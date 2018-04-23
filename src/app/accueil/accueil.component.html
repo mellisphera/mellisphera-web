@@ -1,0 +1,28 @@
+<div class="wrapper">
+    <div class="sidebar" data-color="red" data-image="">
+        <app-sidebar ></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+    </div>
+    <div class="main-panel">
+        <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+        <router-outlet></router-outlet>
+        <div *ngIf="userBLG">
+            <iframe src="http://51.38.49.225:5601/app/kibana#/dashboard/dc0156d0-46cf-11e8-aea2-9b09ab5afc07?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3A'Thu%20Mar%2008%202018%2022%3A58%3A51%20GMT%2B0100'%2Cinterval%3Aauto%2Cmode%3Aabsolute%2Ctimezone%3AEurope%2FBerlin%2Cto%3A'Sat%20Mar%2024%202018%2009%3A45%3A34%20GMT%2B0100'))" height="740" width="100%"></iframe>
+        </div>
+        <div *ngIf="userCLO">
+            <iframe src="http://51.38.49.225:5601/app/kibana#/dashboard/11dbe3e0-46d2-11e8-aea2-9b09ab5afc07?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3A'Fri%20Mar%2009%202018%2010%3A05%3A02%20GMT%2B0100'%2Cinterval%3Aauto%2Cmode%3Aabsolute%2Ctimezone%3AEurope%2FBerlin%2Cto%3A'Tue%20Apr%2017%202018%2023%3A59%3A59%20GMT%2B0200'))" height="740" width="100%"></iframe>
+        </div>
+        <div *ngIf="userJCP">
+            <iframe src="http://51.38.49.225:5601/app/kibana#/dashboard/e4791900-46d5-11e8-aea2-9b09ab5afc07?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3A'Thu%20Mar%2008%202018%2022%3A59%3A10%20GMT%2B0100'%2Cinterval%3Aauto%2Cmode%3Aabsolute%2Ctimezone%3AEurope%2FBerlin%2Cto%3A'Sat%20Mar%2024%202018%2009%3A28%3A37%20GMT%2B0100'))" height="740" width="100%"></iframe>
+        </div>
+        <div *ngIf="userJHE">
+            <iframe src="http://51.38.49.225:5601/app/kibana#/dashboard/f9f1fe70-46d3-11e8-aea2-9b09ab5afc07?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3A'Thu%20Mar%2008%202018%2004%3A47%3A12%20GMT%2B0100'%2Cinterval%3Aauto%2Cmode%3Aabsolute%2Ctimezone%3AEurope%2FBerlin%2Cto%3A'Sat%20Mar%2024%202018%2011%3A40%3A48%20GMT%2B0100'))" height="740" width="100%"></iframe>
+        </div>
+      
+        <footer-cmp></footer-cmp>
+     
+    </div>
+    test
+</div>
+
+
