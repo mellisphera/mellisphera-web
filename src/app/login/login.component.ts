@@ -1,11 +1,13 @@
 import { Component, OnInit,Input,Output, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
-import { user } from '../_model/user';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormControl, FormGroup, Validators  } from '@angular/forms';
+import { User } from '../_model/user';
 import { UserloggedService } from '../userlogged.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserModule } from '@angular/platform-browser';
+import { AuthService } from '../auth/auth.service';
+import { FormGroup, FormControl, Validators ,ReactiveFormsModule,FormBuilder } from '@angular/forms';
+
+import { UsersService } from '../auth/users.service';
 
 @Component({
   selector: 'app-login',
@@ -19,13 +21,25 @@ export class LoginComponent implements OnInit {
   
   public username;
   public password;
-  users: user[];
-  loginForm: FormGroup;
+  myform: FormGroup;
+  users: User[];
+  //loginForm: FormGroup;
   message : string;
  
 
-  constructor(public router: Router, private data : UserloggedService) { 
+  constructor(private formBuilder: FormBuilder,
+              public router: Router,
+              private data : UserloggedService,
+              private usersServices : UsersService,
+              private authService: AuthService) { 
+
     this.loginErrorMsg=false;
+
+    this.myform = this.formBuilder.group({
+      'username': ['', Validators.required],
+      'password': ['', [Validators.required, Validators.minLength(3)]]
+  });
+
     this.users =[
       {username: '***REMOVED***' ,pwd:'***REMOVED***'},
       {username: '***REMOVED***' ,pwd:'***REMOVED***'},
@@ -34,6 +48,13 @@ export class LoginComponent implements OnInit {
 ];
 
   }
+
+/*  onSignIn(){
+    //console.log(this.myform.value);
+    localStorage.setItem('currentUser', JSON.stringify({ token: "jwt will come later", "user": this.myform.value})); 
+    this.authService.signIn(this.myform.value); 
+  }
+  */
 
   login(username,password){
 
@@ -60,17 +81,16 @@ export class LoginComponent implements OnInit {
       }
     })
   }
-//  console.log('Name:' + this.loginForm.get('name').value);
   }
+  
   currentUser(){
     return JSON.parse(localStorage.getItem('currentUser'));
   }
   ngOnInit() {
-    this.loginForm = new FormGroup({
-         username: new FormControl('Username'),
-         password: new FormControl('pwd')
+    this.myform = new FormGroup({
+         username: new FormControl(''),
+         password: new FormControl('')
   })
-
   }
   goToDashboard(){
       console.log("holaaa!");

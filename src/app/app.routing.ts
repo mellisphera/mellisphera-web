@@ -5,6 +5,9 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
+import { TestComponent } from './test/test.component';
+import { RucheRucherComponent } from './accueil/ruche-rucher/ruche.rucher.component';
+
 import { TablesComponent } from './tables/tables.component';
 import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
@@ -15,6 +18,9 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { AuthGuardService as AuthGuard } from './auth/auth-guard.service';
+import { CapteurComponent } from './accueil/capteur/capteur.component';
+import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouveau-capteur.component';
+
 const routes: Routes =[
    /* { path: '',          component: LoginComponent },  
     { path: 'login',          component: LoginComponent },
@@ -28,10 +34,14 @@ const routes: Routes =[
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
     { path: '',          redirectTo: 'dashboard', pathMatch: 'full' }*/
-    { path: '',          component: LoginComponent },
-    { path: 'login',          component: LoginComponent },
-    { path: 'dashboard',          component: HomeComponent },
-    { path: 'accueil',          component: AccueilComponent}
+    { path: '',                 component: LoginComponent },
+    { path: 'login',            component: LoginComponent },
+    { path: 'test',             component: TestComponent },
+    { path: 'dashboard',        component: HomeComponent },
+    { path: 'accueil',          component: AccueilComponent },
+    { path: 'ruche-et-rucher',  component: RucheRucherComponent },
+    { path: 'capteurs',         component: CapteurComponent },
+    { path: 'nouveau-capteur',  component: NouveauCapteurComponent }
 ];
 
 @NgModule({

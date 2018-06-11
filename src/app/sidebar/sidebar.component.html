@@ -9,14 +9,18 @@
         </a>
     </div>
     <ul class="nav responsive-nav">
+        <!--
         <li *ngIf="isMobileMenu()">
             <a class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-dashboard"></i>
 				<p class="hidden-lg hidden-md">Dashboard</p>
             </a>
         </li>
+        -->
         <li class="dropdown" *ngIf="isMobileMenu()">
-              <a class="dropdown-toggle" data-toggle="dropdown">
+             
+            <!--
+            <a class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-globe"></i>
                     <b class="caret hidden-sm hidden-xs"></b>
                     <span class="notification hidden-sm hidden-xs">5</span>
@@ -25,6 +29,7 @@
 						<b class="caret"></b>
 					</p>
               </a>
+            
               <ul class="dropdown-menu">
                 <li><a href="#">Notification 1</a></li>
                 <li><a href="#">Notification 2</a></li>
@@ -32,7 +37,9 @@
                 <li><a href="#">Notification 4</a></li>
                 <li><a href="#">Another notification</a></li>
               </ul>
+        
         </li>
+        <!--
         <li *ngIf="isMobileMenu()">
            <a>
                 <i class="fa fa-search"></i>
@@ -52,7 +59,7 @@
     				</p>
 
               </a>
-              <!---
+            
               <ul class="dropdown-menu">
                 <li><a href="#">Action</a></li>
                 <li><a href="#">Another action</a></li>
@@ -62,11 +69,12 @@
                 <li class="divider"></li>
                 <li><a href="#">Separated link</a></li>
               </ul>
-              -->
+            
         </li>
+    -->
         <li *ngIf="isMobileMenu()">
             <a>
-                <p>Log out</p>
+                <p>Log out </p>
             </a>
         </li>
         <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
@@ -84,6 +92,18 @@
                     <p>Accueil</p>
                 </a>
         </li>
+        <li>
+            <a routerLink="/ruche-et-rucher">
+                <i></i>
+                <p>Ruches et ruchers</p>
+            </a>
+        </li>
+        <li>
+                <a routerLink="/capteurs">
+                    <i></i>
+                    <p>Capteurs</p>
+                </a>
+            </li>
         <!--
         <li>
                 <a routerLink="/login">
