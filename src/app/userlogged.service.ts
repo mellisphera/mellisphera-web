@@ -18,5 +18,5 @@ export class UserloggedService {
   } 
   logOut(){
     return localStorage.removeItem('currentUser');
-}
+  }
 }
