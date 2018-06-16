@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { TestComponent } from './test/test.component';
 import { RucheRucherComponent } from './accueil/ruche-rucher/ruche.rucher.component';
+import { MeteoComponent } from './accueil/meteo/meteo.component';
 
 import { TablesComponent } from './tables/tables.component';
 import { TypographyComponent } from './typography/typography.component';
@@ -22,10 +23,10 @@ import { CapteurComponent } from './accueil/capteur/capteur.component';
 import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouveau-capteur.component';
 
 const routes: Routes =[
-   /* { path: '',          component: LoginComponent },  
+   /* { path: '',             component: LoginComponent },  
     { path: 'login',          component: LoginComponent },
     { path: 'dashboard',      component: HomeComponent },
-  //  { path: 'dashboard',    component: DashboardComponent },
+  //{ path: 'dashboard',      component: DashboardComponent },
     { path: 'user',           component: UserComponent },
     { path: 'table',          component: TablesComponent },
     { path: 'typography',     component: TypographyComponent },
@@ -33,7 +34,7 @@ const routes: Routes =[
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
-    { path: '',          redirectTo: 'dashboard', pathMatch: 'full' }*/
+    { path: '',               redirectTo: 'dashboard', pathMatch: 'full' }*/
     { path: '',                 component: LoginComponent },
     { path: 'login',            component: LoginComponent },
     { path: 'test',             component: TestComponent },
@@ -41,7 +42,8 @@ const routes: Routes =[
     { path: 'accueil',          component: AccueilComponent },
     { path: 'ruche-et-rucher',  component: RucheRucherComponent },
     { path: 'capteurs',         component: CapteurComponent },
-    { path: 'nouveau-capteur',  component: NouveauCapteurComponent }
+    { path: 'meteo',            component: MeteoComponent },
+    
 ];
 
 @NgModule({

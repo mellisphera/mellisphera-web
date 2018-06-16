@@ -38,6 +38,7 @@ export class CapteurComponent implements OnInit {
   radioRuche : boolean;
   
   message="";
+  public errorMsg;
 
   private timerSubscription: AnonymousSubscription;
   
@@ -138,7 +139,9 @@ export class CapteurComponent implements OnInit {
 
 
         this.capteurService.createCapteur(this.capteur).subscribe( 
-            data => {}
+            data => {},
+            ( error => this.errorMsg=error)
+            
         );
        
         this.resetCapteurForm();

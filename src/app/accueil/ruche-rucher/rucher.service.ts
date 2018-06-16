@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from '../../../config';
@@ -15,16 +15,12 @@ export class RucherService {
  
     
     constructor(private http:HttpClient) {}
- 
+    // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
     // pour créer un rucher
-    createRucher(rucher : Rucher) {
-        let body = JSON.stringify(rucher);
-        return this.http.post(CONFIG.URL+'apiaries', body,httpOptions);
-    }
-    // pour créer une ruche dans un rucher
-    createRuche(ruche : Ruche) {
-        let body = JSON.stringify(ruche);
-        return this.http.post(CONFIG.URL+'hives', body , httpOptions);
+    createRucher(rucher) {
+        //let body = JSON.stringify(rucher);
+        return this.http.post(CONFIG.URL+'apiaries', rucher ,httpOptions).
+        catch(this.errorHandler);
     }
     // pour afficher tout les ruchers
     getRuchers() : Observable<Rucher[]>{
@@ -34,14 +30,37 @@ export class RucherService {
     getUserRuchers(username) : Observable<Rucher[]>{
         return this.http.get<Rucher[]>(CONFIG.URL+'apiaries/'+ username);
     }  
+    // pour afficher tout les ruchers
+    getRucherDetails(idApiary) : Observable<Rucher[]>{
+            return this.http.get<Rucher[]>(CONFIG.URL+'apiaries/details/'+idApiary);
+    }  
+    updateRucher(rucher) {
+        let body = JSON.stringify(rucher);
+        return this.http.put(CONFIG.URL+'apiaries/update/' + rucher.id, body, httpOptions);
+    }
+
+    // -- RUCHE -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- 
+    // pour créer une ruche dans un rucher
+    createRuche(ruche) {
+        let body = JSON.stringify(ruche);
+        return this.http.post(CONFIG.URL+'hives', body , httpOptions);
+    }
+    updateRuche(ruche) {
+        let body = JSON.stringify(ruche);
+        return this.http.put(CONFIG.URL+'hives/update/' + ruche.id, body, httpOptions);
+    }
     // Service permettant de récuperer les ruches du rucher selectionné d'un utilisateur X
     getUserRuches(username,idRucher) : Observable<Ruche[]>{
         return this.http.get<Ruche[]>(CONFIG.URL+'hives/'+ username +'/'+ idRucher);
     }   
-   // pour afficher tout les ruchers
-    getRucherDetails(idApiary) : Observable<Rucher[]>{
-    return this.http.get<Rucher[]>(CONFIG.URL+'apiaries/details/'+idApiary);
-    }  
+    // pour supprimer une ruche
+    deleteRuche(ruche) {
+        return this.http.delete(CONFIG.URL+'hives/' + ruche.id);
+    }
+
+    errorHandler(error: HttpErrorResponse){
+        return Observable.throw(error.message || "server error")
+    }
 
 
     /*
