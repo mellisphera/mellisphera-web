@@ -14,6 +14,7 @@ import { LbdModule } from './lbd/lbd.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { TestComponent } from './test/test.component';
+import { MeteoComponent } from './accueil/meteo/meteo.component';
 import { UserComponent } from './user/user.component';
 import { RucheRucherComponent } from './accueil/ruche-rucher/ruche.rucher.component';
 import { CapteurComponent } from './accueil/capteur/capteur.component';
@@ -33,6 +34,8 @@ import { AccueilComponent } from './accueil/accueil.component';
 
 
 import { ReactiveFormsModule } from '@angular/forms';
+
+
 
 import { CapteurService } from './accueil/capteur/capteur.service';
 import { RucherService } from './accueil/ruche-rucher/rucher.service';
@@ -61,7 +64,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
     DashboardComponent,
     ControldashboardComponent,
     AccueilComponent,
-    RucheRucherComponent 
+    RucheRucherComponent,
+    MeteoComponent
 
   ],
   imports: [

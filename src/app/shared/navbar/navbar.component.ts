@@ -28,7 +28,9 @@ export class NavbarComponent implements OnInit{
     logout(){
         this.router.navigate(['/login']);
         localStorage.removeItem('currentUser');
-        console.log("Local storage"+localStorage);
+        localStorage.removeItem('currentRucher');
+        console.log("Local storage user : "+localStorage.get('currentUser'));
+        console.log("Local storage rucher : "+localStorage.getItem('currentRucher'));
     }
 
     ngOnInit(){

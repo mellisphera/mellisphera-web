@@ -1,0 +1,88 @@
+<div class="wrapper">
+    <div class="sidebar" data-color="yellow" data-image="">
+        <app-sidebar ></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+    </div>
+
+    <div class="main-panel">
+        <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+        <router-outlet></router-outlet>
+    
+        
+        <div class="container-fluid" style="background-color: white;">
+                <div class="row content">
+                        <div class="col-sm-9">                        
+                        
+                            <div class="form-inline" >
+                                <div class="form-group">
+                            
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                        <button class="btn btn-primary btn-block">
+                                                Méteo de la periode
+                                        </button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button class="btn btn-primary btn-block">
+                                                Historique
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <!-- Template for the city component -->
+                            <div class="container-fluid">
+                   
+                                <div style="text-align:center">
+                                        <h2 *ngIf="dataCity.city">
+                                                <img src="https://openweathermap.org/img/w/{{dataCity.list[0].weather[0].icon}}.png" class="forecast-icon" alt="forecast">
+                                                {{dataCity.list[0].main.temp_min }}°   <!-- {{dataCity.list[0].weather[0].description}}--> à {{dataCity.city.name}}, {{dataCity.city.country}}
+                                            </h2>      
+                                </div>
+                                <div id="cityCont" class="container">
+                                    <button (click)="goBack()" class="btn btn-primary">GoBack</button>
+                                         
+                                    <div>
+                                        <table class="table">
+                                        <thead>
+                                            <tr>
+                                            <th>Date </th>
+                                            <th>Température min/max (C)</th>
+                                            <th>Pression</th>
+                                            <th>Humidité </th>
+                                            <th>Météo</th>
+                                            <th></th>
+                                            <th>Wind speed (m/s)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let cityForecast of dataCity.list">
+                                            <td class="forecast-info forecast-0">{{cityForecast.dt_txt | date:'fullDate':'':'fr'}}</td>
+                                            <td class="forecast-info forecast-1"><b>Min :</b> {{cityForecast.main.temp_min}} <b>| Max :</b> {{cityForecast.main.temp_max}}</td>
+                                            <td class="forecast-info forecast-2">{{cityForecast.main.pressure  }}</td>
+                                            <td class="forecast-info forecast-3">{{cityForecast.main.humidity}}</td>
+                                            <td class="forecast-info forecast-4"><img src="https://openweathermap.org/img/w/{{cityForecast.weather[0].icon}}.png" class="forecast-icon" alt="forecast"></td>
+                                            <td class="forecast-info forecast-4">{{cityForecast.weather[0].description}}</td>
+                                            <td class="forecast-info forecast-5">{{cityForecast.wind.speed}}</td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+        
+                              
+                 
+                            <br><br>    
+                            </div>
+        
+            
+                
+                </div>
+              </div>
+</div>

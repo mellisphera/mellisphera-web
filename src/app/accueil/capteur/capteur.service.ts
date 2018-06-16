@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from '../../../config';
@@ -19,7 +19,8 @@ export class CapteurService {
     // pour créer un capteur
     createCapteur(capteur : Capteur) {
         let body = JSON.stringify(capteur);
-        return this.http.post(CONFIG.URL+'sensors', body,httpOptions);
+        return this.http.post(CONFIG.URL+'sensors', body,httpOptions).
+        catch(this.errorHandler);
     }
 
     //get all sensors 
@@ -33,6 +34,11 @@ export class CapteurService {
     
     deleteCapteur(capteur) {
         return this.http.delete(CONFIG.URL+'sensors/' + capteur.id);
+    }
+
+
+    errorHandler(error: HttpErrorResponse){
+        return Observable.throw(error.message || "server error")
     }
 
     /*
