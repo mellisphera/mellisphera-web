@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
   else if(username!=null || password!=null){
     this.users.forEach( element => {
       if(element.username== username && element.pwd==password){
-        this.router.navigate(['/accueil']);
+        this.router.navigate(['/ruche-et-rucher']);
         this.data.changeMessage(username);
         //localStorage.setItem('currentUser',username);
         localStorage.setItem('currentUser', JSON.stringify({ token: "jwt will come later", username: username}));

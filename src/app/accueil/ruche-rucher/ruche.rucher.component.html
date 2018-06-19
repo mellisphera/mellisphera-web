@@ -55,7 +55,6 @@
                                                 <tr>
                                                     <th scope="col">Ruche</th>
                                                     <th scope="col">Description</th>
-                                            <!--    <th scope="col">Indicateur santé</th>  -->
                                                     <th scope="col">Actions</th>
                                                 </tr>
                                                 </thead>
@@ -64,7 +63,6 @@
                                                   <tr *ngFor="let ruche of ruches " >
                                                       <td>{{ruche.name}}</td>
                                                       <td>{{ruche.description}}</td>
-                                            <!--      <td>à mettre en place </td>  -->
                                                       <td>
                                                         <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
                                                                 data-target="#editRucheModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
@@ -83,69 +81,71 @@
                                       </div>
                                   </div>
                               </div>
-                              <div class="panel panel-info">
-                                  <div class="panel-heading">
-                                      <h4 class="panel-title">
-                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><b>2. Observations</b></a>
-                                      </h4>
-                                  </div>
-                                  <div id="collapseTwo" class="panel-collapse collapse">
-                                      <div class="panel-body">
-                                          <p>Espace résérvé pour les observations <a href="https://www.tutorialrepublic.com/twitter-bootstrap-tutorial/" target="_blank">Learn more.</a></p>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="panel panel-info">
-                                  <div class="panel-heading">
-                                      <h4 class="panel-title">
-                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                            <b>3. Fleurs</b>
-                                           
-                                          </a>
-                                      </h4>
-                                  </div>
-                                  <div id="collapseThree" class="panel-collapse collapse">
-                                      <div class="panel-body">
-                                       
-                                         <!-- table Fleurs -->
-                                        <table class="table">    
-                                          <thead class="thead-dark">
-                                            <tr>
-                                              <th scope="col">#</th>
-                                              <th scope="col">Nom</th>
-                                              <th scope="col">Date Début</th>
-                                              <th scope="col">Date fin</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                            <tr>
-                                              <th scope="row">1</th>
-                                              <td>Mark</td>
-                                              <td>Otto</td>
-                                              <td>Otto</td>
-                                            </tr>
-                                            <tr>
-                                              <th scope="row">2</th>
-                                              <td>Jacob</td>
-                                              <td>Thornton</td>
-                                              <td>Otto</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>Otto</td>
-                                              </tr>
-                                          </tbody>
-                                  </table>
-                                 
-
-                                     <!-- end of table fleurs -->
-                                      </div>
-                                  </div>
-                              </div>
+                         
                           </div>
                         
+                      </div>
+
+                      <div class="panel panel-info">
+                          <div class="panel-heading">
+                              <h4 class="panel-title">
+                                  <a data-toggle="collapse" href="#collapseTwo"><b>2. Observations</b></a>
+                              </h4>
+                          </div>
+                          <div id="collapseTwo" class="panel-collapse collapse">
+                              <div class="panel-body">
+                                  <p>Espace résérvé pour les observations <a href="https://www.tutorialrepublic.com/twitter-bootstrap-tutorial/" target="_blank">Learn more.</a></p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="panel panel-info">
+                          <div class="panel-heading">
+                              <h4 class="panel-title">
+                                  <a data-toggle="collapse" href="#collapseThree">
+                                    <b>3. Fleurs</b>
+                                   
+                                  </a>
+                              </h4>
+                          </div>
+                          <div id="collapseThree" class="panel-collapse collapse">
+                              <div class="panel-body">
+                               
+                                 <!-- table Fleurs -->
+                                <table class="table">    
+                                  <thead class="thead-dark">
+                                    <tr>
+                                      <th scope="col">#</th>
+                                      <th scope="col">Nom</th>
+                                      <th scope="col">Date Début</th>
+                                      <th scope="col">Date fin</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">1</th>
+                                      <td>Mark</td>
+                                      <td>Otto</td>
+                                      <td>Otto</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">2</th>
+                                      <td>Jacob</td>
+                                      <td>Thornton</td>
+                                      <td>Otto</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>Otto</td>
+                                      </tr>
+                                  </tbody>
+                          </table>
+                         
+
+                             <!-- end of table fleurs -->
+                              </div>
+                          </div>
                       </div>
          
 
@@ -165,7 +165,7 @@
                                                              class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none;">
                 <i class="fa fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;" (click)="deleteRuche(ruche)">
+            <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;" (click)="deleteRucher(rucher)">
               <i class="fa fa-times"></i>
             </button>
             <div *ngIf="!updateRucherInput">

@@ -1,6 +1,6 @@
 export const CONFIG = {
     //URL: "http://51.254.129.164:8080/",
-    URL: "http://localhost:8091/",
+    URL: "http://51.38.49.225:8091/",
     // URL: "http://192.168.1.30:8080/",
 
     apiPath: 'api/',

@@ -38,6 +38,9 @@ export class RucherService {
         let body = JSON.stringify(rucher);
         return this.http.put(CONFIG.URL+'apiaries/update/' + rucher.id, body, httpOptions);
     }
+    deleteRucher(rucher) {
+        return this.http.delete(CONFIG.URL+'apiaries/' + rucher.id);
+    }
 
     // -- RUCHE -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- 
     // pour créer une ruche dans un rucher
