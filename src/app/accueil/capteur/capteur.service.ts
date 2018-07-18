@@ -36,32 +36,25 @@ export class CapteurService {
         return this.http.delete(CONFIG.URL+'sensors/' + capteur.id);
     }
 
+    updateCapteur(capteur : Capteur) {
+        alert("capteur.id : "+capteur.id);
+        let body = JSON.stringify(capteur);
+        return this.http.put(CONFIG.URL+'sensors/update/' + capteur.id, body, httpOptions);
+    }
+
+    checkCapteurType(capteurRef) : Observable<any[]>{
+        //alert(capteurRef);
+        return this.http.get<any[]>(CONFIG.URL+'sold-devices/check/'+capteurRef);
+    }
+
+
+    string(){
+        return "ezibi ?" ; 
+    }
 
     errorHandler(error: HttpErrorResponse){
         return Observable.throw(error.message || "server error")
     }
 
-    /*
-    // pour créer une ruche dans un rucher
-    createRuche(capteur : Capteur) {
-        let body = JSON.stringify(capteur);
-        return this.http.post(CONFIG.URL+'hives', body , httpOptions);
-    }
-    // pour afficher tout les ruchers
-    getRuchers() : Observable<Capteur[]>{
-        return this.http.get<Capteur[]>(CONFIG.URL+'apiaries/all');
-    }   
-    // pour afficher tout les ruchers de l'utilsateur connecté
-    getUserRuchers(username) : Observable<Capteur[]>{
-        return this.http.get<Capteur[]>(CONFIG.URL+'apiaries/'+ username);
-    }  
-    // Service permettant de récuperer les ruches du rucher selectionné d'un utilisateur X
-    getUserRuches(username,idRucher) : Observable<Capteur[]>{
-        return this.http.get<Capteur[]>(CONFIG.URL+'hives/'+ username +'/'+ idRucher);
-    }   
-   // pour afficher tout les ruchers
-    getRucherDetails(idApiary) : Observable<Capteur[]>{
-    return this.http.get<Capteur[]>(CONFIG.URL+'apiaries/details/'+idApiary);
-    }  
-    */
+    
 }

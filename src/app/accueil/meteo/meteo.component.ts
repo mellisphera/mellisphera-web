@@ -5,7 +5,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { RouterModule, Routes } from "@angular/router";
 import { Http, Response } from "@angular/http";
-
+import * as echarts from '../../../assets/echarts.js';
 @Component({
   selector: 'app-meteo',
   templateUrl: './meteo.component.html',
@@ -26,7 +26,13 @@ export class MeteoComponent implements OnInit {
         this.route.params.subscribe( params =>  this.getCityForecast(params['name']));
         this.getCityTest();
         this.getCityData();
+        this.testGraphMickael();
+        
   }
+  ngOnInit() {
+    this.testGraphMickael();
+  }
+
   getCityForecast(cityName) {
     console.log(cityName);
     this.apiCityUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + this.cityName + '&units=metric&appid=***REMOVED***';
@@ -48,9 +54,15 @@ export class MeteoComponent implements OnInit {
     goBack(): void {
         this.location.back();
     }
-  
-  ngOnInit() {
-      }
+
+
+    testGraphMickael(){
+       
+        
+    }
+
+
+ 
       isMap(){
         
       }

@@ -1,0 +1,63 @@
+<div class="wrapper">
+        <div class="sidebar" data-color="red" data-image="">
+            <app-sidebar ></app-sidebar>
+            <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+        </div>
+        <div class="main-panel">
+            <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+            <router-outlet></router-outlet>
+
+
+<!-- change component content here-->                    
+<div class="container-fluid" style="background-color:white;">
+        <div class="row content">
+                <div class="col-sm-9">                        
+                      <div class="form-inline" >
+                        <div class="form-group">
+                            <label><h4>Rucher :</h4> </label>
+                  
+                            <select  [(ngModel)]="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
+                                <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
+                                     {{rucher.name}}
+                                </option>
+                            </select>   
+                          <!--  <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#newRucherModal" >Créer rucher</button>-->
+                
+                        </div>
+                      </div>
+                        <br><br>    
+                        <div class="form-group">
+                                <label for="exampleTextarea" >Rapport</label>
+                                <textarea class="form-control" id="exampleTextarea" rows="8" [(ngModel)]="texteRapport"></textarea>
+                        </div>
+                        <button class="btn btn-primary" (click)="analyserRapport(texteRapport)" >Analyser</button>
+                        <button type="submit" class="btn btn-primary" >Sauver</button>
+
+                        <div class="form-group">
+                            <label for="exampleTextarea">Résultat du rapport</label>
+                        </div>
+                        
+                        <div class="form-group">
+                                <label style="background-color: rgba(236, 234, 234, 0.49);">
+                               
+                                    <ul *ngFor="let d of resultatRapport ">
+                                        <li>
+                                          Phrase :  {{d.sentence}} type :{{d.type}} Score : {{d.nluScore}}
+                                        </li>
+                                    </ul>
+                                </label>
+                        </div>
+
+                    </div>
+          <div class="col-sm-3 sidenav" style="background-color: rgba(236, 234, 234, 0.49); height:1500px;border-color:black;">
+
+          </div>
+        </div>
+      </div>
+</div>
+
+<!-- MODALS ARE DECLARE HERE !!! -->
+
+ 
+
+

@@ -1,5 +1,5 @@
 <div class="wrapper">
-        <div class="sidebar" data-color="yellow" data-image="">
+        <div class="sidebar" data-color="red" data-image="">
             <app-sidebar ></app-sidebar>
             <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
         </div>
@@ -43,7 +43,7 @@
                                           
                                           
                                           <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
-                                                  data-target="#newRucheModal"  class="btn btn-success btn-lg" (click)="isSelectedRucherNull()">
+                                                  data-target="#newRucheModal"  class="btn btn-success btn-lg" >
                                               <i class="fa fa-plus"></i>
                                           </button>
 
@@ -61,7 +61,11 @@
                                                 <tbody>
                                                   
                                                   <tr *ngFor="let ruche of ruches " >
-                                                      <td>{{ruche.name}}</td>
+                                                    
+                                                      <td>
+                                                          <a routerLink="/ruche-detail" (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> 
+                                                      </td>
+                                                       
                                                       <td>{{ruche.description}}</td>
                                                       <td>
                                                         <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
@@ -85,7 +89,7 @@
                           </div>
                         
                       </div>
-
+                      <!--
                       <div class="panel panel-info">
                           <div class="panel-heading">
                               <h4 class="panel-title">
@@ -94,60 +98,11 @@
                           </div>
                           <div id="collapseTwo" class="panel-collapse collapse">
                               <div class="panel-body">
-                                  <p>Espace résérvé pour les observations <a href="https://www.tutorialrepublic.com/twitter-bootstrap-tutorial/" target="_blank">Learn more.</a></p>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="panel panel-info">
-                          <div class="panel-heading">
-                              <h4 class="panel-title">
-                                  <a data-toggle="collapse" href="#collapseThree">
-                                    <b>3. Fleurs</b>
-                                   
-                                  </a>
-                              </h4>
-                          </div>
-                          <div id="collapseThree" class="panel-collapse collapse">
-                              <div class="panel-body">
                                
-                                 <!-- table Fleurs -->
-                                <table class="table">    
-                                  <thead class="thead-dark">
-                                    <tr>
-                                      <th scope="col">#</th>
-                                      <th scope="col">Nom</th>
-                                      <th scope="col">Date Début</th>
-                                      <th scope="col">Date fin</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <th scope="row">1</th>
-                                      <td>Mark</td>
-                                      <td>Otto</td>
-                                      <td>Otto</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">2</th>
-                                      <td>Jacob</td>
-                                      <td>Thornton</td>
-                                      <td>Otto</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>Otto</td>
-                                      </tr>
-                                  </tbody>
-                          </table>
-                         
-
-                             <!-- end of table fleurs -->
                               </div>
                           </div>
                       </div>
-         
+                      -->
 
                         <br><br>    
                     </div>
@@ -162,10 +117,10 @@
             </button>
             -->
             <button data-toggle="tooltip" data-html="true"  data-toggle="modal" type="button" (click)="editRucherClicked()"
-                                                             class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none;">
+                                                             class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none; ">
                 <i class="fa fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;" (click)="deleteRucher(rucher)">
+            <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;  " (click)="deleteRucher(rucher)">
               <i class="fa fa-times"></i>
             </button>
             <div *ngIf="!updateRucherInput">
@@ -204,44 +159,44 @@
                   <form [formGroup]="editRucherForm" (ngSubmit)="onEditerRucher(editRucherForm.value) ">
                     <h4 class="text-center">Editer Rucher</h4>
                     <div class="form-group row"  >
-                      <div class="col-md-6">
-                        <label for="recipient-name" class="col-form-label">Nom : {{editRucherForm.controls['nom'].value}} </label>
-                        <input [(ngModel)]="nomEdit" formControlName="nom" type="text" class="form-control text-left" id="recipient-name" value="{{detailsRucher.name}}">
-                        
-                        <div class="alert alert-danger" *ngIf="editRucherForm.controls['nom'].invalid && editRucherForm.controls['nom'].dirty ">
+                       <div class="col-md-12">
+                        <label for="recipient-name" class="col-form-label">Nom : </label>
+                        <input [(ngModel)]="detailsRucher.name" formControlName="nom" type="text" class="form-control text-left" id="recipient-name" >
+                      </div>  
+                      <div class="col-md-12">
+                        <div class="alert alert-danger" *ngIf="editRucherForm.controls['nom'].invalid">
                             Veuillez saisir un nom
 
                         </div>
-                       
-                      </div>
-                      <div class="col-md-6">
-                          <label for="recipient-name" class="col-form-label">Ville :</label>
-                          <input [(ngModel)]="codePostalEdit" formControlName="codePostal" type="text" class="form-control text-left" id="recipient-name" value="{{detailsRucher.codePostal}}">
-                        
-                          <div class="alert alert-danger" *ngIf="editRucherForm.controls['codePostal'].invalid && editRucherForm.controls['codePostal'].dirty ">
-                              Veuillez saisir une ville
-                          </div>
-                         
                       </div>
                     </div>
                     <div class="form-group row"  >
-                
+                        <div class="col-md-12">
+                          <label for="recipient-name" class="col-form-label">Ville :  </label>
+                          <input [(ngModel)]="detailsRucher.codePostal" formControlName="codePostal" type="text" class="form-control text-left" id="recipient-name">
+                        </div>
+                        <div class="col-md-12">
+                          <div class="alert alert-danger" *ngIf="editRucherForm.controls['codePostal'].invalid ">
+                              Veuillez saisir une ville
+                          </div>
+                        </div>
+               
                     </div>
                   
                     <div class="form-group row"  >
                         <div class="col-md-6">
-                          <label for="recipient-name" class="col-form-label">Description :</label>
+                          <label for="recipient-name" class="col-form-label">Description : </label>
                         </div>
                         <div class="col-md-12">
-                          <textarea [(ngModel)]="descriptionEdit" formControlName="description"  type="text" class="form-control text-left" id="recipient-name" value="{{detailsRucher.description}}"></textarea>
+                          <textarea [(ngModel)]="detailsRucher.description" formControlName="description"  type="text" class="form-control text-left" id="recipient-name"></textarea>
                    
-                          <div class="alert alert-danger" *ngIf="editRucherForm.controls['description'].invalid && editRucherForm.controls['description'].dirty ">
+                          <div class="alert alert-danger" *ngIf="editRucherForm.controls['description'].invalid ">
                               Veuillez saisir une description
                           </div>
                          
                         </div>
                     </div>
-                    <button type="button" class="btn btn-success" data-dismiss="modal"  [disabled]="!editRucherForm.valid" (click)="onEditerRucher(editRucherForm.value)">Editer</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" [disabled]="editRucherForm.invalid" (click)="onEditerRucher(editRucherForm.value)">Sauvegarder</button>
                     <button type="button" class="btn btn-danger" (click)="editRucherClicked()">Annuler</button>
                   </form>
               </div>
@@ -322,18 +277,19 @@
                   <textarea [(ngModel)]="descriptionRuche"   formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
                 </div>
 
-                <div *ngIf="selectedRucherNull">
+                <div *ngIf="!selectedRucher">
                   <div class="alert alert-danger" >
                     Veuillez selectionner un rucher dans la page précédente !
                   </div>
                 </div>
                 
-                <div *ngIf="!selectedRucherNull">
-                   <button type="submit" class="btn btn-primary"  [disabled]="!newRucheForm.valid" > Créer Ruche</button>
+                <div *ngIf="selectedRucher">
+                 
                 </div>
               </form>
             </div>
             <div class="modal-footer">
+              <button type="submit" class="btn btn-primary"  [disabled]="!newRucheForm.valid"  (click)="createRuche(newRucheForm.value)" > Créer Ruche</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
              
             </div>
@@ -376,7 +332,7 @@
     </div>
   </div>
 </div>
-<!-- End of new Rucher Modal -->
+<!-- End of edit Rucher Modal -->
 
 <script>
     $('#editRucheModal').modal({

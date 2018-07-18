@@ -20,7 +20,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { AuthGuardService as AuthGuard } from './auth/auth-guard.service';
 import { CapteurComponent } from './accueil/capteur/capteur.component';
+import { GraphComponent } from './accueil/graph/graph.component';
 import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouveau-capteur.component';
+import { RucheDetailComponent } from './accueil/ruche-rucher/ruche-detail/ruche.detail.component';
+import { RapportComponent } from './accueil/rapport/rapport.component';
 
 const routes: Routes =[
    /* { path: '',             component: LoginComponent },  
@@ -43,6 +46,9 @@ const routes: Routes =[
     { path: 'ruche-et-rucher',  component: RucheRucherComponent },
     { path: 'capteurs',         component: CapteurComponent },
     { path: 'meteo',            component: MeteoComponent },
+    { path: 'graphiques',       component: GraphComponent },
+    { path: 'ruche-detail',     component: RucheDetailComponent},
+    { path: 'rapport',          component: RapportComponent}
     
 ];
 

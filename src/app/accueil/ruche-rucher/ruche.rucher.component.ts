@@ -40,6 +40,7 @@ export class RucheRucherComponent implements OnInit {
     codePostalEdit='';
     //object to create a new rucher
     rucher = new Rucher();
+    rucherE = new Rucher();
     //object for details ruchers
     detailsRucher : any[] =[];
 
@@ -57,6 +58,10 @@ export class RucheRucherComponent implements OnInit {
     public errorMsg;
     //updateRucher input is true when user clicks on Update Rucher
     updateRucherInput: boolean;
+
+    parentMessage;
+
+    localStorageRuche;
 
    private timerSubscription: AnonymousSubscription;
  
@@ -102,8 +107,9 @@ export class RucheRucherComponent implements OnInit {
 
 
     ngOnInit(){
-      this.clearRucherSelection();
+     // this.clearRucherSelection();
       this.updateRucherInput=false;
+      console.log("localStorage.getItem()" +localStorage.getItem("currentRucher"));
       console.log("init current rucher : " + String(this.selectedRucher));
       this.x=String(this.selectedRucher);
       this.x=this.currentRucherID;
@@ -112,6 +118,18 @@ export class RucheRucherComponent implements OnInit {
       this.getUserRuchers();  
       this.getRucheDuRucher();
       this.getDetailsRucher();
+    }
+
+    clickOnRuche(ruche){
+     
+       
+        this.selectedRuche=ruche;
+        this.localStorageRuche= this.selectedRuche.id;
+ 
+        console.log("this.selectedRuche : "+ this.selectedRuche );
+         console.log("this.selectedRuche : "+ this.selectedRuche );
+        localStorage.setItem("clickedRuche",  this.localStorageRuche);
+        //this.router.navigate['/ruche-detail'];
     }
 
   resetForm(){
@@ -177,25 +195,28 @@ createRucher(rucher){
   deleteRucher(rucher){
     //console.log("Delete rucher " + this.selectedRucher);
     rucher= this.selectedRucher;
-    console.log(rucher);
+    console.log("to delete rucher : " + rucher);
     
    
       if(this.selectedRucher!=null) {
         if (confirm("Etes vous sur de vouloir supprimer : " + this.selectedRucher + "?")) {
-          this.rucherService.deleteRucher(this.detailsRucher).subscribe(
+          this.rucherService.deleteRucher(rucher).subscribe(
             data => {},
           ( error => this.errorMsg=error)
         );
-        this.clearRucherSelection();
-        this.getDetailsRucher();
+        //this.clearRucherSelection();
+        this.refreshRucherData(); 
         //this.currentRucherID=null;g
         this.subscribeToData();
-        this.refreshRucherData();
-        location.reload();
+        this.getDetailsRucher();
+        alert("this.rucher[0].id : " +  this.ruchers[0].id)
+        localStorage.setItem("currentRucher",   this.ruchers[0].id);
+        this.selectedRucher= this.ruchers[0].id;
+        alert("le rucher a été supprimé :( ")
         }
          
       }
-    
+  
       else {
         alert("aucun rucher selectionné");
       }
@@ -206,21 +227,21 @@ createRucher(rucher){
 }
 
   //Editer Rucher
-  onEditerRucher(rucher){
-    console.log("this.nomEdit : " + this.nomEdit);
-    console.log("this.descriptionEdit : "+ this.descriptionEdit);
-    console.log("this.codePostalEdit : " + this.codePostalEdit);
-    if (confirm("Etes vous sur de vouloir editer ce rucher : ?")){
-      this.rucher.name=this.nomEdit;
-      this.rucher.description=this.descriptionEdit;
-      this.rucher.codePostal=this.codePostalEdit;
-      this.rucher.id=String(this.selectedRucher);
-    if(this.rucher.name != null && this.rucher.description!=null && this.rucher.id!=null){
-      this.rucherService.updateRucher(this.rucher).subscribe( 
+  onEditerRucher(rucherEdit){
+    this.rucherE.name=this.editRucherForm.controls['nom'].value;
+    this.rucherE.description=this.editRucherForm.controls['description'].value;
+    this.rucherE.codePostal=this.editRucherForm.controls['codePostal'].value;
+    this.rucherE.id=String(this.selectedRucher);
+    if (confirm("Etes vous sur de vouloir editer ce rucher : ?" + this.rucherE.name)){
+  
+      console.log(" this.rucherE.name : " +  this.rucherE.name);
+    
+      this.rucherService.updateRucher(this.rucherE).subscribe( 
         data => {},
         ( error => this.errorMsg=error)
         );
-      }
+      this.updateRucherInput=false;
+      //this.editRucherClicked();
 
   }
 
@@ -228,9 +249,9 @@ createRucher(rucher){
      alert("Votre rucher a été éditée");
      this.subscribeToData();
      this.refreshRucherData();
-     this.editRucherClicked();
+     //this.editRucherClicked();
      this.getDetailsRucher();
-     this.newRucherForm.reset();
+     //this.newRucherForm.reset();
   }
 
   getUserRuchers(){
@@ -240,7 +261,8 @@ createRucher(rucher){
       err => console.error(err),
       () => console.log()
     );
-
+    console.log("rucher[0] : "+  this.ruchers[0]);
+    console.log("rucher[0] : "+  this.selectedRucher);
 
   }
 
@@ -272,16 +294,6 @@ createRucher(rucher){
     console.log("selected ruche : "+ this.selectedRuche.name);
   }
 
-  isSelectedRucherNull(){
-    if(this.selectedRucher==null){
-      this.selectedRucherNull=true;
-      return "aucun rucher selectionné !";
-    }
-    else{
-      this.selectedRucherNull=false;
-    }
-  }
-
   //Pour effacer une ruche
 
   deleteRuche(ruche){
@@ -293,8 +305,9 @@ createRucher(rucher){
           
           );
       }
+      this.refreshRucherData();
       this.subscribeToData();
-  
+      this.selectedRucher=this.ruchers[0];
   }
 
   //Pour créer une ruche
@@ -329,30 +342,30 @@ createRucher(rucher){
         this.subscribeToData();
         this.newRucheForm.reset();
   }
+  editRucherClicked(){
+    if(this.updateRucherInput==true){
+      this.updateRucherInput=false;
+      //Fthis.editRucherForm.reset();      
+    }  
+    else if(this.updateRucherInput==false && this.selectedRucher!=null){
+      this.updateRucherInput=true;
+       
+    }
+  }
 
   private refreshRucherData(): void {
     this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
-    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getDetailsRucher());
+    this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
   }
   private subscribeToData(): void {
-    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getRucheDuRucher());
-
+    this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher());
   }
 
   resetRucheForm(){
     this.newRucheForm.reset();
   }
 
-  editRucherClicked(){
-    if(this.updateRucherInput==true){
-      this.updateRucherInput=false;
-      this.editRucherForm.reset();
 
-    }  
-    else if(this.updateRucherInput==false && this.selectedRucher!=null){
-      this.updateRucherInput=true;
-    }
-  }
   
   isMap(path){
       var titlee = this.location.prepareExternalUrl(this.location.path());
@@ -364,4 +377,8 @@ createRucher(rucher){
         return true;
       }
   }   
+
+
+
+
 }
