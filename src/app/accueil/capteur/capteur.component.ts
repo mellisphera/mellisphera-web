@@ -25,35 +25,34 @@ export class CapteurComponent implements OnInit {
   selectedRucher = new Rucher();
   selectedRuche = new Ruche();
   selectedCapteur = new Capteur();
+  capteurEdit = new Capteur();
   //variable to store ruches
   ruches: any [] = [];
   //for new sensor
   newCapteurForm : FormGroup;
+  //to edit a sensor
+  editCapteurForm : FormGroup;
   capteur= new Capteur();
   reference ='';
   type='';
   description ='';
 
+  types : any[] = []; 
+
   radioStock :boolean;
   radioRuche : boolean;
   
   message="";
+  editedSensorMsg :boolean;
   public errorMsg;
 
   private timerSubscription: AnonymousSubscription;
   
     receiveMessage($event){
             this.message=$event;
+
     }
-  
-  /*
-               private formBuilder: FormBuilder,
-               public location: Location,
-               public router: Router, 
-               private capteurService : CapteurService
-  */ 
-
-
+    
     constructor(    
                     private data : UserloggedService,
                     private _router : Router,
@@ -73,13 +72,27 @@ export class CapteurComponent implements OnInit {
                             'validate' : ``
                         })                
                 
+        this.editCapteurForm=formBuilder.group({
+                            'selectedRucher': [null],
+                            'selectedRuche': [null,Validators.compose([Validators.required])],
+                            'checkbox': [],
+                            'validate' : ``
+                        })                
         this.username= data.currentUser().username;
         
     }
 
 
+    ngOnInit() {
+        this.getUserRuchers(); 
+        this.getAllCapteur();
+        this.selectRadioStock();
+}
 
     selectRadioStock(){
+        console.log("radio stock : " + this.radioStock);
+        console.log("radio stock : " + this.radioRuche);
+        this.editedSensorMsg=false;
         this.radioRuche=false;
         this.radioStock=true;
         this.selectedRucher=null;
@@ -88,6 +101,7 @@ export class CapteurComponent implements OnInit {
         this.newCapteurForm.get('selectedRuche').updateValueAndValidity();
         
     }
+
     selectRadioRuche(){
         this.radioRuche=true;
         this.radioStock=false;
@@ -100,12 +114,7 @@ export class CapteurComponent implements OnInit {
     }
 
 
-    ngOnInit() {
-            this.getUserRuchers(); 
-            this.getAllCapteur();
-            //console.log("liste capteurs :"+  this.capteurs);
-            //console.log("init current rucher" + this._selectedRucherService.currentRucher());
-    }
+
 
     capteurForm(){
         this._router.navigate(['/nouveau-capteur']);
@@ -122,10 +131,30 @@ export class CapteurComponent implements OnInit {
        
     }
 
+    selectCapteur(capteur){
+        this.selectedCapteur=capteur;
+    }
+
+
+    checkCapteurType(value : any){
+        
+    console.log("value :"+  value);
+       
+            this.capteurService.checkCapteurType(value).subscribe(
+                data =>{ 
+                    this.types=data;
+                },
+                ( error => this.errorMsg=error)
+               );
+    }
+    string(){
+     //   this.test= this.capteurService.string();
+    }
+
    //CREATE CAPTEUR
     createCapteur(capteur){
         this.capteur.reference=this.reference;
-        this.capteur.type=this.type;
+        this.capteur.type=this.newCapteurForm.controls['type'].value;
         this.capteur.description=this.description;
         var idRuche = String(this.selectedRuche);
         this.capteur.idHive = idRuche;
@@ -139,9 +168,7 @@ export class CapteurComponent implements OnInit {
 
 
         this.capteurService.createCapteur(this.capteur).subscribe( 
-            data => {},
             ( error => this.errorMsg=error)
-            
         );
        
         this.resetCapteurForm();
@@ -171,6 +198,25 @@ export class CapteurComponent implements OnInit {
         }
         this.subscribeToData();
      
+    }
+
+    updateCapteur(){
+      
+        this.selectedCapteur.idApiary=String(this.selectedRucher);
+        this.selectedCapteur.idHive=String(this.selectedRuche);
+ 
+        this.capteurService.updateCapteur(this.selectedCapteur).subscribe(
+            data => { 
+                alert("capteur modifié ! ");
+             },
+             ( error => this.errorMsg=error)
+        );
+        this.editedSensorMsg=true;
+        
+        this.editCapteurForm.reset();
+        
+        this.subscribeToData();
+        
     }
 
     getUserRuchers(){
@@ -209,12 +255,15 @@ export class CapteurComponent implements OnInit {
 
     onCancelClicked(){
       this.resetCapteurForm();
-      
+      this.editedSensorMsg=false;
+      this.editCapteurForm.reset();
     }
 
     private subscribeToData(): void {
         this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.getAllCapteur());
     }
+
+
 
  
 }

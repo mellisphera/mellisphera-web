@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="sidebar" data-color="yellow" data-image="">
+    <div class="sidebar" data-color="red" data-image="">
         <app-sidebar ></app-sidebar>
         <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
     </div>
@@ -20,26 +20,29 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-lg-6">
                                         <button class="btn btn-primary btn-block">
                                                 Méteo de la periode
                                         </button>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-lg-6">
                                     <button class="btn btn-primary btn-block">
                                                 Historique
                                     </button>
                                 </div>
                             </div>
 
+                            
+
 
                             <!-- Template for the city component -->
+        
                             <div class="container-fluid">
                    
                                 <div style="text-align:center">
                                         <h2 *ngIf="dataCity.city">
                                                 <img src="https://openweathermap.org/img/w/{{dataCity.list[0].weather[0].icon}}.png" class="forecast-icon" alt="forecast">
-                                                {{dataCity.list[0].main.temp_min }}°   <!-- {{dataCity.list[0].weather[0].description}}--> à {{dataCity.city.name}}, {{dataCity.city.country}}
+                                                {{dataCity.list[0].main.temp_min }}°    {{dataCity.list[0].weather[0].description}} à {{dataCity.city.name}}, {{dataCity.city.country}}
                                             </h2>      
                                 </div>
                                 <div id="cityCont" class="container">
@@ -60,7 +63,7 @@
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let cityForecast of dataCity.list">
-                                            <td class="forecast-info forecast-0">{{cityForecast.dt_txt | date:'fullDate':'':'fr'}}</td>
+                                            <td class="forecast-info forecast-0">{{cityForecast.dt_txt }}</td>
                                             <td class="forecast-info forecast-1"><b>Min :</b> {{cityForecast.main.temp_min}} <b>| Max :</b> {{cityForecast.main.temp_max}}</td>
                                             <td class="forecast-info forecast-2">{{cityForecast.main.pressure  }}</td>
                                             <td class="forecast-info forecast-3">{{cityForecast.main.humidity}}</td>
@@ -72,17 +75,89 @@
                                         </table>
                                     </div>
                                 </div>
-                                
                             </div>
-                            
-        
-                              
-                 
+                      
+                        
+                      
                             <br><br>    
                             </div>
-        
-            
-                
                 </div>
-              </div>
-</div>
+
+
+
+
+              
+              
+        
+<!--
+           
+                <div class="container">
+
+                    
+                        <h4 class="text-center"*ngIf="dataCity.city">
+                                <img src="https://openweathermap.org/img/w/{{dataCity.list[0].weather[0].icon}}.png" class="forecast-icon" alt="forecast">
+                                {{dataCity.list[0].main.temp_min }}°    {{dataCity.list[0].weather[0].description}} à {{dataCity.city.name}}, {{dataCity.city.country}}
+                        </h4>      
+                    
+                                            <table class="table table-striped " >
+                                                    <tr >
+                                                        
+                                                        <td class="card"*ngFor="let cityForecast of dataCity.list  | slice:0:6">
+                                                            <div class="" style="width: 18rem;">
+                                                                    <div class="card-top text-center"><b>Le</b> {{cityForecast.dt_txt }}</div>
+                                                                    <div class="text-center">
+                                                                            <img class="card-img-top text-center" src="https://openweathermap.org/img/w/{{cityForecast.weather[0].icon}}.png" style="width:70px; height:70px;" alt="Card image cap">
+                                                                    </div>
+                                                                        
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title text-center">{{cityForecast.weather[0].description}}</h5>
+                                                                        <p class="card-text text-center"> <b>Min : </b>{{cityForecast.main.temp_min}}  <b>Max :</b>{{cityForecast.main.temp_max}} </p>
+                                                                        
+                                                                    </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="width:200px;" >
+                                                            
+                                                        <td class="card" *ngFor="let cityForecast of dataCity.list  | slice:7:13">
+                                                            <div>
+                                                                <div class="" style="width: 18rem;">
+                                                                        <div class="card-top text-center"><b>Le</b> {{cityForecast.dt_txt }}</div>
+                                                                        <div class="text-center">
+                                                                                <img class="card-img-top text-center" src="https://openweathermap.org/img/w/{{cityForecast.weather[0].icon}}.png" style="width:70px; height:70px;"  alt="Card image cap">
+                                                                        </div>
+                                                                            
+                                                                        <div class="card-body">
+                                                                            <h5 class="card-title text-center">{{cityForecast.weather[0].description}}</h5>
+                                                                            <p class="card-text text-center"> <b>Min : </b>{{cityForecast.main.temp_min}}  <b>Max :</b>{{cityForecast.main.temp_max}} </p>
+                                                                            
+                                                                        </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="width:200px;" >
+                                                            
+                                                        <td class="card" *ngFor="let cityForecast of dataCity.list  | slice:13:19">
+                                                            <div class="" style="width: 18rem;">
+                                                                    <div class="card-top text-center"><b>Date : </b> {{cityForecast.dt_txt }}</div>
+                                                                    <div class="text-center">
+                                                                            <img class="card-img-top text-center" src="https://openweathermap.org/img/w/{{cityForecast.weather[0].icon}}.png" style="width:70px; height:70px;" alt="Card image cap">
+                                                                    </div>
+                                                                        
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title text-center">{{cityForecast.weather[0].description}}</h5>
+                                                                        <p class="card-text text-center"> <b>Min : </b>{{cityForecast.main.temp_min}}  <b>Max :</b>{{cityForecast.main.temp_max}} </p>
+                                                                        
+                                                                    </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                    </div>
+    
+              
+                
+        
+                -->
+        </div>

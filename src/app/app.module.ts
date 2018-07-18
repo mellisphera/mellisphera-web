@@ -17,8 +17,11 @@ import { TestComponent } from './test/test.component';
 import { MeteoComponent } from './accueil/meteo/meteo.component';
 import { UserComponent } from './user/user.component';
 import { RucheRucherComponent } from './accueil/ruche-rucher/ruche.rucher.component';
+import { RucheDetailComponent } from './accueil/ruche-rucher/ruche-detail/ruche.detail.component';
 import { CapteurComponent } from './accueil/capteur/capteur.component';
 import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouveau-capteur.component';
+import { GraphComponent } from './accueil/graph/graph.component';
+
 
 import { TablesComponent } from './tables/tables.component';
 import { TypographyComponent } from './typography/typography.component';
@@ -31,20 +34,21 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ControldashboardComponent } from './controldashboard/controldashboard.component';
 import { AccueilComponent } from './accueil/accueil.component';
-
+import { RapportComponent } from './accueil/rapport/rapport.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
-
-
 import { CapteurService } from './accueil/capteur/capteur.service';
 import { RucherService } from './accueil/ruche-rucher/rucher.service';
+import { TestService } from './test/test.service';
 import { UserloggedService } from './userlogged.service';
 import { UsersService } from './auth/users.service';
 import { selectedRucherService } from './accueil/_shared-services/selected-rucher.service';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { GraphService } from './accueil/graph/graph.service';
+import { RapportService } from './accueil/rapport/rapport.service';
 
 @NgModule({
   declarations: [
@@ -65,7 +69,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
     ControldashboardComponent,
     AccueilComponent,
     RucheRucherComponent,
-    MeteoComponent
+    MeteoComponent,
+    GraphComponent,
+    RucheDetailComponent,
+    RapportComponent
 
   ],
   imports: [
@@ -89,7 +96,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
     JwtHelperService,
     UsersService,
     RucherService,
-    selectedRucherService
+    selectedRucherService,
+    TestService,
+    GraphService,
+    RapportService
      
               ],
   bootstrap: [AppComponent]

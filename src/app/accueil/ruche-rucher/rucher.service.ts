@@ -39,7 +39,7 @@ export class RucherService {
         return this.http.put(CONFIG.URL+'apiaries/update/' + rucher.id, body, httpOptions);
     }
     deleteRucher(rucher) {
-        return this.http.delete(CONFIG.URL+'apiaries/' + rucher.id);
+        return this.http.delete(CONFIG.URL+'apiaries/' + rucher);
     }
 
     // -- RUCHE -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- 
@@ -64,47 +64,5 @@ export class RucherService {
     errorHandler(error: HttpErrorResponse){
         return Observable.throw(error.message || "server error")
     }
-
-
-    /*
-    createUser(user) {
-                let body = JSON.stringify(user);
-                return this.http.post('http://localhost:8091/user/signup', body, httpOptions);
-    }       
-    updateUser(user) {
-                let body = JSON.stringify(user);
-                return this.http.put('http://localhost:8091/user/' + user.id, body, httpOptions);
-    }
-    loginUser(user) {
-                let body = JSON.stringify(user);
-                return this.http.post('http://localhost:8091/user/login' + body, httpOptions);
-    }
-    deleteUser(user) {
-                return this.http.delete('http://localhost:8091/user/' + user.id);
-    }
-    
-
-//posts services
-   
-    updatePost(post) {
-        let body = JSON.stringify(post);
-        return this.http.put('http://localhost:8091/posts/update/' + post.id, body, httpOptions);
-    }
-    deletePost(post) {
-        return this.http.delete('http://localhost:8091/posts/' + post.id);
-    }   
-    createPost(post) {
-        let body = JSON.stringify(post);
-        return this.http.post('http://localhost:8091/posts', body, httpOptions);
-}    
-   
-/*
-    getAll(): Observable<Post[]> {
-        return this.http.get('http://localhost:8091/posts/all')
-          .map(res => res.json().data)
-          .catch(this.handleError);
-    }
-*/
-    
     
 }

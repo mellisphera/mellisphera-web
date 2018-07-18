@@ -1,5 +1,5 @@
 <div class="wrapper">
-        <div class="sidebar" data-color="yellow" data-image="">
+        <div class="sidebar" data-color="red" data-image="">
             <app-sidebar ></app-sidebar>
             <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
         </div>
@@ -70,7 +70,10 @@
                                                                 <th scope="col">Reference</th>
                                                                 <th scope="col">Description</th>
                                                                 <th scope="col">Affectation</th>
+                                                        <!--    <th scope="col">Ruche</th>   -->
+                                                                <th scope="col">Type</th>
                                                                 <th scope="col">Action</th>
+                                                             
                                                             </tr>
                                                             </thead>
                                                             <tbody>
@@ -78,13 +81,15 @@
                                                                 <tr *ngFor="let capteur of capteurs">
                                                                     <td>{{capteur.reference}}</td>
                                                                     <td>{{capteur.description}}</td>
-                                                                    <td>{{capteur.idHive}}  </td>
+                                                        <!--        <td>{{capteur.idHive}}</td>   -->
+                                                                    <td>{{capteur.hiveName}}</td>
+                                                                    <td>{{capteur.type}}  </td>
                                                                     <td>
-                                                                        <!--
-                                                                        <button type="button" class="btn btn-primary btn-lg"  style="padding: 0;border: none; background: none;">
-                                                                                <i class="fa fa-edit"></i>
+                                                                        <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="selectCapteur(capteur)"
+                                                                        data-target="#editCapteurModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                                                            <i class="fa fa-edit"></i>
                                                                         </button>
-                                                                        -->
+                                                                        
                                                                         <button type="button" class="btn btn-warning btn-lg " (click)="deleteCapteur(capteur)" style="padding: 0;border: none; background: none;">
                                                                                 <i class="fa fa-times"></i>
                                                                         </button>
@@ -113,8 +118,7 @@
             
                                     <!-- End of table ruche -->                      
                                     <!-- table Observations -->
-            
-            
+
                                     <br><br>    
                                 </div>
             
@@ -132,6 +136,8 @@
 </div>
     
 
+
+
  <!-- New capteur Modal -->
  <div class="modal fade" id="newCapteurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -147,16 +153,19 @@
                             <div class="form-group row">
                                 <div class="col-md-6" >
                                         <label for="recipient-name" class="col-form-label">Référence (*):</label>
-                                        <input [(ngModel)]="reference" formControlName="reference" type="text" class="form-control" id="recipient-name">
+                                        <input #ref (keyup)="checkCapteurType(ref.value)" [(ngModel)]="reference" formControlName="reference" type="text" class="form-control" id="recipient-name">
                                         <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].touched">
-                                                Veuillez saisir une reference
+                                                Veuillez saisir une reference valide
                                         </div>
 
                                 </div>
                                 <div class="col-md-6">
                             
-                                        <label for="recipient-name" class="col-form-label">Type :</label>
-                                        <input [(ngModel)]="type" formControlName="type" type="text" class="form-control" id="recipient-name">
+                                        <label for="recipient-name" class="col-form-label"  >Type :</label>
+                                        <input [(ngModel)]="types.type" formControlName="type" disabled="true" type="text" class="form-control" id="recipient-name" >
+                                        <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['type'].valid && newCapteurForm.controls['reference'].touched">
+                                                Vérifiez la référence de votre capteur
+                                        </div>
                                    
                                 </div>
                             
@@ -196,10 +205,7 @@
                                                     {{rucher.name}}
                                                 </option>
                                             </select>   
-                                        
-                                        <!-- 
-                                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#newRucherModal" >Créer rucher</button>
-                                            -->
+                                
                                     </div>
                                                             
                                     <div class="form-group ">
@@ -216,14 +222,69 @@
                                     </div>
                                 </div>
                                 
-                            <button type="submit" class="btn btn-primary" [disabled]="!newCapteurForm.valid"  > Ajouter Capteur</button>
+                     
                       </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClicked()">Fermer</button>
-             
+                    <button type="submit" class="btn btn-primary" [disabled]="!newCapteurForm.valid" (click)="createCapteur(newCapteurForm.value)" > Ajouter Capteur</button>
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClicked()">Fermer</button>
             </div>
           </div>
         </div>
       </div>
 <!-- End of new Rucher Modal -->
+
+
+<!-- EDIT CAPTEUR Modal -->
+<div class="modal fade" id="editCapteurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-center" id="exampleModalLabel"><h3>Editer affectation capteur</h3> </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                <form  [formGroup]="editCapteurForm" (ngSubmit)="updateCapteur(editCapteurForm.value)">
+                                                                    
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Rucher :</label>
+                                    <select  [(ngModel)]="selectedRucherEdit"  formControlName="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
+                                        <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
+                                            {{rucher.name}}
+                                        </option>
+                                    </select>   
+                                
+                                </div>
+                                <div class="form-group ">
+                                            <label for="message-text" class="col-form-label">Ruche :</label>
+                                            <select  [(ngModel)]="selectedRuche" formControlName="selectedRuche"  (click)="onSelectRuche($event)" class="form-control " id="sel1">
+                                                <option  *ngFor="let ruche of ruches" [value]="ruche.id" >
+                                                    {{ruche.name}}
+                                                </option>
+                                            </select>   
+                                            <div class="alert alert-danger" *ngIf="!editCapteurForm.controls['selectedRuche'].valid && editCapteurForm.controls['selectedRuche'].untouched && !editedSensorMsg">
+                                                        Veuillez choisir une ruche
+                                            </div>
+    
+                                </div>
+
+                                <div class="form-group ">
+                                    <div class="alert alert-success" *ngIf="editedSensorMsg">
+                                            Capteur déplacé avec <strong>succès !</strong>
+                                    </div>
+                                </div>
+                                                
+                     
+                  </form>
+        </div>
+        <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" [disabled]="!editCapteurForm.valid"  (click)="updateCapteur(editCapteurForm.value)"> Sauvegarder</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClicked()">Fermer</button>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- End EDIT capteur Modal -->

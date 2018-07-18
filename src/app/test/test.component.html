@@ -6,12 +6,42 @@
     <div class="main-panel">
         <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
         <router-outlet></router-outlet>
-      
-        <app-tables>
-      
-            
-        </app-tables>
-     
+
+        <div class="container">
+                <div echarts id="main" style="width: 800px;height:400px;"></div>
+        </div>
+        
+
+        <table class="table">
+                <thead>
+                    <tr>
+                    <th>Min temp (C) </th>
+                    <th>Max temp (C) </th>
+                    <th>Day </th>
+                    <th>Icon </th>
+                    <th>Météo</th>
+                    <th></th>
+                    <th>Wind speed (m/s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cityForecast of dataCity | slice:0:4">
+                    
+                    <td class="forecast-info forecast-1">{{cityForecast.minTempDay}}</td>
+                    <td class="forecast-info forecast-2">{{cityForecast.maxTempDay}}</td>
+                    <td class="forecast-info forecast-3">{{cityForecast.day}}</td>
+                    <td class="forecast-info forecast-4"><img src="https://openweathermap.org/img/w/{{cityForecast.icons[0]}}.png" class="forecast-icon" alt="forecast"></td>
+                  
+                    </tr>
+                </tbody>
+                </table>
+
+
     </div>
+
+
+        
+
+     
     test
 </div>
