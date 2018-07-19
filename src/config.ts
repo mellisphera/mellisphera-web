@@ -1,12 +1,9 @@
 export const CONFIG = {
-    //URL: "http://51.254.129.164:8080/",
-    URL: "http://51.38.49.225:8091/",
-    // URL: "http://192.168.1.30:8080/",
+    //URL: "http://51.68.71.91:8091/", //Dev
+    URL: "http://51.68.71.91:8092/",   //Prod
+    //URL: "http://localhost:8092/",   //Local
 
     apiPath: 'api/',
-    entete: `
-        <img src="http://51.254.129.164/assets/images/apen.PNG" width="50" alt="Apen">
-    `,
     googleMapsAPI: 'AIzaSyAHvIyK6M1SW6R1rYkXnTWNiCbbqE9gBVI'
 
 
