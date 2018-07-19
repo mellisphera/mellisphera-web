@@ -1,0 +1,21 @@
+#graph{
+  height: 1000px;
+  width: 1500px;
+}
+
+
+.zoom {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  transition: transform .2s;
+}
+
+.zoom:hover {
+  //Multiplie par 4 la taille de la photo
+  -ms-transform: scale(4); /* IE 9 */
+  -webkit-transform: scale(4); /* Safari 3-8 */
+  transform: scale(4);
+  //Met la photo en 1er plan
+  z-index: 2;
+}

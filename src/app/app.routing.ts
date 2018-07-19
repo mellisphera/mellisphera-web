@@ -24,6 +24,7 @@ import { GraphComponent } from './accueil/graph/graph.component';
 import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouveau-capteur.component';
 import { RucheDetailComponent } from './accueil/ruche-rucher/ruche-detail/ruche.detail.component';
 import { RapportComponent } from './accueil/rapport/rapport.component';
+import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
 
 const routes: Routes =[
    /* { path: '',             component: LoginComponent },  
@@ -48,7 +49,8 @@ const routes: Routes =[
     { path: 'meteo',            component: MeteoComponent },
     { path: 'graphiques',       component: GraphComponent },
     { path: 'ruche-detail',     component: RucheDetailComponent},
-    { path: 'rapport',          component: RapportComponent}
+    { path: 'rapport',          component: RapportComponent},
+    { path: 'fleurs-floraison', component: FleursFloraisonComponent }
     
 ];
 
