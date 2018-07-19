@@ -21,6 +21,8 @@ import { RucheDetailComponent } from './accueil/ruche-rucher/ruche-detail/ruche.
 import { CapteurComponent } from './accueil/capteur/capteur.component';
 import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouveau-capteur.component';
 import { GraphComponent } from './accueil/graph/graph.component';
+import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
+
 
 
 import { TablesComponent } from './tables/tables.component';
@@ -49,6 +51,7 @@ import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { GraphService } from './accueil/graph/graph.service';
 import { RapportService } from './accueil/rapport/rapport.service';
+import { FleursFloraisonService } from './accueil/fleurs-floraison/fleurs.floraison.service';
 
 @NgModule({
   declarations: [
@@ -72,7 +75,8 @@ import { RapportService } from './accueil/rapport/rapport.service';
     MeteoComponent,
     GraphComponent,
     RucheDetailComponent,
-    RapportComponent
+    RapportComponent,
+    FleursFloraisonComponent
 
   ],
   imports: [
@@ -99,7 +103,8 @@ import { RapportService } from './accueil/rapport/rapport.service';
     selectedRucherService,
     TestService,
     GraphService,
-    RapportService
+    RapportService,
+    FleursFloraisonService
      
               ],
   bootstrap: [AppComponent]
