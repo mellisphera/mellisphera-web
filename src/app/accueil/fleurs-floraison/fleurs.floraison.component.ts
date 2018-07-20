@@ -305,6 +305,8 @@ export class FleursFloraisonComponent implements OnInit {
     this.selectedFleur.nom = fleur.flowerApi.francais;
     this.selectedFleur.dateDebut = fleur.flowerApi.flomin;
     this.selectedFleur.dateFin = fleur.flowerApi.flomax;
+    this.selectedFleur.dateDebutd = fleur.flowerApi.flomind;
+    this.selectedFleur.dateFind = fleur.flowerApi.flomaxd;
     this.selectedFleur.dateThDebut = fleur.flowerApi.flomin;
     this.selectedFleur.dateThFin = fleur.flowerApi.flomax;  
     this.selectedFleur.dateThDebutd = fleur.flowerApi.flomind;
