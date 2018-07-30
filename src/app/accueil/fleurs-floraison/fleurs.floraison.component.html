@@ -84,8 +84,8 @@
                            <tr *ngFor = "let fleur of fleursBibli ">
                                <td> <img src="{{ fleur.photo }}" class="zoom"> </td>
                                <td><b> {{fleur.nom}} </b></td>
-                               <td>{{fleur.dateThDebutd}}</td>
-                               <td>{{fleur.dateThFind}}</td>
+                               <td>{{fleur.dateThDebutdate}}</td>
+                               <td>{{fleur.dateThFindate}}</td>
                                <td>
                                    <input type="text"  [(ngModel)]="fleur.dateDebutd[currentYear]" class=""  name="dateDebutd-{{in}}"  required />
                                   
@@ -120,7 +120,7 @@
        </div>
        <div class="modal-footer">
 
-            <button class="btn btn-primary " data-toggle="modal" data-target="#recherche"  > <i class="fa fa-search"></i>Annuaire des Plantes</button> 
+            <button class="btn btn-primary pull-left" data-toggle="modal" data-target="#recherche"> <i class="fa fa-search"></i>Annuaire des Plantes</button> 
            <button type="button" class="btn btn-primary" (click)="updateTot(fleursBibli)">Enregistrer</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" >Fermer</button>
         
@@ -156,8 +156,10 @@
                                                 <div class="form-group">
                                                     <br/>
                                                     <label>Nom français  :</label>
-                                                    <input type="text" (input)="onSelectFr($event)" [(ngModel)]="selectedFr" name="nomfr">
-                                                 </div>
+                                                    <form (ngSubmit)="subscribeToDataRechercheVariete()">
+                                                        <input type="text" (input)="onSelectFr($event)" [(ngModel)]="selectedFr" name="nomfr">
+                                                    </form>
+                                                </div>
                                                  <br/>
                                                 <button type="submit" (click)="subscribeToDataRechercheVariete()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
                                             </div>
@@ -169,10 +171,12 @@
                                                     <option *ngFor="let type of types" [value]="type" >
                                                         {{ type }}
                                                     </option>
-                                                </select>   
+                                                </select>
+                                                <br/>   
                                                 <label>Periode de floraison  : </label>
                                                     <br/>
-                                                    <input type="range" style="width:400px" min="1" max="12" value="6" step="janvier, fevrier, mars, avril" list="months">
+                                                    <input type="range" style="width:400px" [(ngModel)]="selectedFlo" (click)="onSelectFlo($event)" min="0" max="12">
+                                                    <img src="/assets/img/mois.png" style="width:400px">
                                                     <br/>
                                                 <button type="submit" (click)="subscribeToDataRecherchePeriode()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
                                             </div>
@@ -202,7 +206,7 @@
                                    <td> {{ fleur.flowerApi.latin }} </td>
                                    <td> {{ fleur.type }} </td>
                                    <td> {{ fleur.flowerApi.butineur }} </td>
-                                   <td > {{ fleur.flowerApi.flomind }} -> {{ fleur.flowerApi.flomaxd }} </td>
+                                   <td > {{ fleur.flowerApi.flomindate }} -> {{ fleur.flowerApi.flomaxdate }} </td>
                                    <td> <img src="{{ fleur.flowerItsap.interet_pollen }}" ></td>
                                    <td> <img src="{{ fleur.flowerItsap.interet_nectar }}"></td>
                                    <td> <img src="{{ fleur.flowerItsap.indice_confiance }}"> </td>
@@ -212,8 +216,7 @@
                                                {{rucher.name}}
                                            </option>
                                        </select>
-                                       <button data-toggle="tooltip" data-html="true" title="Ajouter à la ruche" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
-                                                           class="btn btn-success btn-lg" (click)="addFleur(fleur)" >
+                                       <button data-toggle="tooltip" data-html="true" title="Ajouter au rucher" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;" class="btn btn-success btn-lg" (click)="addFleur(fleur)" >
                                            <i class="fa fa-plus"></i>
                                        </button>
                                    </td>

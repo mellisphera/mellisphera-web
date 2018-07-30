@@ -9,6 +9,8 @@ export class Fleur {
 	dateThFin : number;
 	dateThDebutd : string;
 	dateThFind : string;
+	dateThDebutdate: string ;
+	dateThFindate: string ;
 	presence : string;
     username : string; 
 	idApiary : string;
