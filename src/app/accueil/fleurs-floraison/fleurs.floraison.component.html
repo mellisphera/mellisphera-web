@@ -28,8 +28,8 @@
                                     <h4 class="panel-title" >
                                         <a data-toggle="collapse" href="#collapseOne">
                                             <b>Fleurs</b>
-                                            <button class="btn btn-primary" style="right:0px" data-toggle="modal" data-target="#biblioteque" > <i class="fa fa-book"></i>Bibliotèque du rucher</button>
-                                            <button class="btn btn-primary " data-toggle="modal" data-target="#recherche"> <i class="fa fa-search"></i>Rechercher fleurs</button> 
+                                            <button class="btn btn-primary" style="right:0px" data-toggle="modal" data-target="#biblioteque" > <i class="fa fa-book"></i>Mes Plantes</button>
+                                            <button class="btn btn-primary " data-toggle="modal" data-target="#recherche"  > <i class="fa fa-search"></i>Annuaire de Plantes</button> 
                                         </a>
                                     </h4>
                                 </div>
@@ -44,13 +44,10 @@
 
                                     </div>
                                 </div>
-                            </div>
-                             
-                       
+                            </div>  
+                        </div>     
                     </div>
-                                
-                    </div>
-                    <br><br>    
+                    <br/>   
                 </div>
             </div>
         </div>
@@ -64,7 +61,7 @@
    <div class="modal-dialog" role="document">
      <div class="modal-content" style="width:1000px">
        <div class="modal-header">
-         <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Bibliotèque du rucher</h4></h5>
+         <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Plantes Mellifères <br/> {{ nameApiary.name }}</h4></h5>
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
            <span aria-hidden="true">&times;</span>
          </button>
@@ -75,11 +72,11 @@
                            <tr>
                                <th scope="col">Photo</th>
                                <th scope="col">Nom</th>
-                               <th scope="col">Semaine de début floraison théorique</th>
-                               <th scope="col">Semaine de fin floraison théorique</th>
-                               <th scope="col">Semaine de début floraison observée</th>
-                               <th scope="col">Semaine de fin floraison observée</th>
-                               <th scope="col">Présence dans la ruche :</th>
+                               <th scope="col">Début floraison théorique</th>
+                               <th scope="col">Fin floraison théorique</th>
+                               <th scope="col">Début floraison observée</th>
+                               <th scope="col">Fin floraison observée</th>
+                               <th scope="col">Présence dans le rucher :</th>
                                <th scope="col">Actions</th>
                            </tr>
                         </thead>
@@ -122,6 +119,8 @@
                    </table> 
        </div>
        <div class="modal-footer">
+
+            <button class="btn btn-primary " data-toggle="modal" data-target="#recherche"  > <i class="fa fa-search"></i>Annuaire des Plantes</button> 
            <button type="button" class="btn btn-primary" (click)="updateTot(fleursBibli)">Enregistrer</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" >Fermer</button>
         
@@ -135,7 +134,8 @@
        <div class="modal-dialog" role="document">
          <div class="modal-content" style="width:1000px">
            <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Recherche de fleurs</h4></h5>
+             <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Annuaire de Plantes Mellifères</h4></h5>
+             <button class="btn btn-primary" style="right:0px" data-toggle="modal" data-target="#biblioteque" data-dismiss="modal" > <i class="fa fa-book"></i>Mes Plantes</button>
              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
              </button>
@@ -143,60 +143,40 @@
            <div class="modal-body">
                    <div class="panel-body">
                            <div class="panel panel-info ">
-                               <div class="panel-heading "  >
-                                   <h4 class="panel-title" >
-                                       <a>
-                                           <b>Filtres plantes</b>
-                                       </a>
-                                              
-                                   </h4>
-                               </div>
                                <div class="panel-collapse collapse in">
                                   <div class="panel-body">
-                                      <span class="form-inline" >
-                                          <div class="form-group">
-                                              <label>Type  : </label>
-                                              <select [(ngModel)]="selectedType" (click)="onSelectType($event)" class="form-control " >
-                                                  <option value=""></option>
-                                                  <option *ngFor="let type of types" [value]="type" >
-                                                      {{ type }}
-                                                  </option>
-                                              </select>   
-                                           </div>
-                                       </span>    
-                                       <br/>
-                                                  
-                                       <span class="form-inline" >
-                                          <div class="form-group">
-                                              <label>Semaine de floraison (début)  :</label>
-                                              <input type="number" (input)="onSelectFlomin($event)" [(ngModel)]="selectedFlomin" name="debut" min="1" max="52">
-                                           </div>
-                                       </span>
-                                                  
-                                       <span class="form-inline" >
-                                           <div class="form-group">
-                                               <label>Semaine de floraison (fin)  :</label>
-                                               <input type="number" (input)="onSelectFlomax($event)" [(ngModel)]="selectedFlomax" name="fin" min="1" max="52">
-                                           </div>
-                                       </span>
-                                       <br/>
 
-                                       <span class="form-inline" >
-                                           <div class="form-group">
-                                              <label>Nom français  :</label>
-                                              <input type="text" (input)="onSelectFr($event)" [(ngModel)]="selectedFr" name="nomfr">
-                                           </div>
-                                       </span>
-                                                  
-                                       <span class="form-inline" >
-                                          <div class="form-group">
-                                              <label>Nom latin  :</label>
-                                              <input type="text" (input)="onSelectLt($event)" [(ngModel)]="selectedLt" name="nomlat">     
-                                           </div>
-                                       </span>
-                                                  
-                                       <br/>
-                                       <button type="submit" (click)="subscribeToDataRecherche()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>  
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a data-toggle="tab" href="#variete">Recherche par variété/espèce</a></li>
+                                            <li><a data-toggle="tab" href="#periode">Recherche par période</a></li>
+                                        </ul>
+
+                                        <div class="tab-content">
+                                            <div id="variete" class="tab-pane fade in active">
+                                                <div class="form-group">
+                                                    <br/>
+                                                    <label>Nom français  :</label>
+                                                    <input type="text" (input)="onSelectFr($event)" [(ngModel)]="selectedFr" name="nomfr">
+                                                 </div>
+                                                 <br/>
+                                                <button type="submit" (click)="subscribeToDataRechercheVariete()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
+                                            </div>
+                                            <div id="periode" class="tab-pane fade">
+                                              <br/>
+                                                <label>Type  : </label>
+                                                <select style="width:400px" [(ngModel)]="selectedType" (click)="onSelectType($event)" class="form-control " >
+                                                    <option value=""></option>
+                                                    <option *ngFor="let type of types" [value]="type" >
+                                                        {{ type }}
+                                                    </option>
+                                                </select>   
+                                                <label>Periode de floraison  : </label>
+                                                    <br/>
+                                                    <input type="range" style="width:400px" min="1" max="12" value="6" step="janvier, fevrier, mars, avril" list="months">
+                                                    <br/>
+                                                <button type="submit" (click)="subscribeToDataRecherchePeriode()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
+                                            </div>
+                                        </div>
                                    </div>
                                </div>
                            </div>
@@ -208,7 +188,7 @@
                                        <th scope="col">Nom latin</th>
                                        <th scope="col">Type</th>
                                        <th scope="col">Butineur</th>
-                                       <th scope="col">Semaines de floraison</th>
+                                       <th scope="col">Période de floraison</th>
                                        <th scope="col">Intêret pollen /3</th>
                                        <th scope="col">Intêret nectar /3</th>
                                        <th scope="col">Indice de confiance /3</th>
