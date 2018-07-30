@@ -5,6 +5,7 @@ import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from '../../../config';
 import { FleursTest } from './fleurstest'
 import { Fleur } from './fleur'
+import { Rucher } from '../ruche-rucher/rucher';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -34,6 +35,11 @@ export class FleursFloraisonService {
     //Récupère le noms des fleurs du rucher
     getNamesFlowers(username,idRucher): Observable <String[]>{
         return this.http.get<String[]>(CONFIG.URL+'flowers/namesflowers/'+ username +'/'+ idRucher);
+    }
+
+     //Récupère le noms des fleurs du rucher
+    getNameApiary(idRucher): Observable<Rucher[]>{
+        return this.http.get<Rucher[]>(CONFIG.URL+'apiaries/details/'+ idRucher);
     }
 
     //Récupère le dates de floraisons théoriques des fleurs du rucher
@@ -72,8 +78,13 @@ export class FleursFloraisonService {
     }
 
     //Récupère les fleurs qui correspondet à la recherche
-    rechercheFlowers(fleur) : Observable<FleursTest[]>{
-        return this.http.put<FleursTest[]>(CONFIG.URL+'flowerstest/recherche',fleur);
+    rechercheFlowersVar(fleur) : Observable<FleursTest[]>{
+        return this.http.put<FleursTest[]>(CONFIG.URL+'flowerstest/rechercheVar',fleur);
+    }
+
+    //Récupère les fleurs qui correspondet à la recherche
+    rechercheFlowersPer(fleur) : Observable<FleursTest[]>{
+        return this.http.put<FleursTest[]>(CONFIG.URL+'flowerstest/recherchePer',fleur);
     }
 
     
