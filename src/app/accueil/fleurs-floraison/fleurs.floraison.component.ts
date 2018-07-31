@@ -40,10 +40,10 @@ export class FleursFloraisonComponent implements OnInit {
     currentLt: string;
     //Variable for Présence
     currentPresence: string;
-    //
+    //Variable pour la période de floraison
     currentFlo: string;
-    //Variable pour le nom du rucher
-    nameApiary: any[] = [];
+    //Variable pour les informations du rucher
+    nameApiary= new Rucher();
     
     //variable pour stocker le nom français entré
     selectedFr = new String;
@@ -82,14 +82,14 @@ export class FleursFloraisonComponent implements OnInit {
     '21', '22', '23', '24' , '25', '26', '27', '28', '29', '30', 
     '31', '32', '33', '34', '35' ,'36' ,'37' , '38' , '39', '40',
     '41' ,'42', '43', '44', '45' ,'46' ,'47' , '48' , '49', '50',
-    '51', '52' ];*/
+    '51', '52' ];
 
     weeks = ['1 janv', '8 janv', '15 janv', '22 janv', '29 janv', '5 fev', '12 fev', '19 fev', '26 fev', '5 mars',
     '12 mars','19 mars','26 mars', '2 avr', '9 avr', '16 avr', '23 avr', '30 avr','7 mai', '14 mai', 
     '21 mai', '28 mai', '4 juin', '11 juin' , '18 juin', '25 juin', '2 juil', '9 juil', '23 juil', '30 juil', 
     '6 aout', '13 aout', '20 aout', '27 aout', '3 sept' ,'10 sept' ,'17 sept' , '24 sept' , '1 oct', '8 oct',
     '15 oct' ,'22 oct', '29 oct', '5 nov', '12 nov' ,'19 nov' ,'26 nov' , '3 dec' , '10 dec', '17 dec',
-    '24 dec', '31 dec' ];
+    '24 dec', '31 dec' ];*/
 
     //Tableau des images des fleurs du rucher
     flowerIcon = new Array();
@@ -312,9 +312,9 @@ export class FleursFloraisonComponent implements OnInit {
     this.selectedFleur.username = this.username;
     this.selectedFleur.photo = fleur.photo;
     if (this.selectedRucher!=null){
-      if (confirm("Are you sure you want to add " + this.selectedFleur.nom + " to rucher" +" ?")) {
+      if (confirm("Ajouter plante " + this.selectedFleur.nom + " au rucher " + this.nameApiary.name +" ?")) {
         //A changer avce l'année en cours !!
-        this.fleursFloraisonService.addFlower(this.selectedFleur,this.selectedRucher,this.currentYear)
+        this.fleursFloraisonService.addFlower(this.selectedFleur,this.selectedRucher)
           .subscribe(data => {},
             error => this.ErrorMsg=error);
             //on recharge les fleurs du rucher
@@ -364,7 +364,7 @@ export class FleursFloraisonComponent implements OnInit {
   //Supprime une fleur du rucher
   deleteFleur(fleur){
     this.selectedFleur = fleur;
-    if (confirm("Are you sure you want to delete " + this.selectedFleur.nom + "?")) {
+    if (confirm("Supprimer la plante " + this.selectedFleur.nom + " du rucher "+ this.nameApiary.name +" ?")) {
       this.fleursFloraisonService.deleteFleur(this.selectedFleur)
         .subscribe(data => {},
             error => this.ErrorMsg=error);
@@ -394,7 +394,6 @@ export class FleursFloraisonComponent implements OnInit {
     rechercheFleurPeriode(){
       //On créer un fleur type de recherche
       this.selectedFleurTest.type = this.selectedType;
-      console.log("this.selectedFlo : "+this.selectedFlo);
       this.selectedFleurTh.flomind = this.selectedFlo
       this.selectedFleurTest.flowerApi = this.selectedFleurTh;
       //On envoie la requêtes
@@ -651,6 +650,7 @@ export class FleursFloraisonComponent implements OnInit {
       //Le pointeur ne bouge qu'avec la souris
       tooltip: {
         triggerOn: 'none',
+        trigger:'axis',
       },
       //Défini l'axe ou les axes abscisse(s)
       xAxis: [
@@ -690,7 +690,7 @@ export class FleursFloraisonComponent implements OnInit {
           },
 
           axisLabel: {
-            rotate: 50
+            rotate: 40
           }
          }
       
