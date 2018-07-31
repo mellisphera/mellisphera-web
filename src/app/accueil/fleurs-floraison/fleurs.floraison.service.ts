@@ -38,8 +38,8 @@ export class FleursFloraisonService {
     }
 
      //Récupère le noms des fleurs du rucher
-    getNameApiary(idRucher): Observable<Rucher[]>{
-        return this.http.get<Rucher[]>(CONFIG.URL+'apiaries/details/'+ idRucher);
+    getNameApiary(idRucher): Observable<Rucher>{
+        return this.http.get<Rucher>(CONFIG.URL+'apiaries/details/'+ idRucher);
     }
 
     //Récupère le dates de floraisons théoriques des fleurs du rucher
@@ -53,8 +53,8 @@ export class FleursFloraisonService {
     }
 
     //Ajoute une fleur à un rucher de l'utilisateur
-    addFlower(fleur,id,annee){
-        return this.http.put(CONFIG.URL+'flowers/add/'+id+'/'+annee,fleur);
+    addFlower(fleur,id){
+        return this.http.put(CONFIG.URL+'flowers/add/'+id,fleur);
     }
 
     //Change la date de début de floraison obserevée d'une fleur

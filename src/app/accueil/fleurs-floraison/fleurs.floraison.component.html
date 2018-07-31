@@ -95,9 +95,6 @@
                                </td>
                                <td>
                                    <select  [(ngModel)]="fleur.presence" (click)="onSelectPresence($event)" class="form-control ">
-                                           <option value=" " >
-                                                   
-                                           </option>
                                        <option value="Elevée" >
                                            Elevée
                                        </option>
@@ -120,7 +117,7 @@
        </div>
        <div class="modal-footer">
 
-            <button class="btn btn-primary pull-left" data-toggle="modal" data-target="#recherche"> <i class="fa fa-search"></i>Annuaire des Plantes</button> 
+            <button class="btn btn-primary pull-left"  data-toggle="modal" data-target="#recherche"> <i class="fa fa-search"></i>Annuaire des Plantes</button> 
            <button type="button" class="btn btn-primary" (click)="updateTot(fleursBibli)">Enregistrer</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" >Fermer</button>
         
@@ -130,7 +127,7 @@
 </div>
 
    
-<div class="modal fade" id="recherche" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="recherche"  tabindex="-1" role="dialog" aria-hidden="true">
        <div class="modal-dialog" role="document">
          <div class="modal-content" style="width:1000px">
            <div class="modal-header">
