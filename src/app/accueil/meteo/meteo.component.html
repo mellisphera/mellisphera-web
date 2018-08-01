@@ -18,26 +18,24 @@
                             
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-lg-6">
-                                        <button class="btn btn-primary btn-block">
-                                                Méteo de la periode
-                                        </button>
-                                </div>
-                                <div class="col-lg-6">
-                                    <button class="btn btn-primary btn-block">
-                                                Historique
-                                    </button>
-                                </div>
-                            </div>
-
-                            
+                   
 
 
                             <!-- Template for the city component -->
         
                             <div class="container-fluid">
+                                    <div class="form-inline" >
+                                    <div class="form-group">
+                                            <label><h4>Rucher :</h4> </label>
+                                            <select  [(ngModel)]="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
+                                                <option  *ngFor="let rucher of ruchers;" [value]="rucher.id" >
+                                                     <div id="rucherName">
+                                                         {{rucher.name}}
+                                                     </div>
+                                                </option>
+                                            </select>   
+                                        </div>
+                                      </div>
                    
                                 <div style="text-align:center">
                                         <h2 *ngIf="dataCity.city">

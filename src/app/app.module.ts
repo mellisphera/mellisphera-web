@@ -52,6 +52,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { GraphService } from './accueil/graph/graph.service';
 import { RapportService } from './accueil/rapport/rapport.service';
 import { FleursFloraisonService } from './accueil/fleurs-floraison/fleurs.floraison.service';
+import { RucheDetailService } from './accueil/ruche-rucher/ruche-detail/ruche.detail.service';
+
 
 @NgModule({
   declarations: [
@@ -104,7 +106,8 @@ import { FleursFloraisonService } from './accueil/fleurs-floraison/fleurs.florai
     TestService,
     GraphService,
     RapportService,
-    FleursFloraisonService
+    FleursFloraisonService,
+    RucheDetailService
      
               ],
   bootstrap: [AppComponent]

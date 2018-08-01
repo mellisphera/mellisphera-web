@@ -85,24 +85,45 @@
                                       </div>
                                   </div>
                               </div>
+
+                              
                          
                           </div>
                         
                       </div>
-                      <!--
                       <div class="panel panel-info">
                           <div class="panel-heading">
                               <h4 class="panel-title">
-                                  <a data-toggle="collapse" href="#collapseTwo"><b>2. Observations</b></a>
+                                  <a data-toggle="collapse" href="#collapseTwo"><b>2. Observations nature</b></a>
                               </h4>
                           </div>
-                          <div id="collapseTwo" class="panel-collapse collapse">
+                          <div id="collapseTwo" class="panel-collapse collapse in">
                               <div class="panel-body">
-                               
+                                  <table class="table">    
+                                      <thead class="thead-dark">
+                                      <tr>
+                                              <th scope="col">Date</th>
+                                              <th scope="col">Sentence</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                        
+                                        <tr *ngFor="let d of observationsNature.ObservationNature" >
+                                          <td>
+                                              {{d.date}}
+                                          </td>
+                                             
+                                          <td>
+                                              {{d.sentence}}
+                                          </td>
+                                  
+                                        </tr>
+                                      </tbody>
+                              </table>      
                               </div>
                           </div>
                       </div>
-                      -->
+                    
 
                         <br><br>    
                     </div>

@@ -2,7 +2,6 @@ import { Component, OnInit, Input} from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef } from '@angular/core';
-
 import { Subscription } from 'rxjs/Rx';
 import { AnonymousSubscription } from "rxjs/Subscription";
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
@@ -66,16 +65,20 @@ export class RapportComponent implements OnInit {
       this.x=String(this.selectedRucher);
       this.x=this.currentRucherID;
       this.selectedRucher=this.x;
-      this.getObservationsNature();
-      this.getActionsApicoles();
-      this.getObservationsRuche();
+      this.deleteAllReportTemp();
       console.log("nat : "+this.observationsNature);
       this.btnAnalyse=true;
+      
+    }
+    deleteAllReportTemp(){
+      this._rapportService.deleteAllReportTemp().subscribe(
+        data => {},
+        (error => this.errorMsg=error)
+      );
     }
     
-
     getObservationsNature(){
-      this._rapportService.getObservationsNature(this.selectedRucher).subscribe(
+      this._rapportService.getObservationsNatureTemp(this.selectedRucher).subscribe(
         data => { this.observationsNature = data;},
         err => console.error(err),
         () => console.log()
@@ -83,7 +86,7 @@ export class RapportComponent implements OnInit {
     }
 
     getObservationsRuche(){
-      this._rapportService.getObservationsRuche(this.selectedRucher).subscribe(
+      this._rapportService.getObservationsRucheTemp(this.selectedRucher).subscribe(
         data => { this.observationsRuche = data;},
         err => console.error(err),
         () => console.log()
@@ -91,8 +94,8 @@ export class RapportComponent implements OnInit {
     }
 
     getActionsApicoles(){
-      this._rapportService.getActionsApicoles(this.selectedRucher).subscribe(
-        data => { this.observationsRuche = data;},
+      this._rapportService.getActionsApicolesTemp(this.selectedRucher).subscribe(
+        data => { this.actionsApicole = data;},
         err => console.error(err),
         () => console.log()
       );
@@ -107,7 +110,6 @@ export class RapportComponent implements OnInit {
       );  
     }
 
-
     onSelectRucher(event : any) : void{
       localStorage.setItem("currentRucher",String(this.selectedRucher));
       console.log("selected rucher : "+this.selectedRucher);
@@ -117,25 +119,45 @@ export class RapportComponent implements OnInit {
 
     }
 
-    getRapport(){
+
+    saveRapport(){
+        this._rapportService.saveNLU(this.texteRapport, this.selectedRucher).subscribe( 
+          data => {
+            console.log(data);
+            this.resultatRapport=data;
+            this.texteRapport=" ";
+            this.getActionsApicoles();
+            this.getObservationsNature();
+            this.getObservationsRuche();
+          },
+          ( error => this.errorMsg=error)
+      );
+      alert("votre rapport a été enregistré");
+      this.deleteAllReportTemp();
+      this.rapportForm.reset();
+    }
+
+    getRapportTemp(){
         this._rapportService.getNluResult(this.texteRapport, this.selectedRucher).subscribe( 
           data => {
             console.log(data);
             this.resultatRapport=data;
+            alert("votre rapport a été analysé ! ");
+            this.getActionsApicoles();
+            this.getObservationsNature();
+            this.getObservationsRuche();
+
           },
           ( error => this.errorMsg=error)
       );
+     
 
-      this.getActionsApicoles();
-      this.getObservationsNature();
-      this.getObservationsRuche();
-      this.texteRapport=null;
     }
 
     analyserRapport(texte){
-    this.getRapport();
-    console.log(texte)
-    this.rapportAnalyse= texte;
+      this.getRapportTemp();
+      console.log(texte)
+      this.rapportAnalyse= texte;
     }
 
 

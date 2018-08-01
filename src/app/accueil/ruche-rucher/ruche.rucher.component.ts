@@ -10,6 +10,7 @@ import { UserloggedService } from '../../userlogged.service';
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { AnonymousSubscription } from "rxjs/Subscription";
+import { RapportService } from '../rapport/rapport.service';
 
 @Component({
   selector: 'app-ruche-rucher',
@@ -43,6 +44,8 @@ export class RucheRucherComponent implements OnInit {
     rucherE = new Rucher();
     //object for details ruchers
     detailsRucher : any[] =[];
+    // array to store observations nature
+    observationsNature : any[] = []; 
 
     //nouvelle ruche
     ruche = new Ruche();
@@ -62,6 +65,7 @@ export class RucheRucherComponent implements OnInit {
     parentMessage;
 
     localStorageRuche;
+    //localStorageRucheName;
 
    private timerSubscription: AnonymousSubscription;
  
@@ -71,7 +75,8 @@ export class RucheRucherComponent implements OnInit {
                 public router: Router,
                 public rucherService : RucherService,
                 private data : UserloggedService,
-                private _selectedRucherService : selectedRucherService) {
+                private _selectedRucherService : selectedRucherService,
+                private _rapportService : RapportService) {
         
             this.newRucherForm=formBuilder.group({
                     'nom': [null,Validators.compose([Validators.required])],
@@ -96,17 +101,12 @@ export class RucheRucherComponent implements OnInit {
         
         this.username= data.currentUser().username;
         this.currentRucherID= localStorage.getItem("currentRucher");
-
-        //variable for currentRucername);
-       
-
         
-     
   } 
 
 
 
-    ngOnInit(){
+ngOnInit(){
      // this.clearRucherSelection();
       this.updateRucherInput=false;
       console.log("localStorage.getItem()" +localStorage.getItem("currentRucher"));
@@ -118,26 +118,37 @@ export class RucheRucherComponent implements OnInit {
       this.getUserRuchers();  
       this.getRucheDuRucher();
       this.getDetailsRucher();
-    }
+      this.getObservationsNature();
+}
 
-    clickOnRuche(ruche){
+getObservationsNature(){
+  this._rapportService.getObservationsNature(this.selectedRucher).subscribe(
+    data => { 
+              this.observationsNature = data;
+            },
+    err => console.error(err),
+    () => console.log()
+  );
+}
+
+clickOnRuche(ruche){
      
        
         this.selectedRuche=ruche;
         this.localStorageRuche= this.selectedRuche.id;
  
         console.log("this.selectedRuche : "+ this.selectedRuche );
-         console.log("this.selectedRuche : "+ this.selectedRuche );
+        console.log("this.selectedRuche : "+ this.selectedRuche );
         localStorage.setItem("clickedRuche",  this.localStorageRuche);
-        //this.router.navigate['/ruche-detail'];
-    }
+        localStorage.setItem("selectedRucheName",  this.selectedRuche.name);
+}
 
-  resetForm(){
+resetForm(){
    this.newRucherForm.reset();
-  }
+}
 
 
-  getDetailsRucher(){
+getDetailsRucher(){
     if(this.selectedRucher==null){
        return "";
     }
@@ -227,7 +238,7 @@ createRucher(rucher){
 }
 
   //Editer Rucher
-  onEditerRucher(rucherEdit){
+onEditerRucher(rucherEdit){
     this.rucherE.name=this.editRucherForm.controls['nom'].value;
     this.rucherE.description=this.editRucherForm.controls['description'].value;
     this.rucherE.codePostal=this.editRucherForm.controls['codePostal'].value;
@@ -243,18 +254,18 @@ createRucher(rucher){
       this.updateRucherInput=false;
       //this.editRucherClicked();
 
-  }
+}
 
 
-     alert("Votre rucher a été éditée");
+alert("Votre rucher a été éditée");
      this.subscribeToData();
      this.refreshRucherData();
      //this.editRucherClicked();
      this.getDetailsRucher();
      //this.newRucherForm.reset();
-  }
+}
 
-  getUserRuchers(){
+getUserRuchers(){
     console.log("this username :"+  this.username);
     this.rucherService.getUserRuchers(this.username).subscribe(
       data => { this.ruchers = data;},
@@ -264,7 +275,7 @@ createRucher(rucher){
     console.log("rucher[0] : "+  this.ruchers[0]);
     console.log("rucher[0] : "+  this.selectedRucher);
 
-  }
+}
 
   getRucheDuRucher(){
     console.log("In get ruche du rucher :"+  this.currentRucherID);

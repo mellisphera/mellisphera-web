@@ -85,8 +85,8 @@ export class CapteurComponent implements OnInit {
 
     ngOnInit() {
         this.getUserRuchers(); 
-        this.getAllCapteur();
         this.selectRadioStock();
+        this.getAllCapteur();
 }
 
     selectRadioStock(){
@@ -123,9 +123,9 @@ export class CapteurComponent implements OnInit {
     getAllCapteur(){
         console.log("this username :"+  this.username);
        
-        this.capteurService.getUserCapteurs(String(this.username)).subscribe(
+        this.capteurService.getUserCapteurs(this.username).subscribe(
           data => {this.capteurs=data;},
-          err  => {console.log(err)},
+          err  => {},
           () => console.log('done loading sensors')
         );
        
@@ -149,7 +149,7 @@ export class CapteurComponent implements OnInit {
     }
     string(){
      //   this.test= this.capteurService.string();
-    }
+    }   
 
    //CREATE CAPTEUR
     createCapteur(capteur){
@@ -168,7 +168,10 @@ export class CapteurComponent implements OnInit {
 
 
         this.capteurService.createCapteur(this.capteur).subscribe( 
-            ( error => this.errorMsg=error)
+            data => { 
+                alert("capteur créé ! ");
+             },
+             ( error => this.errorMsg=error)
         );
        
         this.resetCapteurForm();
@@ -189,12 +192,8 @@ export class CapteurComponent implements OnInit {
 
     deleteCapteur(capteur){
         this.selectedCapteur = capteur;
-        if (confirm("Are you sure you want to delete " + this.selectedCapteur.reference + "?")) {
-          this.capteurService.deleteCapteur(this.selectedCapteur )
-            .subscribe(
-              err => {
-               
-              });
+        if (confirm("Etes vous sure de vouloir supprimer : " + this.selectedCapteur.reference + "?")) {
+          this.capteurService.deleteCapteur(this.selectedCapteur).subscribe();
         }
         this.subscribeToData();
      
@@ -214,7 +213,11 @@ export class CapteurComponent implements OnInit {
         this.editedSensorMsg=true;
         
         this.editCapteurForm.reset();
-        
+        alert();
+        alert();
+        alert();
+        alert();
+        alert();
         this.subscribeToData();
         
     }
@@ -260,7 +263,7 @@ export class CapteurComponent implements OnInit {
     }
 
     private subscribeToData(): void {
-        this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.getAllCapteur());
+        this.timerSubscription = Observable.timer(2000).first().subscribe(() => this.getAllCapteur());
     }
 
 

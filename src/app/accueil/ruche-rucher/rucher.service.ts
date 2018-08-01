@@ -41,6 +41,10 @@ export class RucherService {
     deleteRucher(rucher) {
         return this.http.delete(CONFIG.URL+'apiaries/' + rucher);
     }
+    //get rucher name
+    getRucherName(idApiary) : Observable<Rucher> {
+        return this.http.get<Rucher>(CONFIG.URL+'apiaries/name/'+idApiary);
+    } 
 
     // -- RUCHE -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- -- RUCHE -- 
     // pour créer une ruche dans un rucher
@@ -60,6 +64,10 @@ export class RucherService {
     deleteRuche(ruche) {
         return this.http.delete(CONFIG.URL+'hives/' + ruche.id);
     }
+
+    getRucheDetail(idHive) : Observable<Ruche> {
+        return this.http.get<Ruche>(CONFIG.URL+'hives/details/'+idHive);
+    } 
 
     errorHandler(error: HttpErrorResponse){
         return Observable.throw(error.message || "server error")
