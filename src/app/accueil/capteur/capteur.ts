@@ -6,7 +6,9 @@ export class Capteur {
 	description : string;
 	username: string;
     idHive: string;
-    idApiary: string;
+	idApiary: string;
+	hiveName: string;
+	apiaryName:string;
      
 }
    

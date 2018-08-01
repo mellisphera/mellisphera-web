@@ -33,8 +33,8 @@
                                     <label for="exampleTextarea" >Rapport</label>
                                     <textarea class="form-control" id="exampleTextarea" rows="8"  formControlName="texte" [(ngModel)]="texteRapport"></textarea>
                             </div>
-                            <button class="btn btn-primary" (click)="analyserRapport(rapportForm.value)" (change)="change($event)" [disabled]="!rapportForm.valid" >Analyser et Sauver</button>
-                            <!--<button type="submit" class="btn btn-primary" >Sauver</button>-->
+                            <button class="btn btn-primary" (click)="getRapportTemp(rapportForm.value)" (change)="change($event)" [disabled]="!rapportForm.valid" >Analyser</button>
+                            <button type="submit" (click)="saveRapport(rapportForm.value)" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Sauver</button>
                         </form>
 
                         <div class="form-group">
@@ -43,45 +43,111 @@
                         
                         <div class="form-group">
                                 <label style="background-color: rgba(236, 234, 234, 0.49);">
-                               
+                               <!--
                                     <ul *ngFor="let d of resultatRapport ">
                                         <li>
                                           Phrase :  {{d.sentence}} type :{{d.type}} Score : {{d.nluScore}}
                                         </li>
                                     </ul>
-
+                                -->
                                
                                 </label>
                         </div>
 
-                        <div class="panel panel-primary">
+                        <div class="panel panel-info">
                             <div class="panel-heading">Observation Ruche</div>
                             <div class="panel-body">
-                                <ul>
-                                    <li *ngFor="let d of observationsRuche.ObservationRuche">
-                                        {{d.sentence}}
-                                    </li>
-                                </ul>
+                                    <div>
+                                            <table class="table">    
+                                                <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">Ruche</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Sentence</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                  
+                                                  <tr *ngFor="let d of observationsRuche.ObservationRuche" >
+                                                    
+                                                    <td>
+                                                        {{d.ruche}}
+                                                    </td>
+                                                    <td>
+                                                        {{d.date}}
+                                                    </td>
+                                                       
+                                                    <td>
+                                                        {{d.sentence}}
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                            </table>      
+                                    </div>
                             </div>
                         </div>
-                        <div class="panel panel-primary">
+                       
+                        <div class="panel panel-info">
                             <div class="panel-heading">Observation Nature</div>
                             <div class="panel-body">
-                                <ul>
-                                    <li *ngFor="let d of observationsNature.ObservationNature">
-                                        {{d.sentence}}
-                                    </li>
-                                </ul>
+                                    <table class="table">    
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                    <th scope="col">Ruche</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Sentence</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                              
+                                                <tr *ngFor="let d of observationsNature.ObservationNature" >
+                                                    
+                                                    <td>
+                                                        {{d.ruche}}
+                                                    </td>
+                                                    <td>
+                                                        {{d.date}}
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        {{d.sentence}}
+                                                    </td>
+                                            
+                                                </tr>
+                                            </tbody>
+                                    </table>      
+
                             </div>
                         </div>
-                        <div class="panel panel-primary">
+                      
+                        <div class="panel panel-info">
                             <div class="panel-heading">Action Apicole</div>
                             <div class="panel-body">
-                                <ul>
-                                    <li *ngFor="let d of actionsApicole.ActionApi">
-                                        {{d.sentence}}
-                                    </li>
-                                </ul>
+                                    <table class="table">    
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">Ruche</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Sentence</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                              
+                                              <tr *ngFor="let d of actionsApicole.OperationApi" >
+                                                
+                                                <td>
+                                                    {{d.ruche}}
+                                                </td>
+                                                <td>
+                                                    {{d.date}}
+                                                </td>
+                                                   
+                                                <td>
+                                                    {{d.sentence}}
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                    </table>
                             </div>
                         </div>
                       

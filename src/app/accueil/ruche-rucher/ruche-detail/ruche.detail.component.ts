@@ -4,15 +4,15 @@ import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef } from '@angular/core';
 import * as echarts from '../../../../assets/echarts.js';
-/*
-import { Rucher } from './rucher';
-import { Ruche } from './ruche';
-import { RucherService } from './rucher.service';
-import { UserloggedService } from '../../userlogged.service';
-import { selectedRucherService } from '../_shared-services/selected-rucher.service';
-*/
+
+import { Rucher } from '../rucher';
+import { Ruche } from '../ruche';
+import { RucherService } from '../rucher.service';
+import { UserloggedService } from '../../../userlogged.service';
+import { selectedRucherService } from '../../_shared-services/selected-rucher.service';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { AnonymousSubscription } from "rxjs/Subscription";
+import { RucheDetailService } from './ruche.detail.service';
 
 @Component({
   selector: 'app-ruche-detail',
@@ -21,22 +21,88 @@ import { AnonymousSubscription } from "rxjs/Subscription";
 
 export class RucheDetailComponent implements OnInit {
    
-  //@Input() childMessage: string;
   rucheId;
-  //nomRuche;
-  constructor(){
+  rucheDetail = new Ruche();
+  rucheName;
+  rucheDescription;
+  rucheCity;
+  observationsRuche : any[] = [];
+  actionsApicole : any[] = [];   
+  private timerSubscription: AnonymousSubscription;
+
+constructor(    private formBuilder: FormBuilder,
+                public location: Location,
+                public router: Router,
+                public rucherService : RucherService,
+                private data : UserloggedService,
+                private _rucheDetailService : RucheDetailService,
+                private _selectedRucherService : selectedRucherService){
    
     console.log("local storage ruche ID "+localStorage.getItem("clickedRuche") );
-  }
+}
+ngOnInit(){
+    this.rucheId=localStorage.getItem("clickedRuche");
+    this.chartWeightGain();
+    this.getRucheDetails();
+    this.subscribeToData()
+}
+
+getRucheDetails(){
+    this.rucherService.getRucheDetail(this.rucheId).subscribe(
+        data => { 
+                this.rucheDetail = data;
+                this.rucheName = this.rucheDetail.name;
+                this.rucheDescription = this.rucheDetail.description;
+                console.error("ruchename : " + this.rucheName);
+
+              },
+         err => console.error(err),
+         () => console.log()
+    );
+}
+
+getObservationsRuche(){
+    this._rucheDetailService.getObservationsRuche(this.rucheName).subscribe(
+        data => { 
+                this.observationsRuche = data;
+                console.log(this.observationsRuche);
+            },
+        err => console.error(err),
+        () => console.log()
+    );
+}
+
+getActionsApicole(){
+    this._rucheDetailService.getActionsApicoles(this.rucheName).subscribe(
+        data => { 
+                    this.actionsApicole = data;
+                    console.log(this.actionsApicole);
+                },
+        err => console.error(err),
+        () => console.log()
+      );
+}
+/*
+deleteRuche(){
+    this._rucheDetailService.deleteReport(this.rucheName).subscribe(
+        data => { 
+                    this.actionsApicole = data;
+                    console.log(this.actionsApicole);
+                },
+        err => console.error(err),
+        () => console.log()
+      );
+
+}
+*/
 
 
-    ngOnInit(){
-      this.rucheId=localStorage.getItem("clickedRuche");
-      //this.nomRuche=this.rucheId.name;
-      this.chartWeightGain();
-    }
+private subscribeToData(): void {
+    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getActionsApicole());
+    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getObservationsRuche());
+}
 
-    chartWeightGain(){
+chartWeightGain(){
       var myChart = echarts.init(document.getElementById('main'));
 
       var data = 
@@ -238,7 +304,7 @@ export class RucheDetailComponent implements OnInit {
               myChart.setOption(option);
 
 
-    }
+}
 
 
 
