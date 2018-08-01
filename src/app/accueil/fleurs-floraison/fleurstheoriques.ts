@@ -6,6 +6,8 @@ export class FleurTheoriques {
     flomax : number;
     flomind : string;
     flomaxd:string;
+	flomaxdate: string ;
+	flomindate: string ;
     forme : String;
     francais : String;
     genre : String;

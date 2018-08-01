@@ -40,17 +40,13 @@ export class FleursFloraisonComponent implements OnInit {
     currentLt: string;
     //Variable for Présence
     currentPresence: string;
-    //L'année en cours
-    currentYear = "2018";
-
-    //Initialise le flomin à 1
-    selectedFlomin = 1;
-    //Initialise le flomax à 52
-    selectedFlomax = 52;
+    //Variable pour la période de floraison
+    currentFlo: string;
+    //Variable pour les informations du rucher
+    nameApiary= new Rucher();
+    
     //variable pour stocker le nom français entré
     selectedFr = new String;
-    //Variable pour stocker le nom latin entré
-    selectedLt = new String;
     //Variable pour la fleur selectionnée
     selectedFleur = new Fleur();
     //Variable pour la fleur qui contient les éléments de recherche
@@ -59,6 +55,8 @@ export class FleursFloraisonComponent implements OnInit {
     selectedFleurTh = new FleurTheoriques();
     //Variable pour la présence de la fleur changé
     selectedPresence = new String;
+    //Variable pour la période de floraison
+    selectedFlo : string;
 
     //variable to store fleurs
     fleursTest: any [] = [];
@@ -84,14 +82,14 @@ export class FleursFloraisonComponent implements OnInit {
     '21', '22', '23', '24' , '25', '26', '27', '28', '29', '30', 
     '31', '32', '33', '34', '35' ,'36' ,'37' , '38' , '39', '40',
     '41' ,'42', '43', '44', '45' ,'46' ,'47' , '48' , '49', '50',
-    '51', '52' ];*/
+    '51', '52' ];
 
     weeks = ['1 janv', '8 janv', '15 janv', '22 janv', '29 janv', '5 fev', '12 fev', '19 fev', '26 fev', '5 mars',
     '12 mars','19 mars','26 mars', '2 avr', '9 avr', '16 avr', '23 avr', '30 avr','7 mai', '14 mai', 
     '21 mai', '28 mai', '4 juin', '11 juin' , '18 juin', '25 juin', '2 juil', '9 juil', '23 juil', '30 juil', 
     '6 aout', '13 aout', '20 aout', '27 aout', '3 sept' ,'10 sept' ,'17 sept' , '24 sept' , '1 oct', '8 oct',
     '15 oct' ,'22 oct', '29 oct', '5 nov', '12 nov' ,'19 nov' ,'26 nov' , '3 dec' , '10 dec', '17 dec',
-    '24 dec', '31 dec' ];
+    '24 dec', '31 dec' ];*/
 
     //Tableau des images des fleurs du rucher
     flowerIcon = new Array();
@@ -111,10 +109,10 @@ export class FleursFloraisonComponent implements OnInit {
     selectedRucher = new Rucher();
     //Variable pour le type selectionné
     selectedType = new String;
-
+    //La date d'aujourd'hui
     date = new Date();
-    today = new String;
-    
+    //L'année en cours
+    currentYear = this.date.getFullYear();
     
     
   private timerSubscription: AnonymousSubscription;
@@ -132,6 +130,7 @@ export class FleursFloraisonComponent implements OnInit {
                 this.currentFlomin = localStorage.getItem("currentFlomin");
                 this.currentFlomax = localStorage.getItem("currentFlomax");
                 this.currentPresence = localStorage.getItem("currentPresence");
+                this.currentFlo = localStorage.getItem("currentFlo");
                 console.log("logged user rucher/ruches : "+ this.username);  
   } 
 
@@ -141,18 +140,16 @@ export class FleursFloraisonComponent implements OnInit {
     this.x=String(this.selectedRucher);
     this.x=this.currentRucherID;
     this.selectedRucher=this.x;
-    //On charge l'année en cours (2018) 
-    //A changer quand on change d'année
     console.log("logged user rucher/ruches : "+ this.username);
     this.getUserRuchers();
     this.getFleurDuRucher(this.currentYear);
     this.getAllFleurTest();
     this.getAllType();
     this.subscribeToNames();
-    this.today = [this.date.getFullYear(),this.date.getMonth(),this.date.getDay()].join('-');
-    console.log("date : "+this.date);
-    console.log("today : "+this.today);
     console.log("this.selectedRucher :"+  this.selectedRucher);
+    if(this.selectedRucher != undefined){
+      this.getNameApiary();
+    }
   }
 
 
@@ -211,6 +208,14 @@ export class FleursFloraisonComponent implements OnInit {
     this.subscribeToGraph();
   }
 
+  getNameApiary(){
+    this.fleursFloraisonService.getNameApiary(this.selectedRucher).subscribe(
+      data => { 
+        this.nameApiary=data;
+      }
+    );
+  }
+
   //On récupères les dates de flo théoriques de la plante "name"
   getOneDateTh(name,i){
     this.fleursFloraisonService.getFloraisonThFlowers(this.username,this.selectedRucher,name).subscribe(
@@ -253,18 +258,6 @@ export class FleursFloraisonComponent implements OnInit {
     }
   }
 
-  //Change le flomin entré
-  onSelectFlomin(event : any) : void{;
-    this.currentFlomin=String(this.selectedFlomin);
-    localStorage.setItem("currentFlomin",String(this.selectedFlomin));
-  }
-
-  //Change le flomax entré
-  onSelectFlomax(event : any) : void{;
-    this.currentFlomax=String(this.selectedFlomax);
-    localStorage.setItem("currentFlomax",String(this.selectedFlomax));
-  }
-
   //Change le type selectionné
   onSelectType(event : any): void{
     this.currentType=String(this.selectedType);
@@ -278,26 +271,28 @@ export class FleursFloraisonComponent implements OnInit {
     console.log("current rucher : "+this.currentRucherID);
     this.subscribeToDataFleur();
     this.getNames();
-  }
+    this.getNameApiary()
+;  }
 
   //change le nom français entré par l'utilisateur
   onSelectFr(event : any) : void{
     this.currentFr=String(this.selectedFr);
     localStorage.setItem("currentFr",String(this.selectedFr));
-    console.log("current Fr : "+this.currentFr);
   }
 
-  //change le nom latin entré par l'utilisateur
-  onSelectLt(event : any) : void{
-    this.currentLt=String(this.selectedLt);
-    localStorage.setItem("currentLt",String(this.selectedLt));
-    console.log("current Lt : "+this.currentLt);
-  }
-
+  //
   onSelectPresence(event : any) : void{
     this.currentPresence=String(this.selectedPresence);
     localStorage.setItem("currentPresence",String(this.selectedPresence));
   }
+
+  //change le nom français entré par l'utilisateur
+  onSelectFlo(event : any) : void{
+    this.currentFlo=String(this.selectedFlo);
+    localStorage.setItem("currentFlo",String(this.selectedFlo));
+    console.log("currentFlo : "+this.currentFlo);
+  }
+
   
   //Ajoute la fleur à un rucher
   addFleur(fleur){
@@ -311,13 +306,15 @@ export class FleursFloraisonComponent implements OnInit {
     this.selectedFleur.dateThFin = fleur.flowerApi.flomax;  
     this.selectedFleur.dateThDebutd = fleur.flowerApi.flomind;
     this.selectedFleur.dateThFind = fleur.flowerApi.flomaxd; 
+    this.selectedFleur.dateThDebutdate = fleur.flowerApi.flomindate;
+    this.selectedFleur.dateThFindate = fleur.flowerApi.flomaxdate; 
     this.selectedFleur.presence = "";
     this.selectedFleur.username = this.username;
     this.selectedFleur.photo = fleur.photo;
     if (this.selectedRucher!=null){
-      if (confirm("Are you sure you want to add " + this.selectedFleur.nom + " to rucher" + this.selectedRucher +" ?")) {
+      if (confirm("Ajouter plante " + this.selectedFleur.nom + " au rucher " + this.nameApiary.name +" ?")) {
         //A changer avce l'année en cours !!
-        this.fleursFloraisonService.addFlower(this.selectedFleur,this.selectedRucher,this.currentYear)
+        this.fleursFloraisonService.addFlower(this.selectedFleur,this.selectedRucher)
           .subscribe(data => {},
             error => this.ErrorMsg=error);
             //on recharge les fleurs du rucher
@@ -331,22 +328,18 @@ export class FleursFloraisonComponent implements OnInit {
   //Change le début de floraison observée d'une fleur
   updateDebut(fleur){
     this.selectedFleur = fleur;
-    //if (( this.selectedFleur.dateDebut[this.currentYear] > 0 ) && (this.selectedFleur.dateDebut[this.currentYear] < 53 )) {
-        this.fleursFloraisonService.updateFleurDebut(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateDebutd[this.currentYear])
-        .subscribe(data => {},
-          error => this.ErrorMsg=error);
-      //  }
+    this.fleursFloraisonService.updateFleurDebut(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateDebutd[this.currentYear])
+      .subscribe(data => {},
+      error => this.ErrorMsg=error);
     
    }
 
   //Change la fin de floraison observée d'une fleur
   updateFin(fleur){
     this.selectedFleur = fleur;
-   // if ( (this.selectedFleur.dateFin[this.currentYear] > 0) && (this.selectedFleur.dateFin[this.currentYear] < 53 ) ){
-      this.fleursFloraisonService.updateFleurFin(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateFind[this.currentYear])
-          .subscribe(data => {},
-            error => this.ErrorMsg=error);
-     //   }
+    this.fleursFloraisonService.updateFleurFin(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateFind[this.currentYear])
+      .subscribe(data => {},
+      error => this.ErrorMsg=error);
   }
 
   //Change la presence d'une fleur dans le rucher
@@ -371,7 +364,7 @@ export class FleursFloraisonComponent implements OnInit {
   //Supprime une fleur du rucher
   deleteFleur(fleur){
     this.selectedFleur = fleur;
-    if (confirm("Are you sure you want to delete " + this.selectedFleur.nom + "?")) {
+    if (confirm("Supprimer la plante " + this.selectedFleur.nom + " du rucher "+ this.nameApiary.name +" ?")) {
       this.fleursFloraisonService.deleteFleur(this.selectedFleur)
         .subscribe(data => {},
             error => this.ErrorMsg=error);
@@ -383,16 +376,12 @@ export class FleursFloraisonComponent implements OnInit {
   }
 
   //Lance la recherche des fleurs qui correspondent aux critères entré par l'utilisateur
-  rechercheFleur(){
+  rechercheFleurVariete(){
     //On créer un fleur type de recherche
-    this.selectedFleurTest.type = this.selectedType;
-    this.selectedFleurTh.flomin = this.selectedFlomin;
-    this.selectedFleurTh.flomax = this.selectedFlomax;
     this.selectedFleurTh.francais = this.selectedFr;
-    this.selectedFleurTh.latin = this.selectedLt;
     this.selectedFleurTest.flowerApi = this.selectedFleurTh;
     //On envoie la requêtes
-    this.fleursFloraisonService.rechercheFlowers(this.selectedFleurTest)
+    this.fleursFloraisonService.rechercheFlowersVar(this.selectedFleurTest)
         .subscribe(
           data => { this.fleursTest = data ;
           }
@@ -401,10 +390,30 @@ export class FleursFloraisonComponent implements OnInit {
         this.subscribeToImage();
   }
 
+    //Lance la recherche des fleurs qui correspondent aux critères entré par l'utilisateur
+    rechercheFleurPeriode(){
+      //On créer un fleur type de recherche
+      this.selectedFleurTest.type = this.selectedType;
+      this.selectedFleurTh.flomind = this.selectedFlo
+      this.selectedFleurTest.flowerApi = this.selectedFleurTh;
+      //On envoie la requêtes
+      this.fleursFloraisonService.rechercheFlowersPer(this.selectedFleurTest)
+          .subscribe(
+            data => { this.fleursTest = data ;
+            }
+          );
+          //On charge les images associées
+          this.subscribeToImage();
+    }
 
   //Rafraichit la page avec les fleurs qui correspondent à la recherche
-  private subscribeToDataRecherche(): void {
-    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.rechercheFleur());
+  private subscribeToDataRechercheVariete(): void {
+    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.rechercheFleurVariete());
+  }
+
+  //Rafraichit la page avec les fleurs qui correspondent à la recherche
+  private subscribeToDataRecherchePeriode(): void {
+    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.rechercheFleurPeriode());
   }
 
   //On recharge la bilbiothèque de fleurs
@@ -439,12 +448,12 @@ export class FleursFloraisonComponent implements OnInit {
 
   //On charge une date théorique d'une fleur pour le graph
   private subscribeToOneDateTh(name,i): void {
-    this.timerSubscription = Observable.timer(200).first().subscribe(() => this.getOneDateTh(name,i));
+    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getOneDateTh(name,i));
   }
 
   //On charge une date observée d'une fleur pour le graph
   private subscribeToOneDateOb(databis,name,i,annee): void {
-    this.timerSubscription = Observable.timer(200).first().subscribe(() => this.getOneDateOb(databis,name,i,annee));
+    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getOneDateOb(databis,name,i,annee));
   }
 
   //
@@ -638,19 +647,21 @@ export class FleursFloraisonComponent implements OnInit {
         right: 10,
         containLabel: true
       },
-
+      //Le pointeur ne bouge qu'avec la souris
+      tooltip: {
+        triggerOn: 'none',
+        trigger:'axis',
+      },
       //Défini l'axe ou les axes abscisse(s)
       xAxis: [
         {
           type: 'time',
-          //A changer quand l'année change !!
-          min:'2018-01-01',
-          max:'2018-12-31',
-          data: this.weeks,
+          min:this.currentYear+'-01-01',
+          max:this.currentYear+'-12-31',
           
           //Option pour le pointeur
           axisPointer: {
-            value: this.today,
+            value: this.date,
             lineStyle: {
                 color: '#004E52',
                 opacity: 0.5,
@@ -679,21 +690,12 @@ export class FleursFloraisonComponent implements OnInit {
           },
 
           axisLabel: {
-            rotate: 50
+            rotate: 40
           }
          }
       
   
        ],
-       //Propriété du zoom axes x
-       dataZoom: [
-        {
-          show: true,
-          start: 0,
-          end: 100,
-          xAxisIndex: [0]
-        }
-    ],
     //Défini l'axe ou les axes ordonnée(s)
       yAxis: {
         type: 'category',
