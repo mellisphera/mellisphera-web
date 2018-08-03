@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
-import { CONFIG } from '../../../config';
-import { FleursTest } from './fleurstest'
-import { Fleur } from './fleur'
+import { CONFIG } from 'config';
+import { FleursTheorique } from './fleurstheorique'
+import { FleurObservees } from './fleurobservees'
 import { Rucher } from '../ruche-rucher/rucher';
 
 const httpOptions = {
@@ -18,18 +18,18 @@ export class FleursFloraisonService {
     constructor(private http:HttpClient) {}
 
     //Récupère la liste des fleurs théoriques
-    getFleurTest(): Observable<FleursTest[]>{
-        return this.http.get<FleursTest[]>(CONFIG.URL+'flowerstest/all');
+    getFleurTest(): Observable<FleursTheorique[]>{
+        return this.http.get<FleursTheorique[]>(CONFIG.URL+'flowersTh/all');
     }
 
     //Service permettant de récuperer les fleurs du rucher selectionné d'un utilisateur x
-    getUserFleur(username,idRucher,annee): Observable<Fleur[]>{
-        return this.http.get<Fleur[]>(CONFIG.URL+'flowers/'+ username +'/'+ idRucher);
+    getUserFleur(username,idRucher,annee): Observable<FleurObservees[]>{
+        return this.http.get<FleurObservees[]>(CONFIG.URL+'flowers/'+ username +'/'+ idRucher);
     }
 
     //Récupère la liste des fleurs théoriques
     getType(): Observable<String[]>{
-        return this.http.get<String[]>(CONFIG.URL+'flowerstest/types');
+        return this.http.get<String[]>(CONFIG.URL+'flowersTh/types');
     }
 
     //Récupère le noms des fleurs du rucher
@@ -78,13 +78,13 @@ export class FleursFloraisonService {
     }
 
     //Récupère les fleurs qui correspondet à la recherche
-    rechercheFlowersVar(fleur) : Observable<FleursTest[]>{
-        return this.http.put<FleursTest[]>(CONFIG.URL+'flowerstest/rechercheVar',fleur);
+    rechercheFlowersVar(fleur) : Observable<FleursTheorique[]>{
+        return this.http.put<FleursTheorique[]>(CONFIG.URL+'flowersTh/rechercheVar',fleur);
     }
 
     //Récupère les fleurs qui correspondet à la recherche
-    rechercheFlowersPer(fleur) : Observable<FleursTest[]>{
-        return this.http.put<FleursTest[]>(CONFIG.URL+'flowerstest/recherchePer',fleur);
+    rechercheFlowersPer(fleur) : Observable<FleursTheorique[]>{
+        return this.http.put<FleursTheorique[]>(CONFIG.URL+'flowersTh/recherchePer',fleur);
     }
 
     

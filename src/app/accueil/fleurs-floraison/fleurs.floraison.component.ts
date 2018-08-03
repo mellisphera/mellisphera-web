@@ -3,17 +3,17 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FleursFloraisonService } from './fleurs.floraison.service';
-import { FleurTheoriques } from "./fleurstheoriques";
+import { FleursINRA } from "./fleursINRA";
 import { FleurITSAP } from "./fleurITSAP";
-import { Fleur } from './fleur'
+import { FleurObservees } from './fleurobservees'
 import { Rucher } from '../ruche-rucher/rucher';
-import { FleursTest } from './fleurstest'
+import { FleursTheorique } from './fleurstheorique'
 import { UserloggedService } from '../../userlogged.service';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable, Subscription } from 'rxjs';
 import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
-import * as echarts from '../../../assets/echarts.js';
+import * as echarts from 'assets/echarts';
 
 
 @Component({/*  */
@@ -48,11 +48,11 @@ export class FleursFloraisonComponent implements OnInit {
     //variable pour stocker le nom français entré
     selectedFr = new String;
     //Variable pour la fleur selectionnée
-    selectedFleur = new Fleur();
+    selectedFleur = new FleurObservees();
     //Variable pour la fleur qui contient les éléments de recherche
-    selectedFleurTest = new FleursTest();
+    selectedFleurTest = new FleursTheorique();
     //Variable pour la fleur apibotanica qui contient les éléments de recherche
-    selectedFleurTh = new FleurTheoriques();
+    selectedFleurTh = new FleursINRA();
     //Variable pour la présence de la fleur changé
     selectedPresence = new String;
     //Variable pour la période de floraison
@@ -74,7 +74,7 @@ export class FleursFloraisonComponent implements OnInit {
     //Les années à afficher
     annee = ["2018","2019","2020"];
     //Mois de l'année
-    mois = ['janv', 'fev', 'mars','avril','mai','juin','juil','aout','sept','oct','nov','dec'];
+    //mois = ['janv', 'fev', 'mars','avril','mai','juin','juil','aout','sept','oct','nov','dec'];
     //Semaine de l'année
     /*
     weeks = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
@@ -286,7 +286,7 @@ export class FleursFloraisonComponent implements OnInit {
     localStorage.setItem("currentPresence",String(this.selectedPresence));
   }
 
-  //change le nom français entré par l'utilisateur
+  //
   onSelectFlo(event : any) : void{
     this.currentFlo=String(this.selectedFlo);
     localStorage.setItem("currentFlo",String(this.selectedFlo));

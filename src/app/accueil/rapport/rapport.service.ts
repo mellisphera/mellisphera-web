@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
-import { CONFIG } from '../../../config';
+import { CONFIG } from 'config';
 
 
 const httpOptions = {
@@ -25,7 +25,7 @@ export class RapportService {
         let body = JSON.stringify(texte);
         return this.http.post('http://51.38.49.225:5000/nluSave', { texte : texte, idApiary : idApiary} , httpOptions);
     }
-    deleteAllReportTemp() : Observable<any[]>{
+    deleteAllReportTemp() : Observable<Object>{
         return this.http.delete(CONFIG.URL+'report-temp/deleteAll');
     } 
     // pour afficher tout les observations de nature temporaires
