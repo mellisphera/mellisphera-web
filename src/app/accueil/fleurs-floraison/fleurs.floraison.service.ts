@@ -24,7 +24,7 @@ export class FleursFloraisonService {
 
     //Service permettant de récuperer les fleurs du rucher selectionné d'un utilisateur x
     getUserFleur(username,idRucher,annee): Observable<FleurObservees[]>{
-        return this.http.get<FleurObservees[]>(CONFIG.URL+'flowersOb/'+ username +'/'+ idRucher);
+        return this.http.get<FleurObservees[]>(CONFIG.URL+'flowersOb/'+ idRucher);
     }
 
     //Récupère la liste des fleurs théoriques
@@ -34,7 +34,7 @@ export class FleursFloraisonService {
 
     //Récupère le noms des fleurs du rucher
     getNamesFlowers(username,idRucher): Observable <String[]>{
-        return this.http.get<String[]>(CONFIG.URL+'flowersOb/namesflowers/'+ username +'/'+ idRucher);
+        return this.http.get<String[]>(CONFIG.URL+'flowersOb/namesflowers/'+ idRucher);
     }
 
      //Récupère le noms des fleurs du rucher
@@ -44,12 +44,12 @@ export class FleursFloraisonService {
 
     //Récupère le dates de floraisons théoriques des fleurs du rucher
     getFloraisonThFlowers(username,idRucher,fleur): Observable <number[]>{
-        return this.http.get<number[]>(CONFIG.URL+'flowersOb/datesthflowersd/'+fleur.id+'/'+ username +'/'+ idRucher+'/'+fleur.nom);
+        return this.http.get<number[]>(CONFIG.URL+'flowersOb/datesthflowersd/'+fleur.id);
     }
 
     //Récupère les dates de floraisons observées des fleurs du rucher
     getFloraisonObFlowers(username,idRucher,fleur,annee): Observable <number[]>{
-        return this.http.get<number[]>(CONFIG.URL+'flowersOb/datesobflowersd/'+fleur.id+'/'+username +'/'+ idRucher+'/'+fleur.nom+'/'+annee);
+        return this.http.get<number[]>(CONFIG.URL+'flowersOb/datesobflowersd/'+fleur.id+'/'+annee);
     }
 
     //Ajoute une fleur à un rucher de l'utilisateur
