@@ -24,7 +24,7 @@ export class FleursFloraisonService {
 
     //Service permettant de récuperer les fleurs du rucher selectionné d'un utilisateur x
     getUserFleur(username,idRucher,annee): Observable<FleurObservees[]>{
-        return this.http.get<FleurObservees[]>(CONFIG.URL+'flowers/'+ username +'/'+ idRucher);
+        return this.http.get<FleurObservees[]>(CONFIG.URL+'flowersOb/'+ username +'/'+ idRucher);
     }
 
     //Récupère la liste des fleurs théoriques
@@ -34,7 +34,7 @@ export class FleursFloraisonService {
 
     //Récupère le noms des fleurs du rucher
     getNamesFlowers(username,idRucher): Observable <String[]>{
-        return this.http.get<String[]>(CONFIG.URL+'flowers/namesflowers/'+ username +'/'+ idRucher);
+        return this.http.get<String[]>(CONFIG.URL+'flowersOb/namesflowers/'+ username +'/'+ idRucher);
     }
 
      //Récupère le noms des fleurs du rucher
@@ -43,38 +43,38 @@ export class FleursFloraisonService {
     }
 
     //Récupère le dates de floraisons théoriques des fleurs du rucher
-    getFloraisonThFlowers(username,idRucher,nomfleur): Observable <number[]>{
-        return this.http.get<number[]>(CONFIG.URL+'flowers/datesthflowersd/'+ username +'/'+ idRucher+'/'+nomfleur);
+    getFloraisonThFlowers(username,idRucher,fleur): Observable <number[]>{
+        return this.http.get<number[]>(CONFIG.URL+'flowersOb/datesthflowersd/'+fleur.id+'/'+ username +'/'+ idRucher+'/'+fleur.nom);
     }
 
     //Récupère les dates de floraisons observées des fleurs du rucher
-    getFloraisonObFlowers(username,idRucher,nomfleur,annee): Observable <number[]>{
-        return this.http.get<number[]>(CONFIG.URL+'flowers/datesobflowersd/'+ username +'/'+ idRucher+'/'+nomfleur+'/'+annee);
+    getFloraisonObFlowers(username,idRucher,fleur,annee): Observable <number[]>{
+        return this.http.get<number[]>(CONFIG.URL+'flowersOb/datesobflowersd/'+fleur.id+'/'+username +'/'+ idRucher+'/'+fleur.nom+'/'+annee);
     }
 
     //Ajoute une fleur à un rucher de l'utilisateur
     addFlower(fleur,id){
-        return this.http.put(CONFIG.URL+'flowers/add/'+id,fleur);
+        return this.http.put(CONFIG.URL+'flowersOb/add/'+id,fleur);
     }
 
     //Change la date de début de floraison obserevée d'une fleur
     updateFleurDebut(id,annee,dateDebut) {
-        return this.http.put(CONFIG.URL+'flowers/updateDebd/'+id+'/'+annee,dateDebut);
+        return this.http.put(CONFIG.URL+'flowersOb/updateDebd/'+id+'/'+annee,dateDebut);
     }
 
     //Change la date de fin de floraison obserevée d'une fleur
     updateFleurFin(id,annee,dateFin){
-        return this.http.put(CONFIG.URL+'flowers/updateFind/'+id+'/'+annee,dateFin);
+        return this.http.put(CONFIG.URL+'flowersOb/updateFind/'+id+'/'+annee,dateFin);
     }
 
     //Change le pourcentage d'une fleur dans le rucher
     updatePresence(fleur){
-        return this.http.put(CONFIG.URL+'flowers/updatePresence/'+fleur.id,fleur.presence);
+        return this.http.put(CONFIG.URL+'flowersOb/updatePresence/'+fleur.id,fleur.presence);
     }
 
     //on supprime une fleur de la bibliothèque
     deleteFleur(fleur) {
-        return this.http.delete(CONFIG.URL+'flowers/' + fleur.id);
+        return this.http.delete(CONFIG.URL+'flowersOb/' + fleur.id);
     }
 
     //Récupère les fleurs qui correspondet à la recherche

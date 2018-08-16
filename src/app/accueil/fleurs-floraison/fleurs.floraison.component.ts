@@ -59,15 +59,15 @@ export class FleursFloraisonComponent implements OnInit {
     selectedFlo : string;
 
     //variable to store fleurs
-    fleursTest: any [] = [];
+    fleursTest: FleursTheorique[] = [];
     //variable to store types of flowers
     types: any [] = [];
     //variable to store ruchers
     ruchers: any [] = [];
     //variable to store fleurs de la bibliothèque
-    fleursBibli: any [] = [];
+    fleursBibli: FleurObservees [] = [];
     //Noms des fleurs
-    names: any[] = [];
+    names = new Array();
 
     x;
 
@@ -195,11 +195,13 @@ export class FleursFloraisonComponent implements OnInit {
   //On récupère les noms des plantes du rucher
   getNames(){
     //on récupère les noms des plantes
+    
     this.fleursFloraisonService.getNamesFlowers(this.username,this.selectedRucher).subscribe(
       data => { 
         this.names=data;
       }
     );
+
     //on charges les dates théoriques associées
     this.subscribeToDateTh();
     //on charges les dates observées associées
@@ -217,14 +219,14 @@ export class FleursFloraisonComponent implements OnInit {
   }
 
   //On récupères les dates de flo théoriques de la plante "name"
-  getOneDateTh(name,i){
-    this.fleursFloraisonService.getFloraisonThFlowers(this.username,this.selectedRucher,name).subscribe(
+  getOneDateTh(fleur,i){
+    this.fleursFloraisonService.getFloraisonThFlowers(this.username,this.selectedRucher,fleur).subscribe(
       data => { this.dataTh[i]=data;});
   }
 
   //On récupères les dates de flo observée de la plante "name"
-  getOneDateOb(databis,name,i,annee){
-    this.fleursFloraisonService.getFloraisonObFlowers(this.username,this.selectedRucher,name,annee).subscribe(
+  getOneDateOb(databis,fleur,i,annee){
+    this.fleursFloraisonService.getFloraisonObFlowers(this.username,this.selectedRucher,fleur,annee).subscribe(
       data => { databis[i]=data;});
   }
 
@@ -243,7 +245,7 @@ export class FleursFloraisonComponent implements OnInit {
     }
     //On récupères les dates théoriques
     for (var i = 0; i < this.dataTh.length; i++) {
-        this.subscribeToOneDateTh(this.names[i],i);
+        this.subscribeToOneDateTh(this.fleursBibli[i],i);
     }
       
   }
@@ -251,10 +253,10 @@ export class FleursFloraisonComponent implements OnInit {
   //On récupère toutes les date de flo observées des fleurs du rucher
   getDatesOb(annee){
     for (var i = 0; i < this.data2018.length; i++) {
-      this.subscribeToOneDateOb(this.data2018,this.names[i],i,"2018");
+      this.subscribeToOneDateOb(this.data2018,this.fleursBibli[i],i,"2018");
     }
-   for (var i = 0; i < this.data2019.length; i++) {
-    this.subscribeToOneDateOb(this.data2019,this.names[i],i,"2019");
+    for (var i = 0; i < this.data2019.length; i++) {
+      this.subscribeToOneDateOb(this.data2019,this.fleursBibli[i],i,"2019");
     }
   }
 
@@ -444,11 +446,11 @@ export class FleursFloraisonComponent implements OnInit {
   //On charge les dates observées pour le graph
   private subscribeToDateOb(annee): void {
     this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getDatesOb(annee));
-}
+  }
 
   //On charge une date théorique d'une fleur pour le graph
-  private subscribeToOneDateTh(name,i): void {
-    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getOneDateTh(name,i));
+  private subscribeToOneDateTh(fleur,i): void {
+    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getOneDateTh(fleur,i));
   }
 
   //On charge une date observée d'une fleur pour le graph
@@ -509,6 +511,7 @@ export class FleursFloraisonComponent implements OnInit {
       
     }
   }
+
 
   /*
   //Affiche les semaines de floraisons théoriques des plantes du rucher
