@@ -431,7 +431,7 @@ export class FleursFloraisonComponent implements OnInit {
 
   //On recharge la bilbiothèque de fleurs
   private subscribeToDataFleur(): void {
-    this.timerSubscription = Observable.timer(100).first().subscribe(() => this.getFleurDuRucher(this.currentYear));
+    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getFleurDuRucher(this.currentYear));
   }
 
   //On recharge le pourcentage totale du rucher
@@ -451,12 +451,12 @@ export class FleursFloraisonComponent implements OnInit {
   
   //On charge les dates théoriques pour le graph
   private subscribeToDateTh(): void {
-      this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getDatesTh());
+      this.timerSubscription = Observable.timer(400).first().subscribe(() => this.getDatesTh());
   }
 
   //On charge les dates observées pour le graph
   private subscribeToDateOb(annee): void {
-    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getDatesOb(annee));
+    this.timerSubscription = Observable.timer(400).first().subscribe(() => this.getDatesOb(annee));
   }
 
   //On charge une date théorique d'une fleur pour le graph
