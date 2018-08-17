@@ -165,7 +165,7 @@ export class FleursFloraisonComponent implements OnInit {
     console.log("this username :"+  this.username);
     console.log("this.selectedRucher :"+  this.selectedRucher);
     if(this.selectedRucher!=null){
-      this.fleursFloraisonService.getUserFleur(this.username,this.selectedRucher,annee).subscribe(
+      this.fleursFloraisonService.getUserFleur(this.selectedRucher).subscribe(
         data => { this.fleursBibli = data });  
     }
   }
@@ -196,12 +196,11 @@ export class FleursFloraisonComponent implements OnInit {
   getNames(){
     //on récupère les noms des plantes
     
-    this.fleursFloraisonService.getNamesFlowers(this.username,this.selectedRucher).subscribe(
+    this.fleursFloraisonService.getNamesFlowers(this.selectedRucher).subscribe(
       data => { 
         this.names=data;
       }
     );
-
     //on charges les dates théoriques associées
     this.subscribeToDateTh();
     //on charges les dates observées associées
@@ -220,40 +219,48 @@ export class FleursFloraisonComponent implements OnInit {
 
   //On récupères les dates de flo théoriques de la plante "name"
   getOneDateTh(fleur,i){
-    this.fleursFloraisonService.getFloraisonThFlowers(this.username,this.selectedRucher,fleur).subscribe(
+    this.fleursFloraisonService.getFloraisonThFlowers(fleur).subscribe(
       data => { this.dataTh[i]=data;});
   }
 
   //On récupères les dates de flo observée de la plante "name"
   getOneDateOb(databis,fleur,i,annee){
-    this.fleursFloraisonService.getFloraisonObFlowers(this.username,this.selectedRucher,fleur,annee).subscribe(
+    this.fleursFloraisonService.getFloraisonObFlowers(fleur,annee).subscribe(
       data => { databis[i]=data;});
   }
 
   //On récupère toutes les date de flo théoriques des fleurs du rucher
   getDatesTh(){
+    this.dataTh=new Array();
     //On défini la taille du tableau des floraisons théoriques et observées
     for (let i = 0; i < this.names.length; i++) {
       this.dataTh[i]=new Array(2);
-      this.data2018[i]=new Array(2);
-      this.data2019[i]=new Array(2);
       for (let j = 0; j < 2; j++) {
         this.dataTh[i][j] = new Array(2);
-        this.data2018[i][j] = new Array(2);
-        this.data2019[i][j] = new Array(2);
       }
     }
     //On récupères les dates théoriques
     for (var i = 0; i < this.dataTh.length; i++) {
-        this.subscribeToOneDateTh(this.fleursBibli[i],i);
+      this.subscribeToOneDateTh(this.fleursBibli[i],i);
     }
-      
   }
 
   //On récupère toutes les date de flo observées des fleurs du rucher
   getDatesOb(annee){
+    this.data2018=new Array();
+    this.data2019=new Array();
+    //On défini la taille du tableau des floraisons théoriques et observées
+    for (let i = 0; i < this.names.length; i++) {
+      this.data2018[i]=new Array(2);
+      this.data2019[i]=new Array(2);
+      for (let j = 0; j < 2; j++) {
+        this.data2018[i][j] = new Array(2);
+        this.data2019[i][j] = new Array(2);
+      }
+    }
     for (var i = 0; i < this.data2018.length; i++) {
       this.subscribeToOneDateOb(this.data2018,this.fleursBibli[i],i,"2018");
+      
     }
     for (var i = 0; i < this.data2019.length; i++) {
       this.subscribeToOneDateOb(this.data2019,this.fleursBibli[i],i,"2019");
@@ -267,14 +274,19 @@ export class FleursFloraisonComponent implements OnInit {
   }
 
   //Change le rucher selectionné
-  onSelectRucher(event : any) : void{;
+  onChangeRucher(){
+    this.subscribeToDataFleur();
+    this.subscribeToNames();
+    this.getNameApiary();
+  }
+
+  //Change le rucher selectionné
+  onSelectRucher(event : any) : void{
     this.currentRucherID=String(this.selectedRucher);
     localStorage.setItem("currentRucher",String(this.selectedRucher));
     console.log("current rucher : "+this.currentRucherID);
-    this.subscribeToDataFleur();
-    this.getNames();
-    this.getNameApiary()
-;  }
+    this.onChangeRucher();
+  }
 
   //change le nom français entré par l'utilisateur
   onSelectFr(event : any) : void{
@@ -292,7 +304,6 @@ export class FleursFloraisonComponent implements OnInit {
   onSelectFlo(event : any) : void{
     this.currentFlo=String(this.selectedFlo);
     localStorage.setItem("currentFlo",String(this.selectedFlo));
-    console.log("currentFlo : "+this.currentFlo);
   }
 
   
@@ -393,20 +404,20 @@ export class FleursFloraisonComponent implements OnInit {
   }
 
     //Lance la recherche des fleurs qui correspondent aux critères entré par l'utilisateur
-    rechercheFleurPeriode(){
-      //On créer un fleur type de recherche
-      this.selectedFleurTest.type = this.selectedType;
-      this.selectedFleurTh.flomind = this.selectedFlo
-      this.selectedFleurTest.flowerApi = this.selectedFleurTh;
-      //On envoie la requêtes
-      this.fleursFloraisonService.rechercheFlowersPer(this.selectedFleurTest)
-          .subscribe(
-            data => { this.fleursTest = data ;
-            }
-          );
-          //On charge les images associées
-          this.subscribeToImage();
-    }
+  rechercheFleurPeriode(){
+    //On créer un fleur type de recherche
+    this.selectedFleurTest.type = this.selectedType;
+    this.selectedFleurTh.flomind = this.selectedFlo
+    this.selectedFleurTest.flowerApi = this.selectedFleurTh;
+    //On envoie la requêtes
+    this.fleursFloraisonService.rechercheFlowersPer(this.selectedFleurTest)
+      .subscribe(
+        data => { this.fleursTest = data ;
+        }
+      );
+      //On charge les images associées
+      this.subscribeToImage();
+  }
 
   //Rafraichit la page avec les fleurs qui correspondent à la recherche
   private subscribeToDataRechercheVariete(): void {
@@ -420,7 +431,7 @@ export class FleursFloraisonComponent implements OnInit {
 
   //On recharge la bilbiothèque de fleurs
   private subscribeToDataFleur(): void {
-    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.getFleurDuRucher(this.currentYear));
+    this.timerSubscription = Observable.timer(100).first().subscribe(() => this.getFleurDuRucher(this.currentYear));
   }
 
   //On recharge le pourcentage totale du rucher
@@ -440,22 +451,22 @@ export class FleursFloraisonComponent implements OnInit {
   
   //On charge les dates théoriques pour le graph
   private subscribeToDateTh(): void {
-      this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getDatesTh());
+      this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getDatesTh());
   }
 
   //On charge les dates observées pour le graph
   private subscribeToDateOb(annee): void {
-    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getDatesOb(annee));
+    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getDatesOb(annee));
   }
 
   //On charge une date théorique d'une fleur pour le graph
   private subscribeToOneDateTh(fleur,i): void {
-    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getOneDateTh(fleur,i));
+    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getOneDateTh(fleur,i));
   }
 
   //On charge une date observée d'une fleur pour le graph
   private subscribeToOneDateOb(databis,name,i,annee): void {
-    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getOneDateOb(databis,name,i,annee));
+    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getOneDateOb(databis,name,i,annee));
   }
 
   //
