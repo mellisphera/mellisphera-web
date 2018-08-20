@@ -61,9 +61,9 @@ export class FleursFloraisonComponent implements OnInit {
     //variable to store fleurs
     fleursTest: FleursTheorique[] = [];
     //variable to store types of flowers
-    types: any [] = [];
+    types: String [] = [];
     //variable to store ruchers
-    ruchers: any [] = [];
+    ruchers: Rucher [] = [];
     //variable to store fleurs de la bibliothèque
     fleursBibli: FleurObservees [] = [];
     //Noms des fleurs
@@ -73,6 +73,7 @@ export class FleursFloraisonComponent implements OnInit {
 
     //Les années à afficher
     annee = ["2018","2019","2020"];
+
     //Mois de l'année
     //mois = ['janv', 'fev', 'mars','avril','mai','juin','juil','aout','sept','oct','nov','dec'];
     //Semaine de l'année
@@ -166,7 +167,7 @@ export class FleursFloraisonComponent implements OnInit {
     console.log("this.selectedRucher :"+  this.selectedRucher);
     if(this.selectedRucher!=null){
       this.fleursFloraisonService.getUserFleur(this.selectedRucher).subscribe(
-        data => { this.fleursBibli = data });  
+        data => { this.fleursBibli = data });       
     }
   }
 
@@ -431,7 +432,7 @@ export class FleursFloraisonComponent implements OnInit {
 
   //On recharge la bilbiothèque de fleurs
   private subscribeToDataFleur(): void {
-    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.getFleurDuRucher(this.currentYear));
+    this.timerSubscription = Observable.timer(400).first().subscribe(() => this.getFleurDuRucher(this.currentYear));
   }
 
   //On recharge le pourcentage totale du rucher
@@ -471,17 +472,17 @@ export class FleursFloraisonComponent implements OnInit {
 
   //
   private subscribeToUpDeb(fleur): void {
-    this.timerSubscription = Observable.timer(200).first().subscribe(() => this.updateDebut(fleur));
+    this.timerSubscription = Observable.timer(100).first().subscribe(() => this.updateDebut(fleur));
   }
 
   //
   private subscribeToUpFin(fleur): void {
-    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.updateFin(fleur));
+    this.timerSubscription = Observable.timer(200).first().subscribe(() => this.updateFin(fleur));
   }
 
   //
   private subscribeToUpPre(fleur): void {
-    this.timerSubscription = Observable.timer(400).first().subscribe(() => this.updatePresence(fleur));
+    this.timerSubscription = Observable.timer(300).first().subscribe(() => this.updatePresence(fleur));
   }
 
   //Charge le chemin des images en fonctions de la valeur de l'interet pollen/nectar et indice de confiance (entre 0 et 3)
