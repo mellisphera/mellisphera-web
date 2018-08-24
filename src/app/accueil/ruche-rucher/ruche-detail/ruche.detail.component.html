@@ -36,7 +36,7 @@
                                       <div class="panel-body">
                                      
                                             <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
-                                            data-target="#newRucheModal"  class="btn btn-success btn-lg" >
+                                            data-target="#newObservationModal"  class="btn btn-success btn-lg" >
                                                       <i class="fa fa-plus"></i>
                                             </button>
                                                      
@@ -45,27 +45,47 @@
                                                     <table class="table">    
                                                             <thead class="thead-dark">
                                                             <tr>
-                                                                <th scope="col">Ruche</th>
                                                                 <th scope="col">Date</th>
                                                                 <th scope="col">Sentence</th>
+                                                                <th scope="col">Type</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
+                                                                <ng-container *ngFor="let hive of observationsHive" >
+                                                                    <ng-container *ngIf="hive.type =='HiveObs'">
+                                                                        <tr >
+                                                                            <td>
+                                                                               {{hive.date}}
+                                                                           </td>
+                                                                            
+                                                                            <td>
+                                                                                {{hive.sentence}}
+                                                                            </td>
+                                                                            <td>
+                                                                                Observation
+                                                                            </td>
+                                                                            
+                                                                        </tr>
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="hive.type =='HiveAct'">
+                                                                            <tr style="color: blue;">
+                                                                                <td>
+                                                                                   {{hive.date}}
+                                                                               </td>
+                                                                                
+                                                                                <td>
+                                                                                    {{hive.sentence}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    Action
+                                                                                </td>
+                                                                                
+                                                                            </tr>
+                                                                        </ng-container>   
+
+                                                                </ng-container>
                                                               
-                                                              <tr *ngFor="let d of observationsRuche.ObservationRuche"  >
-                                                           
-                                                                <td>
-                                                                    {{d.ruche}}
-                                                                </td>
-                                                                <td>
-                                                                    {{d.date}}
-                                                                </td>
-                                                                   
-                                                                <td>
-                                                                    {{d.sentence}}
-                                                                </td>
-                                                              </tr>
-                                                              <tr *ngFor="let d of actionsApicole.OperationApi" style="color: blue;">
+                                                             <!-- <tr *ngFor="let d of actionsApicole.OperationApi" style="color: blue;">
                                                                     
                                                                
                                                                     <td>
@@ -78,7 +98,7 @@
                                                                     <td>
                                                                         {{d.sentence}}
                                                                     </td>
-                                                                </tr>
+                                                                </tr> -->
                                                             </tbody>
                                                     </table>
                                             </div>
@@ -135,3 +155,57 @@
 
 <!-- MODALS ARE DECLARE HERE !!! -->
 
+<!-- New Observation Modal -->
+<div class="modal fade" id="newObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Nouvelle Observation</h3> </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <form  [formGroup]="ObservationForm" (ngSubmit)="createObservation(ObservationForm.value)">
+
+                <div class="form-group ">
+                                        
+            
+                        <label  class="col-form-label" for="exampleRadios1" >
+                            Type d'observations :  
+                        </label>
+                        <div class="form-check">
+                            <label class="form-check-label" for="exampleRadios1" >
+                                Observations
+                            </label>
+                            <input class="form-check-input" (change)="selectRadioObs()" type="radio" formControlName="checkbox" name="checkbox"  [checked]="radioObs">
+                                
+                
+                            <label class="form-check-label" for="exampleRadios1">
+                               Actions 
+                            </label>
+                            <input class="form-check-input" (change)="selectRadioAction()" type="radio" formControlName="checkbox" name="checkbox" [checked]="radioAct">
+                            
+                        </div>
+                    </div>
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Observations/Actions :</label>
+            <input [(ngModel)]="sentence" formControlName="sentence" type="text" class="form-control" id="recipient-name">
+        </div>
+
+       
+        
+           
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary"  (click)="createObservation(ObservationForm.value)" [disabled]="!ObservationForm.valid" > Créer Observation</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+       
+      </div>
+    </div>
+    </div>
+</div>
+    <!-- End of new Observation Modal -->

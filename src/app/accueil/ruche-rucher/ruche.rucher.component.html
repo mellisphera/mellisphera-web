@@ -1,384 +1,426 @@
 <div class="wrapper">
-        <div class="sidebar" data-color="red" data-image="">
-            <app-sidebar ></app-sidebar>
-            <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
-        </div>
-        <div class="main-panel">
-            <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
-            <router-outlet></router-outlet>
+  <div class="sidebar" data-color="red" data-image="">
+      <app-sidebar ></app-sidebar>
+      <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+  </div>
+  <div class="main-panel">
+      <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+      <router-outlet></router-outlet>
 
 
 <!-- change component content here-->                    
 <div class="container-fluid" style="background-color:white;">
-        <div class="row content">
-                <div class="col-sm-9">                        
-                      <div class="form-inline" >
-                        <div class="form-group">
-                            <label><h4>Rucher :</h4> </label>
-                            <select  [(ngModel)]="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
-                                <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
-                                     {{rucher.name}}
-                                </option>
-                            </select>   
-                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#newRucherModal" >Créer rucher</button>
-                        </div>
-                      </div>
+  <div class="row content">
+          <div class="col-sm-9">                        
+                <div class="form-inline" >
+                  <div class="form-group">
+                      <label><h4>Rucher :</h4> </label>
+                      <select  [(ngModel)]="selectedRucher"  class="form-control " id="sel1">
+                          <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)">
+                               {{rucher.name}}
+                          </option>
+                      </select>   
+                      <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#newRucherModal" >Créer rucher</button>
+                  </div>
+                </div>
 
 
-                      <div class="bs-example">
-                          <div class="panel-group" id="accordion">
-                              <div class="panel panel-info ">
-                                  <div class="panel-heading "  >
-                                      <h4 class="panel-title" >
-                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                             <b>1. Ruches</b>
-                                           </a>
-                                      </h4>
+                <div class="bs-example">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-info ">
+                            <div class="panel-heading "  >
+                                <h4 class="panel-title" >
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                       <b>1. Ruches</b>
+                                     </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                               
+
+                                    <b class="text-success"></b>
+                                    
+                                    
+                                    <button data-toggle="tooltip" data-html="true" title="Nouvelle Ruche" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
+                                            data-target="#newRucheModal"  class="btn btn-success btn-lg" >
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+
+                           
+                                    <!-- tables ruche -->
+                                  <div>
+                                      <table class="table">    
+                                          <thead class="thead-dark">
+                                          <tr>
+                                              <th scope="col">Ruche</th>
+                                              <th scope="col">Description</th>
+                                              <th scope="col">Actions</th>
+                                          </tr>
+                                          </thead>
+                                          <tbody>
+                                            
+                                            <tr *ngFor="let ruche of ruches " >
+                                              
+                                                <td>
+                                                    <a routerLink="/ruche-detail" (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> 
+                                                </td>
+                                                 
+                                                <td>{{ruche.description}}</td>
+                                                <td>
+                                                  <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
+                                                          data-target="#editRucheModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                                          <i class="fa fa-edit"></i>
+                                                  </button>
+                                                  <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;" (click)="deleteRuche(ruche)">
+                                                          <i class="fa fa-times"></i>
+                                                  </button>
+                                                </td>
+                                            </tr>
+                                          </tbody>
+                                      </table>      
                                   </div>
-                                  <div id="collapseOne" class="panel-collapse collapse in">
-                                      <div class="panel-body">
-                                     
-
-                                          <b class="text-success"></b>
-                                          
-                                          
-                                          <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
-                                                  data-target="#newRucheModal"  class="btn btn-success btn-lg" >
-                                              <i class="fa fa-plus"></i>
-                                          </button>
-
-                                 
-                                          <!-- tables ruche -->
-                                        <div>
-                                            <table class="table">    
-                                                <thead class="thead-dark">
-                                                <tr>
-                                                    <th scope="col">Ruche</th>
-                                                    <th scope="col">Description</th>
-                                                    <th scope="col">Actions</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                  
-                                                  <tr *ngFor="let ruche of ruches " >
-                                                    
-                                                      <td>
-                                                          <a routerLink="/ruche-detail" (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> 
-                                                      </td>
-                                                       
-                                                      <td>{{ruche.description}}</td>
-                                                      <td>
-                                                        <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
-                                                                data-target="#editRucheModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
-                                                                <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;" (click)="deleteRuche(ruche)">
-                                                                <i class="fa fa-times"></i>
-                                                        </button>
-                                                      </td>
-                                                  </tr>
-                                                </tbody>
-                                            </table>      
-                                        </div>
-                  
-                                        
-                                      </div>
-                                  </div>
-                              </div>
-
-                              
-                         
-                          </div>
-                        
-                      </div>
-                      <div class="panel panel-info">
-                          <div class="panel-heading">
-                              <h4 class="panel-title">
-                                  <a data-toggle="collapse" href="#collapseTwo"><b>2. Observations nature</b></a>
-                              </h4>
-                          </div>
-                          <div id="collapseTwo" class="panel-collapse collapse in">
-                              <div class="panel-body">
-                                  <table class="table">    
-                                      <thead class="thead-dark">
-                                      <tr>
-                                              <th scope="col">Date</th>
-                                              <th scope="col">Sentence</th>
-                                      </tr>
-                                      </thead>
-                                      <tbody>
-                                        
-                                        <tr *ngFor="let d of observationsNature.ObservationNature" >
-                                          <td>
-                                              {{d.date}}
-                                          </td>
-                                             
-                                          <td>
-                                              {{d.sentence}}
-                                          </td>
+            
                                   
-                                        </tr>
-                                      </tbody>
-                              </table>      
-                              </div>
-                          </div>
-                      </div>
-                    
-
-                        <br><br>    
-                    </div>
-
-    
-          <div class="col-sm-3 sidenav" style="background-color: rgba(236, 234, 234, 0.49); height:1500px;border-color:black;">
-         
-            <!--
-            <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
-                                                            data-target="#editRucheModal" class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none;">
-                <i class="fa fa-edit"></i>
-            </button>
-            -->
-            <button data-toggle="tooltip" data-html="true"  data-toggle="modal" type="button" (click)="editRucherClicked()"
-                                                             class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none; ">
-                <i class="fa fa-edit"></i>
-            </button>
-            <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;  " (click)="deleteRucher(rucher)">
-              <i class="fa fa-times"></i>
-            </button>
-            <div *ngIf="!updateRucherInput">
-              <h4 class="text-center">{{detailsRucher.name}} </h4>
-              <h5 class="text-center"><b> </b>{{detailsRucher.ville}}</h5>
-              <h5 class="text-center"><b> </b>{{detailsRucher.codePostal}}</h5>
-              <p class="text-center"><b> </b>{{detailsRucher.description}}</p>
-            </div>
-            <!--  DO IT HERE !! !!!-->
-<!--
-            <form [formGroup]="newRucherForm" (ngSubmit)="createRucher(newRucherForm.value) ">
-                <div class="form-group"  >
-                  <label for="recipient-name" class="col-form-label">Nom :</label>
-                  <input [(ngModel)]="nom" formControlName="nom" type="text" class="form-control" id="recipient-name">
-                  <div class="alert alert-danger" *ngIf="!newRucherForm.controls['nom'].valid && newRucherForm.controls['nom'].touched">
-                    Veuillez saisir un nom entre 1 et 20 caractères
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="message-text" class="col-form-label">Description :</label>
-                  <textarea [(ngModel)]="description" formControlName="description" class="form-control" id="message-text"></textarea>
-                  <div class="alert alert-danger" *ngIf="!newRucherForm.controls['description'].valid && newRucherForm.controls['description'].touched">
-                      Veuillez saisir une description entre 1 et 40 caractères
-                </div>
-                </div>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Ville :</label>
-                  <input [(ngModel)]="codePostal" formControlName="codePostal" type="text" class="form-control" id="recipient-name">
-                  <div class="alert alert-danger" *ngIf="!newRucherForm.controls['codePostal'].valid && newRucherForm.controls['codePostal'].touched">
-                            Veuillez saisir le nom de la ville
-                  </div>
-                </div>
-            </form>
-          -->
-            <!--This is for editing Rucher-->
-              <div *ngIf="updateRucherInput">
-                  <form [formGroup]="editRucherForm" (ngSubmit)="onEditerRucher(editRucherForm.value) ">
-                    <h4 class="text-center">Editer Rucher</h4>
-                    <div class="form-group row"  >
-                       <div class="col-md-12">
-                        <label for="recipient-name" class="col-form-label">Nom : </label>
-                        <input [(ngModel)]="detailsRucher.name" formControlName="nom" type="text" class="form-control text-left" id="recipient-name" >
-                      </div>  
-                      <div class="col-md-12">
-                        <div class="alert alert-danger" *ngIf="editRucherForm.controls['nom'].invalid">
-                            Veuillez saisir un nom
-
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="form-group row"  >
-                        <div class="col-md-12">
-                          <label for="recipient-name" class="col-form-label">Ville :  </label>
-                          <input [(ngModel)]="detailsRucher.ville" formControlName="ville" type="text" class="form-control text-left" id="recipient-name">
-                        </div>
-                        <div class="col-md-12">
-                          <div class="alert alert-danger" *ngIf="editRucherForm.controls['ville'].invalid ">
-                              Veuillez saisir une ville
-                          </div>
-                        </div>
+
                         
+                   
                     </div>
+                  
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapseTwo"><b>2. Observations rucher</b></a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse in">
+                        <div class="panel-body">
 
-                    <div class="form-group row"  >
-                      <div class="col-md-12">
-                        <label for="recipient-name" class="col-form-label">Code Postal :  </label>
-                        <input [(ngModel)]="detailsRucher.codePostal" formControlName="codePostal" type="text" class="form-control text-left" id="recipient-name">
-                      </div>
-                      <div class="col-md-12">
-                        <div class="alert alert-danger" *ngIf="editRucherForm.controls['codePostal'].invalid ">
-                            Veuillez saisir un Code Postal
+                            <b class="text-success"></b>
+                                    
+                                    
+                            <button data-toggle="tooltip" data-html="true" title="Nouvelle Observation" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
+                                    data-target="#newObservationModal"  class="btn btn-success btn-lg" >
+                                <i class="fa fa-plus"></i>
+                            </button>
+
+                            <table class="table">    
+                                <thead class="thead-dark">
+                                <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Sentence</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                  
+                                  <tr *ngFor="let ap of apiaryObs" >
+                                    <td>
+                                        {{ap.date}}
+                                    </td>
+                                       
+                                    <td>
+                                        {{ap.sentence}}
+                                    </td>
+                            
+                                  </tr>
+                                </tbody>
+                        </table>      
                         </div>
-                      </div>
-                      
+                    </div>
+                </div>
+              
+
+                  <br><br>    
+              </div>
+
+
+    <div class="col-sm-3 sidenav" style="background-color: rgba(236, 234, 234, 0.49); height:1500px;border-color:black;">
+   
+      <!--
+      <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
+                                                      data-target="#editRucheModal" class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none;">
+          <i class="fa fa-edit"></i>
+      </button>
+      -->
+      <button data-toggle="tooltip" data-html="true"  data-toggle="modal" type="button" (click)="editRucherClicked()"
+                                                       class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none; ">
+          <i class="fa fa-edit"></i>
+      </button>
+      <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;  " (click)="deleteRucher(rucher)">
+        <i class="fa fa-times"></i>
+      </button>
+      <div *ngIf="!updateRucherInput">
+        <h4 class="text-center">{{detailsRucher.name}} </h4>
+        <h5 class="text-center"><b> </b>{{detailsRucher.ville}}</h5>
+        <h5 class="text-center"><b> </b>{{detailsRucher.codePostal}}</h5>
+        <p class="text-center"><b> </b>{{detailsRucher.description}}</p>
+      </div>
+      <!--  DO IT HERE !! !!!-->
+<!--
+      <form [formGroup]="newRucherForm" (ngSubmit)="createRucher(newRucherForm.value) ">
+          <div class="form-group"  >
+            <label for="recipient-name" class="col-form-label">Nom :</label>
+            <input [(ngModel)]="nom" formControlName="nom" type="text" class="form-control" id="recipient-name">
+            <div class="alert alert-danger" *ngIf="!newRucherForm.controls['nom'].valid && newRucherForm.controls['nom'].touched">
+              Veuillez saisir un nom entre 1 et 20 caractères
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Description :</label>
+            <textarea [(ngModel)]="description" formControlName="description" class="form-control" id="message-text"></textarea>
+            <div class="alert alert-danger" *ngIf="!newRucherForm.controls['description'].valid && newRucherForm.controls['description'].touched">
+                Veuillez saisir une description entre 1 et 40 caractères
+          </div>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Ville :</label>
+            <input [(ngModel)]="codePostal" formControlName="codePostal" type="text" class="form-control" id="recipient-name">
+            <div class="alert alert-danger" *ngIf="!newRucherForm.controls['codePostal'].valid && newRucherForm.controls['codePostal'].touched">
+                      Veuillez saisir le nom de la ville
+            </div>
+          </div>
+      </form>
+    -->
+      <!--This is for editing Rucher-->
+        <div *ngIf="updateRucherInput">
+            <form [formGroup]="editRucherForm" (ngSubmit)="onEditerRucher(editRucherForm.value) ">
+              <h4 class="text-center">Editer Rucher</h4>
+              <div class="form-group row"  >
+                 <div class="col-md-12">
+                  <label for="recipient-name" class="col-form-label">Nom : </label>
+                  <input [(ngModel)]="detailsRucher.name" formControlName="nom" type="text" class="form-control text-left" id="recipient-name" >
+                </div>  
+                <div class="col-md-12">
+                  <div class="alert alert-danger" *ngIf="editRucherForm.controls['nom'].invalid">
+                      Veuillez saisir un nom
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row"  >
+                  <div class="col-md-12">
+                    <label for="recipient-name" class="col-form-label">Ville :  </label>
+                    <input [(ngModel)]="detailsRucher.ville" formControlName="ville" type="text" class="form-control text-left" id="recipient-name">
+                  </div>
+                  <div class="col-md-12">
+                    <div class="alert alert-danger" *ngIf="editRucherForm.controls['ville'].invalid ">
+                        Veuillez saisir une ville
+                    </div>
                   </div>
                   
-                    <div class="form-group row"  >
-                        <div class="col-md-6">
-                          <label for="recipient-name" class="col-form-label">Description : </label>
-                        </div>
-                        <div class="col-md-12">
-                          <textarea [(ngModel)]="detailsRucher.description" formControlName="description"  type="text" class="form-control text-left" id="recipient-name"></textarea>
-                   
-                          <div class="alert alert-danger" *ngIf="editRucherForm.controls['description'].invalid ">
-                              Veuillez saisir une description
-                          </div>
-                         
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-success" data-dismiss="modal" [disabled]="editRucherForm.invalid" (click)="onEditerRucher(editRucherForm.value)">Sauvegarder</button>
-                    <button type="button" class="btn btn-danger" (click)="editRucherClicked()">Annuler</button>
-                  </form>
               </div>
-            <!--End of editing Rucher  DIV-->
-          </div>
+
+              <div class="form-group row"  >
+                <div class="col-md-12">
+                  <label for="recipient-name" class="col-form-label">Code Postal :  </label>
+                  <input [(ngModel)]="detailsRucher.codePostal" formControlName="codePostal" type="text" class="form-control text-left" id="recipient-name">
+                </div>
+                <div class="col-md-12">
+                  <div class="alert alert-danger" *ngIf="editRucherForm.controls['codePostal'].invalid ">
+                      Veuillez saisir un Code Postal
+                  </div>
+                </div>
+                
+            </div>
+            
+              <div class="form-group row"  >
+                  <div class="col-md-6">
+                    <label for="recipient-name" class="col-form-label">Description : </label>
+                  </div>
+                  <div class="col-md-12">
+                    <textarea [(ngModel)]="detailsRucher.description" formControlName="description"  type="text" class="form-control text-left" id="recipient-name"></textarea>
+             
+                    <div class="alert alert-danger" *ngIf="editRucherForm.controls['description'].invalid ">
+                        Veuillez saisir une description
+                    </div>
+                   
+                  </div>
+              </div>
+              <button type="button" class="btn btn-success" data-dismiss="modal" [disabled]="editRucherForm.invalid" (click)="onEditerRucher(editRucherForm.value)">Sauvegarder</button>
+              <button type="button" class="btn btn-danger" (click)="editRucherClicked()">Annuler</button>
+            </form>
         </div>
-      </div>
+      <!--End of editing Rucher  DIV-->
+    </div>
+  </div>
+</div>
 </div>
 
 <!-- MODALS ARE DECLARE HERE !!! -->
 
- <!-- New rucher Modal -->
- <div class="modal fade" id="newRucherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Nouveau Rucher</h4></h5>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-         </button>
-       </div>
-       <div class="modal-body">
-              <form [formGroup]="newRucherForm" (ngSubmit)="createRucher(newRucherForm.value) ">
-                  <div class="form-group"  >
-                    <label for="recipient-name" class="col-form-label">Nom :</label>
-                    <input [(ngModel)]="nom" formControlName="nom" type="text" class="form-control" id="recipient-name">
-                    <div class="alert alert-danger" *ngIf="!newRucherForm.controls['nom'].valid && newRucherForm.controls['nom'].touched">
-                      Veuillez saisir un nom entre 1 et 20 caractères
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="message-text" class="col-form-label">Description :</label>
-                    <textarea [(ngModel)]="description" formControlName="description" class="form-control" id="message-text"></textarea>
-                    <div class="alert alert-danger" *ngIf="!newRucherForm.controls['description'].valid && newRucherForm.controls['description'].touched">
-                        Veuillez saisir une description entre 1 et 40 caractères
-                  </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">Ville :</label>
-                    <input [(ngModel)]="ville" formControlName="ville" type="text" class="form-control" id="recipient-name">
-                    <div class="alert alert-danger" *ngIf="!newRucherForm.controls['ville'].valid && newRucherForm.controls['ville'].touched">
-                              Veuillez saisir le nom de la ville
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">Code postal :</label>
-                    <input [(ngModel)]="codePostal" formControlName="codePostal" type="text" class="form-control" id="recipient-name">
-                    <div class="alert alert-danger" *ngIf="!newRucherForm.controls['codePostal'].valid && newRucherForm.controls['codePostal'].touched">
-                              Veuillez saisir le nom de le codePostal
-                    </div>
-                  </div>
-              </form>
-       </div>
-       <div class="modal-footer">
-          <button type="submit" class="btn btn-primary"  data-dismiss="modal" (click)="createRucher(newRucherForm.value)"   value="Créer Rucher" [disabled]="!newRucherForm.valid">Créer Rucher</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetForm()">Fermer</button>
-        
-       </div>
-     </div>
-   </div>
+<!-- New rucher Modal -->
+<div class="modal fade" id="newRucherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+ <div class="modal-header">
+   <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Nouveau Rucher</h4></h5>
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+     <span aria-hidden="true">&times;</span>
+   </button>
  </div>
+ <div class="modal-body">
+        <form [formGroup]="newRucherForm" (ngSubmit)="createRucher(newRucherForm.value) ">
+            <div class="form-group"  >
+              <label for="recipient-name" class="col-form-label">Nom :</label>
+              <input [(ngModel)]="nom" formControlName="nom" type="text" class="form-control" id="recipient-name">
+              <div class="alert alert-danger" *ngIf="!newRucherForm.controls['nom'].valid && newRucherForm.controls['nom'].touched">
+                Veuillez saisir un nom entre 1 et 20 caractères
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Description :</label>
+              <textarea [(ngModel)]="description" formControlName="description" class="form-control" id="message-text"></textarea>
+              <div class="alert alert-danger" *ngIf="!newRucherForm.controls['description'].valid && newRucherForm.controls['description'].touched">
+                  Veuillez saisir une description entre 1 et 40 caractères
+            </div>
+            </div>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Ville :</label>
+              <input [(ngModel)]="ville" formControlName="ville" type="text" class="form-control" id="recipient-name">
+              <div class="alert alert-danger" *ngIf="!newRucherForm.controls['ville'].valid && newRucherForm.controls['ville'].touched">
+                        Veuillez saisir le nom de la ville
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Code postal :</label>
+              <input [(ngModel)]="codePostal" formControlName="codePostal" type="text" class="form-control" id="recipient-name">
+              <div class="alert alert-danger" *ngIf="!newRucherForm.controls['codePostal'].valid && newRucherForm.controls['codePostal'].touched">
+                        Veuillez saisir le nom de le codePostal
+              </div>
+            </div>
+        </form>
+ </div>
+ <div class="modal-footer">
+    <button type="submit" class="btn btn-primary"  data-dismiss="modal" (click)="createRucher(newRucherForm.value)"   value="Créer Rucher" [disabled]="!newRucherForm.valid">Créer Rucher</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetForm()">Fermer</button>
+  
+ </div>
+</div>
+</div>
+</div>
 <!-- End of new Rucher Modal -->
 
 
 
- <!-- New Ruche Modal -->
- <div class="modal fade" id="newRucheModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Nouvelle ruche</h3> </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form  [formGroup]="newRucheForm" (ngSubmit)="createRuche(newRucheForm.value)">
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Nom :</label>
-                  <input [(ngModel)]="nomRuche" formControlName="nomRuche" type="text" class="form-control" id="recipient-name">
-                </div>
-
-                <div class="form-group">
-                  <label for="message-text" class="col-form-label">Description :</label>
-                  <textarea [(ngModel)]="descriptionRuche"   formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
-                </div>
-
-                <div *ngIf="!selectedRucher">
-                  <div class="alert alert-danger" >
-                    Veuillez selectionner un rucher dans la page précédente !
-                  </div>
-                </div>
-                
-                <div *ngIf="selectedRucher">
-                 
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary"  [disabled]="!newRucheForm.valid"  (click)="createRuche(newRucheForm.value)" > Créer Ruche</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-             
-            </div>
-          </div>
-        </div>
-      </div>
-<!-- End of new Rucher Modal -->
-
- <!-- Edit Ruche Modal -->
- <div class="modal fade" id="editRucheModal" backdrop="false"tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- New Ruche Modal -->
+<div class="modal fade" id="newRucheModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Editer ruche</h3> </h5>
+        <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Nouvelle ruche</h3> </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form  [formGroup]="newRucheForm" (ngSubmit)="onEditerRuche(newRucheForm.value)">
+        <form  [formGroup]="newRucheForm" (ngSubmit)="createRuche(newRucheForm.value)">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Nom :</label>
-            <input [(ngModel)]="nomRuche" formControlName="nomRuche" type="text" class="form-control" id="recipient-name" value="{{selectedRuche.name}}">
+            <input [(ngModel)]="nomRuche" formControlName="nomRuche" type="text" class="form-control" id="recipient-name">
           </div>
 
           <div class="form-group">
             <label for="message-text" class="col-form-label">Description :</label>
-            <textarea [(ngModel)]="descriptionRuche"   formControlName="descriptionRuche" class="form-control" id="message-text" value="{{selectedRuche.description}}"></textarea>
+            <textarea [(ngModel)]="descriptionRuche"   formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
           </div>
 
-          <!---<button type="submit" class="btn btn-primary"  [disabled]="!newRucheForm.valid" > Editer Ruche</button>
-               </button>
-          -->
+          <div *ngIf="!selectedRucher">
+            <div class="alert alert-danger" >
+              Veuillez selectionner un rucher dans la page précédente !
+            </div>
+          </div>
+          
+          <div *ngIf="selectedRucher">
+           
+          </div>
         </form>
       </div>
       <div class="modal-footer">
-          <button type="submit" class="btn btn-primary"  data-dismiss="modal" (click)="onEditerRuche(newRucheForm.value)" [disabled]="!newRucheForm.valid">Editer Ruche</button>
-          <button type="button" class="btn btn-secondary"  data-dismiss="modal" (click)="resetRucheForm()">Fermer</button>
+        <button type="submit" class="btn btn-primary"  [disabled]="!newRucheForm.valid"  (click)="createRuche(newRucheForm.value)" > Créer Ruche</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+       
       </div>
     </div>
   </div>
 </div>
+<!-- End of new Ruche Modal -->
+
+<!-- Edit Ruche Modal -->
+<div class="modal fade" id="editRucheModal" backdrop="false"tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Editer ruche</h3> </h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form  [formGroup]="newRucheForm" (ngSubmit)="onEditerRuche(newRucheForm.value)">
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label">Nom :</label>
+      <input [(ngModel)]="nomRuche" formControlName="nomRuche" type="text" class="form-control" id="recipient-name" value="{{selectedRuche.name}}">
+    </div>
+
+    <div class="form-group">
+      <label for="message-text" class="col-form-label">Description :</label>
+      <textarea [(ngModel)]="descriptionRuche"   formControlName="descriptionRuche" class="form-control" id="message-text" value="{{selectedRuche.description}}"></textarea>
+    </div>
+
+    <!---<button type="submit" class="btn btn-primary"  [disabled]="!newRucheForm.valid" > Editer Ruche</button>
+         </button>
+    -->
+  </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary"  data-dismiss="modal" (click)="onEditerRuche(newRucheForm.value)" [disabled]="!newRucheForm.valid">Editer Ruche</button>
+    <button type="button" class="btn btn-secondary"  data-dismiss="modal" (click)="resetRucheForm()">Fermer</button>
+</div>
+</div>
+</div>
+</div>
 <!-- End of edit Rucher Modal -->
 
+
+
+<!-- New Observation Modal -->
+<div class="modal fade" id="newObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Nouvelle Observation</h3> </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form  [formGroup]="ObservationForm" (ngSubmit)="createRuche(ObservationForm.value)">
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Observations :</label>
+        <input [(ngModel)]="sentence" formControlName="sentence" type="text" class="form-control" id="recipient-name">
+      </div>
+      
+       
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" (click)="createObservation(ObservationForm.value)" [disabled]="!ObservationForm.valid" > Créer Observation</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+   
+  </div>
+</div>
+</div>
+</div>
+<!-- End of new Observation Modal -->
+
+
 <script>
-    $('#editRucheModal').modal({
-       keyboard: false,
-       backdrop : static
-    })
-  </script>
+$('#editRucheModal').modal({
+ keyboard: false,
+ backdrop : static
+})
+</script>

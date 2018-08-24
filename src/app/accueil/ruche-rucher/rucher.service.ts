@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
-import { CONFIG } from '../../../config';
+import { CONFIG } from 'config';
 import { Rucher } from './rucher';
 import { Ruche } from './ruche';
+import { ProcessReport } from './processedReport';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -72,5 +73,12 @@ export class RucherService {
     errorHandler(error: HttpErrorResponse){
         return Observable.throw(error.message || "server error")
     }
-    
+
+    createObservation(observation) {
+        return this.http.put(CONFIG.URL+'report/insert',observation);
+    }
+
+    getObservation(idApiary): Observable<ProcessReport[]> {
+        return this.http.get<ProcessReport[]>(CONFIG.URL+'report/apiary/'+idApiary);
+    }
 }

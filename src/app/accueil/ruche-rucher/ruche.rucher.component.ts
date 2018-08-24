@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ViewChild, ElementRef } from '@angular/core';
 import { Rucher } from './rucher';
 import { Ruche } from './ruche';
+import { ProcessReport } from './processedReport';
 import { RucherService } from './rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
@@ -41,13 +42,22 @@ export class RucheRucherComponent implements OnInit {
     descriptionEdit='';
     villeEdit='';
     codePostalEdit='';
-    //object to create a new rucher
+    //New Observation
+    ObservationForm : FormGroup;
+    type='ApiaryObs';
+    date = new Date();
+    sentence='';
+    //object to create a new apiary
     rucher = new Rucher();
+    //object to edit the apiary
     rucherE = new Rucher();
     //object for details ruchers
     detailsRucher : any[] =[];
-    // array to store observations nature
-    observationsNature : any[] = []; 
+    // array to store observations apiary
+    apiaryObs : ProcessReport[] = []; 
+
+    //
+    newObs = new ProcessReport();
 
     //nouvelle ruche
     ruche = new Ruche();
@@ -99,7 +109,9 @@ export class RucheRucherComponent implements OnInit {
                   'nomRuche': [null,Validators.compose([Validators.required])],
                   'descriptionRuche': [null]
             })
-     
+            this.ObservationForm=formBuilder.group({
+              'sentence': [null,Validators.compose([Validators.required])]
+        })
 
         
         this.username= data.currentUser().username;
@@ -121,13 +133,13 @@ ngOnInit(){
       this.getUserRuchers();  
       this.getRucheDuRucher();
       this.getDetailsRucher();
-      this.getObservationsNature();
+      this.getObservationsApiary();
 }
 
-getObservationsNature(){
-  this._rapportService.getObservationsNature(this.selectedRucher).subscribe(
+getObservationsApiary(){
+  this.rucherService.getObservation(this.selectedRucher).subscribe(
     data => { 
-              this.observationsNature = data;
+              this.apiaryObs = data;
             },
     err => console.error(err),
     () => console.log()
@@ -301,6 +313,7 @@ getUserRuchers(){
     console.log("selected rucher : "+this.selectedRucher);
     this.getRucheDuRucher();
     this.getDetailsRucher();
+    this.getObservationsApiary();
 
   }
 
@@ -359,6 +372,7 @@ getUserRuchers(){
         this.subscribeToData();
         this.newRucheForm.reset();
   }
+
   editRucherClicked(){
     if(this.updateRucherInput==true){
       this.updateRucherInput=false;
@@ -369,6 +383,29 @@ getUserRuchers(){
        
     }
   }
+
+
+  //Pour créer une observation
+  createObservation(observation){
+      // sometimes you want to be more precise
+      var options = {
+        weekday:'short',year:'numeric',month:'long',day:'2-digit',hour: 'numeric', minute: 'numeric', second: 'numeric',
+    };
+    this.newObs.date = new Intl.DateTimeFormat('fr-FR', options).format(this.date);
+    this.newObs.type = this.type;
+    this.newObs.sentence = this.sentence;
+    this.newObs.idApiary = this.currentRucherID;
+    this.newObs.idHive = '';
+    this.newObs.nluScore = '';
+
+      this.rucherService.createObservation(this.newObs).subscribe( 
+        data => {},
+        ( error => this.errorMsg=error)
+      );
+    alert("Votre Observations a été enregistrée avec Succès !");
+    this.getObservationsApiary();
+    this.ObservationForm.reset();
+}
 
   private refreshRucherData(): void {
     this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
