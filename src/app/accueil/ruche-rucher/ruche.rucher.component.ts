@@ -34,10 +34,12 @@ export class RucheRucherComponent implements OnInit {
     nom ='';
     description='';
     codePostal='';
+    ville='';
     // Edit Rucher 
     editRucherForm : FormGroup;
     nomEdit ='';
     descriptionEdit='';
+    villeEdit='';
     codePostalEdit='';
     //object to create a new rucher
     rucher = new Rucher();
@@ -80,21 +82,22 @@ export class RucheRucherComponent implements OnInit {
         
             this.newRucherForm=formBuilder.group({
                     'nom': [null,Validators.compose([Validators.required])],
-                    'description': [null,Validators.compose([Validators.required])],
+                    'description': [null],
+                    'ville': [null,Validators.compose([Validators.required])],
                     'codePostal': [null,Validators.compose([Validators.required])],
-                    
                     'validate' : ``
                 })
 
             this.editRucherForm=formBuilder.group({
                   'nom': [null,Validators.compose([Validators.required])],
-                  'description': [null,Validators.compose([Validators.required])],
+                  'description': [null],
+                  'ville': [null,Validators.compose([Validators.required])],
                   'codePostal': [null,Validators.compose([Validators.required])],
                   'validate' : ``
               })
             this.newRucheForm=formBuilder.group({
                   'nomRuche': [null,Validators.compose([Validators.required])],
-                  'descriptionRuche': [null,Validators.compose([Validators.required])]
+                  'descriptionRuche': [null]
             })
      
 
@@ -177,6 +180,7 @@ createRucher(rucher){
         this.rucher.name=this.nom;
         this.rucher.description=this.description;
         this.rucher.codePostal=this.codePostal;
+        this.rucher.ville=this.ville;
         this.rucher.username=this.username;
         this.rucher.createdAt=new Date();
         this.rucher.username=this.username;
@@ -241,9 +245,10 @@ createRucher(rucher){
 onEditerRucher(rucherEdit){
     this.rucherE.name=this.editRucherForm.controls['nom'].value;
     this.rucherE.description=this.editRucherForm.controls['description'].value;
+    this.rucherE.ville=this.editRucherForm.controls['ville'].value;
     this.rucherE.codePostal=this.editRucherForm.controls['codePostal'].value;
     this.rucherE.id=String(this.selectedRucher);
-    if (confirm("Etes vous sur de vouloir editer ce rucher : ?" + this.rucherE.name)){
+    if (confirm("Etes vous sur de vouloir editer le rucher \""+this.rucherE.name+"\" : ?")){
   
       console.log(" this.rucherE.name : " +  this.rucherE.name);
     
@@ -253,16 +258,17 @@ onEditerRucher(rucherEdit){
         );
       this.updateRucherInput=false;
       //this.editRucherClicked();
+      alert("Votre rucher a été éditée");
+      this.subscribeToData();
+      this.refreshRucherData();
+      //this.editRucherClicked();
+      this.getDetailsRucher();
+      //this.newRucherForm.reset();
 
-}
+    }
 
 
-alert("Votre rucher a été éditée");
-     this.subscribeToData();
-     this.refreshRucherData();
-     //this.editRucherClicked();
-     this.getDetailsRucher();
-     //this.newRucherForm.reset();
+    
 }
 
 getUserRuchers(){

@@ -146,6 +146,7 @@
             </button>
             <div *ngIf="!updateRucherInput">
               <h4 class="text-center">{{detailsRucher.name}} </h4>
+              <h5 class="text-center"><b> </b>{{detailsRucher.ville}}</h5>
               <h5 class="text-center"><b> </b>{{detailsRucher.codePostal}}</h5>
               <p class="text-center"><b> </b>{{detailsRucher.description}}</p>
             </div>
@@ -194,15 +195,28 @@
                     <div class="form-group row"  >
                         <div class="col-md-12">
                           <label for="recipient-name" class="col-form-label">Ville :  </label>
-                          <input [(ngModel)]="detailsRucher.codePostal" formControlName="codePostal" type="text" class="form-control text-left" id="recipient-name">
+                          <input [(ngModel)]="detailsRucher.ville" formControlName="ville" type="text" class="form-control text-left" id="recipient-name">
                         </div>
                         <div class="col-md-12">
-                          <div class="alert alert-danger" *ngIf="editRucherForm.controls['codePostal'].invalid ">
+                          <div class="alert alert-danger" *ngIf="editRucherForm.controls['ville'].invalid ">
                               Veuillez saisir une ville
                           </div>
                         </div>
-               
+                        
                     </div>
+
+                    <div class="form-group row"  >
+                      <div class="col-md-12">
+                        <label for="recipient-name" class="col-form-label">Code Postal :  </label>
+                        <input [(ngModel)]="detailsRucher.codePostal" formControlName="codePostal" type="text" class="form-control text-left" id="recipient-name">
+                      </div>
+                      <div class="col-md-12">
+                        <div class="alert alert-danger" *ngIf="editRucherForm.controls['codePostal'].invalid ">
+                            Veuillez saisir un Code Postal
+                        </div>
+                      </div>
+                      
+                  </div>
                   
                     <div class="form-group row"  >
                         <div class="col-md-6">
@@ -257,9 +271,16 @@
                   </div>
                   <div class="form-group">
                     <label for="recipient-name" class="col-form-label">Ville :</label>
+                    <input [(ngModel)]="ville" formControlName="ville" type="text" class="form-control" id="recipient-name">
+                    <div class="alert alert-danger" *ngIf="!newRucherForm.controls['ville'].valid && newRucherForm.controls['ville'].touched">
+                              Veuillez saisir le nom de la ville
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Code postal :</label>
                     <input [(ngModel)]="codePostal" formControlName="codePostal" type="text" class="form-control" id="recipient-name">
                     <div class="alert alert-danger" *ngIf="!newRucherForm.controls['codePostal'].valid && newRucherForm.controls['codePostal'].touched">
-                              Veuillez saisir le nom de la ville
+                              Veuillez saisir le nom de le codePostal
                     </div>
                   </div>
               </form>

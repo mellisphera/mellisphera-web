@@ -65,7 +65,7 @@ export class CapteurComponent implements OnInit {
         this.newCapteurForm=formBuilder.group({
                             'reference': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(20)])],
                             'type': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(400)])],
-                            'description': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(400)])],
+                            'description': [null],
                             'selectedRucher': [null],
                             'selectedRuche': [null],
                             'checkbox': [],
