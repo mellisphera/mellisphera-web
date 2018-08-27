@@ -25,6 +25,7 @@ import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouve
 import { RucheDetailComponent } from './accueil/ruche-rucher/ruche-detail/ruche.detail.component';
 import { RapportComponent } from './accueil/rapport/rapport.component';
 import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
+import { DispositionRucheComponent } from './accueil/disposition-ruche/disposition-ruche.component';
 
 const routes: Routes =[
    /* { path: '',             component: LoginComponent },  
@@ -50,7 +51,8 @@ const routes: Routes =[
     { path: 'graphiques',       component: GraphComponent },
     { path: 'ruche-detail',     component: RucheDetailComponent},
     { path: 'rapport',          component: RapportComponent},
-    { path: 'fleurs-floraison', component: FleursFloraisonComponent }
+    { path: 'fleurs-floraison', component: FleursFloraisonComponent },
+    { path: 'position-Ruche', component: DispositionRucheComponent}
     
 ];
 

@@ -186,6 +186,8 @@ createRucher(rucher){
         this.rucher.username=this.username;
         this.rucher.createdAt=new Date();
         this.rucher.username=this.username;
+        this.rucher.urlPhoto='void';
+
 
         this.rucherService.createRucher(this.rucher).subscribe( 
               data => {
@@ -285,7 +287,6 @@ onSelectObs(obs){
     this.dateEdit=this.selectedObs.date;
   }
 
-
 //Pour effacer une ruche
 deleteRuche(ruche){
   this.selectedRuche = ruche;
@@ -293,6 +294,7 @@ deleteRuche(ruche){
     this.rucherService.deleteRuche(this.selectedRuche).subscribe(
       data => {},
       ( error => this.errorMsg=error));
+
   }
   this.refreshRucherData();
   this.subscribeToData();
