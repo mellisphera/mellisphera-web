@@ -65,6 +65,11 @@ export class RucherService {
         return this.http.delete(CONFIG.URL+'hives/' + ruche.id);
     }
 
+    updateCoordonneesRuche(ruche){
+        let body = JSON.stringify(ruche);
+        return this.http.put(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,body,httpOptions);
+    }
+
     getRucheDetail(idHive) : Observable<Ruche> {
         return this.http.get<Ruche>(CONFIG.URL+'hives/details/'+idHive);
     } 

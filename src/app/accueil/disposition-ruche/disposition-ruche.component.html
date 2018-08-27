@@ -1,0 +1,25 @@
+<div class="wrapper">
+  <div class="sidebar" data-color="yellow" data-image="">
+      <app-sidebar ></app-sidebar>
+      <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+  </div>
+  <div class="main-panel">
+    <div class="form-group">
+        <label><h4>Rucher :</h4> </label>
+        <select id="sel1" (change)="onChange($event)">
+          <option *ngFor="let rucher of rucherByUser; let i = index" [id]="i" [value]="rucher.id" >{{ rucherByUser[i].name}}</option>
+        </select>
+      <div id="cadre" [ngStyle]="style">
+         <!-- <img src="/assets/img/rucher-loin.jpg"/>-->
+        <div 
+        data-toggle="tooltip" data-placement="top" [title]="infoRuche"
+        *ngFor="let ruche of tabRuche; let i = index" 
+        [style.left.%]="ruche.hivePosX"
+        [style.top.%]="ruche.hivePosY"
+        [id]="i" (mouseover)="onMouseover($event)" (stopped)="onDragEnd($event)" [allowedOffsets]="offset" ngDraggable class="ruche">
+         <div id="health_status"></div>
+         <div id="health_trend"></div>
+        </div>
+      </div>
+      </div>
+    </div>

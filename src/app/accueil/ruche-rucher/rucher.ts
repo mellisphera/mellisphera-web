@@ -9,5 +9,11 @@ createdAt : Date;
 urlPhoto : string;
 username : string;
 codePostal : string;
+ville : string;
+
+
+    getCity(){
+        return this.ville;
+    }
   
 }
