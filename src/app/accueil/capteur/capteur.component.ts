@@ -179,7 +179,9 @@ export class CapteurComponent implements OnInit {
     deleteCapteur(capteur){
         this.selectedCapteur = capteur;
         if (confirm("Etes vous sure de vouloir supprimer : " + this.selectedCapteur.reference + "?")) {
-          this.capteurService.deleteCapteur(this.selectedCapteur).subscribe();
+          this.capteurService.deleteCapteur(this.selectedCapteur).subscribe(
+              data => {},
+               ( error => this.errorMsg=error));
         }
         this.subscribeToData();
      
@@ -235,7 +237,7 @@ export class CapteurComponent implements OnInit {
     }
 
     private subscribeToData(): void {
-        this.timerSubscription = Observable.timer(2000).first().subscribe(() => this.getAllCapteur());
+        this.timerSubscription = Observable.timer(200).first().subscribe(() => this.getAllCapteur());
     }
 
 
