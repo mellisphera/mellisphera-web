@@ -11,9 +11,9 @@ username : string;
 codePostal : string;
 ville : string;
 
-
     getCity(){
         return this.ville;
     }
+
   
 }

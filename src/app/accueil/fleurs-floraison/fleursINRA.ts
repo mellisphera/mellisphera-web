@@ -1,4 +1,4 @@
-export class FleurTheoriques {
+export class FleursINRA {
 	autre : String;
     butineur : String;
     famille : String;

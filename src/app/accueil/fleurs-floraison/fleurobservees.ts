@@ -1,4 +1,4 @@
-export class Fleur {
+export class FleurObservees {
 	id : string;
 	nom : string;
 	dateDebut : Map<string,number>;

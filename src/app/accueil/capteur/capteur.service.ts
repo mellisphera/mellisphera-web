@@ -37,13 +37,11 @@ export class CapteurService {
     }
 
     updateCapteur(capteur : Capteur) {
-        alert("capteur.id : "+capteur.id);
         let body = JSON.stringify(capteur);
         return this.http.put(CONFIG.URL+'sensors/update/' + capteur.id, body, httpOptions);
     }
 
     checkCapteurType(capteurRef) : Observable<any[]>{
-        //alert(capteurRef);
         return this.http.get<any[]>(CONFIG.URL+'sold-devices/check/'+capteurRef);
     }
 

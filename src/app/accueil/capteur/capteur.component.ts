@@ -65,7 +65,7 @@ export class CapteurComponent implements OnInit {
         this.newCapteurForm=formBuilder.group({
                             'reference': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(20)])],
                             'type': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(400)])],
-                            'description': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(400)])],
+                            'description': [null],
                             'selectedRucher': [null],
                             'selectedRuche': [null],
                             'checkbox': [],
@@ -91,7 +91,7 @@ export class CapteurComponent implements OnInit {
 
     selectRadioStock(){
         console.log("radio stock : " + this.radioStock);
-        console.log("radio stock : " + this.radioRuche);
+        console.log("radio ruche : " + this.radioRuche);
         this.editedSensorMsg=false;
         this.radioRuche=false;
         this.radioStock=true;
@@ -161,7 +161,7 @@ export class CapteurComponent implements OnInit {
         this.capteur.idApiary = String(this.selectedRucher);
         this.capteur.username = this.username;
 
-        if(this.radioStock==true){
+        if(this.radioStock){
             this.capteur.idHive = "stock";
             this.capteur.idApiary = "stock";
         }
@@ -213,11 +213,6 @@ export class CapteurComponent implements OnInit {
         this.editedSensorMsg=true;
         
         this.editCapteurForm.reset();
-        alert();
-        alert();
-        alert();
-        alert();
-        alert();
         this.subscribeToData();
         
     }
