@@ -33,7 +33,9 @@ export class RucheDetailComponent implements OnInit {
     ObservationForm : FormGroup;
     type='';
     date = new Date();
+    dateEdit = String();
     sentence='';
+    selectedObs = new ProcessReport();
 
     radioObs : boolean;
     radioAct : boolean;
@@ -41,6 +43,7 @@ export class RucheDetailComponent implements OnInit {
     //
     newObs = new ProcessReport();
 
+    selectedObsR = new ProcessReport();
 
     public errorMsg;
 
@@ -92,6 +95,13 @@ getObservationsHive(){
     );
 }
 
+onSelectObsR(obs){
+    this.selectedObsR=obs;
+    this.type=this.selectedObsR.type;
+    this.sentence=this.selectedObsR.sentence;
+    this.dateEdit=this.selectedObsR.date;
+  }
+
 selectRadioAction(){
     this.radioAct = true;
     this.radioObs = false;
@@ -122,6 +132,7 @@ createObservation(observation){
     this.newObs.idApiary = '';
     this.newObs.idHive = this.rucheId;
     this.newObs.nluScore = '';
+    this.newObs.id=null;
 
       this.rucherService.createObservation(this.newObs).subscribe( 
         data => {},
@@ -134,6 +145,32 @@ createObservation(observation){
     this.radioObs = true;
     this.subscribeToData();
 }
+
+onEditObservation(){
+    this.newObs.date = this.dateEdit;
+    this.newObs.sentence = this.sentence;
+    this.newObs.type = this.selectedObsR.type;
+    this.newObs.id = this.selectedObsR.id;
+    this.newObs.idApiary = this.selectedObsR.idApiary;
+    this.newObs.idHive = this.selectedObsR.idHive;
+    this.newObs.nluScore = this.selectedObsR.nluScore;
+    this.rucherService.updateObs(this.newObs).subscribe( 
+      data => {},
+      ( error => this.errorMsg=error)
+    );
+    alert("Votre observation a été éditée");
+    this.subscribeToData();
+  }
+
+deleteObsR(ap){
+    if (confirm("Etes vous sur de vouloir supprimer cette observation ?")) {
+      this.rucherService.deleteObservation(ap.id).subscribe( 
+        data => {},
+        ( error => this.errorMsg=error)
+      );
+    }
+    this.subscribeToData();
+  }
 
 resetObservationForm(){
     this.ObservationForm.get('sentence').reset();

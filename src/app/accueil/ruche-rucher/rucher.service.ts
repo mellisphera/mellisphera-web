@@ -81,4 +81,12 @@ export class RucherService {
     getObservation(idApiary): Observable<ProcessReport[]> {
         return this.http.get<ProcessReport[]>(CONFIG.URL+'report/apiary/'+idApiary);
     }
+
+    updateObs(observation) {
+        return this.http.put(CONFIG.URL+'report/update/' + observation.id, observation);
+    }
+
+    deleteObservation(idObs) {
+        return this.http.delete(CONFIG.URL+'report/'+idObs);
+    }
 }
