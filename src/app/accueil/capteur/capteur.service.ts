@@ -42,12 +42,7 @@ export class CapteurService {
     }
 
     checkCapteurType(capteurRef) : Observable<any[]>{
-        return this.http.get<any[]>(CONFIG.URL+'sold-devices/check/'+capteurRef);
-    }
-
-
-    string(){
-        return "ezibi ?" ; 
+        return this.http.get<any[]>(CONFIG.URL+'sold_devices/check/'+capteurRef);
     }
 
     errorHandler(error: HttpErrorResponse){
