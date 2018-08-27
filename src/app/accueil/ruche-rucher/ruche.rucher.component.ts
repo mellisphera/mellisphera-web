@@ -20,69 +20,69 @@ import { RapportService } from '../rapport/rapport.service';
 
 export class RucheRucherComponent implements OnInit {
 
-    @ViewChild('closeBtn') closeBtn: ElementRef;
+  @ViewChild('closeBtn') closeBtn: ElementRef;
 
-    //variable to store ruchers
-    ruchers: any [] = [];
-    //variable to store ruches
-    ruches: any [] = [];
-    //variable for connected user
-    username : string;
-    //variable for currentRucher ID
-    currentRucherID: string;
-    // new rucher form
-    newRucherForm : FormGroup;
-    nom ='';
-    description='';
-    codePostal='';
-    ville='';
-    // Edit Rucher 
-    editRucherForm : FormGroup;
-    nomEdit ='';
-    descriptionEdit='';
-    villeEdit='';
-    codePostalEdit='';
+  //variable to store ruchers
+  ruchers: any [] = [];
+  //variable to store ruches
+  ruches: any [] = [];
+  //variable for connected user
+  username : string;
+  //variable for currentRucher ID
+  currentRucherID: string;
+  // new rucher form
+  newRucherForm : FormGroup;
+  nom ='';
+  description='';
+  codePostal='';
+  ville='';
+  // Edit Rucher 
+  editRucherForm : FormGroup;
+  nomEdit ='';
+  descriptionEdit='';
+  villeEdit='';
+  codePostalEdit='';
 
-    //
-    newObs = new ProcessReport();
-    //New Observation
-    ObservationForm : FormGroup;
-    type='ApiaryObs';
-    date = new Date();
-    dateEdit = String();
-    sentence='';
-    //object to create a new apiary
-    rucher = new Rucher();
-    //object to edit the apiary
-    rucherE = new Rucher();
-    //object for details ruchers
-    detailsRucher : any[] =[];
-    // array to store observations apiary
-    apiaryObs : ProcessReport[] = []; 
+  //
+  newObs = new ProcessReport();
+  //New Observation
+  ObservationForm : FormGroup;
+  type='ApiaryObs';
+  date = new Date();
+  dateEdit = String();
+  sentence='';
+  //object to create a new apiary
+  rucher = new Rucher();
+  //object to edit the apiary
+  rucherE = new Rucher();
+  //object for details ruchers
+  detailsRucher : Rucher[] =[];
+  // array to store observations apiary
+  apiaryObs : ProcessReport[] = []; 
     
 
-    //nouvelle ruche
-    ruche = new Ruche();
-    newRucheForm : FormGroup;
-    nomRuche ='';
-    descriptionRuche='';
+  //nouvelle ruche
+  ruche = new Ruche();
+  newRucheForm : FormGroup;
+  nomRuche ='';
+  descriptionRuche='';
 
-    x; 
+  x; 
     
-    selectedRucher = new Rucher();
-    selectedRuche = new Ruche();
-    selectedObs = new ProcessReport();
-    selectedRucherNull:boolean;
-    public errorMsg;
-    //updateRucher input is true when user clicks on Update Rucher
-    updateRucherInput: boolean;
+  selectedRucher = new Rucher();
+  selectedRuche = new Ruche();
+  selectedObs = new ProcessReport();
+  selectedRucherNull:boolean;
+  public errorMsg;
+  //updateRucher input is true when user clicks on Update Rucher
+  updateRucherInput: boolean;
 
-    parentMessage;
+  parentMessage;
 
-    localStorageRuche;
-    //localStorageRucheName;
+  localStorageRuche;
+  //localStorageRucheName;
 
-   private timerSubscription: AnonymousSubscription;
+  private timerSubscription: AnonymousSubscription;
  
     
   constructor(  private formBuilder: FormBuilder,
@@ -125,37 +125,34 @@ export class RucheRucherComponent implements OnInit {
 
 
 ngOnInit(){
-     // this.clearRucherSelection();
-      this.updateRucherInput=false;
-      this.x=String(this.selectedRucher);
-      this.x=this.currentRucherID;
-      this.selectedRucher=this.x;
-
-      this.getUserRuchers();  
-      this.getRucheDuRucher();
-      this.getDetailsRucher();
-      this.getObservationsApiary();
+  // this.clearRucherSelection();
+  this.updateRucherInput=false;
+  this.x=String(this.selectedRucher);
+  this.x=this.currentRucherID;
+  this.selectedRucher=this.x;
+  this.getUserRuchers();  
+  this.getRucheDuRucher();
+  this.getDetailsRucher();
+  this.getObservationsApiary();
 }
 
 getObservationsApiary(){
   this.rucherService.getObservation(this.selectedRucher).subscribe(
     data => { 
-              this.apiaryObs = data;
-            },
-    err => console.error(err)
-  );
+      this.apiaryObs = data;
+    },
+    err => console.error(err));
 }
 
 clickOnRuche(ruche){    
-        this.selectedRuche=ruche;
-        this.localStorageRuche= this.selectedRuche.id;
-
-        localStorage.setItem("clickedRuche",  this.localStorageRuche);
-        localStorage.setItem("selectedRucheName",  this.selectedRuche.name);
+  this.selectedRuche=ruche;
+  this.localStorageRuche= this.selectedRuche.id;
+  localStorage.setItem("clickedRuche",  this.localStorageRuche);
+  localStorage.setItem("selectedRucheName",  this.selectedRuche.name);
 }
 
 resetForm(){
-   this.newRucherForm.reset();
+  this.newRucherForm.reset();
 }
 
 
@@ -182,7 +179,6 @@ clearRucherSelection(){
 //Fonction pour créer le rucher
 createRucher(rucher){
         this.selectedRucherNull=true;
-        //JSON.stringify(this.username);
         this.rucher.name=this.nom;
         this.rucher.description=this.description;
         this.rucher.codePostal=this.codePostal;
@@ -209,244 +205,219 @@ createRucher(rucher){
         alert("Votre rucher a été créé");
         this.refreshRucherData()
         this.newRucherForm.reset();
-
-    
-  }
-  //delete rucher
-  deleteRucher(rucher){
-    rucher= this.selectedRucher;
-    
-      if(this.selectedRucher!=null) {
-        if (confirm("Etes vous sur de vouloir supprimer : " + this.selectedRucher + "?")) {
-          this.rucherService.deleteRucher(rucher).subscribe(
-            data => {},
-          ( error => this.errorMsg=error)
-          );
-          //this.clearRucherSelection();
-          this.refreshRucherData(); 
-          //this.currentRucherID=null;
-          this.subscribeToData();
-          this.getDetailsRucher();
-          alert("this.rucher[0].id : " +  this.ruchers[0].id)
-          localStorage.setItem("currentRucher",   this.ruchers[0].id);
-          this.selectedRucher= this.ruchers[0].id;
-          alert("le rucher a été supprimé :( ")
-        }
-      }
-      else {
-        alert("aucun rucher selectionné");
-      }
-
 }
-
-  //Editer Rucher
-onEditerRucher(rucherEdit){
-    this.rucherE.name=this.editRucherForm.controls['nom'].value;
-    this.rucherE.description=this.editRucherForm.controls['description'].value;
-    this.rucherE.ville=this.editRucherForm.controls['ville'].value;
-    this.rucherE.codePostal=this.editRucherForm.controls['codePostal'].value;
-    this.rucherE.id=String(this.selectedRucher);
-    if (confirm("Etes vous sur de vouloir editer le rucher \""+this.rucherE.name+"\" : ?")){    
-      this.rucherService.updateRucher(this.rucherE).subscribe( 
+//delete rucher
+deleteRucher(rucher){
+  this.selectedRucher = rucher;
+  if(this.selectedRucher!=null) {
+    if (confirm("Etes vous sur de vouloir supprimer : " + rucher.name + "?")) {
+      this.rucherService.deleteRucher(rucher).subscribe(
         data => {},
         ( error => this.errorMsg=error)
-        );
-      this.updateRucherInput=false;
-      //this.editRucherClicked();
-      alert("Votre rucher a été éditée");
+      );
+      //this.clearRucherSelection();
+      this.refreshRucherData(); 
+      //this.currentRucherID=null;
       this.subscribeToData();
-      this.refreshRucherData();
-      //this.editRucherClicked();
       this.getDetailsRucher();
-      this.newRucherForm.reset();
+      localStorage.setItem("currentRucher",   this.ruchers[0].id);
+      this.selectedRucher= this.ruchers[0].id;
+      alert("le rucher a été supprimé :( ")
+    }
+  }
+  else {
+    alert("aucun rucher selectionné");
+  }
+}
 
-    } 
+//Editer Rucher
+onEditerRucher(rucherEdit){
+  this.rucherE.name=this.editRucherForm.controls['nom'].value;
+  this.rucherE.description=this.editRucherForm.controls['description'].value;
+  this.rucherE.ville=this.editRucherForm.controls['ville'].value;
+  this.rucherE.codePostal=this.editRucherForm.controls['codePostal'].value;
+  this.rucherE.id=String(this.selectedRucher);
+  if (confirm("Etes vous sur de vouloir editer le rucher \""+this.rucherE.name+"\" : ?")){    
+    this.rucherService.updateRucher(this.rucherE).subscribe( 
+      data => {},
+      ( error => this.errorMsg=error)
+      );
+    this.updateRucherInput=false;
+    alert("Votre rucher a été édité");
+    this.subscribeToData();
+    this.refreshRucherData();
+    this.getDetailsRucher();
+    this.newRucherForm.reset();
+
+  } 
 }
 
 getUserRuchers(){
-    this.rucherService.getUserRuchers(this.username).subscribe(
-      data => { this.ruchers = data;},
-      err => console.error(err)
-    );
-
+  this.rucherService.getUserRuchers(this.username).subscribe(
+    data => { this.ruchers = data;},
+    err => console.error(err)
+  );
 }
 
-  getRucheDuRucher(){
+getRucheDuRucher(){
       this.rucherService.getUserRuches(this.username,this.currentRucherID).subscribe(
         data => { this.ruches = data },
         () => console.log()
       );  
-  }
+}
 
-  onSelectRucher(event : any) : void{
-    this.currentRucherID=String(this.selectedRucher);
-    localStorage.setItem("currentRucher",String(this.selectedRucher));
-    this.getRucheDuRucher();
-    this.getDetailsRucher();
-    this.getObservationsApiary();
+onSelectRucher(event : any) : void{
+  this.currentRucherID=String(this.selectedRucher);
+  localStorage.setItem("currentRucher",String(this.selectedRucher));
+  this.getRucheDuRucher();
+  this.getDetailsRucher();
+  this.getObservationsApiary();
+}
 
-  }
-
-  onSelectRuche(ruche){
+onSelectRuche(ruche){
     this.selectedRuche=ruche;
     this.nomRuche=this.selectedRuche.name;
     this.descriptionRuche=this.selectedRuche.description;
-  }
+}
 
-  onSelectObs(obs){
+onSelectObs(obs){
     this.selectedObs=obs;
     this.type=this.selectedObs.type;
     this.sentence=this.selectedObs.sentence;
     this.dateEdit=this.selectedObs.date;
   }
 
+//Pour effacer une ruche
+deleteRuche(ruche){
+  this.selectedRuche = ruche;
+  if (confirm("Etes vous sur de vouloir supprimer : " + ruche.name + "?")) {
+    this.rucherService.deleteRuche(this.selectedRuche).subscribe(
+      data => {},
+      ( error => this.errorMsg=error));
 
-  //Pour effacer une ruche
-
-  deleteRuche(ruche){
-      this.selectedRuche = ruche;
-      if (confirm("Etes vous sur de vouloir supprimer : " + this.selectedRuche.name + "?")) {
-        this.rucherService.deleteRuche(this.selectedRuche).subscribe(
-              data => {},
-            ( error => this.errorMsg=error)
-          
-          );
-      }
-      this.refreshRucherData();
-      this.subscribeToData();
-      this.selectedRucher=this.ruchers[0];
   }
-
-  //Pour créer une ruche
-  createRuche(ruche){
-        this.ruche.name=this.nomRuche;
-        this.ruche.description=this.descriptionRuche;
-        this.ruche.username= this.username;
-        this.ruche.id=null;
-        this.ruche.hivePosX='1';
-        this.ruche.hivePosY='1';
-        this.ruche.idApiary=String(this.currentRucherID);
-        
-        if(this.selectedRucher!=undefined){
-          this.rucherService.createRuche(this.ruche).subscribe( 
-            data => {},
-            ( error => this.errorMsg=error)
-          );
-        }
-        alert("Votre Ruche a été créé avec Succès !");
-        this.subscribeToData();
-        this.newRucheForm.reset();
-  }
-  // pour editer une ruche
-  onEditerRuche(ruche){
-       this.ruche.name=this.nomRuche;
-       this.ruche.description=this.descriptionRuche;
-       this.ruche.id=this.selectedRuche.id;
-       this.rucherService.updateRuche(this.ruche).subscribe( 
-              data => {},
-              ( error => this.errorMsg=error)
-        );
-        alert("Votre ruche a été éditée");
-        this.subscribeToData();
-        //this.newRucheForm.reset(); 
-  }
-
-  editRucherClicked(){
-    if(this.updateRucherInput==true){
-      this.updateRucherInput=false;
-      //this.editRucherForm.reset();      
-    }  
-    else if(this.updateRucherInput==false && this.selectedRucher!=null){
-      this.updateRucherInput=true;
-       
-    }
-  }
-
-
-  //Pour créer une observation
-  createObservation(observation){
-      // sometimes you want to be more precise
-      var options = {
-        weekday:'short',year:'numeric',month:'long',day:'2-digit',hour: 'numeric', minute: 'numeric', second: 'numeric',
-    };
-    this.newObs.date = new Intl.DateTimeFormat('fr-FR', options).format(this.date);
-    this.newObs.type = this.type;
-    this.newObs.sentence = this.sentence;
-    this.newObs.idApiary = this.currentRucherID;
-    this.newObs.idHive = '';
-    this.newObs.nluScore = '';
-    this.newObs.id=null;
-      this.rucherService.createObservation(this.newObs).subscribe( 
-        data => {},
-        ( error => this.errorMsg=error)
-      );
-    alert("Votre Observations a été enregistrée avec Succès !");
-    this.getObservationsApiary();
-    this.ObservationForm.reset();
+  this.refreshRucherData();
+  this.subscribeToData();
+  this.selectedRucher=this.ruchers[0];
 }
 
-  deleteObs(ap){
-    if (confirm("Etes vous sur de vouloir supprimer cette observation ?")) {
-      this.rucherService.deleteObservation(ap.id).subscribe( 
-        data => {},
-        ( error => this.errorMsg=error)
-      );
-      this.refreshObsData();
-    }
-    
-  }
-
-  onEditObservation(){
-    this.newObs.date = this.dateEdit;
-    this.newObs.sentence = this.sentence;
-    this.newObs.type = this.type;
-    this.newObs.id = this.selectedObs.id;
-    this.newObs.idApiary = this.selectedObs.idApiary;
-    this.newObs.idHive = this.selectedObs.idHive;
-    this.newObs.nluScore = this.selectedObs.nluScore;
-    this.rucherService.updateObs(this.newObs).subscribe( 
+//Pour créer une ruche
+createRuche(ruche){
+  this.ruche.name=this.nomRuche;
+  this.ruche.description=this.descriptionRuche;
+  this.ruche.username= this.username;
+  this.ruche.id=null;
+  this.ruche.idApiary=String(this.currentRucherID);     
+  if(this.selectedRucher!=undefined){
+    this.rucherService.createRuche(this.ruche).subscribe( 
       data => {},
-      ( error => this.errorMsg=error)
-    );
-    alert("Votre observation a été éditée");
-    this.getObservationsApiary();
+      ( error => this.errorMsg=error));
   }
+  alert("Votre Ruche a été créé avec Succès !");
+  this.subscribeToData();
+  this.newRucheForm.reset();
+}
 
-  resetObservationForm(){
-    this.ObservationForm.reset();
-  }
+// pour editer une ruche
+onEditerRuche(ruche){
+  this.ruche.name=this.nomRuche;
+  this.ruche.description=this.descriptionRuche;
+  this.ruche.id=this.selectedRuche.id;
+  this.rucherService.updateRuche(this.ruche).subscribe( 
+    data => {},
+    ( error => this.errorMsg=error));
+  alert("Votre ruche a été éditée");
+  this.subscribeToData();   
+}
 
-  private refreshObsData(): void {
-    this.timerSubscription = Observable.timer(200).first().subscribe(() => this.getObservationsApiary());
+editRucherClicked(){
+  if(this.updateRucherInput==true){
+    this.updateRucherInput=false;
+    //this.editRucherForm.reset();      
+  }  
+  else if(this.updateRucherInput==false && this.selectedRucher!=null){
+    this.updateRucherInput=true;     
   }
+}
 
-  private refreshRucherData(): void {
-    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
-    this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
+
+//Pour créer une observation
+createObservation(observation){
+  // Format de la date enregistrée
+  var options = {
+    weekday:'short',year:'numeric',month:'long',day:'2-digit',hour: 'numeric', minute: 'numeric', second: 'numeric',
+  };
+  this.newObs.date = new Intl.DateTimeFormat('fr-FR', options).format(this.date);
+  this.newObs.type = this.type;
+  this.newObs.sentence = this.sentence;
+  this.newObs.idApiary = this.currentRucherID;
+  this.newObs.idHive = '';
+  this.newObs.nluScore = '';
+  this.newObs.id=null;
+  this.rucherService.createObservation(this.newObs).subscribe( 
+    data => {},
+      ( error => this.errorMsg=error));
+  alert("Votre Observations a été enregistrée avec Succès !");
+  this.getObservationsApiary();
+  this.ObservationForm.reset();
+}
+
+deleteObs(ap){
+  if (confirm("Etes vous sur de vouloir supprimer cette observation ?")) {
+    this.rucherService.deleteObservation(ap.id).subscribe( 
+      data => {},
+      ( error => this.errorMsg=error));
+    this.refreshObsData();
   }
+}
+
+onEditObservation(){
+  this.newObs.date = this.dateEdit;
+  this.newObs.sentence = this.sentence;
+  this.newObs.type = this.type;
+  this.newObs.id = this.selectedObs.id;
+  this.newObs.idApiary = this.selectedObs.idApiary;
+  this.newObs.idHive = this.selectedObs.idHive;
+  this.newObs.nluScore = this.selectedObs.nluScore;
+  this.rucherService.updateObs(this.newObs).subscribe( 
+    data => {},
+    ( error => this.errorMsg=error));
+  alert("Votre observation a été éditée");
+  this.getObservationsApiary();
+}
+
+resetObservationForm(){
+  this.ObservationForm.reset();
+}
+
+private refreshObsData(): void {
+  this.timerSubscription = Observable.timer(200).first().subscribe(() => this.getObservationsApiary());
+}
+
+private refreshRucherData(): void {
+  this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
+  this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
+}
   
-  private subscribeToData(): void {
-    this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher());
-  }
+private subscribeToData(): void {
+  this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher());
+}
 
-  resetRucheForm(){
-    this.newRucheForm.reset();
-  }
+resetRucheForm(){
+  this.newRucheForm.reset();
+}
 
 
   
-  isMap(path){
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      titlee = titlee.slice( 1 );
-      if(path == titlee){
-        return false;
-      }
-      else {
-        return true;
-      }
-  }   
-
-
-
+isMap(path){
+  var titlee = this.location.prepareExternalUrl(this.location.path());
+  titlee = titlee.slice( 1 );
+  if(path == titlee){
+    return false;
+  }
+  else {
+    return true;
+  }
+}   
 
 }
