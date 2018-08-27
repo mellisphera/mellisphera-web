@@ -43,30 +43,7 @@ export class CalendrierComponent implements OnInit {
         },500)
       },500
     );
-   
-    
-    /*
-    this.requete.setUrl('http://localhost:8091/dailyweather');
-    this.requete.exeRequete();
-    setTimeout(
-      ()=>{
-        this.json.setJsonActu(this.requete.gettabMeteo());
-        this.tabNbRucher = this.json.getJsonActu();
-        this.json.sortJsonMeteoActu();
-        //console.log(this.requete.gettabMeteo());
-        console.log(this.json.getJsonStaticMeteoActu());
-        this.json.recupMeteoById(this.json.getJsonStaticMeteoActu()[0][4]);
-        this.idRucher = this.json.getJsonStaticMeteoActu()[0][4]; 
-        this.requetteMeteoFutur();
-        this.tabMeteo = this.json.getResultat();
-        setTimeout(
-          ()=>{
-            this.affichCalendrier();
-          },1000
-        );
-        
-      },1000
-    );*/
+
   }
 
   getWeatherByCity(){
@@ -86,12 +63,7 @@ export class CalendrierComponent implements OnInit {
       this.calendrierInit = null;
     }
     this.calendrierInit = echarts.init(document.getElementById('main'));
-    /*let tab=[
-      ["2018-08-25",'01d',26,34],
-      ["2018-08-26",'01d',26,34],
-      ["2018-08-27",'01d',26,34],
-      ["2018-08-28",'01d',26,34]
-    ];*/
+
     console.log('Avant affichage calendrier :');
     this.calendrier.options.series[0].data = this.tabMeteo;
    // this.calendrier.meteo = this.tabMeteo;
@@ -108,19 +80,6 @@ export class CalendrierComponent implements OnInit {
       }
     );
   }
-/*
-  requetteMeteoFutur(){
-    this.requete.setUrl('https://api.openweathermap.org/data/2.5/forecast?q='+this.requete.city+'&units=metric&appid=110ff02ed24ccd819801248373c3b208');
-    this.requete.exeRequete();
-    setTimeout(
-      ()=>{
-        this.json.setJsonMeteoFutur(this.requete.gettabMeteo());
-        this.json.sortJsonMeteoFutur();
-      },1000
-    );
-
-  }
-*/
   onChange(id){
     this
     this.idRucher = id.target.value;
