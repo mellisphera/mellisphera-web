@@ -55,18 +55,15 @@ export class RapportComponent implements OnInit {
               })
     
         this.username= data.currentUser().username;
-        console.log("local storage ruche ID "+localStorage.getItem("clickedRuche") );
     }
 
     ngOnInit(){
-      console.log(this.texteRapport);
       this.getUserRuchers();
       this.currentRucherID= localStorage.getItem("currentRucher");
       this.x=String(this.selectedRucher);
       this.x=this.currentRucherID;
       this.selectedRucher=this.x;
       this.deleteAllReportTemp();
-      console.log("nat : "+this.observationsNature);
       this.btnAnalyse=true;
       
     }
@@ -80,39 +77,33 @@ export class RapportComponent implements OnInit {
     getObservationsNature(){
       this._rapportService.getObservationsNatureTemp(this.selectedRucher).subscribe(
         data => { this.observationsNature = data;},
-        err => console.error(err),
-        () => console.log()
+        err => console.error(err)
       );
     }
 
     getObservationsRuche(){
       this._rapportService.getObservationsRucheTemp(this.selectedRucher).subscribe(
         data => { this.observationsRuche = data;},
-        err => console.error(err),
-        () => console.log()
+        err => console.error(err)
       );
     }
 
     getActionsApicoles(){
       this._rapportService.getActionsApicolesTemp(this.selectedRucher).subscribe(
         data => { this.actionsApicole = data;},
-        err => console.error(err),
-        () => console.log()
+        err => console.error(err)
       );
     }
 
     getUserRuchers(){
-      console.log("this username :"+  this.username);
       this.rucherService.getUserRuchers(this.username).subscribe(
         data => { this.ruchers = data;},
-        err => console.error(err),
-        () => console.log()
+        err => console.error(err)
       );  
     }
 
     onSelectRucher(event : any) : void{
       localStorage.setItem("currentRucher",String(this.selectedRucher));
-      console.log("selected rucher : "+this.selectedRucher);
       this.getActionsApicoles();
       this.getObservationsNature();
       this.getObservationsRuche();
@@ -123,7 +114,6 @@ export class RapportComponent implements OnInit {
     saveRapport(){
         this._rapportService.saveNLU(this.texteRapport, this.selectedRucher).subscribe( 
           data => {
-            console.log(data);
             this.resultatRapport=data;
             this.texteRapport=" ";
             this.getActionsApicoles();
@@ -140,7 +130,6 @@ export class RapportComponent implements OnInit {
     getRapportTemp(){
         this._rapportService.getNluResult(this.texteRapport, this.selectedRucher).subscribe( 
           data => {
-            console.log(data);
             this.resultatRapport=data;
             alert("votre rapport a été analysé ! ");
             this.getActionsApicoles();
@@ -156,7 +145,6 @@ export class RapportComponent implements OnInit {
 
     analyserRapport(texte){
       this.getRapportTemp();
-      console.log(texte)
       this.rapportAnalyse= texte;
     }
 
