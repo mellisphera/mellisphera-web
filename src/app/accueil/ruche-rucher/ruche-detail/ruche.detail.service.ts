@@ -18,9 +18,8 @@ export class RucheDetailService {
     // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
 
     // pour afficher tout les ruchers de l'utilsateur connecté
-    getObservationsRuche(hiveName) : Observable<any[]>{
-        //alert(hiveName);
-        return this.http.get<any[]>(CONFIG.URL+'report/observations-ruche/'+hiveName);
+    getObservationsHive(idHive) : Observable<any[]>{
+        return this.http.get<any[]>(CONFIG.URL+'report/hive/'+idHive);
     }  
     // pour afficher tout les ruchers de l'utilsateur connecté
     getActionsApicoles(hiveName) : Observable<any[]>{
@@ -36,4 +35,5 @@ export class RucheDetailService {
         return Observable.throw(error.message || "server error")
     }
     
+
 }

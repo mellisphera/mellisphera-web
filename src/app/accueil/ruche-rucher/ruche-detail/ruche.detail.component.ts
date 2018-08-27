@@ -7,6 +7,7 @@ import * as echarts from '../../../../assets/echarts.js';
 
 import { Rucher } from '../rucher';
 import { Ruche } from '../ruche';
+import { ProcessReport } from '../processedReport';
 import { RucherService } from '../rucher.service';
 import { UserloggedService } from '../../../userlogged.service';
 import { selectedRucherService } from '../../_shared-services/selected-rucher.service';
@@ -21,30 +22,52 @@ import { RucheDetailService } from './ruche.detail.service';
 
 export class RucheDetailComponent implements OnInit {
    
-  rucheId;
-  rucheDetail = new Ruche();
-  rucheName;
-  rucheDescription;
-  rucheCity;
-  observationsRuche : any[] = [];
-  actionsApicole : any[] = [];   
+    rucheId;
+    rucheDetail = new Ruche();
+    rucheName;
+    rucheDescription;
+    rucheCity;
+    observationsHive : ProcessReport[] = [];
+
+    //New Observation
+    ObservationForm : FormGroup;
+    type='';
+    date = new Date();
+    dateEdit = String();
+    sentence='';
+    selectedObs = new ProcessReport();
+
+    radioObs : boolean;
+    radioAct : boolean;
+
+    //
+    newObs = new ProcessReport();
+
+    selectedObsR = new ProcessReport();
+
+    public errorMsg;
+
   private timerSubscription: AnonymousSubscription;
 
 constructor(    private formBuilder: FormBuilder,
                 public location: Location,
                 public router: Router,
                 public rucherService : RucherService,
+                public RucheDetailService : RucheDetailService,
                 private data : UserloggedService,
-                private _rucheDetailService : RucheDetailService,
                 private _selectedRucherService : selectedRucherService){
-   
-    console.log("local storage ruche ID "+localStorage.getItem("clickedRuche") );
+                this.ObservationForm=formBuilder.group({
+                        'sentence': [null,Validators.compose([Validators.required])],
+                        'checkbox': [],
+                  })
 }
 ngOnInit(){
     this.rucheId=localStorage.getItem("clickedRuche");
     this.chartWeightGain();
     this.getRucheDetails();
-    this.subscribeToData()
+    this.getObservationsHive();
+    this.radioAct = false;
+    this.radioObs = true;
 }
 
 getRucheDetails(){
@@ -53,53 +76,104 @@ getRucheDetails(){
                 this.rucheDetail = data;
                 this.rucheName = this.rucheDetail.name;
                 this.rucheDescription = this.rucheDetail.description;
-                console.error("ruchename : " + this.rucheName);
 
               },
-         err => console.error(err),
-         () => console.log()
+         err => console.error(err)
     );
 }
 
-getObservationsRuche(){
-    this._rucheDetailService.getObservationsRuche(this.rucheName).subscribe(
+getObservationsHive(){
+    this.RucheDetailService.getObservationsHive(this.rucheId).subscribe(
         data => { 
-                this.observationsRuche = data;
-                console.log(this.observationsRuche);
+                this.observationsHive = data;
             },
-        err => console.error(err),
-        () => console.log()
+        err => console.error(err)
     );
 }
 
-getActionsApicole(){
-    this._rucheDetailService.getActionsApicoles(this.rucheName).subscribe(
-        data => { 
-                    this.actionsApicole = data;
-                    console.log(this.actionsApicole);
-                },
-        err => console.error(err),
-        () => console.log()
-      );
-}
-/*
-deleteRuche(){
-    this._rucheDetailService.deleteReport(this.rucheName).subscribe(
-        data => { 
-                    this.actionsApicole = data;
-                    console.log(this.actionsApicole);
-                },
-        err => console.error(err),
-        () => console.log()
-      );
+onSelectObsR(obs){
+    this.selectedObsR=obs;
+    this.type=this.selectedObsR.type;
+    this.sentence=this.selectedObsR.sentence;
+    this.dateEdit=this.selectedObsR.date;
+  }
 
+selectRadioAction(){
+    this.radioAct = true;
+    this.radioObs = false;
 }
-*/
 
+
+selectRadioObs(){
+    this.radioAct = false;
+    this.radioObs = true;
+}
+
+//Pour créer une observation
+createObservation(observation){
+
+    // sometimes you want to be more precise
+    var options = {
+        weekday:'short',year:'numeric',month:'long',day:'2-digit',hour: 'numeric', minute: 'numeric', second: 'numeric',
+    };
+    this.newObs.date = new Intl.DateTimeFormat('fr-FR', options).format(this.date);
+
+    if (this.radioAct){
+        this.newObs.type = 'HiveAct';
+    } else {
+        this.newObs.type = 'HiveObs';
+    }
+    
+    this.newObs.sentence = this.sentence;
+    this.newObs.idApiary = '';
+    this.newObs.idHive = this.rucheId;
+    this.newObs.nluScore = '';
+    this.newObs.id=null;
+
+      this.rucherService.createObservation(this.newObs).subscribe( 
+        data => {},
+        ( error => this.errorMsg=error)
+      );
+    alert("Votre Observations a été enregistrée avec Succès !");
+    
+    this.resetObservationForm();
+    this.radioAct = false;
+    this.radioObs = true;
+    this.getObservationsHive();
+}
+
+onEditObservation(){
+    this.newObs.date = this.dateEdit;
+    this.newObs.sentence = this.sentence;
+    this.newObs.type = this.selectedObsR.type;
+    this.newObs.id = this.selectedObsR.id;
+    this.newObs.idApiary = this.selectedObsR.idApiary;
+    this.newObs.idHive = this.selectedObsR.idHive;
+    this.newObs.nluScore = this.selectedObsR.nluScore;
+    this.rucherService.updateObs(this.newObs).subscribe( 
+      data => {},
+      ( error => this.errorMsg=error)
+    );
+    alert("Votre observation a été éditée");
+    this.getObservationsHive();
+  }
+
+deleteObsR(ap){
+    if (confirm("Etes vous sur de vouloir supprimer cette observation ?")) {
+      this.rucherService.deleteObservation(ap.id).subscribe( 
+        data => {},
+        ( error => this.errorMsg=error)
+      );
+    }
+    this.subscribeToData();
+  }
+
+resetObservationForm(){
+    this.ObservationForm.get('sentence').reset();
+}
 
 private subscribeToData(): void {
-    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getActionsApicole());
-    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getObservationsRuche());
+    this.timerSubscription = Observable.timer(100).first().subscribe(() => this.getObservationsHive());
 }
 
 chartWeightGain(){
