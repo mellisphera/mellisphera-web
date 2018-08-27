@@ -21,16 +21,20 @@
                    
                             <!-- Template for the city component -->
                             <div id="cityCont" class="container">
-                            <div>
-                                    <div style="text-align:center">
-                                            <h2 *ngIf="dataCity.city">
-                                                    <img src="https://openweathermap.org/img/w/{{dataCity.list[0].weather[0].icon}}.png" class="forecast-icon" alt="forecast">
-                                                    {{dataCity.list[0].main.temp_min }}°    {{dataCity.list[0].weather[0].description}} à {{dataCity.city.name}}, {{dataCity.city.country}}
-                                                </h2>      
-                                    </div>
-                            <app-calendrier></app-calendrier>
+                                <div>
+                                        <div style="text-align:center">
+                                                <h2 *ngIf="dataCity.city">
+                                                        <img src="https://openweathermap.org/img/w/{{dataCity.list[0].weather[0].icon}}.png" class="forecast-icon" alt="forecast">
+                                                        {{dataCity.list[0].main.temp_min }}°    {{dataCity.list[0].weather[0].description}} à {{dataCity.city.name}}, {{dataCity.city.country}}
+                                                    </h2>      
+                                        </div>
+                                <app-calendrier></app-calendrier>
+                                </div>
                             </div>
-                </div>
+                        </div>
+                    </div>
 
         </div>
+    </div>
+</div>
 

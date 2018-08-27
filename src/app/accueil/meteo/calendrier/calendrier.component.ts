@@ -35,7 +35,7 @@ export class CalendrierComponent implements OnInit {
         this.cityRucher = this.tabRucher[0].codePostal;
         this.getWeatherByCity();
         setTimeout(()=>{
-          console.log(this.tabRucher);
+          console.log(this.meteo);
           this.json.setJsonWeather(this.meteo);
           this.json.sortProcess();
           this.tabMeteo=this.json.getResultat();
@@ -43,7 +43,6 @@ export class CalendrierComponent implements OnInit {
         },500)
       },500
     );
-
   }
 
   getWeatherByCity(){
@@ -63,11 +62,8 @@ export class CalendrierComponent implements OnInit {
       this.calendrierInit = null;
     }
     this.calendrierInit = echarts.init(document.getElementById('main'));
-
     console.log('Avant affichage calendrier :');
     this.calendrier.options.series[0].data = this.tabMeteo;
-   // this.calendrier.meteo = this.tabMeteo;
-    //this.calendrier.options.range = '2018-08';
     this.calendrierInit.setOption(this.calendrier.options);
   }
   getRucherByUser() {
@@ -80,11 +76,12 @@ export class CalendrierComponent implements OnInit {
       }
     );
   }
+
   onChange(id){
     this
     this.idRucher = id.target.value;
     console.log(this.tabRucher[this.idRucher]);
-    this.cityRucher = this.tabRucher[this.idRucher].codePostal;
+    this.cityRucher = this.tabRucher[this.idRucher].ville;
     console.log(this.cityRucher);
     this.getWeatherByCity();
     setTimeout(()=>{
