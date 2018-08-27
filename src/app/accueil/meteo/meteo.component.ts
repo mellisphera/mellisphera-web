@@ -49,38 +49,25 @@ export class MeteoComponent implements OnInit {
     this.getUserRuchers();
     this.getRucherName();
     this.getCityTest();
-    this.getCityData();
-
-
-
-    //console.log("wtf");
-   //console.log("rucher[0].codePostal : "+ this.ruchers[0].codePostal);
+    this.getCityData(); 
   }
 
   getUserRuchers(){
     this.rucherService.getUserRuchers(this.username).subscribe(
       data => { this.ruchers = data;},
-      err => console.error(err),
-      () => console.log()
-    );
+      err => console.error(err));
   }
   getRucherName(){
-    console.log("this.selected "+ this.selectedRucher)
     this.rucherService.getRucherName(this.selectedRucher).subscribe(
       data => { 
-                console.log("data : " + data.toString());
                 this.rucher = data;
-                //this.cityName=data;
-               /* 
-              */console.log("this.ruchername : "+ this.rucher.name)
               this.cityName=this.rucher.name;
 
                 this.getCityForecast(this.cityName);
                 this.getCityData();
                 this.getCityTest();
               },
-      err => console.error(err),
-      () => console.log()
+      err => console.error(err)
     );
   }
 
@@ -95,7 +82,6 @@ export class MeteoComponent implements OnInit {
   }
 
   getCityForecast(cityName) {
-    console.log(cityName);
    
     this.apiCityUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + this.cityName + '&units=metric&appid=***REMOVED***';
   }
@@ -107,7 +93,6 @@ export class MeteoComponent implements OnInit {
 
   getCityTest() {
       this.getCityData().subscribe(dataCity => {
-          console.log(dataCity);
           this.dataCity = dataCity;
       })
   }

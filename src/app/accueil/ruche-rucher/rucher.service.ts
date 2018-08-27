@@ -40,7 +40,7 @@ export class RucherService {
         return this.http.put(CONFIG.URL+'apiaries/update/' + rucher.id, body, httpOptions);
     }
     deleteRucher(rucher) {
-        return this.http.delete(CONFIG.URL+'apiaries/' + rucher);
+        return this.http.delete(CONFIG.URL+'apiaries/' + rucher.id);
     }
     //get rucher name
     getRucherName(idApiary) : Observable<Rucher> {

@@ -218,36 +218,27 @@ export class CapteurComponent implements OnInit {
     }
 
     getUserRuchers(){
-        console.log("this username :"+  this.username);
-        
             this.rucherService.getUserRuchers(this.username).subscribe(
                 data => { this.ruchers = data },
-                err => console.error(err),
-                () => console.log('done loading ruchers')
-            );
+                err => console.error(err));
         
     }
 
     onSelectRucher(event : any) : void{
         this.selectedRucher=event.target.value;
-        console.log("Selected Rucher : "+ this.selectedRucher);
         this.getRucheDuRucher();
         //this.getDetailsRucher();
     }
     
     onSelectRuche(event : any) : void{
         this.selectedRuche=event.target.value;
-        console.log("L'ID de la ruche selectionnée : "+ this.selectedRuche);
         this.getRucheDuRucher();
         //this.getDetailsRucher();
     }
 
     getRucheDuRucher(){
-        console.log("this username :"+  this.username);
         this.rucherService.getUserRuches(this.username,this.selectedRucher).subscribe(
-        data => { this.ruches = data },
-        
-        () => console.log('Done loading RUCHES ')
+        data => { this.ruches = data }
         );
     }
 
