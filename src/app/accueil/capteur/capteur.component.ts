@@ -90,8 +90,6 @@ export class CapteurComponent implements OnInit {
 }
 
     selectRadioStock(){
-        console.log("radio stock : " + this.radioStock);
-        console.log("radio ruche : " + this.radioRuche);
         this.editedSensorMsg=false;
         this.radioRuche=false;
         this.radioStock=true;
@@ -106,9 +104,6 @@ export class CapteurComponent implements OnInit {
         this.radioRuche=true;
         this.radioStock=false;
 
-        console.log("radio stock : " + this.radioStock);
-        console.log("radio ruche : " + this.radioRuche);
-
         this.newCapteurForm.get('selectedRuche').setValidators([Validators.required]);
         this.newCapteurForm.get('selectedRuche').updateValueAndValidity();
     }
@@ -121,13 +116,10 @@ export class CapteurComponent implements OnInit {
     }
 
     getAllCapteur(){
-        console.log("this username :"+  this.username);
        
         this.capteurService.getUserCapteurs(this.username).subscribe(
           data => {this.capteurs=data;},
-          err  => {},
-          () => console.log('done loading sensors')
-        );
+          err  => {});
        
     }
 
@@ -136,20 +128,14 @@ export class CapteurComponent implements OnInit {
     }
 
 
-    checkCapteurType(value : any){
-        
-    console.log("value :"+  value);
-       
+    checkCapteurType(value : any){       
             this.capteurService.checkCapteurType(value).subscribe(
                 data =>{ 
                     this.types=data;
                 },
                 ( error => this.errorMsg=error)
                );
-    }
-    string(){
-     //   this.test= this.capteurService.string();
-    }   
+    } 
 
    //CREATE CAPTEUR
     createCapteur(capteur){
