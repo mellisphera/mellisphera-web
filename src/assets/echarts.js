@@ -75871,7 +75871,8 @@ var MONTH_TEXT = {
 
 var WEEK_TEXT = {
     EN: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-    CN: ['日', '一', '二', '三', '四', '五', '六']
+    CN: ['日', '一', '二', '三', '四', '五', '六'],
+    FR: ['D','L', 'M', 'M', 'J', 'V', 'S']
 };
 
 extendComponentView({

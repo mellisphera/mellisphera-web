@@ -171,7 +171,6 @@ clearRucherSelection(){
 //Fonction pour créer le rucher
 createRucher(rucher){
 
-    
         this.selectedRucherNull=true;
         //JSON.stringify(this.username);
         this.rucher.name=this.nom;
@@ -180,7 +179,7 @@ createRucher(rucher){
         this.rucher.username=this.username;
         this.rucher.createdAt=new Date();
         this.rucher.username=this.username;
-
+        this.rucher.urlPhoto='void';
    
 
         this.rucherService.createRucher(this.rucher).subscribe( 
@@ -327,6 +326,8 @@ getUserRuchers(){
         this.ruche.description=this.descriptionRuche;
         this.ruche.username= this.username;
         this.ruche.id=null;
+        this.ruche.hivePosX='1';
+        this.ruche.hivePosY='1';
         this.ruche.idApiary=String(this.currentRucherID);
         
         console.log("Selected rucher ID : "+this.selectedRucher );

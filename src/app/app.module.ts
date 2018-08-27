@@ -23,7 +23,10 @@ import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouve
 import { GraphComponent } from './accueil/graph/graph.component';
 import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
 
-
+import { JsonRequete } from './accueil/meteo/calendrier/Service/JsonRequete';
+import { CalendrierComponent } from './accueil//meteo/calendrier/calendrier.component';
+import { Requete } from './accueil/meteo/calendrier/Service/Requete';
+import { Calendrier } from './accueil/meteo/calendrier/calendrier';
 
 import { TablesComponent } from './tables/tables.component';
 import { TypographyComponent } from './typography/typography.component';
@@ -53,7 +56,10 @@ import { GraphService } from './accueil/graph/graph.service';
 import { RapportService } from './accueil/rapport/rapport.service';
 import { FleursFloraisonService } from './accueil/fleurs-floraison/fleurs.floraison.service';
 import { RucheDetailService } from './accueil/ruche-rucher/ruche-detail/ruche.detail.service';
+import { DispositionRucheComponent } from './accueil/disposition-ruche/disposition-ruche.component';
 
+import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
+//import { NgDraggableModule } from 'angular-draggable'; 
 
 @NgModule({
   declarations: [
@@ -78,7 +84,9 @@ import { RucheDetailService } from './accueil/ruche-rucher/ruche-detail/ruche.de
     GraphComponent,
     RucheDetailComponent,
     RapportComponent,
-    FleursFloraisonComponent
+    FleursFloraisonComponent,
+    CalendrierComponent,
+    DispositionRucheComponent
 
   ],
   imports: [
@@ -92,7 +100,9 @@ import { RucheDetailService } from './accueil/ruche-rucher/ruche-detail/ruche.de
     AppRoutingModule,
     LbdModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DragAndCheckModule,
+    //NgDraggableModule
   ],
   providers: [
     CapteurService,
@@ -107,9 +117,11 @@ import { RucheDetailService } from './accueil/ruche-rucher/ruche-detail/ruche.de
     GraphService,
     RapportService,
     FleursFloraisonService,
-    RucheDetailService
-     
-              ],
+    RucheDetailService,
+    JsonRequete,
+    Requete,
+    Calendrier
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

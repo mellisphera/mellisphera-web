@@ -4,5 +4,7 @@ export class Ruche {
     description : string;
     username : string;
     idApiary: string;
+    hivePosX : string;
+    hivePosY : string;
    }
    
