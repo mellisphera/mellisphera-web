@@ -48,36 +48,55 @@
                                                                 <th scope="col">Date</th>
                                                                 <th scope="col">Sentence</th>
                                                                 <th scope="col">Type</th>
+                                                                <th scope="col">Actions</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <ng-container *ngFor="let hive of observationsHive" >
-                                                                    <ng-container *ngIf="hive.type =='HiveObs'">
+                                                                <ng-container *ngFor="let hiveObs of observationsHive" >
+                                                                    <ng-container *ngIf="hiveObs.type =='HiveObs'">
                                                                         <tr >
                                                                             <td>
-                                                                               {{hive.date}}
+                                                                               {{hiveObs.date}}
                                                                            </td>
                                                                             
                                                                             <td>
-                                                                                {{hive.sentence}}
+                                                                                {{hiveObs.sentence}}
                                                                             </td>
                                                                             <td>
                                                                                 Observation
                                                                             </td>
+                                                                            <td>
+                                                                                <button data-toggle="tooltip" data-html="true" title="Modifier ruche" data-toggle="modal" type="button" (click)="onSelectObsR(hiveObs)"
+                                                                                    data-target="#editObservationModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                                                                    <i class="fa fa-edit"></i>
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-warning btn-lg "  title="Supprimer ruche" style="padding: 0;border: none; background: none;" (click)="deleteObsR(hiveObs)">
+                                                                                    <i class="fa fa-times"></i>
+                                                                                </button>
+                                                                            </td>
                                                                             
                                                                         </tr>
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="hive.type =='HiveAct'">
+                                                                    <ng-container *ngIf="hiveObs.type =='HiveAct'">
                                                                             <tr style="color: blue;">
                                                                                 <td>
-                                                                                   {{hive.date}}
+                                                                                   {{hiveObs.date}}
                                                                                </td>
                                                                                 
                                                                                 <td>
-                                                                                    {{hive.sentence}}
+                                                                                    {{hiveObs.sentence}}
                                                                                 </td>
                                                                                 <td>
                                                                                     Action
+                                                                                </td>
+                                                                                <td>
+                                                                                    <button data-toggle="tooltip" data-html="true" title="Modifier ruche" data-toggle="modal" type="button" (click)="onSelectObsR(hiveObs)"
+                                                                                        data-target="#editObservationModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                                                                        <i class="fa fa-edit"></i>
+                                                                                    </button>
+                                                                                    <button type="button" class="btn btn-warning btn-lg "  title="Supprimer ruche" style="padding: 0;border: none; background: none;" (click)="deleteObsR(hiveObs)">
+                                                                                        <i class="fa fa-times"></i>
+                                                                                    </button>
                                                                                 </td>
                                                                                 
                                                                             </tr>
@@ -209,3 +228,34 @@
     </div>
 </div>
     <!-- End of new Observation Modal -->
+
+
+
+<!-- Edit Observation Modal -->
+<div class="modal fade" id="editObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Editer Observation</h3> </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form  [formGroup]="ObservationForm" (ngSubmit)="onEditObservation(ObservationForm.value)">
+              <div class="form-group">
+                <label for="recipient-editobs" class="col-form-label">Observations :</label>
+                <textarea [(ngModel)]="sentence" formControlName="sentence" type="text" class="form-control" id="recipient-editobs" value="{{ selectedObsR.sentence }}"></textarea>
+              </div>
+              
+               
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" (click)="onEditObservation(ObservationForm.value)" [disabled]="!ObservationForm.valid" > Modifier Observation</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetObservationForm()">Fermer</button>
+          </div>
+        </div>
+        </div>
+        </div>
+        <!-- End of edit Observation Modal -->

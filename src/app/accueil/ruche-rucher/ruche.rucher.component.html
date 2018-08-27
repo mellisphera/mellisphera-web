@@ -68,11 +68,11 @@
                                                  
                                                 <td>{{ruche.description}}</td>
                                                 <td>
-                                                  <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
+                                                  <button data-toggle="tooltip" data-html="true" title="Modifier ruche" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
                                                           data-target="#editRucheModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
                                                           <i class="fa fa-edit"></i>
                                                   </button>
-                                                  <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;" (click)="deleteRuche(ruche)">
+                                                  <button type="button" class="btn btn-warning btn-lg "  title="Supprimer ruche" style="padding: 0;border: none; background: none;" (click)="deleteRuche(ruche)">
                                                           <i class="fa fa-times"></i>
                                                   </button>
                                                 </td>
@@ -113,6 +113,7 @@
                                 <tr>
                                         <th scope="col">Date</th>
                                         <th scope="col">Sentence</th>
+                                        <th scope="col">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -125,7 +126,15 @@
                                     <td>
                                         {{ap.sentence}}
                                     </td>
-                            
+                                    <td>
+                                      <button data-toggle="tooltip" data-html="true" title="Modifier observation" data-toggle="modal" type="button" data-target="#editObservationModal" (click)="onSelectObs(ap)"
+                                      class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                        <i class="fa fa-edit"></i>
+                                      </button>
+                                      <button type="button" class="btn btn-warning btn-lg"  title="Supprimer observation"  style="padding: 0;border: none; background: none;" (click)="deleteObs(ap)" >
+                                              <i class="fa fa-times"></i>
+                                      </button>
+                                    </td>
                                   </tr>
                                 </tbody>
                         </table>      
@@ -139,13 +148,7 @@
 
 
     <div class="col-sm-3 sidenav" style="background-color: rgba(236, 234, 234, 0.49); height:1500px;border-color:black;">
-   
-      <!--
-      <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
-                                                      data-target="#editRucheModal" class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none;">
-          <i class="fa fa-edit"></i>
-      </button>
-      -->
+ 
       <button data-toggle="tooltip" data-html="true"  data-toggle="modal" type="button" (click)="editRucherClicked()"
                                                        class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none; ">
           <i class="fa fa-edit"></i>
@@ -159,33 +162,6 @@
         <h5 class="text-center"><b> </b>{{detailsRucher.codePostal}}</h5>
         <p class="text-center"><b> </b>{{detailsRucher.description}}</p>
       </div>
-      <!--  DO IT HERE !! !!!-->
-<!--
-      <form [formGroup]="newRucherForm" (ngSubmit)="createRucher(newRucherForm.value) ">
-          <div class="form-group"  >
-            <label for="recipient-name" class="col-form-label">Nom :</label>
-            <input [(ngModel)]="nom" formControlName="nom" type="text" class="form-control" id="recipient-name">
-            <div class="alert alert-danger" *ngIf="!newRucherForm.controls['nom'].valid && newRucherForm.controls['nom'].touched">
-              Veuillez saisir un nom entre 1 et 20 caractères
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Description :</label>
-            <textarea [(ngModel)]="description" formControlName="description" class="form-control" id="message-text"></textarea>
-            <div class="alert alert-danger" *ngIf="!newRucherForm.controls['description'].valid && newRucherForm.controls['description'].touched">
-                Veuillez saisir une description entre 1 et 40 caractères
-          </div>
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Ville :</label>
-            <input [(ngModel)]="codePostal" formControlName="codePostal" type="text" class="form-control" id="recipient-name">
-            <div class="alert alert-danger" *ngIf="!newRucherForm.controls['codePostal'].valid && newRucherForm.controls['codePostal'].touched">
-                      Veuillez saisir le nom de la ville
-            </div>
-          </div>
-      </form>
-    -->
-      <!--This is for editing Rucher-->
         <div *ngIf="updateRucherInput">
             <form [formGroup]="editRucherForm" (ngSubmit)="onEditerRucher(editRucherForm.value) ">
               <h4 class="text-center">Editer Rucher</h4>
@@ -370,10 +346,6 @@
       <label for="message-text" class="col-form-label">Description :</label>
       <textarea [(ngModel)]="descriptionRuche"   formControlName="descriptionRuche" class="form-control" id="message-text" value="{{selectedRuche.description}}"></textarea>
     </div>
-
-    <!---<button type="submit" class="btn btn-primary"  [disabled]="!newRucheForm.valid" > Editer Ruche</button>
-         </button>
-    -->
   </form>
 </div>
 <div class="modal-footer">
@@ -400,8 +372,8 @@
   <div class="modal-body">
     <form  [formGroup]="ObservationForm" (ngSubmit)="createRuche(ObservationForm.value)">
       <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Observations :</label>
-        <input [(ngModel)]="sentence" formControlName="sentence" type="text" class="form-control" id="recipient-name">
+        <label for="recipient-obs" class="col-form-label">Observations :</label>
+        <textarea [(ngModel)]="sentence" formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
       </div>
       
        
@@ -409,14 +381,42 @@
   </div>
   <div class="modal-footer">
     <button type="submit" class="btn btn-primary" (click)="createObservation(ObservationForm.value)" [disabled]="!ObservationForm.valid" > Créer Observation</button>
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-   
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetObservationForm()">Fermer</button>
   </div>
 </div>
 </div>
 </div>
 <!-- End of new Observation Modal -->
 
+
+<!-- Edit Observation Modal -->
+<div class="modal fade" id="editObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Editer Observation</h3> </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  [formGroup]="ObservationForm" (ngSubmit)="onEditObservation(ObservationForm.value)">
+          <div class="form-group">
+            <label for="recipient-editobs" class="col-form-label">Observations :</label>
+            <textarea [(ngModel)]="sentence" formControlName="sentence" type="text" class="form-control" id="recipient-editobs" value="{{ selectedObs.sentence }}"></textarea>
+          </div>
+          
+           
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="onEditObservation(ObservationForm.value)" [disabled]="!ObservationForm.valid" > Modifier Observation</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetObservationForm()">Fermer</button>
+      </div>
+    </div>
+    </div>
+    </div>
+    <!-- End of edit Observation Modal -->
 
 <script>
 $('#editRucheModal').modal({

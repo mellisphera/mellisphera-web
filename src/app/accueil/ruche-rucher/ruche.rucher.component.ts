@@ -42,10 +42,14 @@ export class RucheRucherComponent implements OnInit {
     descriptionEdit='';
     villeEdit='';
     codePostalEdit='';
+
+    //
+    newObs = new ProcessReport();
     //New Observation
     ObservationForm : FormGroup;
     type='ApiaryObs';
     date = new Date();
+    dateEdit = String();
     sentence='';
     //object to create a new apiary
     rucher = new Rucher();
@@ -55,9 +59,7 @@ export class RucheRucherComponent implements OnInit {
     detailsRucher : any[] =[];
     // array to store observations apiary
     apiaryObs : ProcessReport[] = []; 
-
-    //
-    newObs = new ProcessReport();
+    
 
     //nouvelle ruche
     ruche = new Ruche();
@@ -69,6 +71,7 @@ export class RucheRucherComponent implements OnInit {
     
     selectedRucher = new Rucher();
     selectedRuche = new Ruche();
+    selectedObs = new ProcessReport();
     selectedRucherNull:boolean;
     public errorMsg;
     //updateRucher input is true when user clicks on Update Rucher
@@ -141,8 +144,7 @@ getObservationsApiary(){
     data => { 
               this.apiaryObs = data;
             },
-    err => console.error(err),
-    () => console.log()
+    err => console.error(err)
   );
 }
 
@@ -324,6 +326,14 @@ getUserRuchers(){
     console.log("selected ruche : "+ this.selectedRuche.name);
   }
 
+  onSelectObs(obs){
+    this.selectedObs=obs;
+    this.type=this.selectedObs.type;
+    this.sentence=this.selectedObs.sentence;
+    this.dateEdit=this.selectedObs.date;
+  }
+
+
   //Pour effacer une ruche
 
   deleteRuche(ruche){
@@ -370,13 +380,13 @@ getUserRuchers(){
         );
         alert("Votre ruche a été éditée");
         this.subscribeToData();
-        this.newRucheForm.reset();
+        this.newRucheForm.reset(); 
   }
 
   editRucherClicked(){
     if(this.updateRucherInput==true){
       this.updateRucherInput=false;
-      //Fthis.editRucherForm.reset();      
+      this.editRucherForm.reset();      
     }  
     else if(this.updateRucherInput==false && this.selectedRucher!=null){
       this.updateRucherInput=true;
@@ -397,7 +407,7 @@ getUserRuchers(){
     this.newObs.idApiary = this.currentRucherID;
     this.newObs.idHive = '';
     this.newObs.nluScore = '';
-
+    this.newObs.id=null;
       this.rucherService.createObservation(this.newObs).subscribe( 
         data => {},
         ( error => this.errorMsg=error)
@@ -407,10 +417,46 @@ getUserRuchers(){
     this.ObservationForm.reset();
 }
 
+  deleteObs(ap){
+    if (confirm("Etes vous sur de vouloir supprimer cette observation ?")) {
+      this.rucherService.deleteObservation(ap.id).subscribe( 
+        data => {},
+        ( error => this.errorMsg=error)
+      );
+      this.refreshObsData();
+    }
+    
+  }
+
+  onEditObservation(){
+    this.newObs.date = this.dateEdit;
+    this.newObs.sentence = this.sentence;
+    this.newObs.type = this.type;
+    this.newObs.id = this.selectedObs.id;
+    this.newObs.idApiary = this.selectedObs.idApiary;
+    this.newObs.idHive = this.selectedObs.idHive;
+    this.newObs.nluScore = this.selectedObs.nluScore;
+    this.rucherService.updateObs(this.newObs).subscribe( 
+      data => {},
+      ( error => this.errorMsg=error)
+    );
+    alert("Votre observation a été éditée");
+    this.getObservationsApiary();
+  }
+
+  resetObservationForm(){
+    this.ObservationForm.reset();
+  }
+
+  private refreshObsData(): void {
+    this.timerSubscription = Observable.timer(200).first().subscribe(() => this.getObservationsApiary());
+  }
+
   private refreshRucherData(): void {
     this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
     this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
   }
+  
   private subscribeToData(): void {
     this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher());
   }
