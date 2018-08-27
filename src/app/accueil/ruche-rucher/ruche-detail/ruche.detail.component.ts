@@ -60,14 +60,12 @@ constructor(    private formBuilder: FormBuilder,
                         'sentence': [null,Validators.compose([Validators.required])],
                         'checkbox': [],
                   })
-   
-    console.log("local storage ruche ID "+localStorage.getItem("clickedRuche") );
 }
 ngOnInit(){
     this.rucheId=localStorage.getItem("clickedRuche");
     this.chartWeightGain();
     this.getRucheDetails();
-    this.subscribeToData();
+    this.getObservationsHive();
     this.radioAct = false;
     this.radioObs = true;
 }
@@ -80,8 +78,7 @@ getRucheDetails(){
                 this.rucheDescription = this.rucheDetail.description;
 
               },
-         err => console.error(err),
-         () => console.log()
+         err => console.error(err)
     );
 }
 
@@ -90,8 +87,7 @@ getObservationsHive(){
         data => { 
                 this.observationsHive = data;
             },
-        err => console.error(err),
-        () => console.log()
+        err => console.error(err)
     );
 }
 
@@ -143,7 +139,7 @@ createObservation(observation){
     this.resetObservationForm();
     this.radioAct = false;
     this.radioObs = true;
-    this.subscribeToData();
+    this.getObservationsHive();
 }
 
 onEditObservation(){
@@ -159,7 +155,7 @@ onEditObservation(){
       ( error => this.errorMsg=error)
     );
     alert("Votre observation a été éditée");
-    this.subscribeToData();
+    this.getObservationsHive();
   }
 
 deleteObsR(ap){
@@ -177,7 +173,7 @@ resetObservationForm(){
 }
 
 private subscribeToData(): void {
-    this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getObservationsHive());
+    this.timerSubscription = Observable.timer(100).first().subscribe(() => this.getObservationsHive());
 }
 
 chartWeightGain(){
