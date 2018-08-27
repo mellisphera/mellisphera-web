@@ -22,28 +22,10 @@
                             <!-- Template for the city component -->
 
         
-                            <div class="container-fluid">
-                                    <div class="form-inline" >
-                                    <div class="form-group">
-                                            <label><h4>Rucher :</h4> </label>
-                                            <select  [(ngModel)]="selectedRucher"  class="form-control " id="sel1">
-                                                <option  *ngFor="let rucher of ruchers;" [value]="rucher.id" (click)="onSelectRucher($event)" >
-                                                     <div id="rucherName">
-                                                         {{rucher.name}}
-                                                     </div>
-                                                </option>
-                                            </select>   
-                                        </div>
-                                      </div>
-                   
-                                <div style="text-align:center">
-                                        <h2 *ngIf="dataCity.city">
-                                                <img src="https://openweathermap.org/img/w/{{dataCity.list[0].weather[0].icon}}.png" class="forecast-icon" alt="forecast">
-                                                {{dataCity.list[0].main.temp_min }}°    {{dataCity.list[0].weather[0].description}} à {{dataCity.city.name}}, {{dataCity.city.country}}
-                                            </h2>      
-                                </div>
+                            <div class="container-fluid">                  
+                                
                                 <div id="cityCont" class="container">
-                                    <button (click)="goBack()" class="btn btn-primary">GoBack</button>
+                                    
                                          
                             <div>
                                     <div style="text-align:center">
