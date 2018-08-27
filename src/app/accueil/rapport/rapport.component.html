@@ -16,8 +16,8 @@
                         <div class="form-group">
                             <label><h4>Rucher :</h4> </label>
                   
-                            <select  [(ngModel)]="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
-                                <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
+                            <select  [(ngModel)]="selectedRucher"  class="form-control " id="sel1">
+                                <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
                                      {{rucher.name}}
                                 </option>
                             </select>   
@@ -53,47 +53,14 @@
                                
                                 </label>
                         </div>
-
-                        <div class="panel panel-info">
-                            <div class="panel-heading">Observation Ruche</div>
-                            <div class="panel-body">
-                                    <div>
-                                            <table class="table">    
-                                                <thead class="thead-dark">
-                                                <tr>
-                                                    <th scope="col">Ruche</th>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Sentence</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                  
-                                                  <tr *ngFor="let d of observationsRuche.ObservationRuche" >
-                                                    
-                                                    <td>
-                                                        {{d.ruche}}
-                                                    </td>
-                                                    <td>
-                                                        {{d.date}}
-                                                    </td>
-                                                       
-                                                    <td>
-                                                        {{d.sentence}}
-                                                    </td>
-                                                  </tr>
-                                                </tbody>
-                                            </table>      
-                                    </div>
-                            </div>
-                        </div>
                        
                         <div class="panel panel-info">
-                            <div class="panel-heading">Observation Nature</div>
+                            <div class="panel-heading">Observations Rucher</div>
                             <div class="panel-body">
                                     <table class="table">    
                                             <thead class="thead-dark">
                                             <tr>
-                                                    <th scope="col">Ruche</th>
+                                                    <th scope="col">Rucher</th>
                                                     <th scope="col">Date</th>
                                                     <th scope="col">Sentence</th>
                                             </tr>
@@ -119,9 +86,42 @@
 
                             </div>
                         </div>
+
+                        <div class="panel panel-info">
+                                <div class="panel-heading">Observations Ruche</div>
+                                <div class="panel-body">
+                                        <div>
+                                                <table class="table">    
+                                                    <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col">Ruche</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Sentence</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      
+                                                      <tr *ngFor="let d of observationsRuche.ObservationRuche" >
+                                                        
+                                                        <td>
+                                                            {{d.ruche}}
+                                                        </td>
+                                                        <td>
+                                                            {{d.date}}
+                                                        </td>
+                                                           
+                                                        <td>
+                                                            {{d.sentence}}
+                                                        </td>
+                                                      </tr>
+                                                    </tbody>
+                                                </table>      
+                                        </div>
+                                </div>
+                            </div>
                       
                         <div class="panel panel-info">
-                            <div class="panel-heading">Action Apicole</div>
+                            <div class="panel-heading">Actions sur la Ruche</div>
                             <div class="panel-body">
                                     <table class="table">    
                                             <thead class="thead-dark">
