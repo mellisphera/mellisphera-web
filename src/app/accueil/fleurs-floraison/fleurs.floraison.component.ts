@@ -74,24 +74,6 @@ export class FleursFloraisonComponent implements OnInit {
     //Les années à afficher
     annee = ["2018","2019","2020"];
 
-    //Mois de l'année
-    //mois = ['janv', 'fev', 'mars','avril','mai','juin','juil','aout','sept','oct','nov','dec'];
-    //Semaine de l'année
-    /*
-    weeks = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-    '11','12','13', '14', '15', '16', '17', '18','19', '20', 
-    '21', '22', '23', '24' , '25', '26', '27', '28', '29', '30', 
-    '31', '32', '33', '34', '35' ,'36' ,'37' , '38' , '39', '40',
-    '41' ,'42', '43', '44', '45' ,'46' ,'47' , '48' , '49', '50',
-    '51', '52' ];
-
-    weeks = ['1 janv', '8 janv', '15 janv', '22 janv', '29 janv', '5 fev', '12 fev', '19 fev', '26 fev', '5 mars',
-    '12 mars','19 mars','26 mars', '2 avr', '9 avr', '16 avr', '23 avr', '30 avr','7 mai', '14 mai', 
-    '21 mai', '28 mai', '4 juin', '11 juin' , '18 juin', '25 juin', '2 juil', '9 juil', '23 juil', '30 juil', 
-    '6 aout', '13 aout', '20 aout', '27 aout', '3 sept' ,'10 sept' ,'17 sept' , '24 sept' , '1 oct', '8 oct',
-    '15 oct' ,'22 oct', '29 oct', '5 nov', '12 nov' ,'19 nov' ,'26 nov' , '3 dec' , '10 dec', '17 dec',
-    '24 dec', '31 dec' ];*/
-
     //Tableau des images des fleurs du rucher
     flowerIcon = new Array();
 
@@ -132,22 +114,18 @@ export class FleursFloraisonComponent implements OnInit {
                 this.currentFlomax = localStorage.getItem("currentFlomax");
                 this.currentPresence = localStorage.getItem("currentPresence");
                 this.currentFlo = localStorage.getItem("currentFlo");
-                console.log("logged user rucher/ruches : "+ this.username);  
   } 
 
   //Au chargement de la page on execute ces fonctions
   ngOnInit(){
-    console.log("init current rucher : " + String(this.selectedRucher));
     this.x=String(this.selectedRucher);
     this.x=this.currentRucherID;
     this.selectedRucher=this.x;
-    console.log("logged user rucher/ruches : "+ this.username);
     this.getUserRuchers();
     this.getFleurDuRucher(this.currentYear);
     this.getAllFleurTest();
     this.getAllType();
     this.subscribeToNames();
-    console.log("this.selectedRucher :"+  this.selectedRucher);
     if(this.selectedRucher != undefined){
       this.getNameApiary();
     }
@@ -156,15 +134,12 @@ export class FleursFloraisonComponent implements OnInit {
 
   //Récupère les ruchers de l'utilisateur
   getUserRuchers(){
-    console.log("this username :"+  this.username);
     this.rucherService.getUserRuchers(this.username).subscribe(
       data => { this.ruchers = data } );
   }
 
   //Récupère les fleurs du rucher
   getFleurDuRucher(annee){
-    console.log("this username :"+  this.username);
-    console.log("this.selectedRucher :"+  this.selectedRucher);
     if(this.selectedRucher!=null){
       this.fleursFloraisonService.getUserFleur(this.selectedRucher).subscribe(
         data => { this.fleursBibli = data });       
@@ -173,7 +148,6 @@ export class FleursFloraisonComponent implements OnInit {
 
   //Récupère les fleurs 
   getAllFleurTest(){
-    console.log("this username :"+  this.username);
     this.fleursFloraisonService.getFleurTest().subscribe(
       data => { 
         this.fleursTest=data;
@@ -185,7 +159,6 @@ export class FleursFloraisonComponent implements OnInit {
 
   //Récupère les types de plantes
   getAllType(){
-    console.log("this username :"+  this.username);
     this.fleursFloraisonService.getType().subscribe(
       data => { 
         this.types=data;
@@ -285,7 +258,6 @@ export class FleursFloraisonComponent implements OnInit {
   onSelectRucher(event : any) : void{
     this.currentRucherID=String(this.selectedRucher);
     localStorage.setItem("currentRucher",String(this.selectedRucher));
-    console.log("current rucher : "+this.currentRucherID);
     this.onChangeRucher();
   }
 
@@ -421,12 +393,12 @@ export class FleursFloraisonComponent implements OnInit {
   }
 
   //Rafraichit la page avec les fleurs qui correspondent à la recherche
-  private subscribeToDataRechercheVariete(): void {
+  subscribeToDataRechercheVariete(): void {
     this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.rechercheFleurVariete());
   }
 
   //Rafraichit la page avec les fleurs qui correspondent à la recherche
-  private subscribeToDataRecherchePeriode(): void {
+  subscribeToDataRecherchePeriode(): void {
     this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.rechercheFleurPeriode());
   }
 
@@ -611,25 +583,6 @@ export class FleursFloraisonComponent implements OnInit {
   //graphique des fleurs du rucher
   graphStatique(){
     var unChart = echarts.init(document.getElementById("graph"));    
-   /* 
-    for (let index = 0; index < this.dataTh.length; index++) {
-      this.dataTh[index] = this.dataTh[index].map(function (item) {
-        return [item[1], item[0], item[2]];
-        });
-    }
-
-    for (let index = 0; index < this.data2018.length; index++) {
-      this.data2018[index] = this.data2018[index].map(function (item) {
-        return [item[1], item[0], item[2]];
-        });
-    }
-
-    for (let index = 0; index < this.data2019.length; index++) {
-      this.data2019[index] = this.data2019[index].map(function (item) {
-        return [item[1], item[0], item[2]];
-        });
-    }
-*/
 
   for (let index = 0; index < this.dataTh.length; index++) {
     this.dataTh[index] = this.dataTh[index].map(function (item) {
@@ -652,7 +605,7 @@ export class FleursFloraisonComponent implements OnInit {
 
       //Défini la légende du graph
       legend: {
-        data: ['Floraisons théoriques','Floraisons observées 2018','Floraisons observées 2019','Floraisons observées 2020'],
+        data: ['Floraisons théoriques','Floraisons observées 2018'],
         left: 'right',
       },
 
@@ -735,7 +688,7 @@ export class FleursFloraisonComponent implements OnInit {
           symbol: 'arrow',
           color:'#990000',
           symbolSize: 15
-        },
+        }/*,
         //Floraisons observées 2019
         {
           name: 'Floraisons observées 2019',
@@ -751,7 +704,7 @@ export class FleursFloraisonComponent implements OnInit {
         symbol: 'arrow',
         color:'yellow',
         symbolSize: 15
-     }
+       }*/
     ]
     };
           

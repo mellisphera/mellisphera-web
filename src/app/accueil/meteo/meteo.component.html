@@ -27,8 +27,8 @@
                                     <div class="form-inline" >
                                     <div class="form-group">
                                             <label><h4>Rucher :</h4> </label>
-                                            <select  [(ngModel)]="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
-                                                <option  *ngFor="let rucher of ruchers;" [value]="rucher.id" >
+                                            <select  [(ngModel)]="selectedRucher"  class="form-control " id="sel1">
+                                                <option  *ngFor="let rucher of ruchers;" [value]="rucher.id" (click)="onSelectRucher($event)" >
                                                      <div id="rucherName">
                                                          {{rucher.name}}
                                                      </div>
