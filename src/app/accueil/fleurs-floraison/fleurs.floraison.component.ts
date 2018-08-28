@@ -338,8 +338,14 @@ export class FleursFloraisonComponent implements OnInit {
 
   updateTot(fleursBib){   
     for (let i = 0; i < fleursBib.length; i++) {
+      if (fleursBib[i].dateDebutd[this.currentYear] == ""){
+        fleursBib[i].dateDebutd[this.currentYear] = "null";
+      }
+      if (fleursBib[i].dateFind[this.currentYear] == ""){
+        fleursBib[i].dateFind[this.currentYear] = "null";
+      }
+      this.subscribeToUpFin(fleursBib[i]);
       this.subscribeToUpDeb(fleursBib[i]);
-      this.subscribeToUpFin(fleursBib[i]);  
       this.subscribeToUpPre(fleursBib[i]);
     }
     //On charge les noms des fleurs (et recharge le graphique avec les bonnes données)

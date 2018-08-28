@@ -81,37 +81,53 @@
                            </tr>
                         </thead>
                         <tbody>
-                           <tr *ngFor = "let fleur of fleursBibli ">
-                               <td> <img src="{{ fleur.photo }}" class="zoom"> </td>
-                               <td><b> {{fleur.nom}} </b></td>
-                               <td>{{fleur.dateThDebutdate}}</td>
-                               <td>{{fleur.dateThFindate}}</td>
-                               <td>
-                                   <input type="text"  [(ngModel)]="fleur.dateDebutd[currentYear]" class=""  name="dateDebutd-{{in}}"  required />
-                                  
-                               </td>
-                               <td>
-                                   <input type="text" [(ngModel)]="fleur.dateFind[currentYear]" class=""  name="dateFind-{{in}}"  required />
-                               </td>
-                               <td>
-                                   <select  [(ngModel)]="fleur.presence" (click)="onSelectPresence($event)" class="form-control ">
-                                       <option value="Elevée" >
-                                           Elevée
-                                       </option>
-                                       <option value="Moyen" >
-                                           Moyen
-                                       </option>
-                                       <option value="Faible" >
-                                           Faible
-                                       </option>
-                                   </select>
-                               </td>
-                               <td>
-                                   <button type="button" class="btn btn-warning btn-lg " (click)="deleteFleur(fleur)"  style="padding: 0;border: none; background: none;">
-                                       <i class="fa fa-times"></i>
-                                   </button>
-                               </td>
-                           </tr>
+                            <ng-container *ngFor = "let fleur of fleursBibli ">
+                                
+                                    <tr>
+                                        <td> <img src="{{ fleur.photo }}" class="zoom"> </td>
+                                        <td><b> {{fleur.nom}} </b></td>
+                                        <td>{{fleur.dateThDebutdate}}</td>
+                                        <td>{{fleur.dateThFindate}}</td>
+                                        <ng-container *ngIf = "fleur.dateDebutd[currentYear]!=''">
+                                            <td>
+                                                <input type="text"  [(ngModel)]="fleur.dateDebutd[currentYear]" name="dateDebutd-{{in}}"  />
+                                            </td>
+                                        </ng-container>
+                                        <ng-container *ngIf = "fleur.dateDebutd[currentYear]==''">
+                                            <td>
+                                                <input type="text"  [(ngModel)]="fleur.dateDebutd[currentYear]" placeholder="{{fleur.dateThDebutdate}}" name="dateDebutd-{{in}}"  />
+                                            </td>
+                                        </ng-container>
+                                        <ng-container *ngIf = "fleur.dateFind[currentYear]!=''">
+                                            <td>
+                                                <input type="text" [(ngModel)]="fleur.dateFind[currentYear]"  name="dateFind-{{in}}"  />
+                                            </td>
+                                        </ng-container>
+                                        <ng-container *ngIf = "fleur.dateFind[currentYear]==''">
+                                            <td>
+                                                <input type="text"  [(ngModel)]="fleur.dateFind[currentYear]" placeholder="{{fleur.dateThFindate}}"  name="dateDebutd-{{in}}"  />
+                                            </td>
+                                        </ng-container>
+                                        <td>
+                                            <select  [(ngModel)]="fleur.presence" (click)="onSelectPresence($event)" class="form-control ">
+                                                <option value="Elevée" >
+                                                    Elevée
+                                                </option>
+                                                <option value="Moyen" >
+                                                    Moyen
+                                                </option>
+                                                <option value="Faible" >
+                                                    Faible
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-warning btn-lg " (click)="deleteFleur(fleur)"  style="padding: 0;border: none; background: none;">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                            </ng-container>
                        </tbody>
                    </table> 
        </div>
