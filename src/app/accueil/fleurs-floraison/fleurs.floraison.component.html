@@ -88,26 +88,12 @@
                                         <td><b> {{fleur.nom}} </b></td>
                                         <td>{{fleur.dateThDebutdate}}</td>
                                         <td>{{fleur.dateThFindate}}</td>
-                                        <ng-container *ngIf = "fleur.dateDebutd[currentYear]!=''">
-                                            <td>
-                                                <input type="text"  [(ngModel)]="fleur.dateDebutd[currentYear]" name="dateDebutd-{{in}}"  />
-                                            </td>
-                                        </ng-container>
-                                        <ng-container *ngIf = "fleur.dateDebutd[currentYear]==''">
-                                            <td>
-                                                <input type="text"  [(ngModel)]="fleur.dateDebutd[currentYear]" placeholder="{{fleur.dateThDebutdate}}" name="dateDebutd-{{in}}"  />
-                                            </td>
-                                        </ng-container>
-                                        <ng-container *ngIf = "fleur.dateFind[currentYear]!=''">
-                                            <td>
-                                                <input type="text" [(ngModel)]="fleur.dateFind[currentYear]"  name="dateFind-{{in}}"  />
-                                            </td>
-                                        </ng-container>
-                                        <ng-container *ngIf = "fleur.dateFind[currentYear]==''">
-                                            <td>
-                                                <input type="text"  [(ngModel)]="fleur.dateFind[currentYear]" placeholder="{{fleur.dateThFindate}}"  name="dateDebutd-{{in}}"  />
-                                            </td>
-                                        </ng-container>
+                                        <td>
+                                            <input type="text"  [(ngModel)]="fleur.dateDebutd[currentYear]" placeholder="{{fleur.dateThDebutdate}}"  name="dateDebutd-{{in}}"  />
+                                        </td>
+                                        <td>
+                                            <input type="text" [(ngModel)]="fleur.dateFind[currentYear]"  placeholder="{{fleur.dateThFindate}}"  name="dateFind-{{in}}"  />
+                                        </td>
                                         <td>
                                             <select  [(ngModel)]="fleur.presence" (click)="onSelectPresence($event)" class="form-control ">
                                                 <option value="Elevée" >
