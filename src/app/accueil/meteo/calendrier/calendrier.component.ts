@@ -1,14 +1,11 @@
-import { Component, OnInit, Input, Output} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Requete } from './Service/Requete';
 import { JsonRequete } from './Service/JsonRequete';
 import * as echarts from '../../../../assets/echarts';
-//import dispose from '../../../../assets/echarts';
 import { Calendrier } from './calendrier';
 import { UserloggedService } from '../../../userlogged.service';
 import { RucherService } from '../../ruche-rucher/rucher.service';
 import { Rucher } from '../../ruche-rucher/rucher';
-import { resolve } from 'dns';
-import { reject } from 'q';
 import { Meteo } from "./Service/Meteo";
 
 @Component({
@@ -40,11 +37,12 @@ export class CalendrierComponent implements OnInit {
           this.json.sortProcess();
           this.tabMeteo=this.json.getResultat();
           this.showCalendar();
-        },500)
-      },500
+        },300)
+      },300
     );
   }
-
+//(change)="onChange($event)
+  /* Recupéere la méteo pour un rucher */
   getWeatherByCity(){
     this.requete.getWeather(this.cityRucher).subscribe(
       (data)=>{
@@ -55,17 +53,17 @@ export class CalendrierComponent implements OnInit {
       }
     );
   }
-
+  /* affiche le calendrier avec le tableau récupèrer */
   showCalendar(){
     if(this.calendrierInit != null){
       this.calendrierInit.dispose("#main");
       this.calendrierInit = null;
     }
     this.calendrierInit = echarts.init(document.getElementById('main'));
-    console.log('Avant affichage calendrier :');
     this.calendrier.options.series[0].data = this.tabMeteo;
     this.calendrierInit.setOption(this.calendrier.options);
   }
+
   getRucherByUser() {
     this.rucherService.getUserRuchers(this.username).subscribe(
       (data) => {
@@ -89,7 +87,7 @@ export class CalendrierComponent implements OnInit {
       this.json.sortProcess();
       this.tabMeteo=this.json.getResultat();
       this.showCalendar();
-    },500)
+    },300)
   }
 
 }

@@ -58,6 +58,8 @@ import { FleursFloraisonService } from './accueil/fleurs-floraison/fleurs.florai
 import { RucheDetailService } from './accueil/ruche-rucher/ruche-detail/ruche.detail.service';
 import { DispositionRucheComponent } from './accueil/disposition-ruche/disposition-ruche.component';
 
+import { DailyRecordService } from './accueil/disposition-ruche/Service/dailyRecordService';
+
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
 //import { NgDraggableModule } from 'angular-draggable'; 
 
@@ -120,7 +122,8 @@ import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
     RucheDetailService,
     JsonRequete,
     Requete,
-    Calendrier
+    Calendrier,
+    DailyRecordService
   ],
   bootstrap: [AppComponent]
 })
