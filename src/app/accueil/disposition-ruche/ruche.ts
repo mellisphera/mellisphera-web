@@ -29,6 +29,10 @@ export class Ruche{
     setY(y: string){
         this.hivePosY = y;
     }
+
+    getId(){
+        return this.id;
+    }
 }
 
    

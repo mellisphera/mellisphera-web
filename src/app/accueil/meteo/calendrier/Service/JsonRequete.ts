@@ -1,8 +1,11 @@
 import { Meteo } from "./Meteo";
 
-/*
-    Class qui formate le json des requetes
+/* 
+
+trie le json obtenu de la requete pour avoir un tableau [date, icons ,tM, tm] utilisable par echarts 
+
 */
+
 export  class JsonRequete{
     private meteo : any;
     private tabMeteo : any[];
@@ -30,23 +33,14 @@ export  class JsonRequete{
         this.tabMeteo=[];
         console.log(this.tabMeteo);
         var date;
+        this.tabMeteo.push(new Meteo(this.convertDate(this.meteo.list[0].dt_txt),this.meteo.list[0].weather[0].icon,Math.round(this.meteo.list[0].main.temp_min),Math.round(this.meteo.list[0].main.temp_max)).getArray());
         this.meteo.list.forEach((element,index)=>{
             var heure = new Date(element.dt_txt).getHours();
-            if(heure  == 12){
-                console.log("true");
+            console.log(date != new Date().getDate());
+            if(heure  == 12 && date != new Date().getDate()){
                 this.tabMeteo.push(new Meteo(this.convertDate(element.dt_txt),element.weather[0].icon,Math.round(element.main.temp_min),Math.round(element.main.temp_max)).getArray());
             }
             date = new Date(element.dt_txt).getDate();
         })
-    }
-
-    recupMeteoById(id){
-        console.log("id : "+id);
-        this.tabMeteo=[];
-        this.premiereRequete.forEach((element,index)=>{
-            if(element[4] == id){
-                this.tabMeteo.push(element);
-            }
-        });
     }
 }
