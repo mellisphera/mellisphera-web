@@ -89,10 +89,10 @@
                                         <td>{{fleur.dateThDebutdate}}</td>
                                         <td>{{fleur.dateThFindate}}</td>
                                         <td>
-                                            <input type="text"  [(ngModel)]="fleur.dateDebutd[currentYear]" placeholder="{{fleur.dateThDebutdate}}"  name="dateDebutd-{{in}}"  />
+                                            <input type="text"  [(ngModel)]="fleur.dateDebutdate[currentYear]" placeholder="{{fleur.dateThDebutdate}}"  name="dateDebutd-{{in}}"  />
                                         </td>
                                         <td>
-                                            <input type="text" [(ngModel)]="fleur.dateFind[currentYear]"  placeholder="{{fleur.dateThFindate}}"  name="dateFind-{{in}}"  />
+                                            <input type="text" [(ngModel)]="fleur.dateFindate[currentYear]"  placeholder="{{fleur.dateThFindate}}"  name="dateFind-{{in}}"  />
                                         </td>
                                         <td>
                                             <select  [(ngModel)]="fleur.presence" (click)="onSelectPresence($event)" class="form-control ">

@@ -308,7 +308,7 @@ export class FleursFloraisonComponent implements OnInit {
   //Change le début de floraison observée d'une fleur
   updateDebut(fleur){
     this.selectedFleur = fleur;
-    this.fleursFloraisonService.updateFleurDebut(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateDebutd[this.currentYear])
+    this.fleursFloraisonService.updateFleurDebut(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateDebutdate[this.currentYear])
       .subscribe(data => {},
       error => this.ErrorMsg=error);
     
@@ -317,7 +317,7 @@ export class FleursFloraisonComponent implements OnInit {
   //Change la fin de floraison observée d'une fleur
   updateFin(fleur){
     this.selectedFleur = fleur;
-    this.fleursFloraisonService.updateFleurFin(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateFind[this.currentYear])
+    this.fleursFloraisonService.updateFleurFin(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateFindate[this.currentYear])
       .subscribe(data => {},
       error => this.ErrorMsg=error);
   }
@@ -332,11 +332,11 @@ export class FleursFloraisonComponent implements OnInit {
 
   updateTot(fleursBib){   
     for (let i = 0; i < fleursBib.length; i++) {
-      if (fleursBib[i].dateDebutd[this.currentYear] == ""){
-        fleursBib[i].dateDebutd[this.currentYear] = "null";
+      if (fleursBib[i].dateDebutdate[this.currentYear] == ""){
+        fleursBib[i].dateDebutdate[this.currentYear] = "null";
       }
-      if (fleursBib[i].dateFind[this.currentYear] == ""){
-        fleursBib[i].dateFind[this.currentYear] = "null";
+      if (fleursBib[i].dateFindate[this.currentYear] == ""){
+        fleursBib[i].dateFindate[this.currentYear] = "null";
       }
       this.subscribeToUpFin(fleursBib[i]);
       this.subscribeToUpDeb(fleursBib[i]);
