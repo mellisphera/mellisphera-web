@@ -69,10 +69,10 @@
                                             <ng-container *ngIf="obs.type =='ApiaryObs'">
                                                 <tr >
                                                     <td>
-                                                        {{ob.date}}
+                                                        {{obs.date}}
                                                     </td>
                                                     <td>                                                                    
-                                                        {{ob.sentence}}
+                                                        {{obs.sentence}}
                                                     </td>
                                                 </tr>
                                             </ng-container>
@@ -97,17 +97,14 @@
                                             <tbody>
                                                 <ng-container *ngFor="let obs of observations" >
                                                     <ng-container *ngIf="obs.type =='HiveObs'">
-                                                        <tr >
+                                                        <tr>
                                                             <td>
-                                                                <ng-container *ngFor="let r of ob.ruche" >
-                                                                    {{r}}/
-                                                                </ng-container>
                                                             </td>
                                                             <td>
-                                                                {{ob.date}}
+                                                                {{obs.date}}
                                                             </td>
                                                             <td>
-                                                                {{ob.sentence}}
+                                                                {{obs.sentence}}
                                                             </td>
                                                         </tr>
                                                     </ng-container>
@@ -134,15 +131,12 @@
                                             <ng-container *ngIf="obs.type =='HiveAct'">
                                                 <tr >
                                                     <td>
-                                                        <ng-container *ngFor="let r of ob.ruche" >
-                                                            {{r}}/
-                                                        </ng-container>
                                                     </td>
                                                     <td>
-                                                        {{ob.date}}
+                                                        {{obs.date}}
                                                     </td>
                                                     <td>
-                                                        {{ob.sentence}}
+                                                        {{obs.sentence}}
                                                     </td>
                                                 </tr>
                                             </ng-container>

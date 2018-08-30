@@ -25,10 +25,7 @@ export class RapportComponent implements OnInit {
   btnAnalyse: boolean;
   
   //variable to store ruchers
-  ruchers: any [] = [];
-  observationsNature : any[] = []; 
-  observationsRuche : any[] = [];
-  actionsApicole : any[] = [];  
+  ruchers: Rucher [] = [];
   rapportForm : FormGroup;
 
   texteRapport ='';
@@ -84,7 +81,7 @@ export class RapportComponent implements OnInit {
       this.rapportService.getNluResult(this.texteRapport, this.selectedRucher).subscribe( 
         data => {},
         ( error => this.errorMsg=error));
-        this.subscribeToData();
+        this.subscribeToRapport();
     }
 
     getRapportTemp(){
@@ -97,10 +94,14 @@ export class RapportComponent implements OnInit {
       this.rapportService.getNluSave(this.texteRapport, this.selectedRucher).subscribe( 
         data => {},
         ( error => this.errorMsg=error));
+        this.texteRapport = "";
+        confirm("Observations enregistrées !")
+        this.observations = null;
+        
     }
 
-    private subscribeToData(): void {
-      this.timerSubscription = Observable.timer(100).first().subscribe(() => this.getRapportTemp());
+  private subscribeToRapport(): void {
+    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.getRapportTemp());
   }
 
   onSelectRucher(event : any) : void{
