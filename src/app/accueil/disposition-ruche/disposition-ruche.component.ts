@@ -1,13 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Ruche } from './ruche';
-import { reject } from 'q';
-import { parse } from 'querystring';
+import { DailyRecordService } from './Service/dailyRecordService';
+import { DailyRecordsTH } from './DailyRecordTH';
 
 @Component({
   selector: 'app-disposition-ruche',
@@ -23,7 +21,14 @@ export class DispositionRucheComponent implements OnInit {
   private left: any= Offsets.HALF_WIDTH;
   infoRuche : any = null;
   offset : Offsets;
-  constructor( private draggable: DragAndCheckModule, private login: UserloggedService, private rucher: RucherService) { 
+  username: string;
+  rucherByUser: any[] = null;
+  nbRucheByRucher: any[];
+  rucherSelect: string;
+  tabRuche: any[];
+  tabInstanceRuche: Ruche[] = [];
+  dailyRecHive : any;
+  constructor( private dailyRecTh :  DailyRecordService, private draggable: DragAndCheckModule, private login: UserloggedService, private rucher: RucherService) { 
     this.offset = new Offsets(this.top,this.right,this.bottom, this.left);
   }
 
@@ -37,12 +42,6 @@ export class DispositionRucheComponent implements OnInit {
     'background-position': "center",
     'background-repeat': "no-repeat"
   };
-  username: string;
-  rucherByUser: any[] = null;
-  nbRucheByRucher: any[];
-  rucherSelect: string;
-  tabRuche: any[];
-  tabInstanceRuche: Ruche[] = [];
   ngOnInit() {
     this.username = this.login.currentUser().username;
     this.getRucherByUser();
@@ -55,9 +54,8 @@ export class DispositionRucheComponent implements OnInit {
         this.tabRuche.forEach((element, index) => {
           this.tabInstanceRuche.push(new Ruche(element.id ,element.name, element.description, element.username, element.idApiary, element.hivePosX, element.hivePosY));
         });
-        //console.log(this.tabInstanceRuche);
-      }, 1000)
-      
+      }, 200);
+      this.getHiveStatus();
     },500);
   }
   getRucherByUser() {
@@ -71,6 +69,23 @@ export class DispositionRucheComponent implements OnInit {
     );
   }
 
+  getHiveStatus(){
+    this.tabInstanceRuche.forEach(element => {
+      this.getDailyRecThByHive(element.getId());
+      console.log(this.dailyRecHive);
+    });
+  }
+
+  getDailyRecThByHive(idHive){
+    this.dailyRecTh.getDailyRecThByIdHive(idHive).subscribe(
+      (data)=>{
+        this.dailyRecHive = data;
+      },
+      (err)=>{
+        console.log(err);
+      }
+    );
+  }
 
   /* Obtient les ruches d'un rucher pour un utilisateurs*/
   getRuche() {
@@ -141,12 +156,10 @@ export class DispositionRucheComponent implements OnInit {
       this.tabRuche.forEach((element, index) => {
         this.tabInstanceRuche.push(new Ruche(element.id ,element.name, element.description, element.username, element.idApiary, element.hivePosX, element.hivePosY));
       });
-      //console.log(this.tabInstanceRuche);
-    }, 1000)
+    }, 200)
   }
 
   onMouseover($event){
-    //console.log($event.target.id);
     this.infoRuche = this.tabInstanceRuche[$event.target.id].toString();
   }
 
