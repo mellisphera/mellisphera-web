@@ -13,9 +13,10 @@ export class Calendrier{
         },*/
 
         tooltip:{ // Active info bulle au survol de la souris
-           formatter:(params)=>{ // permet d'afficher sous un certain format le contenu de la bulle
+            trigger: 'item'
+           /*formatter:(params)=>{ // permet d'afficher sous un certain format le contenu de la bulle
                 return "params.value(0)";
-            }
+            }*/
         }, 
         calendar:{
             cellSize : 80, // taille cellule
@@ -35,7 +36,9 @@ export class Calendrier{
                 }
             },
             dayLabel:{ // Affiche le nom des jour
-                nameMap:'fr' // langue francais
+                nameMap:'fr', // langue francais
+                firstDay: 1
+                // firstDay
             },
             yearLabel:{ // Affiche l'année
                 show:false // desactiver
@@ -113,7 +116,7 @@ export class Calendrier{
         tabDate.push((date.getMonth()+1));
         tabDate.push(date.getFullYear());
         
-        //return tabDate;
-        return tabDate[2]+'-'+tabDate[1];
+        console.log(tabDate[2]+'-'+tabDate[1],tabDate[2]+'-'+parseInt(tabDate[1]+1));
+        return [tabDate[2]+'-'+tabDate[1],tabDate[2]+'-'+parseInt(tabDate[1]+1)+'-'+15];
     }
 }
