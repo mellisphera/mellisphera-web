@@ -22,12 +22,7 @@ export class Requete{
         return this.httpClient.get<string[]>('https://api.openweathermap.org/data/2.5/forecast?q='+city+'&units=metric&appid=***REMOVED***');
 
     }
-
-    // this.httpClient.get<string[]>('https://api.openweathermap.org/data/2.5/forecast?q='+city+'&units=metric&appid=***REMOVED***')
     getDataRequete(reponse : HttpResponse<Object>){
         return this.data;
     }
-    /*
-    get -> Observable . subscribe -> observable
-    */
 }
