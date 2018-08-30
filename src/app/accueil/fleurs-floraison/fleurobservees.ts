@@ -1,12 +1,10 @@
 export class FleurObservees {
 	id : string;
 	nom : string;
-	dateDebut : Map<string,number>;
-	dateFin : Map<string,number>;
 	dateDebutd : Map<string,string>;
 	dateFind : Map<string,string>;
-	dateThDebut : number;
-	dateThFin : number;
+	dateDebutdate : Map<string,string>;
+	dateFindate : Map<string,string>;
 	dateThDebutd : string;
 	dateThFind : string;
 	dateThDebutdate: string ;

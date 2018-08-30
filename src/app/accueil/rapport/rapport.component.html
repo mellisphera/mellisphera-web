@@ -33,7 +33,7 @@
                                     <label for="exampleTextarea" >Rapport</label>
                                     <textarea class="form-control" id="exampleTextarea" rows="8"  formControlName="texte" [(ngModel)]="texteRapport"></textarea>
                             </div>
-                            <button class="btn btn-primary" (click)="getRapportTemp(rapportForm.value)" (change)="change($event)" [disabled]="!rapportForm.valid" >Analyser</button>
+                            <button class="btn btn-primary" (click)="getAnalyseTemp(rapportForm.value)" (change)="change($event)" [disabled]="!rapportForm.valid" >Analyser</button>
                             <button type="submit" (click)="saveRapport(rapportForm.value)" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Sauver</button>
                         </form>
 
@@ -57,104 +57,97 @@
                         <div class="panel panel-info">
                             <div class="panel-heading">Observations Rucher</div>
                             <div class="panel-body">
-                                    <table class="table">    
-                                            <thead class="thead-dark">
-                                            <tr>
-                                                    <th scope="col">Rucher</th>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Sentence</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                              
-                                                <tr *ngFor="let d of observationsNature.ObservationNature" >
-                                                    
+                                <table class="table">    
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Sentence</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let obs of observations" >
+                                            <ng-container *ngIf="obs.type =='ApiaryObs'">
+                                                <tr >
                                                     <td>
-                                                        {{d.ruche}}
+                                                        {{obs.date}}
                                                     </td>
-                                                    <td>
-                                                        {{d.date}}
+                                                    <td>                                                                    
+                                                        {{obs.sentence}}
                                                     </td>
-                                                    
-                                                    <td>
-                                                        {{d.sentence}}
-                                                    </td>
-                                            
                                                 </tr>
-                                            </tbody>
-                                    </table>      
-
+                                            </ng-container>
+                                        </ng-container>         
+                                    </tbody>
+                                </table>  
                             </div>
                         </div>
 
                         <div class="panel panel-info">
                                 <div class="panel-heading">Observations Ruche</div>
                                 <div class="panel-body">
-                                        <div>
-                                                <table class="table">    
-                                                    <thead class="thead-dark">
-                                                    <tr>
-                                                        <th scope="col">Ruche</th>
-                                                        <th scope="col">Date</th>
-                                                        <th scope="col">Sentence</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                      
-                                                      <tr *ngFor="let d of observationsRuche.ObservationRuche" >
-                                                        
-                                                        <td>
-                                                            {{d.ruche}}
-                                                        </td>
-                                                        <td>
-                                                            {{d.date}}
-                                                        </td>
-                                                           
-                                                        <td>
-                                                            {{d.sentence}}
-                                                        </td>
-                                                      </tr>
-                                                    </tbody>
-                                                </table>      
-                                        </div>
+                                    <div>    
+                                        <table class="table">    
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">Ruche(s)</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Sentence</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let obs of observations" >
+                                                    <ng-container *ngIf="obs.type =='HiveObs'">
+                                                        <tr>
+                                                            <td>
+                                                            </td>
+                                                            <td>
+                                                                {{obs.date}}
+                                                            </td>
+                                                            <td>
+                                                                {{obs.sentence}}
+                                                            </td>
+                                                        </tr>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>                    
+                                    </div>
                                 </div>
                             </div>
                       
                         <div class="panel panel-info">
                             <div class="panel-heading">Actions sur la Ruche</div>
                             <div class="panel-body">
-                                    <table class="table">    
-                                            <thead class="thead-dark">
-                                            <tr>
-                                                <th scope="col">Ruche</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Sentence</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                              
-                                              <tr *ngFor="let d of actionsApicole.OperationApi" >
-                                                
-                                                <td>
-                                                    {{d.ruche}}
-                                                </td>
-                                                <td>
-                                                    {{d.date}}
-                                                </td>
-                                                   
-                                                <td>
-                                                    {{d.sentence}}
-                                                </td>
-                                              </tr>
-                                            </tbody>
-                                    </table>
+                                <table class="table">    
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Ruche(s)</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Sentence</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let obs of observations" >
+                                            <ng-container *ngIf="obs.type =='HiveAct'">
+                                                <tr >
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                        {{obs.date}}
+                                                    </td>
+                                                    <td>
+                                                        {{obs.sentence}}
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container> 
+                                    </tbody>
+                                </table>                                               
                             </div>
                         </div>
                       
                     </div>
 
-
-                    
           <div class="col-sm-3 sidenav" style="background-color: rgba(236, 234, 234, 0.49); height:1500px;border-color:black;">
 
           </div>
