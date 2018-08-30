@@ -18,12 +18,12 @@ export class RapportService {
     //to save in processReportTemp
     getNluResult(texte, idApiary){
         let body = JSON.stringify({"texte":texte,"idApiary":idApiary});
-        return this.http.post('http://localhost:5000/nlu/nluAnalyse',body, httpOptions);
+        return this.http.post('http://51.68.71.91:5000/nlu/nluAnalyse',body, httpOptions);
     }
 
     getNluSave(texte, idApiary){
         let body = JSON.stringify({"texte":texte,"idApiary":idApiary});
-        return this.http.post('http://localhost:5000/nlu/nluSave',body, httpOptions);
+        return this.http.post('http://51.68.71.91:5000/nlu/nluSave',body, httpOptions);
     }
 
     getRapportTemp(username):Observable<ProcessReport[]>{
