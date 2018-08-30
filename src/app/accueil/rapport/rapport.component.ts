@@ -12,6 +12,7 @@ import { Rucher } from '../ruche-rucher/rucher';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
+import { ProcessReport } from '../ruche-rucher/processedReport';
 
 
 @Component({
@@ -40,12 +41,17 @@ export class RapportComponent implements OnInit {
   x;
   currentRucherID;
 
+  observations : ProcessReport[] = [];
 
   public errorMsg;
+
+  private timerSubscription: AnonymousSubscription;
+
+
   //nomRuche;
     constructor(private formBuilder: FormBuilder,
                 private http:HttpClient,
-                private _rapportService : RapportService,
+                private rapportService : RapportService,
                 private data : UserloggedService,
                 public rucherService : RucherService,
               ){  
@@ -63,36 +69,8 @@ export class RapportComponent implements OnInit {
       this.x=String(this.selectedRucher);
       this.x=this.currentRucherID;
       this.selectedRucher=this.x;
-      this.deleteAllReportTemp();
       this.btnAnalyse=true;
       
-    }
-    deleteAllReportTemp(){
-      this._rapportService.deleteAllReportTemp().subscribe(
-        data => {},
-        (error => this.errorMsg=error)
-      );
-    }
-    
-    getObservationsNature(){
-      this._rapportService.getObservationsNatureTemp(this.selectedRucher).subscribe(
-        data => { this.observationsNature = data;},
-        err => console.error(err)
-      );
-    }
-
-    getObservationsRuche(){
-      this._rapportService.getObservationsRucheTemp(this.selectedRucher).subscribe(
-        data => { this.observationsRuche = data;},
-        err => console.error(err)
-      );
-    }
-
-    getActionsApicoles(){
-      this._rapportService.getActionsApicolesTemp(this.selectedRucher).subscribe(
-        data => { this.actionsApicole = data;},
-        err => console.error(err)
-      );
     }
 
     getUserRuchers(){
@@ -101,54 +79,34 @@ export class RapportComponent implements OnInit {
         err => console.error(err)
       );  
     }
-
-    onSelectRucher(event : any) : void{
-      localStorage.setItem("currentRucher",String(this.selectedRucher));
-      this.getActionsApicoles();
-      this.getObservationsNature();
-      this.getObservationsRuche();
-
-    }
-
-
-    saveRapport(){
-        this._rapportService.saveNLU(this.texteRapport, this.selectedRucher).subscribe( 
-          data => {
-            this.resultatRapport=data;
-            this.texteRapport=" ";
-            this.getActionsApicoles();
-            this.getObservationsNature();
-            this.getObservationsRuche();
-          },
-          ( error => this.errorMsg=error)
-      );
-      alert("votre rapport a été enregistré");
-      this.deleteAllReportTemp();
-      this.rapportForm.reset();
+    
+    getAnalyseTemp(){
+      this.rapportService.getNluResult(this.texteRapport, this.selectedRucher).subscribe( 
+        data => {},
+        ( error => this.errorMsg=error));
+        this.subscribeToData();
     }
 
     getRapportTemp(){
-        this._rapportService.getNluResult(this.texteRapport, this.selectedRucher).subscribe( 
-          data => {
-            this.resultatRapport=data;
-            alert("votre rapport a été analysé ! ");
-            this.getActionsApicoles();
-            this.getObservationsNature();
-            this.getObservationsRuche();
-
-          },
-          ( error => this.errorMsg=error)
-      );
-     
-
+      this.rapportService.getRapportTemp(this.username).subscribe( 
+        data => {this.observations = data},
+        ( error => this.errorMsg=error));
     }
 
-    analyserRapport(texte){
-      this.getRapportTemp();
-      this.rapportAnalyse= texte;
+    saveRapport(){
+      this.rapportService.getNluSave(this.texteRapport, this.selectedRucher).subscribe( 
+        data => {},
+        ( error => this.errorMsg=error));
     }
 
+    private subscribeToData(): void {
+      this.timerSubscription = Observable.timer(100).first().subscribe(() => this.getRapportTemp());
+  }
 
+  onSelectRucher(event : any) : void{
+    this.currentRucherID=String(this.selectedRucher);
+    localStorage.setItem("currentRucher",String(this.selectedRucher));
+  }
 
 
 }
