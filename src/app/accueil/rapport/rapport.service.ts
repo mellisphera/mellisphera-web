@@ -30,6 +30,15 @@ export class RapportService {
         return this.http.get<ProcessReport[]>(CONFIG.URL+'report_temp/'+username);
     }
 
+    deleteObsTemp(idTemp){
+        return this.http.delete(CONFIG.URL+'report_temp/delete/'+idTemp);
+    }
+
+
+    getSave(username){
+        return this.http.get<ProcessReport[]>(CONFIG.URL+'report_temp/add/'+username);
+    }
+
     // error handling
     errorHandler(error: HttpErrorResponse){
         return Observable.throw(error.message || "server error")
