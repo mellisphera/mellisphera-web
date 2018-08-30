@@ -127,6 +127,7 @@ createObservation(observation){
     this.newObs.sentence = this.sentence;
     this.newObs.idApiary = '';
     this.newObs.idHive = this.rucheId;
+    this.newObs.idLHive = [this.rucheId];
     this.newObs.nluScore = '';
     this.newObs.id=null;
 
@@ -149,6 +150,7 @@ onEditObservation(){
     this.newObs.id = this.selectedObsR.id;
     this.newObs.idApiary = this.selectedObsR.idApiary;
     this.newObs.idHive = this.selectedObsR.idHive;
+    this.newObs.idLHive = [this.rucheId];
     this.newObs.nluScore = this.selectedObsR.nluScore;
     this.rucherService.updateObs(this.newObs).subscribe( 
       data => {},

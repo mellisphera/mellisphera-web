@@ -5,6 +5,7 @@ import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from '../../../../config';
 import { Rucher } from '../rucher';
 import { Ruche } from '../ruche';
+import { ProcessReport } from '../processedReport';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -18,13 +19,8 @@ export class RucheDetailService {
     // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
 
     // pour afficher tout les ruchers de l'utilsateur connecté
-    getObservationsHive(idHive) : Observable<any[]>{
-        return this.http.get<any[]>(CONFIG.URL+'report/hive/'+idHive);
-    }  
-    // pour afficher tout les ruchers de l'utilsateur connecté
-    getActionsApicoles(hiveName) : Observable<any[]>{
-        //alert(hiveName);
-        return this.http.get<any[]>(CONFIG.URL+'report/apicole-ruche/'+hiveName);
+    getObservationsHive(idHive) : Observable<ProcessReport[]>{
+        return this.http.get<ProcessReport[]>(CONFIG.URL+'report/hive/'+idHive);
     }  
     // pour afficher tout les ruchers de l'utilsateur connecté
     deleteReport(report) {

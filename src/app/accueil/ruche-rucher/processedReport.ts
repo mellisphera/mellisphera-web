@@ -6,6 +6,8 @@ export class ProcessReport {
     sentence : string;
     idApiary : string;
     idHive : string;
+    idLHive: Array<string>;
+    Lruche: Array<string>;
     nluScore : string;
       
     }

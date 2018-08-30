@@ -153,8 +153,6 @@ export class FleursFloraisonComponent implements OnInit {
         this.fleursTest=data;
       }
     );
-    //On charge les images des indices pol, conf et nec des plantes
-    this.subscribeToImage();
   }
 
   //Récupère les types de plantes
@@ -284,12 +282,8 @@ export class FleursFloraisonComponent implements OnInit {
   addFleur(fleur){
     //on fait une copie de la fleur
     this.selectedFleur.nom = fleur.flowerApi.francais;
-    this.selectedFleur.dateDebut = fleur.flowerApi.flomin;
-    this.selectedFleur.dateFin = fleur.flowerApi.flomax;
     this.selectedFleur.dateDebutd = fleur.flowerApi.flomind;
-    this.selectedFleur.dateFind = fleur.flowerApi.flomaxd;
-    this.selectedFleur.dateThDebut = fleur.flowerApi.flomin;
-    this.selectedFleur.dateThFin = fleur.flowerApi.flomax;  
+    this.selectedFleur.dateFind = fleur.flowerApi.flomaxd; 
     this.selectedFleur.dateThDebutd = fleur.flowerApi.flomind;
     this.selectedFleur.dateThFind = fleur.flowerApi.flomaxd; 
     this.selectedFleur.dateThDebutdate = fleur.flowerApi.flomindate;
@@ -314,7 +308,7 @@ export class FleursFloraisonComponent implements OnInit {
   //Change le début de floraison observée d'une fleur
   updateDebut(fleur){
     this.selectedFleur = fleur;
-    this.fleursFloraisonService.updateFleurDebut(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateDebutd[this.currentYear])
+    this.fleursFloraisonService.updateFleurDebut(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateDebutdate[this.currentYear])
       .subscribe(data => {},
       error => this.ErrorMsg=error);
     
@@ -323,7 +317,7 @@ export class FleursFloraisonComponent implements OnInit {
   //Change la fin de floraison observée d'une fleur
   updateFin(fleur){
     this.selectedFleur = fleur;
-    this.fleursFloraisonService.updateFleurFin(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateFind[this.currentYear])
+    this.fleursFloraisonService.updateFleurFin(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateFindate[this.currentYear])
       .subscribe(data => {},
       error => this.ErrorMsg=error);
   }
@@ -338,8 +332,14 @@ export class FleursFloraisonComponent implements OnInit {
 
   updateTot(fleursBib){   
     for (let i = 0; i < fleursBib.length; i++) {
+      if (fleursBib[i].dateDebutdate[this.currentYear] == ""){
+        fleursBib[i].dateDebutdate[this.currentYear] = "null";
+      }
+      if (fleursBib[i].dateFindate[this.currentYear] == ""){
+        fleursBib[i].dateFindate[this.currentYear] = "null";
+      }
+      this.subscribeToUpFin(fleursBib[i]);
       this.subscribeToUpDeb(fleursBib[i]);
-      this.subscribeToUpFin(fleursBib[i]);  
       this.subscribeToUpPre(fleursBib[i]);
     }
     //On charge les noms des fleurs (et recharge le graphique avec les bonnes données)
@@ -372,8 +372,6 @@ export class FleursFloraisonComponent implements OnInit {
           data => { this.fleursTest = data ;
           }
         );
-        //On charge les images associées
-        this.subscribeToImage();
   }
 
     //Lance la recherche des fleurs qui correspondent aux critères entré par l'utilisateur
@@ -388,8 +386,6 @@ export class FleursFloraisonComponent implements OnInit {
         data => { this.fleursTest = data ;
         }
       );
-      //On charge les images associées
-      this.subscribeToImage();
   }
 
   //Rafraichit la page avec les fleurs qui correspondent à la recherche
@@ -405,11 +401,6 @@ export class FleursFloraisonComponent implements OnInit {
   //On recharge la bilbiothèque de fleurs
   private subscribeToDataFleur(): void {
     this.timerSubscription = Observable.timer(400).first().subscribe(() => this.getFleurDuRucher(this.currentYear));
-  }
-
-  //On recharge le pourcentage totale du rucher
-  private subscribeToImage(): void {
-    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.changeImage());
   }
 
   //On recharge le pourcentage totale du rucher
@@ -456,46 +447,6 @@ export class FleursFloraisonComponent implements OnInit {
   private subscribeToUpPre(fleur): void {
     this.timerSubscription = Observable.timer(300).first().subscribe(() => this.updatePresence(fleur));
   }
-
-  //Charge le chemin des images en fonctions de la valeur de l'interet pollen/nectar et indice de confiance (entre 0 et 3)
-  changeImage(){
-    var i;
-    var max = this.fleursTest.length;
-    for (i = 0; i < max; i++) {
-      //Pictogramme de l'interêt pollen
-      if (this.fleursTest[i].flowerItsap.interet_pollen == "1"){
-        this.fleursTest[i].flowerItsap.interet_pollen = "/assets/img/pol1.png";
-      } else if (this.fleursTest[i].flowerItsap.interet_pollen == "2") {
-        this.fleursTest[i].flowerItsap.interet_pollen = "/assets/img/pol2.png";
-      } else if (this.fleursTest[i].flowerItsap.interet_pollen == "3"){
-        this.fleursTest[i].flowerItsap.interet_pollen = "/assets/img/pol3.png";
-      } else if (this.fleursTest[i].flowerItsap.interet_pollen == "0") {
-        this.fleursTest[i].flowerItsap.interet_pollen = "/assets/img/vide.png";
-      }
-      //Pictogramme de l'interêt nectar
-      if (this.fleursTest[i].flowerItsap.interet_nectar == "1"){
-        this.fleursTest[i].flowerItsap.interet_nectar = "/assets/img/nec1.png";
-      } else if (this.fleursTest[i].flowerItsap.interet_nectar == "2") {
-        this.fleursTest[i].flowerItsap.interet_nectar = "/assets/img/nec2.png";
-      } else if (this.fleursTest[i].flowerItsap.interet_nectar == "3"){
-        this.fleursTest[i].flowerItsap.interet_nectar = "/assets/img/nec3.png";
-      } else if (this.fleursTest[i].flowerItsap.interet_nectar == "0"){
-        this.fleursTest[i].flowerItsap.interet_pollen = "/assets/img/vide.png";
-      }
-      //Pictogramme de l'indice de confiance
-      if (this.fleursTest[i].flowerItsap.indice_confiance == "1"){
-        this.fleursTest[i].flowerItsap.indice_confiance = "/assets/img/conf1.png";
-      } else if (this.fleursTest[i].flowerItsap.indice_confiance == "2") {
-        this.fleursTest[i].flowerItsap.indice_confiance = "/assets/img/conf2.png";
-      } else if (this.fleursTest[i].flowerItsap.indice_confiance == "3"){
-        this.fleursTest[i].flowerItsap.indice_confiance = "/assets/img/conf3.png";
-      } else if (this.fleursTest[i].flowerItsap.indice_confiance == "0") {
-        this.fleursTest[i].flowerItsap.interet_pollen = "/assets/img/vide.png";
-      }
-      
-    }
-  }
-
 
   /*
   //Affiche les semaines de floraisons théoriques des plantes du rucher
