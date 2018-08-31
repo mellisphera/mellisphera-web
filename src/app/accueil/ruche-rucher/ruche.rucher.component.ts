@@ -219,14 +219,12 @@ deleteRucher(rucher){
         data => {},
         ( error => this.errorMsg=error)
       );
-      //this.clearRucherSelection();
-      this.refreshRucherData(); 
-      //this.currentRucherID=null;
-      this.subscribeToData();
-      this.getDetailsRucher();
       localStorage.setItem("currentRucher",   this.ruchers[0].id);
       this.selectedRucher= this.ruchers[0].id;
-      alert("le rucher a été supprimé :( ")
+      this.getDetailsRucher();
+      this.refreshRucherData(); 
+      this.subscribeToData();
+      alert("le rucher a été supprimé :( ");
     }
   }
   else {
@@ -248,9 +246,9 @@ onEditerRucher(rucherEdit){
       );
     this.updateRucherInput=false;
     alert("Votre rucher a été édité");
-    this.subscribeToData();
     this.refreshRucherData();
     this.getDetailsRucher();
+    this.subscribeToData();
     this.newRucherForm.reset();
 
   } 
