@@ -19,7 +19,7 @@ export class Ruche{
     }
 
     toString(){
-        return " Nom : " +this.name+", Description : "+this.description+", Rucher : "+this.idApiary+"";
+        return this.name+" : "+this.description;
     }
 
     setX(x : string){

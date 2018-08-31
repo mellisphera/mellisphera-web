@@ -17,19 +17,23 @@
     position: relative;
     font-size: 15px;
     /*border-radius: 40px;*/
-    padding: 5px;
+    padding: 2px;
     cursor: move;
+    border-radius: 10px;
+    box-shadow: 3px 2px 2px black;
 }
 #health_trend{
     width: 50%;
     height:100%;
     border: 2px solid orangered;
+    border-radius: 8px;
 }
 #health_status{
     width: 50%;
     height: 100%;
-    background-color: green;
+   /* background-color: green;*/
     border: 2px solid orangered;
+    border-radius: 8px;
 }
 select{
     padding: 8px;
@@ -40,4 +44,16 @@ select{
 #detail{
     margin: auto;
     width: 30%;
+}
+.statusA{
+    background-color : green;
+}
+.statusB{
+    background-color: orange;
+}
+.statusC{
+    background-color: red
+}
+.statusInconnu{
+    background-color: darkgray;
 }
