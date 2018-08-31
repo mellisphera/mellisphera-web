@@ -1,3 +1,8 @@
+#Mise en Prod
+
+s'assurer que le fichier src/app/accueil/rapport/rapport.service.ts à l'adresse serveur
+
+
 # [Light Bootstrap Dashboard Angular CLI](http://lbd-angular2.creative-tim.com/)
 [![version][version-badge]][CHANGELOG]
 
