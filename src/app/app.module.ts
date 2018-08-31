@@ -23,9 +23,8 @@ import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouve
 import { GraphComponent } from './accueil/graph/graph.component';
 import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
 
-import { JsonRequete } from './accueil/meteo/calendrier/Service/JsonRequete';
 import { CalendrierComponent } from './accueil//meteo/calendrier/calendrier.component';
-import { Requete } from './accueil/meteo/calendrier/Service/Requete';
+import { Requete } from './accueil/meteo/calendrier/Service/MteoRequete';
 import { Calendrier } from './accueil/meteo/calendrier/calendrier';
 
 import { TablesComponent } from './tables/tables.component';
@@ -120,7 +119,6 @@ import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
     RapportService,
     FleursFloraisonService,
     RucheDetailService,
-    JsonRequete,
     Requete,
     Calendrier,
     DailyRecordService

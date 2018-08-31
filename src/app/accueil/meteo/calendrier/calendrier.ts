@@ -1,5 +1,5 @@
 import * as echarts from '../../../../assets/echarts';
-import { Meteo } from "./Service/Meteo";
+import { Meteo } from "./Meteo";
 
 export class Calendrier{
 
