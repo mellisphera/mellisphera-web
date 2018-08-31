@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="sidebar" data-color="yellow" data-image="">
+  <div class="sidebar" data-color="red" data-image="">
       <app-sidebar ></app-sidebar>
       <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
   </div>
@@ -17,7 +17,7 @@
         [style.left.%]="ruche.hivePosX"
         [style.top.%]="ruche.hivePosY"
         [id]="i" (mouseover)="onMouseover($event)" (stopped)="onDragEnd($event)" [allowedOffsets]="offset" ngDraggable class="ruche">
-         <div id="health_status"></div>
+         <div [class]="getColorStatus(i)" id="health_status"></div>
          <div id="health_trend"></div>
         </div>
       </div>
