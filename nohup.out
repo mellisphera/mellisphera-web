@@ -48,3 +48,21 @@ webpack: wait until bundle finished: /rapport
 [0mchunk {[1m[33mvendor[39m[22m} [1m[32mvendor.bundle.js[39m[22m (vendor) 13.8 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
 
 webpack: Compiled successfully.
+webpack: Compiling...
+[0mDate: [1m[37m2018-08-30T13:37:03.200Z[39m[22m - Hash: [1m[37m367c4ce614c3592c7bfa[39m[22m - Time: [1m[37m4273[39m[22mms[0m
+[0m5 unchanged chunks[0m
+[0mchunk {[1m[33mmain[39m[22m} [1m[32mmain.bundle.js[39m[22m (main) 8.51 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+
+webpack: Compiled successfully.
+webpack: Compiling...
+[0mDate: [1m[37m2018-08-31T12:43:41.364Z[39m[22m - Hash: [1m[37md6a594aeb48d67895501[39m[22m - Time: [1m[37m3634[39m[22mms[0m
+[0m5 unchanged chunks[0m
+[0mchunk {[1m[33mmain[39m[22m} [1m[32mmain.bundle.js[39m[22m (main) 8.53 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+
+webpack: Compiled successfully.
+webpack: Compiling...
+[0mDate: [1m[37m2018-08-31T12:45:11.897Z[39m[22m - Hash: [1m[37mb135c4bb29f82830aed8[39m[22m - Time: [1m[37m989[39m[22mms[0m
+[0m5 unchanged chunks[0m
+[0mchunk {[1m[33mmain[39m[22m} [1m[32mmain.bundle.js[39m[22m (main) 8.53 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+
+webpack: Compiled successfully.
