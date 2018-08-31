@@ -164,7 +164,6 @@ export class DispositionRucheComponent implements OnInit {
   }
 
   onMouseover($event){
-    this.tabInstanceRuche = [];
     this.infoRuche = this.tabInstanceRuche[$event.target.id].toString();
   }
 
