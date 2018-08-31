@@ -36,6 +36,14 @@ export class DailyRecordsTH{
 
     public getHealthTrend(){
         return this.health_trend;
-    }
+	}
+	
+	public getColorStatus(){
+		if(this.health_status == 'A'){ return "statusA"; }
+		else if(this.health_status == 'B'){ return 'statusB'; }
+		else{
+			return 'statusC';
+		}
+	}
 
 }
