@@ -24,6 +24,8 @@ export class CapteurComponent implements OnInit {
   sensors ;
   selectedRucher = new Rucher();
   selectedRuche = new Ruche();
+  selectedRucherEdit = new Rucher();
+  selectedRucheEdit = new Ruche();
   selectedCapteur = new Capteur();
   capteurEdit = new Capteur();
   //variable to store ruches
@@ -42,6 +44,9 @@ export class CapteurComponent implements OnInit {
   radioStock :boolean;
   radioRuche : boolean;
   
+  radioStockE :boolean;
+  radioRucheE : boolean;
+
   message="";
   editedSensorMsg :boolean;
   public errorMsg;
@@ -68,14 +73,15 @@ export class CapteurComponent implements OnInit {
                             'description': [null],
                             'selectedRucher': [null],
                             'selectedRuche': [null],
-                            'checkbox': [],
+                            'checkbox': [null],
                             'validate' : ``
                         })                
                 
         this.editCapteurForm=formBuilder.group({
                             'selectedRucher': [null],
-                            'selectedRuche': [null,Validators.compose([Validators.required])],
-                            'checkbox': [],
+                            'selectedRuche': [null],
+                            'checkbox': [null],
+                            'description': [null],
                             'validate' : ``
                         })                
         this.username= data.currentUser().username;
@@ -93,6 +99,8 @@ export class CapteurComponent implements OnInit {
         this.editedSensorMsg=false;
         this.radioRuche=false;
         this.radioStock=true;
+        this.radioRucheE=false;
+        this.radioStockE=true;
         this.selectedRucher=null;
         this.selectedRuche=null;
         this.newCapteurForm.get('selectedRuche').clearValidators();
@@ -108,6 +116,24 @@ export class CapteurComponent implements OnInit {
         this.newCapteurForm.get('selectedRuche').updateValueAndValidity();
     }
 
+    selectRadioStockE(){
+        this.editedSensorMsg=false;
+        this.radioRucheE=false;
+        this.radioStockE=true;
+        this.selectedRucherEdit=null;
+        this.selectedRucheEdit=null;
+        this.editCapteurForm.get('selectedRuche').clearValidators();
+        this.editCapteurForm.get('selectedRuche').updateValueAndValidity();
+        
+    }
+
+    selectRadioRucheE(){
+        this.radioRucheE=true;
+        this.radioStockE=false;
+
+        this.editCapteurForm.get('selectedRuche').setValidators([Validators.required]);
+        this.editCapteurForm.get('selectedRuche').updateValueAndValidity();
+    }
 
 
 
@@ -152,7 +178,6 @@ export class CapteurComponent implements OnInit {
             this.capteur.idApiary = "stock";
         }
 
-
         this.capteurService.createCapteur(this.capteur).subscribe( 
             data => { 
                 alert("capteur créé ! ");
@@ -191,6 +216,7 @@ export class CapteurComponent implements OnInit {
       
         this.selectedCapteur.idApiary=String(this.selectedRucher);
         this.selectedCapteur.idHive=String(this.selectedRuche);
+        this.selectedCapteur.description = this.description;
  
         this.capteurService.updateCapteur(this.selectedCapteur).subscribe(
             data => { 
@@ -200,6 +226,9 @@ export class CapteurComponent implements OnInit {
         );
         this.editedSensorMsg=true;
         
+        this.radioRucheE=false;
+        this.radioStockE=true;
+
         this.editCapteurForm.reset();
         this.subscribeToData();
         
