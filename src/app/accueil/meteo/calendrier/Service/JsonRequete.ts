@@ -1,5 +1,5 @@
-import { Meteo } from "./Meteo";
-
+import { Meteo } from "../Meteo";
+import { DailyWeather } from "../DailyWeather";
 /* 
 
 trie le json obtenu de la requete pour avoir un tableau [date, icons ,tM, tm] utilisable par echarts 
@@ -7,13 +7,19 @@ trie le json obtenu de la requete pour avoir un tableau [date, icons ,tM, tm] ut
 */
 
 export  class JsonRequete{
-    private meteo : any;
+    private json : any;
     private tabMeteo : any[];
     private premiereRequete : any[]=[];
+    private tabDailyWeather : any[];
 
-    setJsonWeather(json : any){
-        this.meteo = json; 
+    constructor(json : any){
+        this.json = json;
     }
+
+    setJsonWeather(json){
+        this.json = json; 
+    }
+    
     getResultat(){
         return this.tabMeteo;
     }
@@ -29,17 +35,27 @@ export  class JsonRequete{
         return anee + '-' +mois+'-'+ jour;  
     }
 
-    sortProcess(){
+    sortMeteoProcess(){
         this.tabMeteo=[];
         console.log(this.tabMeteo);
-        var date;
-        this.tabMeteo.push(new Meteo(this.convertDate(this.meteo.list[0].dt_txt),this.meteo.list[0].weather[0].icon,Math.round(this.meteo.list[0].main.temp_min),Math.round(this.meteo.list[0].main.temp_max)).getArray());
-        this.meteo.list.forEach((element,index)=>{
+        var date = null;
+        this.tabMeteo.push(new Meteo(this.convertDate(this.json.list[0].dt_txt),this.json.list[0].weather[0].icon,Math.round(this.json.list[0].main.temp_min),Math.round(this.json.list[0].main.temp_max)).getArray());
+        this.json.list.forEach((element,index)=>{
             var heure = new Date(element.dt_txt).getHours();
             date = new Date(element.dt_txt);
             if(heure  == 12 && date.getDate() != new Date().getDate()){
                 this.tabMeteo.push(new Meteo(this.convertDate(element.dt_txt),element.weather[0].icon,Math.round(element.main.temp_min),Math.round(element.main.temp_max)).getArray());
             }
         })
+    }
+
+    sortProcessDailyWeather(){
+        this.tabDailyWeather=[];
+        var date = null;
+        this.json.forEach((element, index)=>{
+            date = new Date(element.day);
+            this.tabDailyWeather.push(new DailyWeather(element.minTempDay,element.maxTempDay, element.avgTempDay, element.day, element.icons, element.idApiary));
+        })
+        
     }
 }
