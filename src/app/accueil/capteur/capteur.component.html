@@ -204,7 +204,7 @@
                         {{ruche.name}}
                     </option>
                 </select>   
-                <div class="alert alert-danger" *ngIf="!editCapteurForm.controls['selectedRuche'].valid && editCapteurForm.controls['selectedRuche'].untouched && !editedSensorMsg">
+                <div class="alert alert-danger" *ngIf="!editCapteurForm.controls['selectedRuche'].valid && editCapteurForm.controls['selectedRuche'].untouched && !editedSensorMsgE">
                     Veuillez choisir une ruche
                 </div>
         </div>
@@ -214,7 +214,7 @@
         <input [(ngModel)]="description"   formControlName="description" class="form-control" id="message-text">
     </div>
     <div class="form-group ">
-        <div class="alert alert-success" *ngIf="editedSensorMsg">
+        <div class="alert alert-success" *ngIf="editedSensorMsgE">
             Capteur déplacé avec <strong>succès !</strong>
         </div>
     </div>
@@ -222,7 +222,7 @@
 </div>
 <div class="modal-footer">
     <button type="submit" class="btn btn-primary" [disabled]="!editCapteurForm.valid"  (click)="updateCapteur(editCapteurForm.value)"> Sauvegarder</button>
-<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClicked()">Fermer</button>
+<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClickedE()">Fermer</button>
 
 </div>
 </div>

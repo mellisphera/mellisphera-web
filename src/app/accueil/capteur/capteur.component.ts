@@ -49,6 +49,7 @@ export class CapteurComponent implements OnInit {
 
   message="";
   editedSensorMsg :boolean;
+  editedSensorMsgE : boolean;
   public errorMsg;
 
   private timerSubscription: AnonymousSubscription;
@@ -73,14 +74,14 @@ export class CapteurComponent implements OnInit {
                             'description': [null],
                             'selectedRucher': [null],
                             'selectedRuche': [null],
-                            'checkbox': [null],
+                            'checkbox': [],
                             'validate' : ``
                         })                
                 
         this.editCapteurForm=formBuilder.group({
                             'selectedRucher': [null],
                             'selectedRuche': [null],
-                            'checkbox': [null],
+                            'checkbox': [],
                             'description': [null],
                             'validate' : ``
                         })                
@@ -99,8 +100,7 @@ export class CapteurComponent implements OnInit {
         this.editedSensorMsg=false;
         this.radioRuche=false;
         this.radioStock=true;
-        this.radioRucheE=false;
-        this.radioStockE=true;
+
         this.selectedRucher=null;
         this.selectedRuche=null;
         this.newCapteurForm.get('selectedRuche').clearValidators();
@@ -117,9 +117,10 @@ export class CapteurComponent implements OnInit {
     }
 
     selectRadioStockE(){
-        this.editedSensorMsg=false;
+        this.editedSensorMsgE=false;
         this.radioRucheE=false;
         this.radioStockE=true;
+
         this.selectedRucherEdit=null;
         this.selectedRucheEdit=null;
         this.editCapteurForm.get('selectedRuche').clearValidators();
@@ -168,14 +169,16 @@ export class CapteurComponent implements OnInit {
         this.capteur.reference=this.reference;
         this.capteur.type=this.newCapteurForm.controls['type'].value;
         this.capteur.description=this.description;
-        var idRuche = String(this.selectedRuche);
-        this.capteur.idHive = idRuche;
-        this.capteur.idApiary = String(this.selectedRucher);
+        
         this.capteur.username = this.username;
 
         if(this.radioStock){
             this.capteur.idHive = "stock";
             this.capteur.idApiary = "stock";
+        }else {
+            var idRuche = String(this.selectedRuche);
+            this.capteur.idHive = idRuche;
+            this.capteur.idApiary = String(this.selectedRucher);
         }
 
         this.capteurService.createCapteur(this.capteur).subscribe( 
@@ -194,11 +197,7 @@ export class CapteurComponent implements OnInit {
         this.subscribeToData();
     }  
 
-    resetCapteurForm(){
-        this.newCapteurForm.get('reference').reset();
-        this.newCapteurForm.get('type').reset();
-        this.newCapteurForm.get('description').reset();
-    }
+
     //DELETE CAPTEUR
 
     deleteCapteur(capteur){
@@ -214,8 +213,14 @@ export class CapteurComponent implements OnInit {
 
     updateCapteur(){
       
-        this.selectedCapteur.idApiary=String(this.selectedRucher);
-        this.selectedCapteur.idHive=String(this.selectedRuche);
+        if(this.radioStockE){
+            this.selectedCapteur.idHive = "stock";
+            this.selectedCapteur.idApiary = "stock";
+        } else {
+            this.selectedCapteur.idApiary=String(this.selectedRucher);
+            this.selectedCapteur.idHive=String(this.selectedRuche);
+        }
+        
         this.selectedCapteur.description = this.description;
  
         this.capteurService.updateCapteur(this.selectedCapteur).subscribe(
@@ -224,12 +229,10 @@ export class CapteurComponent implements OnInit {
              },
              ( error => this.errorMsg=error)
         );
-        this.editedSensorMsg=true;
-        
+        this.resetCapteurEditForm();
+        this.editedSensorMsgE=false;
         this.radioRucheE=false;
         this.radioStockE=true;
-
-        this.editCapteurForm.reset();
         this.subscribeToData();
         
     }
@@ -263,6 +266,24 @@ export class CapteurComponent implements OnInit {
       this.resetCapteurForm();
       this.editedSensorMsg=false;
       this.editCapteurForm.reset();
+    }
+
+    resetCapteurForm(){
+        this.newCapteurForm.get('reference').reset();
+        this.newCapteurForm.get('type').reset();
+        this.newCapteurForm.get('description').reset();
+    }
+
+    onCancelClickedE(){
+        this.resetCapteurEditForm();
+        this.editedSensorMsgE=false;
+        this.editCapteurForm.reset();
+    }
+
+    resetCapteurEditForm(){
+        this.editCapteurForm.get('description').reset();
+        this.radioRucheE=false;
+        this.radioStockE=true;
     }
 
     private subscribeToData(): void {
