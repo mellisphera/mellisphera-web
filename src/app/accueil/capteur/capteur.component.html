@@ -199,7 +199,7 @@
         </div>                 
         <div class="form-group ">
             <label for="message-text" class="col-form-label">Ruche :</label>
-            <select  [(ngModel)]="selectedRuche" formControlName="selectedRuche"   class="form-control " id="sel1">
+            <select  [(ngModel)]="selectedRucheEdit" formControlName="selectedRuche"   class="form-control " id="sel1">
                     <option  *ngFor="let ruche of ruches" [value]="ruche.id" (click)="onSelectRuche($event)">
                         {{ruche.name}}
                     </option>
@@ -211,7 +211,7 @@
     </div>       
     <div class="form-group">
         <label for="message-text" class="col-form-label">Description :</label>
-        <input [(ngModel)]="description"   formControlName="description" class="form-control" id="message-text">
+        <input [(ngModel)]="descriptionE" [value]="selectedCapteur.description"  formControlName="description" class="form-control" id="message-text">
     </div>
     <div class="form-group ">
         <div class="alert alert-success" *ngIf="editedSensorMsgE">
