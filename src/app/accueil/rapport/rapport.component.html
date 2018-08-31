@@ -34,7 +34,7 @@
                                     <textarea class="form-control" id="exampleTextarea" rows="8"  formControlName="texte" [(ngModel)]="texteRapport"></textarea>
                             </div>
                             <button class="btn btn-primary" (click)="getAnalyseTemp(rapportForm.value)" (change)="change($event)" [disabled]="!rapportForm.valid" >Analyser</button>
-                            <button type="submit" (click)="saveRapport(rapportForm.value)" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Sauver</button>
+                            <button type="submit" (click)="saveTemp()" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Sauver</button>
                         </form>
 
                         <div class="form-group">
@@ -62,6 +62,7 @@
                                         <tr>
                                             <th scope="col">Date</th>
                                             <th scope="col">Sentence</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,6 +74,11 @@
                                                     </td>
                                                     <td>                                                                    
                                                         {{obs.sentence}}
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning btn-lg "  title="Supprimer observation" (click)="supprimerObsTemp(obs)" style="padding: 0;border: none; background: none;">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             </ng-container>
@@ -92,6 +98,7 @@
                                                     <th scope="col">Ruche(s)</th>
                                                     <th scope="col">Date</th>
                                                     <th scope="col">Sentence</th>
+                                                    <th scope="col">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -106,6 +113,12 @@
                                                             <td>
                                                                 {{obs.sentence}}
                                                             </td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-warning btn-lg " title="Supprimer observation" (click)="supprimerObsTemp(obs)" style="padding: 0;border: none; background: none;">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </td>
+                                                            
                                                         </tr>
                                                     </ng-container>
                                                 </ng-container>
@@ -124,6 +137,7 @@
                                             <th scope="col">Ruche(s)</th>
                                             <th scope="col">Date</th>
                                             <th scope="col">Sentence</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -137,6 +151,11 @@
                                                     </td>
                                                     <td>
                                                         {{obs.sentence}}
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning btn-lg " title="Supprimer action" (click)="supprimerObsTemp(obs)" style="padding: 0;border: none; background: none;">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             </ng-container>

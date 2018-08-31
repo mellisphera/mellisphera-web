@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="sidebar" data-color="yellow" data-image="">
+    <div class="sidebar" data-color="red" data-image="">
         <app-sidebar ></app-sidebar>
         <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
     </div>
@@ -108,7 +108,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-warning btn-lg " (click)="deleteFleur(fleur)"  style="padding: 0;border: none; background: none;">
+                                            <button type="button" class="btn btn-warning btn-lg " (click)="deleteFleur(fleur)" title="Supprimer Plante" style="padding: 0;border: none; background: none;">
                                                 <i class="fa fa-times"></i>
                                             </button>
                                         </td>
@@ -174,7 +174,7 @@
                                                 <br/>   
                                                 <label>Periode de floraison  : </label>
                                                     <br/>
-                                                    <input type="range" style="width:400px" [(ngModel)]="selectedFlo" (click)="onSelectFlo($event)" min="0" max="12">
+                                                    <input type="range" style="width:400px" [(ngModel)]="selectedFlo" (click)="onSelectFlo($event)" value="0" min="0" max="12">
                                                     <img src="/assets/img/mois.png" style="width:400px">
                                                     <br/>
                                                 <button type="submit" (click)="subscribeToDataRecherchePeriode()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
@@ -190,11 +190,10 @@
                                        <th scope="col">Nom français</th>
                                        <th scope="col">Nom latin</th>
                                        <th scope="col">Type</th>
-                                       <th scope="col">Butineur</th>
                                        <th scope="col">Période de floraison</th>
-                                       <th scope="col">Intêret pollen /3</th>
-                                       <th scope="col">Intêret nectar /3</th>
-                                       <th scope="col">Indice de confiance /3</th>
+                                       <th scope="col">Intêret pollen</th>
+                                       <th scope="col">Intêret nectar</th>
+                                       <th scope="col">Indice de confiance</th>
                                        <th scope="col">Ajouter à un rucher</th>
                                    </tr>
                                </thead>
@@ -204,7 +203,6 @@
                                    <td> <b> {{ fleur.flowerApi.francais }} </b> </td>
                                    <td> {{ fleur.flowerApi.latin }} </td>
                                    <td> {{ fleur.type }} </td>
-                                   <td> {{ fleur.flowerApi.butineur }} </td>
                                    <td > {{ fleur.flowerApi.flomindate }} -> {{ fleur.flowerApi.flomaxdate }} </td>
                                    <td> <img src="{{ fleur.flowerItsap.interet_pollen }}" ></td>
                                    <td> <img src="{{ fleur.flowerItsap.interet_nectar }}"></td>

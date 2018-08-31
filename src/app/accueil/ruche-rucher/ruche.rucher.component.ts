@@ -30,6 +30,7 @@ export class RucheRucherComponent implements OnInit {
   username : string;
   //variable for currentRucher ID
   currentRucherID: string;
+  rucheRucherID : string;
   // new rucher form
   newRucherForm : FormGroup;
   nom ='';
@@ -71,6 +72,7 @@ export class RucheRucherComponent implements OnInit {
     
   selectedRucher = new Rucher();
   selectedRuche = new Ruche();
+  selectedRucherAssocie = new Rucher();
   selectedObs = new ProcessReport();
   selectedRucherNull:boolean;
   public errorMsg;
@@ -110,7 +112,8 @@ export class RucheRucherComponent implements OnInit {
               })
             this.newRucheForm=formBuilder.group({
                   'nomRuche': [null,Validators.compose([Validators.required])],
-                  'descriptionRuche': [null]
+                  'descriptionRuche': [null],
+                  'rucheRucher':[null,Validators.compose([Validators.required])]
             })
             this.ObservationForm=formBuilder.group({
               'sentence': [null,Validators.compose([Validators.required])]
@@ -119,7 +122,7 @@ export class RucheRucherComponent implements OnInit {
         
         this.username= data.currentUser().username;
         this.currentRucherID= localStorage.getItem("currentRucher");
-        
+        this.rucheRucherID= localStorage.getItem("rucheRucherID");
   } 
 
 
@@ -130,6 +133,7 @@ ngOnInit(){
   this.x=String(this.selectedRucher);
   this.x=this.currentRucherID;
   this.selectedRucher=this.x;
+  this.selectedRucherAssocie=this.selectedRucher;
   this.getUserRuchers();  
   this.getRucheDuRucher();
   this.getDetailsRucher();
@@ -215,14 +219,12 @@ deleteRucher(rucher){
         data => {},
         ( error => this.errorMsg=error)
       );
-      //this.clearRucherSelection();
-      this.refreshRucherData(); 
-      //this.currentRucherID=null;
-      this.subscribeToData();
-      this.getDetailsRucher();
       localStorage.setItem("currentRucher",   this.ruchers[0].id);
       this.selectedRucher= this.ruchers[0].id;
-      alert("le rucher a été supprimé :( ")
+      this.getDetailsRucher();
+      this.refreshRucherData(); 
+      this.subscribeToData();
+      alert("le rucher a été supprimé :( ");
     }
   }
   else {
@@ -244,9 +246,9 @@ onEditerRucher(rucherEdit){
       );
     this.updateRucherInput=false;
     alert("Votre rucher a été édité");
-    this.subscribeToData();
     this.refreshRucherData();
     this.getDetailsRucher();
+    this.subscribeToData();
     this.newRucherForm.reset();
 
   } 
@@ -268,10 +270,18 @@ getRucheDuRucher(){
 
 onSelectRucher(event : any) : void{
   this.currentRucherID=String(this.selectedRucher);
+  this.selectedRucherAssocie = this.selectedRucher;
+  this.rucheRucherID=String(this.selectedRucher);
   localStorage.setItem("currentRucher",String(this.selectedRucher));
+  localStorage.setItem("rucheRucherID",String(this.selectedRucher));
   this.getRucheDuRucher();
   this.getDetailsRucher();
   this.getObservationsApiary();
+}
+
+onSelectRucherAssocie(event : any) : void{
+  this.rucheRucherID=String(this.selectedRucherAssocie);
+  localStorage.setItem("rucheRucherID",String(this.selectedRucherAssocie));
 }
 
 onSelectRuche(ruche){
@@ -314,8 +324,8 @@ createRuche(ruche){
       ( error => this.errorMsg=error));
   }
   alert("Votre Ruche a été créé avec Succès !");
-  this.subscribeToData();
   this.newRucheForm.reset();
+  this.subscribeToData();
 }
 
 // pour editer une ruche
@@ -323,10 +333,12 @@ onEditerRuche(ruche){
   this.ruche.name=this.nomRuche;
   this.ruche.description=this.descriptionRuche;
   this.ruche.id=this.selectedRuche.id;
+  this.ruche.idApiary=this.rucheRucherID;
   this.rucherService.updateRuche(this.ruche).subscribe( 
     data => {},
     ( error => this.errorMsg=error));
   alert("Votre ruche a été éditée");
+  this.selectedRucherAssocie=this.selectedRucher;
   this.subscribeToData();   
 }
 
