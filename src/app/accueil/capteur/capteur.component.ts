@@ -38,6 +38,7 @@ export class CapteurComponent implements OnInit {
   reference ='';
   type='';
   description ='';
+  descriptionE='';
 
   types : any[] = []; 
 
@@ -94,6 +95,8 @@ export class CapteurComponent implements OnInit {
         this.getUserRuchers(); 
         this.selectRadioStock();
         this.getAllCapteur();
+        this.radioRucheE=false;
+        this.radioStockE=true;
 }
 
     selectRadioStock(){
@@ -152,6 +155,9 @@ export class CapteurComponent implements OnInit {
 
     selectCapteur(capteur){
         this.selectedCapteur=capteur;
+        this.descriptionE = this.selectedCapteur.description;
+        this.selectedRucherEdit.id = this.selectedCapteur.idApiary;
+        this.selectedRucheEdit.id = this.selectedCapteur.idHive;
     }
 
 
@@ -217,18 +223,17 @@ export class CapteurComponent implements OnInit {
             this.selectedCapteur.idHive = "stock";
             this.selectedCapteur.idApiary = "stock";
         } else {
-            this.selectedCapteur.idApiary=String(this.selectedRucher);
-            this.selectedCapteur.idHive=String(this.selectedRuche);
+            this.selectedCapteur.idApiary=String(this.selectedRucherEdit);
+            this.selectedCapteur.idHive=String(this.selectedRucheEdit);
         }
         
-        this.selectedCapteur.description = this.description;
+        this.selectedCapteur.description = this.descriptionE;
  
         this.capteurService.updateCapteur(this.selectedCapteur).subscribe(
-            data => { 
-                alert("capteur modifié ! ");
-             },
+            data => {},
              ( error => this.errorMsg=error)
         );
+        alert("capteur modifié ! ");
         this.resetCapteurEditForm();
         this.editedSensorMsgE=false;
         this.radioRucheE=false;

@@ -1,0 +1,68 @@
+Your global Angular CLI version (6.0.8) is greater than your local
+version (1.7.4). The local Angular CLI version is used.
+
+To disable this warning use "ng config -g cli.warnings.versionMismatch false".
+Port 4300 is already in use. Use '--port' to specify a different port.
+Your global Angular CLI version (6.0.8) is greater than your local
+version (1.7.4). The local Angular CLI version is used.
+
+To disable this warning use "ng config -g cli.warnings.versionMismatch false".
+Port 4300 is already in use. Use '--port' to specify a different port.
+Your global Angular CLI version (6.0.8) is greater than your local
+version (1.7.4). The local Angular CLI version is used.
+
+To disable this warning use "ng config -g cli.warnings.versionMismatch false".
+** NG Live Development Server is listening on 51.68.71.91:4300, open your browser on http://51.68.71.91:4300/ **
+webpack: wait until bundle finished: /
+[0mDate: [1m[37m2018-08-30T12:22:34.159Z[39m[22m[0m
+[0mHash: [1m[37m812c085bc953e2e4624e[39m[22m[0m
+[0mTime: [1m[37m34555[39m[22mms[0m
+[0mchunk {[1m[33minline[39m[22m} [1m[32minline.bundle.js[39m[22m (inline) 3.85 kB [1m[33m[entry][39m[22m[1m[32m [rendered][39m[22m[0m
+[0mchunk {[1m[33mmain[39m[22m} [1m[32mmain.bundle.js[39m[22m (main) 8.51 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+[0mchunk {[1m[33mpolyfills[39m[22m} [1m[32mpolyfills.bundle.js[39m[22m (polyfills) 953 kB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+[0mchunk {[1m[33mscripts[39m[22m} [1m[32mscripts.bundle.js[39m[22m (scripts) 1.25 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+[0mchunk {[1m[33mstyles[39m[22m} [1m[32mstyles.bundle.js[39m[22m (styles) 264 kB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+[0mchunk {[1m[33mvendor[39m[22m} [1m[32mvendor.bundle.js[39m[22m (vendor) 13.8 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+
+webpack: Compiled successfully.
+webpack: Compiling...
+[0mDate: [1m[37m2018-08-30T13:14:59.647Z[39m[22m - Hash: [1m[37m85eabba0dbc930e48c65[39m[22m - Time: [1m[37m3750[39m[22mms[0m
+[0m5 unchanged chunks[0m
+[0mchunk {[1m[33mmain[39m[22m} [1m[32mmain.bundle.js[39m[22m (main) 8.51 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+
+webpack: Compiled successfully.
+Your global Angular CLI version (6.0.8) is greater than your local
+version (1.7.4). The local Angular CLI version is used.
+
+To disable this warning use "ng config -g cli.warnings.versionMismatch false".
+** NG Live Development Server is listening on 51.68.71.91:4300, open your browser on http://51.68.71.91:4300/ **
+webpack: wait until bundle finished: /rapport
+[0mDate: [1m[37m2018-08-30T13:16:37.349Z[39m[22m[0m
+[0mHash: [1m[37m40ae93ce10345ce6a3c0[39m[22m[0m
+[0mTime: [1m[37m33349[39m[22mms[0m
+[0mchunk {[1m[33minline[39m[22m} [1m[32minline.bundle.js[39m[22m (inline) 3.85 kB [1m[33m[entry][39m[22m[1m[32m [rendered][39m[22m[0m
+[0mchunk {[1m[33mmain[39m[22m} [1m[32mmain.bundle.js[39m[22m (main) 8.51 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+[0mchunk {[1m[33mpolyfills[39m[22m} [1m[32mpolyfills.bundle.js[39m[22m (polyfills) 953 kB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+[0mchunk {[1m[33mscripts[39m[22m} [1m[32mscripts.bundle.js[39m[22m (scripts) 1.25 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+[0mchunk {[1m[33mstyles[39m[22m} [1m[32mstyles.bundle.js[39m[22m (styles) 264 kB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+[0mchunk {[1m[33mvendor[39m[22m} [1m[32mvendor.bundle.js[39m[22m (vendor) 13.8 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+
+webpack: Compiled successfully.
+webpack: Compiling...
+[0mDate: [1m[37m2018-08-30T13:37:03.200Z[39m[22m - Hash: [1m[37m367c4ce614c3592c7bfa[39m[22m - Time: [1m[37m4273[39m[22mms[0m
+[0m5 unchanged chunks[0m
+[0mchunk {[1m[33mmain[39m[22m} [1m[32mmain.bundle.js[39m[22m (main) 8.51 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+
+webpack: Compiled successfully.
+webpack: Compiling...
+[0mDate: [1m[37m2018-08-31T12:43:41.364Z[39m[22m - Hash: [1m[37md6a594aeb48d67895501[39m[22m - Time: [1m[37m3634[39m[22mms[0m
+[0m5 unchanged chunks[0m
+[0mchunk {[1m[33mmain[39m[22m} [1m[32mmain.bundle.js[39m[22m (main) 8.53 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+
+webpack: Compiled successfully.
+webpack: Compiling...
+[0mDate: [1m[37m2018-08-31T12:45:11.897Z[39m[22m - Hash: [1m[37mb135c4bb29f82830aed8[39m[22m - Time: [1m[37m989[39m[22mms[0m
+[0m5 unchanged chunks[0m
+[0mchunk {[1m[33mmain[39m[22m} [1m[32mmain.bundle.js[39m[22m (main) 8.53 MB [1m[33m[initial][39m[22m[1m[32m [rendered][39m[22m[0m
+
+webpack: Compiled successfully.
