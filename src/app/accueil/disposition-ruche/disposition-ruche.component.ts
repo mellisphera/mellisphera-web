@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
-import { Observable } from 'rxjs';
 import { Ruche } from './ruche';
 import { DailyRecordService } from './Service/dailyRecordService';
 import { DailyRecordsTH } from './DailyRecordTH';
@@ -25,9 +24,11 @@ export class DispositionRucheComponent implements OnInit {
   rucherByUser: any[] = null;
   nbRucheByRucher: any[];
   rucherSelect: string;
+  dailyRecHive : any;
   tabRuche: any[];
   tabInstanceRuche: Ruche[] = [];
-  dailyRecHive : any;
+  tabInstanceDailyRechTh : DailyRecordsTH[];
+
   constructor( private dailyRecTh :  DailyRecordService, private draggable: DragAndCheckModule, private login: UserloggedService, private rucher: RucherService) { 
     this.offset = new Offsets(this.top,this.right,this.bottom, this.left);
   }
@@ -37,27 +38,38 @@ export class DispositionRucheComponent implements OnInit {
     'y': '0'
   };
 
+
   style = {
     'background-image':'',
     'background-position': "center",
     'background-repeat': "no-repeat"
   };
+
   ngOnInit() {
     this.username = this.login.currentUser().username;
     this.getRucherByUser();
     setTimeout(() => {
-      console.log(this.rucherByUser);
       this.rucherSelect = this.rucherByUser[0].id;
       this.setBackgroundById(this.rucherSelect);
       this.getRuche();
+      this.getDailyRecThByHive(this.rucherSelect);
       setTimeout(() => {
-        this.tabRuche.forEach((element, index) => {
-          this.tabInstanceRuche.push(new Ruche(element.id ,element.name, element.description, element.username, element.idApiary, element.hivePosX, element.hivePosY));
-        });
-      }, 200);
-      this.getHiveStatus();
-    },500);
+        this.createInstanceRuche();
+        this.createInstanceDailyRecTh();
+      }, 400);
+      
+    },600);
   }
+
+  getColorStatus($index){
+    try{
+      return this.tabInstanceDailyRechTh[$index].getColorStatus();
+    }
+    catch(e){
+      return "statusInconnu";
+    }
+  }
+
   getRucherByUser() {
     this.rucher.getUserRuchers(this.username).subscribe(
       (data) => {
@@ -69,15 +81,9 @@ export class DispositionRucheComponent implements OnInit {
     );
   }
 
-  getHiveStatus(){
-    this.tabInstanceRuche.forEach(element => {
-      this.getDailyRecThByHive(element.getId());
-      console.log(this.dailyRecHive);
-    });
-  }
 
-  getDailyRecThByHive(idHive){
-    this.dailyRecTh.getDailyRecThByIdHive(idHive).subscribe(
+  getDailyRecThByHive(idApiary){
+    this.dailyRecTh.getDailyRecThByIdHive(this.username,idApiary).subscribe(
       (data)=>{
         this.dailyRecHive = data;
       },
@@ -96,8 +102,6 @@ export class DispositionRucheComponent implements OnInit {
       (err) => { console.log(err); }
     );
   }
-
-// [ngStyle]="{'left' : ruche.hivePosX+'%', 'top':ruche.hivePosY+'%' }"
 
   /* Fonctions qui est appeler à chaquue deplacement d'une ruche */
   onDragEnd($event) {
@@ -147,19 +151,20 @@ export class DispositionRucheComponent implements OnInit {
   getPourccentToPx(valeur, valeurTotal){
     return ((valeur/100) * valeurTotal);
   }
+  /* Pour chaque rucher selectionner */
   onChange($event) {
-    this.tabInstanceRuche = [];
     this.rucherSelect = $event.target.value
+    this.getDailyRecThByHive(this.rucherSelect);
     this.setBackgroundById(this.rucherSelect);
     this.getRuche();
     setTimeout(() => {
-      this.tabRuche.forEach((element, index) => {
-        this.tabInstanceRuche.push(new Ruche(element.id ,element.name, element.description, element.username, element.idApiary, element.hivePosX, element.hivePosY));
-      });
-    }, 200)
+      this.createInstanceRuche();
+      this.createInstanceDailyRecTh();
+    }, 300)
   }
 
   onMouseover($event){
+    this.tabInstanceRuche = [];
     this.infoRuche = this.tabInstanceRuche[$event.target.id].toString();
   }
 
@@ -175,6 +180,22 @@ export class DispositionRucheComponent implements OnInit {
           }
           
         }
+    });
+  }
+
+  createInstanceRuche(){
+    this.tabRuche.forEach((element, index) => {
+      this.tabInstanceRuche.push(new Ruche(element.id ,element.name, element.description, element.username, element.idApiary, element.hivePosX, element.hivePosY));
+    });
+  }
+
+  createInstanceDailyRecTh(){
+    this.tabInstanceDailyRechTh = [];
+    this.dailyRecHive.forEach((element, index) => {
+      this.tabInstanceDailyRechTh.push(new DailyRecordsTH(element.recordDate, element.idHive, 
+        element.humidity_int_min, element.humidity_int_max, element.temp_int_min, element.temp_int_max, 
+        element.temp_int_moy, element.temp_int_stddev, element.health_status, element.health_trend, element.r_int_text));
+        console.log(this.tabInstanceDailyRechTh[index].getHealthStatus());
     });
   }
 }

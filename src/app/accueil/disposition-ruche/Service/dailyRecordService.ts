@@ -7,8 +7,8 @@ export class DailyRecordService{
     
     constructor(private http : HttpClient){}
 
-    getDailyRecThByIdHive(idHive){
-        return this.http.get("***REMOVED***/dalyRecordsTH/last/"+idHive);
+    getDailyRecThByIdHive(username, idApiary){
+        return this.http.get("***REMOVED***/dailyRecordsTH/"+username+'/'+idApiary);
     }
 
 }
