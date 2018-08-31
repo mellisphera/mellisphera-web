@@ -1,288 +1,231 @@
 <div class="wrapper">
-        <div class="sidebar" data-color="red" data-image="">
-            <app-sidebar ></app-sidebar>
-            <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
-        </div>
+    <div class="sidebar" data-color="red" data-image="">
+        <app-sidebar ></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+    </div>
     
-        <div class="main-panel">
-            <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
-            <router-outlet></router-outlet>
-        
-            
-            <div class="container-fluid" style="background-color: white;">
-                    <div class="row content">
-                            <div class="col-sm-9">                        
-                                  <!--  <label for="sel1"><h4>Selectionnez un de vos ruchers :</h4></label>
-                           
-                                    <select  [(ngModel)]="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
-                                            <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
-                                                 {{rucher.name}}
-                                            </option>
-                                    </select>   
-                           
-                                  
-                                  <div class="form-group"> 
-                                      Rucher Selectionné :  <b>{{selectedRucher.id}}</b> <br>
-                                  </div>
-                                -->
-                                  <div class="form-inline" >
-                                    <div class="form-group">
-                                        <!--
-                                        <label><h4>Rucher :</h4> </label>
-                                        <select  [(ngModel)]="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
-                                            <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
-                                                 {{rucher.name}}
-                                            </option>
-                                        </select>   
-                                        -->
-                                       <!-- 
-                                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#newRucherModal" >Créer rucher</button>
-                                        -->
-                                    </div>
-                                  </div>
-            
-            
-                                  <div class="bs-example">
-                                      <div class="panel-group" id="accordion">
-                                          <div class="panel panel-info ">
-                                              <div class="panel-heading "  >
-                                                  <h4 class="panel-title" >
-                                                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                                         <b>Capteurs </b>
-                                                       </a>
-                                              
-                                                    </h4>
-                                              </div>
-                                              <div id="collapseOne" class="panel-collapse collapse in">
-                                                  <div class="panel-body">
-                                              
-                                                        <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
-                                                                data-target="#newCapteurModal"  class="btn btn-success btn-lg" (click)="selectRadioStock()">
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
-                                                    
-            
-                                                      <!-- tables ruche -->
-                                                    <div>
-                                                        <table class="table">    
-                                                            <thead class="thead-dark" >
-                                                            <tr>
-                                                                <th scope="col">Reference</th>
-                                                                <th scope="col">Description</th>
-                                                                <th scope="col">Affectation</th>
-                                                                <th scope="col">Type</th>
-                                                                <th scope="col">Action</th>
-                                                             
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                              
-                                                                <tr *ngFor="let capteur of capteurs">
-                                                                    <td>{{capteur.reference}}</td>
-                                                                    <td>{{capteur.description}}</td>
-                                                                    <td>{{capteur.apiaryName}} | {{capteur.hiveName}}</td>
-                                                                    <td>{{capteur.type}}  </td>
-                                                                    <td>
-                                                                        <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="selectCapteur(capteur)"
-                                                                        data-target="#editCapteurModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
-                                                                            <i class="fa fa-edit"></i>
-                                                                        </button>
-                                                                        
-                                                                        <button type="button" class="btn btn-warning btn-lg " (click)="deleteCapteur(capteur)" style="padding: 0;border: none; background: none;">
-                                                                                <i class="fa fa-times"></i>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>      
-                                                    </div>
-                              
-                                                    
-                                                  </div>
-                                              </div>
-                                          </div>
-                                     
-                                      </div>
-                                    
-                                  </div>
-                     
-                                  <!--  <h3> Selected rucher : {{selectedRucher.name}} </h3> -->
-            
-                                  
-                                   
-                                      <!-- End of table ruche -->
-                                     <!-- table Observations -->
-                                    
-            
-                                    <!-- End of table ruche -->                      
-                                    <!-- table Observations -->
-
-                                    <br><br>    
-                                </div>
-            
-                
-                      <div class="col-sm-3 sidenav" style="background-color: white; height:1500px;border-color:black;">
-                        <h4 class="text-center"></h4>
-                        <h5 class="text-center"><b></b></h5>
-                        <p  class="text-center"><b> </b></p>
-                        <!--
-                        <button class="btn btn-primary" style="margin-left:44%;"> &&</button>
-                        -->
-                      </div>
+    <div class="main-panel">
+        <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+        <router-outlet></router-outlet> 
+        <div class="container-fluid" style="background-color: white;">
+            <div class="row content">
+                <div class="col-sm-9">
+                    <div class="form-inline" >
+                        <div class="form-group">
+                        </div>
                     </div>
-                  </div>
-</div>
-    
-
-
-
- <!-- New capteur Modal -->
- <div class="modal fade" id="newCapteurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title text-center" id="exampleModalLabel"><h3>Déclaration de capteur</h3> </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                    <form  [formGroup]="newCapteurForm" (ngSubmit)="createCapteur(newCapteurForm.value)">
-                            <div class="form-group row">
-                                <div class="col-md-6" >
-                                        <label for="recipient-name" class="col-form-label">Référence (*):</label>
-                                        <input #ref (keyup)="checkCapteurType(ref.value)" [(ngModel)]="reference" formControlName="reference" type="text" class="form-control" id="recipient-name">
-                                        <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].touched">
-                                                Veuillez saisir une reference valide
-                                        </div>
-
+                    <div class="bs-example">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-info ">
+                                <div class="panel-heading "  >
+                                    <h4 class="panel-title" >
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                            <b>Capteurs </b>
+                                        </a>                                 
+                                    </h4>
                                 </div>
-                                <div class="col-md-6">
-                            
-                                        <label for="recipient-name" class="col-form-label"  >Type :</label>
-                                        <input [(ngModel)]="types.type" formControlName="type" disabled="true" type="text" class="form-control" id="recipient-name" >
-                                        <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['type'].valid && newCapteurForm.controls['reference'].touched">
-                                                Vérifiez la référence de votre capteur
-                                        </div>
-                                   
-                                </div>
-                            
-                                </div>
-
-                            
-                                <div class="form-group">
-                                        <label for="message-text" class="col-form-label">Description :</label>
-                                        <input [(ngModel)]="description"   formControlName="description" class="form-control" id="message-text">
-                                </div>
-
-                                <div class="form-group ">
-                                        
-                                                <label  class="col-form-label" for="exampleRadios1" >
-                                                        Affecter à :  
-                                                </label>
-                                        <div class="form-check">
-                                                <label class="form-check-label" for="exampleRadios1" >
-                                                        Stock 
-                                                </label>
-                                                <input class="form-check-input" (change)="selectRadioStock()" type="radio" formControlName="checkbox" name="checkbox"  [checked]="radioStock">
-                                                
-                                        
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                        Ruche 
-                                                </label>
-                                                <input class="form-check-input" (change)="selectRadioRuche()" type="radio" formControlName="checkbox" name="checkbox" [checked]="radioRuche">
-                                              
-                                        </div>
-                                </div>
-
-                                <div *ngIf="radioRuche">
-                                    <div class="form-group">
-                                            <label for="recipient-name" class="col-form-label">Rucher :</label>
-                                            <select  [(ngModel)]="selectedRucher"  formControlName="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
-                                                <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
-                                                    {{rucher.name}}
-                                                </option>
-                                            </select>   
-                                
-                                    </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body">                              
+                                        <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
+                                            data-target="#newCapteurModal"  class="btn btn-success btn-lg" (click)="selectRadioStock()">
+                                            <i class="fa fa-plus"></i>
+                                        </button>            
+                                        <!-- tables ruche -->
+                                        <div>
+                                            <table class="table">    
+                                                <thead class="thead-dark" >
+                                                    <tr>
+                                                        <th scope="col">Reference</th>
+                                                        <th scope="col">Description</th>
+                                                        <th scope="col">Affectation</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Action</th>                             
+                                                    </tr>
+                                                </thead>
+                                                <tbody>                                  
+                                                    <tr *ngFor="let capteur of capteurs">
+                                                        <td>{{capteur.reference}}</td>
+                                                        <td>{{capteur.description}}</td>
+                                                        <td>{{capteur.apiaryName}} | {{capteur.hiveName}}</td>
+                                                        <td>{{capteur.type}}  </td>
+                                                        <td>
+                                                            <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="selectCapteur(capteur)"
+                                                            data-target="#editCapteurModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                                                <i class="fa fa-edit"></i>
+                                                            </button>
                                                             
-                                    <div class="form-group ">
-                                                <label for="message-text" class="col-form-label">Ruche :</label>
-                                                <select  [(ngModel)]="selectedRuche" formControlName="selectedRuche"  (click)="onSelectRuche($event)" class="form-control " id="sel1">
-                                                    <option  *ngFor="let ruche of ruches" [value]="ruche.id" >
-                                                        {{ruche.name}}
-                                                    </option>
-                                                </select>   
-                                                <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].untouched">
-                                                        Veuillez choisir une ruche
-                                                </div>
-        
+                                                            <button type="button" class="btn btn-warning btn-lg " (click)="deleteCapteur(capteur)" style="padding: 0;border: none; background: none;">
+                                                                    <i class="fa fa-times"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>                           
+                                        </div>
                                     </div>
                                 </div>
-                                
-                     
-                      </form>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>    
+                </div>    
+                <div class="col-sm-3 sidenav" style="background-color: white; height:1500px;border-color:black;">
+                <h4 class="text-center"></h4>
+                <h5 class="text-center"><b></b></h5>
+                <p  class="text-center"><b> </b></p>
             </div>
-            <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" [disabled]="!newCapteurForm.valid" (click)="createCapteur(newCapteurForm.value)" > Ajouter Capteur</button>
-                   <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClicked()">Fermer</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
+
+
+
+
+<!-- New capteur Modal -->
+<div class="modal fade" id="newCapteurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title text-center" id="exampleModalLabel"><h3>Déclaration de capteur</h3> </h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+    <form  [formGroup]="newCapteurForm" (ngSubmit)="createCapteur(newCapteurForm.value)">
+        <div class="form-group row">
+            <div class="col-md-6" >
+                <label for="recipient-name" class="col-form-label">Référence (*):</label>
+                <input #ref (keyup)="checkCapteurType(ref.value)" [(ngModel)]="reference" formControlName="reference" type="text" class="form-control" id="recipient-name">
+                <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].touched">
+                    Veuillez saisir une reference valide
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="recipient-name" class="col-form-label"  >Type :</label>
+                <input [(ngModel)]="types.type" formControlName="type" disabled="true" type="text" class="form-control" id="recipient-name" >
+                <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['type'].valid && newCapteurForm.controls['reference'].touched">
+                    Vérifiez la référence de votre capteur
+                </div>   
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="message-text" class="col-form-label">Description :</label>
+            <input [(ngModel)]="description"   formControlName="description" class="form-control" id="message-text">
+        </div>
+        <div class="form-group ">          
+            <label  class="col-form-label" for="exampleRadios1" >
+                Affecter à :  
+            </label>
+            <div class="form-check">
+                <label class="form-check-label" for="exampleRadios1" >
+                    Stock 
+                </label>
+                <input class="form-check-input" (change)="selectRadioStock()" type="radio" formControlName="checkbox" name="checkbox"  [checked]="radioStock">
+                <label class="form-check-label" for="exampleRadios1">
+                    Ruche 
+                </label>
+                <input class="form-check-input" (change)="selectRadioRuche()" type="radio" formControlName="checkbox" name="checkbox" [checked]="radioRuche">                      
+            </div>
+        </div>
+        <div *ngIf="radioRuche">
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Rucher :</label>
+                <select  [(ngModel)]="selectedRucher"  formControlName="selectedRucher" class="form-control " id="sel1">
+                    <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
+                        {{rucher.name}}
+                    </option>
+                </select>   
+            </div>                 
+            <div class="form-group ">
+                <label for="message-text" class="col-form-label">Ruche :</label>
+                <select  [(ngModel)]="selectedRuche" formControlName="selectedRuche"  (click)="onSelectRuche($event)" class="form-control " id="sel1">
+                    <option  *ngFor="let ruche of ruches" [value]="ruche.id" >
+                        {{ruche.name}}
+                    </option>
+                </select>   
+                <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].untouched">
+                    Veuillez choisir une ruche
+                </div>        
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="!newCapteurForm.valid" (click)="createCapteur(newCapteurForm.value)" > Ajouter Capteur</button>
+       <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClicked()">Fermer</button>
+</div>
+</div>
+</div>
+</div>
 <!-- End of new Rucher Modal -->
 
 
 <!-- EDIT CAPTEUR Modal -->
 <div class="modal fade" id="editCapteurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-center" id="exampleModalLabel"><h3>Editer affectation capteur</h3> </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title text-center" id="exampleModalLabel"><h3>Editer affectation capteur</h3> </h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+<form  [formGroup]="editCapteurForm" (ngSubmit)="updateCapteur(editCapteurForm.value)">
+    <div class="form-group ">          
+        <label  class="col-form-label" for="exampleRadios1" >
+            Affecter à :  
+        </label>
+        <div class="form-check">
+            <label class="form-check-label" for="exampleRadios1" >
+                Stock 
+            </label>
+            <input class="form-check-input" (change)="selectRadioStockE()" type="radio" formControlName="checkbox" name="checkbox"  [checked]="radioStockE">
+            <label class="form-check-label" for="exampleRadios1">
+                Ruche 
+            </label>
+            <input class="form-check-input" (change)="selectRadioRucheE()" type="radio" formControlName="checkbox" name="checkbox" [checked]="radioRucheE">                      
         </div>
-        <div class="modal-body">
-                <form  [formGroup]="editCapteurForm" (ngSubmit)="updateCapteur(editCapteurForm.value)">
-                                                                    
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Rucher :</label>
-                                    <select  [(ngModel)]="selectedRucherEdit"  formControlName="selectedRucher"  class="form-control " id="sel1">
-                                        <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
-                                            {{rucher.name}}
-                                        </option>
-                                    </select>   
-                                
-                                </div>
-                                <div class="form-group ">
-                                            <label for="message-text" class="col-form-label">Ruche :</label>
-                                            <select  [(ngModel)]="selectedRuche" formControlName="selectedRuche"   class="form-control " id="sel1">
-                                                <option  *ngFor="let ruche of ruches" [value]="ruche.id" (click)="onSelectRuche($event)">
-                                                    {{ruche.name}}
-                                                </option>
-                                            </select>   
-                                            <div class="alert alert-danger" *ngIf="!editCapteurForm.controls['selectedRuche'].valid && editCapteurForm.controls['selectedRuche'].untouched && !editedSensorMsg">
-                                                        Veuillez choisir une ruche
-                                            </div>
-    
-                                </div>
-
-                                <div class="form-group ">
-                                    <div class="alert alert-success" *ngIf="editedSensorMsg">
-                                            Capteur déplacé avec <strong>succès !</strong>
-                                    </div>
-                                </div>
-                                                
-                     
-                  </form>
-        </div>
-        <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" [disabled]="!editCapteurForm.valid"  (click)="updateCapteur(editCapteurForm.value)"> Sauvegarder</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClicked()">Fermer</button>
-         
-        </div>
-      </div>
     </div>
-  </div>
+    <div *ngIf="radioRucheE">
+        <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Rucher :</label>
+            <select  [(ngModel)]="selectedRucherEdit"  formControlName="selectedRucher"  class="form-control " id="sel1">
+                <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
+                    {{rucher.name}}
+                </option>
+            </select>      
+        </div>                 
+        <div class="form-group ">
+            <label for="message-text" class="col-form-label">Ruche :</label>
+            <select  [(ngModel)]="selectedRuche" formControlName="selectedRuche"   class="form-control " id="sel1">
+                    <option  *ngFor="let ruche of ruches" [value]="ruche.id" (click)="onSelectRuche($event)">
+                        {{ruche.name}}
+                    </option>
+                </select>   
+                <div class="alert alert-danger" *ngIf="!editCapteurForm.controls['selectedRuche'].valid && editCapteurForm.controls['selectedRuche'].untouched && !editedSensorMsgE">
+                    Veuillez choisir une ruche
+                </div>
+        </div>
+    </div>       
+    <div class="form-group">
+        <label for="message-text" class="col-form-label">Description :</label>
+        <input [(ngModel)]="description"   formControlName="description" class="form-control" id="message-text">
+    </div>
+    <div class="form-group ">
+        <div class="alert alert-success" *ngIf="editedSensorMsgE">
+            Capteur déplacé avec <strong>succès !</strong>
+        </div>
+    </div>
+</form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" [disabled]="!editCapteurForm.valid"  (click)="updateCapteur(editCapteurForm.value)"> Sauvegarder</button>
+<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClickedE()">Fermer</button>
+
+</div>
+</div>
+</div>
+</div>
 <!-- End EDIT capteur Modal -->

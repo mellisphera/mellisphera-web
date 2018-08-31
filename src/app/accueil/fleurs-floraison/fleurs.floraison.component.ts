@@ -129,6 +129,7 @@ export class FleursFloraisonComponent implements OnInit {
     if(this.selectedRucher != undefined){
       this.getNameApiary();
     }
+    this.selectedFlo = "0";
   }
 
 

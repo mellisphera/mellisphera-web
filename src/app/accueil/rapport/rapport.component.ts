@@ -90,6 +90,16 @@ export class RapportComponent implements OnInit {
         ( error => this.errorMsg=error));
     }
 
+
+    saveTemp(){
+      this.rapportService.getSave(this.username).subscribe( 
+        data => {},
+        ( error => this.errorMsg=error));
+        this.texteRapport = "";
+        confirm("Observations enregistrées !")
+        this.observations = null;
+    }
+
     saveRapport(){
       this.rapportService.getNluSave(this.texteRapport, this.selectedRucher).subscribe( 
         data => {},
@@ -98,6 +108,14 @@ export class RapportComponent implements OnInit {
         confirm("Observations enregistrées !")
         this.observations = null;
         
+    }
+
+    supprimerObsTemp(obs){
+      console.log("id : "+obs.id);
+      this.rapportService.deleteObsTemp(obs.id).subscribe( 
+        data => {},
+        ( error => this.errorMsg=error));
+        this.subscribeToRapport();
     }
 
   private subscribeToRapport(): void {
