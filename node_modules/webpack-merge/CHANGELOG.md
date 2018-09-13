@@ -1,3 +1,18 @@
+4.1.4 / 2018-08-01
+==================
+
+  * Maintenance - Remove bitHound from the README as it closed down. #102
+
+4.1.3 / 2018-06-14
+==================
+
+  * Fix - Smart merge respects the existing loader order #79, #101
+
+4.1.2 / 2017-02-22
+==================
+
+  * Maintenance - Update lodash, #97, #98
+
 4.1.1 / 2017-11-01
 ==================
 

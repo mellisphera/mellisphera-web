@@ -106,4 +106,8 @@ export class MeteoComponent implements OnInit {
   isMap(){
         
   }
+  message="";
+  receiveMessage($event){
+    this.message=$event;
+  }
 }

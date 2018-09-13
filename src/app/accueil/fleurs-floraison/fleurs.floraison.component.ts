@@ -670,7 +670,10 @@ export class FleursFloraisonComponent implements OnInit {
   
   }
 
-
+  message="";
+  receiveMessage($event){
+      this.message=$event;
+  }
 
 
 

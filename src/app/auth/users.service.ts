@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { Observable } from 'rxjs/Rx';
+import { BehaviorSubject } from "rxjs";
+import { Observable } from 'rxjs';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { User } from '../_model/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';

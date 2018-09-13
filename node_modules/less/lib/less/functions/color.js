@@ -1,15 +1,24 @@
-var Dimension = require("../tree/dimension"),
-    Color = require("../tree/color"),
-    Quoted = require("../tree/quoted"),
-    Anonymous = require("../tree/anonymous"),
-    functionRegistry = require("./function-registry"),
+var Dimension = require('../tree/dimension'),
+    Color = require('../tree/color'),
+    Quoted = require('../tree/quoted'),
+    Anonymous = require('../tree/anonymous'),
+    functionRegistry = require('./function-registry'),
     colorFunctions;
 
 function clamp(val) {
     return Math.min(1, Math.max(0, val));
 }
-function hsla(color) {
-    return colorFunctions.hsla(color.h, color.s, color.l, color.a);
+function hsla(origColor, hsl) {
+    var color = colorFunctions.hsla(hsl.h, hsl.s, hsl.l, hsl.a);
+    if (color) {
+        if (origColor.value && 
+            /^(rgb|hsl)/.test(origColor.value)) {
+            color.value = origColor.value;
+        } else {
+            color.value = 'rgb';
+        }
+        return color;
+    }
 }
 function number(n) {
     if (n instanceof Dimension) {
@@ -18,8 +27,8 @@ function number(n) {
         return n;
     } else {
         throw {
-            type: "Argument",
-            message: "color functions take numbers as parameters"
+            type: 'Argument',
+            message: 'color functions take numbers as parameters'
         };
     }
 }
@@ -32,46 +41,79 @@ function scaled(n, size) {
 }
 colorFunctions = {
     rgb: function (r, g, b) {
-        return colorFunctions.rgba(r, g, b, 1.0);
+        var color = colorFunctions.rgba(r, g, b, 1.0);
+        if (color) {
+            color.value = 'rgb';
+            return color;
+        }
     },
     rgba: function (r, g, b, a) {
-        var rgb = [r, g, b].map(function (c) { return scaled(c, 255); });
-        a = number(a);
-        return new Color(rgb, a);
+        try {
+            if (r instanceof Color) {
+                if (g) {
+                    a = number(g);
+                } else {
+                    a = r.alpha;
+                }
+                return new Color(r.rgb, a, 'rgba');
+            }
+            var rgb = [r, g, b].map(function (c) { return scaled(c, 255); });
+            a = number(a);
+            return new Color(rgb, a, 'rgba');
+        }
+        catch (e) {}
     },
     hsl: function (h, s, l) {
-        return colorFunctions.hsla(h, s, l, 1.0);
+        var color = colorFunctions.hsla(h, s, l, 1.0);
+        if (color) {
+            color.value = 'hsl';
+            return color;
+        }
     },
     hsla: function (h, s, l, a) {
+        try {
+            if (h instanceof Color) {
+                if (s) {
+                    a = number(s);
+                } else {
+                    a = h.alpha;
+                }
+                return new Color(h.rgb, a, 'hsla');
+            }
 
-        var m1, m2;
+            var m1, m2;
 
-        function hue(h) {
-            h = h < 0 ? h + 1 : (h > 1 ? h - 1 : h);
-            if (h * 6 < 1) {
-                return m1 + (m2 - m1) * h * 6;
+            function hue(h) {
+                h = h < 0 ? h + 1 : (h > 1 ? h - 1 : h);
+                if (h * 6 < 1) {
+                    return m1 + (m2 - m1) * h * 6;
+                }
+                else if (h * 2 < 1) {
+                    return m2;
+                }
+                else if (h * 3 < 2) {
+                    return m1 + (m2 - m1) * (2 / 3 - h) * 6;
+                }
+                else {
+                    return m1;
+                }
             }
-            else if (h * 2 < 1) {
-                return m2;
-            }
-            else if (h * 3 < 2) {
-                return m1 + (m2 - m1) * (2 / 3 - h) * 6;
-            }
-            else {
-                return m1;
-            }
+
+            h = (number(h) % 360) / 360;
+            s = clamp(number(s)); l = clamp(number(l)); a = clamp(number(a));
+
+            m2 = l <= 0.5 ? l * (s + 1) : l + s - l * s;
+            m1 = l * 2 - m2;
+
+            var rgb = [
+                hue(h + 1 / 3) * 255,
+                hue(h)       * 255,
+                hue(h - 1 / 3) * 255
+            ];
+            a = number(a);
+            return new Color(rgb, a, 'hsla');
         }
-
-        h = (number(h) % 360) / 360;
-        s = clamp(number(s)); l = clamp(number(l)); a = clamp(number(a));
-
-        m2 = l <= 0.5 ? l * (s + 1) : l + s - l * s;
-        m1 = l * 2 - m2;
-
-        return colorFunctions.rgba(hue(h + 1 / 3) * 255,
-            hue(h)       * 255,
-            hue(h - 1 / 3) * 255,
-            a);
+        catch (e) {}
     },
 
     hsv: function(h, s, v) {
@@ -152,81 +194,81 @@ colorFunctions = {
         }
         var hsl = color.toHSL();
 
-        if (typeof method !== "undefined" && method.value === "relative") {
+        if (typeof method !== 'undefined' && method.value === 'relative') {
             hsl.s +=  hsl.s * amount.value / 100;
         }
         else {
             hsl.s += amount.value / 100;
         }
         hsl.s = clamp(hsl.s);
-        return hsla(hsl);
+        return hsla(color, hsl);
     },
     desaturate: function (color, amount, method) {
         var hsl = color.toHSL();
 
-        if (typeof method !== "undefined" && method.value === "relative") {
+        if (typeof method !== 'undefined' && method.value === 'relative') {
             hsl.s -=  hsl.s * amount.value / 100;
         }
         else {
             hsl.s -= amount.value / 100;
         }
         hsl.s = clamp(hsl.s);
-        return hsla(hsl);
+        return hsla(color, hsl);
     },
     lighten: function (color, amount, method) {
         var hsl = color.toHSL();
 
-        if (typeof method !== "undefined" && method.value === "relative") {
+        if (typeof method !== 'undefined' && method.value === 'relative') {
             hsl.l +=  hsl.l * amount.value / 100;
         }
         else {
             hsl.l += amount.value / 100;
         }
         hsl.l = clamp(hsl.l);
-        return hsla(hsl);
+        return hsla(color, hsl);
     },
     darken: function (color, amount, method) {
         var hsl = color.toHSL();
 
-        if (typeof method !== "undefined" && method.value === "relative") {
+        if (typeof method !== 'undefined' && method.value === 'relative') {
             hsl.l -=  hsl.l * amount.value / 100;
         }
         else {
             hsl.l -= amount.value / 100;
         }
         hsl.l = clamp(hsl.l);
-        return hsla(hsl);
+        return hsla(color, hsl);
     },
     fadein: function (color, amount, method) {
         var hsl = color.toHSL();
 
-        if (typeof method !== "undefined" && method.value === "relative") {
+        if (typeof method !== 'undefined' && method.value === 'relative') {
             hsl.a +=  hsl.a * amount.value / 100;
         }
         else {
             hsl.a += amount.value / 100;
         }
         hsl.a = clamp(hsl.a);
-        return hsla(hsl);
+        return hsla(color, hsl);
     },
     fadeout: function (color, amount, method) {
         var hsl = color.toHSL();
 
-        if (typeof method !== "undefined" && method.value === "relative") {
+        if (typeof method !== 'undefined' && method.value === 'relative') {
             hsl.a -=  hsl.a * amount.value / 100;
         }
         else {
             hsl.a -= amount.value / 100;
         }
         hsl.a = clamp(hsl.a);
-        return hsla(hsl);
+        return hsla(color, hsl);
     },
     fade: function (color, amount) {
         var hsl = color.toHSL();
 
         hsl.a = amount.value / 100;
         hsl.a = clamp(hsl.a);
-        return hsla(hsl);
+        return hsla(color, hsl);
     },
     spin: function (color, amount) {
         var hsl = color.toHSL();
@@ -234,7 +276,7 @@ colorFunctions = {
 
         hsl.h = hue < 0 ? 360 + hue : hue;
 
-        return hsla(hsl);
+        return hsla(color, hsl);
     },
     //
     // Copyright (c) 2006-2009 Hampton Catlin, Natalie Weizenbaum, and Chris Eppstein
@@ -278,7 +320,7 @@ colorFunctions = {
         if (typeof dark === 'undefined') {
             dark = colorFunctions.rgba(0, 0, 0, 1.0);
         }
-        //Figure out which is actually light and dark!
+        // Figure out which is actually light and dark:
         if (dark.luma() > light.luma()) {
             var t = light;
             light = dark;
@@ -295,21 +337,60 @@ colorFunctions = {
             return dark;
         }
     },
+    // Changes made in 2.7.0 - Reverted in 3.0.0
+    // contrast: function (color, color1, color2, threshold) {
+    //     // Return which of `color1` and `color2` has the greatest contrast with `color`
+    //     // according to the standard WCAG contrast ratio calculation.
+    //     // http://www.w3.org/TR/WCAG20/#contrast-ratiodef
+    //     // The threshold param is no longer used, in line with SASS.
+    //     // filter: contrast(3.2);
+    //     // should be kept as is, so check for color
+    //     if (!color.rgb) {
+    //         return null;
+    //     }
+    //     if (typeof color1 === 'undefined') {
+    //         color1 = colorFunctions.rgba(0, 0, 0, 1.0);
+    //     }
+    //     if (typeof color2 === 'undefined') {
+    //         color2 = colorFunctions.rgba(255, 255, 255, 1.0);
+    //     }
+    //     var contrast1, contrast2;
+    //     var luma = color.luma();
+    //     var luma1 = color1.luma();
+    //     var luma2 = color2.luma();
+    //     // Calculate contrast ratios for each color
+    //     if (luma > luma1) {
+    //         contrast1 = (luma + 0.05) / (luma1 + 0.05);
+    //     } else {
+    //         contrast1 = (luma1 + 0.05) / (luma + 0.05);
+    //     }
+    //     if (luma > luma2) {
+    //         contrast2 = (luma + 0.05) / (luma2 + 0.05);
+    //     } else {
+    //         contrast2 = (luma2 + 0.05) / (luma + 0.05);
+    //     }
+    //     if (contrast1 > contrast2) {
+    //         return color1;
+    //     } else {
+    //         return color2;
+    //     }
+    // },
     argb: function (color) {
         return new Anonymous(color.toARGB());
     },
     color: function(c) {
         if ((c instanceof Quoted) &&
-            (/^#([a-f0-9]{6}|[a-f0-9]{3})$/i.test(c.value))) {
-            return new Color(c.value.slice(1));
+            (/^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3,4})$/i.test(c.value))) {
+            var val = c.value.slice(1);
+            return new Color(val, undefined, '#' + val);
         }
         if ((c instanceof Color) || (c = Color.fromKeyword(c.value))) {
             c.value = undefined;
             return c;
         }
         throw {
-            type:    "Argument",
-            message: "argument must be a color keyword or 3/6 digit hex e.g. #FFF"
+            type:    'Argument',
+            message: 'argument must be a color keyword or 3|4|6|8 digit hex e.g. #FFF'
         };
     },
     tint: function(color, amount) {
