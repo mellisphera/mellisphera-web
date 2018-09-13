@@ -5,6 +5,6 @@ export declare class JwtHelperService {
     private b64decode(str);
     private b64DecodeUnicode(str);
     decodeToken(token?: string): any;
-    getTokenExpirationDate(token?: string): Date;
+    getTokenExpirationDate(token?: string): Date | null;
     isTokenExpired(token?: string, offsetSeconds?: number): boolean;
 }

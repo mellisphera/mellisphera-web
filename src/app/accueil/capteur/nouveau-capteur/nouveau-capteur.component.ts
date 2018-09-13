@@ -7,8 +7,8 @@ import { UserloggedService } from '../../../userlogged.service';
 import { Rucher } from '../../ruche-rucher/rucher';
 import { Ruche } from '../../ruche-rucher/ruche';
 import { Capteur } from '../capteur';
-import { Observable, Subscription } from 'rxjs/Rx';
-import {AnonymousSubscription} from "rxjs/Subscription";
+import { Observable, Subscription } from 'rxjs';
+// import {AnonymousSubscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-capteur',
@@ -38,7 +38,7 @@ export class NouveauCapteurComponent implements OnInit {
   
   message="";
 
-  private timerSubscription: AnonymousSubscription;
+  private timerSubscription: Subscription;
   
     receiveMessage($event){
             this.message=$event;

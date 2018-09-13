@@ -3,8 +3,8 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { GraphService } from './graph.service'
 import * as echarts from '../../../assets/echarts.js';
-import { AnonymousSubscription } from "rxjs/Subscription";
-import { Observable, Subscription } from 'rxjs/Rx';
+// import { AnonymousSubscription } from "rxjs";
+import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-graph',
   templateUrl: './graph.component.html'
@@ -15,7 +15,7 @@ export class GraphComponent implements OnInit {
   dataCity: any[] = [];
   minTemps=[];
   maxTemps= [];
-  private timerSubscription: AnonymousSubscription;
+  private timerSubscription: Subscription;
 
   options ;
      constructor(public location: Location,
@@ -81,5 +81,8 @@ export class GraphComponent implements OnInit {
     logIn(){
       this.showLogin=false;
     }
-
+    message="";
+    receiveMessage($event){
+        this.message=$event;
+    }
 }

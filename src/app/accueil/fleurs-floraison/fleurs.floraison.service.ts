@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from 'config';
 import { FleursTheorique } from './fleurstheorique'

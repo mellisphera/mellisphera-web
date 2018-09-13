@@ -18,8 +18,8 @@ export class AccueilComponent implements OnInit {
   message="";
   
       receiveMessage($event){
-          this.message=$event;
-   }
+        this.message=$event;
+      }
   
   
   constructor( private data : UserloggedService ) { 

@@ -103,7 +103,7 @@
             </div>
             <div class="col-md-6">
                 <label for="recipient-name" class="col-form-label"  >Type :</label>
-                <input [(ngModel)]="types.type" formControlName="type" disabled="true" type="text" class="form-control" id="recipient-name" >
+                <input [(ngModel)]="type" formControlName="type" disabled="true" type="text" class="form-control" id="recipient-name" >
                 <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['type'].valid && newCapteurForm.controls['reference'].touched">
                     Vérifiez la référence de votre capteur
                 </div>   
