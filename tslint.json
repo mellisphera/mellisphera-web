@@ -16,10 +16,14 @@
     },
     "eofline": true,
     "forin": true,
+<<<<<<< HEAD
     "import-blacklist": [
       true,
       "rxjs/Rx"
     ],
+=======
+    "import-blacklist": [true],
+>>>>>>> e810c7899c07ad65db9083480f82b5a883bb3f1b
     "import-spacing": true,
     "indent": [
       true,
