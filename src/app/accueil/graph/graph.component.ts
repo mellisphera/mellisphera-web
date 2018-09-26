@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { GraphService } from './graph.service'
-import * as echarts from '../../../assets/echarts.js';
+import * as echarts from '../../../assets/echarts';
 // import { AnonymousSubscription } from "rxjs";
 import { Observable, Subscription } from 'rxjs';
 @Component({

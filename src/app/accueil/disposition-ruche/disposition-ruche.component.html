@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div class="sidebar" data-color="red" data-image="">
       <app-sidebar ></app-sidebar>
-      <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+      <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
   </div>
   <div class="main-panel">
     <div class="form-group">
@@ -10,7 +10,7 @@
           <option *ngFor="let rucher of rucherByUser; let i = index" [id]="i" [value]="rucher.id" >{{ rucherByUser[i].name}}</option>
         </select>
       <div id="cadre" [ngStyle]="style">
-         <!-- <img src="/assets/img/rucher-loin.jpg"/>-->
+         <!-- <img src="./assets/img/rucher-loin.jpg"/>-->
         <div 
         data-toggle="tooltip" data-placement="top" [title]="infoRuche"
         *ngFor="let ruche of tabRuche; let i = index" 

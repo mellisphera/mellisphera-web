@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="sidebar" data-color="red" data-image="">
         <app-sidebar ></app-sidebar>
-        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+        <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
     </div>
     <div class="main-panel">
         <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
@@ -175,7 +175,7 @@
                                                 <label>Periode de floraison  : </label>
                                                     <br/>
                                                     <input type="range" style="width:400px" [(ngModel)]="selectedFlo" (click)="onSelectFlo($event)" value="0" min="0" max="12">
-                                                    <img src="/assets/img/mois.png" style="width:400px">
+                                                    <img src="./assets/img/mois.png" style="width:400px">
                                                     <br/>
                                                 <button type="submit" (click)="subscribeToDataRecherchePeriode()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
                                             </div>
