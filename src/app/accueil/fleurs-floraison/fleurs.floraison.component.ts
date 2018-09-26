@@ -13,7 +13,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
-import * as echarts from 'assets/echarts';
+import * as echarts from '../../../assets/echarts';
 
 
 @Component({/*  */

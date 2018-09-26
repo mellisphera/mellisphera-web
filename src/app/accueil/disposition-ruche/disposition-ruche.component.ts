@@ -13,7 +13,7 @@ import { DailyRecordsTH } from './DailyRecordTH';
 })
 export class DispositionRucheComponent implements OnInit {
   
-  defautBackground = "../../../assets/img/rucher-loin.jpg";
+  defautBackground = "./assets/img/rucher-loin.jpg";
   private top: any = Offsets.HANDLE_HEIGHT;
   private right: any= Offsets.HALF_WIDTH;
   private bottom: any= Offsets.HANDLE_HEIGHT;
