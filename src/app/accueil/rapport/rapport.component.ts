@@ -3,9 +3,9 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
-// import { AnonymousSubscription } from "rxjs/Subscription";
+import { AnonymousSubscription } from "rxjs/Subscription";
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { RapportService } from './rapport.service';
 import { Rucher } from '../ruche-rucher/rucher';
@@ -42,7 +42,7 @@ export class RapportComponent implements OnInit {
 
   public errorMsg;
 
-  private timerSubscription: Subscription;
+  private timerSubscription: AnonymousSubscription;
 
 
   //nomRuche;
@@ -61,23 +61,22 @@ export class RapportComponent implements OnInit {
     }
 
     ngOnInit(){
-      this.getUserRuchers();
+     // this.getUserRuchers();
       this.currentRucherID= localStorage.getItem("currentRucher");
       this.x=String(this.selectedRucher);
       this.x=this.currentRucherID;
       this.selectedRucher=this.x;
       this.btnAnalyse=true;
-      
     }
-
+/*
     getUserRuchers(){
       this.rucherService.getUserRuchers(this.username).subscribe(
         data => { this.ruchers = data;},
         err => console.error(err)
       );  
-    }
+    }*/
     
-    getAnalyseTemp(FormRapport){
+    getAnalyseTemp(){
       this.rapportService.getNluResult(this.texteRapport, this.selectedRucher).subscribe( 
         data => {},
         ( error => this.errorMsg=error));
@@ -127,12 +126,5 @@ export class RapportComponent implements OnInit {
     localStorage.setItem("currentRucher",String(this.selectedRucher));
   }
 
-  message="";
-    receiveMessage($event){
-        this.message=$event;
-    }
 
-  change($event){
-
-  }
 }

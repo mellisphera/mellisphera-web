@@ -121,7 +121,7 @@ export class FleursFloraisonComponent implements OnInit {
     this.x=String(this.selectedRucher);
     this.x=this.currentRucherID;
     this.selectedRucher=this.x;
-    this.getUserRuchers();
+    //this.getUserRuchers();
     this.getFleurDuRucher(this.currentYear);
     this.getAllFleurTest();
     this.getAllType();
@@ -134,10 +134,10 @@ export class FleursFloraisonComponent implements OnInit {
 
 
   //Récupère les ruchers de l'utilisateur
-  getUserRuchers(){
+ /* getUserRuchers(){
     this.rucherService.getUserRuchers(this.username).subscribe(
       data => { this.ruchers = data } );
-  }
+  }*/
 
   //Récupère les fleurs du rucher
   getFleurDuRucher(annee){
@@ -670,10 +670,7 @@ export class FleursFloraisonComponent implements OnInit {
   
   }
 
-  message="";
-  receiveMessage($event){
-      this.message=$event;
-  }
+
 
 
 

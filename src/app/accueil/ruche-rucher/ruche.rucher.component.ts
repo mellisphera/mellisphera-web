@@ -9,8 +9,8 @@ import { ProcessReport } from './processedReport';
 import { RucherService } from './rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
-import { Observable, Subscription } from 'rxjs';
-// import { AnonymousSubscription } from "rxjs/Subscription";
+import { Observable, Subscription } from 'rxjs/Rx';
+import { AnonymousSubscription } from "rxjs/Subscription";
 import { RapportService } from '../rapport/rapport.service';
 
 @Component({
@@ -84,7 +84,7 @@ export class RucheRucherComponent implements OnInit {
   localStorageRuche;
   //localStorageRucheName;
 
-  private timerSubscription: Subscription;
+  private timerSubscription: AnonymousSubscription;
  
     
   constructor(  private formBuilder: FormBuilder,
@@ -134,9 +134,7 @@ ngOnInit(){
   this.x=this.currentRucherID;
   this.selectedRucher=this.x;
   this.selectedRucherAssocie=this.selectedRucher;
-  this.getUserRuchers();  
   this.getRucheDuRucher();
-  this.getDetailsRucher();
   this.getObservationsApiary();
 }
 
@@ -159,7 +157,7 @@ resetForm(){
   this.newRucherForm.reset();
 }
 
-
+/*
 getDetailsRucher(){
     if(this.selectedRucher==null){
        return "";
@@ -173,7 +171,7 @@ getDetailsRucher(){
      
     );
     }
-}
+}*/
 
 clearRucherSelection(){
   this.selectedRucher=null;
@@ -200,7 +198,7 @@ createRucher(rucher){
                   return "aucun rucher selectionné !";
               }
         
-                this.getUserRuchers();
+                this.rucherService.getUserRuchers(this.data.currentUser().username);
                 return true;
               },
              ( error => this.errorMsg=error)
@@ -221,7 +219,7 @@ deleteRucher(rucher){
       );
       localStorage.setItem("currentRucher",   this.ruchers[0].id);
       this.selectedRucher= this.ruchers[0].id;
-      this.getDetailsRucher();
+      this.rucherService.getRucheDetail(this.data.currentUser().username);
       this.refreshRucherData(); 
       this.subscribeToData();
       alert("le rucher a été supprimé :( ");
@@ -247,19 +245,19 @@ onEditerRucher(rucherEdit){
     this.updateRucherInput=false;
     alert("Votre rucher a été édité");
     this.refreshRucherData();
-    this.getDetailsRucher();
+    this.rucherService.getRucheDetail(this.data.currentUser().username);
     this.subscribeToData();
     this.newRucherForm.reset();
 
   } 
 }
-
+/*
 getUserRuchers(){
   this.rucherService.getUserRuchers(this.username).subscribe(
     data => { this.ruchers = data;},
     err => console.error(err)
   );
-}
+}*/
 
 getRucheDuRucher(){
       this.rucherService.getUserRuches(this.username,this.currentRucherID).subscribe(
@@ -275,7 +273,7 @@ onSelectRucher(event : any) : void{
   localStorage.setItem("currentRucher",String(this.selectedRucher));
   localStorage.setItem("rucheRucherID",String(this.selectedRucher));
   this.getRucheDuRucher();
-  this.getDetailsRucher();
+  this.rucherService.getRucheDetail(this.data.currentUser().username);
   this.getObservationsApiary();
 }
 
@@ -383,7 +381,7 @@ deleteObs(ap){
   }
 }
 
-onEditObservation(Formvalue){
+onEditObservation(){
   this.newObs.date = this.dateEdit;
   this.newObs.sentence = this.sentence;
   this.newObs.type = this.type;
@@ -407,8 +405,8 @@ private refreshObsData(): void {
 }
 
 private refreshRucherData(): void {
-  this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
-  this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
+  this.timerSubscription = Observable.timer(500).first().subscribe(() => this.rucherService.getUserRuchers(this.data.currentUser()));
+  this.timerSubscription = Observable.timer(600).first().subscribe(() => this.rucherService.getRucherDetails(this.selectedRucher));
 }
   
 private subscribeToData(): void {
@@ -431,8 +429,5 @@ isMap(path){
     return true;
   }
 }   
-message="";
-    receiveMessage($event){
-        this.message=$event;
-    }
+
 }

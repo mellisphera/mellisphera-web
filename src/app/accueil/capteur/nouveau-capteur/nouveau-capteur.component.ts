@@ -7,8 +7,8 @@ import { UserloggedService } from '../../../userlogged.service';
 import { Rucher } from '../../ruche-rucher/rucher';
 import { Ruche } from '../../ruche-rucher/ruche';
 import { Capteur } from '../capteur';
-import { Observable, Subscription } from 'rxjs';
-// import {AnonymousSubscription} from "rxjs/Subscription";
+import { Observable, Subscription } from 'rxjs/Rx';
+import {AnonymousSubscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-capteur',
@@ -38,7 +38,7 @@ export class NouveauCapteurComponent implements OnInit {
   
   message="";
 
-  private timerSubscription: Subscription;
+  private timerSubscription: AnonymousSubscription;
   
     receiveMessage($event){
             this.message=$event;
@@ -105,7 +105,6 @@ export class NouveauCapteurComponent implements OnInit {
           err  => {console.log(err)},
           () => console.log('done loading sensors')
         );
-       
     }
 
    //CREATE CAPTEUR
@@ -148,7 +147,7 @@ export class NouveauCapteurComponent implements OnInit {
         this.subscribeToData();
      
     }
-
+/*
     getUserRuchers(){
         console.log("this username :"+  this.username);
         
@@ -159,7 +158,7 @@ export class NouveauCapteurComponent implements OnInit {
             );
         
     }
-
+*/
     onSelectRucher(event : any) : void{
         this.selectedRucher=event.target.value;
         console.log("Selected Rucher : "+ this.selectedRucher);
@@ -195,7 +194,7 @@ export class NouveauCapteurComponent implements OnInit {
 
 
     ngOnInit() {
-        this.getUserRuchers(); 
+        this.rucherService.getUserRuchers(this.username); 
         
         console.log("liste capteurs :"+  this.capteurs);
     }

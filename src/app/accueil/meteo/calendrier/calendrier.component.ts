@@ -1,93 +1,68 @@
-import { Component, OnInit} from '@angular/core';
-import { Requete } from './Service/MteoRequete';
-import { JsonRequete } from './Service/JsonRequete';
+import { Component, OnInit, AfterViewInit} from '@angular/core';
+import { MeteoService } from './Service/MeteoService';
 import * as echarts from '../../../../assets/echarts';
-import { Calendrier } from './calendrier';
 import { UserloggedService } from '../../../userlogged.service';
 import { RucherService } from '../../ruche-rucher/rucher.service';
-import { Rucher } from '../../ruche-rucher/rucher';
-import { Meteo } from "./Meteo";
+import { ECharts, EChartOption} from 'echarts';
+/*import * as echarts from 'node_modules/echarts/dist/echarts.min.js'*/
+import { CalendrierService } from './Service/calendrier.service';
 
 @Component({
   selector: 'app-calendrier',
   templateUrl: './calendrier.component.html',
   styleUrls: ['./calendrier.component.scss']
 })
-export class CalendrierComponent implements OnInit {
+export class CalendrierComponent implements OnInit{
 
-  constructor(private rucherService : RucherService, private calendrier : Calendrier, private requete : Requete, /*private json : JsonRequete, */private login : UserloggedService) { }
+  data : any = [
+    ["2018-10-02","01d",15,15],
+    ["2018-10-03","01d",15,15],
+    ["2018-10-04","01d",15,15],
+    ["2018-10-05","01d",15,15],
+    ["2018-10-06","01d",15,15]
+  ]
+  constructor(public rucherService : RucherService, public meteoService : MeteoService, private login : UserloggedService, public calendrier : CalendrierService) {
+  }
 
-  calendrierInit : any = null;;
-  meteo : any = null;
-  tabRucher : Rucher[];
-  idRucher : string;
+  calendrierInit : any = null;
+  meteoSelect : any[];
   username: string;
-  cityRucher : string;
-  tabMeteo : Meteo[];
-  jsonMeteo : JsonRequete;
+  
   ngOnInit() {
     this.username = this.login.currentUser().username;
-    this.getRucherByUser();
-    setTimeout(
-      ()=>{
-        this.cityRucher = this.tabRucher[0].codePostal;
-        this.getWeatherByCity();
-        setTimeout(()=>{
-          console.log(this.meteo);
-          this.jsonMeteo = new JsonRequete(this.meteo);
-          this.jsonMeteo.setJsonWeather(this.meteo);
-          this.jsonMeteo.sortMeteoProcess();
-          this.tabMeteo=this.jsonMeteo.getResultat();
-          this.showCalendar();
-        },300)
-      },300
-    );
+    //this.meteoSelect = this.meteoService.meteo[this.rucherService.ruchers[0].id]; 
   }
-  /* Recupéere la méteo pour un rucher */
-  getWeatherByCity(){
-    this.requete.getWeather(this.cityRucher).subscribe(
-      (data)=>{
-        this.meteo = data
-      },
-      (err)=>{
-        console.log(err);
-      }
-    );
-  }
+  
   /* affiche le calendrier avec le tableau récupèrer */
+
   showCalendar(){
     if(this.calendrierInit != null){
       this.calendrierInit.dispose("#main");
       this.calendrierInit = null;
     }
     this.calendrierInit = echarts.init(document.getElementById('main'));
-    this.calendrier.options.series[0].data = this.tabMeteo;
+    this.calendrier.options.series[0].data = this.meteoService.arrayMeteo;
+    console.log(this.calendrier.options);
     this.calendrierInit.setOption(this.calendrier.options);
   }
 
-  getRucherByUser() {
-    this.rucherService.getUserRuchers(this.username).subscribe(
-      (data) => {
-        this.tabRucher = data;
-      },
-      (err) => {
-        console.log(err);
+
+  onSelectRucher($event){
+    // this.idRucher = id.target.value;
+    //this.meteoService.arrayMeteo = [];
+    console.log(this.rucherService.rucher);
+    this.meteoService.getWeather(this.rucherService.rucher.id,this.rucherService.rucher.ville);
+    console.log(this.data);
+    this.meteoService.meteoObs.subscribe(
+      ()=>{},
+      ()=>{},
+      ()=>{
+        console.log(this.meteoService.arrayMeteo);
+        this.showCalendar();
       }
     );
-  }
 
-  onChange(id){
-    this.idRucher = id.target.value;
-    console.log(this.tabRucher[this.idRucher]);
-    this.cityRucher = this.tabRucher[this.idRucher].ville;
-    console.log(this.cityRucher);
-    this.getWeatherByCity();
-    setTimeout(()=>{
-      this.jsonMeteo = new JsonRequete(this.meteo);
-      this.jsonMeteo.sortMeteoProcess();
-      this.tabMeteo=this.jsonMeteo.getResultat();
-      this.showCalendar();
-    },300)
+
   }
 
 }

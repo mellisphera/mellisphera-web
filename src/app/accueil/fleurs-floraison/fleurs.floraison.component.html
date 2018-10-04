@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="sidebar" data-color="red" data-image="">
         <app-sidebar ></app-sidebar>
-        <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
+        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
     </div>
     <div class="main-panel">
         <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
@@ -15,7 +15,7 @@
                        <div class="form-group">
                            <label><h4>Rucher :</h4> </label>
                            <select  [(ngModel)]="selectedRucher" class="form-control " id="sel1">
-                               <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
+                               <option  *ngFor="let rucher of rucherService.ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
                                    {{rucher.name}}
                                </option>
                            </select>
@@ -175,7 +175,7 @@
                                                 <label>Periode de floraison  : </label>
                                                     <br/>
                                                     <input type="range" style="width:400px" [(ngModel)]="selectedFlo" (click)="onSelectFlo($event)" value="0" min="0" max="12">
-                                                    <img src="./assets/img/mois.png" style="width:400px">
+                                                    <img src="/assets/img/mois.png" style="width:400px">
                                                     <br/>
                                                 <button type="submit" (click)="subscribeToDataRecherchePeriode()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
                                             </div>
@@ -209,7 +209,7 @@
                                    <td> <img src="{{ fleur.flowerItsap.indice_confiance }}"> </td>
                                    <td> 
                                        <select  [(ngModel)]="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
-                                           <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
+                                           <option  *ngFor="let rucher of rucherService.ruchers" [value]="rucher.id" >
                                                {{rucher.name}}
                                            </option>
                                        </select>

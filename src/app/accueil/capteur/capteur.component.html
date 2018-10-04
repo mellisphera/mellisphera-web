@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="sidebar" data-color="red" data-image="">
         <app-sidebar ></app-sidebar>
-        <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
+        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
     </div>
     
     <div class="main-panel">
@@ -103,7 +103,7 @@
             </div>
             <div class="col-md-6">
                 <label for="recipient-name" class="col-form-label"  >Type :</label>
-                <input [(ngModel)]="type" formControlName="type" disabled="true" type="text" class="form-control" id="recipient-name" >
+                <input [(ngModel)]="types.type" formControlName="type" disabled="true" type="text" class="form-control" id="recipient-name" >
                 <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['type'].valid && newCapteurForm.controls['reference'].touched">
                     Vérifiez la référence de votre capteur
                 </div>   
@@ -132,7 +132,7 @@
             <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Rucher :</label>
                 <select  [(ngModel)]="selectedRucher"  formControlName="selectedRucher" class="form-control " id="sel1">
-                    <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
+                    <option  *ngFor="let rucher of rucherService.ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
                         {{rucher.name}}
                     </option>
                 </select>   
@@ -192,7 +192,7 @@
         <div class="form-group">
             <label for="recipient-name" class="col-form-label">Rucher :</label>
             <select  [(ngModel)]="selectedRucherEdit"  formControlName="selectedRucher"  class="form-control " id="sel1">
-                <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
+                <option  *ngFor="let rucher of rucherService.ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
                     {{rucher.name}}
                 </option>
             </select>      
