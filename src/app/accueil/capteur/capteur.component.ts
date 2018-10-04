@@ -92,7 +92,7 @@ export class CapteurComponent implements OnInit {
 
 
     ngOnInit() {
-        //this.getUserRuchers(); 
+        this.getUserRuchers(); 
         this.selectRadioStock();
         this.getAllCapteur();
         this.radioRucheE=false;
@@ -164,7 +164,7 @@ export class CapteurComponent implements OnInit {
     checkCapteurType(value : any){       
             this.capteurService.checkCapteurType(value).subscribe(
                 data =>{ 
-                    this.type=data;
+                    this.types=data;
                 },
                 ( error => this.errorMsg=error)
                );
@@ -241,14 +241,14 @@ export class CapteurComponent implements OnInit {
         this.subscribeToData();
         
     }
-/*
+
     getUserRuchers(){
             this.rucherService.getUserRuchers(this.username).subscribe(
                 data => { this.ruchers = data },
                 err => console.error(err));
         
     }
-*/
+
     onSelectRucher(event : any) : void{
         this.selectedRucher=event.target.value;
         this.getRucheDuRucher();

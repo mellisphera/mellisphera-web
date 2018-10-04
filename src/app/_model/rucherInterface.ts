@@ -1,4 +1,4 @@
-export interface Rucher {
+export interface RucherInterface {
 
     id : string;
     latitude: string;

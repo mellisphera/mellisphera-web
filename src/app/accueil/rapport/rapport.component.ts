@@ -61,20 +61,21 @@ export class RapportComponent implements OnInit {
     }
 
     ngOnInit(){
-     // this.getUserRuchers();
+      this.getUserRuchers();
       this.currentRucherID= localStorage.getItem("currentRucher");
       this.x=String(this.selectedRucher);
       this.x=this.currentRucherID;
       this.selectedRucher=this.x;
       this.btnAnalyse=true;
+      
     }
-/*
+
     getUserRuchers(){
       this.rucherService.getUserRuchers(this.username).subscribe(
         data => { this.ruchers = data;},
         err => console.error(err)
       );  
-    }*/
+    }
     
     getAnalyseTemp(){
       this.rapportService.getNluResult(this.texteRapport, this.selectedRucher).subscribe( 

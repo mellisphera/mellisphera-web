@@ -132,7 +132,7 @@
             <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Rucher :</label>
                 <select  [(ngModel)]="selectedRucher"  formControlName="selectedRucher" class="form-control " id="sel1">
-                    <option  *ngFor="let rucher of rucherService.ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
+                    <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
                         {{rucher.name}}
                     </option>
                 </select>   
@@ -192,7 +192,7 @@
         <div class="form-group">
             <label for="recipient-name" class="col-form-label">Rucher :</label>
             <select  [(ngModel)]="selectedRucherEdit"  formControlName="selectedRucher"  class="form-control " id="sel1">
-                <option  *ngFor="let rucher of rucherService.ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
+                <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
                     {{rucher.name}}
                 </option>
             </select>      

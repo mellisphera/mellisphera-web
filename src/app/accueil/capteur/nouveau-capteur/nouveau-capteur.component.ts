@@ -105,6 +105,7 @@ export class NouveauCapteurComponent implements OnInit {
           err  => {console.log(err)},
           () => console.log('done loading sensors')
         );
+       
     }
 
    //CREATE CAPTEUR
@@ -147,7 +148,7 @@ export class NouveauCapteurComponent implements OnInit {
         this.subscribeToData();
      
     }
-/*
+
     getUserRuchers(){
         console.log("this username :"+  this.username);
         
@@ -158,7 +159,7 @@ export class NouveauCapteurComponent implements OnInit {
             );
         
     }
-*/
+
     onSelectRucher(event : any) : void{
         this.selectedRucher=event.target.value;
         console.log("Selected Rucher : "+ this.selectedRucher);
@@ -194,7 +195,7 @@ export class NouveauCapteurComponent implements OnInit {
 
 
     ngOnInit() {
-        this.rucherService.getUserRuchers(this.username); 
+        this.getUserRuchers(); 
         
         console.log("liste capteurs :"+  this.capteurs);
     }

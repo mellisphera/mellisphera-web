@@ -9,5 +9,6 @@ export class Capteur {
 	idApiary: string;
 	hiveName: string;
 	apiaryName:string;
+     
 }
    

@@ -134,7 +134,9 @@ ngOnInit(){
   this.x=this.currentRucherID;
   this.selectedRucher=this.x;
   this.selectedRucherAssocie=this.selectedRucher;
+  this.getUserRuchers();  
   this.getRucheDuRucher();
+  this.getDetailsRucher();
   this.getObservationsApiary();
 }
 
@@ -157,7 +159,7 @@ resetForm(){
   this.newRucherForm.reset();
 }
 
-/*
+
 getDetailsRucher(){
     if(this.selectedRucher==null){
        return "";
@@ -171,7 +173,7 @@ getDetailsRucher(){
      
     );
     }
-}*/
+}
 
 clearRucherSelection(){
   this.selectedRucher=null;
@@ -198,7 +200,7 @@ createRucher(rucher){
                   return "aucun rucher selectionné !";
               }
         
-                this.rucherService.getUserRuchers(this.data.currentUser().username);
+                this.getUserRuchers();
                 return true;
               },
              ( error => this.errorMsg=error)
@@ -219,7 +221,7 @@ deleteRucher(rucher){
       );
       localStorage.setItem("currentRucher",   this.ruchers[0].id);
       this.selectedRucher= this.ruchers[0].id;
-      this.rucherService.getRucheDetail(this.data.currentUser().username);
+      this.getDetailsRucher();
       this.refreshRucherData(); 
       this.subscribeToData();
       alert("le rucher a été supprimé :( ");
@@ -245,19 +247,19 @@ onEditerRucher(rucherEdit){
     this.updateRucherInput=false;
     alert("Votre rucher a été édité");
     this.refreshRucherData();
-    this.rucherService.getRucheDetail(this.data.currentUser().username);
+    this.getDetailsRucher();
     this.subscribeToData();
     this.newRucherForm.reset();
 
   } 
 }
-/*
+
 getUserRuchers(){
   this.rucherService.getUserRuchers(this.username).subscribe(
     data => { this.ruchers = data;},
     err => console.error(err)
   );
-}*/
+}
 
 getRucheDuRucher(){
       this.rucherService.getUserRuches(this.username,this.currentRucherID).subscribe(
@@ -273,7 +275,7 @@ onSelectRucher(event : any) : void{
   localStorage.setItem("currentRucher",String(this.selectedRucher));
   localStorage.setItem("rucheRucherID",String(this.selectedRucher));
   this.getRucheDuRucher();
-  this.rucherService.getRucheDetail(this.data.currentUser().username);
+  this.getDetailsRucher();
   this.getObservationsApiary();
 }
 
@@ -405,8 +407,8 @@ private refreshObsData(): void {
 }
 
 private refreshRucherData(): void {
-  this.timerSubscription = Observable.timer(500).first().subscribe(() => this.rucherService.getUserRuchers(this.data.currentUser()));
-  this.timerSubscription = Observable.timer(600).first().subscribe(() => this.rucherService.getRucherDetails(this.selectedRucher));
+  this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
+  this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
 }
   
 private subscribeToData(): void {
