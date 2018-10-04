@@ -41,8 +41,8 @@ export class CapteurService {
         return this.http.put(CONFIG.URL+'sensors/update/' + capteur.id, body, httpOptions);
     }
 
-    checkCapteurType(capteurRef) : Observable<string>{
-        return this.http.get<string>(CONFIG.URL+'sold_devices/check/'+capteurRef);
+    checkCapteurType(capteurRef) : Observable<any[]>{
+        return this.http.get<any[]>(CONFIG.URL+'sold_devices/check/'+capteurRef);
     }
 
     errorHandler(error: HttpErrorResponse){

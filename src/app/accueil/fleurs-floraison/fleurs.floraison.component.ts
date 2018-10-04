@@ -13,7 +13,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
-import * as echarts from '../../../assets/echarts';
+import * as echarts from 'assets/echarts';
 
 
 @Component({/*  */
@@ -121,7 +121,7 @@ export class FleursFloraisonComponent implements OnInit {
     this.x=String(this.selectedRucher);
     this.x=this.currentRucherID;
     this.selectedRucher=this.x;
-    //this.getUserRuchers();
+    this.getUserRuchers();
     this.getFleurDuRucher(this.currentYear);
     this.getAllFleurTest();
     this.getAllType();
@@ -134,10 +134,10 @@ export class FleursFloraisonComponent implements OnInit {
 
 
   //Récupère les ruchers de l'utilisateur
- /* getUserRuchers(){
+  getUserRuchers(){
     this.rucherService.getUserRuchers(this.username).subscribe(
       data => { this.ruchers = data } );
-  }*/
+  }
 
   //Récupère les fleurs du rucher
   getFleurDuRucher(annee){

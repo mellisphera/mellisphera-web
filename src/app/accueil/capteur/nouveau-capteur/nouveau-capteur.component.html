@@ -60,7 +60,7 @@
                                         <div class="form-group">
                                                 <label for="recipient-name" class="col-form-label">Rucher :</label>
                                                 <select  [(ngModel)]="selectedRucher"  formControlName="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
-                                                    <option  *ngFor="let rucher of rucherService.ruchers" [value]="rucher.id" >
+                                                    <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
                                                         {{rucher.name}}
                                                     </option>
                                                 </select>   

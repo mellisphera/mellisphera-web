@@ -3,10 +3,10 @@ import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from '../../../config';
-//import { Rucher } from './rucher';
+import { Rucher } from './rucher';
 import { Ruche } from './ruche';
 import { ProcessReport } from './processedReport';
-import { Rucher } from '../../_model/rucher';
+import { RucherInterface } from '../../_model/rucherInterface';
 import { UserloggedService } from '../../userlogged.service';
 import { RucheService } from '../disposition-ruche/Service/ruche.service';
 import { DailyRecordService } from '../disposition-ruche/Service/dailyRecordService';
@@ -24,7 +24,7 @@ export class RucherService {
     rucherObs : Observable<Rucher[]>;
 
     constructor(private http:HttpClient, private user : UserloggedService, private ruche : RucheService, private dailyRec : DailyRecordService) {
-        this.getUserRuchers(this.user.currentUser().username);
+        this.getUserRuchersLast(this.user.currentUser().username);
     }
     // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
     // pour créer un rucher
@@ -38,7 +38,7 @@ export class RucherService {
         return this.http.get<Rucher[]>(CONFIG.URL+'apiaries/all');
     }   
     // pour afficher tout les ruchers de l'utilsateur connecté
-    getUserRuchers(username){
+    getUserRuchersLast(username){
         this.rucherObs = this.http.get<Rucher[]>(CONFIG.URL+'apiaries/'+ username);
         this.rucherObs.subscribe(
             (data)=>{
@@ -52,9 +52,18 @@ export class RucherService {
                 console.log(err);   
             }
         );
+    }
+
+    getUserRuchers(username) : Observable<Rucher[]>{
+        return this.http.get<Rucher[]>(CONFIG.URL+'apiaries/'+ username);
     }  
+
+    getRucherDetails(idApiary) : Observable<Rucher[]>{
+        return this.http.get<Rucher[]>(CONFIG.URL+'apiaries/details/'+idApiary);
+    }  
+
     // pour afficher tout les ruchers
-    getRucherDetails(idApiary){
+    getRucherDetailsLast(idApiary){
         this.http.get<Rucher>(CONFIG.URL+'apiaries/details/'+idApiary).subscribe(
             (data)=>{
                 this.rucher = data;

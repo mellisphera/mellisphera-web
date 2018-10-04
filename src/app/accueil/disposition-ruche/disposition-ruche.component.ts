@@ -6,7 +6,7 @@ import { Ruche } from './ruche';
 import { DailyRecordService } from './Service/dailyRecordService';
 import { DailyRecordsTH } from './DailyRecordTH';
 import { RucheService } from './Service/ruche.service';
-import { Rucher } from '../../_model/rucher';
+import { RucherInterface } from '../../_model/rucherInterface';
 import { RucheInterface } from '../../_model/ruche';
 
 @Component({
