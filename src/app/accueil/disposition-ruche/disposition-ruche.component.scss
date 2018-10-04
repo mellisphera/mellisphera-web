@@ -5,21 +5,21 @@
     border: 2px;
     border-radius: 10px;
     overflow: hidden;
-   /* background: url("./assets/img/rucher-loin.jpg") no-repeat center;*/
+    background: url("../../../assets/background/rucher.jpg") no-repeat center;
     background-size: 100%;
     box-shadow: 8px 8px 5px black;
 }
 .ruche{
     display: flex;
     justify-content: center;
-    width: 100px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     position: relative;
     font-size: 15px;
     /*border-radius: 40px;*/
     padding: 2px;
     cursor: move;
-    border-radius: 10px;
+    border-radius: 50px;
     box-shadow: 3px 2px 2px black;
 }
 #health_trend{
@@ -39,21 +39,22 @@ select{
     padding: 8px;
 }
 .ruche:hover{
-    border: 3px solid blue;
+    //border: 3px solid blue;
+    box-shadow: none;
 }
 #detail{
     margin: auto;
     width: 30%;
 }
 .statusA{
-    background-color : green;
+    border : 5px solid green;
 }
 .statusB{
-    background-color: orange;
+    border: 5px solid yellow;;
 }
 .statusC{
-    background-color: red
+    border: 5px solid orangered;
 }
 .statusInconnu{
-    background-color: darkgray;
+    border: 5px solid darkgray;
 }

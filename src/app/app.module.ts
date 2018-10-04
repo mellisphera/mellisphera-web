@@ -24,8 +24,6 @@ import { GraphComponent } from './accueil/graph/graph.component';
 import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
 
 import { CalendrierComponent } from './accueil//meteo/calendrier/calendrier.component';
-import { Requete } from './accueil/meteo/calendrier/Service/MteoRequete';
-import { Calendrier } from './accueil/meteo/calendrier/calendrier';
 
 import { TablesComponent } from './tables/tables.component';
 import { TypographyComponent } from './typography/typography.component';
@@ -58,8 +56,12 @@ import { RucheDetailService } from './accueil/ruche-rucher/ruche-detail/ruche.de
 import { DispositionRucheComponent } from './accueil/disposition-ruche/disposition-ruche.component';
 
 import { DailyRecordService } from './accueil/disposition-ruche/Service/dailyRecordService';
-
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
+import { MeteoService } from './accueil/meteo/calendrier/Service/MeteoService';
+import { RucheService } from './accueil/disposition-ruche/Service/ruche.service';
+
+import { NgxEchartsModule } from 'ngx-echarts';
+import { CalendrierService } from './accueil/meteo/calendrier/Service/calendrier.service';
 //import { NgDraggableModule } from 'angular-draggable'; 
 
 @NgModule({
@@ -103,6 +105,7 @@ import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
     ReactiveFormsModule,
     HttpClientModule,
     DragAndCheckModule,
+    NgxEchartsModule
     //NgDraggableModule
   ],
   providers: [
@@ -119,9 +122,10 @@ import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
     RapportService,
     FleursFloraisonService,
     RucheDetailService,
-    Requete,
-    Calendrier,
-    DailyRecordService
+    MeteoService,
+    DailyRecordService,
+    RucheService,
+    CalendrierService
   ],
   bootstrap: [AppComponent]
 })

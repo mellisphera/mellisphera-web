@@ -1,24 +1,24 @@
 <div class="wrapper">
   <div class="sidebar" data-color="red" data-image="">
       <app-sidebar ></app-sidebar>
-      <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
+      <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
   </div>
   <div class="main-panel">
     <div class="form-group">
+      <form>
         <label><h4>Rucher :</h4> </label>
-        <select id="sel1" (change)="onChange($event)">
-          <option *ngFor="let rucher of rucherByUser; let i = index" [id]="i" [value]="rucher.id" >{{ rucherByUser[i].name}}</option>
+        <select [(ngModel)]="rucherService.rucher" name="rucher" id="sel1" (change)="onChange($event)">
+          <option *ngFor="let rucher of rucherService.ruchers; let i = index" [id]="i" [ngValue]="rucher" >{{ rucher.name }}</option>
         </select>
+      </form>
       <div id="cadre" [ngStyle]="style">
-         <!-- <img src="./assets/img/rucher-loin.jpg"/>-->
-        <div 
+         <!-- <img src="/assets/img/rucher-loin.jpg"/>-->
+        <div
         data-toggle="tooltip" data-placement="top" [title]="infoRuche"
-        *ngFor="let ruche of tabRuche; let i = index" 
+        *ngFor="let ruche of rucheService.ruches; let i = index" 
         [style.left.%]="ruche.hivePosX"
         [style.top.%]="ruche.hivePosY"
-        [id]="i" (mouseover)="onMouseover($event)" (stopped)="onDragEnd($event)" [allowedOffsets]="offset" ngDraggable class="ruche">
-         <div [class]="getColorStatus(i)" id="health_status"></div>
-         <div id="health_trend"></div>
+        [id]="i" (mouseover)="onMouseover(ruche)" (stopped)="onDragEnd($event)" [allowedOffsets]="offset" ngDraggable [class]="dailyRecTh.getStatus(ruche.id)">
         </div>
       </div>
       </div>
