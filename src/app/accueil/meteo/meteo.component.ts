@@ -46,18 +46,17 @@ export class MeteoComponent implements OnInit {
     this.x=String(this.selectedRucher);
     this.x=this.currentRucherID;
     this.selectedRucher=this.x;
-    //this.getUserRuchers();
-    //this.getRucherName();
+    this.getUserRuchers();
+    this.getRucherName();
     this.getCityTest();
     this.getCityData(); 
   }
-/*
+
   getUserRuchers(){
     this.rucherService.getUserRuchers(this.username).subscribe(
       data => { this.ruchers = data;},
       err => console.error(err));
-  }*/
-  /*
+  }
   getRucherName(){
     this.rucherService.getRucherName(this.selectedRucher).subscribe(
       data => { 
@@ -71,14 +70,14 @@ export class MeteoComponent implements OnInit {
       err => console.error(err)
     );
   }
-*/
+
 
 
   onSelectRucher(event : any) : void{
   this.currentRucherID=String(this.selectedRucher);
   localStorage.setItem("currentRucher",String(this.selectedRucher));
   
-   // this.getRucherName();
+    this.getRucherName();
 
   }
 
@@ -106,5 +105,9 @@ export class MeteoComponent implements OnInit {
     
   isMap(){
         
+  }
+  message="";
+  receiveMessage($event){
+    this.message=$event;
   }
 }

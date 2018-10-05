@@ -46,7 +46,7 @@
                                                     <tr *ngFor="let capteur of capteurs">
                                                         <td>{{capteur.reference}}</td>
                                                         <td>{{capteur.description}}</td>
-                                                        <td>{{capteur.apiaryName}} | {{capteur.hiveName}}</td>
+                                                        <td>{{capteur.apiaryName}} | {{capteur.hiveName}}</td>
                                                         <td>{{capteur.type}}  </td>
                                                         <td>
                                                             <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" type="button" (click)="selectCapteur(capteur)"
@@ -103,7 +103,7 @@
             </div>
             <div class="col-md-6">
                 <label for="recipient-name" class="col-form-label"  >Type :</label>
-                <input [(ngModel)]="types.type" formControlName="type" disabled="true" type="text" class="form-control" id="recipient-name" >
+                <input [(ngModel)]="type.type" formControlName="type" disabled="true" type="text" class="form-control" id="recipient-name" >
                 <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['type'].valid && newCapteurForm.controls['reference'].touched">
                     Vérifiez la référence de votre capteur
                 </div>   
@@ -178,14 +178,14 @@
             Affecter à :  
         </label>
         <div class="form-check">
+                <input class="form-check-input" (change)="selectRadioStockE()" type="radio" formControlName="checkbox" name="checkbox"  [checked]="radioStockE">
             <label class="form-check-label" for="exampleRadios1" >
                 Stock 
             </label>
-            <input class="form-check-input" (change)="selectRadioStockE()" type="radio" formControlName="checkbox" name="checkbox"  [checked]="radioStockE">
+            <input class="form-check-input" (change)="selectRadioRucheE()" type="radio" formControlName="checkbox" name="checkbox" [checked]="radioRucheE">   
             <label class="form-check-label" for="exampleRadios1">
                 Ruche 
-            </label>
-            <input class="form-check-input" (change)="selectRadioRucheE()" type="radio" formControlName="checkbox" name="checkbox" [checked]="radioRucheE">                      
+            </label>                   
         </div>
     </div>
     <div *ngIf="radioRucheE">
