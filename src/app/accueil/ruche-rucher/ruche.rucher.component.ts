@@ -9,8 +9,8 @@ import { ProcessReport } from './processedReport';
 import { RucherService } from './rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
-import { Observable, Subscription } from 'rxjs/Rx';
-import { AnonymousSubscription } from "rxjs/Subscription";
+import { Observable, Subscription } from 'rxjs';
+// import { AnonymousSubscription } from "rxjs/Subscription";
 import { RapportService } from '../rapport/rapport.service';
 
 @Component({
@@ -84,7 +84,7 @@ export class RucheRucherComponent implements OnInit {
   localStorageRuche;
   //localStorageRucheName;
 
-  private timerSubscription: AnonymousSubscription;
+  private timerSubscription: Subscription;
  
     
   constructor(  private formBuilder: FormBuilder,
@@ -383,7 +383,7 @@ deleteObs(ap){
   }
 }
 
-onEditObservation(){
+onEditObservation(Formvalue){
   this.newObs.date = this.dateEdit;
   this.newObs.sentence = this.sentence;
   this.newObs.type = this.type;
@@ -431,5 +431,8 @@ isMap(path){
     return true;
   }
 }   
-
+message="";
+    receiveMessage($event){
+        this.message=$event;
+    }
 }

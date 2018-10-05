@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CapteurService } from './capteur.service';
-import { FormGroup,FormBuilder, Validators,FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators,FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RucherService } from '../ruche-rucher/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 import { Rucher } from '../ruche-rucher/rucher';
 import { Ruche } from '../ruche-rucher/ruche';
 import { Capteur } from './capteur';
-import { Observable, Subscription } from 'rxjs/Rx';
-import { AnonymousSubscription } from "rxjs/Subscription";
+import { CapteurInterface } from '../../_model/capteur';
+
+import { Observable, Subscription } from 'rxjs';
+// import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
 
 @Component({
@@ -36,11 +38,11 @@ export class CapteurComponent implements OnInit {
   editCapteurForm : FormGroup;
   capteur= new Capteur();
   reference ='';
-  type='';
+  type : CapteurInterface;
   description ='';
   descriptionE='';
 
-  types : any[] = []; 
+  types : string=''; 
 
   radioStock :boolean;
   radioRuche : boolean;
@@ -53,14 +55,15 @@ export class CapteurComponent implements OnInit {
   editedSensorMsgE : boolean;
   public errorMsg;
 
-  private timerSubscription: AnonymousSubscription;
+  // private timerSubscription: AnonymousSubscription;
+  private timerSubscription: Subscription;
   
     receiveMessage($event){
             this.message=$event;
 
     }
     
-    constructor(    
+    constructor(
                     private data : UserloggedService,
                     private _router : Router,
                     private formBuilder: FormBuilder,
@@ -69,7 +72,7 @@ export class CapteurComponent implements OnInit {
                     private _selectedRucherService : selectedRucherService, ) { 
 
         
-        this.newCapteurForm=formBuilder.group({
+        this.newCapteurForm = formBuilder.group({
                             'reference': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(20)])],
                             'type': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(400)])],
                             'description': [null],
@@ -79,14 +82,15 @@ export class CapteurComponent implements OnInit {
                             'validate' : ``
                         })                
                 
-        this.editCapteurForm=formBuilder.group({
+        this.editCapteurForm = formBuilder.group({
                             'selectedRucher': [null],
                             'selectedRuche': [null],
                             'checkbox': [],
                             'description': [null],
                             'validate' : ``
                         })                
-        this.username= data.currentUser().username;
+        this.username = data.currentUser().username;
+        this.type = {id : "", sensorRef: "", type : "", dateSold : "", soldTo : "", soldToEmail : ""}
         
     }
 
@@ -164,7 +168,7 @@ export class CapteurComponent implements OnInit {
     checkCapteurType(value : any){       
             this.capteurService.checkCapteurType(value).subscribe(
                 data =>{ 
-                    this.types=data;
+                    this.type=data;
                 },
                 ( error => this.errorMsg=error)
                );
@@ -217,7 +221,7 @@ export class CapteurComponent implements OnInit {
      
     }
 
-    updateCapteur(){
+    updateCapteur(x){
       
         if(this.radioStockE){
             this.selectedCapteur.idHive = "stock";
@@ -226,7 +230,7 @@ export class CapteurComponent implements OnInit {
             this.selectedCapteur.idApiary=String(this.selectedRucherEdit);
             this.selectedCapteur.idHive=String(this.selectedRucheEdit);
         }
-        
+          
         this.selectedCapteur.description = this.descriptionE;
  
         this.capteurService.updateCapteur(this.selectedCapteur).subscribe(

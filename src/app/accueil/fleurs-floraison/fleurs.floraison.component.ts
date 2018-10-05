@@ -13,7 +13,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
-import * as echarts from 'assets/echarts';
+import * as echarts from './../../../assets/echarts';
 
 
 @Component({/*  */
@@ -467,7 +467,6 @@ export class FleursFloraisonComponent implements OnInit {
         });
     }
   }
-
   //Affiche les semaines de floraisons observées année 2018 des plantes du rucher
   generateData2018(option) {
     for (var i = 0; i < this.data2018.length; i++) {
@@ -486,7 +485,6 @@ export class FleursFloraisonComponent implements OnInit {
         });
     }
   }
-
   //Affiche les semaines de floraisons observées année 2019 des plantes du rucher
   generateData2019(option) {
     for (var i = 0; i < this.data2019.length; i++) {
@@ -670,7 +668,10 @@ export class FleursFloraisonComponent implements OnInit {
   
   }
 
-
+  message="";
+  receiveMessage($event){
+      this.message=$event;
+  }
 
 
 

@@ -1,40 +1,39 @@
 <div class="wrapper">
-    <div class="sidebar" data-color="red" data-image="">
-        <app-sidebar ></app-sidebar>
-        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
-    </div>
-
-    <div class="main-panel">
-        <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
-        <router-outlet></router-outlet>
+        <div class="sidebar" data-color="red" data-image="">
+            <app-sidebar ></app-sidebar>
+            <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+        </div>
     
+        <div class="main-panel">
+            <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+            <router-outlet></router-outlet>
         
-        <div class="container-fluid" style="background-color: white;">
-                <div class="row content">
-                        <div class="col-sm-9">                        
-                        
-                            <div class="form-inline" >
-                                <div class="form-group">
+            
+            <div class="container-fluid" style="background-color: white;">
+                    <div class="row content">
+                            <div class="col-sm-9">                        
                             
+                                <div class="form-inline" >
+                                    <div class="form-group">
+                                
+                                    </div>
                                 </div>
-                            </div>
-                   
-                            <!-- Template for the city component -->
-                            <div id="cityCont" class="container">
-                                <div>
-                                        <div style="text-align:center">
-                                                <h2 *ngIf="dataCity.city">
-                                                        <img src="https://openweathermap.org/img/w/{{dataCity.list[0].weather[0].icon}}.png" class="forecast-icon" alt="forecast">
-                                                        {{dataCity.list[0].main.temp_min }}°    {{dataCity.list[0].weather[0].description}} à {{dataCity.city.name}}, {{dataCity.city.country}}
-                                                    </h2>      
-                                        </div>
-                                <app-calendrier></app-calendrier>
+                       
+                                <!-- Template for the city component -->
+                                <div id="cityCont" class="container">
+                                    <div>
+                                            <div style="text-align:center">
+                                                    <h2 *ngIf="dataCity.city">
+                                                            <img src="https://openweathermap.org/img/w/{{dataCity.list[0].weather[0].icon}}.png" class="forecast-icon" alt="forecast">
+                                                            {{dataCity.list[0].main.temp_min }}°    {{dataCity.list[0].weather[0].description}} à {{dataCity.city.name}}, {{dataCity.city.country}}
+                                                        </h2>      
+                                            </div>
+                                    <app-calendrier></app-calendrier>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+    
+            </div>
         </div>
     </div>
-</div>
-

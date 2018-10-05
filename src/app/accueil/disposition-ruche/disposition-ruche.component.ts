@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
@@ -26,7 +26,7 @@ export class DispositionRucheComponent implements OnInit {
   offset : Offsets;
   username: string;
   rucheSelect : RucheInterface;
-  
+  message="";
   constructor( public dailyRecTh :  DailyRecordService, private draggable: DragAndCheckModule, private login: UserloggedService, public rucheService : RucheService, public rucherService: RucherService) { 
     this.offset = new Offsets(this.top,this.right,this.bottom, this.left);
   }
@@ -36,6 +36,10 @@ export class DispositionRucheComponent implements OnInit {
     'y': '0'
   };
 
+  receiveMessage($event){
+    this.message=$event;
+
+  }
 
   style = {
     'background-image':'',
