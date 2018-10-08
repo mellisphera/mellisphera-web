@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
+import { MeteoService } from './MeteoService';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendrierService {
 
-  constructor() { }
+
+
+
+  constructor() { 
+  }
 
   couleur : string ='rgba(123,123,123,0.3)';
   options={ // initialisateur d'objet
@@ -47,15 +52,6 @@ export class CalendrierService {
              show:false // desactiver
          }
      },
-
-
-     series: [{ // Type de données et valeur
-         type: 'custom', // définit un type personnaliser
-         coordinateSystem: 'calendar', // type de coordonnée
-
-         renderItem:this.renderItem, // pour chaque valeur dans data cette fonction sera appelé
-         data:''// Valeur à ajouter au calendrier (tableau de date)
-     }],
      range:this.decomposeDate(new Date())
 
  };

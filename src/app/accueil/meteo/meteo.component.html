@@ -10,30 +10,36 @@
         
             
             <div class="container-fluid" style="background-color: white;">
-                    <div class="row content">
-                            <div class="col-sm-9">                        
-                            
-                                <div class="form-inline" >
-                                    <div class="form-group">
-                                
-                                    </div>
+                    <div class="container-fluid">
+                            <div class="form-inline" >
+                            <div class="form-group">
+                                  <form>
+                                    <label><h4>Rucher :</h4> </label>
+                                    <select [(ngModel)]="rucherService.rucher" name="rucher" (change)="onSelectRucher($event)" class="form-control" id="sel1">
+                                      <option *ngFor="let rucher of rucherService.ruchers; let i = index" [ngValue]="rucher"> {{rucher.name}} </option>
+                                    </select>
+                                  </form>
                                 </div>
-                       
-                                <!-- Template for the city component -->
-                                <div id="cityCont" class="container">
-                                    <div>
-                                            <div style="text-align:center">
-                                                    <h2 *ngIf="dataCity.city">
-                                                            <img src="https://openweathermap.org/img/w/{{dataCity.list[0].weather[0].icon}}.png" class="forecast-icon" alt="forecast">
-                                                            {{dataCity.list[0].main.temp_min }}°    {{dataCity.list[0].weather[0].description}} à {{dataCity.city.name}}, {{dataCity.city.country}}
-                                                        </h2>      
-                                            </div>
-                                    <app-calendrier></app-calendrier>
-                                    </div>
-                                </div>
+                              </div>
+                          
+                          <div style="text-align:center">
+                          </div>
+                              <!--<div style="width: 700px; height: 1000px;" id ="main"></div>-->
                             </div>
-                        </div>
-    
+                            <div id="cityCont" class="container">
+                              <div>
+                                      <div style="text-align:center">
+                                              <h2>
+                                                  <img src="https://openweathermap.org/img/w/{{meteoService.meteo[0].icons}}.png" class="forecast-icon" alt="forecast">
+                                                      {{meteoService.meteo[0].tempMin}}° à {{meteoService.ville}}
+                                              </h2>      
+                                      </div>
+                              </div>
+                          </div>
+                            <div echarts [options]="calendrier.options" [merge]="meteoService.mergeOption" [loading]="!meteoService.status" style="height:820px; width: 1000px;">
+                          
+                            </div>
+                            <!--echarts [options] ="meteoSelect" -->
             </div>
         </div>
     </div>

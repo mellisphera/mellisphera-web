@@ -256,6 +256,7 @@ export class CapteurComponent implements OnInit {
     onSelectRucher(event : any) : void{
         this.selectedRucher=event.target.value;
         this.getRucheDuRucher();
+        console.log(this.ruches);
         //this.getDetailsRucher();
     }
     

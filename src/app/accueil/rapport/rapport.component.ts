@@ -123,6 +123,7 @@ export class RapportComponent implements OnInit {
   }
 
   onSelectRucher(event : any) : void{
+    console.log(this.selectedRucher);
     this.currentRucherID=String(this.selectedRucher);
     localStorage.setItem("currentRucher",String(this.selectedRucher));
   }

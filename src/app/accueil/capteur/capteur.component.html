@@ -191,7 +191,7 @@
     <div *ngIf="radioRucheE">
         <div class="form-group">
             <label for="recipient-name" class="col-form-label">Rucher :</label>
-            <select  [(ngModel)]="selectedRucherEdit"  formControlName="selectedRucher"  class="form-control " id="sel1">
+            <select  [(ngModel)]="selectedRucherEdit"  formControlName="selectedRucher"  (change)="onSelectRucher($event)" class="form-control " id="sel1">
                 <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
                     {{rucher.name}}
                 </option>

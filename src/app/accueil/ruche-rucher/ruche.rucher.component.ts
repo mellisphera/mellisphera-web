@@ -207,7 +207,7 @@ createRucher(rucher){
               
         );
         alert("Votre rucher a été créé");
-        this.refreshRucherData()
+        this.refreshRucherData();
         this.newRucherForm.reset();
 }
 //delete rucher
@@ -409,10 +409,11 @@ private refreshObsData(): void {
 private refreshRucherData(): void {
   this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
   this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
+  this.timerSubscription = Observable.timer(500).first().subscribe(()=> this.rucherService.getUserRuchersLast(this.username));
 }
   
 private subscribeToData(): void {
-  this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher());
+  this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher());  
 }
 
 resetRucheForm(){
