@@ -21,7 +21,12 @@ export class MeteoComponent implements OnInit {
   calendrierInit : any = null;
   meteoSelect : any[];
   username: string;
-  
+  message="";
+
+  receiveMessage($event){
+    this.message=$event;
+
+  }
   ngOnInit() {
     this.username = this.login.currentUser().username;
   }
