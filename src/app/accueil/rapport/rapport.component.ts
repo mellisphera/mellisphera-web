@@ -3,9 +3,9 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
-import { AnonymousSubscription } from "rxjs/Subscription";
+// import { AnonymousSubscription } from "rxjs/Subscription";
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { RapportService } from './rapport.service';
 import { Rucher } from '../ruche-rucher/rucher';
@@ -42,7 +42,7 @@ export class RapportComponent implements OnInit {
 
   public errorMsg;
 
-  private timerSubscription: AnonymousSubscription;
+  private timerSubscription: Subscription;
 
 
   //nomRuche;
@@ -77,7 +77,7 @@ export class RapportComponent implements OnInit {
       );  
     }
     
-    getAnalyseTemp(){
+    getAnalyseTemp(FormRapport){
       this.rapportService.getNluResult(this.texteRapport, this.selectedRucher).subscribe( 
         data => {},
         ( error => this.errorMsg=error));
@@ -123,9 +123,17 @@ export class RapportComponent implements OnInit {
   }
 
   onSelectRucher(event : any) : void{
+    console.log(this.selectedRucher);
     this.currentRucherID=String(this.selectedRucher);
     localStorage.setItem("currentRucher",String(this.selectedRucher));
   }
 
+  message="";
+    receiveMessage($event){
+        this.message=$event;
+    }
 
+  change($event){
+
+  }
 }

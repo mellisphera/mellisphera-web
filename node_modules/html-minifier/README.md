@@ -3,14 +3,12 @@
 [![NPM version](https://img.shields.io/npm/v/html-minifier.svg)](https://www.npmjs.com/package/html-minifier)
 [![Build Status](https://img.shields.io/travis/kangax/html-minifier.svg)](https://travis-ci.org/kangax/html-minifier)
 [![Dependency Status](https://img.shields.io/david/kangax/html-minifier.svg)](https://david-dm.org/kangax/html-minifier)
-[![devDependency Status](https://img.shields.io/david/dev/kangax/html-minifier.svg)](https://david-dm.org/kangax/html-minifier?type=dev)
-[![Gitter](https://img.shields.io/gitter/room/kangax/html-minifier.svg)](https://gitter.im/kangax/html-minifier)
 
-[HTMLMinifier](http://kangax.github.io/html-minifier/) is a highly **configurable**, **well-tested**, JavaScript-based HTML minifier.
+[HTMLMinifier](https://kangax.github.io/html-minifier/) is a highly **configurable**, **well-tested**, JavaScript-based HTML minifier.
 
 See [corresponding blog post](http://perfectionkills.com/experimenting-with-html-minifier/) for all the gory details of [how it works](http://perfectionkills.com/experimenting-with-html-minifier/#how_it_works), [description of each option](http://perfectionkills.com/experimenting-with-html-minifier/#options), [testing results](http://perfectionkills.com/experimenting-with-html-minifier/#field_testing) and [conclusions](http://perfectionkills.com/experimenting-with-html-minifier/#cost_and_benefits).
 
-[Test suite is available online](http://kangax.github.io/html-minifier/tests/).
+[Test suite is available online](https://kangax.github.io/html-minifier/tests/).
 
 Also see corresponding [Ruby wrapper](https://github.com/stereobooster/html_minifier), and for Node.js, [Grunt plugin](https://github.com/gruntjs/grunt-contrib-htmlmin), [Gulp module](https://github.com/jonschlinkert/gulp-htmlmin), [Koa middleware wrapper](https://github.com/koajs/html-minifier) and [Express middleware wrapper](https://github.com/melonmanchan/express-minify-html).
 
@@ -22,19 +20,19 @@ How does HTMLMinifier compare to other solutions — [HTML Minifier from Will Pe
 
 | Site                                                                         | Original size *(KB)* | HTMLMinifier | minimize | Will Peavy | htmlcompressor.com |
 | ---------------------------------------------------------------------------- |:--------------------:| ------------:| --------:| ----------:| ------------------:|
-| [Google](https://www.google.com/)                                            | 45                   | **42**       | 45       | 47         | 45                 |
-| [Twitter](https://twitter.com/)                                              | 122                  | **89**       | 115      | 134        | 115                |
-| [HTMLMinifier](https://github.com/kangax/html-minifier)                      | 142                  | **110**      | 119      | 123        | 118                |
-| [New York Times](https://www.nytimes.com/)                                   | 221                  | **152**      | 172      | 168        | 156                |
-| [Stack Overflow](https://stackoverflow.com/)                                 | 247                  | **193**      | 202      | 210        | 200                |
-| [Bootstrap CSS](https://getbootstrap.com/docs/3.3/css/)                      | 272                  | **260**      | 269      | 229        | 269                |
-| [BBC](https://www.bbc.co.uk/)                                                | 283                  | **228**      | 275      | 278        | 262                |
-| [Amazon](https://www.amazon.co.uk/)                                          | 370                  | **315**      | 356      | 367        | n/a                |
-| [Wikipedia](https://en.wikipedia.org/wiki/President_of_the_United_States)    | 474                  | **442**      | 458      | 473        | 457                |
-| [NBC](https://www.nbc.com/)                                                  | 666                  | **627**      | 663      | 665        | n/a                |
+| [Google](https://www.google.com/)                                            | 47                   | **43**       | 47       | 49         | 47                 |
+| [Twitter](https://twitter.com/)                                              | 146                  | **115**      | 138      | 155        | 138                |
+| [HTMLMinifier](https://github.com/kangax/html-minifier)                      | 171                  | **128**      | 143      | 148        | 142                |
+| [New York Times](https://www.nytimes.com/)                                   | 207                  | **139**      | 158      | 155        | 144                |
+| [Stack Overflow](https://stackoverflow.com/)                                 | 256                  | **199**      | 209      | 217        | 206                |
+| [Bootstrap CSS](https://getbootstrap.com/docs/3.3/css/)                      | 271                  | **260**      | 269      | 229        | 269                |
+| [BBC](https://www.bbc.co.uk/)                                                | 294                  | **238**      | 285      | 289        | 278                |
+| [Amazon](https://www.amazon.co.uk/)                                          | 377                  | **328**      | 368      | 379        | n/a                |
+| [Wikipedia](https://en.wikipedia.org/wiki/President_of_the_United_States)    | 520                  | **484**      | 504      | 523        | 503                |
+| [NBC](https://www.nbc.com/)                                                  | 669                  | **633**      | 668      | 669        | n/a                |
 | [Eloquent Javascript](https://eloquentjavascript.net/1st_edition/print.html) | 870                  | **815**      | 840      | 864        | n/a                |
-| [ES6 table](https://kangax.github.io/compat-table/es6/)                      | 4916                 | **4189**     | 4652     | n/a        | n/a                |
-| [ES6 draft](https://tc39.github.io/ecma262/)                                 | 6099                 | **5435**     | 5597     | n/a        | n/a                |
+| [ES6 table](https://kangax.github.io/compat-table/es6/)                      | 5243                 | **4472**     | 4963     | n/a        | n/a                |
+| [ES6 draft](https://tc39.github.io/ecma262/)                                 | 6072                 | **5449**     | 5615     | n/a        | n/a                |
 
 ## Options Quick Reference
 

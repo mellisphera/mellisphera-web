@@ -3,8 +3,8 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { TestService } from './test.service'
 import * as echarts from '../../assets/echarts.js';
-import { AnonymousSubscription } from "rxjs/Subscription";
-import { Observable, Subscription } from 'rxjs/Rx';
+// import { AnonymousSubscription } from "rxjs";
+import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html'
@@ -16,7 +16,7 @@ export class TestComponent implements OnInit {
   minTemps=[];
   maxTemps= [];
   recordDates:any[]= [];
-  private timerSubscription: AnonymousSubscription;
+  private timerSubscription: Subscription;
   mergeOption: any = null;  
   options ;
      constructor(public location: Location,
@@ -32,24 +32,27 @@ export class TestComponent implements OnInit {
             console.log(index);
         }
      
-      //this.getData();
-      //load dates
-     this.subscribeToRecordDates();
-      //load weight values
-      this.subscribeToFillY();
-      //console.log("record dates : " + this.recordDates);
-      var T = this.recordDates;
-      /*for (var index = 0; index < T.length; index++) {
+        //this.getData();
+        //load dates
+        this.subscribeToRecordDates();
+        //load weight values
+        this.subscribeToFillY();
+        //console.log("record dates : " + this.recordDates);
+        var T = this.recordDates;
+        /*for (var index = 0; index < T.length; index++) {
           var element = this.recordDates[index];
           console.log("tegleb :) ");
           console.log("element : " + element);
           
-      }*/
-      this.subscribeToTest();
- 
+        }*/
+        this.subscribeToTest();
+      
     }
 
-
+    message="";
+    receiveMessage($event){
+        this.message=$event;
+    }
     /*
     getRecordDates(){
         this._testService.getRecordDates().then(data => {

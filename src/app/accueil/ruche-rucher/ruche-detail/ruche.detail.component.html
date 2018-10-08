@@ -3,7 +3,7 @@
 <div class="wrapper">
         <div class="sidebar" data-color="red" data-image="">
             <app-sidebar ></app-sidebar>
-            <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+            <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
         </div>
         <div class="main-panel">
             <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
@@ -185,26 +185,25 @@
         </button>
       </div>
       
-      <div class="modal-body">
+      <div class="modal-body" id="popupObs">
         <form  [formGroup]="ObservationForm" (ngSubmit)="createObservation(ObservationForm.value)">
 
-                <div class="form-group ">
+                <div class="form-group">
                                         
             
                         <label  class="col-form-label" for="exampleRadios1" >
-                            Type d'observations :  
+                            Type :  
                         </label>
                         <div class="form-check">
+                                <input class="form-check-input" (change)="selectRadioObs()" type="radio" formControlName="checkbox" name="checkbox"  [checked]="radioObs">
                             <label class="form-check-label" for="exampleRadios1" >
                                 Observations
                             </label>
-                            <input class="form-check-input" (change)="selectRadioObs()" type="radio" formControlName="checkbox" name="checkbox"  [checked]="radioObs">
                                 
-                
+                            <input class="form-check-input" (change)="selectRadioAction()" type="radio" formControlName="checkbox" name="checkbox" [checked]="radioAct">
                             <label class="form-check-label" for="exampleRadios1">
                                Actions 
                             </label>
-                            <input class="form-check-input" (change)="selectRadioAction()" type="radio" formControlName="checkbox" name="checkbox" [checked]="radioAct">
                             
                         </div>
                     </div>

@@ -5,7 +5,7 @@ import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from '../../../config';
 import { Capteur } from './capteur';
 import { Rucher } from '../ruche-rucher/rucher';
-
+import { CapteurInterface } from '../../_model/capteur';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -41,8 +41,8 @@ export class CapteurService {
         return this.http.put(CONFIG.URL+'sensors/update/' + capteur.id, body, httpOptions);
     }
 
-    checkCapteurType(capteurRef) : Observable<any[]>{
-        return this.http.get<any[]>(CONFIG.URL+'sold_devices/check/'+capteurRef);
+    checkCapteurType(capteurRef) : Observable<CapteurInterface>{
+        return this.http.get<CapteurInterface>(CONFIG.URL+'sold_devices/check/'+capteurRef);
     }
 
     errorHandler(error: HttpErrorResponse){

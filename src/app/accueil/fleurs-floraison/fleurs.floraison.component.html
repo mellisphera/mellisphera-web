@@ -1,231 +1,231 @@
 <div class="wrapper">
-    <div class="sidebar" data-color="red" data-image="">
-        <app-sidebar ></app-sidebar>
-        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
-    </div>
-    <div class="main-panel">
-        <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
-        <router-outlet></router-outlet>
-
-        <!-- change component content here-->                    
-        <div class="container-fluid" style="background-color:white;">
-            <div class="row content">
-                <div class="col-sm-9">
-                   <div class="form-inline" >
-                       <div class="form-group">
-                           <label><h4>Rucher :</h4> </label>
-                           <select  [(ngModel)]="selectedRucher" class="form-control " id="sel1">
-                               <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
-                                   {{rucher.name}}
-                               </option>
-                           </select>
+        <div class="sidebar" data-color="red" data-image="">
+            <app-sidebar ></app-sidebar>
+            <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+        </div>
+        <div class="main-panel">
+            <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+            <router-outlet></router-outlet>
+    
+            <!-- change component content here-->                    
+            <div class="container-fluid" style="background-color:white;">
+                <div class="row content">
+                    <div class="col-sm-9">
+                       <div class="form-inline" >
+                           <div class="form-group">
+                               <label><h4>Rucher :</h4> </label>
+                               <select  [(ngModel)]="selectedRucher" class="form-control " (change)="onSelectRucher($event)" id="sel1">
+                                   <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
+                                       {{rucher.name}}
+                                   </option>
+                               </select>
+                           </div>
                        </div>
-                   </div>
-                    <div class="bs-example">
-                        <div class="panel-group" id="accordion">
-                            <div class="panel panel-info ">
-                                <div class="panel-heading "  >
-                                    <h4 class="panel-title" >
-                                        <a data-toggle="collapse" href="#collapseOne">
-                                            <b>Fleurs</b>
-                                            <button class="btn btn-primary" style="right:0px" data-toggle="modal" data-target="#biblioteque" > <i class="fa fa-book"></i>Mes Plantes</button>
-                                            <button class="btn btn-primary " data-toggle="modal" data-target="#recherche"  > <i class="fa fa-search"></i>Annuaire de Plantes</button> 
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div>
-                                    <div class="panel-body">
-
-                                           <br/>
-
-                                       <div id="graph">
-
-                                       </div>
-
+                        <div class="bs-example">
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-info ">
+                                    <div class="panel-heading "  >
+                                        <h4 class="panel-title" >
+                                            <a data-toggle="collapse" href="#collapseOne">
+                                                <b>Fleurs</b>
+                                                <button class="btn btn-primary" style="right:0px" data-toggle="modal" data-target="#biblioteque" > <i class="fa fa-book"></i>Mes Plantes</button>
+                                                <button class="btn btn-primary " data-toggle="modal" data-target="#recherche"  > <i class="fa fa-search"></i>Annuaire de Plantes</button> 
+                                            </a>
+                                        </h4>
                                     </div>
-                                </div>
-                            </div>  
-                        </div>     
+                                    <div>
+                                        <div class="panel-body">
+    
+                                               <br/>
+    
+                                           <div id="graph">
+    
+                                           </div>
+    
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>     
+                        </div>
+                        <br/>   
                     </div>
-                    <br/>   
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
-
-
-<div class="modal fade" id="biblioteque" tabindex="-1" role="dialog"  aria-hidden="true">
-   <div class="modal-dialog" role="document">
-     <div class="modal-content" style="width:1000px">
-       <div class="modal-header">
-         <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Plantes Mellifères <br/> {{ nameApiary.name }}</h4></h5>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-         </button>
-       </div>
-       <div class="modal-body">
-               <table class="table">    
-                       <thead class="thead-dark">
-                           <tr>
-                               <th scope="col">Photo</th>
-                               <th scope="col">Nom</th>
-                               <th scope="col">Début floraison théorique</th>
-                               <th scope="col">Fin floraison théorique</th>
-                               <th scope="col">Début floraison observée</th>
-                               <th scope="col">Fin floraison observée</th>
-                               <th scope="col">Présence dans le rucher :</th>
-                               <th scope="col">Actions</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container *ngFor = "let fleur of fleursBibli ">
-                                
-                                    <tr>
-                                        <td> <img src="{{ fleur.photo }}" class="zoom"> </td>
-                                        <td><b> {{fleur.nom}} </b></td>
-                                        <td>{{fleur.dateThDebutdate}}</td>
-                                        <td>{{fleur.dateThFindate}}</td>
-                                        <td>
-                                            <input type="text"  [(ngModel)]="fleur.dateDebutdate[currentYear]" placeholder="{{fleur.dateThDebutdate}}"  name="dateDebutd-{{in}}"  />
-                                        </td>
-                                        <td>
-                                            <input type="text" [(ngModel)]="fleur.dateFindate[currentYear]"  placeholder="{{fleur.dateThFindate}}"  name="dateFind-{{in}}"  />
-                                        </td>
-                                        <td>
-                                            <select  [(ngModel)]="fleur.presence" (click)="onSelectPresence($event)" class="form-control ">
-                                                <option value="Elevée" >
-                                                    Elevée
-                                                </option>
-                                                <option value="Moyen" >
-                                                    Moyen
-                                                </option>
-                                                <option value="Faible" >
-                                                    Faible
-                                                </option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning btn-lg " (click)="deleteFleur(fleur)" title="Supprimer Plante" style="padding: 0;border: none; background: none;">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                            </ng-container>
-                       </tbody>
-                   </table> 
-       </div>
-       <div class="modal-footer">
-
-            <button class="btn btn-primary pull-left"  data-toggle="modal" data-target="#recherche"> <i class="fa fa-search"></i>Annuaire des Plantes</button> 
-           <button type="button" class="btn btn-primary" (click)="updateTot(fleursBibli)">Enregistrer</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" >Fermer</button>
-        
-       </div>
-     </div>
-   </div>
-</div>
-
-   
-<div class="modal fade" id="recherche"  tabindex="-1" role="dialog" aria-hidden="true">
+    
+    
+    
+    
+    <div class="modal fade" id="biblioteque" tabindex="-1" role="dialog"  aria-hidden="true">
        <div class="modal-dialog" role="document">
          <div class="modal-content" style="width:1000px">
            <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Annuaire de Plantes Mellifères</h4></h5>
-             <button class="btn btn-primary" style="right:0px" data-toggle="modal" data-target="#biblioteque" data-dismiss="modal" > <i class="fa fa-book"></i>Mes Plantes</button>
+             <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Plantes Mellifères <br/> {{ nameApiary.name }}</h4></h5>
              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
              </button>
            </div>
            <div class="modal-body">
-                   <div class="panel-body">
-                           <div class="panel panel-info ">
-                               <div class="panel-collapse collapse in">
-                                  <div class="panel-body">
-
-                                        <ul class="nav nav-tabs">
-                                            <li class="active"><a data-toggle="tab" href="#variete">Recherche par variété/espèce</a></li>
-                                            <li><a data-toggle="tab" href="#periode">Recherche par période</a></li>
-                                        </ul>
-
-                                        <div class="tab-content">
-                                            <div id="variete" class="tab-pane fade in active">
-                                                <div class="form-group">
-                                                    <br/>
-                                                    <label>Nom français  :</label>
-                                                    <form (ngSubmit)="subscribeToDataRechercheVariete()">
-                                                        <input type="text" (input)="onSelectFr($event)" [(ngModel)]="selectedFr" name="nomfr">
-                                                    </form>
-                                                </div>
-                                                 <br/>
-                                                <button type="submit" (click)="subscribeToDataRechercheVariete()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
-                                            </div>
-                                            <div id="periode" class="tab-pane fade">
-                                              <br/>
-                                                <label>Type  : </label>
-                                                <select style="width:400px" [(ngModel)]="selectedType" (click)="onSelectType($event)" class="form-control " >
-                                                    <option value=""></option>
-                                                    <option *ngFor="let type of types" [value]="type" >
-                                                        {{ type }}
+                   <table class="table">    
+                           <thead class="thead-dark">
+                               <tr>
+                                   <th scope="col">Photo</th>
+                                   <th scope="col">Nom</th>
+                                   <th scope="col">Début floraison théorique</th>
+                                   <th scope="col">Fin floraison théorique</th>
+                                   <th scope="col">Début floraison observée</th>
+                                   <th scope="col">Fin floraison observée</th>
+                                   <th scope="col">Présence dans le rucher :</th>
+                                   <th scope="col">Actions</th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor = "let fleur of fleursBibli ">
+                                    
+                                        <tr>
+                                            <td> <img src="{{ fleur.photo }}" class="zoom"> </td>
+                                            <td><b> {{fleur.nom}} </b></td>
+                                            <td>{{fleur.dateThDebutdate}}</td>
+                                            <td>{{fleur.dateThFindate}}</td>
+                                            <td>
+                                                <input type="text"  [(ngModel)]="fleur.dateDebutdate[currentYear]" placeholder="{{fleur.dateThDebutdate}}"  name="dateDebutd-{{in}}"  />
+                                            </td>
+                                            <td>
+                                                <input type="text" [(ngModel)]="fleur.dateFindate[currentYear]"  placeholder="{{fleur.dateThFindate}}"  name="dateFind-{{in}}"  />
+                                            </td>
+                                            <td>
+                                                <select  [(ngModel)]="fleur.presence" (click)="onSelectPresence($event)" class="form-control ">
+                                                    <option value="Elevée" >
+                                                        Elevée
+                                                    </option>
+                                                    <option value="Moyen" >
+                                                        Moyen
+                                                    </option>
+                                                    <option value="Faible" >
+                                                        Faible
                                                     </option>
                                                 </select>
-                                                <br/>   
-                                                <label>Periode de floraison  : </label>
-                                                    <br/>
-                                                    <input type="range" style="width:400px" [(ngModel)]="selectedFlo" (click)="onSelectFlo($event)" value="0" min="0" max="12">
-                                                    <img src="/assets/img/mois.png" style="width:400px">
-                                                    <br/>
-                                                <button type="submit" (click)="subscribeToDataRecherchePeriode()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
-                                            </div>
-                                        </div>
-                                   </div>
-                               </div>
-                           </div>
-                           <table class="table"  >    
-                               <thead class="thead-dark">
-                                   <tr>
-                                       <th scope="col">Photos</th>
-                                       <th scope="col">Nom français</th>
-                                       <th scope="col">Nom latin</th>
-                                       <th scope="col">Type</th>
-                                       <th scope="col">Période de floraison</th>
-                                       <th scope="col">Intêret pollen</th>
-                                       <th scope="col">Intêret nectar</th>
-                                       <th scope="col">Indice de confiance</th>
-                                       <th scope="col">Ajouter à un rucher</th>
-                                   </tr>
-                               </thead>
-                           <tbody>                  
-                               <tr *ngFor="let fleur of fleursTest" name="pollen">
-                                   <td> <img src="{{ fleur.photo }}" class="zoom"> </td>
-                                   <td> <b> {{ fleur.flowerApi.francais }} </b> </td>
-                                   <td> {{ fleur.flowerApi.latin }} </td>
-                                   <td> {{ fleur.type }} </td>
-                                   <td > {{ fleur.flowerApi.flomindate }} -> {{ fleur.flowerApi.flomaxdate }} </td>
-                                   <td> <img src="{{ fleur.flowerItsap.interet_pollen }}" ></td>
-                                   <td> <img src="{{ fleur.flowerItsap.interet_nectar }}"></td>
-                                   <td> <img src="{{ fleur.flowerItsap.indice_confiance }}"> </td>
-                                   <td> 
-                                       <select  [(ngModel)]="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
-                                           <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
-                                               {{rucher.name}}
-                                           </option>
-                                       </select>
-                                       <button data-toggle="tooltip" data-html="true" title="Ajouter au rucher" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;" class="btn btn-success btn-lg" (click)="addFleur(fleur)" >
-                                           <i class="fa fa-plus"></i>
-                                       </button>
-                                   </td>
-                               </tr>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning btn-lg " (click)="deleteFleur(fleur)" title="Supprimer Plante" style="padding: 0;border: none; background: none;">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                </ng-container>
                            </tbody>
-                       </table>  
+                       </table> 
            </div>
            <div class="modal-footer">
-              
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+    
+                <button class="btn btn-primary pull-left"  data-toggle="modal" data-target="#recherche"> <i class="fa fa-search"></i>Annuaire des Plantes</button> 
+               <button type="button" class="btn btn-primary" (click)="updateTot(fleursBibli)">Enregistrer</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" >Fermer</button>
             
            </div>
          </div>
        </div>
-       </div>
+    </div>
+    
+       
+    <div class="modal fade" id="recherche"  tabindex="-1" role="dialog" aria-hidden="true">
+           <div class="modal-dialog" role="document">
+             <div class="modal-content" style="width:1000px">
+               <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Annuaire de Plantes Mellifères</h4></h5>
+                 <button class="btn btn-primary" style="right:0px" data-toggle="modal" data-target="#biblioteque" data-dismiss="modal" > <i class="fa fa-book"></i>Mes Plantes</button>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+               </div>
+               <div class="modal-body">
+                       <div class="panel-body">
+                               <div class="panel panel-info ">
+                                   <div class="panel-collapse collapse in">
+                                      <div class="panel-body">
+    
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a data-toggle="tab" href="#variete">Recherche par variété/espèce</a></li>
+                                                <li><a data-toggle="tab" href="#periode">Recherche par période</a></li>
+                                            </ul>
+    
+                                            <div class="tab-content">
+                                                <div id="variete" class="tab-pane fade in active">
+                                                    <div class="form-group">
+                                                        <br/>
+                                                        <label>Nom français  :</label>
+                                                        <form (ngSubmit)="subscribeToDataRechercheVariete()">
+                                                            <input type="text" (input)="onSelectFr($event)" [(ngModel)]="selectedFr" name="nomfr">
+                                                        </form>
+                                                    </div>
+                                                     <br/>
+                                                    <button type="submit" (click)="subscribeToDataRechercheVariete()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
+                                                </div>
+                                                <div id="periode" class="tab-pane fade">
+                                                  <br/>
+                                                    <label>Type  : </label>
+                                                    <select style="width:400px" [(ngModel)]="selectedType" (click)="onSelectType($event)" class="form-control " >
+                                                        <option value=""></option>
+                                                        <option *ngFor="let type of types" [value]="type" >
+                                                            {{ type }}
+                                                        </option>
+                                                    </select>
+                                                    <br/>   
+                                                    <label>Periode de floraison  : </label>
+                                                        <br/>
+                                                        <input type="range" style="width:400px" [(ngModel)]="selectedFlo" (click)="onSelectFlo($event)" value="0" min="0" max="12">
+                                                        <img src="/assets/img/mois.png" style="width:400px">
+                                                        <br/>
+                                                    <button type="submit" (click)="subscribeToDataRecherchePeriode()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
+                                                </div>
+                                            </div>
+                                       </div>
+                                   </div>
+                               </div>
+                               <table class="table"  >    
+                                   <thead class="thead-dark">
+                                       <tr>
+                                           <th scope="col">Photos</th>
+                                           <th scope="col">Nom français</th>
+                                           <th scope="col">Nom latin</th>
+                                           <th scope="col">Type</th>
+                                           <th scope="col">Période de floraison</th>
+                                           <th scope="col">Intêret pollen</th>
+                                           <th scope="col">Intêret nectar</th>
+                                           <th scope="col">Indice de confiance</th>
+                                           <th scope="col">Ajouter à un rucher</th>
+                                       </tr>
+                                   </thead>
+                               <tbody>                  
+                                   <tr *ngFor="let fleur of fleursTest" name="pollen">
+                                       <td> <img src="{{ fleur.photo }}" class="zoom"> </td>
+                                       <td> <b> {{ fleur.flowerApi.francais }} </b> </td>
+                                       <td> {{ fleur.flowerApi.latin }} </td>
+                                       <td> {{ fleur.type }} </td>
+                                       <td > {{ fleur.flowerApi.flomindate }} -> {{ fleur.flowerApi.flomaxdate }} </td>
+                                       <td> <img src="{{ fleur.flowerItsap.interet_pollen }}" ></td>
+                                       <td> <img src="{{ fleur.flowerItsap.interet_nectar }}"></td>
+                                       <td> <img src="{{ fleur.flowerItsap.indice_confiance }}"> </td>
+                                       <td> 
+                                           <select  [(ngModel)]="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
+                                               <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
+                                                   {{rucher.name}}
+                                               </option>
+                                           </select>
+                                           <button data-toggle="tooltip" data-html="true" title="Ajouter au rucher" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;" class="btn btn-success btn-lg" (click)="addFleur(fleur)" >
+                                               <i class="fa fa-plus"></i>
+                                           </button>
+                                       </td>
+                                   </tr>
+                               </tbody>
+                           </table>  
+               </div>
+               <div class="modal-footer">
+                  
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                
+               </div>
+             </div>
+           </div>
+           </div>
