@@ -1,4 +1,4 @@
-[![build status](https://secure.travis-ci.org/survivejs/webpack-merge.svg)](http://travis-ci.org/survivejs/webpack-merge) [![bitHound Score](https://www.bithound.io/github/survivejs/webpack-merge/badges/score.svg)](https://www.bithound.io/github/survivejs/webpack-merge) [![codecov](https://codecov.io/gh/survivejs/webpack-merge/branch/master/graph/badge.svg)](https://codecov.io/gh/survivejs/webpack-merge)
+[![build status](https://secure.travis-ci.org/survivejs/webpack-merge.svg)](http://travis-ci.org/survivejs/webpack-merge) [![codecov](https://codecov.io/gh/survivejs/webpack-merge/branch/master/graph/badge.svg)](https://codecov.io/gh/survivejs/webpack-merge)
 
 # webpack-merge - Merge designed for Webpack
 
@@ -270,6 +270,69 @@ merge.smart({
   }]
 }
 ```
+
+This also works in reverse - the existing order will be maintained if possible:
+
+```javascript
+merge.smart({
+  loaders: [{
+    test: /\.css$/,
+    use: [
+      { loader: 'css-loader', options: { myOptions: true } },
+      { loader: 'style-loader' }
+    ]
+  }]
+}, {
+  loaders: [{
+    test: /\.css$/,
+    use: [
+      { loader: 'style-loader', options: { someSetting: true } }
+    ]
+  }]
+});
+// will become
+{
+  loaders: [{
+    test: /\.css$/,
+    use: [
+      { loader: 'css-loader', options: { myOptions: true } },
+      { loader: 'style-loader', options: { someSetting: true } }
+    ]
+  }]
+}
+```
+
+In the case of an order conflict, the second order wins:
+```javascript
+merge.smart({
+  loaders: [{
+    test: /\.css$/,
+    use: [
+      { loader: 'css-loader' },
+      { loader: 'style-loader' }
+    ]
+  }]
+}, {
+  loaders: [{
+    test: /\.css$/,
+    use: [
+      { loader: 'style-loader' },
+      { loader: 'css-loader' }
+    ]
+  }]
+});
+// will become
+{
+  loaders: [{
+    test: /\.css$/,
+    use: [
+      { loader: 'style-loader' }
+      { loader: 'css-loader' },
+    ]
+  }]
+}
+```
+
 
 **Loader query strings `loaders: ['babel?plugins[]=object-assign']` will be overridden.**
 

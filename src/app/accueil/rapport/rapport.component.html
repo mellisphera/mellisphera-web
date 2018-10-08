@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <label><h4>Rucher :</h4> </label>
                   
-                            <select  [(ngModel)]="selectedRucher"  class="form-control " id="sel1">
+                            <select  [(ngModel)]="selectedRucher"  class="form-control " (change)="onSelectRucher($event)" id="sel1">
                                 <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
                                      {{rucher.name}}
                                 </option>
@@ -175,7 +175,3 @@
 </div>
 
 <!-- MODALS ARE DECLARE HERE !!! -->
-
- 
-
-

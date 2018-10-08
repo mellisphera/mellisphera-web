@@ -11,8 +11,8 @@ import { ProcessReport } from '../processedReport';
 import { RucherService } from '../rucher.service';
 import { UserloggedService } from '../../../userlogged.service';
 import { selectedRucherService } from '../../_shared-services/selected-rucher.service';
-import { Observable, Subscription } from 'rxjs/Rx';
-import { AnonymousSubscription } from "rxjs/Subscription";
+import { Observable, Subscription } from 'rxjs';
+// import { AnonymousSubscription } from "rxjs/Subscription";
 import { RucheDetailService } from './ruche.detail.service';
 
 @Component({
@@ -47,7 +47,7 @@ export class RucheDetailComponent implements OnInit {
 
     public errorMsg;
 
-  private timerSubscription: AnonymousSubscription;
+  private timerSubscription: Subscription;
 
 constructor(    private formBuilder: FormBuilder,
                 public location: Location,
@@ -143,7 +143,7 @@ createObservation(observation){
     this.getObservationsHive();
 }
 
-onEditObservation(){
+onEditObservation(FormObs){
     this.newObs.date = this.dateEdit;
     this.newObs.sentence = this.sentence;
     this.newObs.type = this.selectedObsR.type;
@@ -177,7 +177,10 @@ resetObservationForm(){
 private subscribeToData(): void {
     this.timerSubscription = Observable.timer(100).first().subscribe(() => this.getObservationsHive());
 }
-
+message="";
+    receiveMessage($event){
+        this.message=$event;
+    }
 chartWeightGain(){
       var myChart = echarts.init(document.getElementById('main'));
 

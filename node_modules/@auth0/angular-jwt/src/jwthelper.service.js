@@ -1,6 +1,7 @@
+// tslint:disable:no-bitwise
 import { Injectable, Inject } from '@angular/core';
 import { JWT_OPTIONS } from './jwtoptions.token';
-var JwtHelperService = (function () {
+var JwtHelperService = /** @class */ (function () {
     function JwtHelperService(config) {
         if (config === void 0) { config = null; }
         this.tokenGetter = config && config.tokenGetter || function () { };
@@ -26,7 +27,10 @@ var JwtHelperService = (function () {
         return this.b64DecodeUnicode(output);
     };
     // credits for decoder goes to https://github.com/atk
-    JwtHelperService.prototype.b64decode = function (str) {
+    // credits for decoder goes to https://github.com/atk
+    JwtHelperService.prototype.b64decode = 
+    // credits for decoder goes to https://github.com/atk
+    function (str) {
         var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
         var output = '';
         str = String(str).replace(/=+$/, '');
@@ -86,8 +90,9 @@ var JwtHelperService = (function () {
     };
     JwtHelperService.prototype.isTokenExpired = function (token, offsetSeconds) {
         if (token === void 0) { token = this.tokenGetter(); }
-        if (token === null || token === '')
+        if (token === null || token === '') {
             return true;
+        }
         var date = this.getTokenExpirationDate(token);
         offsetSeconds = offsetSeconds || 0;
         if (date === null) {
@@ -95,13 +100,13 @@ var JwtHelperService = (function () {
         }
         return !(date.valueOf() > new Date().valueOf() + offsetSeconds * 1000);
     };
+    JwtHelperService.decorators = [
+        { type: Injectable },
+    ];
+    /** @nocollapse */
+    JwtHelperService.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: Inject, args: [JWT_OPTIONS,] },] },
+    ]; };
     return JwtHelperService;
 }());
 export { JwtHelperService };
-JwtHelperService.decorators = [
-    { type: Injectable },
-];
-/** @nocollapse */
-JwtHelperService.ctorParameters = function () { return [
-    { type: undefined, decorators: [{ type: Inject, args: [JWT_OPTIONS,] },] },
-]; };

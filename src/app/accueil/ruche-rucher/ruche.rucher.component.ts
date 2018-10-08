@@ -9,8 +9,8 @@ import { ProcessReport } from './processedReport';
 import { RucherService } from './rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
-import { Observable, Subscription } from 'rxjs/Rx';
-import { AnonymousSubscription } from "rxjs/Subscription";
+import { Observable, Subscription } from 'rxjs';
+// import { AnonymousSubscription } from "rxjs/Subscription";
 import { RapportService } from '../rapport/rapport.service';
 
 @Component({
@@ -84,7 +84,7 @@ export class RucheRucherComponent implements OnInit {
   localStorageRuche;
   //localStorageRucheName;
 
-  private timerSubscription: AnonymousSubscription;
+  private timerSubscription: Subscription;
  
     
   constructor(  private formBuilder: FormBuilder,
@@ -207,7 +207,7 @@ createRucher(rucher){
               
         );
         alert("Votre rucher a été créé");
-        this.refreshRucherData()
+        this.refreshRucherData();
         this.newRucherForm.reset();
 }
 //delete rucher
@@ -383,7 +383,7 @@ deleteObs(ap){
   }
 }
 
-onEditObservation(){
+onEditObservation(Formvalue){
   this.newObs.date = this.dateEdit;
   this.newObs.sentence = this.sentence;
   this.newObs.type = this.type;
@@ -409,10 +409,11 @@ private refreshObsData(): void {
 private refreshRucherData(): void {
   this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
   this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
+  this.timerSubscription = Observable.timer(500).first().subscribe(()=> this.rucherService.getUserRuchersLast(this.username));
 }
   
 private subscribeToData(): void {
-  this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher());
+  this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher());  
 }
 
 resetRucheForm(){
@@ -431,5 +432,8 @@ isMap(path){
     return true;
   }
 }   
-
+message="";
+    receiveMessage($event){
+        this.message=$event;
+    }
 }

@@ -6,7 +6,7 @@ import { JWT_OPTIONS } from './src/jwtoptions.token';
 export * from './src/jwt.interceptor';
 export * from './src/jwthelper.service';
 export * from './src/jwtoptions.token';
-var JwtModule = (function () {
+var JwtModule = /** @class */ (function () {
     function JwtModule(parentModule) {
         if (parentModule) {
             throw new Error('JwtModule is already loaded. It should only be imported in your application\'s main module.');
@@ -30,13 +30,13 @@ var JwtModule = (function () {
             ]
         };
     };
+    JwtModule.decorators = [
+        { type: NgModule },
+    ];
+    /** @nocollapse */
+    JwtModule.ctorParameters = function () { return [
+        { type: JwtModule, decorators: [{ type: Optional }, { type: SkipSelf },] },
+    ]; };
     return JwtModule;
 }());
 export { JwtModule };
-JwtModule.decorators = [
-    { type: NgModule },
-];
-/** @nocollapse */
-JwtModule.ctorParameters = function () { return [
-    { type: JwtModule, decorators: [{ type: Optional }, { type: SkipSelf },] },
-]; };

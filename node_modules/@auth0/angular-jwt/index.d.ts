@@ -5,7 +5,7 @@ export * from './src/jwtoptions.token';
 export interface JwtModuleOptions {
     jwtOptionsProvider?: Provider;
     config?: {
-        tokenGetter?: () => string | Promise<string>;
+        tokenGetter?: () => string | null | Promise<string | null>;
         headerName?: string;
         authScheme?: string;
         whitelistedDomains?: Array<string | RegExp>;
