@@ -1,4 +1,4 @@
-src/app/accueil/rapport/rapport.component.html<div class="wrapper">
+<div class="wrapper">
         <div class="sidebar" data-color="red" data-image="">
             <app-sidebar ></app-sidebar>
             <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
@@ -16,7 +16,7 @@ src/app/accueil/rapport/rapport.component.html<div class="wrapper">
                         <div class="form-group">
                             <label><h4>Rucher :</h4> </label>
                   
-                            <select  [(ngModel)]="selectedRucher"  class="form-control " id="sel1">
+                            <select  [(ngModel)]="selectedRucher"  class="form-control " (change)="onSelectRucher($event)" id="sel1">
                                 <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
                                      {{rucher.name}}
                                 </option>

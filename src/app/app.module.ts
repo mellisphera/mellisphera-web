@@ -23,8 +23,6 @@ import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouve
 import { GraphComponent } from './accueil/graph/graph.component';
 import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
 
-import { CalendrierComponent } from './accueil//meteo/calendrier/calendrier.component';
-
 import { TablesComponent } from './tables/tables.component';
 import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
@@ -57,11 +55,11 @@ import { DispositionRucheComponent } from './accueil/disposition-ruche/dispositi
 
 import { DailyRecordService } from './accueil/disposition-ruche/Service/dailyRecordService';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
-import { MeteoService } from './accueil/meteo/calendrier/Service/MeteoService';
+import { MeteoService } from './accueil/meteo/Service/MeteoService';
 import { RucheService } from './accueil/disposition-ruche/Service/ruche.service';
 
 import { NgxEchartsModule } from 'ngx-echarts';
-import { CalendrierService } from './accueil/meteo/calendrier/Service/calendrier.service';
+import { CalendrierService } from './accueil/meteo/Service/calendrier.service';
 //import { NgDraggableModule } from 'angular-draggable'; 
 
 @NgModule({
@@ -88,7 +86,6 @@ import { CalendrierService } from './accueil/meteo/calendrier/Service/calendrier
     RucheDetailComponent,
     RapportComponent,
     FleursFloraisonComponent,
-    CalendrierComponent,
     DispositionRucheComponent
 
   ],

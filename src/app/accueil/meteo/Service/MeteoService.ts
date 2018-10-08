@@ -1,11 +1,11 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DailyWeather } from '../DailyWeather';
-import { Meteo } from '../../../../_model/meteo';
-import { RucherService } from '../../../ruche-rucher/rucher.service';
+import { Meteo } from '../../../_model/meteo';
+import { RucherService } from '../../ruche-rucher/rucher.service';
 import { element } from 'protractor';
-import { UserloggedService } from '../../../../userlogged.service';
+import { UserloggedService } from '../../../userlogged.service';
 import { Observable } from 'rxjs';
+import { CalendrierService } from './calendrier.service';
 
 /*
     class dont les fonctions éxécute les requetes
@@ -18,11 +18,24 @@ export class MeteoService{
     firstMeteo  : Meteo[];
     meteoObs : Observable<Meteo[]>;
     arrayMeteo : any = [];
-    constructor(private httpClient :  HttpClient, private login : UserloggedService){
+    mergeOption : any = null;
+    ville : string;
+    status : boolean;
+    constructor(private rucher : RucherService,  private celendrier : CalendrierService, private httpClient :  HttpClient, private login : UserloggedService){
         this.meteo = [];
+        this.rucher.rucherObs.subscribe(
+            ()=>{},
+            ()=>{},
+            ()=>{
+                this.getWeather(this.rucher.rucher.ville);
+            }
+
+        )
     }
 
-    getWeather(id : string ,city: string){
+    getWeather(city: string){
+        this.status = false;
+        this.ville = city;
         this.arrayMeteo = [];
         this.meteoObs = this.httpClient.get<Meteo[]>('https://api.openweathermap.org/data/2.5/forecast?q='+city+'&units=metric&appid=110ff02ed24ccd819801248373c3b208');
         this.meteoObs.subscribe(
@@ -41,8 +54,20 @@ export class MeteoService{
                 });
                 console.log(this.meteo);
                 this.getArray();
-                //console.log(this.arrayMeteo);
-            },
+                console.log(this.arrayMeteo);
+                this.mergeOption = {
+                    series: [{ 
+                        type: 'custom',
+                        coordinateSystem: 'calendar',
+            
+                        renderItem:this.celendrier.renderItem, 
+                        data:this.arrayMeteo
+                    }]
+                    }
+                    this.status = true;
+              
+                
+            },  
             (err)=>{
                 console.log(err);
             },
@@ -50,10 +75,6 @@ export class MeteoService{
             }
         );
         console.log(this.meteo.length);
-    }
-
-    getDailyWeatherByIdApiary(idApiary){
-        return this.httpClient.get<DailyWeather[]>('http://localhost:8091/apiary/'+idApiary);
     }
 
     convertDate(date : string){
