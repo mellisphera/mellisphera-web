@@ -22,10 +22,18 @@ export class RucheService {
    }
 
    getRucheByApiary(username , idApiary){
+      this.ruches = [];
       this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username+'/'+idApiary).subscribe(
         (data)=>{
           data.forEach(element=>{
-            this.ruches.push({id : element.id, name : element.name, description : element.description, username : element.username, idApiary : element.idApiary , hivePosX : element.hivePosX , hivePosY : element.hivePosY});
+            this.ruches.push({
+              id : element.id, 
+              name : element.name, 
+              description : element.description,
+               username : element.username, 
+               idApiary : element.idApiary , 
+               hivePosX : element.hivePosX , 
+               hivePosY : element.hivePosY});
           });
         },
         (err)=>{
@@ -38,7 +46,9 @@ export class RucheService {
    updateCoordonneesRuche(ruche){
     //let body = JSON.stringify(ruche);
     this.http.put(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,ruche,httpOptions).subscribe(
-      ()=>{},
+      ()=>{
+        this.getRucheByApiary(this.user.currentUser().username,ruche.idApiary);
+      },
       (err)=>{
         console.log(err);
       }

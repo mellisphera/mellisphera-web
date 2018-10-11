@@ -43,7 +43,11 @@ export class MeteoService{
                 var date = null;
                 let premierElement = data['list'][0];
                 this.meteo = [];
-                this.meteo.push({date : this.convertDate(premierElement.dt_txt), icons : premierElement.weather[0].icon, tempMin : Math.round(premierElement.main.temp_min), tempMax : Math.round(premierElement.main.temp_max)});
+                this.meteo.push({
+                    date : this.convertDate(premierElement.dt_txt), 
+                    icons : premierElement.weather[0].icon, 
+                    tempMin : Math.round(premierElement.main.temp_min), 
+                    tempMax : Math.round(premierElement.main.temp_max)});
                 data['list'].forEach(element => {
                     let heure = new Date(element.dt_txt).getHours();
                     date = new Date(element.dt_txt);
@@ -90,7 +94,7 @@ export class MeteoService{
 
     getArray(){
         this.meteo.forEach(element =>{
-            this.arrayMeteo.push([element.date, element.icons, element.tempMax, element.tempMin]);
+            this.arrayMeteo.push([element.date, element.icons, element.tempMin, element.tempMax]);
         });
     }
     //[element.date, element.icons, element.tempMax, element.tempMin])
