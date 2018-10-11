@@ -21,10 +21,10 @@ export class CalendrierService {
      },*/
 
      tooltip:{ // Active info bulle au survol de la souris
-         trigger: 'item'
-        /*formatter:(params)=>{ // permet d'afficher sous un certain format le contenu de la bulle
-             return "params.value(0)";
-         }*/
+        trigger: 'item',
+        formatter : (params)=>{
+            return params.data[0]+' :<br/> temp-min : '+params.data[2]+' °C<br/> temp-max : '+params.data[3]+' °C';
+        }
      }, 
      calendar:{
          cellSize : 80, // taille cellule

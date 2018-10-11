@@ -9,7 +9,7 @@
             <router-outlet></router-outlet>
         
             
-            <div class="container-fluid" style="background-color: white;">
+            <div class="container-fluid" style="background-color: white;" ngResizable>
                     <div class="container-fluid">
                             <div class="form-inline" >
                             <div class="form-group">
@@ -25,21 +25,18 @@
                           <div style="text-align:center">
                           </div>
                               <!--<div style="width: 700px; height: 1000px;" id ="main"></div>-->
-                            </div>
-                            <div id="cityCont" class="container">
+                    </div>
+                        <div id="cityCont" class="container">
                               <div>
-                                      <div style="text-align:center">
-                                              <h2>
-                                                  <img src="https://openweathermap.org/img/w/{{meteoService.meteo[0].icons}}.png" class="forecast-icon" alt="forecast">
+                                    <div style="text-align:center">
+                                            <h2>
+                                                <img src="https://openweathermap.org/img/w/{{meteoService.meteo[0].icons}}.png" class="forecast-icon" alt="forecast">
                                                       {{meteoService.meteo[0].tempMin}}° à {{meteoService.ville}}
-                                              </h2>      
-                                      </div>
+                                            </h2>      
+                                    </div>
                               </div>
-                          </div>
-                            <div echarts [options]="calendrier.options" [merge]="meteoService.mergeOption" [loading]="!meteoService.status" style="height:820px; width: 1000px;">
-                          
-                            </div>
-                            <!--echarts [options] ="meteoSelect" -->
+                        </div>
+                        <div echarts [options]="calendrier.options" (chartMouseOver)="onMouseouver($event);" [autoResize]="true"  [merge]="meteoService.mergeOption" [loading]="!meteoService.status" style="min-height:100vh;"></div>
             </div>
         </div>
     </div>

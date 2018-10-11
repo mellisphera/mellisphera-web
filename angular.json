@@ -26,7 +26,8 @@
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/echarts/dist/echarts.min.js"
+              "node_modules/echarts/dist/echarts.js",
+              "node_modules/echarts/dist/extension/bmap.js"
             ]
           },
           "configurations": {

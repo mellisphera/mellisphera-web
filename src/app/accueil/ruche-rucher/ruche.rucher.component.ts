@@ -410,10 +410,13 @@ private refreshRucherData(): void {
   this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
   this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
   this.timerSubscription = Observable.timer(500).first().subscribe(()=> this.rucherService.getUserRuchersLast(this.username));
+  //this.rucherService.getUserRuchersLast(this.username);
+  console.log(this.rucherService.ruchers);
 }
   
 private subscribeToData(): void {
-  this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher());  
+  this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher()); 
+  this.rucherService.getUserRuchersLast(this.username);
 }
 
 resetRucheForm(){
