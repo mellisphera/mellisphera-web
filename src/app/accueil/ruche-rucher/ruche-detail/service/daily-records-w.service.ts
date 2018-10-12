@@ -75,6 +75,13 @@ export class DailyRecordsWService {
 
     );
   }
+
+  cleanQuery(){
+    this.dailyRec = [];
+    this.dailyRecArray = [];
+    this.dailyObs = null;
+  }
+
   convertDate(date : string){
     var dateIso = new Date(date);
     var jour = ''+dateIso.getDate();
