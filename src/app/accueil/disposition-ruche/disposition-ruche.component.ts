@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
@@ -14,7 +14,7 @@ import { RucheInterface } from '../../_model/ruche';
   templateUrl: './disposition-ruche.component.html',
   styleUrls: ['./disposition-ruche.component.scss']
 })
-export class DispositionRucheComponent implements OnInit {
+export class DispositionRucheComponent implements OnInit, OnDestroy {
   
   defautBackground = "../../../assets/img/rucher-loin.jpg";
   public top: any = Offsets.HANDLE_HEIGHT;
@@ -29,6 +29,7 @@ export class DispositionRucheComponent implements OnInit {
   message="";
   constructor( public dailyRecTh :  DailyRecordService, private draggable: DragAndCheckModule, private login: UserloggedService, public rucheService : RucheService, public rucherService: RucherService) { 
     this.offset = new Offsets(this.top,this.right,this.bottom, this.left);
+    //this.rucheService.getRucheByApiary(this.login.currentUser().username, this.rucherService.rucher.id);
   }
 
   position = {
@@ -72,6 +73,7 @@ export class DispositionRucheComponent implements OnInit {
     rucheUpdate.setX(this.position.x);
     rucheUpdate.setY(this.position.y);
     this.rucheService.updateCoordonneesRuche(rucheUpdate);
+    //this.rucheService.getRucheByApiary(this.username,rucheUpdate.idApiary);
 
   }
   
@@ -126,5 +128,9 @@ export class DispositionRucheComponent implements OnInit {
   onMouseover($ruche){
     let ruche = JSON.parse(JSON.stringify($ruche))
     this.infoRuche = ruche.name + ' : '+ruche.description;
+  }
+
+  ngOnDestroy(){
+    
   }
 }

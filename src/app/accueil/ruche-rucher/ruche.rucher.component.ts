@@ -12,6 +12,7 @@ import { selectedRucherService } from '../_shared-services/selected-rucher.servi
 import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";
 import { RapportService } from '../rapport/rapport.service';
+import { RucheService } from '../disposition-ruche/Service/ruche.service';
 
 @Component({
   selector: 'app-ruche-rucher',
@@ -93,7 +94,8 @@ export class RucheRucherComponent implements OnInit {
                 public rucherService : RucherService,
                 private data : UserloggedService,
                 private _selectedRucherService : selectedRucherService,
-                private _rapportService : RapportService) {
+                private _rapportService : RapportService,
+                private rucheService : RucheService) {
         
             this.newRucherForm=formBuilder.group({
                     'nom': [null,Validators.compose([Validators.required])],
@@ -410,10 +412,15 @@ private refreshRucherData(): void {
   this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
   this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
   this.timerSubscription = Observable.timer(500).first().subscribe(()=> this.rucherService.getUserRuchersLast(this.username));
+  //this.rucherService.getUserRuchersLast(this.username);
+  console.log(this.rucherService.ruchers);
+  this.rucherService.getUserRuchersLast(this.username);
+  this.rucheService.getRucheByApiary(this.username, this.ruche.idApiary);
 }
   
 private subscribeToData(): void {
-  this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher());  
+  this.timerSubscription = Observable.timer(700).first().subscribe(() => this.getRucheDuRucher()); 
+  this.rucherService.getUserRuchersLast(this.username);
 }
 
 resetRucheForm(){
