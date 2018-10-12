@@ -1,7 +1,7 @@
 import { OnInit } from '@angular/core';
 import { Component, Input } from '@angular/core';
 import { MeteoService } from './Service/MeteoService';
-import * as echarts from '../../../assets/echarts';
+//import * as echarts from '../../../assets/echarts';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
 import { ECharts, EChartOption} from 'echarts';
@@ -21,7 +21,12 @@ export class MeteoComponent implements OnInit {
   calendrierInit : any = null;
   meteoSelect : any[];
   username: string;
-  
+  message="";
+
+  receiveMessage($event){
+    this.message=$event;
+
+  }
   ngOnInit() {
     this.username = this.login.currentUser().username;
   }
@@ -30,5 +35,9 @@ export class MeteoComponent implements OnInit {
   onSelectRucher($event){
     console.log(this.rucherService.rucher);
     this.meteoService.getWeather(this.rucherService.rucher.ville);
+  }
+
+  onMouseouver($event){
+    
   }
 }

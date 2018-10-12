@@ -60,6 +60,9 @@ import { RucheService } from './accueil/disposition-ruche/Service/ruche.service'
 
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CalendrierService } from './accueil/meteo/Service/calendrier.service';
+import { CalendrierPoidsService } from './accueil/ruche-rucher/ruche-detail/service/calendrier-poids.service';
+import { DailyRecordsWService } from './accueil/ruche-rucher/ruche-detail/service/daily-records-w.service';
+import { DailyStockHoneyService } from './accueil/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
 //import { NgDraggableModule } from 'angular-draggable'; 
 
 @NgModule({
@@ -122,7 +125,10 @@ import { CalendrierService } from './accueil/meteo/Service/calendrier.service';
     MeteoService,
     DailyRecordService,
     RucheService,
-    CalendrierService
+    CalendrierService,
+    CalendrierPoidsService,
+    DailyRecordsWService,
+    DailyStockHoneyService
   ],
   bootstrap: [AppComponent]
 })

@@ -54,7 +54,7 @@ export class DailyRecordService{
     getStatus(id){
         this.status = "Inconnu";
         this.verifId(id);
-        return "ruche status"+this.status;
+        return "ruche "+this.status;
     }
 
     verifId(id){
