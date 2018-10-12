@@ -72,7 +72,7 @@ export class DailyStockHoneyService {
           console.log(this.dailyStockByFlower[elt]);
           this.templateSerie.name = elt;
           this.templateSerie.data = [];
-          this.templateSerie.stack = "testt";
+          this.templateSerie.stack = "test";
           this.templateSerie.data = this.dailyStockByFlower[elt];
           this.mergeOption.series.push(this.templateSerie)
           this.cleanTemplate();

@@ -27,7 +27,7 @@ export class GrapheReserveMielService {
         }
     },
     dataZoom: [
-        {
+        {   
             show: true,
             realtime: true,
             start: 65,
@@ -35,6 +35,7 @@ export class GrapheReserveMielService {
         },
         {
             type: 'inside',
+            show: true,
             realtime: true,
             start: 65,
             end: 85
