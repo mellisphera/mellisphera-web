@@ -18,6 +18,8 @@ import { CalendrierPoidsService } from './service/calendrier-poids.service';
 import { DailyRecordsWService } from './service/daily-records-w.service';
 import { DailyStockHoneyService } from './service/daily-stock-honey.service';
 import { GrapheReserveMielService } from './service/graphe-reserve-miel.service';
+import { RecordService } from './service/Record/record.service';
+import { GraphRecordService } from './service/Record/graph-record.service';
 
 @Component({
   selector: 'app-ruche-detail',
@@ -64,7 +66,9 @@ constructor(    private formBuilder: FormBuilder,
                 private _selectedRucherService : selectedRucherService,
                 public dailyRecWService : DailyRecordsWService,
                 public dailyStockHoneyService : DailyStockHoneyService,
-                public grapheMielService : GrapheReserveMielService ){
+                public grapheMielService : GrapheReserveMielService,
+                public recordService : RecordService,
+                public graphRecordService : GraphRecordService  ){
                 this.ObservationForm=formBuilder.group({
                         'sentence': [null,Validators.compose([Validators.required])],
                         'checkbox': [],
@@ -74,6 +78,7 @@ ngOnInit(){
     this.rucheId=localStorage.getItem("clickedRuche");
     this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheId);   
     this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheId);
+    this.recordService.getRecordByIdHive(this.rucheId);
     console.log("ok");
     //this.chartWeightGain();
     this.getRucheDetails();

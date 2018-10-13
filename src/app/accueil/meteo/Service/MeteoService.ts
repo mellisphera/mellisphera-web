@@ -6,6 +6,7 @@ import { element } from 'protractor';
 import { UserloggedService } from '../../../userlogged.service';
 import { Observable } from 'rxjs';
 import { CalendrierService } from './calendrier.service';
+import { GraphMeteoService } from './graph-meteo.service';
 
 /*
     class dont les fonctions éxécute les requetes
@@ -21,7 +22,14 @@ export class MeteoService{
     mergeOption : any = null;
     ville : string;
     status : boolean;
-    constructor(private rucher : RucherService,  private celendrier : CalendrierService, private httpClient :  HttpClient, private login : UserloggedService){
+    mergeOptionGraph  : any = null;
+
+    tabTempMoy : any[];
+    tabDate : any[];
+    tabHeatmap : any[];
+    tabHumidty : any[];
+
+    constructor(private rucher : RucherService,  private celendrier : CalendrierService, private httpClient :  HttpClient, private login : UserloggedService, private graphMeteo : GraphMeteoService){
         this.meteo = [];
         this.rucher.rucherObs.subscribe(
             ()=>{},
@@ -45,28 +53,55 @@ export class MeteoService{
                 this.meteo = [];
                 this.meteo.push({
                     date : this.convertDate(premierElement.dt_txt), 
+                    humidity : premierElement.main.humidity,
                     icons : premierElement.weather[0].icon, 
                     tempMin : Math.round(premierElement.main.temp_min), 
-                    tempMax : Math.round(premierElement.main.temp_max)});
+                    tempMax : Math.round(premierElement.main.temp_max,),
+                    tempMoy : (premierElement.main.temp_min + premierElement.main.temp_max)/2});
                 data['list'].forEach(element => {
                     let heure = new Date(element.dt_txt).getHours();
                     date = new Date(element.dt_txt);
                     if(heure  == 12 && date.getDate() != new Date().getDate()){
-                        this.meteo.push({ date : this.convertDate(element.dt_txt), icons : element.weather[0].icon, tempMin : Math.round(element.main.temp_min), tempMax : Math.round(element.main.temp_max) });
+                        this.meteo.push({ 
+                            date : this.convertDate(element.dt_txt),
+                            humidity : element.main.humidity, 
+                            icons : element.weather[0].icon, 
+                            tempMin : Math.round(element.main.temp_min), 
+                            tempMax : Math.round(element.main.temp_max),
+                            tempMoy : (element.main.temp_min + element.main.temp_max)/2
+                        
+                        });
                     }
 
                 });
+                console.log(data);
                 console.log(this.meteo);
                 this.getArray();
                 console.log(this.arrayMeteo);
+                console.log(this.tabHeatmap);
                 this.mergeOption = {
                     series: [{ 
-                        type: 'custom',
+                        data : this.arrayMeteo
+                    },/*
+                    {
+                        type: 'heatmap',
                         coordinateSystem: 'calendar',
-            
-                        renderItem:this.celendrier.renderItem, 
-                        data:this.arrayMeteo
-                    }]
+                        data:this.tabHeatmap
+                    }*/],
+                    }
+                    this.mergeOptionGraph = {
+                        xAxis: {
+                            type: 'category',
+                            data: this.tabDate
+                        },
+                        series : [
+                            {
+                                data : this.tabTempMoy
+                            },
+                            {
+                                data : this.tabHumidty
+                            }
+                        ]
                     }
                     this.status = true;
               
@@ -93,8 +128,16 @@ export class MeteoService{
     }
 
     getArray(){
+        this.tabHumidty = [];
+        this.tabTempMoy =  [];
+        this.tabDate = [];
+        this.tabHeatmap = [];
         this.meteo.forEach(element =>{
             this.arrayMeteo.push([element.date, element.icons, element.tempMin, element.tempMax]);
+            this.tabTempMoy.push(element.tempMoy.toFixed(2));
+            this.tabDate.push(element.date);
+            this.tabHeatmap.push([element.date, element.humidity]);
+            this.tabHumidty.push(element.humidity);
         });
     }
     //[element.date, element.icons, element.tempMax, element.tempMin])

@@ -21,6 +21,8 @@ export class DailyStockHoneyService {
   dailyStockByFlower : Object;
   typeFlower : any[];
   arrayDate : any[];
+
+  /* Template pour une serie(1 type d fleur)*/
   templateSerie =  {
       name:'',
       type:'line',
@@ -37,6 +39,7 @@ export class DailyStockHoneyService {
   constructor(private http : HttpClient) {
 
   }
+  /* Requete API*/
   getDailyStockHoneyByApiary(idHive : string){
     this.dailyStock = [];
     this.dailyStockObs = this.http.get<DailyStockHoney[]>(CONFIG.URL+'/dailyStockHoney'+'/hive/'+idHive);
@@ -68,6 +71,8 @@ export class DailyStockHoneyService {
         };
         this.countFlower();
         this.dailyStockByFleur();
+
+        /* Mise à jour du template avec les info récupèrer */
         for(var elt in this.dailyStockByFlower){
           console.log(this.dailyStockByFlower[elt]);
           this.templateSerie.name = elt;
@@ -101,6 +106,7 @@ export class DailyStockHoneyService {
     return anee + '-' +mois+'-'+ jour;
 }
 
+
   cleanTemplate(){
     this.templateSerie = {
       name:'',
@@ -116,6 +122,8 @@ export class DailyStockHoneyService {
     },
     };
   }
+
+  /* Trie les données obtenue par fleur */
   dailyStockByFleur(){
     this.arrayDate = [];
     this.dailyStockByFlower = {};
@@ -127,14 +135,7 @@ export class DailyStockHoneyService {
         this.arrayDate.push(element.date);
       }
       this.dailyStockByFlower[''+element.nom].push(
-        /*id:element.id,
-        nom : element.nom,*/
         element.stockJ,
-        /*apportJ : element.apportJ,
-        date : element.date,
-        idApiary : element.idApiary,
-        idHive : element.idHive,
-        username : element.username*/
       )
     })
   }
@@ -144,6 +145,7 @@ export class DailyStockHoneyService {
     this.typeFlower = [];
   }
 
+  /* Recupère tout les types de fleurs de la requete */
   countFlower(){
     this.typeFlower = [];
     let fleur = null;

@@ -46,6 +46,7 @@ export class RucherService {
                 this.rucher = data[0];
                 this.ruche.getRucheByApiary(this.user.currentUser().username,this.rucher.id);
                 this.dailyRec.getDailyRecThByApiary(this.rucher.id);
+                //sessionStorage.setItem("idApiaryUpdate",this.rucher.id);
                 console.log(this.rucher);
             },
             (err)=>{

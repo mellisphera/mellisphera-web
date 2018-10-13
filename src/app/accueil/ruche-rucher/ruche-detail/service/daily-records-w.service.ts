@@ -12,6 +12,12 @@ const httpOptions = {
 })
 export class DailyRecordsWService {
 
+
+  /*
+  *   Service poue les données DailyRecordsW pour le calendrier de poid
+  *
+  */
+
   dailyObs : Observable<DailyRecordsW[]>;
 
   dailyRec : DailyRecordsW[];
@@ -92,6 +98,8 @@ export class DailyRecordsWService {
 
     return anee + '-' +mois+'-'+ jour;
 }
+
+
   getArray(){
     this.dailyRec.forEach(element =>{
         this.dailyRecArray.push([
