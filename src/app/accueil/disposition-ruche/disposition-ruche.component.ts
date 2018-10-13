@@ -26,6 +26,7 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   offset : Offsets;
   username: string;
   rucheSelect : RucheInterface;
+  rucherSelectId : string;
   message="";
   constructor( public dailyRecTh :  DailyRecordService, private draggable: DragAndCheckModule, private login: UserloggedService, public rucheService : RucheService, public rucherService: RucherService) { 
     this.offset = new Offsets(this.top,this.right,this.bottom, this.left);

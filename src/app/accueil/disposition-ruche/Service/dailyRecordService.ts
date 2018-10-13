@@ -9,6 +9,7 @@ import { UserloggedService } from '../../../userlogged.service';
 export class DailyRecordService{
     
     constructor(private http : HttpClient, private user : UserloggedService){
+        this.getDailyRecThByApiary(sessionStorage.getItem("idApiaryUpdate"));
     }
 
     dailyRecObs : Observable<DailyRecordTh>;
@@ -21,6 +22,7 @@ export class DailyRecordService{
         this.dailyRecObs = this.http.get<DailyRecordTh>(CONFIG.URL+'/dailyRecordsTH/last/'+idHive);
         this.dailyRecObs.subscribe(
             (data)=>{
+                console.log(data);
                 this.dailyRecord = {id : data.id, recordDate : data.recordDate, idHive : data.idHive, humidity_int_min : data.humidity_int_min, 
                     humidity_int_max : data.humidity_int_max, temp_int_min: data.temp_int_min, temp_int_max : data.temp_int_max, 
                     temp_int_moy : data.temp_int_moy, temp_int_stddev: data.temp_int_stddev, health_status : data.health_status, health_trend : data.health_trend, r_int_text: data.r_int_text };

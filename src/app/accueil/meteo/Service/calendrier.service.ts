@@ -26,6 +26,11 @@ export class CalendrierService {
             return params.data[0]+' :<br/> temp-min : '+params.data[2]+' °C<br/> temp-max : '+params.data[3]+' °C';
         }
      }, 
+     visualMap: {
+        show: true,
+        min: 0,
+        max: 100
+    },
      calendar:{
          cellSize : 80, // taille cellule
          orient : 'vertical', // orientation calendrier
@@ -52,6 +57,17 @@ export class CalendrierService {
              show:false // desactiver
          }
      },
+     series: [{ 
+        type: 'custom',
+        coordinateSystem: 'calendar',
+        data : '',
+        renderItem:this.renderItem, 
+    },
+   /* {
+        type: 'heatmap',
+        coordinateSystem: 'calendar',
+        data:''
+    }*/],
      range:this.decomposeDate(new Date())
 
  };
