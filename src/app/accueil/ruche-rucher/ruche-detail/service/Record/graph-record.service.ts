@@ -21,6 +21,7 @@ export class GraphRecordService {
             }
         }
     },
+    calculable : 'true',
     markLine: {
         symbol: ['none', 'none'],
         data: [
@@ -98,9 +99,9 @@ export class GraphRecordService {
         {
             type: 'value',
             name: 'Width',
-            min: 0,
-            max: 350,
-            interval: 50,
+            /*min: 0,
+            max: 400,*/
+            interval: 5,
             axisLabel: {
                 formatter: '{value} Kg'
             }
@@ -108,8 +109,8 @@ export class GraphRecordService {
         {
             type: 'value',
             name: '°C',
-            min: 0,
-            max: 35,
+           /* min: 0,
+            max: 40,*/
             interval: 5,
             axisLabel: {
                 formatter: '{value} °C'
@@ -125,7 +126,8 @@ export class GraphRecordService {
         {
             name:'Temp-int',
             type:'line',
-            data : ''
+            data : '',
+            AxisIndex: 1,
         },
         {
             name:'Temp-ext',

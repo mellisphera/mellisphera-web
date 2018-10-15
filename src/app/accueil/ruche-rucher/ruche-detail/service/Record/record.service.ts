@@ -49,11 +49,11 @@ export class RecordService {
           })
         });
         this.sortRecordByTemp();
-        /*
-        console.log(this.recArrrayTint);
-        console.log(this.recArrayText);
-        console.log(this.recArrayWeight);*/
-        console.log(this.recArrayDate);
+        //console.log(this.recArray);
+      /*  console.log(this.recArrrayTint);
+        console.log(this.recArrayText);*/
+        /*console.log(this.recArrayWeight);
+        console.log(this.recArrayDate);*/
 
         this.mergeOption = {
           xAxis: [

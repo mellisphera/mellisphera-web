@@ -46,12 +46,26 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   style = {
     'background-image':'',
     'background-position': "center",
-    'background-repeat': "no-repeat"
+    'background-repeat': "no-repeat",
+    'url' : ''
   };
 
   ngOnInit() {
     console.log(this.rucheService.ruches);
     this.username = this.login.currentUser().username;
+    if(this.username == "***REMOVED***"){
+      this.style["background-image"] = "url('../../../assets/imageClient/JHE.jpg')";
+      this.style.url = "../../../assets/imageClient/JHE.jpg"
+    }
+    else if(this.username == "***REMOVED***"){
+      this.style["background-image"] = "url('../../../assets/imageClient/JCP.png')";
+      this.style.url = "../../../assets/imageClient/JHE.jpg"
+    }
+    else if(this.username == "***REMOVED***"){
+      this.style["background-image"] = "url('../../../assets/imageClient/***REMOVED***.png')";
+      this.style.url = "../../../assets/imageClient/***REMOVED***.jpg"
+    }
+    console.log(this.style);
   }
 
   /*getColorStatus($index){
