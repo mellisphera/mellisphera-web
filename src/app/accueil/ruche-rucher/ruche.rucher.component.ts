@@ -325,7 +325,6 @@ createRuche(ruche){
       data => {},
       ( error => this.errorMsg=error));
   }
-  alert("Votre Ruche a été créé avec Succès !");
   this.newRucheForm.reset();
   this.subscribeToData();
 }
@@ -413,9 +412,6 @@ private refreshRucherData(): void {
   this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
   this.timerSubscription = Observable.timer(500).first().subscribe(()=> this.rucherService.getUserRuchersLast(this.username));
   this.rucherService.getUserRuchersLast(this.username);
-  console.log(this.rucherService.ruchers);
-  this.rucherService.getUserRuchersLast(this.username);
-  this.rucheService.getRucheByApiary(this.username, this.ruche.idApiary);
 }
   
 private subscribeToData(): void {
