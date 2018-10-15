@@ -152,14 +152,17 @@
                                         </h4>
                                     </div>
                                     <div id="collapsetwo" class="panel-collapse collapse in">
-                                        <div class="panel-body" id="contentChart">
-                                                <div echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width:28%;min-height:50vh;"></div>  
-                                                <!--[merge]="calendrierPoids.mergeOption"-->
-
-                                                <div echarts [options]="grapheMielService.option" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true" style="width:65%;height:40vh;"></div> 
-                                            <b class="text-success"></b>                                                                                             
+                                        <div class="panel-body">                                                                                                                            
+                                            <div id="contentChart" >
+                                                    <div echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width:30%;min-height:50vh;"></div>  
+                                                    <!--[merge]="calendrierPoids.mergeOption"-->
+    
+                                                    <div echarts [options]="grapheMielService.option" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true" style="width:60%;height:50vh;"></div> 
+                                                    <b class="text-success"></b>  
+                                            </div>                                                                                           
                                         </div>
-                                        <div echarts [options]="graphRecordService.option" [merge]="recordService.mergeOption" [autoResize]="true" style="width:100%;height:40vh;"></div>
+                                        <div echarts [options]="graphRecordService.option" [merge]="recordService.mergeOption" [autoResize]="true" style="width:100%;height:50vh;"></div>
+                                        <div echarts [options]="calendrierHealthService.option" [autoResize]="true" style="width:50%;height:50vh;"></div>
                                     </div>
                                   </div>
                             </div>

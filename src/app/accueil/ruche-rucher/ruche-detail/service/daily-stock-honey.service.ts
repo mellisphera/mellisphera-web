@@ -22,6 +22,8 @@ export class DailyStockHoneyService {
   typeFlower : any[];
   arrayDate : any[];
 
+  timeLine : any[];
+
   /* Template pour une serie(1 type d fleur)*/
   templateSerie =  {
       name:'',
@@ -59,6 +61,7 @@ export class DailyStockHoneyService {
           });
         });
         this.mergeOption = {
+
           xAxis : [
             {
               data : [] = []
@@ -93,6 +96,7 @@ export class DailyStockHoneyService {
       }
     );
   }
+
 
   convertDate(date){
     var dateIso = new Date(date);
