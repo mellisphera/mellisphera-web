@@ -146,6 +146,8 @@ getObservationsApiary(){
   this.rucherService.getObservation(this.selectedRucher).subscribe(
     data => { 
       this.apiaryObs = data;
+      console.log(this.apiaryObs);
+      console.log(this.data);
     },
     err => console.error(err));
 }

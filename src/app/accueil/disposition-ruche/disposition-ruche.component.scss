@@ -5,9 +5,11 @@
     border: 2px;
     border-radius: 10px;
     overflow: hidden;
-    background: url("../../../assets/background/rucher.jpg") no-repeat center;
+    background: url("../../../assets/imageClient/blg.jpg");
+    //background: url("../../../assets/imageClient/.jpg")  no-repeat;
     background-size: 100%;
     box-shadow: 8px 8px 5px black;
+    transform: rotate(0deg);
 }
 .ruche{
     display: flex;
