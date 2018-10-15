@@ -20,6 +20,8 @@ import { DailyStockHoneyService } from './service/daily-stock-honey.service';
 import { GrapheReserveMielService } from './service/graphe-reserve-miel.service';
 import { RecordService } from './service/Record/record.service';
 import { GraphRecordService } from './service/Record/graph-record.service';
+import { DailyRecordService } from '../../disposition-ruche/Service/dailyRecordService';
+import { CalendrierHealthService } from './service/health/calendrier-health.service';
 
 @Component({
   selector: 'app-ruche-detail',
@@ -68,7 +70,9 @@ constructor(    private formBuilder: FormBuilder,
                 public dailyStockHoneyService : DailyStockHoneyService,
                 public grapheMielService : GrapheReserveMielService,
                 public recordService : RecordService,
-                public graphRecordService : GraphRecordService  ){
+                public graphRecordService : GraphRecordService,
+                public calendrierHealthService : CalendrierHealthService,
+                public dailyRecThService : DailyRecordService){
                 this.ObservationForm=formBuilder.group({
                         'sentence': [null,Validators.compose([Validators.required])],
                         'checkbox': [],
@@ -83,6 +87,7 @@ ngOnInit(){
     //this.chartWeightGain();
     this.getRucheDetails();
     this.getObservationsHive();
+    this.dailyRecThService.getByIdHive(this.rucheId);
     this.radioAct = false;
     this.radioObs = true;
     console.log(this.calendrierPoids.option);

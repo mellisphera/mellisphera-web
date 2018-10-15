@@ -26,11 +26,6 @@ export class CalendrierService {
             return params.data[0]+' :<br/> temp-min : '+params.data[2]+' °C<br/> temp-max : '+params.data[3]+' °C';
         }
      }, 
-     visualMap: {
-        show: true,
-        min: 0,
-        max: 100
-    },
      calendar:{
          cellSize : 80, // taille cellule
          orient : 'vertical', // orientation calendrier
@@ -89,10 +84,10 @@ export class CalendrierService {
                  image:img, // image à afficher
                  width:40, // largeur
                  heigth:30, // et hauteur de l'image
-                 /* placement de l'image (x,y) avec les coordonnées */
+                 /*placement de l'image (x,y) avec les coordonnées */
                  x : cellPoint[0]-23,
                  y : cellPoint[1]-18
-             }
+             },
          },
          {
              type:'text',// affiche le numero du jour,
@@ -100,7 +95,7 @@ export class CalendrierService {
                  /* placement */
                  x : cellPoint[0]-6,
                  y : cellPoint[1]-32,
-                 text:jour
+                 text:jour,
              }
          },
          {

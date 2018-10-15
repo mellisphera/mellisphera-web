@@ -21,6 +21,44 @@ export class GraphRecordService {
             }
         }
     },
+    markLine: {
+        symbol: ['none', 'none'],
+        data: [
+            [
+                {
+                    name: 'from lowest to highest',
+                    type: 'min',
+                    valueDim: 'lowest',
+                    symbol: 'circle',
+                    symbolSize: 10,
+                    label: {
+                        normal: {show: false},
+                        emphasis: {show: false}
+                    }
+                },
+                {
+                    type: 'max',
+                    valueDim: 'highest',
+                    symbol: 'circle',
+                    symbolSize: 10,
+                    label: {
+                        normal: {show: false},
+                        emphasis: {show: false}
+                    }
+                }
+            ],
+            {
+                name: 'min line on close',
+                type: 'min',
+                valueDim: 'close'
+            },
+            {
+                name: 'max line on close',
+                type: 'max',
+                valueDim: 'close'
+            }
+        ]
+    },
     toolbox: {
         feature: {
             dataView: {show: true, readOnly: false},
@@ -61,7 +99,7 @@ export class GraphRecordService {
             type: 'value',
             name: 'Width',
             min: 0,
-            max: 300,
+            max: 350,
             interval: 50,
             axisLabel: {
                 formatter: '{value} Kg'
@@ -71,7 +109,7 @@ export class GraphRecordService {
             type: 'value',
             name: '°C',
             min: 0,
-            max: 30,
+            max: 35,
             interval: 5,
             axisLabel: {
                 formatter: '{value} °C'

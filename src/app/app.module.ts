@@ -66,6 +66,7 @@ import { DailyStockHoneyService } from './accueil/ruche-rucher/ruche-detail/serv
 import { GraphMeteoService } from './accueil/meteo/Service/graph-meteo.service';
 import { RecordService } from './accueil/ruche-rucher/ruche-detail/service/Record/record.service';
 import { GraphRecordService } from './accueil/ruche-rucher/ruche-detail/service/Record/graph-record.service';
+import { CalendrierHealthService } from './accueil/ruche-rucher/ruche-detail/service/health/calendrier-health.service';
 //import { NgDraggableModule } from 'angular-draggable'; 
 
 @NgModule({
@@ -134,7 +135,8 @@ import { GraphRecordService } from './accueil/ruche-rucher/ruche-detail/service/
     DailyStockHoneyService,
     GraphMeteoService,
     RecordService,
-    GraphRecordService
+    GraphRecordService,
+    CalendrierHealthService
   ],
   bootstrap: [AppComponent]
 })

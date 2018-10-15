@@ -25,6 +25,8 @@ export class DailyRecordsWService {
   mergeOption : any = null;
   rangeCalendar  : any[];
 
+  timeLine : any[];
+
   constructor(private http : HttpClient) { 
     this.dailyRecArray = [];
   }
@@ -97,11 +99,22 @@ export class DailyRecordsWService {
     if(parseInt(mois) < 10 ){ mois = '0'+mois; }
 
     return anee + '-' +mois+'-'+ jour;
+  }
+
+  getMonth(date : string){
+    return new Date(date).getMonth()+1;
+  }
+  getYear(date : string){
+    return new Date(date).getFullYear();
 }
 
-
   getArray(){
-    this.dailyRec.forEach(element =>{
+    this.timeLine = [];
+    let lastMonth = null;
+    this.dailyRec.forEach((element,index) =>{
+      if(this.getMonth(element.recordDate) != lastMonth){
+        this.timeLine.push(element.recordDate);
+      }
         this.dailyRecArray.push([
           element.recordDate,
           element.weight_income_gain, 
@@ -116,6 +129,7 @@ export class DailyRecordsWService {
           element.weight_colony,
           element.weight_filling_rate
         ]);
+        lastMonth = this.getMonth(element.recordDate)
     });
   }
 
