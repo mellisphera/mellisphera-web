@@ -46,7 +46,7 @@ export class DailyRecordsWService {
             start = this.getYear(start)+'-'+(this.getMonth(start))+'-'+'31';
           }
           else{
-            end = this.getYear(start)+'-'+(this.getMonth(start)+6);
+            end = this.getYear(start)+'-'+(this.getMonth(start)+5) + '-30';
           }
 
           
