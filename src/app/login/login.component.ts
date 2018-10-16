@@ -44,7 +44,9 @@ export class LoginComponent implements OnInit {
       {username: 'jcp' ,pwd:'apis123'},
       {username: 'blg' ,pwd:'apis123'},
       {username: 'jhe' ,pwd:'apis123'},
-      {username: 'clo' ,pwd:'apis123'}
+      {username: 'clo' ,pwd:'apis123'},
+      {username: 'tst' ,pwd:'apis123'},
+      {username: 'lpo' ,pwd:'apis123'}
 ];
 
   }
