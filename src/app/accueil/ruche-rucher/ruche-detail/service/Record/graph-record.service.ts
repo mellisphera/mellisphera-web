@@ -10,8 +10,12 @@ export class GraphRecordService {
   dataWeight : any[] = [15,65,80,97,14,65];
   dataDate : any[] = ['2018-02-03','2018-02-04','2018-02-05','2018-02-06','2018-02-07','2018-02-08'];
   dataTemp : any[] = [18,30,25,13,28,33];
-
+ 
   option = {
+    title: {
+        text: 'Poids & Température horaires'
+
+    },
     tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -21,84 +25,40 @@ export class GraphRecordService {
             }
         }
     },
-    calculable : 'true',
-    markLine: {
-        symbol: ['none', 'none'],
-        data: [
-            [
-                {
-                    name: 'from lowest to highest',
-                    type: 'min',
-                    valueDim: 'lowest',
-                    symbol: 'circle',
-                    symbolSize: 10,
-                    label: {
-                        normal: {show: false},
-                        emphasis: {show: false}
-                    }
-                },
-                {
-                    type: 'max',
-                    valueDim: 'highest',
-                    symbol: 'circle',
-                    symbolSize: 10,
-                    label: {
-                        normal: {show: false},
-                        emphasis: {show: false}
-                    }
-                }
-            ],
-            {
-                name: 'min line on close',
-                type: 'min',
-                valueDim: 'close'
-            },
-            {
-                name: 'max line on close',
-                type: 'max',
-                valueDim: 'close'
-            }
-        ]
-    },
-    toolbox: {
-        feature: {
-            dataView: {show: true, readOnly: false},
-            magicType: {show: true, type: ['line', 'line']},
-            restore: {show: true},
-            saveAsImage: {show: true}
+    xAxis: {
+        type: 'time',
+        splitLine: {
+            show: false
         }
     },
     legend: {
         data:['Poids','Temp-int','Temp-ext']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '10%',
+        containLabel: true
     },
     dataZoom: [
         {   
             show: true,
             realtime: true,
             start: 30,
-            end: 85
+            end: 85,
         },
         {
             type: 'inside',
             show: true,
             realtime: true,
             start: 30,
-            end: 85
-        }
-    ],
-    xAxis: [
-        {
-            type: 'category',
-            data: this.dataDate,
-            axisPointer: {
-                type: 'shadow'
-            }
+            end: 85,
         }
     ],
     yAxis: [
         {
             type: 'value',
-            name: 'Width',
+            name: 'Poids',
             /*min: 0,
             max: 400,*/
             interval: 5,
@@ -108,34 +68,37 @@ export class GraphRecordService {
         },
         {
             type: 'value',
-            name: '°C',
+            name: 'Temp.',
            /* min: 0,
             max: 40,*/
             interval: 5,
             axisLabel: {
                 formatter: '{value} °C'
             }
+
         }
     ],
     series: [
         {
-            name:'Poids',
-            type:'line',
-            data : ''
-        },
-        {
-            name:'Temp-int',
-            type:'line',
-            data : '',
-            AxisIndex: 1,
-        },
-        {
-            name:'Temp-ext',
-            type:'line',
-            data : '',
-            yAxisIndex: 1,
-        }
-    ]
+             name:'Poids',
+             type:'line',
+             data : '',
+             yAxisIndex: 0
+         },
+         {
+             name:'Temp-int',
+             type:'line',
+             data : '',
+             yAxisIndex: 1
+             //xAxisIndex : 1
+         },
+         {
+             name:'Temp-ext',
+             type:'line',
+             data : '',
+             yAxisIndex: 1
+         }
+     ]
 };
 
 }

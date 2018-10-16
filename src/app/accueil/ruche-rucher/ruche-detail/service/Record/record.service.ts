@@ -13,14 +13,49 @@ const httpOptions = {
 })
 export class RecordService {
 
+  data  = 
+[
+ { name : '2018-03-09T00:05:02', value : ['2018-03-09T00:05:02', 5125]},
+ { name : '2018-03-10T23:57:11', value : ['2018-03-10T23:57:11', 5125]},
+ { name : '2018-03-11T17:03:21', value : ['2018-03-11T17:03:21', 5125]},
+ { name : '2018-03-12T04:21:44', value : ['2018-03-12T04:21:44', 5125]},
+ { name : '2018-03-13T22:39:56', value : ['2018-03-13T22:39:56', 5125]},
+ { name : '2018-03-14T22:19:56', value : ['2018-03-14T22:19:56', 5125]},
+ { name : '2018-03-15T21:59:56', value : ['2018-03-15T21:59:56', 5125]},
+ { name : '2018-03-16T22:32:08', value : ['2018-03-16T22:32:08', 5125]},
+ { name : '2018-03-17T00:23:32', value : ['2018-03-17T00:23:32', 5125]},
+ { name : '2018-03-18T04:49:01', value : ['2018-03-18T04:49:01', 5125]},
+ { name : '2018-03-19T20:14:37', value : ['2018-03-19T20:14:37', 5125]},
+ { name : '2018-03-20T00:01:49', value : ['2018-03-20T00:01:49', 5125]},
+ { name : '2018-03-21T07:16:13', value : ['2018-03-21T07:16:13', 5125]},
+ { name : '2018-03-22T07:29:53', value : ['2018-03-22T07:29:53', 5125]},
+ { name : '2018-03-23T04:27:49', value : ['2018-03-23T04:27:49', 5125]},
+ { name : '2018-03-24T04:12:40', value : ['2018-03-24T04:12:40', 5125]},
+ { name : '2018-03-25T05:34:19', value : ['2018-03-25T05:34:19', 5125]},
+ { name : '2018-03-26T04:05:19', value : ['2018-03-26T04:05:19', 5125]},
+ { name : '2018-03-27T02:46:05', value : ['2018-03-27T02:46:05', 5125]},
+ { name : '2018-03-28T05:57:49', value : ['2018-03-28T05:57:49', 5125]},
+ { name : '2018-03-29T23:25:00', value : ['2018-03-29T23:25:00', 5125]},
+ { name : '2018-03-30T23:52:58', value : ['2018-03-30T23:52:58', 5125]},
+ { name : '2018-03-31T12:06:10', value : ['2018-03-31T12:06:10', 5125]},
+ { name : '2018-04-01T23:45:45', value : ['2018-04-01T23:45:45', 5125]},
+ { name : '2018-04-02T23:05:55', value : ['2018-04-02T23:05:55', 5125]},
+ { name : '2018-04-03T22:54:40', value : ['2018-04-03T22:54:40', 5125]},
+ { name : '2018-04-04T19:51:58', value : ['2018-04-04T19:51:58', 5125]},
+ { name : '2018-04-05T23:30:13', value : ['2018-04-05T23:30:13', 5125]},
+ { name : '2018-04-06T21:25:26', value : ['2018-04-06T21:25:26', 5125]},
+ { name : '2018-04-07T23:09:23', value : ['2018-04-07T23:09:23', 5125]},
+ { name : '2018-04-08T02:00:56', value : ['2018-04-08T02:00:56', 5125]},
+ { name : '2018-04-09T08:30:48', value : ['2018-04-09T08:30:48', 5125]},
+];
   recArray : Record[];
   recordObs : Observable<Record[]>;
 
   recArrrayTint : any[];
   recArrayText : any[];
   recArrayWeight : any[];
-  recArrayDate : any[];
-
+  recArrayDateExt : any[];
+  recArrayDateInt : any[];
   mergeOption : any = null;
   constructor(private http : HttpClient) { 
 
@@ -49,19 +84,18 @@ export class RecordService {
           })
         });
         this.sortRecordByTemp();
+        console.log(this.recArrayWeight);
         //console.log(this.recArray);
-      /*  console.log(this.recArrrayTint);
-        console.log(this.recArrayText);*/
-        /*console.log(this.recArrayWeight);
-        console.log(this.recArrayDate);*/
+        /*console.log(this.recArrrayTint);
+        console.log(this.recArrayText);
+        console.log(this.recArrayWeight);
+        console.log(this.recArrrayTint);*/
+        console.log(this.data)
 
         this.mergeOption = {
-          xAxis: [
-            {
-              data: this.recArrayDate,
-            }],
           series: [
             {
+              //data : this.recArrayWeight
               data : this.recArrayWeight
             },
             {
@@ -80,19 +114,43 @@ export class RecordService {
   }
 
   sortRecordByTemp(){
+
+    /*this.data.forEach(element=>{
+      element[1]=[];
+      element[1] = [
+        {
+          name : element[1],
+          value : 5125
+        }
+      ]
+    });*/
+    //Thu Mar 08 20:46:26 CET 2018
+
     this.recArrrayTint = [];
     this.recArrayText = [];
+
+    this.recArrayDateInt = [];
     this.recArrayWeight = [];
-    this.recArrayDate = [];
-    this.recArray.forEach(element=>{
+    this.recArrayDateExt = [];
+    this.recArray.forEach((element,index)=>{
       if(element.temp_ext != null){
-        this.recArrayText.push(element.temp_ext);
+        /*var date = element.recordDate.split(" ");
+        console.log(date);*/
+        this.recArrayText.push({name : element.recordDate, value : [
+          element.recordDate , element.temp_ext
+        ]});
+        this.recArrayWeight.push({name : element.recordDate,value :[
+          element.recordDate,element.weight
+        ]});
+       // this.recArrayDateExt.push(element.recordDate,element.recordDate);
       }
       else if(element.temp_int != null){
-        this.recArrrayTint.push(element.temp_int);
+        this.recArrrayTint.push({ name : element.recordDate, value : [
+          element.recordDate, element.temp_int
+        ]});  
+        //this.recArrayDateInt.push(element.recordDate);
+      
       }
-      this.recArrayWeight.push(element.weight);
-      this.recArrayDate.push(element.recordDate);
-    })
+    });
   }
 }

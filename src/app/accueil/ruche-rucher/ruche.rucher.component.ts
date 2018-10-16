@@ -125,6 +125,8 @@ export class RucheRucherComponent implements OnInit {
         this.username= data.currentUser().username;
         this.currentRucherID= localStorage.getItem("currentRucher");
         this.rucheRucherID= localStorage.getItem("rucheRucherID");
+
+
   } 
 
 
@@ -374,6 +376,7 @@ createObservation(observation){
       ( error => this.errorMsg=error));
   alert("Votre Observations a été enregistrée avec Succès !");
   this.getObservationsApiary();
+  this.rucherService.getObservationLast(this.selectedRucher.id);
   this.ObservationForm.reset();
 }
 
