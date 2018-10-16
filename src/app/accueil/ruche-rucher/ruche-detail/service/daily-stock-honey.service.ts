@@ -87,8 +87,8 @@ export class DailyStockHoneyService {
         }
         this.mergeOption.legend.data = this.typeFlower;
         this.mergeOption.xAxis[0].data = this.arrayDate;
-        console.log(this.mergeOption);
-        console.log(this.arrayDate);
+        /*console.log(this.mergeOption);
+        console.log(this.arrayDate);*/
 
       },
       (err)=>{

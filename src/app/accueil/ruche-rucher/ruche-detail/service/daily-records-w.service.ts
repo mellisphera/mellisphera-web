@@ -31,7 +31,6 @@ export class DailyRecordsWService {
     this.dailyRecArray = [];
   }
 
-  
   getDailyRecordsWbyIdHive(idHive : string){
     this.dailyRecArray = [];
     this.dailyRec = [];
@@ -40,7 +39,20 @@ export class DailyRecordsWService {
       (data)=>{
         console.log(data); 
           this.rangeCalendar = [];
-          this.rangeCalendar.push(this.convertDate(data[0].recordDate), this.convertDate(data[data.length-1].recordDate));
+          var start = this.convertDate(data[0].recordDate);
+          var end = this.convertDate(data[data.length-1].recordDate);
+          console.log(this.getMonth(this.convertDate(data[0].recordDate)) - this.getMonth(data[data.length-1].recordDate));
+          if((this.getMonth(this.convertDate(data[0].recordDate)) - this.getMonth(data[data.length-1].recordDate)) < -2){
+            start = this.getYear(start)+'-'+(this.getMonth(start))+'-'+'31';
+          }
+          else{
+            end = this.getYear(start)+'-'+(this.getMonth(start)+6);
+          }
+
+          
+          console.log(start+'-'+end);
+          //this.rangeCalendar.push(this.convertDate(data[0].recordDate), this.convertDate(data[data.length-1].recordDate));
+          this.rangeCalendar.push(start,end);
           console.log(this.rangeCalendar);
           data.forEach((element, index)=>{
             this.dailyRec.push({
@@ -58,9 +70,9 @@ export class DailyRecordsWService {
               weight_filling_rate : element.weight_filling_rate
           });
         });
-        console.log(this.dailyRec);
+        //console.log(this.dailyRec);
         this.getArray();
-        console.log(this.dailyRecArray);
+        //console.log(this.dailyRecArray);
         this.mergeOption = {
           calendar : [{
             range: this.rangeCalendar,
