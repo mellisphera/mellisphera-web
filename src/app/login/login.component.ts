@@ -45,8 +45,8 @@ export class LoginComponent implements OnInit {
       {username: '***REMOVED***' ,pwd:'***REMOVED***'},
       {username: '***REMOVED***' ,pwd:'***REMOVED***'},
       {username: 'clo' ,pwd:'***REMOVED***'},
-      {username: '2po', pwd:'***REMOVED***'},
-      {username: "bcjj", pwd:'***REMOVED***'}
+      {username: 'bcjj' ,pwd:'***REMOVED***'},
+      {username: '***REMOVED***' ,pwd:'***REMOVED***'}
 ];
 
   }
