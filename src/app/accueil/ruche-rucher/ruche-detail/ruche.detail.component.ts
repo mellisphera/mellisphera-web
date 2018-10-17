@@ -80,7 +80,8 @@ constructor(    private formBuilder: FormBuilder,
 }
 ngOnInit(){
     this.rucheId=localStorage.getItem("clickedRuche");
-    this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheId);   
+    this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheId);
+    this.dailyStockHoneyService.cleanQuery();
     this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheId);
     this.recordService.getRecordByIdHive(this.rucheId);
     console.log("ok");

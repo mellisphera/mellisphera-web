@@ -57,6 +57,7 @@ export class GrapheReserveMielService {
     ],
     yAxis : [
         {
+            name : 'Poids',
             type : 'value'
         }
     ],

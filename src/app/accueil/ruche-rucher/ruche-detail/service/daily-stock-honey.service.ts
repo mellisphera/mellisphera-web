@@ -142,6 +142,8 @@ export class DailyStockHoneyService {
     this.dailyStock = [];
     this.arrayDate = [];
     this.typeFlower = [];
+    this.cleanTemplate();
+    this.mergeOption = [];
   }
 
   /* Recupère tout les types de fleurs de la requete */
