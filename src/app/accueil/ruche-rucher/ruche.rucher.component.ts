@@ -125,6 +125,8 @@ export class RucheRucherComponent implements OnInit {
         this.username= data.currentUser().username;
         this.currentRucherID= localStorage.getItem("currentRucher");
         this.rucheRucherID= localStorage.getItem("rucheRucherID");
+
+
   } 
 
 
@@ -146,6 +148,8 @@ getObservationsApiary(){
   this.rucherService.getObservation(this.selectedRucher).subscribe(
     data => { 
       this.apiaryObs = data;
+      console.log(this.apiaryObs);
+      console.log(this.data);
     },
     err => console.error(err));
 }
@@ -257,6 +261,7 @@ onEditerRucher(rucherEdit){
 }
 
 getUserRuchers(){
+  console.log(this.username);
   this.rucherService.getUserRuchers(this.username).subscribe(
     data => { this.ruchers = data;},
     err => console.error(err)
@@ -325,7 +330,6 @@ createRuche(ruche){
       data => {},
       ( error => this.errorMsg=error));
   }
-  alert("Votre Ruche a été créé avec Succès !");
   this.newRucheForm.reset();
   this.subscribeToData();
 }
@@ -373,6 +377,7 @@ createObservation(observation){
       ( error => this.errorMsg=error));
   alert("Votre Observations a été enregistrée avec Succès !");
   this.getObservationsApiary();
+  this.rucherService.getObservationLast(this.selectedRucher.id);
   this.ObservationForm.reset();
 }
 
@@ -412,10 +417,7 @@ private refreshRucherData(): void {
   this.timerSubscription = Observable.timer(500).first().subscribe(() => this.getUserRuchers());
   this.timerSubscription = Observable.timer(600).first().subscribe(() => this.getDetailsRucher());
   this.timerSubscription = Observable.timer(500).first().subscribe(()=> this.rucherService.getUserRuchersLast(this.username));
-  //this.rucherService.getUserRuchersLast(this.username);
-  console.log(this.rucherService.ruchers);
   this.rucherService.getUserRuchersLast(this.username);
-  this.rucheService.getRucheByApiary(this.username, this.ruche.idApiary);
 }
   
 private subscribeToData(): void {

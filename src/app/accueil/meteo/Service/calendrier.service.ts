@@ -27,7 +27,7 @@ export class CalendrierService {
         }
      }, 
      calendar:{
-         cellSize : 80, // taille cellule
+         cellSize : 70, // taille cellule
          orient : 'vertical', // orientation calendrier
          splitLine: { // style bordure
              show: true,
@@ -52,11 +52,24 @@ export class CalendrierService {
              show:false // desactiver
          }
      },
+     series: [{ 
+        type: 'custom',
+        coordinateSystem: 'calendar',
+        data : '',
+        renderItem:this.renderItem, 
+    },
+   /* {
+        type: 'heatmap',
+        coordinateSystem: 'calendar',
+        data:''
+    }*/],
      range:this.decomposeDate(new Date())
 
  };
  renderItem(params,api){ // fonction qui sera appelée pour chaque valeur dans data
      var cellPoint = api.coord([api.value(0),api.value(1)]); // utilise les valeurs des données pour obtenir des coordonnées
+     var cellWidth = params.coordSys.cellWidth;
+     var cellHeight = params.coordSys.cellHeight;
      var img; // variable pour chemin de l'image
      var jour;
    // var date=echarts.format.formatTime('yyyy-MM-dd',api.value(0));
@@ -73,34 +86,34 @@ export class CalendrierService {
                  image:img, // image à afficher
                  width:40, // largeur
                  heigth:30, // et hauteur de l'image
-                 /* placement de l'image (x,y) avec les coordonnées */
-                 x : cellPoint[0]-23,
-                 y : cellPoint[1]-18
-             }
+                 /*placement de l'image (x,y) avec les coordonnées */
+                 x: cellPoint[0] - cellWidth /2+13,
+                 y: cellPoint[1] - cellHeight / 2 + 13,
+             },
          },
          {
              type:'text',// affiche le numero du jour,
              style:{
                  /* placement */
                  x : cellPoint[0]-6,
-                 y : cellPoint[1]-32,
-                 text:jour
+                 y : cellPoint[1]-28,
+                 text:jour,
              }
          },
          {
              type:'text',
              style : {
                  x:cellPoint[0]-30,
-                 y:cellPoint[1]+20,
-                 text:api.value(2)
+                 y:cellPoint[1]+18,
+                 text:api.value(2)+'°C/'
              }
          },
          {
              type:'text',
              style: {
-                 x:cellPoint[0]+18,
-                 y:cellPoint[1]+20,
-                 text : api.value(3)
+                 x:cellPoint[0]+6,
+                 y:cellPoint[1]+18,
+                 text : api.value(3)+'°C'
              }
                
          

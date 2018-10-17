@@ -26,6 +26,7 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   offset : Offsets;
   username: string;
   rucheSelect : RucheInterface;
+  rucherSelectId : string;
   message="";
   constructor( public dailyRecTh :  DailyRecordService, private draggable: DragAndCheckModule, private login: UserloggedService, public rucheService : RucheService, public rucherService: RucherService) { 
     this.offset = new Offsets(this.top,this.right,this.bottom, this.left);
@@ -45,12 +46,26 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   style = {
     'background-image':'',
     'background-position': "center",
-    'background-repeat': "no-repeat"
+    'background-repeat': "no-repeat",
+    'url' : ''
   };
 
   ngOnInit() {
     console.log(this.rucheService.ruches);
     this.username = this.login.currentUser().username;
+    if(this.username == "***REMOVED***"){
+      this.style["background-image"] = "url('../../../assets/imageClient/JHE.jpg')";
+      this.style.url = "../../../assets/imageClient/JHE.jpg"
+    }
+    else if(this.username == "***REMOVED***"){
+      this.style["background-image"] = "url('../../../assets/imageClient/JCP.png')";
+      this.style.url = "../../../assets/imageClient/JHE.jpg"
+    }
+    else if(this.username == "***REMOVED***"){
+      this.style["background-image"] = "url('../../../assets/imageClient/***REMOVED***.png')";
+      this.style.url = "../../../assets/imageClient/***REMOVED***.jpg"
+    }
+    console.log(this.style);
   }
 
   /*getColorStatus($index){
