@@ -261,6 +261,7 @@ onEditerRucher(rucherEdit){
 }
 
 getUserRuchers(){
+  console.log(this.username);
   this.rucherService.getUserRuchers(this.username).subscribe(
     data => { this.ruchers = data;},
     err => console.error(err)
