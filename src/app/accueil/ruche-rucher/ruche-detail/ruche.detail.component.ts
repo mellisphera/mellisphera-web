@@ -18,6 +18,10 @@ import { CalendrierPoidsService } from './service/calendrier-poids.service';
 import { DailyRecordsWService } from './service/daily-records-w.service';
 import { DailyStockHoneyService } from './service/daily-stock-honey.service';
 import { GrapheReserveMielService } from './service/graphe-reserve-miel.service';
+import { RecordService } from './service/Record/record.service';
+import { GraphRecordService } from './service/Record/graph-record.service';
+import { DailyRecordService } from '../../disposition-ruche/Service/dailyRecordService';
+import { CalendrierHealthService } from './service/health/calendrier-health.service';
 
 @Component({
   selector: 'app-ruche-detail',
@@ -64,7 +68,11 @@ constructor(    private formBuilder: FormBuilder,
                 private _selectedRucherService : selectedRucherService,
                 public dailyRecWService : DailyRecordsWService,
                 public dailyStockHoneyService : DailyStockHoneyService,
-                public grapheMielService : GrapheReserveMielService ){
+                public grapheMielService : GrapheReserveMielService,
+                public recordService : RecordService,
+                public graphRecordService : GraphRecordService,
+                public calendrierHealthService : CalendrierHealthService,
+                public dailyRecThService : DailyRecordService){
                 this.ObservationForm=formBuilder.group({
                         'sentence': [null,Validators.compose([Validators.required])],
                         'checkbox': [],
@@ -72,12 +80,15 @@ constructor(    private formBuilder: FormBuilder,
 }
 ngOnInit(){
     this.rucheId=localStorage.getItem("clickedRuche");
-    this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheId);   
+    this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheId);
+    this.dailyStockHoneyService.cleanQuery();
     this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheId);
+    this.recordService.getRecordByIdHive(this.rucheId);
     console.log("ok");
     //this.chartWeightGain();
     this.getRucheDetails();
     this.getObservationsHive();
+    this.dailyRecThService.getByIdHive(this.rucheId);
     this.radioAct = false;
     this.radioObs = true;
     console.log(this.calendrierPoids.option);

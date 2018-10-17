@@ -17,7 +17,6 @@ export class CalendrierPoidsService {
 
   option = {
     backgroundColor: 'white',
-
     title: {
         top: 70,
         text: 'Weight_max for each day',
@@ -31,6 +30,14 @@ export class CalendrierPoidsService {
         formatter: (params)=>{
             return params.data[0]+'<br/>'+params.seriesName+ ' : '+params.data[1];
         }    
+    },
+    toolbox: {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'line']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
     },
     legend: {
         top: '30',

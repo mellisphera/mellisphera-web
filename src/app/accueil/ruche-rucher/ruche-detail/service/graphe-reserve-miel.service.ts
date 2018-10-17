@@ -49,12 +49,15 @@ export class GrapheReserveMielService {
     },
     xAxis : [
         {
-            type : 'category',
-            boundaryGap : false,
+            type : 'time',
+            splitLine: {
+                show: false
+            }
         }
     ],
     yAxis : [
         {
+            name : 'Poids',
             type : 'value'
         }
     ],

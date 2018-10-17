@@ -20,6 +20,8 @@ export class RucherService {
  
     rucher : Rucher;
     ruchers : Rucher[]=null;
+    observations : ProcessReport[];
+    observationObs : Observable<ProcessReport[]>;
 
     rucherObs : Observable<Rucher[]>;
 
@@ -46,6 +48,7 @@ export class RucherService {
                 this.rucher = data[0];
                 this.ruche.getRucheByApiary(this.user.currentUser().username,this.rucher.id);
                 this.dailyRec.getDailyRecThByApiary(this.rucher.id);
+                //sessionStorage.setItem("idApiaryUpdate",this.rucher.id);
                 console.log(this.rucher);
             },
             (err)=>{
@@ -123,6 +126,18 @@ export class RucherService {
 
     getObservation(idApiary): Observable<ProcessReport[]> {
         return this.http.get<ProcessReport[]>(CONFIG.URL+'report/apiary/'+idApiary);
+    }
+
+    getObservationLast(idApiary){
+        this.observationObs = this.http.get<ProcessReport[]>(CONFIG.URL+'report/apiary/'+idApiary);
+        this.observationObs.subscribe(
+            (data)=>{
+                this.observations = data;
+            },
+            (err)=>{
+                console.log(err);
+            }
+        )
     }
 
     updateObs(observation) {

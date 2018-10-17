@@ -19,6 +19,11 @@ export class RucheService {
 
   constructor(private user : UserloggedService, private http : HttpClient) {
     this.ruches = [];
+  /* if(sessionStorage.getItem("idApiaryUpdate")){
+      let id = sessionStorage.getItem("idApiaryUpdate");
+      console.log(id);
+      this.getRucheByApiary(this.user.currentUser().username,id);
+    }*/
    }
 
    getRucheByApiary(username , idApiary){

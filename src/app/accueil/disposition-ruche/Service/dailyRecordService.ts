@@ -9,21 +9,64 @@ import { UserloggedService } from '../../../userlogged.service';
 export class DailyRecordService{
     
     constructor(private http : HttpClient, private user : UserloggedService){
+        this.getDailyRecThByApiary(sessionStorage.getItem("idApiaryUpdate"));
     }
 
     dailyRecObs : Observable<DailyRecordTh>;
+    dailyRecObsArray : Observable<DailyRecordTh[]>;
     dailyRecTabObs : Observable<DailyRecordTh[]>;
     status : string = "Inconnu";
     dailyRecord : DailyRecordTh;
     dailyRecords : DailyRecordTh[] = null;
 
-    getDailyRecThByIdHive(idHive){
+    getDailyRecThByIdHivelas(idHive){
         this.dailyRecObs = this.http.get<DailyRecordTh>(CONFIG.URL+'/dailyRecordsTH/last/'+idHive);
         this.dailyRecObs.subscribe(
             (data)=>{
-                this.dailyRecord = {id : data.id, recordDate : data.recordDate, idHive : data.idHive, humidity_int_min : data.humidity_int_min, 
-                    humidity_int_max : data.humidity_int_max, temp_int_min: data.temp_int_min, temp_int_max : data.temp_int_max, 
-                    temp_int_moy : data.temp_int_moy, temp_int_stddev: data.temp_int_stddev, health_status : data.health_status, health_trend : data.health_trend, r_int_text: data.r_int_text };
+                console.log(data);
+                this.dailyRecord = {
+                    id : data.id, 
+                    recordDate : data.recordDate, 
+                    idHive : data.idHive, 
+                    humidity_int_min : data.humidity_int_min, 
+                    humidity_int_max : data.humidity_int_max, 
+                    temp_int_min: data.temp_int_min, 
+                    temp_int_max : data.temp_int_max, 
+                    temp_int_moy : data.temp_int_moy, 
+                    temp_int_stddev: data.temp_int_stddev, 
+                    health_status : data.health_status, 
+                    health_trend : data.health_trend, 
+                    r_int_text: data.r_int_text 
+                };
+            },
+            (err)=>{
+                console.log(err);
+            }
+        );
+    }
+    getByIdHive(idHive){
+        this.dailyRecords = [];
+        this.dailyRecObsArray = this.http.get<DailyRecordTh[]>(CONFIG.URL+'/dailyRecordsTH/hive/'+idHive);
+        this.dailyRecObsArray.subscribe(
+            (data)=>{
+                console.log(data);
+                data.forEach(element => {
+                    this.dailyRecords.push({
+                        id : element.id, 
+                        recordDate : element.recordDate, 
+                        idHive : element.idHive, 
+                        humidity_int_min : element.humidity_int_min, 
+                        humidity_int_max : element.humidity_int_max, 
+                        temp_int_min: element.temp_int_min, 
+                        temp_int_max : element.temp_int_max, 
+                        temp_int_moy : element.temp_int_moy, 
+                        temp_int_stddev: element.temp_int_stddev, 
+                        health_status : element.health_status, 
+                        health_trend : element.health_trend, 
+                        r_int_text: element.r_int_text 
+                    })
+                });
+                console.log(this.dailyRecords)
             },
             (err)=>{
                 console.log(err);
