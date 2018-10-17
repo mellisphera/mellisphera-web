@@ -34,60 +34,54 @@ export class DailyRecordsWService {
   getDailyRecordsWbyIdHive(idHive : string){
     this.dailyRecArray = [];
     this.dailyRec = [];
+    var start, end = null;
     this.dailyObs = this.http.get<DailyRecordsW[]>(CONFIG.URL+'/dailyRecordsW/hive/'+idHive);
     this.dailyObs.subscribe(
       (data)=>{
         console.log(data); 
           this.rangeCalendar = [];
-          var start = this.convertDate(data[0].recordDate);
-          var end = this.convertDate(data[data.length-1].recordDate);
-          console.log(this.getMonth(this.convertDate(data[0].recordDate)) - this.getMonth(data[data.length-1].recordDate));
-          if((this.getMonth(this.convertDate(data[0].recordDate)) - this.getMonth(data[data.length-1].recordDate)) < -2){
-            start = this.getYear(start)+'-'+(this.getMonth(start))+'-'+'31';
+          try{
+                start = this.convertDate(data[0].recordDate);
+                end = this.convertDate(data[data.length-1].recordDate);
+                console.log(this.getMonth(this.convertDate(data[0].recordDate)) - this.getMonth(data[data.length-1].recordDate));
+                if((this.getMonth(this.convertDate(data[0].recordDate)) - this.getMonth(data[data.length-1].recordDate)) < -2){
+                  start = this.getYear(start)+'-'+(this.getMonth(start))+'-'+'31';
+                }
+                else{
+                  end = this.getYear(start)+'-'+(this.getMonth(start)+5) + '-30';
+                }
           }
-          else{
-            end = this.getYear(start)+'-'+(this.getMonth(start)+5) + '-30';
+          catch(e){
+            console.log("Aucune donnée");
           }
-
-          
-          console.log(start+'-'+end);
-          //this.rangeCalendar.push(this.convertDate(data[0].recordDate), this.convertDate(data[data.length-1].recordDate));
-          this.rangeCalendar.push(start,end);
-          console.log(this.rangeCalendar);
-          data.forEach((element, index)=>{
-            this.dailyRec.push({
-              recordDate : this.convertDate(element.recordDate),
-              idHive : element.idHive,
-              temp_int_min : element.temp_int_min,
-              temp_int_max : element.temp_int_max,
-              weight_min : element.weight_min,
-              weight_max : element.weight_max,
-              weight_gain : element.weight_gain,
-              weight_income_gain : element.weight_income_gain,
-              weight_foragingbees : element.weight_foragingbees,
-              weight_hive : element.weight_hive,
-              weight_colony : element.weight_colony,
-              weight_filling_rate : element.weight_filling_rate
-          });
-        });
-        //console.log(this.dailyRec);
-        this.getArray();
-        //console.log(this.dailyRecArray);
-        this.mergeOption = {
-          calendar : [{
-            range: this.rangeCalendar,
-          }],
-          series : [
-            {
-                data: this.dailyRecArray,
-
-            },
-            {
-                data: this.dailyRecArray,
-            },
-    
-          ]
-        }
+          finally{
+            if(start != null){
+                console.log(start+'-'+end);
+                //this.rangeCalendar.push(this.convertDate(data[0].recordDate), this.convertDate(data[data.length-1].recordDate));
+                this.rangeCalendar.push(start,end);
+                console.log(this.rangeCalendar);
+                data.forEach((element, index)=>{
+                  this.dailyRec.push({
+                    recordDate : this.convertDate(element.recordDate),
+                    idHive : element.idHive,
+                    temp_int_min : element.temp_int_min,
+                    temp_int_max : element.temp_int_max,
+                    weight_min : element.weight_min,
+                    weight_max : element.weight_max,
+                    weight_gain : element.weight_gain,
+                    weight_income_gain : element.weight_income_gain,
+                    weight_foragingbees : element.weight_foragingbees,
+                    weight_hive : element.weight_hive,
+                    weight_colony : element.weight_colony,
+                    weight_filling_rate : element.weight_filling_rate
+                });
+              });
+                 //console.log(this.dailyRec);
+                this.getArray();
+                //console.log(this.dailyRecArray);
+                this.updateCalendar();
+              }
+            }
       },
       (err)=>{
         console.log(err);
@@ -96,10 +90,29 @@ export class DailyRecordsWService {
     );
   }
 
+  updateCalendar(){
+    this.mergeOption = {
+      calendar : [{
+        range: this.rangeCalendar,
+      }],
+      series : [
+        {
+            data: this.dailyRecArray,
+
+        },
+        {
+            data: this.dailyRecArray,
+        },
+
+      ]
+    }
+  }
+  
   cleanQuery(){
     this.dailyRec = [];
     this.dailyRecArray = [];
     this.dailyObs = null;
+    this.mergeOption = null;
   }
 
   convertDate(date : string){
