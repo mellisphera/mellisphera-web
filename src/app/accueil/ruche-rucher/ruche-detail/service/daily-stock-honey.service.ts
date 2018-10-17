@@ -62,11 +62,6 @@ export class DailyStockHoneyService {
         });
         this.mergeOption = {
 
-          xAxis : [
-            {
-              data : [] = []
-            }
-          ],
           legend : {
             data : [] = []
           },
@@ -74,7 +69,7 @@ export class DailyStockHoneyService {
         };
         this.countFlower();
         this.dailyStockByFleur();
-
+        console.log(this.dailyStockByFlower);
         /* Mise à jour du template avec les info récupèrer */
         for(var elt in this.dailyStockByFlower){
           console.log(this.dailyStockByFlower[elt]);
@@ -86,7 +81,6 @@ export class DailyStockHoneyService {
           this.cleanTemplate();
         }
         this.mergeOption.legend.data = this.typeFlower;
-        this.mergeOption.xAxis[0].data = this.arrayDate;
         /*console.log(this.mergeOption);
         console.log(this.arrayDate);*/
 
@@ -130,7 +124,7 @@ export class DailyStockHoneyService {
   /* Trie les données obtenue par fleur */
   dailyStockByFleur(){
     this.arrayDate = [];
-    this.dailyStockByFlower = {};
+    this.dailyStockByFlower = [];
     this.typeFlower.forEach(element=>{
       this.dailyStockByFlower[''+element] = [];
     });
@@ -138,9 +132,10 @@ export class DailyStockHoneyService {
       if(this.arrayDate.indexOf(element.date) == -1){
         this.arrayDate.push(element.date);
       }
-      this.dailyStockByFlower[''+element.nom].push(
-        element.stockJ,
-      )
+      this.dailyStockByFlower[''+element.nom].push({name : element.date, value : [
+        element.date, element.stockJ
+      ]}
+      );
     })
   }
   cleanQuery(){
