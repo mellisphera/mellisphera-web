@@ -45,3 +45,52 @@ Date: 2018-10-17T12:40:59.397Z - Hash: 88d72a628ada41caeda9 - Time: 4129ms
 5 unchanged chunks
 chunk {main} main.js, main.js.map (main) 3.24 MB [initial] [rendered]
 [34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+** Angular Live Development Server is listening on 51.68.71.91:4200, open your browser on http://51.68.71.91:4200/ **
+
+Date: 2018-10-17T13:50:31.419Z
+Hash: 88d72a628ada41caeda9
+Time: 28685ms
+chunk {main} main.js, main.js.map (main) 3.24 MB [initial] [rendered]
+chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 411 kB [initial] [rendered]
+chunk {runtime} runtime.js, runtime.js.map (runtime) 5.22 kB [entry] [rendered]
+chunk {scripts} scripts.js, scripts.js.map (scripts) 2.19 MB  [rendered]
+chunk {styles} styles.js, styles.js.map (styles) 28.1 kB [initial] [rendered]
+chunk {vendor} vendor.js, vendor.js.map (vendor) 4.31 MB [initial] [rendered]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+
+Date: 2018-10-17T13:59:52.579Z - Hash: 3c734faaba6d4d6e24f2 - Time: 13020ms
+5 unchanged chunks
+chunk {main} main.js, main.js.map (main) 3.27 MB [initial] [rendered]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+[34mℹ[39m [90m｢wdm｣[39m: wait until bundle finished: /ruche-detail
+
+Date: 2018-10-17T14:14:50.420Z - Hash: f6f593da8e8cbf162567 - Time: 5455ms
+5 unchanged chunks
+chunk {main} main.js, main.js.map (main) 3.27 MB [initial] [rendered]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+
+Date: 2018-10-17T14:18:05.688Z - Hash: 417860127b2ed9e246d3 - Time: 4820ms
+5 unchanged chunks
+chunk {main} main.js, main.js.map (main) 3.27 MB [initial] [rendered]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+
+Date: 2018-10-17T14:19:56.102Z - Hash: a1b08244f72f1d7b72a7 - Time: 4439ms
+5 unchanged chunks
+chunk {main} main.js, main.js.map (main) 3.27 MB [initial] [rendered]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+
+Date: 2018-10-17T14:26:36.781Z - Hash: c2dee2f9042ed25d94c5 - Time: 4525ms
+5 unchanged chunks
+chunk {main} main.js, main.js.map (main) 3.27 MB [initial] [rendered]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+
+Date: 2018-10-17T14:29:01.491Z - Hash: 897ca28943a347f644c4 - Time: 4400ms
+5 unchanged chunks
+chunk {main} main.js, main.js.map (main) 3.27 MB [initial] [rendered]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.

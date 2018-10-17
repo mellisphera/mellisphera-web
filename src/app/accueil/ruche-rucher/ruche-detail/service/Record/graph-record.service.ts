@@ -58,22 +58,22 @@ export class GraphRecordService {
     yAxis: [
         {
             type: 'value',
-            name: 'Poids',
+            name: 'Poids (kg)',
             /*min: 0,
             max: 400,*/
             interval: 5,
             axisLabel: {
-                formatter: '{value} Kg'
+                formatter: '{value}'
             }
         },
         {
             type: 'value',
-            name: 'Temp.',
+            name: 'Temp.(°C)',
            /* min: 0,
             max: 40,*/
             interval: 5,
             axisLabel: {
-                formatter: '{value} °C'
+                formatter: '{value}'
             }
 
         }
@@ -82,19 +82,24 @@ export class GraphRecordService {
         {
              name:'Poids',
              type:'line',
+             showSymbol: false,
+             hoverAnimation: true,
              data : '',
              yAxisIndex: 0
          },
          {
              name:'Temp-int',
              type:'line',
+             showSymbol: false,
+             hoverAnimation: true,
              data : '',
              yAxisIndex: 1
-             //xAxisIndex : 1
          },
          {
              name:'Temp-ext',
              type:'line',
+             showSymbol: false,
+             hoverAnimation: true,
              data : '',
              yAxisIndex: 1
          }
