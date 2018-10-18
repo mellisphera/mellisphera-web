@@ -80,6 +80,8 @@ constructor(    private formBuilder: FormBuilder,
 }
 ngOnInit(){
     this.rucheId=localStorage.getItem("clickedRuche");
+    console.log(this.rucheId);
+    console.log(sessionStorage.getItem("selectedRucheName"));
     this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheId);
     this.dailyStockHoneyService.cleanQuery();
     this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheId);
@@ -88,10 +90,10 @@ ngOnInit(){
     //this.chartWeightGain();
     this.getRucheDetails();
     this.getObservationsHive();
-    this.dailyRecThService.getByIdHive(this.rucheId);
+    //this.dailyRecThService.getByIdHive(this.rucheId);
     this.radioAct = false;
     this.radioObs = true;
-    console.log(this.calendrierPoids.option);
+    //console.log(this.calendrierPoids.option);
 }
 
 getRucheDetails(){

@@ -8,6 +8,7 @@ import { DailyRecordsTH } from './DailyRecordTH';
 import { RucheService } from './Service/ruche.service';
 import { RucherInterface } from '../../_model/rucherInterface';
 import { RucheInterface } from '../../_model/ruche';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-disposition-ruche',
@@ -21,14 +22,22 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   public right: any= Offsets.HALF_WIDTH;
   public bottom: any= Offsets.HANDLE_HEIGHT;
   public left: any= Offsets.HALF_WIDTH;
-  
   infoRuche : any = null;
   offset : Offsets;
   username: string;
   rucheSelect : RucheInterface;
   rucherSelectId : string;
   message="";
-  constructor( public dailyRecTh :  DailyRecordService, private draggable: DragAndCheckModule, private login: UserloggedService, public rucheService : RucheService, public rucherService: RucherService) { 
+
+  rucheOnClick : Ruche;
+
+  constructor( public dailyRecTh :  DailyRecordService, private draggable: DragAndCheckModule, 
+    private login: UserloggedService, 
+    public rucheService : RucheService, 
+    public rucherService: RucherService,
+    private route : Router) { 
+    
+    
     this.offset = new Offsets(this.top,this.right,this.bottom, this.left);
     //this.rucheService.getRucheByApiary(this.login.currentUser().username, this.rucherService.rucher.id);
   }
@@ -49,6 +58,18 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     'background-repeat': "no-repeat",
     'url' : ''
   };
+  statusImg = {
+    "statusAFluctuation" : "../../../assets/icons/wfbfl.png",
+    "statusADecline" : "../../../assets/icons/wfbde.png",
+    "statusAImprove" : "../../../assets/icons/wfbim.png",
+    "statusBImprove" : "../../../assets/icons/wnbim.png",
+    "statusBFluctuation" : "../../../assets/icons/wnbfl.png",
+    "statusBDecline" : "../../../assets//icons/wnbde.png",
+    "statusBStable" : "../../../assets/icons/wnbst.png",
+    "statusCImprove" : "../../../assets/icons/wobim.png",
+    "statusCFluctuation" : "../../../assets/icons/wobfl.png",
+     "Inconnu" : "../../../assets/icons/wos.png"
+  };
 
   ngOnInit() {
     console.log(this.rucheService.ruches);
@@ -68,15 +89,19 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     console.log(this.style);
   }
 
-  /*getColorStatus($index){
-    try{
-      return this.tabInstanceDailyRechTh[$index].getColorStatus();
-    }
-    catch(e){
-      return "statusInconnu";
-    }
+  onClick(ruche){
+    console.log(ruche);/*
+    this.rucheOnClick = new Ruche(ruche.id, ruche.name,
+       ruche.description, ruche.username,
+       ruche.idApiary, ruche.hivePosX, 
+       ruche.hivePosXY
+       );*/
+    sessionStorage.setItem("clickedRuche",ruche.id);
+    sessionStorage.setItem("selectedRucheName",ruche.name);
+    //this.route.navigate(['/ruche-detail']);
+
   }
-*/
+
   onDragEnd($event) {
     let id = $event.id;
 
