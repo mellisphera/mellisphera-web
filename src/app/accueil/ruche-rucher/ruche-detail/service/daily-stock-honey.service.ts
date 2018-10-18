@@ -33,7 +33,7 @@ export class DailyStockHoneyService {
       data:[''],
       label: {
         normal: {
-            show: true,
+            show: false,
             position: 'top'
         }
     },
@@ -114,7 +114,7 @@ export class DailyStockHoneyService {
       data:[''],
       label: {
         normal: {
-            show: true,
+            show: false,
             position: 'top'
         }
     },

@@ -81,9 +81,19 @@ export class DailyRecordService{
                 console.log(data);
                 if(data[0]!= null){
                     data.forEach(element => {
-                        this.dailyRecords.push({id : element.id, recordDate : element.recordDate, idHive : element.idHive, humidity_int_min : element.humidity_int_min, 
-                            humidity_int_max : element.humidity_int_max, temp_int_min: element.temp_int_min, temp_int_max : element.temp_int_max, 
-                            temp_int_moy : element.temp_int_moy, temp_int_stddev: element.temp_int_stddev, health_status : element.health_status, health_trend : element.health_trend, r_int_text: element.r_int_text });
+                        this.dailyRecords.push({id : element.id, 
+                            recordDate : element.recordDate, 
+                            idHive : element.idHive,
+                            humidity_int_min : element.humidity_int_min, 
+                            humidity_int_max : element.humidity_int_max, 
+                            temp_int_min: element.temp_int_min, 
+                            temp_int_max : element.temp_int_max, 
+                            temp_int_moy : element.temp_int_moy, 
+                            temp_int_stddev: element.temp_int_stddev, 
+                            health_status : element.health_status, 
+                            health_trend : element.health_trend, 
+                            r_int_text: element.r_int_text 
+                        });
                     });
                 console.log(this.dailyRecords);
                 }
@@ -95,15 +105,15 @@ export class DailyRecordService{
     }
 
     getStatus(id){
-        this.status = "Inconnu";
+        this.status = "ruche Inconnu";
         this.verifId(id);
-        return "ruche "+this.status;
+        return this.status;
     }
 
     verifId(id){
         this.dailyRecords.forEach((element,index)=>{
             if(element.idHive == id){
-                this.status =  element.health_status;
+                this.status =  "ruche "+ element.health_status+element.health_trend;
             }
         })
     }

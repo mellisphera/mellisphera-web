@@ -1,11 +1,11 @@
 #cadre{
     margin: auto;
-    width: 90%;
+    width: 98%;
     height: 90vh;
     border: 2px;
     border-radius: 10px;
     overflow: hidden;
-    background: url("../../../assets/imageClient/***REMOVED***.jpg");
+    background: url("../../../assets/imageClient/***REMOVED***.png");
     //background: url("../../../assets/imageClient/.jpg")  no-repeat;
     background-size: 100%;
     box-shadow: 8px 8px 5px black;
@@ -14,8 +14,8 @@
 .ruche{
     display: flex;
     justify-content: center;
-    width: 60px;
-    height: 60px;
+    width: 101px;
+    height: 101px;
     position: relative;
     font-size: 15px;
     /*border-radius: 40px;*/
@@ -48,15 +48,40 @@ select{
     margin: auto;
     width: 30%;
 }
-.statusA{
-    border: 8px solid green;
+
+.statusAFluctuation{
+   background: url("../../../assets/icons/wfbfl.png") no-repeat center;
 }
-.statusB{
-    border: 8px solid yellow;;
+.statusADecline{
+    background: url("../../../assets/icons/wfbde.png") no-repeat center;
 }
-.statusC{
-    border: 8px solid orangered;
+.statusAStable{
+    background: url("../../../assets/icons/wfbst.png") no-repeat center;
 }
+.statusAImprove{
+    background: url("../../../assets/icons/wfbim.png") no-repeat center;
+}
+
+.statusBImprove{
+    background: url("../../../assets/icons/wnbim.png") no-repeat center;
+}
+.statusBFluctuation{
+    background: url("../../../assets/icons/wnbfl.png") no-repeat center;
+}
+.statusBDecline{
+    background: url("../../../assets//icons/wnbde.png") no-repeat center;
+}
+.statusBStable{
+    background: url("../../../assets/icons/wnbst.png") no-repeat center;
+}
+
+.statusCImprove{
+    background: url("../../../assets/icons/wobim.png") no-repeat center;
+}
+.statusCFluctuation{
+    background: url("../../../assets/icons/wobfl.png") no-repeat center;
+}
+
 .Inconnu{
-    border: 8px solid darkgray;
+    background: url("../../../assets/icons/wos.png") no-repeat center;
 }
