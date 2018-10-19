@@ -73,23 +73,25 @@ constructor(    private formBuilder: FormBuilder,
                 public graphRecordService : GraphRecordService,
                 public calendrierHealthService : CalendrierHealthService,
                 public dailyRecThService : DailyRecordService){
+                    this.rucheId = null;
                 this.ObservationForm=formBuilder.group({
                         'sentence': [null,Validators.compose([Validators.required])],
                         'checkbox': [],
                   })
 }
 ngOnInit(){
+
     this.rucheId=localStorage.getItem("clickedRuche");
     console.log(this.rucheId);
     console.log(sessionStorage.getItem("selectedRucheName"));
+    this.getRucheDetails();
+    this.getObservationsHive();
     this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheId);
     this.dailyStockHoneyService.cleanQuery();
     this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheId);
     this.recordService.getRecordByIdHive(this.rucheId);
     console.log("ok");
     //this.chartWeightGain();
-    this.getRucheDetails();
-    this.getObservationsHive();
     //this.dailyRecThService.getByIdHive(this.rucheId);
     this.radioAct = false;
     this.radioObs = true;
@@ -97,8 +99,10 @@ ngOnInit(){
 }
 
 getRucheDetails(){
+    console.log(this.rucheId);
     this.rucherService.getRucheDetail(this.rucheId).subscribe(
         data => { 
+            console.log(data);
                 this.rucheDetail = data;
                 this.rucheName = this.rucheDetail.name;
                 this.rucheDescription = this.rucheDetail.description;

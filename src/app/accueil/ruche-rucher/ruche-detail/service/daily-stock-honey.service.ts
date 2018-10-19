@@ -69,10 +69,10 @@ export class DailyStockHoneyService {
         };
         this.countFlower();
         this.dailyStockByFleur();
-        console.log(this.dailyStockByFlower);
+        //console.log(this.dailyStockByFlower);
         /* Mise à jour du template avec les info récupèrer */
         for(var elt in this.dailyStockByFlower){
-          console.log(this.dailyStockByFlower[elt]);
+          //console.log(this.dailyStockByFlower[elt]);
           this.templateSerie.name = elt;
           this.templateSerie.data = [];
           this.templateSerie.stack = "test";
