@@ -31,6 +31,7 @@ export class DailyStockHoneyService {
       stack: '',
       areaStyle: {normal: {}},
       data:[''],
+      showSymbol: false,
       label: {
         normal: {
             show: false,
@@ -112,6 +113,7 @@ export class DailyStockHoneyService {
       stack: '',
       areaStyle: {normal: {}},
       data:[''],
+      showSymbol: false,
       label: {
         normal: {
             show: false,

@@ -6,12 +6,12 @@
         <form >
             <div class="form-group" >
                 <label for="username" >Nom d'utilisateur :</label>
-                <input type="text" [(ngModel)]="authService.login.username" class="form-control"  name="username"  placeholder="Nom d'utilisateur"required />
+                <input type="text" [(ngModel)]="authService.login.username" class="form-control" required name="username"  placeholder="Nom d'utilisateur"required />
             <!--  <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>-->
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe : </label>
-                <input type="password" [(ngModel)]="authService.login.password"  class="form-control"  name="password"  placeholder="Mot de passe" required />
+                <input type="password" [(ngModel)]="authService.login.password"  requiered class="form-control"  name="password"  placeholder="Mot de passe" required />
                 <!-- <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>-->
             </div>
             <div *ngIf="errLogin" class="loginErrorMsg">
