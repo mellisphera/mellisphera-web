@@ -15,8 +15,9 @@ while valider!= True:
 	username = input("User >")
 	password = input("Password >")
 	phone = input("Tel >")
-	email = username+"@mellisphera.fr"
 	email = input("email >")
+	if email == "" :
+		 email = username+"@mellisphera.fr"
 	connexion = input("connexion >")
 
 	user  = {
