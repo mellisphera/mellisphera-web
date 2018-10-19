@@ -38,7 +38,7 @@ export class DailyRecordsWService {
     this.dailyObs = this.http.get<DailyRecordsW[]>(CONFIG.URL+'/dailyRecordsW/hive/'+idHive);
     this.dailyObs.subscribe(
       (data)=>{
-        console.log(data); 
+        //console.log(data); 
           this.rangeCalendar = [];
           try{
                 start = this.convertDate(data[0].recordDate);
@@ -59,7 +59,7 @@ export class DailyRecordsWService {
                 console.log(start+'-'+end);
                 //this.rangeCalendar.push(this.convertDate(data[0].recordDate), this.convertDate(data[data.length-1].recordDate));
                 this.rangeCalendar.push(start,end);
-                console.log(this.rangeCalendar);
+                //console.log(this.rangeCalendar);
                 data.forEach((element, index)=>{
                   this.dailyRec.push({
                     recordDate : this.convertDate(element.recordDate),

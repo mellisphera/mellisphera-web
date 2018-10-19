@@ -90,12 +90,7 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   }
 
   onClick(ruche){
-    console.log(ruche);/*
-    this.rucheOnClick = new Ruche(ruche.id, ruche.name,
-       ruche.description, ruche.username,
-       ruche.idApiary, ruche.hivePosX, 
-       ruche.hivePosXY
-       );*/
+   // console.log(ruche);
     sessionStorage.setItem("clickedRuche",ruche.id);
     sessionStorage.setItem("selectedRucheName",ruche.name);
     //this.route.navigate(['/ruche-detail']);
