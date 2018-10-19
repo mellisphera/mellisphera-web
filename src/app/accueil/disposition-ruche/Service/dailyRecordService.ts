@@ -74,7 +74,7 @@ export class DailyRecordService{
         );
     }
     getDailyRecThByApiary(idApiary){
-        this.dailyRecTabObs = this.http.get<DailyRecordTh[]>(CONFIG.URL+'/dailyRecordsTH/'+this.user.currentUser().username+'/'+idApiary);
+        this.dailyRecTabObs = this.http.get<DailyRecordTh[]>(CONFIG.URL+'dailyRecordsTH/'+this.user.currentUser().username+'/'+idApiary);
         this.dailyRecords = [];
         this.dailyRecTabObs.subscribe(
             (data)=>{

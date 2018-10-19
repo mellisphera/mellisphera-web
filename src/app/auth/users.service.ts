@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from "rxjs";
 import { Observable } from 'rxjs';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
-import { User } from '../_model/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CONFIG } from '../../config';
 

@@ -81,19 +81,14 @@ constructor(    private formBuilder: FormBuilder,
                   })
 }
 ngOnInit(){
-
     this.rucheId = this.activatedRoute.snapshot.params.id;
     console.log(this.rucheId);
-    /*this.rucheId=localStorage.getItem("clickedRuche");
-    console.log(this.rucheId);*/
-    console.log(sessionStorage.getItem("selectedRucheName"));
     this.getRucheDetails();
     this.getObservationsHive();
     this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheId);
     this.dailyStockHoneyService.cleanQuery();
     this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheId);
     this.recordService.getRecordByIdHive(this.rucheId);
-    console.log("ok");
     //this.chartWeightGain();
     //this.dailyRecThService.getByIdHive(this.rucheId);
     this.radioAct = false;
