@@ -27,8 +27,6 @@ export class AuthService {
 
   public showNavBarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private authenticated = false;
-
   constructor(private router: Router, 
               private usersService: UsersService,
               private http : HttpClient) {
@@ -45,7 +43,6 @@ export class AuthService {
         this.errLogin = !this.isAuthenticated;
         console.log(!this.isAuthenticated);
         if(this.isAuthenticated){
-          console.log("ok");
           this.router.navigate(['/position-Ruche']);
         }
       },
