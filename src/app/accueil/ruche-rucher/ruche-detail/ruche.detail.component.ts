@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ViewChild, ElementRef } from '@angular/core';
 //import * as echarts from '../../../../assets/echarts.js';
 import { ECharts, EChartOption} from 'echarts';
@@ -72,7 +72,8 @@ constructor(    private formBuilder: FormBuilder,
                 public recordService : RecordService,
                 public graphRecordService : GraphRecordService,
                 public calendrierHealthService : CalendrierHealthService,
-                public dailyRecThService : DailyRecordService){
+                public dailyRecThService : DailyRecordService,
+                private activatedRoute : ActivatedRoute){
                     this.rucheId = null;
                 this.ObservationForm=formBuilder.group({
                         'sentence': [null,Validators.compose([Validators.required])],
@@ -81,8 +82,10 @@ constructor(    private formBuilder: FormBuilder,
 }
 ngOnInit(){
 
-    this.rucheId=localStorage.getItem("clickedRuche");
+    this.rucheId = this.activatedRoute.snapshot.params.id;
     console.log(this.rucheId);
+    /*this.rucheId=localStorage.getItem("clickedRuche");
+    console.log(this.rucheId);*/
     console.log(sessionStorage.getItem("selectedRucheName"));
     this.getRucheDetails();
     this.getObservationsHive();
