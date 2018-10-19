@@ -86,6 +86,10 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
       this.style["background-image"] = "url('../../../assets/imageClient/blg.png')";
       this.style.url = "../../../assets/imageClient/blg.jpg"
     }
+    else if(this.username == "lpo"){
+      this.style["background-image"]="url('../../../assets/imageClient/LPO.png')"
+      this.style.url = "";
+    }
     console.log(this.style);
   }
 
