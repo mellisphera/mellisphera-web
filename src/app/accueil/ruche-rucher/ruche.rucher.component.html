@@ -63,7 +63,7 @@
                                               <tr *ngFor="let ruche of ruches " >
                                                 
                                                   <td>
-                                                      <a routerLink="/ruche-detail" (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> 
+                                                      <a [routerLink]="['/ruche-detail/',ruche.id]" (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> 
                                                   </td>
                                                    
                                                   <td>{{ruche.description}}</td>

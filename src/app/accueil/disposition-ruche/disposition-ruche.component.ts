@@ -91,9 +91,9 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
 
   onClick(ruche){
    // console.log(ruche);
-    sessionStorage.setItem("clickedRuche",ruche.id);
+    //sessionStorage.setItem("clickedRuche",ruche.id);
     sessionStorage.setItem("selectedRucheName",ruche.name);
-    //this.route.navigate(['/ruche-detail']);
+    this.route.navigate(['/ruche-detail',ruche.id]);
 
   }
 

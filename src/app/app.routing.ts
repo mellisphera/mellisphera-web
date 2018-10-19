@@ -49,7 +49,7 @@ const routes: Routes =[
     { path: 'capteurs',         component: CapteurComponent },
     { path: 'meteo',            component: MeteoComponent },
     { path: 'graphiques',       component: GraphComponent },
-    { path: 'ruche-detail',     component: RucheDetailComponent},
+    { path: 'ruche-detail/:id',     component: RucheDetailComponent},
     { path: 'rapport',          component: RapportComponent},
     { path: 'fleurs-floraison', component: FleursFloraisonComponent },
     { path: 'position-Ruche', component: DispositionRucheComponent}
