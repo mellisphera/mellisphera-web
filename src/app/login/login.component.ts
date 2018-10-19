@@ -48,9 +48,21 @@ export class LoginComponent implements OnInit {
       {username: 'clo' ,password:'***REMOVED***'},
       {username: 'bcjj' ,password:'***REMOVED***'},
       {username: '***REMOVED***' ,password:'***REMOVED***'}
-];
+
+  ];
 
   }
+
+  ngOnInit() {
+    if(this.authService.isAuthenticated){
+      this.router.navigate(['/position-Ruche']);
+    }
+    this.myform = new FormGroup({
+         username: new FormControl(''),
+         password: new FormControl('')
+  })
+  }
+
 
 /*  onSignIn(){
     //console.log(this.myform.value);
@@ -92,12 +104,6 @@ export class LoginComponent implements OnInit {
   
   currentUser(){
     return JSON.parse(localStorage.getItem('currentUser'));
-  }
-  ngOnInit() {
-    this.myform = new FormGroup({
-         username: new FormControl(''),
-         password: new FormControl('')
-  })
   }
   goToDashboard(){
       console.log("holaaa!");
