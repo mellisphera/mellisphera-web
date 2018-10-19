@@ -1,6 +1,5 @@
 import { Component, OnInit,Input,Output, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../_model/user';
 import { UserloggedService } from '../userlogged.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,6 +7,7 @@ import { AuthService } from '../auth/auth.service';
 import { FormGroup, FormControl, Validators ,ReactiveFormsModule,FormBuilder } from '@angular/forms';
 
 import { UsersService } from '../auth/users.service';
+import { Login } from '../_model/login';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +19,11 @@ export class LoginComponent implements OnInit {
   loginErrorMsg: boolean;
   //@Output() messageEvent = new EventEmitter<string>();
   
+  users : Login[];
+
   public username;
   public password;
   myform: FormGroup;
-  users: User[];
   //loginForm: FormGroup;
   message : string;
  
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
               public router: Router,
               private data : UserloggedService,
               private usersServices : UsersService,
-              private authService: AuthService) { 
+              public authService: AuthService) { 
 
     this.loginErrorMsg=false;
 
@@ -41,12 +42,12 @@ export class LoginComponent implements OnInit {
   });
 
     this.users =[
-      {username: 'jcp' ,pwd:'apis123'},
-      {username: 'blg' ,pwd:'apis123'},
-      {username: 'jhe' ,pwd:'apis123'},
-      {username: 'clo' ,pwd:'apis123'},
-      {username: 'bcjj' ,pwd:'apis123'},
-      {username: 'lpo' ,pwd:'apis123'}
+      {username: 'jcp' ,password:'apis123'},
+      {username: 'blg' ,password:'apis123'},
+      {username: 'jhe' ,password:'apis123'},
+      {username: 'clo' ,password:'apis123'},
+      {username: 'bcjj' ,password:'apis123'},
+      {username: 'lpo' ,password:'apis123'}
 ];
 
   }
@@ -58,8 +59,12 @@ export class LoginComponent implements OnInit {
   }
   */
 
-  login(username,password){
+  verifLogin(){
+    console.log(this.authService.login);
+    this.authService.signIn();
 
+
+    /*
   if(username==null || password==null){
     console.log("verifiez vos identifiants");
     this.loginErrorMsg=true;
@@ -68,7 +73,7 @@ export class LoginComponent implements OnInit {
   }
   else if(username!=null || password!=null){
     this.users.forEach( element => {
-      if(element.username== username && element.pwd==password){
+      if(element.username== username && element.password==password){
         this.router.navigate(['/position-Ruche']);
         this.data.changeMessage(username);
         //localStorage.setItem('currentUser',username);
@@ -82,7 +87,7 @@ export class LoginComponent implements OnInit {
         this.username='';
       }
     })
-  }
+  }*/
   }
   
   currentUser(){

@@ -44,15 +44,15 @@ const routes: Routes =[
     { path: 'login',            component: LoginComponent },
     { path: 'test',             component: TestComponent },
     { path: 'dashboard',        component: HomeComponent },
-    { path: 'accueil',          component: AccueilComponent },
-    { path: 'ruche-et-rucher',  component: RucheRucherComponent },
-    { path: 'capteurs',         component: CapteurComponent },
-    { path: 'meteo',            component: MeteoComponent },
+    { path: 'accueil',          canActivate : [AuthGuard], component: AccueilComponent},
+    { path: 'ruche-et-rucher',  canActivate : [AuthGuard], component: RucheRucherComponent },
+    { path: 'capteurs',         canActivate : [AuthGuard], component: CapteurComponent },
+    { path: 'meteo',            canActivate : [AuthGuard], component: MeteoComponent },
     { path: 'graphiques',       component: GraphComponent },
-    { path: 'ruche-detail/:id',     component: RucheDetailComponent},
-    { path: 'rapport',          component: RapportComponent},
-    { path: 'fleurs-floraison', component: FleursFloraisonComponent },
-    { path: 'position-Ruche', component: DispositionRucheComponent}
+    { path: 'ruche-detail/:id',     canActivate : [AuthGuard], component: RucheDetailComponent},
+    { path: 'rapport',          canActivate : [AuthGuard], component: RapportComponent},
+    { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
+    { path: 'position-Ruche', canActivate : [AuthGuard], component: DispositionRucheComponent}
     
 ];
 

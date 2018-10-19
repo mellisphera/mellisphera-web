@@ -3,6 +3,7 @@ import { ROUTES } from '../../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { UserloggedService } from '../../userlogged.service';
 import {Router} from "@angular/router";
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
     // moduleId: module.id,
@@ -18,7 +19,7 @@ export class NavbarComponent implements OnInit{
     private toggleButton: any;
     private sidebarVisible: boolean;eza
 
-    constructor(location: Location,  private element: ElementRef, private data : UserloggedService,private router: Router) {
+    constructor(location: Location,  private element: ElementRef, private data : UserloggedService,private router: Router, private authService : AuthService) {
       this.location = location;
       this.sidebarVisible = false;
         this.username= data.currentUser().username;
@@ -26,8 +27,9 @@ export class NavbarComponent implements OnInit{
     }
 
     logout(){
+        this.authService.isAuthenticated = false;
         this.router.navigate(['/login']);
-        localStorage.removeItem('currentUser');
+        //localStorage.removeItem('currentUser');
         localStorage.removeItem('currentRucher');
         console.log("Local storage user : "+localStorage.get('currentUser'));
         console.log("Local storage rucher : "+localStorage.getItem('currentRucher'));

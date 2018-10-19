@@ -4,70 +4,55 @@ import { BehaviorSubject } from "rxjs";
 import { Observable } from 'rxjs';
 import { UsersService } from './users.service';
 
-import { User } from '../_model/user';
+import { Login } from '../_model/login';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CONFIG } from '../../config';
 
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 @Injectable()
 export class AuthService {
 
- public users;
-  showLoginErrMsg : boolean;
-  //private _showNavBar = new BehaviorSubject<boolean>(null);
+
+  login : Login;
+  loginObs : Observable<boolean>;
+
+  isAuthenticated : boolean;
+
+  errLogin : boolean;
+
   public showNavBarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private authenticated = false;
 
   constructor(private router: Router, 
-              private usersService: UsersService) {}
+              private usersService: UsersService,
+              private http : HttpClient) {
+                this.login = { username : "", password : ""};
+                this.isAuthenticated = false;
+                this.errLogin = false;
+              }
 
-  signIn(user: User) {
-         //load users
-    this.usersService.getUsers().subscribe(
-        data => { this.users = data},
-        err => console.error(err),
-        () => console.log('done loading users')
-      );
-
-      this.users.forEach(element => {
-        console.log("user : "+ user.username);
-        if(element.username==user.username && element.pwd==user.pwd){       
-//          localStorage.setItem('currentUser', JSON.stringify({ token: "jwt will come later", username: user.username}));         
-//         this.router.navigate(['/accueil']);
-        
+  signIn() {
+    this.loginObs = this.http.post<boolean>(CONFIG.URL+'user/loguser',this.login,httpOptions);
+    this.loginObs.subscribe(
+      (data)=>{
+        this.isAuthenticated = data;
+        this.errLogin = !this.isAuthenticated;
+        console.log(!this.isAuthenticated);
+        if(this.isAuthenticated){
+          console.log("ok");
+          this.router.navigate(['/position-Ruche']);
         }
-        else
-        this.showLoginErrMsg=true;
-      });
-
-/*
-    if ((user.username === 'nizar' || user.password === 'nizar') 
-      && user.password === 'nizar'){
-      this.authenticated = true;
-      this.showNavBar(true);
-      this.router.navigate(['/accueil']);
-    } else {
-      this.authenticated = false;
-    }
-*/
-
-  }
-  
-
-  logout() {
-    this.authenticated = false;
-    this.showNavBar(false);
-    this.router.navigate(['/']);
+      },
+      (err)=>{
+        console.log(err);
+      }
+    );
   }
 
- 
-
-  isAuthenticated() {
-    return this.authenticated;
-  }
-
-  private showNavBar(ifShow: boolean) {
-     this.showNavBarEmitter.emit(ifShow);
-  }
 }
