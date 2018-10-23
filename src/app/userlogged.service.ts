@@ -15,8 +15,8 @@ export class UserloggedService {
      this.messageSource.next(message);
    }
    currentUser(){    
-    //return JSON.parse(localStorage.getItem('currentUser'));
-    return this.authService.login;
+    return JSON.parse(sessionStorage.getItem('currentUser'));
+    //return this.authService.login;
   } 
   logOut(){
     return localStorage.removeItem('currentUser');

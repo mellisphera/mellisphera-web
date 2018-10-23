@@ -22,7 +22,7 @@ export class AuthService {
   loginObs : Observable<boolean>;
 
   isAuthenticated : boolean;
-
+  connexionStatus : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   errLogin : boolean;
 
   public showNavBarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -31,18 +31,22 @@ export class AuthService {
               private usersService: UsersService,
               private http : HttpClient) {
                 this.login = { username : "", password : ""};
-                this.isAuthenticated = false;
                 this.errLogin = false;
+                this.isAuthenticated = false;
               }
 
   signIn() {
     this.loginObs = this.http.post<boolean>(CONFIG.URL+'user/loguser',this.login,httpOptions);
     this.loginObs.subscribe(
       (data)=>{
+        this.connexionStatus.next(data);
+        sessionStorage.setItem("connexion",JSON.stringify(data));
         this.isAuthenticated = data;
         this.errLogin = !this.isAuthenticated;
         console.log(!this.isAuthenticated);
         if(this.isAuthenticated){
+          console.log(sessionStorage.getItem("connexion") == "true");
+          sessionStorage.setItem("currentUser",JSON.stringify(this.login));
           this.router.navigate(['/position-Ruche']);
         }
       },

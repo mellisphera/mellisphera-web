@@ -41,16 +41,6 @@ export class LoginComponent implements OnInit {
       'password': ['', [Validators.required, Validators.minLength(3)]]
   });
 
-    this.users =[
-      {username: '***REMOVED***' ,password:'***REMOVED***'},
-      {username: '***REMOVED***' ,password:'***REMOVED***'},
-      {username: '***REMOVED***' ,password:'***REMOVED***'},
-      {username: 'clo' ,password:'***REMOVED***'},
-      {username: 'bcjj' ,password:'***REMOVED***'},
-      {username: '***REMOVED***' ,password:'***REMOVED***'}
-
-  ];
-
   }
 
   ngOnInit() {
@@ -74,32 +64,6 @@ export class LoginComponent implements OnInit {
   verifLogin(){
     console.log(this.authService.login);
     this.authService.signIn();
-
-
-    /*
-  if(username==null || password==null){
-    console.log("verifiez vos identifiants");
-    this.loginErrorMsg=true;
-    this.password='';
-    this.username='';
-  }
-  else if(username!=null || password!=null){
-    this.users.forEach( element => {
-      if(element.username== username && element.password==password){
-        this.router.navigate(['/position-Ruche']);
-        this.data.changeMessage(username);
-        //localStorage.setItem('currentUser',username);
-        localStorage.setItem('currentUser', JSON.stringify({ token: "jwt will come later", username: username}));
-        
-      }
-      else{
-        console.log("login ou mdp incorrecte");
-        this.loginErrorMsg=true;
-        this.password='';
-        this.username='';
-      }
-    })
-  }*/
   }
   
   currentUser(){
