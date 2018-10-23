@@ -1,3 +1,4 @@
+#!/Applications/anaconda3/bin/python
 #!/usr/bin/python3
 
 from pymongo import MongoClient
@@ -5,7 +6,7 @@ import datetime
 
 mongo = MongoClient('51.68.71.91',43975)
 
-db =  mongo['apiwatchTest2']
+db =  mongo['production']
 
 collection = db['User']
 
