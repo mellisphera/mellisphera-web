@@ -76,19 +76,19 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     this.username = this.login.currentUser().username;
     if(this.username == "***REMOVED***"){
       this.style["background-image"] = "url('../../../assets/imageClient/JHE.jpg')";
-      this.style.url = "../../../assets/imageClient/JHE.jpg"
     }
     else if(this.username == "***REMOVED***"){
       this.style["background-image"] = "url('../../../assets/imageClient/JCP.png')";
-      this.style.url = "../../../assets/imageClient/JHE.jpg"
     }
     else if(this.username == "***REMOVED***"){
       this.style["background-image"] = "url('../../../assets/imageClient/***REMOVED***.png')";
-      this.style.url = "../../../assets/imageClient/***REMOVED***.jpg"
     }
     else if(this.username == "***REMOVED***"){
       this.style["background-image"]="url('../../../assets/imageClient/LPO.png')";
     }
+    else if(this.username == "aro"){
+    this.style["background-image"]="url('../../../assets/imageClient/aro.png')"
+  }
     console.log(this.style);
   }
 
