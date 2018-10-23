@@ -62,7 +62,7 @@ export class GrapheReserveMielService {
         }
     ],
     series : [
-
+        
     ],
 };
 

@@ -28,8 +28,13 @@ export class NavbarComponent implements OnInit{
 
     logout(){
         this.authService.isAuthenticated = false;
+        sessionStorage.connexion = "false";
+        sessionStorage.removeItem('currentUser');
+        console.log(this.authService.connexionStatus);
+        console.log(this.authService.isAuthenticated);
+        console.log(sessionStorage.getItem("connexion"));
+        this.authService.connexionStatus.next(false);
         this.router.navigate(['/login']);
-        //localStorage.removeItem('currentUser');
         localStorage.removeItem('currentRucher');
         console.log("Local storage user : "+localStorage.get('currentUser'));
         console.log("Local storage rucher : "+localStorage.getItem('currentRucher'));

@@ -31,7 +31,7 @@ while valider!= True:
 		"connexions" : connexion
 	}
 	print(user)
-	confirm = input("Confier(y/n)>")
+	confirm = input("Confirmer(y/n)>")
 	if(confirm == "y" or confirm == "Y"):
 		valider = True
 
