@@ -1,3 +1,14 @@
+<div class="wrapper">
+  <div class="sidebar" data-color="red" data-image="">
+      <app-sidebar ></app-sidebar>
+      <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
+  </div>
+  <div class="main-panel">
+      <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+      <router-outlet></router-outlet>
+  </div>
+<app-ruche-navbar></app-ruche-navbar>
 <p>
-  stock works!
+  STOCK
 </p>
+</div>

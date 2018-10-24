@@ -72,7 +72,7 @@ import { HealthComponent } from './accueil/ruche-rucher/ruche-detail/health/heal
 import { StockComponent } from './accueil/ruche-rucher/ruche-detail/stock/stock.component';
 import { HourlyComponent } from './accueil/ruche-rucher/ruche-detail/hourly/hourly.component';
 import { DailyComponent } from './accueil/ruche-rucher/ruche-detail/daily/daily.component';
-import { OperationsComponent } from './accueil/ruche-rucher/ruche-detail/operations/operations.component';
+import { ObservationComponent } from './accueil/ruche-rucher/ruche-detail/observation/observation.component';
 
 //import { NgDraggableModule } from 'angular-draggable'; 
 
@@ -106,7 +106,7 @@ import { OperationsComponent } from './accueil/ruche-rucher/ruche-detail/operati
     StockComponent,
     HourlyComponent,
     DailyComponent,
-    OperationsComponent
+    ObservationComponent
 
   ],
   imports: [

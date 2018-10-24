@@ -26,6 +26,11 @@ import { RucheDetailComponent } from './accueil/ruche-rucher/ruche-detail/ruche.
 import { RapportComponent } from './accueil/rapport/rapport.component';
 import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
 import { DispositionRucheComponent } from './accueil/disposition-ruche/disposition-ruche.component';
+import { DailyComponent } from './accueil/ruche-rucher/ruche-detail/daily/daily.component';
+import { HealthComponent } from './accueil/ruche-rucher/ruche-detail/health/health.component';
+import { HourlyComponent } from './accueil/ruche-rucher/ruche-detail/hourly/hourly.component';
+import { ObservationComponent } from './accueil/ruche-rucher/ruche-detail/observation/observation.component';
+import { StockComponent } from './accueil/ruche-rucher/ruche-detail/stock/stock.component';
 
 const routes: Routes =[
    /* { path: '',             component: LoginComponent },  
@@ -52,7 +57,12 @@ const routes: Routes =[
     { path: 'ruche-detail/:id',     canActivate : [AuthGuard], component: RucheDetailComponent},
     { path: 'rapport',          canActivate : [AuthGuard], component: RapportComponent},
     { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
-    { path: 'position-Ruche', canActivate : [AuthGuard], component: DispositionRucheComponent}
+    { path: 'position-Ruche', canActivate : [AuthGuard], component: DispositionRucheComponent},
+    { path: "daily", canActivate : [AuthGuard], component : DailyComponent},
+    { path: "health", canActivate : [AuthGuard], component : HealthComponent},
+    { path: "hourly", canActivate : [AuthGuard], component : HourlyComponent},
+    { path: "observation", canActivate : [AuthGuard], component : ObservationComponent},
+    { path: "stock", canActivate : [AuthGuard], component : StockComponent}
     
 ];
 
