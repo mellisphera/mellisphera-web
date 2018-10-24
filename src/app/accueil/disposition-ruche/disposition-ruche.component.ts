@@ -104,13 +104,22 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     let id = $event.id;
 
     this.getPosition($event.style);
-    console.log(this.rucheService.ruches[id]);
-    this.rucheSelect = this.rucheService.ruches[id];
-    let rucheUpdate = new Ruche(this.rucheSelect.id,this.rucheSelect.name,this.rucheSelect.description,this.rucheSelect.username,this.rucheSelect.idApiary,this.rucheSelect.hivePosX,this.rucheSelect.hivePosY);
-    console.log(rucheUpdate);
-    rucheUpdate.setX(this.position.x);
-    rucheUpdate.setY(this.position.y);
-    this.rucheService.updateCoordonneesRuche(rucheUpdate);
+    try{
+          console.log(this.rucheService.ruches[id]);
+          this.rucheSelect = this.rucheService.ruches[id];
+          let rucheUpdate = new Ruche(this.rucheSelect.id,this.rucheSelect.name,this.rucheSelect.description,this.rucheSelect.username,this.rucheSelect.idApiary,this.rucheSelect.hivePosX,this.rucheSelect.hivePosY);
+          console.log(rucheUpdate);
+          rucheUpdate.setX(this.position.x);
+          rucheUpdate.setY(this.position.y);
+          this.rucheService.updateCoordonneesRuche(rucheUpdate);
+          this.position.x = ''+0;
+          this.position.y = ''+0;
+
+    }
+    catch(e){
+
+    }
+
     //this.rucheService.getRucheByApiary(this.username,rucheUpdate.idApiary);
 
   }
@@ -128,6 +137,9 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     let left = parseInt(position.left);
     let top = parseInt(position.top);
     /* Convertir en px */
+    
+    console.log("x"+left+'- y'+top);
+    console.log("parent"+widthcontainer+"-"+heightcontainer);
     left = this.getPourccentToPx(left,widthcontainer);
     top = this.getPourccentToPx(top,heightcontainer);
 
@@ -139,13 +151,13 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     this.position.x = ''+(parseInt(left+deplacement[0]) *100) / widthcontainer;
     this.position.y  =''+(parseInt(top+deplacement[1]) *100) / heightcontainer;
     console.log(this.position);
-    if(parseInt(this.position.x) > 90 || parseInt(this.position.x) < 5){ this.position.x = ''+50;
-    this.rucheService.cleanRuches();
-    this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
+    if(parseInt(this.position.x) > 99 || parseInt(this.position.x) < 0){ this.position.x = ''+50;
+      this.rucheService.cleanRuches();
+      //this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
     }
-    if(parseInt(this.position.y) > 90 || parseInt(this.position.y) < 5){ this.position.y = ''+50;
-    this.rucheService.cleanRuches();
-    this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
+    if(parseInt(this.position.y) > 99 || parseInt(this.position.y) < 0){ this.position.y = ''+50;
+      this.rucheService.cleanRuches();
+      //this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
     }
     console.log(this.position);
   }
@@ -164,6 +176,7 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   }
 
   onMouseover($ruche){
+    console.log(this.position);
     let ruche = JSON.parse(JSON.stringify($ruche))
     this.infoRuche = ruche.name + ' : '+ruche.description;
   }
