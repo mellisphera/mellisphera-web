@@ -1,16 +1,3 @@
-
-
-<div class="wrapper">
-  <div class="sidebar" data-color="red" data-image="">
-      <app-sidebar ></app-sidebar>
-      <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
-  </div>
-  <div class="main-panel">
-      <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
-      <router-outlet></router-outlet>
-
-
-<!-- change component content here-->                    
 <div class="container-fluid" style="background-color:white;">
   <div class="row content">
       <app-ruche-navbar></app-ruche-navbar>
@@ -52,7 +39,7 @@
                                                       </tr>
                                                       </thead>
                                                       <tbody>
-                                                          <ng-container *ngFor="let hiveObs of observationsHive" >
+                                                          <ng-container *ngFor="let hiveObs of observationService.observations" >
                                                               <ng-container *ngIf="hiveObs.type =='HiveObs'">
                                                                   <tr >
                                                                       <td>{{hiveObs.date}}</td>
@@ -119,31 +106,21 @@
 </div>
 
 <div class="modal-body" id="popupObs">
-  <form  [formGroup]="ObservationForm" (ngSubmit)="createObservation(ObservationForm.value)">
-
+  <form  [formGroup]="ObservationForm" (ngSubmit)="createObservation()">
           <div class="form-group">
-                                  
-      
-                  <label  class="col-form-label" for="exampleRadios1" >
-                      Type :  
-                  </label>
+                  <label  class="col-form-label" for="exampleRadios1" >Type :  </label>
                   <div class="form-check">
-                          <input class="form-check-input" (change)="selectRadioObs()" type="radio" formControlName="checkbox" name="checkbox"  [checked]="radioObs">
-                      <label class="form-check-label" for="exampleRadios1" >
-                          Observations
-                      </label>
-                          
-                      <input class="form-check-input" (change)="selectRadioAction()" type="radio" formControlName="checkbox" name="checkbox" [checked]="radioAct">
-                      <label class="form-check-label" for="exampleRadios1">
-                         Actions 
-                      </label>
-                      
+                      <input class="form-check-input" type="radio" formControlName="type" value="HiveObs" [checked]="radioObs">
+                      <label class="form-check-label" for="exampleRadios1" >Observations</label>
+                      <input class="form-check-input" type="radio" formControlName="type" value="HiveAct" [checked]="radioAct">
+                      <label class="form-check-label" for="exampleRadios1">Actions </label>
                   </div>
               </div>
 
     <div class="form-group">
       <label for="recipient-name" class="col-form-label">Observations/Actions :</label>
-      <input [(ngModel)]="sentence" formControlName="sentence" type="text" class="form-control" id="recipient-name">
+      <input type="datetime-local" formControlName="date">
+      <input formControlName="sentence" type="text" class="form-control" id="recipient-name">
   </div>
 
  
@@ -174,10 +151,10 @@
       </button>
     </div>
     <div class="modal-body">
-      <form  [formGroup]="ObservationForm" (ngSubmit)="onEditObservation(ObservationForm.value)">
+      <form  [formGroup]="ObservationForm" (ngSubmit)="onEditObservation()">
         <div class="form-group">
           <label for="recipient-editobs" class="col-form-label">Observations :</label>
-          <textarea [(ngModel)]="sentence" formControlName="sentence" type="text" class="form-control" id="recipient-editobs" value="{{ selectedObsR.sentence }}"></textarea>
+          <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
         </div>
         
          

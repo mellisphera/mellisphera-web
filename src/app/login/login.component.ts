@@ -2,7 +2,6 @@ import { Component, OnInit,Input,Output, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
 import { UserloggedService } from '../userlogged.service';
 import { JwtModule } from '@auth0/angular-jwt';
-import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from '../auth/auth.service';
 import { FormGroup, FormControl, Validators ,ReactiveFormsModule,FormBuilder } from '@angular/forms';
 
