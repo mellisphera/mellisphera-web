@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { SidebarComponent } from './sidebar.component';
 
 @NgModule({
-    imports: [ RouterModule, CommonModule ],
+    imports: [ RouterModule, CommonModule],
     declarations: [ SidebarComponent ],
     exports: [ SidebarComponent ]
 })

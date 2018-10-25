@@ -82,6 +82,7 @@ constructor(    private formBuilder: FormBuilder,
 }
 ngOnInit(){
     this.rucheId = this.activatedRoute.snapshot.params.id;
+    console.log("omlegjfig");
     console.log(this.rucheId);
     this.getRucheDetails();
     this.getObservationsHive();
