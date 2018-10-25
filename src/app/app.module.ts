@@ -73,6 +73,7 @@ import { StockComponent } from './accueil/ruche-rucher/ruche-detail/stock/stock.
 import { HourlyComponent } from './accueil/ruche-rucher/ruche-detail/hourly/hourly.component';
 import { DailyComponent } from './accueil/ruche-rucher/ruche-detail/daily/daily.component';
 import { ObservationComponent } from './accueil/ruche-rucher/ruche-detail/observation/observation.component';
+import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observation/service/observation.service';
 
 //import { NgDraggableModule } from 'angular-draggable'; 
 
@@ -149,7 +150,8 @@ import { ObservationComponent } from './accueil/ruche-rucher/ruche-detail/observ
     GraphMeteoService,
     RecordService,
     GraphRecordService,
-    CalendrierHealthService
+    CalendrierHealthService,
+    ObservationService
   ],
   bootstrap: [AppComponent]
 })

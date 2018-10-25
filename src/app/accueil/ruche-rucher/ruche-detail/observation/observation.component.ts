@@ -7,6 +7,7 @@ import { DailyRecordsWService } from '../service/daily-records-w.service';
 import { ActivatedRoute } from '@angular/router';
 import { DailyStockHoneyService } from '../service/daily-stock-honey.service';
 import { RecordService } from '../service/Record/record.service';
+import { ObservationService } from './service/observation.service';
 
 @Component({
   selector: 'app-observation',
@@ -21,16 +22,17 @@ export class ObservationComponent implements OnInit {
   rucheDescription;
   observationsHive : ProcessReport[] = [];
   constructor(public rucherService : RucherService, 
-    public rucheDetailService : RucheDetailService, 
     private dailyRecWService : DailyRecordsWService,
     private activatedRoute : ActivatedRoute,
     private dailyStockHoneyService : DailyStockHoneyService,
-    private recordService : RecordService
+    private recordService : RecordService,
+    public observationService : ObservationService
     ) { }
 
   ngOnInit() {
     this.rucheId = this.activatedRoute.snapshot.params.id;
     console.log(this.rucheId);
+    this.observationService.getObservationByIdHive(this.rucheId);
     /*this.getRucheDetails();
     this.getObservationsHive();*/
     this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheId);
