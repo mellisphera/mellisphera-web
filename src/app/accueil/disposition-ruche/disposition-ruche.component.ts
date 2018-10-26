@@ -6,7 +6,7 @@ import { Ruche } from './ruche';
 import { DailyRecordService } from './Service/dailyRecordService';
 import { DailyRecordsTH } from './DailyRecordTH';
 import { RucheService } from './Service/ruche.service';
-import { RucherInterface } from '../../_model/rucherInterface';
+//import { RucherInterface } from '../../_model/rucherInterface';
 import { RucheInterface } from '../../_model/ruche';
 import { Route, Router } from '@angular/router';
 

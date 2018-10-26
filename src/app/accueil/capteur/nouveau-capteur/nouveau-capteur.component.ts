@@ -152,11 +152,11 @@ export class NouveauCapteurComponent implements OnInit {
     getUserRuchers(){
         console.log("this username :"+  this.username);
         
-            this.rucherService.getUserRuchers(this.username).subscribe(
+            /*this.rucherService.getUserRuchers(this.username).subscribe(
                 data => { this.ruchers = data },
                 err => console.error(err),
                 () => console.log('done loading ruchers')
-            );
+            );*/
         
     }
 
@@ -176,11 +176,11 @@ export class NouveauCapteurComponent implements OnInit {
 
     getRucheDuRucher(){
         console.log("this username :"+  this.username);
-        this.rucherService.getUserRuches(this.username,this.selectedRucher).subscribe(
+       /* this.rucherService.getUserRuches(this.username,this.selectedRucher).subscribe(
         data => { this.ruches = data },
         
         () => console.log('Done loading RUCHES ')
-        );
+        );*/
     }
 
     onCancelClicked(){

@@ -135,8 +135,8 @@ export class FleursFloraisonComponent implements OnInit {
 
   //Récupère les ruchers de l'utilisateur
   getUserRuchers(){
-    this.rucherService.getUserRuchers(this.username).subscribe(
-      data => { this.ruchers = data } );
+    /*this.rucherService.getUserRuchers(this.username).subscribe(
+      data => { this.ruchers = data } );*/
   }
 
   //Récupère les fleurs du rucher
