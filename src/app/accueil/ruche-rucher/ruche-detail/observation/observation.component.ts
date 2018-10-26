@@ -55,7 +55,7 @@ export class ObservationComponent implements OnInit {
     })
   }
 
-  createObservation(event){
+  createObservation(){
     const formValue = this.ObservationForm.value;
     console.log(formValue);
     this.observationService.observation = formValue;
@@ -88,5 +88,7 @@ export class ObservationComponent implements OnInit {
     this.observationService.observation = hiveObs;
     this.observationService.deleteObservation();
   }
-
+  resetObservationForm(){
+    this.ObservationForm.get('sentence').reset();
+}
 }

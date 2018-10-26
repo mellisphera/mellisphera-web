@@ -36,12 +36,14 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
   private timerSubscription: Subscription;
 
-    constructor(private activatedRoute : ActivatedRoute){
+    constructor(private activatedRoute : ActivatedRoute, private route : Router){
                     this.rucheId = null;
     }
     ngOnInit(){
         this.rucheId = this.activatedRoute.snapshot.params.id;
         console.log(this.rucheId);
+        console.log(this.route);
+        this.route.navigate(['/ruche-detail/'+this.rucheId+'/observation',this.rucheId]);
     }
 
 
