@@ -68,6 +68,8 @@ import { RecordService } from './accueil/ruche-rucher/ruche-detail/service/Recor
 import { GraphRecordService } from './accueil/ruche-rucher/ruche-detail/service/Record/graph-record.service';
 import { CalendrierHealthService } from './accueil/ruche-rucher/ruche-detail/service/health/calendrier-health.service';
 import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from './shared/shared.module';
 
 //import { NgDraggableModule } from 'angular-draggable'; 
 
@@ -92,7 +94,7 @@ import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observat
     RucheRucherComponent,
     MeteoComponent,
     GraphComponent,
-    RucheDetailComponent,
+    //RucheDetailComponent,
     RapportComponent,
     FleursFloraisonComponent,
     DispositionRucheComponent,
@@ -100,9 +102,10 @@ import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observat
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     HttpModule,
-    NavbarModule,
+    //NavbarModule,
     FooterModule,
     SidebarModule,
     RouterModule,
@@ -112,6 +115,7 @@ import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observat
     HttpClientModule,
     DragAndCheckModule,
     NgxEchartsModule,
+    SharedModule
     //NgDraggableModule
   ],
   providers: [
@@ -140,6 +144,9 @@ import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observat
     GraphRecordService,
     CalendrierHealthService,
     ObservationService
+  ],
+  exports:[
+    //RucheDetailComponent
   ],
   bootstrap: [AppComponent]
 })

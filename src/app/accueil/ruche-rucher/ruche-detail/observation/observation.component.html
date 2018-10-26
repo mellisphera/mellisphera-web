@@ -1,14 +1,11 @@
 <div class="container-fluid" style="background-color:white;">
   <div class="row content">
-      <app-ruche-navbar></app-ruche-navbar>
           <div class="col-sm-12">                        
                 <div class="form-inline" >
                   <div class="form-group">
                           <h4>Ruche : {{ rucheName }} </h4>
                   </div>
                 </div>
-                  
-
                 <div class="bs-example">
                     <div class="panel-group" id="accordion">
                           <div class="panel panel-info ">
@@ -22,7 +19,7 @@
                             <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="panel-body">
                                
-                                      <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
+                                      <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-backdrop="false"  data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
                                       data-target="#newObservationModal"  class="btn btn-success btn-lg" >
                                                 <i class="fa fa-plus"></i>
                                       </button>
@@ -47,7 +44,7 @@
                                                                       <td>Observation</td>
                                                                       <td>
                                                                           <button data-toggle="tooltip" data-html="true" title="Modifier ruche" data-toggle="modal" type="button" (click)="onSelectObsR(hiveObs)"
-                                                                              data-target="#editObservationModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                                                              data-target="#editObservationModal" data-backdrop="false" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
                                                                               <i class="fa fa-edit"></i>
                                                                           </button>
                                                                           <button type="button" class="btn btn-warning btn-lg "  title="Supprimer ruche" style="padding: 0;border: none; background: none;" (click)="deleteObsR(hiveObs)">
@@ -63,11 +60,11 @@
                                                                           <td>{{hiveObs.sentence}}</td>
                                                                           <td>Action</td>
                                                                           <td>
-                                                                              <button data-toggle="tooltip" data-html="true" title="Modifier ruche" data-toggle="modal" type="button" (click)="onSelectObsR(hiveObs)"
-                                                                                  data-target="#editObservationModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                                                              <button  data-toggle="tooltip" data-html="true" title="Modifier ruche" data-toggle="modal" type="button" (click)="onSelectObsR(hiveObs)"
+                                                                                  data-target="#editObservationModal" data-backdrop="false" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
                                                                                   <i class="fa fa-edit"></i>
                                                                               </button>
-                                                                              <button type="button" class="btn btn-warning btn-lg "  title="Supprimer ruche" style="padding: 0;border: none; background: none;" (click)="deleteObsR(hiveObs)">
+                                                                              <button  type="button" class="btn btn-warning btn-lg "  title="Supprimer ruche" style="padding: 0;border: none; background: none;" (click)="deleteObsR(hiveObs)">
                                                                                   <i class="fa fa-times"></i>
                                                                               </button>
                                                                           </td>
@@ -89,7 +86,6 @@
                 </div>  
               </div>
   </div>
-</div>
 </div>
 
 <!-- MODALS ARE DECLARE HERE !!! -->
@@ -156,8 +152,6 @@
           <label for="recipient-editobs" class="col-form-label">Observations :</label>
           <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
         </div>
-        
-         
       </form>
     </div>
     <div class="modal-footer">

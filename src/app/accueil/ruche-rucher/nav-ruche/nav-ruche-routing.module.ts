@@ -6,6 +6,7 @@ import { HourlyComponent } from '../ruche-detail/hourly/hourly.component';
 import { AuthGuardService as AuthGuard } from '../../../auth/auth-guard.service';
 import { HealthComponent } from '../ruche-detail/health/health.component';
 import { RucheDetailComponent } from '../ruche-detail/ruche.detail.component';
+import { ObservationComponent } from '../ruche-detail/observation/observation.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
       { path: 'daily/:id', component: DailyComponent },
       { path: 'stock/:id', component: StockComponent },
       { path: 'hourly/:id', component: HourlyComponent },
-      { path: 'health/:id',component : HealthComponent}
+      { path: 'health/:id',component : HealthComponent},
+      { path: 'observation/:id', component : ObservationComponent}
     ]
   }
 ];

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-//import { CommonModule, } from '@angular/common';
+import { CommonModule, } from '@angular/common';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
@@ -38,7 +38,7 @@ const routes: Routes =[
     { path: 'meteo',            canActivate : [AuthGuard], component: MeteoComponent },
     { path: 'ruche-detail/:id',
       loadChildren : "./accueil/ruche-rucher/nav-ruche/nav-ruche.module#NavRucheModule",
-      canActivate : [AuthGuard],
+      canLoad : [AuthGuard],
     },
     { path: 'rapport',          canActivate : [AuthGuard], component: RapportComponent},
     { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
@@ -48,7 +48,7 @@ const routes: Routes =[
 
 @NgModule({
   imports: [
-    ///CommonModule,
+    CommonModule,
     RouterModule.forRoot(routes)
   ],
   exports: [
