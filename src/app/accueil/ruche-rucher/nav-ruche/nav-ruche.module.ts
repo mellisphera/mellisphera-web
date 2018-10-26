@@ -9,14 +9,23 @@ import { SharedModule } from '../../../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ObservationComponent } from '../ruche-detail/observation/observation.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { CalendrierPoidsService } from '../ruche-detail/stock/service/calendrier-poids.service';
+import { DailyRecordsWService } from '../ruche-detail/service/daily-records-w.service';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { DailyStockHoneyService } from '../ruche-detail/service/daily-stock-honey.service';
+import { GrapheReserveMielService } from '../ruche-detail/stock/service/graphe-reserve-miel.service';
+import { GraphRecordService } from '../ruche-detail/hourly/service/graph-record.service';
+import { RecordService } from '../ruche-detail/service/Record/record.service';
+import { CalendrierHealthService } from '../ruche-detail/health/service/calendrier-health.service';
 
 @NgModule({
   imports: [
     CommonModule,
     NavRucheRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxEchartsModule
+
   ],
   declarations: [
     DailyComponent,
@@ -25,5 +34,17 @@ import { ReactiveFormsModule } from '@angular/forms';
     HealthComponent,
     ObservationComponent
   ],
+  providers:[
+    CalendrierPoidsService,
+    DailyRecordsWService,
+    DailyStockHoneyService,
+    GrapheReserveMielService,
+    GraphRecordService,
+    RecordService,
+    CalendrierHealthService
+
+    
+
+  ]
 })
 export class NavRucheModule { }

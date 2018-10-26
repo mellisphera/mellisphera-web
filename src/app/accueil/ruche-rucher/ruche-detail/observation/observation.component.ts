@@ -50,13 +50,14 @@ export class ObservationComponent implements OnInit {
   initForm(){
     this.ObservationForm=this.formBuilder.group({
       'sentence': [null,Validators.compose([Validators.required])],
-      'type': [],
+      'type': '',
       'date': new Intl.DateTimeFormat('fr-FR', this.optionsDate).format(new Date()),
     })
   }
 
   createObservation(event){
     const formValue = this.ObservationForm.value;
+    console.log(formValue);
     this.observationService.observation = formValue;
     this.observationService.observation.idHive = this.rucheId;
     this.observationService.observation.idLHive = [this.rucheId];
