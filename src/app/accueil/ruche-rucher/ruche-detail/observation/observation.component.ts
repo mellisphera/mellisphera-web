@@ -44,12 +44,6 @@ export class ObservationComponent implements OnInit {
     this.rucheId = this.activatedRoute.snapshot.params.id;
     console.log(this.rucheId);
     this.observationService.getObservationByIdHive(this.rucheId);
-    /*this.getRucheDetails();
-    this.getObservationsHive();*/
-    /*this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheId);
-    this.dailyStockHoneyService.cleanQuery();
-    this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheId);*/
-    this.recordService.getRecordByIdHive(this.rucheId);
   }
 
 
