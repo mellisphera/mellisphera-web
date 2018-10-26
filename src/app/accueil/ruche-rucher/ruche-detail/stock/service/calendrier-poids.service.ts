@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { DailyRecordsWService } from './daily-records-w.service';
+import { DailyRecordsWService } from '../../service/daily-records-w.service';
 @Injectable({
   providedIn: 'root'
 })
