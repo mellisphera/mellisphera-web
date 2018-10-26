@@ -60,20 +60,16 @@ import { RucheService } from './accueil/disposition-ruche/Service/ruche.service'
 
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CalendrierService } from './accueil/meteo/Service/calendrier.service';
-import { CalendrierPoidsService } from './accueil/ruche-rucher/ruche-detail/service/calendrier-poids.service';
+//import { CalendrierPoidsService } from './accueil/ruche-rucher/ruche-detail/service/calendrier-poids.service';
 import { DailyRecordsWService } from './accueil/ruche-rucher/ruche-detail/service/daily-records-w.service';
-import { DailyStockHoneyService } from './accueil/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
+//import { DailyStockHoneyService } from './accueil/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
 import { GraphMeteoService } from './accueil/meteo/Service/graph-meteo.service';
 import { RecordService } from './accueil/ruche-rucher/ruche-detail/service/Record/record.service';
-import { GraphRecordService } from './accueil/ruche-rucher/ruche-detail/service/Record/graph-record.service';
-import { CalendrierHealthService } from './accueil/ruche-rucher/ruche-detail/service/health/calendrier-health.service';
-import { RucheNavbarComponent } from './accueil/ruche-rucher/ruche-detail/ruche-navbar/ruche-navbar.component';
-import { HealthComponent } from './accueil/ruche-rucher/ruche-detail/health/health.component';
-import { StockComponent } from './accueil/ruche-rucher/ruche-detail/stock/stock.component';
-import { HourlyComponent } from './accueil/ruche-rucher/ruche-detail/hourly/hourly.component';
-import { DailyComponent } from './accueil/ruche-rucher/ruche-detail/daily/daily.component';
-import { ObservationComponent } from './accueil/ruche-rucher/ruche-detail/observation/observation.component';
+//import { GraphRecordService } from './accueil/ruche-rucher/ruche-detail/service/Record/graph-record.service';
+//import { CalendrierHealthService } from './accueil/ruche-rucher/ruche-detail/service/health/calendrier-health.service';
 import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from './shared/shared.module';
 
 //import { NgDraggableModule } from 'angular-draggable'; 
 
@@ -98,23 +94,18 @@ import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observat
     RucheRucherComponent,
     MeteoComponent,
     GraphComponent,
-    RucheDetailComponent,
+    //RucheDetailComponent,
     RapportComponent,
     FleursFloraisonComponent,
     DispositionRucheComponent,
-    RucheNavbarComponent,
-    HealthComponent,
-    StockComponent,
-    HourlyComponent,
-    DailyComponent,
-    ObservationComponent
 
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     HttpModule,
-    NavbarModule,
+    //NavbarModule,
     FooterModule,
     SidebarModule,
     RouterModule,
@@ -123,7 +114,8 @@ import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observat
     ReactiveFormsModule,
     HttpClientModule,
     DragAndCheckModule,
-    NgxEchartsModule
+    NgxEchartsModule,
+    SharedModule
     //NgDraggableModule
   ],
   providers: [
@@ -144,14 +136,17 @@ import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observat
     DailyRecordService,
     RucheService,
     CalendrierService,
-    CalendrierPoidsService,
-    DailyRecordsWService,
-    DailyStockHoneyService,
+    //CalendrierPoidsService,
+    //DailyRecordsWService,
+    //DailyStockHoneyService,
     GraphMeteoService,
-    RecordService,
-    GraphRecordService,
-    CalendrierHealthService,
+    //RecordService,
+    //GraphRecordService,
+    //CalendrierHealthService,
     ObservationService
+  ],
+  exports:[
+    //RucheDetailComponent
   ],
   bootstrap: [AppComponent]
 })

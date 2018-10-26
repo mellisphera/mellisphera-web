@@ -1,14 +1,6 @@
-<div class="wrapper">
-  <div class="sidebar" data-color="red" data-image="">
-      <app-sidebar ></app-sidebar>
-      <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
-  </div>
-  <div class="main-panel">
-      <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
-      <router-outlet></router-outlet>
-  </div>
-<app-ruche-navbar></app-ruche-navbar>
-<p>
-  STOCK
-</p>
+<div class="container-fluid" style="background-color:white;">
+  <div class="row content">
+      <div echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width:35%;height:80vh;"></div>  
+      <div echarts [options]="grapheMielService.option" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true" style="width:100%;height:50vh;"></div>
+    </div>
 </div>

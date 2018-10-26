@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router, CanActivate, CanLoad, ActivatedRouteSnapshot, RouterStateSnapshot, Route } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService implements CanActivate, CanLoad {
 
   constructor(
     private router: Router,
@@ -20,5 +20,13 @@ export class AuthGuardService implements CanActivate {
     }
     this.router.navigate(['/login']);
     
+  }
+  
+
+  canLoad(route: Route): boolean {
+    if(sessionStorage.getItem("connexion") == "true"){
+      return true;
+    }
+    this.router.navigate(['/login']);
   }
 }
