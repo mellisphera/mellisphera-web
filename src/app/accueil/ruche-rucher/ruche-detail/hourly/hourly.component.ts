@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { RecordService } from '../service/Record/record.service';
+import { GraphRecordService } from './service/graph-record.service';
 
 @Component({
   selector: 'app-hourly',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HourlyComponent implements OnInit {
 
-  constructor() { }
+  message="";
+  rucheId;
+  constructor(private activatedRoute : ActivatedRoute,
+    public recordService : RecordService,
+    public graphRecordService : GraphRecordService
+    ) { }
 
   ngOnInit() {
+    this.rucheId = this.activatedRoute.snapshot.params.id;
+    this.recordService.getRecordByIdHive(this.rucheId);
+  }
+
+  receiveMessage($event){
+    this.message=$event;
   }
 
 }

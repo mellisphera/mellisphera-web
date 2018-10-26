@@ -13,21 +13,62 @@ const httpOptions = {
 })
 export class ObservationService {
 
-  observationObs : Observable<Observation[]>;
+  observationsObs : Observable<Observation[]>;
+  observationObs : Observable<Observation>;
   observations : Observation[];
-
+  observation : Observation;
   constructor(private http : HttpClient) { }
 
 
   getObservationByIdHive(idHive : string){
-    this.observationObs = this.http.get<Observation[]>(CONFIG.URL+'report/hive/'+idHive);
-    this.observationObs.subscribe(
+    this.observationsObs = this.http.get<Observation[]>(CONFIG.URL+'report/hive/'+idHive);
+    this.observationsObs.subscribe(
       (data)=>{
+        console.log(data);
         this.observations = data;
         console.log(this.observations);
       },
       (err)=>{
         console.log(err);
+      }
+    );
+  }
+
+  createObservation(){
+    this.observationObs = this.http.put<Observation>(CONFIG.URL+'report/insert',this.observation);
+    this.observationObs.subscribe(
+      ()=>{},
+      (err)=>{
+        console.log(err);
+      },
+      ()=>{
+        this.getObservationByIdHive(this.observation.idHive);
+      }
+    );
+  }
+
+  updateObservation(){
+    this.observationObs = this.http.put<Observation>(CONFIG.URL+'report/update/'+this.observation.id,this.observation);
+    this.observationObs.subscribe(
+      ()=>{},
+      (err)=>{
+        console.log(err);
+      },
+      ()=>{
+        this.getObservationByIdHive(this.observation.idHive);
+      }
+    );
+  }
+
+  deleteObservation(){
+    this.observationObs = this.http.delete<Observation>(CONFIG.URL+'report/'+this.observation.id);
+    this.observationObs.subscribe(
+      ()=>{},
+      (err)=>{
+        console.log(err);
+      },
+      ()=>{
+        this.getObservationByIdHive(this.observation.idHive);
       }
     );
   }
