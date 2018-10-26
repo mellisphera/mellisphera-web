@@ -96,7 +96,7 @@ export class CapteurComponent implements OnInit {
 
 
     ngOnInit() {
-        this.getUserRuchers(); 
+       // this.getUserRuchers(); 
         this.selectRadioStock();
         this.getAllCapteur();
         this.radioRucheE=false;
@@ -246,31 +246,31 @@ export class CapteurComponent implements OnInit {
         
     }
 
-    getUserRuchers(){
+   /* getUserRuchers(){
             this.rucherService.getUserRuchers(this.username).subscribe(
                 data => { this.ruchers = data },
                 err => console.error(err));
         
     }
-
+*/
     onSelectRucher(event : any) : void{
         this.selectedRucher=event.target.value;
-        this.getRucheDuRucher();
+        //this.getRucheDuRucher();
         console.log(this.ruches);
         //this.getDetailsRucher();
     }
     
     onSelectRuche(event : any) : void{
         this.selectedRuche=event.target.value;
-        this.getRucheDuRucher();
+        //this.getRucheDuRucher();
         //this.getDetailsRucher();
     }
 
-    getRucheDuRucher(){
+   /* getRucheDuRucher(){
         this.rucherService.getUserRuches(this.username,this.selectedRucher).subscribe(
         data => { this.ruches = data }
         );
-    }
+    }*/
 
     onCancelClicked(){
       this.resetCapteurForm();

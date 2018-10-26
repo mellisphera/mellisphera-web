@@ -71,10 +71,10 @@ export class RapportComponent implements OnInit {
     }
 
     getUserRuchers(){
-      this.rucherService.getUserRuchers(this.username).subscribe(
+     /* this.rucherService.getUserRuchers(this.username).subscribe(
         data => { this.ruchers = data;},
         err => console.error(err)
-      );  
+      ); */ 
     }
     
     getAnalyseTemp(FormRapport){
