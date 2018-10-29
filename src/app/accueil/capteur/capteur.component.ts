@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CapteurService } from './capteur.service';
-import { FormGroup, FormBuilder, Validators,FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators,FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RucherService } from '../ruche-rucher/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
@@ -71,112 +71,97 @@ export class CapteurComponent implements OnInit {
                     public capteurService : CapteurService,
                     private _selectedRucherService : selectedRucherService, ) { 
 
-        
-        this.newCapteurForm = formBuilder.group({
-                            'reference': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(20)])],
-                            'type': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(400)])],
-                            'description': [null],
-                            'selectedRucher': [null],
-                            'selectedRuche': [null],
-                            'checkbox': [],
-                            'validate' : ``
-                        })                
-                
-        this.editCapteurForm = formBuilder.group({
-                            'selectedRucher': [null],
-                            'selectedRuche': [null],
-                            'checkbox': [],
-                            'description': [null],
-                            'validate' : ``
-                        })                
+                   
         this.username = data.currentUser().username;
-        this.type = {id : "", sensorRef: "", type : "", dateSold : "", soldTo : "", soldToEmail : ""}
+        this.type = {id : "", sensorRef: "", type : "", dateSold : "", soldTo : "", soldToEmail : ""};
+        this.initForm();
         
     }
 
 
     ngOnInit() {
        // this.getUserRuchers(); 
-        this.selectRadioStock();
+      /*  this.selectRadioStock();
         this.getAllCapteur();
         this.radioRucheE=false;
-        this.radioStockE=true;
+        this.radioStockE=true;*/
 }
 
     selectRadioStock(){
-        this.editedSensorMsg=false;
+       /* this.editedSensorMsg=false;
         this.radioRuche=false;
         this.radioStock=true;
 
         this.selectedRucher=null;
         this.selectedRuche=null;
         this.newCapteurForm.get('selectedRuche').clearValidators();
-        this.newCapteurForm.get('selectedRuche').updateValueAndValidity();
+        this.newCapteurForm.get('selectedRuche').updateValueAndValidity();*/
         
     }
 
     selectRadioRuche(){
         this.radioRuche=true;
+       /* this.radioRuche=true;
         this.radioStock=false;
 
         this.newCapteurForm.get('selectedRuche').setValidators([Validators.required]);
-        this.newCapteurForm.get('selectedRuche').updateValueAndValidity();
+        this.newCapteurForm.get('selectedRuche').updateValueAndValidity();*/
     }
 
     selectRadioStockE(){
-        this.editedSensorMsgE=false;
+      /*  this.editedSensorMsgE=false;
         this.radioRucheE=false;
         this.radioStockE=true;
 
         this.selectedRucherEdit=null;
         this.selectedRucheEdit=null;
         this.editCapteurForm.get('selectedRuche').clearValidators();
-        this.editCapteurForm.get('selectedRuche').updateValueAndValidity();
+        this.editCapteurForm.get('selectedRuche').updateValueAndValidity();*/
         
     }
 
     selectRadioRucheE(){
-        this.radioRucheE=true;
+       /* this.radioRucheE=true;
         this.radioStockE=false;
 
         this.editCapteurForm.get('selectedRuche').setValidators([Validators.required]);
-        this.editCapteurForm.get('selectedRuche').updateValueAndValidity();
+        this.editCapteurForm.get('selectedRuche').updateValueAndValidity();*/
     }
 
-
-
     capteurForm(){
-        this._router.navigate(['/nouveau-capteur']);
+       // this._router.navigate(['/nouveau-capteur']);
     }
 
     getAllCapteur(){
        
-        this.capteurService.getUserCapteurs(this.username).subscribe(
+       /* this.capteurService.getUserCapteurs(this.username).subscribe(
           data => {this.capteurs=data;},
           err  => {});
-       
+       */
     }
 
     selectCapteur(capteur){
-        this.selectedCapteur=capteur;
+       /* this.selectedCapteur=capteur;
         this.descriptionE = this.selectedCapteur.description;
         this.selectedRucherEdit.id = this.selectedCapteur.idApiary;
-        this.selectedRucheEdit.id = this.selectedCapteur.idHive;
+        this.selectedRucheEdit.id = this.selectedCapteur.idHive;*/
     }
 
 
     checkCapteurType(value : any){       
-            this.capteurService.checkCapteurType(value).subscribe(
+       /*     this.capteurService.checkCapteurType(value).subscribe(
                 data =>{ 
                     this.type=data;
                 },
                 ( error => this.errorMsg=error)
-               );
+               );*/
     } 
 
    //CREATE CAPTEUR
-    createCapteur(capteur){
-        this.capteur.reference=this.reference;
+    createCapteur(){
+        var formValue = this.newCapteurForm.value;
+        console.log(formValue);
+       /* this.capteur.reference=this.reference;
         this.capteur.type=this.newCapteurForm.controls['type'].value;
         this.capteur.description=this.description;
         
@@ -204,25 +189,27 @@ export class CapteurComponent implements OnInit {
         this.radioStock=true;
         
         alert("Votre Capteur a été créé");
-        this.subscribeToData();
+        this.subscribeToData();*/
     }  
-
+    getTypeCapteur(){
+        return this.newCapteurForm.get('checkbox');
+    }
 
     //DELETE CAPTEUR
 
     deleteCapteur(capteur){
-        this.selectedCapteur = capteur;
+       /* this.selectedCapteur = capteur;
         if (confirm("Etes vous sure de vouloir supprimer : " + this.selectedCapteur.reference + "?")) {
           this.capteurService.deleteCapteur(this.selectedCapteur).subscribe(
               data => {},
                ( error => this.errorMsg=error));
         }
-        this.subscribeToData();
+        this.subscribeToData();*/
      
     }
 
     updateCapteur(x){
-      
+      /*
         if(this.radioStockE){
             this.selectedCapteur.idHive = "stock";
             this.selectedCapteur.idApiary = "stock";
@@ -243,7 +230,7 @@ export class CapteurComponent implements OnInit {
         this.radioRucheE=false;
         this.radioStockE=true;
         this.subscribeToData();
-        
+        */
     }
 
    /* getUserRuchers(){
@@ -254,14 +241,14 @@ export class CapteurComponent implements OnInit {
     }
 */
     onSelectRucher(event : any) : void{
-        this.selectedRucher=event.target.value;
+      /*  this.selectedRucher=event.target.value;
         //this.getRucheDuRucher();
         console.log(this.ruches);
-        //this.getDetailsRucher();
+        //this.getDetailsRucher();*/
     }
     
     onSelectRuche(event : any) : void{
-        this.selectedRuche=event.target.value;
+      /*  this.selectedRuche=event.target.value;*/
         //this.getRucheDuRucher();
         //this.getDetailsRucher();
     }
@@ -273,34 +260,52 @@ export class CapteurComponent implements OnInit {
     }*/
 
     onCancelClicked(){
-      this.resetCapteurForm();
+     /* this.resetCapteurForm();
       this.editedSensorMsg=false;
-      this.editCapteurForm.reset();
+      this.editCapteurForm.reset();*/
     }
 
     resetCapteurForm(){
-        this.newCapteurForm.get('reference').reset();
+       /* this.newCapteurForm.get('reference').reset();
         this.newCapteurForm.get('type').reset();
-        this.newCapteurForm.get('description').reset();
+        this.newCapteurForm.get('description').reset();*/
     }
 
     onCancelClickedE(){
-        this.resetCapteurEditForm();
+      /* this.resetCapteurEditForm();
         this.editedSensorMsgE=false;
-        this.editCapteurForm.reset();
+        this.editCapteurForm.reset();*/
     }
 
     resetCapteurEditForm(){
-        this.editCapteurForm.get('description').reset();
+      /*  this.editCapteurForm.get('description').reset();
         this.radioRucheE=false;
-        this.radioStockE=true;
+        this.radioStockE=true;*/
     }
 
     private subscribeToData(): void {
-        this.timerSubscription = Observable.timer(200).first().subscribe(() => this.getAllCapteur());
+       // this.timerSubscription = Observable.timer(200).first().subscribe(() => this.getAllCapteur());
     }
 
 
+    initForm(){
+        this.newCapteurForm = this.formBuilder.group({
+            'reference': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(20)])],
+            'type': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(400)])],
+            'description': [null],
+            'selectedRucher': [null],
+            'selectedRuche': [null],
+            'checkbox': [],
+            'validate' : ``
+        })                
 
+        /*this.editCapteurForm = this.formBuilder.group({
+            'selectedRucher': [null],
+            'selectedRuche': [null],
+            'checkbox': [],
+            'description': [null],
+            'validate' : ``
+        }) */
+    }
  
 }

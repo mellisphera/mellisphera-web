@@ -107,7 +107,7 @@
                                   </thead>
                                   <tbody>
                                     
-                                    <tr *ngFor="let ap of apiaryObs" >
+                                    <tr *ngFor="let ap of rucherService.observationService.observationsApiary" >
                                       <td>
                                           {{ap.date}}
                                       </td>
@@ -137,57 +137,46 @@
   
   
       <div class="col-sm-3 sidenav" style="background-color: rgba(236, 234, 234, 0.49); height:1500px;border-color:black;">
-   
-        <button data-toggle="tooltip" data-html="true"  data-toggle="modal" type="button" (click)="editRucherClicked()"
-                                                         class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none; ">
+        <button data-toggle="tooltip" data-html="true"  data-toggle="modal" type="button" (click)="editRucherClicked()" [disabled]="updateRucherInput" class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none; ">
             <i class="fa fa-edit"></i>
         </button>
-        <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;  " (click)="deleteRucher(detailsRucher)">
+        <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;  " (click)="deleteRucher()">
           <i class="fa fa-times"></i>
         </button>
         <div *ngIf="!updateRucherInput">
-          <h4 class="text-center">{{detailsRucher.name}} </h4>
-          <h5 class="text-center"><b> </b>{{detailsRucher.ville}}</h5>
-          <h5 class="text-center"><b> </b>{{detailsRucher.codePostal}}</h5>
-          <p class="text-center"><b> </b>{{detailsRucher.description}}</p>
+          <h4 class="text-center">{{rucherService.detailsRucher.name}} </h4>
+          <h5 class="text-center"><b> </b>{{rucherService.detailsRucher.ville}}</h5>
+          <h5 class="text-center"><b> </b>{{rucherService.detailsRucher.codePostal}}</h5>
+          <p class="text-center"><b> </b>{{rucherService.detailsRucher.description}}</p>
         </div>
           <div *ngIf="updateRucherInput">
-              <form [formGroup]="rucherForm" (ngSubmit)="onEditerRucher(rucherForm.value) ">
+              <form [formGroup]="rucherForm" (ngSubmit)="onEditerRucher() ">
                 <h4 class="text-center">Editer Rucher</h4>
                 <div class="form-group row"  >
                    <div class="col-md-12">
                     <label for="recipient-name" class="col-form-label">Nom : </label>
-                    <input [(ngModel)]="detailsRucher.name" formControlName="nom" type="text" class="form-control text-left" id="recipient-name" >
+                    <input formControlName="nom" type="text" class="form-control text-left" id="recipient-name" >
                   </div>  
                   <div class="col-md-12">
-                    <div class="alert alert-danger" *ngIf="rucherForm.controls['nom'].invalid">
-                        Veuillez saisir un nom
-  
-                    </div>
+                    <div class="alert alert-danger" *ngIf="rucherForm.controls['nom'].invalid">Veuillez saisir un nom</div>
                   </div>
                 </div>
                 <div class="form-group row"  >
                     <div class="col-md-12">
                       <label for="recipient-name" class="col-form-label">Ville :  </label>
-                      <input [(ngModel)]="detailsRucher.ville" formControlName="ville" type="text" class="form-control text-left" id="recipient-name">
+                      <input formControlName="ville" type="text" class="form-control text-left" id="recipient-name">
                     </div>
                     <div class="col-md-12">
-                      <div class="alert alert-danger" *ngIf="rucherForm.controls['ville'].invalid ">
-                          Veuillez saisir une ville
-                      </div>
+                      <div class="alert alert-danger" *ngIf="rucherForm.controls['ville'].invalid ">Veuillez saisir une ville</div>
                     </div>
-                    
                 </div>
-  
                 <div class="form-group row"  >
                   <div class="col-md-12">
                     <label for="recipient-name" class="col-form-label">Code Postal :  </label>
-                    <input [(ngModel)]="detailsRucher.codePostal" formControlName="codePostal" type="text" class="form-control text-left" id="recipient-name">
+                    <input formControlName="codePostal" type="text" class="form-control text-left" id="recipient-name">
                   </div>
                   <div class="col-md-12">
-                    <div class="alert alert-danger" *ngIf="rucherForm.controls['codePostal'].invalid ">
-                        Veuillez saisir un Code Postal
-                    </div>
+                    <div class="alert alert-danger" *ngIf="rucherForm.controls['codePostal'].invalid ">Veuillez saisir un Code Postal</div>
                   </div>
                   
               </div>
@@ -197,16 +186,13 @@
                       <label for="recipient-name" class="col-form-label">Description : </label>
                     </div>
                     <div class="col-md-12">
-                      <textarea [(ngModel)]="detailsRucher.description" formControlName="description"  type="text" class="form-control text-left" id="recipient-name"></textarea>
-               
-                      <div class="alert alert-danger" *ngIf="rucherForm.controls['description'].invalid ">
-                          Veuillez saisir une description
-                      </div>
+                      <textarea formControlName="description"  type="text" class="form-control text-left" id="recipient-name"></textarea>
+                      <div class="alert alert-danger" *ngIf="rucherForm.controls['description'].invalid ">Veuillez saisir une description</div>
                      
                     </div>
                 </div>
-                <button type="button" class="btn btn-success" data-dismiss="modal" [disabled]="rucherForm.invalid" (click)="onEditerRucher(rucherForm.value)">Sauvegarder</button>
-                <button type="button" class="btn btn-danger" (click)="editRucherClicked()">Annuler</button>
+                <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="onEditerRucher()" [disabled]="rucherForm.invalid">Sauvegarder</button>
+                <button type="reset" class="btn btn-danger" (click)="updateRucherInput=false;">Annuler</button>
               </form>
           </div>
         <!--End of editing Rucher  DIV-->
@@ -257,12 +243,11 @@
                     Veuillez saisir le nom de le codePostal
                   </div>
               </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="Créer Rucher" (click)="createRucher()" [disabled]="!rucherForm.valid">Créer Rucher</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
+            </div>
           </form>
-        </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary"  data-dismiss="modal" (click)="createRucher()"   value="Créer Rucher" [disabled]="!rucherForm.valid">Créer Rucher</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetForm()">Fermer</button>
-          
         </div>
       </div>
     </div>
@@ -285,29 +270,22 @@
           <form  [formGroup]="newRucheForm" (ngSubmit)="createRuche()">
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Nom :</label>
-              <input [(ngModel)]="nomRuche" formControlName="nomRuche" type="text" class="form-control" id="recipient-name">
+              <input formControlName="nomRuche" type="text" class="form-control" id="recipient-name">
             </div>
-  
             <div class="form-group">
               <label for="message-text" class="col-form-label">Description :</label>
-              <textarea [(ngModel)]="descriptionRuche"   formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
+              <textarea formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
             </div>
-  
             <div *ngIf="!selectedRucher">
-              <div class="alert alert-danger" >
-                Veuillez selectionner un rucher dans la page précédente !
-              </div>
+              <div class="alert alert-danger" >Veuillez selectionner un rucher dans la page précédente !</div>
             </div>
-            
             <div *ngIf="selectedRucher">
-             
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="createRuche();" [disabled]="!newRucheForm.valid" > Créer Ruche</button>
+              <button type="reset" class="btn btn-secondary" (click)="initForm()" data-dismiss="modal">Fermer</button>
             </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="createRuche()" > Créer Ruche</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetRucheForm()">Fermer</button>
-         
         </div>
       </div>
     </div>
@@ -325,32 +303,26 @@
             </button>
           </div>
           <div class="modal-body">
-            <form  [formGroup]="newRucheForm" (ngSubmit)="onEditerRuche()">
-    
-                <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">Rucher :</label>
-                    <select  [(ngModel)]="rucherService.rucherSelectUpdate"  formControlName="rucheRucher"  class="form-control" id="sel1">
-                      <ng-container  *ngFor="let rucher of rucherService.ruchers" >
-                            <option [value]="rucher.id">
-                              {{rucher.name}}
-                            </option>
-                        </ng-container>
-                    </select>
-                </div>
+              <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Rucher :</label>
+                  <select  [(ngModel)]="rucherService.rucherSelectUpdate" class="form-control">
+                      <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option> 
+                  </select>
+              </div>
+            <form [formGroup]="newRucheForm" (ngSubmit)="onEditeRuche()">
               <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Nom :</label>
-                <input [(ngModel)]="nomRuche" formControlName="nomRuche" type="text" class="form-control" id="recipient-name">
+                <input formControlName="nomRuche" type="text" class="form-control" id="recipient-name">
               </div>
-    
               <div class="form-group">
                 <label for="message-text" class="col-form-label">Description :</label>
-                <textarea [(ngModel)]="descriptionRuche"   formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
+                <textarea  formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
               </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditerRuche(newRucheForm.value)" [disabled]="!newRucheForm.valid">Editer Ruche</button>
-              <button type="button" class="btn btn-secondary"  data-dismiss="modal" (click)="resetRucheForm()">Fermer</button>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" [disabled]="!newRucheForm.valid">Editer Ruche</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
+              </div>
+          </form>
           </div>
         </div>
       </div>
@@ -371,16 +343,17 @@
           </button>
         </div>
         <div class="modal-body">
-          <form  [formGroup]="observationForm" (ngSubmit)="createRuche(observationForm.value)">
+          <form  [formGroup]="observationForm" (ngSubmit)="createObservation()">
             <div class="form-group">
+              <input type="datetime-local" formControlName="date">
               <label for="recipient-obs" class="col-form-label">Observations :</label>
-              <textarea [(ngModel)]="sentence" formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
+              <textarea formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
             </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="createObservation()" [disabled]="!observationForm.valid" > Créer Observation</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
+              </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" (click)="createObservation(observationForm.value)" [disabled]="!observationForm.valid" > Créer Observation</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetObservationForm()">Fermer</button>
         </div>
       </div>
     </div>
@@ -399,16 +372,16 @@
           </button>
         </div>
         <div class="modal-body">
-          <form  [formGroup]="observationForm" (ngSubmit)="onEditObservation(observationForm.value)">
+          <form  [formGroup]="observationForm" (ngSubmit)="onEditObservation()">
             <div class="form-group">
               <label for="recipient-editobs" class="col-form-label">Observations :</label>
-              <textarea [(ngModel)]="sentence" formControlName="sentence" type="text" class="form-control" id="recipient-editobs" value="{{ selectedObs.sentence }}"></textarea>
+              <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
             </div> 
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="onEditObservation()" [disabled]="!observationForm.valid" > Modifier Observation</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
+              </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" (click)="onEditObservation(observationForm.value)" [disabled]="!observationForm.valid" > Modifier Observation</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetObservationForm()">Fermer</button>
         </div>
       </div>
     </div>

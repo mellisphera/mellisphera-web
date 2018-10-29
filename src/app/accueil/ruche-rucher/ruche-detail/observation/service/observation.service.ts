@@ -15,7 +15,8 @@ export class ObservationService {
 
   observationsObs : Observable<Observation[]>;
   observationObs : Observable<Observation>;
-  observations : Observation[];
+  observationsHive : Observation[];
+  observationsApiary : Observation[];
   observation : Observation;
   constructor(private http : HttpClient) { }
 
@@ -25,8 +26,8 @@ export class ObservationService {
     this.observationsObs.subscribe(
       (data)=>{
         console.log(data);
-        this.observations = data;
-        console.log(this.observations);
+        this.observationsHive = data;
+        console.log(this.observationsHive);
       },
       (err)=>{
         console.log(err);
@@ -34,6 +35,18 @@ export class ObservationService {
     );
   }
 
+  getObservationByIdApiary(idApiary : string){
+    this.http.get<Observation[]>(CONFIG.URL+'report/apiary/'+idApiary).subscribe(
+      (data)=>{
+        console.log(data);
+        this.observationsApiary = data;
+        console.log(this.observationsApiary);
+      },
+      (err)=>{
+        console.log(err);
+      }
+    );
+  }
   createObservation(){
     this.observationObs = this.http.put<Observation>(CONFIG.URL+'report/insert',this.observation);
     this.observationObs.subscribe(
@@ -43,6 +56,7 @@ export class ObservationService {
       },
       ()=>{
         this.getObservationByIdHive(this.observation.idHive);
+        this.getObservationByIdApiary(this.observation.idApiary);
       }
     );
   }
@@ -69,6 +83,7 @@ export class ObservationService {
       },
       ()=>{
         this.getObservationByIdHive(this.observation.idHive);
+        this.getObservationByIdApiary(this.observation.idApiary);
       }
     );
   }

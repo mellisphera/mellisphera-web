@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http'
 import { CONFIG } from '../../../../config';
 import { RucherService } from '../../ruche-rucher/rucher.service';
 import { Observable } from 'rxjs';
+import { ObservationService } from '../../ruche-rucher/ruche-detail/observation/service/observation.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,7 +21,7 @@ export class RucheService {
 
   rucheObs : Observable<RucheInterface>;
   ruchesObs : Observable<RucheInterface[]>;
-  constructor(private user : UserloggedService, private http : HttpClient) {
+  constructor(private user : UserloggedService, private http : HttpClient, private observationService : ObservationService) {
     this.ruches = [];
   /* if(sessionStorage.getItem("idApiaryUpdate")){
       let id = sessionStorage.getItem("idApiaryUpdate");
@@ -34,25 +35,20 @@ export class RucheService {
       this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username+'/'+idApiary)
       this.ruchesObs.subscribe(
         (data)=>{
-          data.forEach(element=>{
-            this.ruches.push({
-              id : element.id, 
-              name : element.name, 
-              description : element.description,
-               username : element.username, 
-               idApiary : element.idApiary , 
-               hivePosX : element.hivePosX , 
-               hivePosY : element.hivePosY});
-          });
+          console.log(data);
+          this.ruches = data;
         },
         (err)=>{
           console.log(err);
+        },
+        ()=>{
+          this.observationService.getObservationByIdApiary(idApiary);
         }
         
       )
    }
 
-   updateCoordonneesRuche(ruche){
+  updateCoordonneesRuche(ruche){
     this.rucheObs = this.http.put<RucheInterface>(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,ruche,httpOptions)
     this.rucheObs.subscribe(
       ()=>{
@@ -64,11 +60,23 @@ export class RucheService {
     );
   }
 
-   cleanRuches(){
+  updateRuche(lastIdApiary : string) {
+   this.rucheObs = this.http.put<RucheInterface>(CONFIG.URL+'hives/update/' + this.ruche.id, this.ruche, httpOptions);
+   this.rucheObs.subscribe(
+     ()=>{},
+     (err)=>{
+       console.log(err);
+     },
+     ()=>{
+       this.getRucheByApiary(this.user.currentUser().username,lastIdApiary);
+     }
+   );
+  }
+  cleanRuches(){
      this.ruches=[];
-   }
+  }
 
-   createRuche(){
+  createRuche(){
     this.rucheObs = this.http.post<RucheInterface>(CONFIG.URL+'hives', this.ruche , httpOptions);
     this.rucheObs.subscribe(
       ()=>{},
@@ -79,7 +87,20 @@ export class RucheService {
         this.getRucheByApiary(this.user.currentUser().username,this.ruche.idApiary);
       }
     );
-   }
+  }
+
+  deleteRuche() {
+    this.rucheObs = this.http.delete<RucheInterface>(CONFIG.URL+'hives/' + this.ruche.id);
+    this.rucheObs.subscribe(
+      ()=>{},
+      (err)=>{
+        console.log(err);
+      },
+      ()=>{
+        this.getRucheByApiary(this.user,this.ruche.idApiary);
+      }
+    );
+  }
 
 
 }
