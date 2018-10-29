@@ -43,7 +43,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>                                  
-                                                    <tr *ngFor="let capteur of capteurs">
+                                                    <tr *ngFor="let capteur of capteurService.capteursByUser">
                                                         <td>{{capteur.reference}}</td>
                                                         <td>{{capteur.description}}</td>
                                                         <td>{{capteur.apiaryName}} | {{capteur.hiveName}}</td>
@@ -92,18 +92,18 @@
   </button>
 </div>
 <div class="modal-body">
-    <form  [formGroup]="newCapteurForm" (ngSubmit)="createCapteur(newCapteurForm.value)">
+    <form  [formGroup]="newCapteurForm" (ngSubmit)="createCapteur()">
         <div class="form-group row">
             <div class="col-md-6" >
                 <label for="recipient-name" class="col-form-label">Référence (*):</label>
-                <input #ref (keyup)="checkCapteurType(ref.value)" [(ngModel)]="reference" formControlName="reference" type="text" class="form-control" id="recipient-name">
+                <input #ref (keyup)="capteurService.checkCapteurType(ref.value)"formControlName="reference" type="text" class="form-control" id="recipient-name">
                 <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].touched">
                     Veuillez saisir une reference valide
                 </div>
             </div>
             <div class="col-md-6">
                 <label for="recipient-name" class="col-form-label"  >Type :</label>
-                <input [(ngModel)]="type.type" formControlName="type" disabled="true" type="text" class="form-control" id="recipient-name" >
+                <input formControlName="type" disabled="true" type="text" [value]="capteurService.capteur.type" class="form-control" id="recipient-name" >
                 <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['type'].valid && newCapteurForm.controls['reference'].touched">
                     Vérifiez la référence de votre capteur
                 </div>   
@@ -111,49 +111,44 @@
         </div>
         <div class="form-group">
             <label for="message-text" class="col-form-label">Description :</label>
-            <input [(ngModel)]="description"   formControlName="description" class="form-control" id="message-text">
+            <input formControlName="description" class="form-control" id="message-text">
         </div>
         <div class="form-group ">          
-            <label  class="col-form-label" for="exampleRadios1" >
-                Affecter à :  
-            </label>
+            <label  class="col-form-label" for="exampleRadios1" >Affecter à :  </label>
             <div class="form-check">
-                <label class="form-check-label" for="exampleRadios1" >
-                    Stock 
+                <label class="form-check-label" for="exampleRadios1" >Stock 
                 </label>
-                <input class="form-check-input" (change)="selectRadioStock()" type="radio" formControlName="checkbox" name="checkbox"  [checked]="radioStock">
-                <label class="form-check-label" for="exampleRadios1">
-                    Ruche 
-                </label>
-                <input class="form-check-input" (change)="selectRadioRuche()" type="radio" formControlName="checkbox" name="checkbox" [checked]="radioRuche">                      
-            </div>
-        </div>
-        <div *ngIf="radioRuche">
-            <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Rucher :</label>
-                <select  [(ngModel)]="selectedRucher"  formControlName="selectedRucher" class="form-control " id="sel1">
-                    <option  *ngFor="let rucher of ruchers" [value]="rucher.id" (click)="onSelectRucher($event)" >
-                        {{rucher.name}}
-                    </option>
-                </select>   
-            </div>                 
-            <div class="form-group ">
-                <label for="message-text" class="col-form-label">Ruche :</label>
-                <select  [(ngModel)]="selectedRuche" formControlName="selectedRuche"  (click)="onSelectRuche($event)" class="form-control " id="sel1">
-                    <option  *ngFor="let ruche of ruches" [value]="ruche.id" >
-                        {{ruche.name}}
-                    </option>
-                </select>   
-                <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].untouched">
-                    Veuillez choisir une ruche
-                </div>        
+                <input class="form-check-input" value="stock" type="radio" formControlName="checkbox">
+                <label class="form-check-label" for="exampleRadios1">Ruche </label>
+                <input class="form-check-input" value="ruche" type="radio" formControlName="checkbox">                   
             </div>
         </div>
     </form>
+    <div *ngIf="getTypeCapteur().value=='ruche'">
+        <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Rucher :</label>
+            <select [(ngModel)]="rucherService.rucher" class="form-control" >
+                <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher" >
+                    {{rucher.name}}
+                </option>
+            </select>   
+        </div>                 
+        <div class="form-group ">
+            <label for="message-text" class="col-form-label">Ruche :</label>
+            <select [(ngModel)]="rucherService.rucheService.ruche" id="sel1" class="form-control">
+                <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="ruche" >
+                    {{ruche.name}}
+                </option>
+            </select>   
+            <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].untouched">
+                Veuillez choisir une ruche
+            </div>        
+        </div>
+    </div>
 </div>
 <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" [disabled]="!newCapteurForm.valid" (click)="createCapteur(newCapteurForm.value)" > Ajouter Capteur</button>
-       <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClicked()">Fermer</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!newCapteurForm.valid" > Ajouter Capteur</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClicked()">Fermer</button>
 </div>
 </div>
 </div>

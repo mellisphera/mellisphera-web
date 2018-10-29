@@ -98,19 +98,19 @@ export class NouveauCapteurComponent implements OnInit {
     }
 
     getAllCapteur(){
-        console.log("this username :"+  this.username);
+       /* console.log("this username :"+  this.username);
        
         this.capteurService.getUserCapteurs(String(this.username)).subscribe(
           data => {this.capteurs=data;},
           err  => {console.log(err)},
           () => console.log('done loading sensors')
-        );
+        );*/
        
     }
 
    //CREATE CAPTEUR
     createCapteur(capteur){
-        this.capteur.reference=this.reference;
+        /*this.capteur.reference=this.reference;
         this.capteur.type=this.type;
         this.capteur.description=this.description;
         var idRuche = String(this.selectedRuche);
@@ -131,8 +131,8 @@ export class NouveauCapteurComponent implements OnInit {
        
     
         alert("Votre Capteur a été créé");
-        //this.subscribeToData();
-    }  
+        //this.subscribeToData();*/
+    } 
 
     //DELETE CAPTEUR
 
