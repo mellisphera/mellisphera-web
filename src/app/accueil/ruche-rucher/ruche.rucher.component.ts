@@ -61,7 +61,7 @@ export class RucheRucherComponent implements OnInit {
                 private data : UserloggedService,
                 private _selectedRucherService : selectedRucherService,
                 private _rapportService : RapportService,
-                private rucheService : RucheService) {
+                public rucheService : RucheService) {
 
 
         
