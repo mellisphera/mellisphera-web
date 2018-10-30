@@ -69,58 +69,6 @@ export class CapteurComponent implements OnInit {
         this.radioStockE=true;*/
 }
 
-    selectRadioStock(){
-       /* this.editedSensorMsg=false;
-        this.radioRuche=false;
-        this.radioStock=true;
-
-        this.selectedRucher=null;
-        this.selectedRuche=null;
-        this.newCapteurForm.get('selectedRuche').clearValidators();
-        this.newCapteurForm.get('selectedRuche').updateValueAndValidity();*/
-        
-    }
-
-    selectRadioRuche(){
-       /* this.radioRuche=true;
-        this.radioStock=false;
-
-        this.newCapteurForm.get('selectedRuche').setValidators([Validators.required]);
-        this.newCapteurForm.get('selectedRuche').updateValueAndValidity();*/
-    }
-
-    selectRadioStockE(){
-      /*  this.editedSensorMsgE=false;
-        this.radioRucheE=false;
-        this.radioStockE=true;
-
-        this.selectedRucherEdit=null;
-        this.selectedRucheEdit=null;
-        this.editCapteurForm.get('selectedRuche').clearValidators();
-        this.editCapteurForm.get('selectedRuche').updateValueAndValidity();*/
-        
-    }
-
-    selectRadioRucheE(){
-       /* this.radioRucheE=true;
-        this.radioStockE=false;
-
-        this.editCapteurForm.get('selectedRuche').setValidators([Validators.required]);
-        this.editCapteurForm.get('selectedRuche').updateValueAndValidity();*/
-    }
-
-    capteurForm(){
-       // this._router.navigate(['/nouveau-capteur']);
-    }
-
-    getAllCapteur(){
-       
-       /* this.capteurService.getUserCapteurs(this.username).subscribe(
-          data => {this.capteurs=data;},
-          err  => {});
-       */
-    }
-
     onChangeCapteur($event){
         this.capteurService.capteur = $event.target.value;
         console.log(this.capteurService.capteur);
@@ -131,6 +79,7 @@ export class CapteurComponent implements OnInit {
             checkbox: this.capteurService.capteur.hiveName,
             description: this.capteurService.capteur.description,
         };
+        this.editCapteurForm.setValue(donnée);
         this.editCapteurCheckbox = donnée.checkbox != "stock";
     }
 
