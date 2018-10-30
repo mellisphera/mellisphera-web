@@ -34,15 +34,9 @@ export class RucherService {
         private dailyRec : DailyRecordService,
         public observationService : ObservationService) {
         this.getUserRuchersLast(this.user.currentUser().username);
-        this.rucheService.ruche = { 
-            id : '',
-            name : '',
-            description : '',
-            username : '',
-            idApiary: '',
-            hivePosX : '',
-            hivePosY : ''
-         }
+        this.initRuche();
+    }
+    initRuche(){
          this.rucherSelectUpdate = {
             id : '',
             latitude: '',

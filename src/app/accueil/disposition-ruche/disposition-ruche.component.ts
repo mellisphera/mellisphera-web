@@ -152,11 +152,13 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     this.position.y  =''+(parseInt(top+deplacement[1]) *100) / heightcontainer;
     console.log(this.position);
     if(parseInt(this.position.x) > 99 || parseInt(this.position.x) < 0){ this.position.x = ''+50;
-      this.rucheService.cleanRuches();
+      this.position.x = ""+50;
+      this.position.y = ""+50;
       //this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
     }
     if(parseInt(this.position.y) > 99 || parseInt(this.position.y) < 0){ this.position.y = ''+50;
-      this.rucheService.cleanRuches();
+      this.position.x = ""+50;
+      this.position.y = ""+50;
       //this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
     }
     console.log(this.position);

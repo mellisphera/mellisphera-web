@@ -1,3 +1,8 @@
 var chartPoid = echarts.init(document.getElementById("second"));
-var options = {};
+
+var options ={
+
+
+}
+
 chartPoid.setOption(options);

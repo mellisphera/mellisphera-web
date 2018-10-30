@@ -152,13 +152,14 @@ deleteRuche(ruche){
 createRuche(){
   const formValue = this.newRucheForm.value;
   console.log(formValue);
+  this.rucheService.initRuche();
   console.log(this.rucherService.rucheService.ruche);
-  this.rucherService.rucheService.ruche.id= null;
-  this.rucherService.rucheService.ruche.idApiary = this.rucherService.rucher.id;
-  this.rucherService.rucheService.ruche.description = formValue.descriptionRuche;
-  this.rucherService.rucheService.ruche.name = formValue.nomRuche;
-  this.rucherService.rucheService.ruche.username = this.username;
-  console.log(this.rucherService.rucheService.ruche);
+  this.rucheService.ruche.id= null;
+  this.rucheService.ruche.idApiary = this.rucherService.rucher.id;
+  this.rucheService.ruche.description = formValue.descriptionRuche;
+  this.rucheService.ruche.name = formValue.nomRuche;
+  this.rucheService.ruche.username = this.username;
+  console.log(this.rucheService.ruche);
   this.initForm();
   this.rucheService.createRuche();
 }
@@ -243,7 +244,12 @@ initForm(){
     'validate' : ``
   })
 }
-   
+  
+cancelUpdateRucher(){
+  this.updateRucherInput=false;
+  this.initForm();
+}
+
 receiveMessage($event){
   this.message=$event;
 }
