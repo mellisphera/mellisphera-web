@@ -23,19 +23,31 @@ export class RucheService {
   ruchesObs : Observable<RucheInterface[]>;
   constructor(private user : UserloggedService, private http : HttpClient, private observationService : ObservationService) {
     this.ruches = [];
+    this.initRuche();
   /* if(sessionStorage.getItem("idApiaryUpdate")){
       let id = sessionStorage.getItem("idApiaryUpdate");
       console.log(id);
       this.getRucheByApiary(this.user.currentUser().username,id);
     }*/
    }
-
+   initRuche(){
+    this.ruche = { 
+      id : null,
+      name : '',
+      description : '',
+      username : '',
+      idApiary: '',
+      hivePosX : '',
+      hivePosY : ''
+   }
+   }
    getRucheByApiary(username , idApiary){
       this.ruches = [];
       this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username+'/'+idApiary)
       this.ruchesObs.subscribe(
         (data)=>{
           console.log(data);
+          this.ruche = data[data.length-1];
           this.ruches = data;
         },
         (err)=>{

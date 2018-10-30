@@ -70,6 +70,7 @@ import { RecordService } from './accueil/ruche-rucher/ruche-detail/service/Recor
 import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './shared/shared.module';
+import { PipeCapteur } from './accueil/capteur/capteur.pipe';
 
 //import { NgDraggableModule } from 'angular-draggable'; 
 
@@ -98,6 +99,7 @@ import { SharedModule } from './shared/shared.module';
     RapportComponent,
     FleursFloraisonComponent,
     DispositionRucheComponent,
+    PipeCapteur
 
   ],
   imports: [

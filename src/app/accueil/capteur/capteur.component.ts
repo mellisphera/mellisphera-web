@@ -12,6 +12,7 @@ import { CapteurInterface } from '../../_model/capteur';
 import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
+import { ninvoke } from 'q';
 
 @Component({
   selector: 'app-capteur',
@@ -21,34 +22,16 @@ import { selectedRucherService } from '../_shared-services/selected-rucher.servi
 export class CapteurComponent implements OnInit {
 
   username: string;
-  ruchers: any [] = [];
-  capteurs : any[] = []; 
-  sensors ;
-  selectedRucher = new Rucher();
-  selectedRuche = new Ruche();
-  selectedRucherEdit = new Rucher();
-  selectedRucheEdit = new Ruche();
-  selectedCapteur = new Capteur();
-  capteurEdit = new Capteur();
+
+  editCapteurCheckbox : boolean;
+
   //variable to store ruches
   ruches: any [] = [];
   //for new sensor
   newCapteurForm : FormGroup;
   //to edit a sensor
   editCapteurForm : FormGroup;
-  capteur= new Capteur();
-  reference ='';
-  type : CapteurInterface;
-  description ='';
-  descriptionE='';
 
-  types : string=''; 
-
-  radioStock :boolean;
-  radioRuche : boolean;
-  
-  radioStockE :boolean;
-  radioRucheE : boolean;
 
   message="";
   editedSensorMsg :boolean;
@@ -73,7 +56,6 @@ export class CapteurComponent implements OnInit {
 
                    
         this.username = data.currentUser().username;
-        this.type = {id : "", sensorRef: "", type : "", dateSold : "", soldTo : "", soldToEmail : ""};
         this.initForm();
         
     }
@@ -100,7 +82,6 @@ export class CapteurComponent implements OnInit {
     }
 
     selectRadioRuche(){
-        this.radioRuche=true;
        /* this.radioRuche=true;
         this.radioStock=false;
 
@@ -140,31 +121,51 @@ export class CapteurComponent implements OnInit {
        */
     }
 
+    onChangeCapteur($event){
+        this.capteurService.capteur = $event.target.value;
+        console.log(this.capteurService.capteur);
+    }
     selectCapteur(capteur){
-       /* this.selectedCapteur=capteur;
-        this.descriptionE = this.selectedCapteur.description;
-        this.selectedRucherEdit.id = this.selectedCapteur.idApiary;
-        this.selectedRucheEdit.id = this.selectedCapteur.idHive;*/
+        this.capteurService.capteur = capteur;
+        var donnée = {
+            checkbox: this.capteurService.capteur.hiveName,
+            description: this.capteurService.capteur.description,
+        };
+        this.editCapteurCheckbox = donnée.checkbox != "stock";
     }
 
 
     checkCapteurType(value : any){       
-       /*     this.capteurService.checkCapteurType(value).subscribe(
-                data =>{ 
-                    this.type=data;
-                },
-                ( error => this.errorMsg=error)
-               );*/
+
     } 
 
    //CREATE CAPTEUR
     createCapteur(){
+        alert("ok");
         var formValue = this.newCapteurForm.value;
         console.log(formValue);
+        let tempType = this.capteurService.capteur.type; 
+        this.capteurService.initCapteur();
+        //this.capteurService.capteur = formValue;
+        if(formValue.checkbox != "stock"){
+            console.log("ruche")
+            this.capteurService.capteur.idHive = this.rucherService.rucheService.ruche.id;
+            this.capteurService.capteur.idApiary = this.rucherService.rucher.id;
+        }
+        else{
+            this.capteurService.capteur.idHive = "stock";
+            this.capteurService.capteur.idApiary = "stock";
+        }
+        this.capteurService.capteur.description = formValue.description
+        console.log(this.capteurService.capteur);
+        this.capteurService.capteur.username = this.username;
+        this.capteurService.capteur.reference = formValue.reference;
+        this.capteurService.capteur.type = tempType;
+        this.initForm();
+        this.capteurService.createCapteur();
        /* this.capteur.reference=this.reference;
         this.capteur.type=this.newCapteurForm.controls['type'].value;
         this.capteur.description=this.description;
-        
         this.capteur.username = this.username;
 
         if(this.radioStock){
@@ -191,24 +192,49 @@ export class CapteurComponent implements OnInit {
         alert("Votre Capteur a été créé");
         this.subscribeToData();*/
     }  
-    getTypeCapteur(){
+    getTypeAffectation(){
         return this.newCapteurForm.get('checkbox');
+    }
+    getTypeAffectationFormUpdate(){
+        return this.editCapteurForm.get('checkbox');
+    }
+    getSensorRef(){
+        return this.newCapteurForm.get("reference");
     }
 
     //DELETE CAPTEUR
 
     deleteCapteur(capteur){
-       /* this.selectedCapteur = capteur;
-        if (confirm("Etes vous sure de vouloir supprimer : " + this.selectedCapteur.reference + "?")) {
-          this.capteurService.deleteCapteur(this.selectedCapteur).subscribe(
-              data => {},
-               ( error => this.errorMsg=error));
-        }
-        this.subscribeToData();*/
+       this.capteurService.capteur = capteur;
+       this.capteurService.deleteCapteur();
      
     }
 
-    updateCapteur(x){
+    updateCapteur(){
+        const formValue = this.editCapteurForm.value;
+        let tempType = this.capteurService.capteur.type; 
+        let idTemp = this.capteurService.capteur.id;
+        this.capteurService.initCapteur();
+        //this.capteurService.capteur = formValue;
+        console.log(formValue);
+        if(formValue.checkbox != "stock"){
+            console.log("ruche")
+            this.capteurService.capteur.idHive = this.rucherService.rucheService.ruche.id;
+            this.capteurService.capteur.idApiary = this.rucherService.rucher.id;
+        }
+        else{
+            this.capteurService.capteur.idHive = "stock";
+            this.capteurService.capteur.idApiary = "stock";
+        }
+        this.capteurService.capteur.description = formValue.description
+        this.capteurService.capteur.id = idTemp;
+        console.log(this.capteurService.capteur);
+        //this.capteurService.capteur.username = this.username;
+        //this.capteurService.capteur.reference = formValue.reference;
+        this.capteurService.capteur.type = tempType;
+        this.initForm();
+        this.capteurService.updateCapteur();
+
       /*
         if(this.radioStockE){
             this.selectedCapteur.idHive = "stock";
@@ -240,7 +266,9 @@ export class CapteurComponent implements OnInit {
         
     }
 */
-    onSelectRucher(event : any) : void{
+    onSelectRucher(){
+        console.log("ok");
+        this.rucherService.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id);
       /*  this.selectedRucher=event.target.value;
         //this.getRucheDuRucher();
         console.log(this.ruches);
@@ -291,21 +319,14 @@ export class CapteurComponent implements OnInit {
     initForm(){
         this.newCapteurForm = this.formBuilder.group({
             'reference': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(20)])],
-            'type': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(400)])],
             'description': [null],
-            'selectedRucher': [null],
-            'selectedRuche': [null],
-            'checkbox': [],
-            'validate' : ``
-        })                
+            'checkbox':'',
+        });
 
-        /*this.editCapteurForm = this.formBuilder.group({
-            'selectedRucher': [null],
-            'selectedRuche': [null],
-            'checkbox': [],
+        this.editCapteurForm = this.formBuilder.group({
             'description': [null],
-            'validate' : ``
-        }) */
+            'checkbox':''
+        });
     }
  
 }

@@ -1,7 +1,5833 @@
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
+
+/***/ "./src/$$_lazy_route_resource lazy recursive":
+/*!**********************************************************!*\
+  !*** ./src/$$_lazy_route_resource lazy namespace object ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./accueil/ruche-rucher/nav-ruche/nav-ruche.module": [
+		"./src/app/accueil/ruche-rucher/nav-ruche/nav-ruche.module.ts",
+		"accueil-ruche-rucher-nav-ruche-nav-ruche-module"
+	]
+};
+function webpackAsyncContext(req) {
+	var ids = map[req];
+	if(!ids) {
+		return Promise.resolve().then(function() {
+			var e = new Error("Cannot find module '" + req + "'");
+			e.code = 'MODULE_NOT_FOUND';
+			throw e;
+		});
+	}
+	return __webpack_require__.e(ids[1]).then(function() {
+		var module = __webpack_require__(ids[0]);
+		return (typeof module === "object" && module && module.__esModule ? module : Object.assign({/* fake namespace object */}, typeof module === "object" && module, { "default": module }));
+	});
+}
+webpackAsyncContext.keys = function webpackAsyncContextKeys() {
+	return Object.keys(map);
+};
+webpackAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
+module.exports = webpackAsyncContext;
+
+/***/ }),
+
+/***/ "./src/app/accueil/_shared-services/selected-rucher.service.ts":
+/*!*********************************************************************!*\
+  !*** ./src/app/accueil/_shared-services/selected-rucher.service.ts ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let selectedRucherService = class selectedRucherService {
+    constructor() { }
+    currentRucher() {
+        return JSON.parse(localStorage.getItem('currentRucher'));
+    }
+};
+selectedRucherService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [])
+], selectedRucherService);
+exports.selectedRucherService = selectedRucherService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/accueil.component.html":
+/*!************************************************!*\
+  !*** ./src/app/accueil/accueil.component.html ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!--\n<div class=\"wrapper\">\n    <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n        <app-sidebar ></app-sidebar>\n        <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-5.jpg)\"></div>\n    </div>\n    <div class=\"main-panel\">\n        <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n        <router-outlet></router-outlet>\n        <div *ngIf=\"userBLG\">\n            <iframe src=\"http://51.38.49.225:5601/app/kibana#/dashboard/5f4e3b70-4856-11e8-b317-dfe56e640e2d?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3A'Wed%20Mar%2007%202018%2015%3A52%3A56%20GMT%2B0100'%2Cmode%3Aabsolute%2Cto%3A'Sun%20Mar%2025%202018%2020%3A02%3A42%20GMT%2B0200'))\" height=\"1500\" width=\"100%\"></iframe>\n        </div>\n        <div *ngIf=\"userCLO\">\n            <iframe src=\"http://51.38.49.225:5601/app/kibana#/dashboard/aad257f0-4a24-11e8-b317-dfe56e640e2d?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3A'Mon%20Mar%2012%202018%2013%3A27%3A32%20GMT%2B0100'%2Cinterval%3A'1d'%2Cmode%3Aabsolute%2Ctimezone%3AEurope%2FBerlin%2Cto%3A'Wed%20Apr%2025%202018%2019%3A16%3A01%20GMT%2B0200'))\" height=\"1500\" width=\"100%\"></iframe>\n        </div>\n        <div *ngIf=\"userJCP\">\n            <iframe src=\"http://51.38.49.225:5601/app/kibana#/dashboard/1d253850-4867-11e8-b317-dfe56e640e2d?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3A'Mon%20Mar%2012%202018%2013%3A27%3A32%20GMT%2B0100'%2Cinterval%3A'1d'%2Cmode%3Aabsolute%2Ctimezone%3AEurope%2FBerlin%2Cto%3A'Wed%20Apr%2025%202018%2019%3A16%3A01%20GMT%2B0200'))\" height=\"1000\" width=\"1500\"></iframe>\n        </div>\n        <div *ngIf=\"userJHE\">\n            <iframe src=\"http://51.38.49.225:5601/app/kibana#/dashboard/f9f1fe70-46d3-11e8-aea2-9b09ab5afc07?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3A'Thu%20Mar%2008%202018%2004%3A47%3A12%20GMT%2B0100'%2Cinterval%3Aauto%2Cmode%3Aabsolute%2Ctimezone%3AEurope%2FBerlin%2Cto%3A'Sat%20Mar%2024%202018%2011%3A40%3A48%20GMT%2B0100'))\" height=\"1500\" width=\"100%\"></iframe>\n        </div>\n    </div>\n    test\n</div>\n-->\n\n    <div class=\"wrapper\">\n    <div class=\"sidebar\" data-color=\"yellow\" data-image=\"\">\n        <app-sidebar ></app-sidebar>\n        <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-5.jpg)\"></div>\n    </div>\n\n    <div class=\"main-panel\">\n        <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n        <router-outlet></router-outlet>\n    \n        \n\n<div class=\"container-fluid\">\n        <div class=\"row\">\n                <div class=\"col-sm-6 \">\n                  <div class=\"card\">\n                    <div class=\"card-body text-center\">\n                      <h3 class=\"card-title\"><b>Santé des colonies</b></h3>\n                      <h3 class=\"card-title text-white\">.</h3>\n                      <h3 class=\"card-title\">.</h3>\n                      <h3 class=\"card-title\">.</h3>\n                      <p class=\"card-text\">With supporting text below as a natural lead-in to additional content.</p>\n                      <a href=\"#\" class=\"btn btn-success btn-block\">Colonies</a>\n                    </div>\n                  </div>\n                </div>\n                <div class=\"col-sm-6 \">\n                        <div class=\"card text-center\">\n                          <div class=\"card-body\">\n                            <h3 class=\"card-title\"><b>A faire</b></h3>\n                            <h3 class=\"card-title\">.</h3>\n                            <h3 class=\"card-title\">.</h3>\n                            <h3 class=\"card-title\">.</h3>\n                            <p class=\"card-text\">With supporting text below as a natural lead-in to additional content.</p>\n                            <a href=\"#\" class=\"btn btn-success btn-block\">A faire</a>\n                          </div>\n                        </div>\n                </div>\n        </div>\n\n        <div class=\"row\">\n                <div class=\"col-sm-6  text-center\">\n                  <div class=\"card\">\n                    <div class=\"card-body\">\n                      <h3 class=\"card-title\"><b>Météo</b></h3>\n                      <h3 class=\"card-title\">.</h3>\n                      <h3 class=\"card-title\">.</h3>\n                      <h3 class=\"card-title\">.</h3>\n                      <p class=\"card-text\">With supporting text below as a natural </p>\n                      <a href=\"#\" class=\"btn btn-success btn-block\">Go somewhere</a>\n                    </div>\n                  </div>\n                </div>\n                <div class=\"col-sm-6 text-center\">\n                        <div class=\"card\">\n                          <div class=\"card-body\">\n                            <h3 class=\"card-title\"><b>Fleurs</b></h3>\n                            <h3 class=\"card-title\">.</h3>\n                            <h3 class=\"card-title\">.</h3>\n                            <h3 class=\"card-title\">.</h3>\n                            <p class=\"card-text\">With supporting text below as a natural lead-in to additional content.</p>\n                            <a href=\"#\" class=\"btn btn-success btn-block\">Fleurs</a>\n                          </div>\n                        </div>\n                </div>\n        </div>\n        \n</div>\n\n"
+
+/***/ }),
+
+/***/ "./src/app/accueil/accueil.component.scss":
+/*!************************************************!*\
+  !*** ./src/app/accueil/accueil.component.scss ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".card-accueil {\n  height: 100px; }\n"
+
+/***/ }),
+
+/***/ "./src/app/accueil/accueil.component.ts":
+/*!**********************************************!*\
+  !*** ./src/app/accueil/accueil.component.ts ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const userlogged_service_1 = __webpack_require__(/*! ../userlogged.service */ "./src/app/userlogged.service.ts");
+let AccueilComponent = class AccueilComponent {
+    constructor(data) {
+        this.data = data;
+        this.message = "";
+        this.username = data.currentUser().username;
+        console.log("logged user accueil : " + this.username);
+        if (this.username == 'blg') {
+            this.userBLG = true;
+            console.log("userBLG : " + this.userBLG);
+        }
+        if (this.username == 'clo') {
+            this.userCLO = true;
+            console.log("userCLO : " + this.userCLO);
+        }
+        if (this.username == 'jcp') {
+            this.userJCP = true;
+            console.log("userCLO : " + this.userJCP);
+        }
+        if (this.username == 'jhe') {
+            this.userJHE = true;
+            console.log("userCLO : " + this.userJHE);
+        }
+    }
+    receiveMessage($event) {
+        this.message = $event;
+    }
+    ngOnInit() {
+    }
+    isMap() {
+    }
+};
+AccueilComponent = __decorate([
+    core_1.Component({
+        selector: 'app-accueil',
+        template: __webpack_require__(/*! ./accueil.component.html */ "./src/app/accueil/accueil.component.html"),
+        styles: [__webpack_require__(/*! ./accueil.component.scss */ "./src/app/accueil/accueil.component.scss")]
+    }),
+    __metadata("design:paramtypes", [userlogged_service_1.UserloggedService])
+], AccueilComponent);
+exports.AccueilComponent = AccueilComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/capteur/capteur.component.html":
+/*!********************************************************!*\
+  !*** ./src/app/accueil/capteur/capteur.component.html ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"wrapper\">\n    <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n        <app-sidebar ></app-sidebar>\n        <div class=\"sidebar-background\" style=\"background-image: url(/assets/img/sidebar-5.jpg)\"></div>\n    </div>\n    \n    <div class=\"main-panel\">\n        <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n        <router-outlet></router-outlet> \n        <div class=\"container-fluid\" style=\"background-color: white;\">\n            <div class=\"row content\">\n                <div class=\"col-sm-12\">\n                    <div class=\"form-inline\" >\n                        <div class=\"form-group\">\n                        </div>\n                    </div>\n                    <div class=\"bs-example\">\n                        <div class=\"panel-group\" id=\"accordion\">\n                            <div class=\"panel panel-info \">\n                                <div class=\"panel-heading \"  >\n                                    <h4 class=\"panel-title\" >\n                                        <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapseOne\">\n                                            <b>Capteurs </b>\n                                        </a>                                 \n                                    </h4>\n                                </div>\n                                <div id=\"collapseOne\" class=\"panel-collapse collapse in\">\n                                    <div class=\"panel-body\">                              \n                                        <button data-toggle=\"tooltip\" data-html=\"true\" title=\"Nouveau capteur\" data-toggle=\"modal\" style=\"margin-left: 98%; padding: 0;border: none; background: none;\"\n                                            data-target=\"#newCapteurModal\"  class=\"btn btn-success btn-lg\" (click)=\"selectRadioStock()\">\n                                            <i class=\"fa fa-plus\"></i>\n                                        </button>            \n                                        <!-- tables ruche -->\n                                        <div>\n                                            <table class=\"table\">    \n                                                <thead class=\"thead-dark\" >\n                                                    <tr>\n                                                        <th scope=\"col\">Reference</th>\n                                                        <th scope=\"col\">Description</th>\n                                                        <th scope=\"col\">Affectation</th>\n                                                        <th scope=\"col\">Type</th>\n                                                        <th scope=\"col\">Action</th>                             \n                                                    </tr>\n                                                </thead>\n                                                <tbody>                                  \n                                                    <tr *ngFor=\"let capteur of capteurService.capteursByUser\">\n                                                        <td>{{capteur.reference}}</td>\n                                                        <td>{{capteur.description}}</td>\n                                                        <td>{{capteur.apiaryName}} | {{capteur.hiveName}}</td>\n                                                        <td>{{capteur.type}}</td>\n                                                        <td>\n                                                            <button data-toggle=\"tooltip\" data-html=\"true\" title=\"Nouveau capteur\" data-toggle=\"modal\" type=\"button\" (click)=\"selectCapteur(capteur)\"\n                                                            data-target=\"#editCapteurModal\" class=\"btn btn-primary  btn-lg \" style=\"padding: 0;border: none; background: none;\">\n                                                                <i class=\"fa fa-edit\"></i>\n                                                            </button>\n                                                            \n                                                            <button type=\"button\" class=\"btn btn-warning btn-lg \" (click)=\"deleteCapteur(capteur)\" style=\"padding: 0;border: none; background: none;\">\n                                                                    <i class=\"fa fa-times\"></i>\n                                                            </button>\n                                                        </td>\n                                                    </tr>\n                                                </tbody>\n                                            </table>                           \n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <br><br>    \n                </div>    \n                <div class=\"col-sm-3 sidenav\" style=\"background-color: white; height:1500px;border-color:black;\">\n                <h4 class=\"text-center\"></h4>\n                <h5 class=\"text-center\"><b></b></h5>\n                <p  class=\"text-center\"><b> </b></p>\n            </div>\n        </div>\n    </div>\n</div>\n\n\n\n\n<!-- New capteur Modal -->\n<div class=\"modal fade\" id=\"newCapteurModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n<div class=\"modal-dialog\" role=\"document\">\n<div class=\"modal-content\">\n<div class=\"modal-header\">\n  <h5 class=\"modal-title text-center\" id=\"exampleModalLabel\"><h3>Déclaration de capteur</h3> </h5>\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n</div>\n<div class=\"modal-body\">\n    <form [formGroup]=\"newCapteurForm\" (ngSubmit)=\"createCapteur()\">\n        <div class=\"form-group row\">\n            <div class=\"col-md-6\" >\n                <label for=\"recipient-name\" class=\"col-form-label\">Référence (*):</label>\n                <input #ref formControlName=\"reference\" name=\"ref\" type=\"text\" class=\"form-control\" id=\"recipient-name\">\n                <div class=\"alert alert-danger\" *ngIf=\"!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].touched\">\n                    Veuillez saisir une reference valide\n                </div>\n            </div>\n            <div class=\"col-md-6\">\n                <label for=\"recipient-name\" class=\"col-form-label\">Type :</label>\n                <select [(ngModel)]=\"capteurService.capteur\"class=\"form-control\" [ngModelOptions]=\"{standalone: true}\">\n                    <option *ngFor=\"let capteur of (capteurService.capteurAcheter | capteurPipe:getSensorRef().value);\" [ngValue]=\"capteur\">{{ capteur.type }} </option>\n                </select>\n                <div class=\"alert alert-danger\" hidden>\n                    Vérifiez la référence de votre capteur\n                </div>\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"message-text\" class=\"col-form-label\">Description :</label>\n            <input formControlName=\"description\" class=\"form-control\" id=\"message-text\">\n        </div>\n        <div class=\"form-group \">          \n            <label class=\"col-form-label\" for=\"exampleRadios1\" >Affecter à :  </label>\n            <div class=\"form-check\">\n                <label class=\"form-check-label\" for=\"exampleRadios1\" >Stock </label>\n                <input class=\"form-check-input\" value=\"stock\" type=\"radio\" formControlName=\"checkbox\">\n                <label class=\"form-check-label\" for=\"exampleRadios1\">Ruche </label>\n                <input class=\"form-check-input\" value=\"ruche\" type=\"radio\" formControlName=\"checkbox\">                   \n            </div>\n        </div>\n        <div *ngIf=\"getTypeAffectation().value=='ruche'\">\n                <div class=\"form-group\">\n                    <label class=\"col-form-label\">Rucher :</label>\n                    <select [(ngModel)]=\"rucherService.rucher\" [ngModelOptions]=\"{standalone: true}\" class=\"form-control\" (change)=\"onSelectRucher();\">\n                        <option *ngFor=\"let rucher of rucherService.ruchers\" [ngValue]=\"rucher\" >{{rucher.name}}</option>\n                    </select>   \n                </div>                 \n                <div class=\"form-group\">\n                    <label class=\"col-form-label\">Ruche :</label>\n                    <select [(ngModel)]=\"rucherService.rucheService.ruche\" [ngModelOptions]=\"{standalone: true}\" class=\"form-control\">\n                        <option *ngFor=\"let ruche of rucherService.rucheService.ruches\" [ngValue]=\"ruche\" >{{ruche.name}}</option>\n                    </select>   \n                    <div class=\"alert alert-danger\" hidden>Veuillez choisir une ruche</div>        \n                </div>\n            </div>  \n            <div class=\"modal-footer\">\n                    <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!newCapteurForm.valid\">Ajouter Capteur</button>\n                    <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"onCancelClicked()\">Fermer</button>\n            </div>\n    </form>\n</div>\n</div>\n</div>\n</div>\n<!-- End of new Rucher Modal -->\n\n\n<!-- EDIT CAPTEUR Modal -->\n<div class=\"modal fade\" id=\"editCapteurModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n<div class=\"modal-dialog\" role=\"document\">\n<div class=\"modal-content\">\n<div class=\"modal-header\">\n<h5 class=\"modal-title text-center\" id=\"exampleModalLabel\"><h3>Editer affectation capteur</h3> </h5>\n<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n<span aria-hidden=\"true\">&times;</span>\n</button>\n</div>\n<div class=\"modal-body\">\n<form  [formGroup]=\"editCapteurForm\" (ngSubmit)=\"updateCapteur()\">\n    <div class=\"form-group \">          \n        <label  class=\"col-form-label\" for=\"exampleRadios1\" >\n            Affecter à :  \n        </label>\n        <div class=\"form-check\">\n            <input class=\"form-check-input\" type=\"radio\" formControlName=\"checkbox\" value=\"stock\">\n            <label class=\"form-check-label\" for=\"exampleRadios1\" >Stock </label>\n            <input class=\"form-check-input\" type=\"radio\" formControlName=\"checkbox\" value=\"ruche\" [checked]=\"editCapteurCheckbox\">   \n            <label class=\"form-check-label\" for=\"exampleRadios1\">Ruche </label>                   \n        </div>\n    </div>\n    <div *ngIf=\"getTypeAffectationFormUpdate().value=='ruche' || editCapteurCheckbox \">\n            <div class=\"form-group\">\n                <label class=\"col-form-label\">Rucher :</label>\n                <select [(ngModel)]=\"rucherService.rucher\" [ngModelOptions]=\"{standalone: true}\" class=\"form-control\" (change)=\"onSelectRucher();\">\n                    <option *ngFor=\"let rucher of rucherService.ruchers\" [ngValue]=\"rucher\" >{{rucher.name}}</option>\n                </select>   \n            </div>                 \n            <div class=\"form-group\">\n                <label class=\"col-form-label\">Ruche :</label>\n                <select [(ngModel)]=\"rucherService.rucheService.ruche\" [ngModelOptions]=\"{standalone: true}\" class=\"form-control\">\n                    <option *ngFor=\"let ruche of rucherService.rucheService.ruches\" [ngValue]=\"ruche\" >{{ruche.name}}</option>\n                </select>   \n                <div class=\"alert alert-danger\" hidden>Veuillez choisir une ruche</div>        \n            </div>\n        </div>        \n    <div class=\"form-group\">\n        <label for=\"message-text\" class=\"col-form-label\">Description :</label>\n        <input formControlName=\"description\" class=\"form-control\" id=\"message-text\">\n    </div>\n    <div class=\"form-group \">\n        <div class=\"alert alert-success\" *ngIf=\"editedSensorMsgE\">\n            Capteur déplacé avec <strong>succès !</strong>\n        </div>\n    </div>\n    <div class=\"modal-footer\">\n            <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!editCapteurForm.valid\"> Sauvegarder</button>\n            <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"onCancelClickedE()\">Fermer</button>\n    </div>\n</form>\n</div>\n</div>\n</div>\n</div>\n<!-- End EDIT capteur Modal -->\n-->"
+
+/***/ }),
+
+/***/ "./src/app/accueil/capteur/capteur.component.scss":
+/*!********************************************************!*\
+  !*** ./src/app/accueil/capteur/capteur.component.scss ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".btn-circle.btn-xl {\n  width: 70px;\n  height: 70px;\n  padding: 10px 16px;\n  border-radius: 35px;\n  font-size: 24px;\n  line-height: 1.33; }\n\n.btn-circle {\n  width: 30px;\n  height: 30px;\n  padding: 6px 0px;\n  border-radius: 15px;\n  text-align: center;\n  font-size: 12px;\n  line-height: 1.42857; }\n"
+
+/***/ }),
+
+/***/ "./src/app/accueil/capteur/capteur.component.ts":
+/*!******************************************************!*\
+  !*** ./src/app/accueil/capteur/capteur.component.ts ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const capteur_service_1 = __webpack_require__(/*! ./capteur.service */ "./src/app/accueil/capteur/capteur.service.ts");
+const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const rucher_service_1 = __webpack_require__(/*! ../ruche-rucher/rucher.service */ "./src/app/accueil/ruche-rucher/rucher.service.ts");
+const userlogged_service_1 = __webpack_require__(/*! ../../userlogged.service */ "./src/app/userlogged.service.ts");
+// import { AnonymousSubscription } from "rxjs/Subscription";
+const selected_rucher_service_1 = __webpack_require__(/*! ../_shared-services/selected-rucher.service */ "./src/app/accueil/_shared-services/selected-rucher.service.ts");
+let CapteurComponent = class CapteurComponent {
+    constructor(data, _router, formBuilder, rucherService, capteurService, _selectedRucherService) {
+        this.data = data;
+        this._router = _router;
+        this.formBuilder = formBuilder;
+        this.rucherService = rucherService;
+        this.capteurService = capteurService;
+        this._selectedRucherService = _selectedRucherService;
+        //variable to store ruches
+        this.ruches = [];
+        this.message = "";
+        this.username = data.currentUser().username;
+        this.initForm();
+    }
+    receiveMessage($event) {
+        this.message = $event;
+    }
+    ngOnInit() {
+        // this.getUserRuchers(); 
+        /*  this.selectRadioStock();
+          this.getAllCapteur();
+          this.radioRucheE=false;
+          this.radioStockE=true;*/
+    }
+    selectRadioStock() {
+        /* this.editedSensorMsg=false;
+         this.radioRuche=false;
+         this.radioStock=true;
+ 
+         this.selectedRucher=null;
+         this.selectedRuche=null;
+         this.newCapteurForm.get('selectedRuche').clearValidators();
+         this.newCapteurForm.get('selectedRuche').updateValueAndValidity();*/
+    }
+    selectRadioRuche() {
+        /* this.radioRuche=true;
+         this.radioStock=false;
+ 
+         this.newCapteurForm.get('selectedRuche').setValidators([Validators.required]);
+         this.newCapteurForm.get('selectedRuche').updateValueAndValidity();*/
+    }
+    selectRadioStockE() {
+        /*  this.editedSensorMsgE=false;
+          this.radioRucheE=false;
+          this.radioStockE=true;
+  
+          this.selectedRucherEdit=null;
+          this.selectedRucheEdit=null;
+          this.editCapteurForm.get('selectedRuche').clearValidators();
+          this.editCapteurForm.get('selectedRuche').updateValueAndValidity();*/
+    }
+    selectRadioRucheE() {
+        /* this.radioRucheE=true;
+         this.radioStockE=false;
+ 
+         this.editCapteurForm.get('selectedRuche').setValidators([Validators.required]);
+         this.editCapteurForm.get('selectedRuche').updateValueAndValidity();*/
+    }
+    capteurForm() {
+        // this._router.navigate(['/nouveau-capteur']);
+    }
+    getAllCapteur() {
+        /* this.capteurService.getUserCapteurs(this.username).subscribe(
+           data => {this.capteurs=data;},
+           err  => {});
+        */
+    }
+    onChangeCapteur($event) {
+        this.capteurService.capteur = $event.target.value;
+        console.log(this.capteurService.capteur);
+    }
+    selectCapteur(capteur) {
+        this.capteurService.capteur = capteur;
+        var donnée = {
+            checkbox: this.capteurService.capteur.hiveName,
+            description: this.capteurService.capteur.description,
+        };
+        this.editCapteurCheckbox = donnée.checkbox != "stock";
+    }
+    checkCapteurType(value) {
+    }
+    //CREATE CAPTEUR
+    createCapteur() {
+        alert("ok");
+        var formValue = this.newCapteurForm.value;
+        console.log(formValue);
+        let tempType = this.capteurService.capteur.type;
+        this.capteurService.initCapteur();
+        //this.capteurService.capteur = formValue;
+        if (formValue.checkbox != "stock") {
+            console.log("ruche");
+            this.capteurService.capteur.idHive = this.rucherService.rucheService.ruche.id;
+            this.capteurService.capteur.idApiary = this.rucherService.rucher.id;
+        }
+        else {
+            this.capteurService.capteur.idHive = "stock";
+            this.capteurService.capteur.idApiary = "stock";
+        }
+        this.capteurService.capteur.description = formValue.description;
+        console.log(this.capteurService.capteur);
+        this.capteurService.capteur.username = this.username;
+        this.capteurService.capteur.reference = formValue.reference;
+        this.capteurService.capteur.type = tempType;
+        this.initForm();
+        this.capteurService.createCapteur();
+        /* this.capteur.reference=this.reference;
+         this.capteur.type=this.newCapteurForm.controls['type'].value;
+         this.capteur.description=this.description;
+         this.capteur.username = this.username;
+ 
+         if(this.radioStock){
+             this.capteur.idHive = "stock";
+             this.capteur.idApiary = "stock";
+         }else {
+             var idRuche = String(this.selectedRuche);
+             this.capteur.idHive = idRuche;
+             this.capteur.idApiary = String(this.selectedRucher);
+         }
+ 
+         this.capteurService.createCapteur(this.capteur).subscribe(
+             data => {
+                 alert("capteur créé ! ");
+              },
+              ( error => this.errorMsg=error)
+         );
+        
+         this.resetCapteurForm();
+         //location.reload();
+         this.radioRuche=false;
+         this.radioStock=true;
+         
+         alert("Votre Capteur a été créé");
+         this.subscribeToData();*/
+    }
+    getTypeAffectation() {
+        return this.newCapteurForm.get('checkbox');
+    }
+    getTypeAffectationFormUpdate() {
+        return this.editCapteurForm.get('checkbox');
+    }
+    getSensorRef() {
+        return this.newCapteurForm.get("reference");
+    }
+    //DELETE CAPTEUR
+    deleteCapteur(capteur) {
+        this.capteurService.capteur = capteur;
+        this.capteurService.deleteCapteur();
+    }
+    updateCapteur() {
+        const formValue = this.editCapteurForm.value;
+        let tempType = this.capteurService.capteur.type;
+        let idTemp = this.capteurService.capteur.id;
+        this.capteurService.initCapteur();
+        //this.capteurService.capteur = formValue;
+        console.log(formValue);
+        if (formValue.checkbox != "stock") {
+            console.log("ruche");
+            this.capteurService.capteur.idHive = this.rucherService.rucheService.ruche.id;
+            this.capteurService.capteur.idApiary = this.rucherService.rucher.id;
+        }
+        else {
+            this.capteurService.capteur.idHive = "stock";
+            this.capteurService.capteur.idApiary = "stock";
+        }
+        this.capteurService.capteur.description = formValue.description;
+        this.capteurService.capteur.id = idTemp;
+        console.log(this.capteurService.capteur);
+        //this.capteurService.capteur.username = this.username;
+        //this.capteurService.capteur.reference = formValue.reference;
+        this.capteurService.capteur.type = tempType;
+        this.initForm();
+        this.capteurService.updateCapteur();
+        /*
+          if(this.radioStockE){
+              this.selectedCapteur.idHive = "stock";
+              this.selectedCapteur.idApiary = "stock";
+          } else {
+              this.selectedCapteur.idApiary=String(this.selectedRucherEdit);
+              this.selectedCapteur.idHive=String(this.selectedRucheEdit);
+          }
+            
+          this.selectedCapteur.description = this.descriptionE;
+   
+          this.capteurService.updateCapteur(this.selectedCapteur).subscribe(
+              data => {},
+               ( error => this.errorMsg=error)
+          );
+          alert("capteur modifié ! ");
+          this.resetCapteurEditForm();
+          this.editedSensorMsgE=false;
+          this.radioRucheE=false;
+          this.radioStockE=true;
+          this.subscribeToData();
+          */
+    }
+    /* getUserRuchers(){
+             this.rucherService.getUserRuchers(this.username).subscribe(
+                 data => { this.ruchers = data },
+                 err => console.error(err));
+         
+     }
+ */
+    onSelectRucher() {
+        console.log("ok");
+        this.rucherService.rucheService.getRucheByApiary(this.username, this.rucherService.rucher.id);
+        /*  this.selectedRucher=event.target.value;
+          //this.getRucheDuRucher();
+          console.log(this.ruches);
+          //this.getDetailsRucher();*/
+    }
+    onSelectRuche(event) {
+        /*  this.selectedRuche=event.target.value;*/
+        //this.getRucheDuRucher();
+        //this.getDetailsRucher();
+    }
+    /* getRucheDuRucher(){
+         this.rucherService.getUserRuches(this.username,this.selectedRucher).subscribe(
+         data => { this.ruches = data }
+         );
+     }*/
+    onCancelClicked() {
+        /* this.resetCapteurForm();
+         this.editedSensorMsg=false;
+         this.editCapteurForm.reset();*/
+    }
+    resetCapteurForm() {
+        /* this.newCapteurForm.get('reference').reset();
+         this.newCapteurForm.get('type').reset();
+         this.newCapteurForm.get('description').reset();*/
+    }
+    onCancelClickedE() {
+        /* this.resetCapteurEditForm();
+          this.editedSensorMsgE=false;
+          this.editCapteurForm.reset();*/
+    }
+    resetCapteurEditForm() {
+        /*  this.editCapteurForm.get('description').reset();
+          this.radioRucheE=false;
+          this.radioStockE=true;*/
+    }
+    subscribeToData() {
+        // this.timerSubscription = Observable.timer(200).first().subscribe(() => this.getAllCapteur());
+    }
+    initForm() {
+        this.newCapteurForm = this.formBuilder.group({
+            'reference': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(1), forms_1.Validators.maxLength(20)])],
+            'description': [null],
+            'checkbox': '',
+        });
+        this.editCapteurForm = this.formBuilder.group({
+            'description': [null],
+            'checkbox': ''
+        });
+    }
+};
+CapteurComponent = __decorate([
+    core_1.Component({
+        selector: 'app-capteur',
+        template: __webpack_require__(/*! ./capteur.component.html */ "./src/app/accueil/capteur/capteur.component.html"),
+        styles: [__webpack_require__(/*! ./capteur.component.scss */ "./src/app/accueil/capteur/capteur.component.scss")]
+    }),
+    __metadata("design:paramtypes", [userlogged_service_1.UserloggedService,
+        router_1.Router,
+        forms_1.FormBuilder,
+        rucher_service_1.RucherService,
+        capteur_service_1.CapteurService,
+        selected_rucher_service_1.selectedRucherService])
+], CapteurComponent);
+exports.CapteurComponent = CapteurComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/capteur/capteur.pipe.ts":
+/*!*************************************************!*\
+  !*** ./src/app/accueil/capteur/capteur.pipe.ts ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+// Pipe de traitement des listes
+let PipeCapteur = class PipeCapteur {
+    transform(values, filtre) {
+        // console.log(values[0], filtre);
+        if (!values || !values.length)
+            return [];
+        if (!filtre)
+            return values;
+        // return values.filter(v => String(v).toLowerCase().indexOf(filtre.toLowerCase()) >= 0);
+        return values.filter(v => {
+            if (v.sensorRef) {
+                return v.sensorRef.indexOf(filtre.toUpperCase()) >= 0;
+            }
+        });
+    }
+};
+PipeCapteur = __decorate([
+    core_1.Pipe({ name: 'capteurPipe' })
+], PipeCapteur);
+exports.PipeCapteur = PipeCapteur;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/capteur/capteur.service.ts":
+/*!****************************************************!*\
+  !*** ./src/app/accueil/capteur/capteur.service.ts ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const Observable_1 = __webpack_require__(/*! rxjs/Observable */ "./node_modules/rxjs-compat/_esm2015/Observable.js");
+const config_1 = __webpack_require__(/*! ../../../config */ "./src/config.ts");
+const userlogged_service_1 = __webpack_require__(/*! ../../userlogged.service */ "./src/app/userlogged.service.ts");
+const httpOptions = {
+    headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
+};
+let CapteurService = class CapteurService {
+    constructor(http, user) {
+        this.http = http;
+        this.user = user;
+        this.getCapteurs();
+        this.getUserCapteurs();
+        this.getSoldDevicesByUser();
+        this.initCapteur();
+    }
+    initCapteur() {
+        this.capteur = {
+            id: null,
+            reference: '',
+            name: '',
+            type: '',
+            description: '',
+            username: '',
+            idHive: '',
+            idApiary: '',
+            hiveName: '',
+            apiaryName: ''
+        };
+    }
+    // pour créer un capteur
+    createCapteur() {
+        this.capteurObs = this.http.post(config_1.CONFIG.URL + 'sensors', this.capteur, httpOptions);
+        this.capteurObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getUserCapteurs();
+        });
+    }
+    //get all sensors 
+    getCapteurs() {
+        this.capteursObs = this.http.get(config_1.CONFIG.URL + 'sensors/all');
+        this.capteursObs.subscribe((data) => {
+            this.capteurs = data;
+            this.capteur = data[0];
+            //console.log(this.capteurs);
+        }, (err) => {
+            console.log(err);
+        });
+    }
+    getSoldDevicesByUser() {
+        this.capteursObs = this.http.get(config_1.CONFIG.URL + 'sold_devices/username/' + this.user.currentUser().username);
+        this.capteursObs.subscribe((data) => {
+            this.capteurAcheter = data;
+            console.log(this.capteurAcheter);
+        }, (err) => {
+            console.log(err);
+        });
+    }
+    getUserCapteurs() {
+        this.capteursObs = this.http.get(config_1.CONFIG.URL + 'sensors/' + this.user.currentUser().username);
+        this.capteursObs.subscribe((data) => {
+            this.capteursByUser = data;
+            console.log(this.capteursByUser);
+        }, (err) => {
+            console.log(err);
+        });
+    }
+    deleteCapteur() {
+        this.capteurObs = this.http.delete(config_1.CONFIG.URL + 'sensors/' + this.capteur.id);
+        this.capteurObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getUserCapteurs();
+        });
+    }
+    updateCapteur() {
+        this.capteurObs = this.http.put(config_1.CONFIG.URL + 'sensors/update/' + this.capteur.id, this.capteur, httpOptions);
+        this.capteurObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getUserCapteurs();
+        });
+    }
+    errorHandler(error) {
+        return Observable_1.Observable.throw(error.message || "server error");
+    }
+};
+CapteurService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.HttpClient, userlogged_service_1.UserloggedService])
+], CapteurService);
+exports.CapteurService = CapteurService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/capteur/capteur.ts":
+/*!********************************************!*\
+  !*** ./src/app/accueil/capteur/capteur.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class Capteur {
+}
+exports.Capteur = Capteur;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/capteur/nouveau-capteur/nouveau-capteur.component.html":
+/*!********************************************************************************!*\
+  !*** ./src/app/accueil/capteur/nouveau-capteur/nouveau-capteur.component.html ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"wrapper\">\n        <div class=\"sidebar\" data-color=\"yellow\" data-image=\"\">\n            <app-sidebar ></app-sidebar>\n            <div class=\"sidebar-background\" style=\"background-image: url(/assets/img/sidebar-5.jpg)\"></div>\n        </div>\n    \n        <div class=\"main-panel\">\n            <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n            <router-outlet></router-outlet>\n        \n\n<div class=\"container-fluid\" style=\"background-color: white; height:100%;\">\n\n   \n            <div class=\"modal-dialog\" role=\"document\">\n            <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                <h5 class=\"modal-title text-center\" id=\"exampleModalLabel\"><h3>Déclaration de capteur</h3> </h5>\n            \n                </div>\n                <div class=\"modal-body\">\n                        <form  [formGroup]=\"newCapteurForm\" (ngSubmit)=\"createCapteur(newCapteurForm.value)\">\n                                <div class=\"form-group row\">\n                                    <div class=\"col-md-6\" >\n                                            <label for=\"recipient-name\" class=\"col-form-label\">Référence (*):</label>\n                                            <input [(ngModel)]=\"reference\" formControlName=\"reference\" type=\"text\" class=\"form-control\" id=\"recipient-name\">\n                                            <div class=\"alert alert-danger\" *ngIf=\"!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].touched\">\n                                                    Veuillez saisir une reference\n                                            </div>\n\n                                    </div>\n                                    <div class=\"col-md-6\">\n                                            <label for=\"recipient-name\" class=\"col-form-label\">Type :</label>\n                                            <input [(ngModel)]=\"type\" formControlName=\"type\" type=\"text\" class=\"form-control\" id=\"recipient-name\">\n                                    </div>\n                                \n                                    </div>\n\n                                \n                                    <div class=\"form-group\">\n                                            <label for=\"message-text\" class=\"col-form-label\">Description :</label>\n                                            <input [(ngModel)]=\"description\"   formControlName=\"description\" class=\"form-control\" id=\"message-text\">\n                                    </div>\n\n                                    <div class=\"form-group \">\n                                            <div class=\"form-check\">\n                                                    <input class=\"form-check-input\" (click)=\"selectRadioStock()\" type=\"radio\" formControlName=\"checkbox\" name=\"checkbox\"  [checked]=\"radioStock\">\n                                                    <label class=\"form-check-label\" for=\"exampleRadios1\" >\n                                                            Stock\n                                                    </label>\n                                            \n                                                    <input class=\"form-check-input\" (click)=\"selectRadioRuche()\" type=\"radio\" formControlName=\"checkbox\" name=\"checkbox\" [checked]=\"radioRuche\">\n                                                    <label class=\"form-check-label\" for=\"exampleRadios1\">\n                                                            Ruche\n                                                    </label>\n                                            </div>\n                                    </div>\n\n                                    <div *ngIf=\"radioRuche\">\n                                        <div class=\"form-group\">\n                                                <label for=\"recipient-name\" class=\"col-form-label\">Rucher :</label>\n                                                <select  [(ngModel)]=\"selectedRucher\"  formControlName=\"selectedRucher\" (click)=\"onSelectRucher($event)\" class=\"form-control \" id=\"sel1\">\n                                                    <option  *ngFor=\"let rucher of ruchers\" [value]=\"rucher.id\" >\n                                                        {{rucher.name}}\n                                                    </option>\n                                                </select>   \n                                            \n                                            <!-- \n                                                <button type=\"submit\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#newRucherModal\" >Créer rucher</button>\n                                                -->\n                                        </div>\n                                                                \n                                        <div class=\"form-group \">\n                                                    <label for=\"message-text\" class=\"col-form-label\">Affecter à :</label>\n                                                    <select  [(ngModel)]=\"selectedRuche\" formControlName=\"selectedRuche\"  (click)=\"onSelectRuche($event)\" class=\"form-control \" id=\"sel1\">\n                                                        <option  *ngFor=\"let ruche of ruches\" [value]=\"ruche.id\" >\n                                                            {{ruche.name}}\n                                                        </option>\n                                                    </select>   \n                                                    <div class=\"alert alert-danger\" *ngIf=\"!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].untouched\">\n                                                            Veuillez choisir une ruche\n                                                    </div>\n            \n                                        </div>\n                                    </div>\n                                    \n                                <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!newCapteurForm.valid\"  > Ajouter Capteur</button>\n                        </form>\n                </div>\n                <div class=\"modal-footer\">\n                <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"onCancelClicked()\">Fermer</button>\n                \n                </div>\n            </div>\n            </div>      \n\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/accueil/capteur/nouveau-capteur/nouveau-capteur.component.scss":
+/*!********************************************************************************!*\
+  !*** ./src/app/accueil/capteur/nouveau-capteur/nouveau-capteur.component.scss ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/accueil/capteur/nouveau-capteur/nouveau-capteur.component.ts":
+/*!******************************************************************************!*\
+  !*** ./src/app/accueil/capteur/nouveau-capteur/nouveau-capteur.component.ts ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const capteur_service_1 = __webpack_require__(/*! ../capteur.service */ "./src/app/accueil/capteur/capteur.service.ts");
+const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const rucher_service_1 = __webpack_require__(/*! ../../ruche-rucher/rucher.service */ "./src/app/accueil/ruche-rucher/rucher.service.ts");
+const userlogged_service_1 = __webpack_require__(/*! ../../../userlogged.service */ "./src/app/userlogged.service.ts");
+const rucher_1 = __webpack_require__(/*! ../../ruche-rucher/rucher */ "./src/app/accueil/ruche-rucher/rucher.ts");
+const ruche_1 = __webpack_require__(/*! ../../ruche-rucher/ruche */ "./src/app/accueil/ruche-rucher/ruche.ts");
+const capteur_1 = __webpack_require__(/*! ../capteur */ "./src/app/accueil/capteur/capteur.ts");
+const Rx_1 = __webpack_require__(/*! rxjs/Rx */ "./node_modules/rxjs-compat/_esm2015/Rx.js");
+let NouveauCapteurComponent = class NouveauCapteurComponent {
+    /*
+                 private formBuilder: FormBuilder,
+                 public location: Location,
+                 public router: Router,
+                 private capteurService : CapteurService
+    */
+    constructor(data, formBuilder, _router, rucherService, capteurService) {
+        this.data = data;
+        this.formBuilder = formBuilder;
+        this._router = _router;
+        this.rucherService = rucherService;
+        this.capteurService = capteurService;
+        this.ruchers = [];
+        this.capteurs = [];
+        this.selectedRucher = new rucher_1.Rucher();
+        this.selectedRuche = new ruche_1.Ruche();
+        this.selectedCapteur = new capteur_1.Capteur();
+        //variable to store ruches
+        this.ruches = [];
+        this.capteur = new capteur_1.Capteur();
+        this.reference = '';
+        this.type = '';
+        this.description = '';
+        this.message = "";
+        this.radioRuche = false;
+        this.radioStock = true;
+        this.selectedRucher = null;
+        this.selectedRuche = null;
+        this.newCapteurForm = formBuilder.group({
+            'reference': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(1), forms_1.Validators.maxLength(20)])],
+            'type': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(1), forms_1.Validators.maxLength(400)])],
+            'description': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(1), forms_1.Validators.maxLength(400)])],
+            'selectedRucher': [null],
+            'selectedRuche': [null],
+            'checkbox': [],
+            'validate': ``
+        });
+        this.username = data.currentUser().username;
+    }
+    receiveMessage($event) {
+        this.message = $event;
+    }
+    selectRadioStock() {
+        this.radioRuche = false;
+        this.radioStock = true;
+        this.selectedRucher = null;
+        this.selectedRuche = null;
+        this.newCapteurForm.get('selectedRuche').clearValidators();
+        this.newCapteurForm.get('selectedRuche').updateValueAndValidity();
+    }
+    selectRadioRuche() {
+        this.radioRuche = true;
+        this.radioStock = false;
+        console.log("radio stock : " + this.radioStock);
+        console.log("radio ruche : " + this.radioRuche);
+        this.newCapteurForm.get('selectedRuche').setValidators([forms_1.Validators.required]);
+        this.newCapteurForm.get('selectedRuche').updateValueAndValidity();
+    }
+    getAllCapteur() {
+        /* console.log("this username :"+  this.username);
+        
+         this.capteurService.getUserCapteurs(String(this.username)).subscribe(
+           data => {this.capteurs=data;},
+           err  => {console.log(err)},
+           () => console.log('done loading sensors')
+         );*/
+    }
+    //CREATE CAPTEUR
+    createCapteur(capteur) {
+        /*this.capteur.reference=this.reference;
+        this.capteur.type=this.type;
+        this.capteur.description=this.description;
+        var idRuche = String(this.selectedRuche);
+        this.capteur.idHive = idRuche;
+        this.capteur.idApiary = String(this.selectedRucher);
+
+        if(this.radioStock==true){
+            this.capteur.idHive = "stock";
+            this.capteur.idApiary = "stock";
+        }
+
+
+        this.capteurService.createCapteur(this.capteur).subscribe(
+            data => {}
+        );
+        this._router.navigate['/capteurs'];
+        this.newCapteurForm.reset();
+       
+    
+        alert("Votre Capteur a été créé");
+        //this.subscribeToData();*/
+    }
+    //DELETE CAPTEUR
+    getUserRuchers() {
+        console.log("this username :" + this.username);
+        /*this.rucherService.getUserRuchers(this.username).subscribe(
+            data => { this.ruchers = data },
+            err => console.error(err),
+            () => console.log('done loading ruchers')
+        );*/
+    }
+    onSelectRucher(event) {
+        this.selectedRucher = event.target.value;
+        console.log("Selected Rucher : " + this.selectedRucher);
+        this.getRucheDuRucher();
+        //this.getDetailsRucher();
+    }
+    onSelectRuche(event) {
+        this.selectedRuche = event.target.value;
+        console.log("L'ID de la ruche selectionnée : " + this.selectedRuche);
+        this.getRucheDuRucher();
+        //this.getDetailsRucher();
+    }
+    getRucheDuRucher() {
+        console.log("this username :" + this.username);
+        /* this.rucherService.getUserRuches(this.username,this.selectedRucher).subscribe(
+         data => { this.ruches = data },
+         
+         () => console.log('Done loading RUCHES ')
+         );*/
+    }
+    onCancelClicked() {
+        this.newCapteurForm.reset();
+        this.radioRuche = false;
+        this.radioStock = true;
+    }
+    subscribeToData() {
+        this.timerSubscription = Rx_1.Observable.timer(1000).first().subscribe(() => this.getAllCapteur());
+    }
+    ngOnInit() {
+        this.getUserRuchers();
+        console.log("liste capteurs :" + this.capteurs);
+    }
+};
+NouveauCapteurComponent = __decorate([
+    core_1.Component({
+        selector: 'app-capteur',
+        template: __webpack_require__(/*! ./nouveau-capteur.component.html */ "./src/app/accueil/capteur/nouveau-capteur/nouveau-capteur.component.html"),
+        styles: [__webpack_require__(/*! ./nouveau-capteur.component.scss */ "./src/app/accueil/capteur/nouveau-capteur/nouveau-capteur.component.scss")]
+    }),
+    __metadata("design:paramtypes", [userlogged_service_1.UserloggedService,
+        forms_1.FormBuilder,
+        router_1.Router,
+        rucher_service_1.RucherService,
+        capteur_service_1.CapteurService])
+], NouveauCapteurComponent);
+exports.NouveauCapteurComponent = NouveauCapteurComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/disposition-ruche/Service/dailyRecordService.ts":
+/*!*************************************************************************!*\
+  !*** ./src/app/accueil/disposition-ruche/Service/dailyRecordService.ts ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const config_1 = __webpack_require__(/*! ../../../../config */ "./src/config.ts");
+const userlogged_service_1 = __webpack_require__(/*! ../../../userlogged.service */ "./src/app/userlogged.service.ts");
+let DailyRecordService = class DailyRecordService {
+    constructor(http, user) {
+        this.http = http;
+        this.user = user;
+        this.status = "Inconnu";
+        this.dailyRecords = null;
+        this.getDailyRecThByApiary(sessionStorage.getItem("idApiaryUpdate"));
+    }
+    getDailyRecThByIdHivelas(idHive) {
+        this.dailyRecObs = this.http.get(config_1.CONFIG.URL + '/dailyRecordsTH/last/' + idHive);
+        this.dailyRecObs.subscribe((data) => {
+            console.log(data);
+            this.dailyRecord = {
+                id: data.id,
+                recordDate: data.recordDate,
+                idHive: data.idHive,
+                humidity_int_min: data.humidity_int_min,
+                humidity_int_max: data.humidity_int_max,
+                temp_int_min: data.temp_int_min,
+                temp_int_max: data.temp_int_max,
+                temp_int_moy: data.temp_int_moy,
+                temp_int_stddev: data.temp_int_stddev,
+                health_status: data.health_status,
+                health_trend: data.health_trend,
+                r_int_text: data.r_int_text
+            };
+        }, (err) => {
+            console.log(err);
+        });
+    }
+    getByIdHive(idHive) {
+        this.dailyRecords = [];
+        this.dailyRecObsArray = this.http.get(config_1.CONFIG.URL + '/dailyRecordsTH/hive/' + idHive);
+        this.dailyRecObsArray.subscribe((data) => {
+            console.log(data);
+            data.forEach(element => {
+                this.dailyRecords.push({
+                    id: element.id,
+                    recordDate: element.recordDate,
+                    idHive: element.idHive,
+                    humidity_int_min: element.humidity_int_min,
+                    humidity_int_max: element.humidity_int_max,
+                    temp_int_min: element.temp_int_min,
+                    temp_int_max: element.temp_int_max,
+                    temp_int_moy: element.temp_int_moy,
+                    temp_int_stddev: element.temp_int_stddev,
+                    health_status: element.health_status,
+                    health_trend: element.health_trend,
+                    r_int_text: element.r_int_text
+                });
+            });
+            console.log(this.dailyRecords);
+        }, (err) => {
+            console.log(err);
+        });
+    }
+    getDailyRecThByApiary(idApiary) {
+        this.dailyRecTabObs = this.http.get(config_1.CONFIG.URL + 'dailyRecordsTH/' + this.user.currentUser().username + '/' + idApiary);
+        this.dailyRecords = [];
+        this.dailyRecTabObs.subscribe((data) => {
+            console.log(data);
+            if (data[0] != null) {
+                data.forEach(element => {
+                    this.dailyRecords.push({ id: element.id,
+                        recordDate: element.recordDate,
+                        idHive: element.idHive,
+                        humidity_int_min: element.humidity_int_min,
+                        humidity_int_max: element.humidity_int_max,
+                        temp_int_min: element.temp_int_min,
+                        temp_int_max: element.temp_int_max,
+                        temp_int_moy: element.temp_int_moy,
+                        temp_int_stddev: element.temp_int_stddev,
+                        health_status: element.health_status,
+                        health_trend: element.health_trend,
+                        r_int_text: element.r_int_text
+                    });
+                });
+                console.log(this.dailyRecords);
+            }
+        }, (err) => {
+            console.log(err);
+        });
+    }
+    getStatus(id) {
+        this.status = "ruche Inconnu";
+        this.verifId(id);
+        return this.status;
+    }
+    verifId(id) {
+        this.dailyRecords.forEach((element, index) => {
+            if (element.idHive == id) {
+                this.status = "ruche " + element.health_status + element.health_trend;
+            }
+        });
+    }
+};
+DailyRecordService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.HttpClient, userlogged_service_1.UserloggedService])
+], DailyRecordService);
+exports.DailyRecordService = DailyRecordService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/disposition-ruche/Service/ruche.service.ts":
+/*!********************************************************************!*\
+  !*** ./src/app/accueil/disposition-ruche/Service/ruche.service.ts ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const userlogged_service_1 = __webpack_require__(/*! ../../../userlogged.service */ "./src/app/userlogged.service.ts");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const config_1 = __webpack_require__(/*! ../../../../config */ "./src/config.ts");
+const observation_service_1 = __webpack_require__(/*! ../../ruche-rucher/ruche-detail/observation/service/observation.service */ "./src/app/accueil/ruche-rucher/ruche-detail/observation/service/observation.service.ts");
+const httpOptions = {
+    headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
+};
+let RucheService = class RucheService {
+    constructor(user, http, observationService) {
+        this.user = user;
+        this.http = http;
+        this.observationService = observationService;
+        this.ruches = [];
+        /* if(sessionStorage.getItem("idApiaryUpdate")){
+            let id = sessionStorage.getItem("idApiaryUpdate");
+            console.log(id);
+            this.getRucheByApiary(this.user.currentUser().username,id);
+          }*/
+    }
+    getRucheByApiary(username, idApiary) {
+        this.ruches = [];
+        this.ruchesObs = this.http.get(config_1.CONFIG.URL + 'hives/' + username + '/' + idApiary);
+        this.ruchesObs.subscribe((data) => {
+            console.log(data);
+            this.ruche = data[data.length - 1];
+            this.ruches = data;
+        }, (err) => {
+            console.log(err);
+        }, () => {
+            this.observationService.getObservationByIdApiary(idApiary);
+        });
+    }
+    updateCoordonneesRuche(ruche) {
+        this.rucheObs = this.http.put(config_1.CONFIG.URL + 'hives/update/coordonnees/' + ruche.id, ruche, httpOptions);
+        this.rucheObs.subscribe(() => {
+            this.getRucheByApiary(this.user.currentUser().username, ruche.idApiary);
+        }, (err) => {
+            console.log(err);
+        });
+    }
+    updateRuche(lastIdApiary) {
+        this.rucheObs = this.http.put(config_1.CONFIG.URL + 'hives/update/' + this.ruche.id, this.ruche, httpOptions);
+        this.rucheObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getRucheByApiary(this.user.currentUser().username, lastIdApiary);
+        });
+    }
+    cleanRuches() {
+        this.ruches = [];
+    }
+    createRuche() {
+        this.rucheObs = this.http.post(config_1.CONFIG.URL + 'hives', this.ruche, httpOptions);
+        this.rucheObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getRucheByApiary(this.user.currentUser().username, this.ruche.idApiary);
+        });
+    }
+    deleteRuche() {
+        this.rucheObs = this.http.delete(config_1.CONFIG.URL + 'hives/' + this.ruche.id);
+        this.rucheObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getRucheByApiary(this.user, this.ruche.idApiary);
+        });
+    }
+};
+RucheService = __decorate([
+    core_1.Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [userlogged_service_1.UserloggedService, http_1.HttpClient, observation_service_1.ObservationService])
+], RucheService);
+exports.RucheService = RucheService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/disposition-ruche/disposition-ruche.component.html":
+/*!****************************************************************************!*\
+  !*** ./src/app/accueil/disposition-ruche/disposition-ruche.component.html ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"wrapper\">\n  <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n      <app-sidebar ></app-sidebar>\n      <div class=\"sidebar-background\" style=\"background-image: url(/assets/img/sidebar-5.jpg)\"></div>\n  </div>\n\n  <div class=\"main-panel\">\n      <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n      <router-outlet></router-outlet>\n  \n      \n      <div class=\"container-fluid\" style=\"background-color: white;\" ngResizable>\n              <div class=\"container-fluid\">\n                <div class=\"form-group\">\n                  <form>\n                    <label><h4>Rucher :</h4> </label>\n                    <select [(ngModel)]=\"rucherService.rucher\" name=\"rucher\" id=\"sel1\" (change)=\"onChange($event)\">\n                      <option *ngFor=\"let rucher of rucherService.ruchers; let i = index\" [id]=\"i\" [ngValue]=\"rucher\" >{{ rucher.name }}</option>\n                    </select>\n                  </form>\n                  <div id=\"cadre\" [ngStyle]=\"style\">\n                    <div\n                    data-toggle=\"tooltip\" data-placement=\"top\" [title]=\"infoRuche\"\n                    *ngFor=\"let ruche of rucheService.ruches; let i = index\" \n                    [style.left.%]=\"ruche.hivePosX\"\n                    [style.top.%]=\"ruche.hivePosY\"\n                    [id]=\"i\" (mouseover)=\"onMouseover(ruche)\" (dblclick)=\"onClick(ruche);\" (stopped)=\"onDragEnd($event)\" [allowedOffsets]=\"offset\" ngDraggable [class]=\"dailyRecTh.getStatus(ruche.id)\">\n                    </div>\n                  </div>\n                  </div>\n              </div>\n      </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/accueil/disposition-ruche/disposition-ruche.component.scss":
+/*!****************************************************************************!*\
+  !*** ./src/app/accueil/disposition-ruche/disposition-ruche.component.scss ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "#cadre {\n  margin: auto;\n  width: 98%;\n  height: 90vh;\n  border: 2px;\n  border-radius: 10px;\n  overflow: hidden;\n  background: url('blg.png');\n  background-size: 100%;\n  box-shadow: 8px 8px 5px black;\n  -webkit-transform: rotate(0deg);\n          transform: rotate(0deg); }\n\n.ruche {\n  display: flex;\n  justify-content: center;\n  width: 60px;\n  height: 60px;\n  position: absolute;\n  font-size: 15px;\n  /*border-radius: 40px;*/\n  padding: 2px;\n  cursor: move;\n  border-radius: 50px;\n  box-shadow: 3px 2px 2px black; }\n\n#health_trend {\n  width: 50%;\n  height: 100%;\n  border: 2px solid orangered;\n  border-radius: 8px; }\n\n#health_status {\n  width: 50%;\n  height: 100%;\n  /* background-color: green;*/\n  border: 2px solid orangered;\n  border-radius: 8px; }\n\nselect {\n  padding: 8px; }\n\n.ruche:hover {\n  box-shadow: none; }\n\n#detail {\n  margin: auto;\n  width: 30%; }\n\n.statusAFluctuation {\n  background: url(\"data:image/png;base64,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\") no-repeat center; }\n\n.statusADecline {\n  background: url(\"data:image/png;base64,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\") no-repeat center; }\n\n.statusAStable {\n  background: url(\"data:image/png;base64,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\") no-repeat center; }\n\n.statusAImprove {\n  background: url(\"data:image/png;base64,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\") no-repeat center; }\n\n.statusBImprove {\n  background: url(\"data:image/png;base64,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\") no-repeat center; }\n\n.statusBFluctuation {\n  background: url(\"data:image/png;base64,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\") no-repeat center; }\n\n.statusBDecline {\n  background: url(\"data:image/png;base64,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\") no-repeat center; }\n\n.statusBStable {\n  background: url(\"data:image/png;base64,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\") no-repeat center; }\n\n.statusCImprove {\n  background: url(\"data:image/png;base64,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\") no-repeat center; }\n\n.statusCFluctuation {\n  background: url(\"data:image/png;base64,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\") no-repeat center; }\n\n.Inconnu {\n  background: url(\"data:image/png;base64,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\") no-repeat center; }\n"
+
+/***/ }),
+
+/***/ "./src/app/accueil/disposition-ruche/disposition-ruche.component.ts":
+/*!**************************************************************************!*\
+  !*** ./src/app/accueil/disposition-ruche/disposition-ruche.component.ts ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const ng2_drag_and_check_1 = __webpack_require__(/*! ng2-drag-and-check */ "./node_modules/ng2-drag-and-check/ng2-drag-and-check.js");
+const userlogged_service_1 = __webpack_require__(/*! ../../userlogged.service */ "./src/app/userlogged.service.ts");
+const rucher_service_1 = __webpack_require__(/*! ../ruche-rucher/rucher.service */ "./src/app/accueil/ruche-rucher/rucher.service.ts");
+const ruche_1 = __webpack_require__(/*! ./ruche */ "./src/app/accueil/disposition-ruche/ruche.ts");
+const dailyRecordService_1 = __webpack_require__(/*! ./Service/dailyRecordService */ "./src/app/accueil/disposition-ruche/Service/dailyRecordService.ts");
+const ruche_service_1 = __webpack_require__(/*! ./Service/ruche.service */ "./src/app/accueil/disposition-ruche/Service/ruche.service.ts");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+let DispositionRucheComponent = class DispositionRucheComponent {
+    constructor(dailyRecTh, draggable, login, rucheService, rucherService, route) {
+        this.dailyRecTh = dailyRecTh;
+        this.draggable = draggable;
+        this.login = login;
+        this.rucheService = rucheService;
+        this.rucherService = rucherService;
+        this.route = route;
+        this.defautBackground = "../../../assets/img/rucher-loin.jpg";
+        this.top = ng2_drag_and_check_1.Offsets.HANDLE_HEIGHT;
+        this.right = ng2_drag_and_check_1.Offsets.HALF_WIDTH;
+        this.bottom = ng2_drag_and_check_1.Offsets.HANDLE_HEIGHT;
+        this.left = ng2_drag_and_check_1.Offsets.HALF_WIDTH;
+        this.infoRuche = null;
+        this.message = "";
+        this.position = {
+            'x': '0',
+            'y': '0'
+        };
+        this.style = {
+            'background-image': '',
+            'background-position': "center",
+            'background-repeat': "no-repeat",
+            'url': ''
+        };
+        this.statusImg = {
+            "statusAFluctuation": "../../../assets/icons/wfbfl.png",
+            "statusADecline": "../../../assets/icons/wfbde.png",
+            "statusAImprove": "../../../assets/icons/wfbim.png",
+            "statusBImprove": "../../../assets/icons/wnbim.png",
+            "statusBFluctuation": "../../../assets/icons/wnbfl.png",
+            "statusBDecline": "../../../assets//icons/wnbde.png",
+            "statusBStable": "../../../assets/icons/wnbst.png",
+            "statusCImprove": "../../../assets/icons/wobim.png",
+            "statusCFluctuation": "../../../assets/icons/wobfl.png",
+            "Inconnu": "../../../assets/icons/wos.png"
+        };
+        this.offset = new ng2_drag_and_check_1.Offsets(this.top, this.right, this.bottom, this.left);
+        //this.rucheService.getRucheByApiary(this.login.currentUser().username, this.rucherService.rucher.id);
+    }
+    receiveMessage($event) {
+        this.message = $event;
+    }
+    ngOnInit() {
+        console.log(this.rucheService.ruches);
+        this.username = this.login.currentUser().username;
+        if (this.username == "jhe") {
+            this.style["background-image"] = "url('../../../assets/imageClient/JHE.jpg')";
+        }
+        else if (this.username == "jcp") {
+            this.style["background-image"] = "url('../../../assets/imageClient/JCP.png')";
+        }
+        else if (this.username == "blg") {
+            this.style["background-image"] = "url('../../../assets/imageClient/blg.png')";
+        }
+        else if (this.username == "lpo") {
+            this.style["background-image"] = "url('../../../assets/imageClient/LPO.png')";
+        }
+        else if (this.username == "aro") {
+            this.style["background-image"] = "url('../../../assets/imageClient/aro.png')";
+        }
+        console.log(this.style);
+    }
+    onClick(ruche) {
+        // console.log(ruche);
+        //sessionStorage.setItem("clickedRuche",ruche.id);
+        sessionStorage.setItem("selectedRucheName", ruche.name);
+        this.route.navigate(['/ruche-detail', ruche.id]);
+    }
+    onDragEnd($event) {
+        let id = $event.id;
+        this.getPosition($event.style);
+        try {
+            console.log(this.rucheService.ruches[id]);
+            this.rucheSelect = this.rucheService.ruches[id];
+            let rucheUpdate = new ruche_1.Ruche(this.rucheSelect.id, this.rucheSelect.name, this.rucheSelect.description, this.rucheSelect.username, this.rucheSelect.idApiary, this.rucheSelect.hivePosX, this.rucheSelect.hivePosY);
+            console.log(rucheUpdate);
+            rucheUpdate.setX(this.position.x);
+            rucheUpdate.setY(this.position.y);
+            this.rucheService.updateCoordonneesRuche(rucheUpdate);
+            this.position.x = '' + 0;
+            this.position.y = '' + 0;
+        }
+        catch (e) {
+        }
+        //this.rucheService.getRucheByApiary(this.username,rucheUpdate.idApiary);
+    }
+    /* Calcule les positions */
+    getPosition(position) {
+        let container = document.getElementById("cadre");
+        /* Dimensions block parent */
+        let widthcontainer = container.offsetWidth;
+        let heightcontainer = container.offsetHeight;
+        let coordonnes = position.transform.slice(10, position.transform.length - 1);
+        /* Position en pourcentage */
+        let left = parseInt(position.left);
+        let top = parseInt(position.top);
+        /* Convertir en px */
+        console.log("x" + left + '- y' + top);
+        console.log("parent" + widthcontainer + "-" + heightcontainer);
+        left = this.getPourccentToPx(left, widthcontainer);
+        top = this.getPourccentToPx(top, heightcontainer);
+        let deplacement = coordonnes.split(',');
+        deplacement[0] = parseInt(deplacement[0].slice(0, deplacement[0].length - 2));
+        deplacement[1] = parseInt(deplacement[1].slice(0, deplacement[1].length - 2));
+        this.position.x = '' + (parseInt(left + deplacement[0]) * 100) / widthcontainer;
+        this.position.y = '' + (parseInt(top + deplacement[1]) * 100) / heightcontainer;
+        console.log(this.position);
+        if (parseInt(this.position.x) > 99 || parseInt(this.position.x) < 0) {
+            this.position.x = '' + 50;
+            this.rucheService.cleanRuches();
+            //this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
+        }
+        if (parseInt(this.position.y) > 99 || parseInt(this.position.y) < 0) {
+            this.position.y = '' + 50;
+            this.rucheService.cleanRuches();
+            //this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
+        }
+        console.log(this.position);
+    }
+    getPourccentToPx(valeur, valeurTotal) {
+        return ((valeur / 100) * valeurTotal);
+    }
+    /* Pour chaque rucher selectionner */
+    onChange($event) {
+        let id = $event.target.selectedIndex;
+        this.rucherService.rucher = this.rucherService.ruchers[id];
+        console.log(this.rucherService.rucher);
+        this.rucheService.cleanRuches();
+        this.rucheService.getRucheByApiary(this.username, this.rucherService.rucher.id);
+        this.dailyRecTh.getDailyRecThByApiary(this.rucherService.rucher.id);
+    }
+    onMouseover($ruche) {
+        console.log(this.position);
+        let ruche = JSON.parse(JSON.stringify($ruche));
+        this.infoRuche = ruche.name + ' : ' + ruche.description;
+    }
+    ngOnDestroy() {
+    }
+};
+DispositionRucheComponent = __decorate([
+    core_1.Component({
+        selector: 'app-disposition-ruche',
+        template: __webpack_require__(/*! ./disposition-ruche.component.html */ "./src/app/accueil/disposition-ruche/disposition-ruche.component.html"),
+        styles: [__webpack_require__(/*! ./disposition-ruche.component.scss */ "./src/app/accueil/disposition-ruche/disposition-ruche.component.scss")]
+    }),
+    __metadata("design:paramtypes", [dailyRecordService_1.DailyRecordService, ng2_drag_and_check_1.DragAndCheckModule,
+        userlogged_service_1.UserloggedService,
+        ruche_service_1.RucheService,
+        rucher_service_1.RucherService,
+        router_1.Router])
+], DispositionRucheComponent);
+exports.DispositionRucheComponent = DispositionRucheComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/disposition-ruche/ruche.ts":
+/*!****************************************************!*\
+  !*** ./src/app/accueil/disposition-ruche/ruche.ts ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class Ruche {
+    constructor(id, name, description, username, idApiary, hivePosX, hivePosY) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.username = username;
+        this.idApiary = idApiary;
+        this.hivePosX = hivePosX;
+        this.hivePosY = hivePosY;
+    }
+    toString() {
+        return this.name + " : " + this.description;
+    }
+    setX(x) {
+        this.hivePosX = x;
+    }
+    setY(y) {
+        this.hivePosY = y;
+    }
+    getId() {
+        return this.id;
+    }
+}
+exports.Ruche = Ruche;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/fleurs-floraison/fleurobservees.ts":
+/*!************************************************************!*\
+  !*** ./src/app/accueil/fleurs-floraison/fleurobservees.ts ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class FleurObservees {
+}
+exports.FleurObservees = FleurObservees;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/fleurs-floraison/fleurs.floraison.component.html":
+/*!**************************************************************************!*\
+  !*** ./src/app/accueil/fleurs-floraison/fleurs.floraison.component.html ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"wrapper\">\n        <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n            <app-sidebar ></app-sidebar>\n            <div class=\"sidebar-background\" style=\"background-image: url(/assets/img/sidebar-5.jpg)\"></div>\n        </div>\n        <div class=\"main-panel\">\n            <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n            <router-outlet></router-outlet>\n    \n            <!-- change component content here-->                    \n            <div class=\"container-fluid\" style=\"background-color:white;\">\n                <div class=\"row content\">\n                    <div class=\"col-sm-9\">\n                       <div class=\"form-inline\" >\n                           <div class=\"form-group\">\n                               <label><h4>Rucher :</h4> </label>\n                               <select  [(ngModel)]=\"selectedRucher\" class=\"form-control \" (change)=\"onSelectRucher($event)\" id=\"sel1\">\n                                   <option  *ngFor=\"let rucher of ruchers\" [value]=\"rucher.id\" (click)=\"onSelectRucher($event)\" >\n                                       {{rucher.name}}\n                                   </option>\n                               </select>\n                           </div>\n                       </div>\n                        <div class=\"bs-example\">\n                            <div class=\"panel-group\" id=\"accordion\">\n                                <div class=\"panel panel-info \">\n                                    <div class=\"panel-heading \"  >\n                                        <h4 class=\"panel-title\" >\n                                            <a data-toggle=\"collapse\" href=\"#collapseOne\">\n                                                <b>Fleurs</b>\n                                                <button class=\"btn btn-primary\" style=\"right:0px\" data-toggle=\"modal\" data-target=\"#biblioteque\" > <i class=\"fa fa-book\"></i>Mes Plantes</button>\n                                                <button class=\"btn btn-primary \" data-toggle=\"modal\" data-target=\"#recherche\"  > <i class=\"fa fa-search\"></i>Annuaire de Plantes</button> \n                                            </a>\n                                        </h4>\n                                    </div>\n                                    <div>\n                                        <div class=\"panel-body\">\n    \n                                               <br/>\n    \n                                           <div id=\"graph\">\n    \n                                           </div>\n    \n                                        </div>\n                                    </div>\n                                </div>  \n                            </div>     \n                        </div>\n                        <br/>   \n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    \n    \n    \n    \n    <div class=\"modal fade\" id=\"biblioteque\" tabindex=\"-1\" role=\"dialog\"  aria-hidden=\"true\">\n       <div class=\"modal-dialog\" role=\"document\">\n         <div class=\"modal-content\" style=\"width:1000px\">\n           <div class=\"modal-header\">\n             <h5 class=\"modal-title\" id=\"exampleModalLabel\"><h4 class=\"text-center\" >Plantes Mellifères <br/> {{ nameApiary.name }}</h4></h5>\n             <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n               <span aria-hidden=\"true\">&times;</span>\n             </button>\n           </div>\n           <div class=\"modal-body\">\n                   <table class=\"table\">    \n                           <thead class=\"thead-dark\">\n                               <tr>\n                                   <th scope=\"col\">Photo</th>\n                                   <th scope=\"col\">Nom</th>\n                                   <th class=\"text-justify\" scope=\"col\">Début <br/>floraison <br/>théorique</th>\n                                   <th class=\"text-justify\" scope=\"col\">Fin <br/>floraison <br/>théorique</th>\n                                   <th class=\"text-justify\" scope=\"col\">Début<br/>floraison <br/>observée</th>\n                                   <th class=\"text-justify\" scope=\"col\">Fin <br/>floraison <br/>observée</th>\n                                   <th class=\"text-justify\" scope=\"col\">Présence dans le<br/> rucher :</th>\n                                   <th class=\"text-justify\" scope=\"col\">Actions</th>\n                               </tr>\n                            </thead>\n                            <tbody>\n                                <ng-container *ngFor = \"let fleur of fleursBibli \">\n                                    \n                                        <tr>\n                                            <td> <img src=\"{{ fleur.photo }}\" class=\"zoom\"> </td>\n                                            <td><b> {{fleur.nom}} </b></td>\n                                            <td>{{fleur.dateThDebutdate}}</td>\n                                            <td>{{fleur.dateThFindate}}</td>\n                                            <td>\n                                                <input type=\"text\"  [(ngModel)]=\"fleur.dateDebutdate[currentYear]\" placeholder=\"{{fleur.dateThDebutdate}}\"  name=\"dateDebutd-{{in}}\"  />\n                                            </td>\n                                            <td>\n                                                <input type=\"text\" [(ngModel)]=\"fleur.dateFindate[currentYear]\"  placeholder=\"{{fleur.dateThFindate}}\"  name=\"dateFind-{{in}}\"  />\n                                            </td>\n                                            <td>\n                                                <select  [(ngModel)]=\"fleur.presence\" (click)=\"onSelectPresence($event)\" class=\"form-control \">\n                                                    <option value=\"Elevée\" >\n                                                        Elevée\n                                                    </option>\n                                                    <option value=\"Moyen\" >\n                                                        Moyen\n                                                    </option>\n                                                    <option value=\"Faible\" >\n                                                        Faible\n                                                    </option>\n                                                </select>\n                                            </td>\n                                            <td>\n                                                <button type=\"button\" class=\"btn btn-warning btn-lg \" (click)=\"deleteFleur(fleur)\" title=\"Supprimer Plante\" style=\"padding: 0;border: none; background: none;\">\n                                                    <i class=\"fa fa-times\"></i>\n                                                </button>\n                                            </td>\n                                        </tr>\n                                </ng-container>\n                           </tbody>\n                       </table> \n           </div>\n           <div class=\"modal-footer\">\n    \n                <button class=\"btn btn-primary pull-left\"  data-toggle=\"modal\" data-target=\"#recherche\"> <i class=\"fa fa-search\"></i>Annuaire des Plantes</button> \n               <button type=\"button\" class=\"btn btn-primary\" (click)=\"updateTot(fleursBibli)\">Enregistrer</button>\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" >Fermer</button>\n            \n           </div>\n         </div>\n       </div>\n    </div>\n    \n       \n    <div class=\"modal fade\" id=\"recherche\"  tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">\n           <div class=\"modal-dialog\" role=\"document\">\n             <div class=\"modal-content\" style=\"width:1000px\">\n               <div class=\"modal-header\">\n                 <h5 class=\"modal-title\" id=\"exampleModalLabel\"><h4 class=\"text-center\" >Annuaire de Plantes Mellifères</h4></h5>\n                 <button class=\"btn btn-primary\" style=\"right:0px\" data-toggle=\"modal\" data-target=\"#biblioteque\" data-dismiss=\"modal\" > <i class=\"fa fa-book\"></i>Mes Plantes</button>\n                 <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                   <span aria-hidden=\"true\">&times;</span>\n                 </button>\n               </div>\n               <div class=\"modal-body\">\n                       <div class=\"panel-body\">\n                               <div class=\"panel panel-info \">\n                                   <div class=\"panel-collapse collapse in\">\n                                      <div class=\"panel-body\">\n    \n                                            <ul class=\"nav nav-tabs\">\n                                                <li class=\"active\"><a data-toggle=\"tab\" href=\"#variete\">Recherche par variété/espèce</a></li>\n                                                <li><a data-toggle=\"tab\" href=\"#periode\">Recherche par période</a></li>\n                                            </ul>\n    \n                                            <div class=\"tab-content\">\n                                                <div id=\"variete\" class=\"tab-pane fade in active\">\n                                                    <div class=\"form-group\">\n                                                        <br/>\n                                                        <label>Nom français  :</label>\n                                                        <form (ngSubmit)=\"subscribeToDataRechercheVariete()\">\n                                                            <input type=\"text\" (input)=\"onSelectFr($event)\" [(ngModel)]=\"selectedFr\" name=\"nomfr\">\n                                                        </form>\n                                                    </div>\n                                                     <br/>\n                                                    <button type=\"submit\" (click)=\"subscribeToDataRechercheVariete()\" class=\"btn btn-primary\" data-toggle=\"modal\" >Rechercher</button>\n                                                </div>\n                                                <div id=\"periode\" class=\"tab-pane fade\">\n                                                  <br/>\n                                                    <label>Type  : </label>\n                                                    <select style=\"width:400px\" [(ngModel)]=\"selectedType\" (click)=\"onSelectType($event)\" class=\"form-control \" >\n                                                        <option value=\"\"></option>\n                                                        <option *ngFor=\"let type of types\" [value]=\"type\" >\n                                                            {{ type }}\n                                                        </option>\n                                                    </select>\n                                                    <br/>   \n                                                    <label>Periode de floraison  : </label>\n                                                        <br/>\n                                                        <input type=\"range\" style=\"width:400px\" [(ngModel)]=\"selectedFlo\" (click)=\"onSelectFlo($event)\" value=\"0\" min=\"0\" max=\"12\">\n                                                        <img src=\"/assets/img/mois.png\" style=\"width:400px\">\n                                                        <br/>\n                                                    <button type=\"submit\" (click)=\"subscribeToDataRecherchePeriode()\" class=\"btn btn-primary\" data-toggle=\"modal\" >Rechercher</button>\n                                                </div>\n                                            </div>\n                                       </div>\n                                   </div>\n                               </div>\n                               <table class=\"table\"  >    \n                                   <thead class=\"thead-dark\">\n                                       <tr>\n                                           <th scope=\"col\">Photos</th>\n                                           <th scope=\"col\">Nom français</th>\n                                           <th scope=\"col\">Nom latin</th>\n                                           <th scope=\"col\">Type</th>\n                                           <th scope=\"col\">Période de floraison</th>\n                                           <th scope=\"col\">Intêret pollen</th>\n                                           <th scope=\"col\">Intêret nectar</th>\n                                           <th scope=\"col\">Indice de confiance</th>\n                                           <th scope=\"col\">Ajouter à un rucher</th>\n                                       </tr>\n                                   </thead>\n                               <tbody>                  \n                                   <tr *ngFor=\"let fleur of fleursTest\" name=\"pollen\">\n                                       <td> <img src=\"{{ fleur.photo }}\" class=\"zoom\"> </td>\n                                       <td> <b> {{ fleur.flowerApi.francais }} </b> </td>\n                                       <td> {{ fleur.flowerApi.latin }} </td>\n                                       <td> {{ fleur.type }} </td>\n                                       <td > {{ fleur.flowerApi.flomindate }} -> {{ fleur.flowerApi.flomaxdate }} </td>\n                                       <td> <img src=\"{{ fleur.flowerItsap.interet_pollen }}\" ></td>\n                                       <td> <img src=\"{{ fleur.flowerItsap.interet_nectar }}\"></td>\n                                       <td> <img src=\"{{ fleur.flowerItsap.indice_confiance }}\"> </td>\n                                       <td> \n                                           <select  [(ngModel)]=\"selectedRucher\" (click)=\"onSelectRucher($event)\" class=\"form-control \" id=\"sel1\">\n                                               <option  *ngFor=\"let rucher of ruchers\" [value]=\"rucher.id\" >\n                                                   {{rucher.name}}\n                                               </option>\n                                           </select>\n                                           <button data-toggle=\"tooltip\" data-html=\"true\" title=\"Ajouter au rucher\" data-toggle=\"modal\" style=\"margin-left: 98%; padding: 0;border: none; background: none;\" class=\"btn btn-success btn-lg\" (click)=\"addFleur(fleur)\" >\n                                               <i class=\"fa fa-plus\"></i>\n                                           </button>\n                                       </td>\n                                   </tr>\n                               </tbody>\n                           </table>  \n               </div>\n               <div class=\"modal-footer\">\n                  \n                  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Fermer</button>\n                \n               </div>\n             </div>\n           </div>\n           </div>"
+
+/***/ }),
+
+/***/ "./src/app/accueil/fleurs-floraison/fleurs.floraison.component.scss":
+/*!**************************************************************************!*\
+  !*** ./src/app/accueil/fleurs-floraison/fleurs.floraison.component.scss ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "#graph {\n  height: 700px;\n  width: 100%;\n  overflow: hidden; }\n\n.zoom {\n  width: 100px;\n  height: 100px;\n  margin: 0 auto;\n  transition: -webkit-transform .2s;\n  transition: transform .2s;\n  transition: transform .2s, -webkit-transform .2s; }\n\n.zoom:hover {\n  /* IE 9 */\n  -webkit-transform: scale(4);\n  /* Safari 3-8 */\n  transform: scale(4);\n  z-index: 2; }\n"
+
+/***/ }),
+
+/***/ "./src/app/accueil/fleurs-floraison/fleurs.floraison.component.ts":
+/*!************************************************************************!*\
+  !*** ./src/app/accueil/fleurs-floraison/fleurs.floraison.component.ts ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const fleurs_floraison_service_1 = __webpack_require__(/*! ./fleurs.floraison.service */ "./src/app/accueil/fleurs-floraison/fleurs.floraison.service.ts");
+const fleursINRA_1 = __webpack_require__(/*! ./fleursINRA */ "./src/app/accueil/fleurs-floraison/fleursINRA.ts");
+const fleurobservees_1 = __webpack_require__(/*! ./fleurobservees */ "./src/app/accueil/fleurs-floraison/fleurobservees.ts");
+const rucher_1 = __webpack_require__(/*! ../ruche-rucher/rucher */ "./src/app/accueil/ruche-rucher/rucher.ts");
+const fleurstheorique_1 = __webpack_require__(/*! ./fleurstheorique */ "./src/app/accueil/fleurs-floraison/fleurstheorique.ts");
+const userlogged_service_1 = __webpack_require__(/*! ../../userlogged.service */ "./src/app/userlogged.service.ts");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+const rucher_service_1 = __webpack_require__(/*! ../ruche-rucher/rucher.service */ "./src/app/accueil/ruche-rucher/rucher.service.ts");
+const echarts = __webpack_require__(/*! ./../../../assets/echarts */ "./src/assets/echarts.js");
+let FleursFloraisonComponent = class FleursFloraisonComponent {
+    constructor(formBuilder, location, router, rucherService, fleursFloraisonService, data) {
+        this.formBuilder = formBuilder;
+        this.location = location;
+        this.router = router;
+        this.rucherService = rucherService;
+        this.fleursFloraisonService = fleursFloraisonService;
+        this.data = data;
+        //Variable pour les informations du rucher
+        this.nameApiary = new rucher_1.Rucher();
+        //variable pour stocker le nom français entré
+        this.selectedFr = new String;
+        //Variable pour la fleur selectionnée
+        this.selectedFleur = new fleurobservees_1.FleurObservees();
+        //Variable pour la fleur qui contient les éléments de recherche
+        this.selectedFleurTest = new fleurstheorique_1.FleursTheorique();
+        //Variable pour la fleur apibotanica qui contient les éléments de recherche
+        this.selectedFleurTh = new fleursINRA_1.FleursINRA();
+        //Variable pour la présence de la fleur changé
+        this.selectedPresence = new String;
+        //variable to store fleurs
+        this.fleursTest = [];
+        //variable to store types of flowers
+        this.types = [];
+        //variable to store ruchers
+        this.ruchers = [];
+        //variable to store fleurs de la bibliothèque
+        this.fleursBibli = [];
+        //Noms des fleurs
+        this.names = new Array();
+        //Les années à afficher
+        this.annee = ["2018", "2019", "2020"];
+        //Tableau des images des fleurs du rucher
+        this.flowerIcon = new Array();
+        //Tableau des données de floraisons théoriques à afficher
+        this.dataTh = new Array();
+        //Tableau des données de floraisons observés à afficher
+        this.data2018 = new Array();
+        //Tableau des données de floraisons observés de 2019
+        this.data2019 = new Array();
+        //Tableau des données de floraisons observés de 2020
+        this.data2020 = new Array();
+        //Variable pour le rucher selectionné
+        this.selectedRucher = new rucher_1.Rucher();
+        //Variable pour le type selectionné
+        this.selectedType = new String;
+        //La date d'aujourd'hui
+        this.date = new Date();
+        //L'année en cours
+        this.currentYear = this.date.getFullYear();
+        this.message = "";
+        this.username = data.currentUser().username;
+        this.currentRucherID = localStorage.getItem("currentRucher");
+        this.currentType = localStorage.getItem("currentType");
+        this.currentFlomin = localStorage.getItem("currentFlomin");
+        this.currentFlomax = localStorage.getItem("currentFlomax");
+        this.currentPresence = localStorage.getItem("currentPresence");
+        this.currentFlo = localStorage.getItem("currentFlo");
+    }
+    //Au chargement de la page on execute ces fonctions
+    ngOnInit() {
+        this.x = String(this.selectedRucher);
+        this.x = this.currentRucherID;
+        this.selectedRucher = this.x;
+        this.getUserRuchers();
+        this.getFleurDuRucher(this.currentYear);
+        this.getAllFleurTest();
+        this.getAllType();
+        this.subscribeToNames();
+        if (this.selectedRucher != undefined) {
+            this.getNameApiary();
+        }
+        this.selectedFlo = "0";
+    }
+    //Récupère les ruchers de l'utilisateur
+    getUserRuchers() {
+        /*this.rucherService.getUserRuchers(this.username).subscribe(
+          data => { this.ruchers = data } );*/
+    }
+    //Récupère les fleurs du rucher
+    getFleurDuRucher(annee) {
+        if (this.selectedRucher != null) {
+            this.fleursFloraisonService.getUserFleur(this.selectedRucher).subscribe(data => { this.fleursBibli = data; });
+        }
+    }
+    //Récupère les fleurs 
+    getAllFleurTest() {
+        this.fleursFloraisonService.getFleurTest().subscribe(data => {
+            this.fleursTest = data;
+        });
+    }
+    //Récupère les types de plantes
+    getAllType() {
+        this.fleursFloraisonService.getType().subscribe(data => {
+            this.types = data;
+        });
+    }
+    //On récupère les noms des plantes du rucher
+    getNames() {
+        //on récupère les noms des plantes
+        this.fleursFloraisonService.getNamesFlowers(this.selectedRucher).subscribe(data => {
+            this.names = data;
+        });
+        //on charges les dates théoriques associées
+        this.subscribeToDateTh();
+        //on charges les dates observées associées
+        this.subscribeToDateOb(this.annee);
+        //on charge le graph
+        this.subscribeToGraph();
+    }
+    getNameApiary() {
+        this.fleursFloraisonService.getNameApiary(this.selectedRucher).subscribe(data => {
+            this.nameApiary = data;
+        });
+    }
+    //On récupères les dates de flo théoriques de la plante "name"
+    getOneDateTh(fleur, i) {
+        this.fleursFloraisonService.getFloraisonThFlowers(fleur).subscribe(data => { this.dataTh[i] = data; });
+    }
+    //On récupères les dates de flo observée de la plante "name"
+    getOneDateOb(databis, fleur, i, annee) {
+        this.fleursFloraisonService.getFloraisonObFlowers(fleur, annee).subscribe(data => { databis[i] = data; });
+    }
+    //On récupère toutes les date de flo théoriques des fleurs du rucher
+    getDatesTh() {
+        this.dataTh = new Array();
+        //On défini la taille du tableau des floraisons théoriques et observées
+        for (let i = 0; i < this.names.length; i++) {
+            this.dataTh[i] = new Array(2);
+            for (let j = 0; j < 2; j++) {
+                this.dataTh[i][j] = new Array(2);
+            }
+        }
+        //On récupères les dates théoriques
+        for (var i = 0; i < this.dataTh.length; i++) {
+            this.subscribeToOneDateTh(this.fleursBibli[i], i);
+        }
+    }
+    //On récupère toutes les date de flo observées des fleurs du rucher
+    getDatesOb(annee) {
+        this.data2018 = new Array();
+        this.data2019 = new Array();
+        //On défini la taille du tableau des floraisons théoriques et observées
+        for (let i = 0; i < this.names.length; i++) {
+            this.data2018[i] = new Array(2);
+            this.data2019[i] = new Array(2);
+            for (let j = 0; j < 2; j++) {
+                this.data2018[i][j] = new Array(2);
+                this.data2019[i][j] = new Array(2);
+            }
+        }
+        for (var i = 0; i < this.data2018.length; i++) {
+            this.subscribeToOneDateOb(this.data2018, this.fleursBibli[i], i, "2018");
+        }
+        for (var i = 0; i < this.data2019.length; i++) {
+            this.subscribeToOneDateOb(this.data2019, this.fleursBibli[i], i, "2019");
+        }
+    }
+    //Change le type selectionné
+    onSelectType(event) {
+        this.currentType = String(this.selectedType);
+        localStorage.setItem("currentType", String(this.selectedType));
+    }
+    //Change le rucher selectionné
+    onChangeRucher() {
+        this.subscribeToDataFleur();
+        this.subscribeToNames();
+        this.getNameApiary();
+    }
+    //Change le rucher selectionné
+    onSelectRucher(event) {
+        this.currentRucherID = String(this.selectedRucher);
+        localStorage.setItem("currentRucher", String(this.selectedRucher));
+        this.onChangeRucher();
+    }
+    //change le nom français entré par l'utilisateur
+    onSelectFr(event) {
+        this.currentFr = String(this.selectedFr);
+        localStorage.setItem("currentFr", String(this.selectedFr));
+    }
+    //
+    onSelectPresence(event) {
+        this.currentPresence = String(this.selectedPresence);
+        localStorage.setItem("currentPresence", String(this.selectedPresence));
+    }
+    //
+    onSelectFlo(event) {
+        this.currentFlo = String(this.selectedFlo);
+        localStorage.setItem("currentFlo", String(this.selectedFlo));
+    }
+    //Ajoute la fleur à un rucher
+    addFleur(fleur) {
+        //on fait une copie de la fleur
+        this.selectedFleur.nom = fleur.flowerApi.francais;
+        this.selectedFleur.dateDebutd = fleur.flowerApi.flomind;
+        this.selectedFleur.dateFind = fleur.flowerApi.flomaxd;
+        this.selectedFleur.dateThDebutd = fleur.flowerApi.flomind;
+        this.selectedFleur.dateThFind = fleur.flowerApi.flomaxd;
+        this.selectedFleur.dateThDebutdate = fleur.flowerApi.flomindate;
+        this.selectedFleur.dateThFindate = fleur.flowerApi.flomaxdate;
+        this.selectedFleur.presence = "";
+        this.selectedFleur.username = this.username;
+        this.selectedFleur.photo = fleur.photo;
+        if (this.selectedRucher != null) {
+            if (confirm("Ajouter plante " + this.selectedFleur.nom + " au rucher " + this.nameApiary.name + " ?")) {
+                //A changer avce l'année en cours !!
+                this.fleursFloraisonService.addFlower(this.selectedFleur, this.selectedRucher)
+                    .subscribe(data => { }, error => this.ErrorMsg = error);
+                //on recharge les fleurs du rucher
+                this.subscribeToDataFleur();
+                //On charge les noms des fleurs (et recharge le graphique avec les bonnes données)
+                this.subscribeToNames();
+            }
+        }
+    }
+    //Change le début de floraison observée d'une fleur
+    updateDebut(fleur) {
+        this.selectedFleur = fleur;
+        this.fleursFloraisonService.updateFleurDebut(this.selectedFleur.id, this.currentYear, this.selectedFleur.dateDebutdate[this.currentYear])
+            .subscribe(data => { }, error => this.ErrorMsg = error);
+    }
+    //Change la fin de floraison observée d'une fleur
+    updateFin(fleur) {
+        this.selectedFleur = fleur;
+        this.fleursFloraisonService.updateFleurFin(this.selectedFleur.id, this.currentYear, this.selectedFleur.dateFindate[this.currentYear])
+            .subscribe(data => { }, error => this.ErrorMsg = error);
+    }
+    //Change la presence d'une fleur dans le rucher
+    updatePresence(fleur) {
+        this.selectedFleur = fleur;
+        this.fleursFloraisonService.updatePresence(this.selectedFleur)
+            .subscribe(data => { }, error => this.ErrorMsg = error);
+    }
+    updateTot(fleursBib) {
+        for (let i = 0; i < fleursBib.length; i++) {
+            if (fleursBib[i].dateDebutdate[this.currentYear] == "") {
+                fleursBib[i].dateDebutdate[this.currentYear] = "null";
+            }
+            if (fleursBib[i].dateFindate[this.currentYear] == "") {
+                fleursBib[i].dateFindate[this.currentYear] = "null";
+            }
+            this.subscribeToUpFin(fleursBib[i]);
+            this.subscribeToUpDeb(fleursBib[i]);
+            this.subscribeToUpPre(fleursBib[i]);
+        }
+        //On charge les noms des fleurs (et recharge le graphique avec les bonnes données)
+        this.subscribeToNames();
+        this.subscribeToDataFleur();
+    }
+    //Supprime une fleur du rucher
+    deleteFleur(fleur) {
+        this.selectedFleur = fleur;
+        if (confirm("Supprimer la plante " + this.selectedFleur.nom + " du rucher " + this.nameApiary.name + " ?")) {
+            this.fleursFloraisonService.deleteFleur(this.selectedFleur)
+                .subscribe(data => { }, error => this.ErrorMsg = error);
+            //On recharge la page avec les fleurs du rucher restantes      
+            this.subscribeToDataFleur();
+            //On charge les noms des fleurs (et recharge le graphique avec les bonnes données)
+            this.subscribeToNames();
+        }
+    }
+    //Lance la recherche des fleurs qui correspondent aux critères entré par l'utilisateur
+    rechercheFleurVariete() {
+        //On créer un fleur type de recherche
+        this.selectedFleurTh.francais = this.selectedFr;
+        this.selectedFleurTest.flowerApi = this.selectedFleurTh;
+        //On envoie la requêtes
+        this.fleursFloraisonService.rechercheFlowersVar(this.selectedFleurTest)
+            .subscribe(data => {
+            this.fleursTest = data;
+        });
+    }
+    //Lance la recherche des fleurs qui correspondent aux critères entré par l'utilisateur
+    rechercheFleurPeriode() {
+        //On créer un fleur type de recherche
+        this.selectedFleurTest.type = this.selectedType;
+        this.selectedFleurTh.flomind = this.selectedFlo;
+        this.selectedFleurTest.flowerApi = this.selectedFleurTh;
+        //On envoie la requêtes
+        this.fleursFloraisonService.rechercheFlowersPer(this.selectedFleurTest)
+            .subscribe(data => {
+            this.fleursTest = data;
+        });
+    }
+    //Rafraichit la page avec les fleurs qui correspondent à la recherche
+    subscribeToDataRechercheVariete() {
+        this.timerSubscription = rxjs_1.Observable.timer(1000).first().subscribe(() => this.rechercheFleurVariete());
+    }
+    //Rafraichit la page avec les fleurs qui correspondent à la recherche
+    subscribeToDataRecherchePeriode() {
+        this.timerSubscription = rxjs_1.Observable.timer(1000).first().subscribe(() => this.rechercheFleurPeriode());
+    }
+    //On recharge la bilbiothèque de fleurs
+    subscribeToDataFleur() {
+        this.timerSubscription = rxjs_1.Observable.timer(400).first().subscribe(() => this.getFleurDuRucher(this.currentYear));
+    }
+    //On recharge le pourcentage totale du rucher
+    subscribeToNames() {
+        this.timerSubscription = rxjs_1.Observable.timer(100).first().subscribe(() => this.getNames());
+    }
+    //On recharge le graph du rucher
+    subscribeToGraph() {
+        this.timerSubscription = rxjs_1.Observable.timer(1000).first().subscribe(() => this.graphStatique());
+    }
+    //On charge les dates théoriques pour le graph
+    subscribeToDateTh() {
+        this.timerSubscription = rxjs_1.Observable.timer(400).first().subscribe(() => this.getDatesTh());
+    }
+    //On charge les dates observées pour le graph
+    subscribeToDateOb(annee) {
+        this.timerSubscription = rxjs_1.Observable.timer(400).first().subscribe(() => this.getDatesOb(annee));
+    }
+    //On charge une date théorique d'une fleur pour le graph
+    subscribeToOneDateTh(fleur, i) {
+        this.timerSubscription = rxjs_1.Observable.timer(500).first().subscribe(() => this.getOneDateTh(fleur, i));
+    }
+    //On charge une date observée d'une fleur pour le graph
+    subscribeToOneDateOb(databis, name, i, annee) {
+        this.timerSubscription = rxjs_1.Observable.timer(500).first().subscribe(() => this.getOneDateOb(databis, name, i, annee));
+    }
+    //
+    subscribeToUpDeb(fleur) {
+        this.timerSubscription = rxjs_1.Observable.timer(100).first().subscribe(() => this.updateDebut(fleur));
+    }
+    //
+    subscribeToUpFin(fleur) {
+        this.timerSubscription = rxjs_1.Observable.timer(200).first().subscribe(() => this.updateFin(fleur));
+    }
+    //
+    subscribeToUpPre(fleur) {
+        this.timerSubscription = rxjs_1.Observable.timer(300).first().subscribe(() => this.updatePresence(fleur));
+    }
+    /*
+    //Affiche les semaines de floraisons théoriques des plantes du rucher
+    generateDataTh(option) {
+      for (var i = 0; i < this.dataTh.length; i++) {
+          option.series.push({
+            name: 'Floraisons théoriques',
+            type: 'line',
+            color:'#509B21',
+            data: this.dataTh[i],
+            symbolSize: function (val) {
+                return val[2] * 5;
+            },
+            animationDelay: function (idx) {
+                return idx * 2;
+            }
+          });
+      }
+    }
+    //Affiche les semaines de floraisons observées année 2018 des plantes du rucher
+    generateData2018(option) {
+      for (var i = 0; i < this.data2018.length; i++) {
+          option.series.push({
+             name: 'Floraisons observées 2018',
+            type: 'scatter',
+            symbol: 'arrow',
+            color:'#990000',
+            data: this.data2018[i],
+            symbolSize: function (val) {
+                return val[2] * 5;
+            },
+            animationDelay: function (idx) {
+                return idx * 2;
+            }
+          });
+      }
+    }
+    //Affiche les semaines de floraisons observées année 2019 des plantes du rucher
+    generateData2019(option) {
+      for (var i = 0; i < this.data2019.length; i++) {
+          option.series.push({
+             name: 'Floraisons observées 2019',
+            type: 'scatter',
+            symbol: 'arrow',
+            color:'blue',
+            data: this.data2019[i],
+            symbolSize: function (val) {
+                return val[2] * 5;
+            },
+            animationDelay: function (idx) {
+                return idx * 2;
+            }
+          });
+      }
+    }*/
+    generateDataTh(option) {
+        for (var i = 0; i < this.dataTh.length; i++) {
+            option.series.push({
+                name: 'Floraisons théoriques',
+                type: 'line',
+                color: '#509B21',
+                symbolSize: 12,
+                data: this.dataTh[i]
+            });
+        }
+    }
+    generateData2018(option) {
+        for (var i = 0; i < this.data2018.length; i++) {
+            option.series.push({
+                name: 'Floraisons observées 2018',
+                type: 'scatter',
+                symbol: 'arrow',
+                color: '#990000',
+                symbolSize: 15,
+                data: this.data2018[i]
+            });
+        }
+    }
+    //graphique des fleurs du rucher
+    graphStatique() {
+        var unChart = echarts.init(document.getElementById("graph"));
+        for (let index = 0; index < this.dataTh.length; index++) {
+            this.dataTh[index] = this.dataTh[index].map(function (item) {
+                return [item[0], item[1]];
+            });
+        }
+        for (let index = 0; index < this.data2018.length; index++) {
+            this.data2018[index] = this.data2018[index].map(function (item) {
+                return [item[0], item[1]];
+            });
+        }
+        var option = {
+            //Défini le titre du graphique
+            title: {
+                text: 'Fleurs du rucher',
+            },
+            //Défini la légende du graph
+            legend: {
+                data: ['Floraisons théoriques', 'Floraisons observées 2018'],
+                left: 'right',
+            },
+            grid: {
+                left: 2,
+                bottom: 10,
+                right: 10,
+                containLabel: true
+            },
+            //Le pointeur ne bouge qu'avec la souris
+            tooltip: {
+                triggerOn: 'none',
+                trigger: 'axis',
+            },
+            //Défini l'axe ou les axes abscisse(s)
+            xAxis: [
+                {
+                    type: 'time',
+                    min: this.currentYear + '-01-01',
+                    max: this.currentYear + '-12-31',
+                    //Option pour le pointeur
+                    axisPointer: {
+                        value: this.date,
+                        lineStyle: {
+                            color: '#004E52',
+                            opacity: 0.5,
+                            width: 2
+                        },
+                        label: {
+                            show: true,
+                            backgroundColor: '#004E52'
+                        },
+                        handle: {
+                            show: true,
+                            color: '#004E52'
+                        }
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#999',
+                            type: 'dotted'
+                        }
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        rotate: 40
+                    }
+                }
+            ],
+            //Défini l'axe ou les axes ordonnée(s)
+            yAxis: {
+                type: 'category',
+                data: this.names,
+                axisLine: {
+                    show: false
+                }
+            },
+            //Affiche les données sur le graph
+            series: [
+                //Floraisons théoriques
+                {
+                    name: 'Floraisons théoriques',
+                    type: 'line',
+                    color: '#509B21',
+                    symbolSize: 12
+                },
+                //Floraisons observées 2018
+                {
+                    name: 'Floraisons observées 2018',
+                    type: 'scatter',
+                    symbol: 'arrow',
+                    color: '#990000',
+                    symbolSize: 15
+                } /*,
+                //Floraisons observées 2019
+                {
+                  name: 'Floraisons observées 2019',
+                  type: 'scatter',
+                  symbol: 'arrow',
+                  color:'blue',
+                  symbolSize: 15
+               },
+               //Floraisons observées 2020
+               {
+                name: 'Floraisons observées 2020',
+                type: 'scatter',
+                symbol: 'arrow',
+                color:'yellow',
+                symbolSize: 15
+               }*/
+            ]
+        };
+        //Affiche les données
+        this.generateDataTh(option);
+        this.generateData2018(option);
+        //this.generateData2019(option);
+        unChart.setOption(option);
+    }
+    receiveMessage($event) {
+        this.message = $event;
+    }
+};
+FleursFloraisonComponent = __decorate([
+    core_1.Component({
+        selector: 'app-fleurs-floraison',
+        template: __webpack_require__(/*! ./fleurs.floraison.component.html */ "./src/app/accueil/fleurs-floraison/fleurs.floraison.component.html"),
+        styles: [__webpack_require__(/*! ./fleurs.floraison.component.scss */ "./src/app/accueil/fleurs-floraison/fleurs.floraison.component.scss")]
+    }),
+    __metadata("design:paramtypes", [forms_1.FormBuilder,
+        common_1.Location,
+        router_1.Router,
+        rucher_service_1.RucherService,
+        fleurs_floraison_service_1.FleursFloraisonService,
+        userlogged_service_1.UserloggedService])
+], FleursFloraisonComponent);
+exports.FleursFloraisonComponent = FleursFloraisonComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/fleurs-floraison/fleurs.floraison.service.ts":
+/*!**********************************************************************!*\
+  !*** ./src/app/accueil/fleurs-floraison/fleurs.floraison.service.ts ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const config_1 = __webpack_require__(/*! config */ "./src/config.ts");
+const httpOptions = {
+    headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
+};
+let FleursFloraisonService = class FleursFloraisonService {
+    constructor(http) {
+        this.http = http;
+    }
+    //Récupère la liste des fleurs théoriques
+    getFleurTest() {
+        return this.http.get(config_1.CONFIG.URL + 'flowersTh/all');
+    }
+    //Service permettant de récuperer les fleurs du rucher selectionné d'un utilisateur x
+    getUserFleur(idRucher) {
+        return this.http.get(config_1.CONFIG.URL + 'flowersOb/' + idRucher);
+    }
+    //Récupère la liste des fleurs théoriques
+    getType() {
+        return this.http.get(config_1.CONFIG.URL + 'flowersTh/types');
+    }
+    //Récupère le noms des fleurs du rucher
+    getNamesFlowers(idRucher) {
+        return this.http.get(config_1.CONFIG.URL + 'flowersOb/namesflowers/' + idRucher);
+    }
+    //Récupère le noms des fleurs du rucher
+    getNameApiary(idRucher) {
+        return this.http.get(config_1.CONFIG.URL + 'apiaries/details/' + idRucher);
+    }
+    //Récupère le dates de floraisons théoriques des fleurs du rucher
+    getFloraisonThFlowers(fleur) {
+        return this.http.get(config_1.CONFIG.URL + 'flowersOb/datesthflowersd/' + fleur.id);
+    }
+    //Récupère les dates de floraisons observées des fleurs du rucher
+    getFloraisonObFlowers(fleur, annee) {
+        return this.http.get(config_1.CONFIG.URL + 'flowersOb/datesobflowersd/' + fleur.id + '/' + annee);
+    }
+    //Ajoute une fleur à un rucher de l'utilisateur
+    addFlower(fleur, id) {
+        return this.http.put(config_1.CONFIG.URL + 'flowersOb/add/' + id, fleur);
+    }
+    //Change la date de début de floraison obserevée d'une fleur
+    updateFleurDebut(id, annee, dateDebut) {
+        return this.http.put(config_1.CONFIG.URL + 'flowersOb/updateDebd/' + id + '/' + annee, dateDebut);
+    }
+    //Change la date de fin de floraison obserevée d'une fleur
+    updateFleurFin(id, annee, dateFin) {
+        return this.http.put(config_1.CONFIG.URL + 'flowersOb/updateFind/' + id + '/' + annee, dateFin);
+    }
+    //Change le pourcentage d'une fleur dans le rucher
+    updatePresence(fleur) {
+        return this.http.put(config_1.CONFIG.URL + 'flowersOb/updatePresence/' + fleur.id, fleur.presence);
+    }
+    //on supprime une fleur de la bibliothèque
+    deleteFleur(fleur) {
+        return this.http.delete(config_1.CONFIG.URL + 'flowersOb/' + fleur.id);
+    }
+    //Récupère les fleurs qui correspondet à la recherche
+    rechercheFlowersVar(fleur) {
+        return this.http.put(config_1.CONFIG.URL + 'flowersTh/rechercheVar', fleur);
+    }
+    //Récupère les fleurs qui correspondet à la recherche
+    rechercheFlowersPer(fleur) {
+        return this.http.put(config_1.CONFIG.URL + 'flowersTh/recherchePer', fleur);
+    }
+};
+FleursFloraisonService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.HttpClient])
+], FleursFloraisonService);
+exports.FleursFloraisonService = FleursFloraisonService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/fleurs-floraison/fleursINRA.ts":
+/*!********************************************************!*\
+  !*** ./src/app/accueil/fleurs-floraison/fleursINRA.ts ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class FleursINRA {
+}
+exports.FleursINRA = FleursINRA;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/fleurs-floraison/fleurstheorique.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/accueil/fleurs-floraison/fleurstheorique.ts ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class FleursTheorique {
+}
+exports.FleursTheorique = FleursTheorique;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/graph/graph.component.html":
+/*!****************************************************!*\
+  !*** ./src/app/accueil/graph/graph.component.html ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"wrapper\">\n        <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n            <app-sidebar ></app-sidebar>\n            <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-5.jpg)\"></div>\n        </div>\n        <div class=\"main-panel\">\n            <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n            <router-outlet></router-outlet>\n    \n            <div id=\"main\" style=\"width: 1200px;height:900px;\">ss</div>\n    \n            <table class=\"table\">\n                    <thead>\n                        <tr>\n                        <th>Min temp (C) </th>\n                        <th>Max temp (C) </th>\n                        <th>Day </th>\n                        <th>Icon </th>\n                        <th>Météo</th>\n                        <th></th>\n                        <th>Wind speed (m/s)</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr *ngFor=\"let cityForecast of dataCity | slice:0:4\">\n                        \n                        <td class=\"forecast-info forecast-1\">{{cityForecast.minTempDay}}</td>\n                        <td class=\"forecast-info forecast-2\">{{cityForecast.maxTempDay}}</td>\n                        <td class=\"forecast-info forecast-3\">{{cityForecast.day}}</td>\n                        <td class=\"forecast-info forecast-4\"><img src=\"https://openweathermap.org/img/w/{{cityForecast.icons[0]}}.png\" class=\"forecast-icon\" alt=\"forecast\"></td>\n                      \n                        </tr>\n                    </tbody>\n                    </table>\n    \n    \n        </div>\n    \n    \n            \n    \n         \n        test\n    </div>\n    "
+
+/***/ }),
+
+/***/ "./src/app/accueil/graph/graph.component.ts":
+/*!**************************************************!*\
+  !*** ./src/app/accueil/graph/graph.component.ts ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const graph_service_1 = __webpack_require__(/*! ./graph.service */ "./src/app/accueil/graph/graph.service.ts");
+// import { AnonymousSubscription } from "rxjs";
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+let GraphComponent = class GraphComponent {
+    constructor(location, router, _testService) {
+        this.location = location;
+        this.router = router;
+        this._testService = _testService;
+        this.dataCity = [];
+        this.minTemps = [];
+        this.maxTemps = [];
+        this.message = "";
+    }
+    ngOnInit() {
+        this.getData();
+        console.log("meteo : " + this.dataCity);
+        this.subscribeToFillY();
+        console.log("min temps: " + this.minTemps);
+        this.subscribeToTest();
+    }
+    getData() {
+        // console.log("this username :"+  this.username);
+        this._testService.getWeather().subscribe(data => {
+            this.dataCity = data;
+        }, err => console.error(err), () => console.log());
+    }
+    fillY() {
+        this._testService.getMinTems().subscribe(data => {
+            this.minTemps = data;
+        }, err => console.error(err), () => console.log());
+    }
+    subscribeToFillY() {
+        this.timerSubscription = rxjs_1.Observable.timer(500).first().subscribe(() => this.fillY());
+    }
+    subscribeToTest() {
+        this.timerSubscription = rxjs_1.Observable.timer(800).first().subscribe(() => this.test());
+    }
+    test() {
+    }
+    goToDashboard() {
+        this.router.navigate(['dashboard']);
+    }
+    logIn() {
+        this.showLogin = false;
+    }
+    receiveMessage($event) {
+        this.message = $event;
+    }
+};
+GraphComponent = __decorate([
+    core_1.Component({
+        selector: 'app-graph',
+        template: __webpack_require__(/*! ./graph.component.html */ "./src/app/accueil/graph/graph.component.html")
+    }),
+    __metadata("design:paramtypes", [common_1.Location,
+        router_1.Router,
+        graph_service_1.GraphService])
+], GraphComponent);
+exports.GraphComponent = GraphComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/graph/graph.service.ts":
+/*!************************************************!*\
+  !*** ./src/app/accueil/graph/graph.service.ts ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+const config_1 = __webpack_require__(/*! ../../../config */ "./src/config.ts");
+//import { Weather} from './weather';
+const httpOptions = {
+    headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
+};
+let GraphService = class GraphService {
+    constructor(http) {
+        this.http = http;
+    }
+    // pour afficher tout les ruchers
+    getWeather() {
+        return this.http.get(config_1.CONFIG.URL + 'dailyweather/all');
+    }
+    getMinTems() {
+        return this.http.get(config_1.CONFIG.URL + 'dailyweather/getMinTemps');
+    }
+    errorHandler(error) {
+        return rxjs_1.Observable.throw(error.message || "server error");
+    }
+};
+GraphService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.HttpClient])
+], GraphService);
+exports.GraphService = GraphService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/meteo/Service/MeteoService.ts":
+/*!*******************************************************!*\
+  !*** ./src/app/accueil/meteo/Service/MeteoService.ts ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const rucher_service_1 = __webpack_require__(/*! ../../ruche-rucher/rucher.service */ "./src/app/accueil/ruche-rucher/rucher.service.ts");
+const userlogged_service_1 = __webpack_require__(/*! ../../../userlogged.service */ "./src/app/userlogged.service.ts");
+const calendrier_service_1 = __webpack_require__(/*! ./calendrier.service */ "./src/app/accueil/meteo/Service/calendrier.service.ts");
+const graph_meteo_service_1 = __webpack_require__(/*! ./graph-meteo.service */ "./src/app/accueil/meteo/Service/graph-meteo.service.ts");
+/*
+    class dont les fonctions éxécute les requetes
+*/
+let MeteoService = class MeteoService {
+    constructor(rucher, celendrier, httpClient, login, graphMeteo) {
+        this.rucher = rucher;
+        this.celendrier = celendrier;
+        this.httpClient = httpClient;
+        this.login = login;
+        this.graphMeteo = graphMeteo;
+        this.data = null;
+        this.meteo = null;
+        this.arrayMeteo = [];
+        this.mergeOption = null;
+        this.mergeOptionGraph = null;
+        this.meteo = [];
+        this.rucher.rucherObs.subscribe(() => { }, () => { }, () => {
+            this.getWeather(this.rucher.rucher.ville);
+        });
+    }
+    getWeather(city) {
+        this.status = false;
+        this.ville = city;
+        this.arrayMeteo = [];
+        this.meteoObs = this.httpClient.get('https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&units=metric&appid=110ff02ed24ccd819801248373c3b208');
+        this.meteoObs.subscribe((data) => {
+            var date = null;
+            let premierElement = data['list'][0];
+            this.meteo = [];
+            this.meteo.push({
+                date: this.convertDate(premierElement.dt_txt),
+                humidity: premierElement.main.humidity,
+                icons: premierElement.weather[0].icon,
+                tempMin: Math.round(premierElement.main.temp_min),
+                tempMax: Math.round(premierElement.main.temp_max),
+                tempMoy: (premierElement.main.temp_min + premierElement.main.temp_max) / 2
+            });
+            data['list'].forEach(element => {
+                let heure = new Date(element.dt_txt).getHours();
+                date = new Date(element.dt_txt);
+                if (heure == 12 && date.getDate() != new Date().getDate()) {
+                    this.meteo.push({
+                        date: this.convertDate(element.dt_txt),
+                        humidity: element.main.humidity,
+                        icons: element.weather[0].icon,
+                        tempMin: Math.round(element.main.temp_min),
+                        tempMax: Math.round(element.main.temp_max),
+                        tempMoy: (element.main.temp_min + element.main.temp_max) / 2
+                    });
+                }
+            });
+            console.log(data);
+            console.log(this.meteo);
+            this.getArray();
+            console.log(this.arrayMeteo);
+            console.log(this.tabHeatmap);
+            this.mergeOption = {
+                series: [{
+                        data: this.arrayMeteo
+                    },
+                ],
+            };
+            this.mergeOptionGraph = {
+                xAxis: {
+                    type: 'category',
+                    data: this.tabDate
+                },
+                series: [
+                    {
+                        data: this.tabTempMoy
+                    },
+                    {
+                        data: this.tabHumidty
+                    }
+                ]
+            };
+            this.status = true;
+        }, (err) => {
+            console.log(err);
+        }, () => {
+        });
+        console.log(this.meteo.length);
+    }
+    convertDate(date) {
+        var dateIso = new Date(date);
+        var jour = '' + dateIso.getDate();
+        var mois = '' + (dateIso.getMonth() + 1);
+        var anee = dateIso.getFullYear();
+        if (parseInt(jour) < 10) {
+            jour = '0' + jour;
+        }
+        if (parseInt(mois) < 10) {
+            mois = '0' + mois;
+        }
+        return anee + '-' + mois + '-' + jour;
+    }
+    getArray() {
+        this.tabHumidty = [];
+        this.tabTempMoy = [];
+        this.tabDate = [];
+        this.tabHeatmap = [];
+        this.meteo.forEach(element => {
+            this.arrayMeteo.push([element.date, element.icons, element.tempMin, element.tempMax]);
+            this.tabTempMoy.push(element.tempMoy.toFixed(2));
+            this.tabDate.push(element.date);
+            this.tabHeatmap.push([element.date, element.humidity]);
+            this.tabHumidty.push(element.humidity);
+        });
+    }
+};
+MeteoService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [rucher_service_1.RucherService, calendrier_service_1.CalendrierService, http_1.HttpClient, userlogged_service_1.UserloggedService, graph_meteo_service_1.GraphMeteoService])
+], MeteoService);
+exports.MeteoService = MeteoService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/meteo/Service/calendrier.service.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/accueil/meteo/Service/calendrier.service.ts ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let CalendrierService = class CalendrierService {
+    constructor() {
+        this.couleur = 'rgba(123,123,123,0.3)';
+        this.options = {
+            /* Proprieté */
+            /*title:{
+                bottom:"20",
+                text : 'Calendrier'
+            },*/
+            tooltip: {
+                trigger: 'item',
+                formatter: (params) => {
+                    return params.data[0] + ' :<br/> temp-min : ' + params.data[2] + ' °C<br/> temp-max : ' + params.data[3] + ' °C';
+                }
+            },
+            calendar: {
+                cellSize: 70,
+                orient: 'vertical',
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        width: 3,
+                        opacity: 1,
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: this.couleur,
+                        borderWidth: 1,
+                        borderColor: 'white'
+                    }
+                },
+                dayLabel: {
+                    nameMap: 'fr',
+                    firstDay: 1
+                    // firstDay
+                },
+                yearLabel: {
+                    show: false // desactiver
+                }
+            },
+            series: [{
+                    type: 'custom',
+                    coordinateSystem: 'calendar',
+                    data: '',
+                    renderItem: this.renderItem,
+                },
+            ],
+            range: this.decomposeDate(new Date())
+        };
+    }
+    renderItem(params, api) {
+        var cellPoint = api.coord([api.value(0), api.value(1)]); // utilise les valeurs des données pour obtenir des coordonnées
+        var cellWidth = params.coordSys.cellWidth;
+        var cellHeight = params.coordSys.cellHeight;
+        var img; // variable pour chemin de l'image
+        var jour;
+        // var date=echarts.format.formatTime('yyyy-MM-dd',api.value(0));
+        if (isNaN(api.value(0))) {
+            return false;
+        }
+        img = "http://openweathermap.org/img/w/" + api.value(1) + ".png";
+        jour = new Date(api.value(0)).getDate();
+        var group = {
+            type: 'group',
+            children: [{
+                    type: 'image',
+                    style: {
+                        image: img,
+                        width: 40,
+                        heigth: 30,
+                        /*placement de l'image (x,y) avec les coordonnées */
+                        x: cellPoint[0] - cellWidth / 2 + 13,
+                        y: cellPoint[1] - cellHeight / 2 + 13,
+                    },
+                },
+                {
+                    type: 'text',
+                    style: {
+                        /* placement */
+                        x: cellPoint[0] - 6,
+                        y: cellPoint[1] - 28,
+                        text: jour,
+                    }
+                },
+                {
+                    type: 'text',
+                    style: {
+                        x: cellPoint[0] - 30,
+                        y: cellPoint[1] + 18,
+                        text: api.value(2) + '°C/'
+                    }
+                },
+                {
+                    type: 'text',
+                    style: {
+                        x: cellPoint[0] + 6,
+                        y: cellPoint[1] + 18,
+                        text: api.value(3) + '°C'
+                    }
+                }
+            ]
+        };
+        return group;
+    }
+    decomposeDate(date) {
+        var tabDate = [];
+        date = new Date(date);
+        tabDate.push(date.getDate());
+        tabDate.push((date.getMonth() + 1));
+        tabDate.push(date.getFullYear());
+        console.log(tabDate[2] + '-' + tabDate[1], tabDate[2] + '-' + parseInt(tabDate[1] + 1));
+        return [tabDate[2] + '-' + tabDate[1], tabDate[2] + '-' + parseInt(tabDate[1] + 1) + '-' + 15];
+    }
+};
+CalendrierService = __decorate([
+    core_1.Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [])
+], CalendrierService);
+exports.CalendrierService = CalendrierService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/meteo/Service/graph-meteo.service.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/accueil/meteo/Service/graph-meteo.service.ts ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let GraphMeteoService = class GraphMeteoService {
+    constructor() {
+        this.option = {
+            title: {
+                left: "10%",
+                text: 'Température Moyenne | Humidité'
+            },
+            xAxis: {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data: ['Temp-Moyenne', 'Humidité']
+            },
+            series: [{
+                    name: 'Temp-Moyenne',
+                    type: 'line',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                }, {
+                    name: 'Humidité',
+                    type: 'line',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                }
+            ],
+            dataZoom: [
+                {
+                    show: true,
+                    realtime: true,
+                    start: 20,
+                    end: 85
+                },
+                {
+                    type: 'inside',
+                    show: true,
+                    realtime: true,
+                    start: 20,
+                    end: 85
+                }
+            ],
+        };
+    }
+};
+GraphMeteoService = __decorate([
+    core_1.Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [])
+], GraphMeteoService);
+exports.GraphMeteoService = GraphMeteoService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/meteo/meteo.component.html":
+/*!****************************************************!*\
+  !*** ./src/app/accueil/meteo/meteo.component.html ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"wrapper\">\n        <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n            <app-sidebar ></app-sidebar>\n            <div class=\"sidebar-background\" style=\"background-image: url(/assets/img/sidebar-5.jpg)\"></div>\n        </div>\n    \n        <div class=\"main-panel\">\n            <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n            <router-outlet></router-outlet>\n        \n            \n            <div class=\"container-fluid\" style=\"background-color: white;\" ngResizable>\n                    <div class=\"container-fluid\">\n                            <div class=\"form-inline\" >\n                            <div class=\"form-group\">\n                                  <form>\n                                    <label><h4>Rucher :</h4> </label>\n                                    <select [(ngModel)]=\"rucherService.rucher\" name=\"rucher\" (change)=\"onSelectRucher($event)\" class=\"form-control\" id=\"sel1\">\n                                      <option *ngFor=\"let rucher of rucherService.ruchers; let i = index\" [ngValue]=\"rucher\"> {{rucher.name}} </option>\n                                    </select>\n                                  </form>\n                                </div>\n                              </div>\n                          \n                          <div style=\"text-align:center\">\n                          </div>\n                              <!--<div style=\"width: 700px; height: 1000px;\" id =\"main\"></div>-->\n                    </div>\n                        <div id=\"cityCont\" class=\"container\">\n                              <div>\n                                    <div style=\"text-align:center\">\n                                            <h2>\n                                                <img src=\"https://openweathermap.org/img/w/{{meteoService.meteo[0].icons}}.png\" class=\"forecast-icon\" alt=\"forecast\">\n                                                      {{meteoService.meteo[0].tempMin}}° à {{meteoService.ville}}\n                                            </h2>      \n                                    </div>\n                              </div>\n                        </div>\n                        <div id=\"contentChart\">\n                            <div echarts [options]=\"calendrier.options\" (chartMouseOver)=\"onMouseouver($event);\" (chartClick)=\"onClick($event);\" [autoResize]=\"true\"  [merge]=\"meteoService.mergeOption\" [loading]=\"!meteoService.status\" style=\"min-width:45%; min-height:100vh;\"></div>\n                            <div echarts [options]=\"graphMeteo.option\" [autoResize]=\"true\"  [merge]=\"meteoService.mergeOptionGraph\" [loading]=\"!meteoService.status\" style=\"width:45%;height:28vh;\"></div>\n                        </div>\n                    </div>\n        </div>\n    </div>"
+
+/***/ }),
+
+/***/ "./src/app/accueil/meteo/meteo.component.scss":
+/*!****************************************************!*\
+  !*** ./src/app/accueil/meteo/meteo.component.scss ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "#contentChart {\n  display: flex;\n  justify-content: space-around;\n  flex-wrap: wrap; }\n"
+
+/***/ }),
+
+/***/ "./src/app/accueil/meteo/meteo.component.ts":
+/*!**************************************************!*\
+  !*** ./src/app/accueil/meteo/meteo.component.ts ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const MeteoService_1 = __webpack_require__(/*! ./Service/MeteoService */ "./src/app/accueil/meteo/Service/MeteoService.ts");
+//import * as echarts from '../../../assets/echarts';
+const userlogged_service_1 = __webpack_require__(/*! ../../userlogged.service */ "./src/app/userlogged.service.ts");
+const rucher_service_1 = __webpack_require__(/*! ../ruche-rucher/rucher.service */ "./src/app/accueil/ruche-rucher/rucher.service.ts");
+//import * as echarts from 'node_modules/echarts/dist/echarts.min.js'
+const calendrier_service_1 = __webpack_require__(/*! ./Service/calendrier.service */ "./src/app/accueil/meteo/Service/calendrier.service.ts");
+const graph_meteo_service_1 = __webpack_require__(/*! ./Service/graph-meteo.service */ "./src/app/accueil/meteo/Service/graph-meteo.service.ts");
+let MeteoComponent = class MeteoComponent {
+    constructor(rucherService, meteoService, login, calendrier, graphMeteo) {
+        this.rucherService = rucherService;
+        this.meteoService = meteoService;
+        this.login = login;
+        this.calendrier = calendrier;
+        this.graphMeteo = graphMeteo;
+        this.calendrierInit = null;
+        this.message = "";
+    }
+    receiveMessage($event) {
+        this.message = $event;
+    }
+    ngOnInit() {
+        this.username = this.login.currentUser().username;
+    }
+    onSelectRucher($event) {
+        console.log(this.rucherService.rucher);
+        this.meteoService.getWeather(this.rucherService.rucher.ville);
+    }
+    onMouseouver($event) {
+    }
+    onClick($event) {
+        console.log($event);
+    }
+    ngDoCheck() {
+        try {
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+};
+MeteoComponent = __decorate([
+    core_1.Component({
+        selector: 'app-meteo',
+        template: __webpack_require__(/*! ./meteo.component.html */ "./src/app/accueil/meteo/meteo.component.html"),
+        styles: [__webpack_require__(/*! ./meteo.component.scss */ "./src/app/accueil/meteo/meteo.component.scss")]
+    }),
+    __metadata("design:paramtypes", [rucher_service_1.RucherService, MeteoService_1.MeteoService,
+        userlogged_service_1.UserloggedService,
+        calendrier_service_1.CalendrierService,
+        graph_meteo_service_1.GraphMeteoService])
+], MeteoComponent);
+exports.MeteoComponent = MeteoComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/rapport/rapport.component.html":
+/*!********************************************************!*\
+  !*** ./src/app/accueil/rapport/rapport.component.html ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"wrapper\">\n        <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n            <app-sidebar ></app-sidebar>\n            <div class=\"sidebar-background\" style=\"background-image: url(/assets/img/sidebar-5.jpg)\"></div>\n        </div>\n        <div class=\"main-panel\">\n            <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n            <router-outlet></router-outlet>\n\n\n<!-- change component content here-->                    \n<div class=\"container-fluid\" style=\"background-color:white;\">\n        <div class=\"row content\">\n                <div class=\"col-sm-9\">                        \n                      <div class=\"form-inline\" >\n                        <div class=\"form-group\">\n                            <label><h4>Rucher :</h4> </label>\n                  \n                            <select  [(ngModel)]=\"selectedRucher\"  class=\"form-control \" (change)=\"onSelectRucher($event)\" id=\"sel1\">\n                                <option  *ngFor=\"let rucher of ruchers\" [value]=\"rucher.id\" (click)=\"onSelectRucher($event)\" >\n                                     {{rucher.name}}\n                                </option>\n                            </select>   \n                          <!--  <button type=\"submit\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#newRucherModal\" >Créer rucher</button>-->\n                \n                        </div>\n                      </div>\n                        <br><br>    \n\n\n                        <form>\n                            <div class=\"form-group\" [formGroup]=\"rapportForm\" >\n                                    <label for=\"exampleTextarea\" >Rapport</label>\n                                    <textarea class=\"form-control\" id=\"exampleTextarea\" rows=\"8\"  formControlName=\"texte\" [(ngModel)]=\"texteRapport\"></textarea>\n                            </div>\n                            <button class=\"btn btn-primary\" (click)=\"getAnalyseTemp(rapportForm.value)\" (change)=\"change($event)\" [disabled]=\"!rapportForm.valid\" >Analyser</button>\n                            <button type=\"submit\" (click)=\"saveTemp()\" class=\"btn btn-primary\"  [disabled]=\"!rapportForm.valid\" >Sauver</button>\n                        </form>\n\n                        <div class=\"form-group\">\n                            <label for=\"exampleTextarea\">Résultat du rapport</label>\n                        </div>\n                        \n                        <div class=\"form-group\">\n                                <label style=\"background-color: rgba(236, 234, 234, 0.49);\">\n                               <!--\n                                    <ul *ngFor=\"let d of resultatRapport \">\n                                        <li>\n                                          Phrase :  {{d.sentence}} type :{{d.type}} Score : {{d.nluScore}}\n                                        </li>\n                                    </ul>\n                                -->\n                               \n                                </label>\n                        </div>\n                       \n                        <div class=\"panel panel-info\">\n                            <div class=\"panel-heading\">Observations Rucher</div>\n                            <div class=\"panel-body\">\n                                <table class=\"table\">    \n                                    <thead class=\"thead-dark\">\n                                        <tr>\n                                            <th scope=\"col\">Date</th>\n                                            <th scope=\"col\">Sentence</th>\n                                            <th scope=\"col\">Action</th>\n                                        </tr>\n                                    </thead>\n                                    <tbody>\n                                        <ng-container *ngFor=\"let obs of observations\" >\n                                            <ng-container *ngIf=\"obs.type =='ApiaryObs'\">\n                                                <tr >\n                                                    <td>\n                                                        {{obs.date}}\n                                                    </td>\n                                                    <td>                                                                    \n                                                        {{obs.sentence}}\n                                                    </td>\n                                                    <td>\n                                                        <button type=\"button\" class=\"btn btn-warning btn-lg \"  title=\"Supprimer observation\" (click)=\"supprimerObsTemp(obs)\" style=\"padding: 0;border: none; background: none;\">\n                                                            <i class=\"fa fa-times\"></i>\n                                                        </button>\n                                                    </td>\n                                                </tr>\n                                            </ng-container>\n                                        </ng-container>         \n                                    </tbody>\n                                </table>  \n                            </div>\n                        </div>\n\n                        <div class=\"panel panel-info\">\n                                <div class=\"panel-heading\">Observations Ruche</div>\n                                <div class=\"panel-body\">\n                                    <div>    \n                                        <table class=\"table\">    \n                                            <thead class=\"thead-dark\">\n                                                <tr>\n                                                    <th scope=\"col\">Ruche(s)</th>\n                                                    <th scope=\"col\">Date</th>\n                                                    <th scope=\"col\">Sentence</th>\n                                                    <th scope=\"col\">Action</th>\n                                                </tr>\n                                            </thead>\n                                            <tbody>\n                                                <ng-container *ngFor=\"let obs of observations\" >\n                                                    <ng-container *ngIf=\"obs.type =='HiveObs'\">\n                                                        <tr>\n                                                            <td>\n                                                            </td>\n                                                            <td>\n                                                                {{obs.date}}\n                                                            </td>\n                                                            <td>\n                                                                {{obs.sentence}}\n                                                            </td>\n                                                            <td>\n                                                                <button type=\"button\" class=\"btn btn-warning btn-lg \" title=\"Supprimer observation\" (click)=\"supprimerObsTemp(obs)\" style=\"padding: 0;border: none; background: none;\">\n                                                                    <i class=\"fa fa-times\"></i>\n                                                                </button>\n                                                            </td>\n                                                            \n                                                        </tr>\n                                                    </ng-container>\n                                                </ng-container>\n                                            </tbody>\n                                        </table>                    \n                                    </div>\n                                </div>\n                            </div>\n                      \n                        <div class=\"panel panel-info\">\n                            <div class=\"panel-heading\">Actions sur la Ruche</div>\n                            <div class=\"panel-body\">\n                                <table class=\"table\">    \n                                    <thead class=\"thead-dark\">\n                                        <tr>\n                                            <th scope=\"col\">Ruche(s)</th>\n                                            <th scope=\"col\">Date</th>\n                                            <th scope=\"col\">Sentence</th>\n                                            <th scope=\"col\">Action</th>\n                                        </tr>\n                                    </thead>\n                                    <tbody>\n                                        <ng-container *ngFor=\"let obs of observations\" >\n                                            <ng-container *ngIf=\"obs.type =='HiveAct'\">\n                                                <tr >\n                                                    <td>\n                                                    </td>\n                                                    <td>\n                                                        {{obs.date}}\n                                                    </td>\n                                                    <td>\n                                                        {{obs.sentence}}\n                                                    </td>\n                                                    <td>\n                                                        <button type=\"button\" class=\"btn btn-warning btn-lg \" title=\"Supprimer action\" (click)=\"supprimerObsTemp(obs)\" style=\"padding: 0;border: none; background: none;\">\n                                                            <i class=\"fa fa-times\"></i>\n                                                        </button>\n                                                    </td>\n                                                </tr>\n                                            </ng-container>\n                                        </ng-container> \n                                    </tbody>\n                                </table>                                               \n                            </div>\n                        </div>\n                      \n                    </div>\n\n          <div class=\"col-sm-3 sidenav\" style=\"background-color: rgba(236, 234, 234, 0.49); height:1500px;border-color:black;\">\n\n          </div>\n        </div>\n      </div>\n</div>\n\n<!-- MODALS ARE DECLARE HERE !!! -->\n"
+
+/***/ }),
+
+/***/ "./src/app/accueil/rapport/rapport.component.ts":
+/*!******************************************************!*\
+  !*** ./src/app/accueil/rapport/rapport.component.ts ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+// import { AnonymousSubscription } from "rxjs/Subscription";
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+const rapport_service_1 = __webpack_require__(/*! ./rapport.service */ "./src/app/accueil/rapport/rapport.service.ts");
+const rucher_1 = __webpack_require__(/*! ../ruche-rucher/rucher */ "./src/app/accueil/ruche-rucher/rucher.ts");
+const userlogged_service_1 = __webpack_require__(/*! ../../userlogged.service */ "./src/app/userlogged.service.ts");
+const rucher_service_1 = __webpack_require__(/*! ../ruche-rucher/rucher.service */ "./src/app/accueil/ruche-rucher/rucher.service.ts");
+const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+let RapportComponent = class RapportComponent {
+    //nomRuche;
+    constructor(formBuilder, http, rapportService, data, rucherService) {
+        this.formBuilder = formBuilder;
+        this.http = http;
+        this.rapportService = rapportService;
+        this.data = data;
+        this.rucherService = rucherService;
+        //variable to store ruchers
+        this.ruchers = [];
+        this.texteRapport = '';
+        this.rapportAnalyse = '';
+        this.idApiary = 'xx';
+        this.selectedRucher = new rucher_1.Rucher();
+        this.observations = [];
+        this.message = "";
+        this.rapportForm = formBuilder.group({
+            'texte': [null, forms_1.Validators.compose([forms_1.Validators.required])],
+        });
+        this.username = data.currentUser().username;
+    }
+    ngOnInit() {
+        this.getUserRuchers();
+        this.currentRucherID = localStorage.getItem("currentRucher");
+        this.x = String(this.selectedRucher);
+        this.x = this.currentRucherID;
+        this.selectedRucher = this.x;
+        this.btnAnalyse = true;
+    }
+    getUserRuchers() {
+        /* this.rucherService.getUserRuchers(this.username).subscribe(
+           data => { this.ruchers = data;},
+           err => console.error(err)
+         ); */
+    }
+    getAnalyseTemp(FormRapport) {
+        this.rapportService.getNluResult(this.texteRapport, this.selectedRucher).subscribe(data => { }, (error => this.errorMsg = error));
+        this.subscribeToRapport();
+    }
+    getRapportTemp() {
+        this.rapportService.getRapportTemp(this.username).subscribe(data => { this.observations = data; }, (error => this.errorMsg = error));
+    }
+    saveTemp() {
+        this.rapportService.getSave(this.username).subscribe(data => { }, (error => this.errorMsg = error));
+        this.texteRapport = "";
+        confirm("Observations enregistrées !");
+        this.observations = null;
+    }
+    saveRapport() {
+        this.rapportService.getNluSave(this.texteRapport, this.selectedRucher).subscribe(data => { }, (error => this.errorMsg = error));
+        this.texteRapport = "";
+        confirm("Observations enregistrées !");
+        this.observations = null;
+    }
+    supprimerObsTemp(obs) {
+        console.log("id : " + obs.id);
+        this.rapportService.deleteObsTemp(obs.id).subscribe(data => { }, (error => this.errorMsg = error));
+        this.subscribeToRapport();
+    }
+    subscribeToRapport() {
+        this.timerSubscription = rxjs_1.Observable.timer(1000).first().subscribe(() => this.getRapportTemp());
+    }
+    onSelectRucher(event) {
+        console.log(this.selectedRucher);
+        this.currentRucherID = String(this.selectedRucher);
+        localStorage.setItem("currentRucher", String(this.selectedRucher));
+    }
+    receiveMessage($event) {
+        this.message = $event;
+    }
+    change($event) {
+    }
+};
+RapportComponent = __decorate([
+    core_1.Component({
+        selector: 'app-rapport',
+        template: __webpack_require__(/*! ./rapport.component.html */ "./src/app/accueil/rapport/rapport.component.html")
+    }),
+    __metadata("design:paramtypes", [forms_1.FormBuilder,
+        http_1.HttpClient,
+        rapport_service_1.RapportService,
+        userlogged_service_1.UserloggedService,
+        rucher_service_1.RucherService])
+], RapportComponent);
+exports.RapportComponent = RapportComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/rapport/rapport.service.ts":
+/*!****************************************************!*\
+  !*** ./src/app/accueil/rapport/rapport.service.ts ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const Observable_1 = __webpack_require__(/*! rxjs/Observable */ "./node_modules/rxjs-compat/_esm2015/Observable.js");
+const config_1 = __webpack_require__(/*! ../../../config */ "./src/config.ts");
+const httpOptions = {
+    headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
+};
+let RapportService = class RapportService {
+    constructor(http) {
+        this.http = http;
+        this.rapport = [];
+    }
+    //to save in processReportTemp
+    getNluResult(texte, idApiary) {
+        let body = JSON.stringify({ "texte": texte, "idApiary": idApiary });
+        //LOCAL
+        //return this.http.post('http://localhost:5000/nlu/nluAnalyse',body, httpOptions);
+        //SERVEUR
+        return this.http.post('http://51.68.71.91:5000/nlu/nluAnalyse', body, httpOptions);
+    }
+    getNluSave(texte, idApiary) {
+        let body = JSON.stringify({ "texte": texte, "idApiary": idApiary });
+        //LOCAL
+        //return this.http.post('http://localhost:5000/nlu/nluSave',body, httpOptions);
+        //SERVEUR
+        return this.http.post('http://51.68.71.91:5000/nlu/nluSave', body, httpOptions);
+    }
+    getRapportTemp(username) {
+        return this.http.get(config_1.CONFIG.URL + 'report_temp/' + username);
+    }
+    deleteObsTemp(idTemp) {
+        return this.http.delete(config_1.CONFIG.URL + 'report_temp/delete/' + idTemp);
+    }
+    getSave(username) {
+        return this.http.get(config_1.CONFIG.URL + 'report_temp/add/' + username);
+    }
+    // error handling
+    errorHandler(error) {
+        return Observable_1.Observable.throw(error.message || "server error");
+    }
+};
+RapportService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.HttpClient])
+], RapportService);
+exports.RapportService = RapportService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/ruche-rucher/processedReport.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/accueil/ruche-rucher/processedReport.ts ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class ProcessReport {
+}
+exports.ProcessReport = ProcessReport;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/ruche-rucher/ruche-detail/observation/service/observation.service.ts":
+/*!**********************************************************************************************!*\
+  !*** ./src/app/accueil/ruche-rucher/ruche-detail/observation/service/observation.service.ts ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const config_1 = __webpack_require__(/*! ../../../../../../config */ "./src/config.ts");
+const httpOptions = {
+    headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
+};
+let ObservationService = class ObservationService {
+    constructor(http) {
+        this.http = http;
+    }
+    getObservationByIdHive(idHive) {
+        this.observationsObs = this.http.get(config_1.CONFIG.URL + 'report/hive/' + idHive);
+        this.observationsObs.subscribe((data) => {
+            console.log(data);
+            this.observationsHive = data;
+            console.log(this.observationsHive);
+        }, (err) => {
+            console.log(err);
+        });
+    }
+    getObservationByIdApiary(idApiary) {
+        this.http.get(config_1.CONFIG.URL + 'report/apiary/' + idApiary).subscribe((data) => {
+            console.log(data);
+            this.observationsApiary = data;
+            console.log(this.observationsApiary);
+        }, (err) => {
+            console.log(err);
+        });
+    }
+    createObservation() {
+        this.observationObs = this.http.put(config_1.CONFIG.URL + 'report/insert', this.observation);
+        this.observationObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getObservationByIdHive(this.observation.idHive);
+            this.getObservationByIdApiary(this.observation.idApiary);
+        });
+    }
+    updateObservation() {
+        this.observationObs = this.http.put(config_1.CONFIG.URL + 'report/update/' + this.observation.id, this.observation);
+        this.observationObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getObservationByIdHive(this.observation.idHive);
+        });
+    }
+    deleteObservation() {
+        this.observationObs = this.http.delete(config_1.CONFIG.URL + 'report/' + this.observation.id);
+        this.observationObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getObservationByIdHive(this.observation.idHive);
+            this.getObservationByIdApiary(this.observation.idApiary);
+        });
+    }
+};
+ObservationService = __decorate([
+    core_1.Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [http_1.HttpClient])
+], ObservationService);
+exports.ObservationService = ObservationService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.component.html":
+/*!*******************************************************************************!*\
+  !*** ./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.component.html ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n\n<div class=\"wrapper\">\n        <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n            <app-sidebar ></app-sidebar>\n            <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-5.jpg)\"></div>\n        </div>\n        <div class=\"main-panel\">\n            <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n            <!--<router-outlet></router-outlet>-->\n\n<!-- change component content here-->\n            <div class=\"container-fluid\" style=\"background-color:white;\">\n                <nav class=\"navbar navbar-expand navbar-light bg-light\">\n                    <ul class=\"nav navbar-nav\">\n                        <li class=\"nav-item active\">\n                            <a class=\"nav-link\" [routerLink]=\"['./health',rucheId]\" routerLinkActive=\"active\" >Santé<span class=\"sr-only\">(current)</span></a>\n                        </li>\n                        <li class=\"nav-item\">\n                            <a class=\"nav-link\" [routerLink]=\"['./stock',rucheId]\" routerLinkActive=\"active\" >Réserves</a>\n                        </li>\n                        <li class=\"nav-item\">\n                            <a class=\"nav-link\" [routerLink]=\"['./observation',rucheId]\" routerLinkActive=\"active\" >Observations</a>\n                        </li>\n                        <li class=\"nav-item\">\n                            <a class=\"nav-link\" [routerLink]=\"['./daily',rucheId]\" routerLinkActive=\"active\" >Jour x jour</a>\n                        </li>\n                        <li class=\"nav-item\">\n                            <a class=\"nav-link\" [routerLink]=\"['./hourly',rucheId]\" routerLinkActive=\"active\">Heure x heure</a>\n                        </li>\n                    </ul>\n                </nav>\n            <router-outlet></router-outlet>\n            </div>\n        </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.component.scss":
+/*!*******************************************************************************!*\
+  !*** ./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.component.scss ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "#popupObs {\n  padding-left: 20px; }\n\n#contentChart {\n  display: flex;\n  justify-content: space-around; }\n\ninput[formControlName=\"checkbox\"] {\n  padding: 5px; }\n"
+
+/***/ }),
+
+/***/ "./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.component.ts":
+/*!*****************************************************************************!*\
+  !*** ./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.component.ts ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+//import { CalendrierHealthService } from './service/health/calendrier-health.service';
+let RucheDetailComponent = class RucheDetailComponent {
+    constructor(activatedRoute, route) {
+        this.activatedRoute = activatedRoute;
+        this.route = route;
+        this.message = "";
+        this.rucheId = null;
+    }
+    ngOnInit() {
+        this.rucheId = this.activatedRoute.snapshot.params.id;
+        console.log(this.rucheId);
+        console.log(this.route);
+        this.route.navigate(['/ruche-detail/' + this.rucheId + '/observation', this.rucheId]);
+    }
+    receiveMessage($event) {
+        this.message = $event;
+    }
+    ngOnDestroy() {
+    }
+};
+RucheDetailComponent = __decorate([
+    core_1.Component({
+        selector: 'app-ruche-detail',
+        template: __webpack_require__(/*! ./ruche.detail.component.html */ "./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.component.html"),
+        styles: [__webpack_require__(/*! ./ruche.detail.component.scss */ "./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.component.scss")]
+    }),
+    __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router])
+], RucheDetailComponent);
+exports.RucheDetailComponent = RucheDetailComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.service.ts":
+/*!***************************************************************************!*\
+  !*** ./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.service.ts ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+const config_1 = __webpack_require__(/*! ../../../../config */ "./src/config.ts");
+const httpOptions = {
+    headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
+};
+let RucheDetailService = class RucheDetailService {
+    constructor(http) {
+        this.http = http;
+    }
+    // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
+    // pour afficher tout les ruchers de l'utilsateur connecté
+    getObservationsHive(idHive) {
+        return this.http.get(config_1.CONFIG.URL + 'report/hive/' + idHive);
+    }
+    // pour afficher tout les ruchers de l'utilsateur connecté
+    deleteReport(report) {
+        return this.http.delete(config_1.CONFIG.URL + 'report/' + report.sentence);
+    }
+    errorHandler(error) {
+        return rxjs_1.Observable.throw(error.message || "server error");
+    }
+};
+RucheDetailService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.HttpClient])
+], RucheDetailService);
+exports.RucheDetailService = RucheDetailService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/ruche-rucher/ruche.rucher.component.html":
+/*!******************************************************************!*\
+  !*** ./src/app/accueil/ruche-rucher/ruche.rucher.component.html ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"wrapper\">\n    <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n        <app-sidebar ></app-sidebar>\n        <div class=\"sidebar-background\" style=\"background-image: url(/assets/img/sidebar-5.jpg)\"></div>\n    </div>\n    <div class=\"main-panel\">\n        <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n        <router-outlet></router-outlet>\n  \n  \n  <!-- change component content here-->                    \n  <div class=\"container-fluid\" style=\"background-color:white;\">\n    <div class=\"row content\">\n            <div class=\"col-sm-9\">                        \n                  <div class=\"form-inline\" >\n                    <div class=\"form-group\">\n                        <label><h4>Rucher :</h4> </label>\n                        <select [(ngModel)]=\"rucherService.rucher\" name=\"rucher\" id=\"sel1\" class=\"form-control\" (change)=\"onSelectRucher()\">\n                            <option *ngFor=\"let rucher of rucherService.ruchers; let i = index\" [id]=\"i\" [ngValue]=\"rucher\" >{{ rucher.name }}</option>\n                          </select>  \n                        <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#newRucherModal\" >Créer rucher</button>\n                    </div>\n                  </div>\n                  <div class=\"bs-example\">\n                      <div class=\"panel-group\" id=\"accordion\">\n                          <div class=\"panel panel-info \">\n                              <div class=\"panel-heading \"  >\n                                  <h4 class=\"panel-title\" >\n                                      <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapseOne\"><b>1. Ruches</b></a>\n                                  </h4>\n                              </div>\n                              <div id=\"collapseOne\" class=\"panel-collapse collapse in\">\n                                  <div class=\"panel-body\">\n                                      <b class=\"text-success\"></b>\n                                      <button data-toggle=\"tooltip\" data-html=\"true\" title=\"Nouvelle Ruche\" data-toggle=\"modal\" style=\"margin-left: 98%; padding: 0;border: none; background: none;\"\n                                              data-target=\"#newRucheModal\"  class=\"btn btn-success btn-lg\" >\n                                          <i class=\"fa fa-plus\"></i>\n                                      </button>\n  \n                                      <!-- tables ruche -->\n                                    <div>\n                                        <table class=\"table\">    \n                                            <thead class=\"thead-dark\">\n                                            <tr>\n                                                <th scope=\"col\">Ruche</th>\n                                                <th scope=\"col\">Description</th>\n                                                <th scope=\"col\">Actions</th>\n                                            </tr>\n                                            </thead>\n                                            <tbody>\n                                              \n                                              <tr *ngFor=\"let ruche of rucheService.ruches \" >\n                                                \n                                                  <td>\n                                                      <a [routerLink]=\"['/ruche-detail',ruche.id]\"  routerLinkActive=\"active\" (click)=\"clickOnRuche(ruche)\"> {{ruche.name}}</a> \n                                                  </td>\n                                                   \n                                                  <td>{{ruche.description}}</td>\n                                                  <td>\n                                                    <button data-toggle=\"tooltip\" data-html=\"true\" title=\"Modifier ruche\" data-toggle=\"modal\" type=\"button\" (click)=\"onSelectRuche(ruche)\"\n                                                            data-target=\"#editRucheModal\" class=\"btn btn-primary  btn-lg \" style=\"padding: 0;border: none; background: none;\">\n                                                            <i class=\"fa fa-edit\"></i>\n                                                    </button>\n                                                    <button type=\"button\" class=\"btn btn-warning btn-lg \"  title=\"Supprimer ruche\" style=\"padding: 0;border: none; background: none;\" (click)=\"deleteRuche(ruche)\">\n                                                            <i class=\"fa fa-times\"></i>\n                                                    </button>\n                                                  </td>\n                                              </tr>\n                                            </tbody>\n                                        </table>      \n                                    </div>\n              \n                                    \n                                  </div>\n                              </div>\n                          </div>\n  \n                          \n                     \n                      </div>\n                    \n                  </div>\n                  <div class=\"panel panel-info\">\n                      <div class=\"panel-heading\">\n                          <h4 class=\"panel-title\">\n                              <a data-toggle=\"collapse\" href=\"#collapseTwo\"><b>2. Observations rucher</b></a>\n                          </h4>\n                      </div>\n                      <div id=\"collapseTwo\" class=\"panel-collapse collapse in\">\n                          <div class=\"panel-body\">\n  \n                              <b class=\"text-success\"></b>\n                                      \n                                      \n                              <button data-toggle=\"tooltip\" data-html=\"true\" title=\"Nouvelle Observation\" data-toggle=\"modal\" style=\"margin-left: 98%; padding: 0;border: none; background: none;\"\n                                      data-target=\"#newObservationModal\"  class=\"btn btn-success btn-lg\" >\n                                  <i class=\"fa fa-plus\"></i>\n                              </button>\n  \n                              <table class=\"table\">    \n                                  <thead class=\"thead-dark\">\n                                  <tr>\n                                          <th scope=\"col\">Date</th>\n                                          <th scope=\"col\">Sentence</th>\n                                          <th scope=\"col\">Actions</th>\n                                  </tr>\n                                  </thead>\n                                  <tbody>\n                                    \n                                    <tr *ngFor=\"let ap of rucherService.observationService.observationsApiary\" >\n                                      <td>\n                                          {{ap.date}}\n                                      </td>\n                                         \n                                      <td>\n                                          {{ap.sentence}}\n                                      </td>\n                                      <td>\n                                        <button data-toggle=\"tooltip\" data-html=\"true\" title=\"Modifier observation\" data-toggle=\"modal\" type=\"button\" data-target=\"#editObservationModal\" (click)=\"onSelectObs(ap)\"\n                                        class=\"btn btn-primary  btn-lg \" style=\"padding: 0;border: none; background: none;\">\n                                          <i class=\"fa fa-edit\"></i>\n                                        </button>\n                                        <button type=\"button\" class=\"btn btn-warning btn-lg\"  title=\"Supprimer observation\"  style=\"padding: 0;border: none; background: none;\" (click)=\"deleteObs(ap)\" >\n                                                <i class=\"fa fa-times\"></i>\n                                        </button>\n                                      </td>\n                                    </tr>\n                                  </tbody>\n                          </table>      \n                          </div>\n                      </div>\n                  </div>\n                \n  \n                    <br><br>    \n                </div>\n  \n  \n      <div class=\"col-sm-3 sidenav\" style=\"background-color: rgba(236, 234, 234, 0.49); height:1500px;border-color:black;\">\n        <button data-toggle=\"tooltip\" data-html=\"true\"  data-toggle=\"modal\" type=\"button\" (click)=\"editRucherClicked()\" [disabled]=\"updateRucherInput\" class=\"btn btn-success  btn-lg \" style=\"padding: 0;border: none; background: none; \">\n            <i class=\"fa fa-edit\"></i>\n        </button>\n        <button type=\"button\" class=\"btn btn-warning btn-lg \"style=\"padding: 0;border: none; background: none;  \" (click)=\"deleteRucher()\">\n          <i class=\"fa fa-times\"></i>\n        </button>\n        <div *ngIf=\"!updateRucherInput\">\n          <h4 class=\"text-center\">{{rucherService.detailsRucher.name}} </h4>\n          <h5 class=\"text-center\"><b> </b>{{rucherService.detailsRucher.ville}}</h5>\n          <h5 class=\"text-center\"><b> </b>{{rucherService.detailsRucher.codePostal}}</h5>\n          <p class=\"text-center\"><b> </b>{{rucherService.detailsRucher.description}}</p>\n        </div>\n          <div *ngIf=\"updateRucherInput\">\n              <form [formGroup]=\"rucherForm\" (ngSubmit)=\"onEditerRucher() \">\n                <h4 class=\"text-center\">Editer Rucher</h4>\n                <div class=\"form-group row\"  >\n                   <div class=\"col-md-12\">\n                    <label for=\"recipient-name\" class=\"col-form-label\">Nom : </label>\n                    <input formControlName=\"nom\" type=\"text\" class=\"form-control text-left\" id=\"recipient-name\" >\n                  </div>  \n                  <div class=\"col-md-12\">\n                    <div class=\"alert alert-danger\" *ngIf=\"rucherForm.controls['nom'].invalid\">Veuillez saisir un nom</div>\n                  </div>\n                </div>\n                <div class=\"form-group row\"  >\n                    <div class=\"col-md-12\">\n                      <label for=\"recipient-name\" class=\"col-form-label\">Ville :  </label>\n                      <input formControlName=\"ville\" type=\"text\" class=\"form-control text-left\" id=\"recipient-name\">\n                    </div>\n                    <div class=\"col-md-12\">\n                      <div class=\"alert alert-danger\" *ngIf=\"rucherForm.controls['ville'].invalid \">Veuillez saisir une ville</div>\n                    </div>\n                </div>\n                <div class=\"form-group row\"  >\n                  <div class=\"col-md-12\">\n                    <label for=\"recipient-name\" class=\"col-form-label\">Code Postal :  </label>\n                    <input formControlName=\"codePostal\" type=\"text\" class=\"form-control text-left\" id=\"recipient-name\">\n                  </div>\n                  <div class=\"col-md-12\">\n                    <div class=\"alert alert-danger\" *ngIf=\"rucherForm.controls['codePostal'].invalid \">Veuillez saisir un Code Postal</div>\n                  </div>\n                  \n              </div>\n              \n                <div class=\"form-group row\"  >\n                    <div class=\"col-md-6\">\n                      <label for=\"recipient-name\" class=\"col-form-label\">Description : </label>\n                    </div>\n                    <div class=\"col-md-12\">\n                      <textarea formControlName=\"description\"  type=\"text\" class=\"form-control text-left\" id=\"recipient-name\"></textarea>\n                      <div class=\"alert alert-danger\" *ngIf=\"rucherForm.controls['description'].invalid \">Veuillez saisir une description</div>\n                     \n                    </div>\n                </div>\n                <button type=\"submit\" class=\"btn btn-success\" data-dismiss=\"modal\" (click)=\"onEditerRucher()\" [disabled]=\"rucherForm.invalid\">Sauvegarder</button>\n                <button type=\"reset\" class=\"btn btn-danger\" (click)=\"updateRucherInput=false;\">Annuler</button>\n              </form>\n          </div>\n        <!--End of editing Rucher  DIV-->\n      </div>\n    </div>\n  </div>\n  </div>\n  \n  <!-- MODALS ARE DECLARE HERE !!! -->\n  \n  <!-- New rucher Modal -->\n  <div class=\"modal fade\" id=\"newRucherModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\" role=\"document\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h5 class=\"modal-title\" id=\"exampleModalLabel\"><h4 class=\"text-center\" >Nouveau Rucher</h4></h5>\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n            <span aria-hidden=\"true\">&times;</span>\n          </button>\n        </div>\n        <div class=\"modal-body\">\n          <form [formGroup]=\"rucherForm\" (ngSubmit)=\"createRucher() \">\n            <div class=\"form-group\"  >\n              <label for=\"recipient-name\" class=\"col-form-label\">Nom :</label>\n              <input [(ngModel)]=\"nom\" formControlName=\"nom\" type=\"text\" class=\"form-control\" id=\"recipient-name\">\n              <div class=\"alert alert-danger\" *ngIf=\"!rucherForm.controls['nom'].valid && rucherForm.controls['nom'].touched\">\n                Veuillez saisir un nom entre 1 et 20 caractères\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label for=\"message-text\" class=\"col-form-label\">Description :</label>\n              <textarea [(ngModel)]=\"description\" formControlName=\"description\" class=\"form-control\" id=\"message-text\"></textarea>\n              <div class=\"alert alert-danger\" *ngIf=\"!rucherForm.controls['description'].valid && rucherForm.controls['description'].touched\">\n                Veuillez saisir une description entre 1 et 40 caractères\n              </div>\n            </div>\n              <div class=\"form-group\">\n                <label for=\"recipient-name\" class=\"col-form-label\">Ville :</label>\n                <input [(ngModel)]=\"ville\" formControlName=\"ville\" type=\"text\" class=\"form-control\" id=\"recipient-name\">\n                  <div class=\"alert alert-danger\" *ngIf=\"!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched\">\n                    Veuillez saisir le nom de la ville\n                  </div>\n                </div>\n                <div class=\"form-group\">\n                  <label for=\"recipient-name\" class=\"col-form-label\">Code postal :</label>\n                  <input [(ngModel)]=\"codePostal\" formControlName=\"codePostal\" type=\"text\" class=\"form-control\" id=\"recipient-name\">\n                  <div class=\"alert alert-danger\" *ngIf=\"!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched\">\n                    Veuillez saisir le nom de le codePostal\n                  </div>\n              </div>\n              <div class=\"modal-footer\">\n                <button type=\"submit\" class=\"btn btn-primary\"  data-dismiss=\"modal\" value=\"Créer Rucher\" (click)=\"createRucher()\" [disabled]=\"!rucherForm.valid\">Créer Rucher</button>\n                <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"initForm()\">Fermer</button>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- End of new Rucher Modal -->\n  \n  \n  \n  <!-- New Ruche Modal -->\n  <div class=\"modal fade\" id=\"newRucheModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\" role=\"document\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h5 class=\"modal-title\" id=\"exampleModalLabel\"><h3 class=\"text-center\">Nouvelle ruche</h3> </h5>\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n            <span aria-hidden=\"true\">&times;</span>\n          </button>\n        </div>\n        <div class=\"modal-body\">\n          <form  [formGroup]=\"newRucheForm\" (ngSubmit)=\"createRuche()\">\n            <div class=\"form-group\">\n              <label for=\"recipient-name\" class=\"col-form-label\">Nom :</label>\n              <input formControlName=\"nomRuche\" type=\"text\" class=\"form-control\" id=\"recipient-name\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"message-text\" class=\"col-form-label\">Description :</label>\n              <textarea formControlName=\"descriptionRuche\" class=\"form-control\" id=\"message-text\"></textarea>\n            </div>\n            <div *ngIf=\"!selectedRucher\">\n              <div class=\"alert alert-danger\" >Veuillez selectionner un rucher dans la page précédente !</div>\n            </div>\n            <div *ngIf=\"selectedRucher\">\n            </div>\n            <div class=\"modal-footer\">\n              <button type=\"submit\" class=\"btn btn-primary\" data-dismiss=\"modal\" (click)=\"createRuche();\" [disabled]=\"!newRucheForm.valid\" > Créer Ruche</button>\n              <button type=\"reset\" class=\"btn btn-secondary\" (click)=\"initForm()\" data-dismiss=\"modal\">Fermer</button>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- End of new Ruche Modal -->\n  \n  <!-- Edit Ruche Modal -->\n  <div class=\"modal fade\" id=\"editRucheModal\" backdrop=\"false\"tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n      <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <h5 class=\"modal-title\" id=\"exampleModalLabel\"><h3 class=\"text-center\">Editer ruche</h3> </h5>\n            <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n              <span aria-hidden=\"true\">&times;</span>\n            </button>\n          </div>\n          <div class=\"modal-body\">\n              <div class=\"form-group\">\n                  <label for=\"recipient-name\" class=\"col-form-label\">Rucher :</label>\n                  <select  [(ngModel)]=\"rucherService.rucherSelectUpdate\" class=\"form-control\">\n                      <option *ngFor=\"let rucher of rucherService.ruchers\" [ngValue]=\"rucher\">{{rucher.name}}</option> \n                  </select>\n              </div>\n            <form [formGroup]=\"newRucheForm\" (ngSubmit)=\"onEditeRuche()\">\n              <div class=\"form-group\">\n                <label for=\"recipient-name\" class=\"col-form-label\">Nom :</label>\n                <input formControlName=\"nomRuche\" type=\"text\" class=\"form-control\" id=\"recipient-name\">\n              </div>\n              <div class=\"form-group\">\n                <label for=\"message-text\" class=\"col-form-label\">Description :</label>\n                <textarea  formControlName=\"descriptionRuche\" class=\"form-control\" id=\"message-text\"></textarea>\n              </div>\n              <div class=\"modal-footer\">\n                <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!newRucheForm.valid\">Editer Ruche</button>\n                <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"initForm()\">Fermer</button>\n              </div>\n          </form>\n          </div>\n        </div>\n      </div>\n    </div>>\n  </div>\n  <!-- End of edit Rucher Modal -->\n  \n  \n  \n  <!-- New Observation Modal -->\n  <div class=\"modal fade\" id=\"newObservationModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\" role=\"document\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h5 class=\"modal-title\" id=\"exampleModalLabel\"><h3 class=\"text-center\">Nouvelle Observation</h3> </h5>\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n            <span aria-hidden=\"true\">&times;</span>\n          </button>\n        </div>\n        <div class=\"modal-body\">\n          <form  [formGroup]=\"observationForm\" (ngSubmit)=\"createObservation()\">\n            <div class=\"form-group\">\n              <input type=\"datetime-local\" formControlName=\"date\">\n              <label for=\"recipient-obs\" class=\"col-form-label\">Observations :</label>\n              <textarea formControlName=\"sentence\" type=\"text\" class=\"form-control\" id=\"recipient-obs\"></textarea>\n            </div>\n            <div class=\"modal-footer\">\n                <button type=\"submit\" class=\"btn btn-primary\" (click)=\"createObservation()\" [disabled]=\"!observationForm.valid\" > Créer Observation</button>\n                <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"initForm()\">Fermer</button>\n              </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- End of new Observation Modal -->\n  \n  \n  <!-- Edit Observation Modal -->\n  <div class=\"modal fade\" id=\"editObservationModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\" role=\"document\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h5 class=\"modal-title\" id=\"exampleModalLabel\"><h3 class=\"text-center\">Editer Observation</h3> </h5>\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n             <span aria-hidden=\"true\">&times;</span>\n          </button>\n        </div>\n        <div class=\"modal-body\">\n          <form  [formGroup]=\"observationForm\" (ngSubmit)=\"onEditObservation()\">\n            <div class=\"form-group\">\n              <label for=\"recipient-editobs\" class=\"col-form-label\">Observations :</label>\n              <textarea formControlName=\"sentence\" type=\"text\" class=\"form-control\" id=\"recipient-editobs\"></textarea>\n            </div> \n            <div class=\"modal-footer\">\n                <button type=\"submit\" class=\"btn btn-primary\" (click)=\"onEditObservation()\" [disabled]=\"!observationForm.valid\" > Modifier Observation</button>\n                <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"initForm()\">Fermer</button>\n              </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- End of edit Observation Modal -->\n  \n  <script>\n  $('#editRucheModal').modal({\n   keyboard: false,\n   backdrop : static\n  })\n  </script>"
+
+/***/ }),
+
+/***/ "./src/app/accueil/ruche-rucher/ruche.rucher.component.ts":
+/*!****************************************************************!*\
+  !*** ./src/app/accueil/ruche-rucher/ruche.rucher.component.ts ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const core_2 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const processedReport_1 = __webpack_require__(/*! ./processedReport */ "./src/app/accueil/ruche-rucher/processedReport.ts");
+const rucher_service_1 = __webpack_require__(/*! ./rucher.service */ "./src/app/accueil/ruche-rucher/rucher.service.ts");
+const userlogged_service_1 = __webpack_require__(/*! ../../userlogged.service */ "./src/app/userlogged.service.ts");
+const selected_rucher_service_1 = __webpack_require__(/*! ../_shared-services/selected-rucher.service */ "./src/app/accueil/_shared-services/selected-rucher.service.ts");
+// import { AnonymousSubscription } from "rxjs/Subscription";
+const rapport_service_1 = __webpack_require__(/*! ../rapport/rapport.service */ "./src/app/accueil/rapport/rapport.service.ts");
+const ruche_service_1 = __webpack_require__(/*! ../disposition-ruche/Service/ruche.service */ "./src/app/accueil/disposition-ruche/Service/ruche.service.ts");
+let RucheRucherComponent = class RucheRucherComponent {
+    constructor(formBuilder, location, router, rucherService, data, _selectedRucherService, _rapportService, rucheService) {
+        this.formBuilder = formBuilder;
+        this.location = location;
+        this.router = router;
+        this.rucherService = rucherService;
+        this.data = data;
+        this._selectedRucherService = _selectedRucherService;
+        this._rapportService = _rapportService;
+        this.rucheService = rucheService;
+        this.username = "";
+        //
+        this.newObs = new processedReport_1.ProcessReport();
+        this.type = 'ApiaryObs';
+        this.message = "";
+        this.optionsDate = {
+            weekday: 'short', year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric',
+        };
+        this.username = data.currentUser().username;
+        this.currentRucherID = localStorage.getItem("currentRucher");
+        this.rucheRucherID = localStorage.getItem("rucheRucherID");
+    }
+    ngOnInit() {
+        this.initForm();
+    }
+    clickOnRuche(ruche) {
+        localStorage.setItem("clickedRuche", this.localStorageRuche);
+        //localStorage.setItem("selectedRucheName",  this.selectedRuche.name);
+    }
+    resetForm() {
+        this.newRucherForm.reset();
+    }
+    //Fonction pour créer le rucher
+    createRucher() {
+        const formValue = this.rucherForm.value;
+        console.log(formValue);
+        this.rucherService.rucher.id = null;
+        this.rucherService.rucher.description = formValue.description;
+        this.rucherService.rucher.name = formValue.nom;
+        this.rucherService.rucher.ville = formValue.ville;
+        this.rucherService.rucher.codePostal = formValue.codePostal;
+        this.rucherService.rucher.createdAt = new Date();
+        this.rucherService.rucher.urlPhoto = "void";
+        console.log(this.rucherService.rucher);
+        this.initForm();
+        this.rucherService.createRucher();
+    }
+    //delete rucher
+    deleteRucher() {
+        this.rucherService.deleteRucher();
+    }
+    //Editer Rucher
+    onEditerRucher() {
+        const formValue = this.rucherForm.value;
+        this.rucherService.detailsRucher.description = formValue.description;
+        this.rucherService.detailsRucher.name = formValue.nom;
+        this.rucherService.detailsRucher.ville = formValue.ville;
+        this.rucherService.detailsRucher.codePostal = formValue.codePostal;
+        console.log(this.rucherService.detailsRucher);
+        this.initForm();
+        this.rucherService.updateRucher();
+        this.updateRucherInput = false;
+    }
+    onSelectRucher() {
+        console.log(this.rucherService.rucher);
+        this.rucheService.getRucheByApiary(this.username, this.rucherService.rucher.id);
+        this.rucherService.getRucherDetails();
+    }
+    //Quand on Edite une ruche
+    onSelectObs(obs) {
+        this.rucherService.observationService.observation = obs;
+        console.log(this.rucherService.observationService.observation);
+        var donnée = {
+            sentence: this.rucherService.observationService.observation.sentence,
+            date: this.rucherService.observationService.observation.date
+        };
+        this.observationForm.setValue(donnée);
+    }
+    //Pour effacer une ruche
+    deleteRuche(ruche) {
+        console.log(ruche);
+        this.rucheService.ruche = ruche;
+        this.rucheService.deleteRuche();
+    }
+    //Pour créer une ruche
+    createRuche() {
+        const formValue = this.newRucheForm.value;
+        console.log(formValue);
+        console.log(this.rucherService.rucheService.ruche);
+        this.rucherService.rucheService.ruche.id = null;
+        this.rucherService.rucheService.ruche.idApiary = this.rucherService.rucher.id;
+        this.rucherService.rucheService.ruche.description = formValue.descriptionRuche;
+        this.rucherService.rucheService.ruche.name = formValue.nomRuche;
+        this.rucherService.rucheService.ruche.username = this.username;
+        console.log(this.rucherService.rucheService.ruche);
+        this.initForm();
+        this.rucheService.createRuche();
+    }
+    onSelectRuche(ruche) {
+        this.rucheService.ruche = ruche;
+        var donnée = {
+            nomRuche: this.rucheService.ruche.name,
+            descriptionRuche: this.rucheService.ruche.description,
+        };
+        this.newRucheForm.setValue(donnée);
+    }
+    // pour editer une ruche
+    onEditeRuche() {
+        const formValue = this.newRucheForm.value;
+        var lastIdApiary = this.rucheService.ruche.idApiary;
+        console.log(lastIdApiary);
+        console.log(formValue);
+        this.rucheService.ruche.idApiary = this.rucherService.rucherSelectUpdate.id;
+        this.rucheService.ruche.name = formValue.nomRuche;
+        this.rucheService.ruche.description = formValue.descriptionRuche;
+        console.log(this.rucheService.ruche.idApiary);
+        this.rucheService.updateRuche(lastIdApiary);
+        console.log(this.rucheService.ruche);
+    }
+    editRucherClicked() {
+        this.updateRucherInput = true;
+        console.log(this.rucherService.rucher);
+        var donnée = {
+            nom: this.rucherService.rucher.name,
+            description: this.rucherService.rucher.description,
+            ville: this.rucherService.rucher.ville,
+            codePostal: this.rucherService.rucher.codePostal,
+            validate: ''
+        };
+        this.rucherForm.setValue(donnée);
+    }
+    //Pour créer une observation
+    createObservation() {
+        const formValue = this.observationForm.value;
+        console.log(formValue);
+        this.rucherService.observationService.observation = formValue;
+        this.rucherService.observationService.observation.idApiary = this.rucherService.rucher.id;
+        console.log(this.rucherService.observationService.observation);
+        this.initForm();
+        this.rucherService.observationService.createObservation();
+    }
+    deleteObs(obsApiary) {
+        this.rucherService.observationService.observation = obsApiary;
+        this.rucherService.observationService.deleteObservation();
+    }
+    onEditObservation() {
+        const formValue = this.observationForm.value;
+        this.rucherService.observationService.observation.sentence = formValue.sentence;
+        console.log(this.rucherService.observationService.observation);
+        this.rucherService.observationService.updateObservation();
+    }
+    resetRucheForm() {
+        this.newRucheForm.reset();
+    }
+    initForm() {
+        this.observationForm = this.formBuilder.group({
+            'sentence': [null, forms_1.Validators.compose([forms_1.Validators.required])],
+            'date': new Intl.DateTimeFormat('fr-FR', this.optionsDate).format(new Date()),
+        });
+        this.newRucheForm = this.formBuilder.group({
+            'nomRuche': [null, forms_1.Validators.compose([forms_1.Validators.required])],
+            'descriptionRuche': [null],
+        });
+        this.rucherForm = this.formBuilder.group({
+            'nom': [null, forms_1.Validators.compose([forms_1.Validators.required])],
+            'description': [null],
+            'ville': [null, forms_1.Validators.compose([forms_1.Validators.required])],
+            'codePostal': [null, forms_1.Validators.compose([forms_1.Validators.required])],
+            'validate': ``
+        });
+    }
+    receiveMessage($event) {
+        this.message = $event;
+    }
+};
+__decorate([
+    core_2.ViewChild('closeBtn'),
+    __metadata("design:type", core_2.ElementRef)
+], RucheRucherComponent.prototype, "closeBtn", void 0);
+RucheRucherComponent = __decorate([
+    core_1.Component({
+        selector: 'app-ruche-rucher',
+        template: __webpack_require__(/*! ./ruche.rucher.component.html */ "./src/app/accueil/ruche-rucher/ruche.rucher.component.html")
+    }),
+    __metadata("design:paramtypes", [forms_1.FormBuilder,
+        common_1.Location,
+        router_1.Router,
+        rucher_service_1.RucherService,
+        userlogged_service_1.UserloggedService,
+        selected_rucher_service_1.selectedRucherService,
+        rapport_service_1.RapportService,
+        ruche_service_1.RucheService])
+], RucheRucherComponent);
+exports.RucheRucherComponent = RucheRucherComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/ruche-rucher/ruche.ts":
+/*!***********************************************!*\
+  !*** ./src/app/accueil/ruche-rucher/ruche.ts ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class Ruche {
+}
+exports.Ruche = Ruche;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/ruche-rucher/rucher.service.ts":
+/*!********************************************************!*\
+  !*** ./src/app/accueil/ruche-rucher/rucher.service.ts ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const Observable_1 = __webpack_require__(/*! rxjs/Observable */ "./node_modules/rxjs-compat/_esm2015/Observable.js");
+const config_1 = __webpack_require__(/*! ../../../config */ "./src/config.ts");
+const userlogged_service_1 = __webpack_require__(/*! ../../userlogged.service */ "./src/app/userlogged.service.ts");
+const ruche_service_1 = __webpack_require__(/*! ../disposition-ruche/Service/ruche.service */ "./src/app/accueil/disposition-ruche/Service/ruche.service.ts");
+const dailyRecordService_1 = __webpack_require__(/*! ../disposition-ruche/Service/dailyRecordService */ "./src/app/accueil/disposition-ruche/Service/dailyRecordService.ts");
+const observation_service_1 = __webpack_require__(/*! ./ruche-detail/observation/service/observation.service */ "./src/app/accueil/ruche-rucher/ruche-detail/observation/service/observation.service.ts");
+const httpOptions = {
+    headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
+};
+let RucherService = class RucherService {
+    constructor(http, user, rucheService, dailyRec, observationService) {
+        this.http = http;
+        this.user = user;
+        this.rucheService = rucheService;
+        this.dailyRec = dailyRec;
+        this.observationService = observationService;
+        this.getUserRuchersLast(this.user.currentUser().username);
+        this.rucheService.ruche = {
+            id: '',
+            name: '',
+            description: '',
+            username: '',
+            idApiary: '',
+            hivePosX: '',
+            hivePosY: ''
+        };
+        this.rucherSelectUpdate = {
+            id: '',
+            latitude: '',
+            longitude: '',
+            name: '',
+            description: '',
+            createdAt: null,
+            urlPhoto: '',
+            username: '',
+            codePostal: '',
+            ville: ''
+        };
+    }
+    // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
+    // pour créer un rucher
+    createRucher() {
+        this.rucherObs = this.http.post(config_1.CONFIG.URL + 'apiaries', this.rucher);
+        this.rucherObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getUserRuchersLast(this.user.currentUser().username);
+        });
+    }
+    // pour afficher tout les ruchers de l'utilsateur connecté
+    getUserRuchersLast(username) {
+        this.ruchersObs = this.http.get(config_1.CONFIG.URL + 'apiaries/' + username);
+        this.ruchersObs.subscribe((data) => {
+            console.log(data);
+            this.rucher = data[data.length - 1];
+            this.rucherSelectUpdate = data[data.length - 1];
+            this.ruchers = data;
+            console.log(this.rucherSelectUpdate);
+        }, (err) => {
+            console.log(err);
+        }, () => {
+            this.observationService.getObservationByIdApiary(this.rucher.id);
+            this.rucheService.getRucheByApiary(this.user.currentUser().username, this.rucher.id);
+            this.getRucherDetails();
+            this.dailyRec.getDailyRecThByApiary(this.rucher.id);
+        });
+    }
+    getRucherDetails() {
+        this.rucherObs = this.http.get(config_1.CONFIG.URL + 'apiaries/details/' + this.rucher.id);
+        this.rucherObs.subscribe((data) => {
+            this.detailsRucher = data;
+        }, (err) => {
+            console.log(err);
+        });
+    }
+    updateRucher() {
+        this.rucherObs = this.http.put(config_1.CONFIG.URL + 'apiaries/update/' + this.detailsRucher.id, this.detailsRucher, httpOptions);
+        this.rucherObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getUserRuchersLast(this.user.currentUser().username);
+        });
+    }
+    deleteRucher() {
+        this.rucherObs = this.http.delete(config_1.CONFIG.URL + 'apiaries/' + this.rucher.id);
+        this.rucherObs.subscribe(() => { }, (err) => {
+            console.log(err);
+        }, () => {
+            this.getUserRuchersLast(this.user.currentUser().username);
+        });
+    }
+    getObservation(idApiary) {
+        //return this.http.get<ProcessReport[]>(CONFIG.URL+'report/apiary/'+idApiary);
+    }
+    errorHandler(error) {
+        return Observable_1.Observable.throw(error.message || "server error");
+    }
+};
+RucherService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.HttpClient, userlogged_service_1.UserloggedService,
+        ruche_service_1.RucheService,
+        dailyRecordService_1.DailyRecordService,
+        observation_service_1.ObservationService])
+], RucherService);
+exports.RucherService = RucherService;
+
+
+/***/ }),
+
+/***/ "./src/app/accueil/ruche-rucher/rucher.ts":
+/*!************************************************!*\
+  !*** ./src/app/accueil/ruche-rucher/rucher.ts ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class Rucher {
+    getCity() {
+        return this.ville;
+    }
+}
+exports.Rucher = Rucher;
+
+
+/***/ }),
+
+/***/ "./src/app/app.component.css":
+/*!***********************************!*\
+  !*** ./src/app/app.component.css ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/app.component.html":
+/*!************************************!*\
+  !*** ./src/app/app.component.html ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<router-outlet></router-outlet>\n"
+
+/***/ }),
+
+/***/ "./src/app/app.component.ts":
+/*!**********************************!*\
+  !*** ./src/app/app.component.ts ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+let AppComponent = class AppComponent {
+    constructor(location, router) {
+        this.location = location;
+        this.router = router;
+        this.showLogin = true;
+    }
+    ngOnInit() {
+    }
+    goToDashboard() {
+        this.router.navigate(['dashboard']);
+    }
+    logIn() {
+        this.showLogin = false;
+    }
+    isMap(path) {
+        var titlee = this.location.prepareExternalUrl(this.location.path());
+        titlee = titlee.slice(1);
+        if (path == titlee) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+};
+AppComponent = __decorate([
+    core_1.Component({
+        selector: 'app-root',
+        template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
+        styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
+    }),
+    __metadata("design:paramtypes", [common_1.Location, router_1.Router])
+], AppComponent);
+exports.AppComponent = AppComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/app.module.ts":
+/*!*******************************!*\
+  !*** ./src/app/app.module.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const platform_browser_1 = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+const http_1 = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm2015/http.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const http_2 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const app_routing_1 = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
+const footer_module_1 = __webpack_require__(/*! ./shared/footer/footer.module */ "./src/app/shared/footer/footer.module.ts");
+const sidebar_module_1 = __webpack_require__(/*! ./sidebar/sidebar.module */ "./src/app/sidebar/sidebar.module.ts");
+const lbd_module_1 = __webpack_require__(/*! ./lbd/lbd.module */ "./src/app/lbd/lbd.module.ts");
+const app_component_1 = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+const home_component_1 = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
+const test_component_1 = __webpack_require__(/*! ./test/test.component */ "./src/app/test/test.component.ts");
+const meteo_component_1 = __webpack_require__(/*! ./accueil/meteo/meteo.component */ "./src/app/accueil/meteo/meteo.component.ts");
+const user_component_1 = __webpack_require__(/*! ./user/user.component */ "./src/app/user/user.component.ts");
+const ruche_rucher_component_1 = __webpack_require__(/*! ./accueil/ruche-rucher/ruche.rucher.component */ "./src/app/accueil/ruche-rucher/ruche.rucher.component.ts");
+const capteur_component_1 = __webpack_require__(/*! ./accueil/capteur/capteur.component */ "./src/app/accueil/capteur/capteur.component.ts");
+const nouveau_capteur_component_1 = __webpack_require__(/*! ./accueil/capteur/nouveau-capteur/nouveau-capteur.component */ "./src/app/accueil/capteur/nouveau-capteur/nouveau-capteur.component.ts");
+const graph_component_1 = __webpack_require__(/*! ./accueil/graph/graph.component */ "./src/app/accueil/graph/graph.component.ts");
+const fleurs_floraison_component_1 = __webpack_require__(/*! ./accueil/fleurs-floraison/fleurs.floraison.component */ "./src/app/accueil/fleurs-floraison/fleurs.floraison.component.ts");
+const tables_component_1 = __webpack_require__(/*! ./tables/tables.component */ "./src/app/tables/tables.component.ts");
+const typography_component_1 = __webpack_require__(/*! ./typography/typography.component */ "./src/app/typography/typography.component.ts");
+const icons_component_1 = __webpack_require__(/*! ./icons/icons.component */ "./src/app/icons/icons.component.ts");
+const maps_component_1 = __webpack_require__(/*! ./maps/maps.component */ "./src/app/maps/maps.component.ts");
+const notifications_component_1 = __webpack_require__(/*! ./notifications/notifications.component */ "./src/app/notifications/notifications.component.ts");
+const upgrade_component_1 = __webpack_require__(/*! ./upgrade/upgrade.component */ "./src/app/upgrade/upgrade.component.ts");
+const login_component_1 = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
+const dashboard_component_1 = __webpack_require__(/*! ./dashboard/dashboard.component */ "./src/app/dashboard/dashboard.component.ts");
+const controldashboard_component_1 = __webpack_require__(/*! ./controldashboard/controldashboard.component */ "./src/app/controldashboard/controldashboard.component.ts");
+const accueil_component_1 = __webpack_require__(/*! ./accueil/accueil.component */ "./src/app/accueil/accueil.component.ts");
+const rapport_component_1 = __webpack_require__(/*! ./accueil/rapport/rapport.component */ "./src/app/accueil/rapport/rapport.component.ts");
+const forms_2 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+const capteur_service_1 = __webpack_require__(/*! ./accueil/capteur/capteur.service */ "./src/app/accueil/capteur/capteur.service.ts");
+const rucher_service_1 = __webpack_require__(/*! ./accueil/ruche-rucher/rucher.service */ "./src/app/accueil/ruche-rucher/rucher.service.ts");
+const test_service_1 = __webpack_require__(/*! ./test/test.service */ "./src/app/test/test.service.ts");
+const userlogged_service_1 = __webpack_require__(/*! ./userlogged.service */ "./src/app/userlogged.service.ts");
+const users_service_1 = __webpack_require__(/*! ./auth/users.service */ "./src/app/auth/users.service.ts");
+const selected_rucher_service_1 = __webpack_require__(/*! ./accueil/_shared-services/selected-rucher.service */ "./src/app/accueil/_shared-services/selected-rucher.service.ts");
+const auth_service_1 = __webpack_require__(/*! ./auth/auth.service */ "./src/app/auth/auth.service.ts");
+const auth_guard_service_1 = __webpack_require__(/*! ./auth/auth-guard.service */ "./src/app/auth/auth-guard.service.ts");
+const angular_jwt_1 = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
+const graph_service_1 = __webpack_require__(/*! ./accueil/graph/graph.service */ "./src/app/accueil/graph/graph.service.ts");
+const rapport_service_1 = __webpack_require__(/*! ./accueil/rapport/rapport.service */ "./src/app/accueil/rapport/rapport.service.ts");
+const fleurs_floraison_service_1 = __webpack_require__(/*! ./accueil/fleurs-floraison/fleurs.floraison.service */ "./src/app/accueil/fleurs-floraison/fleurs.floraison.service.ts");
+const ruche_detail_service_1 = __webpack_require__(/*! ./accueil/ruche-rucher/ruche-detail/ruche.detail.service */ "./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.service.ts");
+const disposition_ruche_component_1 = __webpack_require__(/*! ./accueil/disposition-ruche/disposition-ruche.component */ "./src/app/accueil/disposition-ruche/disposition-ruche.component.ts");
+const dailyRecordService_1 = __webpack_require__(/*! ./accueil/disposition-ruche/Service/dailyRecordService */ "./src/app/accueil/disposition-ruche/Service/dailyRecordService.ts");
+const ng2_drag_and_check_1 = __webpack_require__(/*! ng2-drag-and-check */ "./node_modules/ng2-drag-and-check/ng2-drag-and-check.js");
+const MeteoService_1 = __webpack_require__(/*! ./accueil/meteo/Service/MeteoService */ "./src/app/accueil/meteo/Service/MeteoService.ts");
+const ruche_service_1 = __webpack_require__(/*! ./accueil/disposition-ruche/Service/ruche.service */ "./src/app/accueil/disposition-ruche/Service/ruche.service.ts");
+const ngx_echarts_1 = __webpack_require__(/*! ngx-echarts */ "./node_modules/ngx-echarts/fesm2015/ngx-echarts.js");
+const calendrier_service_1 = __webpack_require__(/*! ./accueil/meteo/Service/calendrier.service */ "./src/app/accueil/meteo/Service/calendrier.service.ts");
+//import { DailyStockHoneyService } from './accueil/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
+const graph_meteo_service_1 = __webpack_require__(/*! ./accueil/meteo/Service/graph-meteo.service */ "./src/app/accueil/meteo/Service/graph-meteo.service.ts");
+//import { GraphRecordService } from './accueil/ruche-rucher/ruche-detail/service/Record/graph-record.service';
+//import { CalendrierHealthService } from './accueil/ruche-rucher/ruche-detail/service/health/calendrier-health.service';
+const observation_service_1 = __webpack_require__(/*! ./accueil/ruche-rucher/ruche-detail/observation/service/observation.service */ "./src/app/accueil/ruche-rucher/ruche-detail/observation/service/observation.service.ts");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const shared_module_1 = __webpack_require__(/*! ./shared/shared.module */ "./src/app/shared/shared.module.ts");
+const capteur_pipe_1 = __webpack_require__(/*! ./accueil/capteur/capteur.pipe */ "./src/app/accueil/capteur/capteur.pipe.ts");
+//import { NgDraggableModule } from 'angular-draggable'; 
+let AppModule = class AppModule {
+};
+AppModule = __decorate([
+    core_1.NgModule({
+        declarations: [
+            nouveau_capteur_component_1.NouveauCapteurComponent,
+            capteur_component_1.CapteurComponent,
+            app_component_1.AppComponent,
+            home_component_1.HomeComponent,
+            test_component_1.TestComponent,
+            user_component_1.UserComponent,
+            tables_component_1.TablesComponent,
+            typography_component_1.TypographyComponent,
+            icons_component_1.IconsComponent,
+            maps_component_1.MapsComponent,
+            notifications_component_1.NotificationsComponent,
+            upgrade_component_1.UpgradeComponent,
+            login_component_1.LoginComponent,
+            dashboard_component_1.DashboardComponent,
+            controldashboard_component_1.ControldashboardComponent,
+            accueil_component_1.AccueilComponent,
+            ruche_rucher_component_1.RucheRucherComponent,
+            meteo_component_1.MeteoComponent,
+            graph_component_1.GraphComponent,
+            //RucheDetailComponent,
+            rapport_component_1.RapportComponent,
+            fleurs_floraison_component_1.FleursFloraisonComponent,
+            disposition_ruche_component_1.DispositionRucheComponent,
+            capteur_pipe_1.PipeCapteur
+        ],
+        imports: [
+            platform_browser_1.BrowserModule,
+            common_1.CommonModule,
+            forms_1.FormsModule,
+            http_1.HttpModule,
+            //NavbarModule,
+            footer_module_1.FooterModule,
+            sidebar_module_1.SidebarModule,
+            router_1.RouterModule,
+            app_routing_1.AppRoutingModule,
+            lbd_module_1.LbdModule,
+            forms_2.ReactiveFormsModule,
+            http_2.HttpClientModule,
+            ng2_drag_and_check_1.DragAndCheckModule,
+            ngx_echarts_1.NgxEchartsModule,
+            shared_module_1.SharedModule
+            //NgDraggableModule
+        ],
+        providers: [
+            capteur_service_1.CapteurService,
+            userlogged_service_1.UserloggedService,
+            auth_service_1.AuthService,
+            auth_guard_service_1.AuthGuardService,
+            angular_jwt_1.JwtHelperService,
+            users_service_1.UsersService,
+            rucher_service_1.RucherService,
+            selected_rucher_service_1.selectedRucherService,
+            test_service_1.TestService,
+            graph_service_1.GraphService,
+            rapport_service_1.RapportService,
+            fleurs_floraison_service_1.FleursFloraisonService,
+            ruche_detail_service_1.RucheDetailService,
+            MeteoService_1.MeteoService,
+            dailyRecordService_1.DailyRecordService,
+            ruche_service_1.RucheService,
+            calendrier_service_1.CalendrierService,
+            //CalendrierPoidsService,
+            //DailyRecordsWService,
+            //DailyStockHoneyService,
+            graph_meteo_service_1.GraphMeteoService,
+            //RecordService,
+            //GraphRecordService,
+            //CalendrierHealthService,
+            observation_service_1.ObservationService
+        ],
+        exports: [],
+        bootstrap: [app_component_1.AppComponent]
+    })
+], AppModule);
+exports.AppModule = AppModule;
+
+
+/***/ }),
+
+/***/ "./src/app/app.routing.ts":
+/*!********************************!*\
+  !*** ./src/app/app.routing.ts ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const home_component_1 = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
+const test_component_1 = __webpack_require__(/*! ./test/test.component */ "./src/app/test/test.component.ts");
+const ruche_rucher_component_1 = __webpack_require__(/*! ./accueil/ruche-rucher/ruche.rucher.component */ "./src/app/accueil/ruche-rucher/ruche.rucher.component.ts");
+const meteo_component_1 = __webpack_require__(/*! ./accueil/meteo/meteo.component */ "./src/app/accueil/meteo/meteo.component.ts");
+const login_component_1 = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
+const accueil_component_1 = __webpack_require__(/*! ./accueil/accueil.component */ "./src/app/accueil/accueil.component.ts");
+const auth_guard_service_1 = __webpack_require__(/*! ./auth/auth-guard.service */ "./src/app/auth/auth-guard.service.ts");
+const capteur_component_1 = __webpack_require__(/*! ./accueil/capteur/capteur.component */ "./src/app/accueil/capteur/capteur.component.ts");
+const rapport_component_1 = __webpack_require__(/*! ./accueil/rapport/rapport.component */ "./src/app/accueil/rapport/rapport.component.ts");
+const fleurs_floraison_component_1 = __webpack_require__(/*! ./accueil/fleurs-floraison/fleurs.floraison.component */ "./src/app/accueil/fleurs-floraison/fleurs.floraison.component.ts");
+const disposition_ruche_component_1 = __webpack_require__(/*! ./accueil/disposition-ruche/disposition-ruche.component */ "./src/app/accueil/disposition-ruche/disposition-ruche.component.ts");
+const routes = [
+    /* { path: '',             component: LoginComponent },
+     { path: 'login',          component: LoginComponent },
+     { path: 'dashboard',      component: HomeComponent },
+   //{ path: 'dashboard',      component: DashboardComponent },
+     { path: 'user',           component: UserComponent },
+     { path: 'table',          component: TablesComponent },
+     { path: 'typography',     component: TypographyComponent },
+     { path: 'icons',          component: IconsComponent },
+     { path: 'maps',           component: MapsComponent },
+     { path: 'notifications',  component: NotificationsComponent },
+     { path: 'upgrade',        component: UpgradeComponent },
+     { path: '',               redirectTo: 'dashboard', pathMatch: 'full' }*/
+    { path: '', component: login_component_1.LoginComponent },
+    { path: 'login', component: login_component_1.LoginComponent },
+    { path: 'test', component: test_component_1.TestComponent },
+    { path: 'dashboard', component: home_component_1.HomeComponent },
+    { path: 'accueil', canActivate: [auth_guard_service_1.AuthGuardService], component: accueil_component_1.AccueilComponent },
+    { path: 'ruche-et-rucher', canActivate: [auth_guard_service_1.AuthGuardService], component: ruche_rucher_component_1.RucheRucherComponent },
+    { path: 'capteurs', canActivate: [auth_guard_service_1.AuthGuardService], component: capteur_component_1.CapteurComponent },
+    { path: 'meteo', canActivate: [auth_guard_service_1.AuthGuardService], component: meteo_component_1.MeteoComponent },
+    { path: 'ruche-detail/:id',
+        loadChildren: "./accueil/ruche-rucher/nav-ruche/nav-ruche.module#NavRucheModule",
+        canLoad: [auth_guard_service_1.AuthGuardService],
+    },
+    { path: 'rapport', canActivate: [auth_guard_service_1.AuthGuardService], component: rapport_component_1.RapportComponent },
+    { path: 'fleurs-floraison', canActivate: [auth_guard_service_1.AuthGuardService], component: fleurs_floraison_component_1.FleursFloraisonComponent },
+    { path: 'position-Ruche', canActivate: [auth_guard_service_1.AuthGuardService], component: disposition_ruche_component_1.DispositionRucheComponent },
+];
+let AppRoutingModule = class AppRoutingModule {
+};
+AppRoutingModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            common_1.CommonModule,
+            router_1.RouterModule.forRoot(routes)
+        ],
+        exports: [],
+    })
+], AppRoutingModule);
+exports.AppRoutingModule = AppRoutingModule;
+
+
+/***/ }),
+
+/***/ "./src/app/auth/auth-guard.service.ts":
+/*!********************************************!*\
+  !*** ./src/app/auth/auth-guard.service.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const auth_service_1 = __webpack_require__(/*! ./auth.service */ "./src/app/auth/auth.service.ts");
+let AuthGuardService = class AuthGuardService {
+    constructor(router, authService) {
+        this.router = router;
+        this.authService = authService;
+    }
+    canActivate(route, state) {
+        if (sessionStorage.getItem("connexion") == "true") {
+            return true;
+        }
+        this.router.navigate(['/login']);
+    }
+    canLoad(route) {
+        if (sessionStorage.getItem("connexion") == "true") {
+            return true;
+        }
+        this.router.navigate(['/login']);
+    }
+};
+AuthGuardService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [router_1.Router,
+        auth_service_1.AuthService])
+], AuthGuardService);
+exports.AuthGuardService = AuthGuardService;
+
+
+/***/ }),
+
+/***/ "./src/app/auth/auth.service.ts":
+/*!**************************************!*\
+  !*** ./src/app/auth/auth.service.ts ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+const users_service_1 = __webpack_require__(/*! ./users.service */ "./src/app/auth/users.service.ts");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const config_1 = __webpack_require__(/*! ../../config */ "./src/config.ts");
+const httpOptions = {
+    headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
+};
+let AuthService = class AuthService {
+    constructor(router, usersService, http) {
+        this.router = router;
+        this.usersService = usersService;
+        this.http = http;
+        this.connexionStatus = new rxjs_1.BehaviorSubject(false);
+        this.showNavBarEmitter = new core_1.EventEmitter();
+        this.login = { username: "", password: "" };
+        this.errLogin = false;
+        this.isAuthenticated = false;
+    }
+    signIn() {
+        this.loginObs = this.http.post(config_1.CONFIG.URL + 'user/loguser', this.login, httpOptions);
+        this.loginObs.subscribe((data) => {
+            this.connexionStatus.next(data);
+            sessionStorage.setItem("connexion", JSON.stringify(data));
+            this.isAuthenticated = data;
+            this.errLogin = !this.isAuthenticated;
+            console.log(!this.isAuthenticated);
+            if (this.isAuthenticated) {
+                console.log(sessionStorage.getItem("connexion") == "true");
+                sessionStorage.setItem("currentUser", JSON.stringify(this.login));
+                this.router.navigate(['/position-Ruche']);
+            }
+        }, (err) => {
+            console.log(err);
+        });
+    }
+};
+AuthService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [router_1.Router,
+        users_service_1.UsersService,
+        http_1.HttpClient])
+], AuthService);
+exports.AuthService = AuthService;
+
+
+/***/ }),
+
+/***/ "./src/app/auth/users.service.ts":
+/*!***************************************!*\
+  !*** ./src/app/auth/users.service.ts ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const httpOptions = {
+    headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
+};
+let UsersService = class UsersService {
+    constructor(http) {
+        this.http = http;
+    }
+    getUsers() {
+        return this.http.get('http://localhost:8091/posts/all');
+    }
+};
+UsersService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.HttpClient])
+], UsersService);
+exports.UsersService = UsersService;
+
+
+/***/ }),
+
+/***/ "./src/app/controldashboard/controldashboard.component.html":
+/*!******************************************************************!*\
+  !*** ./src/app/controldashboard/controldashboard.component.html ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div >\n    <div class=\"wrapper\">\n        <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n            <app-sidebar></app-sidebar>\n            <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-5.jpg)\"></div>\n        </div>\n        <div class=\"main-panel\">\n            <navbar-cmp></navbar-cmp>\n            <router-outlet></router-outlet>\n        <!--\n            <div *ngIf=\"isMap('maps')\">\n                <footer-cmp></footer-cmp>\n            </div>\n        </div>\n        -->\n    </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/controldashboard/controldashboard.component.scss":
+/*!******************************************************************!*\
+  !*** ./src/app/controldashboard/controldashboard.component.scss ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/controldashboard/controldashboard.component.ts":
+/*!****************************************************************!*\
+  !*** ./src/app/controldashboard/controldashboard.component.ts ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let ControldashboardComponent = class ControldashboardComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+ControldashboardComponent = __decorate([
+    core_1.Component({
+        selector: 'app-controldashboard',
+        template: __webpack_require__(/*! ./controldashboard.component.html */ "./src/app/controldashboard/controldashboard.component.html"),
+        styles: [__webpack_require__(/*! ./controldashboard.component.scss */ "./src/app/controldashboard/controldashboard.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], ControldashboardComponent);
+exports.ControldashboardComponent = ControldashboardComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/dashboard/dashboard.component.html":
+/*!****************************************************!*\
+  !*** ./src/app/dashboard/dashboard.component.html ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "You're in the dashboard"
+
+/***/ }),
+
+/***/ "./src/app/dashboard/dashboard.component.scss":
+/*!****************************************************!*\
+  !*** ./src/app/dashboard/dashboard.component.scss ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/dashboard/dashboard.component.ts":
+/*!**************************************************!*\
+  !*** ./src/app/dashboard/dashboard.component.ts ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let DashboardComponent = class DashboardComponent {
+    constructor() {
+        console.log("hello you are in the Dashboard component");
+    }
+    ngOnInit() {
+    }
+};
+DashboardComponent = __decorate([
+    core_1.Component({
+        selector: 'app-dashboard',
+        template: __webpack_require__(/*! ./dashboard.component.html */ "./src/app/dashboard/dashboard.component.html"),
+        styles: [__webpack_require__(/*! ./dashboard.component.scss */ "./src/app/dashboard/dashboard.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], DashboardComponent);
+exports.DashboardComponent = DashboardComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/home/home.component.css":
+/*!*****************************************!*\
+  !*** ./src/app/home/home.component.css ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/home/home.component.html":
+/*!******************************************!*\
+  !*** ./src/app/home/home.component.html ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div>\n        <div class=\"wrapper\">\n            <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n                <app-sidebar></app-sidebar>\n                <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-5.jpg)\"></div>\n            </div>\n            <div class=\"main-panel\">\n                <navbar-cmp></navbar-cmp>\n                <router-outlet></router-outlet>\n                <div *ngIf=\"isMap()\">\n                    <footer-cmp></footer-cmp>\n                </div>\n            </div>\n        </div>\n        \n</div> "
+
+/***/ }),
+
+/***/ "./src/app/home/home.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/home/home.component.ts ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const lbd_chart_component_1 = __webpack_require__(/*! ../lbd/lbd-chart/lbd-chart.component */ "./src/app/lbd/lbd-chart/lbd-chart.component.ts");
+const Chartist = __webpack_require__(/*! chartist */ "./node_modules/chartist/dist/chartist.js");
+let HomeComponent = class HomeComponent {
+    constructor() { }
+    isMap() {
+    }
+    ngOnInit() {
+        this.emailChartType = lbd_chart_component_1.ChartType.Pie;
+        this.emailChartData = {
+            labels: ['62%', '32%', '6%'],
+            series: [62, 32, 6]
+        };
+        this.emailChartLegendItems = [
+            { title: 'Open', imageClass: 'fa fa-circle text-info' },
+            { title: 'Bounce', imageClass: 'fa fa-circle text-danger' },
+            { title: 'Unsubscribe', imageClass: 'fa fa-circle text-warning' }
+        ];
+        this.hoursChartType = lbd_chart_component_1.ChartType.Line;
+        this.hoursChartData = {
+            labels: ['9:00AM', '12:00AM', '3:00PM', '6:00PM', '9:00PM', '12:00PM', '3:00AM', '6:00AM'],
+            series: [
+                [287, 385, 490, 492, 554, 586, 698, 695, 752, 788, 846, 944],
+                [67, 152, 143, 240, 287, 335, 435, 437, 539, 542, 544, 647],
+                [23, 113, 67, 108, 190, 239, 307, 308, 439, 410, 410, 509]
+            ]
+        };
+        this.hoursChartOptions = {
+            low: 0,
+            high: 800,
+            showArea: true,
+            height: '245px',
+            axisX: {
+                showGrid: false,
+            },
+            lineSmooth: Chartist.Interpolation.simple({
+                divisor: 3
+            }),
+            showLine: false,
+            showPoint: false,
+        };
+        this.hoursChartResponsive = [
+            ['screen and (max-width: 640px)', {
+                    axisX: {
+                        labelInterpolationFnc: function (value) {
+                            return value[0];
+                        }
+                    }
+                }]
+        ];
+        this.hoursChartLegendItems = [
+            { title: 'Open', imageClass: 'fa fa-circle text-info' },
+            { title: 'Click', imageClass: 'fa fa-circle text-danger' },
+            { title: 'Click Second Time', imageClass: 'fa fa-circle text-warning' }
+        ];
+        this.activityChartType = lbd_chart_component_1.ChartType.Bar;
+        this.activityChartData = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            series: [
+                [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
+                [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695]
+            ]
+        };
+        this.activityChartOptions = {
+            seriesBarDistance: 10,
+            axisX: {
+                showGrid: false
+            },
+            height: '245px'
+        };
+        this.activityChartResponsive = [
+            ['screen and (max-width: 640px)', {
+                    seriesBarDistance: 5,
+                    axisX: {
+                        labelInterpolationFnc: function (value) {
+                            return value[0];
+                        }
+                    }
+                }]
+        ];
+        this.activityChartLegendItems = [
+            { title: 'Tesla Model S', imageClass: 'fa fa-circle text-info' },
+            { title: 'BMW 5 Series', imageClass: 'fa fa-circle text-danger' }
+        ];
+    }
+};
+HomeComponent = __decorate([
+    core_1.Component({
+        selector: 'app-home',
+        template: __webpack_require__(/*! ./home.component.html */ "./src/app/home/home.component.html"),
+        styles: [__webpack_require__(/*! ./home.component.css */ "./src/app/home/home.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], HomeComponent);
+exports.HomeComponent = HomeComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/icons/icons.component.css":
+/*!*******************************************!*\
+  !*** ./src/app/icons/icons.component.css ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/icons/icons.component.html":
+/*!********************************************!*\
+  !*** ./src/app/icons/icons.component.html ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"main-content\">\n    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h4 class=\"title\">202 Awesome Stroke Icons</h4>\n                        <p class=\"category\">Handcrafted by our friends from <a target=\"_blank\" href=\"http://themes-pixeden.com/font-demos/7-stroke/index.html\">Pixeden</a></p>\n                    </div>\n                    <div class=\"content all-icons\">\n                        <div class=\"row\">\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-album\"></i>\n                                    <input type=\"text\" value=\"pe-7s-album\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-arc\"></i>\n                                    <input type=\"text\" value=\"pe-7s-arc\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-back-2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-back-2\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-bandaid\"></i>\n                                    <input type=\"text\" value=\"pe-7s-bandaid\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-car\"></i>\n                                    <input type=\"text\" value=\"pe-7s-car\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-diamond\"></i>\n                                    <input type=\"text\" value=\"pe-7s-diamond\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-door-lock\"></i>\n                                    <input type=\"text\" value=\"pe-7s-door-lock\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-eyedropper\"></i>\n                                    <input type=\"text\" value=\"pe-7s-eyedropper\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-female\"></i>\n                                    <input type=\"text\" value=\"pe-7s-female\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-gym\"></i>\n                                    <input type=\"text\" value=\"pe-7s-gym\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-hammer\"></i>\n                                    <input type=\"text\" value=\"pe-7s-hammer\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-headphones\"></i>\n                                    <input type=\"text\" value=\"pe-7s-headphones\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-helm\"></i>\n                                    <input type=\"text\" value=\"pe-7s-helm\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-hourglass\"></i>\n                                    <input type=\"text\" value=\"pe-7s-hourglass\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-leaf\"></i>\n                                    <input type=\"text\" value=\"pe-7s-leaf\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-magic-wand\"></i>\n                                    <input type=\"text\" value=\"pe-7s-magic-wand\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-male\"></i>\n                                    <input type=\"text\" value=\"pe-7s-male\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-map-2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-map-2\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-next-2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-next-2\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-paint-bucket\"></i>\n                                    <input type=\"text\" value=\"pe-7s-paint-bucket\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-pendrive\"></i>\n                                    <input type=\"text\" value=\"pe-7s-pendrive\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-photo\"></i>\n                                    <input type=\"text\" value=\"pe-7s-photo\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-piggy\"></i>\n                                    <input type=\"text\" value=\"pe-7s-piggy\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-plugin\"></i>\n                                    <input type=\"text\" value=\"pe-7s-plugin\">\n                                </div>\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-refresh-2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-refresh-2\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-rocket\"></i>\n                                    <input type=\"text\" value=\"pe-7s-rocket\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-settings\"></i>\n                                    <input type=\"text\" value=\"pe-7s-settings\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-shield\"></i>\n                                    <input type=\"text\" value=\"pe-7s-shield\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-smile\"></i>\n                                    <input type=\"text\" value=\"pe-7s-smile\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-usb\"></i>\n                                    <input type=\"text\" value=\"pe-7s-usb\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-vector\"></i>\n                                    <input type=\"text\" value=\"pe-7s-vector\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-wine\"></i>\n                                    <input type=\"text\" value=\"pe-7s-wine\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-cloud-upload\"></i>\n                                    <input type=\"text\" value=\"pe-7s-cloud-upload\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-cash\"></i>\n                                    <input type=\"text\" value=\"pe-7s-cash\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-close\"></i>\n                                    <input type=\"text\" value=\"pe-7s-close\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-bluetooth\"></i>\n                                    <input type=\"text\" value=\"pe-7s-bluetooth\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-cloud-download\"></i>\n                                    <input type=\"text\" value=\"pe-7s-cloud-download\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-way\"></i>\n                                    <input type=\"text\" value=\"pe-7s-way\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-close-circle\"></i>\n                                    <input type=\"text\" value=\"pe-7s-close-circle\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-id\"></i>\n                                    <input type=\"text\" value=\"pe-7s-id\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-angle-up\"></i>\n                                    <input type=\"text\" value=\"pe-7s-angle-up\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-wristwatch\"></i>\n                                    <input type=\"text\" value=\"pe-7s-wristwatch\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-angle-up-circle\"></i>\n                                    <input type=\"text\" value=\"pe-7s-angle-up-circle\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-world\"></i>\n                                    <input type=\"text\" value=\"pe-7s-world\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-angle-right\"></i>\n                                    <input type=\"text\" value=\"pe-7s-angle-right\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-volume\"></i>\n                                    <input type=\"text\" value=\"pe-7s-volume\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-angle-right-circle\"></i>\n                                    <input type=\"text\" value=\"pe-7s-angle-right-circle\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-users\"></i>\n                                    <input type=\"text\" value=\"pe-7s-users\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-angle-left\"></i>\n                                    <input type=\"text\" value=\"pe-7s-angle-left\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-user-female\"></i>\n                                    <input type=\"text\" value=\"pe-7s-user-female\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-angle-left-circle\"></i>\n                                    <input type=\"text\" value=\"pe-7s-angle-left-circle\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-up-arrow\"></i>\n                                    <input type=\"text\" value=\"pe-7s-up-arrow\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-angle-down\"></i>\n                                    <input type=\"text\" value=\"pe-7s-angle-down\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-switch\"></i>\n                                    <input type=\"text\" value=\"pe-7s-switch\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-angle-down-circle\"></i>\n                                    <input type=\"text\" value=\"pe-7s-angle-down-circle\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-scissors\"></i>\n                                    <input type=\"text\" value=\"pe-7s-scissors\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-wallet\"></i>\n                                    <input type=\"text\" value=\"pe-7s-wallet\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-safe\"></i>\n                                    <input type=\"text\" value=\"pe-7s-safe\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-volume2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-volume2\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-volume1\"></i>\n                                    <input type=\"text\" value=\"pe-7s-volume1\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-voicemail\"></i>\n                                    <input type=\"text\" value=\"pe-7s-voicemail\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-video\"></i>\n                                    <input type=\"text\" value=\"pe-7s-video\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-user\"></i>\n                                    <input type=\"text\" value=\"pe-7s-user\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-upload\"></i>\n                                    <input type=\"text\" value=\"pe-7s-upload\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-unlock\"></i>\n                                    <input type=\"text\" value=\"pe-7s-unlock\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-umbrella\"></i>\n                                    <input type=\"text\" value=\"pe-7s-umbrella\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-trash\"></i>\n                                    <input type=\"text\" value=\"pe-7s-trash\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-tools\"></i>\n                                    <input type=\"text\" value=\"pe-7s-tools\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-timer\"></i>\n                                    <input type=\"text\" value=\"pe-7s-timer\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-ticket\"></i>\n                                    <input type=\"text\" value=\"pe-7s-ticket\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-target\"></i>\n                                    <input type=\"text\" value=\"pe-7s-target\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-sun\"></i>\n                                    <input type=\"text\" value=\"pe-7s-sun\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-study\"></i>\n                                    <input type=\"text\" value=\"pe-7s-study\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-stopwatch\"></i>\n                                    <input type=\"text\" value=\"pe-7s-stopwatch\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-star\"></i>\n                                    <input type=\"text\" value=\"pe-7s-star\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-speaker\"></i>\n                                    <input type=\"text\" value=\"pe-7s-speaker\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-signal\"></i>\n                                    <input type=\"text\" value=\"pe-7s-signal\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-shuffle\"></i>\n                                    <input type=\"text\" value=\"pe-7s-shuffle\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-shopbag\"></i>\n                                    <input type=\"text\" value=\"pe-7s-shopbag\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-share\"></i>\n                                    <input type=\"text\" value=\"pe-7s-share\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-server\"></i>\n                                    <input type=\"text\" value=\"pe-7s-server\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-search\"></i>\n                                    <input type=\"text\" value=\"pe-7s-search\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-film\"></i>\n                                    <input type=\"text\" value=\"pe-7s-film\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-science\"></i>\n                                    <input type=\"text\" value=\"pe-7s-science\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-disk\"></i>\n                                    <input type=\"text\" value=\"pe-7s-disk\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-ribbon\"></i>\n                                    <input type=\"text\" value=\"pe-7s-ribbon\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-repeat\"></i>\n                                    <input type=\"text\" value=\"pe-7s-repeat\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-refresh\"></i>\n                                    <input type=\"text\" value=\"pe-7s-refresh\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-add-user\"></i>\n                                    <input type=\"text\" value=\"pe-7s-add-user\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-refresh-cloud\"></i>\n                                    <input type=\"text\" value=\"pe-7s-refresh-cloud\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-paperclip\"></i>\n                                    <input type=\"text\" value=\"pe-7s-paperclip\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-radio\"></i>\n                                    <input type=\"text\" value=\"pe-7s-radio\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-note2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-note2\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-print\"></i>\n                                    <input type=\"text\" value=\"pe-7s-print\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-network\"></i>\n                                    <input type=\"text\" value=\"pe-7s-network\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-prev\"></i>\n                                    <input type=\"text\" value=\"pe-7s-prev\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-mute\"></i>\n                                    <input type=\"text\" value=\"pe-7s-mute\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-power\"></i>\n                                    <input type=\"text\" value=\"pe-7s-power\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-medal\"></i>\n                                    <input type=\"text\" value=\"pe-7s-medal\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-portfolio\"></i>\n                                    <input type=\"text\" value=\"pe-7s-portfolio\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-like2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-like2\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-plus\"></i>\n                                    <input type=\"text\" value=\"pe-7s-plus\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-left-arrow\"></i>\n                                    <input type=\"text\" value=\"pe-7s-left-arrow\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-play\"></i>\n                                    <input type=\"text\" value=\"pe-7s-play\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-key\"></i>\n                                    <input type=\"text\" value=\"pe-7s-key\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-plane\"></i>\n                                    <input type=\"text\" value=\"pe-7s-plane\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-joy\"></i>\n                                    <input type=\"text\" value=\"pe-7s-joy\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-photo-gallery\"></i>\n                                    <input type=\"text\" value=\"pe-7s-photo-gallery\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-pin\"></i>\n                                    <input type=\"text\" value=\"pe-7s-pin\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-phone\"></i>\n                                    <input type=\"text\" value=\"pe-7s-phone\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-plug\"></i>\n                                    <input type=\"text\" value=\"pe-7s-plug\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-pen\"></i>\n                                    <input type=\"text\" value=\"pe-7s-pen\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-right-arrow\"></i>\n                                    <input type=\"text\" value=\"pe-7s-right-arrow\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-paper-plane\"></i>\n                                    <input type=\"text\" value=\"pe-7s-paper-plane\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-delete-user\"></i>\n                                    <input type=\"text\" value=\"pe-7s-delete-user\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-paint\"></i>\n                                    <input type=\"text\" value=\"pe-7s-paint\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-bottom-arrow\"></i>\n                                    <input type=\"text\" value=\"pe-7s-bottom-arrow\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-notebook\"></i>\n                                    <input type=\"text\" value=\"pe-7s-notebook\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-note\"></i>\n                                    <input type=\"text\" value=\"pe-7s-note\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-next\"></i>\n                                    <input type=\"text\" value=\"pe-7s-next\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-news-paper\"></i>\n                                    <input type=\"text\" value=\"pe-7s-news-paper\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-musiclist\"></i>\n                                    <input type=\"text\" value=\"pe-7s-musiclist\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-music\"></i>\n                                    <input type=\"text\" value=\"pe-7s-music\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-mouse\"></i>\n                                    <input type=\"text\" value=\"pe-7s-mouse\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-more\"></i>\n                                    <input type=\"text\" value=\"pe-7s-more\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-moon\"></i>\n                                    <input type=\"text\" value=\"pe-7s-moon\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-monitor\"></i>\n                                    <input type=\"text\" value=\"pe-7s-monitor\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-micro\"></i>\n                                    <input type=\"text\" value=\"pe-7s-micro\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-menu\"></i>\n                                    <input type=\"text\" value=\"pe-7s-menu\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-map\"></i>\n                                    <input type=\"text\" value=\"pe-7s-map\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-map-marker\"></i>\n                                    <input type=\"text\" value=\"pe-7s-map-marker\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-mail\"></i>\n                                    <input type=\"text\" value=\"pe-7s-mail\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-mail-open\"></i>\n                                    <input type=\"text\" value=\"pe-7s-mail-open\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-mail-open-file\"></i>\n                                    <input type=\"text\" value=\"pe-7s-mail-open-file\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-magnet\"></i>\n                                    <input type=\"text\" value=\"pe-7s-magnet\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-loop\"></i>\n                                    <input type=\"text\" value=\"pe-7s-loop\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-look\"></i>\n                                    <input type=\"text\" value=\"pe-7s-look\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-lock\"></i>\n                                    <input type=\"text\" value=\"pe-7s-lock\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-lintern\"></i>\n                                    <input type=\"text\" value=\"pe-7s-lintern\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-link\"></i>\n                                    <input type=\"text\" value=\"pe-7s-link\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-like\"></i>\n                                    <input type=\"text\" value=\"pe-7s-like\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-light\"></i>\n                                    <input type=\"text\" value=\"pe-7s-light\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-less\"></i>\n                                    <input type=\"text\" value=\"pe-7s-less\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-keypad\"></i>\n                                    <input type=\"text\" value=\"pe-7s-keypad\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-junk\"></i>\n                                    <input type=\"text\" value=\"pe-7s-junk\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-info\"></i>\n                                    <input type=\"text\" value=\"pe-7s-info\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-home\"></i>\n                                    <input type=\"text\" value=\"pe-7s-home\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-help2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-help2\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-help1\"></i>\n                                    <input type=\"text\" value=\"pe-7s-help1\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-graph3\"></i>\n                                    <input type=\"text\" value=\"pe-7s-graph3\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-graph2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-graph2\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-graph1\"></i>\n                                    <input type=\"text\" value=\"pe-7s-graph1\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-graph\"></i>\n                                    <input type=\"text\" value=\"pe-7s-graph\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-global\"></i>\n                                    <input type=\"text\" value=\"pe-7s-global\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-gleam\"></i>\n                                    <input type=\"text\" value=\"pe-7s-gleam\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-glasses\"></i>\n                                    <input type=\"text\" value=\"pe-7s-glasses\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-gift\"></i>\n                                    <input type=\"text\" value=\"pe-7s-gift\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-folder\"></i>\n                                    <input type=\"text\" value=\"pe-7s-folder\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-flag\"></i>\n                                    <input type=\"text\" value=\"pe-7s-flag\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-filter\"></i>\n                                    <input type=\"text\" value=\"pe-7s-filter\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-file\"></i>\n                                    <input type=\"text\" value=\"pe-7s-file\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-expand1\"></i>\n                                    <input type=\"text\" value=\"pe-7s-expand1\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-exapnd2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-exapnd2\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-edit\"></i>\n                                    <input type=\"text\" value=\"pe-7s-edit\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-drop\"></i>\n                                    <input type=\"text\" value=\"pe-7s-drop\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-drawer\"></i>\n                                    <input type=\"text\" value=\"pe-7s-drawer\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-download\"></i>\n                                    <input type=\"text\" value=\"pe-7s-download\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-display2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-display2\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-display1\"></i>\n                                    <input type=\"text\" value=\"pe-7s-display1\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-diskette\"></i>\n                                    <input type=\"text\" value=\"pe-7s-diskette\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-date\"></i>\n                                    <input type=\"text\" value=\"pe-7s-date\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-cup\"></i>\n                                    <input type=\"text\" value=\"pe-7s-cup\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-culture\"></i>\n                                    <input type=\"text\" value=\"pe-7s-culture\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-crop\"></i>\n                                    <input type=\"text\" value=\"pe-7s-crop\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-credit\"></i>\n                                    <input type=\"text\" value=\"pe-7s-credit\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-copy-file\"></i>\n                                    <input type=\"text\" value=\"pe-7s-copy-file\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-config\"></i>\n                                    <input type=\"text\" value=\"pe-7s-config\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-compass\"></i>\n                                    <input type=\"text\" value=\"pe-7s-compass\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-comment\"></i>\n                                    <input type=\"text\" value=\"pe-7s-comment\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-coffee\"></i>\n                                    <input type=\"text\" value=\"pe-7s-coffee\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-cloud\"></i>\n                                    <input type=\"text\" value=\"pe-7s-cloud\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-clock\"></i>\n                                    <input type=\"text\" value=\"pe-7s-clock\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-check\"></i>\n                                    <input type=\"text\" value=\"pe-7s-check\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-chat\"></i>\n                                    <input type=\"text\" value=\"pe-7s-chat\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-cart\"></i>\n                                    <input type=\"text\" value=\"pe-7s-cart\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-camera\"></i>\n                                    <input type=\"text\" value=\"pe-7s-camera\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-call\"></i>\n                                    <input type=\"text\" value=\"pe-7s-call\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-calculator\"></i>\n                                    <input type=\"text\" value=\"pe-7s-calculator\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-browser\"></i>\n                                    <input type=\"text\" value=\"pe-7s-browser\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-box2\"></i>\n                                    <input type=\"text\" value=\"pe-7s-box2\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-box1\"></i>\n                                    <input type=\"text\" value=\"pe-7s-box1\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-bookmarks\"></i>\n                                    <input type=\"text\" value=\"pe-7s-bookmarks\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-bicycle\"></i>\n                                    <input type=\"text\" value=\"pe-7s-bicycle\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-bell\"></i>\n                                    <input type=\"text\" value=\"pe-7s-bell\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-battery\"></i>\n                                    <input type=\"text\" value=\"pe-7s-battery\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-ball\"></i>\n                                    <input type=\"text\" value=\"pe-7s-ball\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-back\"></i>\n                                    <input type=\"text\" value=\"pe-7s-back\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-attention\"></i>\n                                    <input type=\"text\" value=\"pe-7s-attention\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-anchor\"></i>\n                                    <input type=\"text\" value=\"pe-7s-anchor\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-albums\"></i>\n                                    <input type=\"text\" value=\"pe-7s-albums\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-alarm\"></i>\n                                    <input type=\"text\" value=\"pe-7s-alarm\">\n                                </div>\n\n                            </div>\n                            <div class=\"font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6\">\n                                <div class=\"font-icon-detail\"><i class=\"pe-7s-airplay\"></i>\n                                    <input type=\"text\" value=\"pe-7s-airplay\">\n                                </div>\n\n                            </div>\n                        </div>\n\n\n                    </div>\n                </div>\n            </div>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/icons/icons.component.ts":
+/*!******************************************!*\
+  !*** ./src/app/icons/icons.component.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let IconsComponent = class IconsComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+IconsComponent = __decorate([
+    core_1.Component({
+        selector: 'app-icons',
+        template: __webpack_require__(/*! ./icons.component.html */ "./src/app/icons/icons.component.html"),
+        styles: [__webpack_require__(/*! ./icons.component.css */ "./src/app/icons/icons.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], IconsComponent);
+exports.IconsComponent = IconsComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/lbd/lbd-chart/lbd-chart.component.html":
+/*!********************************************************!*\
+  !*** ./src/app/lbd/lbd-chart/lbd-chart.component.html ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"card\">\n  <div class=\"header\">\n    <h4 class=\"title\">{{ title }}</h4>\n    <p class=\"category\">{{ subtitle }}</p>\n  </div>\n  <div class=\"content\">\n    <div [attr.id]=\"chartId\" class=\"ct-chart {{ chartClass }}\"></div>\n\n    <div class=\"footer\">\n      <div class=\"legend\">\n        <span *ngFor=\"let item of legendItems\">\n          <i [ngClass]=\"item.imageClass\"></i> {{ item.title }}\n        </span>\n      </div>\n      <hr *ngIf=\"withHr\">\n      <div class=\"stats\">\n        <i [ngClass]=\"footerIconClass\"></i> {{ footerText }}\n      </div>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/lbd/lbd-chart/lbd-chart.component.ts":
+/*!******************************************************!*\
+  !*** ./src/app/lbd/lbd-chart/lbd-chart.component.ts ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const Chartist = __webpack_require__(/*! chartist */ "./node_modules/chartist/dist/chartist.js");
+var ChartType;
+(function (ChartType) {
+    ChartType[ChartType["Pie"] = 0] = "Pie";
+    ChartType[ChartType["Line"] = 1] = "Line";
+    ChartType[ChartType["Bar"] = 2] = "Bar";
+})(ChartType = exports.ChartType || (exports.ChartType = {}));
+let LbdChartComponent = LbdChartComponent_1 = class LbdChartComponent {
+    constructor() {
+    }
+    ngOnInit() {
+        this.chartId = `lbd-chart-${LbdChartComponent_1.currentId++}`;
+    }
+    ngAfterViewInit() {
+        switch (this.chartType) {
+            case ChartType.Pie:
+                new Chartist.Pie(`#${this.chartId}`, this.chartData, this.chartOptions, this.chartResponsive);
+                break;
+            case ChartType.Line:
+                new Chartist.Line(`#${this.chartId}`, this.chartData, this.chartOptions, this.chartResponsive);
+                break;
+            case ChartType.Bar:
+                new Chartist.Bar(`#${this.chartId}`, this.chartData, this.chartOptions, this.chartResponsive);
+                break;
+        }
+    }
+};
+LbdChartComponent.currentId = 1;
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], LbdChartComponent.prototype, "title", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], LbdChartComponent.prototype, "subtitle", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], LbdChartComponent.prototype, "chartClass", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Number)
+], LbdChartComponent.prototype, "chartType", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], LbdChartComponent.prototype, "chartData", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], LbdChartComponent.prototype, "chartOptions", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Array)
+], LbdChartComponent.prototype, "chartResponsive", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], LbdChartComponent.prototype, "footerIconClass", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], LbdChartComponent.prototype, "footerText", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Array)
+], LbdChartComponent.prototype, "legendItems", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], LbdChartComponent.prototype, "withHr", void 0);
+LbdChartComponent = LbdChartComponent_1 = __decorate([
+    core_1.Component({
+        selector: 'lbd-chart',
+        template: __webpack_require__(/*! ./lbd-chart.component.html */ "./src/app/lbd/lbd-chart/lbd-chart.component.html"),
+        changeDetection: core_1.ChangeDetectionStrategy.OnPush
+    }),
+    __metadata("design:paramtypes", [])
+], LbdChartComponent);
+exports.LbdChartComponent = LbdChartComponent;
+var LbdChartComponent_1;
+
+
+/***/ }),
+
+/***/ "./src/app/lbd/lbd.module.ts":
+/*!***********************************!*\
+  !*** ./src/app/lbd/lbd.module.ts ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const lbd_chart_component_1 = __webpack_require__(/*! ./lbd-chart/lbd-chart.component */ "./src/app/lbd/lbd-chart/lbd-chart.component.ts");
+let LbdModule = class LbdModule {
+};
+LbdModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            common_1.CommonModule,
+            router_1.RouterModule
+        ],
+        declarations: [
+            lbd_chart_component_1.LbdChartComponent
+        ],
+        exports: [
+            lbd_chart_component_1.LbdChartComponent
+        ]
+    })
+], LbdModule);
+exports.LbdModule = LbdModule;
+
+
+/***/ }),
+
+/***/ "./src/app/login/login.component.html":
+/*!********************************************!*\
+  !*** ./src/app/login/login.component.html ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<body>\n<div >\n    <div class=\"col-md-6 col-md-offset-3\">\n        <h2>Bievenue à<b> Mellisphera</b> !</h2>\n        <h5>Veuillez insérer vos identifiants </h5>\n        <form (ngSubmit)=\"verifLogin()\" >\n            <div class=\"form-group\" >\n                <label for=\"username\" >Nom d'utilisateur :</label>\n                <input type=\"text\" [(ngModel)]=\"authService.login.username\" class=\"form-control\" required name=\"username\"  placeholder=\"Nom d'utilisateur\"required />\n            <!--  <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Username is required</div>-->\n            </div>\n            <div class=\"form-group\">\n                <label for=\"password\">Mot de passe : </label>\n                <input type=\"password\" [(ngModel)]=\"authService.login.password\"  requiered class=\"form-control\"  name=\"password\"  placeholder=\"Mot de passe\" required />\n                <!-- <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div>-->\n            </div>\n            <div *ngIf=\"authService.errLogin\" class=\"loginErrorMsg\">\n                   <b>Mot de passe incorrect</b> \n            </div>\n            <div class=\"form-group\">\n                   \n                <input type=\"submit\" class=\"btn btn-primary\" value=\"Se Connecter\">\n                <!-- <button [disabled]=\"loading\" class=\"btn btn-primary\" (click)=\"goToDashboard()\">Hola</button>\n                <button [disabled]=\"loading\" class=\"btn btn-primary\" (click)=\"test()\">form</button>\n                <img *ngIf=\"loading\" />\n                    <a [routerLink]=\"['/register']\" class=\"btn btn-link\">Register</a>-->\n             \n            </div>\n        </form>\n    </div>    \n</div>\n</body>\n"
+
+/***/ }),
+
+/***/ "./src/app/login/login.component.scss":
+/*!********************************************!*\
+  !*** ./src/app/login/login.component.scss ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".loginErrorMsg {\n  color: #DD2424;\n  font-style: unset; }\n\nbody {\n  background-color: #f7f7f7; }\n"
+
+/***/ }),
+
+/***/ "./src/app/login/login.component.ts":
+/*!******************************************!*\
+  !*** ./src/app/login/login.component.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const userlogged_service_1 = __webpack_require__(/*! ../userlogged.service */ "./src/app/userlogged.service.ts");
+const auth_service_1 = __webpack_require__(/*! ../auth/auth.service */ "./src/app/auth/auth.service.ts");
+const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+const users_service_1 = __webpack_require__(/*! ../auth/users.service */ "./src/app/auth/users.service.ts");
+let LoginComponent = class LoginComponent {
+    constructor(formBuilder, router, data, usersServices, authService) {
+        this.formBuilder = formBuilder;
+        this.router = router;
+        this.data = data;
+        this.usersServices = usersServices;
+        this.authService = authService;
+        this.loginErrorMsg = false;
+        this.myform = this.formBuilder.group({
+            'username': ['', forms_1.Validators.required],
+            'password': ['', [forms_1.Validators.required, forms_1.Validators.minLength(3)]]
+        });
+    }
+    ngOnInit() {
+        if (this.authService.isAuthenticated) {
+            this.router.navigate(['/position-Ruche']);
+        }
+        this.myform = new forms_1.FormGroup({
+            username: new forms_1.FormControl(''),
+            password: new forms_1.FormControl('')
+        });
+    }
+    /*  onSignIn(){
+        //console.log(this.myform.value);
+        localStorage.setItem('currentUser', JSON.stringify({ token: "jwt will come later", "user": this.myform.value}));
+        this.authService.signIn(this.myform.value);
+      }
+      */
+    verifLogin() {
+        console.log(this.authService.login);
+        this.authService.signIn();
+    }
+    currentUser() {
+        return JSON.parse(localStorage.getItem('currentUser'));
+    }
+    goToDashboard() {
+        console.log("holaaa!");
+    }
+    test() {
+    }
+};
+LoginComponent = __decorate([
+    core_1.Component({
+        selector: 'app-login',
+        template: __webpack_require__(/*! ./login.component.html */ "./src/app/login/login.component.html"),
+        styles: [__webpack_require__(/*! ./login.component.scss */ "./src/app/login/login.component.scss")]
+    }),
+    __metadata("design:paramtypes", [forms_1.FormBuilder,
+        router_1.Router,
+        userlogged_service_1.UserloggedService,
+        users_service_1.UsersService,
+        auth_service_1.AuthService])
+], LoginComponent);
+exports.LoginComponent = LoginComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/maps/maps.component.css":
+/*!*****************************************!*\
+  !*** ./src/app/maps/maps.component.css ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/maps/maps.component.html":
+/*!******************************************!*\
+  !*** ./src/app/maps/maps.component.html ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"map\"></div>\n"
+
+/***/ }),
+
+/***/ "./src/app/maps/maps.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/maps/maps.component.ts ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let MapsComponent = class MapsComponent {
+    constructor() { }
+    ngOnInit() {
+        const myLatlng = new google.maps.LatLng(40.748817, -73.985428);
+        const mapOptions = {
+            zoom: 13,
+            center: myLatlng,
+            scrollwheel: false,
+            styles: [
+                { 'featureType': 'water', 'stylers': [{ 'saturation': 43 }, { 'lightness': -11 }, { 'hue': '#0088ff' }] },
+                { 'featureType': 'road', 'elementType': 'geometry.fill', 'stylers': [{ 'hue': '#ff0000' },
+                        { 'saturation': -100 }, { 'lightness': 99 }] },
+                { 'featureType': 'road', 'elementType': 'geometry.stroke', 'stylers': [{ 'color': '#808080' },
+                        { 'lightness': 54 }] },
+                { 'featureType': 'landscape.man_made', 'elementType': 'geometry.fill', 'stylers': [{ 'color': '#ece2d9' }] },
+                { 'featureType': 'poi.park', 'elementType': 'geometry.fill', 'stylers': [{ 'color': '#ccdca1' }] },
+                { 'featureType': 'road', 'elementType': 'labels.text.fill', 'stylers': [{ 'color': '#767676' }] },
+                { 'featureType': 'road', 'elementType': 'labels.text.stroke', 'stylers': [{ 'color': '#ffffff' }] },
+                { 'featureType': 'poi', 'stylers': [{ 'visibility': 'off' }] },
+                { 'featureType': 'landscape.natural', 'elementType': 'geometry.fill', 'stylers': [{ 'visibility': 'on' },
+                        { 'color': '#b8cb93' }] },
+                { 'featureType': 'poi.park', 'stylers': [{ 'visibility': 'on' }] },
+                { 'featureType': 'poi.sports_complex', 'stylers': [{ 'visibility': 'on' }] },
+                { 'featureType': 'poi.medical', 'stylers': [{ 'visibility': 'on' }] },
+                { 'featureType': 'poi.business', 'stylers': [{ 'visibility': 'simplified' }] }
+            ]
+        };
+        const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        const Marker = new google.maps.Marker({
+            position: myLatlng,
+            title: 'Hello World!'
+        });
+        // To add the marker to the map, call setMap();
+        Marker.setMap(map);
+    }
+};
+MapsComponent = __decorate([
+    core_1.Component({
+        selector: 'app-maps',
+        template: __webpack_require__(/*! ./maps.component.html */ "./src/app/maps/maps.component.html"),
+        styles: [__webpack_require__(/*! ./maps.component.css */ "./src/app/maps/maps.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], MapsComponent);
+exports.MapsComponent = MapsComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/notifications/notifications.component.css":
+/*!***********************************************************!*\
+  !*** ./src/app/notifications/notifications.component.css ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/notifications/notifications.component.html":
+/*!************************************************************!*\
+  !*** ./src/app/notifications/notifications.component.html ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"main-content\" >\n    <div class=\"container-fluid\">\n        <div class=\"card\">\n            <div class=\"header\">\n                <h4 class=\"title\">Notifications</h4>\n                <p class=\"category\">Handcrafted by our friend <a target=\"_blank\" href=\"https://github.com/mouse0270\">Robert McIntosh</a>. Please checkout the <a href=\"http://bootstrap-notify.remabledesigns.com/\" target=\"_blank\">full documentation.</a></p>\n            </div>\n            <div class=\"content\">\n                <div class=\"row\">\n                    <div class=\"col-md-6\">\n                        <h5>Notifications Style</h5>\n                        <div class=\"alert alert-info\">\n                            <span>This is a plain notification</span>\n                        </div>\n                        <div class=\"alert alert-info\">\n                            <button type=\"button\" aria-hidden=\"true\" class=\"close\">×</button>\n                            <span>This is a notification with close button.</span>\n                        </div>\n                        <div class=\"alert alert-info\" data-notify=\"container\">\n                            <button type=\"button\" aria-hidden=\"true\" class=\"close\">×</button>\n                            <span data-notify=\"icon\" class=\"pe-7s-bell\"></span>\n                            <span data-notify=\"message\">This is a notification with close button and icon.</span>\n                        </div>\n                        <div class=\"alert alert-info\" data-notify=\"container\">\n                            <button type=\"button\" aria-hidden=\"true\" class=\"close\">×</button>\n                            <span data-notify=\"icon\" class=\"pe-7s-bell\"></span>\n                            <span data-notify=\"message\">This is a notification with close button and icon and have many lines. You can see that the icon and the close button are always vertically aligned. This is a beautiful notification. So you don't have to worry about the style.</span>\n                        </div>\n                    </div>\n                    <div class=\"col-md-6\">\n                        <h5>Notification states</h5>\n                        <div class=\"alert alert-info\">\n                            <button type=\"button\" aria-hidden=\"true\" class=\"close\">×</button>\n                            <span><b> Info - </b> This is a regular notification made with \".alert-info\"</span>\n                        </div>\n                        <div class=\"alert alert-success\">\n                            <button type=\"button\" aria-hidden=\"true\" class=\"close\">×</button>\n                            <span><b> Success - </b> This is a regular notification made with \".alert-success\"</span>\n                        </div>\n                        <div class=\"alert alert-warning\">\n                            <button type=\"button\" aria-hidden=\"true\" class=\"close\">×</button>\n                            <span><b> Warning - </b> This is a regular notification made with \".alert-warning\"</span>\n                        </div>\n                        <div class=\"alert alert-danger\">\n                            <button type=\"button\" aria-hidden=\"true\" class=\"close\">×</button>\n                            <span><b> Danger - </b> This is a regular notification made with \".alert-danger\"</span>\n                        </div>\n                    </div>\n                </div>\n                <br>\n                <br>\n                <div class=\"places-buttons\">\n                    <div class=\"row\">\n                        <div class=\"col-md-6 col-md-offset-3 text-center\">\n                            <h5>Notifications Places\n                                <p class=\"category\">Click to view notifications</p>\n                            </h5>\n                        </div>\n                    </div>\n                    <div class=\"row\">\n                        <div class=\"col-md-3 col-md-offset-2\">\n                            <button class=\"btn btn-default btn-block\" (click)=\"showNotification('top','left')\">Top Left</button>\n                        </div>\n                        <div class=\"col-md-3\">\n                            <button class=\"btn btn-default btn-block\" (click)=\"showNotification('top','center')\">Top Center</button>\n                        </div>\n                        <div class=\"col-md-3\">\n                            <button class=\"btn btn-default btn-block\" (click)=\"showNotification('top','right')\">Top Right</button>\n                        </div>\n                    </div>\n                    <div class=\"row\">\n                        <div class=\"col-md-3 col-md-offset-2\">\n                            <button class=\"btn btn-default btn-block\" (click)=\"showNotification('bottom','left')\">Bottom Left</button>\n                        </div>\n                        <div class=\"col-md-3\">\n                            <button class=\"btn btn-default btn-block\" (click)=\"showNotification('bottom','center')\">Bottom Center</button>\n                        </div>\n                        <div class=\"col-md-3\">\n                            <button class=\"btn btn-default btn-block\" (click)=\"showNotification('bottom','right')\">Bottom Right</button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/notifications/notifications.component.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/notifications/notifications.component.ts ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let NotificationsComponent = class NotificationsComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+    showNotification(from, align) {
+        const type = ['', 'info', 'success', 'warning', 'danger'];
+        var color = Math.floor((Math.random() * 4) + 1);
+        $.notify({
+            icon: "pe-7s-gift",
+            message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
+        }, {
+            type: type[color],
+            timer: 1000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+    }
+};
+NotificationsComponent = __decorate([
+    core_1.Component({
+        selector: 'app-notifications',
+        template: __webpack_require__(/*! ./notifications.component.html */ "./src/app/notifications/notifications.component.html"),
+        styles: [__webpack_require__(/*! ./notifications.component.css */ "./src/app/notifications/notifications.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], NotificationsComponent);
+exports.NotificationsComponent = NotificationsComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/shared/footer/footer.component.html":
+/*!*****************************************************!*\
+  !*** ./src/app/shared/footer/footer.component.html ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<footer class=\"footer marginBottom\" >\n    <div class=\"container-fluid\">\n        <nav class=\"pull-left\">\n            <ul>\n                <li>\n                    <a href=\"#\">\n                        \n                    </a>\n                </li>\n                <li>\n                    <a href=\"#\">\n                        \n                    </a>\n                </li>\n                <li>\n                    <a href=\"#\">\n                        \n                    </a>\n                </li>\n                <li>\n                    <a href=\"#\">\n                        \n                    </a>\n                </li>\n            </ul>\n        </nav>\n        <p class=\"copyright pull-right\">\n            &copy; {{test | date: 'yyyy'}} <a href=\"lema-bkr.com\">LEMA BKR</a>, Let's make a beekeeping revolution\n        </p>\n    </div>\n</footer>\n"
+
+/***/ }),
+
+/***/ "./src/app/shared/footer/footer.component.ts":
+/*!***************************************************!*\
+  !*** ./src/app/shared/footer/footer.component.ts ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let FooterComponent = class FooterComponent {
+    constructor() {
+        this.test = new Date();
+        this.clientHeight = window.innerHeight;
+    }
+};
+FooterComponent = __decorate([
+    core_1.Component({
+        selector: 'footer-cmp',
+        template: __webpack_require__(/*! ./footer.component.html */ "./src/app/shared/footer/footer.component.html")
+    }),
+    __metadata("design:paramtypes", [])
+], FooterComponent);
+exports.FooterComponent = FooterComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/shared/footer/footer.module.ts":
+/*!************************************************!*\
+  !*** ./src/app/shared/footer/footer.module.ts ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const footer_component_1 = __webpack_require__(/*! ./footer.component */ "./src/app/shared/footer/footer.component.ts");
+let FooterModule = class FooterModule {
+};
+FooterModule = __decorate([
+    core_1.NgModule({
+        imports: [router_1.RouterModule, common_1.CommonModule],
+        declarations: [footer_component_1.FooterComponent],
+        exports: [footer_component_1.FooterComponent]
+    })
+], FooterModule);
+exports.FooterModule = FooterModule;
+
+
+/***/ }),
+
+/***/ "./src/app/shared/navbar/navbar.component.html":
+/*!*****************************************************!*\
+  !*** ./src/app/shared/navbar/navbar.component.html ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<nav class=\"navbar navbar-default\">\n    <div class=\"container-fluid\">\n        <div class=\"navbar-header\">\n            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" (click)=\"sidebarToggle()\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n            </button>\n           <!-- <a class=\"navbar-brand\" href=\"#\" >{{getTitle()}}</a>-->\n           \n      \n       \n        </div>\n        <div class=\"collapse navbar-collapse\">\n            <ul class=\"nav navbar-nav navbar-left\">\n                <!--\n                <li style=\"margin-top:10px;margin-right:10px; \">\n                            <b>Rucher : </b>\n                </li>\n                   \n                    <li>\n                     <select class=\"form-control selectpicker\" id=\"sel1\" data-style=\"btn-primary\">\n                            <option>Rucher 1</option>\n                            <option>Rucher 2</option>\n                            <option>Rucher 3</option>\n                            <option>Rucher 4</option>\n                    </select>\n                </li>\n                -->\n                \n               <!--\n                <li class=\"dropdown\">\n                    <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n                        <i class=\"fa fa-globe\"></i>\n                        <b class=\"caret\"></b>\n                        <span class=\"notification hidden-sm hidden-xs\">5</span>\n                        <p class=\"hidden-lg hidden-md\">\n                            5 Notifications\n                            <b class=\"caret\"></b>\n                        </p>\n                    </a>\n                    <ul class=\"dropdown-menu\">\n                        <li><a href=\"#\">Notification 1</a></li>\n                        <li><a href=\"#\">Notification 2</a></li>\n                        <li><a href=\"#\">Notification 3</a></li>\n                        <li><a href=\"#\">Notification 4</a></li>\n                        <li><a href=\"#\">Another notification</a></li>\n                    </ul>\n                </li>\n            -->\n                <li><!--\n                    <a href=\"#\">\n                        <i class=\"fa fa-search\"></i>\n                        <p class=\"hidden-lg hidden-md\">Search</p>\n                    </a>-->\n                    <!--\n                    <a><input type=\"text\" class=\"form-control\" placeholder=\"Rechercher\"></a>\n                    -->\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\">\n                <li>\n                    <a href=\"#\">\n                         <p>Bienvenue <b>{{username}} </b>!</p>\n                    </a>\n                </li>\n                <li class=\"dropdown\">\n                <!--\n                    <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n                        <p>\n                            Dropdown\n                            <b class=\"caret\"></b>\n                        </p>\n                    </a>\n              \n                    <ul class=\"dropdown-menu\">\n                        <li><a href=\"#\">Action</a></li>\n                        <li><a href=\"#\">Another action</a></li>\n                        <li><a href=\"#\">Something</a></li>\n                        <li><a href=\"#\">Another action</a></li>\n                        <li><a href=\"#\">Something</a></li>\n                        <li class=\"divider\"></li>\n                        <li><a href=\"#\">Separated link</a></li>\n                    </ul>\n                -->\n                </li>\n                <li>\n                    <a href=\"#\">\n                        <p (click)=\"logout()\">Se déconnecter</p>\n                    </a>\n                </li>\n                <li class=\"separator hidden-lg hidden-md\"></li>\n            </ul>\n        </div>\n    </div>\n</nav>\n<!--\n<app-login [username]='username'></app-login>\n-->"
+
+/***/ }),
+
+/***/ "./src/app/shared/navbar/navbar.component.ts":
+/*!***************************************************!*\
+  !*** ./src/app/shared/navbar/navbar.component.ts ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const sidebar_component_1 = __webpack_require__(/*! ../../sidebar/sidebar.component */ "./src/app/sidebar/sidebar.component.ts");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const userlogged_service_1 = __webpack_require__(/*! ../../userlogged.service */ "./src/app/userlogged.service.ts");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const auth_service_1 = __webpack_require__(/*! ../../auth/auth.service */ "./src/app/auth/auth.service.ts");
+let NavbarComponent = class NavbarComponent {
+    constructor(location, element, data, router, authService) {
+        this.element = element;
+        this.data = data;
+        this.router = router;
+        this.authService = authService;
+        this.location = location;
+        this.sidebarVisible = false;
+        this.username = data.currentUser().username;
+        console.log("Local storage" + localStorage);
+    }
+    logout() {
+        this.authService.isAuthenticated = false;
+        sessionStorage.connexion = "false";
+        sessionStorage.removeItem('currentUser');
+        console.log(this.authService.connexionStatus);
+        console.log(this.authService.isAuthenticated);
+        console.log(sessionStorage.getItem("connexion"));
+        this.authService.connexionStatus.next(false);
+        this.router.navigate(['/login']);
+        localStorage.removeItem('currentRucher');
+        console.log("Local storage user : " + localStorage.get('currentUser'));
+        console.log("Local storage rucher : " + localStorage.getItem('currentRucher'));
+    }
+    ngOnInit() {
+        this.listTitles = sidebar_component_1.ROUTES.filter(listTitle => listTitle);
+        const navbar = this.element.nativeElement;
+        this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+        this.data.currentMessage.subscribe(message => this.message = message);
+    }
+    sidebarOpen() {
+        const toggleButton = this.toggleButton;
+        const body = document.getElementsByTagName('body')[0];
+        setTimeout(function () {
+            toggleButton.classList.add('toggled');
+        }, 500);
+        body.classList.add('nav-open');
+        this.sidebarVisible = true;
+    }
+    ;
+    sidebarClose() {
+        const body = document.getElementsByTagName('body')[0];
+        this.toggleButton.classList.remove('toggled');
+        this.sidebarVisible = false;
+        body.classList.remove('nav-open');
+    }
+    ;
+    sidebarToggle() {
+        // const toggleButton = this.toggleButton;
+        // const body = document.getElementsByTagName('body')[0];
+        if (this.sidebarVisible === false) {
+            this.sidebarOpen();
+        }
+        else {
+            this.sidebarClose();
+        }
+    }
+    ;
+    getTitle() {
+        var titlee = this.location.prepareExternalUrl(this.location.path());
+        titlee = titlee.split('/').pop();
+        for (var item = 0; item < this.listTitles.length; item++) {
+            if (this.listTitles[item].path === titlee) {
+                return this.listTitles[item].title;
+            }
+        }
+        return 'Dashboard';
+    }
+};
+NavbarComponent = __decorate([
+    core_1.Component({
+        // moduleId: module.id,
+        selector: 'navbar-cmp',
+        template: __webpack_require__(/*! ./navbar.component.html */ "./src/app/shared/navbar/navbar.component.html")
+    }),
+    __metadata("design:paramtypes", [common_1.Location, core_1.ElementRef, userlogged_service_1.UserloggedService, router_1.Router, auth_service_1.AuthService])
+], NavbarComponent);
+exports.NavbarComponent = NavbarComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/shared/navbar/navbar.module.ts":
+/*!************************************************!*\
+  !*** ./src/app/shared/navbar/navbar.module.ts ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const navbar_component_1 = __webpack_require__(/*! ./navbar.component */ "./src/app/shared/navbar/navbar.component.ts");
+let NavbarModule = class NavbarModule {
+};
+NavbarModule = __decorate([
+    core_1.NgModule({
+        imports: [router_1.RouterModule],
+        declarations: [navbar_component_1.NavbarComponent],
+        exports: [navbar_component_1.NavbarComponent]
+    })
+], NavbarModule);
+exports.NavbarModule = NavbarModule;
+
+
+/***/ }),
+
+/***/ "./src/app/shared/shared.module.ts":
+/*!*****************************************!*\
+  !*** ./src/app/shared/shared.module.ts ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const ruche_detail_component_1 = __webpack_require__(/*! ../accueil/ruche-rucher/ruche-detail/ruche.detail.component */ "./src/app/accueil/ruche-rucher/ruche-detail/ruche.detail.component.ts");
+const sidebar_module_1 = __webpack_require__(/*! ../sidebar/sidebar.module */ "./src/app/sidebar/sidebar.module.ts");
+//import { NavbarComponent } from './navbar/navbar.component';
+const navbar_module_1 = __webpack_require__(/*! ./navbar/navbar.module */ "./src/app/shared/navbar/navbar.module.ts");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+let SharedModule = class SharedModule {
+};
+SharedModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            common_1.CommonModule,
+            sidebar_module_1.SidebarModule,
+            navbar_module_1.NavbarModule,
+            router_1.RouterModule
+        ],
+        exports: [
+            ruche_detail_component_1.RucheDetailComponent,
+            navbar_module_1.NavbarModule,
+            router_1.RouterModule
+            //SidebarModule
+        ],
+        declarations: [
+            ruche_detail_component_1.RucheDetailComponent,
+        ]
+    })
+], SharedModule);
+exports.SharedModule = SharedModule;
+
+
+/***/ }),
+
+/***/ "./src/app/sidebar/sidebar.component.html":
+/*!************************************************!*\
+  !*** ./src/app/sidebar/sidebar.component.html ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n<div class=\"sidebar-wrapper\">\n    <div class=\"logo\">\n        <a routerLink=\"/position-Ruche\">\n            <i  > <img src=\"./assets/img/bee.png\" style=\"width:30px;height: 30px;\"/> </i>\n            <p>MelliSphera !</p>\n        </a>\n    </div>\n    <ul class=\"nav responsive-nav\">\n        <!--\n        <li *ngIf=\"isMobileMenu()\">\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n                <i class=\"fa fa-dashboard\"></i>\n\t\t\t\t<p class=\"hidden-lg hidden-md\">Dashboard</p>\n            </a>\n        </li>\n        -->\n        <li class=\"dropdown\" *ngIf=\"isMobileMenu()\">\n             \n            <!--\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n                    <i class=\"fa fa-globe\"></i>\n                    <b class=\"caret hidden-sm hidden-xs\"></b>\n                    <span class=\"notification hidden-sm hidden-xs\">5</span>\n\t\t\t\t\t<p class=\"hidden-lg hidden-md\">\n\t\t\t\t\t\t5 Notifications\n\t\t\t\t\t\t<b class=\"caret\"></b>\n\t\t\t\t\t</p>\n              </a>\n            \n              <ul class=\"dropdown-menu\">\n                <li><a href=\"#\">Notification 1</a></li>\n                <li><a href=\"#\">Notification 2</a></li>\n                <li><a href=\"#\">Notification 3</a></li>\n                <li><a href=\"#\">Notification 4</a></li>\n                <li><a href=\"#\">Another notification</a></li>\n              </ul>\n        \n        </li>\n        <!--\n        <li *ngIf=\"isMobileMenu()\">\n           <a>\n                <i class=\"fa fa-search\"></i>\n\t\t\t\t<p class=\"hidden-lg hidden-md\">Search</p>\n            </a>\n        </li>\n        <li *ngIf=\"isMobileMenu()\">\n           <a href=\"\">\n               <p>Account</p>\n            </a>\n        </li>\n        <li class=\"dropdown\" *ngIf=\"isMobileMenu()\">\n              <a class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n                    <p>\n    \t\t\t\t\tDropdown\n    \t\t\t\t\t<b class=\"caret\"></b>\n    \t\t\t\t</p>\n\n              </a>\n            \n              <ul class=\"dropdown-menu\">\n                <li><a href=\"#\">Action</a></li>\n                <li><a href=\"#\">Another action</a></li>\n                <li><a href=\"#\">Something</a></li>\n                <li><a href=\"#\">Another action</a></li>\n                <li><a href=\"#\">Something</a></li>\n                <li class=\"divider\"></li>\n                <li><a href=\"#\">Separated link</a></li>\n              </ul>\n            \n        </li>\n    -->\n        <li *ngIf=\"isMobileMenu()\">\n            <a>\n                <p>Log out </p>\n            </a>\n        </li>\n        <li class=\"separator hidden-lg hidden-md\" *ngIf=\"isMobileMenu()\"></li>\n        <!--\n        <li routerLinkActive=\"active\" *ngFor=\"let menuItem of menuItems\" class=\"{{menuItem.class}}\">\n            <a  [routerLink]=\"[menuItem.path]\">\n                <i class=\"{{menuItem.icon}}\"></i>\n                <p>{{menuItem.title}}</p>\n            </a>\n        </li>\n        -->\n        <!--\n        <li>\n                <a routerLink=\"/accueil\">\n                    <i></i>\n                    <p>Accueil</p>\n                </a>\n        </li>\n        -->\n        <li>\n            <a routerLink=\"/position-Ruche\">\n                <i  > <img src=\"./assets/img/bee-icon.svg\" style=\"width:30px;height: 30px;\"/> </i>\n                <p>Mes abeilles</p>\n            </a>\n        </li>\n        <li>\n            <a routerLink=\"/ruche-et-rucher\">\n                <i > <img src=\"./assets/img/apiary-icon.png\" style=\"width:45px;height: 45px; margin-left: -7px; margin-top:-10px;\"/> </i>\n                <p>Ruches et ruchers</p>\n            </a>\n        </li>      \n        <li>\n                <a routerLink=\"/rapport\">\n                    <i  > <img src=\"./assets/img/report-icon.png\" style=\"width:30px;height: 30px; margin-top:-6px;\"/> </i>\n                    <p>Rapport</p>\n                </a>\n        </li>\n        <li>\n            <a routerLink=\"/fleurs-floraison\">\n                <i  > <img src=\"./assets/img/flower-icon.png\" style=\"width:30px;height: 30px;\"/> </i>\n                <p>Fleurs</p>\n            </a>\n        </li>\n        <li>\n            <a routerLink=\"/meteo\">\n                <i  ><img src=\"./assets/img/weather-icon.png\" style=\"width:30px;height: 30px; margin-top:-8px; \"/> </i>\n                <p>Méteo </p>\n            </a>\n        </li>\n        <li>\n            <a routerLink=\"/capteurs\">\n                <i ><img src=\"./assets/img/sensor-icon.png\" style=\"width:30px;height: 30px; margin-top:-6px;\"/></i>\n                <p>Capteurs</p>\n            </a>\n        </li> \n        <!--\n        <li>\n                <a routerLink=\"/login\">\n                    <i></i>\n                    <p>Ruches</p>\n                </a>\n        </li>\n        <li>\n                <a>\n                    <i></i>\n                    <p>Méteo</p>\n                </a>\n        </li>\n        <li>\n                <a>\n                    <i></i>\n                    <p>Temps-Réel</p>\n                </a>\n        </li>\n        -->\n    </ul>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/sidebar/sidebar.component.ts":
+/*!**********************************************!*\
+  !*** ./src/app/sidebar/sidebar.component.ts ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+exports.ROUTES = [
+    { path: 'dashboard', title: 'Dashboard', icon: 'pe-7s-graph', class: '' },
+    { path: 'user', title: 'User Profile', icon: 'pe-7s-user', class: '' },
+    { path: 'table', title: 'Table List', icon: 'pe-7s-note2', class: '' },
+    { path: 'typography', title: 'Typography', icon: 'pe-7s-news-paper', class: '' },
+    { path: 'icons', title: 'Icons', icon: 'pe-7s-science', class: '' },
+    { path: 'test', title: 'test', icon: 'pe-7s-map-marker', class: '' },
+    { path: 'maps', title: 'Maps', icon: 'pe-7s-map-marker', class: '' },
+    { path: 'notifications', title: 'Notifications', icon: 'pe-7s-bell', class: '' },
+    { path: 'upgrade', title: 'Upgrade to PRO', icon: 'pe-7s-rocket', class: 'active-pro' },
+];
+let SidebarComponent = class SidebarComponent {
+    constructor(router) {
+        this.router = router;
+        //this.username = data.currentUser();
+    }
+    ngOnInit() {
+        this.menuItems = exports.ROUTES.filter(menuItem => menuItem);
+    }
+    isMobileMenu() {
+        if (window.innerWidth > 991) {
+            return false;
+        }
+        return true;
+    }
+    ;
+    goAccueil() {
+        this.router.navigate(['home']);
+    }
+};
+SidebarComponent = __decorate([
+    core_1.Component({
+        selector: 'app-sidebar',
+        template: __webpack_require__(/*! ./sidebar.component.html */ "./src/app/sidebar/sidebar.component.html"),
+    }),
+    __metadata("design:paramtypes", [router_1.Router])
+], SidebarComponent);
+exports.SidebarComponent = SidebarComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/sidebar/sidebar.module.ts":
+/*!*******************************************!*\
+  !*** ./src/app/sidebar/sidebar.module.ts ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const sidebar_component_1 = __webpack_require__(/*! ./sidebar.component */ "./src/app/sidebar/sidebar.component.ts");
+let SidebarModule = class SidebarModule {
+};
+SidebarModule = __decorate([
+    core_1.NgModule({
+        imports: [router_1.RouterModule, common_1.CommonModule],
+        declarations: [sidebar_component_1.SidebarComponent],
+        exports: [sidebar_component_1.SidebarComponent]
+    })
+], SidebarModule);
+exports.SidebarModule = SidebarModule;
+
+
+/***/ }),
+
+/***/ "./src/app/tables/tables.component.css":
+/*!*********************************************!*\
+  !*** ./src/app/tables/tables.component.css ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/tables/tables.component.html":
+/*!**********************************************!*\
+  !*** ./src/app/tables/tables.component.html ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"main-content\">\n    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h4 class=\"title\">Striped Table with Hover</h4>\n                        <p class=\"category\">Here is a subtitle for this table</p>\n                    </div>\n                    <div class=\"content table-responsive table-full-width\">\n                          <table class=\"table table-hover table-striped\">\n                                <thead>\n                                    <tr>\n                                        <th *ngFor=\"let cell of tableData1.headerRow\">{{ cell }}</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    <tr *ngFor=\"let row of tableData1.dataRows\">\n                                        <td *ngFor=\"let cell of row\">{{cell}}</td>\n                                    </tr>\n                                </tbody>\n                          </table>\n\n                    </div>\n                </div>\n            </div>\n            <div class=\"col-md-12\">\n                <div class=\"card card-plain\">\n                    <div class=\"header\">\n                        <h4 class=\"title\">Table on Plain Background</h4>\n                        <p class=\"category\">Here is a subtitle for this table</p>\n                    </div>\n                    <div class=\"content table-responsive table-full-width\">\n                        <table class=\"table table-hover\">\n                            <thead>\n                                <tr>\n                                    <th *ngFor=\"let cell of tableData2.headerRow\">{{ cell }}</th>\n                                </tr>\n                            </thead>\n                            <tbody>\n                                <tr *ngFor=\"let row of tableData2.dataRows\">\n                                    <td *ngFor=\"let cell of row\">{{cell}}</td>\n                                </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/tables/tables.component.ts":
+/*!********************************************!*\
+  !*** ./src/app/tables/tables.component.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let TablesComponent = class TablesComponent {
+    constructor() { }
+    ngOnInit() {
+        this.tableData1 = {
+            headerRow: ['ID', 'Name', 'Country', 'City', 'Salary'],
+            dataRows: [
+                ['1', 'Dakota Rice', 'Niger', 'Oud-Turnhout', '$36,738'],
+                ['2', 'Minerva Hooper', 'Curaçao', 'Sinaai-Waas', '$23,789'],
+                ['3', 'Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
+                ['4', 'Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
+                ['5', 'Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
+                ['6', 'Mason Porter', 'Chile', 'Gloucester', '$78,615']
+            ]
+        };
+        this.tableData2 = {
+            headerRow: ['ID', 'Name', 'Salary', 'Country', 'City'],
+            dataRows: [
+                ['1', 'Dakota Rice', '$36,738', 'Niger', 'Oud-Turnhout'],
+                ['2', 'Minerva Hooper', '$23,789', 'Curaçao', 'Sinaai-Waas'],
+                ['3', 'Sage Rodriguez', '$56,142', 'Netherlands', 'Baileux'],
+                ['4', 'Philip Chaney', '$38,735', 'Korea, South', 'Overland Park'],
+                ['5', 'Doris Greene', '$63,542', 'Malawi', 'Feldkirchen in Kärnten',],
+                ['6', 'Mason Porter', '$78,615', 'Chile', 'Gloucester']
+            ]
+        };
+    }
+};
+TablesComponent = __decorate([
+    core_1.Component({
+        selector: 'app-tables',
+        template: __webpack_require__(/*! ./tables.component.html */ "./src/app/tables/tables.component.html"),
+        styles: [__webpack_require__(/*! ./tables.component.css */ "./src/app/tables/tables.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], TablesComponent);
+exports.TablesComponent = TablesComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/test/test.component.html":
+/*!******************************************!*\
+  !*** ./src/app/test/test.component.html ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"wrapper\">\n    <div class=\"sidebar\" data-color=\"red\" data-image=\"\">\n        <app-sidebar ></app-sidebar>\n        <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-5.jpg)\"></div>\n    </div>\n    <div class=\"main-panel\">\n        <navbar-cmp (messageEvent)=\"receiveMessage($event)\"></navbar-cmp>\n        <router-outlet></router-outlet>\n\n        <div class=\"container\">\n                <div echarts id=\"main\" style=\"width: 800px;height:400px;\"></div>\n        </div>\n        \n<!--\n        <table class=\"table\">\n                <thead>\n                    <tr>\n                    <th>Min temp (C) </th>\n                    <th>Max temp (C) </th>\n                    <th>Day </th>\n                    <th>Icon </th>\n                    <th>Météo</th>\n                    <th></th>\n                    <th>Wind speed (m/s)</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr *ngFor=\"let cityForecast of dataCity | slice:0:4\">\n                    \n                    <td class=\"forecast-info forecast-1\">{{cityForecast.minTempDay}}</td>\n                    <td class=\"forecast-info forecast-2\">{{cityForecast.maxTempDay}}</td>\n                    <td class=\"forecast-info forecast-3\">{{cityForecast.day}}</td>\n                    <td class=\"forecast-info forecast-4\"><img src=\"https://openweathermap.org/img/w/{{cityForecast.icons[0]}}.png\" class=\"forecast-icon\" alt=\"forecast\"></td>\n                  \n                    </tr>\n                </tbody>\n                </table>\n                -->\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/test/test.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/test/test.component.ts ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const test_service_1 = __webpack_require__(/*! ./test.service */ "./src/app/test/test.service.ts");
+const echarts = __webpack_require__(/*! ../../assets/echarts.js */ "./src/assets/echarts.js");
+// import { AnonymousSubscription } from "rxjs";
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+let TestComponent = class TestComponent {
+    constructor(location, router, _testService) {
+        this.location = location;
+        this.router = router;
+        this._testService = _testService;
+        this.dataCity = [];
+        this.minTemps = [];
+        this.maxTemps = [];
+        this.recordDates = [];
+        this.mergeOption = null;
+        this.message = "";
+        this.showLogin = true;
+    }
+    ngOnInit() {
+        for (var index = 0; index < 10; index++) {
+            console.log(index);
+        }
+        //this.getData();
+        //load dates
+        this.subscribeToRecordDates();
+        //load weight values
+        this.subscribeToFillY();
+        //console.log("record dates : " + this.recordDates);
+        var T = this.recordDates;
+        /*for (var index = 0; index < T.length; index++) {
+          var element = this.recordDates[index];
+          console.log("tegleb :) ");
+          console.log("element : " + element);
+          
+        }*/
+        this.subscribeToTest();
+    }
+    receiveMessage($event) {
+        this.message = $event;
+    }
+    /*
+    getRecordDates(){
+        this._testService.getRecordDates().then(data => {
+            // I got xAxis data from API, then merge it.
+            this.mergeOption = {
+              xAxis: {
+                data: data
+              }
+            };
+          });
+        var myChart = echarts.init(document.getElementById('main'));
+        myChart.setOption(this.mergeOption);
+    }
+
+    fillY(){
+        this._testService.getWeigthValues().then(data => {
+            // I got data from API, then merge it too.
+            this.mergeOption = {
+              series: [{
+                data: data
+              }]
+            }
+          });
+
+        var myChart = echarts.init(document.getElementById('main'));
+        myChart.setOption(this.mergeOption);
+    }
+
+
+    createChart(){
+        
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            title: {
+                text: 'Weight ruche'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                data: [0, 0, 0, 0, 0, 0, 0],
+            },
+            yAxis: {
+                splitLine: {
+                    show: false
+                }
+            },
+            toolbox: {
+                left: 'center',
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            dataZoom: [{
+                startValue: '2018-03-08T23:23:14'
+            }, {
+                type: 'inside'
+            }],
+            visualMap: {
+                top: 10,
+                right: 10,
+                
+            },
+            series: {
+                name: 'Poids(kg)',
+                type: 'line',
+                data: [0, 0, 0, 0, 0, 0, 0],
+                markLine: {
+                    silent: true,
+                    data: [{
+                        yAxis: 0
+                    }, {
+                        yAxis: 20
+                    }, {
+                        yAxis: 30
+                    }, {
+                        yAxis: 40
+                    }, {
+                        yAxis: 60
+                    }]
+                }
+            }
+        }
+        myChart.setOption(option);
+
+
+    }
+    */
+    updateChart() {
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            xAxis: {
+                data: this.recordDates,
+            },
+            yAxis: {
+                splitLine: {
+                    show: false
+                }
+            }
+        };
+        myChart.mergeOption(option);
+    }
+    testChart() {
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            title: {
+                text: 'Weight ruche'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                data: this.recordDates,
+            },
+            yAxis: {
+                splitLine: {
+                    show: false
+                }
+            },
+            toolbox: {
+                left: 'center',
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            dataZoom: [{
+                    startValue: '2018-03-08T23:23:14'
+                }, {
+                    type: 'inside'
+                }],
+            visualMap: {
+                top: 10,
+                right: 10,
+            },
+            series: {
+                name: 'Poids(kg)',
+                type: 'line',
+                data: this.minTemps,
+                markLine: {
+                    silent: true,
+                    data: [{
+                            yAxis: 0
+                        }, {
+                            yAxis: 20
+                        }, {
+                            yAxis: 30
+                        }, {
+                            yAxis: 40
+                        }, {
+                            yAxis: 60
+                        }]
+                }
+            }
+        };
+        myChart.setOption(option);
+    }
+    getRecordDates() {
+        this._testService.getRecordDates().subscribe(data => {
+            this.recordDates = data;
+            console.log(data);
+        }, err => console.error(err), () => console.log());
+    }
+    fillY() {
+        this._testService.getWeigthValues().subscribe(data => {
+            this.minTemps = data;
+            console.log("min temps : " + data);
+        }, err => console.error(err), () => console.log());
+    }
+    subscribeToFillY() {
+        this.timerSubscription = rxjs_1.Observable.timer(100).first().subscribe(() => this.fillY());
+    }
+    subscribeToRecordDates() {
+        this.timerSubscription = rxjs_1.Observable.timer(200).first().subscribe(() => this.getRecordDates());
+    }
+    subscribeToTest() {
+        this.timerSubscription = rxjs_1.Observable.timer(4000).first().subscribe(() => this.testChart());
+    }
+    /*
+        getData(){
+         // console.log("this username :"+  this.username);
+          this._testService.getWeather().subscribe(
+            data => { this.dataCity = data;
+            
+            },
+            err => console.error(err),
+            () => console.log()
+          );
+        }
+    */
+    goToDashboard() {
+        this.router.navigate(['dashboard']);
+    }
+    logIn() {
+        this.showLogin = false;
+    }
+};
+TestComponent = __decorate([
+    core_1.Component({
+        selector: 'app-test',
+        template: __webpack_require__(/*! ./test.component.html */ "./src/app/test/test.component.html")
+    }),
+    __metadata("design:paramtypes", [common_1.Location,
+        router_1.Router,
+        test_service_1.TestService])
+], TestComponent);
+exports.TestComponent = TestComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/test/test.service.ts":
+/*!**************************************!*\
+  !*** ./src/app/test/test.service.ts ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+const config_1 = __webpack_require__(/*! ../../config */ "./src/config.ts");
+const httpOptions = {
+    headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
+};
+let TestService = class TestService {
+    constructor(http) {
+        this.http = http;
+    }
+    // pour afficher tout les ruchers
+    getWeather() {
+        return this.http.get(config_1.CONFIG.URL + 'dailyweather/all');
+    }
+    getWeigthValues() {
+        return this.http.get(config_1.CONFIG.URL + 'records/weight');
+    }
+    getRecordDates() {
+        return this.http.get(config_1.CONFIG.URL + 'records/weightDates');
+    }
+    errorHandler(error) {
+        return rxjs_1.Observable.throw(error.message || "server error");
+    }
+};
+TestService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.HttpClient])
+], TestService);
+exports.TestService = TestService;
+
+
+/***/ }),
+
+/***/ "./src/app/typography/typography.component.css":
+/*!*****************************************************!*\
+  !*** ./src/app/typography/typography.component.css ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/typography/typography.component.html":
+/*!******************************************************!*\
+  !*** ./src/app/typography/typography.component.html ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"main-content\" >\n    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h4 class=\"title\">Light Bootstrap Table Heading</h4>\n                        <p class=\"category\">Created using Roboto Font Family</p>\n                    </div>\n                    <div class=\"content\">\n\n                        <div class=\"typo-line\">\n                            <h1><p class=\"category\">Header 1</p>Light Bootstrap Table Heading </h1>\n                        </div>\n\n                        <div class=\"typo-line\">\n                            <h2><p class=\"category\">Header 2</p>Light Bootstrap Table Heading</h2>\n                        </div>\n                        <div class=\"typo-line\">\n                            <h3><p class=\"category\">Header 3</p>Light Bootstrap Table Heading</h3>\n                        </div>\n                        <div class=\"typo-line\">\n                            <h4><p class=\"category\">Header 4</p>Light Bootstrap Table Heading</h4>\n                        </div>\n                        <div class=\"typo-line\">\n                            <h5><p class=\"category\">Header 5</p>Light Bootstrap Table Heading</h5>\n                        </div>\n                        <div class=\"typo-line\">\n                            <h6><p class=\"category\">Header 6</p>Light Bootstrap Table Heading</h6>\n                        </div>\n                        <div class=\"typo-line\">\n                            <p><span class=\"category\">Paragraph</span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam.</p>\n                        </div>\n                        <div class=\"typo-line\">\n                            <p class=\"category\">Quote</p>\n                            <blockquote>\n                                <p>\n                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam.\n                                </p>\n                                <small>\n                                    Steve Jobs, CEO Apple\n                                </small>\n                            </blockquote>\n                        </div>\n\n                        <div class=\"typo-line\">\n                            <p class=\"category\">Muted Text</p>\n                            <p class=\"text-muted\">\n                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.\n                            </p>\n                        </div>\n                        <div class=\"typo-line\">\n                            <!--\n                            there are also \"text-info\", \"text-success\", \"text-warning\", \"text-danger\" clases for the text\n                            -->\n                            <p class=\"category\">Coloured Text\n                            </p>\n                            <p class=\"text-primary\">\n                                Text Primary - Light Bootstrap Table Heading and complex bootstrap dashboard you've ever seen on the internet.\n                            </p>\n                            <p class=\"text-info\">\n                                Text Info - Light Bootstrap Table Heading and complex bootstrap dashboard you've ever seen on the internet.\n                            </p>\n                            <p class=\"text-success\">\n                                Text Success - Light Bootstrap Table Heading and complex bootstrap dashboard you've ever seen on the internet.\n                            </p>\n                            <p class=\"text-warning\">\n                                Text Warning - Light Bootstrap Table Heading and complex bootstrap dashboard you've ever seen on the internet.\n                            </p>\n                            <p class=\"text-danger\">\n                                Text Danger - Light Bootstrap Table Heading and complex bootstrap dashboard you've ever seen on the internet.\n                            </p>\n                        </div>\n                        <div class=\"typo-line\">\n                            <h2><p class=\"category\">Small Tag</p>Header with small subtitle <br><small>\".small\" is a tag for the headers</small> </h2>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/typography/typography.component.ts":
+/*!****************************************************!*\
+  !*** ./src/app/typography/typography.component.ts ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let TypographyComponent = class TypographyComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+TypographyComponent = __decorate([
+    core_1.Component({
+        selector: 'app-typography',
+        template: __webpack_require__(/*! ./typography.component.html */ "./src/app/typography/typography.component.html"),
+        styles: [__webpack_require__(/*! ./typography.component.css */ "./src/app/typography/typography.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], TypographyComponent);
+exports.TypographyComponent = TypographyComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/upgrade/upgrade.component.css":
+/*!***********************************************!*\
+  !*** ./src/app/upgrade/upgrade.component.css ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/upgrade/upgrade.component.html":
+/*!************************************************!*\
+  !*** ./src/app/upgrade/upgrade.component.html ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"main-content\">\n    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-8 col-md-offset-2\">\n                <div class=\"card\">\n                    <div class=\"header text-center\">\n                        <h4 class=\"title\">LBD Angular CLI PRO</h4>\n                        <p class=\"category\">Looking for more components? Please check our Premium Version of Light Bootstrap Dashboard.</p>\n                        <br>\n                    </div>\n                    <div class=\"content table-responsive table-full-width table-upgrade\">\n                        <table class=\"table\">\n                            <thead>\n                                <tr>\n                                    <th></th>\n                                    <th class=\"text-center\">Free</th>\n                                    <th class=\"text-center\">PRO</th>\n                                </tr>\n                            </thead>\n                            <tbody>\n                                <tr>\n                                    <td>Components</td>\n                                    <td>16</td>\n                                    <td>115+</td>\n                                </tr>\n                                <tr>\n                                    <td>Plugins</td>\n                                    <td>4</td>\n                                    <td>14+</td>\n                                </tr>\n                                <tr>\n                                    <td>Example Pages</td>\n                                    <td>4</td>\n                                    <td>22+</td>\n                                </tr>\n                                <tr>\n                                    <td>Documentation</td>\n                                    <td>\n                                        <i class=\"fa fa-times text-danger\"></i>\n                                    </td>\n                                    <td>\n                                        <i class=\"fa fa-check text-success\"></i>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td>SASS Files</td>\n                                    <td><i class=\"fa fa-times text-danger\"></i></td>\n                                    <td><i class=\"fa fa-check text-success\"></i></td>\n                                </tr>\n                                <tr>\n                                    <td>Login/Register/Lock Pages</td>\n                                    <td><i class=\"fa fa-times text-danger\"></i></td>\n                                    <td><i class=\"fa fa-check text-success\"></i></td>\n                                </tr>\n                                <tr>\n                                    <td>Premium Support</td>\n                                    <td><i class=\"fa fa-times text-danger\"></i></td>\n                                    <td><i class=\"fa fa-check text-success\"></i></td>\n                                </tr>\n                                <tr>\n                                    <td></td>\n                                    <td>Free</td>\n                                    <td>Just $49</td>\n                                </tr>\n                                <tr>\n                                    <td></td>\n                                    <td>\n                                        <a href=\"#\" class=\"btn btn-round btn-fill btn-default disabled\">Current Version</a>\n                                    </td>\n                                    <td>\n                                        <a target=\"_blank\" href=\"https://www.creative-tim.com/product/light-bootstrap-dashboard-pro-angular2/?ref=lbd-angular2-free\" class=\"btn btn-round btn-fill btn-info\">Upgrade to PRO</a>\n                                    </td>\n                                </tr>\n                            </tbody>\n                        </table>\n\n                    </div>\n                </div>\n            </div>\n        </div>\n\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/upgrade/upgrade.component.ts":
+/*!**********************************************!*\
+  !*** ./src/app/upgrade/upgrade.component.ts ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let UpgradeComponent = class UpgradeComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+UpgradeComponent = __decorate([
+    core_1.Component({
+        selector: 'app-upgrade',
+        template: __webpack_require__(/*! ./upgrade.component.html */ "./src/app/upgrade/upgrade.component.html"),
+        styles: [__webpack_require__(/*! ./upgrade.component.css */ "./src/app/upgrade/upgrade.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], UpgradeComponent);
+exports.UpgradeComponent = UpgradeComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/user/user.component.css":
+/*!*****************************************!*\
+  !*** ./src/app/user/user.component.css ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/user/user.component.html":
+/*!******************************************!*\
+  !*** ./src/app/user/user.component.html ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"main-content\" >\n    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-8\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h4 class=\"title\">Edit Profile</h4>\n                    </div>\n                    <div class=\"content\">\n                        <form>\n                            <div class=\"row\">\n                                <div class=\"col-md-5\">\n                                    <div class=\"form-group\">\n                                        <label>Company (disabled)</label>\n                                        <input type=\"text\" class=\"form-control\" disabled placeholder=\"Company\" value=\"Creative Code Inc.\">\n                                    </div>\n                                </div>\n                                <div class=\"col-md-3\">\n                                    <div class=\"form-group\">\n                                        <label>Username</label>\n                                        <input type=\"text\" class=\"form-control\" placeholder=\"Username\" value=\"michael23\">\n                                    </div>\n                                </div>\n                                <div class=\"col-md-4\">\n                                    <div class=\"form-group\">\n                                        <label for=\"exampleInputEmail1\">Email address</label>\n                                        <input type=\"email\" class=\"form-control\" placeholder=\"Email\">\n                                    </div>\n                                </div>\n                            </div>\n\n                            <div class=\"row\">\n                                <div class=\"col-md-6\">\n                                    <div class=\"form-group\">\n                                        <label>First Name</label>\n                                        <input type=\"text\" class=\"form-control\" placeholder=\"Company\" value=\"Mike\">\n                                    </div>\n                                </div>\n                                <div class=\"col-md-6\">\n                                    <div class=\"form-group\">\n                                        <label>Last Name</label>\n                                        <input type=\"text\" class=\"form-control\" placeholder=\"Last Name\" value=\"Andrew\">\n                                    </div>\n                                </div>\n                            </div>\n\n                            <div class=\"row\">\n                                <div class=\"col-md-12\">\n                                    <div class=\"form-group\">\n                                        <label>Address</label>\n                                        <input type=\"text\" class=\"form-control\" placeholder=\"Home Address\" value=\"Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09\">\n                                    </div>\n                                </div>\n                            </div>\n\n                            <div class=\"row\">\n                                <div class=\"col-md-4\">\n                                    <div class=\"form-group\">\n                                        <label>City</label>\n                                        <input type=\"text\" class=\"form-control\" placeholder=\"City\" value=\"Mike\">\n                                    </div>\n                                </div>\n                                <div class=\"col-md-4\">\n                                    <div class=\"form-group\">\n                                        <label>Country</label>\n                                        <input type=\"text\" class=\"form-control\" placeholder=\"Country\" value=\"Andrew\">\n                                    </div>\n                                </div>\n                                <div class=\"col-md-4\">\n                                    <div class=\"form-group\">\n                                        <label>Postal Code</label>\n                                        <input type=\"number\" class=\"form-control\" placeholder=\"ZIP Code\">\n                                    </div>\n                                </div>\n                            </div>\n\n                            <div class=\"row\">\n                                <div class=\"col-md-12\">\n                                    <div class=\"form-group\">\n                                        <label>About Me</label>\n                                        <textarea rows=\"5\" class=\"form-control\" placeholder=\"Here can be your description\" value=\"Mike\">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>\n                                    </div>\n                                </div>\n                            </div>\n                            <button type=\"submit\" class=\"btn btn-info btn-fill pull-right\">Update Profile</button>\n                            <div class=\"clearfix\"></div>\n                        </form>\n                    </div>\n                </div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"card card-user\">\n                    <div class=\"image\">\n                        <img src=\"https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400\" alt=\"...\"/>\n                    </div>\n                    <div class=\"content\">\n                        <div class=\"author\">\n                            <a href=\"#\">\n                                <img class=\"avatar border-gray\" src=\"./assets/img/faces/face-3.jpg\" alt=\"...\"/>\n\n                                <h4 class=\"title\">Mike Andrew<br />\n                                    <small>michael24</small>\n                                </h4>\n                            </a>\n                        </div>\n                        <p class=\"description text-center\"> \"Lamborghini Mercy <br>\n                            Your chick she so thirsty <br>\n                            I'm in that two seat Lambo\"\n                        </p>\n                    </div>\n                    <hr>\n                    <div class=\"text-center\">\n                        <button href=\"#\" class=\"btn btn-simple\"><i class=\"fa fa-facebook-square\"></i></button>\n                        <button href=\"#\" class=\"btn btn-simple\"><i class=\"fa fa-twitter\"></i></button>\n                        <button href=\"#\" class=\"btn btn-simple\"><i class=\"fa fa-google-plus-square\"></i></button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/user/user.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/user/user.component.ts ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let UserComponent = class UserComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+UserComponent = __decorate([
+    core_1.Component({
+        selector: 'app-user',
+        template: __webpack_require__(/*! ./user.component.html */ "./src/app/user/user.component.html"),
+        styles: [__webpack_require__(/*! ./user.component.css */ "./src/app/user/user.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], UserComponent);
+exports.UserComponent = UserComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/userlogged.service.ts":
+/*!***************************************!*\
+  !*** ./src/app/userlogged.service.ts ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+const auth_service_1 = __webpack_require__(/*! ./auth/auth.service */ "./src/app/auth/auth.service.ts");
+let UserloggedService = class UserloggedService {
+    constructor(authService) {
+        this.authService = authService;
+        this.messageSource = new rxjs_1.BehaviorSubject('');
+        this.currentMessage = this.messageSource.asObservable();
+    }
+    changeMessage(message) {
+        this.messageSource.next(message);
+    }
+    currentUser() {
+        return JSON.parse(sessionStorage.getItem('currentUser'));
+        //return this.authService.login;
+    }
+    logOut() {
+        return localStorage.removeItem('currentUser');
+    }
+};
+UserloggedService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [auth_service_1.AuthService])
+], UserloggedService);
+exports.UserloggedService = UserloggedService;
+
+
+/***/ }),
+
+/***/ "./src/assets/echarts.js":
+/*!*******************************!*\
+  !*** ./src/assets/echarts.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.echarts = {})));
+	 true ? factory(exports) :
+	undefined;
 }(this, (function (exports) { 'use strict';
 
 /*
@@ -90301,3 +96127,86 @@ exports.env = env$1;
 
 })));
 //# sourceMappingURL=echarts.js.map
+
+
+/***/ }),
+
+/***/ "./src/config.ts":
+/*!***********************!*\
+  !*** ./src/config.ts ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CONFIG = {
+    //URL: "http://51.68.71.91:8091/", //Test
+    //URL: "http://51.68.71.91:8093/",   //Prod
+    URL: "http://localhost:8091/",
+    apiPath: 'api/',
+    googleMapsAPI: 'AIzaSyAHvIyK6M1SW6R1rYkXnTWNiCbbqE9gBVI'
+};
+
+
+/***/ }),
+
+/***/ "./src/environments/environment.ts":
+/*!*****************************************!*\
+  !*** ./src/environments/environment.ts ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// The file contents for the current environment will overwrite these during build.
+// The build system defaults to the dev environment which uses `environment.ts`, but if you do
+// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// The list of which env maps to which file can be found in `angular-cli.json`.
+__webpack_require__(/*! zone.js/dist/zone-error */ "./node_modules/zone.js/dist/zone-error.js");
+exports.environment = {
+    production: false
+};
+
+
+/***/ }),
+
+/***/ "./src/main.ts":
+/*!*********************!*\
+  !*** ./src/main.ts ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const platform_browser_dynamic_1 = __webpack_require__(/*! @angular/platform-browser-dynamic */ "./node_modules/@angular/platform-browser-dynamic/fesm2015/platform-browser-dynamic.js");
+const app_module_1 = __webpack_require__(/*! ./app/app.module */ "./src/app/app.module.ts");
+const environment_1 = __webpack_require__(/*! ./environments/environment */ "./src/environments/environment.ts");
+if (environment_1.environment.production) {
+    core_1.enableProdMode();
+}
+platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
+
+
+/***/ }),
+
+/***/ 0:
+/*!***************************!*\
+  !*** multi ./src/main.ts ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /home/mickael/repos_git/Apiwatch-Frontend/src/main.ts */"./src/main.ts");
+
+
+/***/ })
+
+},[[0,"runtime","vendor"]]]);
+//# sourceMappingURL=main.js.map

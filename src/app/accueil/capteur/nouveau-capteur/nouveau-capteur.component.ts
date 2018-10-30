@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CapteurService } from './../capteur.service';
+import { CapteurService } from '../capteur.service';
 import { FormGroup,FormBuilder, Validators,FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RucherService } from '../../ruche-rucher/rucher.service';
@@ -136,18 +136,6 @@ export class NouveauCapteurComponent implements OnInit {
 
     //DELETE CAPTEUR
 
-    deleteCapteur(capteur){
-        this.selectedCapteur = capteur;
-        if (confirm("Are you sure you want to delete " + this.selectedCapteur.reference + "?")) {
-          this.capteurService.deleteCapteur(this.selectedCapteur )
-            .subscribe(
-              err => {
-               
-              });
-        }
-        this.subscribeToData();
-     
-    }
 
     getUserRuchers(){
         console.log("this username :"+  this.username);

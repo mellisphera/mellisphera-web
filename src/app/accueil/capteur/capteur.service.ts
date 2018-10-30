@@ -6,7 +6,7 @@ import { CONFIG } from '../../../config';
 import { Capteur } from './capteur';
 import { Rucher } from '../ruche-rucher/rucher';
 import { CapteurInterface } from '../../_model/capteur';
-import { UserloggedService } from '../../../app/userlogged.service';
+import { UserloggedService } from '../../userlogged.service';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -17,19 +17,36 @@ export class CapteurService {
     capteur : CapteurInterface;
     capteurs : CapteurInterface[];
     capteursByUser : CapteurInterface[];
+    capteurAcheter : CapteurInterface[];
+
     capteurObs : Observable<CapteurInterface>;
     capteursObs : Observable<CapteurInterface[]>;
     
     constructor(private http:HttpClient, private user : UserloggedService) {
         this.getCapteurs();
         this.getUserCapteurs();
+        this.getSoldDevicesByUser();
+        this.initCapteur();
+    }
+
+    initCapteur(){
+        this.capteur = { 
+            id : null,
+            reference : '',
+            name : '',
+            type : '' ,
+            description : '',
+            username: '',
+            idHive: '',
+            idApiary: '',
+            hiveName: '',
+            apiaryName:''
+        }
     }
  
     // pour créer un capteur
-    createCapteur(capteur : Capteur) {
-        let body = JSON.stringify(capteur);
-
-        this.capteurObs = this.http.post<CapteurInterface>(CONFIG.URL+'sensors', body,httpOptions)
+    createCapteur() {
+        this.capteurObs = this.http.post<CapteurInterface>(CONFIG.URL+'sensors', this.capteur,httpOptions)
         this.capteurObs.subscribe(
             ()=>{},
             (err)=>{
@@ -47,6 +64,21 @@ export class CapteurService {
         this.capteursObs.subscribe(
             (data)=>{
                 this.capteurs = data;
+                this.capteur = data[0];
+                //console.log(this.capteurs);
+            },
+            (err)=>{
+                console.log(err);
+            }
+        );
+    }
+
+    getSoldDevicesByUser(){
+        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sold_devices/username/'+this.user.currentUser().username);
+        this.capteursObs.subscribe(
+            (data)=>{
+                this.capteurAcheter = data;
+                console.log(this.capteurAcheter);
             },
             (err)=>{
                 console.log(err);
@@ -59,6 +91,7 @@ export class CapteurService {
         this.capteursObs.subscribe(
             (data)=>{
                 this.capteursByUser = data;
+                console.log(this.capteursByUser);
             },
             (err)=>{
                 console.log(err);
@@ -66,23 +99,28 @@ export class CapteurService {
         );
     }
     
-    deleteCapteur(capteur) {
-        return this.http.delete(CONFIG.URL+'sensors/' + capteur.id);
-    }
-
-    updateCapteur(capteur : Capteur) {
-        let body = JSON.stringify(capteur);
-        return this.http.put(CONFIG.URL+'sensors/update/' + capteur.id, body, httpOptions);
-    }
-
-    checkCapteurType(capteurRef){
-        this.capteurObs = this.http.get<CapteurInterface>(CONFIG.URL+'sold_devices/check/'+capteurRef);
+    deleteCapteur() {
+        this.capteurObs = this.http.delete<CapteurInterface>(CONFIG.URL+'sensors/' + this.capteur.id);
         this.capteurObs.subscribe(
-            (data)=>{
-                this.capteur = data;
-            },
+            ()=>{},
             (err)=>{
                 console.log(err);
+            },
+            ()=>{
+                this.getUserCapteurs();
+            }
+        );
+    }
+
+    updateCapteur() {
+        this.capteurObs =  this.http.put<CapteurInterface>(CONFIG.URL+'sensors/update/' + this.capteur.id, this.capteur, httpOptions);
+        this.capteurObs.subscribe(
+            ()=>{},
+            (err)=>{
+                console.log(err);
+            },
+            ()=>{
+                this.getUserCapteurs();
             }
         );
     }
