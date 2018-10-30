@@ -31,7 +31,7 @@ export class CapteurComponent implements OnInit {
   newCapteurForm : FormGroup;
   //to edit a sensor
   editCapteurForm : FormGroup;
-
+  capteurSearch : string;
 
   message="";
   editedSensorMsg :boolean;
