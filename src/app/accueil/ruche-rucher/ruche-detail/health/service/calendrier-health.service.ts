@@ -28,9 +28,9 @@ export class CalendrierHealthService {
     },
     toolbox: {
         feature: {
-            dataView: {show: true, readOnly: false},
+            /*dataView: {show: true, readOnly: false},
             magicType: {show: true, type: ['line', 'line']},
-            restore: {show: true},
+            restore: {show: true},*/
             saveAsImage: {show: true}
         }
     },
@@ -44,7 +44,7 @@ export class CalendrierHealthService {
    calendar: [{
         top: 140,
         left: 'center',
-        range: ['2018-2-01', '2018-4-30'],
+        range: ['2018-01-01', '2018-12-30'],
         orient: 'vertical',
         cellSize: '30',
         splitLine: {
@@ -56,9 +56,22 @@ export class CalendrierHealthService {
             }
         },
         dayLabel: {
-            nameMap:'fr',
+            nameMap: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
             firstDay: 1, // start on Monday
+
           },
+          monthLabel: {
+            margin: 10,
+            nameMap: [
+                'Janv.', 'Fev.', 'Mars',
+
+                'Avril', 'Mai', 'Juin',
+
+                'Juill.', 'Aout', 'Sept.',
+
+                'Oct.', 'Nov.', 'Dec.'
+            ]
+        },
         yearLabel: {
             formatter: '{start}',
             textStyle: {
