@@ -48,7 +48,19 @@ export class RucherService {
             username : '',
             codePostal : '',
             ville : ''
-         }
+         };
+         this.rucher = {
+            id : null,
+            latitude: '',
+            longitude: '',
+            name: '',
+            description : '',
+            createdAt : null,
+            urlPhoto : '',
+            username : '',
+            codePostal : '',
+            ville : ''
+         };
     }
     // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
     // pour créer un rucher
@@ -60,6 +72,7 @@ export class RucherService {
                 console.log(err);
             },
             ()=>{
+                console.log(this.rucher);
                 this.getUserRuchersLast(this.user.currentUser().username);
             }
         );
