@@ -350,7 +350,7 @@
               <textarea formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" (click)="createObservation()" [disabled]="!observationForm.valid" > Créer Observation</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!observationForm.valid" > Créer Observation</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
               </div>
           </form>

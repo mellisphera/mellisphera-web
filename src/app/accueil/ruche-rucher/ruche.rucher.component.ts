@@ -221,6 +221,7 @@ createObservation(){
   console.log(formValue);
   this.rucherService.observationService.observation = formValue;
   this.rucherService.observationService.observation.idApiary = this.rucherService.rucher.id;
+  this.rucherService.observationService.observation.type = "ApiaryObs";
   console.log(this.rucherService.observationService.observation);
   this.initForm();
   this.rucherService.observationService.createObservation();
