@@ -244,7 +244,7 @@
                   </div>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="Créer Rucher" (click)="createRucher()" [disabled]="!rucherForm.valid">Créer Rucher</button>
+                <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="Créer Rucher" [disabled]="!rucherForm.valid">Créer Rucher</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
             </div>
           </form>
@@ -345,7 +345,7 @@
         <div class="modal-body">
           <form  [formGroup]="observationForm" (ngSubmit)="createObservation()">
             <div class="form-group">
-              <input type="datetime-local" formControlName="date">
+              <input type="date" formControlName="date"><br/>
               <label for="recipient-obs" class="col-form-label">Observations :</label>
               <textarea formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
             </div>
