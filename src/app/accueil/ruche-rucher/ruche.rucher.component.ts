@@ -90,8 +90,22 @@ resetForm(){
 
 //Fonction pour créer le rucher
 createRucher(){
+  alert("ok");
   const formValue = this.rucherForm.value;
   console.log(formValue);
+  this.rucherService.rucher = {
+    id : null,
+    latitude: '',
+    longitude: '',
+    name: '',
+    description : '',
+    createdAt : null,
+    urlPhoto : '',
+    username : '',
+    codePostal : '',
+    ville : ''
+ };
+  console.log(this.rucherService.rucher);
   this.rucherService.rucher.id=null;
   this.rucherService.rucher.description = formValue.description;
   this.rucherService.rucher.name = formValue.nom;
@@ -99,6 +113,7 @@ createRucher(){
   this.rucherService.rucher.codePostal = formValue.codePostal;
   this.rucherService.rucher.createdAt = new Date();
   this.rucherService.rucher.urlPhoto = "void";
+  this.rucherService.rucher.username = this.username;
   console.log(this.rucherService.rucher);
   this.initForm();
   this.rucherService.createRucher();
