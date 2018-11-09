@@ -43,7 +43,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.rucheId = this.activatedRoute.snapshot.params.id;
         console.log(this.rucheId);
         console.log(this.route);
-        this.route.navigate(['/ruche-detail/'+this.rucheId+'/observation',this.rucheId]);
+        this.route.navigate(['/ruche-detail/'+this.rucheId+'/health',this.rucheId]);
     }
 
 
