@@ -75,7 +75,7 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     console.log(this.rucheService.ruches);
     this.username = this.login.currentUser().username;
     if(this.username == "***REMOVED***"){
-      this.style["background-image"] = "url('../../../assets/imageClient/JHE.jpg')";
+      this.style["background-image"] = "url('../../../assets/imageClient/JHE.png')";
     }
     else if(this.username == "***REMOVED***"){
       this.style["background-image"] = "url('../../../assets/imageClient/JCP.png')";
