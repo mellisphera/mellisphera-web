@@ -214,7 +214,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form [formGroup]="rucherForm" (ngSubmit)="createRucher() ">
+          <form [formGroup]="rucherForm">
             <div class="form-group"  >
               <label for="recipient-name" class="col-form-label">Nom :</label>
               <input [(ngModel)]="nom" formControlName="nom" type="text" class="form-control" id="recipient-name">
@@ -244,7 +244,7 @@
                   </div>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="Créer Rucher" [disabled]="!rucherForm.valid">Créer Rucher</button>
+                <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="Créer Rucher" (click)="createRucher()" [disabled]="!rucherForm.valid">Créer Rucher</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
             </div>
           </form>

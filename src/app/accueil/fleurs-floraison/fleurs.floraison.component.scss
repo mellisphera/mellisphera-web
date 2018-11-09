@@ -21,3 +21,14 @@
   //Met la photo en 1er plan
   z-index: 2;
 }
+button{
+  margin-right: 8px;
+}
+td,th{
+  width: 10%;
+  text-align: center;
+}
+.endtTD{
+  display: flex;
+  justify-content: center;
+}
