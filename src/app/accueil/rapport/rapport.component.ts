@@ -77,8 +77,9 @@ export class RapportComponent implements OnInit {
       ); */ 
     }
     
-    getAnalyseTemp(FormRapport){
-      this.rapportService.getNluResult(this.texteRapport, this.selectedRucher).subscribe( 
+    getAnalyseTemp(){
+      
+      this.rapportService.getNluResult(this.texteRapport, this.rucherService.rucher).subscribe( 
         data => {},
         ( error => this.errorMsg=error));
         this.subscribeToRapport();
@@ -101,7 +102,7 @@ export class RapportComponent implements OnInit {
     }
 
     saveRapport(){
-      this.rapportService.getNluSave(this.texteRapport, this.selectedRucher).subscribe( 
+      this.rapportService.getNluSave(this.texteRapport, this.rucherService.rucher).subscribe( 
         data => {},
         ( error => this.errorMsg=error));
         this.texteRapport = "";
@@ -123,7 +124,7 @@ export class RapportComponent implements OnInit {
   }
 
   onSelectRucher(event : any) : void{
-    console.log(this.selectedRucher);
+    console.log(this.rucherService.rucher);
     this.currentRucherID=String(this.selectedRucher);
     localStorage.setItem("currentRucher",String(this.selectedRucher));
   }
