@@ -66,7 +66,8 @@ export class RecordService {
     this.recordObs = this.http.get<Record[]>(CONFIG.URL+'records/hive/'+idHive);
     this.recordObs.subscribe(
       (data)=>{
-        data.forEach(element=>{
+
+       /* data.forEach(element=>{
           this.recArray.push({
             id : element.id,
             battery_ext : element.battery_ext,
@@ -82,7 +83,8 @@ export class RecordService {
             weight : element.weight,
             idHive : element.weight
           })
-        });
+        });*/
+        this.recArray = data;
         this.sortRecordByTemp();
         console.log(this.recArrayWeight);
         //console.log(this.recArray);

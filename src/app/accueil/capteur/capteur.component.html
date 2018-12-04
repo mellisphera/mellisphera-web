@@ -26,7 +26,7 @@
                                 <div id="collapseOne" class="panel-collapse collapse in">
                                     <div class="panel-body">                        
                                         <button data-toggle="tooltip" data-html="true" title="Nouveau capteur" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
-                                            data-target="#newCapteurModal"  class="btn btn-success btn-lg" (click)="selectRadioStock()">
+                                            data-target="#newCapteurModal"  class="btn btn-success btn-lg">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                         <div class="form-group row">
@@ -144,7 +144,7 @@
             </div>  
             <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" [disabled]="!newCapteurForm.valid">Ajouter Capteur</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClicked()">Fermer</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
             </div>
     </form>
 </div>
@@ -180,18 +180,18 @@
     <div *ngIf="getTypeAffectationFormUpdate().value=='ruche' || editCapteurCheckbox ">
             <div class="form-group">
                 <label class="col-form-label">Rucher :</label>
-                <select [(ngModel)]="rucherService.rucher" [ngModelOptions]="{standalone: true}" class="form-control" (change)="onSelectRucher();">
+                <select [(ngModel)]="rucherService.rucherUpdate" [ngModelOptions]="{standalone: true}" class="form-control" (change)="onSelectRucher();">
                     <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher" >{{rucher.name}}</option>
                 </select>   
             </div>                 
             <div class="form-group">
                 <label class="col-form-label">Ruche :</label>
-                <select [(ngModel)]="rucherService.rucheService.ruche" [ngModelOptions]="{standalone: true}" class="form-control">
-                    <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="ruche" >{{ruche.name}}</option>
+                <select [(ngModel)]="rucherService.rucheService.rucheUpdate" [ngModelOptions]="{standalone: true}" class="form-control">
+                    <option *ngFor="let rucher of rucherService.rucheService.ruches" [ngValue]="rucher" >{{rucher.name}}</option>
                 </select>   
                 <div class="alert alert-danger" hidden>Veuillez choisir une ruche</div>        
             </div>
-        </div>        
+    </div>        
     <div class="form-group">
         <label for="message-text" class="col-form-label">Description :</label>
         <input formControlName="description" class="form-control" id="message-text">
@@ -203,7 +203,7 @@
     </div>
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary" [disabled]="!editCapteurForm.valid"> Sauvegarder</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancelClickedE()">Fermer</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
     </div>
 </form>
 </div>
@@ -211,4 +211,3 @@
 </div>
 </div>
 <!-- End EDIT capteur Modal -->
--->

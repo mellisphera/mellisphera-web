@@ -58,11 +58,20 @@ export class CapteurComponent implements OnInit {
     selectCapteur(capteur){
         this.capteurService.capteur = capteur;
         var donnée = {
-            checkbox: this.capteurService.capteur.hiveName,
+            checkbox: '',
             description: this.capteurService.capteur.description,
         };
         this.editCapteurForm.setValue(donnée);
-        this.editCapteurCheckbox = donnée.checkbox != "stock";
+        this.editCapteurCheckbox = !(this.capteurService.capteur.idHive == 'stock' || this.capteurService.capteur.idApiary == 'stock');
+        console.log(this.editCapteurCheckbox);
+        if(this.editCapteurCheckbox){
+            console.log(this.capteurService.capteur);
+            this.rucherService.findRucherById(this.capteurService.capteur.idApiary);
+            this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive);
+            console.log(this.rucherService.rucherUpdate);
+            console.log(this.rucherService.rucheService.rucheUpdate);
+        }
+
     }
 
     receiveMessage($event){
@@ -142,7 +151,7 @@ export class CapteurComponent implements OnInit {
 
     onSelectRucher(){
         console.log("ok");
-        this.rucherService.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id);
+        this.rucherService.rucheService.getRucheByApiary(this.username,this.rucherService.rucherUpdate.id);
     }
 
     initForm(){
