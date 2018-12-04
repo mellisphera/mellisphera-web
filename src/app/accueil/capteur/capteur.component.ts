@@ -8,6 +8,7 @@ import { UserloggedService } from '../../userlogged.service';
 import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-capteur',
@@ -78,8 +79,8 @@ export class CapteurComponent implements OnInit {
         this.message=$event;
     }
 
-    checkCapteurType(value : any){       
-
+    onchange(event){       
+        this.editCapteurCheckbox = (event.target.value="stock") ? false : true;
     } 
 
    //CREATE CAPTEUR

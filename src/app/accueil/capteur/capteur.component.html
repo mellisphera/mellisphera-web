@@ -171,13 +171,13 @@
             Affecter à :  
         </label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" formControlName="checkbox" value="stock" [checked]="!editCapteurCheckbox">
+            <input class="form-check-input" type="radio" formControlName="checkbox" value="stock" [checked]="!editCapteurCheckbox" (change)="onchange($event)">
             <label class="form-check-label" for="exampleRadios1" >Stock </label>
-            <input class="form-check-input" type="radio" formControlName="checkbox" value="ruche" [checked]="editCapteurCheckbox">   
+            <input class="form-check-input" type="radio" formControlName="checkbox" value="ruche" [checked]="editCapteurCheckbox" (change)="onchange($event)"> 
             <label class="form-check-label" for="exampleRadios1">Ruche </label>                   
         </div>
     </div>
-    <div *ngIf="getTypeAffectationFormUpdate().value=='ruche' || editCapteurCheckbox ">
+    <div *ngIf="editCapteurCheckbox ">
             <div class="form-group">
                 <label class="col-form-label">Rucher :</label>
                 <select [(ngModel)]="rucherService.rucherUpdate" [ngModelOptions]="{standalone: true}" class="form-control" (change)="onSelectRucher();">
