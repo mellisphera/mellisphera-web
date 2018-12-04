@@ -25,25 +25,12 @@ export class RapportComponent implements OnInit {
   btnAnalyse: boolean;
   
   //variable to store ruchers
-  ruchers: Rucher [] = [];
   rapportForm : FormGroup;
-
-  texteRapport ='';
-  rapportAnalyse='';
-  idApiary='xx';
   resultatRapport;
   selectedRucher = new Rucher();
   //variable for connected user
-  username : string;
-  x;
-  currentRucherID;
-
-  observations : ProcessReport[] = [];
 
   public errorMsg;
-
-  private timerSubscription: Subscription;
-
 
   //nomRuche;
     constructor(private formBuilder: FormBuilder,
@@ -57,75 +44,21 @@ export class RapportComponent implements OnInit {
                   
               })
     
-        this.username= data.currentUser().username;
     }
 
     ngOnInit(){
-      this.getUserRuchers();
-      this.currentRucherID= localStorage.getItem("currentRucher");
-      this.x=String(this.selectedRucher);
-      this.x=this.currentRucherID;
-      this.selectedRucher=this.x;
       this.btnAnalyse=true;
       
     }
 
-    getUserRuchers(){
-     /* this.rucherService.getUserRuchers(this.username).subscribe(
-        data => { this.ruchers = data;},
-        err => console.error(err)
-      ); */ 
-    }
-    
     getAnalyseTemp(){
-      
-      this.rapportService.getNluResult(this.texteRapport, this.rucherService.rucher).subscribe( 
-        data => {},
-        ( error => this.errorMsg=error));
-        this.subscribeToRapport();
+      var formValue = this.rapportForm.value;
+      console.log(formValue);
+      this.rapportService.getNluResult(formValue, this.rucherService.rucher.id);
     }
-
-    getRapportTemp(){
-      this.rapportService.getRapportTemp(this.username).subscribe( 
-        data => {this.observations = data},
-        ( error => this.errorMsg=error));
-    }
-
-
-    saveTemp(){
-      this.rapportService.getSave(this.username).subscribe( 
-        data => {},
-        ( error => this.errorMsg=error));
-        this.texteRapport = "";
-        confirm("Observations enregistrées !")
-        this.observations = null;
-    }
-
-    saveRapport(){
-      this.rapportService.getNluSave(this.texteRapport, this.rucherService.rucher).subscribe( 
-        data => {},
-        ( error => this.errorMsg=error));
-        this.texteRapport = "";
-        confirm("Observations enregistrées !")
-        this.observations = null;
-        
-    }
-
-    supprimerObsTemp(obs){
-      console.log("id : "+obs.id);
-      this.rapportService.deleteObsTemp(obs.id).subscribe( 
-        data => {},
-        ( error => this.errorMsg=error));
-        this.subscribeToRapport();
-    }
-
-  private subscribeToRapport(): void {
-    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.getRapportTemp());
-  }
 
   onSelectRucher(event : any) : void{
     console.log(this.rucherService.rucher);
-    this.currentRucherID=String(this.selectedRucher);
     localStorage.setItem("currentRucher",String(this.selectedRucher));
   }
 
@@ -134,7 +67,4 @@ export class RapportComponent implements OnInit {
         this.message=$event;
     }
 
-  change($event){
-
-  }
 }

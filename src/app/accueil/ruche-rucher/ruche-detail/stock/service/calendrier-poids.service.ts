@@ -50,7 +50,7 @@ export class CalendrierPoidsService {
         top: 140,
         left: 'center',
         range: ['2018-2-01', '2018-4-30'],
-        orient: 'vertical',
+        orient: 'horizontal',
         cellSize: '30',
         splitLine: {
             show: true,

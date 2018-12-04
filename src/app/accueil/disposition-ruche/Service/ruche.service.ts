@@ -19,11 +19,15 @@ export class RucheService {
   ruche : RucheInterface;
   ruches : RucheInterface[];
 
+  rucheUpdate : RucheInterface;
+  ruchesAllApiary : RucheInterface[];
+
   rucheObs : Observable<RucheInterface>;
   ruchesObs : Observable<RucheInterface[]>;
   constructor(private user : UserloggedService, private http : HttpClient, private observationService : ObservationService) {
     this.ruches = [];
     this.initRuche();
+    this.getRucheByUsername(this.user.currentUser().username);
   /* if(sessionStorage.getItem("idApiaryUpdate")){
       let id = sessionStorage.getItem("idApiaryUpdate");
       console.log(id);
@@ -39,7 +43,8 @@ export class RucheService {
       idApiary: '',
       hivePosX : '',
       hivePosY : ''
-   }
+    }
+    this.rucheUpdate = this.ruche;
    }
    getRucheByApiary(username , idApiary){
       this.ruches = [];
@@ -59,8 +64,19 @@ export class RucheService {
         
       )
    }
-
-  updateCoordonneesRuche(ruche){
+   getRucheByUsername(username : string){
+     this.ruchesAllApiary = [];
+     this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username).subscribe(
+       (data)=>{
+         this.ruchesAllApiary = data;
+         console.log(this.ruchesAllApiary);
+       },
+       (err)=>{
+         console.log(err);
+       }
+     );
+   }
+   updateCoordonneesRuche(ruche){
     this.rucheObs = this.http.put<RucheInterface>(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,ruche,httpOptions)
     this.rucheObs.subscribe(
       ()=>{
@@ -114,5 +130,12 @@ export class RucheService {
     );
   }
 
+  findRucheById(idHive : string){
+    this.ruchesAllApiary.forEach(element => {
+      if(element.id == idHive){
+        this.rucheUpdate = element;
+      }
+    });
+  }
 
 }

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from '../../../config';
 import { ProcessReport } from '../ruche-rucher/processedReport';
+import { Rapport } from '../../_model/rapport';
+import { UserloggedService } from '../../../app/userlogged.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -11,38 +13,75 @@ const httpOptions = {
  
 @Injectable()
 export class RapportService {
-    rapport: any [] = [];
-    
-    constructor(private http:HttpClient) {}
+    //rapport: any [] = [];
+    rapport : Rapport;
+    rapports : Rapport[];
+    constructor(private http:HttpClient, public username : UserloggedService) {
+        this.rapport = {
+            id:'',
+            Lruche: [],
+            date: '',
+            idApiary: '',
+            idLHive: [],
+            nluScore: 0,
+            sentence: '',
+            type: '',
+            username: ''
+        };
+    }
     
     //to save in processReportTemp
     getNluResult(texte, idApiary){
-        let body = JSON.stringify({"texte":texte,"idApiary":idApiary});
+        let body = JSON.stringify({"texte":texte.texte,"idApiary":idApiary});
         //LOCAL
         //return this.http.post('***REMOVED***:5000/nlu/nluAnalyse',body, httpOptions);
         //SERVEUR
-        return this.http.post('http://***REMOVED***:5000/nlu/nluAnalyse',body, httpOptions);
+        this.http.post<Rapport>(CONFIG.API_PY+'/nlu/nluAnalyse',body, httpOptions).subscribe(
+            (data)=>{
+                console.log(data);
+                this.rapport = data;
+                console.log(this.rapport);
+            },
+            (err)=>{
+                console.log(err);
+            },
+            ()=>{
+                this.getRapportTemp(this.username.currentUser().username);
+            }
+        );
     }
 
-    getNluSave(texte, idApiary){
-        let body = JSON.stringify({"texte":texte,"idApiary":idApiary});
-        //LOCAL
-        //return this.http.post('***REMOVED***:5000/nlu/nluSave',body, httpOptions);
-        //SERVEUR
-        return this.http.post('http://***REMOVED***:5000/nlu/nluSave',body, httpOptions);
+    nluSave(){
+        this.http.get<ProcessReport[]>(CONFIG.URL+'report_temp/add/'+this.username.currentUser().username).subscribe(
+            ()=>{},
+            (err)=>{
+                console.log(err);
+            }
+        )
     }
 
-    getRapportTemp(username):Observable<ProcessReport[]>{
-        return this.http.get<ProcessReport[]>(CONFIG.URL+'report_temp/'+username);
+    getRapportTemp(username){
+        this.http.get<Rapport[]>(CONFIG.URL+'report_temp/'+username).subscribe(
+            (data)=>{
+                this.rapports = data;
+            },
+            (err)=>{
+                console.log(err);
+            }
+        );
     }
 
-    deleteObsTemp(idTemp){
-        return this.http.delete(CONFIG.URL+'report_temp/delete/'+idTemp);
-    }
-
-
-    getSave(username){
-        return this.http.get<ProcessReport[]>(CONFIG.URL+'report_temp/add/'+username);
+    deleteObsTemp(rapport){
+        console.log(rapport);
+        this.http.delete(CONFIG.URL+'report_temp/delete/'+rapport.id).subscribe(
+            ()=>{},
+            (err)=>{
+                console.log(err);
+            },
+            ()=>{
+                this.getRapportTemp(this.username.currentUser().username);
+            }
+        );
     }
 
     // error handling

@@ -24,6 +24,8 @@ export class DailyRecordService{
         this.dailyRecObs.subscribe(
             (data)=>{
                 console.log(data);
+                this.dailyRecord = data;
+                /*
                 this.dailyRecord = {
                     id : data.id, 
                     recordDate : data.recordDate, 
@@ -37,7 +39,7 @@ export class DailyRecordService{
                     health_status : data.health_status, 
                     health_trend : data.health_trend, 
                     r_int_text: data.r_int_text 
-                };
+                };*/
             },
             (err)=>{
                 console.log(err);
@@ -50,6 +52,8 @@ export class DailyRecordService{
         this.dailyRecObsArray.subscribe(
             (data)=>{
                 console.log(data);
+                this.dailyRecords = data;
+                /*
                 data.forEach(element => {
                     this.dailyRecords.push({
                         id : element.id, 
@@ -65,7 +69,7 @@ export class DailyRecordService{
                         health_trend : element.health_trend, 
                         r_int_text: element.r_int_text 
                     })
-                });
+                });*/
                 console.log(this.dailyRecords)
             },
             (err)=>{
@@ -80,6 +84,9 @@ export class DailyRecordService{
             (data)=>{
                 console.log(data);
                 if(data[0]!= null){
+                    this.dailyRecords = data;
+
+                    /*
                     data.forEach(element => {
                         this.dailyRecords.push({id : element.id, 
                             recordDate : element.recordDate, 
@@ -94,7 +101,7 @@ export class DailyRecordService{
                             health_trend : element.health_trend, 
                             r_int_text: element.r_int_text 
                         });
-                    });
+                    });*/
                 console.log(this.dailyRecords);
                 }
             },

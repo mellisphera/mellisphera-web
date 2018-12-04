@@ -23,6 +23,7 @@ export class RucherService {
     rucher : RucherModel;
     ruchers : RucherModel[];
     detailsRucher : RucherModel;
+    rucherUpdate : RucherModel;
 
     rucherSelectUpdate : RucherModel;
 
@@ -61,6 +62,7 @@ export class RucherService {
             codePostal : '',
             ville : ''
          };
+         this.rucherUpdate = this.rucher;
     }
     // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
     // pour créer un rucher
@@ -138,11 +140,16 @@ export class RucherService {
         );
     }
 
-    getObservation(idApiary) {
-        //return this.http.get<ProcessReport[]>(CONFIG.URL+'report/apiary/'+idApiary);
-    }
     errorHandler(error: HttpErrorResponse){
         return Observable.throw(error.message || "server error")
     }
     
+    findRucherById(idApiary : string){
+        this.ruchers.forEach(element => {
+            if(element.id == idApiary){
+                this.rucherUpdate = element;
+            }
+        });
+    }
+
 }
