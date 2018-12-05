@@ -79,8 +79,8 @@ export class CapteurComponent implements OnInit {
         this.message=$event;
     }
 
-    onchange(event){       
-        this.editCapteurCheckbox = (event.target.value="stock") ? false : true;
+    onchange(event){   
+        this.editCapteurCheckbox = (event.target.value == "ruche");
     } 
 
    //CREATE CAPTEUR
