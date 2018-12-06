@@ -2,10 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FleursFloraisonService } from './fleurs.floraison.service';
+import { FleursFloraisonService } from './service/fleurs.floraison.service';
 import { FleursINRA } from "./fleursINRA";
 import { FleurITSAP } from "./fleurITSAP";
-import { FleurObservees } from './fleurobservees'
 import { Rucher } from '../ruche-rucher/rucher';
 import { FleursTheorique } from './fleurstheorique'
 import { UserloggedService } from '../../userlogged.service';
@@ -14,6 +13,7 @@ import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../_shared-services/selected-rucher.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
 import * as echarts from './../../../assets/echarts';
+import { GraphiqueFloraisonService } from './service/graphique-floraison.service';
 
 
 @Component({/*  */
@@ -44,11 +44,11 @@ export class FleursFloraisonComponent implements OnInit {
     currentFlo: string;
     //Variable pour les informations du rucher
     nameApiary= new Rucher();
-    
+    message="";
     //variable pour stocker le nom français entré
     selectedFr = new String;
     //Variable pour la fleur selectionnée
-    selectedFleur = new FleurObservees();
+    //selectedFleur = new FleurObservees();
     //Variable pour la fleur qui contient les éléments de recherche
     selectedFleurTest = new FleursTheorique();
     //Variable pour la fleur apibotanica qui contient les éléments de recherche
@@ -65,7 +65,7 @@ export class FleursFloraisonComponent implements OnInit {
     //variable to store ruchers
     ruchers: Rucher [] = [];
     //variable to store fleurs de la bibliothèque
-    fleursBibli: FleurObservees [] = [];
+    //fleursBibli: FleurObservees [] = [];
     //Noms des fleurs
     names = new Array();
 
@@ -103,8 +103,9 @@ export class FleursFloraisonComponent implements OnInit {
   constructor(  private formBuilder: FormBuilder,
                 public location: Location,
                 public router: Router,
-                public rucherService : RucherService,
+                //public rucherService : RucherService,
                 public fleursFloraisonService : FleursFloraisonService,
+                public grahFleur : GraphiqueFloraisonService,
                 private data : UserloggedService) {
 
                 this.username= data.currentUser().username; 
@@ -118,13 +119,14 @@ export class FleursFloraisonComponent implements OnInit {
 
   //Au chargement de la page on execute ces fonctions
   ngOnInit(){
+    console.log(this.fleursFloraisonService.rucherService.ruchersObs);
     this.x=String(this.selectedRucher);
     this.x=this.currentRucherID;
     this.selectedRucher=this.x;
-    this.getUserRuchers();
-    this.getFleurDuRucher(this.currentYear);
-    this.getAllFleurTest();
-    this.getAllType();
+    //this.getUserRuchers();
+    //this.getFleurDuRucher(this.currentYear);
+    //this.getAllFleurTest();
+    //this.getAllType();
     this.subscribeToNames();
     if(this.selectedRucher != undefined){
       this.getNameApiary();
@@ -140,36 +142,36 @@ export class FleursFloraisonComponent implements OnInit {
   }
 
   //Récupère les fleurs du rucher
-  getFleurDuRucher(annee){
+  /*getFleurDuRucher(annee){
     if(this.selectedRucher!=null){
       this.fleursFloraisonService.getUserFleur(this.selectedRucher).subscribe(
         data => { this.fleursBibli = data });       
     }
-  }
+  }*/
 
   //Récupère les fleurs 
-  getAllFleurTest(){
+  /*getAllFleurTest(){
     this.fleursFloraisonService.getFleurTest().subscribe(
       data => { 
         this.fleursTest=data;
       }
     );
-  }
+  }*/
 
   //Récupère les types de plantes
-  getAllType(){
+  /*getAllType(){
     this.fleursFloraisonService.getType().subscribe(
       data => { 
         this.types=data;
       }
     ); 
-  }
+  }*/
 
   //On récupère les noms des plantes du rucher
   getNames(){
     //on récupère les noms des plantes
     
-    this.fleursFloraisonService.getNamesFlowers(this.selectedRucher).subscribe(
+    /*this.fleursFloraisonService.getNamesFlowers(this.selectedRucher).subscribe(
       data => { 
         this.names=data;
       }
@@ -179,21 +181,21 @@ export class FleursFloraisonComponent implements OnInit {
     //on charges les dates observées associées
     this.subscribeToDateOb(this.annee);
     //on charge le graph
-    this.subscribeToGraph();
+    this.subscribeToGraph();*/
   }
 
   getNameApiary(){
-    this.fleursFloraisonService.getNameApiary(this.selectedRucher).subscribe(
+    /*this.fleursFloraisonService.getNameApiary(this.selectedRucher).subscribe(
       data => { 
         this.nameApiary=data;
       }
-    );
+    );*/
   }
 
   //On récupères les dates de flo théoriques de la plante "name"
   getOneDateTh(fleur,i){
-    this.fleursFloraisonService.getFloraisonThFlowers(fleur).subscribe(
-      data => { this.dataTh[i]=data;});
+    /*this.fleursFloraisonService.getFloraisonThFlowers(fleur).subscribe(
+      data => { this.dataTh[i]=data;});*/
   }
 
   //On récupères les dates de flo observée de la plante "name"
@@ -214,7 +216,7 @@ export class FleursFloraisonComponent implements OnInit {
     }
     //On récupères les dates théoriques
     for (var i = 0; i < this.dataTh.length; i++) {
-      this.subscribeToOneDateTh(this.fleursBibli[i],i);
+      //this.subscribeToOneDateTh(this.fleursBibli[i],i);
     }
   }
 
@@ -232,11 +234,11 @@ export class FleursFloraisonComponent implements OnInit {
       }
     }
     for (var i = 0; i < this.data2018.length; i++) {
-      this.subscribeToOneDateOb(this.data2018,this.fleursBibli[i],i,"2018");
+     // this.subscribeToOneDateOb(this.data2018,this.fleursBibli[i],i,"2018");
       
     }
     for (var i = 0; i < this.data2019.length; i++) {
-      this.subscribeToOneDateOb(this.data2019,this.fleursBibli[i],i,"2019");
+      //this.subscribeToOneDateOb(this.data2019,this.fleursBibli[i],i,"2019");
     }
   }
 
@@ -255,9 +257,8 @@ export class FleursFloraisonComponent implements OnInit {
 
   //Change le rucher selectionné
   onSelectRucher(event : any) : void{
-    this.currentRucherID=String(this.selectedRucher);
-    localStorage.setItem("currentRucher",String(this.selectedRucher));
-    this.onChangeRucher();
+    this.fleursFloraisonService.getUserFleur(this.fleursFloraisonService.rucherService.rucher.id);
+    this.fleursFloraisonService.rucherService.getRucherDetails();
   }
 
   //change le nom français entré par l'utilisateur
@@ -280,7 +281,7 @@ export class FleursFloraisonComponent implements OnInit {
 
   
   //Ajoute la fleur à un rucher
-  addFleur(fleur){
+  /*addFleur(fleur){
     //on fait une copie de la fleur
     this.selectedFleur.nom = fleur.flowerApi.francais;
     this.selectedFleur.dateDebutd = fleur.flowerApi.flomind;
@@ -304,31 +305,31 @@ export class FleursFloraisonComponent implements OnInit {
             this.subscribeToNames();
       }
     }
-  }
+  }*/
 
   //Change le début de floraison observée d'une fleur
-  updateDebut(fleur){
+  /*updateDebut(fleur){
     this.selectedFleur = fleur;
     this.fleursFloraisonService.updateFleurDebut(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateDebutdate[this.currentYear])
       .subscribe(data => {},
       error => this.ErrorMsg=error);
     
-   }
+   }*/
 
   //Change la fin de floraison observée d'une fleur
-  updateFin(fleur){
+ /* updateFin(fleur){
     this.selectedFleur = fleur;
     this.fleursFloraisonService.updateFleurFin(this.selectedFleur.id,this.currentYear,this.selectedFleur.dateFindate[this.currentYear])
       .subscribe(data => {},
       error => this.ErrorMsg=error);
-  }
+  }*/
 
   //Change la presence d'une fleur dans le rucher
   updatePresence(fleur){   
-    this.selectedFleur = fleur;
+    /*this.selectedFleur = fleur;
       this.fleursFloraisonService.updatePresence(this.selectedFleur)
         .subscribe(data => {},
-          error => this.ErrorMsg=error);
+          error => this.ErrorMsg=error);*/
   }
 
   updateTot(fleursBib){   
@@ -349,7 +350,7 @@ export class FleursFloraisonComponent implements OnInit {
   }
 
   //Supprime une fleur du rucher
-  deleteFleur(fleur){
+  /*deleteFleur(fleur){
     this.selectedFleur = fleur;
     if (confirm("Supprimer la plante " + this.selectedFleur.nom + " du rucher "+ this.nameApiary.name +" ?")) {
       this.fleursFloraisonService.deleteFleur(this.selectedFleur)
@@ -360,13 +361,13 @@ export class FleursFloraisonComponent implements OnInit {
       //On charge les noms des fleurs (et recharge le graphique avec les bonnes données)
       this.subscribeToNames();
     }
-  }
+  }*/
 
   //Lance la recherche des fleurs qui correspondent aux critères entré par l'utilisateur
   rechercheFleurVariete(){
     //On créer un fleur type de recherche
-    this.selectedFleurTh.francais = this.selectedFr;
-    this.selectedFleurTest.flowerApi = this.selectedFleurTh;
+    this.selectedFleurTh.setFrancais(this.selectedFr);
+    this.selectedFleurTest.setFlowerApi(this.selectedFleurTh);
     //On envoie la requêtes
     this.fleursFloraisonService.rechercheFlowersVar(this.selectedFleurTest)
         .subscribe(
@@ -378,9 +379,9 @@ export class FleursFloraisonComponent implements OnInit {
     //Lance la recherche des fleurs qui correspondent aux critères entré par l'utilisateur
   rechercheFleurPeriode(){
     //On créer un fleur type de recherche
-    this.selectedFleurTest.type = this.selectedType;
-    this.selectedFleurTh.flomind = this.selectedFlo
-    this.selectedFleurTest.flowerApi = this.selectedFleurTh;
+    this.selectedFleurTest.setType(this.selectedType);
+    this.selectedFleurTh.setFlomind(this.selectedFlo);
+    this.selectedFleurTest.setFlowerApi(this.selectedFleurTh);
     //On envoie la requêtes
     this.fleursFloraisonService.rechercheFlowersPer(this.selectedFleurTest)
       .subscribe(
@@ -401,7 +402,7 @@ export class FleursFloraisonComponent implements OnInit {
 
   //On recharge la bilbiothèque de fleurs
   private subscribeToDataFleur(): void {
-    this.timerSubscription = Observable.timer(400).first().subscribe(() => this.getFleurDuRucher(this.currentYear));
+    //this.timerSubscription = Observable.timer(400).first().subscribe(() => this.getFleurDuRucher(this.currentYear));
   }
 
   //On recharge le pourcentage totale du rucher
@@ -411,7 +412,7 @@ export class FleursFloraisonComponent implements OnInit {
 
   //On recharge le graph du rucher
   private subscribeToGraph(): void {
-    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.graphStatique());
+   // this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.graphStatique());
   }
   
   //On charge les dates théoriques pour le graph
@@ -436,12 +437,12 @@ export class FleursFloraisonComponent implements OnInit {
 
   //
   private subscribeToUpDeb(fleur): void {
-    this.timerSubscription = Observable.timer(100).first().subscribe(() => this.updateDebut(fleur));
+    //this.timerSubscription = Observable.timer(100).first().subscribe(() => this.updateDebut(fleur));
   }
 
   //
   private subscribeToUpFin(fleur): void {
-    this.timerSubscription = Observable.timer(200).first().subscribe(() => this.updateFin(fleur));
+    //this.timerSubscription = Observable.timer(200).first().subscribe(() => this.updateFin(fleur));
   }
 
   //
@@ -531,8 +532,8 @@ export class FleursFloraisonComponent implements OnInit {
 
 
   //graphique des fleurs du rucher
-  graphStatique(){
-    var unChart = echarts.init(document.getElementById("graph"));    
+ graphStatique(){
+    /*var unChart = echarts.init(document.getElementById("graph"));    
 
   for (let index = 0; index < this.dataTh.length; index++) {
     this.dataTh[index] = this.dataTh[index].map(function (item) {
@@ -547,133 +548,17 @@ export class FleursFloraisonComponent implements OnInit {
     });
   }
 
-    var option = {
-      //Défini le titre du graphique
-      title: {
-        text: 'Fleurs du rucher',
-      },
-
-      //Défini la légende du graph
-      legend: {
-        data: ['Floraisons théoriques','Floraisons observées 2018'],
-        left: 'right',
-      },
-
-      grid: {
-        left: 2,
-        bottom: 10,
-        right: 10,
-        containLabel: true
-      },
-      //Le pointeur ne bouge qu'avec la souris
-      tooltip: {
-        triggerOn: 'none',
-        trigger:'axis',
-      },
-      //Défini l'axe ou les axes abscisse(s)
-      xAxis: [
-        {
-          type: 'time',
-          min:this.currentYear+'-01-01',
-          max:this.currentYear+'-12-31',
-          
-          //Option pour le pointeur
-          axisPointer: {
-            value: this.date,
-            lineStyle: {
-                color: '#004E52',
-                opacity: 0.5,
-                width: 2
-            },
-            label: {
-                show: true,
-                backgroundColor: '#004E52'
-            },
-            handle: {
-                show: true,
-                color: '#004E52'
-            }
-          },
-
-          splitLine: {
-              show: true,
-              lineStyle: {
-                  color: '#999',
-                  type: 'dotted'
-              }
-          },
-
-          axisLine: {
-              show: false
-          },
-
-          axisLabel: {
-            rotate: 40
-          }
-         }
-      
-  
-       ],
-    //Défini l'axe ou les axes ordonnée(s)
-      yAxis: {
-        type: 'category',
-        data: this.names,
-        axisLine: {
-            show: false
-        }
-      },
-      //Affiche les données sur le graph
-      series: [
-        //Floraisons théoriques
-        {
-          name: 'Floraisons théoriques',
-          type: 'line',
-          color:'#509B21',
-          symbolSize: 12
-        },
-        //Floraisons observées 2018
-        {
-          name: 'Floraisons observées 2018',
-          type: 'scatter',
-          symbol: 'arrow',
-          color:'#990000',
-          symbolSize: 15
-        }/*,
-        //Floraisons observées 2019
-        {
-          name: 'Floraisons observées 2019',
-          type: 'scatter',
-          symbol: 'arrow',
-          color:'blue',
-          symbolSize: 15
-       },
-       //Floraisons observées 2020
-       {
-        name: 'Floraisons observées 2020',
-        type: 'scatter',
-        symbol: 'arrow',
-        color:'yellow',
-        symbolSize: 15
-       }*/
-    ]
-    };
-          
-
+   
+    
     //Affiche les données
     this.generateDataTh(option);
     this.generateData2018(option);
     //this.generateData2019(option);
 
-   unChart.setOption(option);
-  
+   unChart.setOption(option);*/
   }
 
-  message="";
   receiveMessage($event){
-      this.message=$event;
-  }
-
-
-
-
+    this.message=$event;
+}
 }

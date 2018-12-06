@@ -6,6 +6,7 @@ import { CONFIG } from '../../../config';
 import { ProcessReport } from '../ruche-rucher/processedReport';
 import { Rapport } from '../../_model/rapport';
 import { UserloggedService } from '../../../app/userlogged.service';
+import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -16,7 +17,7 @@ export class RapportService {
     //rapport: any [] = [];
     rapport : Rapport;
     rapports : Rapport[];
-    constructor(private http:HttpClient, public username : UserloggedService) {
+    constructor(private http:HttpClient, public username : UserloggedService, private observationService : ObservationService) {
         this.rapport = {
             id:'',
             Lruche: [],
@@ -51,11 +52,14 @@ export class RapportService {
         );
     }
 
-    nluSave(){
+    nluSave(rucher){
         this.http.get<ProcessReport[]>(CONFIG.URL+'report_temp/add/'+this.username.currentUser().username).subscribe(
             ()=>{},
             (err)=>{
                 console.log(err);
+            },
+            ()=>{
+                this.observationService.getObservationByIdApiary(rucher.id);
             }
         )
     }
@@ -64,6 +68,7 @@ export class RapportService {
         this.http.get<Rapport[]>(CONFIG.URL+'report_temp/'+username).subscribe(
             (data)=>{
                 this.rapports = data;
+                console.log(this.rapports);
             },
             (err)=>{
                 console.log(err);

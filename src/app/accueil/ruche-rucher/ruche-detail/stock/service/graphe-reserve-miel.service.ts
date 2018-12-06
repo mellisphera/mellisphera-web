@@ -30,15 +30,15 @@ export class GrapheReserveMielService {
         {   
             show: true,
             realtime: true,
-            start: 65,
-            end: 85
+            start: 0,
+            end: 100
         },
         {
             type: 'inside',
             show: true,
             realtime: true,
-            start: 65,
-            end: 85
+            start: 0,
+            end: 100
         }
     ],
     grid: {

@@ -45,7 +45,7 @@ export class CalendrierHealthService {
         top: 140,
         left: 'center',
         range: ['2018-01-01', '2018-12-30'],
-        orient: 'vertical',
+        orient: 'horizontal',
         cellSize: '30',
         splitLine: {
             show: true,

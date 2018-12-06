@@ -13,6 +13,7 @@ import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { ProcessReport } from '../ruche-rucher/processedReport';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 
 @Component({
@@ -48,9 +49,8 @@ export class RapportComponent implements OnInit {
 
     ngOnInit(){
       this.btnAnalyse=true;
-      
     }
-
+    
     getAnalyseTemp(){
       var formValue = this.rapportForm.value;
       console.log(formValue);
