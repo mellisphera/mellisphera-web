@@ -16,9 +16,6 @@ export class GraphiqueFloraisonService {
           },
     
           //Défini la légende du graph
-          legend: {
-          },
-    
           grid: {
             left: 2,
             bottom: 10,
@@ -82,8 +79,6 @@ export class GraphiqueFloraisonService {
             }
           },
           //Affiche les données sur le graph
-          series: [
 
-        ]
   }
 }

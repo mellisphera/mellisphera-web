@@ -34,7 +34,7 @@ export class FleursFloraisonService {
     };
     templateLegend: {
         left: 'right',
-        data: any
+        data: null
     };
     fleursObs : Observable<FleurObservees[]>;
     constructor(private http:HttpClient, public rucherService : RucherService) {
@@ -64,16 +64,8 @@ export class FleursFloraisonService {
 
     sortTheoricalFlower(){
         this.tabFleurByDateGraph = [];
-        this.mergeOption = {
-            series : [],
-            yAxis: {
-                data : []
-            },
-            legend : {
-                left: 'right',
-                data:''
-            }
-        };
+        this.cleanTemplate();
+        this.cleanMerge();
         this.nomFleur = [];
         var date = new Date();
         this.fleursByRucher.forEach(element => {
@@ -95,7 +87,6 @@ export class FleursFloraisonService {
     }
     //Service permettant de récuperer les fleurs du rucher selectionné d'un utilisateur x
     getUserFleur(idRucher){
-        console.log(idRucher);
         this.fleursObs = this.http.get<any[]>(CONFIG.URL+'flowersOb/'+ idRucher);
         this.fleursObs.subscribe(
             (data)=>{
@@ -109,7 +100,6 @@ export class FleursFloraisonService {
                 this.sortTheoricalFlower();
                 this.getFleurTest();
                 this.getType();
-                //this.getNamesFlowers(this.rucherService.rucher.id);
             }
         );
     }
@@ -120,7 +110,19 @@ export class FleursFloraisonService {
             type: 'line',
             color:'#509B21',
             symbolSize: 12,
-            data : []
+            data : null
+        };
+    }
+    cleanMerge(){
+        this.mergeOption = {
+            series : new Array(),
+            yAxis: {
+                data : null 
+            },
+            legend : {
+                left: 'right',
+                data: new Array()
+            }
         };
     }
     //Récupère la liste des fleurs théoriques
@@ -172,23 +174,59 @@ export class FleursFloraisonService {
     }
 
     //Change la date de début de floraison obserevée d'une fleur
-    updateFleurDebut(id,annee,dateDebut) {
-        return this.http.put(CONFIG.URL+'flowersOb/updateDebd/'+id+'/'+annee,dateDebut);
+    updateFleurDebut(/*id,annee,dateDebut*/fleur,currentyear) {
+        this.http.put(CONFIG.URL+'flowersOb/updateDebd/'+fleur.id+'/'+currentyear,fleur.dateDebutdate[currentyear]).subscribe(
+            ()=>{},
+            (err)=>{
+                console.log(err);
+            },
+            ()=>{
+                this.updatePresence(fleur);
+            }
+        );
     }
 
     //Change la date de fin de floraison obserevée d'une fleur
-    updateFleurFin(id,annee,dateFin){
-        return this.http.put(CONFIG.URL+'flowersOb/updateFind/'+id+'/'+annee,dateFin);
+    updateFleurFin(currentyear,fleur){
+        console.log(fleur.dateFin);
+        fleur.dateDebutdate[currentyear] = (fleur.dateDebutdate[currentyear] == '') ? 'null' : fleur.dateDebutdate[currentyear] ;
+        fleur.dateFindate[currentyear] = (fleur.dateFindate[currentyear] == '') ? 'null' : fleur.dateFindate[currentyear];
+        console.log(fleur); 
+        this.http.put(CONFIG.URL+'flowersOb/updateFind/'+fleur.id+'/'+currentyear,fleur.dateFindate[currentyear]).subscribe(
+            ()=>{},
+            (err)=>{
+                console.log(err);
+            },
+            ()=>{
+                this.updateFleurDebut(fleur,currentyear);
+            }
+        )
     }
 
     //Change le pourcentage d'une fleur dans le rucher
     updatePresence(fleur){
-        return this.http.put(CONFIG.URL+'flowersOb/updatePresence/'+fleur.id,fleur.presence);
+        this.http.put(CONFIG.URL+'flowersOb/updatePresence/'+fleur.id,fleur.presence).subscribe(
+            ()=>{},
+            (err)=>{
+                console.log(err);
+            },
+            ()=>{
+
+            }
+        )
     }
 
     //on supprime une fleur de la bibliothèque
     deleteFleur(fleur) {
-        return this.http.delete(CONFIG.URL+'flowersOb/' + fleur.id);
+        this.http.delete(CONFIG.URL+'flowersOb/' + fleur.id).subscribe(
+            ()=>{},
+            (err)=>{
+                console.log(err);
+            },
+            ()=>{
+                this.getUserFleur(this.rucherService.rucher.id);
+            }
+        );
     }
 
     //Récupère les fleurs qui correspondet à la recherche

@@ -68,7 +68,6 @@ export class FleursFloraisonComponent implements OnInit {
     //fleursBibli: FleurObservees [] = [];
     //Noms des fleurs
     names = new Array();
-
     x;
 
     //Les années à afficher
@@ -131,7 +130,7 @@ export class FleursFloraisonComponent implements OnInit {
     if(this.selectedRucher != undefined){
       this.getNameApiary();
     }
-    this.selectedFlo = "0";
+    //this.selectedFlo = "0";
   }
 
 
@@ -331,8 +330,16 @@ export class FleursFloraisonComponent implements OnInit {
         .subscribe(data => {},
           error => this.ErrorMsg=error);*/
   }
+  onEditFleur(fleur){
+    this.selectedFlo = fleur.id;
 
-  updateTot(fleursBib){   
+  }
+  saveValue(fleur){
+    this.fleursFloraisonService.updateFleurFin(this.currentYear,fleur);
+    this.selectedFlo = null;
+  }
+
+  /*pdateTot(fleursBib){   
     for (let i = 0; i < fleursBib.length; i++) {
       if (fleursBib[i].dateDebutdate[this.currentYear] == ""){
         fleursBib[i].dateDebutdate[this.currentYear] = "null";
@@ -347,21 +354,12 @@ export class FleursFloraisonComponent implements OnInit {
     //On charge les noms des fleurs (et recharge le graphique avec les bonnes données)
     this.subscribeToNames();
     this.subscribeToDataFleur();
-  }
+  }*/
 
   //Supprime une fleur du rucher
-  /*deleteFleur(fleur){
-    this.selectedFleur = fleur;
-    if (confirm("Supprimer la plante " + this.selectedFleur.nom + " du rucher "+ this.nameApiary.name +" ?")) {
-      this.fleursFloraisonService.deleteFleur(this.selectedFleur)
-        .subscribe(data => {},
-            error => this.ErrorMsg=error);
-      //On recharge la page avec les fleurs du rucher restantes      
-      this.subscribeToDataFleur();
-      //On charge les noms des fleurs (et recharge le graphique avec les bonnes données)
-      this.subscribeToNames();
-    }
-  }*/
+  deleteFleur(fleur){
+
+  }
 
   //Lance la recherche des fleurs qui correspondent aux critères entré par l'utilisateur
   rechercheFleurVariete(){
