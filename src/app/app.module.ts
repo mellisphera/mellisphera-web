@@ -49,7 +49,7 @@ import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { GraphService } from './accueil/graph/graph.service';
 import { RapportService } from './accueil/rapport/rapport.service';
-import { FleursFloraisonService } from './accueil/fleurs-floraison/fleurs.floraison.service';
+import { FleursFloraisonService } from './accueil/fleurs-floraison/service/fleurs.floraison.service';
 import { RucheDetailService } from './accueil/ruche-rucher/ruche-detail/ruche.detail.service';
 import { DispositionRucheComponent } from './accueil/disposition-ruche/disposition-ruche.component';
 

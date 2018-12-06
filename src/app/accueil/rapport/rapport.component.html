@@ -31,7 +31,7 @@
                                     <textarea class="form-control" id="exampleTextarea" rows="8"  formControlName="texte" [(ngModel)]="texteRapport"></textarea>
                             </div>
                             <button class="btn btn-primary" (click)="getAnalyseTemp()" (change)="change($event)" [disabled]="!rapportForm.valid" >Analyser</button>
-                            <button type="submit" (click)="rapportService.nluSave()" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Sauver</button>
+                            <button type="submit" (click)="rapportService.nluSave(rucherService.rucher)" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Sauver</button>
                         </form>
 
                         <div class="form-group">
@@ -57,7 +57,7 @@
                                     <tbody>
                                         <ng-container *ngFor="let obs of rapportService.rapports" >
                                             <ng-container *ngIf="obs.type =='ApiaryObs'">
-                                                <tr >
+                                                <tr class="temp">
                                                     <td>
                                                         {{obs.date}}
                                                     </td>

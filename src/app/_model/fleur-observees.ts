@@ -1,5 +1,5 @@
-export class FleurObservees {
-	id : string;
+export interface FleurObservees {
+    id : string;
 	nom : string;
 	dateDebutd : Map<string,string>;
 	dateFind : Map<string,string>;
@@ -13,5 +13,5 @@ export class FleurObservees {
     username : string; 
 	idApiary : string;
 	photo : string;
-   }
-   
+
+}

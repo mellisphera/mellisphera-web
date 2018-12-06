@@ -44,23 +44,43 @@ export class GraphRecordService {
         {   
             show: true,
             realtime: true,
-            start: 45,
-            end: 85,
+            start: 0,
+            end: 100,
         },
         {
             type: 'inside',
             show: true,
             realtime: true,
-            start: 45,
-            end: 85,
+            start: 0,
+            end: 100,
+        },
+        {
+            type: 'slider',
+            yAxisIndex: 0,
+            filterMode: 'empty'
+        },
+        {
+            type: 'inside',
+            yAxisIndex: 0,
+            filterMode: 'empty'
+        },
+        {
+            type: 'slider',
+            yAxisIndex: 1,
+            filterMode: 'empty'
+        },
+        {
+            type: 'inside',
+            yAxisIndex: 1,
+            filterMode: 'empty'
         }
     ],
     yAxis: [
         {
             type: 'value',
             name: 'Poids (kg)',
-            /*min: 0,
-            max: 400,*/
+            min: 0,
+            max: 80,
             interval: 5,
             axisLabel: {
                 formatter: '{value}'
@@ -69,8 +89,8 @@ export class GraphRecordService {
         {
             type: 'value',
             name: 'Temp.(°C)',
-           /* min: 0,
-            max: 40,*/
+            min: 0,
+            max: 40,
             interval: 5,
             axisLabel: {
                 formatter: '{value}'

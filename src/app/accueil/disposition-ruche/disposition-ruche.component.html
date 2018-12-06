@@ -12,12 +12,10 @@
       <div class="container-fluid" style="background-color: white;" ngResizable>
               <div class="container-fluid">
                 <div class="form-group">
-                  <form>
                     <label><h4>Rucher :</h4> </label>
-                    <select [(ngModel)]="rucherService.rucher" name="rucher" id="sel1" (change)="onChange($event)">
+                    <select [(ngModel)]="rucherService.rucher" name="rucher" id="sel1" (change)="onChange($event)" >
                       <option *ngFor="let rucher of rucherService.ruchers; let i = index" [id]="i" [ngValue]="rucher" >{{ rucher.name }}</option>
                     </select>
-                  </form>
                   <div id="cadre" [ngStyle]="style">
                     <div
                     data-toggle="tooltip" data-placement="top" [title]="infoRuche"

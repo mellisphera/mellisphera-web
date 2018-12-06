@@ -49,7 +49,7 @@ export class CalendrierPoidsService {
    calendar: [{
         top: 140,
         left: 'center',
-        range: ['2018-2-01', '2018-4-30'],
+        range: ['2018-1-01', '2018-12-31'],
         orient: 'horizontal',
         cellSize: '30',
         splitLine: {

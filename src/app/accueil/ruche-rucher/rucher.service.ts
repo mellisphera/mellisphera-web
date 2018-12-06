@@ -21,7 +21,7 @@ const httpOptions = {
 export class RucherService {
  
     rucher : RucherModel;
-    ruchers : RucherModel[];
+    ruchers : RucherModel[] = null;
     detailsRucher : RucherModel;
     rucherUpdate : RucherModel;
 
@@ -36,6 +36,7 @@ export class RucherService {
         public observationService : ObservationService) {
         this.getUserRuchersLast(this.user.currentUser().username);
         this.initRuche();
+
     }
     initRuche(){
          this.rucherSelectUpdate = {
