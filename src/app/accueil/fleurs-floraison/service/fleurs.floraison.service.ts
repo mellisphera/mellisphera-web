@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from '../../../../config';
-import { FleursTheorique } from '../fleurstheorique'
+import { FleursTheorique } from '../../../_model/fleurstheorique'
 import { Rucher } from '../../ruche-rucher/rucher';
 import { RucherService } from '../../ruche-rucher/rucher.service';
 import { FleurObservees } from '../../../_model/fleur-observees'
@@ -170,7 +170,16 @@ export class FleursFloraisonService {
 
     //Ajoute une fleur à un rucher de l'utilisateur
     addFlower(fleur,id){
-        return this.http.put(CONFIG.URL+'flowersOb/add/'+id,fleur);
+        console.log(fleur);
+        this.http.put(CONFIG.URL+'flowersOb/add/'+id,fleur).subscribe(
+            ()=>{},
+            (err)=>{
+                console.log(err);
+            },
+            ()=>{
+                this.getUserFleur(this.rucherService.rucherSelectUpdate.id);
+            }
+        );
     }
 
     //Change la date de début de floraison obserevée d'une fleur

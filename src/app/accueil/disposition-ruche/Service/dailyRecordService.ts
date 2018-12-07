@@ -8,16 +8,27 @@ import { UserloggedService } from '../../../userlogged.service';
 @Injectable()
 export class DailyRecordService{
     
-    constructor(private http : HttpClient, private user : UserloggedService){
-        this.getDailyRecThByApiary(sessionStorage.getItem("idApiaryUpdate"));
-    }
 
     dailyRecObs : Observable<DailyRecordTh>;
     dailyRecObsArray : Observable<DailyRecordTh[]>;
     dailyRecTabObs : Observable<DailyRecordTh[]>;
+
+    arrayTempInt : any[];
+    arrayHint : any[];
+
     status : string = "Inconnu";
     dailyRecord : DailyRecordTh;
     dailyRecords : DailyRecordTh[] = null;
+
+    statusLoading : boolean;
+
+    mergeOptionTint : any;
+    mergeOptionHint : any;
+
+    constructor(private http : HttpClient, private user : UserloggedService){
+        this.statusLoading = false;
+        this.getDailyRecThByApiary(sessionStorage.getItem("idApiaryUpdate"));
+    }
 
     getDailyRecThByIdHivelas(idHive){
         this.dailyRecObs = this.http.get<DailyRecordTh>(CONFIG.URL+'/dailyRecordsTH/last/'+idHive);
@@ -25,21 +36,6 @@ export class DailyRecordService{
             (data)=>{
                 console.log(data);
                 this.dailyRecord = data;
-                /*
-                this.dailyRecord = {
-                    id : data.id, 
-                    recordDate : data.recordDate, 
-                    idHive : data.idHive, 
-                    humidity_int_min : data.humidity_int_min, 
-                    humidity_int_max : data.humidity_int_max, 
-                    temp_int_min: data.temp_int_min, 
-                    temp_int_max : data.temp_int_max, 
-                    temp_int_moy : data.temp_int_moy, 
-                    temp_int_stddev: data.temp_int_stddev, 
-                    health_status : data.health_status, 
-                    health_trend : data.health_trend, 
-                    r_int_text: data.r_int_text 
-                };*/
             },
             (err)=>{
                 console.log(err);
@@ -51,32 +47,61 @@ export class DailyRecordService{
         this.dailyRecObsArray = this.http.get<DailyRecordTh[]>(CONFIG.URL+'/dailyRecordsTH/hive/'+idHive);
         this.dailyRecObsArray.subscribe(
             (data)=>{
-                console.log(data);
                 this.dailyRecords = data;
-                /*
-                data.forEach(element => {
-                    this.dailyRecords.push({
-                        id : element.id, 
-                        recordDate : element.recordDate, 
-                        idHive : element.idHive, 
-                        humidity_int_min : element.humidity_int_min, 
-                        humidity_int_max : element.humidity_int_max, 
-                        temp_int_min: element.temp_int_min, 
-                        temp_int_max : element.temp_int_max, 
-                        temp_int_moy : element.temp_int_moy, 
-                        temp_int_stddev: element.temp_int_stddev, 
-                        health_status : element.health_status, 
-                        health_trend : element.health_trend, 
-                        r_int_text: element.r_int_text 
-                    })
-                });*/
-                console.log(this.dailyRecords)
+                this.dailyRecordToArray();
             },
             (err)=>{
                 console.log(err);
             }
         );
     }
+
+    dailyRecordToArray(){
+        this.arrayTempInt = [];
+        this.arrayHint = [];
+        this.dailyRecords.forEach(element=>{
+            this.arrayTempInt.push([this.convertDate(element.recordDate),element.temp_int_max]);
+            this.arrayHint.push([this.convertDate(element.recordDate), element.humidity_int_max]);
+        })
+        console.log(this.arrayTempInt);
+        this.mergeOptionTint = {
+            series : {
+                    data: this.arrayTempInt
+                },
+            title: {
+                    text: 'Température intérieur maximum'
+                },
+            visualMap: {
+                    min: -10,
+                    max: 40,
+                    splitNumber : 5,
+                    inRange : {
+                        color: ['#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                    }
+                    
+            },
+        }
+        this.mergeOptionHint = {
+            series : {
+                data : this.arrayHint
+            },
+            title: {
+                text: 'Humidité intérieur maximum'
+            },
+            visualMap: {
+                min: 20,
+                max: 100,
+                splitNumber : 4,
+                inRange: {
+                    color: ["#97A6C5","#6987C5",'#3C68C5','#0F4AC5'],
+                },
+            },
+            
+        }
+        console.log(this.arrayHint);
+        this.statusLoading = true;
+    }
+
     getDailyRecThByApiary(idApiary){
         this.dailyRecTabObs = this.http.get<DailyRecordTh[]>(CONFIG.URL+'dailyRecordsTH/'+this.user.currentUser().username+'/'+idApiary);
         this.dailyRecords = [];
@@ -85,23 +110,6 @@ export class DailyRecordService{
                 console.log(data);
                 if(data[0]!= null){
                     this.dailyRecords = data;
-
-                    /*
-                    data.forEach(element => {
-                        this.dailyRecords.push({id : element.id, 
-                            recordDate : element.recordDate, 
-                            idHive : element.idHive,
-                            humidity_int_min : element.humidity_int_min, 
-                            humidity_int_max : element.humidity_int_max, 
-                            temp_int_min: element.temp_int_min, 
-                            temp_int_max : element.temp_int_max, 
-                            temp_int_moy : element.temp_int_moy, 
-                            temp_int_stddev: element.temp_int_stddev, 
-                            health_status : element.health_status, 
-                            health_trend : element.health_trend, 
-                            r_int_text: element.r_int_text 
-                        });
-                    });*/
                 console.log(this.dailyRecords);
                 }
             },
@@ -124,6 +132,17 @@ export class DailyRecordService{
             }
         })
     }
+
+    convertDate(date : string){
+        var dateIso = new Date(date);
+        var jour = ''+dateIso.getDate();
+        var mois = ''+(dateIso.getMonth()+1);
+        var anee = dateIso.getFullYear();
+        if(parseInt(jour) < 10 ){ jour = '0'+jour; }
+        if(parseInt(mois) < 10 ){ mois = '0'+mois; }
+    
+        return anee + '-' +mois+'-'+ jour;
+      }
     
 
 }
