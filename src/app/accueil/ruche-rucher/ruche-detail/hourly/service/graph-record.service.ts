@@ -44,14 +44,14 @@ export class GraphRecordService {
         {   
             show: true,
             realtime: true,
-            start: 0,
+            start: 80,
             end: 100,
         },
         {
             type: 'inside',
             show: true,
             realtime: true,
-            start: 0,
+            start: 80,
             end: 100,
         },
         {
