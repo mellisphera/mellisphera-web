@@ -27,7 +27,12 @@ export class RucheService {
   constructor(private user : UserloggedService, private http : HttpClient, private observationService : ObservationService) {
     this.ruches = [];
     this.initRuche();
-    this.getRucheByUsername(this.user.currentUser().username);
+    if(sessionStorage.getItem("currentUser")){
+      this.getRucheByUsername(this.user.currentUser().username);
+    }
+    else{
+      sessionStorage.setItem("currentUser","jhe");
+    }
   /* if(sessionStorage.getItem("idApiaryUpdate")){
       let id = sessionStorage.getItem("idApiaryUpdate");
       console.log(id);
@@ -64,6 +69,7 @@ export class RucheService {
         
       )
    }
+
    getRucheByUsername(username : string){
      this.ruchesAllApiary = [];
      this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username).subscribe(

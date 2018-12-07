@@ -13,7 +13,7 @@ const httpOptions = {
 };
  
 @Injectable()
-export class FleursFloraisonService {
+export class    FleursFloraisonService {
  
     fleursByRucher : FleurObservees[];
     fleurThs : FleursTheorique[];
@@ -38,13 +38,24 @@ export class FleursFloraisonService {
     };
     fleursObs : Observable<FleurObservees[]>;
     constructor(private http:HttpClient, public rucherService : RucherService) {
-        this.rucherService.ruchersObs.subscribe(
-            ()=>{},()=>{},
-            ()=>{
-                console.log(this.rucherService.rucher.id);
-                this.getUserFleur(this.rucherService.rucher.id);
-            }
-        )
+        if(sessionStorage.getItem("demo")){
+            this.rucherService.rucherObs.subscribe(
+                ()=>{},()=>{},
+                ()=>{
+                    console.log(this.rucherService.rucher.id);
+                    this.getUserFleur(this.rucherService.rucher.id);
+                }
+            )
+        }
+        else{
+            this.rucherService.ruchersObs.subscribe(
+                ()=>{},()=>{},
+                ()=>{
+                    console.log(this.rucherService.rucher.id);
+                    this.getUserFleur(this.rucherService.rucher.id);
+                }
+            )
+        }
     }
     data : [
         ['2018-03-13','ceriser']
@@ -69,7 +80,6 @@ export class FleursFloraisonService {
         this.nomFleur = [];
         var date = new Date();
         this.fleursByRucher.forEach(element => {
-            //console.log(element.nom );
             this.tabFleurByDateGraph.push([
                 [date.getFullYear()+'-'+element.dateThDebutd, element.nom],
                 [date.getFullYear()+'-'+element.dateThFind, element.nom]
@@ -99,7 +109,7 @@ export class FleursFloraisonService {
             ()=>{
                 this.sortTheoricalFlower();
                 this.getFleurTest();
-                this.getType();
+                //this.getType();
             }
         );
     }
