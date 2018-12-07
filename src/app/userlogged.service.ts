@@ -15,18 +15,9 @@ export class UserloggedService {
      this.messageSource.next(message);
    }
    currentUser(){
-     sessionStorage.setItem("demo",'demo');
-    //return JSON.parse(sessionStorage.getItem('currentUser'));
+     //sessionStorage.setItem("demo",'demo');
+    return JSON.parse(sessionStorage.getItem('currentUser'));
     //return sessionStorage.getItem("currentUser") ? JSON.parse(sessionStorage.getItem('currentUser')) : null;
-    if(sessionStorage.getItem("currentUser")){
-      console.log(sessionStorage.getItem("currentUser"));
-      return ({
-        username : sessionStorage.getItem("currentUser")
-      }); 
-    }
-    else{
-      return null;
-    }
     //return this.authService.login;
   } 
   logOut(){
