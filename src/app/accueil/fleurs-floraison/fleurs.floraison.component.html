@@ -157,12 +157,9 @@
                                                     <div class="form-group">
                                                         <br/>
                                                         <label>Nom français  :</label>
-                                                        <form (ngSubmit)="subscribeToDataRechercheVariete()">
-                                                            <input type="text" (input)="onSelectFr($event)" [(ngModel)]="selectedFr" name="nomfr">
-                                                        </form>
+                                                        <input type="text" [(ngModel)]="selectedFr" name="nomfr">
                                                     </div>
                                                      <br/>
-                                                    <button type="submit" (click)="subscribeToDataRechercheVariete()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
                                                 </div>
                                                 <div id="periode" class="tab-pane fade">
                                                   <br/>
@@ -200,7 +197,7 @@
                                        </tr>
                                    </thead>
                                <tbody>                  
-                                   <tr *ngFor="let fleur of fleursTest" name="pollen">
+                                   <tr *ngFor="let fleur of ( fleursFloraisonService.fleurThs | searchFleur : selectedFr)" name="pollen">
                                        <td> <img src="{{ fleur.photo }}" class="zoom"> </td>
                                        <td> <b> {{ fleur.flowerApi.francais }} </b> </td>
                                        <td> {{ fleur.flowerApi.latin }} </td>
@@ -210,12 +207,12 @@
                                        <td> <img src="{{ fleur.flowerItsap.interet_nectar }}"></td>
                                        <td> <img src="{{ fleur.flowerItsap.indice_confiance }}"> </td>
                                        <td> 
-                                           <select  [(ngModel)]="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
-                                               <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
+                                           <select  [(ngModel)]="fleursFloraisonService.rucherService.rucherSelectUpdate" class="form-control " id="sel1">
+                                               <option  *ngFor="let rucher of fleursFloraisonService.rucherService.ruchers" [ngValue]="rucher" >
                                                    {{rucher.name}}
                                                </option>
                                            </select>
-                                           <button data-toggle="tooltip" data-html="true" title="Ajouter au rucher" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;" class="btn btn-success btn-lg" (click)="addFleur(fleur)" >
+                                           <button data-toggle="tooltip" data-html="true" title="Ajouter au rucher" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;" class="btn btn-success btn-lg" (click)="fleursFloraisonService.addFlower(fleur,fleur.id);" >
                                                <i class="fa fa-plus"></i>
                                            </button>
                                        </td>

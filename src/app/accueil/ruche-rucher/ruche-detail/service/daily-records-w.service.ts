@@ -25,6 +25,9 @@ export class DailyRecordsWService {
   mergeOption : any = null;
   rangeCalendar  : any[];
 
+  arrayTempExt : any[];
+  mergeOptionTempExt : any;
+
   timeLine : any[];
 
   constructor(private http : HttpClient) { 
@@ -33,6 +36,7 @@ export class DailyRecordsWService {
 
   getDailyRecordsWbyIdHive(idHive : string){
     this.dailyRecArray = [];
+    this.arrayTempExt = [];
     this.dailyRec = [];
     var start, end = null;
     this.dailyObs = this.http.get<DailyRecordsW[]>(CONFIG.URL+'/dailyRecordsW/hive/'+idHive);
@@ -56,16 +60,17 @@ export class DailyRecordsWService {
           }
           finally{
             if(start != null){
-                console.log(start+'-'+end);
+                //console.log(start+'-'+end);
                 //this.rangeCalendar.push(this.convertDate(data[0].recordDate), this.convertDate(data[data.length-1].recordDate));
-                this.rangeCalendar.push(start,end);
+                //this.rangeCalendar.push(start,end);
                 //console.log(this.rangeCalendar);
+                console.log(data);
                 data.forEach((element, index)=>{
                   this.dailyRec.push({
                     recordDate : this.convertDate(element.recordDate),
                     idHive : element.idHive,
-                    temp_int_min : element.temp_int_min,
-                    temp_int_max : element.temp_int_max,
+                    temp_ext_min : element.temp_ext_min,
+                    temp_ext_max : element.temp_ext_max,
                     weight_min : element.weight_min,
                     weight_max : element.weight_max,
                     weight_gain : element.weight_gain,
@@ -75,10 +80,11 @@ export class DailyRecordsWService {
                     weight_colony : element.weight_colony,
                     weight_filling_rate : element.weight_filling_rate
                 });
+                this.arrayTempExt.push([this.convertDate(element.recordDate), element.temp_ext_max])
               });
-                 //console.log(this.dailyRec);
+                //console.log(this.dailyRec);
                 this.getArray();
-                //console.log(this.dailyRecArray);
+                console.log(this.arrayTempExt);
                 this.updateCalendar();
               }
             }
@@ -92,9 +98,9 @@ export class DailyRecordsWService {
 
   updateCalendar(){
     this.mergeOption = {
-      calendar : [{
-        range: this.rangeCalendar,
-      }],
+     /* calendar : [{
+        range: ,
+      }],*/
       series : [
         {
             data: this.dailyRecArray,
@@ -105,6 +111,21 @@ export class DailyRecordsWService {
         },
 
       ]
+    }
+    this.mergeOptionTempExt = {
+        series : {
+          data : this.arrayTempExt
+        },
+        title: {
+          text: 'Température extérieur maximum'
+      },
+      visualMap: {
+          min: -10,
+          max: 40,
+          splitNumber : 5,
+          inRange: {
+            color: ['#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']        },
+      },
     }
   }
   
@@ -144,8 +165,8 @@ export class DailyRecordsWService {
           element.recordDate,
           element.weight_income_gain, 
           element.idHive,
-          element.temp_int_min,
-          element.temp_int_max,
+          element.temp_ext_min,
+          element.temp_ext_max,
           element.weight_min,
           element.weight_max,
           element.weight_gain,

@@ -3,10 +3,10 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FleursFloraisonService } from './service/fleurs.floraison.service';
-import { FleursINRA } from "./fleursINRA";
-import { FleurITSAP } from "./fleurITSAP";
+import { FleursINRA } from "../../_model/fleursINRA";
+import { FleurITSAP } from "../../_model/fleurITSAP";
 import { Rucher } from '../ruche-rucher/rucher';
-import { FleursTheorique } from './fleurstheorique'
+import { FleursTheorique } from '../../_model/fleurstheorique'
 import { UserloggedService } from '../../userlogged.service';
 import { Observable, Subscription } from 'rxjs';
 import { AnonymousSubscription } from "rxjs/Subscription";
@@ -46,13 +46,13 @@ export class FleursFloraisonComponent implements OnInit {
     nameApiary= new Rucher();
     message="";
     //variable pour stocker le nom français entré
-    selectedFr = new String;
+    selectedFr : string;
     //Variable pour la fleur selectionnée
     //selectedFleur = new FleurObservees();
     //Variable pour la fleur qui contient les éléments de recherche
-    selectedFleurTest = new FleursTheorique();
+    //selectedFleurTest = new FleursTheorique();
     //Variable pour la fleur apibotanica qui contient les éléments de recherche
-    selectedFleurTh = new FleursINRA();
+    //selectedFleurTh = new FleursINRA();
     //Variable pour la présence de la fleur changé
     selectedPresence = new String;
     //Variable pour la période de floraison
@@ -256,6 +256,8 @@ export class FleursFloraisonComponent implements OnInit {
 
   //Change le rucher selectionné
   onSelectRucher(event : any) : void{
+    this.fleursFloraisonService.fleursByRucher = null;
+    this.fleursFloraisonService.mergeOption = null;
     this.fleursFloraisonService.getUserFleur(this.fleursFloraisonService.rucherService.rucher.id);
     this.fleursFloraisonService.rucherService.getRucherDetails();
   }
@@ -281,29 +283,7 @@ export class FleursFloraisonComponent implements OnInit {
   
   //Ajoute la fleur à un rucher
   /*addFleur(fleur){
-    //on fait une copie de la fleur
-    this.selectedFleur.nom = fleur.flowerApi.francais;
-    this.selectedFleur.dateDebutd = fleur.flowerApi.flomind;
-    this.selectedFleur.dateFind = fleur.flowerApi.flomaxd; 
-    this.selectedFleur.dateThDebutd = fleur.flowerApi.flomind;
-    this.selectedFleur.dateThFind = fleur.flowerApi.flomaxd; 
-    this.selectedFleur.dateThDebutdate = fleur.flowerApi.flomindate;
-    this.selectedFleur.dateThFindate = fleur.flowerApi.flomaxdate; 
-    this.selectedFleur.presence = "";
-    this.selectedFleur.username = this.username;
-    this.selectedFleur.photo = fleur.photo;
-    if (this.selectedRucher!=null){
-      if (confirm("Ajouter plante " + this.selectedFleur.nom + " au rucher " + this.nameApiary.name +" ?")) {
-        //A changer avce l'année en cours !!
-        this.fleursFloraisonService.addFlower(this.selectedFleur,this.selectedRucher)
-          .subscribe(data => {},
-            error => this.ErrorMsg=error);
-            //on recharge les fleurs du rucher
-            this.subscribeToDataFleur();
-            //On charge les noms des fleurs (et recharge le graphique avec les bonnes données)
-            this.subscribeToNames();
-      }
-    }
+    this.fleursFloraisonService.addFlower(fleur,fleur.id);
   }*/
 
   //Change le début de floraison observée d'une fleur
@@ -362,7 +342,7 @@ export class FleursFloraisonComponent implements OnInit {
   }
 
   //Lance la recherche des fleurs qui correspondent aux critères entré par l'utilisateur
-  rechercheFleurVariete(){
+  /*rechercheFleurVariete(){
     //On créer un fleur type de recherche
     this.selectedFleurTh.setFrancais(this.selectedFr);
     this.selectedFleurTest.setFlowerApi(this.selectedFleurTh);
@@ -372,10 +352,10 @@ export class FleursFloraisonComponent implements OnInit {
           data => { this.fleursTest = data ;
           }
         );
-  }
+  }*/
 
     //Lance la recherche des fleurs qui correspondent aux critères entré par l'utilisateur
-  rechercheFleurPeriode(){
+ /* rechercheFleurPeriode(){
     //On créer un fleur type de recherche
     this.selectedFleurTest.setType(this.selectedType);
     this.selectedFleurTh.setFlomind(this.selectedFlo);
@@ -386,16 +366,16 @@ export class FleursFloraisonComponent implements OnInit {
         data => { this.fleursTest = data ;
         }
       );
-  }
+  }*/
 
   //Rafraichit la page avec les fleurs qui correspondent à la recherche
   subscribeToDataRechercheVariete(): void {
-    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.rechercheFleurVariete());
+    //this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.rechercheFleurVariete());
   }
 
   //Rafraichit la page avec les fleurs qui correspondent à la recherche
   subscribeToDataRecherchePeriode(): void {
-    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.rechercheFleurPeriode());
+    //this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.rechercheFleurPeriode());
   }
 
   //On recharge la bilbiothèque de fleurs
