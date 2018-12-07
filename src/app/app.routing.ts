@@ -14,6 +14,7 @@ import { CapteurComponent } from './accueil/capteur/capteur.component';
 import { RapportComponent } from './accueil/rapport/rapport.component';
 import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
 import { DispositionRucheComponent } from './accueil/disposition-ruche/disposition-ruche.component';
+import { DemoComponent } from './demo/demo.component';
 
 const routes: Routes =[
    /* { path: '',             component: LoginComponent },  
@@ -43,6 +44,7 @@ const routes: Routes =[
     { path: 'rapport',          canActivate : [AuthGuard], component: RapportComponent},
     { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
     { path: 'position-Ruche', canActivate : [AuthGuard], component: DispositionRucheComponent},
+    { path : 'demo', component : DemoComponent}
     
 ];
 

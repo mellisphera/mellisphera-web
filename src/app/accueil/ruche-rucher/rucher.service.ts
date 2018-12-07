@@ -26,7 +26,6 @@ export class RucherService {
     rucherUpdate : RucherModel;
 
     rucherSelectUpdate : RucherModel;
-
     rucherObs : Observable<RucherModel>;
     ruchersObs : Observable<RucherModel[]>;
 
@@ -34,7 +33,17 @@ export class RucherService {
         public rucheService : RucheService, 
         private dailyRec : DailyRecordService,
         public observationService : ObservationService) {
-        this.getUserRuchersLast(this.user.currentUser().username);
+        if(sessionStorage.getItem("currentUser")){
+            console.log("exist")
+            if(sessionStorage.getItem("demo")){
+                console.log("t");
+                this.getOneApiaryById('5bc48388dc7d27634d281536');
+            }
+            else{
+                this.getUserRuchersLast(this.user.currentUser().username);
+            }
+            
+        }
         this.initRuche();
 
     }
@@ -101,6 +110,18 @@ export class RucherService {
                 this.dailyRec.getDailyRecThByApiary(this.rucher.id);
             }
         );
+    }
+    getOneApiaryById(idApiary){
+        this.rucherObs = this.http.get<RucherModel>(CONFIG.URL+'apiaries/id/'+idApiary);
+        this.rucherObs.subscribe(
+            (data)=>{
+              this.rucher = data;
+              console.log(this.rucher);
+            },
+            (err)=>{
+              console.log(err);
+            }
+        )
     }
 
     getRucherDetails(){

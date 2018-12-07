@@ -1,0 +1,12 @@
+#text{
+    text-align: justify;
+}
+#flex{
+    display: flex;
+    justify-content: space-between;
+}
+.chart{
+    margin-top: 10px;
+    margin: auto;
+    padding: 10px;
+}
