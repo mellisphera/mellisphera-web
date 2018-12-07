@@ -16,7 +16,9 @@ export class UserloggedService {
    }
    currentUser(){
      //sessionStorage.setItem("demo",'demo');
-    sessionStorage.getItem("demo") ? sessionStorage.removeItem("demo");
+    if(sessionStorage.getItem("demo")){
+      sessionStorage.removeItem("demo");
+    }
     return JSON.parse(sessionStorage.getItem('currentUser'));
     //return sessionStorage.getItem("currentUser") ? JSON.parse(sessionStorage.getItem('currentUser')) : null;
     //return this.authService.login;
