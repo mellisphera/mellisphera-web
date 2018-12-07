@@ -73,6 +73,7 @@ export class RucherService {
             ville : ''
          };
          this.rucherUpdate = this.rucher;
+         this.detailsRucher = this.rucher;
     }
     // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
     // pour créer un rucher
