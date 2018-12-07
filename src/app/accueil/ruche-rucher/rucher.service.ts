@@ -24,6 +24,7 @@ export class RucherService {
     ruchers : RucherModel[] = null;
     detailsRucher : RucherModel;
     rucherUpdate : RucherModel;
+    rucherDemo : RucherModel;
 
     rucherSelectUpdate : RucherModel;
     rucherObs : Observable<RucherModel>;
@@ -36,7 +37,6 @@ export class RucherService {
         if(sessionStorage.getItem("currentUser")){
             console.log("exist")
             if(sessionStorage.getItem("demo")){
-                console.log("t");
                 this.getOneApiaryById('5bc48388dc7d27634d281536');
             }
             else{
@@ -111,11 +111,12 @@ export class RucherService {
             }
         );
     }
+    
     getOneApiaryById(idApiary){
         this.rucherObs = this.http.get<RucherModel>(CONFIG.URL+'apiaries/id/'+idApiary);
         this.rucherObs.subscribe(
             (data)=>{
-              this.rucher = data;
+              this.rucherDemo = data;
               console.log(this.rucher);
             },
             (err)=>{
