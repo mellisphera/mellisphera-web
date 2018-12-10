@@ -29,9 +29,10 @@ export class DailyStockHoneyService {
       name:'',
       type:'line',
       stack: '',
-      areaStyle: {normal: {}},
+      itemStyle: {normal: {areaStyle: {type: 'default'}}},
       data:[''],
       showSymbol: false,
+      smooth : 'true',
       label: {
         normal: {
             show: false,
@@ -49,18 +50,7 @@ export class DailyStockHoneyService {
     this.dailyStockObs.subscribe(
       (data)=>{
         console.log(data);
-        data.forEach(element=>{
-          this.dailyStock.push({
-            id:element.id,
-            nom : element.nom,
-            stockJ : element.stockJ,
-            apportJ : element.apportJ,
-            date : element.date,
-            idApiary : element.idApiary,
-            idHive : element.idHive,
-            username : element.username
-          });
-        });
+        this.dailyStock = data;
         this.mergeOption = {
 
           legend : {
@@ -70,16 +60,16 @@ export class DailyStockHoneyService {
         };
         this.countFlower();
         this.dailyStockByFleur();
-        //console.log(this.dailyStockByFlower);
+        console.log(this.dailyStock);
         /* Mise à jour du template avec les info récupèrer */
         for(var elt in this.dailyStockByFlower){
           //console.log(this.dailyStockByFlower[elt]);
           this.templateSerie.name = elt;
           this.templateSerie.data = [];
-          this.templateSerie.stack = "test";
           this.templateSerie.data = this.dailyStockByFlower[elt];
           this.mergeOption.series.push(this.templateSerie)
           this.cleanTemplate();
+          console.log(this.templateSerie  )
         }
         this.mergeOption.legend.data = this.typeFlower;
         /*console.log(this.mergeOption);
@@ -110,10 +100,11 @@ export class DailyStockHoneyService {
     this.templateSerie = {
       name:'',
       type:'line',
-      stack: '',
-      areaStyle: {normal: {}},
+      stack: 'fleurs',
+      itemStyle: {normal: {areaStyle: {type: 'default'}}},
       data:[''],
       showSymbol: false,
+      smooth : 'true',
       label: {
         normal: {
             show: false,
@@ -131,13 +122,15 @@ export class DailyStockHoneyService {
       this.dailyStockByFlower[''+element] = [];
     });
     this.dailyStock.forEach((element,index)=>{
-      if(this.arrayDate.indexOf(element.date) == -1){
+      if(this.arrayDate.indexOf(element) == -1){
         this.arrayDate.push(element.date);
       }
-      this.dailyStockByFlower[''+element.nom].push({name : element.date, value : [
+      /*this.dailyStockByFlower[''+element.nom].push({name : element.date, value : [
         element.date, element.stockJ
       ]}
-      );
+      
+      );*/
+      this.dailyStockByFlower[''+element.nom].push([element.date, Math.round(element.stockJ*100)/100]);
     })
   }
   cleanQuery(){
