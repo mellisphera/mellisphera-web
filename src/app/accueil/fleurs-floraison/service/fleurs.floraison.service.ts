@@ -7,6 +7,7 @@ import { FleursTheorique } from '../../../_model/fleurstheorique'
 import { Rucher } from '../../ruche-rucher/rucher';
 import { RucherService } from '../../ruche-rucher/rucher.service';
 import { FleurObservees } from '../../../_model/fleur-observees'
+import { UserloggedService } from '../../../userlogged.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,44 +23,35 @@ export class    FleursFloraisonService {
     nomFleur : String[];
     datesFleur : number[];
 
+    newFlower : FleurObservees;
+
     mergeOption  : any;
     dataNom : ['ceriser', 'toto', 'ds', 'dsd', 'q', 's'];
     tabFleurByDateGraph : any[];
-    templateSerie = {
-        name: '',
-        type: 'line',
-        color:'#509B21',
-        symbolSize: 12,
-        data : []
-    };
-    templateLegend: {
-        left: 'right',
-        data: null
-    };
+    templateSerie;
+    templateLegend;
     fleursObs : Observable<FleurObservees[]>;
-    constructor(private http:HttpClient, public rucherService : RucherService) {
-        if(sessionStorage.getItem("demo")){
-            this.rucherService.rucherObs.subscribe(
-                ()=>{},()=>{},
-                ()=>{
-                    console.log(this.rucherService.rucher.id);
-                    this.getUserFleur(this.rucherService.rucher.id);
-                }
-            )
-        }
-        else{
-            this.rucherService.ruchersObs.subscribe(
-                ()=>{},()=>{},
-                ()=>{
-                    console.log(this.rucherService.rucher.id);
-                    this.getUserFleur(this.rucherService.rucher.id);
-                }
-            )
-        }
+    constructor(private http:HttpClient, public rucherService : RucherService, private userService : UserloggedService) {
+        this.templateSerie = {
+            name: '',
+            type: 'line',
+            color:'#509B21',
+            symbolSize: 12,
+            data : []
+        };
+        this.templateLegend = {
+            left: 'right',
+            data: null
+        };
+        this.initFleurObservees();
+        this.rucherService.ruchersObs.subscribe(
+            ()=>{},()=>{},
+            ()=>{
+                console.log(this.rucherService.rucher.id);
+                this.getUserFleur(this.rucherService.rucher.id);
+            }
+        )
     }
-    data : [
-        ['2018-03-13','ceriser']
-    ]
     //Récupère la liste des fleurs théoriques
     getFleurTest(){
         this.http.get<FleursTheorique[]>(CONFIG.URL+'flowersTh/all').subscribe(
@@ -73,6 +65,24 @@ export class    FleursFloraisonService {
         );
     }
 
+    initFleurObservees(){
+        this.newFlower = {
+            id : '',
+            nom : '',
+            dateDebutd : null,
+            dateFind : null,
+            dateDebutdate : null,
+            dateFindate : null,
+            dateThDebutd : '',
+            dateThFind : '',
+            dateThDebutdate: '',
+            dateThFindate: '',
+            presence : '',
+            username : '', 
+            idApiary : '',
+            photo : ''
+        };
+    }
     sortTheoricalFlower(){
         this.tabFleurByDateGraph = [];
         this.cleanTemplate();
@@ -179,9 +189,19 @@ export class    FleursFloraisonService {
     }
 
     //Ajoute une fleur à un rucher de l'utilisateur
-    addFlower(fleur,id){
+    addFlower(fleur){
+        this.newFlower.nom = fleur.flowerApi.francais;
+        this.newFlower.dateDebutd = fleur.flowerApi.flomind;
+        this.newFlower.dateFind = fleur.flowerApi.flomaxd;
+        this.newFlower.dateThDebutd = fleur.flowerApi.flomind;
+        this.newFlower.dateThFind = fleur.flowerApi.flomaxd;
+        this.newFlower.dateThDebutdate = fleur.flowerApi.flomindate;
+        this.newFlower.dateThFindate = fleur.flowerApi.flomaxdate;
+        this.newFlower.presence = "";
+        this.newFlower.username = this.userService.currentUser().username;
+        this.newFlower.photo = fleur.photo;
         console.log(fleur);
-        this.http.put(CONFIG.URL+'flowersOb/add/'+id,fleur).subscribe(
+        this.http.put(CONFIG.URL+'flowersOb/add/'+this.rucherService.rucher.id,this.newFlower).subscribe(
             ()=>{},
             (err)=>{
                 console.log(err);

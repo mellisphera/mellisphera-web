@@ -27,17 +27,7 @@ export class RucheService {
   constructor(private user : UserloggedService, private http : HttpClient, private observationService : ObservationService) {
     this.ruches = [];
     this.initRuche();
-    if(sessionStorage.getItem("currentUser")){
-      this.getRucheByUsername(this.user.currentUser().username);
-    }
-    else{
-      sessionStorage.setItem("currentUser","jhe");
-    }
-  /* if(sessionStorage.getItem("idApiaryUpdate")){
-      let id = sessionStorage.getItem("idApiaryUpdate");
-      console.log(id);
-      this.getRucheByApiary(this.user.currentUser().username,id);
-    }*/
+    this.getRucheByUsername(this.user.currentUser().username);
    }
    initRuche(){
     this.ruche = { 

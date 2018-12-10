@@ -36,12 +36,8 @@ export class RucherService {
         public observationService : ObservationService) {
         if(sessionStorage.getItem("currentUser")){
             console.log("exist")
-            if(sessionStorage.getItem("demo")){
-                this.getOneApiaryById('5bc48388dc7d27634d281536');
-            }
-            else{
-                this.getUserRuchersLast(this.user.currentUser().username);
-            }
+            this.getOneApiaryById('5bc48388dc7d27634d281536');
+            this.getUserRuchersLast(this.user.currentUser().username);
             
         }
         this.initRuche();
@@ -118,7 +114,7 @@ export class RucherService {
         this.rucherObs.subscribe(
             (data)=>{
               this.rucherDemo = data;
-              console.log(this.rucher);
+              console.log(this.rucherDemo);
             },
             (err)=>{
               console.log(err);
