@@ -4,5 +4,14 @@
 }
 
 body{
-    background-color: rgb(247, 247, 247);
+    background: #373B47 url('../../assets/mellispherfa.jpg') no-repeat center fixed;
+    background-size: contain;
+}    
+#content{
+    color:white;
+}
+input[type=text],input[type=password]{
+    width: 30%;
+    color: white;
+    background-color: rgba(0,0,0,0.5);
 }

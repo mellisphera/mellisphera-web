@@ -27,7 +27,7 @@ export class RucheService {
   constructor(private user : UserloggedService, private http : HttpClient, private observationService : ObservationService) {
     this.ruches = [];
     this.initRuche();
-    this.getRucheByUsername(this.user.currentUser().username);
+    this.getRucheByUsername(this.user.currentUser().username);  
    }
    initRuche(){
     this.ruche = { 
