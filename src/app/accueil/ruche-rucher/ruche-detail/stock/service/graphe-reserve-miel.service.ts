@@ -27,12 +27,12 @@ export class GrapheReserveMielService {
         }
     },
     dataZoom: [
-        {   
+        /*{   
             show: true,
             realtime: true,
             start: 0,
             end: 100
-        },
+        },*/
         {
             type: 'inside',
             show: true,
@@ -52,17 +52,17 @@ export class GrapheReserveMielService {
             type : 'time',
             splitLine: {
                 show: false
-            }
+            },
+            min : '2018-01-01T00:00:00.000+0000',
+            max : '2018-12-31T00:00:00.000+0000'
         }
     ],
     yAxis : [
         {
             name : 'Poids (kg)',
-            type : 'value'
+            type : 'value'  
+                
         }
-    ],
-    series : [
-        
     ],
 };
 

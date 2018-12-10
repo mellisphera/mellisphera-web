@@ -10,7 +10,7 @@ port='43975'
 
 mongo = MongoClient('mongodb://'+user+':'+password+'@'+host+':'+port+'/')
 
-db =  mongo['production']
+db =  mongo['tdebug']
 
 collection = db['User']
 

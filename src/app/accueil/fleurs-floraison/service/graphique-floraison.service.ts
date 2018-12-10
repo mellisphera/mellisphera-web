@@ -24,8 +24,10 @@ export class GraphiqueFloraisonService {
           },
           //Le pointeur ne bouge qu'avec la souris
           tooltip: {
-            triggerOn: 'none',
-            trigger:'axis',
+            trigger: 'item',
+            formatter: (params)=>{
+                return params.data[0]+'<br/>'+params.seriesName+ ' : '+params.data[1];
+            }    
           },
           //Défini l'axe ou les axes abscisse(s)
           xAxis: [
@@ -34,23 +36,7 @@ export class GraphiqueFloraisonService {
               min:this.currentYear+'-01-01',
               max:this.currentYear+'-12-31',
               
-              //Option pour le pointeur
-              axisPointer: {
-                value: new Date(),
-                lineStyle: {
-                    color: '#004E52',
-                    opacity: 0.5,
-                    width: 2
-                },
-                label: {
-                    show: true,
-                    backgroundColor: '#004E52'
-                },
-                handle: {
-                    show: true,
-                    color: '#004E52'
-                }
-              },
+              //Option pour le pointeu
     
               splitLine: {
                   show: true,
