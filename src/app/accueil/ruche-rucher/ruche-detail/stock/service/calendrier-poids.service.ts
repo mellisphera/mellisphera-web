@@ -18,7 +18,7 @@ export class CalendrierPoidsService {
   option = {
     backgroundColor: 'white',
     title: {
-        top: 70,
+        top: -80,
         text: 'Weight_max for each day',
         left: 'center',
         textStyle: {
@@ -47,7 +47,7 @@ export class CalendrierPoidsService {
         }
     },
    calendar: [{
-        top: 140,
+        top: 70,
         left: 'center',
         range: ['2018-1-01', '2018-12-31'],
         orient: 'horizontal',

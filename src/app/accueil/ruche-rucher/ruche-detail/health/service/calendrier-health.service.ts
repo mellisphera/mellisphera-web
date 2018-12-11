@@ -41,7 +41,7 @@ export class CalendrierHealthService {
     option = {
     backgroundColor: 'white',
     title: {
-        top: 70,
+        top: 20,
         text: 'Weight_max for each day',
         left: 'center',
         textStyle: {
@@ -73,7 +73,7 @@ export class CalendrierHealthService {
         left: 'center',
         range: ['2018-01-01', '2018-12-30'],
         orient: 'horizontal',
-        cellSize: '30',
+        cellSize: '20',
         splitLine: {
             show: true,
             lineStyle: {
