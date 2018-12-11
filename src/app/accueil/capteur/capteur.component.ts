@@ -135,8 +135,8 @@ export class CapteurComponent implements OnInit {
         console.log(formValue);
         if(formValue.checkbox != "stock"){
             console.log("ruche")
-            this.capteurService.capteur.idHive = this.rucherService.rucheService.ruche.id;
-            this.capteurService.capteur.idApiary = this.rucherService.rucher.id;
+            this.capteurService.capteur.idHive = this.rucherService.rucheService.rucheUpdate.id;
+            this.capteurService.capteur.idApiary = this.rucherService.rucherUpdate.id;
         }
         else{
             this.capteurService.capteur.idHive = "stock";
