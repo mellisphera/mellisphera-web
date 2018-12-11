@@ -47,6 +47,8 @@ export class FleursFloraisonComponent implements OnInit {
     message="";
     //variable pour stocker le nom français entré
     selectedFr : string;
+    selectedType : String;
+
     //Variable pour la fleur selectionnée
     //selectedFleur = new FleurObservees();
     //Variable pour la fleur qui contient les éléments de recherche
@@ -90,7 +92,6 @@ export class FleursFloraisonComponent implements OnInit {
     //Variable pour le rucher selectionné
     selectedRucher = new Rucher();
     //Variable pour le type selectionné
-    selectedType = new String;
     //La date d'aujourd'hui
     date = new Date();
     //L'année en cours
@@ -114,6 +115,7 @@ export class FleursFloraisonComponent implements OnInit {
                 this.currentFlomax = localStorage.getItem("currentFlomax");
                 this.currentPresence = localStorage.getItem("currentPresence");
                 this.currentFlo = localStorage.getItem("currentFlo");
+                this.selectedType = '';
   } 
 
   //Au chargement de la page on execute ces fonctions

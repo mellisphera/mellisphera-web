@@ -32,3 +32,15 @@ td,th{
   display: flex;
   justify-content: center;
 }
+#contentFlower{
+  height: 60%;
+  overflow: auto;
+}
+#tickmarks{
+  display: flex;
+
+}
+#tickmarks option{
+  text-align: center;
+  width: 10%;
+}

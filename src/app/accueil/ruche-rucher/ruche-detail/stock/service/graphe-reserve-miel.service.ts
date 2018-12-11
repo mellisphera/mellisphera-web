@@ -22,9 +22,6 @@ export class GrapheReserveMielService {
     legend : {
       },
     toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
     },
     dataZoom: [
         /*{   
@@ -57,13 +54,12 @@ export class GrapheReserveMielService {
             max : '2018-12-31T00:00:00.000+0000'
         }
     ],
-    yAxis : [
+    yAxis :
         {
             name : 'Poids (kg)',
             type : 'value'  
                 
         }
-    ],
 };
 
 

@@ -75,7 +75,7 @@
                                    <th class="text-justify" scope="col">Actions</th>
                                </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="contentFlower">
                                 <ng-container *ngFor = "let fleur of fleursFloraisonService.fleursByRucher; let i = index">
                                         <tr>
                                             <td> <img src="{{ fleur.photo }}" class="zoom"> </td>
@@ -165,13 +165,29 @@
                                                   <br/>
                                                     <label>Type  : </label>
                                                     <select style="width:400px" [(ngModel)]="selectedType" (click)="onSelectType($event)" class="form-control " >
-                                                        <option value=""></option>
-                                                        <option *ngFor="let type of types" [value]="type" >
+                                                        <option value=""> Tout les types</option>
+                                                        <option *ngFor="let type of fleursFloraisonService.typesFleur" [value]="type" >
                                                             {{ type }}
                                                         </option>
                                                     </select>
                                                     <br/>   
                                                     <label>Periode de floraison  : </label>
+                                                    
+                                                        <datalist id="tickmarks">
+                                                            <option value="0" label="Janvier">
+                                                            <option value="10" label="Février">
+                                                            <option value="20" label="Mars">
+                                                            <option value="30" label="Avril">
+                                                            <option value="40" label="Mail">
+                                                            <option value="50" label="Juin">
+                                                            <option value="60" label="Juillet">
+                                                            <option value="70" label="Aôut">
+                                                            <option value="80" label="Septembre">
+                                                            <option value="90" label="Octobre">
+                                                            <option value="100" label="Novembre">
+                                                            <option value="100" label="Decembre">
+                                                        </datalist>
+                                                        <input type="range" list="tickmarks"  min="1" max="12" value="12" step="1">
                                                         <br/>
                                                         <input type="range" style="width:400px" [(ngModel)]="selectedFlo" (click)="onSelectFlo($event)" value="0" min="0" max="12">
                                                         <img src="/assets/img/mois.png" style="width:400px">
@@ -197,7 +213,7 @@
                                        </tr>
                                    </thead>
                                <tbody>                  
-                                   <tr *ngFor="let fleur of ( fleursFloraisonService.fleurThs | searchFleur : selectedFr)" name="pollen">
+                                   <tr *ngFor="let fleur of ( fleursFloraisonService.fleurThs | searchFleur : selectedFr | searchFleurByType :selectedType)" name="pollen">
                                        <td> <img src="{{ fleur.photo }}" class="zoom"> </td>
                                        <td> <b> {{ fleur.flowerApi.francais }} </b> </td>
                                        <td> {{ fleur.flowerApi.latin }} </td>

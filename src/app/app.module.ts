@@ -67,7 +67,7 @@ import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observat
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './shared/shared.module';
 import { PipeCapteur, SearchCapteur } from './accueil/capteur/capteur.pipe';
-import { SearchFleurPipe } from './accueil/fleurs-floraison/service/search-fleur.pipe';
+import { SearchFleurPipe, searchFleurByType } from './accueil/fleurs-floraison/service/search-fleur.pipe';
 import { DemoComponent } from './demo/demo.component';
 
 @NgModule({
@@ -97,6 +97,7 @@ import { DemoComponent } from './demo/demo.component';
     PipeCapteur,
     SearchCapteur,
     SearchFleurPipe,
+    searchFleurByType,
     DemoComponent
 
   ],

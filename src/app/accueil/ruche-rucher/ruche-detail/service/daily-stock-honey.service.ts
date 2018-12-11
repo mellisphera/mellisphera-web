@@ -49,7 +49,6 @@ export class DailyStockHoneyService {
     this.dailyStockObs = this.http.get<DailyStockHoney[]>(CONFIG.URL+'/dailyStockHoney'+'/hive/'+idHive);
     this.dailyStockObs.subscribe(
       (data)=>{
-        console.log(data);
         this.dailyStock = data;
         this.mergeOption = {
 
@@ -60,7 +59,6 @@ export class DailyStockHoneyService {
         };
         this.countFlower();
         this.dailyStockByFleur();
-        console.log(this.dailyStock);
         /* Mise à jour du template avec les info récupèrer */
         for(var elt in this.dailyStockByFlower){
           //console.log(this.dailyStockByFlower[elt]);
@@ -123,14 +121,14 @@ export class DailyStockHoneyService {
     });
     this.dailyStock.forEach((element,index)=>{
       if(this.arrayDate.indexOf(element) == -1){
-        this.arrayDate.push(element.date);
+        this.arrayDate.push(''+element.date);
       }
       /*this.dailyStockByFlower[''+element.nom].push({name : element.date, value : [
         element.date, element.stockJ
       ]}
       
       );*/
-      this.dailyStockByFlower[''+element.nom].push([element.date, Math.round(element.stockJ*100)/100]);
+      this.dailyStockByFlower[''+element.nom].push([''+element.date, Math.round(element.stockJ*100)/100]);
     })
   }
   cleanQuery(){

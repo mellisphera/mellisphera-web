@@ -20,6 +20,8 @@ export class    FleursFloraisonService {
     fleurThs : FleursTheorique[];
 
     typesFleur : String[];
+    typeFleurDef : String;
+
     nomFleur : String[];
     datesFleur : number[];
 
@@ -119,7 +121,7 @@ export class    FleursFloraisonService {
             ()=>{
                 this.sortTheoricalFlower();
                 this.getFleurTest();
-                //this.getType();
+                this.getType();
             }
         );
     }
@@ -151,6 +153,7 @@ export class    FleursFloraisonService {
             (data)=>{
                 this.typesFleur = data;
                 console.log(this.typesFleur);
+                this.typeFleurDef = this.typesFleur[0];
             },
             (err)=>{
                 console.log(err);
