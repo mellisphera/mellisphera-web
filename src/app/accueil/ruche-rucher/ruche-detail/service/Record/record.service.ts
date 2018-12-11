@@ -33,7 +33,10 @@ export class RecordService {
       (data)=>{
         this.recArray = data;
         this.sortRecordByTemp();
+        console.log(data);
         console.log(this.recArrayWeight);
+        console.log(this.recArrrayTint);
+        console.log(this.recArrayText);
         this.mergeOption = {
           series: [
             {
@@ -56,17 +59,6 @@ export class RecordService {
   }
 
   sortRecordByTemp(){
-
-    /*this.data.forEach(element=>{
-      element[1]=[];
-      element[1] = [
-        {
-          name : element[1],
-          value : 5125
-        }
-      ]
-    });*/
-    //Thu Mar 08 20:46:26 CET 2018
 
     this.recArrrayTint = [];
     this.recArrayText = [];
