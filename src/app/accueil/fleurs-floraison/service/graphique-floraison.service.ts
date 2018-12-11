@@ -37,7 +37,9 @@ export class GraphiqueFloraisonService {
               max:this.currentYear+'-12-31',
               
               //Option pour le pointeu
-    
+              label:{
+
+              },
               splitLine: {
                   show: true,
                   lineStyle: {
@@ -49,10 +51,6 @@ export class GraphiqueFloraisonService {
               axisLine: {
                   show: false
               },
-    
-              axisLabel: {
-                rotate: 40
-              }
              }
           
       

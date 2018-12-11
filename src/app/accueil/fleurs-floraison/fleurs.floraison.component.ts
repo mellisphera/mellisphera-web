@@ -48,14 +48,10 @@ export class FleursFloraisonComponent implements OnInit {
     //variable pour stocker le nom français entré
     selectedFr : string;
     selectedType : String;
+    
+    currentMonth : number;
+    currentMonthStr : string[];
 
-    //Variable pour la fleur selectionnée
-    //selectedFleur = new FleurObservees();
-    //Variable pour la fleur qui contient les éléments de recherche
-    //selectedFleurTest = new FleursTheorique();
-    //Variable pour la fleur apibotanica qui contient les éléments de recherche
-    //selectedFleurTh = new FleursINRA();
-    //Variable pour la présence de la fleur changé
     selectedPresence = new String;
     //Variable pour la période de floraison
     selectedFlo : string;
@@ -116,6 +112,8 @@ export class FleursFloraisonComponent implements OnInit {
                 this.currentPresence = localStorage.getItem("currentPresence");
                 this.currentFlo = localStorage.getItem("currentFlo");
                 this.selectedType = '';
+                this.currentMonth = 0;
+                this.currentMonthStr = ['','Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Nomvembre','Decembre'];
   } 
 
   //Au chargement de la page on execute ces fonctions

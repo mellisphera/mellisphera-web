@@ -52,9 +52,9 @@
     
     
     
-    <div class="modal fade" id="biblioteque" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="biblioteque" tabindex="-1" role="dialog"  aria-hidden="true" id="modalFleur">
        <div class="modal-dialog" role="document">
-         <div class="modal-content" style="width:1000px">
+         <div class="modal-content" style="width:70%">
            <div class="modal-header">
              <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Plantes Mellifères <br/> {{ fleursFloraisonService.rucherService.rucher.name }}</h4></h5>
              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -89,7 +89,7 @@
                                                 <input type="text" [disabled]="!(selectedFlo == fleur.id)" [(ngModel)]="fleur.dateFindate[currentYear]"  placeholder="{{fleur.dateThFindate}}"  name="dateFind-{{in}}"/>
                                             </td>
                                             <td>
-                                                <select [disabled]="!(selectedFlo == fleur.id)"  [(ngModel)]="fleur.presence" (click)="onSelectPresence($event)" class="form-control ">
+                                                <select [disabled]="!(selectedFlo == fleur.id)"  [(ngModel)]="fleur.presence" (click)="onSelectPresence($event)" class="form-control" id="selectPresence">
                                                     <option value="Elevée" >
                                                         Elevée
                                                     </option>
@@ -133,7 +133,7 @@
        
     <div class="modal fade" id="recherche"  tabindex="-1" role="dialog" aria-hidden="true">
            <div class="modal-dialog" role="document">
-             <div class="modal-content" style="width:1000px">
+             <div class="modal-content">
                <div class="modal-header">
                  <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Annuaire de Plantes Mellifères</h4></h5>
                  <button class="btn btn-primary" style="right:0px" data-toggle="modal" data-target="#biblioteque" data-dismiss="modal" > <i class="fa fa-book"></i>Mes Plantes</button>
@@ -162,37 +162,40 @@
                                                      <br/>
                                                 </div>
                                                 <div id="periode" class="tab-pane fade">
-                                                  <br/>
-                                                    <label>Type  : </label>
-                                                    <select style="width:400px" [(ngModel)]="selectedType" (click)="onSelectType($event)" class="form-control " >
-                                                        <option value=""> Tout les types</option>
-                                                        <option *ngFor="let type of fleursFloraisonService.typesFleur" [value]="type" >
-                                                            {{ type }}
-                                                        </option>
-                                                    </select>
-                                                    <br/>   
-                                                    <label>Periode de floraison  : </label>
-                                                    
-                                                        <datalist id="tickmarks">
-                                                            <option value="1" label="Janvier">
-                                                            <option value="2" label="Février">
-                                                            <option value="3" label="Mars">
-                                                            <option value="4" label="Avril">
-                                                            <option value="5" label="Mail">
-                                                            <option value="6" label="Juin">
-                                                            <option value="7" label="Juillet">
-                                                            <option value="8" label="Aôut">
-                                                            <option value="9" label="Septembre">
-                                                            <option value="10" label="Octobre">
-                                                            <option value="11" label="Novembre">
-                                                            <option value="12" label="Decembre">
-                                                        </datalist>
-                                                        <input type="range" list="tickmarks"  min="1" max="12" value="12" step="1">
-                                                        <br/>
-                                                        <input type="range" style="width:400px" [(ngModel)]="selectedFlo" (click)="onSelectFlo($event)" value="0" min="0" max="12">
+                                                    <div id="searchPeriode">
+                                                            <br/>
+                                                            <label>Type  : </label>
+                                                            <select style="width:400px" [(ngModel)]="selectedType" (click)="onSelectType($event)" class="form-control " >
+                                                                <option value=""> Tout les types</option>
+                                                                <option *ngFor="let type of fleursFloraisonService.typesFleur" [value]="type" >
+                                                                    {{ type }}
+                                                                </option>
+                                                            </select>
+                                                            <br/>  
+                                                    </div> 
+                                                       <!-- <input type="range" style="width:400px" [(ngModel)]="selectedFlo" (click)="onSelectFlo($event)" value="0" min="0" max="12">
                                                         <img src="/assets/img/mois.png" style="width:400px">
                                                         <br/>
-                                                    <button type="submit" (click)="subscribeToDataRecherchePeriode()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>
+                                                    <button type="submit" (click)="subscribeToDataRecherchePeriode()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>-->
+                                                    <div id="groupRange">
+                                                            <label>Periode de floraison  : </label>
+                                                            <datalist id="tickmarks">
+                                                                <option value="1">
+                                                                <option value="2">
+                                                                <option value="3">
+                                                                <option value="4">
+                                                                <option value="5">
+                                                                <option value="6">
+                                                                <option value="7">
+                                                                <option value="8">
+                                                                <option value="9">
+                                                                <option value="10">
+                                                                <option value="11">
+                                                                <option value="12">
+                                                            </datalist>
+                                                        <input type="text" *ngIf="currentMonth>0" [disabled] name="mois" [value]="currentMonthStr[currentMonth]"/>
+                                                        <input type="range" list="tickmarks"  data-toggle="tooltip" data-placement="top" [title]="currentMonthStr[currentMonth]" [(ngModel)]="currentMonth"  min="1" max="12" value="12" step="1">
+                                                    </div>
                                                 </div>
                                             </div>
                                        </div>
@@ -213,7 +216,7 @@
                                        </tr>
                                    </thead>
                                <tbody>                  
-                                   <tr *ngFor="let fleur of ( fleursFloraisonService.fleurThs | searchFleur : selectedFr | searchFleurByType :selectedType)" name="pollen">
+                                   <tr *ngFor="let fleur of ( fleursFloraisonService.fleurThs | searchFleur : selectedFr | searchFleurByType :selectedType | searchFleurByDate : currentMonth )" name="pollen">
                                        <td> <img src="{{ fleur.photo }}" class="zoom"> </td>
                                        <td> <b> {{ fleur.flowerApi.francais }} </b> </td>
                                        <td> {{ fleur.flowerApi.latin }} </td>
@@ -223,12 +226,12 @@
                                        <td> <img src="{{ fleur.flowerItsap.interet_nectar }}"></td>
                                        <td> <img src="{{ fleur.flowerItsap.indice_confiance }}"> </td>
                                        <td> 
-                                           <select  [(ngModel)]="fleursFloraisonService.rucherService.rucherSelectUpdate" class="form-control " id="sel1">
+                                           <select  [(ngModel)]="fleursFloraisonService.rucherService.rucherSelectUpdate" class="form-control selectStyle" id="sel1">
                                                <option  *ngFor="let rucher of fleursFloraisonService.rucherService.ruchers" [ngValue]="rucher" >
                                                    {{rucher.name}}
                                                </option>
                                            </select>
-                                           <button data-toggle="tooltip" data-html="true" title="Ajouter au rucher" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;" class="btn btn-success btn-lg" (click)="fleursFloraisonService.addFlower(fleur,fleur.id);" >
+                                           <button data-toggle="tooltip" data-html="true" title="Ajouter au rucher" data-toggle="modal" style="margin-left: 1%; padding: 0;border: none; background: none;" class="btn btn-success btn-lg" (click)="fleursFloraisonService.addFlower(fleur,fleur.id);" >
                                                <i class="fa fa-plus"></i>
                                            </button>
                                        </td>

@@ -21,12 +21,16 @@
   //Met la photo en 1er plan
   z-index: 2;
 }
+.modal-body{
+  padding: 0px;
+}
 button{
   margin-right: 8px;
 }
 td,th{
   width: 10%;
   text-align: center;
+  padding: 0px;
 }
 .endtTD{
   display: flex;
@@ -43,4 +47,36 @@ td,th{
 #tickmarks option{
   text-align: center;
   width: 10%;
+}
+input[type=range]{
+  width: 90%;
+}
+#groupRange{
+  text-align: center;
+  width: 100%;
+}
+#periode{
+  display: flex;
+}
+input[name="mois"]{
+  border-radius: 20px;
+  width: 13%;
+  text-align: center;
+  padding: 1%;
+  margin-bottom: 1%;
+}
+.modal-dialog{
+  position: absolute;
+  left: 20%;
+  /* now you must set a margin left under zero - value is a half width your window */
+  /*margin-left: -312px;*/
+  /* this same situation is with height - example */
+  height: 500px;
+  top: 0%;
+  width: 70%;
+  /*margin-top: -250px;*/
+}
+.selectStyle{
+  display: inline-block;
+  width: 50%;
 }
