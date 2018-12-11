@@ -14,7 +14,7 @@
             <div class="col-sm-9">                        
                   <div class="form-inline" >
                     <div class="form-group">
-                        <label><h4>Rucher :</h4> </label>
+                        <label><h4>Apiary :</h4> </label>
                         <select [(ngModel)]="rucherService.rucher" name="rucher" id="sel1" class="form-control" (change)="onSelectRucher()">
                             <option *ngFor="let rucher of rucherService.ruchers; let i = index" [id]="i" [ngValue]="rucher" >{{ rucher.name }}</option>
                           </select>  
@@ -26,7 +26,7 @@
                           <div class="panel panel-info ">
                               <div class="panel-heading "  >
                                   <h4 class="panel-title" >
-                                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><b>1. Ruches</b></a>
+                                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><b>Hives</b></a>
                                   </h4>
                               </div>
                               <div id="collapseOne" class="panel-collapse collapse in">
@@ -42,9 +42,9 @@
                                         <table class="table">    
                                             <thead class="thead-dark">
                                             <tr>
-                                                <th scope="col">Ruche</th>
+                                                <th scope="col">Hive</th>
                                                 <th scope="col">Description</th>
-                                                <th scope="col">Actions</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -83,7 +83,7 @@
                   <div class="panel panel-info">
                       <div class="panel-heading">
                           <h4 class="panel-title">
-                              <a data-toggle="collapse" href="#collapseTwo"><b>2. Observations rucher</b></a>
+                              <a data-toggle="collapse" href="#collapseTwo"><b>Apiary notes </b></a>
                           </h4>
                       </div>
                       <div id="collapseTwo" class="panel-collapse collapse in">

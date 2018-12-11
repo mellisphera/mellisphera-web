@@ -14,7 +14,7 @@
                 <div class="col-sm-12">                        
                       <div class="form-inline" >
                         <div class="form-group">
-                            <label><h4>Rucher :</h4> </label>
+                            <label><h4>Apiary :</h4> </label>
                             <select  [(ngModel)]="rucherService.rucher"  class="form-control " (change)="onSelectRucher($event)" id="sel1">
                                 <option  *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher" >
                                      {{rucher.name}}
@@ -27,16 +27,16 @@
                         <br><br>
                         <form [formGroup]="rapportForm" >
                             <div class="form-group" [formGroup]="rapportForm" >
-                                    <label for="exampleTextarea" >Rapport</label>
+                                    <label for="exampleTextarea" >Report</label>
                                     <textarea class="form-control" id="exampleTextarea" rows="8"  formControlName="texte" [(ngModel)]="texteRapport"></textarea>
                             </div>
                             <button class="btn btn-primary" (click)="getAnalyseTemp()" (change)="change($event)" [disabled]="!rapportForm.valid" >Analyser</button>
                             <button type="submit" (click)="rapportService.nluSave(rucherService.rucher)" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Sauver</button>
                         </form>
 
-                        <div class="form-group">
-                            <label for="exampleTextarea">Résultat du rapport</label>
-                        </div>
+                        <!--<div class="form-group">
+                            <label for="exampleTextarea">Report result>/label>
+                        </div>-->
                         
                         <div class="form-group">
                                 <label style="background-color: rgba(236, 234, 234, 0.49);">
@@ -44,7 +44,7 @@
                         </div>
                        
                         <div class="panel panel-info">
-                            <div class="panel-heading">Observations Rucher</div>
+                            <div class="panel-heading">Apiary observation</div>
                             <div class="panel-body">
                                 <table class="table">    
                                     <thead class="thead-dark">
@@ -78,13 +78,13 @@
                         </div>
 
                         <div class="panel panel-info">
-                                <div class="panel-heading">Observations Ruche</div>
+                                <div class="panel-heading">Hive observation</div>
                                 <div class="panel-body">
                                     <div>    
                                         <table class="table">    
                                             <thead class="thead-dark">
                                                 <tr>
-                                                    <th scope="col">Ruche(s)</th>
+                                                    <th scope="col">Hive</th>
                                                     <th scope="col">Date</th>
                                                     <th scope="col">Sentence</th>
                                                     <th scope="col">Action</th>
@@ -118,12 +118,12 @@
                             </div>
                       
                         <div class="panel panel-info">
-                            <div class="panel-heading">Actions sur la Ruche</div>
+                            <div class="panel-heading">Hive actions</div>
                             <div class="panel-body">
                                 <table class="table">    
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th scope="col">Ruche(s)</th>
+                                            <th scope="col">Hive</th>
                                             <th scope="col">Date</th>
                                             <th scope="col">Sentence</th>
                                             <th scope="col">Action</th>

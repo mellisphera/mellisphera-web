@@ -8,7 +8,7 @@ export class GrapheReserveMielService {
   constructor() { }
   option = {
     title: {
-        text: 'RESERVES MIEL'
+        text: 'Stock Honey'
     },
     tooltip : {
         trigger: 'axis',

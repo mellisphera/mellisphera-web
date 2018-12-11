@@ -1,4 +1,9 @@
 <div class="container-fluid" style="background-color: white;">
+    <div class="form-inline" >
+        <div class="form-group">
+                <h4>Hive # : {{ rucheName }} </h4>
+        </div>
+      </div>
   <div class="col">
     <div echarts [options]="calendrierTempInt.option" [loading]="!dailyRecordThService.statusLoading" [merge]="dailyRecordWservice.mergeOptionTempExt" [autoResize]="true" style="width:100%"></div>
     <div echarts [options]="calendrierTempInt.option" [loading]="!dailyRecordThService.statusLoading" [merge]="dailyRecordThService.mergeOptionTint" [autoResize]="true" style="width:100%;"></div>

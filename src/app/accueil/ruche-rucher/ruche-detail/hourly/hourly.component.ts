@@ -11,7 +11,8 @@ import { GraphRecordService } from './service/graph-record.service';
 export class HourlyComponent implements OnInit {
 
   message="";
-  rucheId;
+  rucheId: string;
+  rucheName : string;
   constructor(private activatedRoute : ActivatedRoute,
     public recordService : RecordService,
     public graphRecordService : GraphRecordService
@@ -19,6 +20,7 @@ export class HourlyComponent implements OnInit {
 
   ngOnInit() {
     this.rucheId = this.activatedRoute.snapshot.params.id;
+    this.rucheName = this.activatedRoute.snapshot.params.name;
     this.recordService.getRecordByIdHive(this.rucheId);
   }
 
