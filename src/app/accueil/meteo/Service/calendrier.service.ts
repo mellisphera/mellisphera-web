@@ -27,8 +27,9 @@ export class CalendrierService {
         }
      }, 
      calendar:{
-         cellSize : 'auto', // taille cellule
-         orient : 'vertical', // orientation calendrier
+         cellSize : [30,30], // taille cellule
+         orient : 'horizontal', // orientation calendrier
+         width:'80%',
          splitLine: { // style bordure
              show: true,
              lineStyle: {
@@ -87,8 +88,8 @@ export class CalendrierService {
                  width:40, // largeur
                  heigth:30, // et hauteur de l'image
                  /*placement de l'image (x,y) avec les coordonnées */
-                 x: cellPoint[0] - cellWidth /2+13,
-                 y: cellPoint[1] - cellHeight / 2 + 13,
+                 x: cellPoint[0] - cellWidth /2+6,
+                 y: cellPoint[1] - cellHeight / 2 -38
              },
          },
          {
@@ -96,11 +97,11 @@ export class CalendrierService {
              style:{
                  /* placement */
                  x : cellPoint[0]-6,
-                 y : cellPoint[1]-28,
+                 y : cellPoint[1]-33,
                  text:jour,
              }
          },
-         {
+         /*{
              type:'text',
              style : {
                  x:cellPoint[0]-30,
@@ -117,7 +118,7 @@ export class CalendrierService {
              }
                
          
-         }
+         }*/
          ]};
      return group;
  }
