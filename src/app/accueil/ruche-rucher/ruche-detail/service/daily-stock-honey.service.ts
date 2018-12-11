@@ -67,7 +67,7 @@ export class DailyStockHoneyService {
           this.templateSerie.data = this.dailyStockByFlower[elt];
           this.mergeOption.series.push(this.templateSerie)
           this.cleanTemplate();
-          console.log(this.templateSerie  )
+          console.log(this.templateSerie)
         }
         this.mergeOption.legend.data = this.typeFlower;
         /*console.log(this.mergeOption);
