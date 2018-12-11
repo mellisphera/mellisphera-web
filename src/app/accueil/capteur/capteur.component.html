@@ -106,7 +106,7 @@
             </div>
             <div class="col-md-6">
                 <label for="recipient-name" class="col-form-label">Type :</label>
-                <select [(ngModel)]="capteurService.capteur"class="form-control" [ngModelOptions]="{standalone: true}">
+                <select [(ngModel)]="capteurService.capteursByUser"class="form-control" [ngModelOptions]="{standalone: true}">
                     <option *ngFor="let capteur of (capteurService.capteurAcheter | capteurPipe:getSensorRef().value);" [ngValue]="capteur">{{ capteur.type }} </option>
                 </select>
                 <div class="alert alert-danger" hidden>
