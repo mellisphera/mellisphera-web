@@ -69,7 +69,7 @@ export class DailyRecordService{
                     data: this.arrayTempInt
                 },
             title: {
-                    text: 'Température intérieur maximum'
+                    text: 'Internal Temperature (max)'
                 },
             visualMap: {
                     min: -10,
@@ -86,7 +86,7 @@ export class DailyRecordService{
                 data : this.arrayHint
             },
             title: {
-                text: 'Humidité intérieur maximum'
+                text: 'Internal Relative Humidity (max)'
             },
             visualMap: {
                 min: 20,
