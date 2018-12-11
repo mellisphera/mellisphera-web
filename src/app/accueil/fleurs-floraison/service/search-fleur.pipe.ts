@@ -36,3 +36,30 @@ export class searchFleurByType implements PipeTransform {
 
 }
 
+@Pipe({
+  name: 'searchFleurByDate'
+})
+export class searchFleurByDate implements PipeTransform {
+
+  public transform(values: any, filtre?: any): any {
+    if (!values || !values.length || values == 0 ) return [];
+    if (!filtre) return values;
+
+    return values.filter(v=>{
+      var dateValue = new Date();
+      dateValue.setFullYear(new Date().getFullYear());
+      dateValue.setMonth((v.flowerApi.flomind.split("-"))[0]);
+      dateValue.setDate((v.flowerApi.flomind.split("-"))[1])
+      console.log(dateValue);
+
+
+      if(v.flowerApi.flomind){
+        //console.log(dateValue.getMonth()+'-'+filtre);
+        console.log(v);
+        return dateValue.getMonth()+''== filtre;
+      }
+    })
+  }
+
+}
+
