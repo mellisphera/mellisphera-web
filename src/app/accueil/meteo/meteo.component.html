@@ -37,8 +37,8 @@
                               </div>
                         </div>
                         <div id="contentChart">
-                            <div echarts [options]="calendrier.options" (chartMouseOver)="onMouseouver($event);" (chartClick)="onClick($event);" [autoResize]="true"  [merge]="meteoService.mergeOption" [loading]="!meteoService.status" style="min-width:45%; min-height:100vh;"></div>
-                            <div echarts [options]="graphMeteo.option" [autoResize]="true"  [merge]="meteoService.mergeOptionGraph" [loading]="!meteoService.status" style="width:45%;height:28vh;"></div>
+                            <div echarts [options]="calendrier.options"[autoResize]="true"  [merge]="meteoService.mergeOption" [loading]="!meteoService.status" style="width:100%;"></div>
+                            <!--<div echarts [options]="graphMeteo.option" [autoResize]="true"  [merge]="meteoService.mergeOptionGraph" [loading]="!meteoService.status" style="width:45%;height:28vh;"></div>-->
                         </div>
                     </div>
         </div>
