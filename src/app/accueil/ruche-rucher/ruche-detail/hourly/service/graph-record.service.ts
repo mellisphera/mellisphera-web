@@ -13,7 +13,7 @@ export class GraphRecordService {
  
   option = {
     title: {
-        text: 'Poids & Température horaires'
+        text: 'Weight & Temperature'
 
     },
     tooltip: {
@@ -42,13 +42,8 @@ export class GraphRecordService {
     },
     dataZoom: [
         {   
-            show: true,
-            realtime: true,
-            start: 80,
-            end: 100,
-        },
-        {
             type: 'inside',
+            yAxisIndex: 0,
             show: true,
             realtime: true,
             start: 80,
@@ -56,11 +51,11 @@ export class GraphRecordService {
         },
         {
             type: 'slider',
-            yAxisIndex: 0,
+            yAxisIndex: 1,
             filterMode: 'empty'
         },
         {
-            type: 'inside',
+            type: 'slider',
             yAxisIndex: 0,
             filterMode: 'empty'
         },

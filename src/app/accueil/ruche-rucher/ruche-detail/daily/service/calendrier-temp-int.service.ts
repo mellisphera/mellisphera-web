@@ -12,7 +12,11 @@ export class CalendrierTempIntService {
         top: 30,
         left: 'center',
     },
-    tooltip : {},
+    tooltip : {
+        formatter: (params)=>{
+            return params.data[0]+'<br/>'+params.data[1];
+        }   
+    },
     visualMap: {
         min: 0,
         max: 40,

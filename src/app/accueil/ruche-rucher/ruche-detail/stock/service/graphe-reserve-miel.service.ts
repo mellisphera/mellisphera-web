@@ -18,6 +18,7 @@ export class GrapheReserveMielService {
                 backgroundColor: '#6a7985'
             }
         }
+        
     },
     legend : {
       },
@@ -41,7 +42,6 @@ export class GrapheReserveMielService {
     grid: {
         left: '3%',
         right: '4%',
-        bottom: '18%',
         containLabel: true
     },
     xAxis : [
