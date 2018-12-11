@@ -27,7 +27,7 @@ export class CalendrierService {
         }
      }, 
      calendar:{
-         cellSize : 70, // taille cellule
+         cellSize : 'auto', // taille cellule
          orient : 'vertical', // orientation calendrier
          splitLine: { // style bordure
              show: true,
