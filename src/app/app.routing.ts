@@ -37,7 +37,7 @@ const routes: Routes =[
     { path: 'ruche-et-rucher',  canActivate : [AuthGuard], component: RucheRucherComponent },
     { path: 'capteurs',         canActivate : [AuthGuard], component: CapteurComponent },
     { path: 'meteo',            canActivate : [AuthGuard], component: MeteoComponent },
-    { path: 'ruche-detail/:id',
+    { path: 'ruche-detail/:id/:name',
       loadChildren : "./accueil/ruche-rucher/nav-ruche/nav-ruche.module#NavRucheModule",
       canLoad : [AuthGuard],
     },

@@ -17,3 +17,22 @@ export class SearchFleurPipe implements PipeTransform {
   }
 
 }
+
+@Pipe({
+  name: 'searchFleurByType'
+})
+export class searchFleurByType implements PipeTransform {
+
+  public transform(values: any, filtre?: any): any {
+    if (!values || !values.length) return [];
+    if (!filtre) return values;
+
+    return values.filter(v=>{
+      if(v.type){
+        return v.type.indexOf(filtre)>=0;
+      }
+    })
+  }
+
+}
+

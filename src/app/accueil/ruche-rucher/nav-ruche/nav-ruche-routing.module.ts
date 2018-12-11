@@ -14,11 +14,11 @@ const routes: Routes = [
     component: RucheDetailComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: 'daily/:id', component: DailyComponent },
-      { path: 'stock/:id', component: StockComponent },
-      { path: 'hourly/:id', component: HourlyComponent },
-      { path: 'health/:id',component : HealthComponent},
-      { path: 'observation/:id', component : ObservationComponent}
+      { path: 'daily/:id/:name', component: DailyComponent },
+      { path: 'stock/:id/:name', component: StockComponent },
+      { path: 'hourly/:id/:name', component: HourlyComponent },
+      { path: 'health/:id/:name',component : HealthComponent},
+      { path: 'observation/:id/:name', component : ObservationComponent}
     ]
   }
 ];

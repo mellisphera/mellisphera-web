@@ -87,16 +87,19 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
       this.style["background-image"]="url('../../../assets/imageClient/LPO.png')";
     }
     else if(this.username == "aro"){
-    this.style["background-image"]="url('../../../assets/imageClient/aro.png')"
-  }
+      this.style["background-image"]="url('../../../assets/imageClient/aro.png')";
+    }
+    else if(this.username == "theo"){
+      this.style["background-image"]="url('../../../assets/imageClient/theo.png')";
+    }
     console.log(this.style);
   }
 
   onClick(ruche){
    // console.log(ruche);
     //sessionStorage.setItem("clickedRuche",ruche.id);
-    sessionStorage.setItem("selectedRucheName",ruche.name);
-    this.route.navigate(['/ruche-detail',ruche.id]);
+    //sessionStorage.setItem("selectedRucheName",ruche.name);
+    this.route.navigate(['/ruche-detail',ruche.id, ruche.name]);
 
   }
 

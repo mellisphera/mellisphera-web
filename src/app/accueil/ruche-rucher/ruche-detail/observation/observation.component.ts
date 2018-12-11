@@ -42,7 +42,9 @@ export class ObservationComponent implements OnInit {
 
   ngOnInit() {
     this.rucheId = this.activatedRoute.snapshot.params.id;
+    this.rucheName = this.activatedRoute.snapshot.params.name;
     console.log(this.rucheId);
+    console.log(this.rucheName);
     this.observationService.getObservationByIdHive(this.rucheId);
   }
 
@@ -51,7 +53,7 @@ export class ObservationComponent implements OnInit {
     this.ObservationForm=this.formBuilder.group({
       'sentence': [null,Validators.compose([Validators.required])],
       'type': '',
-      'date': new Intl.DateTimeFormat('fr-FR', this.optionsDate).format(new Date()),
+      'date': new Date()
     })
   }
 

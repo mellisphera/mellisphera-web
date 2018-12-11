@@ -52,7 +52,7 @@
                                               <tr *ngFor="let ruche of rucheService.ruches " >
                                                 
                                                   <td>
-                                                      <a [routerLink]="['/ruche-detail',ruche.id]"  routerLinkActive="active" (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> 
+                                                      <a [routerLink]="['/ruche-detail',ruche.id,ruche.name]"  routerLinkActive="active" (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> 
                                                   </td>
                                                    
                                                   <td>{{ruche.description}}</td>
@@ -267,7 +267,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form  [formGroup]="newRucheForm" (ngSubmit)="createRuche()">
+          <form  [formGroup]="newRucheForm">
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Nom :</label>
               <input formControlName="nomRuche" type="text" class="form-control" id="recipient-name">
@@ -275,11 +275,6 @@
             <div class="form-group">
               <label for="message-text" class="col-form-label">Description :</label>
               <textarea formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
-            </div>
-            <div *ngIf="!selectedRucher">
-              <div class="alert alert-danger" >Veuillez selectionner un rucher dans la page précédente !</div>
-            </div>
-            <div *ngIf="selectedRucher">
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="createRuche();" [disabled]="!newRucheForm.valid" > Créer Ruche</button>

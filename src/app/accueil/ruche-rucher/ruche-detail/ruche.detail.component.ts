@@ -31,7 +31,8 @@ import { DailyRecordService } from '../../disposition-ruche/Service/dailyRecordS
 
 export class RucheDetailComponent implements OnInit, OnDestroy {
    
-    rucheId;
+    rucheId : string;
+    rucheName : string;
     message="";
 
   private timerSubscription: Subscription;
@@ -41,9 +42,10 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     }
     ngOnInit(){
         this.rucheId = this.activatedRoute.snapshot.params.id;
+        this.rucheName = this.activatedRoute.snapshot.params.name;
         console.log(this.rucheId);
-        console.log(this.route);
-        this.route.navigate(['/ruche-detail/'+this.rucheId+'/health',this.rucheId]);
+        console.log(this.rucheName);
+        this.route.navigate(['/ruche-detail/'+this.rucheId+'/'+this.rucheName+'/health/'+this.rucheId+'/'+this.rucheName]);
     }
 
 
