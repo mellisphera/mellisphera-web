@@ -13,6 +13,7 @@ export class DailyComponent implements OnInit {
 
   message="";
   rucheId;
+  rucheName : string;
 
   constructor(public calendrierTempInt : CalendrierTempIntService, private activatedRoute : ActivatedRoute, 
     public dailyRecordThService : DailyRecordService,
@@ -22,6 +23,7 @@ export class DailyComponent implements OnInit {
     this.rucheId = this.activatedRoute.snapshot.params.id;
     this.dailyRecordThService.getByIdHive(this.rucheId);
     this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheId);
+    this.rucheName = this.activatedRoute.snapshot.params.name;
   }
 
 }

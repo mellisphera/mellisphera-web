@@ -14,7 +14,8 @@ import { GrapheReserveMielService } from './service/graphe-reserve-miel.service'
 export class StockComponent implements OnInit, OnDestroy {
 
   message="";
-  rucheId;
+  rucheId : string;
+  rucheName : string;
   constructor(public dailyRecWService : DailyRecordsWService,
     public calendrierPoids : CalendrierPoidsService,
     public dailyStockHoneyService : DailyStockHoneyService,
@@ -23,6 +24,7 @@ export class StockComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.rucheId = this.activatedRoute.snapshot.params.id;
+    this.rucheName = this.activatedRoute.snapshot.params.name;
     this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheId);
     this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheId);
   }

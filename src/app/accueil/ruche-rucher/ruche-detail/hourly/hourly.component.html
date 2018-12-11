@@ -1,4 +1,9 @@
 <div class="container-fluid" style="background-color:white;">
+    <div class="form-inline" >
+        <div class="form-group">
+                <h4>Hive # : {{ rucheName }} </h4>
+        </div>
+      </div>
   <div class="row content">
       <div echarts [options]="graphRecordService.option" [merge]="recordService.mergeOption" [autoResize]="true" style="width:100%;height:50vh;"></div>
   </div>

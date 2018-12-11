@@ -12,7 +12,7 @@ export class GraphiqueFloraisonService {
   option = {
           //Défini le titre du graphique
           title: {
-            text: 'Fleurs du rucher',
+            text: '',
           },
     
           //Défini la légende du graph
@@ -40,6 +40,7 @@ export class GraphiqueFloraisonService {
               label:{
 
               },
+              splitNumber : '11',
               splitLine: {
                   show: true,
                   lineStyle: {

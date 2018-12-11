@@ -52,6 +52,8 @@ export class CalendrierPoidsService {
         range: ['2018-1-01', '2018-12-31'],
         orient: 'horizontal',
         cellSize: 'auto',
+        height:'200',
+        width:'95%',
         splitLine: {
             show: true,
             lineStyle: {
