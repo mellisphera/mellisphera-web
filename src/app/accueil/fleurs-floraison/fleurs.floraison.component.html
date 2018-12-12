@@ -164,7 +164,7 @@
                                                 <div id="periode" class="tab-pane fade">
                                                     <div id="searchPeriode">
                                                             <br/>
-                                                            <select style="width:400px" [(ngModel)]="selectedType" (click)="onSelectType($event)" class="form-control " >
+                                                            <select style="width:400px" [(ngModel)]="selectedType" class="form-control " >
                                                                 <option value=""> Tout les types</option>
                                                                 <option *ngFor="let type of fleursFloraisonService.typesFleur" [value]="type" >
                                                                     {{ type }}

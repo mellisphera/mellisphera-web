@@ -217,28 +217,28 @@
           <form [formGroup]="rucherForm">
             <div class="form-group"  >
               <label for="recipient-name" class="col-form-label">Nom :</label>
-              <input [(ngModel)]="nom" formControlName="nom" type="text" class="form-control" id="recipient-name">
+              <input formControlName="nom" type="text" class="form-control" id="recipient-name">
               <div class="alert alert-danger" *ngIf="!rucherForm.controls['nom'].valid && rucherForm.controls['nom'].touched">
                 Veuillez saisir un nom entre 1 et 20 caractères
               </div>
             </div>
             <div class="form-group">
               <label for="message-text" class="col-form-label">Description :</label>
-              <textarea [(ngModel)]="description" formControlName="description" class="form-control" id="message-text"></textarea>
+              <textarea formControlName="description" class="form-control" id="message-text"></textarea>
               <div class="alert alert-danger" *ngIf="!rucherForm.controls['description'].valid && rucherForm.controls['description'].touched">
                 Veuillez saisir une description entre 1 et 40 caractères
               </div>
             </div>
               <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Ville :</label>
-                <input [(ngModel)]="ville" formControlName="ville" type="text" class="form-control" id="recipient-name">
+                <input formControlName="ville" type="text" class="form-control" id="recipient-name">
                   <div class="alert alert-danger" *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
                     Veuillez saisir le nom de la ville
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Code postal :</label>
-                  <input [(ngModel)]="codePostal" formControlName="codePostal" type="text" class="form-control" id="recipient-name">
+                  <input formControlName="codePostal" type="text" class="form-control" id="recipient-name">
                   <div class="alert alert-danger" *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
                     Veuillez saisir le nom de le codePostal
                   </div>
