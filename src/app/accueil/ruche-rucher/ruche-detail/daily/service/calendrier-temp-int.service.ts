@@ -9,7 +9,7 @@ export class CalendrierTempIntService {
 
   option = {
     title: {
-        top: 30,
+        top: 28,
         left: 'center',
     },
     tooltip : {
@@ -23,7 +23,7 @@ export class CalendrierTempIntService {
         type: 'piecewise',
         orient: 'horizontal',
         left: 'center',
-        top: 65,
+        top: 55,
         textStyle: {
             color: '#000'
         },
