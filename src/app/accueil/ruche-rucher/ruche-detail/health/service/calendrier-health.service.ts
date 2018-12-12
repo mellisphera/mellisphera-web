@@ -70,7 +70,7 @@ export class CalendrierHealthService {
     },
    calendar: [{
         top: 140,
-        left: 'center',
+        width:'80%',
         range: ['2018-01-01', '2018-12-30'],
         orient: 'horizontal',
         cellSize: '20',

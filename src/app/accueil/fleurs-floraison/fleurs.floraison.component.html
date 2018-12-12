@@ -164,14 +164,12 @@
                                                 <div id="periode" class="tab-pane fade">
                                                     <div id="searchPeriode">
                                                             <br/>
-                                                            <label>Type  : </label>
                                                             <select style="width:400px" [(ngModel)]="selectedType" (click)="onSelectType($event)" class="form-control " >
                                                                 <option value=""> Tout les types</option>
                                                                 <option *ngFor="let type of fleursFloraisonService.typesFleur" [value]="type" >
                                                                     {{ type }}
                                                                 </option>
                                                             </select>
-                                                            <br/>  
                                                     </div> 
                                                        <!-- <input type="range" style="width:400px" [(ngModel)]="selectedFlo" (click)="onSelectFlo($event)" value="0" min="0" max="12">
                                                         <img src="/assets/img/mois.png" style="width:400px">
@@ -180,6 +178,7 @@
                                                     <div id="groupRange">
                                                             <label>Periode de floraison  : </label>
                                                             <datalist id="tickmarks">
+                                                                <option value="0">
                                                                 <option value="1">
                                                                 <option value="2">
                                                                 <option value="3">
@@ -193,8 +192,8 @@
                                                                 <option value="11">
                                                                 <option value="12">
                                                             </datalist>
+                                                        <input type="range" list="tickmarks"  data-toggle="tooltip" data-placement="top" [title]="currentMonthStr[currentMonth]" [(ngModel)]="currentMonth"  min="0" max="12" value="12" step="1">
                                                         <input type="text" *ngIf="currentMonth>0" [disabled] name="mois" [value]="currentMonthStr[currentMonth]"/>
-                                                        <input type="range" list="tickmarks"  data-toggle="tooltip" data-placement="top" [title]="currentMonthStr[currentMonth]" [(ngModel)]="currentMonth"  min="1" max="12" value="12" step="1">
                                                     </div>
                                                 </div>
                                             </div>

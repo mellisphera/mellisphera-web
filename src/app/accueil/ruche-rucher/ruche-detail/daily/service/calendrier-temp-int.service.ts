@@ -29,7 +29,8 @@ export class CalendrierTempIntService {
         },
     },
     calendar: {
-        top: 120,
+        top: 100,
+        bottom:10,
         left: 30,
         right: 30,
         cellSize: ['20', '20'],
