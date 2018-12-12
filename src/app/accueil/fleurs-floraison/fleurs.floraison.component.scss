@@ -49,21 +49,20 @@ td,th{
   width: 10%;
 }
 input[type=range]{
-  width: 90%;
+  margin: auto;
+  width: 80%;
 }
 #groupRange{
   text-align: center;
-  width: 100%;
+  width: 50%;
 }
-#periode{
-  display: flex;
+#periode div{
+  display: inline-block;
 }
 input[name="mois"]{
   border-radius: 20px;
-  width: 13%;
+  width: 18%;
   text-align: center;
-  padding: 1%;
-  margin-bottom: 1%;
 }
 .modal-dialog{
   position: absolute;

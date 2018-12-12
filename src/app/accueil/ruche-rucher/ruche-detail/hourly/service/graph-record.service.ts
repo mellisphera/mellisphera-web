@@ -42,8 +42,6 @@ export class GraphRecordService {
     },
     dataZoom: [
         {   
-            type: 'inside',
-            yAxisIndex: 0,
             show: true,
             realtime: true,
             start: 80,
@@ -55,7 +53,7 @@ export class GraphRecordService {
             filterMode: 'empty'
         },
         {
-            type: 'slider',
+            type: 'inside',
             yAxisIndex: 0,
             filterMode: 'empty'
         },
@@ -64,11 +62,11 @@ export class GraphRecordService {
             yAxisIndex: 1,
             filterMode: 'empty'
         },
-        {
+        /*{
             type: 'inside',
             yAxisIndex: 1,
             filterMode: 'empty'
-        }
+        }*/
     ],
     yAxis: [
         {
