@@ -8,7 +8,9 @@ export class GrapheReserveMielService {
   constructor() { }
   option = {
     title: {
-        text: 'Stock Honey'
+        text: 'Stock Honey',
+        left: 'center',
+        top:-5
     },
     tooltip : {
         trigger: 'axis',
@@ -21,6 +23,7 @@ export class GrapheReserveMielService {
         
     },
     legend : {
+        top:40
       },
     toolbox: {
     },
@@ -42,6 +45,8 @@ export class GrapheReserveMielService {
     grid: {
         left: '3%',
         right: '4%',
+        top:70,
+        bottom:0,
         containLabel: true
     },
     xAxis : [
