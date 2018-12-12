@@ -37,7 +37,6 @@ export class GraphRecordService {
     grid: {
         left: '3%',
         right: '4%',
-        bottom: '10%',
         containLabel: true
     },
     dataZoom: [

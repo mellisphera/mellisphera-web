@@ -18,12 +18,9 @@ export class CalendrierPoidsService {
   option = {
     backgroundColor: 'white',
     title: {
-        top: -80,
+        top: 70,
         text: 'Weight_max for each day',
         left: 'center',
-        textStyle: {
-            color: '#fff'
-        }
     },
     tooltip : {
         trigger: 'item',
@@ -40,20 +37,20 @@ export class CalendrierPoidsService {
         }
     },
     legend: {
-        top: '30',
+        top: 100,
         data:['gain','perte'],
         textStyle: {
             color: 'black'
         }
     },
    calendar: [{
-        top: 70,
         left: 'center',
         range: ['2018-1-01', '2018-12-31'],
         orient: 'horizontal',
         cellSize: 'auto',
-        height:'200',
+        //height:'200',
         width:'95%',
+        top:150,
         splitLine: {
             show: true,
             lineStyle: {
