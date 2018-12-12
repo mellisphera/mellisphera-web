@@ -28,9 +28,9 @@
                         <form [formGroup]="rapportForm" >
                             <div class="form-group" [formGroup]="rapportForm" >
                                     <label for="exampleTextarea" >Report</label>
-                                    <textarea class="form-control" id="exampleTextarea" rows="8"  formControlName="texte" [(ngModel)]="texteRapport"></textarea>
+                                    <textarea class="form-control" id="exampleTextarea" rows="8"  formControlName="texte"></textarea>
                             </div>
-                            <button class="btn btn-primary" (click)="getAnalyseTemp()" (change)="change($event)" [disabled]="!rapportForm.valid" >Analyser</button>
+                            <button class="btn btn-primary" (click)="getAnalyseTemp()" [disabled]="!rapportForm.valid" >Analyser</button>
                             <button type="submit" (click)="rapportService.nluSave(rucherService.rucher)" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Sauver</button>
                         </form>
 
@@ -130,7 +130,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <ng-container *ngFor="let obs of observations" >
+                                        <ng-container *ngFor="let obs of rapportService.rapports" >
                                             <ng-container *ngIf="obs.type =='HiveAct'">
                                                 <tr >
                                                     <td>

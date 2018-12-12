@@ -36,7 +36,7 @@ export class RapportComponent implements OnInit {
   //nomRuche;
     constructor(private formBuilder: FormBuilder,
                 private http:HttpClient,
-                private rapportService : RapportService,
+                public rapportService : RapportService,
                 private data : UserloggedService,
                 public rucherService : RucherService,
               ){  

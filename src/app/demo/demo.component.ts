@@ -17,7 +17,7 @@ export class DemoComponent implements OnInit {
   idHive : string;
   idApiary : string;
   idHiveHonney : string;
-
+  message="";
   constructor(public fleursFloraisonService : FleursFloraisonService, 
     public dailyStockHoneyService : DailyStockHoneyService,
     public dailyRecWService : DailyRecordsWService,
@@ -36,5 +36,9 @@ export class DemoComponent implements OnInit {
     this.dailyRecWService.getDailyRecordsWbyIdHive(this.idHive)
     this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.idHiveHonney);
   }
+
+receiveMessage($event){
+  this.message=$event;
+}
 
 }
