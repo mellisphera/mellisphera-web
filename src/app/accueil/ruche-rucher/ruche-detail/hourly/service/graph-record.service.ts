@@ -48,25 +48,19 @@ export class GraphRecordService {
             end: 100,
         },
         {
-            type: 'slider',
-            yAxisIndex: 1,
-            filterMode: 'empty'
-        },
-        {
             type: 'inside',
-            yAxisIndex: 0,
             filterMode: 'empty'
         },
         {
             type: 'slider',
-            yAxisIndex: 1,
+            yAxisIndex: [1,0],
             filterMode: 'empty'
         },
-        /*{
+        {
             type: 'inside',
-            yAxisIndex: 1,
+            yAxisIndex: [1,0],
             filterMode: 'empty'
-        }*/
+        }
     ],
     yAxis: [
         {
