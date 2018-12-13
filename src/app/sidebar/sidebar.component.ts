@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserloggedService } from '../userlogged.service';
+import { CONFIG } from '../../config'
 
 declare const $: any;
 declare interface RouteInfo {
@@ -29,8 +30,10 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[];
   username;
+  url_sideImg : string;
     
   constructor(public router: Router) {
+    this.url_sideImg = CONFIG.URL_FRONT+'assets/img/bee.png'
     //this.username = data.currentUser();
    }
 

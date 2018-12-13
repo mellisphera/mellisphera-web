@@ -26,7 +26,7 @@ export class GraphiqueFloraisonService {
           tooltip: {
             trigger: 'item',
             formatter: (params)=>{
-                return params.data[0]+'<br/>'+params.seriesName+ ' : '+params.data[1];
+                return params.data[0]+'<br/>'+params.data[1];
             }    
           },
           //Défini l'axe ou les axes abscisse(s)

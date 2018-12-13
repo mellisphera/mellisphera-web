@@ -69,6 +69,7 @@ import { SharedModule } from './shared/shared.module';
 import { PipeCapteur, SearchCapteur } from './accueil/capteur/capteur.pipe';
 import { SearchFleurPipe, searchFleurByType,searchFleurByDate } from './accueil/fleurs-floraison/service/search-fleur.pipe';
 import { DemoComponent } from './demo/demo.component';
+import { SelectionRucherComponent } from './selection-rucher/selection-rucher.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { DemoComponent } from './demo/demo.component';
     SearchFleurPipe,
     searchFleurByType,
     searchFleurByDate,
-    DemoComponent
+    DemoComponent,
+    SelectionRucherComponent
 
   ],
   imports: [

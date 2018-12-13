@@ -82,11 +82,11 @@ export class FleursFloraisonComponent implements OnInit {
 
 
   //Change le rucher selectionné
-  onSelectRucher() : void{
+  onSelectRucher(){
     this.fleursFloraisonService.fleursByRucher = null;
     this.fleursFloraisonService.mergeOption = null;
     this.fleursFloraisonService.getUserFleur(this.fleursFloraisonService.rucherService.rucher.id);
-    this.fleursFloraisonService.rucherService.getRucherDetails();
+    //this.fleursFloraisonService.rucherService.getRucherDetails();
   }
 
   onEditFleur(fleur){

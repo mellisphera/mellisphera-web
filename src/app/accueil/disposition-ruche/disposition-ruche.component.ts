@@ -9,6 +9,7 @@ import { RucheService } from './Service/ruche.service';
 //import { RucherInterface } from '../../_model/rucherInterface';
 import { RucheInterface } from '../../_model/ruche';
 import { Route, Router } from '@angular/router';
+import { CONFIG } from '../../../config'
 
 @Component({
   selector: 'app-disposition-ruche',
@@ -75,22 +76,22 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     console.log(this.rucheService.ruches);
     this.username = this.login.currentUser().username;
     if(this.username == "***REMOVED***"){
-      this.style["background-image"] = "url('../../../assets/imageClient/JHE.png')";
+      this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/JHE.png)";
     }
     else if(this.username == "***REMOVED***"){
-      this.style["background-image"] = "url('../../../assets/imageClient/JCP.png')";
+      this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/JCP.png)";
     }
     else if(this.username == "***REMOVED***"){
-      this.style["background-image"] = "url('../../../assets/imageClient/***REMOVED***.png')";
+      this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/***REMOVED***.png)";
     }
     else if(this.username == "***REMOVED***"){
-      this.style["background-image"]="url('../../../assets/imageClient/LPO.png')";
+      this.style["background-image"]="url("+CONFIG.URL_FRONT+"assets/imageClient/LPO.png)";
     }
     else if(this.username == "aro"){
-      this.style["background-image"]="url('../../../assets/imageClient/aro.png')";
+      this.style["background-image"]="url("+CONFIG.URL_FRONT+"assets/imageClient/aro.png)";
     }
     else if(this.username == "theo"){
-      this.style["background-image"]="url('../../../assets/imageClient/theo.png')";
+      this.style["background-image"]="url("+CONFIG.URL_FRONT+"assets/imageClient/theo.png)";
     }
     console.log(this.style);
   }
