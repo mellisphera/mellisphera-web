@@ -34,17 +34,7 @@ export class    FleursFloraisonService {
     templateLegend;
     fleursObs : Observable<FleurObservees[]>;
     constructor(private http:HttpClient, public rucherService : RucherService, private userService : UserloggedService) {
-        this.templateSerie = {
-            name: '',
-            type: 'line',
-            color:'#509B21',
-            symbolSize: 12,
-            data : []
-        };
-        this.templateLegend = {
-            left: 'right',
-            data: null
-        };
+        this.cleanTemplate();
         this.initFleurObservees();
         this.rucherService.ruchersObs.subscribe(
             ()=>{},()=>{},
@@ -63,6 +53,9 @@ export class    FleursFloraisonService {
             },
             (err)=>{
                 console.log(err);
+            },
+            ()=>{
+                this.getType();
             }
         );
     }
@@ -86,9 +79,6 @@ export class    FleursFloraisonService {
         };
     }
     sortTheoricalFlower(){
-        this.tabFleurByDateGraph = [];
-        this.cleanTemplate();
-        this.cleanMerge();
         this.nomFleur = [];
         var date = new Date();
         this.fleursByRucher.forEach(element => {
@@ -109,6 +99,7 @@ export class    FleursFloraisonService {
     }
     //Service permettant de récuperer les fleurs du rucher selectionné d'un utilisateur x
     getUserFleur(idRucher){
+        this.tabFleurByDateGraph = new Array();
         this.fleursObs = this.http.get<any[]>(CONFIG.URL+'flowersOb/'+ idRucher);
         this.fleursObs.subscribe(
             (data)=>{
@@ -119,9 +110,17 @@ export class    FleursFloraisonService {
                 console.log(err);
             },
             ()=>{
-                this.sortTheoricalFlower();
-                this.getFleurTest();
-                this.getType();
+                console.log(this.fleursByRucher.length > 0)
+                this.cleanTemplate();
+                this.cleanMerge();
+                if(this.fleursByRucher.length > 0){
+                    this.sortTheoricalFlower();
+                    this.getFleurTest();
+                }
+                else{
+                    //throw 'Empty';
+                    console.log("Aucune");
+                }
             }
         );
     }
@@ -132,14 +131,18 @@ export class    FleursFloraisonService {
             type: 'line',
             color:'#509B21',
             symbolSize: 12,
-            data : null
+            data : []
+        };
+        this.templateLegend = {
+            left: 'right',
+            data: []
         };
     }
     cleanMerge(){
         this.mergeOption = {
             series : new Array(),
             yAxis: {
-                data : null 
+                data : []
             },
             legend : {
                 left: 'right',
@@ -269,16 +272,6 @@ export class    FleursFloraisonService {
                 this.getUserFleur(this.rucherService.rucher.id);
             }
         );
-    }
-
-    //Récupère les fleurs qui correspondet à la recherche
-    rechercheFlowersVar(fleur) : Observable<FleursTheorique[]>{
-        return this.http.put<FleursTheorique[]>(CONFIG.URL+'flowersTh/rechercheVar',fleur);
-    }
-
-    //Récupère les fleurs qui correspondet à la recherche
-    rechercheFlowersPer(fleur) : Observable<FleursTheorique[]>{
-        return this.http.put<FleursTheorique[]>(CONFIG.URL+'flowersTh/recherchePer',fleur);
     }
 
     

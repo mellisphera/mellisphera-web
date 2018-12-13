@@ -33,6 +33,7 @@ export class CalendrierTempIntService {
         bottom:10,
         left: 30,
         right: 30,
+        height:'auto',
         cellSize: ['20', '20'],
         range: '2018',
         itemStyle: {

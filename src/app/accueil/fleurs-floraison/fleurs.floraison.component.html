@@ -14,7 +14,7 @@
                        <div class="form-inline" >
                            <div class="form-group">
                                <label><h4>Apiary </h4> </label>
-                               <select  [(ngModel)]="fleursFloraisonService.rucherService.rucher" class="form-control " (change)="onSelectRucher()" id="sel1">
+                               <select  [(ngModel)]="fleursFloraisonService.rucherService.rucher" class="form-control " (change)="fleursFloraisonService.getUserFleur(fleursFloraisonService.rucherService.rucher.id);" id="sel1">
                                    <option  *ngFor="let rucher of fleursFloraisonService.rucherService.ruchers" [ngValue]="rucher" >
                                        {{rucher.name}}
                                    </option>
