@@ -89,15 +89,15 @@ export class CalendrierService {
                  heigth:30, // et hauteur de l'image
                  /*placement de l'image (x,y) avec les coordonnées */
                  x: cellPoint[0] - cellWidth /2+6,
-                 y: cellPoint[1] - cellHeight / 2 -38
+                 y: cellPoint[1] - cellHeight / 2 -5
              },
          },
          {
              type:'text',// affiche le numero du jour,
              style:{
                  /* placement */
-                 x : cellPoint[0]-6,
-                 y : cellPoint[1]-33,
+                 x : cellPoint[0]+6,
+                 y : cellPoint[1]-8,
                  text:jour,
              }
          },
