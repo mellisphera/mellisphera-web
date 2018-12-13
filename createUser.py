@@ -23,7 +23,7 @@ while valider!= True:
 	email = input("email >")
 	if email == "" :
 		 email = username+"@mellisphera.fr"
-	connexion = input("connexion >")
+	connexion = 0
 
 	user  = {
 		"createdAt" : datetime.datetime.now(), 
