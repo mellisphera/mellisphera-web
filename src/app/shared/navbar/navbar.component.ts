@@ -4,6 +4,7 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import { UserloggedService } from '../../userlogged.service';
 import {Router} from "@angular/router";
 import { AuthService } from '../../auth/auth.service';
+import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 
 @Component({
     // moduleId: module.id,
@@ -19,8 +20,17 @@ export class NavbarComponent implements OnInit{
     location: Location;
     private toggleButton: any;
     private sidebarVisible: boolean;eza
+    public lastConnexion : string;
 
-    constructor(location: Location,  private element: ElementRef, private data : UserloggedService,private router: Router, private authService : AuthService) {
+    constructor(location: Location,  
+        private element: ElementRef, 
+        private data : UserloggedService,
+        private router: Router, 
+        private authService : AuthService,) {
+        try{
+            this.lastConnexion = this.authService.lastConnection.toDateString();
+        }
+        catch(e){}  
       this.location = location;
       this.sidebarVisible = false;
         this.username= data.currentUser().username;
@@ -46,6 +56,7 @@ export class NavbarComponent implements OnInit{
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
       this.data.currentMessage.subscribe(message=>this.message=message);
+      console.log(this.authService.lastConnection);
     }
     sidebarOpen() {
         const toggleButton = this.toggleButton;
