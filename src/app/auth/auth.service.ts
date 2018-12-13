@@ -19,10 +19,10 @@ export class AuthService {
 
 
   login : Login;
-  loginObs : Observable<boolean>;
-
+  loginObs : Observable<any>;
+  lastConnection : Date;
   isAuthenticated : boolean;
-  connexionStatus : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  connexionStatus : BehaviorSubject<any> = new BehaviorSubject<boolean>(false);
   errLogin : boolean;
 
   public showNavBarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -36,16 +36,18 @@ export class AuthService {
               }
 
   signIn() {
-    this.loginObs = this.http.post<boolean>(CONFIG.URL+'user/loguser',this.login,httpOptions);
+    this.loginObs = this.http.post<any>(CONFIG.URL+'user/loguser',this.login,httpOptions);
     this.loginObs.subscribe(
       (data)=>{
         this.connexionStatus.next(data);
-        sessionStorage.setItem("connexion",JSON.stringify(data));
-        this.isAuthenticated = data;
+        this.isAuthenticated = typeof(data) == "string" ? true : false;
+        sessionStorage.setItem("connexion",JSON.stringify(this.isAuthenticated));
+        console.log(this.isAuthenticated);
         this.errLogin = !this.isAuthenticated;
         console.log(!this.isAuthenticated);
         if(this.isAuthenticated){
-          console.log(sessionStorage.getItem("connexion") == "true");
+          this.lastConnection = new Date(data);
+          console.log(sessionStorage.getItem("connexion") == "true"); 
           sessionStorage.setItem("currentUser",JSON.stringify(this.login));
           this.router.navigate(['/position-Ruche']);
         }
