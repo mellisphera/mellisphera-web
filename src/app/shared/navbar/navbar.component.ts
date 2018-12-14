@@ -5,6 +5,11 @@ import { UserloggedService } from '../../userlogged.service';
 import {Router} from "@angular/router";
 import { AuthService } from '../../auth/auth.service';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
+import { RucherService } from '../../accueil/ruche-rucher/rucher.service';
+import { RucheService } from '../../accueil/disposition-ruche/Service/ruche.service';
+import { FleursFloraisonService } from '../../accueil/fleurs-floraison/service/fleurs.floraison.service';
+import { MeteoService } from '../../accueil/meteo/Service/MeteoService';
+import { ObservationService } from '../../accueil/ruche-rucher/ruche-detail/observation/service/observation.service';
 
 @Component({
     // moduleId: module.id,
@@ -26,7 +31,12 @@ export class NavbarComponent implements OnInit{
         private element: ElementRef, 
         private data : UserloggedService,
         private router: Router, 
-        private authService : AuthService,) {
+        private authService : AuthService,
+        public rucherService : RucherService,
+        private rucheService : RucheService,
+        private meteoService : MeteoService,
+        private fleursFloraisonService : FleursFloraisonService,
+        private observationService : ObservationService) {
         try{
             this.lastConnexion = this.authService.lastConnection.toDateString();
         }
@@ -58,6 +68,16 @@ export class NavbarComponent implements OnInit{
       this.data.currentMessage.subscribe(message=>this.message=message);
       console.log(this.authService.lastConnection);
     }
+    onSelectRucher(){
+        console.log(this.rucherService.rucher);
+        this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher);
+        this.rucherService.getRucherDetails();
+        this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
+        this.meteoService.getWeather(this.rucherService.rucher.ville);
+        this.observationService.getObservationByIdApiary(this.rucherService.rucher.id);
+        this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id);
+      }
+
     sidebarOpen() {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];

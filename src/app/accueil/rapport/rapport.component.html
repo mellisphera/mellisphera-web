@@ -11,18 +11,7 @@
 <!-- change component content here-->                    
 <div class="container-fluid" style="background-color:white;">
         <div class="row content">
-                <div class="col-sm-12">                        
-                      <div class="form-inline" >
-                        <div class="form-group">
-                            <label><h4>Apiary :</h4> </label>
-                            <select  [(ngModel)]="rucherService.rucher"  class="form-control " (change)="onSelectRucher($event)" id="sel1">
-                                <option  *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher" >
-                                     {{rucher.name}}
-                                </option>
-                            </select>   
-                          <!--  <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#newRucherModal" >Créer rucher</button>-->
-                
-                        </div>
+                <div class="col-sm-12">
                       </div>
                         <br><br>
                         <form [formGroup]="rapportForm" >
