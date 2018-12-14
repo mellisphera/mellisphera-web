@@ -29,16 +29,8 @@ export class MeteoService{
     tabHeatmap : any[];
     tabHumidty : any[];
 
-    constructor(private rucher : RucherService,  private celendrier : CalendrierService, private httpClient :  HttpClient, private login : UserloggedService, private graphMeteo : GraphMeteoService){
+    constructor( private celendrier : CalendrierService, private httpClient :  HttpClient, private login : UserloggedService, private graphMeteo : GraphMeteoService){
         this.meteo = [];
-        this.rucher.rucherObs.subscribe(
-            ()=>{},
-            ()=>{},
-            ()=>{
-                this.getWeather(this.rucher.rucher.ville);
-            }
-
-        )
     }
 
     getWeather(city: string){

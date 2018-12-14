@@ -6,6 +6,7 @@ import { CONFIG } from '../../../../config';
 import { RucherService } from '../../ruche-rucher/rucher.service';
 import { Observable } from 'rxjs';
 import { ObservationService } from '../../ruche-rucher/ruche-detail/observation/service/observation.service';
+import { MeteoService } from '../../meteo/Service/MeteoService';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -24,7 +25,7 @@ export class RucheService {
 
   rucheObs : Observable<RucheInterface>;
   ruchesObs : Observable<RucheInterface[]>;
-  constructor(private user : UserloggedService, private http : HttpClient, private observationService : ObservationService) {
+  constructor(private user : UserloggedService, private http : HttpClient, private observationService : ObservationService, public meteoService : MeteoService) {
     this.ruches = [];
     this.initRuche();
     this.getRucheByUsername(this.user.currentUser().username);  
@@ -54,7 +55,10 @@ export class RucheService {
           console.log(err);
         },
         ()=>{
-          this.observationService.getObservationByIdApiary(idApiary);
+          if(this.ruches.length > 0){
+            this.observationService.getObservationByIdApiary(idApiary);
+          }
+          
         }
         
       )

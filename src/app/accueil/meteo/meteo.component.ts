@@ -19,7 +19,8 @@ export class MeteoComponent implements OnInit, DoCheck {
   constructor(public rucherService : RucherService, public meteoService : MeteoService, 
     private login : UserloggedService, 
     public calendrier : CalendrierService,
-    public graphMeteo : GraphMeteoService) {
+    public graphMeteo : GraphMeteoService
+    ) {
   }
 
   calendrierInit : any = null;
@@ -33,6 +34,7 @@ export class MeteoComponent implements OnInit, DoCheck {
   }
   ngOnInit() {
     this.username = this.login.currentUser().username;
+   // this.meteoService.getWeather(this.rucherService.rucher.ville);
   }
   
 

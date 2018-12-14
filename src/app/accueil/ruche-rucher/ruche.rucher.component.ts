@@ -90,7 +90,6 @@ resetForm(){
 
 //Fonction pour créer le rucher
 createRucher(){
-  alert("ok");
   const formValue = this.rucherForm.value;
   console.log(formValue);
   this.rucherService.rucher = {

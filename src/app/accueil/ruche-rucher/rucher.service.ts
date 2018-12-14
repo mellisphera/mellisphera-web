@@ -12,6 +12,7 @@ import { DailyRecordService } from '../disposition-ruche/Service/dailyRecordServ
 import { RucherModel } from '../../_model/rucher-model';
 import { Observation } from '../../_model/observation';
 import { ObservationService } from './ruche-detail/observation/service/observation.service';
+import { MeteoService } from '../meteo/Service/MeteoService';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -33,7 +34,8 @@ export class RucherService {
     constructor(private http:HttpClient, private user : UserloggedService, 
         public rucheService : RucheService, 
         private dailyRec : DailyRecordService,
-        public observationService : ObservationService) {
+        public observationService : ObservationService,
+        public meteoService : MeteoService) {
         if(sessionStorage.getItem("currentUser")){
             console.log("exist")
             this.getOneApiaryById('5bc48388dc7d27634d281536');
@@ -101,10 +103,14 @@ export class RucherService {
                 console.log(err);   
             },
             ()=>{
-                this.observationService.getObservationByIdApiary(this.rucher.id);
-                this.rucheService.getRucheByApiary(this.user.currentUser().username,this.rucher.id);
-                this.getRucherDetails();
-                this.dailyRec.getDailyRecThByApiary(this.rucher.id);
+                if(this.ruchers.length>0){
+                    this.observationService.getObservationByIdApiary(this.rucher.id);
+                    this.rucheService.getRucheByApiary(this.user.currentUser().username,this.rucher.id);
+                    this.getRucherDetails();
+                    this.dailyRec.getDailyRecThByApiary(this.rucher.id);
+                    this.meteoService.getWeather(this.rucher.ville);
+                    
+                }
             }
         );
     }
