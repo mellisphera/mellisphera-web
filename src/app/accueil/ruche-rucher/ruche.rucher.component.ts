@@ -18,7 +18,8 @@ import { RucherModel } from '../../_model/rucher-model';
 
 @Component({
   selector: 'app-ruche-rucher',
-  templateUrl: './ruche.rucher.component.html'
+  templateUrl: './ruche.rucher.component.html',
+  styleUrls : ['./ruche.rucher.component.scss']
 })
 
 export class RucheRucherComponent implements OnInit {
