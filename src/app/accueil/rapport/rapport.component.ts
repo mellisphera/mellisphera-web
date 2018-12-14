@@ -18,7 +18,8 @@ import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrie
 
 @Component({
   selector: 'app-rapport',
-  templateUrl: './rapport.component.html'
+  templateUrl: './rapport.component.html',
+  styleUrls : ['./rapport.component.scss']
 })
 
 export class RapportComponent implements OnInit {
