@@ -50,7 +50,7 @@ export class    FleursFloraisonService {
         this.http.get<FleursTheorique[]>(CONFIG.URL+'flowersTh/all').subscribe(
             (data)=>{
                 this.fleurThs = data;
-                console.log(this.fleurThs);
+                console.log(''+this.fleurThs);
             },
             (err)=>{
                 console.log(err);
