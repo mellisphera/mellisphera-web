@@ -36,7 +36,6 @@ export class    FleursFloraisonService {
     constructor(private http:HttpClient, public rucherService : RucherService, private userService : UserloggedService) {
         this.cleanTemplate();
         this.initFleurObservees();
-        this.getFleurTest();
         this.rucherService.ruchersObs.subscribe(
             ()=>{},()=>{},
             ()=>{
@@ -44,6 +43,7 @@ export class    FleursFloraisonService {
                 this.getUserFleur(this.rucherService.rucher.id);
             }
         )
+        this.getFleurTest();
     }
     //Récupère la liste des fleurs théoriques
     getFleurTest(){
