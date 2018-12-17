@@ -40,6 +40,7 @@ export class    FleursFloraisonService {
             ()=>{},()=>{},
             ()=>{
                 console.log(this.rucherService.rucher.id);
+                this.getFleurTest();
                 this.getUserFleur(this.rucherService.rucher.id);
             }
         )
@@ -113,7 +114,6 @@ export class    FleursFloraisonService {
                 console.log(this.fleursByRucher.length > 0)
                 this.cleanTemplate();
                 this.cleanMerge();
-                this.getFleurTest();
                 if(this.fleursByRucher.length > 0){
                     this.sortTheoricalFlower();
                 }
