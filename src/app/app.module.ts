@@ -20,7 +20,6 @@ import { RucheRucherComponent } from './accueil/ruche-rucher/ruche.rucher.compon
 import { RucheDetailComponent } from './accueil/ruche-rucher/ruche-detail/ruche.detail.component';
 import { CapteurComponent } from './accueil/capteur/capteur.component';
 import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouveau-capteur.component';
-import { GraphComponent } from './accueil/graph/graph.component';
 import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
 
 import { TablesComponent } from './tables/tables.component';
@@ -47,7 +46,6 @@ import { selectedRucherService } from './accueil/_shared-services/selected-ruche
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { GraphService } from './accueil/graph/graph.service';
 import { RapportService } from './accueil/rapport/rapport.service';
 import { FleursFloraisonService } from './accueil/fleurs-floraison/service/fleurs.floraison.service';
 import { RucheDetailService } from './accueil/ruche-rucher/ruche-detail/ruche.detail.service';
@@ -90,7 +88,6 @@ import { DemoComponent } from './demo/demo.component';
     AccueilComponent,
     RucheRucherComponent,
     MeteoComponent,
-    GraphComponent,
     RapportComponent,
     FleursFloraisonComponent,
     DispositionRucheComponent,
@@ -128,7 +125,6 @@ import { DemoComponent } from './demo/demo.component';
     RucherService,
     selectedRucherService,
     TestService,
-    GraphService,
     RapportService,
     FleursFloraisonService,
     RucheDetailService,
