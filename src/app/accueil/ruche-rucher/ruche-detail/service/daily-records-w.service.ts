@@ -32,6 +32,7 @@ export class DailyRecordsWService {
 
   constructor(private http : HttpClient) { 
     this.dailyRecArray = [];
+    this.updateCalendar();
   }
 
   getDailyRecordsWbyIdHive(idHive : string){
