@@ -113,9 +113,9 @@ export class    FleursFloraisonService {
                 console.log(this.fleursByRucher.length > 0)
                 this.cleanTemplate();
                 this.cleanMerge();
+                this.getFleurTest();
                 if(this.fleursByRucher.length > 0){
                     this.sortTheoricalFlower();
-                    this.getFleurTest();
                 }
                 else{
                     //throw 'Empty';
