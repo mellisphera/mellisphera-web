@@ -10,5 +10,5 @@ export interface DailyStockHoney {
 	idApiary : String;
 	idHive : String;
 	username : String;
-	timestamp : Timestamp<number>;
+	timestamp : String;
 }

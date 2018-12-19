@@ -25,7 +25,13 @@ export class GrapheReserveMielService {
     legend : {
         top:40
       },
-    toolbox: {
+      toolbox: {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'line']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
     },
     dataZoom: [
         /*{   
@@ -42,6 +48,7 @@ export class GrapheReserveMielService {
             end: 100
         }
     ],
+    
     grid: {
         left: '3%',
         right: '4%',
