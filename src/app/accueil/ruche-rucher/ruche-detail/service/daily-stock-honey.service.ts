@@ -57,6 +57,7 @@ export class DailyStockHoneyService {
           },
           series : [] = []
         };
+        console.log(this.dailyStock);
         this.countFlower();
         this.dailyStockByFleur();
         /* Mise à jour du template avec les info récupèrer */
@@ -123,10 +124,6 @@ export class DailyStockHoneyService {
       if(this.arrayDate.indexOf(element) == -1){
         this.arrayDate.push(new Date(element.date));
       }
-      /*this.dailyStockByFlower[''+element.nom].push({name : element.date, value : [
-        element.date, element.stockJ
-      ]}
-      );*/
     })
 
     for(var elt in this.dailyStockByFlower){
@@ -134,17 +131,17 @@ export class DailyStockHoneyService {
         this.dailyStockByFlower[elt].push({name : element});
       });
     }
-    this.dailyStock.forEach(elt=>{
-      for(var element in this.dailyStockByFlower){
-        this.dailyStockByFlower[element].forEach(obj=>{
-          if(obj.name.getDate() == new Date(elt.date).getDate() && obj.name.getMonth() == new Date(elt.date).getMonth()){
-            obj['value'] = [elt.date, elt.stockJ]
+    this.dailyStock.forEach(elt=>{// Parcour le tableau total
+      for(var element in this.dailyStockByFlower){// Pour chaque serie de fleur(element nom d'une fleur donc une serie est un tableau)
+        this.dailyStockByFlower[element].forEach(obj=>{// je parcour ce tableau
+          if(element == elt.nom){//index de l'objet
+            if(obj.name.getDate() == new Date(elt.date).getDate() && obj.name.getMonth() == new Date(elt.date).getMonth()){
+              obj['value'] = [elt.date, elt.stockJ]
+            }
           }
         });
       }
     })
-    console.log(this.arrayDate);
-    console.log(this.dailyStockByFlower);
   }
   cleanQuery(){
     this.dailyStock = [];
