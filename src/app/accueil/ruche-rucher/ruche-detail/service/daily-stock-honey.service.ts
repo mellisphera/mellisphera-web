@@ -121,15 +121,30 @@ export class DailyStockHoneyService {
     });
     this.dailyStock.forEach((element,index)=>{
       if(this.arrayDate.indexOf(element) == -1){
-        this.arrayDate.push(''+element.date);
+        this.arrayDate.push(new Date(element.date));
       }
       /*this.dailyStockByFlower[''+element.nom].push({name : element.date, value : [
         element.date, element.stockJ
       ]}
-      
       );*/
-      this.dailyStockByFlower[''+element.nom].push([''+element.date, Math.round(element.stockJ*100)/100]);
     })
+
+    for(var elt in this.dailyStockByFlower){
+      this.arrayDate.forEach(element=>{
+        this.dailyStockByFlower[elt].push({name : element});
+      });
+    }
+    this.dailyStock.forEach(elt=>{
+      for(var element in this.dailyStockByFlower){
+        this.dailyStockByFlower[element].forEach(obj=>{
+          if(obj.name.getDate() == new Date(elt.date).getDate() && obj.name.getMonth() == new Date(elt.date).getMonth()){
+            obj['value'] = [elt.date, elt.stockJ]
+          }
+        });
+      }
+    })
+    console.log(this.arrayDate);
+    console.log(this.dailyStockByFlower);
   }
   cleanQuery(){
     this.dailyStock = [];

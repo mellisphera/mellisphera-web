@@ -48,7 +48,7 @@ export class DailyRecordsWService {
           try{
                 start = this.convertDate(data[0].recordDate);
                 end = this.convertDate(data[data.length-1].recordDate);
-                console.log(this.getMonth(this.convertDate(data[0].recordDate)) - this.getMonth(data[data.length-1].recordDate));
+                //console.log(this.getMonth(this.convertDate(data[0].recordDate)) - this.getMonth(data[data.length-1].recordDate));
                 if((this.getMonth(this.convertDate(data[0].recordDate)) - this.getMonth(data[data.length-1].recordDate)) < -2){
                   start = this.getYear(start)+'-'+(this.getMonth(start))+'-'+'31';
                 }
@@ -65,7 +65,7 @@ export class DailyRecordsWService {
                 //this.rangeCalendar.push(this.convertDate(data[0].recordDate), this.convertDate(data[data.length-1].recordDate));
                 //this.rangeCalendar.push(start,end);
                 //console.log(this.rangeCalendar);
-                console.log(data);
+                //console.log(data);
                 data.forEach((element, index)=>{
                   this.dailyRec.push({
                     recordDate : this.convertDate(element.recordDate),
@@ -85,7 +85,7 @@ export class DailyRecordsWService {
               });
                 //console.log(this.dailyRec);
                 this.getArray();
-                console.log(this.arrayTempExt);
+                //console.log(this.arrayTempExt);
                 this.updateCalendar();
               }
             }
