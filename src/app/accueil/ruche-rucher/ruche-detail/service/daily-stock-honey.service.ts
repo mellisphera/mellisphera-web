@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CONFIG } from '../../../../../config';
 import { DailyStockHoney } from '../../../../_model/daily-stock-honey';
 import { isEmpty } from 'rxjs-compat/operator/isEmpty';
+import { IfStmt } from '@angular/compiler';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -50,33 +51,34 @@ export class DailyStockHoneyService {
     this.dailyStockObs.subscribe(
       (data)=>{
         this.dailyStock = data;
-        this.mergeOption = {
-
-          legend : {
-            data : [] = []
-          },
-          series : [] = []
-        };
+        this.cleanMerge();
         console.log(this.dailyStock);
-        this.countFlower();
-        this.dailyStockByFleur();
-        /* Mise à jour du template avec les info récupèrer */
-        for(var elt in this.dailyStockByFlower){
-          //console.log(this.dailyStockByFlower[elt]);
-          this.templateSerie.name = elt;
-          this.templateSerie.data = [];
-          this.templateSerie.data = this.dailyStockByFlower[elt];
-          this.mergeOption.series.push(this.templateSerie)
-          this.cleanTemplate();
-          console.log(this.templateSerie)
-        }
-        this.mergeOption.legend.data = this.typeFlower;
-        /*console.log(this.mergeOption);
-        console.log(this.arrayDate);*/
-
       },
       (err)=>{
         console.log(err);
+      },
+      ()=>{
+        if(this.dailyStock.length > 1){
+          this.countFlower();
+          this.dailyStockByFleur();
+          /* Mise à jour du template avec les info récupèrer */
+          for(var elt in this.dailyStockByFlower){
+            //console.log(this.dailyStockByFlower[elt]);
+            this.templateSerie.name = elt;
+            this.templateSerie.data = [];
+            this.templateSerie.data = this.dailyStockByFlower[elt];
+            this.mergeOption.series.push(this.templateSerie)
+            this.cleanTemplate();
+            console.log(this.templateSerie)
+          }
+          this.mergeOption.legend.data = this.typeFlower;
+          /*console.log(this.mergeOption);
+          console.log(this.arrayDate);*/ 
+        }
+        else{
+          console.log("clean");
+          this.cleanMerge();
+        }
       }
     );
   }
@@ -113,6 +115,16 @@ export class DailyStockHoneyService {
     };
   }
 
+  cleanMerge(){
+    this.mergeOption = {
+
+      legend : {
+        data : new Array()
+      },
+      series : new Array()
+    };
+  }
+
   /* Trie les données obtenue par fleur */
   dailyStockByFleur(){
     this.arrayDate = [];
@@ -125,13 +137,22 @@ export class DailyStockHoneyService {
         this.arrayDate.push(new Date(element.date));
       }
     })
-
-    for(var elt in this.dailyStockByFlower){
+    this.dailyStock.forEach((element,index)=>{
+      if(this.arrayDate.indexOf(element.date) == -1){
+        this.arrayDate.push(element.date);
+      }
+      this.dailyStockByFlower[''+element.nom].push({name : element.date, value : [
+        element.date, element.stockJ
+      ]}
+      );
+    })
+    /*for(var elt in this.dailyStockByFlower){
       this.arrayDate.forEach(element=>{
         this.dailyStockByFlower[elt].push({name : element});
       });
-    }
-    this.dailyStock.forEach(elt=>{// Parcour le tableau total
+    }*/
+    
+   /* this.dailyStock.forEach(elt=>{// Parcour le tableau total
       for(var element in this.dailyStockByFlower){// Pour chaque serie de fleur(element nom d'une fleur donc une serie est un tableau)
         this.dailyStockByFlower[element].forEach(obj=>{// je parcour ce tableau
           if(element == elt.nom){//index de l'objet
@@ -141,7 +162,7 @@ export class DailyStockHoneyService {
           }
         });
       }
-    })
+    })*/
   }
   cleanQuery(){
     this.dailyStock = [];

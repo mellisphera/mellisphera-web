@@ -22,6 +22,14 @@ export class GraphiqueFloraisonService {
             right: 10,
             containLabel: true
           },
+          toolbox: {
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'line']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
           //Le pointeur ne bouge qu'avec la souris
           tooltip: {
             trigger: 'item',

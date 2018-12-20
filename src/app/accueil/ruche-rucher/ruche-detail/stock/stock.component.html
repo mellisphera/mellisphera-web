@@ -1,9 +1,4 @@
 <div class="container-fluid" style="background-color:white;">
-    <div class="form-inline" >
-        <div id="ruche" class="form-group">
-                <h4>Hive # : {{ rucheName }} </h4>
-        </div>
-      </div>
   <div class="row content" id="content">
       <div echarts [options]="grapheMielService.option" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
       <div echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" id="calendrierPoids"></div>  

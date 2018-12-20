@@ -11,25 +11,37 @@
 
 <!-- change component content here-->
             <div class="container-fluid" style="background-color:white;">
-                <nav class="navbar navbar-expand navbar-light bg-light">
-                    <ul class="nav navbar-nav responsive-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['./observation',rucheId,rucheName]" routerLinkActive="active" >Notes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['./stock',rucheId,rucheName]" routerLinkActive="active" >Stock</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" [routerLink]="['./health',rucheId,rucheName]" routerLinkActive="active" >Health<span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['./daily',rucheId,rucheName]" routerLinkActive="active" >Daily</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['./hourly',rucheId,rucheName]" routerLinkActive="active">Hourly</a>
-                        </li>
-                    </ul>
-                </nav>
+                    <div id="navBar" class="flex">
+                        <div class="col">
+                            <ul class="pager">
+                                <li (click)="previousHive()" class="navRuche"><a><</a></li>
+                                <li id="hiveName">{{ rucheName }} </li>
+                                <li (click)="nextHive()" class="navRuche"><a>></a></li>
+                             </ul>
+                        </div>
+                        <div class="col">
+                            <nav id="navPannel">
+                                 <ul>
+                                    <a class="nav-link nav-item active" routerLinkActive="active" [routerLink]="['./observation',rucheId,rucheName]">
+                                        <li>Notes</li>
+                                    </a>
+                                    <a class="nav-link nav-item" routerLinkActive="active" [routerLink]="['./stock',rucheId,rucheName]">
+                                        <li>Stock</li>
+                                    </a>
+                                    <a class="nav-link nav-item" routerLinkActive="active" [routerLink]="['./health',rucheId,rucheName]">
+                                        <li>Health</li>
+                                    </a>
+                                    <a class="nav-link nav-item" routerLinkActive="active" [routerLink]="['./daily',rucheId,rucheName]" >
+                                        <li>Daily</li>
+                                    </a>
+                                    <a class="nav-link nav-item" routerLinkActive="active" [routerLink]="['./hourly',rucheId,rucheName]">
+                                        <li>Hourly</li>
+                                    </a>
+                                </ul>
+                            </nav>
+                        </div>
+                        
+                    </div>
             <router-outlet></router-outlet>
             </div>
         </div>
