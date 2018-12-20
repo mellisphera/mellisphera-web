@@ -9,7 +9,7 @@ import { DailyStockHoneyService } from '../service/daily-stock-honey.service';
 import { RecordService } from '../service/Record/record.service';
 import { ObservationService } from './service/observation.service';
 import { FormGroup, FormBuilder,Validators } from '@angular/forms';
-
+import { RucheService } from '../../../disposition-ruche/Service/ruche.service';
 @Component({
   selector: 'app-observation',
   templateUrl: './observation.component.html',
@@ -35,7 +35,8 @@ export class ObservationComponent implements OnInit {
     private activatedRoute : ActivatedRoute,
     private dailyStockHoneyService : DailyStockHoneyService,
     private recordService : RecordService,
-    public observationService : ObservationService
+    public observationService : ObservationService,
+    private rucheService : RucheService
     ) {
       this.initForm();
     }
@@ -45,7 +46,7 @@ export class ObservationComponent implements OnInit {
     this.rucheName = this.activatedRoute.snapshot.params.name;
     console.log(this.rucheId);
     console.log(this.rucheName);
-    this.observationService.getObservationByIdHive(this.rucheId);
+    this.observationService.getObservationByIdHive(this.rucheService.ruche.id);
   }
 
 

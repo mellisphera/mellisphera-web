@@ -1,10 +1,55 @@
 #popupObs{
     padding-left: 20px;
 }
-#contentChart{
-    display: flex;
-    justify-content: space-around;
-}
 input[formControlName="checkbox"]{
     padding: 5px;
+}
+.flex{
+    display: flex;
+    justify-content: space-between;
+}
+input[type=button]{
+    border-radius: 30px;
+    padding: 3px;
+}
+.navRuche{
+    cursor: pointer;
+}
+#navPannel ul{
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+}
+#navPannel li{
+    padding: 20px;
+    font-size: 18px;
+    list-style: none;
+}
+#navPannel li:hover{
+    background-color: white;
+    color: #23CCEF;
+}
+#navBar{
+    background-color:darkcyan;
+    border: 2px solid black;
+}
+#navPannel a{
+    color: white;
+}
+nav{
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+}
+#hiveName{
+    padding: 5px;
+    color: white;
+    font-size: 15px;
+}
+nav, ul{
+    font-size: 10px;
+}
+.active{
+    //color: #23CCEF;
+    background-color: white;
 }

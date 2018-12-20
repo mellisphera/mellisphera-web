@@ -66,7 +66,8 @@ export class RucheService {
 
    getRucheByUsername(username : string){
      this.ruchesAllApiary = [];
-     this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username).subscribe(
+     this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username);
+     this.ruchesObs.subscribe(
        (data)=>{
          this.ruchesAllApiary = data;
          console.log(this.ruchesAllApiary);
@@ -130,12 +131,19 @@ export class RucheService {
     );
   }
 
-  findRucheById(idHive : string){
+  findRucheById(idHive : string, navHive : boolean = false, callback?){
     this.ruchesAllApiary.forEach(element => {
       if(element.id == idHive){
-        this.rucheUpdate = element;
+        if(navHive){
+          this.ruche = element
+        }
+        else if(!navHive){
+          console.log("not");
+          this.rucheUpdate = element;
+        }
       }
     });
+    console.log("test");
   }
 
 }

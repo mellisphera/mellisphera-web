@@ -3,6 +3,7 @@ import { CalendrierTempIntService } from './service/calendrier-temp-int.service'
 import { ActivatedRoute } from '@angular/router';
 import { DailyRecordService } from '../../../disposition-ruche/Service/dailyRecordService';
 import { DailyRecordsWService } from '../service/daily-records-w.service';
+import { RucheService } from '../../../disposition-ruche/Service/ruche.service';
 
 @Component({
   selector: 'app-daily',
@@ -17,14 +18,14 @@ export class DailyComponent implements OnInit {
 
   constructor(public calendrierTempInt : CalendrierTempIntService, private activatedRoute : ActivatedRoute, 
     public dailyRecordThService : DailyRecordService,
-    public dailyRecordWservice : DailyRecordsWService) { }
+    public dailyRecordWservice : DailyRecordsWService,
+    private rucheService : RucheService) { }
 
   ngOnInit() {
     this.rucheId = this.activatedRoute.snapshot.params.id;
     console.log(this.rucheId);
     this.dailyRecordThService.getByIdHive(this.rucheId);
-    this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheId);
-    this.rucheName = this.activatedRoute.snapshot.params.name;
+    this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
   }
 
 }

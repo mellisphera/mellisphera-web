@@ -142,7 +142,7 @@ export class    FleursFloraisonService {
         this.mergeOption = {
             series : new Array(),
             yAxis: {
-                data : []
+                data : new Array()
             },
             legend : {
                 left: 'right',

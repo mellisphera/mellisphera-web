@@ -58,6 +58,7 @@ export class DailyRecordsWService {
           }
           catch(e){
             console.log(e);
+            this.updateCalendar();
           }
           finally{
             if(start != null){
