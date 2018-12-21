@@ -42,4 +42,7 @@ export class StockComponent implements OnInit, OnDestroy {
       this.dailyRecWService.cleanQuery();
       this.dailyStockHoneyService.cleanQuery();
   }
+  chartChange(event){
+    console.log(event);
+  }
 }

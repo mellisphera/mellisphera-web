@@ -5,6 +5,9 @@ import { CONFIG } from '../../../../../config';
 import { DailyStockHoney } from '../../../../_model/daily-stock-honey';
 import { isEmpty } from 'rxjs-compat/operator/isEmpty';
 import { IfStmt } from '@angular/compiler';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { graphic, registerMap } from 'echarts';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -26,28 +29,14 @@ export class DailyStockHoneyService {
   timeLine : any[];
 
   /* Template pour une serie(1 type d fleur)*/
-  templateSerie =  {
-      name:'',
-      type:'line',
-      stack: '',
-      itemStyle: {normal: {areaStyle: {type: 'default'}}},
-      data:[''],
-      showSymbol: false,
-      smooth : 'true',
-      label: {
-        normal: {
-            show: false,
-            position: 'top'
-        }
-    },
-  }
+  templateSerie  : any;
   constructor(private http : HttpClient) {
-
+    this.cleanTemplate();
   }
   /* Requete API*/
   getDailyStockHoneyByApiary(idHive : string){
     this.dailyStock = [];
-    this.dailyStockObs = this.http.get<DailyStockHoney[]>(CONFIG.URL+'/dailyStockHoney'+'/hive/'+idHive);
+    this.dailyStockObs = this.http.get<DailyStockHoney[]>(CONFIG.URL+'dailyStockHoney'+'/hive/'+idHive);
     this.dailyStockObs.subscribe(
       (data)=>{
         this.dailyStock = data;
@@ -55,35 +44,34 @@ export class DailyStockHoneyService {
         console.log(this.dailyStock);
       },
       (err)=>{
-        console.log(err);
+        console.log("Aucune données");
+        //this.cleanMerge();
+        this.mergeOption.series.push(this.templateSerie);
       },
       ()=>{
-        if(this.dailyStock.length > 1){
-          this.countFlower();
-          this.dailyStockByFleur();
-          /* Mise à jour du template avec les info récupèrer */
-          for(var elt in this.dailyStockByFlower){
-            //console.log(this.dailyStockByFlower[elt]);
-            this.templateSerie.name = elt;
-            this.templateSerie.data = [];
-            this.templateSerie.data = this.dailyStockByFlower[elt];
-            this.mergeOption.series.push(this.templateSerie)
-            this.cleanTemplate();
-            console.log(this.templateSerie)
-          }
-          this.mergeOption.legend.data = this.typeFlower;
-          /*console.log(this.mergeOption);
-          console.log(this.arrayDate);*/ 
-        }
-        else{
-          console.log("clean");
-          this.cleanMerge();
-        }
+        this.nextQuery();
       }
     );
   }
 
 
+  nextQuery(){
+    /* Mise à jour du template avec les info récupèrer */
+    this.countFlower();
+    this.dailyStockByFleur();
+    for(var elt in this.dailyStockByFlower){
+      this.templateSerie.name = elt;
+      this.templateSerie.data = [];
+      this.templateSerie.data = this.dailyStockByFlower[elt];
+      this.mergeOption.series.push(this.templateSerie)
+      this.cleanTemplate();
+      console.log(this.templateSerie)
+    }
+    this.mergeOption.legend.data = this.typeFlower;
+    /*console.log(this.mergeOption);
+    console.log(this.arrayDate);*/ 
+  }
+  
   convertDate(date){
     var dateIso = new Date(date);
     console.log(dateIso);
@@ -103,7 +91,7 @@ export class DailyStockHoneyService {
       type:'line',
       stack: 'fleurs',
       itemStyle: {normal: {areaStyle: {type: 'default'}}},
-      data:[''],
+      data:[{name : '', value : ['',0]}],
       showSymbol: false,
       smooth : 'true',
       label: {
@@ -116,17 +104,22 @@ export class DailyStockHoneyService {
   }
 
   cleanMerge(){
+    this.typeFlower = new Array();
     this.mergeOption = {
 
       legend : {
-        data : new Array()
+        data : []
       },
-      series : new Array()
+      series : []
     };
   }
+  
+
+
 
   /* Trie les données obtenue par fleur */
   dailyStockByFleur(){
+    
     this.arrayDate = [];
     this.dailyStockByFlower = [];
     this.typeFlower.forEach(element=>{
@@ -169,7 +162,7 @@ export class DailyStockHoneyService {
     this.arrayDate = [];
     this.typeFlower = [];
     this.cleanTemplate();
-    this.mergeOption = [];
+   // this.mergeOption = [];
   }
 
   /* Recupère tout les types de fleurs de la requete */
@@ -183,3 +176,28 @@ export class DailyStockHoneyService {
     });
   }
 }
+
+
+/*    if(this.dailyStock.length > 1){
+      this.countFlower();
+      this.dailyStockByFleur();
+      for(var elt in this.dailyStockByFlower){
+        this.templateSerie.name = elt;
+        this.templateSerie.data = [];
+        this.templateSerie.data = this.dailyStockByFlower[elt];
+        this.mergeOption.series.push(this.templateSerie)
+        this.cleanTemplate();
+        console.log(this.templateSerie)
+      }
+      this.mergeOption.legend.data = this.typeFlower;
+    }
+    else{
+      console.log("clean");
+      this.dailyStock = new Array();
+      this.cleanTemplate();
+      this.cleanMerge();
+      console.log(this.templateSerie);
+      console.log(this.mergeOption);
+    }
+    this.countFlower();
+    this.dailyStockByFleur();*/

@@ -17,6 +17,7 @@ import { GrapheReserveMielService } from '../ruche-detail/stock/service/graphe-r
 import { GraphRecordService } from '../ruche-detail/hourly/service/graph-record.service';
 import { RecordService } from '../ruche-detail/service/Record/record.service';
 import { CalendrierHealthService } from '../ruche-detail/health/service/calendrier-health.service';
+import {  EChartOption } from 'echarts';
 
 @NgModule({
   imports: [
