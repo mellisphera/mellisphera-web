@@ -57,6 +57,7 @@ import { MeteoService } from './accueil/meteo/Service/MeteoService';
 import { RucheService } from './accueil/disposition-ruche/Service/ruche.service';
 
 import { NgxEchartsModule } from 'ngx-echarts';
+import { ECharts } from 'echarts';
 import { CalendrierService } from './accueil/meteo/Service/calendrier.service';
 import { DailyRecordsWService } from './accueil/ruche-rucher/ruche-detail/service/daily-records-w.service';
 import { GraphMeteoService } from './accueil/meteo/Service/graph-meteo.service';
@@ -113,7 +114,7 @@ import { DemoComponent } from './demo/demo.component';
     HttpClientModule,
     DragAndCheckModule,
     NgxEchartsModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     CapteurService,

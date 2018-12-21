@@ -1,6 +1,6 @@
 <div class="container-fluid" style="background-color:white;">
   <div class="row content" id="content">
-      <div echarts [options]="grapheMielService.option" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
+      <div echarts [options]="grapheMielService.option" (chartDataViewChanged)="chartChange($event)" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
       <div echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" id="calendrierPoids"></div>  
     </div>
 </div>

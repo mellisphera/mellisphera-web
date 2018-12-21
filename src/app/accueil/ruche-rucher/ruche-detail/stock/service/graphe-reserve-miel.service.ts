@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { EChartOption } from 'echarts';
 
 @Injectable({
   providedIn: 'root'
@@ -6,11 +7,11 @@ import { Injectable } from '@angular/core';
 export class GrapheReserveMielService {
 
   constructor() { }
-  option = {
+  option: EChartOption = {
     title: {
         text: 'Stock Honey',
         left: 'center',
-        top:-5
+        top:'-5'
     },
     tooltip : {
         trigger: 'axis',
@@ -33,6 +34,7 @@ export class GrapheReserveMielService {
             saveAsImage: {show: true}
         }
     },
+    series : [],
     dataZoom: [
         /*{   
             show: true,
