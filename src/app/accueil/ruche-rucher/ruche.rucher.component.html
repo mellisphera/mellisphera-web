@@ -151,48 +151,48 @@
         </div>
           <div *ngIf="updateRucherInput">
               <form [formGroup]="rucherForm" (ngSubmit)="onEditerRucher() ">
-                <h4 class="text-center">Editer Rucher</h4>
+                <h4 class="text-center">Edit Apiary</h4>
                 <div class="form-group row"  >
                    <div class="col-md-12">
-                    <label for="recipient-name" class="col-form-label">Nom : </label>
+                    <label for="recipient-name" class="col-form-label">Name </label>
                     <input formControlName="nom" type="text" class="form-control text-left" id="recipient-name" >
                   </div>  
                   <div class="col-md-12">
-                    <div class="alert alert-danger" *ngIf="rucherForm.controls['nom'].invalid">Veuillez saisir un nom</div>
+                    <div class="alert alert-danger" *ngIf="rucherForm.controls['nom'].invalid">your apiary name</div>
                   </div>
                 </div>
                 <div class="form-group row"  >
                     <div class="col-md-12">
-                      <label for="recipient-name" class="col-form-label">Ville :  </label>
+                      <label for="recipient-name" class="col-form-label">City </label>
                       <input formControlName="ville" type="text" class="form-control text-left" id="recipient-name">
                     </div>
                     <div class="col-md-12">
-                      <div class="alert alert-danger" *ngIf="rucherForm.controls['ville'].invalid ">Veuillez saisir une ville</div>
+                      <div class="alert alert-danger" *ngIf="rucherForm.controls['ville'].invalid ">apiary location</div>
                     </div>
                 </div>
                 <div class="form-group row"  >
                   <div class="col-md-12">
-                    <label for="recipient-name" class="col-form-label">Code Postal :  </label>
+                    <label for="recipient-name" class="col-form-label">Zip code </label>
                     <input formControlName="codePostal" type="text" class="form-control text-left" id="recipient-name">
                   </div>
                   <div class="col-md-12">
-                    <div class="alert alert-danger" *ngIf="rucherForm.controls['codePostal'].invalid ">Veuillez saisir un Code Postal</div>
+                    <div class="alert alert-danger" *ngIf="rucherForm.controls['codePostal'].invalid ">zip code</div>
                   </div>
                   
               </div>
               
                 <div class="form-group row"  >
                     <div class="col-md-6">
-                      <label for="recipient-name" class="col-form-label">Description : </label>
+                      <label for="recipient-name" class="col-form-label">Description </label>
                     </div>
                     <div class="col-md-12">
                       <textarea formControlName="description"  type="text" class="form-control text-left" id="recipient-name"></textarea>
-                      <div class="alert alert-danger" *ngIf="rucherForm.controls['description'].invalid ">Veuillez saisir une description</div>
+                      <div class="alert alert-danger" *ngIf="rucherForm.controls['description'].invalid ">describe your apiary</div>
                      
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="onEditerRucher()" [disabled]="rucherForm.invalid">Sauvegarder</button>
-                <button type="reset" class="btn btn-danger" (click)="cancelUpdateRucher()">Annuler</button>
+                <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="onEditerRucher()" [disabled]="rucherForm.invalid">Save</button>
+                <button type="reset" class="btn btn-danger" (click)="cancelUpdateRucher()">Dismiss</button>
               </form>
           </div>
         <!--End of editing Rucher  DIV-->
@@ -201,14 +201,14 @@
   </div>
   </div>
   
-  <!-- MODALS ARE DECLARE HERE !!! -->
+  <!-- MODALS ARE DECLARED HERE !!! -->
   
   <!-- New rucher Modal -->
   <div class="modal fade" id="newRucherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Nouveau Rucher</h4></h5>
+          <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >New Apiary</h4></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -216,36 +216,36 @@
         <div class="modal-body">
           <form [formGroup]="rucherForm">
             <div class="form-group"  >
-              <label for="recipient-name" class="col-form-label">Nom :</label>
+              <label for="recipient-name" class="col-form-label">Name</label>
               <input formControlName="nom" type="text" class="form-control" id="recipient-name">
               <div class="alert alert-danger" *ngIf="!rucherForm.controls['nom'].valid && rucherForm.controls['nom'].touched">
-                Veuillez saisir un nom entre 1 et 20 caractères
+                name no longer than 20 chars
               </div>
             </div>
             <div class="form-group">
-              <label for="message-text" class="col-form-label">Description :</label>
+              <label for="message-text" class="col-form-label">Description</label>
               <textarea formControlName="description" class="form-control" id="message-text"></textarea>
               <div class="alert alert-danger" *ngIf="!rucherForm.controls['description'].valid && rucherForm.controls['description'].touched">
-                Veuillez saisir une description entre 1 et 40 caractères
+                set a short description of your apiary
               </div>
             </div>
               <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Ville :</label>
                 <input formControlName="ville" type="text" class="form-control" id="recipient-name">
                   <div class="alert alert-danger" *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
-                    Veuillez saisir le nom de la ville
+                    city name
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Code postal :</label>
+                  <label for="recipient-name" class="col-form-label">Zip Code</label>
                   <input formControlName="codePostal" type="text" class="form-control" id="recipient-name">
                   <div class="alert alert-danger" *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
-                    Veuillez saisir le nom de le codePostal
+                    Zip Code
                   </div>
               </div>
               <div class="modal-footer">
                 <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="Créer Rucher" (click)="createRucher()" [disabled]="!rucherForm.valid">Créer Rucher</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
             </div>
           </form>
         </div>
@@ -261,7 +261,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Nouvelle ruche</h3> </h5>
+          <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">New Hive</h3> </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -269,16 +269,16 @@
         <div class="modal-body">
           <form  [formGroup]="newRucheForm">
             <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Nom :</label>
+              <label for="recipient-name" class="col-form-label">Name</label>
               <input formControlName="nomRuche" type="text" class="form-control" id="recipient-name">
             </div>
             <div class="form-group">
-              <label for="message-text" class="col-form-label">Description :</label>
+              <label for="message-text" class="col-form-label">Description</label>
               <textarea formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="createRuche();" [disabled]="!newRucheForm.valid" > Créer Ruche</button>
-              <button type="reset" class="btn btn-secondary" (click)="initForm()" data-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="createRuche();" [disabled]="!newRucheForm.valid" > Create hive</button>
+              <button type="reset" class="btn btn-secondary" (click)="initForm()" data-dismiss="modal">Close</button>
             </div>
           </form>
         </div>
@@ -292,30 +292,30 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Editer ruche</h3> </h5>
+            <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Edit Hive</h3> </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
               <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Rucher :</label>
+                  <label for="recipient-name" class="col-form-label">Apiary</label>
                   <select  [(ngModel)]="rucherService.rucherSelectUpdate" class="form-control">
                       <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option> 
                   </select>
               </div>
             <form [formGroup]="newRucheForm" (ngSubmit)="onEditeRuche()">
               <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Nom :</label>
+                <label for="recipient-name" class="col-form-label">Name</label>
                 <input formControlName="nomRuche" type="text" class="form-control" id="recipient-name">
               </div>
               <div class="form-group">
-                <label for="message-text" class="col-form-label">Description :</label>
+                <label for="message-text" class="col-form-label">Description</label>
                 <textarea  formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" [disabled]="!newRucheForm.valid">Editer Ruche</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!newRucheForm.valid">Edit hive</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
               </div>
           </form>
           </div>
@@ -332,7 +332,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Nouvelle Observation</h3> </h5>
+          <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">New Note</h3> </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -341,12 +341,12 @@
           <form  [formGroup]="observationForm" (ngSubmit)="createObservation()">
             <div class="form-group">
               <input type="date" formControlName="date"><br/>
-              <label for="recipient-obs" class="col-form-label">Observations :</label>
+              <label for="recipient-obs" class="col-form-label">Note</label>
               <textarea formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" [disabled]="!observationForm.valid" > Créer Observation</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!observationForm.valid" > Create note</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
               </div>
           </form>
         </div>
@@ -361,7 +361,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Editer Observation</h3> </h5>
+          <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Edit Note</h3> </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
           </button>
@@ -369,12 +369,12 @@
         <div class="modal-body">
           <form  [formGroup]="observationForm" (ngSubmit)="onEditObservation()">
             <div class="form-group">
-              <label for="recipient-editobs" class="col-form-label">Observations :</label>
+              <label for="recipient-editobs" class="col-form-label">Note</label>
               <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
             </div> 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" (click)="onEditObservation()" [disabled]="!observationForm.valid" > Modifier Observation</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
+                <button type="submit" class="btn btn-primary" (click)="onEditObservation()" [disabled]="!observationForm.valid" >Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
               </div>
           </form>
         </div>

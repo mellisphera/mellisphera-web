@@ -19,8 +19,8 @@
                                     <label for="exampleTextarea" >Report</label>
                                     <textarea class="form-control" id="exampleTextarea" rows="8"  formControlName="texte"></textarea>
                             </div>
-                            <button class="btn btn-primary" (click)="getAnalyseTemp()" [disabled]="!rapportForm.valid" >Analyser</button>
-                            <button type="submit" (click)="rapportService.nluSave(rucherService.rucher)" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Sauver</button>
+                            <button class="btn btn-primary" (click)="getAnalyseTemp()" [disabled]="!rapportForm.valid" >Analyse</button>
+                            <button type="submit" (click)="rapportService.nluSave(rucherService.rucher)" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Save notes</button>
                         </form>
 
                         <!--<div class="form-group">

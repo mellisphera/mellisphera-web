@@ -65,8 +65,9 @@ export class FleursFloraisonComponent implements OnInit {
                 this.username= data.currentUser().username; 
                 this.selectedType = '';
                 this.currentMonth = 0;
-                this.currentMonthStr = ['','Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Nomvembre','Decembre'];
-  } 
+                //this.currentMonthStr = ['','Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+                this.currentMonthStr = ['','January','February','March','April','May','June','July','August','September','October','November','December'];
+              } 
 
   //Au chargement de la page on execute ces fonctions
   ngOnInit(){

@@ -83,18 +83,19 @@ export class CalendrierHealthService {
             }
         },
         dayLabel: {
-            nameMap: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+            //nameMap: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+            nameMap: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
             firstDay: 1, // start on Monday
 
           },
           monthLabel: {
             margin: 10,
             nameMap: [
-                'Janv.', 'Fev.', 'Mars',
+                'Jan.', 'Feb.', 'Mar.',
 
-                'Avril', 'Mai', 'Juin',
+                'Apr.', 'May', 'Jun.',
 
-                'Juill.', 'Aout', 'Sept.',
+                'Jul.', 'Aug.', 'Sep.',
 
                 'Oct.', 'Nov.', 'Dec.'
             ]

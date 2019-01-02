@@ -19,7 +19,7 @@
                                 <div class="panel-heading "  >
                                     <h4 class="panel-title" >
                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                            <b>Capteurs </b>
+                                            <b>Sensors </b>
                                         </a>                                 
                                     </h4>
                                 </div>
@@ -40,7 +40,7 @@
                                                     <tr>
                                                         <th scope="col">Reference</th>
                                                         <th scope="col">Description</th>
-                                                        <th scope="col">Affectation</th>
+                                                        <th scope="col">Association</th>
                                                         <th scope="col">Type</th>
                                                         <th scope="col">Action</th>                             
                                                     </tr>
@@ -89,7 +89,7 @@
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
-  <h5 class="modal-title text-center" id="exampleModalLabel"><h3>Déclaration de capteur</h3> </h5>
+  <h5 class="modal-title text-center" id="exampleModalLabel"><h3>New Sensor</h3> </h5>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -98,10 +98,10 @@
     <form [formGroup]="newCapteurForm" (ngSubmit)="createCapteur()">
         <div class="form-group row">
             <div class="col-md-6" >
-                <label for="recipient-name" class="col-form-label">Référence (*):</label>
+                <label for="recipient-name" class="col-form-label">Reference (*):</label>
                 <input #ref formControlName="reference" name="ref" type="text" class="form-control" id="recipient-name">
                 <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].touched">
-                    Veuillez saisir une reference valide
+                    You should select a valid reference
                 </div>
             </div>
             <div class="col-md-6">
@@ -110,7 +110,7 @@
                     <option *ngFor="let capteur of (capteurService.capteurAcheter | capteurPipe:getSensorRef().value);" [ngValue]="capteur">{{ capteur.type }} </option>
                 </select>
                 <div class="alert alert-danger" hidden>
-                    Vérifiez la référence de votre capteur
+                    Select your sensor reference
                 </div>
             </div>
         </div>
@@ -119,32 +119,32 @@
             <input formControlName="description" class="form-control" id="message-text">
         </div>
         <div class="form-group ">          
-            <label class="col-form-label" for="exampleRadios1" >Affecter à :  </label>
+            <label class="col-form-label" for="exampleRadios1" >Link to :</label>
             <div class="form-check">
                 <label class="form-check-label" for="exampleRadios1" >Stock </label>
                 <input class="form-check-input" value="stock" type="radio" formControlName="checkbox">
-                <label class="form-check-label" for="exampleRadios1">Ruche </label>
+                <label class="form-check-label" for="exampleRadios1">Hive </label>
                 <input class="form-check-input" value="ruche" type="radio" formControlName="checkbox">                   
             </div>
         </div>
         <div *ngIf="getTypeAffectation().value=='ruche'">
                 <div class="form-group">
-                    <label class="col-form-label">Rucher :</label>
+                    <label class="col-form-label">Apiary</label>
                     <select [(ngModel)]="rucherService.rucher" [ngModelOptions]="{standalone: true}" class="form-control" (change)="onSelectRucher();">
                         <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher" >{{rucher.name}}</option>
                     </select>   
                 </div>                 
                 <div class="form-group">
-                    <label class="col-form-label">Ruche :</label>
+                    <label class="col-form-label">Hive</label>
                     <select [(ngModel)]="rucherService.rucheService.ruche" [ngModelOptions]="{standalone: true}" class="form-control">
                         <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="ruche" >{{ruche.name}}</option>
                     </select>   
-                    <div class="alert alert-danger" hidden>Veuillez choisir une ruche</div>        
+                    <div class="alert alert-danger" hidden>Select a hive</div>        
                 </div>
             </div>  
             <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" [disabled]="!newCapteurForm.valid">Ajouter Capteur</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!newCapteurForm.valid">Add sensor</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
     </form>
 </div>
@@ -159,7 +159,7 @@
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
-<h5 class="modal-title text-center" id="exampleModalLabel"><h3>Editer affectation capteur</h3> </h5>
+<h5 class="modal-title text-center" id="exampleModalLabel"><h3>Edit sensor</h3> </h5>
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span>
 </button>
@@ -168,42 +168,42 @@
 <form  [formGroup]="editCapteurForm" (ngSubmit)="updateCapteur()">
     <div class="form-group ">          
         <label  class="col-form-label" for="exampleRadios1" >
-            Affecter à :  
+            Link to :  
         </label>
         <div class="form-check">
             <input class="form-check-input" type="radio" formControlName="checkbox" value="stock" [checked]="!editCapteurCheckbox" (click)="onchange($event)">
             <label class="form-check-label" for="exampleRadios1" >Stock </label>
             <input class="form-check-input" type="radio" formControlName="checkbox" value="ruche" [checked]="editCapteurCheckbox" (click)="onchange($event)"> 
-            <label class="form-check-label" for="exampleRadios1">Ruche </label>                   
+            <label class="form-check-label" for="exampleRadios1">Hive </label>                   
         </div>
     </div>
     <div *ngIf="editCapteurCheckbox ">
             <div class="form-group">
-                <label class="col-form-label">Rucher :</label>
+                <label class="col-form-label">Apiary</label>
                 <select [(ngModel)]="rucherService.rucherUpdate" [ngModelOptions]="{standalone: true}" class="form-control" (change)="onSelectRucher();">
                     <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher" >{{rucher.name}}</option>
                 </select>   
             </div>                 
             <div class="form-group">
-                <label class="col-form-label">Ruche :</label>
+                <label class="col-form-label">Hive</label>
                 <select [(ngModel)]="rucherService.rucheService.rucheUpdate" [ngModelOptions]="{standalone: true}" class="form-control">
                     <option *ngFor="let rucher of rucherService.rucheService.ruches" [ngValue]="rucher" >{{rucher.name}}</option>
                 </select>   
-                <div class="alert alert-danger" hidden>Veuillez choisir une ruche</div>        
+                <div class="alert alert-danger" hidden>Select a hive</div>        
             </div>
     </div>        
     <div class="form-group">
-        <label for="message-text" class="col-form-label">Description :</label>
+        <label for="message-text" class="col-form-label">Description</label>
         <input formControlName="description" class="form-control" id="message-text">
     </div>
     <div class="form-group ">
         <div class="alert alert-success" *ngIf="editedSensorMsgE">
-            Capteur déplacé avec <strong>succès !</strong>
+            Sensor edit <strong>successful!</strong>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" [disabled]="!editCapteurForm.valid"> Sauvegarder</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!editCapteurForm.valid"> Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     </div>
 </form>
 </div>
