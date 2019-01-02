@@ -14,7 +14,8 @@
                         <option  *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher" >
                                 {{rucher.name}}
                         </option>
-                    </select>   
+                    </select>
+                    <button type="button" data-backdrop="false" class="btn btn-primary" data-toggle="modal" data-target="#newRucherModal" >Créer rucher</button>
             </div>
            
         </div>
@@ -41,6 +42,57 @@
         </div>
     </div>
 </nav>
+
+  <!-- New rucher Modal -->
+  <div class="modal fade" id="newRucherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Nouveau Rucher</h4></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="rucherForm">
+            <div class="form-group"  >
+              <label for="recipient-name" class="col-form-label">Nom :</label>
+              <input formControlName="nom" type="text" class="form-control" id="recipient-name">
+              <div class="alert alert-danger" *ngIf="!rucherForm.controls['nom'].valid && rucherForm.controls['nom'].touched">
+                Veuillez saisir un nom entre 1 et 20 caractères
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Description :</label>
+              <textarea formControlName="description" class="form-control" id="message-text"></textarea>
+              <div class="alert alert-danger" *ngIf="!rucherForm.controls['description'].valid && rucherForm.controls['description'].touched">
+                Veuillez saisir une description entre 1 et 40 caractères
+              </div>
+            </div>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Ville :</label>
+                <input formControlName="ville" type="text" class="form-control" id="recipient-name">
+                  <div class="alert alert-danger" *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
+                    Veuillez saisir le nom de la ville
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Code postal :</label>
+                  <input formControlName="codePostal" type="text" class="form-control" id="recipient-name">
+                  <div class="alert alert-danger" *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
+                    Veuillez saisir le nom de le codePostal
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="Créer Rucher" (click)="createRucher()" [disabled]="!rucherForm.valid">Créer Rucher</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Fermer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of new Rucher Modal -->
 <!--
 <app-login [username]='username'></app-login>
 -->

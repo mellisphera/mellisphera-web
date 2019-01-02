@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [ 
@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
         //BrowserModule,
         CommonModule,
         FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [ NavbarComponent ],
     exports: [ NavbarComponent ]

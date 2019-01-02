@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit{
     private toggleButton: any;
     private sidebarVisible: boolean;eza
     public lastConnexion : string;
-
+    public rucherForm : FormGroup;
     constructor(location: Location,  
         private element: ElementRef, 
         private data : UserloggedService,
@@ -36,7 +36,8 @@ export class NavbarComponent implements OnInit{
         private rucheService : RucheService,
         private meteoService : MeteoService,
         private fleursFloraisonService : FleursFloraisonService,
-        private observationService : ObservationService) {
+        private observationService : ObservationService,
+        private formBuilder : FormBuilder) {
         try{
             this.lastConnexion = this.authService.lastConnection.toDateString();
         }
@@ -47,6 +48,15 @@ export class NavbarComponent implements OnInit{
         console.log("Local storage"+localStorage);
     }
 
+    initForm(){
+        this.rucherForm=this.formBuilder.group({
+            'nom': [null,Validators.compose([Validators.required])],
+            'description': [null],
+            'ville': [null,Validators.compose([Validators.required])],
+            'codePostal': [null,Validators.compose([Validators.required])],
+            'validate' : ``
+          })
+      }
     logout(){
         this.authService.isAuthenticated = false;
         sessionStorage.connexion = "false";
@@ -66,6 +76,7 @@ export class NavbarComponent implements OnInit{
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
       this.data.currentMessage.subscribe(message=>this.message=message);
+      this.initForm();
       console.log(this.authService.lastConnection);
     }
     onSelectRucher(){
@@ -115,4 +126,33 @@ export class NavbarComponent implements OnInit{
       return 'Dashboard';
     }
   
+    createRucher(){
+        const formValue = this.rucherForm.value;
+        console.log(formValue);
+        this.rucherService.rucher = {
+          id : null,
+          latitude: '',
+          longitude: '',
+          name: '',
+          description : '',
+          createdAt : null,
+          urlPhoto : '',
+          username : '',
+          codePostal : '',
+          ville : ''
+       };
+        console.log(this.rucherService.rucher);
+        this.rucherService.rucher.id=null;
+        this.rucherService.rucher.description = formValue.description;
+        this.rucherService.rucher.name = formValue.nom;
+        this.rucherService.rucher.ville = formValue.ville;
+        this.rucherService.rucher.codePostal = formValue.codePostal;
+        this.rucherService.rucher.createdAt = new Date();
+        this.rucherService.rucher.urlPhoto = "void";
+        this.rucherService.rucher.username = this.username;
+        console.log(this.rucherService.rucher);
+        this.initForm();
+        this.rucherService.createRucher();
+      } 
+      
 }
