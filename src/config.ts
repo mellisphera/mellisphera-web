@@ -5,8 +5,8 @@ export const CONFIG = {
     API_PY : "http://51.68.71.91:5000",
     apiPath: 'api/',
     googleMapsAPI: 'AIzaSyAHvIyK6M1SW6R1rYkXnTWNiCbbqE9gBVI',
-    //URL_FRONT :'http://localhost:4200/'
-    URL_FRONT :'http://51.68.71.91/app/'
+    URL_FRONT :'http://localhost:4200/'
+    //URL_FRONT :'http://51.68.71.91/test/'
 
 
 };
