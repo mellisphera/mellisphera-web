@@ -13,9 +13,11 @@ const httpOptions = {
  
 @Injectable()
 export class RucheDetailService {
- 
     
-    constructor(private http:HttpClient) {}
+    
+    constructor(private http:HttpClient) {
+
+    }
     // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
 
     // pour afficher tout les ruchers de l'utilsateur connecté

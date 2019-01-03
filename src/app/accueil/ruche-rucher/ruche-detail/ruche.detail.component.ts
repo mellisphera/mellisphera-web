@@ -24,6 +24,7 @@ import { DailyRecordService } from '../../disposition-ruche/Service/dailyRecordS
 import { RucheService } from '../../disposition-ruche/Service/ruche.service';
 import { ObservationService } from './observation/service/observation.service';
 //import { CalendrierHealthService } from './service/health/calendrier-health.service';
+import { CONFIG } from '../../../../config';
 
 @Component({
   selector: 'app-ruche-detail',
@@ -37,6 +38,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     rucheName : string;
     message="";
     compteurHive : number;
+    public img : string;
     private timerSubscription: Subscription;
 
     constructor(private activatedRoute : ActivatedRoute, 
@@ -49,6 +51,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         private recordService : RecordService){
                     this.rucheId = null;
                     this.compteurHive = 0;
+                    this.img = CONFIG.URL_FRONT+"assets/icons/next-button-4.png";
     }
 
     ngOnInit(){
