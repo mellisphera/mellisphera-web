@@ -12,11 +12,11 @@
 <!-- change component content here-->
             <div class="container-fluid" style="background-color:white;">
                     <div id="navBar" class="flex">
-                        <div class="col">
-                            <ul class="pager">
-                                <li (click)="previousHive()" class="navRuche"><a><</a></li>
+                        <div class="col" id="navHive">
+                            <ul class="flex">
+                                <li (click)="previousHive()" class="navRuche"><a><img [src]="img" width="35"/></a></li>
                                 <li id="hiveName">{{ rucheName }} </li>
-                                <li (click)="nextHive()" class="navRuche"><a>></a></li>
+                                <li (click)="nextHive()" class="navRuche"><a><img [src]="img" width="35"/></a></li>
                              </ul>
                         </div>
                         <div class="col">
