@@ -49,9 +49,9 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         private dailyRecordWservice : DailyRecordsWService,
         private dailyStockHoneyService : DailyStockHoneyService,
         private recordService : RecordService){
-                    this.rucheId = null;
-                    this.compteurHive = 0;
-                    this.img = CONFIG.URL_FRONT+"assets/icons/next-button-4.png";
+            this.rucheId = null;
+            this.compteurHive = 0;
+            this.img = CONFIG.URL_FRONT+"assets/icons/next-button-4.png";
     }
 
     ngOnInit(){
