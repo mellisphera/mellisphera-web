@@ -40,7 +40,6 @@ export class DailyStockHoneyService {
     this.dailyStockObs.subscribe(
       (data)=>{
         this.dailyStock = data;
-        console.log(data);
         this.cleanMerge();
         console.log(this.dailyStock);
       },
