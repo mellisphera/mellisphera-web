@@ -19,7 +19,7 @@ export class CalendrierPoidsService {
     backgroundColor: 'white',
     title: {
         top: 70,
-        text: 'Weight_max for each day',
+        text: 'Daily weight incomes',
         left: 'center',
     },
     tooltip : {
