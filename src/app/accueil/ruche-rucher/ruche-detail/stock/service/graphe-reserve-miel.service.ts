@@ -9,7 +9,7 @@ export class GrapheReserveMielService {
   constructor() { }
   option: EChartOption = {
     title: {
-        text: 'Stock Honey',
+        text: 'Honey Stock',
         left: 'center',
         top:'-5'
     },
@@ -70,7 +70,7 @@ export class GrapheReserveMielService {
     ],
     yAxis :
         {
-            name : 'Poids (kg)',
+            name : 'Weight (kg)',
             type : 'value'  
                 
         }

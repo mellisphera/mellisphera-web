@@ -14,7 +14,8 @@ export class GraphRecordService {
   option = {
     title: {
         text: 'Weight & Temperature'
-
+        left: 'center',
+        top:'-5'
     },
     tooltip: {
         trigger: 'axis',
@@ -32,6 +33,7 @@ export class GraphRecordService {
         }
     },
     legend: {
+        top:40
         data:['Poids','Temp-int','Temp-ext']
     },
     grid: {
@@ -64,7 +66,7 @@ export class GraphRecordService {
     yAxis: [
         {
             type: 'value',
-            name: 'Poids (kg)',
+            name: 'Weight (kg)',
             min: 0,
             max: 80,
             interval: 5,

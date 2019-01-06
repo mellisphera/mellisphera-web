@@ -42,7 +42,7 @@ export class CalendrierHealthService {
     backgroundColor: 'white',
     title: {
         top: 20,
-        text: 'Weight_max for each day',
+        text: 'Daily weight incomes',
         left: 'center',
         textStyle: {
             color: '#fff'
