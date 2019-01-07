@@ -10,14 +10,14 @@
 
 <!-- change component content here-->                    
 <div class="container-fluid" style="background-color:white;">
-        <div class="row content">
+        <div class="content">
                 <div class="col-sm-12">
                       </div>
                         <br><br>
                         <form [formGroup]="rapportForm" >
                             <div class="form-group" [formGroup]="rapportForm" >
                                     <label for="exampleTextarea" >Report</label>
-                                    <textarea class="form-control" id="exampleTextarea" rows="8"  formControlName="texte"></textarea>
+                                    <textarea class="form-control" id="exampleTextarea" rows="8" placeholder="Write your notes in natural language, as in your own notebook" formControlName="texte"></textarea>
                             </div>
                             <button class="btn btn-primary" (click)="getAnalyseTemp()" [disabled]="!rapportForm.valid" >Analyse</button>
                             <button type="submit" (click)="rapportService.nluSave(rucherService.rucher)" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Save notes</button>

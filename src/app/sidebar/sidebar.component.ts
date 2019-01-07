@@ -33,7 +33,7 @@ export class SidebarComponent implements OnInit {
   url_sideImg : string;
     
   constructor(public router: Router) {
-    this.url_sideImg = CONFIG.URL_FRONT+'assets/img/bee.png'
+    this.url_sideImg = CONFIG.URL_FRONT+'assets/logo.png'
     //this.username = data.currentUser();
    }
 

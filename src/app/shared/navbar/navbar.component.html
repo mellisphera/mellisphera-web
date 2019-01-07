@@ -24,15 +24,20 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                </li>
-                <li>
-                    <a href="#">
-                        <p (click)="logout()">Log out</p>
-                    </a>
-                </li>
-                <li class="separator hidden-lg hidden-md"></li>
-            </ul>
+              <li>
+                  <a href="#">
+                       <p>Welcome <b>{{username}} </b>!</p>
+                  </a>
+              </li>
+              <li class="dropdown">
+              </li>
+              <li>
+                  <a href="#">
+                      <p (click)="logout()">Log out</p>
+                  </a>
+              </li>
+              <li class="separator hidden-lg hidden-md"></li>
+          </ul>
         </div>
     </div>
 </nav>

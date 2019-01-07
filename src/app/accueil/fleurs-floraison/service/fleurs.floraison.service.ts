@@ -134,7 +134,7 @@ export class    FleursFloraisonService {
             data : []
         };
         this.templateLegend = {
-            left: 'right',
+            left: 'center',
             data: []
         };
     }
@@ -145,7 +145,7 @@ export class    FleursFloraisonService {
                 data : new Array()
             },
             legend : {
-                left: 'right',
+                left: 'center',
                 data: new Array()
             }
         };

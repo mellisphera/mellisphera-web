@@ -38,7 +38,7 @@ export class CalendrierPoidsService {
     },
     legend: {
         top: 100,
-        data:['gain','perte'],
+        data:['gain','loss'],
         textStyle: {
             color: 'black'
         }
@@ -99,7 +99,7 @@ export class CalendrierPoidsService {
             }
         },
         {
-            name: 'perte',
+            name: 'loss',
             type: 'effectScatter',
             coordinateSystem: 'calendar',
             data: '',
