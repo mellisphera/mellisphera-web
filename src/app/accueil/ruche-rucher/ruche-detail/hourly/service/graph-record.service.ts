@@ -13,7 +13,7 @@ export class GraphRecordService {
  
   option = {
     title: {
-        text: 'Weight & Temperature'
+        text: 'Weight & Temperature',
         left: 'center',
         top:'-5'
     },
@@ -33,7 +33,7 @@ export class GraphRecordService {
         }
     },
     legend: {
-        top:40
+        top:40,
         data:['Poids','Temp-int','Temp-ext']
     },
     grid: {
