@@ -35,7 +35,6 @@ export class DailyRecordService{
         this.dailyRecObs = this.http.get<DailyRecordTh>(CONFIG.URL+'/dailyRecordsTH/last/'+idHive);
         this.dailyRecObs.subscribe(
             (data)=>{
-                console.log(data);
                 this.dailyRecord = data;
             },
             (err)=>{
@@ -49,7 +48,6 @@ export class DailyRecordService{
         this.dailyRecObsArray.subscribe(
             (data)=>{
                 this.dailyRecords = data;
-                console.log(this.dailyRecords);
                 this.dailyRecordToArray();
             },
             (err)=>{
@@ -67,7 +65,6 @@ export class DailyRecordService{
             this.arrayHint.push([this.convertDate(element.recordDate), element.humidity_int_max]);
             this.arrayHealth.push([element.recordDate,element.health_status,element.health_trend]);
         })
-        console.log(this.arrayTempInt);
         this.mergeOptionCalendarHealth = {
             series:{
                 data:this.arrayHealth
