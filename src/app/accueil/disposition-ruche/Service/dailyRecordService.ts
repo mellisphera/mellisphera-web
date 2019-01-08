@@ -15,7 +15,7 @@ export class DailyRecordService{
 
     arrayTempInt : any[];
     arrayHint : any[];
-
+    arrayHealth : any[];
     status : string = "Inconnu";
     dailyRecord : DailyRecordTh;
     dailyRecords : DailyRecordTh[] = null;
@@ -24,6 +24,7 @@ export class DailyRecordService{
 
     mergeOptionTint : any;
     mergeOptionHint : any;
+    mergeOptionCalendarHealth : any;
 
     constructor(private http : HttpClient, private user : UserloggedService){
         this.statusLoading = false;
@@ -48,6 +49,7 @@ export class DailyRecordService{
         this.dailyRecObsArray.subscribe(
             (data)=>{
                 this.dailyRecords = data;
+                console.log(this.dailyRecords);
                 this.dailyRecordToArray();
             },
             (err)=>{
@@ -59,11 +61,18 @@ export class DailyRecordService{
     dailyRecordToArray(){
         this.arrayTempInt = [];
         this.arrayHint = [];
+        this.arrayHealth = [];
         this.dailyRecords.forEach(element=>{
             this.arrayTempInt.push([this.convertDate(element.recordDate),element.temp_int_max]);
             this.arrayHint.push([this.convertDate(element.recordDate), element.humidity_int_max]);
+            this.arrayHealth.push([element.recordDate,element.health_status,element.health_trend]);
         })
         console.log(this.arrayTempInt);
+        this.mergeOptionCalendarHealth = {
+            series:{
+                data:this.arrayHealth
+            }
+        }
         this.mergeOptionTint = {
             series : {
                     data: this.arrayTempInt
@@ -98,7 +107,7 @@ export class DailyRecordService{
             },
             
         }
-        console.log(this.arrayHint);
+        //console.log(this.arrayHint);
         this.statusLoading = true;
     }
 
@@ -110,7 +119,7 @@ export class DailyRecordService{
                 console.log(data);
                 if(data[0]!= null){
                     this.dailyRecords = data;
-                console.log(this.dailyRecords);
+                    //console.log(this.dailyRecords);
                 }
             },
             (err)=>{

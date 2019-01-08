@@ -17,6 +17,12 @@ export class CalendrierTempIntService {
             return params.data[0]+'<br/>'+params.data[1];
         }   
     },
+    dayLabel: {
+        //nameMap: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+        nameMap: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+        firstDay: 1, // start on Monday
+
+    },
     visualMap: {
         min: 0,
         max: 40,

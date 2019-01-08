@@ -119,6 +119,9 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             case 'hourly':
                 this.recordService.getRecordByIdHive(this.rucheService.ruche.id);
                 break;
+            case 'health':
+                this.dailyRecordThService.getByIdHive(this.rucheService.ruche.id);
+                break;
         }
     }
 
