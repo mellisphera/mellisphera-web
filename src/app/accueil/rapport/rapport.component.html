@@ -19,7 +19,7 @@
                                     <label for="exampleTextarea" >Report</label>
                                     <textarea class="form-control" id="exampleTextarea" rows="8" placeholder="Write your notes in natural language, as in your own notebook" formControlName="texte"></textarea>
                             </div>
-                            <button class="btn btn-primary" (click)="getAnalyseTemp()" [disabled]="!rapportForm.valid" >Analyse</button>
+                            <button class="btn btn-primary" (click)="getAnalyseTemp()" [disabled]="!rapportForm.valid" >Process notes</button>
                             <button type="submit" (click)="rapportService.nluSave(rucherService.rucher)" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Save notes</button>
                         </form>
 
@@ -38,8 +38,8 @@
                                 <table class="table">    
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th class="firstCol" scope="col">Date</th>
-                                            <th class="midle" scope="col">Sentence</th>
+                                            <th id="dateObs" scope="col">Date</th>
+                                            <th scope="col">Sentence</th>
                                             <th style="text-align:right;" class="action" scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -73,8 +73,8 @@
                                         <table class="table">    
                                             <thead class="thead-dark">
                                                 <tr>
-                                                    <th class="firstCol" scope="col">Hive</th>
                                                     <th scope="col">Date</th>
+                                                    <th class="firstCol" scope="col">Hive</th>
                                                     <th scope="col">Sentence</th>
                                                     <th class="action" scope="col">Action</th>
                                                 </tr>
@@ -84,9 +84,9 @@
                                                     <ng-container *ngIf="obs.type =='HiveObs'">
                                                         <tr>
                                                             <td>
+                                                                {{obs.date}}
                                                             </td>
                                                             <td>
-                                                                {{obs.date}}
                                                             </td>
                                                             <td>
                                                                 {{obs.sentence}}
@@ -112,8 +112,8 @@
                                 <table class="table">    
                                     <thead class="thead-dark">
                                         <tr>
+                                            <th class="date" scope="col">Date</th>
                                             <th class="firstCol" scope="col">Hive</th>
-                                            <th scope="col">Date</th>
                                             <th scope="col">Sentence</th>
                                             <th class="action" scope="col">Action</th>
                                         </tr>
@@ -123,9 +123,9 @@
                                             <ng-container *ngIf="obs.type =='HiveAct'">
                                                 <tr >
                                                     <td>
-                                                    </td>
-                                                <td>
                                                         {{obs.date}}
+                                                    </td>
+                                                    <td>
                                                     </td>
                                                     <td>
                                                         {{obs.sentence}}
