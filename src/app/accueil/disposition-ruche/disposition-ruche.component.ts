@@ -54,7 +54,7 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   }
 
   style = {
-    'background-image':'',
+    'background-image':'url('+CONFIG.URL_FRONT+'assets/imageClient/testAccount.png)',
     'background-position': "center",
     'background-repeat': "no-repeat",
     'url' : ''

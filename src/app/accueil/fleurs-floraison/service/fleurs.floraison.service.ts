@@ -131,8 +131,13 @@ export class    FleursFloraisonService {
             type: 'line',
             color:'#509B21',
             symbolSize: 12,
-            data : []
-        };
+            data : [],
+            label: {
+                show:'true',
+                position:'top',
+                formatter:'{a}'
+            }
+        }   
         this.templateLegend = {
             left: 'center',
             data: []
