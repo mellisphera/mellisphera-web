@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserloggedService } from '../userlogged.service';
 import { CONFIG } from '../../config'
+import { AuthService } from '../auth/auth.service';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -33,7 +34,7 @@ export class SidebarComponent implements OnInit {
   username;
   url_sideImg : string;
     
-  constructor(public router: Router) {
+  constructor(public router: Router, public authService : AuthService) {
     this.url_sideImg = CONFIG.URL_FRONT+'assets/logo.png'
     //this.username = data.currentUser();
    }

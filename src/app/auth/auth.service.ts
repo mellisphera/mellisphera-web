@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { UsersService } from './users.service';
 
 import { Login } from '../_model/login';
-
+import { User } from '../_model/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CONFIG } from '../../config';
 
@@ -19,6 +19,7 @@ export class AuthService {
 
 
   login : Login;
+  user : User;
   loginObs : Observable<any>;
   lastConnection : Date;
   isAuthenticated : boolean;
@@ -31,6 +32,20 @@ export class AuthService {
               private usersService: UsersService,
               private http : HttpClient) {
                 this.login = { username : "", password : ""};
+                this.user = { 
+                  id : null,
+                  createdAt : new Date(),
+                  login : this.login,
+                  phone : null,
+                  email : null,
+                  connexions : null,
+                  lastConnection : null,
+                  fullName : null,
+                  position : null,
+                  country : null,
+                  city : null,
+                  levelUser : null, 
+              }
                 this.errLogin = false;
                 this.isAuthenticated = false;
               }
@@ -39,8 +54,12 @@ export class AuthService {
     this.loginObs = this.http.post<any>(CONFIG.URL+'user/loguser',this.login,httpOptions);
     this.loginObs.subscribe(
       (data)=>{
+        console.log(data);
+        this.user = data;
+        //this.login = this.user.login;
+        console.log(this.user);
         this.connexionStatus.next(data);
-        this.isAuthenticated = typeof(data) == "string" ? true : false;
+        this.isAuthenticated = this.user != null? true : false;
         sessionStorage.setItem("connexion",JSON.stringify(this.isAuthenticated));
         console.log(this.isAuthenticated);
         this.errLogin = !this.isAuthenticated;
@@ -48,7 +67,7 @@ export class AuthService {
         if(this.isAuthenticated){
           this.lastConnection = new Date(data);
           console.log(sessionStorage.getItem("connexion") == "true"); 
-          sessionStorage.setItem("currentUser",JSON.stringify(this.login));
+          sessionStorage.setItem("currentUser",JSON.stringify(this.user.login));
           this.router.navigate(['/position-Ruche']);
         }
       },
