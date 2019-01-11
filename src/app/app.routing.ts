@@ -3,7 +3,6 @@ import { CommonModule, } from '@angular/common';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
-import { TestComponent } from './test/test.component';
 import { RucheRucherComponent } from './accueil/ruche-rucher/ruche.rucher.component';
 import { MeteoComponent } from './accueil/meteo/meteo.component';
 
@@ -15,6 +14,7 @@ import { RapportComponent } from './accueil/rapport/rapport.component';
 import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
 import { DispositionRucheComponent } from './accueil/disposition-ruche/disposition-ruche.component';
 import { DemoComponent } from './demo/demo.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes =[
    /* { path: '',             component: LoginComponent },  
@@ -31,7 +31,6 @@ const routes: Routes =[
     { path: '',               redirectTo: 'dashboard', pathMatch: 'full' }*/
     { path: '',                 component: LoginComponent },
     { path: 'login',            component: LoginComponent },
-    { path: 'test',             component: TestComponent },
     { path: 'dashboard',        component: HomeComponent },
     { path: 'accueil',          canActivate : [AuthGuard], component: AccueilComponent},
     { path: 'ruche-et-rucher',  canActivate : [AuthGuard], component: RucheRucherComponent },
@@ -44,6 +43,7 @@ const routes: Routes =[
     { path: 'rapport',          canActivate : [AuthGuard], component: RapportComponent},
     { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
     { path: 'position-Ruche', canActivate : [AuthGuard], component: DispositionRucheComponent},
+    { path: 'admin', canActivate : [AuthGuard], component : AdminComponent},
     { path : 'demo', component : DemoComponent}
     
 ];

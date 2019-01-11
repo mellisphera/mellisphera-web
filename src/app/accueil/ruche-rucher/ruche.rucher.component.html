@@ -154,8 +154,8 @@
                 <h4 class="text-center">Edit Apiary</h4>
                 <div class="form-group row"  >
                    <div class="col-md-12">
-                    <label for="recipient-name" class="col-form-label">Name </label>
-                    <input formControlName="nom" type="text" class="form-control text-left" id="recipient-name" >
+                    <label for="nom" class="col-form-label">Name </label>
+                    <input formControlName="nom" type="text" class="form-control text-left" id="nom" >
                   </div>  
                   <div class="col-md-12">
                     <div class="alert alert-danger" *ngIf="rucherForm.controls['nom'].invalid">your apiary name</div>
@@ -163,8 +163,8 @@
                 </div>
                 <div class="form-group row"  >
                     <div class="col-md-12">
-                      <label for="recipient-name" class="col-form-label">City </label>
-                      <input formControlName="ville" type="text" class="form-control text-left" id="recipient-name">
+                      <label for="villee" class="col-form-label">City </label>
+                      <input formControlName="ville" type="text" class="form-control text-left" id="ville">
                     </div>
                     <div class="col-md-12">
                       <div class="alert alert-danger" *ngIf="rucherForm.controls['ville'].invalid ">apiary location</div>
@@ -172,8 +172,8 @@
                 </div>
                 <div class="form-group row"  >
                   <div class="col-md-12">
-                    <label for="recipient-name" class="col-form-label">Zip code </label>
-                    <input formControlName="codePostal" type="text" class="form-control text-left" id="recipient-name">
+                    <label for="codePostale" class="col-form-label">Zip code </label>
+                    <input formControlName="codePostal" type="text" class="form-control text-left" id="codePostal">
                   </div>
                   <div class="col-md-12">
                     <div class="alert alert-danger" *ngIf="rucherForm.controls['codePostal'].invalid ">zip code</div>
@@ -183,10 +183,10 @@
               
                 <div class="form-group row"  >
                     <div class="col-md-6">
-                      <label for="recipient-name" class="col-form-label">Description </label>
+                      <label for="codePostal" class="col-form-label">Description </label>
                     </div>
                     <div class="col-md-12">
-                      <textarea formControlName="description"  type="text" class="form-control text-left" id="recipient-name"></textarea>
+                      <textarea formControlName="codePostal"  type="text" class="form-control text-left" id="codePostal"></textarea>
                       <div class="alert alert-danger" *ngIf="rucherForm.controls['description'].invalid ">describe your apiary</div>
                      
                     </div>
@@ -216,8 +216,8 @@
         <div class="modal-body">
           <form [formGroup]="rucherForm">
             <div class="form-group"  >
-              <label for="recipient-name" class="col-form-label">Name</label>
-              <input formControlName="nom" type="text" class="form-control" id="recipient-name">
+              <label class="col-form-label">Name</label>
+              <input formControlName="nom" type="text" class="form-control">
               <div class="alert alert-danger" *ngIf="!rucherForm.controls['nom'].valid && rucherForm.controls['nom'].touched">
                 name no longer than 20 chars
               </div>
@@ -230,15 +230,15 @@
               </div>
             </div>
               <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Ville :</label>
-                <input formControlName="ville" type="text" class="form-control" id="recipient-name">
+                <label  class="col-form-label">Ville :</label>
+                <input formControlName="ville" type="text" class="form-control">
                   <div class="alert alert-danger" *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
                     city name
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Zip Code</label>
-                  <input formControlName="codePostal" type="text" class="form-control" id="recipient-name">
+                  <label class="col-form-label">Zip Code</label>
+                  <input formControlName="codePostal" type="text" class="form-control">
                   <div class="alert alert-danger" *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
                     Zip Code
                   </div>
@@ -269,8 +269,8 @@
         <div class="modal-body">
           <form  [formGroup]="newRucheForm">
             <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Name</label>
-              <input formControlName="nomRuche" type="text" class="form-control" id="recipient-name">
+              <label class="col-form-label">Name</label>
+              <input formControlName="nomRuche" type="text" class="form-control">
             </div>
             <div class="form-group">
               <label for="message-text" class="col-form-label">Description</label>
@@ -299,15 +299,15 @@
           </div>
           <div class="modal-body">
               <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Apiary</label>
+                  <label  class="col-form-label">Apiary</label>
                   <select  [(ngModel)]="rucherService.rucherSelectUpdate" class="form-control">
                       <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option> 
                   </select>
               </div>
             <form [formGroup]="newRucheForm" (ngSubmit)="onEditeRuche()">
               <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Name</label>
-                <input formControlName="nomRuche" type="text" class="form-control" id="recipient-name">
+                <label class="col-form-label">Name</label>
+                <input formControlName="nomRuche" type="text" class="form-control>
               </div>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">Description</label>

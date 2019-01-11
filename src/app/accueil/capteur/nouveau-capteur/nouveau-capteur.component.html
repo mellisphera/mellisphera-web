@@ -22,16 +22,16 @@
                         <form  [formGroup]="newCapteurForm" (ngSubmit)="createCapteur(newCapteurForm.value)">
                                 <div class="form-group row">
                                     <div class="col-md-6" >
-                                            <label for="recipient-name" class="col-form-label">Référence (*):</label>
-                                            <input [(ngModel)]="reference" formControlName="reference" type="text" class="form-control" id="recipient-name">
+                                            <label for="reference" class="col-form-label">Référence (*):</label>
+                                            <input [(ngModel)]="reference" formControlName="reference" type="text" class="form-control" id="referencee">
                                             <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].touched">
                                                     Veuillez saisir une reference
                                             </div>
 
                                     </div>
                                     <div class="col-md-6">
-                                            <label for="recipient-name" class="col-form-label">Type :</label>
-                                            <input [(ngModel)]="type" formControlName="type" type="text" class="form-control" id="recipient-name">
+                                            <label for="type" class="col-form-label">Type :</label>
+                                            <input [(ngModel)]="type" formControlName="type" type="text" class="form-control" id="type">
                                     </div>
                                 
                                     </div>
@@ -58,7 +58,7 @@
 
                                     <div *ngIf="radioRuche">
                                         <div class="form-group">
-                                                <label for="recipient-name" class="col-form-label">Rucher :</label>
+                                                <label for="selectedRucher" class="col-form-label">Rucher :</label>
                                                 <select  [(ngModel)]="selectedRucher"  formControlName="selectedRucher" (click)="onSelectRucher($event)" class="form-control " id="sel1">
                                                     <option  *ngFor="let rucher of ruchers" [value]="rucher.id" >
                                                         {{rucher.name}}

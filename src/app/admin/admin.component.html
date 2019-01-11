@@ -1,0 +1,111 @@
+<div class="wrapper">
+    <div class="sidebar" data-color="red" data-image="">
+        <app-sidebar ></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+    </div> 
+    <div class="main-panel">
+        <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+        <router-outlet></router-outlet> 
+        <div class="container-fluid" style="background-color: white;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#signup">Sign-up</a></li>
+                <li><a data-toggle="tab" href="#test">unknown</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="signup" class="tab-pane fade in active">
+                    <div class="col-md-8">
+                      <form [formGroup]="signupForm" class="form-horizontal" (ngSubmit)="signup();">
+                          <div class="form-group">
+                              <label for="name" class="cols-sm-2 control-label">Name</label>
+                              <div class="cols-sm-10">
+                                    <div class="input-group">
+                                      <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                      <input required formControlName="fullName" type="text" class="form-control" name="name" id="name" placeholder="Enter your Name"/>
+                                    </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="email" class="cols-sm-2 control-label">Email</label>
+                              <div class="cols-sm-10">
+                                  <div class="input-group">
+                                      <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                      <input required formControlName="email" type="email" class="form-control" name="email" id="email" placeholder="Enter your Email" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="username" class="cols-sm-2 control-label">Username</label>
+                              <div class="cols-sm-10">
+                                  <div class="input-group">
+                                      <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                      <input required formControlName="username" type="text" class="form-control" name="username" id="username" placeholder="Enter your Username" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="password" class="cols-sm-2 control-label">Password</label>
+                              <div class="cols-sm-10">
+                                  <div class="input-group">
+                                      <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                      <input required formControlName="password" type="password" class="form-control" name="password" id="password" placeholder="Enter your Password" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="phone" class="cols-sm-2 control-label">Phone</label>
+                              <div class="cols-sm-10">
+                                  <div class="input-group">
+                                      <span class="input-group-addon"><i class="fa fa-phone fa-lg" aria-hidden="true"></i></span>
+                                      <input formControlName="phone" type="tel" class="form-control" name="phone" id="phone" placeholder="phone" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="position" class="cols-sm-2 control-label">Position</label>
+                              <div class="cols-sm-10">
+                                  <div class="input-group">
+                                      <span class="input-group-addon"><i class="fa fa-id-card fa-lg" aria-hidden="true"></i></span>
+                                      <input formControlName="position" type="text" class="form-control" name="position" id="position" placeholder="Position" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="country" class="cols-sm-2 control-label">Location</label>
+                              <div class="cols-sm-10">
+                                  <div class="input-group">
+                                      <span class="input-group-addon"><i class="fa fa-globe fa-lg" aria-hidden="true"></i></span>
+                                      <input required formControlName="country" type="text" class="form-control" name="country" id="country" placeholder="Country" />
+                                      <span class="input-group-addon"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i></span>
+                                      <input required formControlName="city" type="text" class="form-control" name="city" id="city" placeholder="city" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                                <label for="username" class="cols-sm-2 control-label">Types</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-id-badge fa-lg" aria-hidden="true"></i></span>
+                                        <select class="form-control" formControlName="types">
+                                            <option value="0">Admin</option>
+                                            <option value="1" selected="selected">Standard</option>
+                                            <option value="2">Premium</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                          <div class="form-group ">
+                              <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+                          </div>
+                          <div *ngIf="success" class="alert alert-success">
+                                <strong>User create!</strong>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div id="test" class="tab-pane fade">
+                  <p>unknown</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

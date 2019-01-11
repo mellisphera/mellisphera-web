@@ -55,8 +55,8 @@
         <div class="modal-body">
           <form [formGroup]="rucherForm">
             <div class="form-group"  >
-              <label for="recipient-name" class="col-form-label">Name</label>
-              <input formControlName="nom" type="text" class="form-control" id="recipient-name">
+              <label for="nom" class="col-form-label">Name</label>
+              <input formControlName="nom" type="text" class="form-control" id="nom">
               <div class="alert alert-danger" *ngIf="!rucherForm.controls['nom'].valid && rucherForm.controls['nom'].touched">
                 select a name from 1 to 20 chars
               </div>
@@ -69,15 +69,15 @@
               </div>
             </div>
               <div class="form-group">
-                <label for="recipient-name" class="col-form-label">City</label>
-                <input formControlName="ville" type="text" class="form-control" id="recipient-name">
+                <label for="ville" class="col-form-label">City</label>
+                <input formControlName="ville" type="text" class="form-control" id="ville">
                   <div class="alert alert-danger" *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
                     select city name
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Zip code</label>
-                  <input formControlName="codePostal" type="text" class="form-control" id="recipient-name">
+                  <label for="codePostal" class="col-form-label">Zip code</label>
+                  <input formControlName="codePostal" type="text" class="form-control" id="codePostal">
                   <div class="alert alert-danger" *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
                     select zip code
                   </div>
