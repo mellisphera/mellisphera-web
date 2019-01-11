@@ -11,7 +11,8 @@ export class AdminComponent implements OnInit {
 
   signupForm : FormGroup;
   success : boolean;
-
+  message="";
+  
   constructor(private formBuilder : FormBuilder, public signupService : SignupService) { 
     this.success = false;
   }
@@ -34,7 +35,9 @@ export class AdminComponent implements OnInit {
       'city' : [null,Validators.required],
     });
   }
-
+  receiveMessage($event){
+      this.message=$event;
+  }
   signup(){
     const data = this.signupForm.value;
     console.log(this.signupService.user);

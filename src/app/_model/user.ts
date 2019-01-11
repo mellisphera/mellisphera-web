@@ -12,5 +12,5 @@ export interface User {
 	position : String;
 	country : String;
 	city : String;
-	levelUser : String;
+	levelUser : number;
 }
