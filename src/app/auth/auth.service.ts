@@ -59,7 +59,7 @@ export class AuthService {
         //this.login = this.user.login;
         console.log(this.user);
         this.connexionStatus.next(data);
-        this.isAuthenticated = this.user != null? true : false;
+        this.isAuthenticated = this.user.id != null? true : false;
         sessionStorage.setItem("connexion",JSON.stringify(this.isAuthenticated));
         console.log(this.isAuthenticated);
         this.errLogin = !this.isAuthenticated;

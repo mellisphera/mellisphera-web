@@ -51,5 +51,16 @@ export class SidebarComponent implements OnInit {
   goAccueil(){
     this.router.navigate(['home']);
   }
+
+  logout(){
+    this.authService.isAuthenticated = false;
+    sessionStorage.connexion = "false";
+    sessionStorage.removeItem('currentUser');
+    console.log(this.authService.connexionStatus);
+    console.log(this.authService.isAuthenticated);
+    console.log(sessionStorage.getItem("connexion"));
+    this.authService.connexionStatus.next(false);
+    this.router.navigate(['/login']);
+  }
  
 }

@@ -9,8 +9,8 @@
         <li class="dropdown" *ngIf="isMobileMenu()">
 
         <li *ngIf="isMobileMenu()">
-            <a>
-                <p>Log out </p>
+            <a  href="#">
+                <p (click)="logout();">Log out </p>
             </a>
         </li>
         <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
@@ -50,11 +50,11 @@
                 <p>Sensors</p>
             </a>
         </li>
-        <!--<li *ngIf="authService.user.levelUser == 0">
-            <a routerLink="" data-toggle="tooltip" data-placement="top" title="signup">
-                <i ><img src="./assets/img/d-icon.png" style="width:30px;height: 30px; margin-top:-6px;"/></i>
-                <p>Sign-up</p>
+        <li *ngIf="authService.user.levelUser == 0">
+            <a routerLink="/admin" data-toggle="tooltip" data-placement="top" title="admin">
+                <i ><img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;"/></i>
+                <p>Admin</p>
             </a>
-        </li> -->
+        </li> 
     </ul>
 </div>

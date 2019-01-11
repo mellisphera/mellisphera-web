@@ -13,7 +13,6 @@ import { LbdModule } from './lbd/lbd.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { TestComponent } from './test/test.component';
 import { MeteoComponent } from './accueil/meteo/meteo.component';
 import { UserComponent } from './user/user.component';
 import { RucheRucherComponent } from './accueil/ruche-rucher/ruche.rucher.component';
@@ -30,7 +29,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 
 import { UpgradeComponent } from './upgrade/upgrade.component';
 import { LoginComponent } from './login/login.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+//import { DashboardComponent } from './dashboard/dashboard.component';
 import { ControldashboardComponent } from './controldashboard/controldashboard.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { RapportComponent } from './accueil/rapport/rapport.component';
@@ -39,7 +38,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CapteurService } from './accueil/capteur/capteur.service';
 import { RucherService } from './accueil/ruche-rucher/rucher.service';
-import { TestService } from './test/test.service';
+//import { TestService } from './test/test.service';
 import { UserloggedService } from './userlogged.service';
 import { UsersService } from './auth/users.service';
 import { selectedRucherService } from './accueil/_shared-services/selected-rucher.service';
@@ -68,6 +67,8 @@ import { SharedModule } from './shared/shared.module';
 import { PipeCapteur, SearchCapteur } from './accueil/capteur/capteur.pipe';
 import { SearchFleurPipe, searchFleurByType,searchFleurByDate } from './accueil/fleurs-floraison/service/search-fleur.pipe';
 import { DemoComponent } from './demo/demo.component';
+import { AdminComponent } from './admin/admin.component';
+import { SignupService } from './admin/service/signup.service';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,6 @@ import { DemoComponent } from './demo/demo.component';
     CapteurComponent,
     AppComponent,
     HomeComponent,
-    TestComponent,
     UserComponent,
     TablesComponent,
     TypographyComponent,
@@ -84,7 +84,7 @@ import { DemoComponent } from './demo/demo.component';
     NotificationsComponent,
     UpgradeComponent,
     LoginComponent,
-    DashboardComponent,
+    //ashboardComponent,
     ControldashboardComponent,
     AccueilComponent,
     RucheRucherComponent,
@@ -97,7 +97,8 @@ import { DemoComponent } from './demo/demo.component';
     SearchFleurPipe,
     searchFleurByType,
     searchFleurByDate,
-    DemoComponent
+    DemoComponent,
+    AdminComponent
 
   ],
   imports: [
@@ -125,7 +126,6 @@ import { DemoComponent } from './demo/demo.component';
     UsersService,
     RucherService,
     selectedRucherService,
-    TestService,
     RapportService,
     FleursFloraisonService,
     RucheDetailService,
@@ -134,7 +134,8 @@ import { DemoComponent } from './demo/demo.component';
     RucheService,
     CalendrierService,
     GraphMeteoService,
-    ObservationService
+    ObservationService,
+    SignupService
   ],
   exports:[
   ],
