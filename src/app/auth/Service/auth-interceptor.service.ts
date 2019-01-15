@@ -14,7 +14,9 @@ export class AuthInterceptorService implements HttpInterceptor {
     let authReq = req;
     const token = ''
     if (token != null) {
-        authReq = req.clone({ headers: req.headers.set(this.TOKEN_HEADER_KEY, 'Bearer ' + token) });
+        if(req.url.indexOf("openweathermap")==-1){
+          authReq = req.clone({ headers: req.headers.set(this.TOKEN_HEADER_KEY, 'Bearer ' + token) });
+        }
     }
     return next.handle(authReq);
   }
