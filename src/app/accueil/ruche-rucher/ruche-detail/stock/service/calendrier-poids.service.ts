@@ -5,13 +5,6 @@ import { DailyRecordsWService } from '../../service/daily-records-w.service';
   providedIn: 'root'
 })
 export class CalendrierPoidsService {
-/*
-    data  = [
-        ["2018-10-09",100, "5bbb00cceba03f1985daceef", 0, 0, 1.025, 6.577, -4.343, 5.552, 0, 0, 0],
-        ["2018-10-10",100, "5bbb00cceba03f1985daceef", 0, 0, 1.025, 6.577, -4.343, 5.552, 0, 0, 0],
-        ["2018-10-11",100, "5bbb00cceba03f1985daceef", 0, 0, 1.025, 6.577, -4.343, 5.552, 0, 0, 0],
-        ["2018-10-12",100, "5bbb00cceba03f1985daceef", 0, 0, 1.025, 6.577, -4.343, 5.552, 0, 0, 0]
-    ]*/
   constructor(private dailyRec : DailyRecordsWService) { 
   }
 
@@ -60,10 +53,11 @@ export class CalendrierPoidsService {
             }
         },
         dayLabel: {
-            nameMap:'fr',
+            nameMap: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
             firstDay: 1, // start on Monday
           },
         yearLabel: {
+            show : false,
             formatter: '{start}',
             textStyle: {
                 color: 'black'

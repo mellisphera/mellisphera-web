@@ -1,13 +1,12 @@
-import { Injectable, EventEmitter } from '@angular/core';
+  import { Injectable, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from "rxjs";
 import { Observable } from 'rxjs';
-import { UsersService } from './users.service';
 
-import { Login } from '../_model/login';
-import { User } from '../_model/user';
+import { Login } from '../../_model/login';
+import { User } from '../../_model/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CONFIG } from '../../config';
+import { CONFIG } from '../../../config';
 
 
 const httpOptions = {
@@ -28,8 +27,7 @@ export class AuthService {
 
   public showNavBarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private router: Router, 
-              private usersService: UsersService,
+  constructor(private router: Router,
               private http : HttpClient) {
                 this.login = { username : "", password : ""};
                 this.user = { 
@@ -67,6 +65,7 @@ export class AuthService {
         if(this.isAuthenticated){
           this.lastConnection = new Date(data);
           console.log(sessionStorage.getItem("connexion") == "true"); 
+          
           sessionStorage.setItem("currentUser",JSON.stringify(this.user.login));
           this.router.navigate(['/position-Ruche']);
         }

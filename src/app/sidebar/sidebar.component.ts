@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserloggedService } from '../userlogged.service';
 import { CONFIG } from '../../config'
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../auth/Service/auth.service';
 
 declare const $: any;
 declare interface RouteInfo {

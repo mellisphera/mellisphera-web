@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './auth/Service/auth.service';
 import { Login } from './_model/login';
 
 @Injectable()
@@ -30,8 +30,22 @@ export class UserloggedService {
       return sessionStorage.getItem("currentUser");
      }
      
-  } 
+  }
+
+  setUser(user : string){
+    window.sessionStorage.removeItem("currentUser");
+    window.sessionStorage.setItem("currentUser",user);
+  }
+
+  getUser() : string{
+    return window.sessionStorage.getItem("currentUser");
+  }
+
   logOut(){
     return localStorage.removeItem('currentUser');
+  }
+
+  signOut() {
+    window.sessionStorage.clear();
   }
 }

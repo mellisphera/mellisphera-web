@@ -3,10 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app.routing';
-import { NavbarModule } from './shared/navbar/navbar.module';
 import { FooterModule } from './shared/footer/footer.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { LbdModule } from './lbd/lbd.module';
@@ -16,17 +15,14 @@ import { HomeComponent } from './home/home.component';
 import { MeteoComponent } from './accueil/meteo/meteo.component';
 import { UserComponent } from './user/user.component';
 import { RucheRucherComponent } from './accueil/ruche-rucher/ruche.rucher.component';
-import { RucheDetailComponent } from './accueil/ruche-rucher/ruche-detail/ruche.detail.component';
 import { CapteurComponent } from './accueil/capteur/capteur.component';
 import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouveau-capteur.component';
 import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
 
-import { TablesComponent } from './tables/tables.component';
 import { IconsComponent } from './icons/icons.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 
 import { LoginComponent } from './login/login.component';
-//import { DashboardComponent } from './dashboard/dashboard.component';
 import { ControldashboardComponent } from './controldashboard/controldashboard.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { RapportComponent } from './accueil/rapport/rapport.component';
@@ -35,11 +31,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CapteurService } from './accueil/capteur/capteur.service';
 import { RucherService } from './accueil/ruche-rucher/rucher.service';
-//import { TestService } from './test/test.service';
 import { UserloggedService } from './userlogged.service';
-import { UsersService } from './auth/users.service';
 import { selectedRucherService } from './accueil/_shared-services/selected-rucher.service';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './auth/Service/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { RapportService } from './accueil/rapport/rapport.service';
@@ -53,11 +47,8 @@ import { MeteoService } from './accueil/meteo/Service/MeteoService';
 import { RucheService } from './accueil/disposition-ruche/Service/ruche.service';
 
 import { NgxEchartsModule } from 'ngx-echarts';
-import { ECharts } from 'echarts';
 import { CalendrierService } from './accueil/meteo/Service/calendrier.service';
-import { DailyRecordsWService } from './accueil/ruche-rucher/ruche-detail/service/daily-records-w.service';
 import { GraphMeteoService } from './accueil/meteo/Service/graph-meteo.service';
-import { RecordService } from './accueil/ruche-rucher/ruche-detail/service/Record/record.service';
 import { ObservationService } from './accueil/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './shared/shared.module';
@@ -66,6 +57,7 @@ import { SearchFleurPipe, searchFleurByType,searchFleurByDate } from './accueil/
 import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
 import { SignupService } from './admin/service/signup.service';
+import { AuthInterceptorService } from './auth/Service/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -74,7 +66,6 @@ import { SignupService } from './admin/service/signup.service';
     AppComponent,
     HomeComponent,
     UserComponent,
-    TablesComponent,
     IconsComponent,
     NotificationsComponent,
     LoginComponent,
@@ -110,6 +101,8 @@ import { SignupService } from './admin/service/signup.service';
     DragAndCheckModule,
     NgxEchartsModule,
     SharedModule,
+    
+    
   ],
   providers: [
     CapteurService,
@@ -117,7 +110,6 @@ import { SignupService } from './admin/service/signup.service';
     AuthService,
     AuthGuardService,
     JwtHelperService,
-    UsersService,
     RucherService,
     selectedRucherService,
     RapportService,
@@ -129,7 +121,9 @@ import { SignupService } from './admin/service/signup.service';
     CalendrierService,
     GraphMeteoService,
     ObservationService,
-    SignupService
+    SignupService,
+    AuthInterceptorService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
   ],
   exports:[
   ],
