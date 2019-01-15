@@ -56,8 +56,7 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   style = {
     'background-image':'url('+CONFIG.URL_FRONT+'assets/imageClient/testAccount.png)',
     'background-position': "center",
-    'background-repeat': "no-repeat",
-    'background-color' : '#3D3D3F',
+    'background-repeat': "no-repeat"
   };
   statusImg = {
     "statusAFluctuation" : "../../../assets/icons/wfbfl.png",
@@ -100,9 +99,6 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   }
 
   onClick(ruche){
-   // console.log(ruche);
-    //sessionStorage.setItem("clickedRuche",ruche.id);
-    //sessionStorage.setItem("selectedRucheName",ruche.name);
     this.route.navigate(['/ruche-detail',ruche.id, ruche.name]);
 
   }
