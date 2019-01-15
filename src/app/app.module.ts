@@ -13,7 +13,6 @@ import { LbdModule } from './lbd/lbd.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { MeteoComponent } from './accueil/meteo/meteo.component';
-import { UserComponent } from './user/user.component';
 import { RucheRucherComponent } from './accueil/ruche-rucher/ruche.rucher.component';
 import { CapteurComponent } from './accueil/capteur/capteur.component';
 import { NouveauCapteurComponent } from './accueil/capteur/nouveau-capteur/nouveau-capteur.component';
@@ -65,7 +64,6 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
     CapteurComponent,
     AppComponent,
     HomeComponent,
-    UserComponent,
     IconsComponent,
     NotificationsComponent,
     LoginComponent,
