@@ -2,10 +2,8 @@ import { Component, OnInit,Input,Output, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
 import { UserloggedService } from '../userlogged.service';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../auth/Service/auth.service';
 import { FormGroup, FormControl, Validators ,ReactiveFormsModule,FormBuilder } from '@angular/forms';
-
-import { UsersService } from '../auth/users.service';
 import { Login } from '../_model/login';
 
 @Component({
@@ -30,7 +28,6 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               public router: Router,
               private data : UserloggedService,
-              private usersServices : UsersService,
               public authService: AuthService) { 
 
     this.loginErrorMsg=false;

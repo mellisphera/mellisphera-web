@@ -2,7 +2,7 @@
 <div class="sidebar-wrapper">
     <div class="logo">
         <a routerLink="/position-Ruche">
-            <i> <img [src]="url_sideImg" style="width:30px;height: 30px;"/> </i>
+            <img [src]="url_sideImg" style="width:30px;height: 30px;"/>
         </a>
     </div>
     <ul class="nav responsive-nav">
@@ -10,50 +10,44 @@
 
         <li *ngIf="isMobileMenu()">
             <a  href="#">
-                <p (click)="logout();">Log out </p>
+                <img (click)="logout();" src="./assets/img/logout.png"style="width:30px;height: 30px;"/>
+                <!--<p (click)="logout();">Log out </p>-->
             </a>
         </li>
         <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
         <li>
             <a routerLink="/position-Ruche"  data-toggle="tooltip" data-placement="top" title="Acceuil">
-                <i><img src="./assets/img/bee-icon.svg" style="width:30px;height: 30px;"/> </i>
-                <p>Apiary</p>
+                <img src="./assets/img/bee-icon.svg" style="width:30px;height: 30px;"/>
             </a>
         </li>
         <li>
             <a routerLink="/ruche-et-rucher" data-toggle="tooltip" data-placement="top" title="Home">
-                <i > <img src="./assets/img/apiary-icon.png" style="width:45px;height: 45px; margin-left: -7px; margin-top:-10px;"/> </i>
-                <p>Hives</p>
+                 <img src="./assets/img/apiary-icon.png" style="width:45px;height: 45px; margin-left: -7px; margin-top:-10px;"/>
             </a>
         </li>      
         <li>
                 <a routerLink="/rapport" data-toggle="tooltip" data-placement="top" title="Rapport">
-                    <i  > <img src="./assets/img/report-icon.png" style="width:30px;height: 30px; margin-top:-6px;"/> </i>
-                    <p>Report</p>
+                     <img src="./assets/img/report-icon.png" style="width:30px;height: 30px; margin-top:-6px;"/>
                 </a>
         </li>
         <li>
             <a routerLink="/fleurs-floraison" data-toggle="tooltip" data-placement="top" title="Flower">
-                <i  > <img src="./assets/img/flower-icon.png" style="width:30px;height: 30px;"/> </i>
-                <p>Flower</p>
+                 <img src="./assets/img/flower-icon.png" style="width:30px;height: 30px;"/>
             </a>
         </li>
         <li>
             <a routerLink="/meteo" data-toggle="tooltip" data-placement="top" title="Weather">
-                <i  ><img src="./assets/img/weather-icon.png" style="width:30px;height: 30px; margin-top:-8px; "/> </i>
-                <p>Weather</p>
+                <img src="./assets/img/weather-icon.png" style="width:30px;height: 30px; margin-top:-8px; "/>
             </a>
         </li>
         <li>
             <a routerLink="/capteurs" data-toggle="tooltip" data-placement="top" title="Sensors">
-                <i ><img src="./assets/img/sensor-icon.png" style="width:30px;height: 30px; margin-top:-6px;"/></i>
-                <p>Sensors</p>
+                <img src="./assets/img/sensor-icon.png" style="width:30px;height: 30px; margin-top:-6px;"/>
             </a>
         </li>
         <li *ngIf="authService.user.levelUser == 0">
             <a routerLink="/admin" data-toggle="tooltip" data-placement="top" title="admin">
-                <i ><img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;"/></i>
-                <p>Admin</p>
+                <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;"/>
             </a>
         </li> 
     </ul>

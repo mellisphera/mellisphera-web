@@ -57,7 +57,7 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     'background-image':'url('+CONFIG.URL_FRONT+'assets/imageClient/testAccount.png)',
     'background-position': "center",
     'background-repeat': "no-repeat",
-    'url' : ''
+    'background-color' : '#3D3D3F',
   };
   statusImg = {
     "statusAFluctuation" : "../../../assets/icons/wfbfl.png",
@@ -75,6 +75,9 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   ngOnInit() {
     console.log(this.rucheService.ruches);
     this.username = this.login.currentUser().username;
+
+    //this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/"+this.username.toUpperCase()+")";
+
     if(this.username == "jhe"){
       this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/JHE.png)";
     }

@@ -3,7 +3,7 @@ import { ROUTES } from '../../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { UserloggedService } from '../../userlogged.service';
 import {Router} from "@angular/router";
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../auth/Service/auth.service';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { RucherService } from '../../accueil/ruche-rucher/rucher.service';
 import { RucheService } from '../../accueil/disposition-ruche/Service/ruche.service';
@@ -108,6 +108,7 @@ export class NavbarComponent implements OnInit{
     sidebarToggle() {
         // const toggleButton = this.toggleButton;
         // const body = document.getElementsByTagName('body')[0];
+        console.log(this.sidebarVisible);
         if (this.sidebarVisible === false) {
             this.sidebarOpen();
         } else {
