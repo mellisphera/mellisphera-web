@@ -4,16 +4,14 @@
                 <h2>Welcome to<b> Mellisphera</b> !</h2>
                 <form (ngSubmit)="verifLogin()" >
                     <div class="form-group">
-                            <label for="username" class="cols-sm-2 control-label">Username</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                                    <input type="text" [(ngModel)]="authService.login.username" class="form-control" required name="username"  placeholder="username"required />
+                                    <input style="text-transform:lowercase" type="text" [(ngModel)]="authService.login.username" class="form-control" required name="username"  placeholder="username"required />
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="password" class="cols-sm-2 control-label">Password</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
