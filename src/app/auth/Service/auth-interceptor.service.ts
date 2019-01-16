@@ -12,7 +12,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let authReq = req;
-    const token = ''
+    const token = 'toto'
     if (token != null) {
         if(req.url.indexOf("openweathermap")==-1){
           authReq = req.clone({ headers: req.headers.set(this.TOKEN_HEADER_KEY, 'Bearer ' + token) });

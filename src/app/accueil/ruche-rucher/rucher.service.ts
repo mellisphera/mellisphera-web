@@ -93,11 +93,13 @@ export class RucherService {
         this.ruchersObs = this.http.get<RucherModel[]>(CONFIG.URL+'apiaries/'+ username);
         this.ruchersObs.subscribe(
             (data)=>{
-                console.log(data);
-                this.rucher = data[data.length-1];
-                this.rucherSelectUpdate = data[data.length-1];
-                this.ruchers = data;
-                console.log(this.rucherSelectUpdate);
+                if(data.length>0){
+                    console.log(data);
+                    this.rucher = data[data.length-1];
+                    this.rucherSelectUpdate = data[data.length-1];
+                    this.ruchers = data;
+                    console.log(this.rucherSelectUpdate);
+                }
             },
             (err)=>{
                 console.log(err);   
