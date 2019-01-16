@@ -7,3 +7,8 @@
 .main-panel{
     width: calc(100% - 92px);
 }
+@media screen and (max-width : 800px){
+    .main-panel{
+        width: 100%;
+    }
+}
