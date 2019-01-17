@@ -21,7 +21,6 @@ export class HealthComponent implements OnInit, OnDestroy{
     this.rucheId = this.activatedRoute.snapshot.params.id;
     this.rucheName = this.activatedRoute.snapshot.params.name;
     this.dailyRecordThService.getByIdHive(this.rucheId);
-    console.log(this.rucheName);
   }
 
   receiveMessage($event){

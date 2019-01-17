@@ -72,7 +72,6 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit() {
-    console.log(this.rucheService.ruches);
     this.username = this.login.currentUser().username;
 
     //this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/"+this.username.toUpperCase()+".png)";
@@ -95,7 +94,6 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     else if(this.username == "theo"){
       this.style["background-image"]="url("+CONFIG.URL_FRONT+"assets/imageClient/theo.png)";
     }
-    console.log(this.style);
   }
 
   onClick(ruche){
@@ -108,10 +106,8 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
 
     this.getPosition($event.style);
     try{
-          console.log(this.rucheService.ruches[id]);
           this.rucheSelect = this.rucheService.ruches[id];
           let rucheUpdate = new Ruche(this.rucheSelect.id,this.rucheSelect.name,this.rucheSelect.description,this.rucheSelect.username,this.rucheSelect.idApiary,this.rucheSelect.hivePosX,this.rucheSelect.hivePosY);
-          console.log(rucheUpdate);
           rucheUpdate.setX(this.position.x);
           rucheUpdate.setY(this.position.y);
           this.rucheService.updateCoordonneesRuche(rucheUpdate);
@@ -141,8 +137,6 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     let top = parseInt(position.top);
     /* Convertir en px */
     
-    console.log("x"+left+'- y'+top);
-    console.log("parent"+widthcontainer+"-"+heightcontainer);
     left = this.getPourccentToPx(left,widthcontainer);
     top = this.getPourccentToPx(top,heightcontainer);
 
@@ -153,7 +147,6 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
 
     this.position.x = ''+(parseInt(left+deplacement[0]) *100) / widthcontainer;
     this.position.y  =''+(parseInt(top+deplacement[1]) *100) / heightcontainer;
-    console.log(this.position);
     if(parseInt(this.position.x) > 99 || parseInt(this.position.x) < 0){ this.position.x = ''+50;
       this.position.x = ""+50;
       this.position.y = ""+50;
@@ -164,7 +157,6 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
       this.position.y = ""+50;
       //this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
     }
-    console.log(this.position);
   }
 
   getPourccentToPx(valeur, valeurTotal){
@@ -174,14 +166,12 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
   onChange($event) {
     let id = $event.target.selectedIndex;
     this.rucherService.rucher = this.rucherService.ruchers[id];
-    console.log(this.rucherService.rucher);
     this.rucheService.cleanRuches();
     this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
     this.dailyRecTh.getDailyRecThByApiary(this.rucherService.rucher.id);
   }
 
   onMouseover($ruche){
-    console.log(this.position);
     let ruche = JSON.parse(JSON.stringify($ruche))
     this.infoRuche = ruche.name + ' : '+ruche.description;
   }

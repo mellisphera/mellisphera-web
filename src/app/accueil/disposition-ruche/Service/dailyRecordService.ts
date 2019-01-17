@@ -104,7 +104,6 @@ export class DailyRecordService{
             },
             
         }
-        //console.log(this.arrayHint);
         this.statusLoading = true;
     }
 
@@ -113,10 +112,9 @@ export class DailyRecordService{
         this.dailyRecords = [];
         this.dailyRecTabObs.subscribe(
             (data)=>{
-                console.log(data);
                 if(data[0]!= null){
                     this.dailyRecords = data;
-                    //console.log(this.dailyRecords);
+
                 }
             },
             (err)=>{

@@ -128,8 +128,6 @@ export class CalendrierService {
      tabDate.push(date.getDate());
      tabDate.push((date.getMonth()+1));
      tabDate.push(date.getFullYear());
-     
-     console.log(tabDate[2]+'-'+tabDate[1],tabDate[2]+'-'+parseInt(tabDate[1]+1));
      return [tabDate[2]+'-'+tabDate[1],tabDate[2]+'-'+parseInt(tabDate[1]+1)+'-'+15];
  }
 }

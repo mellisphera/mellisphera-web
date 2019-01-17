@@ -39,7 +39,6 @@ export class    FleursFloraisonService {
         this.rucherService.ruchersObs.subscribe(
             ()=>{},()=>{},
             ()=>{
-                console.log(this.rucherService.rucher.id);
                 this.getUserFleur(this.rucherService.rucher.id);
             }
         )
@@ -50,7 +49,6 @@ export class    FleursFloraisonService {
         this.http.get<FleursTheorique[]>(CONFIG.URL+'flowersTh/all').subscribe(
             (data)=>{
                 this.fleurThs = data;
-                console.log(''+this.fleurThs);
             },
             (err)=>{
                 console.log(err);
@@ -87,14 +85,12 @@ export class    FleursFloraisonService {
                 [date.getFullYear()+'-'+element.dateThDebutd, element.nom],
                 [date.getFullYear()+'-'+element.dateThFind, element.nom]
             ]);
-            //console.log(this.tabFleurByDateGraph[this.tabFleurByDateGraph.length-1]);
             this.templateSerie.name = element.nom;
             this.templateSerie.data = this.tabFleurByDateGraph[this.tabFleurByDateGraph.length-1];
             this.mergeOption.series.push(this.templateSerie);
             this.nomFleur.push(element.nom);
             this.cleanTemplate();
         });
-        console.log(this.mergeOption);
         this.mergeOption.legend.data = this.nomFleur;
         this.mergeOption.yAxis.data = this.nomFleur;
     }
@@ -105,13 +101,11 @@ export class    FleursFloraisonService {
         this.fleursObs.subscribe(
             (data)=>{
                 this.fleursByRucher = data;
-                console.log(this.fleursByRucher);
             },
             (err)=>{
                 console.log(err);
             },
             ()=>{
-                console.log(this.fleursByRucher.length > 0)
                 this.cleanTemplate();
                 this.cleanMerge();
                 if(this.fleursByRucher.length > 0){
@@ -160,7 +154,6 @@ export class    FleursFloraisonService {
         this.http.get<String[]>(CONFIG.URL+'flowersTh/types').subscribe(
             (data)=>{
                 this.typesFleur = data;
-                console.log(this.typesFleur);
                 this.typeFleurDef = this.typesFleur[0];
             },
             (err)=>{
@@ -174,7 +167,6 @@ export class    FleursFloraisonService {
         this.http.get<String[]>(CONFIG.URL+'flowersOb/namesflowers/'+ idRucher).subscribe(
             (data)=>{
                 this.nomFleur = data;
-                console.log(this.nomFleur);
             },
             (err)=>{
                 console.log(err);
@@ -186,7 +178,6 @@ export class    FleursFloraisonService {
         this.http.get<number[]>(CONFIG.URL+'flowersOb/datesthflowersd/'+fleur.id).subscribe(
             (data)=>{
                 this.datesFleur = data;
-                console.log(data);
             },
             (err)=>{
                 console.log(err);
@@ -211,7 +202,6 @@ export class    FleursFloraisonService {
         this.newFlower.presence = "";
         this.newFlower.username = this.userService.currentUser().username;
         this.newFlower.photo = fleur.photo;
-        console.log(fleur);
         this.http.put(CONFIG.URL+'flowersOb/add/'+this.rucherService.rucher.id,this.newFlower).subscribe(
             ()=>{},
             (err)=>{
@@ -238,10 +228,8 @@ export class    FleursFloraisonService {
 
     //Change la date de fin de floraison obserevée d'une fleur
     updateFleurFin(currentyear,fleur){
-        console.log(fleur.dateFin);
         fleur.dateDebutdate[currentyear] = (fleur.dateDebutdate[currentyear] == '') ? 'null' : fleur.dateDebutdate[currentyear] ;
         fleur.dateFindate[currentyear] = (fleur.dateFindate[currentyear] == '') ? 'null' : fleur.dateFindate[currentyear];
-        console.log(fleur); 
         this.http.put(CONFIG.URL+'flowersOb/updateFind/'+fleur.id+'/'+currentyear,fleur.dateFindate[currentyear]).subscribe(
             ()=>{},
             (err)=>{

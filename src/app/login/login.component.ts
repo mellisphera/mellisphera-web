@@ -50,15 +50,7 @@ export class LoginComponent implements OnInit {
   }
 
 
-/*  onSignIn(){
-    //console.log(this.myform.value);
-    localStorage.setItem('currentUser', JSON.stringify({ token: "jwt will come later", "user": this.myform.value})); 
-    this.authService.signIn(this.myform.value); 
-  }
-  */
-
   verifLogin(){
-    console.log(this.authService.login);
     this.authService.signIn();
   }
   
@@ -66,7 +58,6 @@ export class LoginComponent implements OnInit {
     return JSON.parse(localStorage.getItem('currentUser'));
   }
   goToDashboard(){
-      console.log("holaaa!");
   }
   test(){
     

@@ -65,7 +65,6 @@ export class CapteurService {
             (data)=>{
                 this.capteurs = data;
                 this.capteur = data[0];
-                //console.log(this.capteurs);
             },
             (err)=>{
                 console.log(err);
@@ -78,7 +77,6 @@ export class CapteurService {
         this.capteursObs.subscribe(
             (data)=>{
                 this.capteurAcheter = data;
-                console.log(this.capteurAcheter);
             },
             (err)=>{
                 console.log(err);
@@ -91,7 +89,6 @@ export class CapteurService {
         this.capteursObs.subscribe(
             (data)=>{
                 this.capteursByUser = data;
-                console.log(this.capteursByUser);
             },
             (err)=>{
                 console.log(err);

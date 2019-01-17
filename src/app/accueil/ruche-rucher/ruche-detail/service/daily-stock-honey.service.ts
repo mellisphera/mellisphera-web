@@ -41,11 +41,8 @@ export class DailyStockHoneyService {
       (data)=>{
         this.dailyStock = data;
         this.cleanMerge();
-        console.log(this.dailyStock);
       },
       (err)=>{
-        console.log("Aucune données");
-        //this.cleanMerge();
         this.mergeOption.series.push(this.templateSerie);
       },
       ()=>{
@@ -65,16 +62,12 @@ export class DailyStockHoneyService {
       this.templateSerie.data = this.dailyStockByFlower[elt];
       this.mergeOption.series.push(this.templateSerie)
       this.cleanTemplate();
-      console.log(this.templateSerie)
     }
     this.mergeOption.legend.data = this.typeFlower;
-    /*console.log(this.mergeOption);
-    console.log(this.arrayDate);*/ 
   }
   
   convertDate(date){
     var dateIso = new Date(date);
-    console.log(dateIso);
     var jour = ''+dateIso.getDate();
     var mois = ''+(dateIso.getMonth()+1);
     var anee = dateIso.getFullYear();

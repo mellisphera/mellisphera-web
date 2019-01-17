@@ -92,7 +92,6 @@ resetForm(){
 //Fonction pour créer le rucher
 createRucher(){
   const formValue = this.rucherForm.value;
-  console.log(formValue);
   this.rucherService.rucher = {
     id : null,
     latitude: '',
@@ -105,7 +104,6 @@ createRucher(){
     codePostal : '',
     ville : ''
  };
-  console.log(this.rucherService.rucher);
   this.rucherService.rucher.id=null;
   this.rucherService.rucher.description = formValue.description;
   this.rucherService.rucher.name = formValue.nom;
@@ -114,7 +112,6 @@ createRucher(){
   this.rucherService.rucher.createdAt = new Date();
   this.rucherService.rucher.urlPhoto = "void";
   this.rucherService.rucher.username = this.username;
-  console.log(this.rucherService.rucher);
   this.initForm();
   this.rucherService.createRucher();
 } 
@@ -130,7 +127,6 @@ this.rucherService.detailsRucher.description = formValue.description;
 this.rucherService.detailsRucher.name = formValue.nom;
 this.rucherService.detailsRucher.ville = formValue.ville;
 this.rucherService.detailsRucher.codePostal = formValue.codePostal;
-console.log(this.rucherService.detailsRucher);
 this.initForm();
 this.rucherService.updateRucher();
 this.updateRucherInput = false;
@@ -138,7 +134,6 @@ this.updateRucherInput = false;
 }
 
 onSelectRucher(){
-  console.log(this.rucherService.rucher);
   this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id);
   this.rucherService.getRucherDetails();
 }
@@ -148,7 +143,6 @@ onSelectRucher(){
 
 onSelectObs(obs){
   this.rucherService.observationService.observation = obs;
-  console.log(this.rucherService.observationService.observation);
   var donnée = {
     sentence : this.rucherService.observationService.observation.sentence,
     date : this.rucherService.observationService.observation.date
@@ -158,7 +152,6 @@ onSelectObs(obs){
 
 //Pour effacer une ruche
 deleteRuche(ruche){
-  console.log(ruche);
   this.rucheService.ruche = ruche;
   this.rucheService.deleteRuche();
 }
@@ -166,15 +159,12 @@ deleteRuche(ruche){
 //Pour créer une ruche
 createRuche(){
   const formValue = this.newRucheForm.value;
-  console.log(formValue);
   this.rucheService.initRuche();
-  console.log(this.rucherService.rucheService.ruche);
   this.rucheService.ruche.id= null;
   this.rucheService.ruche.idApiary = this.rucherService.rucher.id;
   this.rucheService.ruche.description = formValue.descriptionRuche;
   this.rucheService.ruche.name = formValue.nomRuche;
   this.rucheService.ruche.username = this.username;
-  console.log(this.rucheService.ruche);
   this.initForm();
   this.rucheService.createRuche();
 }
@@ -191,19 +181,14 @@ onSelectRuche(ruche){
 onEditeRuche(){
   const formValue = this.newRucheForm.value;
   var lastIdApiary = this.rucheService.ruche.idApiary;
-  console.log(lastIdApiary);
-  console.log(formValue);
   this.rucheService.ruche.idApiary = this.rucherService.rucherSelectUpdate.id;
   this.rucheService.ruche.name = formValue.nomRuche;
   this.rucheService.ruche.description = formValue.descriptionRuche;
-  console.log(this.rucheService.ruche.idApiary);
   this.rucheService.updateRuche(lastIdApiary);
-  console.log(this.rucheService.ruche);
 }
 
 editRucherClicked(){
   this.updateRucherInput = true;
-  console.log(this.rucherService.rucher);
   var donnée = {
     nom:this.rucherService.rucher.name,
     description: this.rucherService.rucher.description,
@@ -218,11 +203,9 @@ editRucherClicked(){
 //Pour créer une observation
 createObservation(){
   const formValue = this.observationForm.value;
-  console.log(formValue);
   this.rucherService.observationService.observation = formValue;
   this.rucherService.observationService.observation.idApiary = this.rucherService.rucher.id;
   this.rucherService.observationService.observation.type = "ApiaryObs";
-  console.log(this.rucherService.observationService.observation);
   this.initForm();
   this.rucherService.observationService.createObservation();
 }
@@ -235,7 +218,6 @@ deleteObs(obsApiary){
 onEditObservation(){
   const formValue = this.observationForm.value;
   this.rucherService.observationService.observation.sentence = formValue.sentence;
-  console.log(this.rucherService.observationService.observation);
   this.rucherService.observationService.updateObservation();
  }
 

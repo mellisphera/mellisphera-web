@@ -10,6 +10,7 @@ import { RucheService } from '../../accueil/disposition-ruche/Service/ruche.serv
 import { FleursFloraisonService } from '../../accueil/fleurs-floraison/service/fleurs.floraison.service';
 import { MeteoService } from '../../accueil/meteo/Service/MeteoService';
 import { ObservationService } from '../../accueil/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
 
 @Component({
     // moduleId: module.id,
@@ -37,7 +38,8 @@ export class NavbarComponent implements OnInit{
         private meteoService : MeteoService,
         private fleursFloraisonService : FleursFloraisonService,
         private observationService : ObservationService,
-        private formBuilder : FormBuilder) {
+        private formBuilder : FormBuilder,
+        private tokenService : AtokenStorageService) {
         try{
             this.lastConnexion = this.authService.lastConnection.toDateString();
         }
@@ -45,7 +47,7 @@ export class NavbarComponent implements OnInit{
       this.location = location;
       this.sidebarVisible = false;
         this.username= data.currentUser().username;
-        console.log("Local storage"+localStorage);
+
     }
 
     initForm(){
@@ -59,16 +61,9 @@ export class NavbarComponent implements OnInit{
       }
     logout(){
         this.authService.isAuthenticated = false;
-        sessionStorage.connexion = "false";
-        sessionStorage.removeItem('currentUser');
-        console.log(this.authService.connexionStatus);
-        console.log(this.authService.isAuthenticated);
-        console.log(sessionStorage.getItem("connexion"));
+        this.tokenService.signOut();
         this.authService.connexionStatus.next(false);
         this.router.navigate(['/login']);
-        localStorage.removeItem('currentRucher');
-        console.log("Local storage user : "+localStorage.get('currentUser'));
-        console.log("Local storage rucher : "+localStorage.getItem('currentRucher'));
     }
 
     ngOnInit(){
@@ -77,10 +72,8 @@ export class NavbarComponent implements OnInit{
       this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
       this.data.currentMessage.subscribe(message=>this.message=message);
       this.initForm();
-      console.log(this.authService.lastConnection);
     }
     onSelectRucher(){
-        console.log(this.rucherService.rucher);
         this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher);
         this.rucherService.getRucherDetails();
         this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
@@ -106,9 +99,8 @@ export class NavbarComponent implements OnInit{
         body.classList.remove('nav-open');
     };
     sidebarToggle() {
-        // const toggleButton = this.toggleButton;
-        // const body = document.getElementsByTagName('body')[0];
-        console.log(this.sidebarVisible);
+         const toggleButton = this.toggleButton;
+         const body = document.getElementsByTagName('body')[0];
         if (this.sidebarVisible === false) {
             this.sidebarOpen();
         } else {
@@ -129,7 +121,6 @@ export class NavbarComponent implements OnInit{
   
     createRucher(){
         const formValue = this.rucherForm.value;
-        console.log(formValue);
         this.rucherService.rucher = {
           id : null,
           latitude: '',
@@ -142,7 +133,6 @@ export class NavbarComponent implements OnInit{
           codePostal : '',
           ville : ''
        };
-        console.log(this.rucherService.rucher);
         this.rucherService.rucher.id=null;
         this.rucherService.rucher.description = formValue.description;
         this.rucherService.rucher.name = formValue.nom;
@@ -151,7 +141,6 @@ export class NavbarComponent implements OnInit{
         this.rucherService.rucher.createdAt = new Date();
         this.rucherService.rucher.urlPhoto = "void";
         this.rucherService.rucher.username = this.username;
-        console.log(this.rucherService.rucher);
         this.initForm();
         this.rucherService.createRucher();
       } 

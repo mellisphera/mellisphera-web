@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserloggedService } from '../userlogged.service';
 import { CONFIG } from '../../config'
 import { AuthService } from '../auth/Service/auth.service';
+import { AtokenStorageService } from '../auth/Service/atoken-storage.service';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -34,9 +35,8 @@ export class SidebarComponent implements OnInit {
   username;
   url_sideImg : string;
     
-  constructor(public router: Router, public authService : AuthService) {
+  constructor(public router: Router, public authService : AuthService, public tokenService : AtokenStorageService) {
     this.url_sideImg = CONFIG.URL_FRONT+'assets/logo.png'
-    //this.username = data.currentUser();
    }
 
   ngOnInit() {
@@ -53,12 +53,8 @@ export class SidebarComponent implements OnInit {
   }
 
   logout(){
+    this.tokenService.signOut();
     this.authService.isAuthenticated = false;
-    sessionStorage.connexion = "false";
-    sessionStorage.removeItem('currentUser');
-    console.log(this.authService.connexionStatus);
-    console.log(this.authService.isAuthenticated);
-    console.log(sessionStorage.getItem("connexion"));
     this.authService.connexionStatus.next(false);
     this.router.navigate(['/login']);
   }

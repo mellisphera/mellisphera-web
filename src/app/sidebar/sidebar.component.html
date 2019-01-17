@@ -11,7 +11,6 @@
         <li *ngIf="isMobileMenu()">
             <a  href="#">
                 <img (click)="logout();" src="./assets/img/logout.png"style="width:30px;height: 30px;"/>
-                <!--<p (click)="logout();">Log out </p>-->
             </a>
         </li>
         <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
@@ -45,7 +44,7 @@
                 <img src="./assets/img/sensor-icon.png" style="width:30px;height: 30px; margin-top:-6px;"/>
             </a>
         </li>
-        <li *ngIf="authService.user.levelUser == 0">
+        <li *ngIf="tokenService.getAdmin()">
             <a routerLink="/admin" data-toggle="tooltip" data-placement="top" title="admin">
                 <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;"/>
             </a>

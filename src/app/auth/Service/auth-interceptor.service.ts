@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AtokenStorageService } from './atoken-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 export class AuthInterceptorService implements HttpInterceptor {
 
   TOKEN_HEADER_KEY = 'Authorization';
-  constructor() { }
+  constructor(private tokenService : AtokenStorageService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let authReq = req;
-    const token = 'toto'
+    //const token = this.tokenService.getToken();
+    const token = this.tokenService.getToken();
     if (token != null) {
         if(req.url.indexOf("openweathermap")==-1){
           authReq = req.clone({ headers: req.headers.set(this.TOKEN_HEADER_KEY, 'Bearer ' + token) });
@@ -21,6 +23,3 @@ export class AuthInterceptorService implements HttpInterceptor {
     return next.handle(authReq);
   }
 }
-/*export const httpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
-];*/

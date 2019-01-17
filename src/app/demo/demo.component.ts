@@ -32,7 +32,6 @@ export class DemoComponent implements OnInit {
     }
 
   ngOnInit() {
-    console.log(this.idHive);
     this.dailyRecWService.getDailyRecordsWbyIdHive(this.idHive)
     this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.idHiveHonney);
   }

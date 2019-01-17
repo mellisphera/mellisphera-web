@@ -39,7 +39,6 @@ export class MeteoComponent implements OnInit, DoCheck {
   
 
   onSelectRucher($event){
-    console.log(this.rucherService.rucher);
     this.meteoService.getWeather(this.rucherService.rucher.ville);
   }
 
@@ -48,7 +47,6 @@ export class MeteoComponent implements OnInit, DoCheck {
   }
 
   onClick($event){
-    console.log($event);
   }
   ngDoCheck(){
     try{

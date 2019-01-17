@@ -43,12 +43,11 @@ export class DailyRecordsWService {
     this.dailyObs = this.http.get<DailyRecordsW[]>(CONFIG.URL+'/dailyRecordsW/hive/'+idHive);
     this.dailyObs.subscribe(
       (data)=>{
-        console.log(data); 
+
           this.rangeCalendar = [];
           try{
                 start = this.convertDate(data[0].recordDate);
                 end = this.convertDate(data[data.length-1].recordDate);
-                //console.log(this.getMonth(this.convertDate(data[0].recordDate)) - this.getMonth(data[data.length-1].recordDate));
                 if((this.getMonth(this.convertDate(data[0].recordDate)) - this.getMonth(data[data.length-1].recordDate)) < -2){
                   start = this.getYear(start)+'-'+(this.getMonth(start))+'-'+'31';
                 }
@@ -62,11 +61,6 @@ export class DailyRecordsWService {
           }
           finally{
             if(start != null){
-                //console.log(start+'-'+end);
-                //this.rangeCalendar.push(this.convertDate(data[0].recordDate), this.convertDate(data[data.length-1].recordDate));
-                //this.rangeCalendar.push(start,end);
-                //console.log(this.rangeCalendar);
-                //console.log(data);
                 data.forEach((element, index)=>{
                   this.dailyRec.push({
                     recordDate : this.convertDate(element.recordDate),
@@ -84,9 +78,7 @@ export class DailyRecordsWService {
                 });
                 this.arrayTempExt.push([this.convertDate(element.recordDate), element.temp_ext_max])
               });
-                //console.log(this.dailyRec);
                 this.getArray();
-                //console.log(this.arrayTempExt);
                 this.updateCalendar();
               }
             }

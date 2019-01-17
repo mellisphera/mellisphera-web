@@ -54,12 +54,10 @@ export class RapportComponent implements OnInit {
     
     getAnalyseTemp(){
       var formValue = this.rapportForm.value;
-      console.log(formValue);
       this.rapportService.getNluResult(formValue, this.rucherService.rucher.id);
     }
 
   onSelectRucher(event : any) : void{
-    console.log(this.rucherService.rucher);
     localStorage.setItem("currentRucher",String(this.selectedRucher));
   }
 
