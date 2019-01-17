@@ -5,7 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PipeCapteur implements PipeTransform {
   
   public transform(values: any[], filtre: string): any[] {
-    // console.log(values[0], filtre);
     if (!values || !values.length) return [];
     if (!filtre) return values;
 
@@ -24,10 +23,8 @@ export class SearchCapteur implements PipeTransform {
 
   currentFilter : string;
   public transform(values: any[], filtre: string): any[] {
-    // console.log(values[0], filtre);
     if (!values || !values.length) return [];
     if (!filtre) return values;
-    //console.log(filtre.split(":"));
     var filtreOrigin = filtre.split(":");
     this.typeSearch = filtreOrigin[0];
     this.searchValue = filtreOrigin[1];

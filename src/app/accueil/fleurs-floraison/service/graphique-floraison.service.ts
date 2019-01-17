@@ -7,7 +7,6 @@ export class GraphiqueFloraisonService {
 
   currentYear = new Date().getFullYear();
   constructor() { 
-    console.log(this.option);
   }
   option = {
           //Défini le titre du graphique

@@ -109,7 +109,6 @@ export class CalendrierHealthService {
         if (isNaN(cellPoint[0]) || isNaN(cellPoint[1])) {
             return;
         }
-        console.log(api.value(1));
         //img = CONFIG.URL_FRONT+'/assets/icons/'+this.getStatus(api.value(1),api.value(2));
         switch (api.value(1)){
             case 'statusA':
@@ -152,7 +151,6 @@ export class CalendrierHealthService {
                 img = 'wos.png';
         }
         img = CONFIG.URL_FRONT+'assets/icons/'+img;
-        console.log(img);
         var group = {
             type: 'group',
             children:[{ // enfant de ce groupe(image et text)

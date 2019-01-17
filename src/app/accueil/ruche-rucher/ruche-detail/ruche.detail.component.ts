@@ -57,16 +57,12 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     ngOnInit(){
         this.rucheId = this.activatedRoute.snapshot.params.id;
         this.rucheName = this.activatedRoute.snapshot.params.name;
-        console.log(this.rucheId);
-        console.log(this.rucheName);
         this.rucheService.ruchesObs.subscribe(
             ()=>{},
             ()=>{},
             ()=>{
                 this.rucheService.findRucheById(this.rucheId,true);
-                console.log(this.rucheService.ruche);
                 this.compteurHive = this.rucheService.ruchesAllApiary.indexOf(this.rucheService.ruche);
-                console.log(this.compteurHive); 
             }
         )
         this.route.navigate(['/ruche-detail/'+this.rucheId+'/'+this.rucheName+'/observation/'+this.rucheId+'/'+this.rucheName]);
@@ -83,7 +79,6 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.rucheService.ruche = this.rucheService.ruchesAllApiary[this.compteurHive];
             this.rucheId = this.rucheService.ruche.id;
             this.rucheName = this.rucheService.ruche.name
-            console.log(this.rucheService.ruche);
             this.exeData();
         }
         
@@ -96,7 +91,6 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.rucheService.ruche = this.rucheService.ruchesAllApiary[this.compteurHive];
         this.rucheId = this.rucheService.ruche.id;
         this.rucheName = this.rucheService.ruche.name
-        console.log(this.rucheService.ruche);
         this.exeData();
     }
 

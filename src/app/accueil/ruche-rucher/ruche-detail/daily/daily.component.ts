@@ -23,7 +23,6 @@ export class DailyComponent implements OnInit {
 
   ngOnInit() {
     this.rucheId = this.activatedRoute.snapshot.params.id;
-    console.log(this.rucheId);
     this.dailyRecordThService.getByIdHive(this.rucheId);
     this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
   }

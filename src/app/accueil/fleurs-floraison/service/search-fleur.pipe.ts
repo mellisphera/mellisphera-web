@@ -50,12 +50,9 @@ export class searchFleurByDate implements PipeTransform {
       dateValue.setFullYear(new Date().getFullYear());
       dateValue.setMonth((v.flowerApi.flomind.split("-"))[0]);
       dateValue.setDate((v.flowerApi.flomind.split("-"))[1])
-      console.log(dateValue);
 
 
       if(v.flowerApi.flomind){
-        //console.log(dateValue.getMonth()+'-'+filtre);
-        console.log(v);
         return dateValue.getMonth()+''== filtre;
       }
     })

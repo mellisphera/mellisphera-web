@@ -66,11 +66,7 @@ export class MeteoService{
                     }
 
                 });
-                console.log(data);
-                console.log(this.meteo);
                 this.getArray();
-                console.log(this.arrayMeteo);
-                console.log(this.tabHeatmap);
                 this.mergeOption = {
                     series: [{ 
                         data : this.arrayMeteo
@@ -105,7 +101,6 @@ export class MeteoService{
             ()=>{
             }
         );
-        console.log(this.meteo.length);
     }
 
     convertDate(date : string){

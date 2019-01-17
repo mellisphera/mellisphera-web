@@ -71,7 +71,6 @@ export class FleursFloraisonComponent implements OnInit {
 
   //Au chargement de la page on execute ces fonctions
   ngOnInit(){
-    console.log(this.fleursFloraisonService.rucherService.ruchersObs);
   }
 
 

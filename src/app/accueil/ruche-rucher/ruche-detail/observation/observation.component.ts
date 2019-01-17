@@ -44,8 +44,6 @@ export class ObservationComponent implements OnInit {
   ngOnInit() {
     this.rucheId = this.activatedRoute.snapshot.params.id;
     this.rucheName = this.activatedRoute.snapshot.params.name;
-    console.log(this.rucheId);
-    console.log(this.rucheName);
     this.observationService.getObservationByIdHive(this.rucheService.ruche.id);
   }
 
@@ -60,18 +58,15 @@ export class ObservationComponent implements OnInit {
 
   createObservation(){
     const formValue = this.ObservationForm.value;
-    console.log(formValue);
     this.observationService.observation = formValue;
     this.observationService.observation.idHive = this.rucheId;
     this.observationService.observation.idLHive = [this.rucheId];
-    console.log(this.observationService.observation);
     this.initForm();
     this.observationService.createObservation();
   }
 
   onSelectObsR(hiveOBS){
     this.observationService.observation = hiveOBS;
-    console.log(this.observationService.observation);
     var donnée = {
       sentence : this.observationService.observation.sentence,
       type : this.observationService.observation.type,
@@ -83,7 +78,6 @@ export class ObservationComponent implements OnInit {
   onEditObservation(){
    const formValue = this.ObservationForm.value;
    this.observationService.observation.sentence = formValue.sentence;
-   console.log(this.observationService.observation);
    this.observationService.updateObservation();
   }
 

@@ -37,7 +37,6 @@ export class RucherService {
         public observationService : ObservationService,
         public meteoService : MeteoService) {
         if(sessionStorage.getItem("currentUser")){
-            console.log("exist")
             this.getOneApiaryById('5bc48388dc7d27634d281536');
             this.getUserRuchersLast(this.user.currentUser().username);
             
@@ -83,7 +82,6 @@ export class RucherService {
                 console.log(err);
             },
             ()=>{
-                console.log(this.rucher);
                 this.getUserRuchersLast(this.user.currentUser().username);
             }
         );
@@ -94,11 +92,9 @@ export class RucherService {
         this.ruchersObs.subscribe(
             (data)=>{
                 if(data.length>0){
-                    console.log(data);
                     this.rucher = data[data.length-1];
                     this.rucherSelectUpdate = data[data.length-1];
                     this.ruchers = data;
-                    console.log(this.rucherSelectUpdate);
                 }
             },
             (err)=>{
@@ -122,7 +118,6 @@ export class RucherService {
         this.rucherObs.subscribe(
             (data)=>{
               this.rucherDemo = data;
-              console.log(this.rucherDemo);
             },
             (err)=>{
               console.log(err);

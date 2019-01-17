@@ -7,6 +7,8 @@ import { Login } from '../../_model/login';
 import { User } from '../../_model/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CONFIG } from '../../../config';
+import { AtokenStorageService } from './atoken-storage.service';
+import { JwtResponse } from '../../_model/jwt-response';
 
 
 const httpOptions = {
@@ -19,6 +21,7 @@ export class AuthService {
 
   login : Login;
   user : User;
+  jwtReponse : JwtResponse;
   loginObs : Observable<any>;
   lastConnection : Date;
   isAuthenticated : boolean;
@@ -28,30 +31,69 @@ export class AuthService {
   public showNavBarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private router: Router,
-              private http : HttpClient) {
+              private http : HttpClient,
+              private tokenService : AtokenStorageService) {
                 this.login = { username : "", password : ""};
-                this.user = { 
-                  id : null,
-                  createdAt : new Date(),
-                  login : this.login,
-                  phone : null,
-                  email : null,
-                  connexions : null,
-                  lastConnection : null,
-                  fullName : null,
-                  position : null,
-                  country : null,
-                  city : null,
-                  levelUser : null, 
-              }
                 this.errLogin = false;
                 this.isAuthenticated = false;
               }
 
   signIn() {
-    this.loginObs = this.http.post<any>(CONFIG.URL+'user/loguser',this.login,httpOptions);
+    this.loginObs = this.http.post<JwtResponse>(CONFIG.API_AUTH,this.login,httpOptions);
     this.loginObs.subscribe(
       (data)=>{
+        this.jwtReponse = data;
+        console.log(this.jwtReponse);
+        this.tokenService.saveToken(this.jwtReponse.accessToken);
+        this.tokenService.saveAuthorities(this.jwtReponse.authorities);
+        this.login.username = this.jwtReponse.username  
+        this.connexionStatus.next(data);
+        this.isAuthenticated = window.sessionStorage.getItem("TOKEN_KEY") ? true : false;
+        sessionStorage.setItem("connexion",JSON.stringify(this.isAuthenticated));
+        this.errLogin = !this.isAuthenticated;
+        if(this.isAuthenticated){
+          this.tokenService.testRequete();
+          this.lastConnection = new Date(data);
+          console.log(sessionStorage.getItem("connexion") == "true"); 
+          sessionStorage.setItem("currentUser",JSON.stringify(this.login));
+          this.router.navigate(['/position-Ruche']);
+        }
+      },
+      (err)=>{
+        console.log(err);
+      }
+    );
+  }
+
+}
+
+        /*
+
+        ### AVEC TOKEN ###
+        this.jwtReponse = data;
+        this.tokenService.saveToken(this.jwtReponse.accessToken);
+        this.tokenService.saveAuthorities(this.jwtReponse.authorities);
+        this.login.username = this.jwtReponse.username  
+        this.connexionStatus.next(data);
+        this.isAuthenticated = window.sessionStorage.getItem("TOKEN_KEY") ? true : false;
+        sessionStorage.setItem("connexion",JSON.stringify(this.isAuthenticated));
+        this.errLogin = !this.isAuthenticated;
+        if(this.isAuthenticated){
+          this.lastConnection = new Date(data);
+          console.log(sessionStorage.getItem("connexion") == "true"); 
+          
+          sessionStorage.setItem("currentUser",JSON.stringify(this.login));
+          this.router.navigate(['/position-Ruche']);
+        }
+        
+        
+        
+        
+        
+        
+        
+        ### SANS TOKEN ###
+
         console.log(data);
         this.user = data;
         //this.login = this.user.login;
@@ -68,12 +110,11 @@ export class AuthService {
           
           sessionStorage.setItem("currentUser",JSON.stringify(this.user.login));
           this.router.navigate(['/position-Ruche']);
-        }
-      },
-      (err)=>{
-        console.log(err);
-      }
-    );
-  }
+        
+        
+        
+        
+        */
 
-}
+
+        

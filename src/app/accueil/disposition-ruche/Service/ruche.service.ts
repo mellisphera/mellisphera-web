@@ -47,7 +47,6 @@ export class RucheService {
       this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username+'/'+idApiary)
       this.ruchesObs.subscribe(
         (data)=>{
-          console.log(data);
           this.ruche = data[data.length-1];
           this.ruches = data;
         },
@@ -70,7 +69,6 @@ export class RucheService {
      this.ruchesObs.subscribe(
        (data)=>{
          this.ruchesAllApiary = data;
-         console.log(this.ruchesAllApiary);
        },
        (err)=>{
          console.log(err);
@@ -138,12 +136,10 @@ export class RucheService {
           this.ruche = element
         }
         else if(!navHive){
-          console.log("not");
           this.rucheUpdate = element;
         }
       }
     });
-    console.log("test");
   }
 
 }

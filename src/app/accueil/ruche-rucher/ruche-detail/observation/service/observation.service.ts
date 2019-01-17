@@ -25,9 +25,7 @@ export class ObservationService {
     this.observationsObs = this.http.get<Observation[]>(CONFIG.URL+'report/hive/'+idHive);
     this.observationsObs.subscribe(
       (data)=>{
-        console.log(data);
         this.observationsHive = data;
-        console.log(this.observationsHive);
       },
       (err)=>{
         console.log(err);
@@ -38,9 +36,7 @@ export class ObservationService {
   getObservationByIdApiary(idApiary : string){
     this.http.get<Observation[]>(CONFIG.URL+'report/apiary/'+idApiary).subscribe(
       (data)=>{
-        console.log(data);
         this.observationsApiary = data;
-        console.log(this.observationsApiary);
       },
       (err)=>{
         console.log(err);

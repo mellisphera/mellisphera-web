@@ -54,7 +54,6 @@ export class CapteurComponent implements OnInit {
 
     onChangeCapteur($event){
         this.capteurService.capteur = $event.target.value;
-        console.log(this.capteurService.capteur);
     }
     selectCapteur(capteur){
         this.capteurService.capteur = capteur;
@@ -64,13 +63,9 @@ export class CapteurComponent implements OnInit {
         };
         this.editCapteurForm.setValue(donnée);
         this.editCapteurCheckbox = !(this.capteurService.capteur.idHive == 'stock' || this.capteurService.capteur.idApiary == 'stock');
-        console.log(this.editCapteurCheckbox);
         if(this.editCapteurCheckbox){
-            console.log(this.capteurService.capteur);
             this.rucherService.findRucherById(this.capteurService.capteur.idApiary);
             this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive);
-            console.log(this.rucherService.rucherUpdate);
-            console.log(this.rucherService.rucheService.rucheUpdate);
         }
 
     }
@@ -87,12 +82,10 @@ export class CapteurComponent implements OnInit {
     createCapteur(){
         alert("ok");
         var formValue = this.newCapteurForm.value;
-        console.log(formValue);
         let tempType = this.capteurService.capteur.type; 
         this.capteurService.initCapteur();
         //this.capteurService.capteur = formValue;
         if(formValue.checkbox != "stock"){
-            console.log("ruche")
             this.capteurService.capteur.idHive = this.rucherService.rucheService.ruche.id;
             this.capteurService.capteur.idApiary = this.rucherService.rucher.id;
         }
@@ -101,7 +94,6 @@ export class CapteurComponent implements OnInit {
             this.capteurService.capteur.idApiary = "stock";
         }
         this.capteurService.capteur.description = formValue.description
-        console.log(this.capteurService.capteur);
         this.capteurService.capteur.username = this.username;
         this.capteurService.capteur.reference = formValue.reference;
         this.capteurService.capteur.type = tempType;
@@ -132,9 +124,7 @@ export class CapteurComponent implements OnInit {
         let idTemp = this.capteurService.capteur.id;
         this.capteurService.initCapteur();
         //this.capteurService.capteur = formValue;
-        console.log(formValue);
         if(formValue.checkbox != "stock"){
-            console.log("ruche")
             this.capteurService.capteur.idHive = this.rucherService.rucheService.rucheUpdate.id;
             this.capteurService.capteur.idApiary = this.rucherService.rucherUpdate.id;
         }
@@ -144,14 +134,12 @@ export class CapteurComponent implements OnInit {
         }
         this.capteurService.capteur.description = formValue.description
         this.capteurService.capteur.id = idTemp;
-        console.log(this.capteurService.capteur);
         this.capteurService.capteur.type = tempType;
         this.initForm();
         this.capteurService.updateCapteur();
     }
 
     onSelectRucher(){
-        console.log("ok");
         this.rucherService.rucheService.getRucheByApiary(this.username,this.rucherService.rucherUpdate.id);
     }
 

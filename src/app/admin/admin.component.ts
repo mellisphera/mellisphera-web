@@ -40,13 +40,10 @@ export class AdminComponent implements OnInit {
   }
   signup(){
     const data = this.signupForm.value;
-    console.log(this.signupService.user);
-    console.log(data);
     this.signupService.user = data;
     this.signupService.user.createdAt = new Date();
     this.signupService.user.login = { username: data.username, password : data.password};
     this.signupService.user.levelUser = data.types;
-    console.log(this.signupService.user);
     this.signupService.signupUser(()=>{
       this.success = true;
       this.innitForm();
