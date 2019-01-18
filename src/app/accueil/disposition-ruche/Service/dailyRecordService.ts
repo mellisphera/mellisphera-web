@@ -114,7 +114,7 @@ export class DailyRecordService{
             (data)=>{
                 if(data[0]!= null){
                     this.dailyRecords = data;
-                    console.log(this.dailyRecords);
+
                 }
             },
             (err)=>{

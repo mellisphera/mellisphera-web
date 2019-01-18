@@ -42,9 +42,9 @@ export class ObservationComponent implements OnInit {
     }
 
   ngOnInit() {
-    /*this.rucheId = this.activatedRoute.snapshot.params.id;
+    this.rucheId = this.activatedRoute.snapshot.params.id;
     this.rucheName = this.activatedRoute.snapshot.params.name;
-    this.observationService.getObservationByIdHive(this.rucheService.ruche.id);*/
+    this.observationService.getObservationByIdHive(this.rucheService.ruche.id);
   }
 
 

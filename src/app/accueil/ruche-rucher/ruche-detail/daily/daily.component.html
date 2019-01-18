@@ -1,5 +1,7 @@
-  <div class="row content">
-    <div echarts [options]="calendrierTempInt.option" [loading]="!dailyRecordThService.statusLoading" [merge]="dailyRecordWservice.mergeOptionTempExt" style="height:300px;width:95vw;" [autoResize]="true"></div>
-    <div echarts [options]="calendrierTempInt.option" [loading]="!dailyRecordThService.statusLoading" [merge]="dailyRecordThService.mergeOptionTint" style="height:300px;width:95vw;" [autoResize]="true"></div>
-    <div echarts [options]="calendrierTempInt.option" [loading]="!dailyRecordThService.statusLoading" [merge]="dailyRecordThService.mergeOptionHint" style="height:300px;width:95vw;" [autoResize]="true"></div>  
+<div class="container-fluid" style="background-color: white;">
+  <div class="col">
+    <div echarts [options]="calendrierTempInt.option" [loading]="!dailyRecordThService.statusLoading" [merge]="dailyRecordWservice.mergeOptionTempExt" style="height:300px;" [autoResize]="true"></div>
+    <div echarts [options]="calendrierTempInt.option" [loading]="!dailyRecordThService.statusLoading" [merge]="dailyRecordThService.mergeOptionTint" style="height:300px;" [autoResize]="true"></div>
+    <div echarts [options]="calendrierTempInt.option" [loading]="!dailyRecordThService.statusLoading" [merge]="dailyRecordThService.mergeOptionHint" style="height:300px;"  [autoResize]="true"></div>  
   </div>
+</div>

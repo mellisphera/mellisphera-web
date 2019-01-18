@@ -21,9 +21,9 @@ export class HourlyComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    /*this.rucheId = this.activatedRoute.snapshot.params.id;
+    this.rucheId = this.activatedRoute.snapshot.params.id;
     this.rucheName = this.activatedRoute.snapshot.params.name;
-    this.recordService.getRecordByIdHive(this.rucheService.ruche.id);*/
+    this.recordService.getRecordByIdHive(this.rucheService.ruche.id);
   }
 
   receiveMessage($event){

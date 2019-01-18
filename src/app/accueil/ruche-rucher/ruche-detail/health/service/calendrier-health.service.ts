@@ -17,11 +17,11 @@ export class CalendrierHealthService {
     option = {
     backgroundColor: 'white',
     title: {
-        top: 70,
+        top: 20,
         text: 'Daily weight incomes',
         left: 'center',
         textStyle: {
-            color: 'black'
+            color: '#fff'
         }
     },
     tooltip : {
@@ -47,7 +47,7 @@ export class CalendrierHealthService {
    calendar: [{
         top: 140,
         width:'93%',
-        range: ['2018-01-01', '2018-12-30'],
+        range: ['2019-01-01', '2019-12-30'],
         orient: 'horizontal',
         cellSize: ['auto','40'],
         splitLine: {

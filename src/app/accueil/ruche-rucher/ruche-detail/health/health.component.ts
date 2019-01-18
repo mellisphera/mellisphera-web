@@ -18,9 +18,9 @@ export class HealthComponent implements OnInit, OnDestroy{
     public dailyRecordThService : DailyRecordService) { }
 
   ngOnInit() {
-    /*9this.rucheId = this.activatedRoute.snapshot.params.id;
+    this.rucheId = this.activatedRoute.snapshot.params.id;
     this.rucheName = this.activatedRoute.snapshot.params.name;
-    this.dailyRecordThService.getByIdHive(this.rucheId);*/
+    this.dailyRecordThService.getByIdHive(this.rucheId);
   }
 
   receiveMessage($event){

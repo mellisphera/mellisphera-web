@@ -4,9 +4,6 @@
 .sidebar,.sidebar-wrapper{
     width: 70px;
 }
-.sidebar{
-    background-color: blue;
-}
 .main-panel{
     width: calc(100% - 92px);
 }
