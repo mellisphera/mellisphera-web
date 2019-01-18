@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import {__DEV__} from '../../config';
 import * as echarts from '../../echarts';
 import * as zrUtil from 'zrender/src/core/util';
@@ -100,6 +119,11 @@ export default echarts.extendComponentView({
         var legendDrawnMap = zrUtil.createHashMap();
         var selectMode = legendModel.get('selectedMode');
 
+        var excludeSeriesId = [];
+        ecModel.eachRawSeries(function (seriesModel) {
+            !seriesModel.get('legendHoverLink') && excludeSeriesId.push(seriesModel.id);
+        });
+
         each(legendModel.getData(), function (itemModel, dataIndex) {
             var name = itemModel.get('name');
 
@@ -111,6 +135,7 @@ export default echarts.extendComponentView({
                 return;
             }
 
+            // Representitive series.
             var seriesModel = ecModel.getSeriesByName(name)[0];
 
             if (legendDrawnMap.get(name)) {
@@ -141,8 +166,8 @@ export default echarts.extendComponentView({
                 );
 
                 itemGroup.on('click', curry(dispatchSelectAction, name, api))
-                    .on('mouseover', curry(dispatchHighlightAction, seriesModel, null, api))
-                    .on('mouseout', curry(dispatchDownplayAction, seriesModel, null, api));
+                    .on('mouseover', curry(dispatchHighlightAction, seriesModel.name, null, api, excludeSeriesId))
+                    .on('mouseout', curry(dispatchDownplayAction, seriesModel.name, null, api, excludeSeriesId));
 
                 legendDrawnMap.set(name, true);
             }
@@ -153,6 +178,7 @@ export default echarts.extendComponentView({
                     if (legendDrawnMap.get(name)) {
                         return;
                     }
+
                     if (seriesModel.legendDataProvider) {
                         var data = seriesModel.legendDataProvider();
                         var idx = data.indexOfName(name);
@@ -171,19 +197,24 @@ export default echarts.extendComponentView({
                             selectMode
                         );
 
+                        // FIXME: consider different series has items with the same name.
                         itemGroup.on('click', curry(dispatchSelectAction, name, api))
-                            // FIXME Should not specify the series name
-                            .on('mouseover', curry(dispatchHighlightAction, seriesModel, name, api))
-                            .on('mouseout', curry(dispatchDownplayAction, seriesModel, name, api));
+                            // Should not specify the series name, consider legend controls
+                            // more than one pie series.
+                            .on('mouseover', curry(dispatchHighlightAction, null, name, api, excludeSeriesId))
+                            .on('mouseout', curry(dispatchDownplayAction, null, name, api, excludeSeriesId));
 
                         legendDrawnMap.set(name, true);
                     }
+
                 }, this);
             }
 
             if (__DEV__) {
                 if (!legendDrawnMap.get(name)) {
-                    console.warn(name + ' series not exists. Legend data should be same with series name or data name.');
+                    console.warn(
+                        name + ' series not exists. Legend data should be same with series name or data name.'
+                    );
                 }
             }
         }, this);
@@ -197,6 +228,7 @@ export default echarts.extendComponentView({
         var itemWidth = legendModel.get('itemWidth');
         var itemHeight = legendModel.get('itemHeight');
         var inactiveColor = legendModel.get('inactiveColor');
+        var symbolKeepAspect = legendModel.get('symbolKeepAspect');
 
         var isSelected = legendModel.isSelected(name);
         var itemGroup = new Group();
@@ -217,14 +249,15 @@ export default echarts.extendComponentView({
             itemWidth,
             itemHeight,
             isSelected ? color : inactiveColor,
-            true
+            // symbolKeepAspect default true for legend
+            symbolKeepAspect == null ? true : symbolKeepAspect
         ));
 
         // Compose symbols
         // PENDING
         if (!itemIcon && symbolType
             // At least show one symbol, can't be all none
-            && ((symbolType !== legendSymbolType) || symbolType == 'none')
+            && ((symbolType !== legendSymbolType) || symbolType === 'none')
         ) {
             var size = itemHeight * 0.8;
             if (symbolType === 'none') {
@@ -232,8 +265,14 @@ export default echarts.extendComponentView({
             }
             // Put symbol in the center
             itemGroup.add(createSymbol(
-                symbolType, (itemWidth - size) / 2, (itemHeight - size) / 2, size, size,
-                isSelected ? color : inactiveColor
+                symbolType,
+                (itemWidth - size) / 2,
+                (itemHeight - size) / 2,
+                size,
+                size,
+                isSelected ? color : inactiveColor,
+                // symbolKeepAspect default true for legend
+                symbolKeepAspect == null ? true : symbolKeepAspect
             ));
         }
 
@@ -325,26 +364,28 @@ function dispatchSelectAction(name, api) {
     });
 }
 
-function dispatchHighlightAction(seriesModel, dataName, api) {
+function dispatchHighlightAction(seriesName, dataName, api, excludeSeriesId) {
     // If element hover will move to a hoverLayer.
     var el = api.getZr().storage.getDisplayList()[0];
     if (!(el && el.useHoverLayer)) {
-        seriesModel.get('legendHoverLink') && api.dispatchAction({
+        api.dispatchAction({
             type: 'highlight',
-            seriesName: seriesModel.name,
-            name: dataName
+            seriesName: seriesName,
+            name: dataName,
+            excludeSeriesId: excludeSeriesId
         });
     }
 }
 
-function dispatchDownplayAction(seriesModel, dataName, api) {
+function dispatchDownplayAction(seriesName, dataName, api, excludeSeriesId) {
     // If element hover will move to a hoverLayer.
     var el = api.getZr().storage.getDisplayList()[0];
     if (!(el && el.useHoverLayer)) {
-        seriesModel.get('legendHoverLink') && api.dispatchAction({
+        api.dispatchAction({
             type: 'downplay',
-            seriesName: seriesModel.name,
-            name: dataName
+            seriesName: seriesName,
+            name: dataName,
+            excludeSeriesId: excludeSeriesId
         });
     }
 }

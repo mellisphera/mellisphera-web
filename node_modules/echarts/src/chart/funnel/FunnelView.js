@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as graphic from '../../util/graphic';
 import * as zrUtil from 'zrender/src/core/util';
 import ChartView from '../../view/Chart';
@@ -37,7 +56,7 @@ function FunnelPiece(data, idx) {
 
 var funnelPieceProto = FunnelPiece.prototype;
 
-var opacityAccessPath = ['itemStyle', 'normal', 'opacity'];
+var opacityAccessPath = ['itemStyle', 'opacity'];
 funnelPieceProto.updateData = function (data, idx, firstCreate) {
 
     var polygon = this.childAt(0);
@@ -55,7 +74,7 @@ funnelPieceProto.updateData = function (data, idx, firstCreate) {
         polygon.setShape({
             points: layout.points
         });
-        polygon.setStyle({ opacity : 0 });
+        polygon.setStyle({opacity: 0});
         graphic.initProps(polygon, {
             style: {
                 opacity: opacity
@@ -83,7 +102,7 @@ funnelPieceProto.updateData = function (data, idx, firstCreate) {
                 lineJoin: 'round',
                 fill: visualColor
             },
-            itemStyleModel.getModel('normal').getItemStyle(['opacity'])
+            itemStyleModel.getItemStyle(['opacity'])
         )
     );
     polygon.hoverStyle = itemStyleModel.getModel('emphasis').getItemStyle();
@@ -122,10 +141,10 @@ funnelPieceProto._updateLabel = function (data, idx) {
         z2: 10
     });
 
-    var labelModel = itemModel.getModel('label.normal');
-    var labelHoverModel = itemModel.getModel('label.emphasis');
-    var labelLineModel = itemModel.getModel('labelLine.normal');
-    var labelLineHoverModel = itemModel.getModel('labelLine.emphasis');
+    var labelModel = itemModel.getModel('label');
+    var labelHoverModel = itemModel.getModel('emphasis.label');
+    var labelLineModel = itemModel.getModel('labelLine');
+    var labelLineHoverModel = itemModel.getModel('emphasis.labelLine');
     var visualColor = data.getItemVisual(idx, 'color');
 
     graphic.setLabelStyle(

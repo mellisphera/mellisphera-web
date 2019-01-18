@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as zrUtil from 'zrender/src/core/util';
 import * as zrColor from 'zrender/src/tool/color';
 import * as eventUtil from 'zrender/src/core/event';
@@ -40,8 +59,8 @@ function assembleFont(textStyleModel) {
 
     cssText.push('font:' + textStyleModel.getFont());
 
-    fontSize &&
-        cssText.push('line-height:' + Math.round(fontSize * 3 / 2) + 'px');
+    fontSize
+        && cssText.push('line-height:' + Math.round(fontSize * 3 / 2) + 'px');
 
     each(['decoration', 'align'], function (name) {
         var val = textStyleModel.get(name);
@@ -66,8 +85,8 @@ function assembleCssText(tooltipModel) {
     var padding = tooltipModel.get('padding');
 
     // Animation transition. Do not animate when transitionDuration is 0.
-    transitionDuration &&
-        cssText.push(assembleTransition(transitionDuration));
+    transitionDuration
+        && cssText.push(assembleTransition(transitionDuration));
 
     if (backgroundColor) {
         if (env.canvasSupported) {
@@ -87,8 +106,8 @@ function assembleCssText(tooltipModel) {
         var borderName = 'border-' + name;
         var camelCase = toCamelCase(borderName);
         var val = tooltipModel.get(camelCase);
-        val != null &&
-            cssText.push(borderName + ':' + val + (name === 'color' ? '' : 'px'));
+        val != null
+            && cssText.push(borderName + ':' + val + (name === 'color' ? '' : 'px'));
     });
 
     // Text style
@@ -107,6 +126,10 @@ function assembleCssText(tooltipModel) {
  * @constructor
  */
 function TooltipContent(container, api) {
+    if (env.wxa) {
+        return null;
+    }
+
     var el = document.createElement('div');
     var zr = this._zr = api.getZr();
 
@@ -192,7 +215,14 @@ TooltipContent.prototype = {
             + ';left:' + this._x + 'px;top:' + this._y + 'px;'
             + (tooltipModel.get('extraCssText') || '');
 
-        el.style.display = el.innerHTML ?  'block' : 'none';
+        el.style.display = el.innerHTML ? 'block' : 'none';
+
+        // If mouse occsionally move over the tooltip, a mouseout event will be
+        // triggered by canvas, and cuase some unexpectable result like dragging
+        // stop, "unfocusAdjacency". Here `pointer-events: none` is used to solve
+        // it. Although it is not suppored by IE8~IE10, fortunately it is a rare
+        // scenario.
+        el.style.pointerEvents = this._enterable ? 'auto' : 'none';
 
         this._show = true;
     },
@@ -250,6 +280,25 @@ TooltipContent.prototype = {
 
     isShow: function () {
         return this._show;
+    },
+
+    getOuterSize: function () {
+        var width = this.el.clientWidth;
+        var height = this.el.clientHeight;
+
+        // Consider browser compatibility.
+        // IE8 does not support getComputedStyle.
+        if (document.defaultView && document.defaultView.getComputedStyle) {
+            var stl = document.defaultView.getComputedStyle(this.el);
+            if (stl) {
+                width += parseInt(stl.paddingLeft, 10) + parseInt(stl.paddingRight, 10)
+                    + parseInt(stl.borderLeftWidth, 10) + parseInt(stl.borderRightWidth, 10);
+                height += parseInt(stl.paddingTop, 10) + parseInt(stl.paddingBottom, 10)
+                    + parseInt(stl.borderTopWidth, 10) + parseInt(stl.borderBottomWidth, 10);
+            }
+        }
+
+        return {width: width, height: height};
     }
 };
 

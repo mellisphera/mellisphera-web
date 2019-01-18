@@ -62,7 +62,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             ()=>{},
             ()=>{
                 this.rucheService.findRucheById(this.rucheId,true);
-                this.compteurHive = this.rucheService.ruchesAllApiary.indexOf(this.rucheService.ruche);
+                this.compteurHive = this.rucheService.ruches.indexOf(this.rucheService.ruche);
             }
         )
         this.route.navigate(['/ruche-detail/'+this.rucheId+'/'+this.rucheName+'/observation/'+this.rucheId+'/'+this.rucheName]);
@@ -76,7 +76,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     previousHive(){
         if(this.compteurHive != 0 && this.compteurHive != -1){
             this.compteurHive--;
-            this.rucheService.ruche = this.rucheService.ruchesAllApiary[this.compteurHive];
+            this.rucheService.ruche = this.rucheService.ruches[this.compteurHive];
             this.rucheId = this.rucheService.ruche.id;
             this.rucheName = this.rucheService.ruche.name
             this.exeData();
@@ -85,10 +85,10 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     }
 
     nextHive(){
-        if(this.compteurHive != this.rucheService.ruchesAllApiary.length-1){
+        if(this.compteurHive != this.rucheService.ruches.length-1){
              this.compteurHive++;
         }
-        this.rucheService.ruche = this.rucheService.ruchesAllApiary[this.compteurHive];
+        this.rucheService.ruche = this.rucheService.ruches[this.compteurHive];
         this.rucheId = this.rucheService.ruche.id;
         this.rucheName = this.rucheService.ruche.name
         this.exeData();

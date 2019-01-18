@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as zrUtil from 'zrender/src/core/util';
 import * as eventTool from 'zrender/src/core/event';
 import * as graphic from '../../util/graphic';
@@ -284,6 +303,7 @@ var SliderZoomView = DataZoomView.extend({
         var size = this._size;
         var seriesModel = info.series;
         var data = seriesModel.getRawData();
+
         var otherDim = seriesModel.getShadowDim
             ? seriesModel.getShadowDim() // @see candlestick
             : info.otherDim;
@@ -396,9 +416,12 @@ var SliderZoomView = DataZoomView.extend({
                 var otherDim = getOtherDim(dimNames.name);
                 var otherAxisInverse;
                 var coordSys = seriesModel.coordinateSystem;
+
                 if (otherDim != null && coordSys.getOtherAxis) {
                     otherAxisInverse = coordSys.getOtherAxis(thisAxis).inverse;
                 }
+
+                otherDim = seriesModel.getData().mapDimension(otherDim);
 
                 result = {
                     thisAxis: thisAxis,
@@ -437,7 +460,7 @@ var SliderZoomView = DataZoomView.extend({
             onmouseout: bind(this._showDataInfo, this, false),
             style: {
                 fill: dataZoomModel.get('fillerColor'),
-                textPosition : 'inside'
+                textPosition: 'inside'
             }
         }));
 
@@ -525,6 +548,7 @@ var SliderZoomView = DataZoomView.extend({
      * @private
      * @param {(number|string)} handleIndex 0 or 1 or 'all'
      * @param {number} delta
+     * @return {boolean} changed
      */
     _updateInterval: function (handleIndex, delta) {
         var dataZoomModel = this.dataZoomModel;
@@ -544,10 +568,13 @@ var SliderZoomView = DataZoomView.extend({
                 ? linearMap(minMaxSpan.maxSpan, percentExtent, viewExtend, true) : null
         );
 
-        this._range = asc([
+        var lastRange = this._range;
+        var range = this._range = asc([
             linearMap(handleEnds[0], viewExtend, percentExtent, true),
             linearMap(handleEnds[1], viewExtend, percentExtent, true)
         ]);
+
+        return !lastRange || lastRange[0] !== range[0] || lastRange[1] !== range[1];
     },
 
     /**
@@ -693,21 +720,25 @@ var SliderZoomView = DataZoomView.extend({
         var barTransform = this._displayables.barGroup.getLocalTransform();
         var vertex = graphic.applyTransform([dx, dy], barTransform, true);
 
-        this._updateInterval(handleIndex, vertex[0]);
+        var changed = this._updateInterval(handleIndex, vertex[0]);
 
         var realtime = this.dataZoomModel.get('realtime');
 
         this._updateView(!realtime);
 
-        if (realtime) {
-            realtime && this._dispatchZoomAction();
-        }
+        // Avoid dispatch dataZoom repeatly but range not changed,
+        // which cause bad visual effect when progressive enabled.
+        changed && realtime && this._dispatchZoomAction();
     },
 
     _onDragEnd: function () {
         this._dragging = false;
         this._showDataInfo(false);
-        this._dispatchZoomAction();
+
+        // While in realtime mode and stream mode, dispatch action when
+        // drag end will cause the whole view rerender, which is unnecessary.
+        var realtime = this.dataZoomModel.get('realtime');
+        !realtime && this._dispatchZoomAction();
     },
 
     _onClickPanelClick: function (e) {
@@ -723,9 +754,9 @@ var SliderZoomView = DataZoomView.extend({
         var handleEnds = this._handleEnds;
         var center = (handleEnds[0] + handleEnds[1]) / 2;
 
-        this._updateInterval('all', localPoint[0] - center);
+        var changed = this._updateInterval('all', localPoint[0] - center);
         this._updateView();
-        this._dispatchZoomAction();
+        changed && this._dispatchZoomAction();
     },
 
     /**
