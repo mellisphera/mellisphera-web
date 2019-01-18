@@ -81,7 +81,7 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
     searchFleurByType,
     searchFleurByDate,
     DemoComponent,
-    AdminComponent
+    AdminComponent,
 
   ],
   imports: [

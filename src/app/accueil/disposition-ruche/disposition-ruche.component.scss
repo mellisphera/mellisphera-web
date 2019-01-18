@@ -51,16 +51,16 @@ select{
     width: 30%;
 }
 
-.statusAFluctuation{
+.statusCFluctuation{
    background: url("../../../assets/icons/wfbfl.png") no-repeat center;
 }
-.statusADecline{
+.statusCDecline{
     background: url("../../../assets/icons/wfbde.png") no-repeat center;
 }
-.statusAStable{
+.statusCStable{
     background: url("../../../assets/icons/wfbst.png") no-repeat center;
 }
-.statusAImprove{
+.statusCImprove{
     background: url("../../../assets/icons/wfbim.png") no-repeat center;
 }
 
@@ -77,10 +77,10 @@ select{
     background: url("../../../assets/icons/wnbst.png") no-repeat center;
 }
 
-.statusCImprove{
+.statusAImprove{
     background: url("../../../assets/icons/wobim.png") no-repeat center;
 }
-.statusCFluctuation{
+.statusAFluctuation{
     background: url("../../../assets/icons/wobfl.png") no-repeat center;
 }
 
