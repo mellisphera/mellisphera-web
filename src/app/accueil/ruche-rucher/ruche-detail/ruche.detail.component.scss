@@ -1,51 +1,3 @@
-#popupObs{
-    padding-left: 20px;
-}
-input[formControlName="checkbox"]{
-    padding: 5px;
-}
-.flex{
-    display: flex;
-    justify-content: space-between;
-}
-input[type=button]{
-    border-radius: 30px;
-    padding: 3px;
-}
-.navRuche{
-    cursor: pointer;
-}
-#navPannel ul{
-    display: flex;
-    margin: 0px;
-    padding: 0px;
-}
-#navPannel li{
-    padding: 7px;
-    font-size: 18px;
-    list-style: none;
-}
-#navPannel li:hover{
-    background-color: white;
-    color: #23CCEF;
-    border-radius: 8px;
-}
-#navHive li{
-    list-style: none;
-}
-#navHive{
-    margin-top: 7px;
-}
-#navBar{
-    background-color:#313837;
-    border-radius: 10px;
-    height: 50px;
-    margin-bottom: 5px;
-}
-#navPannel ul{
-    height: 100%;
-    padding-top: 4px;
-}
 li:first-child img{
     transform: rotate(180deg);
 }
@@ -54,17 +6,49 @@ nav{
     padding: 0px;
     height: 100%;
 }
+#navHive{
+    text-align: right;
+}
+#navHive ul{
+    display: inline-block;
+    margin-top: 3px;
+    margin-right: 15px;
+}
+#navHive li{ 
+    display: inline;
+    cursor: pointer;
+}
 #hiveName{
     padding: 5px;
-    color: white;
+    color: #23CCEF;
     font-size: 15px;
 }
-nav, ul{
+ul{
     font-size: 10px;
+    list-style: none;
 }
-.active{
+.flex{
+    display: flex;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
     //color: #23CCEF;
-    background-color: white;
-    color: black;
-    border-radius: 8px;
+    //background-color: blue !important;
+    //border-radius: 8px;
+    //color: white;
+}
+.nav li{
+    font-size: 15px;
+}
+.tab-content>.active{
+   // border: 1px solid black;    
+}
+.padding{
+    margin-right: 7px;
+}
+.nav{
+    background-color: #333F3D;
+    margin-top: 6px;
+}
+.tab-content{
+    margin-top: 10px;
 }

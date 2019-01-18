@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 // Compatitable with 2.0
 
 import {each, isArray, isObject} from 'zrender/src/core/util';
@@ -48,12 +67,6 @@ var COMPATITABLE_COMPONENTS = [
     'grid', 'geo', 'parallel', 'legend', 'toolbox', 'title', 'visualMap', 'dataZoom', 'timeline'
 ];
 
-var COMPATITABLE_SERIES = [
-    'bar', 'boxplot', 'candlestick', 'chord', 'effectScatter',
-    'funnel', 'gauge', 'lines', 'graph', 'heatmap', 'line', 'map', 'parallel',
-    'pie', 'radar', 'sankey', 'scatter', 'treemap'
-];
-
 export default function (option, isTheme) {
     compatStyle(option, isTheme);
 
@@ -78,12 +91,7 @@ export default function (option, isTheme) {
                 && set(seriesOpt, 'itemStyle.normal.color', pointerColor);
         }
 
-        for (var i = 0; i < COMPATITABLE_SERIES.length; i++) {
-            if (COMPATITABLE_SERIES[i] === seriesOpt.type) {
-                compatLayoutProperties(seriesOpt);
-                break;
-            }
-        }
+        compatLayoutProperties(seriesOpt);
     });
 
     // dataRange has changed to visualMap

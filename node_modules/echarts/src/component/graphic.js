@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import {__DEV__} from '../config';
 import * as echarts from '../echarts';
 import * as zrUtil from 'zrender/src/core/util';
@@ -67,6 +86,8 @@ var GraphicModel = echarts.extendComponentModel({
         //          This mode is similar to css behavior, which is useful when you
         //          want an element to be able to overflow its container. (Consider
         //          a rotated circle needs to be located in a corner.)
+        // info: custom info. enables user to mount some info on elements and use them
+        //      in event handlers. Update them only when user specified, otherwise, remain.
 
         // Note: elements is always behind its ancestors in this elements array.
         elements: [],
@@ -245,7 +266,7 @@ echarts.extendComponentView({
         }
         this._lastGraphicModel = graphicModel;
 
-        this._updateElements(graphicModel, api);
+        this._updateElements(graphicModel);
         this._relocate(graphicModel, api);
     },
 
@@ -254,9 +275,8 @@ echarts.extendComponentView({
      *
      * @private
      * @param {Object} graphicModel graphic model
-     * @param {module:echarts/ExtensionAPI} api extension API
      */
-    _updateElements: function (graphicModel, api) {
+    _updateElements: function (graphicModel) {
         var elOptionsToUpdate = graphicModel.useElOptionsToUpdate();
 
         if (!elOptionsToUpdate) {
@@ -274,9 +294,8 @@ echarts.extendComponentView({
             var parentId = elOption.parentId;
             var targetElParent = parentId != null ? elMap.get(parentId) : rootGroup;
 
-            if (elOption.type === 'text') {
-                var elOptionStyle = elOption.style;
-
+            var elOptionStyle = elOption.style;
+            if (elOption.type === 'text' && elOptionStyle) {
                 // In top/bottom mode, textVerticalAlign should not be used, which cause
                 // inaccurately locating.
                 if (elOption.hv && elOption.hv[1]) {
@@ -321,6 +340,7 @@ echarts.extendComponentView({
             if (el) {
                 el.__ecGraphicWidth = elOption.width;
                 el.__ecGraphicHeight = elOption.height;
+                setEventData(el, graphicModel, elOption);
             }
         });
     },
@@ -509,5 +529,23 @@ function setLayoutInfoToExist(existItem, newElOption) {
     if (existItem.type === 'group') {
         existItem.width == null && (existItem.width = newElOption.width = 0);
         existItem.height == null && (existItem.height = newElOption.height = 0);
+    }
+}
+
+function setEventData(el, graphicModel, elOption) {
+    var eventData = el.eventData;
+    // Simple optimize for large amount of elements that no need event.
+    if (!el.silent && !el.ignore && !eventData) {
+        eventData = el.eventData = {
+            componentType: 'graphic',
+            componentIndex: graphicModel.componentIndex,
+            name: el.name
+        };
+    }
+
+    // `elOption.info` enables user to mount some info on
+    // elements and use them in event handlers.
+    if (eventData) {
+        eventData.info = el.info;
     }
 }

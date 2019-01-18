@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import SeriesModel from '../../model/Series';
 import createListFromArray from '../helper/createListFromArray';
 
@@ -6,14 +25,14 @@ export default SeriesModel.extend({
     type: 'series.__base_bar__',
 
     getInitialData: function (option, ecModel) {
-        return createListFromArray(option.data, this, ecModel);
+        return createListFromArray(this.getSource(), this);
     },
 
     getMarkerPosition: function (value) {
         var coordSys = this.coordinateSystem;
         if (coordSys) {
             // PENDING if clamp ?
-            var pt = coordSys.dataToPoint(value, true);
+            var pt = coordSys.dataToPoint(coordSys.clampData(value));
             var data = this.getData();
             var offset = data.getLayout('offset');
             var size = data.getLayout('size');
@@ -41,6 +60,11 @@ export default SeriesModel.extend({
         barMinAngle: 0,
         // cursor: null,
 
+        large: false,
+        largeThreshold: 400,
+        progressive: 3e3,
+        progressiveChunkMode: 'mod',
+
         // barMaxWidth: null,
         // 默认自适应
         // barWidth: null,
@@ -49,15 +73,9 @@ export default SeriesModel.extend({
         // 类目间柱形距离，默认为类目间距的20%，可设固定值
         // barCategoryGap: '20%',
         // label: {
-        //     normal: {
-        //         show: false
-        //     }
+        //      show: false
         // },
-        itemStyle: {
-            // normal: {
-                // color: '各异'
-            // },
-            // emphasis: {}
-        }
+        itemStyle: {},
+        emphasis: {}
     }
 });

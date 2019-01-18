@@ -65,7 +65,6 @@ export class DailyRecordService{
             this.arrayHint.push([this.convertDate(element.recordDate), element.humidity_int_max]);
             this.arrayHealth.push([element.recordDate,element.health_status,element.health_trend]);
         })
-        console.log(this.dailyRecords);
         this.mergeOptionCalendarHealth = {
             series:{
                 data:this.arrayHealth
@@ -115,7 +114,7 @@ export class DailyRecordService{
             (data)=>{
                 if(data[0]!= null){
                     this.dailyRecords = data;
-
+                    console.log(this.dailyRecords);
                 }
             },
             (err)=>{

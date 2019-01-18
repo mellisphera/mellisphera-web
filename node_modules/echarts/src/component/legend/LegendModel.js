@@ -1,6 +1,26 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as echarts from '../../echarts';
 import * as zrUtil from 'zrender/src/core/util';
 import Model from '../../model/Model';
+import {isNameSpecified} from '../../util/model';
 
 var LegendModel = echarts.extendComponentModel({
 
@@ -54,7 +74,49 @@ var LegendModel = echarts.extendComponentModel({
     },
 
     _updateData: function (ecModel) {
-        var legendData = zrUtil.map(this.get('data') || [], function (dataItem) {
+        var potentialData = [];
+        var availableNames = [];
+
+        ecModel.eachRawSeries(function (seriesModel) {
+            var seriesName = seriesModel.name;
+            availableNames.push(seriesName);
+            var isPotential;
+
+            if (seriesModel.legendDataProvider) {
+                var data = seriesModel.legendDataProvider();
+                var names = data.mapArray(data.getName);
+
+                if (!ecModel.isSeriesFiltered(seriesModel)) {
+                    availableNames = availableNames.concat(names);
+                }
+
+                if (names.length) {
+                    potentialData = potentialData.concat(names);
+                }
+                else {
+                    isPotential = true;
+                }
+            }
+            else {
+                isPotential = true;
+            }
+
+            if (isPotential && isNameSpecified(seriesModel)) {
+                potentialData.push(seriesModel.name);
+            }
+        });
+
+        /**
+         * @type {Array.<string>}
+         * @private
+         */
+        this._availableNames = availableNames;
+
+        // If legend.data not specified in option, use availableNames as data,
+        // which is convinient for user preparing option.
+        var rawData = this.get('data') || potentialData;
+
+        var legendData = zrUtil.map(rawData, function (dataItem) {
             // Can be string or number
             if (typeof dataItem === 'string' || typeof dataItem === 'number') {
                 dataItem = {
@@ -63,22 +125,12 @@ var LegendModel = echarts.extendComponentModel({
             }
             return new Model(dataItem, this, this.ecModel);
         }, this);
-        this._data = legendData;
 
-        var availableNames = zrUtil.map(ecModel.getSeries(), function (series) {
-            return series.name;
-        });
-        ecModel.eachSeries(function (seriesModel) {
-            if (seriesModel.legendDataProvider) {
-                var data = seriesModel.legendDataProvider();
-                availableNames = availableNames.concat(data.mapArray(data.getName));
-            }
-        });
         /**
-         * @type {Array.<string>}
+         * @type {Array.<module:echarts/model/Model>}
          * @private
          */
-        this._availableNames = availableNames;
+        this._data = legendData;
     },
 
     /**

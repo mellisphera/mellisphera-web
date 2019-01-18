@@ -7,7 +7,7 @@ import { EChartOption } from 'echarts';
 export class GrapheReserveMielService {
 
   constructor() { }
-  option: EChartOption = {
+  option = {
     title: {
         text: 'Honey Stock',
         left: 'center',

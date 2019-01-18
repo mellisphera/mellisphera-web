@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as zrUtil from 'zrender/src/core/util';
 import SymbolDraw from '../../chart/helper/SymbolDraw';
 import * as numberUtil from '../../util/number';
@@ -45,7 +64,17 @@ export default MarkerView.extend({
 
     type: 'markPoint',
 
-    updateLayout: function (markPointModel, ecModel, api) {
+    // updateLayout: function (markPointModel, ecModel, api) {
+    //     ecModel.eachSeries(function (seriesModel) {
+    //         var mpModel = seriesModel.markPointModel;
+    //         if (mpModel) {
+    //             updateMarkerLayout(mpModel.getData(), seriesModel, api);
+    //             this.markerGroupMap.get(seriesModel.id).updateLayout(mpModel);
+    //         }
+    //     }, this);
+    // },
+
+    updateTransform: function (markPointModel, ecModel, api) {
         ecModel.eachSeries(function (seriesModel) {
             var mpModel = seriesModel.markPointModel;
             if (mpModel) {
@@ -82,7 +111,7 @@ export default MarkerView.extend({
             }
             mpData.setItemVisual(idx, {
                 symbolSize: symbolSize,
-                color: itemModel.get('itemStyle.normal.color')
+                color: itemModel.get('itemStyle.color')
                     || seriesData.getVisual('color'),
                 symbol: itemModel.getShallow('symbol')
             });
@@ -117,14 +146,14 @@ function createList(coordSys, seriesModel, mpModel) {
     if (coordSys) {
         coordDimsInfos = zrUtil.map(coordSys && coordSys.dimensions, function (coordDim) {
             var info = seriesModel.getData().getDimensionInfo(
-                seriesModel.coordDimToDataDim(coordDim)[0]
-            ) || {}; // In map series data don't have lng and lat dimension. Fallback to same with coordSys
-            info.name = coordDim;
-            return info;
+                seriesModel.getData().mapDimension(coordDim)
+            ) || {};
+            // In map series data don't have lng and lat dimension. Fallback to same with coordSys
+            return zrUtil.defaults({name: coordDim}, info);
         });
     }
     else {
-        coordDimsInfos =[{
+        coordDimsInfos = [{
             name: 'value',
             type: 'float'
         }];
