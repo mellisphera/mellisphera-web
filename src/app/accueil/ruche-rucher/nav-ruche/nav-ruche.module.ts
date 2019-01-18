@@ -29,11 +29,7 @@ import {  EChartOption } from 'echarts';
 
   ],
   declarations: [
-    DailyComponent,
-    HourlyComponent,
-    StockComponent,
-    HealthComponent,
-    ObservationComponent
+
   ],
   providers:[
     CalendrierPoidsService,
@@ -43,9 +39,6 @@ import {  EChartOption } from 'echarts';
     GraphRecordService,
     RecordService,
     CalendrierHealthService
-
-    
-
   ]
 })
 export class NavRucheModule { }

@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import {retrieve, defaults, extend, each} from 'zrender/src/core/util';
 import * as formatUtil from '../../util/format';
 import * as graphic from '../../util/graphic';
@@ -12,7 +31,8 @@ var PI = Math.PI;
 
 function makeAxisEventDataBase(axisModel) {
     var eventData = {
-        componentType: axisModel.mainType
+        componentType: axisModel.mainType,
+        componentIndex: axisModel.componentIndex
     };
     eventData[axisModel.mainType + 'Index'] = axisModel.componentIndex;
     return eventData;
@@ -53,8 +73,6 @@ function makeAxisEventDataBase(axisModel) {
  * @param {string} [opt.axisName] default get from axisModel.
  * @param {number} [opt.axisNameAvailableWidth]
  * @param {number} [opt.labelRotate] by degree, default get from axisModel.
- * @param {number} [opt.labelInterval] Default label interval when label
- *                                     interval from model is null or 'auto'.
  * @param {number} [opt.strokeContainThreshold] Default label interval when label
  * @param {number} [opt.nameTruncateMaxWidth]
  */
@@ -169,6 +187,11 @@ var builders = {
         var arrows = axisModel.get('axisLine.symbol');
         var arrowSize = axisModel.get('axisLine.symbolSize');
 
+        var arrowOffset = axisModel.get('axisLine.symbolOffset') || 0;
+        if (typeof arrowOffset === 'number') {
+            arrowOffset = [arrowOffset, arrowOffset];
+        }
+
         if (arrows != null) {
             if (typeof arrows === 'string') {
                 // Use the same arrow for start and end point
@@ -184,10 +207,16 @@ var builders = {
             var symbolWidth = arrowSize[0];
             var symbolHeight = arrowSize[1];
 
-            each([
-                [opt.rotation + Math.PI / 2, pt1],
-                [opt.rotation - Math.PI / 2, pt2]
-            ], function (item, index) {
+            each([{
+                rotate: opt.rotation + Math.PI / 2,
+                offset: arrowOffset[0],
+                r: 0
+            }, {
+                rotate: opt.rotation - Math.PI / 2,
+                offset: arrowOffset[1],
+                r: Math.sqrt((pt1[0] - pt2[0]) * (pt1[0] - pt2[0])
+                    + (pt1[1] - pt2[1]) * (pt1[1] - pt2[1]))
+            }], function (point, index) {
                 if (arrows[index] !== 'none' && arrows[index] != null) {
                     var symbol = createSymbol(
                         arrows[index],
@@ -198,9 +227,17 @@ var builders = {
                         lineStyle.stroke,
                         true
                     );
+
+                    // Calculate arrow position with offset
+                    var r = point.r + point.offset;
+                    var pos = [
+                        pt1[0] + r * Math.cos(opt.rotation),
+                        pt1[1] - r * Math.sin(opt.rotation)
+                    ];
+
                     symbol.attr({
-                        rotation: item[0],
-                        position: item[1],
+                        rotation: point.rotate,
+                        position: pos,
                         silent: true
                     });
                     this.group.add(symbol);
@@ -523,48 +560,6 @@ function isNameLocationCenter(nameLocation) {
     return nameLocation === 'middle' || nameLocation === 'center';
 }
 
-/**
- * @static
- */
-var ifIgnoreOnTick = AxisBuilder.ifIgnoreOnTick = function (
-    axis,
-    i,
-    interval,
-    ticksCnt,
-    showMinLabel,
-    showMaxLabel
-) {
-    if (i === 0 && showMinLabel || i === ticksCnt - 1 && showMaxLabel) {
-        return false;
-    }
-
-    // FIXME
-    // Have not consider label overlap (if label is too long) yet.
-
-    var rawTick;
-    var scale = axis.scale;
-    return scale.type === 'ordinal'
-        && (
-            typeof interval === 'function'
-                ? (
-                    rawTick = scale.getTicks()[i],
-                    !interval(rawTick, scale.getLabel(rawTick))
-                )
-                : i % (interval + 1)
-        );
-};
-
-/**
- * @static
- */
-var getInterval = AxisBuilder.getInterval = function (model, labelInterval) {
-    var interval = model.get('interval');
-    if (interval == null || interval == 'auto') {
-        interval = labelInterval;
-    }
-    return interval;
-};
-
 function buildAxisTick(axisBuilder, axisModel, opt) {
     var axis = axisModel.axis;
 
@@ -577,14 +572,7 @@ function buildAxisTick(axisBuilder, axisModel, opt) {
     var lineStyleModel = tickModel.getModel('lineStyle');
     var tickLen = tickModel.get('length');
 
-    var tickInterval = getInterval(tickModel, opt.labelInterval);
-    var ticksCoords = axis.getTicksCoords(tickModel.get('alignWithLabel'));
-    // FIXME
-    // Corresponds to ticksCoords ?
-    var ticks = axis.scale.getTicks();
-
-    var showMinLabel = axisModel.get('axisLabel.showMinLabel');
-    var showMaxLabel = axisModel.get('axisLabel.showMaxLabel');
+    var ticksCoords = axis.getTicksCoords();
 
     var pt1 = [];
     var pt2 = [];
@@ -592,17 +580,8 @@ function buildAxisTick(axisBuilder, axisModel, opt) {
 
     var tickEls = [];
 
-    var ticksCnt = ticksCoords.length;
-    for (var i = 0; i < ticksCnt; i++) {
-        // Only ordinal scale support tick interval
-        if (ifIgnoreOnTick(
-            axis, i, tickInterval, ticksCnt,
-            showMinLabel, showMaxLabel
-        )) {
-            continue;
-        }
-
-        var tickCoord = ticksCoords[i];
+    for (var i = 0; i < ticksCoords.length; i++) {
+        var tickCoord = ticksCoords[i].coord;
 
         pt1[0] = tickCoord;
         pt1[1] = 0;
@@ -616,7 +595,7 @@ function buildAxisTick(axisBuilder, axisModel, opt) {
         // Tick line, Not use group transform to have better line draw
         var tickEl = new graphic.Line(graphic.subPixelOptimizeLine({
             // Id for animation
-            anid: 'tick_' + ticks[i],
+            anid: 'tick_' + ticksCoords[i].tickValue,
 
             shape: {
                 x1: pt1[0],
@@ -650,8 +629,7 @@ function buildAxisLabel(axisBuilder, axisModel, opt) {
 
     var labelModel = axisModel.getModel('axisLabel');
     var labelMargin = labelModel.get('margin');
-    var ticks = axis.scale.getTicks();
-    var labels = axisModel.getFormattedLabels();
+    var labels = axis.getViewLabels();
 
     // Special label rotate.
     var labelRotation = (
@@ -659,43 +637,36 @@ function buildAxisLabel(axisBuilder, axisModel, opt) {
     ) * PI / 180;
 
     var labelLayout = innerTextLayout(opt.rotation, labelRotation, opt.labelDirection);
-    var categoryData = axisModel.get('data');
+    var rawCategoryData = axisModel.getCategories(true);
 
     var labelEls = [];
     var silent = isSilent(axisModel);
     var triggerEvent = axisModel.get('triggerEvent');
 
-    var showMinLabel = axisModel.get('axisLabel.showMinLabel');
-    var showMaxLabel = axisModel.get('axisLabel.showMaxLabel');
-
-    each(ticks, function (tickVal, index) {
-        if (ifIgnoreOnTick(
-            axis, index, opt.labelInterval, ticks.length,
-            showMinLabel, showMaxLabel
-        )) {
-                return;
-        }
+    each(labels, function (labelItem, index) {
+        var tickValue = labelItem.tickValue;
+        var formattedLabel = labelItem.formattedLabel;
+        var rawLabel = labelItem.rawLabel;
 
         var itemLabelModel = labelModel;
-        if (categoryData && categoryData[tickVal] && categoryData[tickVal].textStyle) {
+        if (rawCategoryData && rawCategoryData[tickValue] && rawCategoryData[tickValue].textStyle) {
             itemLabelModel = new Model(
-                categoryData[tickVal].textStyle, labelModel, axisModel.ecModel
+                rawCategoryData[tickValue].textStyle, labelModel, axisModel.ecModel
             );
         }
 
         var textColor = itemLabelModel.getTextColor()
             || axisModel.get('axisLine.lineStyle.color');
 
-        var tickCoord = axis.dataToCoord(tickVal);
+        var tickCoord = axis.dataToCoord(tickValue);
         var pos = [
             tickCoord,
             opt.labelOffset + opt.labelDirection * labelMargin
         ];
-        var labelStr = axis.scale.getLabel(tickVal);
 
         var textEl = new graphic.Text({
             // Id for animation
-            anid: 'label_' + tickVal,
+            anid: 'label_' + tickValue,
             position: pos,
             rotation: labelLayout.rotation,
             silent: silent,
@@ -703,7 +674,7 @@ function buildAxisLabel(axisBuilder, axisModel, opt) {
         });
 
         graphic.setTextStyle(textEl.style, itemLabelModel, {
-            text: labels[index],
+            text: formattedLabel,
             textAlign: itemLabelModel.getShallow('align', true)
                 || labelLayout.textAlign,
             textVerticalAlign: itemLabelModel.getShallow('verticalAlign', true)
@@ -714,11 +685,15 @@ function buildAxisLabel(axisBuilder, axisModel, opt) {
                     // (1) In category axis with data zoom, tick is not the original
                     // index of axis.data. So tick should not be exposed to user
                     // in category axis.
-                    // (2) Compatible with previous version, which always returns labelStr.
-                    // But in interval scale labelStr is like '223,445', which maked
-                    // user repalce ','. So we modify it to return original val but remain
+                    // (2) Compatible with previous version, which always use formatted label as
+                    // input. But in interval scale the formatted label is like '223,445', which
+                    // maked user repalce ','. So we modify it to return original val but remain
                     // it as 'string' to avoid error in replacing.
-                    axis.type === 'category' ? labelStr : axis.type === 'value' ? tickVal + '' : tickVal,
+                    axis.type === 'category'
+                        ? rawLabel
+                        : axis.type === 'value'
+                        ? tickValue + ''
+                        : tickValue,
                     index
                 )
                 : textColor
@@ -728,7 +703,7 @@ function buildAxisLabel(axisBuilder, axisModel, opt) {
         if (triggerEvent) {
             textEl.eventData = makeAxisEventDataBase(axisModel);
             textEl.eventData.targetType = 'axisLabel';
-            textEl.eventData.value = labelStr;
+            textEl.eventData.value = rawLabel;
         }
 
         // FIXME

@@ -34,17 +34,17 @@ import { CalendrierTempIntService } from './daily/service/calendrier-temp-int.se
 })
 
 export class RucheDetailComponent implements OnInit {
-   
+
     rucheId : string;
     rucheName : string;
     message="";
     compteurHive : number;
     currentTab : string;
     public img : string;
+    private timerSubscription: Subscription;
 
-
-    constructor(private activatedRoute : ActivatedRoute, 
-        private route : Router, 
+    constructor(private activatedRoute : ActivatedRoute,
+        private route : Router,
         public rucheService : RucheService,
         private observationService : ObservationService,
         private dailyRecordThService : DailyRecordService,
@@ -86,7 +86,7 @@ export class RucheDetailComponent implements OnInit {
             this.rucheName = this.rucheService.ruche.name
             this.exeData();
         }
-        
+
     }
 
     nextHive(){
@@ -104,33 +104,27 @@ export class RucheDetailComponent implements OnInit {
         this.currentTab = event.target.innerText.toLowerCase();
         console.log(this.currentTab);
         this.exeData();
+
+
     }
     exeData(){
         if(this.currentTab.indexOf("notes")!=-1){
-            console.log("notes");
-            this.observationService.getObservationByIdHive(this.rucheService.ruche.id);
+          this.observationService.getObservationByIdHive(this.rucheService.ruche.id);
         }
         else if(this.currentTab.indexOf("daily")!=-1){
-            console.log("daily");
-            this.dailyRecordThService.getByIdHive(this.rucheId);
-            this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
+          this.dailyRecordThService.getByIdHive(this.rucheId);
+          this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
         }
-        else if(this.currentTab.indexOf('stock')!=-1){
-            console.log("stock");
-            this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
-            this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheService.ruche.id);
-            console.log(this.dailyStockHoneyService.dailyStock);
+        else if(this.currentTab.indexOf("stock")!=-1){
+          this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
+          this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheService.ruche.id);
         }
-        else if(this.currentTab.indexOf('hourly')!=-1){
-            console.log("hourly");
-            this.recordService.getRecordByIdHive(this.rucheService.ruche.id);
+        else if(this.currentTab.indexOf("hourly")!=-1){
+          this.recordService.getRecordByIdHive(this.rucheService.ruche.id);
         }
-        else if(this.currentTab.indexOf('health')!-1){
-            console.log("health");
-            this.dailyRecordThService.getByIdHive(this.rucheService.ruche.id);
+        else if(this.currentTab.indexOf("health")!=-1){
+          this.dailyRecordThService.getByIdHive(this.rucheService.ruche.id)
         }
     }
 
 }
-
-

@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 // TODO Better on polar
 
 import * as zrUtil from 'zrender/src/core/util';
@@ -57,8 +76,8 @@ function markAreaFilter(coordSys, item) {
         //  }
         // }
         if (
-            fromCoord && toCoord &&
-            (ifMarkLineHasOnlyDim(1, fromCoord, toCoord, coordSys)
+            fromCoord && toCoord
+            && (ifMarkLineHasOnlyDim(1, fromCoord, toCoord, coordSys)
             || ifMarkLineHasOnlyDim(0, fromCoord, toCoord, coordSys))
         ) {
             return true;
@@ -98,7 +117,9 @@ function getSingleMarkerEndPoint(data, idx, dims, seriesModel, api) {
         else {
             var x = data.get(dims[0], idx);
             var y = data.get(dims[1], idx);
-            point = coordSys.dataToPoint([x, y], true);
+            var pt = [x, y];
+            coordSys.clampData && coordSys.clampData(pt, pt);
+            point = coordSys.dataToPoint(pt, true);
         }
         if (coordSys.type === 'cartesian2d') {
             var xAxis = coordSys.getAxis('x');
@@ -131,7 +152,25 @@ MarkerView.extend({
 
     type: 'markArea',
 
-    updateLayout: function (markAreaModel, ecModel, api) {
+    // updateLayout: function (markAreaModel, ecModel, api) {
+    //     ecModel.eachSeries(function (seriesModel) {
+    //         var maModel = seriesModel.markAreaModel;
+    //         if (maModel) {
+    //             var areaData = maModel.getData();
+    //             areaData.each(function (idx) {
+    //                 var points = zrUtil.map(dimPermutations, function (dim) {
+    //                     return getSingleMarkerEndPoint(areaData, idx, dim, seriesModel, api);
+    //                 });
+    //                 // Layout
+    //                 areaData.setItemLayout(idx, points);
+    //                 var el = areaData.getItemGraphicEl(idx);
+    //                 el.setShape('points', points);
+    //             });
+    //         }
+    //     }, this);
+    // },
+
+    updateTransform: function (markAreaModel, ecModel, api) {
         ecModel.eachSeries(function (seriesModel) {
             var maModel = seriesModel.markAreaModel;
             if (maModel) {
@@ -151,12 +190,12 @@ MarkerView.extend({
 
     renderSeries: function (seriesModel, maModel, ecModel, api) {
         var coordSys = seriesModel.coordinateSystem;
-        var seriesName = seriesModel.name;
+        var seriesId = seriesModel.id;
         var seriesData = seriesModel.getData();
 
         var areaGroupMap = this.markerGroupMap;
-        var polygonGroup = areaGroupMap.get(seriesName)
-            || areaGroupMap.set(seriesName, {group: new graphic.Group()});
+        var polygonGroup = areaGroupMap.get(seriesId)
+            || areaGroupMap.set(seriesId, {group: new graphic.Group()});
 
         this.group.add(polygonGroup.group);
         polygonGroup.__keep = true;
@@ -208,12 +247,12 @@ MarkerView.extend({
 
         areaData.eachItemGraphicEl(function (polygon, idx) {
             var itemModel = areaData.getItemModel(idx);
-            var labelModel = itemModel.getModel('label.normal');
-            var labelHoverModel = itemModel.getModel('label.emphasis');
+            var labelModel = itemModel.getModel('label');
+            var labelHoverModel = itemModel.getModel('emphasis.label');
             var color = areaData.getItemVisual(idx, 'color');
             polygon.useStyle(
                 zrUtil.defaults(
-                    itemModel.getModel('itemStyle.normal').getItemStyle(),
+                    itemModel.getModel('itemStyle').getItemStyle(),
                     {
                         fill: colorUtil.modifyAlpha(color, 0.4),
                         stroke: color
@@ -221,7 +260,7 @@ MarkerView.extend({
                 )
             );
 
-            polygon.hoverStyle = itemModel.getModel('itemStyle.emphasis').getItemStyle();
+            polygon.hoverStyle = itemModel.getModel('emphasis.itemStyle').getItemStyle();
 
             graphic.setLabelStyle(
                 polygon.style, polygon.hoverStyle, labelModel, labelHoverModel,
@@ -258,11 +297,12 @@ function createList(coordSys, seriesModel, maModel) {
     var dims = ['x0', 'y0', 'x1', 'y1'];
     if (coordSys) {
         coordDimsInfos = zrUtil.map(coordSys && coordSys.dimensions, function (coordDim) {
-            var info = seriesModel.getData().getDimensionInfo(
-                seriesModel.coordDimToDataDim(coordDim)[0]
-            ) || {}; // In map series data don't have lng and lat dimension. Fallback to same with coordSys
-            info.name = coordDim;
-            return info;
+            var data = seriesModel.getData();
+            var info = data.getDimensionInfo(
+                data.mapDimension(coordDim)
+            ) || {};
+            // In map series data don't have lng and lat dimension. Fallback to same with coordSys
+            return zrUtil.defaults({name: coordDim}, info);
         });
         areaData = new List(zrUtil.map(dims, function (dim, idx) {
             return {
@@ -272,7 +312,7 @@ function createList(coordSys, seriesModel, maModel) {
         }), maModel);
     }
     else {
-        coordDimsInfos =[{
+        coordDimsInfos = [{
             name: 'value',
             type: 'float'
         }];

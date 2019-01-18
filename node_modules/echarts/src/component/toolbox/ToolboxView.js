@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as echarts from '../../echarts';
 import * as zrUtil from 'zrender/src/core/util';
 import * as textContain from 'zrender/src/contain/text';
@@ -100,6 +119,7 @@ export default echarts.extendComponentView({
 
         function createIconPaths(featureModel, feature, featureName) {
             var iconStyleModel = featureModel.getModel('iconStyle');
+            var iconStyleEmphasisModel = featureModel.getModel('emphasis.iconStyle');
 
             // If one feature has mutiple icon. they are orginaized as
             // {
@@ -134,8 +154,8 @@ export default echarts.extendComponentView({
                         height: itemSize
                     }
                 );
-                path.setStyle(iconStyleModel.getModel('normal').getItemStyle());
-                path.hoverStyle = iconStyleModel.getModel('emphasis').getItemStyle();
+                path.setStyle(iconStyleModel.getItemStyle());
+                path.hoverStyle = iconStyleEmphasisModel.getItemStyle();
 
                 graphic.setHoverStyle(path);
 
@@ -143,7 +163,7 @@ export default echarts.extendComponentView({
                     path.__title = titles[iconName];
                     path.on('mouseover', function () {
                             // Should not reuse above hoverStyle, which might be modified.
-                            var hoverStyle = iconStyleModel.getModel('emphasis').getItemStyle();
+                            var hoverStyle = iconStyleEmphasisModel.getItemStyle();
                             path.setStyle({
                                 text: titles[iconName],
                                 textPosition: hoverStyle.textPosition || 'bottom',
@@ -191,7 +211,7 @@ export default echarts.extendComponentView({
                     needPutOnTop = true;
                 }
                 var topOffset = needPutOnTop ? (-5 - rect.height) : (itemSize + 8);
-                if (offsetX + rect.width /  2 > api.getWidth()) {
+                if (offsetX + rect.width / 2 > api.getWidth()) {
                     hoverStyle.textPosition = ['100%', topOffset];
                     hoverStyle.textAlign = 'right';
                 }
@@ -209,11 +229,11 @@ export default echarts.extendComponentView({
         });
     },
 
-    updateLayout: function (toolboxModel, ecModel, api, payload) {
-        zrUtil.each(this._features, function (feature) {
-            feature.updateLayout && feature.updateLayout(feature.model, ecModel, api, payload);
-        });
-    },
+    // updateLayout: function (toolboxModel, ecModel, api, payload) {
+    //     zrUtil.each(this._features, function (feature) {
+    //         feature.updateLayout && feature.updateLayout(feature.model, ecModel, api, payload);
+    //     });
+    // },
 
     remove: function (ecModel, api) {
         zrUtil.each(this._features, function (feature) {

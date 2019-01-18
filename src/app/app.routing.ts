@@ -15,6 +15,7 @@ import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.flor
 import { DispositionRucheComponent } from './accueil/disposition-ruche/disposition-ruche.component';
 import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
+import { RucheDetailComponent } from './accueil/ruche-rucher/ruche-detail/ruche.detail.component';
 
 const routes: Routes =[
    /* { path: '',             component: LoginComponent },  
@@ -36,10 +37,7 @@ const routes: Routes =[
     { path: 'ruche-et-rucher',  canActivate : [AuthGuard], component: RucheRucherComponent },
     { path: 'capteurs',         canActivate : [AuthGuard], component: CapteurComponent },
     { path: 'meteo',            canActivate : [AuthGuard], component: MeteoComponent },
-    { path: 'ruche-detail/:id/:name',
-      loadChildren : "./accueil/ruche-rucher/nav-ruche/nav-ruche.module#NavRucheModule",
-      canLoad : [AuthGuard],
-    },
+    { path: 'ruche-detail/:id/:name', canActivate : [AuthGuard], component : RucheDetailComponent},
     { path: 'rapport',          canActivate : [AuthGuard], component: RapportComponent},
     { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
     { path: 'position-Ruche', canActivate : [AuthGuard], component: DispositionRucheComponent},

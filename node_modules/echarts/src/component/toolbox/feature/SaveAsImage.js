@@ -1,3 +1,24 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
+/* global Uint8Array */
+
 import env from 'zrender/src/core/env';
 import lang from '../../../lang';
 import * as featureManager from '../featureManager';
@@ -55,7 +76,7 @@ proto.onclick = function (ecModel, api) {
             var bstr = atob(url.split(',')[1]);
             var n = bstr.length;
             var u8arr = new Uint8Array(n);
-            while(n--) {
+            while (n--) {
                 u8arr[n] = bstr.charCodeAt(n);
             }
             var blob = new Blob([u8arr]);
@@ -63,10 +84,10 @@ proto.onclick = function (ecModel, api) {
         }
         else {
             var lang = model.get('lang');
-            var html = '' +
-                '<body style="margin:0;">' +
-                '<img src="' + url + '" style="max-width:100%;" title="' + ((lang && lang[0]) || '') + '" />' +
-                '</body>';
+            var html = ''
+                + '<body style="margin:0;">'
+                + '<img src="' + url + '" style="max-width:100%;" title="' + ((lang && lang[0]) || '') + '" />'
+                + '</body>';
             var tab = window.open();
             tab.document.write(html);
         }
