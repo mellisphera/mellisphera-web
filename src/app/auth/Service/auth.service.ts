@@ -39,23 +39,24 @@ export class AuthService {
               }
 
   signIn() {
-    this.loginObs = this.http.post<JwtResponse>(CONFIG.API_AUTH,this.login,httpOptions);
+    this.loginObs = this.http.post<User>(CONFIG.URL,this.login,httpOptions);
     this.loginObs.subscribe(
       (data)=>{
-        this.jwtReponse = data;
-        console.log(this.jwtReponse);
-        this.tokenService.saveToken(this.jwtReponse.accessToken);
-        this.tokenService.saveAuthorities(this.jwtReponse.authorities);
-        this.login.username = this.jwtReponse.username  
+        console.log(data);
+        this.user = data;
+        //this.login = this.user.login;
+        console.log(this.user);
         this.connexionStatus.next(data);
-        this.isAuthenticated = window.sessionStorage.getItem("TOKEN_KEY") ? true : false;
+        this.isAuthenticated = this.user.id != null? true : false;
         sessionStorage.setItem("connexion",JSON.stringify(this.isAuthenticated));
+        console.log(this.isAuthenticated);
         this.errLogin = !this.isAuthenticated;
+        console.log(!this.isAuthenticated);
         if(this.isAuthenticated){
-          this.tokenService.testRequete();
           this.lastConnection = new Date(data);
-          console.log(sessionStorage.getItem("connexion") == "true"); 
-          sessionStorage.setItem("currentUser",JSON.stringify(this.login));
+          console.log(sessionStorage.getItem("connexion") == "true");
+
+          sessionStorage.setItem("currentUser",JSON.stringify(this.user.login));
           this.router.navigate(['/position-Ruche']);
         }
       },
@@ -73,25 +74,25 @@ export class AuthService {
         this.jwtReponse = data;
         this.tokenService.saveToken(this.jwtReponse.accessToken);
         this.tokenService.saveAuthorities(this.jwtReponse.authorities);
-        this.login.username = this.jwtReponse.username  
+        this.login.username = this.jwtReponse.username
         this.connexionStatus.next(data);
         this.isAuthenticated = window.sessionStorage.getItem("TOKEN_KEY") ? true : false;
         sessionStorage.setItem("connexion",JSON.stringify(this.isAuthenticated));
         this.errLogin = !this.isAuthenticated;
         if(this.isAuthenticated){
           this.lastConnection = new Date(data);
-          console.log(sessionStorage.getItem("connexion") == "true"); 
-          
+          console.log(sessionStorage.getItem("connexion") == "true");
+
           sessionStorage.setItem("currentUser",JSON.stringify(this.login));
           this.router.navigate(['/position-Ruche']);
         }
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
         ### SANS TOKEN ###
 
         console.log(data);
@@ -106,15 +107,12 @@ export class AuthService {
         console.log(!this.isAuthenticated);
         if(this.isAuthenticated){
           this.lastConnection = new Date(data);
-          console.log(sessionStorage.getItem("connexion") == "true"); 
-          
+          console.log(sessionStorage.getItem("connexion") == "true");
+
           sessionStorage.setItem("currentUser",JSON.stringify(this.user.login));
           this.router.navigate(['/position-Ruche']);
-        
-        
-        
-        
+
+
+
+
         */
-
-
-        
