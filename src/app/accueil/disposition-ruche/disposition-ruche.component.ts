@@ -144,7 +144,7 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
 
     deplacement[0] = parseInt(deplacement[0].slice(0,deplacement[0].length-2));
     deplacement[1] = parseInt(deplacement[1].slice(0,deplacement[1].length-2));
-
+    console.log(deplacement);
     this.position.x = ''+(parseInt(left+deplacement[0]) *100) / widthcontainer;
     this.position.y  =''+(parseInt(top+deplacement[1]) *100) / heightcontainer;
     if(parseInt(this.position.x) > 99 || parseInt(this.position.x) < 0){ this.position.x = ''+50;
