@@ -130,7 +130,7 @@ export class RucheService {
   }
 
   findRucheById(idHive : string, navHive : boolean = false, callback?){
-    this.ruches.forEach(element => {
+    this.ruchesAllApiary.forEach(element => {
       if(element.id == idHive){
         if(navHive){
           this.ruche = element

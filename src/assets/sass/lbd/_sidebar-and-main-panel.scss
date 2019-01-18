@@ -238,7 +238,7 @@
     &[data-color="orange"]:after{
         @include icon-gradient($new-orange, $orange-color-bottom);
     }
-    &[data-color="blue"]:after{
+    &[data-color="red"]:after{
         @include icon-gradient($new-red, $red-color-bottom);
     }
     &[data-color="purple"]:after{
