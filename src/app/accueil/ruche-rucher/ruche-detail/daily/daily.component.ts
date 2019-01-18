@@ -22,9 +22,9 @@ export class DailyComponent implements OnInit {
     private rucheService : RucheService) { }
 
   ngOnInit() {
-    this.rucheId = this.activatedRoute.snapshot.params.id;
+    /*this.rucheId = this.activatedRoute.snapshot.params.id;
     this.dailyRecordThService.getByIdHive(this.rucheId);
-    this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
+    this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);*/
   }
 
 }

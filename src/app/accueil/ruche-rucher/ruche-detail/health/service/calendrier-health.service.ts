@@ -110,7 +110,6 @@ export class CalendrierHealthService {
             return;
         }
         //img = CONFIG.URL_FRONT+'/assets/icons/'+this.getStatus(api.value(1),api.value(2));
-        console.log(api.value(0));
         switch (api.value(1)){
             case 'statusA':
                 if(api.value(2) == "Fluctuation"){

@@ -25,10 +25,10 @@ export class StockComponent implements OnInit, OnDestroy {
     private rucheService : RucheService) { }
 
   ngOnInit() {
-    this.rucheId = this.activatedRoute.snapshot.params.id;
+    /*this.rucheId = this.activatedRoute.snapshot.params.id;
     this.rucheName = this.activatedRoute.snapshot.params.name;
     this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
-    this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheService.ruche.id);
+    this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheService.ruche.id);*/
   }
 
   receiveMessage($event){

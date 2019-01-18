@@ -25,6 +25,7 @@ import { RucheService } from '../../disposition-ruche/Service/ruche.service';
 import { ObservationService } from './observation/service/observation.service';
 //import { CalendrierHealthService } from './service/health/calendrier-health.service';
 import { CONFIG } from '../../../../config';
+import { CalendrierTempIntService } from './daily/service/calendrier-temp-int.service';
 
 @Component({
   selector: 'app-ruche-detail',
@@ -32,12 +33,13 @@ import { CONFIG } from '../../../../config';
   styleUrls : ['./ruche.detail.component.scss']
 })
 
-export class RucheDetailComponent implements OnInit, OnDestroy {
+export class RucheDetailComponent implements OnInit {
    
     rucheId : string;
     rucheName : string;
     message="";
     compteurHive : number;
+    currentTab : string;
     public img : string;
     private timerSubscription: Subscription;
 
@@ -48,9 +50,11 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         private dailyRecordThService : DailyRecordService,
         private dailyRecordWservice : DailyRecordsWService,
         private dailyStockHoneyService : DailyStockHoneyService,
-        private recordService : RecordService){
+        private recordService : RecordService,
+        public calendrierTempInt : CalendrierTempIntService){
             this.rucheId = null;
             this.compteurHive = 0;
+            this.currentTab = 'notes';
             this.img = CONFIG.URL_FRONT+"assets/icons/next-button-4.png";
     }
 
@@ -61,11 +65,12 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             ()=>{},
             ()=>{},
             ()=>{
+                this.observationService.getObservationByIdHive(this.rucheId);
                 this.rucheService.findRucheById(this.rucheId,true);
                 this.compteurHive = this.rucheService.ruches.indexOf(this.rucheService.ruche);
             }
         )
-        this.route.navigate(['/ruche-detail/'+this.rucheId+'/'+this.rucheName+'/observation/'+this.rucheId+'/'+this.rucheName]);
+        //this.route.navigate(['/ruche-detail/'+this.rucheId+'/'+this.rucheName+'/observation/'+this.rucheId+'/'+this.rucheName]);
     }
 
 
@@ -94,12 +99,17 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.exeData();
     }
 
-    ngOnDestroy() {
-    }
 
+    onTab(event){
+        this.currentTab = event.target.innerText.toLowerCase();
+        console.log(this.currentTab);
+        this.exeData();
+        
+        
+    }
     exeData(){
-        switch (this.activatedRoute.snapshot['_urlSegment'].segments[3].path){
-            case 'observation':
+        switch (this.currentTab){
+            case 'notes':
                 this.observationService.getObservationByIdHive(this.rucheService.ruche.id);
                 break;
             case 'daily':
