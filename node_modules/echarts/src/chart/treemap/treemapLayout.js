@@ -1,28 +1,54 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
+/*
+* The treemap layout implementation references to the treemap
+* layout of d3.js (d3/src/layout/treemap.js in v3). The use of
+* the source code of this file is also subject to the terms
+* and consitions of its license (BSD-3Clause, see
+* <echarts/src/licenses/LICENSE-d3>).
+*/
+
 import * as zrUtil from 'zrender/src/core/util';
 import BoundingRect from 'zrender/src/core/BoundingRect';
 import {parsePercent, MAX_SAFE_INTEGER} from '../../util/number';
 import * as layout from '../../util/layout';
-import * as helper from './helper';
+import * as helper from '../helper/treeHelper';
 
 var mathMax = Math.max;
 var mathMin = Math.min;
 var retrieveValue = zrUtil.retrieve;
 var each = zrUtil.each;
 
-var PATH_BORDER_WIDTH = ['itemStyle', 'normal', 'borderWidth'];
-var PATH_GAP_WIDTH = ['itemStyle', 'normal', 'gapWidth'];
-var PATH_UPPER_LABEL_SHOW = ['upperLabel', 'normal', 'show'];
-var PATH_UPPER_LABEL_HEIGHT = ['upperLabel', 'normal', 'height'];
+var PATH_BORDER_WIDTH = ['itemStyle', 'borderWidth'];
+var PATH_GAP_WIDTH = ['itemStyle', 'gapWidth'];
+var PATH_UPPER_LABEL_SHOW = ['upperLabel', 'show'];
+var PATH_UPPER_LABEL_HEIGHT = ['upperLabel', 'height'];
 
 /**
  * @public
  */
-export default function (ecModel, api, payload) {
-    // Layout result in each node:
-    // {x, y, width, height, area, borderWidth}
-    var condition = {mainType: 'series', subType: 'treemap', query: payload};
-    ecModel.eachComponent(condition, function (seriesModel) {
-
+export default {
+    seriesType: 'treemap',
+    reset: function (seriesModel, ecModel, api, payload) {
+        // Layout result in each node:
+        // {x, y, width, height, area, borderWidth}
         var ecWidth = api.getWidth();
         var ecHeight = api.getHeight();
         var seriesOption = seriesModel.option;
@@ -47,7 +73,9 @@ export default function (ecModel, api, payload) {
 
         // Fetch payload info.
         var payloadType = payload && payload.type;
-        var targetInfo = helper.retrieveTargetInfo(payload, seriesModel);
+        var types = ['treemapZoomToNode', 'treemapRootToNode'];
+        var targetInfo = helper
+            .retrieveTargetInfo(payload, types, seriesModel);
         var rootRect = (payloadType === 'treemapRender' || payloadType === 'treemapMove')
             ? payload.rootRect : null;
         var viewRoot = seriesModel.getViewRoot();
@@ -118,13 +146,14 @@ export default function (ecModel, api, payload) {
             viewRoot,
             0
         );
-    });
-}
+    }
+};
 
 /**
  * Layout treemap with squarify algorithm.
  * @see https://graphics.ethz.ch/teaching/scivis_common/Literature/squarifiedTreeMaps.pdf
- * @see https://github.com/mbostock/d3/blob/master/src/layout/treemap.js
+ * The implementation references to the treemap layout of d3.js.
+ * See the license statement at the head of this file.
  *
  * @protected
  * @param {module:echarts/data/Tree~TreeNode} node
@@ -310,7 +339,7 @@ function sort(viewChildren, orderBy) {
     if (orderBy) {
         viewChildren.sort(function (a, b) {
             var diff = orderBy === 'asc'
-                ?  a.getValue() - b.getValue() : b.getValue() - a.getValue();
+                ? a.getValue() - b.getValue() : b.getValue() - a.getValue();
             return diff === 0
                 ? (orderBy === 'asc'
                     ? a.dataIndex - b.dataIndex : b.dataIndex - a.dataIndex

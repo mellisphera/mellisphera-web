@@ -1,4 +1,23 @@
-import List from '../../data/List';
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
+import createListSimply from '../helper/createListSimply';
 import SeriesModel from '../../model/Series';
 import * as zrUtil from 'zrender/src/core/util';
 
@@ -7,14 +26,12 @@ var GaugeSeries = SeriesModel.extend({
     type: 'series.gauge',
 
     getInitialData: function (option, ecModel) {
-        var list = new List(['value'], this);
         var dataOpt = option.data || [];
         if (!zrUtil.isArray(dataOpt)) {
             dataOpt = [dataOpt];
         }
-        // Only use the first data item
-        list.initData(dataOpt);
-        return list;
+        option.data = dataOpt;
+        return createListSimply(this, ['value']);
     },
 
     defaultOption: {
@@ -82,9 +99,7 @@ var GaugeSeries = SeriesModel.extend({
             width: 8
         },
         itemStyle: {
-            normal: {
-                color: 'auto'
-            }
+            color: 'auto'
         },
         title: {
             show: true,

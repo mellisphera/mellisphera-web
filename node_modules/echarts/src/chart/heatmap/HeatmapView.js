@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import {__DEV__} from '../../config';
 import * as echarts from '../../echarts';
 import * as graphic from '../../util/graphic';
@@ -77,9 +96,12 @@ export default echarts.extendChartView({
         }
 
         this.group.removeAll();
+
+        this._incrementalDisplayable = null;
+
         var coordSys = seriesModel.coordinateSystem;
         if (coordSys.type === 'cartesian2d' || coordSys.type === 'calendar') {
-            this._renderOnCartesianAndCalendar(coordSys, seriesModel, api);
+            this._renderOnCartesianAndCalendar(seriesModel, api, 0, seriesModel.getData().count());
         }
         else if (isGeoCoordSys(coordSys)) {
             this._renderOnGeo(
@@ -88,9 +110,22 @@ export default echarts.extendChartView({
         }
     },
 
-    dispose: function () {},
+    incrementalPrepareRender: function (seriesModel, ecModel, api) {
+        this.group.removeAll();
+    },
 
-    _renderOnCartesianAndCalendar: function (coordSys, seriesModel, api) {
+    incrementalRender: function (params, seriesModel, ecModel, api) {
+        var coordSys = seriesModel.coordinateSystem;
+        if (coordSys) {
+            this._renderOnCartesianAndCalendar(seriesModel, api, params.start, params.end, true);
+        }
+    },
+
+    _renderOnCartesianAndCalendar: function (seriesModel, api, start, end, incremental) {
+
+        var coordSys = seriesModel.coordinateSystem;
+        var width;
+        var height;
 
         if (coordSys.type === 'cartesian2d') {
             var xAxis = coordSys.getAxis('x');
@@ -105,42 +140,42 @@ export default echarts.extendChartView({
                 }
             }
 
-            var width = xAxis.getBandWidth();
-            var height = yAxis.getBandWidth();
-
+            width = xAxis.getBandWidth();
+            height = yAxis.getBandWidth();
         }
 
         var group = this.group;
         var data = seriesModel.getData();
 
-        var itemStyleQuery = 'itemStyle.normal';
-        var hoverItemStyleQuery = 'itemStyle.emphasis';
-        var labelQuery = 'label.normal';
-        var hoverLabelQuery = 'label.emphasis';
+        var itemStyleQuery = 'itemStyle';
+        var hoverItemStyleQuery = 'emphasis.itemStyle';
+        var labelQuery = 'label';
+        var hoverLabelQuery = 'emphasis.label';
         var style = seriesModel.getModel(itemStyleQuery).getItemStyle(['color']);
         var hoverStl = seriesModel.getModel(hoverItemStyleQuery).getItemStyle();
-        var labelModel = seriesModel.getModel('label.normal');
-        var hoverLabelModel = seriesModel.getModel('label.emphasis');
+        var labelModel = seriesModel.getModel(labelQuery);
+        var hoverLabelModel = seriesModel.getModel(hoverLabelQuery);
         var coordSysType = coordSys.type;
+
 
         var dataDims = coordSysType === 'cartesian2d'
             ? [
-                seriesModel.coordDimToDataDim('x')[0],
-                seriesModel.coordDimToDataDim('y')[0],
-                seriesModel.coordDimToDataDim('value')[0]
+                data.mapDimension('x'),
+                data.mapDimension('y'),
+                data.mapDimension('value')
             ]
             : [
-                seriesModel.coordDimToDataDim('time')[0],
-                seriesModel.coordDimToDataDim('value')[0]
+                data.mapDimension('time'),
+                data.mapDimension('value')
             ];
 
-        data.each(function (idx) {
+        for (var idx = start; idx < end; idx++) {
             var rect;
 
             if (coordSysType === 'cartesian2d') {
                 // Ignore empty data
                 if (isNaN(data.get(dataDims[2], idx))) {
-                    return;
+                    continue;
                 }
 
                 var point = coordSys.dataToPoint([
@@ -164,7 +199,7 @@ export default echarts.extendChartView({
             else {
                 // Ignore empty data
                 if (isNaN(data.get(dataDims[1], idx))) {
-                    return;
+                    continue;
                 }
 
                 rect = new graphic.Rect({
@@ -206,9 +241,16 @@ export default echarts.extendChartView({
             rect.setStyle(style);
             graphic.setHoverStyle(rect, data.hasItemOption ? hoverStl : zrUtil.extend({}, hoverStl));
 
+            rect.incremental = incremental;
+            // PENDING
+            if (incremental) {
+                // Rect must use hover layer if it's incremental.
+                rect.useHoverLayer = true;
+            }
+
             group.add(rect);
             data.setItemGraphicEl(idx, rect);
-        });
+        }
     },
 
     _renderOnGeo: function (geo, seriesModel, visualMapModel, api) {
@@ -226,7 +268,7 @@ export default echarts.extendChartView({
         hmLayer.maxOpacity = seriesModel.get('maxOpacity');
 
         var rect = geo.getViewRect().clone();
-        var roamTransform = geo.getRoamTransform().transform;
+        var roamTransform = geo.getRoamTransform();
         rect.applyTransform(roamTransform);
 
         // Clamp on viewport
@@ -237,7 +279,13 @@ export default echarts.extendChartView({
         var width = x2 - x;
         var height = y2 - y;
 
-        var points = data.mapArray(['lng', 'lat', 'value'], function (lng, lat, value) {
+        var dims = [
+            data.mapDimension('lng'),
+            data.mapDimension('lat'),
+            data.mapDimension('value')
+        ];
+
+        var points = data.mapArray(dims, function (lng, lat, value) {
             var pt = geo.dataToPoint([lng, lat]);
             pt[0] -= x;
             pt[1] -= y;
@@ -272,5 +320,7 @@ export default echarts.extendChartView({
             silent: true
         });
         this.group.add(img);
-    }
+    },
+
+    dispose: function () {}
 });

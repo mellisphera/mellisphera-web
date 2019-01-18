@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 
 import {parsePercent, linearMap} from '../../util/number';
 import labelLayout from './labelLayout';
@@ -8,6 +27,9 @@ var RADIAN = Math.PI / 180;
 
 export default function (seriesType, ecModel, api, payload) {
     ecModel.eachSeriesByType(seriesType, function (seriesModel) {
+        var data = seriesModel.getData();
+        var valueDim = data.mapDimension('value');
+
         var center = seriesModel.get('center');
         var radius = seriesModel.get('radius');
 
@@ -26,18 +48,16 @@ export default function (seriesType, ecModel, api, payload) {
         var r0 = parsePercent(radius[0], size / 2);
         var r = parsePercent(radius[1], size / 2);
 
-        var data = seriesModel.getData();
-
         var startAngle = -seriesModel.get('startAngle') * RADIAN;
 
         var minAngle = seriesModel.get('minAngle') * RADIAN;
 
         var validDataCount = 0;
-        data.each('value', function (value) {
+        data.each(valueDim, function (value) {
             !isNaN(value) && validDataCount++;
         });
 
-        var sum = data.getSum('value');
+        var sum = data.getSum(valueDim);
         // Sum may be 0
         var unitRadian = Math.PI / (sum || validDataCount) * 2;
 
@@ -47,7 +67,7 @@ export default function (seriesType, ecModel, api, payload) {
         var stillShowZeroSum = seriesModel.get('stillShowZeroSum');
 
         // [0...max]
-        var extent = data.getDataExtent('value');
+        var extent = data.getDataExtent(valueDim);
         extent[0] = 0;
 
         // In the case some sector angle is smaller than minAngle
@@ -57,7 +77,7 @@ export default function (seriesType, ecModel, api, payload) {
         var currentAngle = startAngle;
         var dir = clockwise ? 1 : -1;
 
-        data.each('value', function (value, idx) {
+        data.each(valueDim, function (value, idx) {
             var angle;
             if (isNaN(value)) {
                 data.setItemLayout(idx, {
@@ -107,7 +127,7 @@ export default function (seriesType, ecModel, api, payload) {
             });
 
             currentAngle = endAngle;
-        }, true);
+        });
 
         // Some sector is constrained by minAngle
         // Rest sectors needs recalculate angle
@@ -116,7 +136,7 @@ export default function (seriesType, ecModel, api, payload) {
             // Constrained by minAngle
             if (restAngle <= 1e-3) {
                 var angle = PI2 / validDataCount;
-                data.each('value', function (value, idx) {
+                data.each(valueDim, function (value, idx) {
                     if (!isNaN(value)) {
                         var layout = data.getItemLayout(idx);
                         layout.angle = angle;
@@ -128,7 +148,7 @@ export default function (seriesType, ecModel, api, payload) {
             else {
                 unitRadian = restAngle / valueSumLargerThanMinAngle;
                 currentAngle = startAngle;
-                data.each('value', function (value, idx) {
+                data.each(valueDim, function (value, idx) {
                     if (!isNaN(value)) {
                         var layout = data.getItemLayout(idx);
                         var angle = layout.angle === minAngle

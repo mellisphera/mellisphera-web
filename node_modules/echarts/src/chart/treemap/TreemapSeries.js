@@ -1,9 +1,28 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as zrUtil from 'zrender/src/core/util';
 import SeriesModel from '../../model/Series';
 import Tree from '../../data/Tree';
 import Model from '../../model/Model';
 import {encodeHTML, addCommas} from '../../util/format';
-import {wrapTreePathInfo} from './helper';
+import {wrapTreePathInfo} from '../helper/treeHelper';
 
 export default SeriesModel.extend({
 
@@ -58,70 +77,61 @@ export default SeriesModel.extend({
             // bottom
             emptyItemWidth: 25,             // Width of empty node.
             itemStyle: {
-                normal: {
-                    color: 'rgba(0,0,0,0.7)', //'#5793f3',
-                    borderColor: 'rgba(255,255,255,0.7)',
-                    borderWidth: 1,
-                    shadowColor: 'rgba(150,150,150,1)',
-                    shadowBlur: 3,
-                    shadowOffsetX: 0,
-                    shadowOffsetY: 0,
-                    textStyle: {
-                        color: '#fff'
-                    }
-                },
-                emphasis: {
-                    textStyle: {}
+                color: 'rgba(0,0,0,0.7)', //'#5793f3',
+                borderColor: 'rgba(255,255,255,0.7)',
+                borderWidth: 1,
+                shadowColor: 'rgba(150,150,150,1)',
+                shadowBlur: 3,
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                textStyle: {
+                    color: '#fff'
                 }
+            },
+            emphasis: {
+                textStyle: {}
             }
         },
         label: {
-            normal: {
-                show: true,
-                // Do not use textDistance, for ellipsis rect just the same as treemap node rect.
-                distance: 0,
-                padding: 5,
-                position: 'inside', // Can be [5, '5%'] or position stirng like 'insideTopLeft', ...
-                // formatter: null,
-                color: '#fff',
-                ellipsis: true
-                // align
-                // verticalAlign
-            }
+            show: true,
+            // Do not use textDistance, for ellipsis rect just the same as treemap node rect.
+            distance: 0,
+            padding: 5,
+            position: 'inside', // Can be [5, '5%'] or position stirng like 'insideTopLeft', ...
+            // formatter: null,
+            color: '#fff',
+            ellipsis: true
+            // align
+            // verticalAlign
         },
         upperLabel: {                   // Label when node is parent.
-            normal: {
-                show: false,
-                position: [0, '50%'],
-                height: 20,
-                // formatter: null,
-                color: '#fff',
-                ellipsis: true,
-                // align: null,
-                verticalAlign: 'middle'
-            },
-            emphasis: {
+            show: false,
+            position: [0, '50%'],
+            height: 20,
+            // formatter: null,
+            color: '#fff',
+            ellipsis: true,
+            // align: null,
+            verticalAlign: 'middle'
+        },
+        itemStyle: {
+            color: null,            // Can be 'none' if not necessary.
+            colorAlpha: null,       // Can be 'none' if not necessary.
+            colorSaturation: null,  // Can be 'none' if not necessary.
+            borderWidth: 0,
+            gapWidth: 0,
+            borderColor: '#fff',
+            borderColorSaturation: null // If specified, borderColor will be ineffective, and the
+                                        // border color is evaluated by color of current node and
+                                        // borderColorSaturation.
+        },
+        emphasis: {
+            upperLabel: {
                 show: true,
                 position: [0, '50%'],
                 color: '#fff',
                 ellipsis: true,
                 verticalAlign: 'middle'
-            }
-        },
-        itemStyle: {
-            normal: {
-                color: null,            // Can be 'none' if not necessary.
-                colorAlpha: null,       // Can be 'none' if not necessary.
-                colorSaturation: null,  // Can be 'none' if not necessary.
-                borderWidth: 0,
-                gapWidth: 0,
-                borderColor: '#fff',
-                borderColorSaturation: null // If specified, borderColor will be ineffective, and the
-                                            // border color is evaluated by color of current node and
-                                            // borderColorSaturation.
-            },
-            emphasis: {
-
             }
         },
 
@@ -284,7 +294,7 @@ export default SeriesModel.extend({
             ? (this._viewRoot = viewRoot)
             : (viewRoot = this._viewRoot);
 
-        var root = this.getData().tree.root;
+        var root = this.getRawData().tree.root;
 
         if (!viewRoot
             || (viewRoot !== root && !root.contains(viewRoot))
@@ -347,7 +357,7 @@ function setDefault(levels, ecModel) {
         var model = new Model(levelDefine);
         var modelColor = model.get('color');
 
-        if (model.get('itemStyle.normal.color')
+        if (model.get('itemStyle.color')
             || (modelColor && modelColor !== 'none')
         ) {
             hasColorDefine = true;
