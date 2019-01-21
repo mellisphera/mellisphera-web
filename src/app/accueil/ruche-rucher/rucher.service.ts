@@ -87,12 +87,22 @@ export class RucherService {
         );
     }
     // pour afficher tout les ruchers de l'utilsateur connecté
+
+    saveCurrentApiaryId(idApiary : string){
+        window.sessionStorage.removeItem('currentApiary');
+        window.sessionStorage.setItem("currentApiary",idApiary);
+    }
+
+    getCurrentApiary(){
+        return window.sessionStorage.getItem('currentApiary');
+    }
     getUserRuchersLast(username){
         this.ruchersObs = this.http.get<RucherModel[]>(CONFIG.URL+'apiaries/'+ username);
         this.ruchersObs.subscribe(
             (data)=>{
                 if(data.length>0){
                     this.rucher = data[data.length-1];
+                    this.saveCurrentApiaryId(this.rucher.id);
                     this.rucherSelectUpdate = data[data.length-1];
                     this.ruchers = data;
                 }

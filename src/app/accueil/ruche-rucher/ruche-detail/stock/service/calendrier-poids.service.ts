@@ -11,7 +11,7 @@ export class CalendrierPoidsService {
   option = {
     backgroundColor: 'white',
     title: {
-        top: 70,
+        top: 5,
         text: 'Daily weight incomes',
         left: 'center',
     },
@@ -30,7 +30,7 @@ export class CalendrierPoidsService {
         }
     },
     legend: {
-        top: 100,
+        top: 30,
         data:['gain','loss'],
         textStyle: {
             color: 'black'
@@ -41,9 +41,9 @@ export class CalendrierPoidsService {
         range: ['2018-1-01', '2018-12-31'],
         orient: 'horizontal',
         cellSize: 'auto',
-        //height:'200',
+        height:'200',
         width:'95%',
-        top:150,
+        top:70,
         splitLine: {
             show: true,
             lineStyle: {
