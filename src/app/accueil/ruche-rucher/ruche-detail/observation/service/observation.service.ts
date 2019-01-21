@@ -26,6 +26,7 @@ export class ObservationService {
     this.observationsObs.subscribe(
       (data)=>{
         this.observationsHive = data;
+        console.log(this.observationsHive);
       },
       (err)=>{
         console.log(err);
@@ -51,6 +52,7 @@ export class ObservationService {
         console.log(err);
       },
       ()=>{
+        console.log(this.observation);
         this.getObservationByIdHive(this.observation.idHive);
         this.getObservationByIdApiary(this.observation.idApiary);
       }

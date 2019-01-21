@@ -59,9 +59,10 @@ export class ObservationComponent implements OnInit {
   createObservation(){
     const formValue = this.ObservationForm.value;
     this.observationService.observation = formValue;
-    this.observationService.observation.idHive = this.rucheId;
-    this.observationService.observation.idLHive = [this.rucheId];
+    this.observationService.observation.idHive = this.rucheService.ruche.id;
+    this.observationService.observation.idLHive = [this.rucheService.ruche.id];
     this.initForm();
+    console.log(this.observationService.observation);
     this.observationService.createObservation();
   }
 
