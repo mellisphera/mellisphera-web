@@ -1,3 +1,3 @@
-<div echarts [options]="grapheMielService.option" (chartDataViewChanged)="chartChange($event)" style="width:93vw; height: 40vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
+<div *ngIf="dailyStockHoneyService.dailyStock.length > 1" echarts [options]="grapheMielService.option" (chartDataViewChanged)="chartChange($event)" style="width:93vw; height: 40vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
 <div echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width: 93vw;height:40vh;"  id="calendrierPoids"></div>  
 
