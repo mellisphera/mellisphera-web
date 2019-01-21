@@ -52,7 +52,6 @@ export class ObservationService {
         console.log(err);
       },
       ()=>{
-        console.log(this.observation);
         this.getObservationByIdHive(this.observation.idHive);
         this.getObservationByIdApiary(this.observation.idApiary);
       }

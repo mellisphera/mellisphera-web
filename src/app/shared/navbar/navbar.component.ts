@@ -11,6 +11,7 @@ import { FleursFloraisonService } from '../../accueil/fleurs-floraison/service/f
 import { MeteoService } from '../../accueil/meteo/Service/MeteoService';
 import { ObservationService } from '../../accueil/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
+import { DailyRecordService } from '../../accueil/disposition-ruche/Service/dailyRecordService';
 
 @Component({
     // moduleId: module.id,
@@ -39,7 +40,8 @@ export class NavbarComponent implements OnInit{
         private fleursFloraisonService : FleursFloraisonService,
         private observationService : ObservationService,
         private formBuilder : FormBuilder,
-        private tokenService : AtokenStorageService) {
+        private tokenService : AtokenStorageService,
+        private dailyRecordService : DailyRecordService ) {
         try{
             this.lastConnexion = this.authService.lastConnection.toDateString();
         }
@@ -82,6 +84,7 @@ export class NavbarComponent implements OnInit{
         this.meteoService.getWeather(this.rucherService.rucher.ville);
         this.observationService.getObservationByIdApiary(this.rucherService.rucher.id);
         this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id);
+        this.dailyRecordService.getDailyRecThByApiary(this.rucherService.rucher.id);
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
       }
 
