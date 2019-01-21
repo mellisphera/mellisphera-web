@@ -66,6 +66,7 @@ export class GraphiqueFloraisonService {
         //Défini l'axe ou les axes ordonnée(s)
           yAxis: {
             type: 'category',
+            show : false,
             axisLine: {
                 show: false
             }

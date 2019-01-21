@@ -43,10 +43,15 @@ export class DailyStockHoneyService {
         this.cleanMerge();
       },
       (err)=>{
+        this.templateSerie.show = false;
+        this.cleanMerge();
         this.mergeOption.series.push(this.templateSerie);
+        console.log(this.mergeOption);
       },
       ()=>{
-        this.nextQuery();
+        if(this.dailyStock.length > 1){
+          this.nextQuery();
+        }
       }
     );
   }
@@ -81,10 +86,11 @@ export class DailyStockHoneyService {
   cleanTemplate(){
     this.templateSerie = {
       name:'',
+      show : true,
       type:'line',
       stack: 'fleurs',
       itemStyle: {normal: {areaStyle: {type: 'default'}}},
-      data:[{name : '', value : ['',0]}],
+      data:[],
       showSymbol: false,
       smooth : 'true',
       label: {
