@@ -1,7 +1,7 @@
 export const CONFIG = {
     //URL: "http://51.68.71.91:8091/", //Test
     //URL: "http://51.68.71.91:8092/",   //Prod
-    URL: "http://localhost:8091/",   //Local
+    URL: "http://192.168.0.109:8091/",   //Local
     API_AUTH : "http://195.154.179.102:80/api/auth/signin",
     //API_PY : "http://51.68.71.91:5000",
     API_PY : "http://localhost:5000",

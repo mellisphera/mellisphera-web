@@ -51,6 +51,7 @@ export class RucheDetailComponent implements OnInit {
         private dailyRecordWservice : DailyRecordsWService,
         private dailyStockHoneyService : DailyStockHoneyService,
         private recordService : RecordService,
+        private userService : UserloggedService,
         public calendrierTempInt : CalendrierTempIntService){
             this.rucheId = null;
             this.compteurHive = 0;
@@ -61,13 +62,31 @@ export class RucheDetailComponent implements OnInit {
     ngOnInit(){
         this.rucheId = this.activatedRoute.snapshot.params.id;
         this.rucheName = this.activatedRoute.snapshot.params.name;
+        console.log(this.rucheId);
         this.rucheService.ruchesObs.subscribe(
             ()=>{},
             ()=>{},
             ()=>{
-                this.observationService.getObservationByIdHive(this.rucheId);
-                this.rucheService.findRucheById(this.rucheId,true);
-                this.compteurHive = this.rucheService.ruches.indexOf(this.rucheService.ruche);
+                if(this.rucheService.ruches.length < 1){
+                    console.log("ok");
+                    this.rucheService.getRucheByApiary(this.userService.getUser(),window.sessionStorage.getItem("currentApiary"))
+                    this.rucheService.ruchesObs.subscribe(
+                        ()=>{},
+                        ()=>{},
+                        ()=>{
+                            this.observationService.getObservationByIdHive(this.rucheId);
+                            this.rucheService.findRucheById(this.rucheId,true);
+                            console.log(this.rucheService.ruche);
+                            this.compteurHive = this.rucheService.ruches.indexOf(this.rucheService.ruche);
+                        }
+                    );
+                }
+                else{
+                    this.observationService.getObservationByIdHive(this.rucheId);
+                    this.rucheService.findRucheById(this.rucheId,true);
+                    console.log(this.rucheService.ruche);
+                    this.compteurHive = this.rucheService.ruches.indexOf(this.rucheService.ruche);
+                }
             }
         )
         //this.route.navigate(['/ruche-detail/'+this.rucheId+'/'+this.rucheName+'/observation/'+this.rucheId+'/'+this.rucheName]);
@@ -125,6 +144,7 @@ export class RucheDetailComponent implements OnInit {
         else if(this.currentTab.indexOf("health")!=-1){
           this.dailyRecordThService.getByIdHive(this.rucheService.ruche.id)
         }
+        console.log(this.rucheService.ruche);
     }
 
 }

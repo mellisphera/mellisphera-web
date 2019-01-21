@@ -80,6 +80,7 @@ export class NavbarComponent implements OnInit{
         this.meteoService.getWeather(this.rucherService.rucher.ville);
         this.observationService.getObservationByIdApiary(this.rucherService.rucher.id);
         this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id);
+        this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
       }
 
     sidebarOpen() {

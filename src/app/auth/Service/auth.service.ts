@@ -39,7 +39,7 @@ export class AuthService {
               }
 
   signIn() {
-    this.loginObs = this.http.post<User>(CONFIG.URL+'/user/loguser',this.login,httpOptions);
+    this.loginObs = this.http.post<User>(CONFIG.URL+'user/loguser',this.login,httpOptions);
     this.loginObs.subscribe(
       (data)=>{
         console.log(data);
