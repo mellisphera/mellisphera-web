@@ -44,6 +44,7 @@ export class DailyStockHoneyService {
       },
       (err)=>{
         this.templateSerie.show = false;
+        this.templateSerie.data = null;
         this.cleanMerge();
         this.mergeOption.series.push(this.templateSerie);
         console.log(this.mergeOption);
