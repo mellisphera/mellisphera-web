@@ -77,7 +77,7 @@ export class NavbarComponent implements OnInit{
     }
     onSelectRucher(){
         this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher);
-        console.log(this.rucheService.ruches);
+        //console.log(this.rucheService.ruches);
         //ruchesObs
         this.rucherService.getRucherDetails();
         this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
