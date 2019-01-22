@@ -40,6 +40,7 @@ export class DailyStockHoneyService {
   constructor(private http : HttpClient) {
     this.cleanTemplate();
     this.loading = false;
+    this.dailyStock = [];
   }
   /* Requete API*/
   getDailyStockHoneyByApiary(idHive : string){
