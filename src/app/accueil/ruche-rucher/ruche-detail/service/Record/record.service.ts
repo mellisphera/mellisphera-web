@@ -15,7 +15,7 @@ export class RecordService {
 
   recArray : Record[];
   recordObs : Observable<Record[]>;
-
+  loading : boolean;
   recArrrayTint : any[];
   recArrayText : any[];
   recArrayWeight : any[];
@@ -23,10 +23,11 @@ export class RecordService {
   recArrayDateInt : any[];
   mergeOption : any = null;
   constructor(private http : HttpClient) { 
-
+    this.loading = false;
   }
 
   getRecordByIdHive(idHive : string){
+    this.loading = false;
     this.recArray = [];
     this.recordObs = this.http.get<Record[]>(CONFIG.URL+'records/hive/'+idHive);
     this.recordObs.subscribe(
@@ -47,6 +48,7 @@ export class RecordService {
             }
         ]
         }
+        this.loading = !this.loading;
       },
       (err)=>{
         console.log(err);
@@ -55,7 +57,6 @@ export class RecordService {
   }
 
   sortRecordByTemp(){
-
     this.recArrrayTint = [];
     this.recArrayText = [];
 

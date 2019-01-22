@@ -98,7 +98,7 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
     HttpClientModule,
     DragAndCheckModule,
     NgxEchartsModule,
-    SharedModule,
+    SharedModule
     
     
   ],
