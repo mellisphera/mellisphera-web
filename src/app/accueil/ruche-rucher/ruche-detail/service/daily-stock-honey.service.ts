@@ -25,21 +25,31 @@ export class DailyStockHoneyService {
   dailyStockByFlower : Object;
   typeFlower : any[];
   arrayDate : any[];
-
+  loading : boolean;
   timeLine : any[];
+  loadingOpts  = {
+    text: 'Loading',
+    color: '#00bdfc',
+    textColor: '#ff0000',
+    maskColor: 'rgba(255, 255, 255, 0.6)',
+    zlevel: 0
+  };;
 
   /* Template pour une serie(1 type d fleur)*/
   templateSerie  : any;
   constructor(private http : HttpClient) {
     this.cleanTemplate();
+    this.loading = false;
   }
   /* Requete API*/
   getDailyStockHoneyByApiary(idHive : string){
+    this.loading = false;
     this.dailyStock = [];
     this.dailyStockObs = this.http.get<DailyStockHoney[]>(CONFIG.URL+'dailyStockHoney'+'/hive/'+idHive);
     this.dailyStockObs.subscribe(
       (data)=>{
         this.dailyStock = data;
+        this.loadingOpts['text'] = 'Loading';
         this.cleanMerge();
       },
       (err)=>{
@@ -48,6 +58,7 @@ export class DailyStockHoneyService {
         this.cleanMerge();
         this.mergeOption.series.push(this.templateSerie);
         console.log(this.mergeOption);
+        this.loadingOpts['text'] = "No data";
       },
       ()=>{
         if(this.dailyStock.length > 1){
@@ -70,6 +81,7 @@ export class DailyStockHoneyService {
       this.cleanTemplate();
     }
     this.mergeOption.legend.data = this.typeFlower;
+    this.loading = !this.loading;
   }
   
   convertDate(date){

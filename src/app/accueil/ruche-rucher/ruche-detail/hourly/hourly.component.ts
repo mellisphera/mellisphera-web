@@ -14,6 +14,8 @@ export class HourlyComponent implements OnInit {
   message="";
   rucheId: string;
   rucheName : string;
+
+
   constructor(private activatedRoute : ActivatedRoute,
     public recordService : RecordService,
     public graphRecordService : GraphRecordService,
