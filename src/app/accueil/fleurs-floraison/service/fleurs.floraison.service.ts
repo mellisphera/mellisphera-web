@@ -96,6 +96,7 @@ export class    FleursFloraisonService {
     }
     //Service permettant de récuperer les fleurs du rucher selectionné d'un utilisateur x
     getUserFleur(idRucher){
+        console.log(idRucher);
         this.tabFleurByDateGraph = new Array();
         this.fleursObs = this.http.get<any[]>(CONFIG.URL+'flowersOb/'+ idRucher);
         this.fleursObs.subscribe(
