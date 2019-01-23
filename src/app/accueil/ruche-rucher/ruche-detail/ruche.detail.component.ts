@@ -119,8 +119,8 @@ export class RucheDetailComponent implements OnInit {
     }
 
 
-    onTab(event){
-        this.currentTab = event.target.innerText.toLowerCase();
+    onTab(event : string){
+        this.currentTab = event;
         console.log(this.currentTab);
         this.exeData();
 
@@ -135,11 +135,15 @@ export class RucheDetailComponent implements OnInit {
           this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
         }
         else if(this.currentTab.indexOf("stock")!=-1){
-          this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
-          this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheService.ruche.id);
+            if(this.dailyStockHoneyService.cuurrentIdHive != this.rucheId){
+                this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
+                this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheService.ruche.id);
+            }
         }
         else if(this.currentTab.indexOf("hourly")!=-1){
-          this.recordService.getRecordByIdHive(this.rucheService.ruche.id);
+            if(this.recordService.currentIdHive != this.rucheId ){
+                this.recordService.getRecordByIdHive(this.rucheService.ruche.id);
+            }
         }
         else if(this.currentTab.indexOf("health")!=-1){
           this.dailyRecordThService.getByIdHive(this.rucheService.ruche.id)

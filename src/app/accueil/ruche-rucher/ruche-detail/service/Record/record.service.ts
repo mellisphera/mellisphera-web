@@ -22,12 +22,16 @@ export class RecordService {
   recArrayDateExt : any[];
   recArrayDateInt : any[];
   mergeOption : any = null;
+  currentIdHive : string;
+
   constructor(private http : HttpClient) { 
+    this.currentIdHive = null;
     this.loading = false;
   }
 
   getRecordByIdHive(idHive : string){
     this.loading = false;
+    this.currentIdHive = idHive;
     this.recArray = [];
     this.recordObs = this.http.get<Record[]>(CONFIG.URL+'records/hive/'+idHive);
     this.recordObs.subscribe(
