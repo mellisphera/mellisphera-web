@@ -95,11 +95,19 @@ export class DailyRecordService{
                 text: 'Internal Relative Humidity (max)'
             },
             visualMap: {
+                pieces: [
+                    // Range of a piece can be specified by property min and max,
+                    // where min will be set as -Infinity if ignored,
+                    // and max will be set as Infinity if ignored.
+                    {min: 20, max : 50},
+                    {min: 50, max: 75},
+                    {min: 75, max: 87},
+                    {min: 87, max: 100},
+                    // Label of the piece can be specified.
+                ],
                 min: 20,
-                max: 100,
-                splitNumber : 4,
                 inRange: {
-                    color: ["#97A6C5","#6987C5",'#3C68C5','#0F4AC5'],
+                    color: ["#97A6C5","#6987C5",'#3C68C5','#05489B'],
                 },
             },
             
