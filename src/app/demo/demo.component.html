@@ -1,10 +1,5 @@
 <div class="wrapper">
-    <div class="sidebar" data-color="blue" data-image="">
-        <app-sidebar ></app-sidebar>
-        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
-    </div>
     <div class="main-panel">
-        <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
         <router-outlet></router-outlet>
         <div class="container-fluid" style="background-color:white;">
           <div id="flex">
@@ -25,7 +20,8 @@
                 <div class="chart" echarts [options]="grahFleur.option" [merge]="fleursFloraisonService.mergeOption" [autoResize]="true" style="width:80%;height:50vh;"></div>
                 <div class="chart" echarts [options]="grapheMielService.option" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true" style="width:80%;height:50vh;"></div>
                 <div class="chart" echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width:80%;height:80vh;"></div>  
-              </div>
+                <iframe width="1000" height="480" src="https://rtsp.me/embed/fTySttEh/" frameborder="0" allowfullscreen></iframe>
+            </div>
           </div>
     </div>
 </div>
