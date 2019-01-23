@@ -33,7 +33,7 @@ export class GraphRecordService {
         }
     },
     legend: {
-        top:40,
+        top:30,
         data:['Poids','Temp-int','Temp-ext']
     },
     grid: {
@@ -54,14 +54,15 @@ export class GraphRecordService {
         },
         {
             type: 'slider',
-            yAxisIndex: [1,0],
-            filterMode: 'empty'
+            yAxisIndex: 0,
+            filterMode: 'empty',
+            left:'0'
         },
         {
-            type: 'inside',
-            yAxisIndex: [1,0],
+            type: 'slider',
+            yAxisIndex: 1,
             filterMode: 'empty'
-        }
+        },
     ],
     yAxis: [
         {
