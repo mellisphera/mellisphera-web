@@ -27,6 +27,7 @@ export class DailyStockHoneyService {
   arrayDate : any[];
   loading : boolean;
   timeLine : any[];
+  cuurrentIdHive : string;
   loadingOpts  = {
     text: 'Loading',
     color: '#00bdfc',
@@ -41,25 +42,25 @@ export class DailyStockHoneyService {
     this.cleanTemplate();
     this.loading = false;
     this.dailyStock = [];
+    this.cuurrentIdHive = null;
   }
   /* Requete API*/
   getDailyStockHoneyByApiary(idHive : string){
+    this.cuurrentIdHive = idHive;
     this.loading = false;
     this.dailyStock = [];
     this.dailyStockObs = this.http.get<DailyStockHoney[]>(CONFIG.URL+'dailyStockHoney'+'/hive/'+idHive);
     this.dailyStockObs.subscribe(
       (data)=>{
         this.dailyStock = data;
-        this.loadingOpts['text'] = 'Loading';
         this.cleanMerge();
       },
       (err)=>{
-        this.templateSerie.show = false;
+        //this.templateSerie.show = false;
         this.templateSerie.data = null;
         this.cleanMerge();
         this.mergeOption.series.push(this.templateSerie);
         console.log(this.mergeOption);
-        this.loadingOpts['text'] = "No data";
       },
       ()=>{
         if(this.dailyStock.length > 1){
