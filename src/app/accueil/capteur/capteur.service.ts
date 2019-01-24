@@ -76,6 +76,7 @@ export class CapteurService {
         this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sold_devices/username/'+this.user.currentUser().username);
         this.capteursObs.subscribe(
             (data)=>{
+                console.log(data);
                 this.capteurAcheter = data;
             },
             (err)=>{
