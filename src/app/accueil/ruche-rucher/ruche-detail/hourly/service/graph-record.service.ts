@@ -34,7 +34,7 @@ export class GraphRecordService {
     },
     legend: {
         top:30,
-        data:['Poids','Temp-int','Temp-ext']
+        data:['Weight','Temp-int','Temp-ext']
     },
     grid: {
         left: '3%',
@@ -89,12 +89,13 @@ export class GraphRecordService {
     ],
     series: [
         {
-             name:'Poids',
+             name:'Weight',
              type:'line',
              showSymbol: false,
              hoverAnimation: true,
              data : '',
-             yAxisIndex: 0
+             yAxisIndex: 0,
+             color : 'black'
          },
          {
              name:'Temp-int',
@@ -102,7 +103,8 @@ export class GraphRecordService {
              showSymbol: false,
              hoverAnimation: true,
              data : '',
-             yAxisIndex: 1
+             yAxisIndex: 1,
+             color : 'red'
          },
          {
              name:'Temp-ext',
@@ -110,7 +112,8 @@ export class GraphRecordService {
              showSymbol: false,
              hoverAnimation: true,
              data : '',
-             yAxisIndex: 1
+             yAxisIndex: 1,
+             color : 'blue'
          }
      ]
 };
