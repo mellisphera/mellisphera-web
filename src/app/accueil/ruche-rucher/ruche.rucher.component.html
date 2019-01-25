@@ -48,10 +48,10 @@
                                                    
                                                   <td>{{ruche.description}}</td>
                                                   <td>
-                                                   <!-- <button data-toggle="tooltip" data-html="true" title="Share hive" data-toggle="modal" type="button"
-                                                        class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                                   <button data-toggle="tooltip" data-html="true" title="Share hive" data-toggle="modal" type="button"
+                                                        class="btn btn-primary  btn-lg " data-target="#shareHive" (click)="onSelectRuche(ruche)" style="padding: 0;border: none; background: none;">
                                                       <i class="fa fa-share-alt-square"></i>
-                                                    </button>-->
+                                                    </button>
                                                     <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
                                                             data-target="#editRucheModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
                                                             <i class="fa fa-edit"></i>
@@ -126,7 +126,7 @@
                       </div>
                   </div>
 
-                  <!--<div class="panel-group" id="accordion">
+                  <div class="panel-group" id="accordion">
                     <div class="panel panel-info ">
                         <div class="panel-heading "  >
                             <h4 class="panel-title" >
@@ -179,7 +179,7 @@
 
                     
                
-                </div>-->
+                </div>
 
                   
   
@@ -432,8 +432,39 @@
       </div>
     </div>
   </div>
-  <!-- End of edit Observation Modal -->
   
+
+
+  <div class="modal fade" id="shareHive" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Sharing : {{ rucheService.ruche.name }}</h3> </h5>
+            <button data-toggle="tooltip" data-html="true" title="New hive" style="margin-left: 98%; padding: 0;border: none; background: none;"
+                    class="btn btn-success btn-lg" (click)="addNewShareStatus = !addNewShareStatus">
+                    <i class="fa fa-plus"></i>
+            </button>
+            <input *ngIf="addNewShareStatus" [(ngModel)]="newsUserSharing" type="text" value="user" (keydown)="addUserShare($event)">
+          </div>
+          <div class="modal-body" id="popupObs">
+              <table class="table">
+                <tr>
+                  <th>User</th>
+                  <!--<th>Sharing date</th>-->
+                </tr>
+              <tbody>
+                <tr *ngFor="let user of rucheService.ruche.sharingUser">
+                  <td>{{ user.login.username}}</td>
+                </tr>
+              </tbody>
+              </table>
+          </div>
+          <div class="modal-footer">
+          
+          </div>
+        </div>
+      </div>
+  </div>
   <script>
   $('#editRucheModal').modal({
    keyboard: false,

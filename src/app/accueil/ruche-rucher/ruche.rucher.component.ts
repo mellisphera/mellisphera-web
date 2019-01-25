@@ -15,6 +15,9 @@ import { RapportService } from '../rapport/rapport.service';
 import { RucheService } from '../disposition-ruche/Service/ruche.service';
 import { ObservationService } from './ruche-detail/observation/service/observation.service';
 import { RucherModel } from '../../_model/rucher-model';
+import { SharingHives } from '../../_model/sharing-hives';
+import { SharingService } from './service/sharing.service';
+import { AuthService } from '../../auth/Service/auth.service';
 
 @Component({
   selector: 'app-ruche-rucher',
@@ -44,6 +47,9 @@ export class RucheRucherComponent implements OnInit {
   //updateRucher input is true when user clicks on Update Rucher
   updateRucherInput: boolean;
 
+  public addNewShareStatus : Boolean;
+  public newsUserSharing : String;
+
   parentMessage;
 
   optionsDate = {
@@ -62,7 +68,9 @@ export class RucheRucherComponent implements OnInit {
                 private data : UserloggedService,
                 private _selectedRucherService : selectedRucherService,
                 private _rapportService : RapportService,
-                public rucheService : RucheService) {
+                public rucheService : RucheService,
+                public sharingService : SharingService,
+                private authService : AuthService) {
 
 
         
@@ -87,7 +95,15 @@ clickOnRuche(ruche){
 
 resetForm(){
   this.newRucherForm.reset();
-}   
+}
+
+addUserShare(event){
+  //console.log(event);
+  if(event.code == 'Enter'){
+    console.log(this.authService.user);
+    this.sharingService.addSharing(this.newsUserSharing,this.rucheService.ruche,this.authService.user);
+  }
+}
 
 //Fonction pour créer le rucher
 createRucher(){
