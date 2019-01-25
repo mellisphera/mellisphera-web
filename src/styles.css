@@ -10,14 +10,6 @@
 .main-panel{
     width: calc(100% - 92px);
 }
-@media screen and (max-width : 900px){
-    .main-panel{
-        width: 100%;
-    }
-    .content{
-        width: 100%;
-    }
-}
 navbar-cmp{
     position: fixed;
     top: 0px;
@@ -27,4 +19,21 @@ navbar-cmp{
 }
 .content{
     margin-top: 55px;
+}
+
+
+
+
+
+@media screen and (max-width : 900px){
+    .main-panel{
+        width: 100%;
+    }
+    .content{
+        width: 100%;
+    }
+    navbar-cmp{
+        left: 0px;
+        width: 100%;
+    }
 }
