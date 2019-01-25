@@ -14,7 +14,7 @@ export class DailyRecordsWService {
 
 
   /*
-  *   Service poue les données DailyRecordsW pour le calendrier de poid
+  *   Service pour les données DailyRecordsW pour le calendrier de poid
   *
   */
 
@@ -79,6 +79,7 @@ export class DailyRecordsWService {
                 this.arrayTempExt.push([this.convertDate(element.recordDate), element.temp_ext_max])
               });
                 this.getArray();
+                //console.log(this.dailyRecArray);
                 this.updateCalendar();
               }
             }
@@ -157,17 +158,7 @@ export class DailyRecordsWService {
       }
         this.dailyRecArray.push([
           element.recordDate,
-          element.weight_income_gain, 
-          element.idHive,
-          element.temp_ext_min,
-          element.temp_ext_max,
-          element.weight_min,
-          element.weight_max,
-          element.weight_gain,
-          element.weight_foragingbees,
-          element.weight_hive,
-          element.weight_colony,
-          element.weight_filling_rate
+          element.weight_income_gain
         ]);
         lastMonth = this.getMonth(element.recordDate)
     });

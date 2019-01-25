@@ -3,15 +3,17 @@ import { DailyRecordService } from '../../../../disposition-ruche/Service/dailyR
 import { type } from 'os';
 import { webSocket } from 'rxjs/webSocket';
 import { CONFIG } from '../../../../../../config';
+import { CalendrierService } from '../../service/calendrier.service';
 //import { ECharts } from 'echarts';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CalendrierHealthService {
+export class CalendrierHealthService  extends CalendrierService {
 
 
     constructor() {
+        super();
     }
 
     option = {
@@ -47,7 +49,7 @@ export class CalendrierHealthService {
    calendar: [{
         top: 140,
         width:'93%',
-        range: ['2018-01-01', '2018-12-30'],
+        range: this.rangeCalendar,
         orient: 'horizontal',
         cellSize: ['auto','40'],
         splitLine: {
@@ -77,8 +79,9 @@ export class CalendrierHealthService {
             ]
         },
         yearLabel: {
-            formatter: '{start}',
-            show:false,
+            formatter: '{start}-{end}',
+            show:true,
+            margin : 50,
             textStyle: {
                 color: 'black'
             }
@@ -111,7 +114,7 @@ export class CalendrierHealthService {
         }
         //img = CONFIG.URL_FRONT+'/assets/icons/'+this.getStatus(api.value(1),api.value(2));
         switch (api.value(1)){
-            case 'statusA':
+            case 'statusC':
                 if(api.value(2) == "Fluctuation"){
                     img = 'wfbfl.png';
                 }
@@ -139,7 +142,7 @@ export class CalendrierHealthService {
                     img = 'wnbim.png';
                 }
                 break;
-            case 'statusC':
+            case 'statusA':
                 if(api.value(2) == "Fluctuation"){
                     img = 'wobfl.png';
                 }
@@ -157,10 +160,10 @@ export class CalendrierHealthService {
                 type:'image', // image
                 style:{ // style de cette image
                     image:img, // image à afficher
-                    width:30, // largeur
+                    width:20, // largeur
                     //heigth:30, // et hauteur de l'image
                     /*placement de l'image (x,y) avec les coordonnées */
-                    x: cellPoint[0] - cellWidth /2+3,
+                    x: cellPoint[0] - cellWidth /2+5,
                     y: cellPoint[1] - cellHeight / 2+5
                 },
             }],

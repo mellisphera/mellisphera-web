@@ -14,4 +14,17 @@
     .main-panel{
         width: 100%;
     }
+    .content{
+        width: 100%;
+    }
+}
+navbar-cmp{
+    position: fixed;
+    top: 0px;
+    left: 92px;
+    z-index: 1000;
+    width: calc(100% - 92px);
+}
+.content{
+    margin-top: 55px;
 }
