@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { CalendrierService } from '../../service/calendrier.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CalendrierTempIntService {
+export class CalendrierTempIntService  extends CalendrierService {
 
-  constructor() { }
+  constructor() {
+      super();
+   }
 
   option = {
     title: {
@@ -31,15 +34,22 @@ export class CalendrierTempIntService {
     calendar: {
         top: 100,
         bottom:10,
-        left: 40,
+        left: 60,
         right: 30,
         height:'auto',
         cellSize: ['20', '20'],
-        range: '2018',
+        range: this.rangeCalendar,
         itemStyle: {
             normal: {borderWidth: 0.5}
         },
-        yearLabel: {show: false},
+        yearLabel: {
+            formatter: '{start}-{end}',
+            margin : 40,
+            show:true,
+            textStyle: {
+                color: 'black'
+            }
+        },
         dayLabel: {
             nameMap: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
             firstDay: 1, // start on Monday

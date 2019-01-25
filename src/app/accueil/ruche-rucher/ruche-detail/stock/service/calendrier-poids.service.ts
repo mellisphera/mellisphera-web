@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-
 import { DailyRecordsWService } from '../../service/daily-records-w.service';
+import { CalendrierService } from '../../service/calendrier.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CalendrierPoidsService {
+export class CalendrierPoidsService extends CalendrierService{
+
   constructor(private dailyRec : DailyRecordsWService) { 
+      super();
   }
 
   option = {
@@ -37,8 +39,8 @@ export class CalendrierPoidsService {
         }
     },
    calendar: [{
-        left: 'center',
-        range: ['2018-1-01', '2018-12-31'],
+        left: 60,
+        range: this.rangeCalendar,
         orient: 'horizontal',
         cellSize: 'auto',
         height:'200',
@@ -56,9 +58,10 @@ export class CalendrierPoidsService {
             nameMap: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
             firstDay: 1, // start on Monday
           },
-        yearLabel: {
-            show : false,
-            formatter: '{start}',
+          yearLabel: {
+            formatter: '{start}-{end}',
+            show:true,
+            margin : 40,
             textStyle: {
                 color: 'black'
             }

@@ -48,6 +48,10 @@
                                                    
                                                   <td>{{ruche.description}}</td>
                                                   <td>
+                                                   <!-- <button data-toggle="tooltip" data-html="true" title="Share hive" data-toggle="modal" type="button"
+                                                        class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                                      <i class="fa fa-share-alt-square"></i>
+                                                    </button>-->
                                                     <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
                                                             data-target="#editRucheModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
                                                             <i class="fa fa-edit"></i>
@@ -121,7 +125,65 @@
                           </div>
                       </div>
                   </div>
-                
+
+                  <div class="panel-group" id="accordion">
+                    <div class="panel panel-info ">
+                        <div class="panel-heading "  >
+                            <h4 class="panel-title" >
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><b>Hives share</b></a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <b class="text-success"></b>
+                                <button data-toggle="tooltip" data-html="true" title="New hive" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
+                                        data-target="#newRucheModal"  class="btn btn-success btn-lg" >
+                                    <i class="fa fa-plus"></i>
+                                </button>
+
+                                <!-- tables ruche -->
+                              <div>
+                                  <table class="table">    
+                                      <thead class="thead-dark">
+                                      <tr>
+                                          <th class="firstCol" scope="col">Hive</th>
+                                          <th class="midle" scope="col">Description</th>
+                                          <th class="action" scope="col">Action</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                        
+                                        <tr *ngFor="" >
+                                          
+                                            <td>
+                                                <a [routerLink]="['/ruche-detail',ruche.id,ruche.name]"  routerLinkActive="active" (click)="clickOnRuche(ruche)"></a> 
+                                            </td>
+                                             
+                                            <td></td>
+                                            <td>
+                                              <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
+                                                      data-target="#editRucheModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                                      <i class="fa fa-edit"></i>
+                                              </button>
+                                              <button type="button" class="btn btn-warning btn-lg "  title="Delete hive" style="padding: 0;border: none; background: none;" (click)="deleteRuche(ruche)">
+                                                      <i class="fa fa-times"></i>
+                                              </button>
+                                            </td>
+                                        </tr>
+                                      </tbody>
+                                  </table>      
+                              </div>
+        
+                              
+                            </div>
+                        </div>
+                    </div>
+
+                    
+               
+                </div>
+
+                  
   
                     <br><br>    
                 </div>
