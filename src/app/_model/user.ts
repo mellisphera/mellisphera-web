@@ -1,7 +1,7 @@
 import { Login } from '../_model/login';
 
 export interface User {
-    id : String;
+    id : string;
     createdAt : Date;
     login : Login;
 	phone : String;
