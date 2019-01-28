@@ -37,7 +37,7 @@ export class RucherService {
         public observationService : ObservationService,
         public meteoService : MeteoService) {
         if(sessionStorage.getItem("currentUser")){
-            this.getOneApiaryById('5bc48388dc7d27634d281536');
+            //this.getOneApiaryById('5bc48388dc7d27634d281536');
             this.getUserRuchersLast(this.user.currentUser().username);
             
         }

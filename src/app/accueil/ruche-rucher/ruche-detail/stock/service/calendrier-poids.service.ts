@@ -11,7 +11,7 @@ export class CalendrierPoidsService extends CalendrierService{
   }
 
   option = {
-    backgroundColor: 'white',
+    //backgroundColor: 'white',
     title: {
         top: 5,
         text: 'Daily weight incomes',
@@ -24,6 +24,7 @@ export class CalendrierPoidsService extends CalendrierService{
         }    
     },
     toolbox: {
+        orient : 'vertical',
         feature: {
             dataView: {show: true, readOnly: false},
             magicType: {show: true, type: ['line', 'line']},

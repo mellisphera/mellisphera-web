@@ -57,7 +57,6 @@ import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
 import { SignupService } from './admin/service/signup.service';
 import { AuthInterceptorService } from './auth/Service/auth-interceptor.service';
-import { SharingService } from './accueil/ruche-rucher/service/sharing.service';
 
 @NgModule({
   declarations: [
@@ -123,7 +122,6 @@ import { SharingService } from './accueil/ruche-rucher/service/sharing.service';
     SignupService,
     AuthInterceptorService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
-    SharingService
   ],
   exports:[
   ],
