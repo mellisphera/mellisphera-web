@@ -27,7 +27,9 @@ export class GraphRecordService {
         }
     },
     toolbox: {
-        orient : 'vertical',
+        orient : 'horizontal',
+        /*right: '0',
+        left : '99%',*/
         feature: {
             dataZoom: {
                 yAxisIndex: 'none'
@@ -68,7 +70,7 @@ export class GraphRecordService {
             type: 'slider',
             yAxisIndex: 0,
             filterMode: 'empty',
-            left:'0'
+            left:'left'
         },
         {
             type: 'slider',
