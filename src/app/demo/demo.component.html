@@ -1,26 +1,27 @@
-<div class="wrapper">
-    <div class="main-panel">
-        <router-outlet></router-outlet>
-        <div class="container-fluid" style="background-color:white;">
-          <div id="flex">
-            <div class="col-5">
-                <p>
-                  <img src="../../assets/MELLISPHERA_04.jpg" width="50%">
-                </p>
-              </div>
-              <div class="paragraph">
-                  <p id="text">
-                      Atque, ut Tullius ait, ut etiam ferae fame monitae plerumque ad eum locum ubi aliquando pastae sunt revertuntur, ita homines instar turbinis degressi montibus impeditis et arduis loca petivere mari confinia, per quae viis latebrosis sese convallibusque occultantes cum appeterent noctes luna etiam tum cornuta ideoque nondum solido splendore fulgente nauticos observabant quos cum in somnum sentirent effusos per ancoralia, quadrupedo gradu repentes seseque suspensis passibus iniectantes in scaphas eisdem sensim nihil opinantibus adsistebant et incendente aviditate saevitiam ne cedentium quidem ulli parcendo obtruncatis omnibus merces opimas velut viles nullis repugnantibus avertebant. haecque non diu sunt perpetrata.
-    
-                      Proinde concepta rabie saeviore, quam desperatio incendebat et fames, amplificatis viribus ardore incohibili in excidium urbium matris Seleuciae efferebantur, quam comes tuebatur Castricius tresque legiones bellicis sudoribus induratae.
-                  </p>
-              </div>
-          </div>
+<div class="container-fluid" style="background-color:white;">
+    <div class="wrapper">
+        <div class="main-panel">
+            <router-outlet></router-outlet>
+            <div id="flex">
+                <div class="col-5">
+                    <p>
+                    <img src="../../assets/MELLISPHERA_04.jpg" width="50%">
+                    <!--<iframe width="1000" height="480" src="https://rtsp.me/embed/fTySttEh/" frameborder="0" allowfullscreen></iframe>-->
+                    </p>
+                </div>
+                <div class="paragraph">
+                    <h2>Titre</h2>
+                    <p id="text">
+                        Atque, ut Tullius ait, ut etiam ferae fame monitae plerumque ad eum locum ubi aliquando pastae sunt revertuntur, ita homines instar turbinis degressi montibus impeditis et arduis loca petivere mari confinia, per quae viis latebrosis sese convallibusque occultantes cum appeterent noctes luna etiam tum cornuta ideoque nondum solido splendore fulgente nauticos observabant quos cum in somnum sentirent effusos per ancoralia, quadrupedo gradu repentes seseque suspensis passibus iniectantes in scaphas eisdem sensim nihil opinantibus adsistebant et incendente aviditate saevitiam ne cedentium quidem ulli parcendo obtruncatis omnibus merces opimas velut viles nullis repugnantibus avertebant. haecque non diu sunt perpetrata.
+        
+                        Proinde concepta rabie saeviore, quam desperatio incendebat et fames, amplificatis viribus ardore incohibili in excidium urbium matris Seleuciae efferebantur, quam comes tuebatur Castricius tresque legiones bellicis sudoribus induratae.
+                    </p>
+                </div>
+            </div>
             <div class="row content" id="content">
                 <div class="chart" echarts [options]="grahFleur.option" [merge]="fleursFloraisonService.mergeOption" [autoResize]="true" style="width:80%;height:50vh;"></div>
                 <div class="chart" echarts [options]="grapheMielService.option" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true" style="width:80%;height:50vh;"></div>
-                <div class="chart" echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width:80%;height:80vh;"></div>  
-                <iframe width="1000" height="480" src="https://rtsp.me/embed/fTySttEh/" frameborder="0" allowfullscreen></iframe>
+                <div class="chart" echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width:80%;height:50vh;"></div>  
             </div>
           </div>
     </div>

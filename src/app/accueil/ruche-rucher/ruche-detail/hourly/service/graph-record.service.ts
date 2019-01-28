@@ -26,6 +26,18 @@ export class GraphRecordService {
             }
         }
     },
+    toolbox: {
+        orient : 'vertical',
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            dataView: {readOnly: false},
+            magicType: {type: ['line', 'bar']},
+            restore: {},
+            saveAsImage: {}
+        }
+    },
     xAxis: {
         type: 'time',
         splitLine: {

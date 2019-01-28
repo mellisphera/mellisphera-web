@@ -27,11 +27,15 @@ export class GrapheReserveMielService {
         top:40
       },
       toolbox: {
+        orient : 'vertical', 
         feature: {
-            dataView: {show: true, readOnly: false},
-            magicType: {show: true, type: ['line', 'line']},
-            restore: {show: true},
-            saveAsImage: {show: true}
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            dataView: {readOnly: false},
+            magicType: {type: ['line', 'bar']},
+            restore: {},
+            saveAsImage: {}
         }
     },
     series : [],
