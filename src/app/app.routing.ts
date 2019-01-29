@@ -42,7 +42,7 @@ const routes: Routes =[
     { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
     { path: 'position-Ruche', canActivate : [AuthGuard], component: DispositionRucheComponent},
     { path: 'admin', canActivate : [AuthGuard], component : AdminComponent},
-    { path : 'demo', component : DemoComponent}
+    { path : 'fstl', component : DemoComponent}
     
 ];
 

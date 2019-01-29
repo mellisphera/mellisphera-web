@@ -120,7 +120,6 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
     GraphMeteoService,
     ObservationService,
     SignupService,
-    AuthInterceptorService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
   ],
   exports:[
