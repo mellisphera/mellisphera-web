@@ -6,6 +6,9 @@ export interface User {
     login : Login;
 	phone : String;
 	email : String;
+	username : string;
+	password : string;
+	role : Array<String>;
 	connexions : number;
 	lastConnection : Date;
 	fullName : String;
