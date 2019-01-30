@@ -19,8 +19,13 @@ export class AuthInterceptorService implements HttpInterceptor {
         Authorization : `Bearer ${this.tokenService.getToken()}`
       }
     });
-    console.log(authReq);
-    return next.handle(authReq);
+    if(req.url.indexOf("openweathermap")!=-1){
+      return next.handle(req);
+    }
+    else{
+      return next.handle(authReq);
+    }
+    
   }
 
 }
