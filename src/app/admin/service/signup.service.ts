@@ -22,7 +22,10 @@ export class SignupService {
       login : { username:null,password:null},
       phone : null,
       email : null,
+      username : null,
+      password : null,
       connexions : null,
+      role : null,
       lastConnection : null,
       fullName : null,
       position : null,
@@ -33,7 +36,7 @@ export class SignupService {
   }
 
   signupUser(callback){
-    this.http.post(CONFIG.URL+'/user/signup',this.user,httpOptions).subscribe(
+    this.http.post(CONFIG.URL+'api/auth/signup',this.user,httpOptions).subscribe(
       ()=>{},
       (err)=>{
         console.log(err);

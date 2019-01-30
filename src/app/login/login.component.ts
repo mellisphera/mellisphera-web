@@ -5,6 +5,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthService } from '../auth/Service/auth.service';
 import { FormGroup, FormControl, Validators ,ReactiveFormsModule,FormBuilder } from '@angular/forms';
 import { Login } from '../_model/login';
+import { SignupService } from '../admin/service/signup.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ import { Login } from '../_model/login';
 })
 export class LoginComponent implements OnInit {
 
+  formLogin : boolean;
   loginErrorMsg: boolean;
   //@Output() messageEvent = new EventEmitter<string>();
   
@@ -25,21 +27,25 @@ export class LoginComponent implements OnInit {
   message : string;
  
 
+  signupForm : FormGroup;
+  success : boolean;
   constructor(private formBuilder: FormBuilder,
               public router: Router,
               private data : UserloggedService,
-              public authService: AuthService) { 
+              public authService: AuthService,
+              public signupService : SignupService) { 
 
     this.loginErrorMsg=false;
-
+    this.formLogin = true;
     this.myform = this.formBuilder.group({
       'username': ['', Validators.required],
-      'password': ['', [Validators.required, Validators.minLength(3)]]
+      'password': ['', Validators.required]
   });
 
   }
 
   ngOnInit() {
+    this.innitForm();
     if(this.authService.isAuthenticated){
       this.router.navigate(['/position-Ruche']);
     }
@@ -49,7 +55,35 @@ export class LoginComponent implements OnInit {
   })
   }
 
-
+  innitForm(){
+    this.signupForm = this.formBuilder.group({
+      'email':[null,Validators.required],
+      'username': [null,Validators.required],
+      'password':[null,Validators.compose([
+        ,Validators.minLength(4),
+        Validators.required
+      ])]
+    });
+  }
+  receiveMessage($event){
+      this.message=$event;
+  }
+  signup(){
+    if(this.signupForm.valid){
+      const data = this.signupForm.value;
+      this.signupService.user = data;
+      this.signupService.user.role = new Array<string>("***REMOVED***");
+      console.log(this.signupService.user);
+      this.signupService.user.createdAt = new Date();
+      this.signupService.signupUser(()=>{
+        this.success = true;
+        this.innitForm();
+        setTimeout(()=>{
+          this.success = false;
+        },1000);
+      });
+    }
+  }
   verifLogin(){
     this.authService.signIn();
   }
