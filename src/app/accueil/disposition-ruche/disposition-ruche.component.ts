@@ -94,6 +94,9 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     else if(this.username == "theo"){
       this.style["background-image"]="url("+CONFIG.URL_FRONT+"assets/imageClient/theo.png)";
     }
+    else if(this.username == "pma"){
+      this.style["background-image"]="url("+CONFIG.URL_FRONT+"assets/imageClient/PMA.png)";
+    }
   }
 
   onClick(ruche){
