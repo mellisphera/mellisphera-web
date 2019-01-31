@@ -10,6 +10,7 @@ import { RucheService } from './Service/ruche.service';
 import { RucheInterface } from '../../_model/ruche';
 import { Route, Router } from '@angular/router';
 import { CONFIG } from '../../../config'
+import { AuthService } from '../../auth/Service/auth.service';
 
 @Component({
   selector: 'app-disposition-ruche',
@@ -36,7 +37,8 @@ export class DispositionRucheComponent implements OnInit, OnDestroy {
     private login: UserloggedService, 
     public rucheService : RucheService, 
     public rucherService: RucherService,
-    private route : Router) { 
+    private route : Router,
+    public authService : AuthService) { 
     
     
     this.offset = new Offsets(this.top,this.right,this.bottom, this.left);

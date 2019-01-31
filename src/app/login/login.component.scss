@@ -81,3 +81,12 @@ input.ng-invalid.ng-touched {
 .ng-untouched{
     color: #b4b4b4;
 }
+input.ng-valid{
+	border-color: green;
+}
+/*img{
+	border-radius: 50px;
+	padding: 5px;
+	background-color: #3D3D3F;
+	border: solid #3D3D3F 10px;
+}*/

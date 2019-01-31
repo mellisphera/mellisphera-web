@@ -44,7 +44,7 @@
                 <img src="./assets/img/sensor-icon.png" style="width:30px;height: 30px; margin-top:-6px;"/>
             </a>
         </li>
-        <li *ngIf="tokenService.getAdmin()">
+        <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')">
             <a routerLink="/admin" data-toggle="tooltip" data-placement="top" title="admin">
                 <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;"/>
             </a>
