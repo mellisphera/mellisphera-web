@@ -26,6 +26,7 @@ import { ObservationService } from './observation/service/observation.service';
 //import { CalendrierHealthService } from './service/health/calendrier-health.service';
 import { CONFIG } from '../../../../config';
 import { CalendrierTempIntService } from './daily/service/calendrier-temp-int.service';
+import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 
 @Component({
   selector: 'app-ruche-detail',
@@ -52,6 +53,7 @@ export class RucheDetailComponent implements OnInit {
         private dailyStockHoneyService : DailyStockHoneyService,
         private recordService : RecordService,
         private userService : UserloggedService,
+        public tokenService : AtokenStorageService,
         public calendrierTempInt : CalendrierTempIntService){
             this.rucheId = null;
             this.compteurHive = 0;

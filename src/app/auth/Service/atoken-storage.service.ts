@@ -47,6 +47,10 @@ export class AtokenStorageService {
     return this.roles.indexOf("ROLE_ADMIN")!=-1;
   }
 
+  checkAuthorities(role : string) : Boolean{
+    return this.getAuthorities().indexOf(role)!=-1 ? true : false;
+  }
+
 
   testRequete(){
     this.httpClient.get<String>("http://195.154.179.102/api/test/pm"

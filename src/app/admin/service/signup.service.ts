@@ -14,8 +14,11 @@ const httpOptions = {
 export class SignupService {
 
   user : User;
+  errSignup : boolean;
+  errSignupLabel : string;
 
   constructor(private http : HttpClient) {
+    this.errSignup = false;
     this.user = { 
       id : null,
       createdAt : new Date(),
@@ -39,10 +42,16 @@ export class SignupService {
     this.http.post(CONFIG.URL+'api/auth/signup',this.user,httpOptions).subscribe(
       ()=>{},
       (err)=>{
+        this.errSignup = true;
         console.log(err);
+        this.errSignupLabel = err.error.message.split('->')[1];
+        console.log(this.errSignup);
       },
       ()=>{
-        callback();
+        if(!this.errSignup){
+          callback();
+        }
+        
       }
     )
   }

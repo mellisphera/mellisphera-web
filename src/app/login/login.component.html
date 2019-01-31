@@ -3,16 +3,19 @@
 	    <section class="login-form">
 		<form (ngSubmit)="verifLogin()" role="login" *ngIf="formLogin">
 			<div>
-				<img src="./assets/logo.png" style="width:50px;height: 50px;" alt="" />
+				<img src="./assets/logo.png" style="width:80px;" alt="" />
 			</div>			
 			<input type="text" name="username" [(ngModel)]="authService.login.username" placeholder="Username" required class="form-control input-lg" />
 			<input type="password" [(ngModel)]="authService.login.password" name="password" placeholder="Password" required class="form-control input-lg" />
-			<button type="submit" name="go" class="btn btn-lg btn-block btn-info">Sign in</button>
+            <div *ngIf="authService.errLogin" class="alert alert-danger" role="alert">
+                    Access denied
+            </div>
+            <button type="submit" name="go" class="btn btn-lg btn-block btn-info">Sign in</button>
 			<div>
 				<a (click)="formLogin = !formLogin" href="#">Create account</a> or <a href="#">reset password</a>
-			</div>
+            </div>
         </form>
-        <form *ngIf="!formLogin" role="login" [formGroup]="signupForm" (ngSubmit)="signup();">
+        <form *ngIf="!formLogin" role="login" [formGroup]="signupForm" (ngSubmit)="signup();" #fsignUp="ngForm">
                 <div>
                     <img src="./assets/logo.png" style="width:50px;height: 50px;" alt="" />
                 </div>	
@@ -36,12 +39,15 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                        <input required formControlName="password" type="password" class="form-control register" name="password" placeholder="Enter your Password" />
+                        <input required formControlName="password" minlength="6" type="password" class="form-control register" name="password" placeholder="Enter your Password" />
                     </div>
                 </div>
             </div>
+            <div *ngIf="signupService.errSignup" class="alert alert-danger" role="alert">
+                    {{ signupService.errSignupLabel }}
+            </div>
             <div class="form-group ">
-               <button type="submit" name="go" class="btn btn-lg btn-block btn-info">Sign up</button>
+               <button [disabled]="fsignUp.invalid" type="submit" name="go" class="btn btn-lg btn-block btn-info">Sign up</button>
             </div>
             <div>
                 <a (click)="formLogin = !formLogin" href="#">Sign-in</a>

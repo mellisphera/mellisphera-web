@@ -47,18 +47,15 @@ export class AuthService {
         this.tokenService.saveAuthorities(this.jwtReponse.authorities);
         this.login.username = this.jwtReponse.username  
         this.connexionStatus.next(data);
-        this.isAuthenticated = window.sessionStorage.getItem("TOKEN_KEY") ? true : false;
+        this.isAuthenticated = this.tokenService.getToken() ? true : false;
         sessionStorage.setItem("connexion",JSON.stringify(this.isAuthenticated));
         this.errLogin = !this.isAuthenticated;
-        if(this.isAuthenticated){
-          this.lastConnection = new Date(data);
-          console.log(sessionStorage.getItem("connexion") == "true"); 
-          
-          sessionStorage.setItem("currentUser",JSON.stringify(this.login));
-          this.router.navigate(['/position-Ruche']);
-        }
+        console.log(sessionStorage.getItem("connexion") == "true"); 
+        sessionStorage.setItem("currentUser",JSON.stringify(this.login));
+        this.router.navigate(['/position-Ruche']);
       },
       (err)=>{
+        this.errLogin = true;
         console.log(err);
       }
     );

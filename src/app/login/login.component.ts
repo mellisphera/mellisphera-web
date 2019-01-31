@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
       'email':[null,Validators.required],
       'username': [null,Validators.required],
       'password':[null,Validators.compose([
-        ,Validators.minLength(4),
+        ,Validators.minLength(6),
         Validators.required
       ])]
     });
@@ -76,6 +76,9 @@ export class LoginComponent implements OnInit {
       console.log(this.signupService.user);
       this.signupService.user.createdAt = new Date();
       this.signupService.signupUser(()=>{
+        this.authService.login.username = this.signupService.user.username;
+        this.authService.login.password = this.signupService.user.password;
+        this.authService.signIn();
         this.success = true;
         this.innitForm();
         setTimeout(()=>{
