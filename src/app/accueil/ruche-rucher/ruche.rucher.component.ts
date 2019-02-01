@@ -3,8 +3,6 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef } from '@angular/core';
-import { Rucher } from './rucher';
-import { Ruche } from './ruche';
 import { ProcessReport } from './processedReport';
 import { RucherService } from './rucher.service';
 import { UserloggedService } from '../../userlogged.service';

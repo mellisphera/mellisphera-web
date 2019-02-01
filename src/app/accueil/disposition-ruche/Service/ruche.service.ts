@@ -39,8 +39,7 @@ export class RucheService {
       idApiary: '',
       hivePosX : '',
       hivePosY : '',
-      sharingUser : [],
-      shareStatus : false
+      sharingUser : []
     }
     this.rucheUpdate = this.ruche;
    }
