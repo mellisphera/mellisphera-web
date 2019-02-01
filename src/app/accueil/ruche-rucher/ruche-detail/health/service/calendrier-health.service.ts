@@ -112,7 +112,7 @@ export class CalendrierHealthService  extends CalendrierService {
         if (isNaN(cellPoint[0]) || isNaN(cellPoint[1])) {
             return;
         }
-        //img = CONFIG.URL_FRONT+'/assets/icons/'+this.getStatus(api.value(1),api.value(2));
+        
         switch (api.value(1)){
             case 'statusC':
                 if(api.value(2) == "Fluctuation"){
@@ -154,6 +154,7 @@ export class CalendrierHealthService  extends CalendrierService {
                 img = 'wos.png';
         }
         img = CONFIG.URL_FRONT+'assets/icons/'+img;
+        //img = CONFIG.URL_FRONT+'assets/icons/'+this.getIcon(api.value(1),api.value(2));
         var group = {
             type: 'group',
             children:[{ // enfant de ce groupe(image et text)
@@ -171,4 +172,46 @@ export class CalendrierHealthService  extends CalendrierService {
         return group;
     }
     
+   /* getIcon(value1, value2){
+        switch (value1){
+            case 'statusC':
+                if(value2 == "Fluctuation"){
+                    return 'wfbfl.png';
+                }
+                else if(value2=="Decline"){
+                    return 'wfbde.png';
+                }
+                else if(value2 == "Stable"){
+                    return 'wfbst.png';
+                }
+                else if(value2 == "Improve"){
+                    return 'wfbim.png';
+                }
+                break;
+            case 'statusB':
+                if(value2 == "Fluctuation"){
+                    return 'wnbfl.png';
+                }
+                else if(value2=="Decline"){
+                    return 'wnbde.png';
+                }
+                else if(value2 == "Stable"){
+                    return 'wnbst.png';
+                }
+                else if(value2 == "Improve"){
+                    return 'wnbim.png';
+                }
+                break;
+            case 'statusA':
+                if(value2 == "Fluctuation"){
+                    return 'wobfl.png';
+                }
+                else if(value2 == "Improve"){
+                    return 'wobim.png';
+                }
+                break;
+            default:
+                return 'wos.png';
+            }
+    }*/
 }

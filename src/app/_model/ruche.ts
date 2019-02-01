@@ -9,5 +9,4 @@ export interface RucheInterface {
     hivePosX : string;
     hivePosY : string;
     sharingUser : User[];
-    shareStatus : Boolean;
 }
