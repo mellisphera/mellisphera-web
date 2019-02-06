@@ -51,27 +51,8 @@ export class DailyRecordsWService {
     this.dailyObs.subscribe(
       (data)=>{
         if(data.length > 0){
-          /*
-          data.forEach((element, index)=>{
-            this.dailyRec.push({
-              recordDate : this.convertDate(element.recordDate),
-              idHive : element.idHive,
-              temp_ext_min : element.temp_ext_min,
-              temp_ext_max : element.temp_ext_max,
-              weight_min : element.weight_min,
-              weight_max : element.weight_max,
-              weight_gain : element.weight_gain,
-              weight_income_gain : element.weight_income_gain,
-              weight_foragingbees : element.weight_foragingbees,
-              weight_hive : element.weight_hive,
-              weight_colony : element.weight_colony,
-              weight_filling_rate : element.weight_filling_rate
-          });
-          this.arrayTempExt.push([this.convertDate(element.recordDate), element.temp_ext_max])
-        });*/
         this.dailyRec = data;
           this.getArray();
-          //console.log(this.dailyRecArray);
           this.updateCalendar();
         }
       },
@@ -106,9 +87,10 @@ export class DailyRecordsWService {
       visualMap: {
           min: -10,
           max: 40,
-          splitNumber : 5,
+          calculable : true,
           inRange: {
-            color: ['#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']        },
+            color: ['#abd9e9','#CC0000']        
+          },
       },
     }
   }

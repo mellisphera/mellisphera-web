@@ -30,15 +30,9 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
         }
     },
     visualMap: {
-        min: 0,
-        max: 40,
-        type: 'piecewise',
         orient: 'horizontal',
+        top : 55,
         left: 'center',
-        top: 55,
-        textStyle: {
-            color: '#000'
-        },
     },
     calendar: {
         top: 100,
