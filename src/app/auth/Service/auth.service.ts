@@ -52,7 +52,7 @@ export class AuthService {
         this.errLogin = !this.isAuthenticated;
         console.log(sessionStorage.getItem("connexion") == "true"); 
         sessionStorage.setItem("currentUser",JSON.stringify(this.login));
-        this.router.navigate(['/position-Ruche']);
+        this.router.navigate(['/home']);
       },
       (err)=>{
         this.errLogin = true;

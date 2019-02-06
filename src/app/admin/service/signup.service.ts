@@ -13,8 +13,8 @@ const httpOptions = {
 })
 export class SignupService {
 
-  user : User;
-  errSignup : boolean;
+  user:User;
+  errSignup:boolean;
   errSignupLabel : string;
 
   constructor(private http : HttpClient) {

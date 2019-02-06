@@ -2,17 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
 import { RucheRucherComponent } from './accueil/ruche-rucher/ruche.rucher.component';
-import { MeteoComponent } from './accueil/meteo/meteo.component';
+import { MeteoComponent } from './meteo/meteo.component';
 
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { AuthGuardService as AuthGuard } from './auth/auth-guard.service';
-import { CapteurComponent } from './accueil/capteur/capteur.component';
-import { RapportComponent } from './accueil/rapport/rapport.component';
-import { FleursFloraisonComponent } from './accueil/fleurs-floraison/fleurs.floraison.component';
-import { DispositionRucheComponent } from './accueil/disposition-ruche/disposition-ruche.component';
+import { CapteurComponent } from './capteur/capteur.component';
+import { RapportComponent } from './rapport/rapport.component';
+import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
+import { HomeComponent } from './accueil/home/home.component';
 import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
 import { RucheDetailComponent } from './accueil/ruche-rucher/ruche-detail/ruche.detail.component';
@@ -32,7 +31,6 @@ const routes: Routes =[
     { path: '',               redirectTo: 'dashboard', pathMatch: 'full' }*/
     { path: '',                 component: LoginComponent },
     { path: 'login',            component: LoginComponent },
-    { path: 'dashboard',        component: HomeComponent },
     { path: 'accueil',          canActivate : [AuthGuard], component: AccueilComponent},
     { path: 'ruche-et-rucher',  canActivate : [AuthGuard], component: RucheRucherComponent },
     { path: 'capteurs',         canActivate : [AuthGuard], component: CapteurComponent },
@@ -40,7 +38,7 @@ const routes: Routes =[
     { path: 'ruche-detail/:id/:name', canActivate : [AuthGuard], component : RucheDetailComponent},
     { path: 'rapport',          canActivate : [AuthGuard], component: RapportComponent},
     { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
-    { path: 'position-Ruche', canActivate : [AuthGuard], component: DispositionRucheComponent},
+    { path: 'home', canActivate : [AuthGuard], component: HomeComponent},
     { path: 'admin', canActivate : [AuthGuard], component : AdminComponent},
     { path : '***REMOVED***', component : DemoComponent}
     

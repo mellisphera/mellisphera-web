@@ -6,12 +6,12 @@ import {Router} from "@angular/router";
 import { AuthService } from '../../auth/Service/auth.service';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { RucherService } from '../../accueil/ruche-rucher/rucher.service';
-import { RucheService } from '../../accueil/disposition-ruche/Service/ruche.service';
-import { FleursFloraisonService } from '../../accueil/fleurs-floraison/service/fleurs.floraison.service';
-import { MeteoService } from '../../accueil/meteo/Service/MeteoService';
+import { RucheService } from '../../accueil/Service/ruche.service';
+import { FleursFloraisonService } from '../../fleurs-floraison/service/fleurs.floraison.service';
+import { MeteoService } from '../../meteo/Service/MeteoService';
 import { ObservationService } from '../../accueil/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
-import { DailyRecordService } from '../../accueil/disposition-ruche/Service/dailyRecordService';
+import { DailyRecordService } from '../../accueil/Service/dailyRecordService';
 
 @Component({
     // moduleId: module.id,
