@@ -4,8 +4,8 @@
             <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
         </div>
     
+        <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
         <div class="main-panel">
-            <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
             <router-outlet></router-outlet>
         
             
