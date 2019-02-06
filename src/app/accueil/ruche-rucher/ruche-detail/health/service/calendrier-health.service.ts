@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DailyRecordService } from '../../../../disposition-ruche/Service/dailyRecordService';
+import { DailyRecordService } from '../../../../Service/dailyRecordService';
 import { type } from 'os';
 import { webSocket } from 'rxjs/webSocket';
 import { CONFIG } from '../../../../../../config';

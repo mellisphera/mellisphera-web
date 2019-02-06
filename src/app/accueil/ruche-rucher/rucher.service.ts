@@ -7,12 +7,12 @@ import { Rucher } from './rucher';
 import { Ruche } from './ruche';
 import { ProcessReport } from './processedReport';
 import { UserloggedService } from '../../userlogged.service';
-import { RucheService } from '../disposition-ruche/Service/ruche.service';
-import { DailyRecordService } from '../disposition-ruche/Service/dailyRecordService';
+import { RucheService } from '../Service/ruche.service';
+import { DailyRecordService } from '../Service/dailyRecordService';
 import { RucherModel } from '../../_model/rucher-model';
 import { Observation } from '../../_model/observation';
 import { ObservationService } from './ruche-detail/observation/service/observation.service';
-import { MeteoService } from '../meteo/Service/MeteoService';
+import { MeteoService } from '../../meteo/Service/MeteoService';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -21,7 +21,7 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
         }   
     },
     toolbox: {
-        orient : 'horizontal',
+        orient : 'vertical',
         feature: {
             dataView: {show: true, readOnly: false},
             magicType: {show: true, type: ['line', 'line']},

@@ -5,7 +5,7 @@ import { CalendrierPoidsService } from './service/calendrier-poids.service';
 import { ActivatedRoute } from '@angular/router';
 import { DailyStockHoneyService } from '../service/daily-stock-honey.service';
 import { GrapheReserveMielService } from './service/graphe-reserve-miel.service';
-import { RucheService } from '../../../disposition-ruche/Service/ruche.service';
+import { RucheService } from '../../../Service/ruche.service';
 
 @Component({
   selector: 'app-stock',

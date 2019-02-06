@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecordService } from '../service/Record/record.service';
 import { GraphRecordService } from './service/graph-record.service';
-import { RucheService } from '../../../disposition-ruche/Service/ruche.service';
+import { RucheService } from '../../../Service/ruche.service';
 
 @Component({
   selector: 'app-hourly',
