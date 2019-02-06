@@ -48,8 +48,11 @@ export class CalendrierHealthService  extends CalendrierService {
     },
    calendar: [{
         top: 140,
+        left: '2%',
+        right: '4%',
+        height:'200',
         width:'93%',
-        range: this.rangeCalendar,
+        range: null,
         orient: 'horizontal',
         cellSize: ['auto','40'],
         splitLine: {
@@ -80,7 +83,7 @@ export class CalendrierHealthService  extends CalendrierService {
         },
         yearLabel: {
             formatter: '{start}-{end}',
-            show:true,
+            show:false,
             margin : 50,
             textStyle: {
                 color: 'black'

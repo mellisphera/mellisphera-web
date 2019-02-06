@@ -4,14 +4,14 @@ import { CalendrierService } from '../../service/calendrier.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CalendrierTempIntService  extends CalendrierService {
+export class CalendrierTempIntService /*extends CalendrierService*/{
 
   constructor() {
-      super();
+
    }
 
   option = {
-    title: {
+    title : {
         top: 28,
         left: 'center',
     },
@@ -19,6 +19,15 @@ export class CalendrierTempIntService  extends CalendrierService {
         formatter: (params)=>{
             return params.data[0]+'<br/>'+params.data[1];
         }   
+    },
+    toolbox: {
+        orient : 'horizontal',
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'line']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
     },
     visualMap: {
         min: 0,
@@ -38,14 +47,14 @@ export class CalendrierTempIntService  extends CalendrierService {
         right: 30,
         height:'auto',
         cellSize: ['20', '20'],
-        range: this.rangeCalendar,
+        range:null,
         itemStyle: {
             normal: {borderWidth: 0.5}
         },
         yearLabel: {
             formatter: '{start}-{end}',
             margin : 40,
-            show:true,
+            show:false,
             textStyle: {
                 color: 'black'
             }
@@ -60,8 +69,5 @@ export class CalendrierTempIntService  extends CalendrierService {
         coordinateSystem: 'calendar',
 
     }
-};
-
-optionHumidityInt = this.option;
-optionTempExt = this.option;
+    };
 }

@@ -4,10 +4,9 @@ import { CalendrierService } from '../../service/calendrier.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CalendrierPoidsService extends CalendrierService{
+export class CalendrierPoidsService{
 
   constructor(private dailyRec : DailyRecordsWService) { 
-      super();
   }
 
   option = {
@@ -24,7 +23,7 @@ export class CalendrierPoidsService extends CalendrierService{
         }    
     },
     toolbox: {
-        orient : 'vertical',
+        orient : 'horizontal',
         feature: {
             dataView: {show: true, readOnly: false},
             magicType: {show: true, type: ['line', 'line']},
@@ -40,13 +39,19 @@ export class CalendrierPoidsService extends CalendrierService{
         }
     },
    calendar: [{
-        left: 60,
-        range: this.rangeCalendar,
-        orient: 'horizontal',
-        cellSize: 'auto',
+        top: 100,
+        bottom:10,
+        left: '1%',
+        right: '4%',
         height:'200',
-        width:'95%',
-        top:70,
+        //height:'auto',
+        cellSize: ['20','20'],
+        range: null,
+        orient: 'horizontal',
+        /*cellSize: 'auto',
+        height:'200',*/
+        //  width:'95%',
+       // top:70,
         splitLine: {
             show: true,
             lineStyle: {
@@ -61,7 +66,7 @@ export class CalendrierPoidsService extends CalendrierService{
           },
           yearLabel: {
             formatter: '{start}-{end}',
-            show:true,
+            show:false,
             margin : 40,
             textStyle: {
                 color: 'black'
@@ -123,4 +128,13 @@ export class CalendrierPoidsService extends CalendrierService{
 
 
     };
+    convertDate(date : Date){
+        var jour = ''+date.getDate();
+        var mois = ''+(date.getMonth()+1);
+        var anee = date.getFullYear();
+        if(parseInt(jour) < 10 ){ jour = '0'+jour; }
+        if(parseInt(mois) < 10 ){ mois = '0'+mois; }
+    
+        return anee + '-' +mois+'-'+ jour;
+      }
 }

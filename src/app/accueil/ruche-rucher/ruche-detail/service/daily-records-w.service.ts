@@ -3,6 +3,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CONFIG } from '../../../../../config';
 import { DailyRecordsW } from '../../../../_model/daily-records-w';
+import { ElementSchemaRegistry } from '@angular/compiler';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -23,14 +24,20 @@ export class DailyRecordsWService {
   dailyRec : DailyRecordsW[];
   dailyRecArray : any[];
   mergeOption : any = null;
-  rangeCalendar  : any[];
+  rangeCalendar : Array<string>;
+
 
   arrayTempExt : any[];
   mergeOptionTempExt : any;
 
   timeLine : any[];
 
-  constructor(private http : HttpClient) { 
+  constructor(private http : HttpClient) {
+    this.rangeCalendar = [];
+    var max = new Date();
+    var min = new Date((max.getFullYear()-1)+'-'+(max.getMonth()+1)+'-'+max.getDate());
+    this.rangeCalendar = [this.convertDate(min),this.convertDate(max)];
+    console.log(this.rangeCalendar);
     this.dailyRecArray = [];
     this.updateCalendar();
   }
@@ -40,10 +47,11 @@ export class DailyRecordsWService {
     this.arrayTempExt = [];
     this.dailyRec = [];
     var start, end = null;
-    this.dailyObs = this.http.get<DailyRecordsW[]>(CONFIG.URL+'/dailyRecordsW/hive/'+idHive);
+    this.dailyObs = this.http.get<DailyRecordsW[]>(CONFIG.URL+'dailyRecordsW/hive/'+idHive);
     this.dailyObs.subscribe(
       (data)=>{
         if(data.length > 0){
+          /*
           data.forEach((element, index)=>{
             this.dailyRec.push({
               recordDate : this.convertDate(element.recordDate),
@@ -60,7 +68,8 @@ export class DailyRecordsWService {
               weight_filling_rate : element.weight_filling_rate
           });
           this.arrayTempExt.push([this.convertDate(element.recordDate), element.temp_ext_max])
-        });
+        });*/
+        this.dailyRec = data;
           this.getArray();
           //console.log(this.dailyRecArray);
           this.updateCalendar();
@@ -76,9 +85,6 @@ export class DailyRecordsWService {
 
   updateCalendar(){
     this.mergeOption = {
-     /* calendar : [{
-        range: ,
-      }],*/
       series : [
         {
             data: this.dailyRecArray,
@@ -114,19 +120,18 @@ export class DailyRecordsWService {
     this.mergeOption = null;
   }
 
-  convertDate(date : string){
-    var dateIso = new Date(date);
-    var jour = ''+dateIso.getDate();
-    var mois = ''+(dateIso.getMonth()+1);
-    var anee = dateIso.getFullYear();
+  convertDate(date : Date){
+    var jour = ''+date.getDate();
+    var mois = ''+(date.getMonth()+1);
+    var anee = date.getFullYear();
     if(parseInt(jour) < 10 ){ jour = '0'+jour; }
     if(parseInt(mois) < 10 ){ mois = '0'+mois; }
 
     return anee + '-' +mois+'-'+ jour;
   }
 
-  getMonth(date : string){
-    return new Date(date).getMonth()+1;
+  getMonth(date : Date){
+    return (new Date(date).getMonth()+1);
   }
   getYear(date : string){
     return new Date(date).getFullYear();
@@ -136,6 +141,7 @@ export class DailyRecordsWService {
     this.timeLine = [];
     let lastMonth = null;
     this.dailyRec.forEach((element,index) =>{
+      this.arrayTempExt.push([element.recordDate, element.temp_ext_max])
       if(this.getMonth(element.recordDate) != lastMonth){
         this.timeLine.push(element.recordDate);
       }

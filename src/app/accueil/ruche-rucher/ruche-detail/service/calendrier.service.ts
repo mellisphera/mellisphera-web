@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
 
-
+@Injectable({
+  providedIn: 'root'
+})
 export class CalendrierService {
 
-  rangeCalendar : Array<String>;
+  rangeCalendar : Array<string>;
 
   constructor() {
+    this.rangeCalendar = [];
     var max = new Date();
-    /*let mois;
-    if(max.getMonth()+1 == 1 ){
-      mois = (max.getMonth()+1)-12;
-    }
-    else if(max.getMonth()+1 == 12){
-      mois == 1;
-    }*/
     var min = new Date((max.getFullYear()-1)+'-'+(max.getMonth()+1)+'-'+max.getDate());
     this.rangeCalendar = [this.convertDate(min),this.convertDate(max)];
+    console.log(this.rangeCalendar);
   }
 
   convertDate(date : Date){

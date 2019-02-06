@@ -61,8 +61,8 @@ export class DailyRecordService{
         this.arrayHint = [];
         this.arrayHealth = [];
         this.dailyRecords.forEach(element=>{
-            this.arrayTempInt.push([this.convertDate(element.recordDate),element.temp_int_max]);
-            this.arrayHint.push([this.convertDate(element.recordDate), element.humidity_int_max]);
+            this.arrayTempInt.push([element.recordDate,element.temp_int_max]);
+            this.arrayHint.push([element.recordDate, element.humidity_int_max]);
             this.arrayHealth.push([element.recordDate,element.health_status,element.health_trend]);
         })
         this.mergeOptionCalendarHealth = {

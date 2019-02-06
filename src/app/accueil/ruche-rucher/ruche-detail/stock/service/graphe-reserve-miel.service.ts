@@ -56,8 +56,8 @@ export class GrapheReserveMielService {
     ],
     
     grid: {
-        left: '3%',
-        right: '4%',
+        left: '2%',
+        right: '2%',
         top:70,
         bottom:0,
         containLabel: true
