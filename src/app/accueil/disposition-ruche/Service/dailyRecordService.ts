@@ -78,14 +78,17 @@ export class DailyRecordService{
                     text: 'Internal Temperature (max)'
                 },
             visualMap: {
+                    calculable: true,
                     min: -10,
                     max: 40,
-                    splitNumber : 5,
-                    inRange : {
-                        color: ['#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                    inRange: {
+                        color: ['#abd9e9','#CC0000']     
                     }
+
+            
                     
             },
+            
         }
         this.mergeOptionHint = {
             series : {
@@ -95,6 +98,10 @@ export class DailyRecordService{
                 text: 'Internal Relative Humidity (max)'
             },
             visualMap: {
+                orient: 'horizontal',
+                top : 55,
+                left: 'center',
+                type: 'piecewise',
                 pieces: [
                     // Range of a piece can be specified by property min and max,
                     // where min will be set as -Infinity if ignored,
@@ -105,9 +112,9 @@ export class DailyRecordService{
                     {min: 87, max: 100},
                     // Label of the piece can be specified.
                 ],
-                min: 20,
                 inRange: {
                     color: ["#97A6C5","#6987C5",'#3C68C5','#05489B'],
+                    //color: ["#97A6C5",'#05489B'],
                 },
             },
             
