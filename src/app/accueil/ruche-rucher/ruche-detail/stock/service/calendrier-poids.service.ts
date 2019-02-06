@@ -41,7 +41,7 @@ export class CalendrierPoidsService{
    calendar: [{
         top: 100,
         bottom:10,
-        left: '1%',
+        left: '2%',
         right: '4%',
         height:'200',
         //height:'auto',
