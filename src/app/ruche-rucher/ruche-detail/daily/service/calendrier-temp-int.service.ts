@@ -22,6 +22,7 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
     },
     toolbox: {
         orient : 'vertical',
+        top : 'middle',
         feature: {
             dataView: {show: true, readOnly: false},
             magicType: {show: true, type: ['line', 'line']},
@@ -31,11 +32,14 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
     },
     visualMap: {
         orient: 'horizontal',
-        top : 55,
-        left: 'center',
+        top : 20,
+        itemWidth : 30,
+        itemHeight : 200,
+        itemSymbol : 'diamond',
+        left: 'right',
     },
     calendar: {
-        top: 100,
+        top: 80,
         bottom:10,
         left: 60,
         right: 30,

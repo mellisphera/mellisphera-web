@@ -2,5 +2,5 @@
     <strong>Info!</strong> No data.
   </div>
 <div echarts [options]="grapheMielService.option" [loading]="!dailyStockHoneyService.loading" [loadingOpts]="dailyStockHoneyService.loadingOpts" (chartDataViewChanged)="chartChange($event)" style="width:93vw; height: 40vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
-<div echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width:85vw;height:40vh;"  id="calendrierPoids"></div>  
+<div echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width:93vw;height:40vh;"  id="calendrierPoids"></div>  
 
