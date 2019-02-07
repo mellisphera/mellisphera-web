@@ -20,7 +20,7 @@ export class GraphStackService {
     legend: {
         orient : 'horizontal',
         data:['Tint','Text','Hint','Hext','Batery-int','Batery-ext'],
-        x: '3%'
+        x: '5%'
     },
     toolbox: {
       orient : 'horizontal',
@@ -52,10 +52,24 @@ export class GraphStackService {
             filterMode: 'empty',
             realtime: true,
             xAxisIndex: [0, 1, 2]
+        },
+        {
+          type: 'inside',
+          filterMode: 'empty',
+          realtime: true,
+          yAxisIndex : 0,
+          left : 'left'
+        },
+        {
+          type: 'inside',
+          filterMode: 'empty',
+          realtime: true,
+          yAxisIndex : 1,
+          left : 'left'
         }
     ],
     grid: [
-      {x: '4%', y: '5%', width: '95%', height: '25%'},
+      {x: '4%', y: '3%', width: '95%', height: '25%'},
       {x: '4%', y: '35%', width: '95%', height: '25%'},
       {x: '4%', y: '67%', width: '95%', height: '25%'},
   ],
@@ -172,7 +186,7 @@ export class GraphStackService {
           //hoverAnimation: true,
           color : 'red',
           large: true,
-          largeThreshold : 10
+          largeThreshold : 10,
           barGap : '30%'
         },
         {
