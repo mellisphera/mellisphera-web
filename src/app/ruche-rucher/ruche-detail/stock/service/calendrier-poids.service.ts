@@ -23,7 +23,7 @@ export class CalendrierPoidsService{
         }    
     },
     toolbox: {
-        orient : 'horizontal',
+        orient : 'vertical',
         feature: {
             dataView: {show: true, readOnly: false},
             magicType: {show: true, type: ['line', 'line']},
@@ -42,7 +42,8 @@ export class CalendrierPoidsService{
         top: 100,
         bottom:10,
         left: '2%',
-        right: '4%',
+        width : '95%',
+        //right: '4%',
         height:'200',
         //height:'auto',
         cellSize: ['20','20'],
