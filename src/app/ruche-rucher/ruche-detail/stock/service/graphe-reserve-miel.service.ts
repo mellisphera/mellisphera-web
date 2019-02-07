@@ -27,6 +27,7 @@ export class GrapheReserveMielService {
         top:40
       },
       toolbox: {
+        top : 'middle',
         orient : 'vertical', 
         feature: {
             dataZoom: {

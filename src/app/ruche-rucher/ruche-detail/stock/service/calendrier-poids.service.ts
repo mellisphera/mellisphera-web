@@ -24,8 +24,29 @@ export class CalendrierPoidsService{
     },
     toolbox: {
         orient : 'vertical',
+        itemSize : 15,
+        top : 'middle',
         feature: {
-            dataView: {show: true, readOnly: false},
+            dataView: {
+                show: true, 
+                readOnly: false,
+                optionToContent: function(opt) {
+                    var series = opt.series;
+                    var table = '<table style="width:100%; border:3px solid black;">';
+                    table+='<tbody>'
+                    table += "<tr style='border: 1px solid black;'><th style='text-align:center;'>"+series[0].name+"</th><tr>";
+                    let data;
+                    series[0].data.forEach(element => {
+                        table+='<tr style="border: 1px solid black;"><td>'+element[0]+'</td ><td>'+element[1]+'</td><tr/>';
+                    });
+                    table += "<tr style='border: 1px solid black;'><th style='text-align:center;'>"+series[1].name+"</th><tr>";
+                    series[1].data.forEach(element => {
+                        table+='<tr style="border: 1px solid black;"><td>'+element[0]+'</td><td>'+element[1]+'</td><tr/>';
+                    });
+                    table+='</tbody></table>';
+                    return table;
+                }
+            },
             magicType: {show: true, type: ['line', 'line']},
             restore: {show: true},
             saveAsImage: {show: true}
@@ -41,8 +62,9 @@ export class CalendrierPoidsService{
    calendar: [{
         top: 100,
         bottom:10,
-        left: '2%',
-        width : '95%',
+        left: '3%',
+        right: '2%',
+        width : '92%',
         //right: '4%',
         height:'200',
         //height:'auto',

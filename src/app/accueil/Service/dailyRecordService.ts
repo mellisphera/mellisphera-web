@@ -97,8 +97,9 @@ export class DailyRecordService{
             },
             visualMap: {
                 orient: 'horizontal',
-                top : 55,
-                left: 'center',
+                top : 20,
+                itemWidth : 50,
+                right: '3%',
                 type: 'piecewise',
                 pieces: [
                     // Range of a piece can be specified by property min and max,
