@@ -3,9 +3,9 @@ import { RucheInterface } from '../../_model/ruche';
 import { UserloggedService } from '../../userlogged.service';
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { CONFIG } from '../../../config';
-import { RucherService } from '../ruche-rucher/rucher.service';
+import { RucherService } from '../../ruche-rucher/rucher.service';
 import { Observable } from 'rxjs';
-import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
+import { ObservationService } from '../../ruche-rucher/ruche-detail/observation/service/observation.service';
 import { MeteoService } from '../../meteo/Service/MeteoService';
 
 const httpOptions = {

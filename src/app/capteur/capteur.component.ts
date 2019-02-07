@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CapteurService } from './capteur.service';
 import { FormGroup, FormBuilder, Validators,FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RucherService } from '../accueil/ruche-rucher/rucher.service';
+import { RucherService } from '../ruche-rucher/rucher.service';
 import { UserloggedService } from '../userlogged.service';
 
 import { Observable, Subscription } from 'rxjs';

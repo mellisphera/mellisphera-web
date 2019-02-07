@@ -1,7 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Meteo } from '../../_model/meteo';
-import { RucherService } from '../../accueil/ruche-rucher/rucher.service';
+import { RucherService } from '../../ruche-rucher/rucher.service';
 import { element } from 'protractor';
 import { UserloggedService } from '../../userlogged.service';
 import { Observable } from 'rxjs';

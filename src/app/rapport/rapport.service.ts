@@ -3,10 +3,10 @@ import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from '../../config';
-import { ProcessReport } from '../accueil/ruche-rucher/processedReport';
+import { ProcessReport } from '../ruche-rucher/processedReport';
 import { Rapport } from '../_model/rapport';
 import { UserloggedService } from '../userlogged.service';
-import { ObservationService } from '../accueil/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

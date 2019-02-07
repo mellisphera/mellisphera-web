@@ -8,11 +8,11 @@ import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { RapportService } from './rapport.service';
-import { Rucher } from '../accueil/ruche-rucher/rucher';
+import { Rucher } from '../ruche-rucher/rucher';
 import { UserloggedService } from '../userlogged.service';
-import { RucherService } from '../accueil/ruche-rucher/rucher.service';
+import { RucherService } from '../ruche-rucher/rucher.service';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
-import { ProcessReport } from '../accueil/ruche-rucher/processedReport';
+import { ProcessReport } from '../ruche-rucher/processedReport';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 
