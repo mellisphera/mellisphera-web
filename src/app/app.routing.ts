@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 
-import { RucheRucherComponent } from './accueil/ruche-rucher/ruche.rucher.component';
+import { RucheRucherComponent } from './ruche-rucher/ruche.rucher.component';
 import { MeteoComponent } from './meteo/meteo.component';
 
 import { LoginComponent } from './auth/login/login.component';
@@ -14,7 +14,7 @@ import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.co
 import { HomeComponent } from './accueil/home/home.component';
 import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
-import { RucheDetailComponent } from './accueil/ruche-rucher/ruche-detail/ruche.detail.component';
+import { RucheDetailComponent } from './ruche-rucher/ruche-detail/ruche.detail.component';
 
 const routes: Routes =[
    /* { path: '',             component: LoginComponent },  

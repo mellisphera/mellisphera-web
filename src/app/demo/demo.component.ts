@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FleursFloraisonService } from '../fleurs-floraison/service/fleurs.floraison.service';
-import { DailyStockHoneyService } from '../accueil/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
-import { DailyRecordsWService } from '../accueil/ruche-rucher/ruche-detail/service/daily-records-w.service';
+import { DailyStockHoneyService } from '../ruche-rucher/ruche-detail/service/daily-stock-honey.service';
+import { DailyRecordsWService } from '../ruche-rucher/ruche-detail/service/daily-records-w.service';
 import { GraphiqueFloraisonService } from '../fleurs-floraison/service/graphique-floraison.service';
-import { GrapheReserveMielService } from '../accueil/ruche-rucher/ruche-detail/stock/service/graphe-reserve-miel.service';
-import { CalendrierPoidsService } from '../accueil/ruche-rucher/ruche-detail/stock/service/calendrier-poids.service';
-import { RucherService } from '../accueil/ruche-rucher/rucher.service';
+import { GrapheReserveMielService } from '../ruche-rucher/ruche-detail/stock/service/graphe-reserve-miel.service';
+import { CalendrierPoidsService } from '../ruche-rucher/ruche-detail/stock/service/calendrier-poids.service';
+import { RucherService } from '../ruche-rucher/rucher.service';
 
 @Component({
   selector: 'app-demo',

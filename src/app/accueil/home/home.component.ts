@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
 import { UserloggedService } from '../../userlogged.service';
-import { RucherService } from '../ruche-rucher/rucher.service';
+import { RucherService } from '../../ruche-rucher/rucher.service';
 import { Ruche } from './ruche';
 import { DailyRecordService } from '../Service/dailyRecordService';
 import { DailyRecordsTH } from './DailyRecordTH';

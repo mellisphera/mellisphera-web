@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { MeteoService } from './Service/MeteoService';
 //import * as echarts from '../../../assets/echarts';
 import { UserloggedService } from '../userlogged.service';
-import { RucherService } from '../accueil/ruche-rucher/rucher.service';
+import { RucherService } from '../ruche-rucher/rucher.service';
 import { ECharts, EChartOption} from 'echarts';
 //import * as echarts from 'node_modules/echarts/dist/echarts.min.js'
 import { CalendrierService } from './Service/calendrier.service';
