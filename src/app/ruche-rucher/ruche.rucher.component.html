@@ -5,7 +5,7 @@
     </div>
     <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
     <div class="main-panel">
-        <router-outlet></router-outlet>
+        <!--<router-outlet></router-outlet>-->
   
   
   <!-- change component content here-->                    
@@ -190,60 +190,6 @@
     </div>
   </div>
   </div>
-  
-  <!-- MODALS ARE DECLARED HERE !!! -->
-  
-  <!-- New rucher Modal -->
-  <div class="modal fade" id="newRucherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >New Apiary</h4></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="rucherForm">
-            <div class="form-group"  >
-              <label class="col-form-label">Name</label>
-              <input formControlName="nom" type="text" class="form-control">
-              <div class="alert alert-danger" *ngIf="!rucherForm.controls['nom'].valid && rucherForm.controls['nom'].touched">
-                name no longer than 20 chars
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="message-text" class="col-form-label">Description</label>
-              <textarea formControlName="description" class="form-control" id="message-text"></textarea>
-              <div class="alert alert-danger" *ngIf="!rucherForm.controls['description'].valid && rucherForm.controls['description'].touched">
-                set a short description of your apiary
-              </div>
-            </div>
-              <div class="form-group">
-                <label  class="col-form-label">Ville :</label>
-                <input formControlName="ville" type="text" class="form-control">
-                  <div class="alert alert-danger" *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
-                    city name
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-form-label">Zip Code</label>
-                  <input formControlName="codePostal" type="text" class="form-control">
-                  <div class="alert alert-danger" *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
-                    Zip Code
-                  </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="Créer Rucher" (click)="createRucher()" [disabled]="!rucherForm.valid">Créer Rucher</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End of new Rucher Modal -->
-  
   
   
   <!-- New Ruche Modal -->
