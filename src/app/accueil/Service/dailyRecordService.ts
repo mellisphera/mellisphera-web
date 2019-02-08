@@ -98,7 +98,7 @@ export class DailyRecordService{
             visualMap: {
                 orient: 'horizontal',
                 top : 20,
-                itemWidth : 50,
+                //itemWidth : 0,
                 right: '3%',
                 type: 'piecewise',
                 pieces: [

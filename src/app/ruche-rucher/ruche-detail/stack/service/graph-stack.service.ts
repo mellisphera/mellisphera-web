@@ -9,7 +9,8 @@ export class GraphStackService {
   option = {
     title: {
         text: 'Stack',
-        x: 'center'
+        x: 'center',
+        top : -5
     },
     tooltip: {
         trigger: 'axis',
@@ -20,15 +21,16 @@ export class GraphStackService {
     legend: {
         orient : 'horizontal',
         data:['Tint','Text','Hint','Hext','Batery-int','Batery-ext'],
-        x: '5%'
+        x: '5%',
+        y : '2%'
     },
     toolbox: {
       orient : 'horizontal',
       //right: '0',
-      left : '85%',
+      left : '80%',
       feature: {
           dataZoom: {
-              yAxisIndex: 'none'
+              yAxisIndex: 'none',
           },
           dataView: {readOnly: false},
           magicType: {type: ['line', 'bar']},
@@ -45,6 +47,7 @@ export class GraphStackService {
             realtime: true,
             start: 80,
             end: 100,
+            bottom : -1,
             xAxisIndex: [0, 1, 2]
         },
         {
@@ -69,9 +72,9 @@ export class GraphStackService {
         }
     ],
     grid: [
-      {x: '4%', y: '3%', width: '95%', height: '25%'},
-      {x: '4%', y: '35%', width: '95%', height: '25%'},
-      {x: '4%', y: '67%', width: '95%', height: '25%'},
+      {x: '4%', y: '5%', width: '95%', height: '28%'},
+      {x: '4%', y: '38%', width: '95%', height: '25%'},
+      {x: '4%', y: '69%', width: '95%', height: '25%'},
   ],
   /*visualMap: {
     top: 10,
