@@ -52,7 +52,7 @@ export class RucherService {
             name: '',
             description : '',
             createdAt : null,
-            urlPhoto : '',
+            photo : 'void',
             username : '',
             codePostal : '',
             ville : ''
@@ -64,7 +64,7 @@ export class RucherService {
             name: '',
             description : '',
             createdAt : null,
-            urlPhoto : '',
+            photo : 'void',
             username : '',
             codePostal : '',
             ville : ''

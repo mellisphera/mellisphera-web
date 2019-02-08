@@ -19,7 +19,7 @@ export class CalendrierPoidsService{
     tooltip : {
         trigger: 'item',
         formatter: (params)=>{
-            return params.data[0]+'<br/>'+params.seriesName+ ' : '+params.data[1];
+            return new Date(params.data[0]).toLocaleDateString()+'<br/>'+params.seriesName+ ' : '+params.data[1];
         }    
     },
     toolbox: {
@@ -47,7 +47,6 @@ export class CalendrierPoidsService{
                     return table;
                 }
             },
-            magicType: {show: true, type: ['line', 'line']},
             restore: {show: true},
             saveAsImage: {show: true}
         }

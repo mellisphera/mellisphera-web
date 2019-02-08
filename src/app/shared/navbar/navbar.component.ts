@@ -1,3 +1,4 @@
+import { CONFIG } from './../../../config';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
@@ -23,6 +24,7 @@ import { DailyRecordService } from '../../accueil/Service/dailyRecordService';
 export class NavbarComponent implements OnInit{
     message : string;
     username : string;
+    photoApiary : File = null;
     private listTitles: any[];
     location: Location;
     private toggleButton: any;
@@ -48,37 +50,44 @@ export class NavbarComponent implements OnInit{
         catch(e){}  
       this.location = location;
       this.sidebarVisible = false;
-        this.username= data.currentUser().username;
+        this.username = data.currentUser().username;
 
     }
 
     initForm(){
-        this.rucherForm=this.formBuilder.group({
-            'nom': [null,Validators.compose([Validators.required])],
+        this.rucherForm = this.formBuilder.group({
+            'nom': [null, Validators.compose([Validators.required])],
             'description': [null],
-            'ville': [null,Validators.compose([Validators.required])],
-            'codePostal': [null,Validators.compose([Validators.required])],
-            'validate' : ``
-          })
+            'ville': [null, Validators.compose([Validators.required])],
+            'codePostal': [null, Validators.compose([Validators.required])],
+            'validate' : ``,
+          });
       }
-    logout(){
+    logout() {
         this.authService.isAuthenticated = false;
         this.tokenService.signOut();
         this.authService.connexionStatus.next(false);
         this.router.navigate(['/login']);
     }
-
+    onPictureLoad(event) {
+        this.photoApiary = event.target.files[0];
+        const fileReader = new FileReader();
+        fileReader.onload = (e) => {
+            this.rucherService.rucher.photo = fileReader.result;
+        }
+        fileReader.readAsDataURL(this.photoApiary);
+        console.log(this.rucherService.rucher);
+    }
     ngOnInit(){
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
-      this.data.currentMessage.subscribe(message=>this.message=message);
+      this.data.currentMessage.subscribe(message => this.message = message);
       this.initForm();
     }
-    onSelectRucher(){
+    onSelectRucher() {
+        console.log(this.rucherService.rucher);
         this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher);
-        //console.log(this.rucheService.ruches);
-        //ruchesObs
         this.rucherService.getRucherDetails();
         this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
         this.meteoService.getWeather(this.rucherService.rucher.ville);
@@ -91,19 +100,19 @@ export class NavbarComponent implements OnInit{
     sidebarOpen() {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];
-        setTimeout(function(){
+        setTimeout(function() {
             toggleButton.classList.add('toggled');
         }, 500);
         body.classList.add('nav-open');
 
         this.sidebarVisible = true;
-    };
+    }
     sidebarClose() {
         const body = document.getElementsByTagName('body')[0];
         this.toggleButton.classList.remove('toggled');
         this.sidebarVisible = false;
         body.classList.remove('nav-open');
-    };
+    }
     sidebarToggle() {
          const toggleButton = this.toggleButton;
          const body = document.getElementsByTagName('body')[0];
@@ -112,13 +121,13 @@ export class NavbarComponent implements OnInit{
         } else {
             this.sidebarClose();
         }
-    };
+    }
 
     getTitle(){
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      titlee = titlee.split('/').pop();
-      for(var item = 0; item < this.listTitles.length; item++){
-          if(this.listTitles[item].path === titlee){
+      var title = this.location.prepareExternalUrl(this.location.path());
+      title = title.split('/').pop();
+      for ( let item = 0; item < this.listTitles.length; item++) {
+          if (this.listTitles[item].path === title) {
               return this.listTitles[item].title;
           }
       }
@@ -127,26 +136,31 @@ export class NavbarComponent implements OnInit{
   
     createRucher(){
         const formValue = this.rucherForm.value;
-        this.rucherService.rucher = {
+        console.log(formValue);
+        /*this.rucherService.rucher = {
           id : null,
           latitude: '',
           longitude: '',
           name: '',
           description : '',
           createdAt : null,
-          urlPhoto : '',
+          photo : '',
           username : '',
           codePostal : '',
           ville : ''
-       };
-        this.rucherService.rucher.id=null;
+       };*/
+        if (this.photoApiary == null) {
+            this.rucherService.rucher.photo = CONFIG.URL_FRONT + 'assets/imageClient/testAccount.png';
+        }
+        this.rucherService.rucher.id = null;
         this.rucherService.rucher.description = formValue.description;
         this.rucherService.rucher.name = formValue.nom;
         this.rucherService.rucher.ville = formValue.ville;
         this.rucherService.rucher.codePostal = formValue.codePostal;
         this.rucherService.rucher.createdAt = new Date();
-        this.rucherService.rucher.urlPhoto = "void";
+        //this.rucherService.rucher.photo = "void";
         this.rucherService.rucher.username = this.username;
+        console.log(this.rucherService.rucher);
         this.initForm();
         this.rucherService.createRucher();
       } 

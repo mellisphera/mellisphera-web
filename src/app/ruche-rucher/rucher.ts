@@ -6,7 +6,7 @@ longitude: string;
 name: string
 description : string;
 createdAt : Date;
-urlPhoto : string;
+photo : string;
 username : string;
 codePostal : string;
 ville : string;
