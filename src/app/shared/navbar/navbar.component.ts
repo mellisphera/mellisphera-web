@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit{
     private listTitles: any[];
     location: Location;
     private toggleButton: any;
-    private sidebarVisible: boolean;eza
+    private sidebarVisible: boolean;
     public lastConnexion : string;
     public rucherForm : FormGroup;
     constructor(location: Location,  
