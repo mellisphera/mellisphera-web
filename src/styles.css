@@ -10,7 +10,7 @@
 .main-panel{
     width: calc(100% - 72px);
 }
-.navbar{
+#navHeader{
     position: fixed;
     top: 0px;
     left: 72px;

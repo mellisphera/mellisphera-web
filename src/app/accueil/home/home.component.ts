@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     public rucherService: RucherService,
     private route : Router,
     public authService : AuthService) { 
+      console.log(this.rucherService.rucher);
     
     
     this.offset = new Offsets(this.top,this.right,this.bottom, this.left);
@@ -62,10 +63,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.username = this.login.currentUser().username;
+    this.style["background-image"] = "url("+this.rucherService.rucher.photo+")";
 
-    //this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/"+this.username.toUpperCase()+".png)";
-
-    if(this.username == "***REMOVED***"){
+   if(this.username == "***REMOVED***"){
       this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/JHE.png)";
     }
     else if(this.username == "***REMOVED***"){
@@ -155,13 +155,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     return ((valeur/100) * valeurTotal);
   }
   /* Pour chaque rucher selectionner */
-  onChange($event) {
-    let id = $event.target.selectedIndex;
-    this.rucherService.rucher = this.rucherService.ruchers[id];
-    this.rucheService.cleanRuches();
-    this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
-    this.dailyRecTh.getDailyRecThByApiary(this.rucherService.rucher.id);
-  }
+
 
   onMouseover($ruche){
     let ruche = JSON.parse(JSON.stringify($ruche))

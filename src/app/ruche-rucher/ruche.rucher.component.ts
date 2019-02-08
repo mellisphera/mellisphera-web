@@ -109,7 +109,7 @@ createRucher(){
     name: '',
     description : '',
     createdAt : null,
-    urlPhoto : '',
+    photo : null,
     username : '',
     codePostal : '',
     ville : ''
@@ -120,7 +120,6 @@ createRucher(){
   this.rucherService.rucher.ville = formValue.ville;
   this.rucherService.rucher.codePostal = formValue.codePostal;
   this.rucherService.rucher.createdAt = new Date();
-  this.rucherService.rucher.urlPhoto = "void";
   this.rucherService.rucher.username = this.username;
   this.initForm();
   this.rucherService.createRucher();
