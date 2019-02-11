@@ -55,7 +55,6 @@ export class GrapheReserveMielService {
             end: 100
         }
     ],
-    
     grid: {
         left: '2%',
         right: '2%',
@@ -76,8 +75,7 @@ export class GrapheReserveMielService {
     yAxis :
         {
             name : 'Weight (kg)',
-            type : 'value'  
-                
+            type : 'value'
         }
 };
 

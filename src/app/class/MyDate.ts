@@ -3,16 +3,14 @@ export class MyDate {
     private date: Date;
 
     constructor(date: Date) {
-        if (date) {
-            this.date = new Date(date);
-        }
+        this.date = new Date(date);
     }
 
     getMonth(): number {
         return this.date.getMonth();
     }
 
-    getMyIso() {
+    getIso(): string {
         let jour = '' + this.date.getDate();
         let mois = '' + (this.date.getMonth() + 1);
         const annee = this.date.getFullYear();
@@ -20,7 +18,13 @@ export class MyDate {
         if (parseInt(mois) < 10 ) { mois = '0' + mois; }
         return annee + '-' + mois + '-' + jour;
     }
-    getDay() {
+    getDay(): number {
         return this.date.getDay();
     }
+
+    getYear(): number {
+        return this.date.getFullYear();
+    }
+
+
 }

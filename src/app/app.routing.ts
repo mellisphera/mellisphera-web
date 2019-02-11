@@ -41,7 +41,6 @@ const routes: Routes =[
     { path: 'home', canActivate : [AuthGuard], component: HomeComponent},
     { path: 'admin', canActivate : [AuthGuard], component : AdminComponent},
     { path : '***REMOVED***', component : DemoComponent}
-    
 ];
 
 @NgModule({

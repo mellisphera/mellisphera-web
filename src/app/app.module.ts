@@ -1,3 +1,5 @@
+import { ConnectionService } from './admin/service/connection.service';
+import { ConnectionsMapService } from './admin/service/connections-map.service';
 import { GraphStackService } from './ruche-rucher/ruche-detail/stack/service/graph-stack.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -74,7 +76,6 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
     searchFleurByDate,
     DemoComponent,
     AdminComponent
-
   ],
   imports: [
     BrowserModule,
@@ -110,6 +111,8 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
     ObservationService,
     SignupService,
     GraphStackService,
+    ConnectionsMapService,
+    ConnectionService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
   ],
   exports:[],

@@ -1,3 +1,4 @@
+import { MyDate } from './../../../../class/MyDate';
 import { Injectable } from '@angular/core';
 import { CalendrierService } from '../../service/calendrier.service';
 
@@ -17,7 +18,7 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
     },
     tooltip : {
         formatter: (params)=>{
-            return params.data[0]+'<br/>'+params.data[1];
+            return new MyDate(params.data[0]).getIso()+'<br/>'+params.data[1];
         }   
     },
     toolbox: {
