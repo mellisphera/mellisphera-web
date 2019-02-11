@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DailyRecordsWService } from '../../service/daily-records-w.service';
 import { CalendrierService } from '../../service/calendrier.service';
+import { MyDate } from '../../../../class/MyDate';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,9 +20,9 @@ export class CalendrierPoidsService{
     },
     tooltip : {
         trigger: 'item',
-        formatter: (params)=>{
-            return new Date(params.data[0]).toLocaleDateString()+'<br/>'+params.seriesName+ ' : '+params.data[1];
-        }    
+        formatter: (params) => {
+            return new MyDate(params.data[0]).getIso() + '<br/>' + params.seriesName + ' : ' + params.data[1];
+        }
     },
     toolbox: {
         orient : 'vertical',
