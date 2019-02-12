@@ -31,21 +31,21 @@ export class CalendrierPoidsService{
         feature: {
             dataView: {
                 show: true, 
-                readOnly: false,
+                readOnly: true,
                 optionToContent: function(opt) {
                     var series = opt.series;
-                    var table = '<table style="width:100%; border:3px solid black;">';
-                    table+='<tbody>'
-                    table += "<tr style='border: 1px solid black;'><th style='text-align:center;'>"+series[0].name+"</th><tr>";
+                    //var table = '<table style="width:100%;">';
+                    var table='<textarea style="width:100%; height:500px;" >'
+                    table += series[0].name+"\n";
                     let data;
                     series[0].data.forEach(element => {
-                        table+='<tr style="border: 1px solid black;"><td>'+element[0]+'</td ><td>'+element[1]+'</td><tr/>';
+                        table+=new MyDate(element[0]).getIso()+' => '+element[1]+'\n';
                     });
-                    table += "<tr style='border: 1px solid black;'><th style='text-align:center;'>"+series[1].name+"</th><tr>";
+                    table += series[1].name+"\n";
                     series[1].data.forEach(element => {
-                        table+='<tr style="border: 1px solid black;"><td>'+element[0]+'</td><td>'+element[1]+'</td><tr/>';
+                        table+=new MyDate(element[0]).getIso()+' => '+element[1];
                     });
-                    table+='</tbody></table>';
+                    table+='</textarea>';
                     return table;
                 }
             },

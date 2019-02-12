@@ -74,7 +74,6 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
     SearchFleurPipe,
     searchFleurByType,
     searchFleurByDate,
-    DemoComponent,
     AdminComponent
   ],
   imports: [
