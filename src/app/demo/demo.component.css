@@ -1,15 +1,21 @@
-#text{
-    text-align: justify;
+.container-fluid{
+    background-color: #e20613;
+    background-size: 100%;
 }
-#flex{
-    display: flex;
-    justify-content: space-between;
+#wrap{
+    max-width: 52em;
+    margin: 0 auto;
+    padding: 0 3em;
+    background-color: #FFF;
+    font-family: "Intro", sans-serif;
 }
-.chart{
-    margin-top: 10px;
+#content{
+    max-width: 640px;
     margin: auto;
-    padding: 10px;
 }
-.main-panel{
-    width: 100%;
+#titre-group div,h1{
+    display: inline-block;
+}
+#titre-group div img{
+    margin-bottom: 19px;
 }

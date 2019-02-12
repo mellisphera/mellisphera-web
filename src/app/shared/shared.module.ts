@@ -19,6 +19,7 @@ import { GrapheReserveMielService } from '../ruche-rucher/ruche-detail/stock/ser
 import { GraphRecordService } from '../ruche-rucher/ruche-detail/hourly/service/graph-record.service';
 import { RecordService } from '../ruche-rucher/ruche-detail/service/Record/record.service';
 import { CalendrierHealthService } from '../ruche-rucher/ruche-detail/health/service/calendrier-health.service';
+import { DemoComponent } from '../demo/demo.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { CalendrierHealthService } from '../ruche-rucher/ruche-detail/health/ser
     StockComponent,
     HealthComponent,
     ObservationComponent,
-    StackComponent
+    StackComponent,
+    DemoComponent
   ],
   providers : [
     CalendrierPoidsService,

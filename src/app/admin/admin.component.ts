@@ -18,7 +18,7 @@ export class AdminComponent implements OnInit {
 
   }
 
-  receiveMessage($event){
+  receiveMessage($event) {
       this.message = $event;
   }
 
