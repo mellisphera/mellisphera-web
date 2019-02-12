@@ -21,7 +21,7 @@
                     Nunc porta orci vel ex porttitor consectetur. Aenean rhoncus sollicitudin faucibus. Ut et odio cursus nibh elementum tristique sit amet nec tortor. Donec condimentum ligula ac enim pharetra, sed porttitor lacus gravida. Nulla ornare volutpat arcu id ultrices. Curabitur metus dolor, sodales a bibendum in, maximus id elit. Phasellus dignissim orci eu nisi tempus, eu vehicula justo gravida. Sed dolor justo, sollicitudin et augue a, posuere venenatis purus.
                 </p>
                 <div echarts [options]="grahFleur.option" [merge]="fleursFloraisonService.mergeOption" [autoResize]="true"></div>
-                <div echarts [options]="grapheMielService.option" [loading]="!dailyStockHoneyService.loading" [loadingOpts]="dailyStockHoneyService.loadingOpts" (chartDataViewChanged)="chartChange($event)" style="width:100%; height: 40vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
+                <div echarts [options]="grapheMielService.option" [loading]="!dailyStockHoneyService.loading" [loadingOpts]="dailyStockHoneyService.loadingOpts" style="width:100%; height: 40vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
                 <div echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width:100%;height:40vh;"  id="calendrierPoids"></div>
             </article>
         </section>
