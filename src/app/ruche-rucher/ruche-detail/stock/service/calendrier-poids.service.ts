@@ -43,7 +43,7 @@ export class CalendrierPoidsService{
                     });
                     table += series[1].name+"\n";
                     series[1].data.forEach(element => {
-                        table+=new MyDate(element[0]).getIso()+' => '+element[1];
+                        table+=new MyDate(element[0]).getIso()+' => '+element[1]+'\n';
                     });
                     table+='</textarea>';
                     return table;
