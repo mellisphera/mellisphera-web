@@ -22,13 +22,13 @@ export class DailyRecordsWService {
   dailyObs : Observable<DailyRecordsW[]>;
 
   dailyRec : DailyRecordsW[];
-  dailyRecArray : any[];
-  mergeOption : any = null;
-  rangeCalendar : Array<string>;
+  dailyRecArray: any[];
+  mergeOption: any = null;
+  rangeCalendar: Array<string>;
+  currentIdHive: string;
 
-
-  arrayTempExt : any[];
-  mergeOptionTempExt : any;
+  arrayTempExt: any[];
+  mergeOptionTempExt: any;
 
   timeLine : any[];
 
@@ -43,10 +43,10 @@ export class DailyRecordsWService {
   }
 
   getDailyRecordsWbyIdHive(idHive : string){
+    this.currentIdHive = idHive;
     this.dailyRecArray = [];
     this.arrayTempExt = [];
     this.dailyRec = [];
-    var start, end = null;
     this.dailyObs = this.http.get<DailyRecordsW[]>(CONFIG.URL+'dailyRecordsW/hive/'+idHive);
     this.dailyObs.subscribe(
       (data)=>{
@@ -56,7 +56,6 @@ export class DailyRecordsWService {
           this.updateCalendar();
         }
       },
-
       (err)=>{
         console.log(err);
       }
@@ -89,10 +88,10 @@ export class DailyRecordsWService {
           max: 40,
           calculable : true,
           inRange: {
-            color: ['#abd9e9','#CC0000']        
+            color: ['#abd9e9','#CC0000']
           },
-      },
-    }
+      }
+    };
   }
   
   cleanQuery(){

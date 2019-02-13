@@ -1,21 +1,59 @@
 .container-fluid{
     background-color: #e20613;
     background-size: 100%;
+    padding: 0px;
 }
 #wrap{
-    max-width: 52em;
+    max-width: 62em;
     margin: 0 auto;
     padding: 0 3em;
     background-color: #FFF;
     font-family: "Intro", sans-serif;
 }
+header{
+    width: 100%;
+    padding: 10px;
+    
+}
+.logo div{
+    padding-top: 12px;
+}
 #content{
     max-width: 640px;
     margin: auto;
 }
-#titre-group div,h1{
-    display: inline-block;
+.uxessaim{
+    /*loat: right;*/
+    width: 190px;
+    vertical-align: bottom !important;
+    margin-left: calc(100% - 190px);
 }
-#titre-group div img{
-    margin-bottom: 19px;
+.tHeader{
+    background-color: #F5F5F5;
+    font-weight: 600;
+}
+.tHContainer{
+    max-width: 640px;
+    margin: auto;
+    font-size: 16px;
+    font-weight: 600;
+}
+.tHeader a{
+    color: black;
+}
+.tHeader a:visited{
+    color: black;
+}
+.tHeader a:hover{
+    color: red;
+}
+article p{
+    font-size: 21px;
+}
+@media screen and (max-width:700px){
+    #wrap{
+        max-width: 100%;
+        margin: auto;
+    }
+
 }

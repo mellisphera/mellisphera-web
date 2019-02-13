@@ -90,6 +90,7 @@ export class CapteurService {
         this.capteursObs.subscribe(
             (data)=>{
                 this.capteursByUser = data;
+                console.log(this.capteursByUser);
             },
             (err)=>{
                 console.log(err);
@@ -111,21 +112,15 @@ export class CapteurService {
     }
 
     updateCapteur() {
-        this.capteurObs =  this.http.put<CapteurInterface>(CONFIG.URL+'sensors/update/' + this.capteur.id, this.capteur, httpOptions);
+        this.capteurObs =  this.http.put<CapteurInterface>(CONFIG.URL+ 'sensors/update/' + this.capteur.id, this.capteur, httpOptions);
         this.capteurObs.subscribe(
-            ()=>{},
-            (err)=>{
+            () => {},
+            (err) => {
                 console.log(err);
             },
-            ()=>{
+            () => {
                 this.getUserCapteurs();
             }
         );
     }
-
-    errorHandler(error: HttpErrorResponse){
-        return Observable.throw(error.message || "server error")
-    }
-
-    
 }

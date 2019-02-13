@@ -66,7 +66,6 @@ export class RucheDetailComponent implements OnInit {
             ()=>{},
             ()=>{
                 if(this.rucheService.ruches.length < 1){
-                    console.log("ok");
                     this.rucheService.getRucheByApiary(this.userService.getUser(),window.sessionStorage.getItem("currentApiary"))
                     this.rucheService.ruchesObs.subscribe(
                         ()=>{},
@@ -133,13 +132,18 @@ export class RucheDetailComponent implements OnInit {
           this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
         }
         else if(this.currentTab.indexOf("stock")!=-1){
-            if(this.dailyStockHoneyService.cuurrentIdHive != this.rucheId){
-                this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
+            if (this.dailyStockHoneyService.cuurrentIdHive != this.rucheId) {
+                console.log("graph");
+                //this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
                 this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheService.ruche.id);
+            }
+            if (this.dailyRecordWservice.currentIdHive != this.rucheId) {
+                console.log("calendrier");
+                this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
             }
         }
         else if(this.currentTab.indexOf("hourly")!=-1){
-            if(this.recordService.currentIdHive != this.rucheId ){
+            if(this.recordService.currentIdHive != this.rucheId){
                 this.recordService.getRecordByIdHive(this.rucheService.ruche.id);
             }
         }

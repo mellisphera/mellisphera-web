@@ -63,9 +63,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.username = this.login.currentUser().username;
-    this.style["background-image"] = "url("+this.rucherService.rucher.photo+")";
+    //this.style["background-image"] = "url("+this.rucherService.rucher.photo+")";
 
-   if(this.username == "jhe"){
+   /*if(this.username == "jhe"){
       this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/JHE.png)";
     }
     else if(this.username == "jcp"){
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     else if(this.username == "pma"){
       this.style["background-image"]="url("+CONFIG.URL_FRONT+"assets/imageClient/PMA.png)";
-    }
+    }*/
   }
 
   onClick(ruche){
@@ -117,22 +117,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   /* Calcule les positions */
   getPosition(position) {
-    let container = document.getElementById("cadre");
+    const container = document.getElementById("cadre");
 
     /* Dimensions block parent */
-    let widthcontainer = container.offsetWidth;
-    let heightcontainer = container.offsetHeight; 
+    const widthcontainer = container.offsetWidth;
+    const heightcontainer = container.offsetHeight; 
 
-    let coordonnes = position.transform.slice(10, position.transform.length - 1);
+    const coordonnes = position.transform.slice(10, position.transform.length - 1);
     /* Position en pourcentage */
     let left = parseInt(position.left);
     let top = parseInt(position.top);
     /* Convertir en px */
-    
     left = this.getPourccentToPx(left,widthcontainer);
     top = this.getPourccentToPx(top,heightcontainer);
 
-    let deplacement = coordonnes.split(',');
+    const deplacement = coordonnes.split(',');
 
     deplacement[0] = parseInt(deplacement[0].slice(0,deplacement[0].length-2));
     deplacement[1] = parseInt(deplacement[1].slice(0,deplacement[1].length-2));
@@ -158,11 +157,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   onMouseover($ruche){
-    let ruche = JSON.parse(JSON.stringify($ruche))
+    const ruche = JSON.parse(JSON.stringify($ruche))
     this.infoRuche = ruche.name + ' : '+ruche.description;
   }
 
   ngOnDestroy(){
-    
   }
 }
