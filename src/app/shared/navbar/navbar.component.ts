@@ -3,7 +3,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { UserloggedService } from '../../userlogged.service';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 import { AuthService } from '../../auth/Service/auth.service';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { RucherService } from '../../ruche-rucher/rucher.service';
@@ -13,6 +13,9 @@ import { MeteoService } from '../../meteo/Service/MeteoService';
 import { ObservationService } from '../../ruche-rucher/ruche-detail/observation/service/observation.service';
 import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
 import { DailyRecordService } from '../../accueil/Service/dailyRecordService';
+import { Subscription } from 'rxjs';
+
+
 
 @Component({
     // moduleId: module.id,
@@ -24,18 +27,21 @@ import { DailyRecordService } from '../../accueil/Service/dailyRecordService';
 export class NavbarComponent implements OnInit{
     message : string;
     username : string;
-    photoApiary : File = null;
+    photoApiary: File ;
     private listTitles: any[];
     location: Location;
+    file: File;
+    httpEmitter:Subscription;
+    hasBaseDropZoneOver: boolean = false;
     private toggleButton: any;
     private sidebarVisible: boolean;
     public lastConnexion : string;
     public rucherForm : FormGroup;
     constructor(location: Location,  
         private element: ElementRef, 
-        private data : UserloggedService,
+        private data: UserloggedService,
         private router: Router, 
-        private authService : AuthService,
+        private authService: AuthService,
         public rucherService : RucherService,
         private rucheService : RucheService,
         private meteoService : MeteoService,
@@ -69,15 +75,18 @@ export class NavbarComponent implements OnInit{
         this.authService.connexionStatus.next(false);
         this.router.navigate(['/login']);
     }
-    onPictureLoad(event) {
-        this.photoApiary = event.target.files[0];
+    onPictureLoad(next) {
         const fileReader = new FileReader();
         fileReader.onload = (e) => {
             this.rucherService.rucher.photo = fileReader.result;
-        }
+        };
+        fileReader.onloadend = () => {
+            next();
+        };
         fileReader.readAsDataURL(this.photoApiary);
         console.log(this.rucherService.rucher);
     }
+
     ngOnInit(){
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
@@ -92,7 +101,7 @@ export class NavbarComponent implements OnInit{
         this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
         this.meteoService.getWeather(this.rucherService.rucher.ville);
         this.observationService.getObservationByIdApiary(this.rucherService.rucher.id);
-        this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id);
+        this.rucheService.getRucheByApiary(this.username, this.rucherService.rucher.id);
         this.dailyRecordService.getDailyRecThByApiary(this.rucherService.rucher.id);
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
       }
@@ -134,35 +143,31 @@ export class NavbarComponent implements OnInit{
       return 'Dashboard';
     }
   
-    createRucher(){
+    apiarySubmit() {
         const formValue = this.rucherForm.value;
         console.log(formValue);
-        /*this.rucherService.rucher = {
-          id : null,
-          latitude: '',
-          longitude: '',
-          name: '',
-          description : '',
-          createdAt : null,
-          photo : '',
-          username : '',
-          codePostal : '',
-          ville : ''
-       };*/
         if (this.photoApiary == null) {
             this.rucherService.rucher.photo = CONFIG.URL_FRONT + 'assets/imageClient/testAccount.png';
         }
-        this.rucherService.rucher.id = null;
-        this.rucherService.rucher.description = formValue.description;
-        this.rucherService.rucher.name = formValue.nom;
-        this.rucherService.rucher.ville = formValue.ville;
-        this.rucherService.rucher.codePostal = formValue.codePostal;
-        this.rucherService.rucher.createdAt = new Date();
-        //this.rucherService.rucher.photo = "void";
-        this.rucherService.rucher.username = this.username;
-        console.log(this.rucherService.rucher);
-        this.initForm();
-        this.rucherService.createRucher();
-      } 
-      
+        else {
+            this.onPictureLoad(() => {
+                console.log(this.rucherService.rucher.photo);
+                this.rucherService.rucher.id = null;
+                this.rucherService.rucher.description = formValue.description;
+                this.rucherService.rucher.name = formValue.nom;
+                this.rucherService.rucher.ville = formValue.ville;
+                this.rucherService.rucher.codePostal = formValue.codePostal;
+                this.rucherService.rucher.createdAt = new Date();
+                //this.rucherService.rucher.photo = "void";
+                this.rucherService.rucher.username = this.username;
+                console.log(this.rucherService.rucher);
+                this.initForm();
+                this.rucherService.createRucher();
+            });
+        }
+      }
+
+      createApiary (){
+
+      }
 }

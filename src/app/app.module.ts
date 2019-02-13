@@ -50,11 +50,13 @@ import { ObservationService } from './ruche-rucher/ruche-detail/observation/serv
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './shared/shared.module';
 import { PipeCapteur, SearchCapteur } from './capteur/capteur.pipe';
-import { SearchFleurPipe, searchFleurByType,searchFleurByDate } from './fleurs-floraison/service/search-fleur.pipe';
+import { SearchFleurPipe, searchFleurByType, searchFleurByDate } from './fleurs-floraison/service/search-fleur.pipe';
 import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
 import { SignupService } from './admin/service/signup.service';
 import { AuthInterceptorService } from './auth/Service/auth-interceptor.service';
+
+
 
 @NgModule({
   declarations: [
@@ -89,7 +91,7 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
     HttpClientModule,
     DragAndCheckModule,
     NgxEchartsModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     CapteurService,
@@ -114,7 +116,9 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
     ConnectionService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
   ],
-  exports:[],
+  exports:[
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

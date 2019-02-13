@@ -11,7 +11,9 @@
       
       <div class="container-fluid" style="background-color: white;">
             <div class="row content">
-                <div id="cadre" [ngStyle]="style">
+                <div id="cadre" [ngStyle]="{'background-image':'url('+rucherService.rucher.photo+')',
+                                            'background-position' : 'center',
+                                            'background-repeat' : 'no-repeat'}">
                     <div
                         data-toggle="tooltip" data-placement="top" [title]="infoRuche"
                         *ngFor="let ruche of rucheService.ruches; let i = index" 

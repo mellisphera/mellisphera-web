@@ -1,28 +1,30 @@
 <div class="container-fluid">
     <div id="wrap">
-        <header>
-            <p>
-                <img src="./assets/logoFull.png" width="100%" alt="logo mellisphera">
-            </p>
-        </header>
+            <header>
+                    <div class="logo">
+                            <a href="https://***REMOVED***.fr/bzz" title="Le Bzz"><img class="bzzLogo" alt="Le Bzz" src="https://***REMOVED***.fr/bzz/wp-content/themes/bzz/images/lebzz.svg"></a>
+                            <img class="uxessaim" src="https://***REMOVED***.fr/bzz/wp-content/themes/bzz/images/uxessaim.svg">
+                    </div>
+                    <div class="tHeader">
+                        <div class="tHContainer">
+                            <a href="https://***REMOVED***.fr/bzz" title="Bzz">
+                                Voir tous les articles
+                            </a>
+                        </div>
+                    </div>
+        
+                </header>
         <section id="content">
             <article>
-                <div id="titre-group">
-                    <div>
-                        <img src="https://www.mellisphera.com/wp-content/uploads/2019/01/triangle-noir.png">
-                    </div>
                     <h1>Titre</h1>
-                </div>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac bibendum turpis, sit amet tempus turpis. Vestibulum odio augue, sodales vel diam ac, tincidunt imperdiet orci. Nam porta tortor ac felis posuere pulvinar. Phasellus in scelerisque leo. Nullam id hendrerit magna, quis aliquet est. Pellentesque metus ante, venenatis at varius et, placerat id magna. Sed lacinia orci ipsum. Vestibulum sit amet ornare sem. Ut pretium pharetra tellus non ornare. Maecenas ornare id quam eu commodo. Mauris faucibus pretium augue non faucibus.
                     Proin cursus mattis quam, sed blandit velit tempus sit amet. In eu dolor magna. Suspendisse potenti. Nullam dictum nisl augue, pharetra ultricies nisi maximus id. Etiam non condimentum nibh. Nam ut iaculis sem. Nullam tincidunt at orci vitae imperdiet. Quisque iaculis tincidunt augue. Duis in lacus eu elit pulvinar consectetur. Proin luctus magna a efficitur fringilla. Vivamus vitae elementum nibh.
-                    Duis id eros libero. Maecenas aliquam consequat mauris vel sollicitudin. Vestibulum condimentum libero ut dictum dapibus. Quisque ultricies, tellus ac finibus pretium, turpis quam mollis libero, ut fermentum mauris lectus ac velit. Donec consectetur non eros quis pharetra. Suspendisse rutrum placerat felis at iaculis. Vestibulum dapibus metus non urna tristique, tincidunt tincidunt mauris faucibus. Fusce eleifend semper magna sit amet aliquam. Nullam rutrum urna et sem tincidunt eleifend.
-                    Suspendisse potenti. Proin ut lorem nisi. Sed diam libero, hendrerit eget eros sed, condimentum tristique orci. Mauris libero felis, rhoncus nec nisl quis, dignissim facilisis odio. Suspendisse potenti. Morbi ultricies eget nulla quis posuere. Suspendisse potenti. Maecenas accumsan erat bibendum felis posuere fringilla. In ac est nec velit scelerisque hendrerit. Suspendisse potenti.
-                    Nunc porta orci vel ex porttitor consectetur. Aenean rhoncus sollicitudin faucibus. Ut et odio cursus nibh elementum tristique sit amet nec tortor. Donec condimentum ligula ac enim pharetra, sed porttitor lacus gravida. Nulla ornare volutpat arcu id ultrices. Curabitur metus dolor, sodales a bibendum in, maximus id elit. Phasellus dignissim orci eu nisi tempus, eu vehicula justo gravida. Sed dolor justo, sollicitudin et augue a, posuere venenatis purus.
                 </p>
-                <div echarts [options]="grahFleur.option" [merge]="fleursFloraisonService.mergeOption" [autoResize]="true"></div>
-                <div echarts [options]="grapheMielService.option" [loading]="!dailyStockHoneyService.loading" [loadingOpts]="dailyStockHoneyService.loadingOpts" style="width:100%; height: 40vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
                 <div echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width:100%;height:40vh;"  id="calendrierPoids"></div>
+                <div echarts [options]="grapheMielService.option" [loading]="!dailyStockHoneyService.loading" [loadingOpts]="dailyStockHoneyService.loadingOpts" style="width:100%; height: 40vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
+                <div echarts [options]="grahFleur.option" [merge]="fleursFloraisonService.mergeOption" [autoResize]="true"></div>
+                
             </article>
         </section>
         <footer>
