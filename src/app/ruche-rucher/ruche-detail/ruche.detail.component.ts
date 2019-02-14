@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, Input } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -31,7 +31,6 @@ import { AtokenStorageService } from '../../auth/Service/atoken-storage.service'
 })
 
 export class RucheDetailComponent implements OnInit {
-
     rucheId : string;
     rucheName : string;
     message="";
@@ -39,6 +38,7 @@ export class RucheDetailComponent implements OnInit {
     currentTab : string;
     public img : string;
     private timerSubscription: Subscription;
+
 
     constructor(private activatedRoute : ActivatedRoute,
         private route : Router,
@@ -54,7 +54,7 @@ export class RucheDetailComponent implements OnInit {
             this.rucheId = null;
             this.compteurHive = 0;
             this.currentTab = 'notes';
-            this.img = CONFIG.URL_FRONT+"assets/icons/next-button-4.png";
+            this.img = CONFIG.URL_FRONT + "assets/icons/next-button-4.png";
     }
 
     ngOnInit(){
@@ -80,7 +80,7 @@ export class RucheDetailComponent implements OnInit {
                 }
                 else{
                     this.observationService.getObservationByIdHive(this.rucheId);
-                    this.rucheService.findRucheById(this.rucheId,true);
+                    this.rucheService.findRucheById(this.rucheId, true);
                     console.log(this.rucheService.ruche);
                     this.compteurHive = this.rucheService.ruches.indexOf(this.rucheService.ruche);
                 }
@@ -99,7 +99,7 @@ export class RucheDetailComponent implements OnInit {
             this.compteurHive--;
             this.rucheService.ruche = this.rucheService.ruches[this.compteurHive];
             this.rucheId = this.rucheService.ruche.id;
-            this.rucheName = this.rucheService.ruche.name
+            this.rucheName = this.rucheService.ruche.name;
             this.exeData();
         }
 
@@ -111,7 +111,7 @@ export class RucheDetailComponent implements OnInit {
         }
         this.rucheService.ruche = this.rucheService.ruches[this.compteurHive];
         this.rucheId = this.rucheService.ruche.id;
-        this.rucheName = this.rucheService.ruche.name
+        this.rucheName = this.rucheService.ruche.name;
         this.exeData();
     }
 
@@ -125,34 +125,34 @@ export class RucheDetailComponent implements OnInit {
     }
     exeData(){
         if(this.currentTab.indexOf("notes")!=-1){
-          this.observationService.getObservationByIdHive(this.rucheService.ruche.id);
+          this.observationService.getObservationByIdHive(this.rucheId);
         }
         else if(this.currentTab.indexOf("daily")!=-1){
           this.dailyRecordThService.getByIdHive(this.rucheId);
-          this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
+          this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheId);
         }
         else if(this.currentTab.indexOf("stock")!=-1){
             if (this.dailyStockHoneyService.cuurrentIdHive != this.rucheId) {
                 console.log("graph");
                 //this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
-                this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheService.ruche.id);
+                this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheId);
             }
             if (this.dailyRecordWservice.currentIdHive != this.rucheId) {
                 console.log("calendrier");
-                this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
+                this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheId);
             }
         }
         else if(this.currentTab.indexOf("hourly")!=-1){
             if(this.recordService.currentIdHive != this.rucheId){
-                this.recordService.getRecordByIdHive(this.rucheService.ruche.id);
+                this.recordService.getRecordByIdHive(this.rucheId);
             }
         }
         else if(this.currentTab.indexOf("health")!=-1){
-          this.dailyRecordThService.getByIdHive(this.rucheService.ruche.id)
+          this.dailyRecordThService.getByIdHive(this.rucheId);
         }
         else if(this.currentTab.indexOf("stack")!=-1){
             if(this.recordService.currentIdHive != this.rucheId ){
-                this.recordService.getRecordByIdHive(this.rucheService.ruche.id);
+                this.recordService.getRecordByIdHive(this.rucheId);
             }
         }
         console.log(this.rucheService.ruche);

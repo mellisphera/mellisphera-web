@@ -134,6 +134,7 @@ export class RucheService {
     this.ruches.forEach(element => {
       if(element.id == idHive){
         if(navHive){
+          console.log(element);
           this.ruche = element
         }
         else if(!navHive){

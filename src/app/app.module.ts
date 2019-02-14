@@ -1,3 +1,6 @@
+import { GraphFlowerService } from './demo/graph/graph-flower.service';
+import { GraphHoneyService } from './demo/graph/graph-honey.service';
+import { CalendrierFSTLervice } from './demo/graph/calendrierFSTL';
 import { HomeComponent } from './accueil/home/home.component';
 import { ConnectionService } from './admin/service/connection.service';
 import { ConnectionsMapService } from './admin/service/connections-map.service';
@@ -116,6 +119,9 @@ import { ngfModule } from 'angular-file';
     GraphStackService,
     ConnectionsMapService,
     ConnectionService,
+    CalendrierFSTLervice,
+    GraphHoneyService,
+    GraphFlowerService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
   ],
   exports:[
