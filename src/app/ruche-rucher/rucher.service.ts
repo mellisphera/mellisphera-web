@@ -21,42 +21,30 @@ const httpOptions = {
 @Injectable()
 export class RucherService {
  
-    rucher : RucherModel;
-    ruchers : RucherModel[] = null;
-    detailsRucher : RucherModel;
-    rucherUpdate : RucherModel;
-    rucherDemo : RucherModel;
+    rucher: RucherModel;
+    ruchers: RucherModel[] = null;
+    detailsRucher: RucherModel;
+    rucherUpdate: RucherModel;
+    rucherDemo: RucherModel;
+
+    currentBackground: string;
 
     rucherSelectUpdate : RucherModel;
-    rucherObs : Observable<RucherModel>;
-    ruchersObs : Observable<RucherModel[]>;
+    rucherObs: Observable<RucherModel>;
+    ruchersObs: Observable<RucherModel[]>;
 
     constructor(private http:HttpClient, private user : UserloggedService, 
         public rucheService : RucheService, 
         private dailyRec : DailyRecordService,
         public observationService : ObservationService,
         public meteoService : MeteoService) {
-        if(sessionStorage.getItem("currentUser")){
-            //this.getOneApiaryById('5bc48388dc7d27634d281536');
+        if (sessionStorage.getItem('currentUser')) {
             this.getUserRuchersLast(this.user.currentUser().username);
-            
         }
         this.initRuche();
 
     }
     initRuche(){
-         this.rucherSelectUpdate = {
-            id : '',
-            latitude: '',
-            longitude: '',
-            name: '',
-            description : '',
-            createdAt : null,
-            photo : 'void',
-            username : '',
-            codePostal : '',
-            ville : ''
-         };
          this.rucher = {
             id : null,
             latitude: '',
@@ -71,6 +59,7 @@ export class RucherService {
          };
          this.rucherUpdate = this.rucher;
          this.detailsRucher = this.rucher;
+         this.rucherSelectUpdate = this.rucher;
     }
     // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
     // pour créer un rucher
@@ -96,12 +85,14 @@ export class RucherService {
     getCurrentApiary(){
         return window.sessionStorage.getItem('currentApiary');
     }
+
     getUserRuchersLast(username){
         this.ruchersObs = this.http.get<RucherModel[]>(CONFIG.URL+'apiaries/'+ username);
         this.ruchersObs.subscribe(
             (data)=>{
                 if(data.length>0){
                     this.rucher = data[data.length-1];
+                    this.currentBackground = this.rucher.photo;
                     this.saveCurrentApiaryId(this.rucher.id);
                     this.rucherSelectUpdate = data[data.length-1];
                     this.ruchers = data;
@@ -172,7 +163,17 @@ export class RucherService {
             }
         );
     }
-
+    updateBackgroundApiary(idApiary: string){
+      this.http.put(CONFIG.URL + 'apiaries/update/background/' + idApiary, this.rucher.photo).subscribe(
+          () => {},
+          (err) => {
+              console.log(err);
+          },
+          () => {
+            this.currentBackground = this.rucher.photo;
+          }
+      );
+    }
     errorHandler(error: HttpErrorResponse){
         return Observable.throw(error.message || "server error")
     }

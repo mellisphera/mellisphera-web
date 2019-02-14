@@ -14,3 +14,10 @@ button{
 .valid-drag{
     border:1px dashed blue;
 }
+#upload-group{
+    display: flex;
+}
+#upload-group div{
+    width: 50%;
+    min-height: 20px;
+}

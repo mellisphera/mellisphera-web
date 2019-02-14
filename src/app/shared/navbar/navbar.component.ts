@@ -145,29 +145,19 @@ export class NavbarComponent implements OnInit{
   
     apiarySubmit() {
         const formValue = this.rucherForm.value;
-        console.log(formValue);
         if (this.photoApiary == null) {
             this.rucherService.rucher.photo = CONFIG.URL_FRONT + 'assets/imageClient/testAccount.png';
         }
-        else {
-            this.onPictureLoad(() => {
-                console.log(this.rucherService.rucher.photo);
-                this.rucherService.rucher.id = null;
-                this.rucherService.rucher.description = formValue.description;
-                this.rucherService.rucher.name = formValue.nom;
-                this.rucherService.rucher.ville = formValue.ville;
-                this.rucherService.rucher.codePostal = formValue.codePostal;
-                this.rucherService.rucher.createdAt = new Date();
-                //this.rucherService.rucher.photo = "void";
-                this.rucherService.rucher.username = this.username;
-                console.log(this.rucherService.rucher);
-                this.initForm();
-                this.rucherService.createRucher();
-            });
+        console.log(this.rucherService.rucher.photo);
+        this.rucherService.rucher.id = null;
+        this.rucherService.rucher.description = formValue.description;
+        this.rucherService.rucher.name = formValue.nom;
+        this.rucherService.rucher.ville = formValue.ville;
+        this.rucherService.rucher.codePostal = formValue.codePostal;
+        this.rucherService.rucher.createdAt = new Date();
+        this.rucherService.rucher.username = this.username;
+        console.log(this.rucherService.rucher);
+        this.initForm();
+        this.rucherService.createRucher();
         }
-      }
-
-      createApiary (){
-
-      }
 }

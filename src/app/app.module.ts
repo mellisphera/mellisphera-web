@@ -1,3 +1,4 @@
+import { HomeComponent } from './accueil/home/home.component';
 import { ConnectionService } from './admin/service/connection.service';
 import { ConnectionsMapService } from './admin/service/connections-map.service';
 import { GraphStackService } from './ruche-rucher/ruche-detail/stack/service/graph-stack.service';
@@ -36,7 +37,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { RapportService } from './rapport/rapport.service';
 import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';
 import { RucheDetailService } from './ruche-rucher/ruche-detail/ruche.detail.service';
-import { HomeComponent } from './accueil/home/home.component';
 
 import { DailyRecordService } from './accueil/Service/dailyRecordService';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
@@ -55,6 +55,7 @@ import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
 import { SignupService } from './admin/service/signup.service';
 import { AuthInterceptorService } from './auth/Service/auth-interceptor.service';
+import { ngfModule } from 'angular-file';
 
 
 
@@ -70,13 +71,13 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
     MeteoComponent,
     RapportComponent,
     FleursFloraisonComponent,
-    HomeComponent,
     PipeCapteur,
     SearchCapteur,
     SearchFleurPipe,
     searchFleurByType,
     searchFleurByDate,
-    AdminComponent
+    AdminComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -91,6 +92,7 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
     HttpClientModule,
     DragAndCheckModule,
     NgxEchartsModule,
+    ngfModule,
     SharedModule,
   ],
   providers: [
