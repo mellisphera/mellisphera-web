@@ -35,6 +35,7 @@ export class NavbarComponent implements OnInit{
     hasBaseDropZoneOver: boolean = false;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    baseDropValid: string;
     public lastConnexion : string;
     public rucherForm : FormGroup;
     constructor(location: Location,  

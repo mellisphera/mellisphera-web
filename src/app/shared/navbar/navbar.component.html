@@ -97,15 +97,11 @@
                <div id="upload-group"> 
                  <div
                  ngfDrop
-                 [(validDrag)]    = "baseDropValid"
-                 [(file)]        = "photoApiary"
-                 (fileOver)       = "hasBaseDropZoneOver=$event"
-                 [(dragFiles)]    = "dragFiles"
-                 [(lastInvalids)] = "lastInvalids"
-                 class            = "well my-drop-zone"
-                 [(lastBaseUrl)]= "rucherService.rucher.photo"
-                 [class.invalid-drag] = "baseDropValid===false"
-                 [class.valid-drag]   = "baseDropValid"
+                 [(validDrag)] = "baseDropValid"
+                 [(file)]= "photoApiary"
+                 class = "well my-drop-zone"
+                 [(lastBaseUrl)] = "rucherService.rucher.photo"
+                 [class.valid-drag] = "baseDropValid"
                 >
                  Base drop zone
                  </div>
