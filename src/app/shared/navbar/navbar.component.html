@@ -88,8 +88,14 @@
                   <input name="image" (change)="onPictureLoad($event)" type="file">
                </div>-->
                
-               <div>
-                 <div class="col"
+               <input
+                  style="display: none"
+                  type="file"
+                  ngf [(file)]="photoApiary" 
+                  #fileInput>
+                <button (click)="fileInput.click()" class="btn btn-large btn-block btn-info">Select File</button>
+               <div id="upload-group"> 
+                 <div
                  ngfDrop
                  [(validDrag)]    = "baseDropValid"
                  [(file)]        = "photoApiary"
@@ -97,16 +103,17 @@
                  [(dragFiles)]    = "dragFiles"
                  [(lastInvalids)] = "lastInvalids"
                  class            = "well my-drop-zone"
+                 [(lastBaseUrl)]= "rucherService.rucher.photo"
                  [class.invalid-drag] = "baseDropValid===false"
                  [class.valid-drag]   = "baseDropValid"
                 >
                  Base drop zone
                  </div>
-                 <input type="file" ngf [(file)]="photoApiary" />
-                 <div class="col-6"[ngfBackground]="photoApiary"
-                 style="background-size:cover;background-repeat:no-repeat; background-position:center; width:50px;height:50px">
+                <div [ngfBackground]="photoApiary"
+                  style="background-size:cover;background-repeat:no-repeat; background-position:center; min-height:20px;">
                 </div>
                </div>
+               
               <div class="modal-footer">
                 <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="Créer Rucher" (click)="apiarySubmit()" [disabled]="!rucherForm.valid">New Apiary</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>

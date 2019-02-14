@@ -6,10 +6,9 @@ import { Ruche } from './ruche';
 import { DailyRecordService } from '../Service/dailyRecordService';
 import { DailyRecordsTH } from './DailyRecordTH';
 import { RucheService } from '../Service/ruche.service';
-//import { RucherInterface } from '../../_model/rucherInterface';
 import { RucheInterface } from '../../_model/ruche';
 import { Route, Router } from '@angular/router';
-import { CONFIG } from '../../../config'
+import { CONFIG } from '../../../config';
 import { AuthService } from '../../auth/Service/auth.service';
 
 @Component({
@@ -17,14 +16,14 @@ import { AuthService } from '../../auth/Service/auth.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, OnDestroy {
-  defautBackground = "../../../assets/img/rucher-loin.jpg";
+export class HomeComponent implements OnInit {
   public top: any = Offsets.HANDLE_HEIGHT;
   public right: any= Offsets.HALF_WIDTH;
   public bottom: any= Offsets.HANDLE_HEIGHT;
   public left: any= Offsets.HALF_WIDTH;
   infoRuche : any = null;
   offset : Offsets;
+  photoApiary: File;
   username: string;
   rucheSelect : RucheInterface;
   rucherSelectId : string;
@@ -39,8 +38,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private route : Router,
     public authService : AuthService) { 
       console.log(this.rucherService.rucher);
-    
-    
+      this.photoApiary = null;
+
     this.offset = new Offsets(this.top,this.right,this.bottom, this.left);
     //this.rucheService.getRucheByApiary(this.login.currentUser().username, this.rucherService.rucher.id);
   }
@@ -155,12 +154,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   /* Pour chaque rucher selectionner */
 
+  saveBackground(){
+    this.rucherService.updateBackgroundApiary(this.rucherService.rucher.id);
+    this.photoApiary = null;
+  }
 
+  cancelBackground() {
+    this.rucherService.rucher.photo = this.rucherService.currentBackground;
+    this.photoApiary = null;
+  }
   onMouseover($ruche){
     const ruche = JSON.parse(JSON.stringify($ruche))
     this.infoRuche = ruche.name + ' : '+ruche.description;
-  }
-
-  ngOnDestroy(){
   }
 }
