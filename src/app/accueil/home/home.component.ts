@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   photoApiary: File;
   username: string;
   rucheSelect : RucheInterface;
+  baseDropValid: string;
   rucherSelectId : string;
   message="";
 
