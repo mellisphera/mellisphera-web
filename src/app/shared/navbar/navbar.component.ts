@@ -46,7 +46,7 @@ export class NavbarComponent implements OnInit{
         public rucherService : RucherService,
         private rucheService : RucheService,
         private meteoService : MeteoService,
-        private fleursFloraisonService : FleursFloraisonService,
+       /* private fleursFloraisonService : FleursFloraisonService,*/
         private observationService : ObservationService,
         private formBuilder : FormBuilder,
         private tokenService : AtokenStorageService,
@@ -100,7 +100,7 @@ export class NavbarComponent implements OnInit{
         console.log(this.rucherService.rucher);
         this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher);
         this.rucherService.getRucherDetails();
-        this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
+      //  this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
         this.meteoService.getWeather(this.rucherService.rucher.ville);
         this.observationService.getObservationByIdApiary(this.rucherService.rucher.id);
         this.rucheService.getRucheByApiary(this.username, this.rucherService.rucher.id);
