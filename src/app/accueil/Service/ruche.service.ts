@@ -50,6 +50,7 @@ export class RucheService {
         (data)=>{
           this.ruche = data[data.length-1];
           this.ruches = data;
+          console.log(this.ruches);
         },
         (err)=>{
           console.log(err);
@@ -96,7 +97,7 @@ export class RucheService {
        console.log(err);
      },
      ()=>{
-       this.getRucheByApiary(this.user.currentUser().username,lastIdApiary);
+       this.getRucheByApiary(this.user.currentUser().username, lastIdApiary);
      }
    );
   }

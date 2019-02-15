@@ -1,3 +1,4 @@
+import { MyDate } from './../../../class/MyDate';
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -75,6 +76,7 @@ export class DailyStockHoneyService {
     /* Mise à jour du template avec les info récupèrer */
     this.countFlower();
     this.dailyStockByFleur();
+    console.log(this.dailyStockByFlower);
     for(var elt in this.dailyStockByFlower){
       this.templateSerie.name = elt;
       this.templateSerie.data = [];
@@ -83,6 +85,9 @@ export class DailyStockHoneyService {
       this.cleanTemplate();
     }
     this.mergeOption.legend.data = this.typeFlower;
+    //this.mergeOption.xAxis[0].min = new MyDate(this.arrayDate[0]).getIso();
+    //this.mergeOption.xAxis[0].max = new MyDate(this.arrayDate[this.arrayDate.length - 1]).getIso();
+    console.log(this.mergeOption.xAxis);
     this.loading = !this.loading;
   }
   
@@ -120,7 +125,10 @@ export class DailyStockHoneyService {
   cleanMerge(){
     this.typeFlower = new Array();
     this.mergeOption = {
-
+      /*xAxis: [{
+        min:'',
+        max:''
+      }],*/
       legend : {
         data : []
       },
@@ -133,7 +141,6 @@ export class DailyStockHoneyService {
 
   /* Trie les données obtenue par fleur */
   dailyStockByFleur(){
-    
     this.arrayDate = [];
     this.dailyStockByFlower = [];
     this.typeFlower.forEach(element=>{
@@ -149,7 +156,7 @@ export class DailyStockHoneyService {
         this.arrayDate.push(element.date);
       }
       this.dailyStockByFlower[''+element.nom].push({name : element.date, value : [
-        element.date, element.stockJ
+        element.date, element.stockJ * 10
       ]}
       );
     })

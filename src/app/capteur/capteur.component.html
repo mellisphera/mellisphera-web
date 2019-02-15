@@ -31,6 +31,7 @@
                                         </button>
                                         <div class="form-group row">
                                             <div class="col-xs-2">
+                                                <label>Search sensors reference :</label>
                                                 <input class="form-control" placeholder="search" type="search" [(ngModel)]="capteurSearch">
                                             </div>   
                                         </div>
@@ -46,7 +47,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>                                  
-                                                    <tr *ngFor="let capteur of ( capteurService.capteursByUser | searchCapteur : capteurSearch)">
+                                                    <tr *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch)">
                                                         <td>{{capteur.reference}}</td>
                                                         <td>{{capteur.description}}</td>
                                                         <td *ngIf="capteur.apiaryName != null">{{capteur.apiaryName}} | {{capteur.hiveName}}</td>
@@ -188,7 +189,7 @@
             <div class="form-group">
                 <label class="col-form-label">Hive</label>
                 <select [(ngModel)]="rucherService.rucheService.rucheUpdate" [ngModelOptions]="{standalone: true}" class="form-control">
-                    <option *ngFor="let rucher of rucherService.rucheService.ruches" [ngValue]="rucher" >{{rucher.name}}</option>
+                    <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="rucher" >{{ruche.name}}</option>
                 </select>   
                 <div class="alert alert-danger" hidden>Select a hive</div>        
             </div>

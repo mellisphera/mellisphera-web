@@ -49,6 +49,7 @@ header{
 }
 article p{
     font-size: 21px;
+    text-align: justify;
 }
 @media screen and (max-width:700px){
     #wrap{

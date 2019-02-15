@@ -12,7 +12,7 @@ export class CalendrierFSTLervice {
     this.option = {
       title: {
           top: 5,
-          text: 'Daily weight incomes',
+          text: 'Poids journalier',
           left: 'center',
       },
       tooltip : {
@@ -34,11 +34,8 @@ export class CalendrierFSTLervice {
           left: '3%',
           right: '2%',
           width : '92%',
-          //right: '4%',
-          height:'200',
-          //height:'auto',
           cellSize: ['20','20'],
-          range: ['2019-02-01','2019-02-28'],
+          range: ['2019-01-01','2019-02-28'],
           orient: 'horizontal',
           /*cellSize: 'auto',
           height:'200',*/
