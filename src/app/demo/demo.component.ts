@@ -9,6 +9,7 @@ import { GraphiqueFloraisonService } from '../fleurs-floraison/service/graphique
 import { GrapheReserveMielService } from '../ruche-rucher/ruche-detail/stock/service/graphe-reserve-miel.service';
 import { CalendrierPoidsService } from '../ruche-rucher/ruche-detail/stock/service/calendrier-poids.service';
 import { CalendrierFSTLervice } from './graph/calendrierFSTL';
+import { RucheService } from '../accueil/Service/ruche.service';
 
 @Component({
   selector: 'app-demo',
@@ -26,6 +27,7 @@ export class DemoComponent implements OnInit {
     public dailyStockHoneyService : DailyStockHoneyService,
     public dailyRecWService: DailyRecordsWService,
     public grahFleur: GraphFlowerService,
+    public rucheService: RucheService,
     public grapheMielService: GraphHoneyService,
     public calendrierPoids: CalendrierFSTLervice,
     public rucherService: RucherService) {
@@ -33,11 +35,10 @@ export class DemoComponent implements OnInit {
 
   ngOnInit() {
     this.rucherService.ruchersObs.subscribe(() => {}, () => {}, () => {
-      this.rucherService.rucheService.ruchesObs.subscribe(() => {}, () => {}, () => {
-        this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucherService.rucheService.ruche.id);
-        console.log(this.dailyRecWService.dailyRec);
-        this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucherService.rucheService.ruche.id);
-      });
+      console.log(this.rucherService.rucher);
+      this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucherService.rucheService.ruche.id);
+      console.log(this.dailyRecWService.dailyRec);
+      this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucherService.rucheService.ruche.id);
     });
   }
 
