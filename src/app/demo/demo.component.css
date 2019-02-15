@@ -51,6 +51,10 @@ article p{
     font-size: 21px;
     text-align: justify;
 }
+footer p{
+    margin-top: 15px;
+    text-align: center;
+}
 @media screen and (max-width:700px){
     #wrap{
         max-width: 100%;

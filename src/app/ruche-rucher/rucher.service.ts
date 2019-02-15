@@ -106,9 +106,9 @@ export class RucherService {
                     this.observationService.getObservationByIdApiary(this.rucher.id);
                     this.rucheService.getRucheByApiary(this.user.currentUser().username,this.rucher.id);
                     this.getRucherDetails();
+                    console.log("APIARY");
                     this.dailyRec.getDailyRecThByApiary(this.rucher.id);
                     this.meteoService.getWeather(this.rucher.ville);
-                    
                 }
             }
         );

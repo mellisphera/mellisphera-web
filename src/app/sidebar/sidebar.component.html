@@ -49,5 +49,10 @@
                 <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;"/>
             </a>
         </li> 
+        <li *ngIf="this.userService.currentUser().username == 'fstl'">
+            <a routerLink="/fstl" data-toggle="tooltip" data-placement="top" title="FSTL">
+                FSTL
+            </a>
+        </li> 
     </ul>
 </div>

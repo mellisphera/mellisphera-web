@@ -35,8 +35,8 @@ export class SidebarComponent implements OnInit {
   username;
   url_sideImg : string;
     
-  constructor(public router: Router, public authService : AuthService, public tokenService : AtokenStorageService) {
-    this.url_sideImg = CONFIG.URL_FRONT+'assets/logo.png'
+  constructor(public userService : UserloggedService, public router: Router, public authService : AuthService, public tokenService : AtokenStorageService) {
+    this.url_sideImg = CONFIG.URL_FRONT+'assets/logo.png';
    }
 
   ngOnInit() {
