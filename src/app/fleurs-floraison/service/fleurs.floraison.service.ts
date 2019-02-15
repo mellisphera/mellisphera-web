@@ -35,13 +35,16 @@ export class    FleursFloraisonService {
     fleursObs : Observable<FleurObservees[]>;
     constructor(private http:HttpClient, public rucherService : RucherService, private userService : UserloggedService) {
         this.cleanTemplate();
+        //currentApiary
         this.initFleurObservees();
-        this.rucherService.ruchersObs.subscribe(
+       /* this.rucherService.ruchersObs.subscribe(
             ()=>{},()=>{},
             ()=>{
+                console.log("FLEUR");
                 this.getUserFleur(this.rucherService.rucher.id);
             }
-        )
+        )*/
+        this.getUserFleur(this.rucherService.getCurrentApiary());
         this.getFleurTest();
     }
     //Récupère la liste des fleurs théoriques

@@ -9,7 +9,7 @@ export class GraphHoneyService {
   constructor() {
     this.option = {
       title: {
-          text: 'Stocke de miel',
+          text: 'Stock de miel',
           left: 'center',
           top:'-5'
       },
@@ -42,11 +42,14 @@ export class GraphHoneyService {
           }
       ],
       grid: {
-          left: '5%',
-          right: '2%',
+          left: '3%',
+          right: '6%',
+          width:'95%',
           top:70,
           bottom:0,
-          containLabel: true
+          containLabel: true,
+          borderWidth:1,
+          show: true
       },
       xAxis : [
           {
@@ -54,8 +57,8 @@ export class GraphHoneyService {
               splitLine: {
                   show: false
               },
-              min : 'dataMin',
-              max : 'dataMax'
+              min : '2019-01-01',
+              max : '2019-02-28'
           }
       ],
       yAxis :

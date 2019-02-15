@@ -48,8 +48,9 @@ export class RucheService {
       this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username+'/'+idApiary)
       this.ruchesObs.subscribe(
         (data)=>{
-          this.ruche = data[data.length-1];
+          this.ruche = data[data.length - 1];
           this.ruches = data;
+          this.saveCurrentHive();
           console.log(this.ruches);
         },
         (err)=>{
@@ -59,10 +60,20 @@ export class RucheService {
           if(this.ruches.length > 0){
             this.observationService.getObservationByIdApiary(idApiary);
           }
-          
         }
-        
       )
+   }
+
+   saveCurrentHive(idHive?: string) {
+     if (idHive) {
+      window.sessionStorage.removeItem('currentHive');
+      window.sessionStorage.setItem('currentHive', idHive);
+     }
+     else {
+      window.sessionStorage.removeItem('currentHive');
+      window.sessionStorage.setItem('currentHive', this.ruche.id);
+     }
+
    }
 
    getRucheByUsername(username : string){
@@ -81,7 +92,7 @@ export class RucheService {
     this.rucheObs = this.http.put<RucheInterface>(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,ruche,httpOptions)
     this.rucheObs.subscribe(
       ()=>{
-        this.getRucheByApiary(this.user.currentUser().username,ruche.idApiary);
+        this.getRucheByApiary(this.user.currentUser().username, ruche.idApiary);
       },
       (err)=>{
         console.log(err);

@@ -47,6 +47,7 @@ export class DailyStockHoneyService {
   }
   /* Requete API*/
   getDailyStockHoneyByApiary(idHive : string){
+    console.log(idHive);
     this.cuurrentIdHive = idHive;
     this.loading = false;
     this.dailyStock = [];

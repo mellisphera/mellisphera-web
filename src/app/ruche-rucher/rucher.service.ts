@@ -76,7 +76,9 @@ export class RucherService {
         );
     }
     // pour afficher tout les ruchers de l'utilsateur connecté
-
+    getCurrentRucher(){
+        return window.sessionStorage.getItem('currentApiary');
+    }
     saveCurrentApiaryId(idApiary : string){
         window.sessionStorage.removeItem('currentApiary');
         window.sessionStorage.setItem("currentApiary",idApiary);
