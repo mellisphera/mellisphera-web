@@ -55,6 +55,9 @@ footer p{
     margin-top: 15px;
     text-align: center;
 }
+footer a{
+    /*margin-left: 2px;*/
+}
 @media screen and (max-width:700px){
     #wrap{
         max-width: 100%;
