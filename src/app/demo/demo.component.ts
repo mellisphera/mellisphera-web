@@ -23,17 +23,19 @@ export class DemoComponent implements OnInit {
   idHiveHonney : string;
   message="";
   constructor(
+    public grahFleur: GraphFlowerService,
+    public rucherService: RucherService,
+    public rucheService: RucheService,
     public fleursFloraisonService: FleursFloraisonService,
     public dailyStockHoneyService : DailyStockHoneyService,
     public dailyRecWService: DailyRecordsWService,
-    public grahFleur: GraphFlowerService,
-    public rucheService: RucheService,
     public grapheMielService: GraphHoneyService,
     public calendrierPoids: CalendrierFSTLervice,
-    public rucherService: RucherService) {
+    ) {
     }
 
   ngOnInit() {
+    
     this.rucherService.ruchersObs.subscribe(() => {}, () => {}, () => {
       this.rucheService.ruchesObs.subscribe(() => {}, () => {}, () => {
         console.log(this.rucherService.rucher);

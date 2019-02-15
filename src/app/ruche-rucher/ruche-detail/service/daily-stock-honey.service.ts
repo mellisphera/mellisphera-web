@@ -8,6 +8,7 @@ import { isEmpty } from 'rxjs-compat/operator/isEmpty';
 import { IfStmt } from '@angular/compiler';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { graphic, registerMap } from 'echarts';
+import { RucheService } from '../../../accueil/Service/ruche.service';
 
 
 const httpOptions = {
@@ -39,11 +40,12 @@ export class DailyStockHoneyService {
 
   /* Template pour une serie(1 type d fleur)*/
   templateSerie  : any;
-  constructor(private http : HttpClient) {
+  constructor(private http : HttpClient,public rucheService : RucheService) {
     this.cleanTemplate();
     this.loading = false;
     this.dailyStock = [];
     this.cuurrentIdHive = null;
+    this.getDailyStockHoneyByApiary(this.rucheService.getCurrentHive());
   }
   /* Requete API*/
   getDailyStockHoneyByApiary(idHive : string){

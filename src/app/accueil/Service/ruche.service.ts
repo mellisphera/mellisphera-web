@@ -73,8 +73,11 @@ export class RucheService {
       window.sessionStorage.removeItem('currentHive');
       window.sessionStorage.setItem('currentHive', this.ruche.id);
      }
-
    }
+   getCurrentHive(){
+     return window.sessionStorage.getItem('currentHive');
+   }
+
 
    getRucheByUsername(username : string){
      this.ruchesAllApiary = [];
