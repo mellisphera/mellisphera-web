@@ -29,12 +29,13 @@ export class CalendrierFSTLervice {
           }
       },
      calendar: [{
-          top: 100,
+          top: 70,
           bottom:10,
-          left: '3%',
-          right: '2%',
-          width : '92%',
-          cellSize: ['20','20'],
+          left: 'center',
+          //right: '2%',
+            //width : '92%',
+        height:'auto',
+          cellSize: [40,'auto'],
           range: ['2019-01-01','2019-02-28'],
           orient: 'horizontal',
           /*cellSize: 'auto',

@@ -60,6 +60,7 @@ export class RucheDetailComponent implements OnInit {
     ngOnInit(){
         this.rucheId = this.activatedRoute.snapshot.params.id;
         this.rucheName = this.activatedRoute.snapshot.params.name;
+        this.rucheService.saveCurrentHive(this.rucheId);
         console.log(this.rucheId);
         this.rucheService.ruchesObs.subscribe(
             ()=>{},

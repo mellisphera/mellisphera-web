@@ -19,9 +19,13 @@ export class GraphFlowerService {
 
       //Défini la légende du graph
       grid: {
-        left: 2,
-        bottom: 10,
-        right: 10,
+        borderWidth:1,
+        left: '5%',
+        right:'10%',
+        width:'100%',
+        bottom: 50,
+        //right: 10,
+        show : true,
         containLabel: true
       },
       //Le pointeur ne bouge qu'avec la souris
@@ -55,7 +59,7 @@ export class GraphFlowerService {
           },
 
           axisLine: {
-              show: false
+              show: true
           },
          }
       
@@ -66,8 +70,9 @@ export class GraphFlowerService {
         type: 'category',
         show : false,
         axisLine: {
-            show: false
-        }
+            show: true
+        },
+        axisLabel : false
       },
       //Affiche les données sur le graph
 

@@ -19,7 +19,7 @@ header{
     padding-top: 12px;
 }
 #content{
-    max-width: 640px;
+    max-width: 670px;
     margin: auto;
 }
 .uxessaim{
@@ -46,6 +46,10 @@ header{
 }
 .tHeader a:hover{
     color: red;
+}
+#logo{
+    width: 40px;
+    margin-bottom: 5px;
 }
 article p{
     font-size: 21px;
