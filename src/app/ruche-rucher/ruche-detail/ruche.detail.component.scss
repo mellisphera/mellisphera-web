@@ -38,6 +38,11 @@ ul{
 }
 .nav li{
     font-size: 15px;
+    transition: all 1s ease-out;
+}
+.nav li:hover{
+    background-color: white;
+    color: #23CCEF;
 }
 .tab-content>.active{
    // border: 1px solid black;    

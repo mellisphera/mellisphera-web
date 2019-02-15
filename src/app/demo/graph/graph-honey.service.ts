@@ -9,7 +9,7 @@ export class GraphHoneyService {
   constructor() {
     this.option = {
       title: {
-          text: 'Honey Stock',
+          text: 'Stocke de miel',
           left: 'center',
           top:'-5'
       },
@@ -21,7 +21,6 @@ export class GraphHoneyService {
                   backgroundColor: '#6a7985'
               }
           }
-          
       },
       legend : {
           top:40
@@ -61,7 +60,7 @@ export class GraphHoneyService {
       ],
       yAxis :
           {
-              name : 'Weight (kg)',
+              name : 'Poids (kg)',
               type : 'value'
           }
   };

@@ -10,8 +10,8 @@
 .main-panel{
     width: calc(100% - 72px);
 }
-#navHeader{
-    position: fixed;
+navbar-cmp nav{
+    position: fixed !important;
     top: 0px;
     left: 72px;
     z-index: 500;
@@ -21,10 +21,6 @@
     margin-top: 55px;
 }
 
-
-
-
-
 @media screen and (max-width : 900px){
     .main-panel{
         width: 100%;
@@ -32,7 +28,7 @@
     .content{
         width: 100%;
     }
-    navbar-cmp{
+    navbar-cmp nav{
         left: 0px;
         width: 100%;
     }

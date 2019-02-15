@@ -20,7 +20,7 @@ export class CalendrierHealthService  extends CalendrierService {
     backgroundColor: 'white',
     title: {
         top: 70,
-        text: 'Daily weight incomes',
+        text: 'Brood level',
         left: 'center',
         textStyle: {
             color: 'black'

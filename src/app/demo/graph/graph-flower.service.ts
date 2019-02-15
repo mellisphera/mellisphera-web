@@ -13,7 +13,8 @@ export class GraphFlowerService {
     this.option = {
       //Défini le titre du graphique
       title: {
-        text: '',
+        text: 'Période de floraison',
+        left:'center'
       },
 
       //Défini la légende du graph
@@ -29,6 +30,9 @@ export class GraphFlowerService {
         formatter: (params)=>{
             return params.data[0]+'<br/>'+params.data[1];
         }    
+      },
+      legend:{
+        top: 30,
       },
       //Défini l'axe ou les axes abscisse(s)
       xAxis: [
