@@ -157,7 +157,7 @@ export class DailyStockHoneyService {
         this.arrayDate.push(element.date);
       }
       this.dailyStockByFlower[''+element.nom].push({name : element.date, value : [
-        element.date, element.stockJ * 10
+        element.date, element.stockJ
       ]}
       );
     })
