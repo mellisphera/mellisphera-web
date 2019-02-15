@@ -54,8 +54,8 @@ export class GraphHoneyService {
               splitLine: {
                   show: false
               },
-              min : '2018-01-01T00:00:00.000+0000',
-              max : '2018-12-31T00:00:00.000+0000'
+              min : 'dataMin',
+              max : 'dataMax'
           }
       ],
       yAxis :
