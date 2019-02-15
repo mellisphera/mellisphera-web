@@ -50,7 +50,7 @@ export class CalendrierHealthService  extends CalendrierService {
         top: 140,
         left: '2%',
         right: '4%',
-        height:'200',
+        height:'20%',
         width:'93%',
         range: null,
         orient: 'horizontal',
@@ -162,13 +162,14 @@ export class CalendrierHealthService  extends CalendrierService {
             type: 'group',
             children:[{ // enfant de ce groupe(image et text)
                 type:'image', // image
+                //scale : ['horizontal scale factor', 'vertical scale factor'],
                 style:{ // style de cette image
                     image:img, // image à afficher
-                    width:20, // largeur
+                    width:cellWidth/3, // largeur
                     //heigth:30, // et hauteur de l'image
                     /*placement de l'image (x,y) avec les coordonnées */
                     x: cellPoint[0] - cellWidth /2+5,
-                    y: cellPoint[1] - cellHeight / 2+5
+                    y: cellPoint[1] - cellHeight / 2+3
                 },
             }],
         };
