@@ -30,7 +30,7 @@ import { AtokenStorageService } from '../../auth/Service/atoken-storage.service'
   styleUrls : ['./ruche.detail.component.scss']
 })
 
-export class RucheDetailComponent implements OnInit {
+export class RucheDetailComponent implements OnInit, OnDestroy {
     rucheId : string;
     rucheName : string;
     message="";
@@ -61,33 +61,15 @@ export class RucheDetailComponent implements OnInit {
         this.rucheId = this.activatedRoute.snapshot.params.id;
         this.rucheName = this.activatedRoute.snapshot.params.name;
         this.rucheService.saveCurrentHive(this.rucheId);
-        console.log(this.rucheId);
-        this.rucheService.ruchesObs.subscribe(
-            ()=>{},
-            ()=>{},
-            ()=>{
-                if(this.rucheService.ruches.length < 1){
-                    this.rucheService.getRucheByApiary(this.userService.getUser(),window.sessionStorage.getItem("currentApiary"))
-                    this.rucheService.ruchesObs.subscribe(
-                        ()=>{},
-                        ()=>{},
-                        ()=>{
-                            this.observationService.getObservationByIdHive(this.rucheId);
-                            this.rucheService.findRucheById(this.rucheId,true);
-                            console.log(this.rucheService.ruche);
-                            this.compteurHive = this.rucheService.ruches.indexOf(this.rucheService.ruche);
-                        }
-                    );
-                }
-                else{
-                    this.observationService.getObservationByIdHive(this.rucheId);
-                    this.rucheService.findRucheById(this.rucheId, true);
-                    console.log(this.rucheService.ruche);
-                    this.compteurHive = this.rucheService.ruches.indexOf(this.rucheService.ruche);
-                }
+        this.rucheService.hiveSubject.subscribe(
+            () => {}, () => {},
+            () => {
+                this.observationService.getObservationByIdHive(this.rucheId);
+                this.rucheService.findRucheById(this.rucheId, true);
+                console.log(this.rucheService.ruche);
+                this.compteurHive = this.rucheService.ruches.indexOf(this.rucheService.ruche);
             }
-        )
-        //this.route.navigate(['/ruche-detail/'+this.rucheId+'/'+this.rucheName+'/observation/'+this.rucheId+'/'+this.rucheName]);
+        );
     }
 
 
@@ -136,7 +118,7 @@ export class RucheDetailComponent implements OnInit {
             if (this.dailyStockHoneyService.cuurrentIdHive != this.rucheId) {
                 console.log("graph");
                 //this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
-                this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucheId);
+                this.dailyStockHoneyService.getDailyStockHoneyByHive(this.rucheId);
             }
             if (this.dailyRecordWservice.currentIdHive != this.rucheId) {
                 console.log("calendrier");
@@ -157,6 +139,10 @@ export class RucheDetailComponent implements OnInit {
             }
         }
         console.log(this.rucheService.ruche);
+    }
+
+    ngOnDestroy() {
+        this.rucheService.hiveSubject.unsubscribe();
     }
 
 }

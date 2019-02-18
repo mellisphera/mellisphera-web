@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MyDate } from './../../../class/MyDate';
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
@@ -22,21 +23,23 @@ export class DailyStockHoneyService {
 
   dailyStock : DailyStockHoney[];
 
-  dailyStockObs : Observable<DailyStockHoney[]>;
-  mergeOption : any = null;
+  dailyStockObs: Observable<DailyStockHoney[]>;
+  dailySubject: BehaviorSubject<DailyStockHoney[]>;
+  mergeOption: any = null;
+
   dailyStockByFlower : Object;
-  typeFlower : any[];
-  arrayDate : any[];
-  loading : boolean;
-  timeLine : any[];
-  cuurrentIdHive : string;
+  typeFlower: any[];
+  arrayDate: any[];
+  loading: boolean;
+  timeLine: any[];
+  cuurrentIdHive: string;
   loadingOpts  = {
     text: 'Loading',
     color: '#00bdfc',
     textColor: '#ff0000',
     maskColor: 'rgba(255, 255, 255, 0.6)',
     zlevel: 0
-  };;
+  };
 
   /* Template pour une serie(1 type d fleur)*/
   templateSerie  : any;
@@ -45,14 +48,13 @@ export class DailyStockHoneyService {
     this.loading = false;
     this.dailyStock = [];
     this.cuurrentIdHive = null;
-    this.getDailyStockHoneyByApiary(this.rucheService.getCurrentHive());
+    //this.getDailyStockHoneyByHive(this.rucheService.getCurrentHive());
   }
   /* Requete API*/
-  getDailyStockHoneyByApiary(idHive : string){
+  getDailyStockHoneyByHive(idHive : string){
     console.log(idHive);
     this.cuurrentIdHive = idHive;
     this.loading = false;
-    this.dailyStock = [];
     this.dailyStockObs = this.http.get<DailyStockHoney[]>(CONFIG.URL+'dailyStockHoney'+'/hive/'+idHive);
     this.dailyStockObs.subscribe(
       (data)=>{
