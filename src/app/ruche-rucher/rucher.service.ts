@@ -38,9 +38,7 @@ export class RucherService {
         private dailyRec : DailyRecordService,
         public observationService : ObservationService,
         public meteoService : MeteoService) {
-        if (sessionStorage.getItem('currentUser')) {
-            this.getUserRuchersLast(this.user.currentUser().username);
-        }
+        this.getUserRuchersLast(this.user.currentUser().username);
         this.initRuche();
 
     }

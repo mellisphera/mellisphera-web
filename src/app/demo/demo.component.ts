@@ -1,3 +1,5 @@
+import { CONFIG } from './../../config';
+import { AtokenStorageService } from './../auth/Service/atoken-storage.service';
 import { RucherService } from './../ruche-rucher/rucher.service';
 import { GraphFlowerService } from './graph/graph-flower.service';
 import { GraphHoneyService } from './graph/graph-honey.service';
@@ -23,28 +25,36 @@ export class DemoComponent implements OnInit {
   idHiveHonney : string;
   message="";
   constructor(
-    public fleursFloraisonService: FleursFloraisonService,
-    public dailyStockHoneyService : DailyStockHoneyService,
-    public dailyRecWService: DailyRecordsWService,
+    private fleursFloraisonService: FleursFloraisonService,
+    private dailyStockHoneyService : DailyStockHoneyService,
+    private dailyRecWService: DailyRecordsWService,
     public grahFleur: GraphFlowerService,
-    public rucheService: RucheService,
+    private rucheService: RucheService,
     public grapheMielService: GraphHoneyService,
     public calendrierPoids: CalendrierFSTLervice,
-    public rucherService: RucherService) {
+    private rucherService: RucherService,
+    private tokenService: AtokenStorageService) {
     }
-
   ngOnInit() {
-    this.rucherService.ruchersObs.subscribe(() => {}, () => {}, () => {
-      this.rucheService.ruchesObs.subscribe(() => {}, () => {}, () => {
-        console.log(this.rucherService.rucher);
-        this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucherService.rucheService.ruche.id);
-        console.log(this.dailyRecWService.dailyRec);
-        this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucherService.rucheService.ruche.id);
+    this.saveToken(() => {
+      this.rucherService.ruchersObs.subscribe(() => {}, () => {}, () => {
+        this.rucheService.ruchesObs.subscribe(() => {}, () => {}, () => {
+          console.log(this.rucherService.rucher);
+          this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucherService.rucheService.ruche.id);
+          console.log(this.dailyRecWService.dailyRec);
+          this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucherService.rucheService.ruche.id);
+        });
       });
     });
   }
 
-receiveMessage($event){
-  this.message=$event;
-}
+  saveToken(next?) {
+    this.tokenService.saveToken(CONFIG.PUBLIC_TOKEN);
+    next();
+  }
+
+
+  receiveMessage($event){
+    this.message=$event;
+  }
 }

@@ -1,3 +1,4 @@
+import { UserloggedService } from './../../userlogged.service';
   import { Injectable, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from "rxjs";
@@ -45,13 +46,11 @@ export class AuthService {
         this.jwtReponse = data;
         this.tokenService.saveToken(this.jwtReponse.accessToken);
         this.tokenService.saveAuthorities(this.jwtReponse.authorities);
-        this.login.username = this.jwtReponse.username  
+        this.login.username = this.jwtReponse.username;
         this.connexionStatus.next(data);
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
-        sessionStorage.setItem("connexion",JSON.stringify(this.isAuthenticated));
         this.errLogin = !this.isAuthenticated;
-        console.log(sessionStorage.getItem("connexion") == "true"); 
-        sessionStorage.setItem("currentUser",JSON.stringify(this.login));
+        this.setUser(this.login);
         this.router.navigate(['/home']);
       },
       (err)=>{
@@ -59,6 +58,10 @@ export class AuthService {
         console.log(err);
       }
     );
+  }
+  setUser(user: Login) {
+    window.sessionStorage.removeItem('currentUser');
+    window.sessionStorage.setItem('currentUser', JSON.stringify(user));
   }
 
 }

@@ -12,33 +12,29 @@ export class UserloggedService {
   loginDemo : Login;
 
   constructor(private authService : AuthService) {
-    this.loginDemo = {
-      username : "demo",
-      password : 'demo'
-    }
    }
 
    changeMessage(message : string){
      this.messageSource.next(message);
    }
-   currentUser(){
-     if(sessionStorage.getItem("currentUser")){
-      return JSON.parse(sessionStorage.getItem('currentUser'));
-     }
-     else{
-      sessionStorage.setItem("currentUser",JSON.stringify(this.loginDemo));
-      return sessionStorage.getItem("currentUser");
-     }
-     
+   currentUser(): Login {
+    if (!this.authService.isAuthenticated ){
+      console.log('not login');
+      this.setUser({
+        'username' : '***REMOVED***',
+        'password' : '***REMOVED***'
+      });
+    }
+    return JSON.parse(sessionStorage.getItem('currentUser'));
   }
 
-  setUser(user : string){
-    window.sessionStorage.removeItem("currentUser");
-    window.sessionStorage.setItem("currentUser",user);
+  setUser(user: Login) {
+    window.sessionStorage.removeItem('currentUser');
+    window.sessionStorage.setItem('currentUser', JSON.stringify(user));
   }
 
-  getUser() : string{
-    return window.sessionStorage.getItem("currentUser");
+  getUser(): string {
+    return JSON.parse(window.sessionStorage.getItem('currentUser')).username;
   }
 
   logOut(){
