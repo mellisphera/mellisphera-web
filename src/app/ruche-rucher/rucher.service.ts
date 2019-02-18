@@ -35,9 +35,9 @@ export class RucherService {
 
     constructor(private http:HttpClient, private user : UserloggedService, 
         public rucheService : RucheService, 
-        private dailyRec : DailyRecordService,
-        public observationService : ObservationService,
-        public meteoService : MeteoService) {
+        private dailyRec: DailyRecordService,
+        public observationService: ObservationService,
+        public meteoService: MeteoService) {
         this.getUserRuchersLast(this.user.currentUser().username);
         this.initRuche();
 

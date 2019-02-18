@@ -74,7 +74,7 @@ export class RucheService {
       window.sessionStorage.setItem('currentHive', this.ruche.id);
      }
    }
-   getCurrentHive(){
+   getCurrentHive() {
      return window.sessionStorage.getItem('currentHive');
    }
 
