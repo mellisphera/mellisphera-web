@@ -26,7 +26,9 @@ export class DailyRecordService{
 
     constructor(private http : HttpClient, private user : UserloggedService){
         this.statusLoading = false;
-        this.getDailyRecThByApiary(sessionStorage.getItem("idApiaryUpdate"));
+        if (this.user.getUser()) {
+            this.getDailyRecThByApiary(sessionStorage.getItem('idApiaryUpdate'));
+        }
     }
 
     getDailyRecThByIdHivelas(idHive){

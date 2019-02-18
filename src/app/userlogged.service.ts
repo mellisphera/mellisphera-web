@@ -26,8 +26,12 @@ export class UserloggedService {
     window.sessionStorage.setItem('currentUser', JSON.stringify(user));
   }
 
-  getUser(): string {
-    return JSON.parse(window.sessionStorage.getItem('currentUser')).username;
+  getUser() {
+    try {
+      return JSON.parse(window.sessionStorage.getItem('currentUser')).username;
+    } catch (e) {
+      return false;
+    }
   }
 
   logOut(){
