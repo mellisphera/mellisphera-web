@@ -39,7 +39,6 @@ export class    FleursFloraisonService {
         this.initFleurObservees();
         this.getFleurTest();
         this.subjectFlower = new BehaviorSubject([]);
-        this.subjectFlower.share();
     }
     //Récupère la liste des fleurs théoriques
     getFleurTest(){
@@ -117,6 +116,7 @@ export class    FleursFloraisonService {
                 }
             }
         );
+        this.subjectFlower.share();
     }
 
     cleanTemplate(){

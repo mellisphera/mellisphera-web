@@ -32,7 +32,6 @@ export class RucheService {
     this.ruches = [];
     this.initRuche();
     this.hiveSubject = new BehaviorSubject<RucheInterface[]>([]);
-    this.hiveSubject.share();
     this.getRucheByUsername(this.user.currentUser().username);
    }
    initRuche(){
@@ -69,6 +68,7 @@ export class RucheService {
           }
         }
       );
+      this.hiveSubject.share();
    }
 
    saveCurrentHive(idHive?: string) {
