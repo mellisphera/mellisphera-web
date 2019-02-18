@@ -38,7 +38,7 @@ export class RucherService {
         private dailyRec: DailyRecordService,
         public observationService: ObservationService,
         public meteoService: MeteoService) {
-        this.getUserRuchersLast(this.user.currentUser().username);
+        this.getUserRuchersLast(this.user.getUser());
         this.initRuche();
 
     }
