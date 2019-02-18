@@ -1,3 +1,4 @@
+import { share } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -9,7 +10,6 @@ import { Rucher } from '../../ruche-rucher/rucher';
 import { RucherService } from '../../ruche-rucher/rucher.service';
 import { FleurObservees } from '../../_model/fleur-observees'
 import { UserloggedService } from '../../userlogged.service';
-import { share } from 'rxjs/operators';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -39,7 +39,7 @@ export class    FleursFloraisonService {
         this.initFleurObservees();
         this.getFleurTest();
         this.subjectFlower = new BehaviorSubject([]);
-        this.subjectFlower.share()
+        //this.subjectFlower.share();
     }
     //Récupère la liste des fleurs théoriques
     getFleurTest(){
