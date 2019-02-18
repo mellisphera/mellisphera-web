@@ -33,11 +33,6 @@ export class DailyRecordsWService {
   timeLine : any[];
 
   constructor(private http : HttpClient) {
-    this.rangeCalendar = [];
-    var max = new Date();
-    var min = new Date((max.getFullYear()-1)+'-'+(max.getMonth()+1)+'-'+max.getDate());
-    this.rangeCalendar = [this.convertDate(min),this.convertDate(max)];
-    console.log(this.rangeCalendar);
     this.dailyRecArray = [];
     this.updateCalendar();
   }
