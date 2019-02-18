@@ -1,6 +1,5 @@
 export const CONFIG = {
     URL: "http://localhost:8091/",   //Local
-<<<<<<< HEAD
     API_PY : "http://localhost:5000",
     apiPath: 'api/',
     googleMapsAPI: 'AIzaSyAHvIyK6M1SW6R1rYkXnTWNiCbbqE9gBVI',
