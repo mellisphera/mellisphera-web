@@ -1,11 +1,8 @@
 export const CONFIG = {
-    URL: "http://192.168.0.101:8091/",   //Local
-    API_AUTH : "http://195.154.179.102:80/api/auth/signin",
-    //API_PY : "http://51.68.71.91:5000",
+    URL: "http://localhost:8091/",   //Local
     API_PY : "http://localhost:5000",
     apiPath: 'api/',
     googleMapsAPI: 'AIzaSyAHvIyK6M1SW6R1rYkXnTWNiCbbqE9gBVI',
-    URL_FRONT :'http://192.168.0.101:4200/'
-
-
+    URL_FRONT :'http://localhost:4200/',
+    PUBLIC_TOKEN : 'eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE1NTA1NjQ5MjcsInN1YiI6ImZzdGwiLCJpYXQiOjE1NTA0Nzg1Mjd9.Mi7U9vkeEkploNMskOGS7zqLXCJCOMjptd43QGnV4LY1CmCdDhX5YWhSVJriEzsb-MysDgMlW-3tzjKzF3MSew'
 };
