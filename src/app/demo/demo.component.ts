@@ -25,15 +25,15 @@ export class DemoComponent implements OnInit {
   idHiveHonney : string;
   message="";
   constructor(
-    private fleursFloraisonService: FleursFloraisonService,
-    private dailyStockHoneyService : DailyStockHoneyService,
-    private dailyRecWService: DailyRecordsWService,
+    public fleursFloraisonService: FleursFloraisonService,
+    public dailyStockHoneyService : DailyStockHoneyService,
+    public dailyRecWService: DailyRecordsWService,
     public grahFleur: GraphFlowerService,
-    private rucheService: RucheService,
+    public rucheService: RucheService,
     public grapheMielService: GraphHoneyService,
     public calendrierPoids: CalendrierFSTLervice,
-    private rucherService: RucherService,
-    private tokenService: AtokenStorageService) {
+    public rucherService: RucherService,
+    public tokenService: AtokenStorageService) {
     }
   ngOnInit() {
     this.saveToken(() => {
