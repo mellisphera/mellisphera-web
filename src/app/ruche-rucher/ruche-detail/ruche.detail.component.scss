@@ -1,6 +1,10 @@
 li:first-child img{
     transform: rotate(180deg);
 }
+#navHive li:first-child, li:last-child{
+    box-shadow: 1px 1px 1px white;
+    border-radius: 100px;
+}
 nav{
     margin: 0px;
     padding: 0px;
@@ -36,11 +40,11 @@ ul{
     //border-radius: 8px;
     //color: white;
 }
-.nav li{
+.onglets{
     font-size: 15px;
     transition: all 1s ease-out;
 }
-.nav li:hover{
+.onglets:hover{
     background-color: white;
     color: #23CCEF;
 }

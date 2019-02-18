@@ -11,42 +11,42 @@
         <div class="container-fluid" style="background-color:white;">
                 <div class="row content">
                     <ul class="nav nav-tabs">
-                        <li class="active" (click)="onTab('notes');">
+                        <li class="active onglets" (click)="onTab('notes');">
                             <a data-toggle="tab" href="#notes">
                                 <i class="fa fa fa-book fa-lg" aria-hidden="true"></i>
                                 Notes</a></li>
-                        <li (click)="onTab('stock');">
+                        <li (click)="onTab('stock');" class="onglets">
                             <a data-toggle="tab" href="#stock">
                                 <i class="padding fa fa-balance-scale fa-lg" aria-hidden="true"></i>
                                 Stock
                             </a>
                         </li>
-                        <li (click)="onTab('health');">
+                        <li class="onglets" (click)="onTab('health');">
                             <a data-toggle="tab" href="#health">
                                 <i class="fa fa-plus-square fa-lg" aria-hidden="true"></i>
                                 Health
                             </a>
                         </li>
-                        <li (click)="onTab('daily');">
+                        <li class="onglets" (click)="onTab('daily');">
                             <a data-toggle="tab" href="#daily">
                             <i class="fa fa-thermometer-3 fa-lg" aria-hidden="true"></i>
                             Daily
                             </a>
                         </li>
-                        <li (click)="onTab('hourly');">
+                        <li class="onglets" (click)="onTab('hourly');">
                             <a data-toggle="tab" href="#hourly">
                                 <i class="padding fa fa-line-chart fa-lg" aria-hidden="true"></i>
                                 Hourly
                             </a>
                         </li>
-                        <li (click)="onTab('stack');">
+                        <li class="onglets" (click)="onTab('stack');">
                             <a data-toggle="tab" href="#stack">
                                 Stack
                             </a>
                         </li>
                             <div id="navHive">
                                 <ul class="flex">
-                                    <li (click)="previousHive()" class="navRuche"><a><img [src]="img" width="35"/></a></li>
+                                    <li width="35" (click)="previousHive()" class="navRuche"><a><img [src]="img" width="35"/></a></li>
                                     <li id="hiveName">{{ rucheName }} </li>
                                     <li (click)="nextHive()" class="navRuche"><a><img [src]="img" width="35"/></a></li>
                                 </ul>
