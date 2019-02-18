@@ -44,6 +44,7 @@ export class DemoComponent implements OnInit {
           console.log(this.dailyRecWService.dailyRec);
           this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucherService.rucheService.ruche.id);
         });
+
       });
     });
   }
