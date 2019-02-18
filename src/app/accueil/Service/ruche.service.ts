@@ -8,7 +8,7 @@ import { RucherService } from '../../ruche-rucher/rucher.service';
 import { Observable, Subscription } from 'rxjs';
 import { ObservationService } from '../../ruche-rucher/ruche-detail/observation/service/observation.service';
 import { MeteoService } from '../../meteo/Service/MeteoService';
-
+import { share } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -32,6 +32,7 @@ export class RucheService {
     this.ruches = [];
     this.initRuche();
     this.hiveSubject = new BehaviorSubject<RucheInterface[]>([]);
+    this.hiveSubject.share();
     this.getRucheByUsername(this.user.currentUser().username);
    }
    initRuche(){
@@ -68,7 +69,6 @@ export class RucheService {
           }
         }
       );
-      this.hiveSubject.share();
    }
 
    saveCurrentHive(idHive?: string) {
