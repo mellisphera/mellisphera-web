@@ -37,13 +37,6 @@ export class    FleursFloraisonService {
         this.cleanTemplate();
         //currentApiary
         this.initFleurObservees();
-       /* this.rucherService.ruchersObs.subscribe(
-            ()=>{},()=>{},
-            ()=>{
-                console.log("FLEUR");
-                this.getUserFleur(this.rucherService.rucher.id);
-            }
-        )*/
         this.getUserFleur(this.rucherService.getCurrentApiary());
         this.getFleurTest();
     }

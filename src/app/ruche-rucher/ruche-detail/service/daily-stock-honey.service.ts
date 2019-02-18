@@ -45,7 +45,7 @@ export class DailyStockHoneyService {
     this.loading = false;
     this.dailyStock = [];
     this.cuurrentIdHive = null;
-    //this.getDailyStockHoneyByApiary(this.rucheService.getCurrentHive());
+    this.getDailyStockHoneyByApiary(this.rucheService.getCurrentHive());
   }
   /* Requete API*/
   getDailyStockHoneyByApiary(idHive : string){
