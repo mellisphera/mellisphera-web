@@ -1,10 +1,11 @@
+import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { RucheInterface } from '../../_model/ruche';
 import { UserloggedService } from '../../userlogged.service';
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { RucherService } from '../../ruche-rucher/rucher.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ObservationService } from '../../ruche-rucher/ruche-detail/observation/service/observation.service';
 import { MeteoService } from '../../meteo/Service/MeteoService';
 
@@ -17,17 +18,21 @@ const httpOptions = {
 })
 export class RucheService {
 
-  ruche : RucheInterface;
-  ruches : RucheInterface[];
-
-  rucheUpdate : RucheInterface;
+  ruche: RucheInterface;
+  ruches: RucheInterface[];
+  rucheUpdate: RucheInterface;
   ruchesAllApiary : RucheInterface[];
 
-  rucheObs : Observable<RucheInterface>;
+  hiveSubject : BehaviorSubject<RucheInterface[]>;
+  rucheObs : Observable<RucheInterface>;  
   ruchesObs : Observable<RucheInterface[]>;
+
+
   constructor(private user : UserloggedService, private http : HttpClient, private observationService : ObservationService, public meteoService : MeteoService) {
     this.ruches = [];
     this.initRuche();
+    this.hiveSubject = new BehaviorSubject<RucheInterface[]>([]);
+    this.hiveSubject.share();
     this.getRucheByUsername(this.user.currentUser().username);
    }
    initRuche(){
@@ -42,14 +47,15 @@ export class RucheService {
       sharingUser : []
     }
     this.rucheUpdate = this.ruche;
+    this.ruches = [];
    }
    getRucheByApiary(username , idApiary){
-      this.ruches = [];
-      this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username+'/'+idApiary)
+      this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username+'/'+idApiary);
       this.ruchesObs.subscribe(
         (data)=>{
           this.ruche = data[data.length - 1];
           this.ruches = data;
+          this.hiveSubject.next(data);
           this.saveCurrentHive();
           console.log(this.ruches);
         },
@@ -58,10 +64,11 @@ export class RucheService {
         },
         ()=>{
           if(this.ruches.length > 0){
+            this.hiveSubject.complete();
             this.observationService.getObservationByIdApiary(idApiary);
           }
         }
-      )
+      );
    }
 
    saveCurrentHive(idHive?: string) {
@@ -80,14 +87,15 @@ export class RucheService {
 
 
    getRucheByUsername(username : string){
-     this.ruchesAllApiary = [];
-     this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username);
+     this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username)
      this.ruchesObs.subscribe(
        (data)=>{
          this.ruchesAllApiary = data;
        },
        (err)=>{
          console.log(err);
+       },
+       ()=>{
        }
      );
    }

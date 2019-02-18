@@ -38,7 +38,7 @@ export class RucherService {
         private dailyRec: DailyRecordService,
         public observationService: ObservationService,
         public meteoService: MeteoService) {
-        this.getUserRuchersLast(this.user.getUser());
+        this.getUserRuchers(this.user.getUser());
         this.initRuche();
 
     }
@@ -59,36 +59,31 @@ export class RucherService {
          this.detailsRucher = this.rucher;
          this.rucherSelectUpdate = this.rucher;
     }
-    // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
-    // pour créer un rucher
     createRucher() {
         this.rucherObs = this.http.post<RucherModel>(CONFIG.URL+'apiaries',this.rucher);
         this.rucherObs.subscribe(
-            ()=>{},
-            (err)=>{
+            () => {},
+            (err) => {
                 console.log(err);
             },
-            ()=>{
-                this.getUserRuchersLast(this.user.currentUser().username);
+            () => {
+                this.getUserRuchers(this.user.currentUser().username);
             }
         );
     }
-    // pour afficher tout les ruchers de l'utilsateur connecté
-    getCurrentRucher(){
-        return window.sessionStorage.getItem('currentApiary');
-    }
     saveCurrentApiaryId(idApiary : string){
         window.sessionStorage.removeItem('currentApiary');
-        window.sessionStorage.setItem("currentApiary",idApiary);
+        window.sessionStorage.setItem('currentApiary', idApiary);
     }
 
     getCurrentApiary(){
         return window.sessionStorage.getItem('currentApiary');
     }
 
-    getUserRuchersLast(username){
+    getUserRuchers(username: string){
         this.ruchersObs = this.http.get<RucherModel[]>(CONFIG.URL+'apiaries/'+ username);
-        this.ruchersObs.subscribe(
+        this.ruchersObs.share()
+        .subscribe(
             (data)=>{
                 if(data.length>0){
                     this.rucher = data[data.length-1];
@@ -99,21 +94,19 @@ export class RucherService {
                 }
             },
             (err)=>{
-                console.log(err);   
+                console.log(err);
             },
             ()=>{
-                if(this.ruchers.length>0){
+                if(this.ruchers.length > 0) {
                     this.observationService.getObservationByIdApiary(this.rucher.id);
                     this.rucheService.getRucheByApiary(this.user.currentUser().username,this.rucher.id);
                     this.getRucherDetails();
-                    console.log("APIARY");
                     this.dailyRec.getDailyRecThByApiary(this.rucher.id);
                     this.meteoService.getWeather(this.rucher.ville);
                 }
             }
         );
     }
-    
     getOneApiaryById(idApiary){
         this.rucherObs = this.http.get<RucherModel>(CONFIG.URL+'apiaries/id/'+idApiary);
         this.rucherObs.subscribe(
@@ -147,7 +140,7 @@ export class RucherService {
                 console.log(err);
             },
             ()=>{   
-                this.getUserRuchersLast(this.user.currentUser().username);
+                this.getUserRuchers(this.user.currentUser().username);
             }
         );
     }
@@ -159,7 +152,7 @@ export class RucherService {
                 console.log(err);
             },
             ()=>{
-                this.getUserRuchersLast(this.user.currentUser().username);
+                this.getUserRuchers(this.user.currentUser().username);
             }
         );
     }

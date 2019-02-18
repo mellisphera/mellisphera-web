@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -24,7 +25,7 @@ export class    FleursFloraisonService {
 
     nomFleur : String[];
     datesFleur : number[];
-
+    subjectFlower : BehaviorSubject<any[]>;
     newFlower : FleurObservees;
 
     mergeOption  : any;
@@ -35,10 +36,10 @@ export class    FleursFloraisonService {
     fleursObs : Observable<FleurObservees[]>;
     constructor(private http:HttpClient, public rucherService : RucherService, private userService : UserloggedService) {
         this.cleanTemplate();
-        //currentApiary
         this.initFleurObservees();
-        this.getUserFleur(this.rucherService.getCurrentApiary());
         this.getFleurTest();
+        this.subjectFlower = new BehaviorSubject([]);
+        this.subjectFlower.share();
     }
     //Récupère la liste des fleurs théoriques
     getFleurTest(){
@@ -98,6 +99,7 @@ export class    FleursFloraisonService {
         this.fleursObs.subscribe(
             (data)=>{
                 this.fleursByRucher = data;
+                this.subjectFlower.next(data);
             },
             (err)=>{
                 console.log(err);
@@ -107,6 +109,7 @@ export class    FleursFloraisonService {
                 this.cleanMerge();
                 if(this.fleursByRucher.length > 0){
                     this.sortTheoricalFlower();
+                    this.subjectFlower.complete();
                 }
                 else{
                     //throw 'Empty';
