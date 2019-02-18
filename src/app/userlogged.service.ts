@@ -18,13 +18,6 @@ export class UserloggedService {
      this.messageSource.next(message);
    }
    currentUser(): Login {
-    if (!this.authService.isAuthenticated ){
-      console.log('not login');
-      this.setUser({
-        'username' : 'fstl',
-        'password' : 'fstl'
-      });
-    }
     return JSON.parse(sessionStorage.getItem('currentUser'));
   }
 

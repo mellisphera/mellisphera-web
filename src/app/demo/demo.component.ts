@@ -1,3 +1,4 @@
+import { UserloggedService } from './../userlogged.service';
 import { CONFIG } from './../../config';
 import { AtokenStorageService } from './../auth/Service/atoken-storage.service';
 import { RucherService } from './../ruche-rucher/rucher.service';
@@ -33,10 +34,12 @@ export class DemoComponent implements OnInit,OnDestroy {
     public grapheMielService: GraphHoneyService,
     public calendrierPoids: CalendrierFSTLervice,
     public rucherService: RucherService,
-    public tokenService: AtokenStorageService) {
+    public tokenService: AtokenStorageService,
+    private user: UserloggedService) {
     }
   ngOnInit() {
     this.saveToken(() => {
+      this.rucherService.getUserRuchersLast(this.user.getUser());
       this.rucheService.hiveSubject.subscribe(
         () => {}, () => {},
         () => {
@@ -51,6 +54,10 @@ export class DemoComponent implements OnInit,OnDestroy {
 
   saveToken(next?) {
     this.tokenService.saveToken(CONFIG.PUBLIC_TOKEN);
+    this.user.setUser({
+      'username' : 'fstl',
+      'password' : 'fstl'
+    });
     next();
   }
 

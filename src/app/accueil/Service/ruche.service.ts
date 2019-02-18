@@ -33,7 +33,9 @@ export class RucheService {
     this.initRuche();
     this.hiveSubject = new BehaviorSubject<RucheInterface[]>([]);
     //this.hiveSubject.share();
-    this.getRucheByUsername(this.user.currentUser().username);
+    if (this.user.getUser()) {
+      this.getRucheByUsername(this.user.currentUser().username);
+    }
    }
    initRuche(){
     this.ruche = { 

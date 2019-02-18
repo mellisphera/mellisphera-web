@@ -20,8 +20,8 @@ const httpOptions = {
 export class AuthService {
 
 
-  login : Login;
-  user : User;
+  login: Login;
+  user: User;
   jwtReponse : JwtResponse;
   loginObs : Observable<any>;
   lastConnection : Date;
