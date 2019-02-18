@@ -42,7 +42,7 @@ export class DemoComponent implements OnInit {
           console.log(this.rucherService.rucher);
           this.dailyRecWService.getDailyRecordsWbyIdHive(this.rucherService.rucheService.ruche.id);
           console.log(this.dailyRecWService.dailyRec);
-          this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucherService.rucheService.ruche.id);
+          //this.dailyStockHoneyService.getDailyStockHoneyByApiary(this.rucherService.rucheService.ruche.id);
         });
 
       });
