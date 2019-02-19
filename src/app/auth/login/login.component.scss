@@ -87,6 +87,9 @@ input.ng-valid{
 .login-form{
 	box-shadow: 5px 10px black;
 }
+button[type="submit"]:active{
+	border-color: green;
+}
 /*img{
 	border-radius: 50px;
 	padding: 5px;

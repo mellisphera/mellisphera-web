@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -32,12 +33,13 @@ export class RucherService {
     rucherSelectUpdate : RucherModel;
     rucherObs: Observable<RucherModel>;
     ruchersObs: Observable<RucherModel[]>;
-
-    constructor(private http:HttpClient, private user : UserloggedService, 
+    rucherSubject : BehaviorSubject<RucherModel[]>;
+    constructor(private http:HttpClient, private user: UserloggedService, 
         public rucheService : RucheService, 
         private dailyRec: DailyRecordService,
         public observationService: ObservationService,
         public meteoService: MeteoService) {
+        this.rucherSubject = new BehaviorSubject([]);
         if (this.user.getUser()) {
             this.getUserRuchersLast(this.user.getUser());
         }
@@ -96,8 +98,8 @@ export class RucherService {
                     this.rucher = data[data.length-1];
                     this.currentBackground = this.rucher.photo;
                     this.saveCurrentApiaryId(this.rucher.id);
-                    this.rucherSelectUpdate = data[data.length-1];
                     this.ruchers = data;
+                    this.rucherSubject.next(data);
                 }
             },
             (err)=>{
@@ -105,8 +107,9 @@ export class RucherService {
             },
             ()=>{
                 if(this.ruchers.length > 0) {
+                    this.rucherSubject.complete();
                     this.observationService.getObservationByIdApiary(this.rucher.id);
-                    this.rucheService.getRucheByApiary(this.user.currentUser().username,this.rucher.id);
+                    this.rucheService.getRucheByApiary(this.user.getUser(),this.rucher.id);
                     this.getRucherDetails();
                     this.dailyRec.getDailyRecThByApiary(this.rucher.id);
                     this.meteoService.getWeather(this.rucher.ville);
@@ -148,7 +151,7 @@ export class RucherService {
                 console.log(err);
             },
             ()=>{   
-                this.getUserRuchersLast(this.user.currentUser().username);
+                this.getUserRuchersLast(this.user.getUser());
             }
         );
     }
@@ -160,7 +163,7 @@ export class RucherService {
                 console.log(err);
             },
             ()=>{
-                this.getUserRuchersLast(this.user.currentUser().username);
+                this.getUserRuchersLast(this.user.getUser());
             }
         );
     }

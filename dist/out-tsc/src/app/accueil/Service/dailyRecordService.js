@@ -102,7 +102,7 @@ var DailyRecordService = /** @class */ (function () {
     };
     DailyRecordService.prototype.getDailyRecThByApiary = function (idApiary) {
         var _this = this;
-        this.dailyRecTabObs = this.http.get(CONFIG.URL + 'dailyRecordsTH/' + this.user.currentUser().username + '/' + idApiary);
+        this.dailyRecTabObs = this.http.get(CONFIG.URL + 'dailyRecordsTH/' + this.user.getUser() + '/' + idApiary);
         this.dailyRecords = [];
         this.dailyRecTabObs.subscribe(function (data) {
             if (data[0] != null) {

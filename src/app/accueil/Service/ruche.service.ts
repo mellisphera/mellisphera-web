@@ -34,7 +34,7 @@ export class RucheService {
     this.hiveSubject = new BehaviorSubject<RucheInterface[]>([]);
     //this.hiveSubject.share();
     if (this.user.getUser()) {
-      this.getRucheByUsername(this.user.currentUser().username);
+      this.getRucheByUsername(this.user.getUser());
     }
    }
    initRuche(){
@@ -105,7 +105,7 @@ export class RucheService {
     this.rucheObs = this.http.put<RucheInterface>(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,ruche,httpOptions)
     this.rucheObs.subscribe(
       ()=>{
-        this.getRucheByApiary(this.user.currentUser().username, ruche.idApiary);
+        this.getRucheByApiary(this.user.getUser(), ruche.idApiary);
       },
       (err)=>{
         console.log(err);
@@ -121,7 +121,7 @@ export class RucheService {
        console.log(err);
      },
      ()=>{
-       this.getRucheByApiary(this.user.currentUser().username, lastIdApiary);
+       this.getRucheByApiary(this.user.getUser(), lastIdApiary);
      }
    );
   }
@@ -137,7 +137,7 @@ export class RucheService {
         console.log(err);
       },
       ()=>{
-        this.getRucheByApiary(this.user.currentUser().username,this.ruche.idApiary);
+        this.getRucheByApiary(this.user.getUser(),this.ruche.idApiary);
       }
     );
   }

@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
     if(this.signupForm.valid){
       const data = this.signupForm.value;
       this.signupService.user = data;
-      this.signupService.user.role = new Array<string>("***REMOVED***");
+      this.signupService.user.role = new Array<string>('***REMOVED***');
       console.log(this.signupService.user);
       this.signupService.user.createdAt = new Date();
       this.signupService.signupUser(()=>{
@@ -87,10 +87,11 @@ export class LoginComponent implements OnInit {
       });
     }
   }
-  verifLogin(){
+  verifLogin() {
+    this.authService.login.username = this.authService.login.username.toUpperCase();
+    console.log(this.authService.login )
     this.authService.signIn();
   }
-  
   currentUser(){
     return JSON.parse(localStorage.getItem('currentUser'));
   }
