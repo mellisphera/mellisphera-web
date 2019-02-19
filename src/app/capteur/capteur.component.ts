@@ -97,7 +97,7 @@ export class CapteurComponent implements OnInit {
             this.capteurService.capteur.hiveName = null;
         }
         this.capteurService.capteur.description = formValue.description;
-        this.capteurService.capteur.username = this.username;
+        this.capteurService.capteur.username = this.username.toLowerCase();
         this.capteurService.capteur.reference = formValue.reference;
         this.capteurService.capteur.type = tempType;
         this.initForm();

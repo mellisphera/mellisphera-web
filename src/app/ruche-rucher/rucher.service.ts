@@ -66,7 +66,7 @@ export class RucherService {
     // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
     // pour créer un rucher
     createRucher() {
-        this.rucherObs = this.http.post<RucherModel>(CONFIG.URL+'apiaries',this.rucher);
+        this.rucherObs = this.http.post<RucherModel>(CONFIG.URL + 'apiaries' , this.rucher);
         this.rucherObs.subscribe(
             ()=>{},
             (err)=>{
@@ -99,7 +99,7 @@ export class RucherService {
                     this.currentBackground = this.rucher.photo;
                     this.saveCurrentApiaryId(this.rucher.id);
                     this.ruchers = data;
-                    this.rucherSubject.next(data);
+                    //this.rucherSubject.next(data);
                 }
             },
             (err)=>{
@@ -107,7 +107,7 @@ export class RucherService {
             },
             ()=>{
                 if(this.ruchers.length > 0) {
-                    this.rucherSubject.complete();
+                    //this.rucherSubject.complete();
                     this.observationService.getObservationByIdApiary(this.rucher.id);
                     this.rucheService.getRucheByApiary(this.user.getUser(),this.rucher.id);
                     this.getRucherDetails();

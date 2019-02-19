@@ -1,3 +1,4 @@
+import { User } from './../../_model/user';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
 import { UserloggedService } from '../../userlogged.service';
@@ -62,7 +63,7 @@ export class HomeComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.username = this.login.currentUser().username;
+    this.username = this.login.getUser();
     //this.style["background-image"] = "url("+this.rucherService.rucher.photo+")";
 
    /*if(this.username == "jhe"){

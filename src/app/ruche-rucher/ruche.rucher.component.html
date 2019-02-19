@@ -11,7 +11,7 @@
   <!-- change component content here-->                    
   <div class="container-fluid" style="background-color:white;">
     <div class="row content">
-            <div class="col-sm-9">                        
+            <div class="col-sm-12">                        
                   <div class="bs-example">
                       <div class="panel-group" id="accordion">
                           <div class="panel panel-info ">
@@ -125,68 +125,8 @@
                     <br><br>    
                 </div>
   
-  
-      <div class="col-sm-3 sidenav" style="background-color: rgba(236, 234, 234, 0.49); height:1500px;border-color:black;">
-        <button data-toggle="tooltip" data-html="true"  data-toggle="modal" type="button" (click)="editRucherClicked()" [disabled]="updateRucherInput" class="btn btn-success  btn-lg " style="padding: 0;border: none; background: none; ">
-            <i class="fa fa-edit"></i>
-        </button>
-        <button type="button" class="btn btn-warning btn-lg "style="padding: 0;border: none; background: none;  " (click)="deleteRucher()">
-          <i class="fa fa-times"></i>
-        </button>
-        <div *ngIf="!updateRucherInput">
-          <h4 class="text-center">{{rucherService.detailsRucher.name}} </h4>
-          <h5 class="text-center"><b> </b>{{rucherService.detailsRucher.ville}}</h5>
-          <h5 class="text-center"><b> </b>{{rucherService.detailsRucher.codePostal}}</h5>
-          <p class="text-center"><b> </b>{{rucherService.detailsRucher.description}}</p>
-        </div>
-          <div *ngIf="updateRucherInput">
-              <form [formGroup]="rucherForm" (ngSubmit)="onEditerRucher() ">
-                <h4 class="text-center">Edit Apiary</h4>
-                <div class="form-group row"  >
-                   <div class="col-md-12">
-                    <label for="nom" class="col-form-label">Name </label>
-                    <input formControlName="nom" type="text" class="form-control text-left" id="nom" >
-                  </div>  
-                  <div class="col-md-12">
-                    <div class="alert alert-danger" *ngIf="rucherForm.controls['nom'].invalid">your apiary name</div>
-                  </div>
-                </div>
-                <div class="form-group row"  >
-                    <div class="col-md-12">
-                      <label for="villee" class="col-form-label">City </label>
-                      <input formControlName="ville" type="text" class="form-control text-left" id="ville">
-                    </div>
-                    <div class="col-md-12">
-                      <div class="alert alert-danger" *ngIf="rucherForm.controls['ville'].invalid ">apiary location</div>
-                    </div>
-                </div>
-                <div class="form-group row"  >
-                  <div class="col-md-12">
-                    <label for="codePostale" class="col-form-label">Zip code </label>
-                    <input formControlName="codePostal" type="text" class="form-control text-left" id="codePostal">
-                  </div>
-                  <div class="col-md-12">
-                    <div class="alert alert-danger" *ngIf="rucherForm.controls['codePostal'].invalid ">zip code</div>
-                  </div>
-                  
-              </div>
-              
-                <div class="form-group row"  >
-                    <div class="col-md-6">
-                      <label for="codePostal" class="col-form-label">Description </label>
-                    </div>
-                    <div class="col-md-12">
-                      <textarea formControlName="codePostal"  type="text" class="form-control text-left" id="codePostal"></textarea>
-                      <div class="alert alert-danger" *ngIf="rucherForm.controls['description'].invalid ">describe your apiary</div>
-                     
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="onEditerRucher()" [disabled]="rucherForm.invalid">Save</button>
-                <button type="reset" class="btn btn-danger" (click)="cancelUpdateRucher()">Dismiss</button>
-              </form>
-          </div>
-        <!--End of editing Rucher  DIV-->
-      </div>
+  <!---->
+
     </div>
   </div>
   </div>

@@ -51,12 +51,18 @@
     </button>
    <div class="form-inline" id="selectRucher" >
             <label>Apiary </label>
-            <select  [(ngModel)]="rucherService.rucher"  class="form-control " (change)="onSelectRucher()" id="sel1">
+            <select  [(ngModel)]="rucherService.rucher"  class="form-control" (change)="onSelectRucher()" id="sel1">
                 <option  *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher" >
                         {{rucher.name}}
                 </option>
             </select>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newRucherModal" >New Apiary</button>
+            <button type="button" (click)="editRucherClicked()" class="crud btn btn-success  btn-lg" data-toggle="modal" data-target="#editRucher" style="border: none; background: none; ">
+              <i class="fa fa-edit fa-3x"></i>
+          </button>
+          <button type="button" class="btn btn-warning btn-lg crud" style="padding: 0;border: none; background: none;" (click)="deleteRucher()">
+            <i class="fa fa-times fa-3x"></i>
+          </button>
     </div>
   </div>
   <div class="collapse navbar-collapse">
@@ -150,7 +156,87 @@
                </div>
                
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="Créer Rucher" (click)="apiarySubmit()" [disabled]="!rucherForm.valid">New Apiary</button>
+                <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="New Apiary" (click)="apiarySubmit()" [disabled]="!rucherForm.valid">New Apiary</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Modal modification rucher-->
+
+  <div class="modal fade" id="editRucher" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><h4 class="text-center" >Edit Apiary</h4></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="rucherForm">
+            <div class="form-group"  >
+              <label for="nom" class="col-form-label">Name</label>
+              <input formControlName="nom" type="text" class="form-control" id="nom">
+              <div class="alert alert-danger" *ngIf="!rucherForm.controls['nom'].valid && rucherForm.controls['nom'].touched">
+                select a name from 1 to 20 chars
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Description</label>
+              <textarea formControlName="description" class="form-control" id="message-text"></textarea>
+              <div class="alert alert-danger" *ngIf="!rucherForm.controls['description'].valid && rucherForm.controls['description'].touched">
+                description can be 40 chars max
+              </div>
+            </div>
+              <div class="form-group">
+                <label for="ville" class="col-form-label">City</label>
+                <input formControlName="ville" type="text" class="form-control" id="ville">
+                  <div class="alert alert-danger" *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
+                    select city name
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="codePostal" class="col-form-label">Zip code</label>
+                  <input formControlName="codePostal" type="text" class="form-control" id="codePostal">
+                  <div class="alert alert-danger" *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
+                    select zip code
+                  </div>
+              </div>
+              <!--
+                <div class="form-group">
+                  <label for="">Image</label>
+                  <input name="image" (change)="onPictureLoad($event)" type="file">
+               </div>-->
+               <!--
+               <input
+                  style="display: none"
+                  type="file"
+                  ngf [(file)]="photoApiary" 
+                  #fileInput>
+                <button (click)="fileInput.click()" class="btn btn-large btn-block btn-info">Select File</button>
+               <div id="upload-group"> 
+                 <div
+                 ngfDrop
+                 [(validDrag)] = "baseDropValid"
+                 [(file)]= "photoApiary"
+                 class = "well my-drop-zone"
+                 [(lastBaseUrl)] = "rucherService.rucher.photo"
+                 [class.valid-drag] = "baseDropValid"
+                >
+                 Base drop zone
+                 </div>
+                <div [ngfBackground]="photoApiary"
+                  style="background-size:cover;background-repeat:no-repeat; background-position:center; min-height:20px;">
+                </div>
+               </div>-->
+               
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"  data-dismiss="modal" value="Save Apiary" (click)="onEditerRucher()" [disabled]="!rucherForm.valid">Save Apiary</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
             </div>
           </form>
