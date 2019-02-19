@@ -23,9 +23,7 @@ import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrie
 })
 
 export class RapportComponent implements OnInit {
-   
   btnAnalyse: boolean;
-  
   //variable to store ruchers
   rapportForm : FormGroup;
   resultatRapport;
@@ -40,26 +38,21 @@ export class RapportComponent implements OnInit {
                 public rapportService : RapportService,
                 private data : UserloggedService,
                 public rucherService : RucherService,
-              ){  
+              ){
                 this.rapportForm=formBuilder.group({
                   'texte': [null,Validators.compose([Validators.required])],
-                  
-              })
-    
+              });
     }
 
     ngOnInit(){
       this.btnAnalyse=true;
     }
-    
-    getAnalyseTemp(){
-      var formValue = this.rapportForm.value;
+
+    getAnalyseTemp() {
+      const formValue = this.rapportForm.value;
       this.rapportService.getNluResult(formValue, this.rucherService.rucher.id);
     }
 
-  onSelectRucher(event : any) : void{
-    localStorage.setItem("currentRucher",String(this.selectedRucher));
-  }
 
   message="";
     receiveMessage($event){
