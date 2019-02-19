@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ import { GraphiqueFloraisonService } from './service/graphique-floraison.service
   styleUrls: ['./fleurs.floraison.component.scss']
 })
 
-export class FleursFloraisonComponent implements OnInit {
+export class FleursFloraisonComponent implements OnInit, OnDestroy {
 
     //variable for connected user
     username : string;
@@ -106,5 +106,8 @@ export class FleursFloraisonComponent implements OnInit {
 
   receiveMessage($event){
     this.message=$event;
-}
+  }
+  ngOnDestroy() {
+    this.fleursFloraisonService.subjectFlower.unsubscribe();
+  }
 }
