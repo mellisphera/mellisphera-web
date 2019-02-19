@@ -53,7 +53,7 @@ export class RapportService {
     }
 
     nluSave(rucher){
-        this.http.get<ProcessReport[]>(CONFIG.URL+'report_temp/add/'+this.username.currentUser().username).subscribe(
+        this.http.get<ProcessReport[]>(CONFIG.URL+'report_temp/add/'+this.username.getUser()).subscribe(
             ()=>{},
             (err)=>{
                 console.log(err);
@@ -84,7 +84,7 @@ export class RapportService {
                 console.log(err);
             },
             ()=>{
-                this.getRapportTemp(this.username.currentUser().username);
+                this.getRapportTemp(this.username.getUser());
             }
         );
     }

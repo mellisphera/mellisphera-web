@@ -101,7 +101,7 @@
         <div class="form-group row">
             <div class="col-md-6" >
                 <label for="ref" class="col-form-label">Reference (*):</label>
-                <input #ref formControlName="reference" name="ref" type="text" class="form-control" id="ref">
+                <input #ref formControlName="reference" placeholder="xx:xx:xx" name="ref" type="text" class="form-control" id="ref">
                 <div class="alert alert-danger" *ngIf="!newCapteurForm.controls['reference'].valid && newCapteurForm.controls['reference'].touched">
                     You should select a valid reference
                 </div>

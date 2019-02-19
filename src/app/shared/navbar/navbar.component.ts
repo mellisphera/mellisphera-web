@@ -35,12 +35,13 @@ export class NavbarComponent implements OnInit{
     hasBaseDropZoneOver: boolean = false;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    public updateStatus : boolean;
     baseDropValid: string;
     public lastConnexion : string;
     public rucherForm : FormGroup;
     constructor(location: Location,  
         private element: ElementRef, 
-        private data: UserloggedService,
+        private userService: UserloggedService,
         private router: Router, 
         private authService: AuthService,
         public rucherService : RucherService,
@@ -57,7 +58,7 @@ export class NavbarComponent implements OnInit{
         catch(e){}  
       this.location = location;
       this.sidebarVisible = false;
-        this.username = data.currentUser().username;
+        this.username = userService.getUser();
 
     }
 
@@ -93,7 +94,7 @@ export class NavbarComponent implements OnInit{
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
       console.log(this.toggleButton);
-      this.data.currentMessage.subscribe(message => this.message = message);
+      this.userService.currentMessage.subscribe(message => this.message = message);
       this.initForm();
     }
     onSelectRucher() {
@@ -107,6 +108,23 @@ export class NavbarComponent implements OnInit{
         this.dailyRecordService.getDailyRecThByApiary(this.rucherService.rucher.id);
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
       }
+      //Editer Rucher
+    onEditerRucher() {
+        const formValue = this.rucherForm.value;
+        this.rucherService.detailsRucher.description = formValue.description;
+        this.rucherService.detailsRucher.name = formValue.nom;
+        this.rucherService.detailsRucher.ville = formValue.ville;
+        this.rucherService.detailsRucher.codePostal = formValue.codePostal;
+        console.log(this.rucherService.detailsRucher);
+        this.initForm();
+        this.rucherService.updateRucher();
+    }
+
+    //delete rucher
+    deleteRucher(){
+        this.rucherService.deleteRucher();
+    }
+  
 
     sidebarOpen() {
         const toggleButton = this.toggleButton;
@@ -133,6 +151,16 @@ export class NavbarComponent implements OnInit{
             this.sidebarClose();
         }
     }
+    editRucherClicked(){
+        var donnée = {
+          nom:this.rucherService.rucher.name,
+          description: this.rucherService.rucher.description,
+          ville: this.rucherService.rucher.ville,
+          codePostal: this.rucherService.rucher.codePostal,
+          validate : ''
+        };
+        this.rucherForm.setValue(donnée);
+      }
 
     getTitle(){
       var title = this.location.prepareExternalUrl(this.location.path());

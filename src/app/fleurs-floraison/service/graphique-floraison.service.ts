@@ -11,13 +11,19 @@ export class GraphiqueFloraisonService {
   option = {
           //Défini le titre du graphique
           title: {
-            text: '',
+            text: 'Apiary Blooming calendar',
+            left:'center',
+            top : 0
           },
-    
+          legend : {
+            top:30
+          },
           //Défini la légende du graph
           grid: {
+            //top : 100,
             left: 2,
-            bottom: 10,
+            //height : 
+            //bottom: 10,
             right: 10,
             containLabel: true
           },

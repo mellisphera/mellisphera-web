@@ -60,15 +60,14 @@ export class RucheRucherComponent implements OnInit {
                 public location: Location,
                 public router: Router,
                 public rucherService : RucherService,
-                private data : UserloggedService,
+                private userService : UserloggedService,
                 private _selectedRucherService : selectedRucherService,
                 private _rapportService : RapportService,
                 public rucheService : RucheService,
                 private authService : AuthService) {
 
 
-        
-        this.username= data.currentUser().username;
+        this.username= userService.getUser();
         this.currentRucherID= localStorage.getItem("currentRucher");
         this.rucheRucherID= localStorage.getItem("rucheRucherID");
 
@@ -91,54 +90,6 @@ resetForm(){
   this.newRucherForm.reset();
 }
 
-addUserShare(event){
-  if(event.code === 'Enter'){
-    console.log(this.authService.user);
-  }
-}
-
-//Fonction pour créer le rucher
-createRucher(){
-  const formValue = this.rucherForm.value;
-  this.rucherService.rucher = {
-    id : null,
-    latitude: '',
-    longitude: '',
-    name: '',
-    description : '',
-    createdAt : null,
-    photo : null,
-    username : '',
-    codePostal : '',
-    ville : ''
- };
-  this.rucherService.rucher.id=null;
-  this.rucherService.rucher.description = formValue.description;
-  this.rucherService.rucher.name = formValue.nom;
-  this.rucherService.rucher.ville = formValue.ville;
-  this.rucherService.rucher.codePostal = formValue.codePostal;
-  this.rucherService.rucher.createdAt = new Date();
-  this.rucherService.rucher.username = this.username;
-  this.initForm();
-  this.rucherService.createRucher();
-} 
-//delete rucher
-deleteRucher(){
-  this.rucherService.deleteRucher();
-}
-
-//Editer Rucher
-onEditerRucher(){
-const formValue = this.rucherForm.value;
-this.rucherService.detailsRucher.description = formValue.description;
-this.rucherService.detailsRucher.name = formValue.nom;
-this.rucherService.detailsRucher.ville = formValue.ville;
-this.rucherService.detailsRucher.codePostal = formValue.codePostal;
-this.initForm();
-this.rucherService.updateRucher();
-this.updateRucherInput = false;
-
-}
 
 onSelectRucher(){
   this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id);
@@ -171,7 +122,7 @@ createRuche(){
   this.rucheService.ruche.idApiary = this.rucherService.rucher.id;
   this.rucheService.ruche.description = formValue.descriptionRuche;
   this.rucheService.ruche.name = formValue.nomRuche;
-  this.rucheService.ruche.username = this.username;
+  this.rucheService.ruche.username = this.username.toLowerCase();
   this.initForm();
   this.rucheService.createRuche();
 }
