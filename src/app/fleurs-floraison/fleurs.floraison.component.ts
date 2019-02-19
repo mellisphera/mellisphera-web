@@ -60,7 +60,8 @@ export class FleursFloraisonComponent implements OnInit {
                 //public rucherService : RucherService,
                 public fleursFloraisonService : FleursFloraisonService,
                 public grahFleur : GraphiqueFloraisonService,
-                private data : UserloggedService) {
+                private data : UserloggedService,
+                private rucherService: RucherService) {
 
                 this.username= data.currentUser().username; 
                 this.selectedType = '';
@@ -71,8 +72,12 @@ export class FleursFloraisonComponent implements OnInit {
 
   //Au chargement de la page on execute ces fonctions
   ngOnInit(){
+    this.rucherService.rucherSubject.subscribe(() => {}, () => {}, 
+    () => {
+        this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
+    }
+    );
   }
-
 
   //On récupères les dates de flo observée de la plante "name"
   getOneDateOb(databis,fleur,i,annee){

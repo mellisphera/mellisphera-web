@@ -28,7 +28,7 @@ export class UserloggedService {
 
   getUser() {
     try {
-      return JSON.parse(window.sessionStorage.getItem('currentUser')).username;
+      return JSON.parse(window.sessionStorage.getItem('currentUser')).username.toLowerCase();
     } catch (e) {
       return false;
     }

@@ -73,7 +73,7 @@ export class CapteurService {
     }
 
     getSoldDevicesByUser(){
-        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sold_devices/username/'+this.user.currentUser().username);
+        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sold_devices/username/'+ this.user.getUser());
         this.capteursObs.subscribe(
             (data)=>{
                 console.log(data);
@@ -86,7 +86,7 @@ export class CapteurService {
     }
 
     getUserCapteurs(){
-        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sensors/'+this.user.currentUser().username);
+        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sensors/'+ this.user.getUser());
         this.capteursObs.subscribe(
             (data)=>{
                 this.capteursByUser = data;

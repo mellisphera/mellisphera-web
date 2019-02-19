@@ -46,7 +46,6 @@ export class RucheRucherComponent implements OnInit {
   public addNewShareStatus : Boolean;
   public newsUserSharing : String;
 
-  parentMessage;
 
   optionsDate = {
     weekday:'short',year:'numeric',month:'long',day:'2-digit',hour: 'numeric', minute: 'numeric', second: 'numeric',
@@ -93,8 +92,7 @@ resetForm(){
 }
 
 addUserShare(event){
-  //console.log(event);
-  if(event.code == 'Enter'){
+  if(event.code === 'Enter'){
     console.log(this.authService.user);
   }
 }
@@ -179,6 +177,7 @@ createRuche(){
 }
 
 onSelectRuche(ruche){
+  this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
   this.rucheService.ruche = ruche;
   var donnée = {
     nomRuche: this.rucheService.ruche.name,
@@ -187,7 +186,7 @@ onSelectRuche(ruche){
   this.newRucheForm.setValue(donnée);
 }
 // pour editer une ruche
-onEditeRuche(){
+onEditeRuche() {
   const formValue = this.newRucheForm.value;
   var lastIdApiary = this.rucheService.ruche.idApiary;
   this.rucheService.ruche.idApiary = this.rucherService.rucherSelectUpdate.id;

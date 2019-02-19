@@ -24,7 +24,7 @@ var RucheService = /** @class */ (function () {
         this.meteoService = meteoService;
         this.ruches = [];
         this.initRuche();
-        this.getRucheByUsername(this.user.currentUser().username);
+        this.getRucheByUsername(this.user.getUser());
     }
     RucheService.prototype.initRuche = function () {
         this.ruche = {
@@ -69,7 +69,7 @@ var RucheService = /** @class */ (function () {
         var _this = this;
         this.rucheObs = this.http.put(CONFIG.URL + 'hives/update/coordonnees/' + ruche.id, ruche, httpOptions);
         this.rucheObs.subscribe(function () {
-            _this.getRucheByApiary(_this.user.currentUser().username, ruche.idApiary);
+            _this.getRucheByApiary(_this.user.getUser(), ruche.idApiary);
         }, function (err) {
             console.log(err);
         });
@@ -80,7 +80,7 @@ var RucheService = /** @class */ (function () {
         this.rucheObs.subscribe(function () { }, function (err) {
             console.log(err);
         }, function () {
-            _this.getRucheByApiary(_this.user.currentUser().username, lastIdApiary);
+            _this.getRucheByApiary(_this.user.getUser(), lastIdApiary);
         });
     };
     RucheService.prototype.cleanRuches = function () {
@@ -92,7 +92,7 @@ var RucheService = /** @class */ (function () {
         this.rucheObs.subscribe(function () { }, function (err) {
             console.log(err);
         }, function () {
-            _this.getRucheByApiary(_this.user.currentUser().username, _this.ruche.idApiary);
+            _this.getRucheByApiary(_this.user.getUser(), _this.ruche.idApiary);
         });
     };
     RucheService.prototype.deleteRuche = function () {

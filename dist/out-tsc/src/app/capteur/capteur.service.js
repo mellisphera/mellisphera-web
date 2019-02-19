@@ -60,7 +60,7 @@ var CapteurService = /** @class */ (function () {
     };
     CapteurService.prototype.getSoldDevicesByUser = function () {
         var _this = this;
-        this.capteursObs = this.http.get(CONFIG.URL + 'sold_devices/username/' + this.user.currentUser().username);
+        this.capteursObs = this.http.get(CONFIG.URL + 'sold_devices/username/' + this.user.getUser());
         this.capteursObs.subscribe(function (data) {
             console.log(data);
             _this.capteurAcheter = data;
@@ -70,7 +70,7 @@ var CapteurService = /** @class */ (function () {
     };
     CapteurService.prototype.getUserCapteurs = function () {
         var _this = this;
-        this.capteursObs = this.http.get(CONFIG.URL + 'sensors/' + this.user.currentUser().username);
+        this.capteursObs = this.http.get(CONFIG.URL + 'sensors/' + this.user.getUser());
         this.capteursObs.subscribe(function (data) {
             _this.capteursByUser = data;
             console.log(_this.capteursByUser);
