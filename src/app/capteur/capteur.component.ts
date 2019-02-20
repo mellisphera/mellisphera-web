@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { RucherModel } from './../_model/rucher-model';
+import { RucheInterface } from './../_model/ruche';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CapteurService } from './capteur.service';
 import { FormGroup, FormBuilder, Validators,FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,23 +17,24 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   templateUrl: './capteur.component.html',
   styleUrls: ['./capteur.component.scss']
 })
-export class CapteurComponent implements OnInit {
+export class CapteurComponent implements OnInit, OnDestroy {
 
   username: string;
-
-  editCapteurCheckbox : boolean;
+  hiveSensorSelect: RucheInterface;
+  apiarySensorSelect: RucherModel;
+  editCapteurCheckbox: boolean;
 
   //variable to store ruches
   ruches: any [] = [];
   //for new sensor
-  newCapteurForm : FormGroup;
+  newCapteurForm: FormGroup;
   //to edit a sensor
-  editCapteurForm : FormGroup;
-  capteurSearch : string;
+  editCapteurForm: FormGroup;
+  capteurSearch: string;
 
-  message="";
-  editedSensorMsg :boolean;
-  editedSensorMsgE : boolean;
+  message ="";
+  editedSensorMsg: boolean;
+  editedSensorMsgE: boolean;
   public errorMsg;
     
     constructor(
@@ -63,9 +66,13 @@ export class CapteurComponent implements OnInit {
         };
         this.editCapteurForm.setValue(donnee);
         this.editCapteurCheckbox = !(this.capteurService.capteur.idHive == null || this.capteurService.capteur.idApiary == null);
-        if(this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
-            this.rucherService.findRucherById(this.capteurService.capteur.idApiary);
-            this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive);
+        if (this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
+            this.rucherService.findRucherById(this.capteurService.capteur.idApiary, (apiary) => {
+                this.apiarySensorSelect = apiary;
+            });
+            this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive, false, (hive) => {
+                this.hiveSensorSelect = hive;
+            });
         }
 
     }
@@ -81,14 +88,14 @@ export class CapteurComponent implements OnInit {
    //CREATE CAPTEUR
     createCapteur() {
         const formValue = this.newCapteurForm.value;
-        let tempType = this.capteurService.capteur.type;
+        const tempType = this.capteurService.capteur.type;
         this.capteurService.initCapteur();
         //this.capteurService.capteur = formValue;
-        if(formValue.checkbox != "stock"){
-            this.capteurService.capteur.idHive = this.rucherService.rucheService.ruche.id;
-            this.capteurService.capteur.idApiary = this.rucherService.rucher.id;
-            this.capteurService.capteur.apiaryName = this.rucherService.rucher.name;
-            this.capteurService.capteur.hiveName = this.rucherService.rucheService.ruche.name;
+        if (formValue.checkbox != 'stock') {
+            this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
+            this.capteurService.capteur.idApiary = this.apiarySensorSelect.id;
+            this.capteurService.capteur.apiaryName = this.apiarySensorSelect.name;
+            this.capteurService.capteur.hiveName = this.apiarySensorSelect.name;
         }
         else{
             this.capteurService.capteur.idHive = null;
@@ -97,12 +104,12 @@ export class CapteurComponent implements OnInit {
             this.capteurService.capteur.hiveName = null;
         }
         this.capteurService.capteur.description = formValue.description;
-        this.capteurService.capteur.username = this.username.toLowerCase();
+        this.capteurService.capteur.username = this.username;
         this.capteurService.capteur.reference = formValue.reference;
         this.capteurService.capteur.type = tempType;
         this.initForm();
         this.capteurService.createCapteur();
-    }  
+    }
     getTypeAffectation(){
         return this.newCapteurForm.get('checkbox');
     }
@@ -123,15 +130,15 @@ export class CapteurComponent implements OnInit {
 
     updateCapteur() {
         const formValue = this.editCapteurForm.value;
-        let tempType = this.capteurService.capteur.type;
-        let idTemp = this.capteurService.capteur.id;
+        const tempType = this.capteurService.capteur.type;
+        const idTemp = this.capteurService.capteur.id;
         this.capteurService.initCapteur();
         //this.capteurService.capteur = formValue;
-        if(formValue.checkbox != "stock"){
-            this.capteurService.capteur.idHive = this.rucherService.rucheService.rucheUpdate.id;
-            this.capteurService.capteur.idApiary = this.rucherService.rucherUpdate.id;
-            this.capteurService.capteur.apiaryName = this.rucherService.rucherUpdate.name;
-            this.capteurService.capteur.hiveName = this.rucherService.rucheService.rucheUpdate.name;
+        if (formValue.checkbox != 'stock') {
+            this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
+            this.capteurService.capteur.idApiary = this.apiarySensorSelect.id;
+            this.capteurService.capteur.apiaryName = this.apiarySensorSelect.name;
+            this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
         }
         else {
             this.capteurService.capteur.idHive = null;
@@ -147,7 +154,7 @@ export class CapteurComponent implements OnInit {
     }
 
     onSelectRucher(){
-        this.rucherService.rucheService.getRucheByApiary(this.username, this.rucherService.rucherUpdate.id);
+        this.rucherService.rucheService.getRucheByApiary(this.username, this.apiarySensorSelect.id);
     }
 
     initForm(){
@@ -163,4 +170,8 @@ export class CapteurComponent implements OnInit {
         });
     }
  
+    ngOnDestroy() {
+        this.rucherService.rucherSubject.unsubscribe();
+        this.rucherService.rucheService.hiveSubject.unsubscribe();
+    }
 }

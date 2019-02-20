@@ -181,11 +181,10 @@ export class RucherService {
     errorHandler(error: HttpErrorResponse){
         return Observable.throw(error.message || "server error")
     }
-    
-    findRucherById(idApiary : string){
+    findRucherById(idApiary: string, next?){
         this.ruchers.forEach(element => {
-            if(element.id == idApiary){
-                this.rucherUpdate = element;
+            if (element.id === idApiary) {
+                next(element);
             }
         });
     }
