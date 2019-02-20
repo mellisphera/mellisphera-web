@@ -1,3 +1,17 @@
 .content{
     margin-top: 10px;
 }
+.panel-body div:first-child button:last-child{
+    margin-left: 25px;
+}
+.panel-body div:first-child button:first-child {
+    margin-left: 95%; 
+    padding: 0;
+    border: none; 
+    background: none;
+}
+@media screen and (max-width:1315px){
+    .panel-body div:first-child button:first-child{
+        margin-left: 90%;
+    }
+}
