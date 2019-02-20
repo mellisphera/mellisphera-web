@@ -23,7 +23,7 @@ export class ObservationComponent implements OnInit {
   rucheDescription;
   radioObs : boolean;
   typeAjout : any;
-
+  typeObs: boolean;
   optionsDate = {
     weekday:'short',year:'numeric',month:'long',day:'2-digit',hour: 'numeric', minute: 'numeric', second: 'numeric',
   };
@@ -38,6 +38,7 @@ export class ObservationComponent implements OnInit {
     public observationService : ObservationService,
     private rucheService : RucheService
     ) {
+      this.typeObs = false;
       this.initForm();
     }
 
@@ -51,23 +52,24 @@ export class ObservationComponent implements OnInit {
   initForm(){
     this.ObservationForm=this.formBuilder.group({
       'sentence': [null,Validators.compose([Validators.required])],
-      'type': '',
+      'type': 'HiveObs',
       'date': new Date()
     })
   }
 
-  createObservation(){
+  createObservation() {
     const formValue = this.ObservationForm.value;
     this.observationService.observation = formValue;
+    this.observationService.observation.type = !this.typeObs ? 'HiveObs' : 'HiveAct';
     this.observationService.observation.idHive = this.rucheService.ruche.id;
     this.observationService.observation.idLHive = [this.rucheService.ruche.id];
     this.initForm();
     this.observationService.createObservation();
   }
 
-  onSelectObsR(hiveOBS){
+  onSelectObsR(hiveOBS) {
     this.observationService.observation = hiveOBS;
-    var donnée = {
+    const donnée = {
       sentence : this.observationService.observation.sentence,
       type : this.observationService.observation.type,
       date : this.observationService.observation.date
@@ -75,9 +77,11 @@ export class ObservationComponent implements OnInit {
     this.ObservationForm.setValue(donnée);
   }
 
-  onEditObservation(){
+  onEditObservation() {
    const formValue = this.ObservationForm.value;
    this.observationService.observation.sentence = formValue.sentence;
+   this.observationService.observation.type = formValue.type;
+   console.log(this.observationService.observation);
    this.observationService.updateObservation();
   }
 

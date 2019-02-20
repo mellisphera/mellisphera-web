@@ -36,7 +36,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
   editedSensorMsg: boolean;
   editedSensorMsgE: boolean;
   public errorMsg;
-    
     constructor(
         private data : UserloggedService,
         private _router : Router,
@@ -47,20 +46,19 @@ export class CapteurComponent implements OnInit, OnDestroy {
 
         this.username = data.currentUser().username;
         this.initForm();
-        
     }
 
 
     ngOnInit() {
     }
 
-    onChangeCapteur($event){
+    onChangeCapteur($event) {
         this.capteurService.capteur = $event.target.value;
     }
-    selectCapteur(capteur){
+    selectCapteur(capteur) {
         this.capteurService.capteur = capteur;
         /* Assigne les données du capteurs au formulaire pour modification*/
-        let donnee = {
+        const donnee = {
             checkbox: '',
             description: this.capteurService.capteur.description,
         };
