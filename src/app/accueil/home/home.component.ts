@@ -19,17 +19,26 @@ import { AuthService } from '../../auth/Service/auth.service';
 })
 export class HomeComponent implements OnInit {
   public top: any = Offsets.HANDLE_HEIGHT;
-  public right: any= Offsets.HALF_WIDTH;
-  public bottom: any= Offsets.HANDLE_HEIGHT;
-  public left: any= Offsets.HALF_WIDTH;
-  infoRuche : any = null;
-  offset : Offsets;
+  public right: any = Offsets.HALF_WIDTH;
+  public bottom: any = Offsets.HANDLE_HEIGHT;
+  public left: any = Offsets.HALF_WIDTH;
+  infoRuche: any = null;
+  offset: Offsets;
   photoApiary: File;
   username: string;
-  rucheSelect : RucheInterface;
+  rucheSelect: RucheInterface;
   baseDropValid: string;
-  rucherSelectId : string;
-  message="";
+  rucherSelectId: string;
+  message: string;
+  style: {
+    'background-image': string,
+    'background-position': string,
+    'background-repeat': string
+  };
+  position: {
+    'x': string,
+    'y': string
+  };
 
   rucheOnClick : Ruche;
 
@@ -39,54 +48,28 @@ export class HomeComponent implements OnInit {
     public rucherService: RucherService,
     private route : Router,
     public authService : AuthService) { 
-      console.log(this.rucherService.rucher);
+      this.username = this.login.getUser();
       this.photoApiary = null;
-
-    this.offset = new Offsets(this.top,this.right,this.bottom, this.left);
-    //this.rucheService.getRucheByApiary(this.login.currentUser().username, this.rucherService.rucher.id);
+      this.message = '';
+      this.style = {
+        'background-image': 'url(' + CONFIG.URL_FRONT + 'assets/imageClient/testAccount.png)',
+        'background-position': 'center',
+        'background-repeat': 'no-repeat'
+      };
+      this.position = {
+        x : '0',
+        y : '0'
+      };
+    this.offset = new Offsets(this.top, this.right, this.bottom, this.left);
   }
 
-  position = {
-    'x': '0',
-    'y': '0'
-  };
-
-  receiveMessage($event){
-    this.message=$event;
+  receiveMessage($event) {
+    this.message = $event;
 
   }
 
-  style = {
-    'background-image':'url('+CONFIG.URL_FRONT+'assets/imageClient/testAccount.png)',
-    'background-position': "center",
-    'background-repeat': "no-repeat"
-  };
 
   ngOnInit() {
-    this.username = this.login.getUser();
-    //this.style["background-image"] = "url("+this.rucherService.rucher.photo+")";
-
-   /*if(this.username == "***REMOVED***"){
-      this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/JHE.png)";
-    }
-    else if(this.username == "***REMOVED***"){
-      this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/JCP.png)";
-    }
-    else if(this.username == "***REMOVED***"){
-      this.style["background-image"] = "url("+CONFIG.URL_FRONT+"assets/imageClient/***REMOVED***.png)";
-    }
-    else if(this.username == "***REMOVED***"){
-      this.style["background-image"]="url("+CONFIG.URL_FRONT+"assets/imageClient/LPO.png)";
-    }
-    else if(this.username == "aro"){
-      this.style["background-image"]="url("+CONFIG.URL_FRONT+"assets/imageClient/aro.png)";
-    }
-    else if(this.username == "theo"){
-      this.style["background-image"]="url("+CONFIG.URL_FRONT+"assets/imageClient/theo.png)";
-    }
-    else if(this.username == "pma"){
-      this.style["background-image"]="url("+CONFIG.URL_FRONT+"assets/imageClient/PMA.png)";
-    }*/
   }
 
   onClick(ruche){

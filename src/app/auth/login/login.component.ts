@@ -95,12 +95,5 @@ export class LoginComponent implements OnInit {
   currentUser(){
     return JSON.parse(localStorage.getItem('currentUser'));
   }
-  goToDashboard(){
-  }
-  test(){
-    
-  }
-
-
 
 }
