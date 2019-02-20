@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 /**
  * @file  Using layout algorithm transform the raw data to layout information.
  * @author Deqing Li(annong035@gmail.com)
@@ -60,10 +79,12 @@ function themeRiverLayout(data, seriesModel, height) {
     var layerSeries = seriesModel.getLayerSeries();
 
     // the points in each layer.
+    var timeDim = data.mapDimension('single');
+    var valueDim = data.mapDimension('value');
     var layerPoints = zrUtil.map(layerSeries, function (singleLayer) {
         return zrUtil.map(singleLayer.indices, function (idx) {
-            var pt = coordSys.dataToPoint(data.get('time', idx));
-            pt[1] = data.get('value', idx);
+            var pt = coordSys.dataToPoint(data.get(timeDim, idx));
+            pt[1] = data.get(valueDim, idx);
             return pt;
         });
     });

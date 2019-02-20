@@ -1,7 +1,7 @@
 export interface DailyRecordTh {
 
     id : string;
-	recordDate : string;
+	recordDate : Date;
 	idHive : string;
 	humidity_int_min : number;
 	humidity_int_max : number;
@@ -12,6 +12,6 @@ export interface DailyRecordTh {
 	health_status : string;
 	health_trend  :string;
     r_int_text : string;
-    
+    timestamp : number;
     //[class]="getColorStatus(i)"
 }

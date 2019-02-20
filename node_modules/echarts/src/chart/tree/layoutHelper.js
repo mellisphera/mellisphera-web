@@ -1,3 +1,29 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
+/*
+* The tree layout implementation references to d3.js
+* (https://github.com/d3/d3-hierarchy). The use of the source
+* code of this file is also subject to the terms and consitions
+* of its license (BSD-3Clause, see <echarts/src/licenses/LICENSE-d3>).
+*/
+
 /**
  * @file The layout algorithm of node-link tree diagrams. Here we using Reingold-Tilford algorithm to drawing
  *       the tree.
@@ -59,7 +85,7 @@ export function init(root) {
 export function firstWalk(node, separation) {
     var children = node.isExpand ? node.children : [];
     var siblings = node.parentNode.children;
-    var subtreeW = node.hierNode.i ? siblings[node.hierNode.i -1] : null;
+    var subtreeW = node.hierNode.i ? siblings[node.hierNode.i - 1] : null;
     if (children.length) {
         executeShifts(node);
         var midPoint = (children[0].hierNode.prelim + children[children.length - 1].hierNode.prelim) / 2;
@@ -74,7 +100,12 @@ export function firstWalk(node, separation) {
     else if (subtreeW) {
         node.hierNode.prelim = subtreeW.hierNode.prelim + separation(node, subtreeW);
     }
-    node.parentNode.hierNode.defaultAncestor = apportion(node, subtreeW, node.parentNode.hierNode.defaultAncestor || siblings[0], separation);
+    node.parentNode.hierNode.defaultAncestor = apportion(
+        node,
+        subtreeW,
+        node.parentNode.hierNode.defaultAncestor || siblings[0],
+        separation
+    );
 }
 
 
@@ -241,7 +272,7 @@ function nextAncestor(nodeInLeft, node, ancestor) {
  * @param  {module:echarts/data/Tree~TreeNode} wr
  * @param  {number} shift [description]
  */
-function moveSubtree(wl, wr,shift) {
+function moveSubtree(wl, wr, shift) {
     var change = shift / (wr.hierNode.i - wl.hierNode.i);
     wr.hierNode.change -= change;
     wr.hierNode.shift += shift;

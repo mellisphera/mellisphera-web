@@ -1,0 +1,79 @@
+<div class="wrapper">
+    <div class="sidebar" data-color="blue" data-image="">
+        <app-sidebar ></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
+    </div>
+    <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+    <div class="main-panel">
+        <!--<router-outlet></router-outlet>-->
+
+<!-- change component content here-->
+        <div class="container-fluid" style="background-color:white;">
+                <div class="row content">
+                    <ul class="nav nav-tabs">
+                        <li class="active onglets" (click)="onTab('notes');">
+                            <a data-toggle="tab" href="#notes">
+                                <i class="fa fa fa-book fa-lg" aria-hidden="true"></i>
+                                Notes</a></li>
+                        <li (click)="onTab('stock');" class="onglets">
+                            <a data-toggle="tab" href="#stock">
+                                <i class="padding fa fa-balance-scale fa-lg" aria-hidden="true"></i>
+                                Stock
+                            </a>
+                        </li>
+                        <li class="onglets" (click)="onTab('health');">
+                            <a data-toggle="tab" href="#health">
+                                <i class="fa fa-plus-square fa-lg" aria-hidden="true"></i>
+                                Health
+                            </a>
+                        </li>
+                        <li class="onglets" (click)="onTab('daily');">
+                            <a data-toggle="tab" href="#daily">
+                            <i class="fa fa-thermometer-3 fa-lg" aria-hidden="true"></i>
+                            Daily
+                            </a>
+                        </li>
+                        <li class="onglets" (click)="onTab('hourly');">
+                            <a data-toggle="tab" href="#hourly">
+                                <i class="padding fa fa-line-chart fa-lg" aria-hidden="true"></i>
+                                Hourly
+                            </a>
+                        </li>
+                        <li class="onglets" (click)="onTab('stack');">
+                            <a data-toggle="tab" href="#stack">
+                                Stack
+                            </a>
+                        </li>
+                            <div id="navHive">
+                                <ul class="flex">
+                                    <li width="35" (click)="previousHive()" class="navRuche"><a><img [src]="img" width="35"/></a></li>
+                                    <li id="hiveName">{{ rucheName }} </li>
+                                    <li (click)="nextHive()" class="navRuche"><a><img [src]="img" width="35"/></a></li>
+                                </ul>
+                            </div>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="notes" class="tab-pane fade in active">
+                            <app-observation></app-observation>
+                        </div>
+                        <div id="stock" class="tab-pane fade">
+                            <app-stock></app-stock>
+                        </div>
+                        <div id="health" class="tab-pane fade">
+                            <app-health></app-health>
+                        </div>
+                        <div id="daily" class="tab-pane fade">
+                            <app-daily></app-daily>
+                        </div>
+                        <div id="hourly" class="tab-pane fade">
+                            <app-hourly></app-hourly>
+                        </div>
+                        <div id="stack" class="tab-pane fade">
+                            <app-stack></app-stack>
+                        </div>
+        <!--<router-outlet></router-outlet>>-->
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

@@ -1,12 +1,31 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as zrUtil from 'zrender/src/core/util';
 import * as clazzUtil from '../../util/clazz';
 import * as graphic from '../../util/graphic';
 import * as axisPointerModelHelper from './modelHelper';
 import * as eventTool from 'zrender/src/core/event';
 import * as throttleUtil from '../../util/throttle';
-import * as modelUtil from '../../util/model';
+import {makeInner} from '../../util/model';
 
-var get = modelUtil.makeGetter();
+var inner = makeInner();
 var clone = zrUtil.clone;
 var bind = zrUtil.bind;
 
@@ -14,7 +33,7 @@ var bind = zrUtil.bind;
  * Base axis pointer class in 2D.
  * Implemenents {module:echarts/component/axis/IAxisPointer}.
  */
-function BaseAxisPointer () {
+function BaseAxisPointer() {
 }
 
 BaseAxisPointer.prototype = {
@@ -109,8 +128,8 @@ BaseAxisPointer.prototype = {
         }
         this._lastGraphicKey = graphicKey;
 
-        var moveAnimation = this._moveAnimation =
-            this.determineAnimation(axisModel, axisPointerModel);
+        var moveAnimation = this._moveAnimation
+            = this.determineAnimation(axisModel, axisPointerModel);
 
         if (!group) {
             group = this._group = new graphic.Group();
@@ -193,7 +212,7 @@ BaseAxisPointer.prototype = {
     createPointerEl: function (group, elOption, axisModel, axisPointerModel) {
         var pointerOption = elOption.pointer;
         if (pointerOption) {
-            var pointerEl = get(group).pointerEl = new graphic[pointerOption.type](
+            var pointerEl = inner(group).pointerEl = new graphic[pointerOption.type](
                 clone(elOption.pointer)
             );
             group.add(pointerEl);
@@ -205,7 +224,7 @@ BaseAxisPointer.prototype = {
      */
     createLabelEl: function (group, elOption, axisModel, axisPointerModel) {
         if (elOption.label) {
-            var labelEl = get(group).labelEl = new graphic.Rect(
+            var labelEl = inner(group).labelEl = new graphic.Rect(
                 clone(elOption.label)
             );
 
@@ -218,7 +237,7 @@ BaseAxisPointer.prototype = {
      * @protected
      */
     updatePointerEl: function (group, elOption, updateProps) {
-        var pointerEl = get(group).pointerEl;
+        var pointerEl = inner(group).pointerEl;
         if (pointerEl) {
             pointerEl.setStyle(elOption.pointer.style);
             updateProps(pointerEl, {shape: elOption.pointer.shape});
@@ -229,7 +248,7 @@ BaseAxisPointer.prototype = {
      * @protected
      */
     updateLabelEl: function (group, elOption, updateProps, axisPointerModel) {
-        var labelEl = get(group).labelEl;
+        var labelEl = inner(group).labelEl;
         if (labelEl) {
             labelEl.setStyle(elOption.label.style);
             updateProps(labelEl, {
@@ -345,7 +364,7 @@ BaseAxisPointer.prototype = {
 
         handle.stopAnimation();
         handle.attr(getHandleTransProps(trans));
-        get(handle).lastProp = null;
+        inner(handle).lastProp = null;
 
         this._doDispatchAxisPointer();
     },
@@ -467,8 +486,8 @@ BaseAxisPointer.prototype.constructor = BaseAxisPointer;
 
 function updateProps(animationModel, moveAnimation, el, props) {
     // Animation optimize.
-    if (!propsEqual(get(el).lastProp, props)) {
-        get(el).lastProp = props;
+    if (!propsEqual(inner(el).lastProp, props)) {
+        inner(el).lastProp = props;
         moveAnimation
             ? graphic.updateProps(el, props, animationModel)
             : (el.stopAnimation(), el.attr(props));

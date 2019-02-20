@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 /**
  * Single coordinates system.
  */
@@ -5,6 +24,7 @@
 import SingleAxis from './SingleAxis';
 import * as axisHelper from '../axisHelper';
 import {getLayoutRect} from '../../util/layout';
+import {each} from 'zrender/src/core/util';
 
 /**
  * Create a single coordinates system.
@@ -97,10 +117,9 @@ Single.prototype = {
         ecModel.eachSeries(function (seriesModel) {
             if (seriesModel.coordinateSystem === this) {
                 var data = seriesModel.getData();
-                var dim = this.dimension;
-                this._axis.scale.unionExtentFromData(
-                    data, seriesModel.coordDimToDataDim(dim)
-                );
+                each(data.mapDimension(this.dimension, true), function (dim) {
+                    this._axis.scale.unionExtentFromData(data, dim);
+                }, this);
                 axisHelper.niceScaleExtent(this._axis.scale, this._axis.model);
             }
         }, this);
@@ -148,7 +167,7 @@ Single.prototype = {
 
         var isHorizontal = axis.isHorizontal();
         var extent = isHorizontal ? [0, rect.width] : [0, rect.height];
-        var idx =  axis.reverse ? 1 : 0;
+        var idx = axis.reverse ? 1 : 0;
 
         axis.setExtent(extent[idx], extent[1 - idx]);
 

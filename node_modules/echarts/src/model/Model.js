@@ -1,10 +1,30 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 /**
  * @module echarts/model/Model
  */
 
 import * as zrUtil from 'zrender/src/core/util';
 import env from 'zrender/src/core/env';
-import * as clazzUtil from '../util/clazz';
+import {makeInner} from '../util/model';
+import {enableClassExtend, enableClassCheck} from '../util/clazz';
 
 import lineStyleMixin from './mixin/lineStyle';
 import areaStyleMixin from './mixin/areaStyle';
@@ -12,6 +32,7 @@ import textStyleMixin from './mixin/textStyle';
 import itemStyleMixin from './mixin/itemStyle';
 
 var mixin = zrUtil.mixin;
+var inner = makeInner();
 
 /**
  * @alias module:echarts/model/Model
@@ -135,11 +156,11 @@ Model.prototype = {
     },
 
     setReadOnly: function (properties) {
-        clazzUtil.setReadOnly(this, properties);
+        // clazzUtil.setReadOnly(this, properties);
     },
 
     // If path is null/undefined, return null/undefined.
-    parsePath: function(path) {
+    parsePath: function (path) {
         if (typeof path === 'string') {
             path = path.split('.');
         }
@@ -152,7 +173,7 @@ Model.prototype = {
      *        return {module:echarts/model/Model}
      */
     customizeGetParent: function (getParentMethod) {
-        clazzUtil.set(this, 'getParent', getParentMethod);
+        inner(this).getParent = getParentMethod;
     },
 
     isAnimationEnabled: function () {
@@ -165,6 +186,7 @@ Model.prototype = {
             }
         }
     }
+
 };
 
 function doGet(obj, pathArr, parentModel) {
@@ -187,12 +209,13 @@ function doGet(obj, pathArr, parentModel) {
 
 // `path` can be null/undefined
 function getParent(model, path) {
-    var getParentMethod = clazzUtil.get(model, 'getParent');
+    var getParentMethod = inner(model).getParent;
     return getParentMethod ? getParentMethod.call(model, path) : model.parentModel;
 }
 
 // Enable Model.extend.
-clazzUtil.enableClassExtend(Model);
+enableClassExtend(Model);
+enableClassCheck(Model);
 
 mixin(Model, lineStyleMixin);
 mixin(Model, areaStyleMixin);

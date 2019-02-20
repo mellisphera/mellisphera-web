@@ -441,8 +441,8 @@ input:focus {
     background: -ms-linear-gradient(top, #FFA534 0%, #ff5221 100%);
     background: linear-gradient(to bottom, #FFA534 0%, #ff5221 100%);
     background-size: 150% 150%; }
-  .sidebar[data-color="red"]:after,
-  .bootstrap-navbar[data-color="red"]:after {
+  .sidebar[data-color="blue"]:after,
+  .bootstrap-navbar[data-color="blue"]:after {
     background: #FB404B;
     background: -moz-linear-gradient(top, #FB404B 0%, #bb0502 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FB404B), color-stop(100%, #bb0502));

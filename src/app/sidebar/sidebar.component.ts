@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserloggedService } from '../userlogged.service';
+import { CONFIG } from '../../config'
+import { AuthService } from '../auth/Service/auth.service';
+import { AtokenStorageService } from '../auth/Service/atoken-storage.service';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -24,14 +27,16 @@ export const ROUTES: RouteInfo[] = [
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
+  styleUrls:['./sidebar.component.scss'],
 
 })
 export class SidebarComponent implements OnInit {
   menuItems: any[];
   username;
+  url_sideImg : string;
     
-  constructor(public router: Router) {
-    //this.username = data.currentUser();
+  constructor(public userService : UserloggedService, public router: Router, public authService : AuthService, public tokenService : AtokenStorageService) {
+    this.url_sideImg = CONFIG.URL_FRONT+'assets/logo.png';
    }
 
   ngOnInit() {
@@ -45,6 +50,13 @@ export class SidebarComponent implements OnInit {
   };
   goAccueil(){
     this.router.navigate(['home']);
+  }
+
+  logout(){
+    this.tokenService.signOut();
+    this.authService.isAuthenticated = false;
+    this.authService.connexionStatus.next(false);
+    this.router.navigate(['/login']);
   }
  
 }

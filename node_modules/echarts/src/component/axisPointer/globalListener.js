@@ -1,8 +1,27 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as zrUtil from 'zrender/src/core/util';
 import env from 'zrender/src/core/env';
-import * as modelUtil from '../../util/model';
+import {makeInner} from '../../util/model';
 
-var get = modelUtil.makeGetter();
+var inner = makeInner();
 var each = zrUtil.each;
 
 /**
@@ -18,20 +37,20 @@ export function register(key, api, handler) {
     }
 
     var zr = api.getZr();
-    get(zr).records || (get(zr).records = {});
+    inner(zr).records || (inner(zr).records = {});
 
     initGlobalListeners(zr, api);
 
-    var record = get(zr).records[key] || (get(zr).records[key] = {});
+    var record = inner(zr).records[key] || (inner(zr).records[key] = {});
     record.handler = handler;
 }
 
 function initGlobalListeners(zr, api) {
-    if (get(zr).initialized) {
+    if (inner(zr).initialized) {
         return;
     }
 
-    get(zr).initialized = true;
+    inner(zr).initialized = true;
 
     useHandler('click', zrUtil.curry(doEnter, 'click'));
     useHandler('mousemove', zrUtil.curry(doEnter, 'mousemove'));
@@ -42,7 +61,7 @@ function initGlobalListeners(zr, api) {
         zr.on(eventType, function (e) {
             var dis = makeDispatchAction(api);
 
-            each(get(zr).records, function (record) {
+            each(inner(zr).records, function (record) {
                 record && cb(record, e, dis.dispatchAction);
             });
 
@@ -112,8 +131,8 @@ export function unregister(key, api) {
         return;
     }
     var zr = api.getZr();
-    var record = (get(zr).records || {})[key];
+    var record = (inner(zr).records || {})[key];
     if (record) {
-        get(zr).records[key] = null;
+        inner(zr).records[key] = null;
     }
 }

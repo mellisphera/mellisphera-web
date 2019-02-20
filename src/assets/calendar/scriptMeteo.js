@@ -2,7 +2,6 @@ var unChart = echarts.init(document.getElementById("main"));
 
 function renderItem(params,api){
     var cellPoint = api.coord([api.value(0),api.value(1)]); // coordonné
-    //console.log("valeur : "+api.value(0) + " coordonné : "+cellpoint);
     var cellWidth = params.coordSys.cellWidth;
     var cellHeight = params.coordSys.cellHeight;
     /* 
@@ -27,7 +26,6 @@ var nb=[];
 for(i=1;i<30;i++){
     nb.push(['2018-02-'+i,1]);
 }
-console.log(nb);
 var i=0;
 var options={
     title:{

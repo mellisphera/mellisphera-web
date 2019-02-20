@@ -1,9 +1,28 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as zrUtil from 'zrender/src/core/util';
-import List from '../../data/List';
+import createListSimply from '../helper/createListSimply';
 import SeriesModel from '../../model/Series';
-import completeDimensions from '../../data/helper/completeDimensions';
 import {encodeHTML, addCommas} from '../../util/format';
 import dataSelectableMixin from '../../component/helper/selectableMixin';
+import {retrieveRawAttr} from '../../data/helper/dataProvider';
 import geoCreator from '../../coord/geo/geoCreator';
 
 var MapSeries = SeriesModel.extend({
@@ -28,30 +47,41 @@ var MapSeries = SeriesModel.extend({
 
     init: function (option) {
 
-        this._fillOption(option, this.getMapType());
+        // this._fillOption(option, this.getMapType());
         // this.option = option;
 
         MapSeries.superApply(this, 'init', arguments);
 
-        this.updateSelectedMap(option.data);
+        this.updateSelectedMap(this._createSelectableList());
     },
 
     getInitialData: function (option) {
-        var dimensions = completeDimensions(['value'], option.data || []);
-
-        var list = new List(dimensions, this);
-
-        list.initData(option.data);
-
-        return list;
+        return createListSimply(this, ['value']);
     },
 
     mergeOption: function (newOption) {
-        this._fillOption(newOption, this.getMapType());
+        // this._fillOption(newOption, this.getMapType());
 
         MapSeries.superApply(this, 'mergeOption', arguments);
 
-        this.updateSelectedMap(this.option.data);
+        this.updateSelectedMap(this._createSelectableList());
+    },
+
+    _createSelectableList: function () {
+        var data = this.getRawData();
+        var valueDim = data.mapDimension('value');
+        var targetList = [];
+        for (var i = 0, len = data.count(); i < len; i++) {
+            targetList.push({
+                name: data.getName(i),
+                value: data.get(valueDim, i),
+                selected: retrieveRawAttr(data, i, 'selected')
+            });
+        }
+
+        targetList = geoCreator.getFilledRegions(targetList, this.getMapType(), this.option.nameMap);
+
+        return targetList;
     },
 
     /**
@@ -73,7 +103,7 @@ var MapSeries = SeriesModel.extend({
         // Shallow clone
         // option = zrUtil.extend({}, option);
 
-        option.data = geoCreator.getFilledRegions(option.data, mapName, option.nameMap);
+        // option.data = geoCreator.getFilledRegions(option.data, mapName, option.nameMap);
 
         // return option;
     },
@@ -81,7 +111,8 @@ var MapSeries = SeriesModel.extend({
     getRawValue: function (dataIndex) {
         // Use value stored in data instead because it is calculated from multiple series
         // FIXME Provide all value of multiple series ?
-        return this.getData().get('value', dataIndex);
+        var data = this.getData();
+        return data.get(data.mapDimension('value'), dataIndex);
     },
 
     /**
@@ -109,7 +140,8 @@ var MapSeries = SeriesModel.extend({
         var seriesNames = [];
         for (var i = 0; i < seriesGroup.length; i++) {
             var otherIndex = seriesGroup[i].originalData.indexOfName(name);
-            if (!isNaN(seriesGroup[i].originalData.get('value', otherIndex))) {
+            var valueDim = data.mapDimension('value');
+            if (!isNaN(seriesGroup[i].originalData.get(valueDim, otherIndex))) {
                 seriesNames.push(
                     encodeHTML(seriesGroup[i].name)
                 );
@@ -205,25 +237,22 @@ var MapSeries = SeriesModel.extend({
         scaleLimit: null,
 
         label: {
-            normal: {
-                show: false,
-                color: '#000'
-            },
-            emphasis: {
-                show: true,
-                color: 'rgb(100,0,0)'
-            }
+            show: false,
+            color: '#000'
         },
         // scaleLimit: null,
         itemStyle: {
-            normal: {
-                // color: 各异,
-                borderWidth: 0.5,
-                borderColor: '#444',
-                areaColor: '#eee'
+            borderWidth: 0.5,
+            borderColor: '#444',
+            areaColor: '#eee'
+        },
+
+        emphasis: {
+            label: {
+                show: true,
+                color: 'rgb(100,0,0)'
             },
-            // 也是选中样式
-            emphasis: {
+            itemStyle: {
                 areaColor: 'rgba(255,215,0,0.8)'
             }
         }

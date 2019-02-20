@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 /**
  * Component model
  *
@@ -7,11 +26,12 @@
 import * as zrUtil from 'zrender/src/core/util';
 import Model from './Model';
 import * as componentUtil from '../util/component';
-import * as clazzUtil from '../util/clazz';
+import {enableClassManagement, parseClassType} from '../util/clazz';
+import {makeInner} from '../util/model';
 import * as layout from '../util/layout';
 import boxLayoutMixin from './mixin/boxLayout';
 
-var arrayPush = Array.prototype.push;
+var inner = makeInner();
 
 /**
  * @alias module:echarts/model/Component
@@ -31,6 +51,12 @@ var ComponentModel = Model.extend({
     id: '',
 
     /**
+     * Because simplified concept is probably better, series.name (or component.name)
+     * has been having too many resposibilities:
+     * (1) Generating id (which requires name in option should not be modified).
+     * (2) As an index to mapping series when merging option or calling API (a name
+     * can refer to more then one components, which is convinient is some case).
+     * (3) Display.
      * @readOnly
      */
     name: '',
@@ -90,9 +116,8 @@ var ComponentModel = Model.extend({
     $constructor: function (option, parentModel, ecModel, extraOpt) {
         Model.call(this, option, parentModel, ecModel, extraOpt);
 
-        this.uid = componentUtil.getUID('componentModel');
+        this.uid = componentUtil.getUID('ec_cpt_model');
     },
-
 
     init: function (option, parentModel, ecModel, extraOpt) {
         this.mergeDefaultAndTheme(option, ecModel);
@@ -125,7 +150,8 @@ var ComponentModel = Model.extend({
     optionUpdated: function (newCptOption, isInit) {},
 
     getDefaultOption: function () {
-        if (!clazzUtil.hasOwn(this, '__defaultOption')) {
+        var fields = inner(this);
+        if (!fields.defaultOption) {
             var optList = [];
             var Class = this.constructor;
             while (Class) {
@@ -138,9 +164,9 @@ var ComponentModel = Model.extend({
             for (var i = optList.length - 1; i >= 0; i--) {
                 defaultOption = zrUtil.merge(defaultOption, optList[i], true);
             }
-            clazzUtil.set(this, '__defaultOption', defaultOption);
+            fields.defaultOption = defaultOption;
         }
-        return clazzUtil.get(this, '__defaultOption');
+        return fields.defaultOption;
     },
 
     getReferringComponents: function (mainType) {
@@ -170,7 +196,7 @@ var ComponentModel = Model.extend({
 // );
 
 // Add capability of registerClass, getClass, hasClass, registerSubTypeDefaulter and so on.
-clazzUtil.enableClassManagement(
+enableClassManagement(
     ComponentModel, {registerWhenExtend: true}
 );
 componentUtil.enableSubTypeDefaulter(ComponentModel);
@@ -181,12 +207,20 @@ componentUtil.enableTopologicalTravel(ComponentModel, getDependencies);
 function getDependencies(componentType) {
     var deps = [];
     zrUtil.each(ComponentModel.getClassesByMainType(componentType), function (Clazz) {
-        arrayPush.apply(deps, Clazz.prototype.dependencies || []);
+        deps = deps.concat(Clazz.prototype.dependencies || []);
     });
-    // Ensure main type
-    return zrUtil.map(deps, function (type) {
-        return clazzUtil.parseClassType(type).main;
+
+    // Ensure main type.
+    deps = zrUtil.map(deps, function (type) {
+        return parseClassType(type).main;
     });
+
+    // Hack dataset for convenience.
+    if (componentType !== 'dataset' && zrUtil.indexOf(deps, 'dataset') <= 0) {
+        deps.unshift('dataset');
+    }
+
+    return deps;
 }
 
 zrUtil.mixin(ComponentModel, boxLayoutMixin);

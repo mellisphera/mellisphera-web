@@ -1,9 +1,11 @@
+import { DeprecatedDatePipe } from "@angular/common";
+
 export interface DailyRecordsW {
 
-    recordDate : string;
+    recordDate : Date;
     idHive : string;
-    temp_int_min : number;
-    temp_int_max : number;
+    temp_ext_min : number;
+    temp_ext_max : number;
     weight_min : number;
     weight_max : number;
     weight_gain : number;
