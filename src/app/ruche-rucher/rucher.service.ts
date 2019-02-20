@@ -33,7 +33,7 @@ export class RucherService {
     rucherSelectUpdate : RucherModel;
     rucherObs: Observable<RucherModel>;
     ruchersObs: Observable<RucherModel[]>;
-    rucherSubject : BehaviorSubject<RucherModel[]>;
+    rucherSubject: BehaviorSubject<RucherModel[]>;
     constructor(private http:HttpClient, private user: UserloggedService, 
         public rucheService : RucheService, 
         private dailyRec: DailyRecordService,
@@ -99,7 +99,7 @@ export class RucherService {
                     this.currentBackground = this.rucher.photo;
                     this.saveCurrentApiaryId(this.rucher.id);
                     this.ruchers = data;
-                    //this.rucherSubject.next(data);
+                    this.rucherSubject.next(data);
                 }
             },
             (err)=>{
@@ -107,7 +107,7 @@ export class RucherService {
             },
             ()=>{
                 if(this.ruchers.length > 0) {
-                    //this.rucherSubject.complete();
+                    this.rucherSubject.complete();
                     this.observationService.getObservationByIdApiary(this.rucher.id);
                     this.rucheService.getRucheByApiary(this.user.getUser(),this.rucher.id);
                     this.getRucherDetails();
