@@ -179,21 +179,21 @@
             <label class="form-check-label" for="exampleRadios1">Hive </label>                   
         </div>
     </div>
-    <div *ngIf="editCapteurCheckbox ">
+    <div *ngIf="editCapteurCheckbox">
             <div class="form-group">
                 <label class="col-form-label">Apiary</label>
-                <select [(ngModel)]="rucherService.rucherUpdate" [ngModelOptions]="{standalone: true}" class="form-control" (change)="onSelectRucher();">
+                <select [(ngModel)]="apiarySensorSelect" [ngModelOptions]="{standalone: true}" class="form-control" (change)="onSelectRucher();">
                     <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher" >{{rucher.name}}</option>
                 </select>   
             </div>                 
             <div class="form-group">
                 <label class="col-form-label">Hive</label>
-                <select [(ngModel)]="rucherService.rucheService.rucheUpdate" [ngModelOptions]="{standalone: true}" class="form-control">
-                    <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="rucher" >{{ruche.name}}</option>
-                </select>   
-                <div class="alert alert-danger" hidden>Select a hive</div>        
-            </div>
-    </div>        
+                    <select [(ngModel)]="hiveSensorSelect" [ngModelOptions]="{standalone: true}" class="form-control">
+                       <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="ruche">{{ruche.name}}</option>
+                    </select>
+            <div class="alert alert-danger" hidden>Select a hive</div>        
+        </div>
+    </div>       
     <div class="form-group">
         <label for="message-text" class="col-form-label">Description</label>
         <input formControlName="description" class="form-control" id="message-text">

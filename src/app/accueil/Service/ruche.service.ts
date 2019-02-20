@@ -58,6 +58,7 @@ export class RucheService {
           this.ruche = data[data.length - 1];
           this.ruches = data;
           this.hiveSubject.next(data);
+          console.log(this.ruche);
           this.saveCurrentHive();
           console.log(this.ruches);
         },
@@ -155,15 +156,14 @@ export class RucheService {
     );
   }
 
-  findRucheById(idHive : string, navHive : boolean = false, callback?){
+  findRucheById(idHive : string, navHive : boolean = false, next?){
     this.ruches.forEach(element => {
       if(element.id == idHive){
         if(navHive){
-          console.log(element);
-          this.ruche = element
+          this.ruche = element;
         }
         else if(!navHive){
-          this.rucheUpdate = element;
+          next(element);
         }
       }
     });
