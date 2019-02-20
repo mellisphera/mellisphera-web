@@ -99,7 +99,7 @@ export class NavbarComponent implements OnInit{
     }
     onSelectRucher() {
         console.log(this.rucherService.rucher);
-        this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher);
+        this.rucheService.getRucheByApiary(this.username, this.rucherService.rucher);
         this.rucherService.getRucherDetails();
       //  this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
         this.meteoService.getWeather(this.rucherService.rucher.ville);
