@@ -40,7 +40,6 @@ var tabData=[];
 for(i=1;i<29;i++){ // boucle qui génére les valeurs
     tabData.push(['2018-02-'+i,(Math.random()*100).toFixed()]);
 }
-console.log(tabData);
 var options={ // initialisateur d'objet
     /* Proprieté */
     title:{

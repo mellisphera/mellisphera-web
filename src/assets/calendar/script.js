@@ -5,7 +5,6 @@ var nb=[];
 for(i=1;i<30;i++){
 	nb.push(['2018-02-'+i,1]);
 }
-console.log(nb);
 var i=0;
 var options={
 	title:{

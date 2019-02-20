@@ -11,4 +11,5 @@ export interface Record {
     temp_ext : number;
     temp_int : number;
     weight;idHive : number;
+    timestamp : number;
 }

@@ -1,8 +1,27 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as echarts from '../../echarts';
 import * as zrUtil from 'zrender/src/core/util';
 import * as graphic from '../../util/graphic';
 import DataDiffer from '../../data/DataDiffer';
-import * as helper from './helper';
+import * as helper from '../helper/treeHelper';
 import Breadcrumb from './Breadcrumb';
 import RoamController from '../../component/helper/RoamController';
 import BoundingRect from 'zrender/src/core/BoundingRect';
@@ -16,10 +35,10 @@ var Rect = graphic.Rect;
 var each = zrUtil.each;
 
 var DRAG_THRESHOLD = 3;
-var PATH_LABEL_NOAMAL = ['label', 'normal'];
-var PATH_LABEL_EMPHASIS = ['label', 'emphasis'];
-var PATH_UPPERLABEL_NORMAL = ['upperLabel', 'normal'];
-var PATH_UPPERLABEL_EMPHASIS = ['upperLabel', 'emphasis'];
+var PATH_LABEL_NOAMAL = ['label'];
+var PATH_LABEL_EMPHASIS = ['emphasis', 'label'];
+var PATH_UPPERLABEL_NORMAL = ['upperLabel'];
+var PATH_UPPERLABEL_EMPHASIS = ['emphasis', 'upperLabel'];
 var Z_BASE = 10; // Should bigger than every z.
 var Z_BG = 1;
 var Z_CONTENT = 2;
@@ -105,7 +124,9 @@ export default echarts.extendChartView({
         this.api = api;
         this.ecModel = ecModel;
 
-        var targetInfo = helper.retrieveTargetInfo(payload, seriesModel);
+        var types = ['treemapZoomToNode', 'treemapRootToNode'];
+        var targetInfo = helper
+            .retrieveTargetInfo(payload, types, seriesModel);
         var payloadType = payload && payload.type;
         var layoutInfo = seriesModel.layoutInfo;
         var isInit = !this._oldTree;
@@ -410,9 +431,9 @@ export default echarts.extendChartView({
     /**
      * @private
      */
-    _onPan: function (dx, dy) {
+    _onPan: function (e) {
         if (this._state !== 'animating'
-            && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)
+            && (Math.abs(e.dx) > DRAG_THRESHOLD || Math.abs(e.dy) > DRAG_THRESHOLD)
         ) {
             // These param must not be cached.
             var root = this.seriesModel.getData().tree.root;
@@ -432,7 +453,7 @@ export default echarts.extendChartView({
                 from: this.uid,
                 seriesId: this.seriesModel.id,
                 rootRect: {
-                    x: rootLayout.x + dx, y: rootLayout.y + dy,
+                    x: rootLayout.x + e.dx, y: rootLayout.y + e.dy,
                     width: rootLayout.width, height: rootLayout.height
                 }
             });
@@ -442,7 +463,10 @@ export default echarts.extendChartView({
     /**
      * @private
      */
-    _onZoom: function (scale, mouseX, mouseY) {
+    _onZoom: function (e) {
+        var mouseX = e.originX;
+        var mouseY = e.originY;
+
         if (this._state !== 'animating') {
             // These param must not be cached.
             var root = this.seriesModel.getData().tree.root;
@@ -469,7 +493,7 @@ export default echarts.extendChartView({
             // Scale root bounding rect.
             var m = matrix.create();
             matrix.translate(m, m, [-mouseX, -mouseY]);
-            matrix.scale(m, m, [scale, scale]);
+            matrix.scale(m, m, [e.scale, e.scale]);
             matrix.translate(m, m, [mouseX, mouseY]);
 
             rect.applyTransform(m);
@@ -677,8 +701,8 @@ function renderNode(
     var thisViewChildren = thisNode.viewChildren;
     var upperHeight = thisLayout.upperHeight;
     var isParent = thisViewChildren && thisViewChildren.length;
-    var itemStyleNormalModel = thisNode.getModel('itemStyle.normal');
-    var itemStyleEmphasisModel = thisNode.getModel('itemStyle.emphasis');
+    var itemStyleNormalModel = thisNode.getModel('itemStyle');
+    var itemStyleEmphasisModel = thisNode.getModel('emphasis.itemStyle');
 
     // End of closure ariables available in "Procedures in renderNode".
     // -----------------------------------------------------------------

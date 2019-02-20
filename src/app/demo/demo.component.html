@@ -1,0 +1,37 @@
+<div class="container-fluid">
+    <div id="wrap">
+            <header>
+                    <div class="logo">
+                            <a href="https://***REMOVED***.fr/bzz" title="Le Bzz"><img class="bzzLogo" alt="Le Bzz" src="https://***REMOVED***.fr/bzz/wp-content/themes/bzz/images/lebzz.svg"></a>
+                            <img class="uxessaim" src="https://***REMOVED***.fr/bzz/wp-content/themes/bzz/images/uxessaim.svg">
+                    </div>
+                    <div class="tHeader">
+                        <div class="tHContainer">
+                            <a href="https://***REMOVED***.fr/bzz" title="Bzz">
+                                Voir tous les articles
+                            </a>
+                        </div>
+                    </div>
+        
+                </header>
+        <section id="content">
+            <article>
+                    <h1>Titre</h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac bibendum turpis, sit amet tempus turpis. Vestibulum odio augue, sodales vel diam ac, tincidunt imperdiet orci. Nam porta tortor ac felis posuere pulvinar
+                </p>
+                <div echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecWService.mergeOption" style="width:100%;height:300px;"  id="calendrierPoids"></div><br/>
+                <div echarts [options]="grapheMielService.option" [loading]="!dailyStockHoneyService.loading" [loadingOpts]="dailyStockHoneyService.loadingOpts" style="width:100%; height: 30vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div><br/>
+                <div echarts [options]="grahFleur.option" [merge]="fleursFloraisonService.mergeOption" [autoResize]="true"></div>
+                
+            </article>
+        </section>
+        <footer>
+            <p>
+                    <a target="_blank" href="http://mellisphera.com"><img id="logo" src="./assets/logo.png"/></a><br/>
+                Powered By Mellisphera
+            </p><br/>
+            
+        </footer>
+    </div>
+</div>

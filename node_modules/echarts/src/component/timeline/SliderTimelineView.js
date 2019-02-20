@@ -1,3 +1,22 @@
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
 import * as zrUtil from 'zrender/src/core/util';
 import BoundingRect from 'zrender/src/core/BoundingRect';
 import * as matrix from 'zrender/src/core/matrix';
@@ -113,7 +132,7 @@ export default TimelineView.extend({
     },
 
     _layout: function (timelineModel, api) {
-        var labelPosOpt = timelineModel.get('label.normal.position');
+        var labelPosOpt = timelineModel.get('label.position');
         var orient = timelineModel.get('orient');
         var viewRect = getViewRect(timelineModel, api);
         // Auto label offset.
@@ -147,13 +166,13 @@ export default TimelineView.extend({
         var mainLength = orient === 'vertical' ? viewRect.height : viewRect.width;
 
         var controlModel = timelineModel.getModel('controlStyle');
-        var showControl = controlModel.get('show');
+        var showControl = controlModel.get('show', true);
         var controlSize = showControl ? controlModel.get('itemSize') : 0;
         var controlGap = showControl ? controlModel.get('itemGap') : 0;
         var sizePlusGap = controlSize + controlGap;
 
         // Special label rotate.
-        var labelRotation = timelineModel.get('label.normal.rotate') || 0;
+        var labelRotation = timelineModel.get('label.rotate') || 0;
         labelRotation = labelRotation * PI / 180; // To radian.
 
         var playPosition;
@@ -161,7 +180,6 @@ export default TimelineView.extend({
         var nextBtnPosition;
         var axisExtent;
         var controlPosition = controlModel.get('position', true);
-        var showControl = controlModel.get('show', true);
         var showPlayBtn = showControl && controlModel.get('showPlayBtn', true);
         var showPrevBtn = showControl && controlModel.get('showPrevBtn', true);
         var showNextBtn = showControl && controlModel.get('showNextBtn', true);
@@ -193,9 +211,9 @@ export default TimelineView.extend({
             rotation: rotationMap[orient],
             labelRotation: labelRotation,
             labelPosOpt: labelPosOpt,
-            labelAlign: timelineModel.get('label.normal.align') || labelAlignMap[orient],
-            labelBaseline: timelineModel.get('label.normal.verticalAlign')
-                || timelineModel.get('label.normal.baseline')
+            labelAlign: timelineModel.get('label.align') || labelAlignMap[orient],
+            labelBaseline: timelineModel.get('label.verticalAlign')
+                || timelineModel.get('label.baseline')
                 || labelBaselineMap[orient],
 
             // Based on mainGroup.
@@ -222,7 +240,7 @@ export default TimelineView.extend({
 
         var viewRect = layoutInfo.viewRect;
         if (layoutInfo.orient === 'vertical') {
-            // transfrom to horizontal, inverse rotate by left-top point.
+            // transform to horizontal, inverse rotate by left-top point.
             var m = matrix.create();
             var rotateOriginX = viewRect.x;
             var rotateOriginY = viewRect.y + viewRect.height;
@@ -288,28 +306,22 @@ export default TimelineView.extend({
         var axisType = timelineModel.get('axisType');
 
         var scale = axisHelper.createScaleByModel(timelineModel, axisType);
-        var dataExtent = data.getDataExtent('value');
-        scale.setExtent(dataExtent[0], dataExtent[1]);
-        this._customizeScale(scale, data);
-        scale.niceTicks();
 
-        var axis = new TimelineAxis('value', scale, layoutInfo.axisExtent, axisType);
-        axis.model = timelineModel;
-
-        return axis;
-    },
-
-    _customizeScale: function (scale, data) {
-
+        // Customize scale. The `tickValue` is `dataIndex`.
         scale.getTicks = function () {
             return data.mapArray(['value'], function (value) {
                 return value;
             });
         };
 
-        scale.getTicksLabels = function () {
-            return zrUtil.map(this.getTicks(), scale.getLabel, scale);
-        };
+        var dataExtent = data.getDataExtent('value');
+        scale.setExtent(dataExtent[0], dataExtent[1]);
+        scale.niceTicks();
+
+        var axis = new TimelineAxis('value', scale, layoutInfo.axisExtent, axisType);
+        axis.model = timelineModel;
+
+        return axis;
     },
 
     _createGroup: function (name) {
@@ -344,23 +356,24 @@ export default TimelineView.extend({
      */
     _renderAxisTick: function (layoutInfo, group, axis, timelineModel) {
         var data = timelineModel.getData();
+        // Show all ticks, despite ignoring strategy.
         var ticks = axis.scale.getTicks();
 
-        each(ticks, function (value, dataIndex) {
-
+        // The value is dataIndex, see the costomized scale.
+        each(ticks, function (value) {
             var tickCoord = axis.dataToCoord(value);
-            var itemModel = data.getItemModel(dataIndex);
-            var itemStyleModel = itemModel.getModel('itemStyle.normal');
-            var hoverStyleModel = itemModel.getModel('itemStyle.emphasis');
+            var itemModel = data.getItemModel(value);
+            var itemStyleModel = itemModel.getModel('itemStyle');
+            var hoverStyleModel = itemModel.getModel('emphasis.itemStyle');
             var symbolOpt = {
                 position: [tickCoord, 0],
-                onclick: bind(this._changeTimeline, this, dataIndex)
+                onclick: bind(this._changeTimeline, this, value)
             };
             var el = giveSymbol(itemModel, itemStyleModel, group, symbolOpt);
             graphic.setHoverStyle(el, hoverStyleModel.getItemStyle());
 
             if (itemModel.get('tooltip')) {
-                el.dataIndex = dataIndex;
+                el.dataIndex = value;
                 el.dataModel = timelineModel;
             }
             else {
@@ -374,28 +387,23 @@ export default TimelineView.extend({
      * @private
      */
     _renderAxisLabel: function (layoutInfo, group, axis, timelineModel) {
-        var labelModel = timelineModel.getModel('label.normal');
+        var labelModel = axis.getLabelModel();
 
         if (!labelModel.get('show')) {
             return;
         }
 
         var data = timelineModel.getData();
-        var ticks = axis.scale.getTicks();
-        var labels = axisHelper.getFormattedLabels(
-            axis, labelModel.get('formatter')
-        );
-        var labelInterval = axis.getLabelInterval();
+        var labels = axis.getViewLabels();
 
-        each(ticks, function (tick, dataIndex) {
-            if (axis.isLabelIgnored(dataIndex, labelInterval)) {
-                return;
-            }
+        each(labels, function (labelItem) {
+            // The tickValue is dataIndex, see the costomized scale.
+            var dataIndex = labelItem.tickValue;
 
             var itemModel = data.getItemModel(dataIndex);
-            var normalLabelModel = itemModel.getModel('label.normal');
-            var hoverLabelModel = itemModel.getModel('label.emphasis');
-            var tickCoord = axis.dataToCoord(tick);
+            var normalLabelModel = itemModel.getModel('label');
+            var hoverLabelModel = itemModel.getModel('emphasis.label');
+            var tickCoord = axis.dataToCoord(labelItem.tickValue);
             var textEl = new graphic.Text({
                 position: [tickCoord, 0],
                 rotation: layoutInfo.labelRotation - layoutInfo.rotation,
@@ -403,7 +411,7 @@ export default TimelineView.extend({
                 silent: false
             });
             graphic.setTextStyle(textEl.style, normalLabelModel, {
-                text: labels[dataIndex],
+                text: labelItem.formattedLabel,
                 textAlign: layoutInfo.labelAlign,
                 textVerticalAlign: layoutInfo.labelBaseline
             });
@@ -423,8 +431,8 @@ export default TimelineView.extend({
         var controlSize = layoutInfo.controlSize;
         var rotation = layoutInfo.rotation;
 
-        var itemStyle = timelineModel.getModel('controlStyle.normal').getItemStyle();
-        var hoverStyle = timelineModel.getModel('controlStyle.emphasis').getItemStyle();
+        var itemStyle = timelineModel.getModel('controlStyle').getItemStyle();
+        var hoverStyle = timelineModel.getModel('emphasis.controlStyle').getItemStyle();
         var rect = [0, -controlSize / 2, controlSize, controlSize];
         var playState = timelineModel.getPlayState();
         var inverse = timelineModel.get('inverse', true);

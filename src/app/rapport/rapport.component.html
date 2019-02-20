@@ -1,0 +1,151 @@
+<div class="wrapper">
+        <div class="sidebar" data-color="blue" data-image="">
+            <app-sidebar ></app-sidebar>
+            <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+        </div>
+        <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+        <div class="main-panel">
+            <router-outlet></router-outlet>
+
+
+<!-- change component content here-->                    
+<div class="container-fluid" style="background-color:white;">
+        <div class="content">
+                <div class="col-sm-12">
+                      </div>
+                        <br><br>
+                        <form [formGroup]="rapportForm" >
+                            <div class="form-group" [formGroup]="rapportForm" >
+                                    <label for="exampleTextarea" >Report</label>
+                                    <textarea class="form-control" id="exampleTextarea" rows="8" placeholder="Write your notes in natural language, as in your own notebook" formControlName="texte"></textarea>
+                            </div>
+                            <button class="btn btn-primary" (click)="getAnalyseTemp()" [disabled]="!rapportForm.valid" >Process notes</button>
+                            <button type="submit" (click)="rapportService.nluSave(rucherService.rucher)" class="btn btn-primary"  [disabled]="!rapportForm.valid" >Save notes</button>
+                        </form>
+
+                        <!--<div class="form-group">
+                            <label for="exampleTextarea">Report result>/label>
+                        </div>-->
+                        
+                        <div class="form-group">
+                                <label style="background-color: rgba(236, 234, 234, 0.49);">
+                                </label>
+                        </div>
+                       
+                        <div class="panel panel-info">
+                            <div class="panel-heading">Apiary observation</div>
+                            <div class="panel-body">
+                                <table class="table">    
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th id="dateObs" scope="col">Date</th>
+                                            <th scope="col">Sentence</th>
+                                            <th style="text-align:right;" class="action" scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let obs of rapportService.rapports" >
+                                            <ng-container *ngIf="obs.type =='ApiaryObs'">
+                                                <tr class="temp">
+                                                    <td>
+                                                        {{obs.date}}
+                                                    </td>
+                                                    <td>                                                                    
+                                                        {{obs.sentence}}
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning btn-lg "  title="Supprimer observation" (click)="rapportService.deleteObsTemp(obs)" style="padding: 0;border: none; background: none;">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container>         
+                                    </tbody>
+                                </table>  
+                            </div>
+                        </div>
+
+                        <div class="panel panel-info">
+                                <div class="panel-heading">Hive observation</div>
+                                <div class="panel-body">
+                                    <div>    
+                                        <table class="table">    
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">Date</th>
+                                                    <th class="firstCol" scope="col">Hive</th>
+                                                    <th scope="col">Sentence</th>
+                                                    <th class="action" scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let obs of rapportService.rapports" >
+                                                    <ng-container *ngIf="obs.type =='HiveObs'">
+                                                        <tr>
+                                                            <td>
+                                                                {{obs.date}}
+                                                            </td>
+                                                            <td>
+                                                            </td>
+                                                            <td>
+                                                                {{obs.sentence}}
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-warning btn-lg " title="Supprimer observation" (click)="supprimerObsTemp(obs)" style="padding: 0;border: none; background: none;">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>                    
+                                    </div>
+                                </div>
+                            </div>
+                      
+                        <div class="panel panel-info">
+                            <div class="panel-heading">Hive actions</div>
+                            <div class="panel-body">
+                                <table class="table">    
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th class="date" scope="col">Date</th>
+                                            <th class="firstCol" scope="col">Hive</th>
+                                            <th scope="col">Sentence</th>
+                                            <th class="action" scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let obs of rapportService.rapports" >
+                                            <ng-container *ngIf="obs.type =='HiveAct'">
+                                                <tr >
+                                                    <td>
+                                                        {{obs.date}}
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                        {{obs.sentence}}
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning btn-lg " title="Supprimer action" (click)="supprimerObsTemp(obs)" style="padding: 0;border: none; background: none;">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container> 
+                                    </tbody>
+                                </table>                                               
+                            </div>
+                        </div>
+                      
+                    </div>
+        </div>
+      </div>
+</div>
+
+<!-- MODALS ARE DECLARE HERE !!! -->

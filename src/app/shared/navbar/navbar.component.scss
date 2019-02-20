@@ -1,0 +1,31 @@
+ul li a{
+    margin: 0px;
+    padding-top: 18px;
+}
+#selectRucher{
+    margin-top: 5px;
+}
+button{
+    margin: 0px !important;
+}
+.navbar-nav a{
+    padding-top: 16px !important;
+}
+.valid-drag{
+    border:3px dashed blue;
+}
+#upload-group{
+    display: flex;
+}
+#upload-group div{
+    width: 50%;
+    min-height: 20px;
+}
+label{
+    margin-right: 6px;
+}
+.crud{
+    /* haut | droit | bas | gauche */
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
