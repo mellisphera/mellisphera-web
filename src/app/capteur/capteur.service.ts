@@ -7,6 +7,7 @@ import { Capteur } from './capteur';
 import { Rucher } from '../ruche-rucher/rucher';
 import { CapteurInterface } from '../_model/capteur';
 import { UserloggedService } from '../userlogged.service';
+import { stringify } from '@angular/core/src/util';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -18,13 +19,19 @@ export class CapteurService {
     capteurs : CapteurInterface[];
     capteursByUser : CapteurInterface[];
     capteurAcheter : CapteurInterface[];
-
+    capteursType:Object;
     capteurObs : Observable<CapteurInterface>;
     capteursObs : Observable<CapteurInterface[]>;
-    
     constructor(private http:HttpClient, private user : UserloggedService) {
         //this.getCapteurs();
         this.getUserCapteurs();
+        this.capteursType =
+            [
+                {'reference' : '41', 'type' : 'T2'},
+                {'reference' : '42', 'type' : 'T_HR'},
+                {'reference' : '43', 'type' : 'WEIGHT'}
+
+            ];
         //this.getSoldDevicesByUser();
         this.initCapteur();
     }
