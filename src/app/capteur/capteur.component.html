@@ -108,6 +108,16 @@
                 <div class="alert alert-danger" *ngIf="getSensorRef().errors?.sensorCheck">
                     Sensor already exist !
                 </div>
+                
+            </div>
+            <div class="col-md-6">
+                <label class="col-form-label">Type :</label>
+                <select class="form-control">
+                    <option *ngFor="let capteur of (capteurService.capteursType | capteurPipe:getSensorRef().value);">{{ capteur.type }} </option>
+                </select>
+                <div class="alert alert-danger" hidden>
+                    Select your sensor reference
+                </div>
             </div>
 
         </div>

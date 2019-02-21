@@ -5,12 +5,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PipeCapteur implements PipeTransform {
   
   public transform(values: any[], filtre: string): any[] {
+
+    const patern  = /[4][0-9]/;
     if (!values || !values.length) return [];
     if (!filtre) return values;
 
     return values.filter(v => {
         if (v.reference) {
-            return v.reference.indexOf(filtre.toUpperCase()) >= 0;
+          console.log(patern.test(v.reference));
+            return patern.test(v.reference);
         }
     });
   }
