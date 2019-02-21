@@ -23,7 +23,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
   hiveSensorSelect: RucheInterface;
   apiarySensorSelect: RucherModel;
   editCapteurCheckbox: boolean;
-
+  paternRef: RegExp;
   //variable to store ruches
   ruches: any [] = [];
   //for new sensor
@@ -40,10 +40,10 @@ export class CapteurComponent implements OnInit, OnDestroy {
         private data : UserloggedService,
         private _router : Router,
         private formBuilder: FormBuilder,
-        public rucherService : RucherService,
-        public capteurService : CapteurService,
-        private _selectedRucherService : selectedRucherService, ) { 
-
+        public rucherService: RucherService,
+        public capteurService: CapteurService,
+        private _selectedRucherService: selectedRucherService, ) {
+        this.paternRef = /[4][0-9]\:([A-Z]|[0-9])([A-Z]|[0-9])\:([A-Z]|[0-9])([A-Z]|[0-9])/;
         this.username = data.currentUser().username;
         this.initForm();
     }
@@ -114,7 +114,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     getTypeAffectationFormUpdate(){
         return this.editCapteurForm.get('checkbox');
     }
-    getSensorRef(){
+    getSensorRef() {
         return this.newCapteurForm.get('reference');
     }
 
@@ -157,7 +157,11 @@ export class CapteurComponent implements OnInit, OnDestroy {
 
     initForm(){
         this.newCapteurForm = this.formBuilder.group({
-            'reference': [null,Validators.compose([Validators.required,Validators.minLength(1), Validators.maxLength(20)])],
+            'reference': [null, Validators.compose(
+                [Validators.required, Validators.pattern(this.paternRef)]),
+                this.validateSensorNotTaken.bind(this),
+                Validators.pattern(this.paternRef)
+            ],
             'description': [null],
             'checkbox':'',
         });
@@ -167,7 +171,12 @@ export class CapteurComponent implements OnInit, OnDestroy {
             'checkbox':''
         });
     }
- 
+    validateSensorNotTaken(control: AbstractControl) {
+        /* Test si le control du formulaire n'existe pas si oui ajouter sensorCheck au form */
+        return this.capteurService.checkSensorExist(control.value).map(res => {
+          return res ? null : { sensorCheck: true };
+        });
+      }
     ngOnDestroy() {
         this.rucherService.rucherSubject.unsubscribe();
         this.rucherService.rucheService.hiveSubject.unsubscribe();

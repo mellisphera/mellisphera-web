@@ -23,9 +23,9 @@ export class CapteurService {
     capteursObs : Observable<CapteurInterface[]>;
     
     constructor(private http:HttpClient, private user : UserloggedService) {
-        this.getCapteurs();
+        //this.getCapteurs();
         this.getUserCapteurs();
-        this.getSoldDevicesByUser();
+        //this.getSoldDevicesByUser();
         this.initCapteur();
     }
 
@@ -88,29 +88,34 @@ export class CapteurService {
     getUserCapteurs() {
         this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sensors/'+ this.user.getUser());
         this.capteursObs.subscribe(
-            (data)=>{
+            (data) => {
                 this.capteursByUser = data;
                 console.log(this.capteursByUser);
             },
-            (err)=>{
+            (err) => {
                 console.log(err);
             },
         );
     }
-    
+
     deleteCapteur() {
         this.capteurObs = this.http.delete<CapteurInterface>(CONFIG.URL+'sensors/' + this.capteur.id);
         this.capteurObs.subscribe(
-            ()=>{},
-            (err)=>{
+            () => {},
+            (err) => {
                 console.log(err);
             },
-            ()=>{
+            () => {
                 this.getUserCapteurs();
             }
         );
     }
 
+    checkSensorExist(reference: string) {
+        return this.http.get<CapteurInterface>(CONFIG.URL + 'sensors/check/' + reference)
+        /* Test si le captuer exist (map sur le resultat de la requete*/
+        .map(res => res.reference !== reference);
+    }
     updateCapteur() {
         this.capteurObs =  this.http.put<CapteurInterface>(CONFIG.URL+ 'sensors/update/' + this.capteur.id, this.capteur, httpOptions);
         this.capteurObs.subscribe(
