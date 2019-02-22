@@ -39,6 +39,7 @@ export class RucheRucherComponent implements OnInit {
   rucherForm : FormGroup;
   type='ApiaryObs';
   message="";
+  private hiveIndex: number;
   newRucheForm : FormGroup;
   //updateRucher input is true when user clicks on Update Rucher
   updateRucherInput: boolean;
@@ -109,15 +110,15 @@ onSelectObs(obs){
   }
 
 //Pour effacer une ruche
-deleteRuche(ruche){
+deleteRuche(ruche, index){
   this.rucheService.ruche = ruche;
-  this.rucheService.deleteRuche();
+  this.rucheService.deleteRuche(index);
 }
 
 //Pour créer une ruche
 createRuche(){
   const formValue = this.newRucheForm.value;
-  this.rucheService.initRuche();
+  //this.rucheService.initRuche();onSelectRuche
   this.rucheService.ruche.id= null;
   this.rucheService.ruche.idApiary = this.rucherService.rucher.id;
   this.rucheService.ruche.description = formValue.descriptionRuche;
@@ -127,7 +128,8 @@ createRuche(){
   this.rucheService.createRuche();
 }
 
-onSelectRuche(ruche){
+onSelectRuche(ruche,index){
+  this.hiveIndex = index;
   this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
   this.rucheService.ruche = ruche;
   var donnée = {
@@ -137,13 +139,13 @@ onSelectRuche(ruche){
   this.newRucheForm.setValue(donnée);
 }
 // pour editer une ruche
-onEditeRuche() {
+onEditeRuche(index) {
   const formValue = this.newRucheForm.value;
   var lastIdApiary = this.rucheService.ruche.idApiary;
   this.rucheService.ruche.idApiary = this.rucherService.rucherSelectUpdate.id;
   this.rucheService.ruche.name = formValue.nomRuche;
   this.rucheService.ruche.description = formValue.descriptionRuche;
-  this.rucheService.updateRuche(lastIdApiary);
+  this.rucheService.updateRuche(lastIdApiary,this.hiveIndex);
 }
 
 editRucherClicked(){

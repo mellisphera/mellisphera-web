@@ -40,7 +40,7 @@
                                             </thead>
                                             <tbody>
                                               
-                                              <tr *ngFor="let ruche of rucheService.ruches " >
+                                              <tr *ngFor="let ruche of rucheService.ruches; index as i" >
                                                 
                                                   <td>
                                                       <a [routerLink]="['/ruche-detail',ruche.id,ruche.name]"  routerLinkActive="active" (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> 
@@ -48,11 +48,11 @@
                                                    
                                                   <td>{{ruche.description}}</td>
                                                   <td>
-                                                    <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal" type="button" (click)="onSelectRuche(ruche)"
+                                                    <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal" type="button" (click)="onSelectRuche(ruche,index)"
                                                             data-target="#editRucheModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
                                                             <i class="fa fa-edit"></i>
                                                     </button>
-                                                    <button type="button" class="btn btn-warning btn-lg "  title="Delete hive" style="padding: 0;border: none; background: none;" (click)="deleteRuche(ruche)">
+                                                    <button type="button" class="btn btn-warning btn-lg "  title="Delete hive" style="padding: 0;border: none; background: none;" (click)="deleteRuche(ruche,i)">
                                                             <i class="fa fa-times"></i>
                                                     </button>
                                                   </td>
