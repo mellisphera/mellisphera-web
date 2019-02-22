@@ -4,5 +4,5 @@ export const CONFIG = {
     apiPath: 'api/',
     googleMapsAPI: 'AIzaSyAHvIyK6M1SW6R1rYkXnTWNiCbbqE9gBVI',
     URL_FRONT :'http://localhost:4200/',
-    PUBLIC_TOKEN : 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmc3RsIiwiaWF0IjoxNTUwNTY1ODMzfQ.QAqZiebmuHJQ0t5B4UxHnzd1sBXfnKEC4onj7qjATKe4iySf2eGOP-GX0ZH7CzNxMvGcVJWSQ0rYxLFh1N2I3g'
+    PUBLIC_TOKEN : 'eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE1NTA5Mjc3NzgsInN1YiI6IkZTVEwiLCJpYXQiOjE1NTA4NDEzNzh9.H1KLyl0AlmaIY-6dVQL_6R9FVL9X42-8hPtuqn0UwBR5FnfkPioVajF1qyVdYgl5W836YuESGhhuP60D8ii7HQ'
 }
