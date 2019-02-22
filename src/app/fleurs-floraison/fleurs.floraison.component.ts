@@ -72,11 +72,16 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
 
   //Au chargement de la page on execute ces fonctions
   ngOnInit(){
-    this.rucherService.rucherSubject.subscribe(() => {}, () => {}, 
-    () => {
-        this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
+    console.log(this.fleursFloraisonService.subjectFlower);
+    console.log(this.rucherService.rucherSubject);
+    if (!this.fleursFloraisonService.subjectFlower.closed) {
+        this.rucherService.rucherSubject.subscribe(() => {}, () => {},
+          () => {
+              this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
+          }
+        );
     }
-    );
+
   }
 
   //On récupères les dates de flo observée de la plante "name"
@@ -94,20 +99,21 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
     //this.fleursFloraisonService.rucherService.getRucherDetails();
   }
 
-  onEditFleur(fleur){
+  onEditFleur(fleur) {
     this.selectedFlo = fleur.id;
 
   }
-  saveValue(fleur){
+  saveValue(fleur) {
     this.fleursFloraisonService.updateFleurFin(this.currentYear,fleur);
     this.selectedFlo = null;
   }
 
 
-  receiveMessage($event){
-    this.message=$event;
+  receiveMessage($event) {
+    this.message = $event;
   }
   ngOnDestroy() {
     this.fleursFloraisonService.subjectFlower.unsubscribe();
+    this.rucherService.rucherSubject.unsubscribe();
   }
 }
