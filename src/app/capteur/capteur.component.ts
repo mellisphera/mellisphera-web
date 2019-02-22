@@ -11,6 +11,9 @@ import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../accueil/_shared-services/selected-rucher.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { e } from '@angular/core/src/render3';
+import { resolve } from 'dns';
+import { reject } from 'q';
 
 @Component({
   selector: 'app-capteur',
@@ -37,14 +40,14 @@ export class CapteurComponent implements OnInit, OnDestroy {
   editedSensorMsgE: boolean;
   public errorMsg;
     constructor(
-        private data : UserloggedService,
+        private userService : UserloggedService,
         private _router : Router,
         private formBuilder: FormBuilder,
         public rucherService: RucherService,
         public capteurService: CapteurService,
         private _selectedRucherService: selectedRucherService, ) {
-        this.paternRef = /[4][0-9]\:([A-Z]|[0-9])([A-Z]|[0-9])\:([A-Z]|[0-9])([A-Z]|[0-9])/;
-        this.username = data.currentUser().username;
+        this.paternRef = /[4][0-9]\:([A-Z]|[0-9])([A-Z]|[0-9])\:([A-Z]|[0-9])([A-Z]|[0-9])$/;
+        this.username = userService.getUser();
         this.initForm();
     }
 
@@ -86,6 +89,8 @@ export class CapteurComponent implements OnInit, OnDestroy {
    //CREATE CAPTEUR
     createCapteur() {
         const formValue = this.newCapteurForm.value;
+        /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIVLE */
+        const sensorType = document.querySelector('#typeSensor > option').innerHTML;
         const tempType = this.capteurService.capteur.type;
         this.capteurService.initCapteur();
         //this.capteurService.capteur = formValue;
@@ -93,7 +98,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
             this.capteurService.capteur.idApiary = this.apiarySensorSelect.id;
             this.capteurService.capteur.apiaryName = this.apiarySensorSelect.name;
-            this.capteurService.capteur.hiveName = this.apiarySensorSelect.name;
+            this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
         }
         else{
             this.capteurService.capteur.idHive = null;
@@ -104,18 +109,23 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.capteurService.capteur.description = formValue.description;
         this.capteurService.capteur.username = this.username;
         this.capteurService.capteur.reference = formValue.reference;
-        this.capteurService.capteur.type = tempType;
+        this.capteurService.capteur.type = sensorType;
+        console.log(this.capteurService.capteur);
         this.initForm();
         this.capteurService.createCapteur();
     }
-    getTypeAffectation(){
+    getTypeAffectation() {
         return this.newCapteurForm.get('checkbox');
     }
-    getTypeAffectationFormUpdate(){
+    getTypeAffectationFormUpdate() {
         return this.editCapteurForm.get('checkbox');
     }
     getSensorRef() {
         return this.newCapteurForm.get('reference');
+    }
+    getSensorType () {
+        console.log(this.newCapteurForm.get('type'));
+        return this.newCapteurForm.get('type');
     }
 
     //DELETE CAPTEUR
@@ -123,12 +133,10 @@ export class CapteurComponent implements OnInit, OnDestroy {
     deleteCapteur(capteur){
        this.capteurService.capteur = capteur;
        this.capteurService.deleteCapteur();
-     
     }
 
     updateCapteur() {
         const formValue = this.editCapteurForm.value;
-        const tempType = this.capteurService.capteur.type;
         const idTemp = this.capteurService.capteur.id;
         this.capteurService.initCapteur();
         //this.capteurService.capteur = formValue;
@@ -145,8 +153,10 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.capteurService.capteur.hiveName = null;
         }
         this.capteurService.capteur.description = formValue.description;
+        this.capteurService.capteur.type = formValue.type;
         this.capteurService.capteur.id = idTemp;
-        this.capteurService.capteur.type = tempType;
+        console.log(this.capteurService.capteur);
+        //this.capteurService.capteur.type = tempType;
         this.initForm();
         this.capteurService.updateCapteur();
     }
@@ -160,7 +170,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
             'reference': [null, Validators.compose(
                 [Validators.required, Validators.pattern(this.paternRef)]),
                 this.validateSensorNotTaken.bind(this),
-                Validators.pattern(this.paternRef)
+               /* Validators.pattern(this.paternRef)*/
             ],
             'description': [null],
             'checkbox':'',
@@ -171,12 +181,26 @@ export class CapteurComponent implements OnInit, OnDestroy {
             'checkbox':''
         });
     }
+    
     validateSensorNotTaken(control: AbstractControl) {
-        /* Test si le control du formulaire n'existe pas si oui ajouter sensorCheck au form */
+        if (!control.valueChanges) {
+            return Observable.of(null);
+          } else {
+            return control.valueChanges
+              .debounceTime(1000)
+              .distinctUntilChanged()
+              .switchMap(value => this.capteurService.checkSensorExist(value))
+              .map(res => {
+                  return res ? null : { sensorCheck: true };
+              })
+              .first();
+          }
+        /*
         return this.capteurService.checkSensorExist(control.value).map(res => {
-          return res ? null : { sensorCheck: true };
-        });
-      }
+            return res ? null : { sensorCheck: true };
+        });*/
+
+    }
     ngOnDestroy() {
         this.rucherService.rucherSubject.unsubscribe();
         this.rucherService.rucheService.hiveSubject.unsubscribe();

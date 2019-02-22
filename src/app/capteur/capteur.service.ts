@@ -118,7 +118,7 @@ export class CapteurService {
         );
     }
 
-    checkSensorExist(reference: string) {
+    checkSensorExist(reference: string): Observable<Boolean>{
         return this.http.get<CapteurInterface>(CONFIG.URL + 'sensors/check/' + reference)
         /* Test si le captuer exist (map sur le resultat de la requete*/
         .map(res => res.reference !== reference);
