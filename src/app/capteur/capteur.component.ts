@@ -16,6 +16,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/first';
+
 @Component({
   selector: 'app-capteur',
   templateUrl: './capteur.component.html',
@@ -158,6 +159,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.capteurService.capteur.id = idTemp;
         console.log(this.capteurService.capteur);
         //this.capteurService.capteur.type = tempType;
+
         this.initForm();
         this.capteurService.updateCapteur();
     }
@@ -182,7 +184,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
             'checkbox':''
         });
     }
-    
     validateSensorNotTaken(control: AbstractControl) {
         if (!control.valueChanges) {
             return Observable.of(null);
@@ -192,7 +193,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
               .distinctUntilChanged()
               .switchMap(value => this.capteurService.checkSensorExist(value))
               .map(res => {
-                  return res ? null : { sensorCheck: true };
+                  return res ? false : { sensorCheck: true };
               })
               .first();
           }

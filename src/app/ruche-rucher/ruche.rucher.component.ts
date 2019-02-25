@@ -82,7 +82,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-    //this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+    this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
   }
 
 
