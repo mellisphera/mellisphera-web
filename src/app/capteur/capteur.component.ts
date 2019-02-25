@@ -10,6 +10,7 @@ import { UserloggedService } from '../userlogged.service';
 import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../accueil/_shared-services/selected-rucher.service';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { e } from '@angular/core/src/render3';
 import { resolve } from 'dns';
