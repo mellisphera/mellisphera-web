@@ -1,0 +1,10 @@
+.notifier__notification--default {
+  background-color: #444;
+  color: #FFF;
+}
+
+.notifier__notification--default .notifier__notification-button-icon {
+  fill: #FFF;
+}
+
+/*# sourceMappingURL=type-default.css.map */

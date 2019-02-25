@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"file": "type-info.css",
+	"sources": [
+		"../../../src/lib/styles/types/type-info.scss"
+	],
+	"names": [],
+	"mappings": "AAMA,AAAA,6BAA6B,CAAC;EAC7B,gBAAgB,EALgB,OAAO;EAMvC,KAAK,EALqB,IAAI;CAW9B;;AARD,AAIC,6BAJ4B,CAI5B,mCAAmC,CAAC;EACnC,IAAI,EAPqB,IAAI;CAQ7B"
+}

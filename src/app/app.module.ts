@@ -59,6 +59,7 @@ import { AdminComponent } from './admin/admin.component';
 import { SignupService } from './admin/service/signup.service';
 import { AuthInterceptorService } from './auth/Service/auth-interceptor.service';
 import { ngfModule } from 'angular-file';
+import { NotifierModule } from 'angular-notifier';
 
 
 
@@ -80,7 +81,7 @@ import { ngfModule } from 'angular-file';
     searchFleurByType,
     searchFleurByDate,
     AdminComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,6 +98,7 @@ import { ngfModule } from 'angular-file';
     NgxEchartsModule,
     ngfModule,
     SharedModule,
+    NotifierModule
   ],
   providers: [
     CapteurService,
