@@ -10,12 +10,10 @@ import { UserloggedService } from '../userlogged.service';
 import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../accueil/_shared-services/selected-rucher.service';
-import { distinctUntilChanged } from 'rxjs/operators';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { e } from '@angular/core/src/render3';
-import { resolve } from 'dns';
-import { reject } from 'q';
-
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 @Component({
   selector: 'app-capteur',
   templateUrl: './capteur.component.html',
@@ -188,6 +186,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
             return Observable.of(null);
           } else {
             return control.valueChanges
+              .debounceTime(1000)
               .distinctUntilChanged()
               .switchMap(value => this.capteurService.checkSensorExist(value))
               .map(res => {
