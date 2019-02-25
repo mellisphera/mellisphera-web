@@ -60,13 +60,21 @@ export class ObservationComponent implements OnInit {
   createObservation() {
     const formValue = this.ObservationForm.value;
     this.observationService.observation = formValue;
-    this.observationService.observation.type = !this.typeObs ? 'HiveObs' : 'HiveAct';
-    this.observationService.observation.idHive = this.rucheService.ruche.id;
-    this.observationService.observation.idLHive = [this.rucheService.ruche.id];
+    this.observationService.observation.type = 'HiveObs';
+    this.observationService.observation.idHive = this.rucheService.getCurrentHive();
+    this.observationService.observation.idLHive = [this.rucheService.getCurrentHive()];
     this.initForm();
     this.observationService.createObservation();
   }
-
+  createAction() {
+    const formValue = this.ObservationForm.value;
+    this.observationService.observation = formValue;
+    this.observationService.observation.type = 'HiveAct';
+    this.observationService.observation.idHive = this.rucheService.getCurrentHive();
+    this.observationService.observation.idLHive = [this.rucheService.getCurrentHive()];
+    this.initForm();
+    this.observationService.createObservation();
+  }
   onSelectObsR(hiveOBS) {
     this.observationService.observation = hiveOBS;
     const donnée = {

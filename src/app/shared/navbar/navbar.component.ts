@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit{
     baseDropValid: string;
     public lastConnexion : string;
     public rucherForm : FormGroup;
-    constructor(location: Location,  
+    constructor(location: Location,
         private element: ElementRef, 
         private userService: UserloggedService,
         private router: Router, 
@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit{
         public rucherService : RucherService,
         private rucheService : RucheService,
         private meteoService : MeteoService,
-       /* private fleursFloraisonService : FleursFloraisonService,*/
+        private fleursFloraisonService : FleursFloraisonService,
         private observationService : ObservationService,
         private formBuilder : FormBuilder,
         private tokenService : AtokenStorageService,
@@ -72,6 +72,10 @@ export class NavbarComponent implements OnInit{
           });
       }
     logout() {
+        this.rucherService.rucherSubject.unsubscribe();
+        this.rucheService.hiveSubject.unsubscribe();
+        this.observationService.obsApiarySubject.unsubscribe();
+        this.observationService.obsHiveSubject.unsubscribe();
         this.authService.isAuthenticated = false;
         this.tokenService.signOut();
         this.authService.connexionStatus.next(false);
@@ -98,15 +102,25 @@ export class NavbarComponent implements OnInit{
       this.initForm();
     }
     onSelectRucher() {
-        console.log(this.rucherService.rucher);
-        this.rucheService.getRucheByApiary(this.username, this.rucherService.rucher);
-        this.rucherService.getRucherDetails();
-      //  this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
-        this.meteoService.getWeather(this.rucherService.rucher.ville);
-        this.observationService.getObservationByIdApiary(this.rucherService.rucher.id);
-        this.rucheService.getRucheByApiary(this.username, this.rucherService.rucher.id);
-        this.dailyRecordService.getDailyRecThByApiary(this.rucherService.rucher.id);
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
+        const location = this.location['_platformStrategy']._platformLocation.location.pathname;
+        switch (location) {
+            case '/ruche-et-rucher':
+                this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+                this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+                break;
+            case '/home':
+                this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+                this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+                break;
+            case '/fleurs-floraison':
+                this.fleursFloraisonService.getUserFleur(this.rucherService.getCurrentRucher());
+                break;
+            case '/meteo':
+                this.meteoService.getWeather(this.rucherService.rucher.ville);
+                break;
+            default:
+        }
       }
       //Editer Rucher
     onEditerRucher() {
@@ -151,8 +165,8 @@ export class NavbarComponent implements OnInit{
             this.sidebarClose();
         }
     }
-    editRucherClicked(){
-        var donnée = {
+    editRucherClicked() {
+        const donnée = {
           nom:this.rucherService.rucher.name,
           description: this.rucherService.rucher.description,
           ville: this.rucherService.rucher.ville,
@@ -163,7 +177,7 @@ export class NavbarComponent implements OnInit{
       }
 
     getTitle(){
-      var title = this.location.prepareExternalUrl(this.location.path());
+      let title = this.location.prepareExternalUrl(this.location.path());
       title = title.split('/').pop();
       for ( let item = 0; item < this.listTitles.length; item++) {
           if (this.listTitles[item].path === title) {

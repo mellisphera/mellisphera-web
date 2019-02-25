@@ -55,21 +55,22 @@ export class RucheService {
     console.log(this.hiveSubject);
   }
 
-   getRucheByApiary(username , idApiary){
-      this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username+'/'+idApiary);
+   getRucheByApiary(idApiary: string){
+      this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+ 'hives/username/' + idApiary);
       this.ruchesObs.subscribe(
         (data)=>{
           this.ruche = data[data.length - 1];
           this.ruches = data;
           this.hiveSubject.next(data);
-          this.saveCurrentHive();
+          //this.saveCurrentHive();
         },
         (err)=>{
           console.log(err);
         },
         ()=>{
           console.log(this.hiveSubject);
-          this.observationService.getObservationByIdApiary(idApiary);
+          this.hiveSubject.complete();
+          //this.observationService.getObservationByIdApiary(idApiary);
         }
       );
    }
@@ -106,7 +107,7 @@ export class RucheService {
     this.rucheObs = this.http.put<RucheInterface>(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,ruche,httpOptions)
     this.rucheObs.subscribe(
       ()=>{
-        this.getRucheByApiary(this.user.getUser(), ruche.idApiary);
+        this.getRucheByApiary(ruche.idApiary);
       },
       (err)=>{
         console.log(err);
@@ -138,7 +139,7 @@ export class RucheService {
         console.log(err);
       },
       () => {
-        this.getRucheByApiary(this.user.getUser(), this.ruche.idApiary);
+        this.getRucheByApiary(this.ruche.idApiary);
       }
     );
   }
@@ -157,15 +158,10 @@ export class RucheService {
     );
   }
 
-  findRucheById(idHive : string, navHive : boolean = false, next?){
+  findRucheById(idHive: string, next?) {
     this.ruches.forEach(element => {
-      if(element.id == idHive){
-        if(navHive){
-          this.ruche = element;
-        }
-        else if(!navHive){
-          next(element);
-        }
+      if (element.id == idHive) {
+        next(element);
       }
     });
   }

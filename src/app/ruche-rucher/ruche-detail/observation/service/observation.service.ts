@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { CONFIG } from '../../../../../config';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Observation } from '../../../../_model/observation';
 
 const httpOptions = {
@@ -13,47 +13,71 @@ const httpOptions = {
 })
 export class ObservationService {
 
-  observationsObs : Observable<Observation[]>;
-  observationObs : Observable<Observation>;
-  observationsHive : Observation[];
-  observationsApiary : Observation[];
-  observation : Observation;
-  constructor(private http : HttpClient) { }
+  observationsObs: Observable<Observation[]>;
+  observationObs: Observable<Observation>;
+  observationsHive: Observation[];
+  observationsApiary: Observation[];
+  observation: Observation;
+  obsHiveSubject: BehaviorSubject<Observation[]>;
+  obsApiarySubject: BehaviorSubject<Observation[]>;
+  constructor(private http: HttpClient) {
+    this.obsHiveSubject = new BehaviorSubject([]);
+    this.obsApiarySubject = new BehaviorSubject([]);
+  }
 
+  emitHiveSubject() {
+    this.obsHiveSubject.next(this.observationsHive.slice());
+    console.log(this.obsHiveSubject);
+  }
+  emitApiarySubject() {
+    this.obsApiarySubject.next(this.observationsApiary.slice());
+    console.log(this.obsApiarySubject);
+  }
 
   getObservationByIdHive(idHive : string){
-    this.observationsObs = this.http.get<Observation[]>(CONFIG.URL+'report/hive/'+idHive);
+    this.observationsObs = this.http.get<Observation[]>(CONFIG.URL + 'report/hive/' + idHive);
     this.observationsObs.subscribe(
-      (data)=>{
+      (data) => {
         this.observationsHive = data;
+        this.obsHiveSubject.next(data);
         console.log(this.observationsHive);
       },
-      (err)=>{
+      (err) => {
         console.log(err);
+      },
+      () => {
+        this.obsHiveSubject.complete();
       }
     );
   }
 
-  getObservationByIdApiary(idApiary : string){
-    this.http.get<Observation[]>(CONFIG.URL+'report/apiary/'+idApiary).subscribe(
-      (data)=>{
+  getObservationByIdApiary(idApiary: string) {
+    this.http.get<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary).subscribe(
+      (data) => {
         this.observationsApiary = data;
+        this.obsApiarySubject.next(data);
       },
-      (err)=>{
+      (err) => {
         console.log(err);
+      },
+      () => {
+        this.obsApiarySubject.complete();
       }
     );
   }
   createObservation(){
-    this.observationObs = this.http.put<Observation>(CONFIG.URL+'report/insert',this.observation);
+    this.observationObs = this.http.put<Observation>(CONFIG.URL + 'report/insert', this.observation);
     this.observationObs.subscribe(
       ()=>{},
       (err)=>{
         console.log(err);
       },
       ()=>{
-        this.getObservationByIdHive(this.observation.idHive);
-        this.getObservationByIdApiary(this.observation.idApiary);
+        if (this.observation.idApiary) {
+          this.getObservationByIdApiary(this.observation.idApiary);
+        } else {
+          this.getObservationByIdHive(this.observation.idHive);
+        }
       }
     );
   }
@@ -66,7 +90,13 @@ export class ObservationService {
         console.log(err);
       },
       ()=>{
-        this.getObservationByIdHive(this.observation.idHive);
+        if (this.observation.idApiary) {
+          this.observationsApiary[this.observationsApiary.indexOf(this.observation)] = this.observation;
+          this.emitApiarySubject();
+        } else {
+          this.observationsHive[this.observationsHive.indexOf(this.observation)] = this.observation;
+          this.emitHiveSubject();
+        }
       }
     );
   }
@@ -79,8 +109,17 @@ export class ObservationService {
         console.log(err);
       },
       ()=>{
-        this.getObservationByIdHive(this.observation.idHive);
-        this.getObservationByIdApiary(this.observation.idApiary);
+        if (this.observation.idApiary) {
+          const index = this.observationsApiary.indexOf(this.observation);
+          this.observationsApiary.splice(index,1);
+          this.emitApiarySubject();
+        } else {
+          const index = this.observationsHive.indexOf(this.observation);
+          this.observationsHive.splice(index,1);
+          this.emitHiveSubject();
+        }
+        //this.getObservationByIdHive(this.observation.idHive);
+        //this.getObservationByIdApiary(this.observation.idApiary);
       }
     );
   }

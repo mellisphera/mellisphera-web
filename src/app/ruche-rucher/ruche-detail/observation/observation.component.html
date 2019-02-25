@@ -14,14 +14,10 @@
                             <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="panel-body">
                                     <div>
-                                        <button data-toggle="tooltip" data-html="true" title="New Observation" data-backdrop="false"  data-toggle="modal" (click)="typeObs = false"
-                                        data-target="#newObservationModal"  class="btn btn-success btn-lg" >
-                                        <i class="fa fa-eye" style="font-size:36px"></i>
-                                        </button>
-                                        <button data-toggle="tooltip" data-html="true" title="New Actioni" data-backdrop="false"  data-toggle="modal"  (click)="typeObs = true" style="padding: 0;border: none; background: none;"
-                                        data-target="#newObservationModal"  class="btn btn-success btn-lg" >
-                                                  <i class="fa fa-street-view" style="font-size:36px"></i>
-                                        </button>
+                                      <button data-toggle="tooltip" data-html="true" title="New sensor" data-backdrop="false"  data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
+                                      data-target="#newObservationModal"  class="btn btn-success btn-lg" >
+                                                <i class="fa fa-plus"></i>
+                                      </button>
                                     </div>
                                       <!-- tables ruche -->
                                       <div>
@@ -35,7 +31,7 @@
                                                       </tr>
                                                       </thead>
                                                       <tbody>
-                                                          <ng-container *ngFor="let hiveObs of observationService.observationsHive" >
+                                                          <ng-container *ngFor="let hiveObs of observationService.observationsHive; index as i" >
                                                               <ng-container *ngIf="hiveObs.type =='HiveObs'">
                                                                   <tr >
                                                                       <td>{{hiveObs.date}}</td>
@@ -115,6 +111,7 @@
 </div>
 <div class="modal-footer">
   <button type="submit" class="btn btn-primary"  (click)="createObservation()" [disabled]="!ObservationForm.valid" > Créer Observation</button>
+  <button type="submit" class="btn btn-primary"  (click)="createAction()" [disabled]="!ObservationForm.valid" > Créer Action</button>
   <button type="button" class="btn btn-secondary" (click)="resetObservationForm()" data-dismiss="modal">Fermer</button>
  
 </div>

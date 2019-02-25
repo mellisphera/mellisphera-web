@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Observation } from './../_model/observation';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,6 +15,7 @@ import { RucheService } from '../accueil/Service/ruche.service';
 import { ObservationService } from './ruche-detail/observation/service/observation.service';
 import { RucherModel } from '../_model/rucher-model';
 import { AuthService } from '../auth/Service/auth.service';
+import { RucheInterface } from '../_model/ruche';
 
 @Component({
   selector: 'app-ruche-rucher',
@@ -21,7 +23,7 @@ import { AuthService } from '../auth/Service/auth.service';
   styleUrls : ['./ruche.rucher.component.scss']
 })
 
-export class RucheRucherComponent implements OnInit {
+export class RucheRucherComponent implements OnInit, OnDestroy {
 
   @ViewChild('closeBtn') closeBtn: ElementRef;
 
@@ -60,157 +62,163 @@ export class RucheRucherComponent implements OnInit {
   constructor(  private formBuilder: FormBuilder,
                 public location: Location,
                 public router: Router,
-                public rucherService : RucherService,
-                private userService : UserloggedService,
-                private _selectedRucherService : selectedRucherService,
-                private _rapportService : RapportService,
-                public rucheService : RucheService,
-                private authService : AuthService) {
+                public rucherService: RucherService,
+                private userService: UserloggedService,
+                private _selectedRucherService: selectedRucherService,
+                private _rapportService: RapportService,
+                private observationService: ObservationService,
+                public rucheService: RucheService,
+                private authService: AuthService) {
 
 
-        this.username= userService.getUser();
-        this.currentRucherID= localStorage.getItem("currentRucher");
-        this.rucheRucherID= localStorage.getItem("rucheRucherID");
+        this.username = userService.getUser();
+       /* this.currentRucherID= localStorage.getItem("currentRucher");
+        this.rucheRucherID= localStorage.getItem("rucheRucherID");*/
 
 
-  } 
-
-
-
-ngOnInit(){
-  this.initForm();
-}
-
-
-clickOnRuche(ruche){    
-  localStorage.setItem("clickedRuche",  this.localStorageRuche);
-  //localStorage.setItem("selectedRucheName",  this.selectedRuche.name);
-}
-
-resetForm(){
-  this.newRucherForm.reset();
-}
-
-
-onSelectRucher(){
-  this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id);
-  this.rucherService.getRucherDetails();
-}
-
-//Quand on Edite une ruche
-
-
-onSelectObs(obs){
-  this.rucherService.observationService.observation = obs;
-  var donnée = {
-    sentence : this.rucherService.observationService.observation.sentence,
-    date : this.rucherService.observationService.observation.date
-  };
-  this.observationForm.setValue(donnée);
   }
 
-//Pour effacer une ruche
-deleteRuche(ruche, index){
-  this.rucheService.ruche = ruche;
-  this.rucheService.deleteRuche(index);
-}
-
-//Pour créer une ruche
-createRuche(){
-  const formValue = this.newRucheForm.value;
-  //this.rucheService.initRuche();onSelectRuche
-  this.rucheService.ruche.id= null;
-  this.rucheService.ruche.idApiary = this.rucherService.rucher.id;
-  this.rucheService.ruche.description = formValue.descriptionRuche;
-  this.rucheService.ruche.name = formValue.nomRuche;
-  this.rucheService.ruche.username = this.username.toLowerCase();
-  this.initForm();
-  this.rucheService.createRuche();
-}
-
-onSelectRuche(ruche,index){
-  this.hiveIndex = index;
-  this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
-  this.rucheService.ruche = ruche;
-  var donnée = {
-    nomRuche: this.rucheService.ruche.name,
-    descriptionRuche: this.rucheService.ruche.description,
-  };
-  this.newRucheForm.setValue(donnée);
-}
-// pour editer une ruche
-onEditeRuche() {
-  const formValue = this.newRucheForm.value;
-  const lastIdApiary = this.rucheService.ruche.idApiary;
-  this.rucheService.ruche.idApiary = this.rucherService.rucherSelectUpdate.id;
-  this.rucheService.ruche.name = formValue.nomRuche;
-  this.rucheService.ruche.description = formValue.descriptionRuche;
-  this.rucheService.updateRuche(lastIdApiary, this.hiveIndex);
-}
-
-editRucherClicked(){
-  this.updateRucherInput = true;
-  var donnée = {
-    nom:this.rucherService.rucher.name,
-    description: this.rucherService.rucher.description,
-    ville: this.rucherService.rucher.ville,
-    codePostal: this.rucherService.rucher.codePostal,
-    validate : ''
-  };
-  this.rucherForm.setValue(donnée);
-}
 
 
-//Pour créer une observation
-createObservation(){
-  const formValue = this.observationForm.value;
-  this.rucherService.observationService.observation = formValue;
-  this.rucherService.observationService.observation.idApiary = this.rucherService.rucher.id;
-  this.rucherService.observationService.observation.type = "ApiaryObs";
-  this.initForm();
-  this.rucherService.observationService.createObservation();
-}
+  ngOnInit() {
+    this.initForm();
+    //this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+  }
 
-deleteObs(obsApiary){
-  this.rucherService.observationService.observation = obsApiary;
-  this.rucherService.observationService.deleteObservation();
-}
 
-onEditObservation(){
-  const formValue = this.observationForm.value;
-  this.rucherService.observationService.observation.sentence = formValue.sentence;
-  this.rucherService.observationService.updateObservation();
- }
+  clickOnRuche(ruche){
+    localStorage.setItem("clickedRuche",  this.localStorageRuche);
+    //localStorage.setItem("selectedRucheName",  this.selectedRuche.name);
+  }
 
-resetRucheForm(){
-  this.newRucheForm.reset();
-}
+  resetForm(){
+    this.newRucherForm.reset();
+  }
 
-initForm(){
-  this.observationForm=this.formBuilder.group({
-    'sentence': [null,Validators.compose([Validators.required])],
-    'date' : new Intl.DateTimeFormat('fr-FR', this.optionsDate).format(new Date()),
-  })
-  this.newRucheForm=this.formBuilder.group({
-    'nomRuche': [null,Validators.compose([Validators.required])],
-    'descriptionRuche': [null],
-  })
-  this.rucherForm=this.formBuilder.group({
-    'nom': [null,Validators.compose([Validators.required])],
-    'description': [null],
-    'ville': [null,Validators.compose([Validators.required])],
-    'codePostal': [null,Validators.compose([Validators.required])],
-    'validate' : ``
-  })
-}
-  
-cancelUpdateRucher(){
-  this.updateRucherInput=false;
-  this.initForm();
-}
 
-receiveMessage($event){
-  this.message=$event;
-}
+  onSelectRucher() {
+    this.rucheService.getRucheByApiary(this.rucherService.rucher.id);
+    this.rucherService.getRucherDetails();
+  }
 
+  //Quand on Edite une ruche
+
+
+  onSelectObs(obs){
+    this.observationService.observation = obs;
+    var donnée = {
+      sentence : this.observationService.observation.sentence,
+      date : this.observationService.observation.date
+    };
+    this.observationForm.setValue(donnée);
+    }
+
+  //Pour effacer une ruche
+  deleteRuche(ruche: RucheInterface, index: number){
+    this.rucheService.ruche = ruche;
+    this.rucheService.deleteRuche(index);
+  }
+
+  //Pour créer une ruche
+  createRuche() {
+    const formValue = this.newRucheForm.value;
+    //this.rucheService.initRuche();onSelectRuche
+    this.rucheService.ruche.id = null;
+    this.rucheService.ruche.idApiary = this.rucherService.rucher.id;
+    this.rucheService.ruche.description = formValue.descriptionRuche;
+    this.rucheService.ruche.name = formValue.nomRuche;
+    this.rucheService.ruche.username = this.username.toLowerCase();
+    this.initForm();
+    this.rucheService.createRuche();
+  }
+
+  onSelectRuche(ruche: RucheInterface, index: number) {
+    this.hiveIndex = index;
+    this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
+    this.rucheService.ruche = ruche;
+    const donnée = {
+      nomRuche: this.rucheService.ruche.name,
+      descriptionRuche: this.rucheService.ruche.description,
+    };
+    this.newRucheForm.setValue(donnée);
+  }
+  // pour editer une ruche
+  onEditeRuche() {
+    const formValue = this.newRucheForm.value;
+    const lastIdApiary = this.rucheService.ruche.idApiary;
+    this.rucheService.ruche.idApiary = this.rucherService.rucherSelectUpdate.id;
+    this.rucheService.ruche.name = formValue.nomRuche;
+    this.rucheService.ruche.description = formValue.descriptionRuche;
+    this.rucheService.updateRuche(lastIdApiary, this.hiveIndex);
+  }
+
+  editRucherClicked() {
+    this.updateRucherInput = true;
+    const donnée = {
+      nom: this.rucherService.rucher.name,
+      description: this.rucherService.rucher.description,
+      ville: this.rucherService.rucher.ville,
+      codePostal: this.rucherService.rucher.codePostal,
+      validate : ''
+    };
+    this.rucherForm.setValue(donnée);
+  }
+
+
+  //Pour créer une observation
+  createObservation() {
+    const formValue = this.observationForm.value;
+    this.observationService.observation = formValue;
+    this.observationService.observation.idApiary = this.rucherService.rucher.id;
+    this.observationService.observation.type = 'ApiaryObs';
+    this.initForm();
+    this.observationService.createObservation();
+  }
+
+  deleteObs(obsApiary: Observation) {
+    this.observationService.observation = obsApiary;
+    this.observationService.deleteObservation();
+  }
+
+  onEditObservation() {
+    const formValue = this.observationForm.value;
+    this.observationService.observation.sentence = formValue.sentence;
+    this.observationService.updateObservation();
+  }
+
+  resetRucheForm() {
+    this.newRucheForm.reset();
+  }
+
+  initForm() {
+    this.observationForm = this.formBuilder.group({
+      'sentence': [null,Validators.compose([Validators.required])],
+      'date' : new Intl.DateTimeFormat('fr-FR', this.optionsDate).format(new Date()),
+    });
+    this.newRucheForm = this.formBuilder.group({
+      'nomRuche': [null, Validators.compose([Validators.required])],
+      'descriptionRuche': [null],
+    });
+    this.rucherForm = this.formBuilder.group({
+      'nom': [null, Validators.compose([Validators.required])],
+      'description': [null],
+      'ville': [null, Validators.compose([Validators.required])],
+      'codePostal': [null, Validators.compose([Validators.required])],
+      'validate' : ``
+    });
+  }
+
+  cancelUpdateRucher() {
+    this.updateRucherInput = false;
+    this.initForm();
+  }
+
+  receiveMessage($event) {
+    this.message = $event;
+  }
+  ngOnDestroy(): void {
+  /*  this.rucheService.hiveSubject.unsubscribe();
+    this.rucherService.rucherSubject.unsubscribe();
+    this.observationService.obsApiarySubject.unsubscribe();*/
+  }
 }

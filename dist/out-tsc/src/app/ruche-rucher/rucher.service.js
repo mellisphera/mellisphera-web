@@ -29,7 +29,7 @@ var RucherService = /** @class */ (function () {
         this.meteoService = meteoService;
         this.ruchers = null;
         if (sessionStorage.getItem('currentUser')) {
-            this.getUserRuchersLast(this.user.getUser());
+            this.getApiaryByUser(this.user.getUser());
         }
         this.initRuche();
     }
@@ -58,7 +58,7 @@ var RucherService = /** @class */ (function () {
         this.rucherObs.subscribe(function () { }, function (err) {
             console.log(err);
         }, function () {
-            _this.getUserRuchersLast(_this.user.getUser());
+            _this.getApiaryByUser(_this.user.getUser());
         });
     };
     // pour afficher tout les ruchers de l'utilsateur connecté
@@ -69,7 +69,7 @@ var RucherService = /** @class */ (function () {
     RucherService.prototype.getCurrentApiary = function () {
         return window.sessionStorage.getItem('currentApiary');
     };
-    RucherService.prototype.getUserRuchersLast = function (username) {
+    RucherService.prototype.getApiaryByUser = function (username) {
         var _this = this;
         this.ruchersObs = this.http.get(CONFIG.URL + 'apiaries/' + username);
         this.ruchersObs.subscribe(function (data) {
@@ -117,7 +117,7 @@ var RucherService = /** @class */ (function () {
         this.rucherObs.subscribe(function () { }, function (err) {
             console.log(err);
         }, function () {
-            _this.getUserRuchersLast(_this.user.getUser());
+            _this.getApiaryByUser(_this.user.getUser());
         });
     };
     RucherService.prototype.deleteRucher = function () {
@@ -126,7 +126,7 @@ var RucherService = /** @class */ (function () {
         this.rucherObs.subscribe(function () { }, function (err) {
             console.log(err);
         }, function () {
-            _this.getUserRuchersLast(_this.user.getUser());
+            _this.getApiaryByUser(_this.user.getUser());
         });
     };
     RucherService.prototype.updateBackgroundApiary = function (idApiary) {
