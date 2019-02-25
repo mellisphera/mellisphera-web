@@ -70,6 +70,7 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
+    this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
   }
 
   onClick(ruche){

@@ -106,6 +106,7 @@ export class RucherService {
                 this.currentBackground = this.rucher.photo;
                 this.saveCurrentApiaryId(this.rucher.id);
                 this.rucherSubject.complete();
+                this.rucheService.getRucheByApiary(this.getCurrentApiary());
             }
         );
     }
