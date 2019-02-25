@@ -141,11 +141,11 @@ onSelectRuche(ruche,index){
 // pour editer une ruche
 onEditeRuche(index) {
   const formValue = this.newRucheForm.value;
-  var lastIdApiary = this.rucheService.ruche.idApiary;
+  const lastIdApiary = this.rucheService.ruche.idApiary;
   this.rucheService.ruche.idApiary = this.rucherService.rucherSelectUpdate.id;
   this.rucheService.ruche.name = formValue.nomRuche;
   this.rucheService.ruche.description = formValue.descriptionRuche;
-  this.rucheService.updateRuche(lastIdApiary,this.hiveIndex);
+  this.rucheService.updateRuche(lastIdApiary, this.hiveIndex);
 }
 
 editRucherClicked(){
