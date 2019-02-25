@@ -63,6 +63,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.rucheId = this.activatedRoute.snapshot.params.id;
         this.rucheName = this.activatedRoute.snapshot.params.name;
         this.observationService.getObservationByIdHive(this.rucheId);
+        console.log(this.rucheService.hiveSubject);
         this.rucheService.hiveSubject.subscribe( () => {}, () => {}, () => {
             this.rucheService.findRucheById(this.rucheId, (hive) => {
                 this.hiveSelect = hive;

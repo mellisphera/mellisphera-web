@@ -155,7 +155,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.capteurService.capteur.hiveName = null;
         }
         this.capteurService.capteur.description = formValue.description;
-        this.capteurService.capteur.type = formValue.type;
+        this.capteurService.capteur.type = formValue.type.toLowerCase();
         this.capteurService.capteur.id = idTemp;
         console.log(this.capteurService.capteur);
         //this.capteurService.capteur.type = tempType;
@@ -205,6 +205,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
     }
     ngOnDestroy() {
         this.rucherService.rucherSubject.unsubscribe();
-        this.rucherService.rucheService.hiveSubject.unsubscribe();
+        //this.rucherService.rucheService.hiveSubject.unsubscribe();
     }
 }
