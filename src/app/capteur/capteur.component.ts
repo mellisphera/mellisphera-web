@@ -14,6 +14,8 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/distinctUntilChanged';
+
 @Component({
   selector: 'app-capteur',
   templateUrl: './capteur.component.html',
