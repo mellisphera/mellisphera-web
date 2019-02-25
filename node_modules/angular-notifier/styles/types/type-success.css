@@ -1,0 +1,10 @@
+.notifier__notification--success {
+  background-color: #5CB85C;
+  color: #FFF;
+}
+
+.notifier__notification--success .notifier__notification-button-icon {
+  fill: #FFF;
+}
+
+/*# sourceMappingURL=type-success.css.map */

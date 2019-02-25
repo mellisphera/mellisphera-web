@@ -1,0 +1,10 @@
+.notifier__notification--error {
+  background-color: #D9534F;
+  color: #FFF;
+}
+
+.notifier__notification--error .notifier__notification-button-icon {
+  fill: #FFF;
+}
+
+/*# sourceMappingURL=type-error.css.map */

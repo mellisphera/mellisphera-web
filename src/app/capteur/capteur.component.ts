@@ -16,6 +16,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/first';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-capteur',
@@ -41,15 +42,18 @@ export class CapteurComponent implements OnInit, OnDestroy {
   editedSensorMsg: boolean;
   editedSensorMsgE: boolean;
   public errorMsg;
+  private readonly notifier: NotifierService;
     constructor(
         private userService : UserloggedService,
         private _router : Router,
         private formBuilder: FormBuilder,
         public rucherService: RucherService,
         public capteurService: CapteurService,
-        private _selectedRucherService: selectedRucherService, ) {
+        private _selectedRucherService: selectedRucherService,
+        public notifierService: NotifierService) {
         this.paternRef = /[4][0-9]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
         this.username = userService.getUser();
+        this.notifier = notifierService;
         this.initForm();
     }
 
@@ -111,10 +115,13 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.capteurService.capteur.description = formValue.description;
         this.capteurService.capteur.username = this.username;
         this.capteurService.capteur.reference = formValue.reference;
-        this.capteurService.capteur.type = sensorType;
+        this.capteurService.capteur.type = sensorType.toLowerCase();
         console.log(this.capteurService.capteur);
         this.initForm();
-        this.capteurService.createCapteur();
+        this.capteurService.createCapteur().subscribe( () => {}, () => {}, () => {
+            this.notifier.notify('success', 'Sensor Create');
+            this.capteurService.getUserCapteurs();
+        });
     }
     getTypeAffectation() {
         return this.newCapteurForm.get('checkbox');
@@ -140,6 +147,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     updateCapteur() {
         const formValue = this.editCapteurForm.value;
         const idTemp = this.capteurService.capteur.id;
+        console.log(formValue);
         this.capteurService.initCapteur();
         //this.capteurService.capteur = formValue;
         if (formValue.checkbox != 'stock') {
@@ -147,21 +155,23 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.capteurService.capteur.idApiary = this.apiarySensorSelect.id;
             this.capteurService.capteur.apiaryName = this.apiarySensorSelect.name;
             this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
-        }
-        else {
+        } else {
             this.capteurService.capteur.idHive = null;
             this.capteurService.capteur.idApiary = null;
             this.capteurService.capteur.apiaryName = null;
             this.capteurService.capteur.hiveName = null;
         }
         this.capteurService.capteur.description = formValue.description;
-        this.capteurService.capteur.type = formValue.type.toLowerCase();
+        this.capteurService.capteur.type = this.capteurService.capteur.type;
         this.capteurService.capteur.id = idTemp;
         console.log(this.capteurService.capteur);
         //this.capteurService.capteur.type = tempType;
 
         this.initForm();
-        this.capteurService.updateCapteur();
+        this.capteurService.updateCapteur().subscribe(() => {}, () => {}, () => {
+            this.notifier.notify('success', 'Sensor Update');
+            this.capteurService.getUserCapteurs();
+        });
     }
 
     onSelectRucher(){

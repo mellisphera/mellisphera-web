@@ -1,0 +1,10 @@
+.notifier__notification--info {
+  background-color: #5BC0DE;
+  color: #FFF;
+}
+
+.notifier__notification--info .notifier__notification-button-icon {
+  fill: #FFF;
+}
+
+/*# sourceMappingURL=type-info.css.map */

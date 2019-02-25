@@ -1,0 +1,10 @@
+.notifier__notification--warning {
+  background-color: #F0AD4E;
+  color: #FFF;
+}
+
+.notifier__notification--warning .notifier__notification-button-icon {
+  fill: #FFF;
+}
+
+/*# sourceMappingURL=type-warning.css.map */

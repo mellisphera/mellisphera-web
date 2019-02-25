@@ -53,16 +53,7 @@ export class CapteurService {
  
     // pour créer un capteur
     createCapteur() {
-        this.capteurObs = this.http.post<CapteurInterface>(CONFIG.URL+'sensors', this.capteur,httpOptions)
-        this.capteurObs.subscribe(
-            ()=>{},
-            (err)=>{
-                console.log(err);
-            },
-            ()=>{
-                this.getUserCapteurs();
-            }
-        );
+        return this.http.post<CapteurInterface>(CONFIG.URL+'sensors', this.capteur, httpOptions);
     }
 
     //get all sensors 
@@ -124,15 +115,6 @@ export class CapteurService {
         .map(res => res.reference !== reference);
     }
     updateCapteur() {
-        this.capteurObs =  this.http.put<CapteurInterface>(CONFIG.URL+ 'sensors/update/' + this.capteur.id, this.capteur, httpOptions);
-        this.capteurObs.subscribe(
-            () => {},
-            (err) => {
-                console.log(err);
-            },
-            () => {
-                this.getUserCapteurs();
-            }
-        );
+        return this.http.put<CapteurInterface>(CONFIG.URL+ 'sensors/update/' + this.capteur.id, this.capteur, httpOptions);
     }
 }
