@@ -66,7 +66,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
                 private userService: UserloggedService,
                 private _selectedRucherService: selectedRucherService,
                 private _rapportService: RapportService,
-                private observationService: ObservationService,
+                public observationService: ObservationService,
                 public rucheService: RucheService,
                 private authService: AuthService) {
 
