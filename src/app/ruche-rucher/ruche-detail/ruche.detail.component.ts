@@ -23,6 +23,7 @@ import { ObservationService } from './observation/service/observation.service';
 import { CONFIG } from '../../../config';
 import { CalendrierTempIntService } from './daily/service/calendrier-temp-int.service';
 import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
+import { RucheInterface } from '../../_model/ruche';
 
 @Component({
   selector: 'app-ruche-detail',
@@ -31,45 +32,45 @@ import { AtokenStorageService } from '../../auth/Service/atoken-storage.service'
 })
 
 export class RucheDetailComponent implements OnInit, OnDestroy {
-    rucheId : string;
-    rucheName : string;
+    rucheId: string;
+    rucheName: string;
     message="";
-    compteurHive : number;
-    currentTab : string;
-    public img : string;
+    hiveSelect: RucheInterface;
+    compteurHive: number;
+    currentTab: string;
+    public img: string;
     private timerSubscription: Subscription;
 
 
     constructor(private activatedRoute : ActivatedRoute,
-        private route : Router,
-        public rucheService : RucheService,
-        private observationService : ObservationService,
-        private dailyRecordThService : DailyRecordService,
-        private dailyRecordWservice : DailyRecordsWService,
+        private route: Router,
+        public rucheService: RucheService,
+        private observationService: ObservationService,
+        private dailyRecordThService: DailyRecordService,
+        private dailyRecordWservice: DailyRecordsWService,
         private dailyStockHoneyService : DailyStockHoneyService,
-        private recordService : RecordService,
-        private userService : UserloggedService,
-        public tokenService : AtokenStorageService,
-        public calendrierTempInt : CalendrierTempIntService){
+        private recordService: RecordService,
+        private userService: UserloggedService,
+        public tokenService: AtokenStorageService,
+        public calendrierTempInt: CalendrierTempIntService) {
             this.rucheId = null;
             this.compteurHive = 0;
             this.currentTab = 'notes';
             this.img = CONFIG.URL_FRONT + "assets/icons/next-button-4.png";
     }
 
-    ngOnInit(){
+    ngOnInit() {
         this.rucheId = this.activatedRoute.snapshot.params.id;
         this.rucheName = this.activatedRoute.snapshot.params.name;
-        this.rucheService.saveCurrentHive(this.rucheId);
-        this.rucheService.hiveSubject.subscribe(
-            () => {}, () => {},
-            () => {
-                this.observationService.getObservationByIdHive(this.rucheId);
-                this.rucheService.findRucheById(this.rucheId, true);
-                console.log(this.rucheService.ruche);
-                this.compteurHive = this.rucheService.ruches.indexOf(this.rucheService.ruche);
-            }
-        );
+        this.observationService.getObservationByIdHive(this.rucheId);
+        this.rucheService.hiveSubject.subscribe( () => {}, () => {}, () => {
+            this.rucheService.findRucheById(this.rucheId, (hive) => {
+                this.hiveSelect = hive;
+                console.log(this.hiveSelect);
+                this.compteurHive = this.rucheService.ruches.indexOf(this.hiveSelect);
+                this.rucheService.saveCurrentHive(this.hiveSelect.id);
+            });
+        });
     }
 
 
@@ -78,11 +79,11 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     }
 
     previousHive(){
-        if(this.compteurHive != 0 && this.compteurHive != -1){
+        if (this.compteurHive != 0 && this.compteurHive != -1) {
             this.compteurHive--;
-            this.rucheService.ruche = this.rucheService.ruches[this.compteurHive];
-            this.rucheId = this.rucheService.ruche.id;
-            this.rucheName = this.rucheService.ruche.name;
+            this.hiveSelect = this.rucheService.ruches[this.compteurHive];
+            this.rucheId = this.hiveSelect.id;
+            this.rucheName = this.hiveSelect.name;
             this.exeData();
         }
 
@@ -92,9 +93,9 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         if(this.compteurHive != this.rucheService.ruches.length-1){
              this.compteurHive++;
         }
-        this.rucheService.ruche = this.rucheService.ruches[this.compteurHive];
-        this.rucheId = this.rucheService.ruche.id;
-        this.rucheName = this.rucheService.ruche.name;
+        this.hiveSelect = this.rucheService.ruches[this.compteurHive];
+        this.rucheId = this.hiveSelect.id;
+        this.rucheName = this.hiveSelect.name;
         this.exeData();
     }
 
@@ -117,7 +118,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         else if(this.currentTab.indexOf("stock")!=-1){
             if (this.dailyStockHoneyService.cuurrentIdHive != this.rucheId) {
                 console.log("graph");
-                //this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.ruche.id);
+                //this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.hiveSelect.id);
                 this.dailyStockHoneyService.getDailyStockHoneyByHive(this.rucheId);
             }
             if (this.dailyRecordWservice.currentIdHive != this.rucheId) {
@@ -138,11 +139,13 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                 this.recordService.getRecordByIdHive(this.rucheId);
             }
         }
-        console.log(this.rucheService.ruche);
+        console.log(this.hiveSelect);
     }
 
     ngOnDestroy() {
         this.rucheService.hiveSubject.unsubscribe();
+        this.observationService.obsHiveSubject.unsubscribe();
+        this.observationService.obsApiarySubject.unsubscribe();
     }
 
 }

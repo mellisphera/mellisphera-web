@@ -24,10 +24,10 @@ export class DailyRecordService{
     mergeOptionHint : any;
     mergeOptionCalendarHealth : any;
 
-    constructor(private http : HttpClient, private user : UserloggedService){
+    constructor(private http: HttpClient, private user : UserloggedService){
         this.statusLoading = false;
         if (this.user.getUser()) {
-            this.getDailyRecThByApiary(sessionStorage.getItem('idApiaryUpdate'));
+            this.getDailyRecThByApiary(sessionStorage.getItem('currentApiary'));
         }
     }
 

@@ -47,7 +47,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         public rucherService: RucherService,
         public capteurService: CapteurService,
         private _selectedRucherService: selectedRucherService, ) {
-        this.paternRef = /[4][0-9]\:([A-Z]|[0-9])([A-Z]|[0-9])\:([A-Z]|[0-9])([A-Z]|[0-9])$/;
+        this.paternRef = /[4][0-9]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
         this.username = userService.getUser();
         this.initForm();
     }
@@ -72,7 +72,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.rucherService.findRucherById(this.capteurService.capteur.idApiary, (apiary) => {
                 this.apiarySensorSelect = apiary;
             });
-            this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive, false, (hive) => {
+            this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive, (hive) => {
                 this.hiveSensorSelect = hive;
             });
         }
@@ -163,7 +163,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     }
 
     onSelectRucher(){
-        this.rucherService.rucheService.getRucheByApiary(this.username, this.apiarySensorSelect.id);
+        this.rucherService.rucheService.getRucheByApiary(this.apiarySensorSelect.id);
     }
 
     initForm(){

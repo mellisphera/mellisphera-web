@@ -33,7 +33,7 @@ export class MeteoComponent implements OnInit, DoCheck {
 
   }
   ngOnInit() {
-    this.username = this.login.currentUser().username;
+    this.username = this.login.getUser();
    // this.meteoService.getWeather(this.rucherService.rucher.ville);
   }
   

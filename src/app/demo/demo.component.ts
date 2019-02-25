@@ -39,7 +39,7 @@ export class DemoComponent implements OnInit,OnDestroy {
     }
   ngOnInit() {
     this.saveToken(() => {
-      this.rucherService.getUserRuchersLast(this.user.getUser());
+      this.rucherService.getApiaryByUser(this.user.getUser());
       this.rucheService.hiveSubject.subscribe(
         () => {}, () => {},
         () => {
