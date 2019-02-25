@@ -187,7 +187,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
             return Observable.of(null);
           } else {
             return control.valueChanges
-              .debounceTime(1000)
               .distinctUntilChanged()
               .switchMap(value => this.capteurService.checkSensorExist(value))
               .map(res => {
