@@ -154,7 +154,7 @@
                 </div>
         </div>  
             <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="createCapteur()" [disabled]="newCapteurForm.invalid">Add sensor</button>
+                    <button type="submit" ngbTooltip="Tooltip on top" class="btn btn-primary" data-dismiss="modal" (click)="createCapteur()" [disabled]="newCapteurForm.invalid">Add sensor</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
     </form>
@@ -222,8 +222,3 @@
 </div>
 </div>
 <!-- End EDIT capteur Modal -->
-<script>
-$("#editVal").click(() => {
-    $('#editCapteurModal').modal('toggle');
-});
-</script>

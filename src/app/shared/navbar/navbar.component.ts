@@ -1,3 +1,4 @@
+import { RucherModel } from './../../_model/rucher-model';
 import { CONFIG } from './../../../config';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
@@ -14,6 +15,7 @@ import { ObservationService } from '../../ruche-rucher/ruche-detail/observation/
 import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
 import { DailyRecordService } from '../../accueil/Service/dailyRecordService';
 import { Subscription } from 'rxjs';
+import { NotifierService } from 'angular-notifier';
 
 
 
@@ -25,52 +27,56 @@ import { Subscription } from 'rxjs';
 })
 
 export class NavbarComponent implements OnInit{
-    message : string;
-    username : string;
+    message: string;
+    username: string;
+
     photoApiary: File ;
     private listTitles: any[];
+
+    private apiaryUpdate: RucherModel;
+    private indexApiaryUpdate: number;
+
     location: Location;
     file: File;
     httpEmitter:Subscription;
-    hasBaseDropZoneOver: boolean = false;
+    hasBaseDropZoneOver: Boolean = false;
     private toggleButton: any;
     private sidebarVisible: boolean;
-    public updateStatus : boolean;
+    public updateStatus: boolean;
     baseDropValid: string;
-    public lastConnexion : string;
-    public rucherForm : FormGroup;
+    public lastConnexion: string;
+    private readonly notifier: NotifierService;
+    public rucherForm: FormGroup;
     constructor(location: Location,
         private element: ElementRef, 
         private userService: UserloggedService,
-        private router: Router, 
+        private router: Router,
         private authService: AuthService,
-        public rucherService : RucherService,
-        private rucheService : RucheService,
-        private meteoService : MeteoService,
+        public rucherService: RucherService,
+        private rucheService: RucheService,
+        private meteoService: MeteoService,
         private fleursFloraisonService : FleursFloraisonService,
         private observationService : ObservationService,
-        private formBuilder : FormBuilder,
-        private tokenService : AtokenStorageService,
-        private dailyRecordService : DailyRecordService ) {
-        try{
-            this.lastConnexion = this.authService.lastConnection.toDateString();
-        }
-        catch(e){}  
+        private formBuilder: FormBuilder,
+        private tokenService: AtokenStorageService,
+        private dailyRecordService: DailyRecordService,
+        public notifierService: NotifierService) {
       this.location = location;
+      this.notifier = this.notifierService;
       this.sidebarVisible = false;
         this.username = userService.getUser();
 
     }
 
-    initForm(){
+    initForm() {
         this.rucherForm = this.formBuilder.group({
-            'nom': [null, Validators.compose([Validators.required])],
+            'name': [null, Validators.compose([Validators.required])],
             'description': [null],
             'ville': [null, Validators.compose([Validators.required])],
             'codePostal': [null, Validators.compose([Validators.required])],
             'validate' : ``,
           });
-      }
+    }
     logout() {
         this.rucherService.rucherSubject.unsubscribe();
         this.rucheService.hiveSubject.unsubscribe();
@@ -84,7 +90,7 @@ export class NavbarComponent implements OnInit{
     onPictureLoad(next) {
         const fileReader = new FileReader();
         fileReader.onload = (e) => {
-            this.rucherService.rucher.photo = fileReader.result;
+            this.rucherService.rucher.photo = <string>fileReader.result;
         };
         fileReader.onloadend = () => {
             next();
@@ -93,7 +99,7 @@ export class NavbarComponent implements OnInit{
         console.log(this.rucherService.rucher);
     }
 
-    ngOnInit(){
+    ngOnInit() {
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
@@ -125,20 +131,32 @@ export class NavbarComponent implements OnInit{
       //Editer Rucher
     onEditerRucher() {
         const formValue = this.rucherForm.value;
-        this.rucherService.detailsRucher.description = formValue.description;
-        this.rucherService.detailsRucher.name = formValue.nom;
-        this.rucherService.detailsRucher.ville = formValue.ville;
-        this.rucherService.detailsRucher.codePostal = formValue.codePostal;
-        console.log(this.rucherService.detailsRucher);
-        this.initForm();
-        this.rucherService.updateRucher();
+        const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
+        this.apiaryUpdate = formValue;
+        this.apiaryUpdate.id = this.rucherService.rucher.id;
+        this.apiaryUpdate.photo = this.rucherService.rucher.photo;
+        this.apiaryUpdate.username = this.rucherService.rucher.username;
+        console.log(this.apiaryUpdate);
+        this.rucherService.updateRucher(this.rucherService.rucher.id, this.apiaryUpdate).subscribe(
+            () => {}, () => {} , () => {
+                this.rucherService.ruchers[index] = this.apiaryUpdate;
+                this.rucherService.emitApiarySubject();
+                this.rucherService.rucher = this.apiaryUpdate;
+                this.notifier.notify('success', 'Updated Apiary');
+            }
+        );
     }
 
     //delete rucher
-    deleteRucher(){
-        this.rucherService.deleteRucher();
+    deleteRucher() {
+        this.rucherService.deleteRucher().subscribe( () => {}, () => {} , () => {
+            const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
+            this.rucherService.ruchers.splice(index,1);
+            this.rucherService.emitApiarySubject();
+            this.notifier.notify('success', 'Deleted Apaiary');
+            this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
+        });
     }
-  
 
     sidebarOpen() {
         const toggleButton = this.toggleButton;
@@ -167,14 +185,14 @@ export class NavbarComponent implements OnInit{
     }
     editRucherClicked() {
         const donnée = {
-          nom:this.rucherService.rucher.name,
+          name: this.rucherService.rucher.name,
           description: this.rucherService.rucher.description,
           ville: this.rucherService.rucher.ville,
           codePostal: this.rucherService.rucher.codePostal,
           validate : ''
         };
         this.rucherForm.setValue(donnée);
-      }
+    }
 
     getTitle(){
       let title = this.location.prepareExternalUrl(this.location.path());
@@ -186,7 +204,6 @@ export class NavbarComponent implements OnInit{
       }
       return 'Dashboard';
     }
-  
     apiarySubmit() {
         const formValue = this.rucherForm.value;
         if (this.photoApiary == null) {
@@ -195,13 +212,15 @@ export class NavbarComponent implements OnInit{
         console.log(this.rucherService.rucher.photo);
         this.rucherService.rucher.id = null;
         this.rucherService.rucher.description = formValue.description;
-        this.rucherService.rucher.name = formValue.nom;
+        this.rucherService.rucher.name = formValue.name;
         this.rucherService.rucher.ville = formValue.ville;
         this.rucherService.rucher.codePostal = formValue.codePostal;
         this.rucherService.rucher.createdAt = new Date();
         this.rucherService.rucher.username = this.username;
-        console.log(this.rucherService.rucher);
         this.initForm();
-        this.rucherService.createRucher();
+        this.rucherService.createRucher().subscribe( () => {}, () => {}, () => {
+            this.rucherService.getApiaryByUser(this.username);
+            this.notifier.notify('success', 'Created Apiary');
+        });
         }
 }
