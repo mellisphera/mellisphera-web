@@ -1,3 +1,4 @@
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar.component';
@@ -12,7 +13,10 @@ import { ngfModule, ngfDrop, ngfSelect } from 'angular-file';
         ngfModule,
         CommonModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ConfirmationPopoverModule.forRoot({
+            confirmButtonType: 'danger' // set defaults here
+          })
     ],
     declarations: [ NavbarComponent ],
     exports: [ NavbarComponent ]
