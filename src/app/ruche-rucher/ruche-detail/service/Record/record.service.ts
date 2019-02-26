@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CONFIG } from '../../../../../config';
 import { Record } from '../../../../_model/record';
 import { Observable } from 'rxjs';
@@ -33,11 +33,11 @@ export class RecordService {
     this.loading = false;
   }
 
-  getRecordByIdHive(idHive : string){
+  getRecordByIdHive(idHive: string, range?: Date[]) {
     this.loading = false;
     this.currentIdHive = idHive;
     this.recArray = [];
-    this.recordObs = this.http.get<Record[]>(CONFIG.URL+'records/hive/'+idHive);
+    this.recordObs = this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, range, httpOptions );
     this.recordObs.subscribe(
       (data)=>{
         this.recArray = data;
@@ -100,7 +100,6 @@ export class RecordService {
     this.recArrayHint = [];
     this.recArray.forEach((element,index)=>{
       if(element.temp_ext != null){
-        var date = element.recordDate.split(" ");
         this.recArrayText.push({name : element.recordDate, value : [
           element.recordDate , element.temp_ext
         ]});

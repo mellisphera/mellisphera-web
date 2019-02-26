@@ -1,3 +1,4 @@
+import { MyDate } from './../../class/MyDate';
 import { Component, OnInit, OnDestroy, Output, Input } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
@@ -56,6 +57,16 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.rucheId = null;
             this.compteurHive = 0;
             this.currentTab = 'notes';
+            this.hiveSelect = {
+                id : null,
+                name : 'NaN',
+                description : '',
+                username : '',
+                idApiary: '',
+                hivePosX : '',
+                hivePosY : '',
+                sharingUser : []
+              };
             this.img = CONFIG.URL_FRONT + "assets/icons/next-button-4.png";
     }
 
@@ -85,6 +96,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.hiveSelect = this.rucheService.ruches[this.compteurHive];
             this.rucheId = this.hiveSelect.id;
             this.rucheName = this.hiveSelect.name;
+            this.rucheService.saveCurrentHive(this.hiveSelect.id);
             this.exeData();
         }
 
@@ -97,6 +109,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.hiveSelect = this.rucheService.ruches[this.compteurHive];
         this.rucheId = this.hiveSelect.id;
         this.rucheName = this.hiveSelect.name;
+        this.rucheService.saveCurrentHive(this.hiveSelect.id);
         this.exeData();
     }
 
@@ -128,8 +141,8 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             }
         }
         else if(this.currentTab.indexOf("hourly")!=-1){
-            if(this.recordService.currentIdHive != this.rucheId){
-                this.recordService.getRecordByIdHive(this.rucheId);
+            if(this.recordService.currentIdHive != this.rucheId) {
+                this.recordService.getRecordByIdHive(this.rucheId, MyDate.getRange());
             }
         }
         else if(this.currentTab.indexOf("health")!=-1){
@@ -137,7 +150,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         }
         else if(this.currentTab.indexOf("stack")!=-1){
             if(this.recordService.currentIdHive != this.rucheId ){
-                this.recordService.getRecordByIdHive(this.rucheId);
+                this.recordService.getRecordByIdHive(this.rucheId, MyDate.getRange());
             }
         }
         console.log(this.hiveSelect);

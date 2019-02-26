@@ -2,6 +2,16 @@ export class MyDate {
     
     private date: Date;
 
+    static getRange(min?: Date): Date[] {
+        let start = new Date();
+        if (!min) {
+            start.setDate((start.getDate() - 15));
+        } else {
+            start = min;
+        }
+        console.log(new Array(start, new Date()));
+        return new Array(start, new Date());
+    }
     constructor(date: Date) {
         this.date = new Date(date);
     }
