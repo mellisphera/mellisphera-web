@@ -1,3 +1,4 @@
+import { MyDate } from './../../../class/MyDate';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecordService } from '../service/Record/record.service';
@@ -19,7 +20,7 @@ export class HourlyComponent implements OnInit {
   constructor(private activatedRoute : ActivatedRoute,
     public recordService : RecordService,
     public graphRecordService : GraphRecordService,
-    private rucheService : RucheService
+    private rucheService: RucheService,
     ) { }
 
   ngOnInit() {
@@ -28,8 +29,22 @@ export class HourlyComponent implements OnInit {
     this.recordService.getRecordByIdHive(this.rucheService.ruche.id);*/
   }
 
-  receiveMessage($event){
-    this.message=$event;
+  receiveMessage($event) {
+    this.message = $event;
+  }
+
+  selectRange(event) {
+    let date = null;
+    const range = event.target.value;
+    if (event.target.value > 10 ) {
+      date = new Date();
+      date.setDate((new Date().getDate() - range));
+    } else {
+      date = new Date();
+      date.setMonth((new Date().getMonth() - range) );
+    }
+    console.log(date);
+    this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), MyDate.getRange(date));
   }
 
 }
