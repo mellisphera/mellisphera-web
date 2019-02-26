@@ -123,7 +123,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         console.log(this.capteurService.capteur);
         this.initForm();
         this.capteurService.createCapteur().subscribe( () => {}, () => {}, () => {
-            this.notifier.notify('success', 'Sensor Create');
+            this.notifier.notify('success', 'Created sensor');
             this.capteurService.getUserCapteurs();
         });
     }
@@ -147,7 +147,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
        this.capteurService.deleteCapteur(capteur).subscribe( () => {}, () => {}, () => {
         this.capteurService.capteursByUser.splice(index,1);
         this.capteurService.emitSensorSubject();
-        this.notifier.notify('success', 'Sensor delete !');
+        this.notifier.notify('success', 'deleted sensor !');
        });
     }
 

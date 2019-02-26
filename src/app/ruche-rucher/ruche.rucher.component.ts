@@ -96,10 +96,6 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
   }
 
 
-  onSelectRucher() {
-    this.rucheService.getRucheByApiary(this.rucherService.rucher.id);
-    this.rucherService.getRucherDetails();
-  }
 
   //Quand on Edite une ruche
 

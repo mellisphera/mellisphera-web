@@ -24,9 +24,7 @@ export class RucherService {
  
     rucher: RucherModel;
     ruchers: RucherModel[] = null;
-    detailsRucher: RucherModel;
     rucherUpdate: RucherModel;
-    rucherDemo: RucherModel;
 
     currentBackground: string;
 
@@ -46,6 +44,11 @@ export class RucherService {
         this.initRuche();
 
     }
+
+    emitApiarySubject() {
+        this.rucherSubject.next(this.ruchers.slice());
+        console.log(this.rucherSubject);
+    }
     initRuche(){
          this.rucher = {
             id : null,
@@ -60,22 +63,12 @@ export class RucherService {
             ville : ''
          };
          this.rucherUpdate = this.rucher;
-         this.detailsRucher = this.rucher;
          this.rucherSelectUpdate = this.rucher;
     }
     // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
     // pour créer un rucher
     createRucher() {
-        this.rucherObs = this.http.post<RucherModel>(CONFIG.URL + 'apiaries' , this.rucher);
-        this.rucherObs.subscribe(
-            ()=>{},
-            (err)=>{
-                console.log(err);
-            },
-            ()=>{
-                this.getApiaryByUser(this.user.getUser());
-            }
-        );
+        return this.http.post<RucherModel>(CONFIG.URL + 'apiaries' , this.rucher);
     }
     // pour afficher tout les ruchers de l'utilsateur connecté
     getCurrentRucher(){
@@ -110,7 +103,7 @@ export class RucherService {
             }
         );
     }
-    getOneApiaryById(idApiary){
+  /*  getOneApiaryById(idApiary){
         this.rucherObs = this.http.get<RucherModel>(CONFIG.URL+'apiaries/id/'+idApiary);
         this.rucherObs.subscribe(
             (data)=>{
@@ -120,9 +113,9 @@ export class RucherService {
               console.log(err);
             }
         )
-    }
+    }*/
 
-    getRucherDetails(){
+    /*getRucherDetails(){
         this.rucherObs = this.http.get<RucherModel>(CONFIG.URL+'apiaries/details/'+this.rucher.id);
         this.rucherObs.subscribe(
             (data)=>{
@@ -133,33 +126,15 @@ export class RucherService {
             }
         );
 
-    }  
+    }  */
 
-    updateRucher() {
-        this.rucherObs = this.http.put<RucherModel>(CONFIG.URL+'apiaries/update/' + this.detailsRucher.id, this.detailsRucher, httpOptions);
-        this.rucherObs.subscribe(
-            ()=>{},
-            (err)=>{
-                console.log(err);
-            },
-            ()=>{   
-                this.getApiaryByUser(this.user.getUser());
-            }
-        );
+    updateRucher(idApiary: String, apiaryUpdate: RucherModel) {
+        return this.http.put<RucherModel>(CONFIG.URL+'apiaries/update/' + idApiary, apiaryUpdate, httpOptions);
     }
     deleteRucher() {
-        this.rucherObs = this.http.delete<RucherModel>(CONFIG.URL+'apiaries/' + this.rucher.id);
-        this.rucherObs.subscribe(
-            ()=>{},
-            (err)=>{
-                console.log(err);
-            },
-            ()=>{
-                this.getApiaryByUser(this.user.getUser());
-            }
-        );
+        return this.http.delete<RucherModel>(CONFIG.URL + 'apiaries/' + this.rucher.id);
     }
-    updateBackgroundApiary(idApiary: string){
+    updateBackgroundApiary(idApiary: string) {
       this.http.put(CONFIG.URL + 'apiaries/update/background/' + idApiary, this.rucher.photo).subscribe(
           () => {},
           (err) => {
@@ -173,7 +148,7 @@ export class RucherService {
     errorHandler(error: HttpErrorResponse){
         return Observable.throw(error.message || "server error")
     }
-    findRucherById(idApiary: string, next?){
+    findRucherById(idApiary: string, next?) {
         this.ruchers.forEach(element => {
             if (element.id === idApiary) {
                 next(element);
