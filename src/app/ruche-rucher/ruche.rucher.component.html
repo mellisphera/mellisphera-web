@@ -52,7 +52,12 @@
                                                             data-target="#editRucheModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
                                                             <i class="fa fa-edit"></i>
                                                     </button>
-                                                    <button type="button" class="btn btn-warning btn-lg "  title="Delete hive" style="padding: 0;border: none; background: none;" (click)="deleteRuche(ruche,i)">
+                                                    <button type="button" class="btn btn-warning btn-lg"
+                                                    mwlConfirmationPopover
+                                                    popoverTitle="Delete Hive ?"
+                                                    placement="top"
+                                                    (confirm)="deleteRuche(ruche,i)"
+                                                    title="Delete hive" style="padding: 0;border: none; background: none;">
                                                             <i class="fa fa-times"></i>
                                                     </button>
                                                   </td>

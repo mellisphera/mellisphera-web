@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -15,15 +16,17 @@ const httpOptions = {
 @Injectable()
 export class CapteurService {
  
-    capteur : CapteurInterface;
-    capteurs : CapteurInterface[];
-    capteursByUser : CapteurInterface[];
-    capteurAcheter : CapteurInterface[];
+    capteur: CapteurInterface;
+    capteurs: CapteurInterface[];
+    capteursByUser: CapteurInterface[];
+    capteurAcheter: CapteurInterface[];
     capteursType:Object;
-    capteurObs : Observable<CapteurInterface>;
-    capteursObs : Observable<CapteurInterface[]>;
-    constructor(private http:HttpClient, private user : UserloggedService) {
+    capteurObs: Observable<CapteurInterface>;
+    capteursObs: Observable<CapteurInterface[]>;
+    sensorSubject: BehaviorSubject<CapteurInterface[]>;
+    constructor(private http:HttpClient, private user: UserloggedService) {
         //this.getCapteurs();
+        this.sensorSubject = new BehaviorSubject([]);
         this.getUserCapteurs();
         this.capteursType =
             [
@@ -50,7 +53,11 @@ export class CapteurService {
             apiaryName:''
         }
     }
- 
+    
+    emitSensorSubject() {
+        this.sensorSubject.next(this.capteursByUser.slice());
+        console.log(this.sensorSubject);
+    }
     // pour créer un capteur
     createCapteur() {
         return this.http.post<CapteurInterface>(CONFIG.URL+'sensors', this.capteur, httpOptions);
@@ -88,17 +95,19 @@ export class CapteurService {
         this.capteursObs.subscribe(
             (data) => {
                 this.capteursByUser = data;
+                this.sensorSubject.next(data);
                 console.log(this.capteursByUser);
             },
             (err) => {
                 console.log(err);
             },
+            () => { this.sensorSubject.complete(); }
         );
     }
 
-    deleteCapteur() {
-        this.capteurObs = this.http.delete<CapteurInterface>(CONFIG.URL+'sensors/' + this.capteur.id);
-        this.capteurObs.subscribe(
+    deleteCapteur(capteur: CapteurInterface) {
+        return this.http.delete<CapteurInterface>(CONFIG.URL+'sensors/' + capteur.id);
+        /*this.capteurObs.subscribe(
             () => {},
             (err) => {
                 console.log(err);
@@ -106,7 +115,7 @@ export class CapteurService {
             () => {
                 this.getUserCapteurs();
             }
-        );
+        );*/
     }
 
     checkSensorExist(reference: string): Observable<Boolean>{

@@ -1,3 +1,4 @@
+import { CapteurInterface } from './../_model/capteur';
 import { RucherModel } from './../_model/rucher-model';
 import { RucheInterface } from './../_model/ruche';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -26,12 +27,14 @@ import { NotifierService } from 'angular-notifier';
 export class CapteurComponent implements OnInit, OnDestroy {
 
   username: string;
+
   hiveSensorSelect: RucheInterface;
   apiarySensorSelect: RucherModel;
+
   editCapteurCheckbox: boolean;
   paternRef: RegExp;
+  indexSensorSelect: number;
   //variable to store ruches
-  ruches: any [] = [];
   //for new sensor
   newCapteurForm: FormGroup;
   //to edit a sensor
@@ -51,7 +54,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         public capteurService: CapteurService,
         private _selectedRucherService: selectedRucherService,
         public notifierService: NotifierService) {
-        this.paternRef = /[4][0-9]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
+        this.paternRef = /[4][0-5]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9]|[a-z])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
         this.username = userService.getUser();
         this.notifier = notifierService;
         this.initForm();
@@ -64,15 +67,16 @@ export class CapteurComponent implements OnInit, OnDestroy {
     onChangeCapteur($event) {
         this.capteurService.capteur = $event.target.value;
     }
-    selectCapteur(capteur) {
+    selectCapteur(capteur: CapteurInterface, index: number) {
+        this.indexSensorSelect = index;
         this.capteurService.capteur = capteur;
+        this.editCapteurCheckbox = !(this.capteurService.capteur.idHive == null || this.capteurService.capteur.idApiary == null);
         /* Assigne les données du capteurs au formulaire pour modification*/
         const donnee = {
-            checkbox: '',
+            checkbox: this.editCapteurCheckbox ? 'ruche' : 'stock',
             description: this.capteurService.capteur.description,
         };
         this.editCapteurForm.setValue(donnee);
-        this.editCapteurCheckbox = !(this.capteurService.capteur.idHive == null || this.capteurService.capteur.idApiary == null);
         if (this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
             this.rucherService.findRucherById(this.capteurService.capteur.idApiary, (apiary) => {
                 this.apiarySensorSelect = apiary;
@@ -115,7 +119,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.capteurService.capteur.description = formValue.description;
         this.capteurService.capteur.username = this.username;
         this.capteurService.capteur.reference = formValue.reference;
-        this.capteurService.capteur.type = sensorType.toLowerCase();
+        this.capteurService.capteur.type = sensorType === 'WEIGHT' ? sensorType.toLowerCase() : sensorType ;
         console.log(this.capteurService.capteur);
         this.initForm();
         this.capteurService.createCapteur().subscribe( () => {}, () => {}, () => {
@@ -139,16 +143,17 @@ export class CapteurComponent implements OnInit, OnDestroy {
 
     //DELETE CAPTEUR
 
-    deleteCapteur(capteur){
-       this.capteurService.capteur = capteur;
-       this.capteurService.deleteCapteur();
+    deleteCapteur(capteur: CapteurInterface, index: number) {
+       this.capteurService.deleteCapteur(capteur).subscribe( () => {}, () => {}, () => {
+        this.capteurService.capteursByUser.splice(index,1);
+        this.capteurService.emitSensorSubject();
+        this.notifier.notify('success', 'Sensor delete !');
+       });
     }
 
     updateCapteur() {
         const formValue = this.editCapteurForm.value;
         const idTemp = this.capteurService.capteur.id;
-        console.log(formValue);
-        this.capteurService.initCapteur();
         //this.capteurService.capteur = formValue;
         if (formValue.checkbox != 'stock') {
             this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
@@ -162,15 +167,16 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.capteurService.capteur.hiveName = null;
         }
         this.capteurService.capteur.description = formValue.description;
-        this.capteurService.capteur.type = this.capteurService.capteur.type;
         this.capteurService.capteur.id = idTemp;
         console.log(this.capteurService.capteur);
         //this.capteurService.capteur.type = tempType;
 
         this.initForm();
         this.capteurService.updateCapteur().subscribe(() => {}, () => {}, () => {
-            this.notifier.notify('success', 'Sensor Update');
-            this.capteurService.getUserCapteurs();
+            this.capteurService.capteursByUser[this.indexSensorSelect] = this.capteurService.capteur;
+            this.capteurService.emitSensorSubject();
+            this.notifier.notify('success', 'Sensor Update !');
+            //this.capteurService.getUserCapteurs();
         });
     }
 
@@ -186,12 +192,12 @@ export class CapteurComponent implements OnInit, OnDestroy {
                /* Validators.pattern(this.paternRef)*/
             ],
             'description': [null],
-            'checkbox':'',
+            'checkbox': ['ruche', Validators.required],
         });
 
         this.editCapteurForm = this.formBuilder.group({
             'description': [null],
-            'checkbox':''
+            'checkbox': ['ruche', Validators.required]
         });
     }
     validateSensorNotTaken(control: AbstractControl) {
@@ -203,7 +209,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
               .distinctUntilChanged()
               .switchMap(value => this.capteurService.checkSensorExist(value))
               .map(res => {
-                  return res ? false : { sensorCheck: true };
+                  return res ? null : { sensorCheck: true };
               })
               .first();
           }
@@ -215,6 +221,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     }
     ngOnDestroy() {
         this.rucherService.rucherSubject.unsubscribe();
+        this.capteurService.sensorSubject.unsubscribe();
         //this.rucherService.rucheService.hiveSubject.unsubscribe();
     }
 }

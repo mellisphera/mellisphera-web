@@ -60,6 +60,8 @@ import { SignupService } from './admin/service/signup.service';
 import { AuthInterceptorService } from './auth/Service/auth-interceptor.service';
 import { ngfModule } from 'angular-file';
 import { NotifierModule } from 'angular-notifier';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+
 
 
 
@@ -98,7 +100,19 @@ import { NotifierModule } from 'angular-notifier';
     NgxEchartsModule,
     ngfModule,
     SharedModule,
-    NotifierModule
+    NotifierModule.withConfig({
+      position: {
+        horizontal: {
+          position: 'middle'
+        },
+        vertical: {
+          position: 'top',
+        }
+      }
+    }),
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger' // set defaults here
+    })
   ],
   providers: [
     CapteurService,

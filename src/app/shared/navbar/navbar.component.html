@@ -17,7 +17,11 @@
             <button type="button" (click)="editRucherClicked()" class="crud btn btn-success  btn-lg" data-toggle="modal" data-target="#editRucher" style="border: none; background: none; ">
               <i class="fa fa-edit fa-3x"></i>
           </button>
-          <button type="button" class="btn btn-warning btn-lg crud" style="padding: 0;border: none; background: none;" (click)="deleteRucher()">
+          <button type="button" class="btn btn-warning btn-lg crud" style="padding: 0;border: none; background: none;" 
+          mwlConfirmationPopover
+          popoverTitle="Delete Apiary ?"
+          placement="bottom"
+          (confirm)="deleteRucher()">
             <i class="fa fa-times fa-3x"></i>
           </button>
     </div>
