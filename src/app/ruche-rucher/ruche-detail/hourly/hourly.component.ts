@@ -17,9 +17,9 @@ export class HourlyComponent implements OnInit {
   rucheName : string;
 
 
-  constructor(private activatedRoute : ActivatedRoute,
-    public recordService : RecordService,
-    public graphRecordService : GraphRecordService,
+  constructor(private activatedRoute: ActivatedRoute,
+    public recordService: RecordService,
+    public graphRecordService: GraphRecordService,
     private rucheService: RucheService,
     ) { }
 
@@ -34,6 +34,7 @@ export class HourlyComponent implements OnInit {
   }
 
   selectRange(event) {
+    /*
     let date = null;
     const range = event.target.value;
     if (event.target.value > 10 ) {
@@ -44,7 +45,8 @@ export class HourlyComponent implements OnInit {
       date.setMonth((new Date().getMonth() - range) );
     }
     console.log(date);
-    this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), MyDate.getRange(date));
+    this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), MyDate.getRange(date));*/
+    this.recordService.setRangeObs(event.target.value);
   }
 
 }

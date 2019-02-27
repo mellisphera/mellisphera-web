@@ -47,11 +47,10 @@ export class AuthService {
         this.tokenService.saveToken(this.jwtReponse.accessToken);
         this.tokenService.saveAuthorities(this.jwtReponse.authorities);
         this.login.email = this.jwtReponse.email;
-        this.login.username = this.jwtReponse.username;
         this.connexionStatus.next(data);
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
-        this.setUser(this.login);
+        this.setUser(this.jwtReponse);
         this.router.navigate(['/home']);
       },
       (err)=>{
@@ -60,61 +59,9 @@ export class AuthService {
       }
     );
   }
-  setUser(user: Login) {
+  setUser(user: JwtResponse) {
     window.sessionStorage.removeItem('currentUser');
     window.sessionStorage.setItem('currentUser', JSON.stringify(user));
   }
 
 }
-
-        /*
-
-        ### AVEC TOKEN ###
-        this.jwtReponse = data;
-        this.tokenService.saveToken(this.jwtReponse.accessToken);
-        this.tokenService.saveAuthorities(this.jwtReponse.authorities);
-        this.login.username = this.jwtReponse.username  
-        this.connexionStatus.next(data);
-        this.isAuthenticated = window.sessionStorage.getItem("TOKEN_KEY") ? true : false;
-        sessionStorage.setItem("connexion",JSON.stringify(this.isAuthenticated));
-        this.errLogin = !this.isAuthenticated;
-        if(this.isAuthenticated){
-          this.lastConnection = new Date(data);
-          console.log(sessionStorage.getItem("connexion") == "true"); 
-          
-          sessionStorage.setItem("currentUser",JSON.stringify(this.login));
-          this.router.navigate(['/position-Ruche']);
-        }
-        
-        
-        
-        
-        
-        
-        
-        ### SANS TOKEN ###
-
-        console.log(data);
-        this.user = data;
-        //this.login = this.user.login;
-        console.log(this.user);
-        this.connexionStatus.next(data);
-        this.isAuthenticated = this.user.id != null? true : false;
-        sessionStorage.setItem("connexion",JSON.stringify(this.isAuthenticated));
-        console.log(this.isAuthenticated);
-        this.errLogin = !this.isAuthenticated;
-        console.log(!this.isAuthenticated);
-        if(this.isAuthenticated){
-          this.lastConnection = new Date(data);
-          console.log(sessionStorage.getItem("connexion") == "true"); 
-          
-          sessionStorage.setItem("currentUser",JSON.stringify(this.user.login));
-          this.router.navigate(['/position-Ruche']);
-        
-        
-        
-        
-        */
-
-
-        

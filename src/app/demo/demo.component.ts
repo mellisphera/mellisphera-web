@@ -57,7 +57,7 @@ export class DemoComponent implements OnInit,OnDestroy {
     this.user.setUser({
       'email': '***REMOVED***@null',
       'username' : '***REMOVED***',
-      'password' : '***REMOVED***'
+      'accessToken' : CONFIG.PUBLIC_TOKEN
     });
     next();
   }

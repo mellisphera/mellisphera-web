@@ -76,7 +76,7 @@ export class RucherService {
     }
     saveCurrentApiaryId(idApiary : string){
         window.sessionStorage.removeItem('currentApiary');
-        window.sessionStorage.setItem("currentApiary",idApiary);
+        window.sessionStorage.setItem('currentApiary', idApiary);
     }
 
     getCurrentApiary(){
@@ -84,20 +84,24 @@ export class RucherService {
     }
 
     getApiaryByUser(username: string){
-        this.ruchersObs = this.http.get<RucherModel[]>(CONFIG.URL+'apiaries/'+ username);
+        this.ruchersObs = this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username);
         this.ruchersObs.subscribe(
             (data) => {
-                this.rucher = data[data.length - 1];
                 this.ruchers = data;
                 this.rucherSubject.next(data);
-
             },
             (err) => {
                 console.log(err);
             },
             () => {
                 this.currentBackground = this.rucher.photo;
-                this.saveCurrentApiaryId(this.rucher.id);
+                if (!this.getCurrentApiary()) {
+                    this.rucher = this.ruchers[0];
+                    this.saveCurrentApiaryId(this.rucher.id);
+                    console.log(this.rucher);
+                } else {
+                    this.rucher = this.ruchers.filter(apiary => apiary.id === this.getCurrentApiary())[0];
+                }
                 this.rucherSubject.complete();
                 this.rucheService.getRucheByApiary(this.getCurrentApiary());
             }

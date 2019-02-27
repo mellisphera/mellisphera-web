@@ -82,13 +82,15 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-    this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+    if (!this.observationService.obsApiarySubject.closed) {
+      this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+    }
+
   }
 
 
-  clickOnRuche(ruche){
-    localStorage.setItem("clickedRuche",  this.localStorageRuche);
-    //localStorage.setItem("selectedRucheName",  this.selectedRuche.name);
+  clickOnRuche(ruche: RucherModel) {
+    this.rucheService.saveCurrentHive(ruche.id);
   }
 
   resetForm(){
@@ -102,7 +104,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
   onSelectObs(obs){
     this.observationService.observation = obs;
-    var donnée = {
+    const donnée = {
       sentence : this.observationService.observation.sentence,
       date : this.observationService.observation.date
     };

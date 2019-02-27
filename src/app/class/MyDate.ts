@@ -1,5 +1,4 @@
 export class MyDate {
-    
     private date: Date;
 
     static getRange(min?: Date): Date[] {
