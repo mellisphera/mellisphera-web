@@ -1,3 +1,4 @@
+import { JwtResponse } from './_model/jwt-response';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth/Service/auth.service';
@@ -9,19 +10,18 @@ export class UserloggedService {
   private messageSource = new BehaviorSubject<string>('');
   currentMessage = this.messageSource.asObservable();
 
-  loginDemo : Login;
 
   constructor(private authService : AuthService) {
    }
 
-   changeMessage(message : string){
+   changeMessage(message: string) {
      this.messageSource.next(message);
    }
-   currentUser(): Login {
+   currentUser(): JwtResponse {
     return JSON.parse(sessionStorage.getItem('currentUser'));
   }
 
-  setUser(user: Login) {
+  setUser(user: JwtResponse) {
     window.sessionStorage.removeItem('currentUser');
     window.sessionStorage.setItem('currentUser', JSON.stringify(user));
   }

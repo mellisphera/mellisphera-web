@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit {
   innitForm(){
     this.signupForm = this.formBuilder.group({
       'email':[null,Validators.required],
-      'username': [null,Validators.required],
       'password':[null,Validators.compose([
         ,Validators.minLength(6),
         Validators.required
@@ -88,8 +87,7 @@ export class LoginComponent implements OnInit {
     }
   }
   verifLogin() {
-    this.authService.login.email = this.authService.login.email;
-    console.log(this.authService.login )
+    console.log(this.authService.login)
     this.authService.signIn();
   }
   currentUser(){

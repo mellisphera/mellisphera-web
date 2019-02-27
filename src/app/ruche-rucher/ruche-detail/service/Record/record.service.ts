@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CONFIG } from '../../../../../config';
 import { Record } from '../../../../_model/record';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { RangeData } from 'src/app/_model/range-data';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,24 +14,27 @@ const httpOptions = {
 })
 export class RecordService {
 
-  recArray : Record[];
-  recordObs : Observable<Record[]>;
-  loading : boolean;
-  recArrrayTint : any[];
-  recArrayText : any[];
-  recArrayWeight : any[];
-  recArrayDateExt : any[];
-  recArrayDateInt : any[];
-  recArrayHint : any[];
-  recArrayHext : any[];
-  recArrayBatteryInt : any[];
-  recArrayBatteryExt : any[];
-  mergeOptionHourly : any = null;
-  currentIdHive : string;
-  mergeOptionStack : any = null;
-  constructor(private http : HttpClient) { 
+  recArray: Record[];
+  recordObs: Observable<Record[]>;
+  loading: boolean;
+  recArrrayTint: any[];
+  recArrayText: any[];
+  recArrayWeight: any[];
+  recArrayDateExt: any[];
+  recArrayDateInt: any[];
+  recArrayHint: any[];
+  recArrayHext: any[];
+  recArrayBatteryInt: any[];
+  recArrayBatteryExt: any[];
+  mergeOptionHourly: any = null;
+  currentIdHive: string;
+  private rangeSubject: BehaviorSubject<RangeData>;
+  mergeOptionStack: any = null;
+
+  constructor(private http: HttpClient) {
     this.currentIdHive = null;
     this.loading = false;
+    this.rangeSubject = new BehaviorSubject({scale: 15, type: 'day'});
   }
 
   getRecordByIdHive(idHive: string, range?: Date[]) {
@@ -51,7 +55,15 @@ export class RecordService {
     );
   }
 
-  updateMerge(){
+  getRangeObs(): Observable<RangeData> {
+    return this.rangeSubject.asObservable();
+  }
+
+  setRangeObs(scale: RangeData): void {
+    this.rangeSubject.next(scale);
+  }
+
+  updateMerge() {
     this.mergeOptionHourly = {
       series: [
         {

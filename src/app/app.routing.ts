@@ -16,8 +16,8 @@ import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
 import { RucheDetailComponent } from './ruche-rucher/ruche-detail/ruche.detail.component';
 
-const routes: Routes =[
-   /* { path: '',             component: LoginComponent },  
+const routes: Routes = [
+   /* { path: '',             component: LoginComponent },
     { path: 'login',          component: LoginComponent },
     { path: 'dashboard',      component: HomeComponent },
   //{ path: 'dashboard',      component: DashboardComponent },
@@ -35,7 +35,7 @@ const routes: Routes =[
     { path: 'ruche-et-rucher',  canActivate : [AuthGuard], component: RucheRucherComponent },
     { path: 'capteurs',         canActivate : [AuthGuard], component: CapteurComponent },
     { path: 'meteo',            canActivate : [AuthGuard], component: MeteoComponent },
-    { path: 'ruche-detail/:id/:name', canActivate : [AuthGuard], component : RucheDetailComponent},
+    { path: 'ruche-detail', canActivate : [AuthGuard], component : RucheDetailComponent},
     { path: 'rapport',          canActivate : [AuthGuard], component: RapportComponent},
     { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
     { path: 'home', canActivate : [AuthGuard], component: HomeComponent},

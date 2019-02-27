@@ -1,8 +1,8 @@
 export interface JwtResponse {
     accessToken: string;
-    type: string;
+    type?: string;
     username: string;
     email: string;
-    connexions : number;
-    authorities: string[];
+    connexions?: number;
+    authorities?: string[];
 }

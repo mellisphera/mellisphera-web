@@ -22,7 +22,7 @@ export class SignupService {
     this.user = { 
       id : null,
       createdAt : new Date(),
-      login : { email: null, username:null,password:null},
+      login : { email: null, password: null},
       phone : null,
       email : null,
       username : null,
