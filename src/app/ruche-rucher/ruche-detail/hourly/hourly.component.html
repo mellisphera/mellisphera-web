@@ -1,9 +1,9 @@
 
-<select (change)="selectRange($event)" name="" id="input" class="form-control">
-    <option value="15">Last 15 days</option>
-    <option value="30">Last 30 days</option>
-    <option value="3">Last 3 months</option>
-    <option value="5">Last 6 months</option>
+<select (change)="selectRange()" [(ngModel)]="range" name="range" id="input" class="form-control">
+    <option [ngValue]="{scale: 15,type: 'DAY'}">Last 15 days</option>
+    <option [ngValue]="{scale: 30, type:'DAY'}">Last 30 days</option>
+    <option [ngValue]="{scale: 3, type: 'MONTH'}">Last 3 months</option>
+    <option [ngValue]="{scale: 6, type: 'MONTH'}">Last 6 months</option>
 </select>
 
 <div echarts [options]="graphRecordService.option" [loading]="!recordService.loading" [merge]="recordService.mergeOptionHourly" [autoResize]="true" style="width:92vw;height:70vh;"></div>

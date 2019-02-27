@@ -11,7 +11,7 @@ import { StockComponent } from '../ruche-rucher/ruche-detail/stock/stock.compone
 import { HealthComponent } from '../ruche-rucher/ruche-detail/health/health.component';
 import { ObservationComponent } from '../ruche-rucher/ruche-detail/observation/observation.component';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CalendrierPoidsService } from '../ruche-rucher/ruche-detail/stock/service/calendrier-poids.service';
 import { DailyRecordsWService } from '../ruche-rucher/ruche-detail/service/daily-records-w.service';
 import { DailyStockHoneyService } from '../ruche-rucher/ruche-detail/service/daily-stock-honey.service';
@@ -20,6 +20,7 @@ import { GraphRecordService } from '../ruche-rucher/ruche-detail/hourly/service/
 import { RecordService } from '../ruche-rucher/ruche-detail/service/Record/record.service';
 import { CalendrierHealthService } from '../ruche-rucher/ruche-detail/health/service/calendrier-health.service';
 import { DemoComponent } from '../demo/demo.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
@@ -27,6 +28,8 @@ import { DemoComponent } from '../demo/demo.component';
     SidebarModule,
     NavbarModule,
     RouterModule,
+    BrowserModule,
+    FormsModule,
     NgxEchartsModule,
     ReactiveFormsModule
   ],

@@ -76,8 +76,9 @@ export class HomeComponent implements OnInit {
     
   }
 
-  onClick(ruche){
-    this.route.navigate(['/ruche-detail',ruche.id, ruche.name]);
+  onClick(ruche: RucheInterface){
+    this.rucheService.saveCurrentHive(ruche.id);
+    this.route.navigate(['/ruche-detail']);
 
   }
 
