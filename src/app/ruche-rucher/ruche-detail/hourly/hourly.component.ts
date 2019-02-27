@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RecordService } from '../service/Record/record.service';
 import { GraphRecordService } from './service/graph-record.service';
 import { RucheService } from '../../../accueil/Service/ruche.service';
+import { DataRange } from '../service/Record/data-range';
 
 @Component({
   selector: 'app-hourly',
@@ -15,13 +16,15 @@ export class HourlyComponent implements OnInit {
   message="";
   rucheId: string;
   rucheName : string;
-
+  public range: DataRange;
 
   constructor(private activatedRoute: ActivatedRoute,
     public recordService: RecordService,
     public graphRecordService: GraphRecordService,
     private rucheService: RucheService,
-    ) { }
+    ) {
+      this.range = {scale: 15, type : 'DAY'};
+    }
 
   ngOnInit() {
     /*this.rucheId = this.activatedRoute.snapshot.params.id;
@@ -33,7 +36,9 @@ export class HourlyComponent implements OnInit {
     this.message = $event;
   }
 
-  selectRange(event) {
+  selectRange() {
+    console.log(this.range);
+    this.recordService.setRange(this.range,this.rucheService.getCurrentHive());
     /*
     let date = null;
     const range = event.target.value;
@@ -46,7 +51,7 @@ export class HourlyComponent implements OnInit {
     }
     console.log(date);
     this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), MyDate.getRange(date));*/
-    this.recordService.setRangeObs(event.target.value);
+    //this.recordService.setRangeObs(event.target.value);
   }
 
 }

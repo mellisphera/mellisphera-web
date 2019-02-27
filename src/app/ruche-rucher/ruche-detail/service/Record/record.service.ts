@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CONFIG } from '../../../../../config';
 import { Record } from '../../../../_model/record';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { RangeData } from 'src/app/_model/range-data';
+import { DataRange } from './data-range';
+import { MyDate } from '../../../../class/MyDate';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -28,13 +29,11 @@ export class RecordService {
   recArrayBatteryExt: any[];
   mergeOptionHourly: any = null;
   currentIdHive: string;
-  private rangeSubject: BehaviorSubject<RangeData>;
   mergeOptionStack: any = null;
 
   constructor(private http: HttpClient) {
     this.currentIdHive = null;
     this.loading = false;
-    this.rangeSubject = new BehaviorSubject({scale: 15, type: 'day'});
   }
 
   getRecordByIdHive(idHive: string, range?: Date[]) {
@@ -55,12 +54,17 @@ export class RecordService {
     );
   }
 
-  getRangeObs(): Observable<RangeData> {
-    return this.rangeSubject.asObservable();
-  }
 
-  setRangeObs(scale: RangeData): void {
-    this.rangeSubject.next(scale);
+  setRange(scale: DataRange, idHive: string): void {
+    let date;
+    if (scale.type == 'DAY') {
+      date = new Date();
+      date.setDate((new Date().getDate() - scale.scale));
+    } else {
+      date = new Date();
+      date.setMonth((new Date().getMonth() - scale.scale));
+    }
+    this.getRecordByIdHive(idHive,MyDate.getRange(date));
   }
 
   updateMerge() {
