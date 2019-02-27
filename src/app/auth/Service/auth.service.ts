@@ -34,7 +34,7 @@ export class AuthService {
   constructor(private router: Router,
               private http : HttpClient,
               private tokenService : AtokenStorageService) {
-                this.login = { username : "", password : ""};
+                this.login = { email : "", password : ""};
                 this.errLogin = false;
                 this.isAuthenticated = false;
               }
@@ -46,6 +46,7 @@ export class AuthService {
         this.jwtReponse = data;
         this.tokenService.saveToken(this.jwtReponse.accessToken);
         this.tokenService.saveAuthorities(this.jwtReponse.authorities);
+        this.login.email = this.jwtReponse.email;
         this.login.username = this.jwtReponse.username;
         this.connexionStatus.next(data);
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
