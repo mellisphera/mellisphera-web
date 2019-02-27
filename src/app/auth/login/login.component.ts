@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
       console.log(this.signupService.user);
       this.signupService.user.createdAt = new Date();
       this.signupService.signupUser(()=>{
-        this.authService.login.username = this.signupService.user.username;
+        this.authService.login.email = this.signupService.user.username;
         this.authService.login.password = this.signupService.user.password;
         this.authService.signIn();
         this.success = true;
@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit {
     }
   }
   verifLogin() {
-    this.authService.login.username = this.authService.login.username.toUpperCase();
+    this.authService.login.email = this.authService.login.email;
     console.log(this.authService.login )
     this.authService.signIn();
   }
