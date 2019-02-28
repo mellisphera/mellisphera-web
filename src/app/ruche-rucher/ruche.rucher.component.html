@@ -49,7 +49,7 @@
                                                   <td>{{ruche.description}}</td>
                                                   <td>
                                                     <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal" type="button" (click)="onSelectRuche(ruche,index)"
-                                                            data-target="#editRucheModal" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                                                            data-target="#editRucheModal" class="btn btn-primary btn-lg " style="padding: 0;border: none; background: none;">
                                                             <i class="fa fa-edit"></i>
                                                     </button>
                                                     <button type="button" class="btn btn-warning btn-lg"
@@ -103,7 +103,7 @@
                                   </thead>
                                   <tbody>
                                     
-                                    <tr *ngFor="let ap of observationService.observationsApiary" >
+                                    <tr *ngFor="let ap of observationService.observationsApiary; let i = index;" >
                                       <td>
                                           {{ap.date}}
                                       </td>
@@ -120,7 +120,7 @@
                                         mwlConfirmationPopover
                                         popoverTitle="Delete notes ?"
                                         placement="top"
-                                        (confirm)="deleteObs(ap)"
+                                        (confirm)="deleteObs(i,ap)"
                                         style="padding: 0;border: none; background: none;"> 
                                                 <i class="fa fa-times"></i>
                                         </button>
@@ -190,7 +190,7 @@
                       <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option> 
                   </select>
               </div>
-            <form [formGroup]="newRucheForm" (ngSubmit)="onEditeRuche()">
+            <form [formGroup]="newRucheForm">
               <div class="form-group">
                 <label class="col-form-label">Name</label>
                 <input formControlName="nomRuche" type="text" class="form-control">
@@ -200,7 +200,7 @@
                 <textarea  formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" [disabled]="!newRucheForm.valid">Edit hive</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditeRuche()" [disabled]="!newRucheForm.valid">Edit hive</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
               </div>
           </form>
@@ -253,21 +253,60 @@
           </button>
         </div>
         <div class="modal-body">
-          <form  [formGroup]="observationForm" (ngSubmit)="onEditObservation()">
+          <form  [formGroup]="observationForm">
             <div class="form-group">
+              <input type="date" formControlName="date"><br/>
               <label for="recipient-editobs" class="col-form-label">Note</label>
               <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
             </div> 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" (click)="onEditObservation()" [disabled]="!observationForm.valid" >Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
+                  <!--fa fa-sign-in-alt"-->
+                <button type="submit" class="btn btn-primary" data-dismiss="modal"  (click)="onEditObservation()" [disabled]="!observationForm.valid" >Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="btn-mvToAction" data-toggle="tooltip" data-dismiss="modal" data-html="true" title="Move to hive" data-toggle="modal" type="button" data-target="#selectHiveModal"
+                class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                  <i class="fa fa-arrow-circle-right"></i>
+                </button>
               </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="selectHiveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Select your hive</h3> </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+                <select [(ngModel)]="hiveToMv" class="form-control" id="select-Apiary">
+                    <option  *ngFor="let ruche of rucheService.ruches" [ngValue]="ruche" >
+                            {{ruche.name}}
+                    </option>
+                </select>
+                <label>Type :</label>
+                <select (change)="typeToMv = $event.target.value" id="input" class="form-control" required="required">
+                  <option value="0">Observation</option>
+                  <option value="1">Action</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" data-dismiss="modal"  (click)="mvToActions()" >Move</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   <script>
+
+    
   
   $('#editRucheModal').modal({
    keyboard: false,

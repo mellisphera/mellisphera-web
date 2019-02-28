@@ -65,9 +65,10 @@ export class ObservationService {
       }
     );
   }
-  createObservation(){
-    this.observationObs = this.http.put<Observation>(CONFIG.URL + 'report/insert', this.observation);
-    this.observationObs.subscribe(
+  createObservation(observation: Observation): Observable<Observation> {
+    return this.http.put<Observation>(CONFIG.URL + 'report/insert', observation);
+
+   /* this.observationObs.subscribe(
       ()=>{},
       (err)=>{
         console.log(err);
@@ -79,11 +80,12 @@ export class ObservationService {
           this.getObservationByIdHive(this.observation.idHive);
         }
       }
-    );
+    );*/
   }
 
-  updateObservation(){
-    this.observationObs = this.http.put<Observation>(CONFIG.URL+'report/update/'+this.observation.id,this.observation);
+  updateObservation(obs: Observation): Observable<Observation> {
+    return this.http.put<Observation>(CONFIG.URL + 'report/update/' + obs.id, obs);
+    /*
     this.observationObs.subscribe(
       ()=>{},
       (err)=>{
@@ -98,12 +100,12 @@ export class ObservationService {
           this.emitHiveSubject();
         }
       }
-    );
+    );*/
   }
 
-  deleteObservation(){
-    this.observationObs = this.http.delete<Observation>(CONFIG.URL+'report/'+this.observation.id);
-    this.observationObs.subscribe(
+  deleteObservation(idObs: string): Observable<Observation> {
+    return this.http.delete<Observation>(CONFIG.URL + 'report/' + idObs);
+   /* this.observationObs.subscribe(
       ()=>{},
       (err)=>{
         console.log(err);
@@ -121,6 +123,6 @@ export class ObservationService {
         //this.getObservationByIdHive(this.observation.idHive);
         //this.getObservationByIdApiary(this.observation.idApiary);
       }
-    );
+    );*/
   }
 }

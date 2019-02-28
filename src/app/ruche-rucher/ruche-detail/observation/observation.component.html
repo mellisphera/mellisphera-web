@@ -46,7 +46,7 @@
                                                                           mwlConfirmationPopover
                                                                           popoverTitle="Delete notes ?"
                                                                           placement="top"
-                                                                          (confirm)="deleteObsR(hiveObs)">
+                                                                          (confirm)="deleteObsR(i,hiveObs)">
                                                                               <i class="fa fa-times"></i>
                                                                           </button>
                                                                       </td>
@@ -67,7 +67,7 @@
                                                                               mwlConfirmationPopover
                                                                               popoverTitle="Delete notes ?"
                                                                               placement="top"
-                                                                              (confirm)="deleteObsR(hiveObs)">
+                                                                              (confirm)="deleteObsR(i,hiveObs)">
                                                                                   <i class="fa fa-times"></i>
                                                                               </button>
                                                                           </td>
@@ -152,6 +152,7 @@
               </div>
           </div>
         <div class="form-group">
+          <input type="date" formControlName="date">
           <label for="recipient-editobs" class="col-form-label">Observations :</label>
           <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
         </div>
