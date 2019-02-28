@@ -1,3 +1,4 @@
+import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
 import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
@@ -40,7 +41,9 @@ const routes: Routes = [
     { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
     { path: 'home', canActivate : [AuthGuard], component: HomeComponent},
     { path: 'admin', canActivate : [AuthGuard], component : AdminComponent},
-    { path : '***REMOVED***', component : DemoComponent}
+    { path : '***REMOVED***', component : DemoComponent},
+    { path: '**', component: Erreur404ComponentComponent },
+    { path: '', redirectTo: '/', pathMatch: 'full' }
 ];
 
 @NgModule({

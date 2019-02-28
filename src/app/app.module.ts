@@ -61,6 +61,7 @@ import { AuthInterceptorService } from './auth/Service/auth-interceptor.service'
 import { ngfModule } from 'angular-file';
 import { NotifierModule } from 'angular-notifier';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
 
 
 
@@ -84,6 +85,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
     searchFleurByDate,
     AdminComponent,
     HomeComponent,
+    Erreur404ComponentComponent,
   ],
   imports: [
     BrowserModule,

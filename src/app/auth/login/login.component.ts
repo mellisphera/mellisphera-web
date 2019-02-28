@@ -68,11 +68,11 @@ export class LoginComponent implements OnInit {
       ])]
     });
   }
-  receiveMessage($event){
-      this.message=$event;
+  receiveMessage($event) {
+      this.message = $event;
   }
   signup(){
-    if(this.signupForm.valid){
+    if (this.signupForm.valid) {
       const data = this.signupForm.value;
       console.log(data);
       this.signupService.user = data;

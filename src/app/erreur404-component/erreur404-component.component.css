@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Charm');
+#notFound{
+    background: #3D3D3F url('../../assets/mellispherfa.png') no-repeat center center;
+    background-size: 70%;
+    height: 100vh;
+    width: 100%;
+}
+#notFound div{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+p{
+    color:white;
+    font-size: 35px;
+    font-family: 'Charm';
+    font-weight: bold;
+}
