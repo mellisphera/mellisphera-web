@@ -66,9 +66,16 @@
                             <app-daily></app-daily>
                         </div>
                         <div id="hourly" class="tab-pane fade">
-                            <select (change)="selectRange()" [(ngModel)]="range" name="range" class="form-control">
-                                <option *ngFor="let range of ranges;" [ngValue]="range" [selected]="range.scale == 15">{{ 'last '+ range.scale+'  '+range.type | lowercase}}</option>
-                            </select>                
+                            
+                            <div class="row">
+                                <div class="col-sm-3" id="range-div">
+                                    <label>Range :</label>  
+                                    <select (change)="selectRange()" [(ngModel)]="range" name="range" class="form-control">
+                                        <option *ngFor="let range of ranges;" [ngValue]="range" [selected]="range.scale == 15">{{ 'last '+ range.scale+'  '+range.type | lowercase}}</option>
+                                    </select>      
+                                </div>
+                            </div>
+                                      
                             <app-hourly></app-hourly>
                         </div>
                         <div id="stack" class="tab-pane fade">
