@@ -1,3 +1,4 @@
+import { RucherService } from './../rucher.service';
 import { DataRange } from './service/Record/data-range';
 import { MyDate } from './../../class/MyDate';
 import { Component, OnInit, OnDestroy, Output, Input } from '@angular/core';
@@ -69,14 +70,16 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         }
         console.log(this.rucheService.hiveSubject);
         console.log(this.hiveSelect);
-        this.rucheService.hiveSubject.subscribe( () => {}, () => {}, () => {
-            this.rucheService.findRucheById(this.rucheService.getCurrentHive(), (hive) => {
-                this.hiveSelect = hive[0];
-                console.log(this.hiveSelect);
-                this.compteurHive = this.rucheService.ruches.indexOf(this.hiveSelect);
-                this.rucheService.saveCurrentHive(this.hiveSelect.id);
+        if  (!this.rucheService.hiveSubject.closed) {
+            this.rucheService.hiveSubject.subscribe( () => {}, () => {}, () => {
+                this.rucheService.findRucheById(this.rucheService.getCurrentHive(), (hive) => {
+                    this.hiveSelect = hive[0];
+                    console.log(this.hiveSelect);
+                    this.compteurHive = this.rucheService.ruches.indexOf(this.hiveSelect);
+                    this.rucheService.saveCurrentHive(this.hiveSelect.id);
+                });
             });
-        });
+        }
 
     }
 
@@ -146,7 +149,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.rucheService.hiveSubject.unsubscribe();
+        //this.rucheService.hiveSubject.unsubscribe();
         this.observationService.obsHiveSubject.unsubscribe();
         this.observationService.obsApiarySubject.unsubscribe();
     }

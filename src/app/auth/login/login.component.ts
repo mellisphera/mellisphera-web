@@ -1,3 +1,4 @@
+import { NotifierService } from 'angular-notifier';
 import { Component, OnInit,Input,Output, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
 import { UserloggedService } from '../../userlogged.service';
@@ -29,14 +30,17 @@ export class LoginComponent implements OnInit {
 
   signupForm : FormGroup;
   success : boolean;
+  private readonly notif: NotifierService;
   constructor(private formBuilder: FormBuilder,
               public router: Router,
               private data : UserloggedService,
               public authService: AuthService,
-              public signupService : SignupService) { 
+              public signupService : SignupService,
+              private notifier: NotifierService) {
 
     this.loginErrorMsg=false;
     this.formLogin = true;
+    this.notif = notifier;
     this.myform = this.formBuilder.group({
       'username': ['', Validators.required],
       'password': ['', Validators.required]
@@ -70,19 +74,22 @@ export class LoginComponent implements OnInit {
   signup(){
     if(this.signupForm.valid){
       const data = this.signupForm.value;
+      console.log(data);
       this.signupService.user = data;
+      this.signupService.user.username = this.signupService.user.email.split('@')[0];
       this.signupService.user.role = new Array<string>('***REMOVED***');
-      console.log(this.signupService.user);
       this.signupService.user.createdAt = new Date();
-      this.signupService.signupUser(()=>{
-        this.authService.login.email = this.signupService.user.username;
+      console.log(this.signupService.user);
+      this.signupService.signupUser(() => {
+        this.authService.login.email = this.signupService.user.email;
         this.authService.login.password = this.signupService.user.password;
         this.authService.signIn();
         this.success = true;
         this.innitForm();
-        setTimeout(()=>{
+        setTimeout(() => {
           this.success = false;
-        },1000);
+          this.notif.notify('success','Sign up successful !');
+        }, 1000);
       });
     }
   }

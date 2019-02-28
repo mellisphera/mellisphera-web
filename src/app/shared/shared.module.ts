@@ -1,3 +1,5 @@
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import { NotifierModule } from 'angular-notifier';
 import { StackComponent } from './../ruche-rucher/ruche-detail/stack/stack.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -31,7 +33,20 @@ import { BrowserModule } from '@angular/platform-browser';
     BrowserModule,
     FormsModule,
     NgxEchartsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NotifierModule.withConfig({
+      position: {
+        horizontal: {
+          position: 'middle'
+        },
+        vertical: {
+          position: 'top',
+        }
+      }
+    }),
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger' // set defaults here
+    })
   ],
   exports:[
     RucheDetailComponent,
