@@ -29,3 +29,17 @@ label{
     padding-top: 0px;
     padding-bottom: 0px;
 }
+#select-Apiary{
+    width: 28% !important;
+    display: inline-block;
+}
+
+@media screen and (max-width:400px){
+    .btn-lg{
+        font-size: 7px;
+        padding: 2px;
+    }
+    .btn-primary{
+        font-size: 8px;
+    }
+}

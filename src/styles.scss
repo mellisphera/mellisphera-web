@@ -22,7 +22,8 @@ navbar-cmp nav{
     margin-top: 55px;
 }
 
-@media screen and (max-width : 900px){
+@media screen and (max-width : 991px){
+    /* Quand la sidebar est caché */
     .main-panel{
         width: 100%;
     }
@@ -32,5 +33,17 @@ navbar-cmp nav{
     navbar-cmp nav{
         left: 0px;
         width: 100%;
+        transform: translate3d(-60px, 0, 0) !important;
+    }
+    .nav-open .main-panel{
+        transform: translate3d(-60px, 0, 0) !important;
+    }
+    .row{
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+    }
+    .col-sm-12 {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
     }
 }
