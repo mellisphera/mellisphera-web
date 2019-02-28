@@ -150,8 +150,8 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         //this.rucheService.hiveSubject.unsubscribe();
-        this.observationService.obsHiveSubject.unsubscribe();
-        this.observationService.obsApiarySubject.unsubscribe();
+        //this.observationService.obsHiveSubject.unsubscribe();
+        //this.observationService.obsApiarySubject.unsubscribe();
     }
 
 }

@@ -1,3 +1,4 @@
+import { MyDate } from './../class/MyDate';
 import { Observation } from './../_model/observation';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
@@ -16,6 +17,7 @@ import { ObservationService } from './ruche-detail/observation/service/observati
 import { RucherModel } from '../_model/rucher-model';
 import { AuthService } from '../auth/Service/auth.service';
 import { RucheInterface } from '../_model/ruche';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-ruche-rucher',
@@ -27,38 +29,32 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
   @ViewChild('closeBtn') closeBtn: ElementRef;
 
-
-  //variable for currentRucher ID
   currentRucherID: string;
-  rucheRucherID : string;
-  // new rucher form
-  newRucherForm : FormGroup;
-  username : string = "";
+  rucheRucherID: string;
+  newRucherForm: FormGroup;
+  private newObs: Observation;
+  username: string;
   //
-  newObs = new ProcessReport();
   //New Observation
   observationForm : FormGroup;
   rucherForm : FormGroup;
-  type='ApiaryObs';
-  message="";
+  type: string;
+  message: string;
   private hiveIndex: number;
+  private notify: NotifierService;
   newRucheForm : FormGroup;
   //updateRucher input is true when user clicks on Update Rucher
   updateRucherInput: boolean;
 
   public addNewShareStatus : Boolean;
   public newsUserSharing : String;
-
+  public hiveToMv: RucheInterface;
+  private typeToMv: number;
 
   optionsDate = {
     weekday:'short',year:'numeric',month:'long',day:'2-digit',hour: 'numeric', minute: 'numeric', second: 'numeric',
   };
 
-  localStorageRuche;
-  //localStorageRucheName;
-  private timerSubscription: Subscription;
- 
-    
   constructor(  private formBuilder: FormBuilder,
                 public location: Location,
                 public router: Router,
@@ -68,10 +64,15 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
                 private _rapportService: RapportService,
                 public observationService: ObservationService,
                 public rucheService: RucheService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private notifyService: NotifierService) {
 
 
         this.username = userService.getUser();
+        this.type = 'ApiaryObs';
+        this.message = '';
+        this.typeToMv = 0;
+        this.notify = notifyService;
        /* this.currentRucherID= localStorage.getItem("currentRucher");
         this.rucheRucherID= localStorage.getItem("rucheRucherID");*/
 
@@ -81,6 +82,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    console.log(this.hiveToMv);
     this.initForm();
     if (!this.observationService.obsApiarySubject.closed) {
       this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
@@ -102,11 +104,12 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
   //Quand on Edite une ruche
 
 
-  onSelectObs(obs){
-    this.observationService.observation = obs;
+  onSelectObs(obs) {
+    this.hiveToMv = this.rucheService.ruches[0];
+    this.newObs = obs;
     const donnée = {
-      sentence : this.observationService.observation.sentence,
-      date : this.observationService.observation.date
+      sentence : this.newObs.sentence,
+      date : this.newObs.date
     };
     this.observationForm.setValue(donnée);
     }
@@ -162,26 +165,54 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     this.rucherForm.setValue(donnée);
   }
 
-
+  mvToActions() {
+    this.newObs.type = this.typeToMv === 0 ? 'HiveObs' : 'HiveAct';
+    this.newObs.idApiary = null;
+    this.newObs.idHive = this.hiveToMv.id;
+    this.newObs.idLHive = new Array(this.hiveToMv.id);
+    const index = this.observationService.observationsApiary.indexOf(this.newObs);
+    console.log(this.newObs);
+    this.observationService.updateObservation(this.newObs).subscribe(() => {}, () => {}, () => {
+      this.observationService.observationsApiary.splice(index, 1);
+      this.observationService.emitApiarySubject();
+      this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
+    });
+  }
   //Pour créer une observation
   createObservation() {
     const formValue = this.observationForm.value;
-    this.observationService.observation = formValue;
-    this.observationService.observation.idApiary = this.rucherService.rucher.id;
-    this.observationService.observation.type = 'ApiaryObs';
+    this.newObs = formValue;
+    this.newObs.idApiary = this.rucherService.rucher.id;
+    this.newObs.type = 'ApiaryObs';
     this.initForm();
-    this.observationService.createObservation();
+    this.observationService.createObservation(this.newObs).subscribe( () => {}, () => {}, () => {
+      this.observationService.getObservationByIdApiary(this.newObs.idApiary);
+      this.notify.notify('success','Created Note');
+    });
   }
 
-  deleteObs(obsApiary: Observation) {
-    this.observationService.observation = obsApiary;
-    this.observationService.deleteObservation();
+  /*selectTypeToMv(event) {
+    this.typeToMv = event.target.value;
+  }*/
+  deleteObs(index: number, obsApiary: Observation) {
+    this.observationService.deleteObservation(obsApiary.id).subscribe(() => {}, () => {}, () => {
+      this.observationService.observationsApiary.splice(index,1);
+      this.observationService.emitApiarySubject();
+      this.notify.notify('success', 'Deleted Note');
+    });
   }
 
   onEditObservation() {
     const formValue = this.observationForm.value;
-    this.observationService.observation.sentence = formValue.sentence;
-    this.observationService.updateObservation();
+    this.newObs.sentence = formValue.sentence;
+    this.newObs.date = formValue.date;
+    const index = this.observationService.observationsApiary.indexOf(this.newObs);
+    this.observationService.updateObservation(this.newObs).subscribe(() => {}, () => {}, () => {
+      this.observationService.observationsApiary[index] = this.newObs;
+      console.log(this.observationService.observationsApiary);
+      this.observationService.emitApiarySubject();
+      this.notify.notify('success', 'Updated Note');
+    });
   }
 
   resetRucheForm() {
@@ -191,7 +222,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
   initForm() {
     this.observationForm = this.formBuilder.group({
       'sentence': [null,Validators.compose([Validators.required])],
-      'date' : new Intl.DateTimeFormat('fr-FR', this.optionsDate).format(new Date()),
+      'date' : new MyDate(new Date()).getIso(),
     });
     this.newRucheForm = this.formBuilder.group({
       'nomRuche': [null, Validators.compose([Validators.required])],
