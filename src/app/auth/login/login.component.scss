@@ -75,9 +75,12 @@ form[role=login] {
     margin: 0px !important;
 }
 
-input.ng-invalid.ng-touched {
-    border-color: red
+input.ng-invalid.ng-dirty {
+    border-color: red !important;
   }
+/*input.ng-invalid.ng-untouched {
+    border-color: red !important;
+  }*/
 .ng-untouched{
     color: #b4b4b4;
 }
