@@ -1,3 +1,4 @@
+import { DataRange } from './service/Record/data-range';
 import { MyDate } from './../../class/MyDate';
 import { Component, OnInit, OnDestroy, Output, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -26,8 +27,8 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     compteurHive: number;
     currentTab: string;
     public img: string;
-
-
+    public range: DataRange;
+    public ranges: DataRange[];
     constructor(private activatedRoute: ActivatedRoute,
         private route: Router,
         public rucheService: RucheService,
@@ -43,7 +44,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.currentTab = 'notes';
             this.hiveSelect = {
                 id : null,
-                name : 'NaN',
+                name : '....',
                 description : '',
                 username : '',
                 idApiary: '',
@@ -51,12 +52,21 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                 hivePosY : '',
                 sharingUser : []
               };
-              this.message = '';
+              this.ranges = [
+                {scale: 15, type: 'DAY'},
+                {scale: 30, type: 'DAY'},
+                {scale: 3, type: 'MONTH'},
+                {scale: 6, type: 'MONTH'}
+            ];
+            this.range = this.ranges[0];
+            this.message = '';
             this.img = CONFIG.URL_FRONT + "assets/icons/next-button-4.png";
     }
 
     ngOnInit() {
-        this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive());
+        if (!this.observationService.obsHiveSubject.closed) {
+            this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive());
+        }
         console.log(this.rucheService.hiveSubject);
         console.log(this.hiveSelect);
         this.rucheService.hiveSubject.subscribe( () => {}, () => {}, () => {
@@ -71,8 +81,8 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     }
 
 
-    receiveMessage($event){
-        this.message=$event;
+    receiveMessage($event) {
+        this.message = $event;
     }
 
     previousHive(){
@@ -86,7 +96,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     }
 
     nextHive() {
-        if (this.compteurHive != this.rucheService.ruches.length-1){
+        if (this.compteurHive != this.rucheService.ruches.length - 1) {
              this.compteurHive++;
         }
         this.hiveSelect = this.rucheService.ruches[this.compteurHive];
@@ -95,6 +105,10 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.exeData();
     }
 
+    selectRange() {
+        console.log(this.range);
+        this.recordService.setRange(this.range, this.rucheService.getCurrentHive());
+    }
 
     onTab(event : string){
         this.currentTab = event;
