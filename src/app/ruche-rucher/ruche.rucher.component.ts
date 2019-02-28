@@ -49,7 +49,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
   public addNewShareStatus : Boolean;
   public newsUserSharing : String;
   public hiveToMv: RucheInterface;
-  private typeToMv: number;
+  public typeToMv: number;
 
   optionsDate = {
     weekday:'short',year:'numeric',month:'long',day:'2-digit',hour: 'numeric', minute: 'numeric', second: 'numeric',
