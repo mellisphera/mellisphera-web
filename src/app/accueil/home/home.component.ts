@@ -42,12 +42,12 @@ export class HomeComponent implements OnInit {
 
   rucheOnClick : Ruche;
 
-  constructor( public dailyRecTh :  DailyRecordService, private draggable: DragAndCheckModule, 
-    private login: UserloggedService, 
-    public rucheService : RucheService, 
+  constructor( public dailyRecTh:  DailyRecordService, private draggable: DragAndCheckModule, 
+    private login: UserloggedService,
+    public rucheService: RucheService,
     public rucherService: RucherService,
-    private route : Router,
-    public authService : AuthService) { 
+    private route: Router,
+    public authService: AuthService) {
       this.username = this.login.getUser();
       this.photoApiary = null;
       this.message = '';
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onClick(ruche: RucheInterface){
+  onClick(ruche: RucheInterface)  {
     this.rucheService.saveCurrentHive(ruche.id);
     this.route.navigate(['/ruche-detail']);
 
