@@ -70,10 +70,11 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.rucherService.rucherSubject.subscribe( () => {}, () => {}, () => {
-      this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-    });
-    
+    if (!this.rucherService.rucherSubject.closed) {
+      this.rucherService.rucherSubject.subscribe( () => {}, () => {}, () => {
+        this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+      });
+    }
   }
 
   onClick(ruche: RucheInterface){
