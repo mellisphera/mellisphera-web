@@ -42,7 +42,11 @@
                                                                               data-target="#editObservationModal" data-backdrop="false" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
                                                                               <i class="fa fa-edit"></i>
                                                                           </button>
-                                                                          <button type="button" class="btn btn-warning btn-lg "  title="Delete hive" style="padding: 0;border: none; background: none;" (click)="deleteObsR(hiveObs)">
+                                                                          <button type="button" class="btn btn-warning btn-lg "  title="Delete hive" style="padding: 0;border: none; background: none;"
+                                                                          mwlConfirmationPopover
+                                                                          popoverTitle="Delete notes ?"
+                                                                          placement="top"
+                                                                          (confirm)="deleteObsR(hiveObs)">
                                                                               <i class="fa fa-times"></i>
                                                                           </button>
                                                                       </td>
@@ -59,7 +63,11 @@
                                                                                   data-target="#editObservationModal" data-backdrop="false" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
                                                                                   <i class="fa fa-edit"></i>
                                                                               </button>
-                                                                              <button  type="button" class="btn btn-warning btn-lg "  title="Delete hive" style="padding: 0;border: none; background: none;" (click)="deleteObsR(hiveObs)">
+                                                                              <button  type="button" class="btn btn-warning btn-lg "  title="Delete hive" style="padding: 0;border: none; background: none;" 
+                                                                              mwlConfirmationPopover
+                                                                              popoverTitle="Delete notes ?"
+                                                                              placement="top"
+                                                                              (confirm)="deleteObsR(hiveObs)">
                                                                                   <i class="fa fa-times"></i>
                                                                               </button>
                                                                           </td>

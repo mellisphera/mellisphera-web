@@ -34,7 +34,6 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
     //variable pour stocker le nom français entré
     selectedFr : string;
     selectedType : String;
-    
     currentMonth : number;
     currentMonthStr : string[];
     selectedFlo : string;
@@ -50,10 +49,6 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
     date = new Date();
     //L'année en cours
     currentYear = this.date.getFullYear();
-    
-    
-  private timerSubscription: AnonymousSubscription;
-
   constructor(  private formBuilder: FormBuilder,
                 public location: Location,
                 public router: Router,
