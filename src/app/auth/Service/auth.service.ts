@@ -53,7 +53,7 @@ export class AuthService {
         this.setUser(this.jwtReponse);
         this.router.navigate(['/home']);
       },
-      (err)=>{
+      (err) => {
         this.errLogin = true;
         console.log(err);
       }
