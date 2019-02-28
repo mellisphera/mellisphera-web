@@ -23,7 +23,7 @@
                               <div id="collapseOne" class="panel-collapse collapse in">
                                   <div class="panel-body">
                                       <b class="text-success"></b>
-                                      <button data-toggle="tooltip" data-html="true" title="New hive" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
+                                      <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true" title="New hive" data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
                                               data-target="#newRucheModal"  class="btn btn-success btn-lg" >
                                           <i class="fa fa-plus"></i>
                                       </button>

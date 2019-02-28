@@ -43,6 +43,7 @@ export class NavbarComponent implements OnInit{
     private toggleButton: any;
     private sidebarVisible: boolean;
     public updateStatus: boolean;
+    private newApiary: RucherModel;
     baseDropValid: string;
     public lastConnexion: string;
     private readonly notifier: NotifierService;
@@ -65,6 +66,19 @@ export class NavbarComponent implements OnInit{
       this.notifier = this.notifierService;
       this.sidebarVisible = false;
         this.username = userService.getUser();
+        this.initForm();
+        this.newApiary = {
+            id : null,
+            latitude: '',
+            longitude: '',
+            name: '',
+            description : '',
+            createdAt : null,
+            photo : 'void',
+            username : '',
+            codePostal : '',
+            ville : ''
+         };
 
     }
 
@@ -90,13 +104,12 @@ export class NavbarComponent implements OnInit{
     onPictureLoad(next) {
         const fileReader = new FileReader();
         fileReader.onload = (e) => {
-            this.rucherService.rucher.photo = <string>fileReader.result;
+            this.newApiary.photo = <string>fileReader.result;
         };
         fileReader.onloadend = () => {
             next();
         };
         fileReader.readAsDataURL(this.photoApiary);
-        console.log(this.rucherService.rucher);
     }
 
     ngOnInit() {
@@ -151,10 +164,14 @@ export class NavbarComponent implements OnInit{
     deleteRucher() {
         this.rucherService.deleteRucher().subscribe( () => {}, () => {} , () => {
             const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
-            this.rucherService.ruchers.splice(index,1);
+            this.rucherService.ruchers.splice(index, 1);
             this.rucherService.emitApiarySubject();
             this.notifier.notify('success', 'Deleted Apaiary');
-            this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
+            console.log(this.rucherService.rucher);
+            if (this.rucherService.ruchers.length > 0) {
+                this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
+                this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
+            }
         });
     }
 
@@ -207,20 +224,29 @@ export class NavbarComponent implements OnInit{
     apiarySubmit() {
         const formValue = this.rucherForm.value;
         if (this.photoApiary == null) {
-            this.rucherService.rucher.photo = CONFIG.URL_FRONT + 'assets/imageClient/testAccount.png';
+            this.newApiary.photo = CONFIG.URL_FRONT + 'assets/imageClient/testAccount.png';
         }
         console.log(this.rucherService.rucher.photo);
-        this.rucherService.rucher.id = null;
-        this.rucherService.rucher.description = formValue.description;
-        this.rucherService.rucher.name = formValue.name;
-        this.rucherService.rucher.ville = formValue.ville;
-        this.rucherService.rucher.codePostal = formValue.codePostal;
-        this.rucherService.rucher.createdAt = new Date();
-        this.rucherService.rucher.username = this.username;
+        this.newApiary.id = null;
+        this.newApiary.description = formValue.description;
+        this.newApiary.name = formValue.name;
+        this.newApiary.ville = formValue.ville;
+        this.newApiary.codePostal = formValue.codePostal;
+        this.newApiary.createdAt = new Date();
+        this.newApiary.username = this.username;
         this.initForm();
-        this.rucherService.createRucher().subscribe( () => {}, () => {}, () => {
-            this.rucherService.getApiaryByUser(this.username);
+        this.rucherService.createRucher(this.newApiary).subscribe( (apiary) => {
+            console.log(apiary);
+            if (this.rucherService.ruchers != null) {
+                this.rucherService.ruchers.push(apiary);
+            } else {
+                this.rucherService.ruchers = new Array(apiary);
+            }
+        }, () => {}, () => {
+            console.log(this.rucherService.ruchers);
+            this.rucherService.emitApiarySubject();
+            this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
             this.notifier.notify('success', 'Created Apiary');
         });
-        }
+    }
 }

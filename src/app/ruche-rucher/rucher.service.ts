@@ -32,16 +32,16 @@ export class RucherService {
     rucherObs: Observable<RucherModel>;
     ruchersObs: Observable<RucherModel[]>;
     rucherSubject: BehaviorSubject<RucherModel[]>;
-    constructor(private http:HttpClient, private user: UserloggedService, 
+    constructor(private http: HttpClient, private user: UserloggedService, 
         public rucheService : RucheService, 
         private dailyRec: DailyRecordService,
         /*public observationService: ObservationService,*/
         public meteoService: MeteoService) {
         this.rucherSubject = new BehaviorSubject([]);
+        this.initRucher();
         if (this.user.getUser()) {
             this.getApiaryByUser(this.user.getUser());
         }
-        this.initRuche();
 
     }
 
@@ -49,7 +49,7 @@ export class RucherService {
         this.rucherSubject.next(this.ruchers.slice());
         console.log(this.rucherSubject);
     }
-    initRuche(){
+    initRucher() {
          this.rucher = {
             id : null,
             latitude: '',
@@ -62,13 +62,14 @@ export class RucherService {
             codePostal : '',
             ville : ''
          };
+         this.ruchers = [];
          this.rucherUpdate = this.rucher;
          this.rucherSelectUpdate = this.rucher;
     }
     // -- RUCHER -- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER ---- RUCHER --
     // pour créer un rucher
-    createRucher() {
-        return this.http.post<RucherModel>(CONFIG.URL + 'apiaries' , this.rucher);
+    createRucher(newApiary: RucherModel) {
+        return this.http.post<RucherModel>(CONFIG.URL + 'apiaries' , newApiary).map(apiary => apiary.id != null ? apiary : null);
     }
     // pour afficher tout les ruchers de l'utilsateur connecté
     getCurrentRucher(){
@@ -94,16 +95,24 @@ export class RucherService {
                 console.log(err);
             },
             () => {
-                this.currentBackground = this.rucher.photo;
-                if (!this.getCurrentApiary()) {
-                    this.rucher = this.ruchers[0];
-                    this.saveCurrentApiaryId(this.rucher.id);
-                    console.log(this.rucher);
+                if (this.ruchers != null ) {
+                    if (!this.getCurrentApiary()) {
+                        console.log(this.ruchers);
+                        this.rucher = this.ruchers[0];
+                        this.saveCurrentApiaryId(this.rucher.id);
+                        console.log(this.rucher);
+                    } else {
+                        this.rucher = this.ruchers.filter(apiary => apiary.id === this.getCurrentApiary())[0];
+                        if (this.rucher === undefined) {
+                            this.rucher = this.ruchers[0];
+                            this.saveCurrentApiaryId(this.rucher.id);
+                        }
+                    }
+                    this.currentBackground = this.rucher.photo;
+                    this.rucherSubject.complete();
+                    this.rucheService.getRucheByApiary(this.getCurrentApiary());
                 } else {
-                    this.rucher = this.ruchers.filter(apiary => apiary.id === this.getCurrentApiary())[0];
                 }
-                this.rucherSubject.complete();
-                this.rucheService.getRucheByApiary(this.getCurrentApiary());
             }
         );
     }
