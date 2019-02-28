@@ -16,14 +16,12 @@ export class HourlyComponent implements OnInit {
   message="";
   rucheId: string;
   rucheName : string;
-  public range: DataRange;
 
   constructor(private activatedRoute: ActivatedRoute,
     public recordService: RecordService,
     public graphRecordService: GraphRecordService,
     private rucheService: RucheService,
     ) {
-      this.range = {scale: 15, type : 'DAY'};
     }
 
   ngOnInit() {
@@ -36,22 +34,5 @@ export class HourlyComponent implements OnInit {
     this.message = $event;
   }
 
-  selectRange() {
-    console.log(this.range);
-    this.recordService.setRange(this.range,this.rucheService.getCurrentHive());
-    /*
-    let date = null;
-    const range = event.target.value;
-    if (event.target.value > 10 ) {
-      date = new Date();
-      date.setDate((new Date().getDate() - range));
-    } else {
-      date = new Date();
-      date.setMonth((new Date().getMonth() - range) );
-    }
-    console.log(date);
-    this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), MyDate.getRange(date));*/
-    //this.recordService.setRangeObs(event.target.value);
-  }
 
 }
