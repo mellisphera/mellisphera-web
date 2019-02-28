@@ -83,13 +83,13 @@ export class LoginComponent implements OnInit {
       this.signupService.signupUser(() => {
         this.authService.login.email = this.signupService.user.email;
         this.authService.login.password = this.signupService.user.password;
-        this.authService.signIn();
+        this.notif.notify('success','Sign up successful !');
         this.success = true;
         this.innitForm();
         setTimeout(() => {
           this.success = false;
-          this.notif.notify('success','Sign up successful !');
-        }, 1000);
+          this.authService.signIn();
+        }, 250);
       });
     }
   }
