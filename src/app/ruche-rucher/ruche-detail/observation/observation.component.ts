@@ -68,8 +68,10 @@ export class ObservationComponent implements OnInit {
     this.newObs.idHive = this.rucheService.getCurrentHive();
     this.newObs.idLHive = [this.rucheService.getCurrentHive()];
     this.initForm();
-    this.observationService.createObservation(this.newObs).subscribe( () => {}, () => {}, () => {
-      this.observationService.getObservationByIdHive(this.newObs.idHive);
+    this.observationService.createObservation(this.newObs).subscribe( (obs) => {
+      this.observationService.observationsHive.push(obs);
+    }, () => {}, () => {
+      this.observationService.emitHiveSubject();
       this.notifier.notify('success', 'Created Note');
     });
   }
@@ -80,8 +82,10 @@ export class ObservationComponent implements OnInit {
     this.newObs.idHive = this.rucheService.getCurrentHive();
     this.newObs.idLHive = [this.rucheService.getCurrentHive()];
     this.initForm();
-    this.observationService.createObservation(this.newObs).subscribe( () => {}, () => {}, () => {
-      this.observationService.getObservationByIdHive(this.newObs.idHive);
+    this.observationService.createObservation(this.newObs).subscribe( (obs) => {
+      this.observationService.observationsHive.push(obs);
+    }, () => {}, () => {
+      this.observationService.emitHiveSubject();
       this.notifier.notify('success','Created Action');
     });
   }

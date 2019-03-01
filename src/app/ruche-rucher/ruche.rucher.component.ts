@@ -203,8 +203,10 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     this.newObs.idApiary = this.rucherService.rucher.id;
     this.newObs.type = 'ApiaryObs';
     this.initForm();
-    this.observationService.createObservation(this.newObs).subscribe( () => {}, () => {}, () => {
-      this.observationService.getObservationByIdApiary(this.newObs.idApiary);
+    this.observationService.createObservation(this.newObs).subscribe( (obs) => {
+      this.observationService.observationsApiary.push(obs);
+    }, () => {}, () => {
+      this.observationService.emitApiarySubject();
       this.notify.notify('success','Created Note');
     });
   }
