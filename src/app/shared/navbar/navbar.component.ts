@@ -239,7 +239,6 @@ export class NavbarComponent implements OnInit{
         this.newApiary.username = this.username;
         this.initForm();
         this.rucherService.createRucher(this.newApiary).subscribe( (apiary) => {
-            console.log(apiary);
             if (this.rucherService.ruchers != null) {
                 this.rucherService.ruchers.push(apiary);
             } else {

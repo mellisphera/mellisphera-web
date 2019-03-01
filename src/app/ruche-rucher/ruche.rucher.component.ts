@@ -156,7 +156,6 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
   // pour editer une ruche
   onEditeRuche() {
     const formValue = this.newRucheForm.value;
-    const lastIdApiary = this.rucheService.ruche.idApiary;
     this.selectHive.idApiary = this.rucherService.rucherSelectUpdate.id;
     this.selectHive.name = formValue.nomRuche;
     this.selectHive.description = formValue.descriptionRuche;
