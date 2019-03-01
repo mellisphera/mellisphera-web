@@ -34,7 +34,7 @@ export class ObservationService {
     console.log(this.obsApiarySubject);
   }
 
-  getObservationByIdHive(idHive : string){
+  getObservationByIdHive(idHive: string) {
     this.observationsObs = this.http.get<Observation[]>(CONFIG.URL + 'report/hive/' + idHive);
     this.observationsObs.subscribe(
       (data) => {
@@ -67,62 +67,13 @@ export class ObservationService {
   }
   createObservation(observation: Observation): Observable<Observation> {
     return this.http.put<Observation>(CONFIG.URL + 'report/insert', observation);
-
-   /* this.observationObs.subscribe(
-      ()=>{},
-      (err)=>{
-        console.log(err);
-      },
-      ()=>{
-        if (this.observation.idApiary) {
-          this.getObservationByIdApiary(this.observation.idApiary);
-        } else {
-          this.getObservationByIdHive(this.observation.idHive);
-        }
-      }
-    );*/
   }
 
   updateObservation(obs: Observation): Observable<Observation> {
     return this.http.put<Observation>(CONFIG.URL + 'report/update/' + obs.id, obs);
-    /*
-    this.observationObs.subscribe(
-      ()=>{},
-      (err)=>{
-        console.log(err);
-      },
-      ()=>{
-        if (this.observation.idApiary) {
-          this.observationsApiary[this.observationsApiary.indexOf(this.observation)] = this.observation;
-          this.emitApiarySubject();
-        } else {
-          this.observationsHive[this.observationsHive.indexOf(this.observation)] = this.observation;
-          this.emitHiveSubject();
-        }
-      }
-    );*/
   }
 
   deleteObservation(idObs: string): Observable<Observation> {
     return this.http.delete<Observation>(CONFIG.URL + 'report/' + idObs);
-   /* this.observationObs.subscribe(
-      ()=>{},
-      (err)=>{
-        console.log(err);
-      },
-      ()=>{
-        if (this.observation.idApiary) {
-          const index = this.observationsApiary.indexOf(this.observation);
-          this.observationsApiary.splice(index,1);
-          this.emitApiarySubject();
-        } else {
-          const index = this.observationsHive.indexOf(this.observation);
-          this.observationsHive.splice(index,1);
-          this.emitHiveSubject();
-        }
-        //this.getObservationByIdHive(this.observation.idHive);
-        //this.getObservationByIdApiary(this.observation.idApiary);
-      }
-    );*/
   }
 }

@@ -65,7 +65,6 @@ export class RucheService {
         (data) => {
           this.ruches = data;
           this.hiveSubject.next(data);
-          //this.saveCurrentHive();
         },
         (err) => {
           console.log(err);
@@ -78,7 +77,6 @@ export class RucheService {
             console.log(this.ruche);
           }
           this.hiveSubject.complete();
-          //this.observationService.getObservationByIdApiary(idApiary);
         }
       );
    }
@@ -113,27 +111,17 @@ export class RucheService {
    updateCoordonneesRuche(ruche){
     this.rucheObs = this.http.put<RucheInterface>(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,ruche,httpOptions)
     this.rucheObs.subscribe(
-      ()=>{
+      () => {
         this.getRucheByApiary(ruche.idApiary);
       },
-      (err)=>{
+      (err) => {
         console.log(err);
       }
     );
   }
 
-  updateRuche(index: number, hive: RucheInterface) {
-   return this.http.put<RucheInterface>(CONFIG.URL + 'hives/update/' + hive.id, hive, httpOptions);
-   /*this.rucheObs.subscribe(
-     ()=>{},
-     (err)=>{
-       console.log(err);
-     },
-     ()=>{
-       this.ruches[index] = this.ruche;
-       this.emitHiveSubject();
-     }
-   );*/
+  updateRuche(index: number, hive: RucheInterface): Observable<RucheInterface> {
+    return this.http.put<RucheInterface>(CONFIG.URL + 'hives/update/' + hive.id, hive, httpOptions);
   }
   cleanRuches(){
      this.ruches=[];
@@ -141,15 +129,6 @@ export class RucheService {
 
   createRuche(ruche: RucheInterface): Observable<RucheInterface> {
     return this.http.post<RucheInterface>(CONFIG.URL + 'hives', ruche , httpOptions);
-    /*.subscribe(
-      () => {},
-      (err) => {
-        console.log(err);
-      },
-      () => {
-        this.getRucheByApiary(this.ruche.idApiary);
-      }
-    );*/
   }
 
   deleteRuche(index: number, hive: RucheInterface): Observable<RucheInterface> {
