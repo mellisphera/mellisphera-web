@@ -123,6 +123,7 @@ export class NavbarComponent implements OnInit{
     onSelectRucher() {
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
+        console.log(location);
         switch (location) {
             case '/ruche-et-rucher':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
@@ -137,6 +138,9 @@ export class NavbarComponent implements OnInit{
                 break;
             case '/meteo':
                 this.meteoService.getWeather(this.rucherService.rucher.ville);
+                break;
+            case '/ruche-detail':
+                this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
             default:
         }
@@ -197,11 +201,11 @@ export class NavbarComponent implements OnInit{
     sidebarToggle() {
          const toggleButton = this.toggleButton;
          const body = document.getElementsByTagName('body')[0];
-        if (this.sidebarVisible === false) {
-            this.sidebarOpen();
-        } else {
-            this.sidebarClose();
-        }
+            if (this.sidebarVisible === false) {
+                this.sidebarOpen();
+            } else {
+                this.sidebarClose();
+            }
     }
     editRucherClicked() {
         const donnée = {

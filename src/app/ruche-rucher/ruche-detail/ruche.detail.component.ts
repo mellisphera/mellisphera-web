@@ -127,7 +127,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
           this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
           this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
         } else if (this.currentTab.indexOf('stock')!=-1) {
-            if (this.dailyStockHoneyService.cuurrentIdHive != this.rucheService.getCurrentHive()) {
+            if (this.dailyStockHoneyService.currentIdHive != this.rucheService.getCurrentHive()) {
                 this.dailyStockHoneyService.getDailyStockHoneyByHive(this.rucheService.getCurrentHive());
             }
             if (this.dailyRecordWservice.currentIdHive != this.rucheService.getCurrentHive()) {
