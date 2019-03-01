@@ -99,7 +99,8 @@
                <input
                   style="display: none"
                   type="file"
-                  ngf [(file)]="photoApiary" 
+                  ngf [(file)]="photoApiary"
+                  [(lastBaseUrl)] = "newApiary.photo"
                   #fileInput>
                 <button (click)="fileInput.click()" class="btn btn-large btn-block btn-info">Select File</button>
                <div id="upload-group"> 
@@ -108,7 +109,7 @@
                  [(validDrag)] = "baseDropValid"
                  [(file)]= "photoApiary"
                  class = "well my-drop-zone"
-                 [(lastBaseUrl)] = "rucherService.rucher.photo"
+                 [(lastBaseUrl)] = "newApiary.photo"
                  [class.valid-drag] = "baseDropValid"
                 >
                  Base drop zone

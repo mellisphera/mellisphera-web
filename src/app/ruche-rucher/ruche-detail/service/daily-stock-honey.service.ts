@@ -110,12 +110,12 @@ export class DailyStockHoneyService {
 
   cleanTemplate(){
     this.templateSerie = {
-      name:'',
-      show : true,
-      type:'line',
+      name: '',
+      show: true,
+      type: 'line',
       stack: 'fleurs',
       itemStyle: {normal: {areaStyle: {type: 'default'}}},
-      data:[],
+      data: [],
       showSymbol: false,
       smooth : 'true',
       label: {
