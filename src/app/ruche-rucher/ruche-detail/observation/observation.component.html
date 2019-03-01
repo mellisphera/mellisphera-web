@@ -105,7 +105,7 @@
 </div>
 
 <div class="modal-body" id="popupObs">
-  <form  [formGroup]="ObservationForm" (ngSubmit)="createObservation()">
+  <form  [formGroup]="ObservationForm">
     <div class="form-group">
       <label for="sentence" class="col-form-label">Observations/Actions</label>
       <input type="date" formControlName="date">
@@ -118,8 +118,8 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="submit" class="btn btn-primary"  (click)="createObservation()" [disabled]="!ObservationForm.valid" > Créer Observation</button>
-  <button type="submit" class="btn btn-primary"  (click)="createAction()" [disabled]="!ObservationForm.valid" > Créer Action</button>
+  <button type="submit" class="btn btn-primary" (click)="createObservation()" data-dismiss="modal" [disabled]="!ObservationForm.valid" > Créer Observation</button>
+  <button type="submit" class="btn btn-primary" (click)="createAction()" data-dismiss="modal" [disabled]="!ObservationForm.valid" > Créer Action</button>
   <button type="button" class="btn btn-secondary" (click)="resetObservationForm()" data-dismiss="modal">Fermer</button>
  
 </div>
