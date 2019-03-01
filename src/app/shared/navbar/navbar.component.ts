@@ -43,7 +43,7 @@ export class NavbarComponent implements OnInit{
     private toggleButton: any;
     private sidebarVisible: boolean;
     public updateStatus: boolean;
-    private newApiary: RucherModel;
+    public newApiary: RucherModel;
     baseDropValid: string;
     public lastConnexion: string;
     private readonly notifier: NotifierService;
@@ -233,7 +233,6 @@ export class NavbarComponent implements OnInit{
         if (this.photoApiary == null) {
             this.newApiary.photo = CONFIG.URL_FRONT + 'assets/imageClient/testAccount.png';
         }
-        console.log(this.rucherService.rucher.photo);
         this.newApiary.id = null;
         this.newApiary.description = formValue.description;
         this.newApiary.name = formValue.name;

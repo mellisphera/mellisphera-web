@@ -68,13 +68,11 @@ export class GrapheReserveMielService {
             splitLine: {
                 show: false
             },
-            min : 'dataMin',
-            max : 'dataMax'
         }
     ],
     yAxis :
         {
-            name : 'Weight (kg)',
+            name : 'Weight variation (kg)',
             type : 'value'
         }
 };

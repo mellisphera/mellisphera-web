@@ -55,7 +55,7 @@ export class GraphRecordService {
         {   
             show: true,
             realtime: true,
-            start: 80,
+            start: 0,
             end: 100,
         },
         {

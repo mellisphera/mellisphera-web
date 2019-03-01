@@ -111,7 +111,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     this.newObs = obs;
     const donnée = {
       sentence : this.newObs.sentence,
-      date : this.newObs.date
+      date : new MyDate(new Date()).getIso()
     };
     this.observationForm.setValue(donnée);
     }
