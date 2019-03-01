@@ -74,6 +74,9 @@ export class RucheService {
             this.ruche = this.ruches[0];
           } else {
             this.ruche = this.ruches.filter(hive => hive.id === this.getCurrentHive())[0];
+            if (this.ruche === undefined) {
+              this.ruche = this.ruches[0];
+            }
             console.log(this.ruche);
           }
           this.hiveSubject.complete();

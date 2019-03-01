@@ -37,21 +37,24 @@ export class DailyRecordsWService {
     this.updateCalendar();
   }
 
-  getDailyRecordsWbyIdHive(idHive : string){
+  getDailyRecordsWbyIdHive(idHive: string){
     this.currentIdHive = idHive;
     this.dailyRecArray = [];
     this.arrayTempExt = [];
     this.dailyRec = [];
     this.dailyObs = this.http.get<DailyRecordsW[]>(CONFIG.URL+'dailyRecordsW/hive/'+idHive);
     this.dailyObs.subscribe(
-      (data)=>{
+      (data) => {
         if(data.length > 0){
         this.dailyRec = data;
           this.getArray();
           this.updateCalendar();
+        } else {
+          console.log('Aucune');
+          this.updateCalendar();
         }
       },
-      (err)=>{
+      (err) => {
         console.log(err);
       }
 

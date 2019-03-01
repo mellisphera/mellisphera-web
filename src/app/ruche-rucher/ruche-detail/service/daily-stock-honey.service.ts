@@ -32,7 +32,7 @@ export class DailyStockHoneyService {
   arrayDate: any[];
   loading: boolean;
   timeLine: any[];
-  cuurrentIdHive: string;
+  currentIdHive: string;
   loadingOpts  = {
     text: 'Loading',
     color: '#00bdfc',
@@ -47,13 +47,13 @@ export class DailyStockHoneyService {
     this.cleanTemplate();
     this.loading = false;
     this.dailyStock = [];
-    this.cuurrentIdHive = null;
+    this.currentIdHive = null;
     //this.getDailyStockHoneyByHive(this.rucheService.getCurrentHive());
   }
   /* Requete API*/
   getDailyStockHoneyByHive(idHive : string){
     console.log(idHive);
-    this.cuurrentIdHive = idHive;
+    this.currentIdHive = idHive;
     this.loading = false;
     this.dailyStockObs = this.http.get<DailyStockHoney[]>(CONFIG.URL+'dailyStockHoney'+'/hive/'+idHive);
     this.dailyStockObs.subscribe(
