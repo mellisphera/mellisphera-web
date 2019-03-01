@@ -29,28 +29,23 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
   @ViewChild('closeBtn') closeBtn: ElementRef;
 
-  currentRucherID: string;
-  rucheRucherID: string;
   newRucherForm: FormGroup;
   private newObs: Observation;
   username: string;
-  //
-  //New Observation
-  observationForm : FormGroup;
-  rucherForm : FormGroup;
+  observationForm: FormGroup;
+  rucherForm: FormGroup;
   type: string;
   message: string;
   private hiveIndex: number;
   private notify: NotifierService;
-  newRucheForm : FormGroup;
-  //updateRucher input is true when user clicks on Update Rucher
+  newRucheForm: FormGroup;
   updateRucherInput: boolean;
 
   public addNewShareStatus : Boolean;
   public newsUserSharing : String;
   public hiveToMv: RucheInterface;
   public typeToMv: number;
-
+  private selectHive: RucheInterface;
   optionsDate = {
     weekday:'short',year:'numeric',month:'long',day:'2-digit',hour: 'numeric', minute: 'numeric', second: 'numeric',
   };
@@ -73,8 +68,16 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
         this.message = '';
         this.typeToMv = 0;
         this.notify = notifyService;
-       /* this.currentRucherID= localStorage.getItem("currentRucher");
-        this.rucheRucherID= localStorage.getItem("rucheRucherID");*/
+        this.selectHive = {
+          id : null,
+          name : '',
+          description : '',
+          username : '',
+          idApiary: '',
+          hivePosX : '',
+          hivePosY : '',
+          sharingUser : []
+        };
 
 
   }
@@ -82,7 +85,6 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    console.log(this.hiveToMv);
     this.initForm();
     if (!this.observationService.obsApiarySubject.closed) {
       this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
@@ -95,7 +97,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     this.rucheService.saveCurrentHive(ruche.id);
   }
 
-  resetForm(){
+  resetForm() {
     this.newRucherForm.reset();
   }
 
@@ -115,31 +117,39 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     }
 
   //Pour effacer une ruche
-  deleteRuche(ruche: RucheInterface, index: number){
-    this.rucheService.ruche = ruche;
-    this.rucheService.deleteRuche(index);
+  deleteRuche(ruche: RucheInterface, index: number) {
+    this.rucheService.deleteRuche(index, ruche).subscribe(() => {}, () => {}, () => {
+      this.rucheService.ruches.splice(index, 1);
+      this.rucheService.emitHiveSubject();
+      this.notify.notify('success', 'Deleted Hive');
+    });
   }
 
   //Pour créer une ruche
   createRuche() {
     const formValue = this.newRucheForm.value;
-    //this.rucheService.initRuche();onSelectRuche
-    this.rucheService.ruche.id = null;
-    this.rucheService.ruche.idApiary = this.rucherService.rucher.id;
-    this.rucheService.ruche.description = formValue.descriptionRuche;
-    this.rucheService.ruche.name = formValue.nomRuche;
-    this.rucheService.ruche.username = this.username.toLowerCase();
+    this.selectHive.id = null;
+    this.selectHive.idApiary = this.rucherService.rucher.id;
+    this.selectHive.description = formValue.descriptionRuche;
+    this.selectHive.name = formValue.nomRuche;
+    this.selectHive.username = this.username.toLowerCase();
     this.initForm();
-    this.rucheService.createRuche();
+    this.rucheService.createRuche(this.selectHive).subscribe((hive) => {
+      this.rucheService.ruches.push(hive);
+    }, () => {}, () => {
+      console.log(this.rucheService.ruches);
+      this.rucheService.emitHiveSubject();
+      this.notify.notify('success','Crated Hive');
+    });
   }
 
   onSelectRuche(ruche: RucheInterface, index: number) {
     this.hiveIndex = index;
     this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
-    this.rucheService.ruche = ruche;
+    this.selectHive = ruche;
     const donnée = {
-      nomRuche: this.rucheService.ruche.name,
-      descriptionRuche: this.rucheService.ruche.description,
+      nomRuche: this.selectHive.name,
+      descriptionRuche: this.selectHive.description,
     };
     this.newRucheForm.setValue(donnée);
   }
@@ -147,10 +157,19 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
   onEditeRuche() {
     const formValue = this.newRucheForm.value;
     const lastIdApiary = this.rucheService.ruche.idApiary;
-    this.rucheService.ruche.idApiary = this.rucherService.rucherSelectUpdate.id;
-    this.rucheService.ruche.name = formValue.nomRuche;
-    this.rucheService.ruche.description = formValue.descriptionRuche;
-    this.rucheService.updateRuche(lastIdApiary, this.hiveIndex);
+    this.selectHive.idApiary = this.rucherService.rucherSelectUpdate.id;
+    this.selectHive.name = formValue.nomRuche;
+    this.selectHive.description = formValue.descriptionRuche;
+    this.rucheService.updateRuche(this.hiveIndex, this.selectHive).subscribe(() => {}, () => {}, () => {
+      if (this.selectHive.idApiary === this.rucherService.getCurrentApiary()) {
+        this.rucheService.ruches[this.hiveIndex] = this.selectHive;
+        this.rucheService.emitHiveSubject();
+      } else {
+        this.rucheService.ruches.splice(this.hiveIndex, 1);
+        this.rucheService.emitHiveSubject();
+      }
+      this.notify.notify('success', 'Updated Hive');
+    });
   }
 
   editRucherClicked() {

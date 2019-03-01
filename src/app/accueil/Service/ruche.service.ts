@@ -37,6 +37,7 @@ export class RucheService {
     this.hiveSubject = new BehaviorSubject<RucheInterface[]>([]);
     if (this.user.getUser()) {
       this.getRucheByUsername(this.user.getUser());
+
     }
    }
    initRuche() {
@@ -121,9 +122,9 @@ export class RucheService {
     );
   }
 
-  updateRuche(lastIdApiary : string,index: number) {
-   this.rucheObs = this.http.put<RucheInterface>(CONFIG.URL+'hives/update/' + this.ruche.id, this.ruche, httpOptions);
-   this.rucheObs.subscribe(
+  updateRuche(index: number, hive: RucheInterface) {
+   return this.http.put<RucheInterface>(CONFIG.URL + 'hives/update/' + hive.id, hive, httpOptions);
+   /*this.rucheObs.subscribe(
      ()=>{},
      (err)=>{
        console.log(err);
@@ -132,14 +133,15 @@ export class RucheService {
        this.ruches[index] = this.ruche;
        this.emitHiveSubject();
      }
-   );
+   );*/
   }
   cleanRuches(){
      this.ruches=[];
   }
 
-  createRuche() {
-    this.http.post<RucheInterface>(CONFIG.URL+'hives', this.ruche , httpOptions).subscribe(
+  createRuche(ruche: RucheInterface): Observable<RucheInterface> {
+    return this.http.post<RucheInterface>(CONFIG.URL + 'hives', ruche , httpOptions);
+    /*.subscribe(
       () => {},
       (err) => {
         console.log(err);
@@ -147,32 +149,14 @@ export class RucheService {
       () => {
         this.getRucheByApiary(this.ruche.idApiary);
       }
-    );
+    );*/
   }
 
-  deleteRuche(index) {
-    this.rucheObs = this.http.delete<RucheInterface>(CONFIG.URL+'hives/' + this.ruche.id);
-    this.rucheObs.subscribe(
-      ()=>{},
-      (err)=>{
-        console.log(err);
-      },
-      ()=>{
-        this.ruches.splice(index,1);
-        this.emitHiveSubject();
-      }
-    );
+  deleteRuche(index: number, hive: RucheInterface): Observable<RucheInterface> {
+    return this.http.delete<RucheInterface>(CONFIG.URL + 'hives/' + hive.id);
   }
 
   findRucheById(idHive: string, next?) {
-    console.log(this.ruches);
-    /*
-    this.ruches.forEach(element => {
-      if (element.id == idHive) {
-        next(element);
-      }
-    });*/
     next(this.ruches.filter(hive => hive.id === idHive));
   }
-
 }
