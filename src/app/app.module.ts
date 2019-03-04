@@ -4,7 +4,7 @@ import { CalendrierFSTLervice } from './demo/graph/calendrierFSTL';
 import { HomeComponent } from './accueil/home/home.component';
 import { ConnectionService } from './admin/service/connection.service';
 import { ConnectionsMapService } from './admin/service/connections-map.service';
-import { GraphStackService } from './ruche-rucher/ruche-detail/stack/service/graph-stack.service';
+import { GraphStackService } from './apiary/ruche-rucher/ruche-detail/stack/service/graph-stack.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +18,7 @@ import { SidebarModule } from './sidebar/sidebar.module';
 
 import { AppComponent } from './app.component';
 import { MeteoComponent } from './meteo/meteo.component';
-import { RucheRucherComponent } from './ruche-rucher/ruche.rucher.component';
+import { RucheRucherComponent } from './apiary/ruche-rucher/ruche.rucher.component';
 import { CapteurComponent } from './capteur/capteur.component';
 import { NouveauCapteurComponent } from './capteur/nouveau-capteur/nouveau-capteur.component';
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
@@ -31,7 +31,7 @@ import { RapportComponent } from './rapport/rapport.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { CapteurService } from './capteur/capteur.service';
-import { RucherService } from './ruche-rucher/rucher.service';
+import { RucherService } from './apiary/ruche-rucher/rucher.service';
 import { UserloggedService } from './userlogged.service';
 import { selectedRucherService } from './accueil/_shared-services/selected-rucher.service';
 import { AuthService } from './auth/Service/auth.service';
@@ -39,7 +39,7 @@ import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { RapportService } from './rapport/rapport.service';
 import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';
-import { RucheDetailService } from './ruche-rucher/ruche-detail/ruche.detail.service';
+import { RucheDetailService } from './apiary/ruche-rucher/ruche-detail/ruche.detail.service';
 
 import { DailyRecordService } from './accueil/Service/dailyRecordService';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
@@ -49,7 +49,7 @@ import { RucheService } from './accueil/Service/ruche.service';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CalendrierService } from './meteo/Service/calendrier.service';
 import { GraphMeteoService } from './meteo/Service/graph-meteo.service';
-import { ObservationService } from './ruche-rucher/ruche-detail/observation/service/observation.service';
+import { ObservationService } from './apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './shared/shared.module';
 import { PipeCapteur, SearchCapteur } from './capteur/capteur.pipe';
@@ -62,6 +62,7 @@ import { ngfModule } from 'angular-file';
 import { NotifierModule } from 'angular-notifier';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
+import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 
 
 
@@ -86,6 +87,7 @@ import { Erreur404ComponentComponent } from './erreur404-component/erreur404-com
     AdminComponent,
     HomeComponent,
     Erreur404ComponentComponent,
+    StackApiaryComponent,
   ],
   imports: [
     BrowserModule,
