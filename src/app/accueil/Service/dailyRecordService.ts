@@ -1,3 +1,8 @@
+/**
+ * @author mickael
+ * @description Ensemble des requetes pour la record Journalier des ruches
+ *
+ */
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -7,32 +12,33 @@ import { UserloggedService } from '../../userlogged.service';
 
 @Injectable()
 export class DailyRecordService{
-    dailyRecObs:Observable<DailyRecordTh>;
-    dailyRecObsArray : Observable<DailyRecordTh[]>;
-    dailyRecTabObs : Observable<DailyRecordTh[]>;
+    dailyRecObs: Observable<DailyRecordTh>;
+    dailyRecObsArray: Observable<DailyRecordTh[]>;
+    dailyRecTabObs: Observable<DailyRecordTh[]>;
 
-    arrayTempInt:any[];
-    arrayHint:any[];
-    arrayHealth : any[];
-    status : string = "Inconnu";
-    dailyRecord : DailyRecordTh;
-    dailyRecords : DailyRecordTh[] = null;
+    arrayTempInt: any[];
+    arrayHint: any[];
+    arrayHealth: any[];
+    status: string;
+    dailyRecord: DailyRecordTh;
+    dailyRecords: DailyRecordTh[] = null;
 
-    statusLoading : boolean;
+    statusLoading: boolean;
 
-    mergeOptionTint : any;
-    mergeOptionHint : any;
-    mergeOptionCalendarHealth : any;
+    mergeOptionTint: any;
+    mergeOptionHint: any;
+    mergeOptionCalendarHealth: any;
 
-    constructor(private http: HttpClient, private user : UserloggedService){
+    constructor(private http: HttpClient, private user: UserloggedService) {
         this.statusLoading = false;
+        this.status = 'Inconnu';
         if (this.user.getUser()) {
             this.getDailyRecThByApiary(sessionStorage.getItem('currentApiary'));
         }
     }
 
-    getDailyRecThByIdHivelas(idHive){
-        this.dailyRecObs = this.http.get<DailyRecordTh>(CONFIG.URL+'/dailyRecordsTH/last/'+idHive);
+    getDailyRecThByIdHivelas(idHive) {
+        this.dailyRecObs = this.http.get<DailyRecordTh>(CONFIG.URL + '/dailyRecordsTH/last/' + idHive);
         this.dailyRecObs.subscribe(
             (data)=>{
                 this.dailyRecord = data;
@@ -42,34 +48,34 @@ export class DailyRecordService{
             }
         );
     }
-    getByIdHive(idHive){
+    getByIdHive(idHive) {
         this.dailyRecords = [];
-        this.dailyRecObsArray = this.http.get<DailyRecordTh[]>(CONFIG.URL+'/dailyRecordsTH/hive/'+idHive);
+        this.dailyRecObsArray = this.http.get<DailyRecordTh[]>(CONFIG.URL + '/dailyRecordsTH/hive/' + idHive);
         this.dailyRecObsArray.subscribe(
-            (data)=>{
+            (data) => {
                 this.dailyRecords = data;
                 this.dailyRecordToArray();
             },
-            (err)=>{
+            (err) => {
                 console.log(err);
             }
         );
     }
 
-    dailyRecordToArray(){
+    dailyRecordToArray() {
         this.arrayTempInt = [];
         this.arrayHint = [];
         this.arrayHealth = [];
-        this.dailyRecords.forEach(element=>{
-            this.arrayTempInt.push([element.recordDate,element.temp_int_max]);
+        this.dailyRecords.forEach(element => {
+            this.arrayTempInt.push([element.recordDate, element.temp_int_max]);
             this.arrayHint.push([element.recordDate, element.humidity_int_max]);
-            this.arrayHealth.push([element.recordDate,element.health_status,element.health_trend]);
-        })
+            this.arrayHealth.push([element.recordDate, element.health_status, element.health_trend]);
+        });
         this.mergeOptionCalendarHealth = {
-            series:{
-                data:this.arrayHealth
+            series: {
+                data: this.arrayHealth
             }
-        }
+        };
         this.mergeOptionTint = {
             series : {
                     data: this.arrayTempInt
@@ -82,14 +88,10 @@ export class DailyRecordService{
                     min: -10,
                     max: 40,
                     inRange: {
-                        color: ['#abd9e9','#CC0000']     
+                        color: ['#abd9e9', '#CC0000']
                     }
-
-            
-                    
             },
-            
-        }
+        };
         this.mergeOptionHint = {
             series : {
                 data : this.arrayHint
@@ -100,7 +102,6 @@ export class DailyRecordService{
             visualMap: {
                 orient: 'horizontal',
                 top : 20,
-                //itemWidth : 0,
                 right: '3%',
                 type: 'piecewise',
                 pieces: [
@@ -114,12 +115,10 @@ export class DailyRecordService{
                     // Label of the piece can be specified.
                 ],
                 inRange: {
-                    color: ["#97A6C5","#6987C5",'#3C68C5','#05489B'],
-                    //color: ["#97A6C5",'#05489B'],
+                    color: ['#97A6C5', '#6987C5', '#3C68C5', '#05489B'],
                 },
             },
-            
-        }
+        };
         this.statusLoading = true;
     }
 
@@ -127,30 +126,30 @@ export class DailyRecordService{
         this.dailyRecTabObs = this.http.get<DailyRecordTh[]>(CONFIG.URL+'dailyRecordsTH/'+this.user.getUser()+'/'+idApiary);
         this.dailyRecords = [];
         this.dailyRecTabObs.subscribe(
-            (data)=>{
-                if(data[0]!= null){
+            (data) => {
+                if (data[0] != null) {
                     this.dailyRecords = data;
                     console.log(this.dailyRecords);
                 }
             },
-            (err)=>{
-                console.log(err)
+            (err) => {
+                console.log(err);
             }
         );
     }
 
-    getStatus(id){
-        this.status = "ruche Inconnu";
-        this.verifId(id);
+    getStatus(idHive: string) {
+        this.status = 'ruche Inconnu';
+        this.verifId(idHive);
         return this.status;
     }
 
-    verifId(id){
-        this.dailyRecords.forEach((element,index)=>{
-            if(element.idHive == id){
-                this.status =  "ruche "+ element.health_status+element.health_trend;
+    verifId(idHive: string) {
+        this.dailyRecords.forEach((element, index) => {
+            if (element.idHive === idHive ) {
+                this.status =  'ruche ' + element.health_status + element.health_trend;
             }
-        })
+        });
     }
 
     convertDate(date : string){

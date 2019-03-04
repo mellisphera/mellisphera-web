@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from '../../config';
 import { Capteur } from './capteur';
-import { Rucher } from '../ruche-rucher/rucher';
+import { Rucher } from '../apiary/ruche-rucher/rucher';
 import { CapteurInterface } from '../_model/capteur';
 import { UserloggedService } from '../userlogged.service';
 import { stringify } from '@angular/core/src/util';

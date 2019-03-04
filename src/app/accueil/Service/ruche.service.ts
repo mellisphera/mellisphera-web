@@ -1,14 +1,18 @@
+/**
+ * @author mickael
+ * @description Ensemble des requetes pour la gestion des ruches
+ *
+ */
+
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { RucheInterface } from '../../_model/ruche';
 import { UserloggedService } from '../../userlogged.service';
-import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CONFIG } from '../../../config';
-import { RucherService } from '../../ruche-rucher/rucher.service';
 import { Observable, Subscription } from 'rxjs';
-import { ObservationService } from '../../ruche-rucher/ruche-detail/observation/service/observation.service';
+import { ObservationService } from '../../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { MeteoService } from '../../meteo/Service/MeteoService';
-import { share } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -30,7 +34,6 @@ export class RucheService {
 
   constructor(private user: UserloggedService,
     private http: HttpClient,
-    private observationService: ObservationService,
     public meteoService: MeteoService) {
     this.ruches = [];
     this.initRuche();
@@ -54,6 +57,7 @@ export class RucheService {
     this.rucheUpdate = this.ruche;
     this.ruches = [];
    }
+
    emitHiveSubject() {
     this.hiveSubject.next(this.ruches.slice());
     console.log(this.hiveSubject);
@@ -70,6 +74,9 @@ export class RucheService {
           console.log(err);
         },
         () => {
+          /*
+          *  Permet lors du refresh de sauvegerder la ruche sélectionné
+          */
           if (!this.getCurrentHive()) {
             this.ruche = this.ruches[0];
           } else {
@@ -84,6 +91,12 @@ export class RucheService {
       );
    }
 
+   /**
+    *
+    *
+    * @param {string} [idHive]
+    * @memberof RucheService
+    */
    saveCurrentHive(idHive?: string) {
      if (idHive) {
       window.sessionStorage.removeItem('currentHive');
@@ -93,13 +106,20 @@ export class RucheService {
       window.sessionStorage.setItem('currentHive', this.ruche.id);
      }
    }
-   getCurrentHive() {
+
+   /**
+    *
+    *
+    * @returns {string}
+    * @memberof RucheService
+    */
+   getCurrentHive(): string {
      return window.sessionStorage.getItem('currentHive');
    }
 
 
-   getRucheByUsername(username : string){
-     this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL+'hives/'+username)
+   getRucheByUsername(username: string) {
+     this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + username);
      this.ruchesObs.subscribe(
        (data)=>{
          this.ruchesAllApiary = data;
@@ -123,21 +143,46 @@ export class RucheService {
     );
   }
 
+  /**
+   * @param {number} index
+   * @param {RucheInterface} hive
+   * @returns {Observable<RucheInterface>}
+   * @memberof RucheService
+   */
   updateRuche(index: number, hive: RucheInterface): Observable<RucheInterface> {
     return this.http.put<RucheInterface>(CONFIG.URL + 'hives/update/' + hive.id, hive, httpOptions);
   }
-  cleanRuches(){
-     this.ruches=[];
-  }
 
+  /**
+   *
+   *
+   * @param {RucheInterface} ruche
+   * @returns {Observable<RucheInterface>}
+   * @memberof RucheService
+   */
   createRuche(ruche: RucheInterface): Observable<RucheInterface> {
     return this.http.post<RucheInterface>(CONFIG.URL + 'hives', ruche , httpOptions);
   }
 
+  /**
+   *
+   *
+   * @param {number} index
+   * @param {RucheInterface} hive
+   * @returns {Observable<RucheInterface>}
+   * @memberof RucheService
+   */
   deleteRuche(index: number, hive: RucheInterface): Observable<RucheInterface> {
     return this.http.delete<RucheInterface>(CONFIG.URL + 'hives/' + hive.id);
   }
 
+  /**
+   *
+   *
+   * @param {string} idHive
+   * @param {*} [next]
+   * @memberof RucheService
+   */
   findRucheById(idHive: string, next?) {
     next(this.ruches.filter(hive => hive.id === idHive));
   }
