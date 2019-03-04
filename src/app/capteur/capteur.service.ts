@@ -27,7 +27,7 @@ export class CapteurService {
     capteurs: CapteurInterface[];
     capteursByUser: CapteurInterface[];
     capteurAcheter: CapteurInterface[];
-    capteursType:Object;
+    capteursType: Object;
     capteurObs: Observable<CapteurInterface>;
     capteursObs: Observable<CapteurInterface[]>;
     public sensorSubject: BehaviorSubject<CapteurInterface[]>;
@@ -37,7 +37,7 @@ export class CapteurService {
      * @param {UserloggedService} user
      * @memberof CapteurService
      */
-    constructor(private http:HttpClient, private user: UserloggedService) {
+    constructor(private http: HttpClient, private user: UserloggedService) {
         this.sensorSubject = new BehaviorSubject([]);
         this.getUserCapteurs();
         this.capteursType =
@@ -96,7 +96,6 @@ export class CapteurService {
         this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sold_devices/username/'+ this.user.getUser());
         this.capteursObs.subscribe(
             (data) => {
-                console.log(data);
                 this.capteurAcheter = data;
             },
             (err) => {
@@ -140,8 +139,13 @@ export class CapteurService {
         return this.http.get<CapteurInterface>(CONFIG.URL + 'sensors/check/' + reference)
         .map(res => res.reference !== reference);
     }
-    
-    updateCapteur() {
+
+    /**
+     *
+     * @returns {Observable<Boolean>} Observable<Boolean>
+     * @memberof CapteurService
+     */
+    updateCapteur(): Observable<CapteurInterface> {
         return this.http.put<CapteurInterface>(CONFIG.URL + 'sensors/update/' + this.capteur.id, this.capteur, httpOptions);
     }
 }
