@@ -22,6 +22,11 @@ navbar-cmp nav{
     margin-top: 55px;
 }
 
+notifier-container ul{
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+
 @media screen and (max-width : 991px){
     /* Quand la sidebar est caché */
     .main-panel{
