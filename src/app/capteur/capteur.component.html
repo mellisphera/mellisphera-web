@@ -106,7 +106,7 @@
             <div class="col-md-6" >
                 <label for="ref" class="col-form-label">Reference (*):</label>
                 <input #ref formControlName="reference" placeholder="xx:xx:xx" name="ref" type="text" class="form-control" id="ref">
-                <div class="alert alert-danger" *ngIf="getSensorRef().errors?.pattern">
+                <div class="invalid-feedback" *ngIf="getSensorRef().errors?.pattern">
                     You should select a valid reference
                 </div>
                 <div class="alert alert-danger" *ngIf="getSensorRef().errors?.sensorCheck">

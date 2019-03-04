@@ -38,7 +38,6 @@ export class NavbarComponent implements OnInit{
 
     location: Location;
     file: File;
-    httpEmitter:Subscription;
     hasBaseDropZoneOver: Boolean = false;
     private toggleButton: any;
     private sidebarVisible: boolean;
@@ -49,7 +48,7 @@ export class NavbarComponent implements OnInit{
     private readonly notifier: NotifierService;
     public rucherForm: FormGroup;
     constructor(location: Location,
-        private element: ElementRef, 
+        private element: ElementRef,
         private userService: UserloggedService,
         private router: Router,
         private authService: AuthService,
@@ -134,10 +133,10 @@ export class NavbarComponent implements OnInit{
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/fleurs-floraison':
-                this.fleursFloraisonService.getUserFleur(this.rucherService.getCurrentRucher());
+                this.fleursFloraisonService.getUserFleur(this.rucherService.getCurrentApiary());
                 break;
             case '/meteo':
-                this.meteoService.getWeather(this.rucherService.rucher.ville);
+                this.meteoService.getWeather(this.rucherService.rucher.codePostal);
                 break;
             case '/ruche-detail':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());

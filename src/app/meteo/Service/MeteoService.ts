@@ -1,7 +1,7 @@
+import { RucherService } from './../../ruche-rucher/rucher.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Meteo } from '../../_model/meteo';
-import { RucherService } from '../../ruche-rucher/rucher.service';
 import { element } from 'protractor';
 import { UserloggedService } from '../../userlogged.service';
 import { Observable } from 'rxjs';
@@ -29,15 +29,17 @@ export class MeteoService{
     tabHeatmap : any[];
     tabHumidty : any[];
 
-    constructor( private celendrier : CalendrierService, private httpClient :  HttpClient, private login : UserloggedService, private graphMeteo : GraphMeteoService){
+    constructor(private celendrier: CalendrierService, 
+        private httpClient:  HttpClient,
+        private login: UserloggedService,
+        private graphMeteo: GraphMeteoService){
         this.meteo = [];
     }
 
-    getWeather(city: string){
+    getWeather(zipCode: string) {
         this.status = false;
-        this.ville = city;
         this.arrayMeteo = [];
-        this.meteoObs = this.httpClient.get<Meteo[]>('https://api.openweathermap.org/data/2.5/forecast?q='+city+'&units=metric&appid=110ff02ed24ccd819801248373c3b208');
+        this.meteoObs = this.httpClient.get<Meteo[]>('https://api.openweathermap.org/data/2.5/forecast?zip='+zipCode+',fr&units=metric&appid=110ff02ed24ccd819801248373c3b208');
         this.meteoObs.subscribe(
             (data)=>{
                 var date = null;

@@ -1,3 +1,11 @@
+/**
+ * @author Mickael
+ * @description Ensemble des requetes à l'API pour la gestion des capteurs
+ *
+ * @export
+ * @class CapteurService
+ */
+
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
@@ -12,10 +20,9 @@ import { stringify } from '@angular/core/src/util';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
- 
 @Injectable()
 export class CapteurService {
- 
+
     capteur: CapteurInterface;
     capteurs: CapteurInterface[];
     capteursByUser: CapteurInterface[];
@@ -23,9 +30,14 @@ export class CapteurService {
     capteursType:Object;
     capteurObs: Observable<CapteurInterface>;
     capteursObs: Observable<CapteurInterface[]>;
-    sensorSubject: BehaviorSubject<CapteurInterface[]>;
+    public sensorSubject: BehaviorSubject<CapteurInterface[]>;
+    /**
+     *Creates an instance of CapteurService.
+     * @param {HttpClient} http
+     * @param {UserloggedService} user
+     * @memberof CapteurService
+     */
     constructor(private http:HttpClient, private user: UserloggedService) {
-        //this.getCapteurs();
         this.sensorSubject = new BehaviorSubject([]);
         this.getUserCapteurs();
         this.capteursType =
@@ -35,12 +47,11 @@ export class CapteurService {
                 {'reference' : '43', 'type' : 'WEIGHT'}
 
             ];
-        //this.getSoldDevicesByUser();
         this.initCapteur();
     }
 
-    initCapteur(){
-        this.capteur = { 
+    initCapteur() {
+        this.capteur = {
             id : null,
             reference : '',
             name : '',
@@ -50,21 +61,25 @@ export class CapteurService {
             idHive: '',
             idApiary: '',
             hiveName: '',
-            apiaryName:''
-        }
+            apiaryName: ''
+        };
     }
-    
     emitSensorSubject() {
         this.sensorSubject.next(this.capteursByUser.slice());
         console.log(this.sensorSubject);
     }
-    // pour créer un capteur
-    createCapteur() {
-        return this.http.post<CapteurInterface>(CONFIG.URL+'sensors', this.capteur, httpOptions);
+    /**
+     *
+     * Create capteurs
+     * @returns {Observable<CapteurInterface>}
+     * @memberof CapteurService
+     * @param {CapteurInterface} capteur
+     */
+    createCapteur(): Observable<CapteurInterface> {
+        return this.http.post<CapteurInterface>(CONFIG.URL + 'sensors', this.capteur, httpOptions);
     }
 
-    //get all sensors 
-    getCapteurs(){
+    getCapteurs() {
         this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sensors/all')
         this.capteursObs.subscribe(
             (data)=>{
@@ -80,11 +95,11 @@ export class CapteurService {
     getSoldDevicesByUser() {
         this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sold_devices/username/'+ this.user.getUser());
         this.capteursObs.subscribe(
-            (data)=>{
+            (data) => {
                 console.log(data);
                 this.capteurAcheter = data;
             },
-            (err)=>{
+            (err) => {
                 console.log(err);
             }
         );
@@ -105,25 +120,28 @@ export class CapteurService {
         );
     }
 
-    deleteCapteur(capteur: CapteurInterface) {
-        return this.http.delete<CapteurInterface>(CONFIG.URL+'sensors/' + capteur.id);
-        /*this.capteurObs.subscribe(
-            () => {},
-            (err) => {
-                console.log(err);
-            },
-            () => {
-                this.getUserCapteurs();
-            }
-        );*/
+        /**
+     *
+     * Create capteurs
+     * @returns {Observable<CapteurInterface>}
+     * @param {CapteurInterface} capteur
+     * @memberof CapteurService
+     */
+    deleteCapteur(capteur: CapteurInterface): Observable<CapteurInterface> {
+        return this.http.delete<CapteurInterface>(CONFIG.URL + 'sensors/' + capteur.id);
     }
-
-    checkSensorExist(reference: string): Observable<Boolean>{
+    /**
+     *
+     * @param {string} reference
+     * @returns {Observable<Boolean>} Observable<Boolean>
+     * @memberof CapteurService
+     */
+    checkSensorExist(reference: string): Observable<Boolean> {
         return this.http.get<CapteurInterface>(CONFIG.URL + 'sensors/check/' + reference)
-        /* Test si le captuer exist (map sur le resultat de la requete*/
         .map(res => res.reference !== reference);
     }
+    
     updateCapteur() {
-        return this.http.put<CapteurInterface>(CONFIG.URL+ 'sensors/update/' + this.capteur.id, this.capteur, httpOptions);
+        return this.http.put<CapteurInterface>(CONFIG.URL + 'sensors/update/' + this.capteur.id, this.capteur, httpOptions);
     }
 }
