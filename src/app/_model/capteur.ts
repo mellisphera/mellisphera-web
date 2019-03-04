@@ -1,5 +1,4 @@
 export interface CapteurInterface {
-    
     id? : string;
 	reference : string;
 	name? : string;

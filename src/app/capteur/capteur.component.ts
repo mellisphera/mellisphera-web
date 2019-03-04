@@ -19,6 +19,13 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/first';
 import { NotifierService } from 'angular-notifier';
 
+/**
+ *@author mickael
+ * @export
+ * @class CapteurComponent
+ * @implements {OnInit}
+ * @implements {OnDestroy}
+ */
 @Component({
   selector: 'app-capteur',
   templateUrl: './capteur.component.html',
@@ -34,10 +41,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
   editCapteurCheckbox: boolean;
   paternRef: RegExp;
   indexSensorSelect: number;
-  //variable to store ruches
-  //for new sensor
   newCapteurForm: FormGroup;
-  //to edit a sensor
   editCapteurForm: FormGroup;
   capteurSearch: string;
 
@@ -79,10 +83,10 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.editCapteurForm.setValue(donnee);
         if (this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
             this.rucherService.findRucherById(this.capteurService.capteur.idApiary, (apiary) => {
-                this.apiarySensorSelect = apiary;
+                this.apiarySensorSelect = apiary[0];
             });
             this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive, (hive) => {
-                this.hiveSensorSelect = hive;
+                this.hiveSensorSelect = hive[0];
             });
         }
 
@@ -94,7 +98,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
 
     onchange(event) {
         this.editCapteurCheckbox = (event.target.value === 'ruche');
-    } 
+    }
 
    //CREATE CAPTEUR
     createCapteur() {
@@ -109,8 +113,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.capteurService.capteur.idApiary = this.apiarySensorSelect.id;
             this.capteurService.capteur.apiaryName = this.apiarySensorSelect.name;
             this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
-        }
-        else{
+        } else {
             this.capteurService.capteur.idHive = null;
             this.capteurService.capteur.idApiary = null;
             this.capteurService.capteur.apiaryName = null;
@@ -200,7 +203,14 @@ export class CapteurComponent implements OnInit, OnDestroy {
             'checkbox': ['ruche', Validators.required]
         });
     }
-    validateSensorNotTaken(control: AbstractControl) {
+    /**
+     *
+     * @description Verifie la valeur du control reference du formulaire
+     * @param {AbstractControl} control
+     * @returns {Observable<any>}
+     * @memberof CapteurComponent
+     */
+    validateSensorNotTaken(control: AbstractControl): Observable<any> {
         if (!control.valueChanges) {
             return Observable.of(null);
           } else {

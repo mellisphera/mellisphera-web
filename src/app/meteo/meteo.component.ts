@@ -14,7 +14,7 @@ import { GraphMeteoService } from './Service/graph-meteo.service';
   templateUrl: './meteo.component.html',
   styleUrls: ['./meteo.component.scss']
 })
-export class MeteoComponent implements OnInit, DoCheck {
+export class MeteoComponent implements OnInit {
 
   constructor(public rucherService : RucherService, public meteoService : MeteoService, 
     private login : UserloggedService, 
@@ -34,26 +34,7 @@ export class MeteoComponent implements OnInit, DoCheck {
   }
   ngOnInit() {
     this.username = this.login.getUser();
-   // this.meteoService.getWeather(this.rucherService.rucher.ville);
-  }
-  
-
-  onSelectRucher($event){
-    this.meteoService.getWeather(this.rucherService.rucher.ville);
-  }
-
-  onMouseouver($event){
-    
-  }
-
-  onClick($event){
-  }
-  ngDoCheck(){
-    try{
-
-    }
-    catch(e){
-      console.log(e);
-    }
+    console.log(this.rucherService.rucher.codePostal);
+    this.meteoService.getWeather(this.rucherService.rucher.codePostal);
   }
 }
