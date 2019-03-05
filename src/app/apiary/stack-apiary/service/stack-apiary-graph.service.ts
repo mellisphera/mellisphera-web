@@ -19,7 +19,6 @@ export class StackApiaryGraphService {
     },
     legend: {
       orient: 'horizontal',
-      data: ['Tint', 'Text', 'Hint', 'Hext', 'Batery-int', 'Batery-ext'],
       y: '2%'
 /*       x: '5%',
       y: '2%' */
