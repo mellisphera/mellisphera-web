@@ -33,15 +33,15 @@ export class    FleursFloraisonService {
     tabFleurByDateGraph : any[];
     templateSerie;
     templateLegend;
-    fleursObs : Observable<FleurObservees[]>;
+    fleursObs: Observable<FleurObservees[]>;
     constructor(private http:HttpClient, public rucherService : RucherService, private userService : UserloggedService) {
         this.cleanTemplate();
         this.initFleurObservees();
         this.getFleurTest();
         this.subjectFlower = new BehaviorSubject([]);
-        //this.subjectFlower.share();
+        // this.subjectFlower.share();
     }
-    //Récupère la liste des fleurs théoriques
+    // Récupère la liste des fleurs théoriques
     getFleurTest(){
         this.http.get<FleursTheorique[]>(CONFIG.URL+'flowersTh/all').subscribe(
             (data)=>{
@@ -69,14 +69,14 @@ export class    FleursFloraisonService {
             dateThDebutdate: '',
             dateThFindate: '',
             presence : '',
-            username : '', 
+            username : '',
             idApiary : '',
             photo : ''
         };
     }
     sortTheoricalFlower(){
         this.nomFleur = [];
-        var date = new Date();
+        const date = new Date();
         this.fleursByRucher.forEach(element => {
             this.tabFleurByDateGraph.push([
                 [date.getFullYear()+'-'+element.dateThDebutd, element.nom],
