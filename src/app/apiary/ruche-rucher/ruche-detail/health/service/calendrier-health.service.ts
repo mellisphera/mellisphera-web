@@ -48,13 +48,13 @@ export class CalendrierHealthService  extends CalendrierService {
     },
    calendar: [{
         top: 140,
-        left: '2%',
+        left: '5%',
         right: '4%',
-        height:'20%',
+        height:'30%',
         width:'93%',
-        range: null,
+        range: ['2018-09-01', '2019-03-31'],
         orient: 'horizontal',
-        cellSize: ['auto','40'],
+        cellSize: ['auto', 50],
         splitLine: {
             show: true,
             lineStyle: {
@@ -162,13 +162,10 @@ export class CalendrierHealthService  extends CalendrierService {
             type: 'group',
             children:[{ // enfant de ce groupe(image et text)
                 type:'image', // image
-                //scale : ['horizontal scale factor', 'vertical scale factor'],
                 style:{ // style de cette image
-                    image:img, // image à afficher
-                    width:cellWidth/3, // largeur
-                    //heigth:30, // et hauteur de l'image
-                    /*placement de l'image (x,y) avec les coordonnées */
-                    x: cellPoint[0] - cellWidth /2+5,
+                    image: img, // image à afficher
+                    width: cellWidth / 3, // largeur
+                    x: cellPoint[0] - cellWidth / 2+10,
                     y: cellPoint[1] - cellHeight / 2+3
                 },
             }],

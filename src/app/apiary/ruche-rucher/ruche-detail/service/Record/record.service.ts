@@ -26,7 +26,7 @@ export class RecordService {
   public loading: boolean;
   private recArrrayTint: any[];
   private recArrayText: any[];
-  private recArrayWeight: any[];
+  private recArrayWeight: any;
   private recArrayDateExt: any[];
   private recArrayDateInt: any[];
   private recArrayHint: any[];
@@ -37,10 +37,18 @@ export class RecordService {
   public currentIdHive: string;
   private templateSerie: any;
   public mergeOptionStack: any = null;
-
+  private legendOption: any;
   constructor(private http: HttpClient) {
     this.currentIdHive = null;
+    this.mergeOptionStack = {
+      series: []
+    };
     this.loading = false;
+    this.legendOption = {
+      legend: {
+        data: []
+      },
+    };
     this.templateSerie = {
       tInt: {
         name: 'Tint',
@@ -105,11 +113,11 @@ export class RecordService {
    * @memberof RecordService
    * @return {void}
    */
-  getRecordByIdHive(idHive: string, range?: Date[]): void {
+  getRecordByIdHive(idHive: string, range?: Date[], hiveName?: string): void {
     this.loading = false;
     this.currentIdHive = idHive;
     this.recArray = [];
-    this.recordObs = this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, range, httpOptions );
+    this.recordObs = this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, range, httpOptions);
     this.recordObs.subscribe(
       (data) => {
         this.recArray = data;
@@ -120,15 +128,45 @@ export class RecordService {
       () => {
         if (this.recArray.length > 0) {
           this.mapRecord();
-          this.updateMerge();
-          this.templateSerie.tInt.data = this.recArrrayTint;
-          this.mergeOptionStack.series.push(this.templateSerie.tInt);
-          this.mergeOptionStack.series.push({data : this.recArrayText });
-          this.mergeOptionStack.series.push({data : this.recArrayHint });
-          this.mergeOptionStack.series.push({data : this.recArrayHext });
-          this.mergeOptionStack.series.push({data : this.recArrayBatteryInt });
-          this.mergeOptionStack.series.push({data : this.recArrayBatteryExt });
-          this.loading = !this.loading;
+          if (!hiveName) {
+            this.updateMerge();
+            this.loading = !this.loading;
+          } else {
+            console.log(hiveName);
+            this.templateSerie.tInt.data = this.recArrrayTint;
+            this.templateSerie.tInt.name = hiveName + 'Tint';
+            this.legendOption.legend.data.push(hiveName + 'Tint');
+            this.mergeOptionStack.series.push(this.templateSerie.tInt);
+
+            this.templateSerie.tExt.name = hiveName + 'Text';
+            this.legendOption.legend.data.push(hiveName + 'Text');
+            this.templateSerie.tExt.data = this.recArrayText;
+            this.mergeOptionStack.series.push(this.templateSerie.tExt);
+
+            this.templateSerie.hInt.name = hiveName + 'Hint';
+            this.templateSerie.hInt.data = this.recArrayHint;
+            this.legendOption.legend.data.push(hiveName + 'Hint');
+            this.mergeOptionStack.series.push(this.templateSerie.hInt);
+
+            this.templateSerie.hExt.name = hiveName + 'hext';
+            this.templateSerie.hExt.data = this.recArrayHext;
+            this.legendOption.legend.data.push(hiveName + 'hext');
+            this.mergeOptionStack.series.push(this.templateSerie.hExt);
+
+            this.templateSerie.bInt.name = hiveName + 'B-int';
+            this.templateSerie.bInt.data = this.recArrayBatteryInt;
+            this.mergeOptionStack.series.push(this.templateSerie.bInt);
+            this.legendOption.legend.data.push(hiveName + 'B-int');
+
+            this.templateSerie.bExt.name = hiveName + 'B-Ext';
+            this.templateSerie.bExt.data = this.recArrayBatteryExt;
+            this.mergeOptionStack.series.push(this.templateSerie.bExt);
+            this.legendOption.legend.data.push(hiveName + 'B-Ext');
+
+          }
+          this.mergeOptionStack.legend = this.legendOption.legend;
+          console.log(this.mergeOptionStack);
+          console.log(this.legendOption);
         }
       }
     );
@@ -136,14 +174,12 @@ export class RecordService {
 
 
   /**
-   *
-   *
    * @param {DataRange} scale
    * @param {string} idHive
    * @memberof RecordService
    * @deprecated 'A modifier'
    */
-  setRange(scale: DataRange, idHive: string): void {
+  setRange(scale: DataRange, idHive: string, hiveName?: string): void {
     let date;
     if (scale.type == 'DAY') {
       date = new Date();
@@ -152,7 +188,7 @@ export class RecordService {
       date = new Date();
       date.setMonth((new Date().getMonth() - scale.scale));
     }
-    this.getRecordByIdHive(idHive, MyDate.getRange(date));
+    this.getRecordByIdHive(idHive, MyDate.getRange(date), hiveName ? hiveName : null);
   }
 
   /**
@@ -164,18 +200,15 @@ export class RecordService {
     this.mergeOptionHourly = {
       series: [
         {
-          data : this.recArrayWeight
+          data: this.recArrayWeight
         },
         {
-          data : this.recArrrayTint
+          data: this.recArrrayTint
         },
         {
-          data : this.recArrayText
+          data: this.recArrayText
         }
       ]
-    };
-    this.mergeOptionStack = {
-      series: []
     };
   }
   mapRecord() {
@@ -190,29 +223,43 @@ export class RecordService {
     this.recArrayHint = [];
     this.recArray.forEach((element, index) => {
       if (element.temp_ext != null) {
-        this.recArrayText.push({name : element.recordDate, value : [
-          element.recordDate , element.temp_ext
-        ]});
-        this.recArrayWeight.push({name : element.recordDate, value :[
-          element.recordDate, element.weight
-        ]});
-        this.recArrayBatteryExt.push({name : element.recordDate, value : [
-          element.recordDate, element.battery_ext
-        ]});
-        this.recArrayHext.push({name : element.recordDate, value : [
-          element.recordDate , element.humidity_ext
-        ]});
-       // this.recArrayDateExt.push(element.recordDate,element.recordDate);
-      } else if (element.temp_int != null){
-        this.recArrrayTint.push({ name : element.recordDate, value : [
-          element.recordDate, element.temp_int
-        ]});
-        this.recArrayBatteryInt.push({name : element.recordDate, value : [
-          element.recordDate, element.battery_int
-        ]});
-        this.recArrayHint.push({name : element.recordDate, value : [
-          element.recordDate , element.humidity_int
-        ]});
+        this.recArrayText.push({
+          name: element.recordDate, value: [
+            element.recordDate, element.temp_ext
+          ]
+        });
+        this.recArrayWeight.push({
+          name: element.recordDate, value: [
+            element.recordDate, element.weight
+          ]
+        });
+        this.recArrayBatteryExt.push({
+          name: element.recordDate, value: [
+            element.recordDate, element.battery_ext
+          ]
+        });
+        this.recArrayHext.push({
+          name: element.recordDate, value: [
+            element.recordDate, element.humidity_ext
+          ]
+        });
+        // this.recArrayDateExt.push(element.recordDate,element.recordDate);
+      } else if (element.temp_int != null) {
+        this.recArrrayTint.push({
+          name: element.recordDate, value: [
+            element.recordDate, element.temp_int
+          ]
+        });
+        this.recArrayBatteryInt.push({
+          name: element.recordDate, value: [
+            element.recordDate, element.battery_int
+          ]
+        });
+        this.recArrayHint.push({
+          name: element.recordDate, value: [
+            element.recordDate, element.humidity_int
+          ]
+        });
         // this.recArrayDateInt.push(element.recordDate);
       }
     });
