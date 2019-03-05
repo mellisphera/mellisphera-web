@@ -1,16 +1,15 @@
-import { type } from 'os';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GraphStackService {
+export class StackApiaryGraphService {
 
-  option = {
+  options = {
     title: {
       text: 'Stack',
       x: 'center',
-      top: -5
+      /* top: -5 */
     },
     tooltip: {
       trigger: 'axis',
@@ -21,13 +20,14 @@ export class GraphStackService {
     legend: {
       orient: 'horizontal',
       data: ['Tint', 'Text', 'Hint', 'Hext', 'Batery-int', 'Batery-ext'],
-      x: '5%',
       y: '2%'
+/*       x: '5%',
+      y: '2%' */
     },
     toolbox: {
       orient: 'horizontal',
       //right: '0',
-      left: '80%',
+/*       left: '80%', */
       feature: {
         dataZoom: {
           yAxisIndex: 'none',
@@ -72,9 +72,9 @@ export class GraphStackService {
       }
     ],
     grid: [
-      { x: '4%', y: '5%', width: '95%', height: '28%' },
-      { x: '4%', y: '38%', width: '95%', height: '25%' },
-      { x: '4%', y: '69%', width: '95%', height: '25%' },
+      { x: '3%', y: '5%', width: '93%', height: '40%' },
+      { x: '3%', y: '54%', width: '93%', height: '35%' },
+      { x: '3%', y: '93%', width: '93%', height: '15%' },
     ],
     /*visualMap: {
       top: 10,
@@ -207,6 +207,6 @@ export class GraphStackService {
       }
     ]
   };
-
-  constructor() { }
+  constructor() {
+  }
 }

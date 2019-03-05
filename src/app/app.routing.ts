@@ -16,6 +16,7 @@ import { HomeComponent } from './accueil/home/home.component';
 import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
 import { RucheDetailComponent } from './apiary/ruche-rucher/ruche-detail/ruche.detail.component';
+import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 
 const routes: Routes = [
    /* { path: '',             component: LoginComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
     { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
     { path: 'home', canActivate : [AuthGuard], component: HomeComponent},
     { path: 'admin', canActivate : [AuthGuard], component : AdminComponent},
+    { path: 'stack-apiary', canActivate : [AuthGuard], component : StackApiaryComponent},
     { path : 'fstl', component : DemoComponent},
     { path: '**', component: Erreur404ComponentComponent },
     { path: '', redirectTo: '/', pathMatch: 'full' }

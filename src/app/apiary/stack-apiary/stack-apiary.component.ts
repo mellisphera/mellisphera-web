@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { StackApiaryGraphService } from './service/stack-apiary-graph.service';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { RucheService } from '../../accueil/Service/ruche.service';
+import { RucheInterface } from '../../_model/ruche';
+import { RecordService } from '../ruche-rucher/ruche-detail/service/Record/record.service';
 
 @Component({
   selector: 'app-stack-apiary',
@@ -7,9 +11,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StackApiaryComponent implements OnInit {
 
-  constructor() { }
+  private arrayHiveSelect: Array<RucheInterface>;
+  constructor(public rucheService: RucheService,
+    private render: Renderer2,
+    private stackApiaryGraph: StackApiaryGraphService,
+    private recordService: RecordService) {
+    this.arrayHiveSelect = [];
+  }
+
 
   ngOnInit() {
+
+  }
+
+  selectHive(selectHive: RucheInterface, event: MouseEvent) {
+    const arrayFilter = this.arrayHiveSelect.filter(hive => hive.id === selectHive.id);
+    if (arrayFilter.length > 0) {
+      this.render.removeClass(event.target, 'active');
+      const index = this.arrayHiveSelect.indexOf(arrayFilter[0]);
+      this.arrayHiveSelect.splice(index, 1);
+    } else {
+      this.render.addClass(event.target, 'active');
+      this.arrayHiveSelect.push(selectHive);
+    }
   }
 
 }
