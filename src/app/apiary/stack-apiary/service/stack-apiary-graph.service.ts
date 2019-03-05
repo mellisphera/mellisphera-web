@@ -73,8 +73,8 @@ export class StackApiaryGraphService {
     ],
     grid: [
       { x: '3%', y: '5%', width: '93%', height: '40%' },
-      { x: '3%', y: '54%', width: '93%', height: '35%' },
-      { x: '3%', y: '93%', width: '93%', height: '15%' },
+      { x: '3%', y: '54%', width: '93%', height: '33%' },
+      { x: '3%', y: '96%', width: '93%', height: '20%' },
     ],
     /*visualMap: {
       top: 10,
@@ -147,65 +147,7 @@ export class StackApiaryGraphService {
         inverse: false
       }
     ],
-    series: [
-      {
-        name: 'Tint',
-        type: 'line',
-        //symbolSize: 8,
-        showSymbol: false,
-        //hoverAnimation: true,
-      },
-      {
-        name: 'Text',
-        type: 'line',
-        //symbolSize: 8,
-        showSymbol: false,
-        //hoverAnimation: true,
-      },
-      {
-        name: 'Hint',
-        type: 'line',
-        //symbolSize: 8,
-        xAxisIndex: 1,
-        yAxisIndex: 1,
-        showSymbol: false,
-        //hoverAnimation: true,
-      },
-      {
-        name: 'Hext',
-        type: 'line',
-        //symbolSize: 8,
-        xAxisIndex: 1,
-        yAxisIndex: 1,
-        showSymbol: false,
-      },
-      {
-        name: "Batery-int",
-        type: "bar",
-        //symbolSize: 8,
-        xAxisIndex: 2,
-        yAxisIndex: 2,
-        showSymbol: false,
-        //hoverAnimation: true,
-        color: 'red',
-        large: true,
-        largeThreshold: 10,
-        barGap: '30%'
-      },
-      {
-        name: "Batery-ext",
-        type: "bar",
-        //symbolSize: 8,
-        xAxisIndex: 2,
-        yAxisIndex: 2,
-        showSymbol: false,
-        //hoverAnimation: true,
-        color: 'blue',
-        large: true,
-        largeThreshold: 10,
-        barGap: '30%'
-      }
-    ]
+    series: []
   };
   constructor() {
   }
