@@ -12,11 +12,13 @@ import { RecordService } from '../ruche-rucher/ruche-detail/service/Record/recor
 export class StackApiaryComponent implements OnInit {
 
   private arrayHiveSelect: Array<RucheInterface>;
+  message: string;
   constructor(public rucheService: RucheService,
     private render: Renderer2,
-    private stackApiaryGraph: StackApiaryGraphService,
-    private recordService: RecordService) {
+    public stackApiaryGraph: StackApiaryGraphService,
+    public recordService: RecordService) {
     this.arrayHiveSelect = [];
+    this.message = '';
   }
 
 
@@ -36,5 +38,9 @@ export class StackApiaryComponent implements OnInit {
       this.recordService.setRange({ scale: 15, type: 'DAY' }, selectHive.id, selectHive.name);
     }
   }
+
+  receiveMessage($event) {
+    this.message = $event;
+}
 
 }
