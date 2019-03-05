@@ -42,13 +42,13 @@ export class RecordService {
     this.recArray = [];
     this.recordObs = this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, range, httpOptions );
     this.recordObs.subscribe(
-      (data)=>{
+      (data) => {
         this.recArray = data;
         this.sortRecordByTemp();
         this.updateMerge();
         this.loading = !this.loading;
       },
-      (err)=>{
+      (err) => {
         console.log(err);
       }
     );
@@ -64,7 +64,7 @@ export class RecordService {
       date = new Date();
       date.setMonth((new Date().getMonth() - scale.scale));
     }
-    this.getRecordByIdHive(idHive,MyDate.getRange(date));
+    this.getRecordByIdHive(idHive, MyDate.getRange(date));
   }
 
   updateMerge() {
@@ -82,7 +82,7 @@ export class RecordService {
       ]
     };
     this.mergeOptionStack = {
-      series :[
+      series: [
         {
           data : this.recArrrayTint
         },
@@ -102,9 +102,9 @@ export class RecordService {
           data : this.recArrayBatteryExt
         }
       ]
-    }
+    };
   }
-  sortRecordByTemp(){
+  sortRecordByTemp() {
     this.recArrrayTint = [];
     this.recArrayText = [];
     this.recArrayDateInt = [];
@@ -114,12 +114,12 @@ export class RecordService {
     this.recArrayBatteryInt = [];
     this.recArrayHext = [];
     this.recArrayHint = [];
-    this.recArray.forEach((element,index)=>{
-      if(element.temp_ext != null){
+    this.recArray.forEach((element,index) => {
+      if (element.temp_ext != null) {
         this.recArrayText.push({name : element.recordDate, value : [
           element.recordDate , element.temp_ext
         ]});
-        this.recArrayWeight.push({name : element.recordDate,value :[
+        this.recArrayWeight.push({name : element.recordDate, value :[
           element.recordDate,element.weight
         ]});
         this.recArrayBatteryExt.push({name : element.recordDate, value : [
@@ -129,8 +129,7 @@ export class RecordService {
           element.recordDate , element.humidity_ext
         ]});
        // this.recArrayDateExt.push(element.recordDate,element.recordDate);
-      }
-      else if(element.temp_int != null){
+      } else if (element.temp_int != null){
         this.recArrrayTint.push({ name : element.recordDate, value : [
           element.recordDate, element.temp_int
         ]});
@@ -140,8 +139,7 @@ export class RecordService {
         this.recArrayHint.push({name : element.recordDate, value : [
           element.recordDate , element.humidity_int
         ]});
-        //this.recArrayDateInt.push(element.recordDate);
-      
+        // this.recArrayDateInt.push(element.recordDate);
       }
     });
   }

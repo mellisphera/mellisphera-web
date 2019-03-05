@@ -1,0 +1,29 @@
+#hive-list li:hover{
+    cursor: pointer;
+    background-color: aqua;
+}
+ul{
+    padding: 0px;
+}
+li{
+    list-style: none;
+    background-image: url('../../../assets/img/apiary-icon.png');
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size:25px;
+    padding: 5px;
+    padding-left: 30px;
+}
+.active{
+    background-color: green;
+    color: white;
+}
+.col-xs{
+    margin: auto !important;
+}
+.row{
+    height: 50vh !important;
+}
+#stackGraph{
+    height: 80vh;
+}

@@ -141,6 +141,9 @@ export class NavbarComponent implements OnInit{
             case '/ruche-detail':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
+            case '/stack-apiary':
+                this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+                break;
             default:
         }
       }
