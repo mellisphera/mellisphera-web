@@ -1,3 +1,9 @@
+/**
+ * @author mickael
+ * @description Ensemble des requetes pour la récupérer les données heure/heure
+ *
+ */
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CONFIG } from '../../../../../../config';
@@ -15,28 +21,91 @@ const httpOptions = {
 })
 export class RecordService {
 
-  recArray: Record[];
-  recordObs: Observable<Record[]>;
-  loading: boolean;
-  recArrrayTint: any[];
-  recArrayText: any[];
-  recArrayWeight: any[];
-  recArrayDateExt: any[];
-  recArrayDateInt: any[];
-  recArrayHint: any[];
-  recArrayHext: any[];
-  recArrayBatteryInt: any[];
-  recArrayBatteryExt: any[];
-  mergeOptionHourly: any = null;
-  currentIdHive: string;
-  mergeOptionStack: any = null;
+  public recArray: Record[];
+  public recordObs: Observable<Record[]>;
+  public loading: boolean;
+  private recArrrayTint: any[];
+  private recArrayText: any[];
+  private recArrayWeight: any[];
+  private recArrayDateExt: any[];
+  private recArrayDateInt: any[];
+  private recArrayHint: any[];
+  private recArrayHext: any[];
+  private recArrayBatteryInt: any[];
+  private recArrayBatteryExt: any[];
+  public mergeOptionHourly: any = null;
+  public currentIdHive: string;
+  private templateSerie: any;
+  public mergeOptionStack: any = null;
 
   constructor(private http: HttpClient) {
     this.currentIdHive = null;
     this.loading = false;
+    this.templateSerie = {
+      tInt: {
+        name: 'Tint',
+        type: 'line',
+        showSymbol: false,
+        data: []
+      },
+      tExt: {
+        name: 'Text',
+        type: 'line',
+        showSymbol: false,
+        data: []
+      },
+      hInt: {
+        name: 'Hint',
+        type: 'line',
+        xAxisIndex: 1,
+        yAxisIndex: 1,
+        showSymbol: false,
+        data: []
+      },
+      hExt: {
+        name: 'Hext',
+        type: 'line',
+        xAxisIndex: 1,
+        yAxisIndex: 1,
+        showSymbol: false,
+        data: []
+      },
+      bInt: {
+        name: 'Batery-int',
+        type: 'bar',
+        xAxisIndex: 2,
+        yAxisIndex: 2,
+        showSymbol: false,
+        color: 'red',
+        large: true,
+        largeThreshold: 10,
+        barGap: '30%',
+        data: []
+      },
+      bExt: {
+        name: 'Batery-ext',
+        type: 'bar',
+        xAxisIndex: 2,
+        yAxisIndex: 2,
+        showSymbol: false,
+        color: 'blue',
+        large: true,
+        largeThreshold: 10,
+        barGap: '30%',
+        data: []
+      }
+    };
   }
 
-  getRecordByIdHive(idHive: string, range?: Date[]) {
+  /**
+   *
+   *
+   * @param {string} idHive
+   * @param {Date[]} [range]
+   * @memberof RecordService
+   * @return {void}
+   */
+  getRecordByIdHive(idHive: string, range?: Date[]): void {
     this.loading = false;
     this.currentIdHive = idHive;
     this.recArray = [];
@@ -44,17 +113,36 @@ export class RecordService {
     this.recordObs.subscribe(
       (data) => {
         this.recArray = data;
-        this.sortRecordByTemp();
-        this.updateMerge();
-        this.loading = !this.loading;
       },
       (err) => {
         console.log(err);
+      },
+      () => {
+        if (this.recArray.length > 0) {
+          this.mapRecord();
+          this.updateMerge();
+          this.templateSerie.tInt.data = this.recArrrayTint;
+          this.mergeOptionStack.series.push(this.templateSerie.tInt);
+          this.mergeOptionStack.series.push({data : this.recArrayText });
+          this.mergeOptionStack.series.push({data : this.recArrayHint });
+          this.mergeOptionStack.series.push({data : this.recArrayHext });
+          this.mergeOptionStack.series.push({data : this.recArrayBatteryInt });
+          this.mergeOptionStack.series.push({data : this.recArrayBatteryExt });
+          this.loading = !this.loading;
+        }
       }
     );
   }
 
 
+  /**
+   *
+   *
+   * @param {DataRange} scale
+   * @param {string} idHive
+   * @memberof RecordService
+   * @deprecated 'A modifier'
+   */
   setRange(scale: DataRange, idHive: string): void {
     let date;
     if (scale.type == 'DAY') {
@@ -67,7 +155,12 @@ export class RecordService {
     this.getRecordByIdHive(idHive, MyDate.getRange(date));
   }
 
-  updateMerge() {
+  /**
+   *
+   *
+   * @memberof RecordService
+   */
+  updateMerge(): void {
     this.mergeOptionHourly = {
       series: [
         {
@@ -82,29 +175,10 @@ export class RecordService {
       ]
     };
     this.mergeOptionStack = {
-      series: [
-        {
-          data : this.recArrrayTint
-        },
-        {
-          data : this.recArrayText
-        },
-        {
-         data : this.recArrayHint
-        },
-        {
-          data : this.recArrayHext
-        },
-        {
-          data : this.recArrayBatteryInt
-        },
-        {
-          data : this.recArrayBatteryExt
-        }
-      ]
+      series: []
     };
   }
-  sortRecordByTemp() {
+  mapRecord() {
     this.recArrrayTint = [];
     this.recArrayText = [];
     this.recArrayDateInt = [];
@@ -114,13 +188,13 @@ export class RecordService {
     this.recArrayBatteryInt = [];
     this.recArrayHext = [];
     this.recArrayHint = [];
-    this.recArray.forEach((element,index) => {
+    this.recArray.forEach((element, index) => {
       if (element.temp_ext != null) {
         this.recArrayText.push({name : element.recordDate, value : [
           element.recordDate , element.temp_ext
         ]});
         this.recArrayWeight.push({name : element.recordDate, value :[
-          element.recordDate,element.weight
+          element.recordDate, element.weight
         ]});
         this.recArrayBatteryExt.push({name : element.recordDate, value : [
           element.recordDate, element.battery_ext
