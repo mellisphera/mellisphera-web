@@ -264,7 +264,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
 
     }
     ngOnDestroy() {
-        this.rucherService.rucherSubject.unsubscribe();
+        /* this.rucherService.rucherSubject.unsubscribe(); */
         this.capteurService.sensorSubject.unsubscribe();
         // this.rucherService.rucheService.hiveSubject.unsubscribe();
         // this.rucherService.rucheService.hiveSubject.unsubscribe();
