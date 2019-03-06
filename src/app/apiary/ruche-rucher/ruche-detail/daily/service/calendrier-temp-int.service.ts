@@ -33,9 +33,9 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
     },
     visualMap: {
         orient: 'horizontal',
-        top : 20,
-        itemWidth : 30,
-        itemHeight : 200,
+        top : 30,
+        itemWidth : 15,
+       /*  itemHeight : 200, */
         itemSymbol : 'diamond',
         left: 'right',
     },

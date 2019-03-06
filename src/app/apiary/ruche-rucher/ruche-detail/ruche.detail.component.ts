@@ -17,9 +17,9 @@ import { AtokenStorageService } from '../../../auth/Service/atoken-storage.servi
 import { RucheInterface } from '../../../_model/ruche';
 
 @Component({
-  selector: 'app-ruche-detail',
-  templateUrl: './ruche.detail.component.html',
-  styleUrls : ['./ruche.detail.component.scss']
+    selector: 'app-ruche-detail',
+    templateUrl: './ruche.detail.component.html',
+    styleUrls: ['./ruche.detail.component.scss']
 })
 
 export class RucheDetailComponent implements OnInit, OnDestroy {
@@ -41,27 +41,27 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         private userService: UserloggedService,
         public tokenService: AtokenStorageService,
         public calendrierTempInt: CalendrierTempIntService) {
-            this.compteurHive = 0;
-            this.currentTab = 'notes';
-            this.hiveSelect = {
-                id : null,
-                name : '....',
-                description : '',
-                username : '',
-                idApiary: '',
-                hivePosX : '',
-                hivePosY : '',
-                sharingUser : []
-              };
-              this.ranges = [
-                {scale: 15, type: 'DAY'},
-                {scale: 30, type: 'DAY'},
-                {scale: 3, type: 'MONTH'},
-                {scale: 6, type: 'MONTH'}
-            ];
-            this.range = this.ranges[0];
-            this.message = '';
-            this.img = CONFIG.URL_FRONT + "assets/icons/next-button-4.png";
+        this.compteurHive = 0;
+        this.currentTab = 'notes';
+        this.hiveSelect = {
+            id: null,
+            name: '....',
+            description: '',
+            username: '',
+            idApiary: '',
+            hivePosX: '',
+            hivePosY: '',
+            sharingUser: []
+        };
+        this.ranges = [
+            { scale: 15, type: 'DAY' },
+            { scale: 30, type: 'DAY' },
+            { scale: 3, type: 'MONTH' },
+            { scale: 6, type: 'MONTH' }
+        ];
+        this.range = this.ranges[0];
+        this.message = '';
+        this.img = CONFIG.URL_FRONT + 'assets/icons/next-button-4.png';
     }
 
     ngOnInit() {
@@ -69,9 +69,9 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive());
         }
         console.log(this.rucheService.hiveSubject);
-        console.log(this.hiveSelect);
-        if  (!this.rucheService.hiveSubject.closed) {
-            this.rucheService.hiveSubject.subscribe( () => {}, () => {}, () => {
+        if (!this.rucheService.hiveSubject.closed) {
+            this.rucheService.hiveSubject.subscribe(() => {}, () => { }, () => {
+                console.log(this.rucheService.ruches);
                 this.rucheService.findRucheById(this.rucheService.getCurrentHive(), (hive) => {
                     this.hiveSelect = hive[0];
                     console.log(this.hiveSelect);
@@ -88,7 +88,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.message = $event;
     }
 
-    previousHive(){
+    previousHive() {
         if (this.compteurHive != 0 && this.compteurHive != -1) {
             this.compteurHive--;
             this.hiveSelect = this.rucheService.ruches[this.compteurHive];
@@ -100,7 +100,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     nextHive() {
         if (this.compteurHive != this.rucheService.ruches.length - 1) {
-             this.compteurHive++;
+            this.compteurHive++;
         }
         this.hiveSelect = this.rucheService.ruches[this.compteurHive];
         this.rucheService.saveCurrentHive(this.hiveSelect.id);
@@ -113,7 +113,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.recordService.setRange(this.range, this.rucheService.getCurrentHive());
     }
 
-    onTab(event : string){
+    onTab(event: string) {
         this.currentTab = event;
         console.log(this.currentTab);
         this.exeData();
@@ -121,12 +121,12 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     }
     exeData() {
-        if (this.currentTab.indexOf('notes') !=-1) {
-          this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive());
-        } else if(this.currentTab.indexOf('daily')!=-1) {
-          this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
-          this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
-        } else if (this.currentTab.indexOf('stock')!=-1) {
+        if (this.currentTab.indexOf('notes') != -1) {
+            this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive());
+        } else if (this.currentTab.indexOf('daily') != -1) {
+            this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
+            this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
+        } else if (this.currentTab.indexOf('stock') != -1) {
             if (this.dailyStockHoneyService.currentIdHive != this.rucheService.getCurrentHive()) {
                 this.dailyStockHoneyService.getDailyStockHoneyByHive(this.rucheService.getCurrentHive());
             }
@@ -134,14 +134,14 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                 console.log('calendrier');
                 this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
             }
-        } else if (this.currentTab.indexOf('hourly')!=-1) {
+        } else if (this.currentTab.indexOf('hourly') != -1) {
             if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
                 this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), MyDate.getRange());
             }
-        } else if (this.currentTab.indexOf('health')!=-1) {
-          this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
-        } else if (this.currentTab.indexOf('stack')!=-1) {
-            if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()){
+        } else if (this.currentTab.indexOf('health') != -1) {
+            this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
+        } else if (this.currentTab.indexOf('stack') != -1) {
+            if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
                 this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), MyDate.getRange());
             }
         }
