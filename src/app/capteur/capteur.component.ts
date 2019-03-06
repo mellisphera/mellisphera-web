@@ -125,16 +125,17 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.editCapteurCheckbox = (event.target.value === 'ruche');
     }
 
-/*     navToHive(idHive: string, idApiary: string) {
+    navToHive(idHive: string, idApiary: string) {
         this.rucherService.rucheService.saveCurrentHive(idHive);
+        console.log(idHive);
         this.rucherService.saveCurrentApiaryId(idApiary);
         this.rucherService.findRucherById(idApiary, (apiary) => {
             this.rucherService.rucher = apiary[0];
             this.rucherService.rucheService.getRucheByApiary(idApiary);
-            console.log(this.rucherService.rucheService.hiveSubject);
+            console.log(this.rucherService.rucheService.ruches);
             this._router.navigateByUrl('/ruche-detail');
         });
-    } */
+    }
 
     //CREATE CAPTEUR
     createCapteur() {
@@ -159,7 +160,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.capteurService.capteur.username = this.username;
         this.capteurService.capteur.reference = formValue.reference;
         this.capteurService.capteur.type = sensorType;
-        console.log(this.capteurService.capteur);
         this.initForm();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
             this.notifier.notify('success', 'Created sensor');
@@ -176,7 +176,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
         return this.newCapteurForm.get('reference');
     }
     getSensorType() {
-        console.log(this.newCapteurForm.get('type'));
         return this.newCapteurForm.get('type');
     }
 
@@ -207,7 +206,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
         }
         this.capteurService.capteur.description = formValue.description;
         this.capteurService.capteur.id = idTemp;
-        console.log(this.capteurService.capteur);
 
         this.initForm();
         this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
