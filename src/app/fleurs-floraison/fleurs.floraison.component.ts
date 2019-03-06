@@ -108,7 +108,7 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
     this.message = $event;
   }
   ngOnDestroy() {
-    this.fleursFloraisonService.subjectFlower.unsubscribe();
-    this.rucherService.rucherSubject.unsubscribe();
+/*     this.fleursFloraisonService.subjectFlower.unsubscribe();
+    this.rucherService.rucherSubject.unsubscribe(); */
   }
 }
