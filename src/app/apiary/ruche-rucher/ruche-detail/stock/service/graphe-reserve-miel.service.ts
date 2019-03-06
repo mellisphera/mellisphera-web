@@ -1,3 +1,4 @@
+import { MyDate } from './../../../../../class/MyDate';
 import { Injectable } from '@angular/core';
 import { EChartOption } from 'echarts';
 
@@ -21,14 +22,13 @@ export class GrapheReserveMielService {
                 backgroundColor: '#6a7985'
             }
         }
-        
     },
     legend : {
-        top:40
+        top: 40
       },
       toolbox: {
         top : 'middle',
-        orient : 'vertical', 
+        orient : 'vertical',
         feature: {
             dataZoom: {
                 yAxisIndex: 'none'
@@ -58,8 +58,8 @@ export class GrapheReserveMielService {
     grid: {
         left: '2%',
         right: '2%',
-        top:70,
-        bottom:0,
+        top: 70,
+        bottom: 0,
         containLabel: true
     },
     xAxis : [
@@ -68,7 +68,7 @@ export class GrapheReserveMielService {
             splitLine: {
                 show: false
             },
-            min: 'dataMin',
+            min: MyDate.getIsoFromDate(MyDate.calcLastYear(new Date())),
             max: 'dataMax'
         }
     ],

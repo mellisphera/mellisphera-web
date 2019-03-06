@@ -13,16 +13,22 @@
                           {{rucher.name}}
                   </option>
               </select>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newRucherModal" >New Apiary</button>
-              <button type="button" (click)="editRucherClicked()" class="crud btn btn-success  btn-lg" data-toggle="modal" data-target="#editRucher" style="border: none; background: none; ">
-                <i class="fa fa-edit fa-3x"></i>
+              <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newRucherModal" >New Apiary</button> -->
+              <button data-toggle="tooltip" data-html="true"
+              title="New apiary" data-toggle="modal"
+              style="margin-left: 98%; padding: 0;border: none; background: none;"
+              data-target="#newRucherModal" class="btn btn-success btn-lg">
+              <i class="fa fa-plus fa-2x"></i>
+            </button>
+              <button type="button" (click)="editRucherClicked()" class="crud btn btn-success btn-lg" data-toggle="modal" data-target="#editRucher" style="border: none; background: none; ">
+                <i class="fa fa-edit fa-2x"></i>
             </button>
             <button type="button" class="btn btn-warning btn-lg crud" style="padding: 0;border: none; background: none;" 
             mwlConfirmationPopover
             popoverTitle="Delete Apiary ?"
             placement="bottom"
             (confirm)="deleteRucher()">
-              <i class="fa fa-times fa-3x"></i>
+              <i class="fa fa-times fa-2x"></i>
             </button>
       </div>
     </div>

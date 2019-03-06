@@ -63,7 +63,7 @@ export class RucheService {
     console.log(this.hiveSubject);
   }
 
-   getRucheByApiary(idApiary: string){
+   getRucheByApiary(idApiary: string) {
       this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/username/' + idApiary);
       this.ruchesObs.subscribe(
         (data) => {

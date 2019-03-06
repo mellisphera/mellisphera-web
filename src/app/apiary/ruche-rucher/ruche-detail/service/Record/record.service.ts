@@ -11,6 +11,7 @@ import { Record } from '../../../../../_model/record';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { DataRange } from './data-range';
 import { MyDate } from '../../../../../class/MyDate';
+import { store } from '@angular/core/src/render3/instructions';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -37,11 +38,20 @@ export class RecordService {
   public currentIdHive: string;
   private templateSerie: any;
   public mergeOptionStack: any = null;
+  public mergeOptionStackApiary: any;
   private legendOption: Array<string>;
+  private subjectStackApiary: BehaviorSubject<string>;
   constructor(private http: HttpClient) {
     this.currentIdHive = null;
+    this.mergeOptionStackApiary = null;
     this.mergeOptionStack = {
       series: []
+    };
+    this.mergeOptionStackApiary = {
+      series : new Array(),
+      legend: {
+        data: new Array<string>()
+      }
     };
     this.loading = false;
     this.legendOption = [
@@ -102,6 +112,9 @@ export class RecordService {
       };
   }
 
+  setStackApiarySubject(idHive: string) {
+
+  }
   /**
    *
    *
@@ -129,45 +142,45 @@ export class RecordService {
             this.updateMerge();
             this.loading = !this.loading;
           } else {
-            console.log(hiveName);
-            console.log(this.templateSerie);
+            /* console.log(hiveName); */
             this.templateSerie.tInt.data = this.recArrrayTint;
             this.templateSerie.tInt.name = hiveName + 'Tint';
             this.legendOption.push(hiveName + 'Tint');
-            this.mergeOptionStack.series.push(this.templateSerie.tInt);
+            this.mergeOptionStackApiary.series.push(this.templateSerie.tInt);
 
             this.templateSerie.tExt.name = hiveName + 'Text';
             this.legendOption.push(hiveName + 'Text');
             this.templateSerie.tExt.data = this.recArrayText;
-            this.mergeOptionStack.series.push(this.templateSerie.tExt);
+            this.mergeOptionStackApiary.series.push(this.templateSerie.tExt);
 
             this.templateSerie.hInt.name = hiveName + 'Hint';
             this.templateSerie.hInt.data = this.recArrayHint;
             this.legendOption.push(hiveName + 'Hint');
-            this.mergeOptionStack.series.push(this.templateSerie.hInt);
+            this.mergeOptionStackApiary.series.push(this.templateSerie.hInt);
 
             this.templateSerie.hExt.name = hiveName + 'hext';
             this.templateSerie.hExt.data = this.recArrayHext;
             this.legendOption.push(hiveName + 'hext');
-            this.mergeOptionStack.series.push(this.templateSerie.hExt);
+            this.mergeOptionStackApiary.series.push(this.templateSerie.hExt);
 
             this.templateSerie.bInt.name = hiveName + 'B-int';
             this.templateSerie.bInt.data = this.recArrayBatteryInt;
-            this.mergeOptionStack.series.push(this.templateSerie.bInt);
+            this.mergeOptionStackApiary.series.push(this.templateSerie.bInt);
             this.legendOption.push(hiveName + 'B-int');
 
             this.templateSerie.bExt.name = hiveName + 'B-Ext';
             this.templateSerie.bExt.data = this.recArrayBatteryExt;
-            this.mergeOptionStack.series.push(this.templateSerie.bExt);
+            this.mergeOptionStackApiary.series.push(this.templateSerie.bExt);
             this.legendOption.push(hiveName + 'B-Ext');
+
+            this.mergeOptionStackApiary.legend.data = this.legendOption;
+            console.log(this.templateSerie);
+            console.log(this.mergeOptionStackApiary);
           }
           /**
            * Pourquoi le graph ne s'affiche pas
            * Pourquoi ajouter une 2eme ruche remplace la 1ère également
            */
-          this.mergeOptionStack.legend.data = this.legendOption;
-          console.log(this.mergeOptionStack);
-          console.log(this.legendOption);
         }
       }
     );
