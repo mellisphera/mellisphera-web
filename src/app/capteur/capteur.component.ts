@@ -125,7 +125,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.editCapteurCheckbox = (event.target.value === 'ruche');
     }
 
-/*     navToHive(idHive: string, idApiary: string) {
+    navToHive(idHive: string, idApiary: string) {
         this.rucherService.rucheService.saveCurrentHive(idHive);
         this.rucherService.saveCurrentApiaryId(idApiary);
         this.rucherService.findRucherById(idApiary, (apiary) => {
@@ -134,7 +134,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
             console.log(this.rucherService.rucheService.hiveSubject);
             this._router.navigateByUrl('/ruche-detail');
         });
-    } */
+    }
 
     //CREATE CAPTEUR
     createCapteur() {

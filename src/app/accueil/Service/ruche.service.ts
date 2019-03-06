@@ -184,6 +184,7 @@ export class RucheService {
    * @memberof RucheService
    */
   findRucheById(idHive: string, next?) {
+    console.log(this.ruches);
     next(this.ruches.filter(hive => hive.id === idHive));
   }
 }
