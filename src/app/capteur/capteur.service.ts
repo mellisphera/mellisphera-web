@@ -44,7 +44,7 @@ export class CapteurService {
             [
                 {'reference' : '41', 'type' : 'T2'},
                 {'reference' : '42', 'type' : 'T_HR'},
-                {'reference' : '43', 'type' : 'WEIGHT'}
+                {'reference' : '43', 'type' : 'weight'}
 
             ];
         this.initCapteur();
