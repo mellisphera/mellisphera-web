@@ -68,7 +68,6 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         if (!this.observationService.obsHiveSubject.closed) {
             this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive());
         }
-        console.log(this.rucheService.hiveSubject);
         if (!this.rucheService.hiveSubject.closed) {
             this.rucheService.hiveSubject.subscribe(() => {}, () => { }, () => {
                 console.log(this.rucheService.ruches);
