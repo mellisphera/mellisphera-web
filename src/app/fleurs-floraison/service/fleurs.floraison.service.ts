@@ -83,7 +83,7 @@ export class    FleursFloraisonService {
                 [date.getFullYear()+'-'+element.dateThFind, element.nom]
             ]);
             this.templateSerie.name = element.nom;
-            this.templateSerie.data = this.tabFleurByDateGraph[this.tabFleurByDateGraph.length-1];
+            this.templateSerie.data = this.tabFleurByDateGraph[this.tabFleurByDateGraph.length - 1];
             this.mergeOption.series.push(this.templateSerie);
             this.nomFleur.push(element.nom);
             this.cleanTemplate();
@@ -137,7 +137,7 @@ export class    FleursFloraisonService {
             data: []
         };
     }
-    cleanMerge(){
+    cleanMerge() {
         this.mergeOption = {
             series : new Array(),
             yAxis: {

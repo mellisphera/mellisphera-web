@@ -60,6 +60,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             { scale: 6, type: 'MONTH' }
         ];
         this.range = this.ranges[0];
+        this.recordService.setRange(this.range);
         this.message = '';
         this.img = CONFIG.URL_FRONT + 'assets/icons/next-button-4.png';
     }
@@ -109,7 +110,8 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     selectRange() {
         console.log(this.range);
-        this.recordService.setRange(this.range, this.rucheService.getCurrentHive());
+        this.recordService.setRange(this.range);
+        this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive());
     }
 
     onTab(event: string) {
@@ -135,13 +137,13 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             }
         } else if (this.currentTab.indexOf('hourly') != -1) {
             if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
-                this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), MyDate.getRange());
+                this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive());
             }
         } else if (this.currentTab.indexOf('health') != -1) {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
         } else if (this.currentTab.indexOf('stack') != -1) {
             if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
-                this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), MyDate.getRange());
+                this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive());
             }
         }
         console.log(this.hiveSelect);

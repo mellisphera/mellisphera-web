@@ -35,7 +35,8 @@ export class StackApiaryComponent implements OnInit {
     } else {
       this.render.addClass(event.target, 'active');
       this.arrayHiveSelect.push(selectHive);
-      this.recordService.setRange({ scale: 15, type: 'DAY' }, selectHive.id, selectHive.name);
+      this.recordService.setRange({ scale: 15, type: 'DAY' });
+      this.recordService.getRecordByIdHive(selectHive.id, selectHive.name);
     }
   }
 
