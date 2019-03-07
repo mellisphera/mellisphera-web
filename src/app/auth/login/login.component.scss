@@ -8,24 +8,28 @@
 }
 
 #body {
-	background: #3D3D3F url('../../../assets/mellispherfa.png') no-repeat center center fixed;
-    -webkit-background-size: 80%;
+	background: #3D3D3F url('../../../assets/background/rucher_login.jpg') no-repeat center fixed;
+     -webkit-background-size: 80%;
     -moz-background-size: 80%;
 	-o-background-size: 80%;
 	background-size: 80%;
+	background-size: cover;
 	height: 100vh;
 }
 
 .login-form {
 	margin: 100px auto;
-    max-width: 446px;
+	max-width: 446px;
     //background-color: rgba(254,254,254,0.4)
+}
+.login-form, form, input{
+	background-color: rgba(100,100,100,0.3);
 }
 
 form[role=login] {
 	font: 18px/2.2em Lato, serif;
 	//color: #b4b4b4;
-	background: #fff;
+	// background: #fff;
 	max-width: 446px;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -41,6 +45,7 @@ form[role=login] {
 	}
 	form[role=login] input,
 	form[role=login] button {
+		color: white;
 		font-size: 16px;
 		margin: 5px 0;
 	}
@@ -69,7 +74,7 @@ form[role=login] {
 	}
 		form[role=login] > div a {
 			font-size: 15px;
-			color: #007fff;
+			color: white;
         }
         
 .register{
@@ -86,10 +91,10 @@ input.ng-invalid.ng-dirty {
     color: #b4b4b4;
 }
 input.ng-valid{
-	border-color: green;
+	border: 3px solid green;
 }
 .login-form{
-	box-shadow: 5px 10px black;
+	box-shadow: 5px 8px black;
 }
 button[type="submit"]:active{
 	border-color: green;
@@ -106,3 +111,7 @@ button[type="submit"]:active{
 	color: red;
 	font-size: small;
 }
+/* #content{
+	margin-top: 150px;
+	margin-left: 150px;
+} */
