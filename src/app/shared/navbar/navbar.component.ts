@@ -126,7 +126,6 @@ export class NavbarComponent implements OnInit{
         switch (location) {
             case '/ruche-et-rucher':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
-                this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/home':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
@@ -143,6 +142,9 @@ export class NavbarComponent implements OnInit{
                 break;
             case '/stack-apiary':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+                break;
+            case '/apiary-notes':
+                this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
                 break;
             default:
         }
