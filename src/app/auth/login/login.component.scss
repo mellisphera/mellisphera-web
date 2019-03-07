@@ -45,7 +45,6 @@ form[role=login] {
 	}
 	form[role=login] input,
 	form[role=login] button {
-		color: white;
 		font-size: 16px;
 		margin: 5px 0;
 	}
@@ -110,6 +109,12 @@ button[type="submit"]:active{
 	text-align: left;
 	color: red;
 	font-size: small;
+}
+input[type="password"], input[type="email"]{
+	color: white;
+}
+input[type="password"]:focus,input[type="email"]:focus{
+	color: black;
 }
 /* #content{
 	margin-top: 150px;
