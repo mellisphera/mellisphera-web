@@ -1,10 +1,10 @@
 import { NotifierService } from 'angular-notifier';
-import { Component, OnInit,Input,Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserloggedService } from '../../userlogged.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthService } from '../Service/auth.service';
-import { FormGroup, FormControl, Validators ,ReactiveFormsModule,FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { Login } from '../../_model/login';
 import { SignupService } from '../../admin/service/signup.service';
 
@@ -15,63 +15,63 @@ import { SignupService } from '../../admin/service/signup.service';
 })
 export class LoginComponent implements OnInit {
 
-  formLogin : boolean;
+  formLogin: boolean;
   loginErrorMsg: boolean;
   //@Output() messageEvent = new EventEmitter<string>();
-  
-  users : Login[];
+
+  users: Login[];
 
   public username;
   public password;
   myform: FormGroup;
   //loginForm: FormGroup;
-  message : string;
- 
+  message: string;
 
-  signupForm : FormGroup;
-  success : boolean;
+
+  signupForm: FormGroup;
+  success: boolean;
   private readonly notif: NotifierService;
   constructor(private formBuilder: FormBuilder,
-              public router: Router,
-              private data : UserloggedService,
-              public authService: AuthService,
-              public signupService : SignupService,
-              private notifier: NotifierService) {
+    public router: Router,
+    private data: UserloggedService,
+    public authService: AuthService,
+    public signupService: SignupService,
+    private notifier: NotifierService) {
 
-    this.loginErrorMsg=false;
+    this.loginErrorMsg = false;
     this.formLogin = true;
     this.notif = notifier;
     this.myform = this.formBuilder.group({
       'username': ['', Validators.required],
       'password': ['', Validators.required]
-  });
+    });
 
   }
 
   ngOnInit() {
     this.innitForm();
-    if(this.authService.isAuthenticated){
+    if (this.authService.isAuthenticated) {
       this.router.navigate(['/home']);
     }
     this.myform = new FormGroup({
-         username: new FormControl(''),
-         password: new FormControl('')
-  })
+      username: new FormControl(''),
+      password: new FormControl('')
+    })
   }
 
-  innitForm(){
+  innitForm() {
     this.signupForm = this.formBuilder.group({
-      'email':[null,Validators.required],
-      'password':[null,Validators.compose([
-        ,Validators.minLength(6),
+      'email': [null, Validators.required],
+      'password': [null, Validators.compose([
+        , Validators.minLength(6),
         Validators.required
       ])]
     });
   }
   receiveMessage($event) {
-      this.message = $event;
+    this.message = $event;
   }
-  signup(){
+  signup() {
     if (this.signupForm.valid) {
       const data = this.signupForm.value;
       console.log(data);
@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
       this.signupService.signupUser(() => {
         this.authService.login.email = this.signupService.user.email;
         this.authService.login.password = this.signupService.user.password;
-        this.notif.notify('success','Sign up successful !');
+        this.notif.notify('success', 'Sign up successful !');
         this.success = true;
         this.innitForm();
         setTimeout(() => {
@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit {
     console.log(this.authService.login)
     this.authService.signIn();
   }
-  currentUser(){
+  currentUser() {
     return JSON.parse(localStorage.getItem('currentUser'));
   }
 
