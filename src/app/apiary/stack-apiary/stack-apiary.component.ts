@@ -32,6 +32,7 @@ export class StackApiaryComponent implements OnInit {
       this.render.removeClass(event.target, 'active');
       const index = this.arrayHiveSelect.indexOf(arrayFilter[0]);
       this.arrayHiveSelect.splice(index, 1);
+      this.recordService.removeHiveStack(selectHive.name);
     } else {
       this.render.addClass(event.target, 'active');
       this.arrayHiveSelect.push(selectHive);

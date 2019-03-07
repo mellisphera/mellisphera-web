@@ -56,7 +56,7 @@ export class    FleursFloraisonService {
         );
     }
 
-    initFleurObservees(){
+    initFleurObservees() {
         this.newFlower = {
             id : '',
             nom : '',
@@ -91,11 +91,11 @@ export class    FleursFloraisonService {
         this.mergeOption.legend.data = this.nomFleur;
         this.mergeOption.yAxis.data = this.nomFleur;
     }
-    //Service permettant de récuperer les fleurs du rucher selectionné d'un utilisateur x
-    getUserFleur(idRucher){
+    // Service permettant de récuperer les fleurs du rucher selectionné d'un utilisateur x
+    getUserFleur(idRucher) {
         console.log(idRucher);
         this.tabFleurByDateGraph = new Array();
-        this.fleursObs = this.http.get<any[]>(CONFIG.URL+'flowersOb/'+ idRucher);
+        this.fleursObs = this.http.get<any[]>(CONFIG.URL + 'flowersOb/' + idRucher);
         this.fleursObs.subscribe(
             (data)=>{
                 this.fleursByRucher = data;
@@ -107,11 +107,10 @@ export class    FleursFloraisonService {
             ()=>{
                 this.cleanTemplate();
                 this.cleanMerge();
-                if(this.fleursByRucher.length > 0){
+                if (this.fleursByRucher.length > 0) {
                     this.sortTheoricalFlower();
                     this.subjectFlower.complete();
-                }
-                else{
+                } else {
                     //throw 'Empty';
                     console.log("Aucune");
                 }
