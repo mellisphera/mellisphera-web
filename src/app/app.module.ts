@@ -63,6 +63,7 @@ import { NotifierModule } from 'angular-notifier';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
+import { ApiaryNotesComponent } from './apiary-notes/apiary-notes.component';
 
 
 
@@ -88,6 +89,7 @@ import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.compone
     HomeComponent,
     Erreur404ComponentComponent,
     StackApiaryComponent,
+    ApiaryNotesComponent,
   ],
   imports: [
     BrowserModule,
