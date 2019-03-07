@@ -74,7 +74,7 @@ export class    FleursFloraisonService {
             photo : ''
         };
     }
-    sortTheoricalFlower() {
+    sortTheoricalFlower(){
         this.nomFleur = [];
         const date = new Date();
         this.fleursByRucher.forEach(element => {
@@ -92,7 +92,7 @@ export class    FleursFloraisonService {
         this.mergeOption.yAxis.data = this.nomFleur;
     }
     //Service permettant de récuperer les fleurs du rucher selectionné d'un utilisateur x
-    getUserFleur(idRucher) {
+    getUserFleur(idRucher){
         console.log(idRucher);
         this.tabFleurByDateGraph = new Array();
         this.fleursObs = this.http.get<any[]>(CONFIG.URL+'flowersOb/'+ idRucher);
@@ -107,7 +107,7 @@ export class    FleursFloraisonService {
             ()=>{
                 this.cleanTemplate();
                 this.cleanMerge();
-                if(this.fleursByRucher.length > 0) {
+                if(this.fleursByRucher.length > 0){
                     this.sortTheoricalFlower();
                     this.subjectFlower.complete();
                 }

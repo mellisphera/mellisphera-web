@@ -2,6 +2,7 @@ export class MyDate {
     private date: Date;
     /**
      *
+     *
      * @static
      * @param {Date} [min]
      * @returns {Date[]}
@@ -14,6 +15,7 @@ export class MyDate {
         } else {
             start = min;
         }
+        console.log(new Array(start, new Date()));
         return new Array(start, new Date());
     }
 
@@ -43,11 +45,6 @@ export class MyDate {
         return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
     }
 
-    /**
-     *Creates an instance of MyDate.
-     * @param {Date} date
-     * @memberof MyDate
-     */
     constructor(date: Date) {
         this.date = new Date(date);
     }

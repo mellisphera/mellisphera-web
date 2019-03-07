@@ -23,7 +23,7 @@ export class StackApiaryComponent implements OnInit {
 
 
   ngOnInit() {
-    
+
   }
 
   selectHive(selectHive: RucheInterface, event: MouseEvent) {

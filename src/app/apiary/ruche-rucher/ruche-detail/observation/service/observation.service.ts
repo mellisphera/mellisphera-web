@@ -35,12 +35,8 @@ export class ObservationService {
   }
 
   getObservationByIdHive(idHive: string) {
-    this.http.get<Observation[]>(CONFIG.URL + 'report/hive/' + idHive).map((data) => {
-      data.sort((a, b) => {
-        return (a.date < b.date) ? 1 : -1;
-      });
-      return data;
-    }).subscribe(
+    this.observationsObs = this.http.get<Observation[]>(CONFIG.URL + 'report/hive/' + idHive);
+    this.observationsObs.subscribe(
       (data) => {
         this.observationsHive = data;
         this.obsHiveSubject.next(data);
@@ -56,13 +52,7 @@ export class ObservationService {
   }
 
   getObservationByIdApiary(idApiary: string) {
-    this.http.get<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary).map((data) => {
-      data.sort((a, b) => {
-        return (a.date < b.date) ? 1 : -1;
-      });
-      return data;
-    })
-    .subscribe(
+    this.http.get<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary).subscribe(
       (data) => {
         this.observationsApiary = data;
         this.obsApiarySubject.next(data);
