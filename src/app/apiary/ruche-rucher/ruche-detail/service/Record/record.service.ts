@@ -86,28 +86,28 @@ export class RecordService {
             this.mapRecord(() => {
               this.cleanTemplate();
               this.templateSerie.tInt.data = this.recArrrayTint;
-              this.templateSerie.tInt.name = hiveName + 'Tint';
-              this.legendOption.push(hiveName + 'Tint');
+              this.templateSerie.tInt.name = hiveName + '-Tint';
+              this.legendOption.push(hiveName + '-Tint');
   
-              this.templateSerie.tExt.name = hiveName + 'Text';
-              this.legendOption.push(hiveName + 'Text');
+              this.templateSerie.tExt.name = hiveName + '-Text';
+              this.legendOption.push(hiveName + '-Text');
               this.templateSerie.tExt.data = this.recArrayText;
   
-              this.templateSerie.hInt.name = hiveName + 'Hint';
+              this.templateSerie.hInt.name = hiveName + '-Hint';
               this.templateSerie.hInt.data = this.recArrayHint;
-              this.legendOption.push(hiveName + 'Hint');
+              this.legendOption.push(hiveName + '-Hint');
   
-              this.templateSerie.hExt.name = hiveName + 'hext';
+              this.templateSerie.hExt.name = hiveName + '-hext';
               this.templateSerie.hExt.data = this.recArrayHext;
-              this.legendOption.push(hiveName + 'hext');
+              this.legendOption.push(hiveName + '-hext');
   
-              this.templateSerie.bInt.name = hiveName + 'B-int';
+              this.templateSerie.bInt.name = hiveName + '-B_int';
               this.templateSerie.bInt.data = this.recArrayBatteryInt;
-              this.legendOption.push(hiveName + 'B-int');
+              this.legendOption.push(hiveName + '-B_int');
   
-              this.templateSerie.bExt.name = hiveName + 'B-Ext';
+              this.templateSerie.bExt.name = hiveName + '-B_Ext';
               this.templateSerie.bExt.data = this.recArrayBatteryExt;
-              this.legendOption.push(hiveName + 'B-Ext');
+              this.legendOption.push(hiveName + '-B_Ext');
   
               this.mergeOptionStackApiary.series.push(this.templateSerie.tInt);
               this.mergeOptionStackApiary.series.push(this.templateSerie.tExt);
@@ -122,11 +122,24 @@ export class RecordService {
           }
           /**
            * Pourquoi le graph ne s'affiche pas
-           * Pourquoi ajouter une 2eme ruche remplace la 1ère également
            */
         }
       }
     );
+  }
+
+  /**
+   *
+   * @param {string} hiveName
+   * @memberof RecordService
+   * @description Supprime les ruche déselectionnée du graph
+   */
+  removeHiveStack(hiveName: string) {
+    this.mergeOptionStackApiary.series.filter(serie => hiveName === serie.name.split('-')[0]).forEach(element => {
+      const index = this.mergeOptionStackApiary.series.indexOf(element);
+      this.mergeOptionStackApiary.series.splice(index, 1);
+      this.legendOption.splice(index, 1);
+    });
   }
 
 
@@ -149,9 +162,9 @@ export class RecordService {
   updateMergeStack() {
     this.mergeOptionStackApiary = {
       legend: {
-        data: new Array()
+        data: []
       },
-      series: new Array(),
+      series: [],
     };
   }
 

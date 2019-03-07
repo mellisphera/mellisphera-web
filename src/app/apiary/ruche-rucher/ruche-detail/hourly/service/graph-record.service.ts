@@ -52,7 +52,7 @@ export class GraphRecordService {
         containLabel: true
     },
     dataZoom: [
-        {   
+        {
             show: true,
             realtime: true,
             start: 0,
@@ -60,13 +60,14 @@ export class GraphRecordService {
         },
         {
             type: 'inside',
+            realtime: true,
             filterMode: 'empty'
         },
         {
             type: 'slider',
             yAxisIndex: 0,
             filterMode: 'empty',
-            left:'left'
+            left: 'left'
         },
         {
             type: 'slider',

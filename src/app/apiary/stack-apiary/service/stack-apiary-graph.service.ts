@@ -8,7 +8,7 @@ export class StackApiaryGraphService {
 
   options: object;
   constructor() {
-    this.options  = {
+    this.options = {
       title: {
         text: 'Stack',
         x: 'center',
@@ -22,14 +22,14 @@ export class StackApiaryGraphService {
       },
       legend: {
         orient: 'horizontal',
-        y: '2%'
-  /*       x: '5%',
-        y: '2%' */
+        y: '2%',
+        /*       x: '5%',
+              y: '2%' */
       },
       toolbox: {
         orient: 'horizontal',
         //right: '0',
-  /*       left: '80%', */
+        /*       left: '80%', */
         feature: {
           dataZoom: {
             yAxisIndex: 'none',
@@ -78,22 +78,6 @@ export class StackApiaryGraphService {
         { x: '3%', y: '54%', width: '93%', height: '33%' },
         { x: '3%', y: '96%', width: '93%', height: '20%' },
       ],
-      /*visualMap: {
-        top: 10,
-        right: 10,
-        seriesIndex : [4,5],
-        pieces: [{
-            gt: 0,
-            lte: 20,
-            color: 'red'
-        }],
-        target: {
-          outOfRange: {
-              color: ['red'],
-              symbolSize: [60, 200]
-          }
-      },
-        },*/
       xAxis: [
         {
           //Temp
@@ -149,7 +133,8 @@ export class StackApiaryGraphService {
           inverse: false
         }
       ],
-      // series: []
+      series: [
+      ]
     };
   }
 }
