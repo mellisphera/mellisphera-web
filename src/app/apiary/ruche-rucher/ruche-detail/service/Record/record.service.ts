@@ -109,6 +109,7 @@ export class RecordService {
               this.templateSerie.bExt.data = this.recArrayBatteryExt;
               this.legendOption.push(hiveName + 'B-Ext');
   
+              this.mergeOptionStackApiary.legend.data = this.legendOption;
               this.mergeOptionStackApiary.series.push(this.templateSerie.tInt);
               this.mergeOptionStackApiary.series.push(this.templateSerie.tExt);
               this.mergeOptionStackApiary.series.push(this.templateSerie.hInt);
@@ -116,7 +117,6 @@ export class RecordService {
               this.mergeOptionStackApiary.series.push(this.templateSerie.bInt);
               this.mergeOptionStackApiary.series.push(this.templateSerie.bExt);
   
-              this.mergeOptionStackApiary.legend.data = this.legendOption;
               console.log(this.mergeOptionStackApiary);
             });
           }
@@ -149,7 +149,9 @@ export class RecordService {
   updateMergeStack() {
     this.mergeOptionStackApiary = {
       legend: {
-        data: new Array()
+        data: new Array(),
+        orient: 'horizontal',
+        y: '2%'
       },
       series: new Array(),
     };
