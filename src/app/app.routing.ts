@@ -1,3 +1,4 @@
+import { ApiaryNotesComponent } from './apiary-notes/apiary-notes.component';
 import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
 import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
@@ -43,7 +44,8 @@ const routes: Routes = [
     { path: 'home', canActivate : [AuthGuard], component: HomeComponent},
     { path: 'admin', canActivate : [AuthGuard], component : AdminComponent},
     { path: 'stack-apiary', canActivate : [AuthGuard], component : StackApiaryComponent},
-    { path : '***REMOVED***', component : DemoComponent},
+    { path: '***REMOVED***', component : DemoComponent},
+    { path: 'apiary-notes', canActivate: [AuthGuard], component : ApiaryNotesComponent},
     { path: '**', component: Erreur404ComponentComponent },
     { path: '', redirectTo: '/', pathMatch: 'full' }
 ];
