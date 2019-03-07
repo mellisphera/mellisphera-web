@@ -112,5 +112,8 @@ export class ApiaryNotesComponent implements OnInit {
     this.updateRucherInput = false;
     this.initForm();
   }
+  receiveMessage($event) {
+    this.message = $event;
+  }
 
 }
