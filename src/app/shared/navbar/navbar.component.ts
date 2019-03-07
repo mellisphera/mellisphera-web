@@ -255,7 +255,6 @@ export class NavbarComponent implements OnInit{
             this.rucherService.emitApiarySubject();
             this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
             this.notifier.notify('success', 'Created Apiary');
-            this.file = null;
             this.initForm();
         });
     }

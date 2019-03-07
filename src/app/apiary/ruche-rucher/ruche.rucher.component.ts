@@ -116,12 +116,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     this.observationForm.setValue(donnée);
     }
 
-  /**
-   *
-   * @param {RucheInterface} ruche
-   * @param {number} index
-   * @memberof RucheRucherComponent
-   */
+  //Pour effacer une ruche
   deleteRuche(ruche: RucheInterface, index: number) {
     this.rucheService.deleteRuche(index, ruche).subscribe(() => {}, () => {}, () => {
       this.rucheService.ruches.splice(index, 1);
@@ -144,17 +139,10 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     }, () => {}, () => {
       console.log(this.rucheService.ruches);
       this.rucheService.emitHiveSubject();
-      this.notify.notify('success', 'Crated Hive');
+      this.notify.notify('success','Crated Hive');
     });
   }
 
-  /**
-   *
-   *
-   * @param {RucheInterface} ruche
-   * @param {number} index
-   * @memberof RucheRucherComponent
-   */
   onSelectRuche(ruche: RucheInterface, index: number) {
     this.hiveIndex = index;
     this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
@@ -223,13 +211,9 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   *
-   *
-   * @param {number} index
-   * @param {Observation} obsApiary
-   * @memberof RucheRucherComponent
-   */
+  /*selectTypeToMv(event) {
+    this.typeToMv = event.target.value;
+  }*/
   deleteObs(index: number, obsApiary: Observation) {
     this.observationService.deleteObservation(obsApiary.id).subscribe(() => {}, () => {}, () => {
       this.observationService.observationsApiary.splice(index,1);

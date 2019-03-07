@@ -20,6 +20,12 @@ export class StackApiaryGraphService {
           animation: false
         }
       },
+      legend: {
+        orient: 'horizontal',
+        y: '2%'
+  /*       x: '5%',
+        y: '2%' */
+      },
       toolbox: {
         orient: 'horizontal',
         //right: '0',
@@ -143,7 +149,7 @@ export class StackApiaryGraphService {
           inverse: false
         }
       ],
-       series: []
+      // series: []
     };
   }
 }
