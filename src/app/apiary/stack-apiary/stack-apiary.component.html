@@ -3,8 +3,8 @@
         <app-sidebar></app-sidebar>
         <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
     </div>
-    <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
     <div class="main-panel">
+        <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
         <div class="content">
 
             <div class="row">
@@ -15,13 +15,15 @@
                         </div>
                         <div class="panel-body">
                             <ul id="hive-list">
-                                <li *ngFor="let hive of rucheService.ruches" (click)="selectHive(hive, $event)">{{hive.name}}</li>
+                                <li *ngFor="let hive of rucheService.ruches" (click)="selectHive(hive, $event)">
+                                    {{hive.name}}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                    <div id="stackGraph" echarts [options]="stackApiaryGraph.options" [merge]="recordService.mergeOptionStackApiary" [autoResize]="true"></div>
+                    <div id="stackGraph" echarts [options]="stackApiaryGraph.options"
+                        [merge]="recordService.mergeOptionStackApiary" [autoResize]="true"></div>
                 </div>
             </div>
 
