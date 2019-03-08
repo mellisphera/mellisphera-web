@@ -8,7 +8,6 @@ import { RucheRucherComponent } from './apiary/ruche-rucher/ruche.rucher.compone
 import { MeteoComponent } from './meteo/meteo.component';
 
 import { LoginComponent } from './auth/login/login.component';
-import { AccueilComponent } from './accueil/accueil.component';
 import { AuthGuardService as AuthGuard } from './auth/auth-guard.service';
 import { CapteurComponent } from './capteur/capteur.component';
 import { RapportComponent } from './rapport/rapport.component';
@@ -20,21 +19,8 @@ import { RucheDetailComponent } from './apiary/ruche-rucher/ruche-detail/ruche.d
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 
 const routes: Routes = [
-   /* { path: '',             component: LoginComponent },
-    { path: 'login',          component: LoginComponent },
-    { path: 'dashboard',      component: HomeComponent },
-  //{ path: 'dashboard',      component: DashboardComponent },
-    { path: 'user',           component: UserComponent },
-    { path: 'table',          component: TablesComponent },
-    { path: 'typography',     component: TypographyComponent },
-    { path: 'icons',          component: IconsComponent },
-    { path: 'maps',           component: MapsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
-    { path: 'upgrade',        component: UpgradeComponent },
-    { path: '',               redirectTo: 'dashboard', pathMatch: 'full' }*/
     { path: '',                 component: LoginComponent },
     { path: 'login',            component: LoginComponent },
-    { path: 'accueil',          canActivate : [AuthGuard], component: AccueilComponent},
     { path: 'ruche-et-rucher',  canActivate : [AuthGuard], component: RucheRucherComponent },
     { path: 'capteurs',         canActivate : [AuthGuard], component: CapteurComponent },
     { path: 'meteo',            canActivate : [AuthGuard], component: MeteoComponent },
