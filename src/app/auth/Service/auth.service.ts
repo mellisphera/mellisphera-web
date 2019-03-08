@@ -1,7 +1,7 @@
 import { UserloggedService } from './../../userlogged.service';
   import { Injectable, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
 
 import { Login } from '../../_model/login';
@@ -34,7 +34,7 @@ export class AuthService {
   constructor(private router: Router,
               private http : HttpClient,
               private tokenService : AtokenStorageService) {
-                this.login = { email : "", password : ""};
+                this.login = { email : '', password : ''};
                 this.errLogin = false;
                 this.isAuthenticated = false;
               }
