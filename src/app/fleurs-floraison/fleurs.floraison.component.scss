@@ -21,17 +21,17 @@
   //Met la photo en 1er plan
   z-index: 2;
 }
-.modal-body{
+/* .modal-body{
   padding: 0px;
-}
+} */
 button{
   margin-right: 8px;
 }
-td,th{
+/* td,th{
   width: 10%;
   text-align: center;
   padding: 0px;
-}
+} */
 .endtTD{
   display: flex;
   justify-content: center;
@@ -78,4 +78,7 @@ input[name="mois"]{
 .selectStyle{
   display: inline-block;
   width: 50%;
+}
+input[type="text"]{
+  max-width: 100%;
 }
