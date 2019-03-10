@@ -59,9 +59,9 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+/*     this.menuItems = ROUTES.filter(menuItem => menuItem);
     const body = document.getElementsByTagName('body')[0];
-    body.classList.add('nav-open');
+    body.classList.add('nav-open'); */
   }
   isMobileMenu() {
     if (window.innerWidth > 991) {

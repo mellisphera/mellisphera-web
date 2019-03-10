@@ -100,7 +100,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         switch (colonne) {
             case 'hive':
                 this.capteurService.capteursByUser.sort((a, b) => {
-                    return (a.hiveName > b.hiveName) ? 1 : -1;
+                    return (a.apiaryName > b.apiaryName) ? 1 : -1;
                 });
                 break;
             case 'type':
