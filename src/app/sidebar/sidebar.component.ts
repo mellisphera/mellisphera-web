@@ -63,7 +63,17 @@ export class SidebarComponent implements OnInit {
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('nav-open'); */
   }
+  
   isMobileMenu() {
+<<<<<<< HEAD
+    if ($(window).width() > 991) {
+        return false;
+    }
+    return true;
+  };
+  goAccueil(){
+    this.router.navigate(['home']);
+=======
     if (window.innerWidth > 991) {
       return false;
     }
@@ -77,6 +87,7 @@ export class SidebarComponent implements OnInit {
     const body = document.getElementsByTagName('body')[0];
     console.log(body);
     body.classList.remove('nav-open');
+>>>>>>> e2dbfd1f1ace96a6caf2dcd0849b6348f3ba8f45
   }
 
   logout() {
