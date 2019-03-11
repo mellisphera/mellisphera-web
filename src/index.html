@@ -25,6 +25,26 @@
    
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125989472-2"></script>
+  <style media="screen">
+    #loader {
+      position: absolute;
+      display: block;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 1;
+      -webkit-transform: translate3d(0, -50%, 0);
+      -moz-transform: translate3d(0, -50%, 0);
+      -o-transform: translate3d(0, -50%, 0);
+      -ms-transform: translate3d(0, -50%, 0);
+      transform: translate3d(0, -50%, 0);
+      text-align: center;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      top: 50%; }
+    </style>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -42,7 +62,7 @@
 </head>
 <body>
   <app-root>
-     <!-- <div id="loader"><img src="assets/img/loader-preview.svg" alt="loading"></div>-->
+      <div id="loader"><img src="assets/img/loader-preview.svg" alt="loading"></div>
   </app-root>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
