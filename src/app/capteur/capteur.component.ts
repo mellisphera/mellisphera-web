@@ -96,7 +96,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.message = $event;
     }
 
-    sortSensors(colonne: string, stock?: boolean) {
+    sortSensors(colonne: string) {
         switch (colonne) {
             case 'hive':
                 this.capteurService.capteursByUser.sort((a, b) => {
