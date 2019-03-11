@@ -23,14 +23,11 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/animate.css/animate.min.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.scss",
               "src/assets/sass/light-bootstrap-dashboard.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
-              "node_modules/bootstrap/dist/js/bootstrap.js",
-              "node_modules/bootstrap-notify/bootstrap-notify.js"
             ]
           },
           "configurations": {

@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
 
   ngAfterContentInit(): void {
     document.querySelector('body').className = 'login';
-    
   }
 
   innitForm() {

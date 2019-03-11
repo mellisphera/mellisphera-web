@@ -6,11 +6,14 @@
 	        box-sizing: border-box;
 	outline: none;
 }
-#login{
+
+#body {
+	/* background: #3D3D3F url('../../../assets/background/rucher_login.jpg') no-repeat center fixed; */
      -webkit-background-size: 80%;
     -moz-background-size: 80%;
 	-o-background-size: 80%;
 	background-size: 80%;
+	background-size: cover;
 }
 
 .login-form {

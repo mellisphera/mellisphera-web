@@ -1,57 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
-/* @import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import "../node_modules/angular-notifier/styles";
 
 .sidebar,.sidebar-wrapper{
-    width: 70px;
+    width: 70px !important;
 }
 .sidebar{
     background-color: blue;
 }
 .main-panel{
-    width: calc(100% - 72px);
+    width: calc(100% - 72px) !important;
 }
 .nav-open .main-panel{
     transform: translate3d(-60px, 0, 0) !important;
 }
-<<<<<<< HEAD
 .login{
-     background: url('./assets/background/rucher_login.jpg') no-repeat center fixed;
-     background-size: cover;
+    background: url('./assets/background/rucher_login.jpg') no-repeat center;
+    background-size: cover;
 }
-=======
-
-<<<<<<< HEAD
-@media screen and (max-width : 991px){
-    /* Quand la sidebar est caché */
-/*     .main-panel{
-        width: 100%;
-    }
-    .content{
-        width: 100%;
-    }
-    navbar-cmp nav{
-        left: 0px;
-        width: 100%;
-        transform: translate3d(-60px, 0, 0) !important;
-    }
-    .nav-open .main-panel{
-        transform: translate3d(-60px, 0, 0) !important;
-    }
-    .row{
-        margin-right: 0px !important;
-        margin-left: 0px !important;
-    }
-    .col-sm-12 {
-        padding-right: 0px !important;
-        padding-left: 0px !important;
-    }
-    .navbar-toggle .icon-bar{
-        border: 1px solid black !important;
-    }
-} */
-=======
->>>>>>> c8792d978e443616f1af1850378a5501fc30ac37
 @media (max-width: 991px){
     .main-panel{
         width: 100%;
@@ -60,4 +26,3 @@
 notifier-container ul{
     margin-bottom: 0px;
 }
->>>>>>> e2dbfd1f1ace96a6caf2dcd0849b6348f3ba8f45

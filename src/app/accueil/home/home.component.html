@@ -1,35 +1,3 @@
-<<<<<<< HEAD
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="row content">
-            <div id="cadre" [ngStyle]="{'background-image':'url('+rucherService.rucher.photo+')',
-                                                'background-position' : 'top',
-                                                'background-repeat' : 'no-repeat'}" ngfDrop
-                [(validDrag)]="baseDropValid" [(file)]="photoApiary" class="my-drop-zone"
-                [class.valid-drag]="baseDropValid" [(lastBaseUrl)]="rucherService.rucher.photo">
-                <div data-toggle="tooltip" data-placement="top" [title]="infoRuche"
-                    *ngFor="let ruche of rucheService.ruches; let i = index" [style.left.%]="ruche.hivePosX"
-                    [style.top.%]="ruche.hivePosY" [id]="i" (mouseover)="onMouseover(ruche)"
-                    (dblclick)="onClick(ruche);" (stopped)="onDragEnd($event)" [allowedOffsets]="offset" ngDraggable
-                    [class]="dailyRecTh.getStatus(ruche.id)">
-                </div>
-            </div>
-        </div>
-
-        <!--
-        "{'background-image':'url('+rucherService.rucher.photo+')',
-                            'background-position' : 'center',
-                            'background-repeat' : 'no-repeat'}"
-    -->
-
-        <div *ngIf="photoApiary!=null" id="modal">
-            <div class="modal-body">
-                <p>Save background?</p>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="saveBackground();">Save changes</button>
-                    <button type="button" class="btn btn-secondary" (click)="cancelBackground();"
-                        data-dismiss="modal">Cancel</button>
-=======
 <div class="wrapper">
     <div class="sidebar" data-color="blue" data-image="">
         <app-sidebar></app-sidebar>
@@ -103,15 +71,9 @@
                     <h1>Another example headline.</h1>
                     <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                     <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
->>>>>>> e2dbfd1f1ace96a6caf2dcd0849b6348f3ba8f45
                 </div>
             </div>
-
         </div>
-<<<<<<< HEAD
-    </div>
-</div>
-=======
         <div class="item active">
             <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:Third slide" alt="Third slide" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzU1NSI+PC9yZWN0Pjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjQ1MCIgeT0iMjUwIiBzdHlsZT0iZmlsbDojNWE1YTVhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjU2cHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+VGhpcmQgc2xpZGU8L3RleHQ+PC9zdmc+">
             <div class="container">
@@ -127,4 +89,3 @@
     <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 </div>
  -->
->>>>>>> e2dbfd1f1ace96a6caf2dcd0849b6348f3ba8f45
