@@ -42,11 +42,12 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
   }
+  
   isMobileMenu() {
-      if (window.innerWidth > 991) {
-          return false;
-      }
-      return true;
+    if ($(window).width() > 991) {
+        return false;
+    }
+    return true;
   };
   goAccueil(){
     this.router.navigate(['home']);
