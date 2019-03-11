@@ -80,6 +80,7 @@ export class RecordService {
             console.log('not name');
             this.mapRecord(() => {
               this.updateMerge();
+              this.updateMergeStack();
               this.loading = !this.loading;
             });
           } else {

@@ -29,9 +29,7 @@ label{
 /*     padding-top: 0px;
     padding-bottom: 0px;
 }
-#select-Apiary{
-    display: inline-block;
-}
+
 
 @media screen and (max-width:755px){
     #select-Apiary{
@@ -48,3 +46,28 @@ label{
         font-size: 8px;
     }
 } */
+<<<<<<< HEAD
+=======
+.navbar .navbar-nav > li > a{
+    margin: 5px 3px !important;
+}
+#select-Apiary{
+    padding-top: 5px;
+    margin-top: 5px;
+}
+label{
+    padding-top: 5px;
+    margin-top: 5px;
+}
+.crud-apiary{
+    border: none;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+@media (max-width: 991px){
+    .navbar-nav > li {
+        float: left !important;
+    }
+}
+>>>>>>> e2dbfd1f1ace96a6caf2dcd0849b6348f3ba8f45

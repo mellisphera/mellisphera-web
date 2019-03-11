@@ -11,22 +11,11 @@
 .main-panel{
     width: calc(100% - 72px);
 }
-navbar-cmp nav{
-    position: fixed !important;
-    top: 0px;
-    left: 72px;
-    z-index: 500;
-    width: calc(100% - 72px);
-}
-.content{
-    margin-top: 55px;
+.nav-open .main-panel{
+    transform: translate3d(-60px, 0, 0) !important;
 }
 
-notifier-container ul{
-    margin-bottom: 0px !important;
-    margin-top: 0px !important;
-}
-
+<<<<<<< HEAD
 @media screen and (max-width : 991px){
     /* Quand la sidebar est caché */
 /*     .main-panel{
@@ -55,3 +44,13 @@ notifier-container ul{
         border: 1px solid black !important;
     }
 } */
+=======
+@media (max-width: 991px){
+    .main-panel{
+        width: 100%;
+    }
+}
+notifier-container ul{
+    margin-bottom: 0px;
+}
+>>>>>>> e2dbfd1f1ace96a6caf2dcd0849b6348f3ba8f45
