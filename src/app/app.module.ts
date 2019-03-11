@@ -25,7 +25,6 @@ import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.co
 
 import { LoginComponent } from './auth/login/login.component';
 import { ControldashboardComponent } from './controldashboard/controldashboard.component';
-import { AccueilComponent } from './accueil/accueil.component';
 import { RapportComponent } from './rapport/rapport.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -75,7 +74,6 @@ import { ApiaryNotesComponent } from './apiary-notes/apiary-notes.component';
     AppComponent,
     LoginComponent,
     ControldashboardComponent,
-    AccueilComponent,
     RucheRucherComponent,
     MeteoComponent,
     RapportComponent,

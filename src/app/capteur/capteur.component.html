@@ -1,282 +1,281 @@
-    <div class="wrapper">
-        <div class="sidebar" data-color="blue" data-image="">
-            <app-sidebar></app-sidebar>
-            <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
-        </div>
+<div class="wrapper">
+    <div class="sidebar" data-color="blue" data-image="">
+        <app-sidebar></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+    </div>
+    <div class="main-panel">
         <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
-        <div class="main-panel">
-            <router-outlet></router-outlet>
-            <div class="container-fluid" style="background-color: white;">
-                <div class="row content">
-                    <div class="col-sm-12">
-                        <div class="form-inline">
-                            <div class="form-group">
-                            </div>
+        <router-outlet></router-outlet>
+        <div class="container-fluid" style="background-color: white;">
+            <div class="row content">
+                <div class="col-sm-12">
+                    <div class="form-inline">
+                        <div class="form-group">
                         </div>
-                        <div class="bs-example">
-                            <div class="panel-group" id="accordion">
-                                <div class="panel panel-info ">
-                                    <div class="panel-heading ">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                                <b>Sensors </b>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <button data-toggle="tooltip" data-html="true" title="Nouveau capteur"
-                                                data-toggle="modal"
-                                                style="margin-left: 98%; padding: 0;border: none; background: none;"
-                                                data-target="#newCapteurModal" class="btn btn-success btn-lg">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                            <div class="form-group row">
-                                                <div class="col-xs-2">
-                                                    <label>Search sensors reference :</label>
-                                                    <input class="form-control" placeholder="search" type="search"
-                                                        [(ngModel)]="capteurSearch">
-                                                </div>
+                    </div>
+                    <div class="bs-example">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-info ">
+                                <div class="panel-heading ">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                            <b>Sensors </b>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <button data-toggle="tooltip" data-html="true" title="Nouveau capteur"
+                                            data-toggle="modal"
+                                            style="margin-left: 98%; padding: 0;border: none; background: none;"
+                                            data-target="#newCapteurModal" class="btn btn-success btn-lg">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                        <div class="form-group row">
+                                            <div class="col-xs-2">
+                                                <label>Search sensors reference :</label>
+                                                <input class="form-control" placeholder="search" type="search"
+                                                    [(ngModel)]="capteurSearch">
                                             </div>
-                                            <!-- tables ruche -->
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Reference
-                                                            <button data-toggle="tooltip" data-html="true"
-                                                                title="Nouveau capteur" (click)="sortSensors('ref');"
-                                                                class="btn btn-success btn-xs">
-                                                                <i class="fa fa-angle-down "></i>
-                                                            </button>
-                                                        </th>
-                                                        <th scope="col">Description
-                                                            <button data-toggle="tooltip" data-html="true"
-                                                                title="Nouveau capteur"
-                                                                (click)="sortSensors('description');"
-                                                                class="btn btn-success btn-xs">
-                                                                <i class="fa fa-angle-down "></i>
-                                                            </button>
-                                                        </th>
-                                                        <th scope="col">Association
-                                                            <button data-toggle="tooltip" data-html="true"
-                                                                title="Nouveau capteur" (click)="sortSensors('hive');"
-                                                                class="btn btn-success btn-xs">
-                                                                <i class="fa fa-angle-down "></i>
-                                                            </button>
-                                                        </th>
-                                                        <th scope="col">Type
-                                                            <button data-toggle="tooltip" data-html="true"
-                                                                title="Nouveau capteur" (click)="sortSensors('type');"
-                                                                class="btn btn-success btn-xs">
-                                                                <i class="fa fa-angle-down "></i>
-                                                            </button>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr
-                                                        *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch); let i = index">
-                                                        <td>{{capteur.reference}}</td>
-                                                        <td>{{capteur.description}}</td>
-                                                        <td class="hive-link" *ngIf="capteur.apiaryName != null"
-                                                            (click)="navToHive(capteur.idHive, capteur.idApiary)">
-                                                            {{capteur.apiaryName}} | {{capteur.hiveName}}</td>
-                                                        <td *ngIf="capteur.apiaryName == null">Stock</td>
-                                                        <td>{{capteur.type}}</td>
-                                                        <td>
-                                                            <button data-toggle="tooltip" data-html="true"
-                                                                title="Nouveau capteur" data-toggle="modal" type="button"
-                                                                (click)="selectCapteur(capteur, i)"
-                                                                data-target="#editCapteurModal"
-                                                                class="btn btn-primary btn-lg"
-                                                                style="padding: 0;border: none; background: none;">
-                                                                <i class="fa fa-edit"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-warning btn-lg"
-                                                                mwlConfirmationPopover popoverTitle="Delete Sensor ?"
-                                                                placement="top" (confirm)="deleteCapteur(capteur, i)"
-                                                                style="padding: 0;border: none; background: none;">
-                                                                <i class="fa fa-times"></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-
-
-
-
-
                                         </div>
+                                        <!-- tables ruche -->
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Reference
+                                                        <button data-toggle="tooltip" data-html="true"
+                                                            (click)="sortSensors('ref');"
+                                                            class="btn btn-success btn-xs">
+                                                            <i class="fa fa-angle-down fa-2x"></i>
+                                                        </button>
+                                                    </th>
+                                                    <th scope="col">Description
+                                                        <button data-toggle="tooltip" data-html="true"
+                                                            (click)="sortSensors('description');"
+                                                            class="btn btn-success btn-xs">
+                                                            <i class="fa fa-angle-down fa-2x"></i>
+                                                        </button>
+                                                    </th>
+                                                    <th scope="col">Association
+                                                        <button data-toggle="tooltip" data-html="true"
+                                                            (click)="sortSensors('hive');"
+                                                            class="btn btn-success btn-xs">
+                                                            <i class="fa fa-angle-down fa-2x"></i>
+                                                        </button>
+                                                    </th>
+                                                    <th scope="col">Type
+                                                        <button data-toggle="tooltip" data-html="true"
+                                                            (click)="sortSensors('type');"
+                                                            class="btn btn-success btn-xs">
+                                                            <i class="fa fa-angle-down fa-2x"></i>
+                                                        </button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch); let i = index">
+                                                    <td>{{capteur.reference}}</td>
+                                                    <td>{{capteur.description}}</td>
+                                                    <td class="hive-link" *ngIf="capteur.apiaryName != null"
+                                                        (click)="navToHive(capteur.idHive, capteur.idApiary)">
+                                                        {{capteur.apiaryName}} | {{capteur.hiveName}}</td>
+                                                    <td *ngIf="capteur.apiaryName == null">Stock</td>
+                                                    <td>{{capteur.type}}</td>
+                                                    <td>
+                                                        <button data-toggle="tooltip" data-html="true"
+                                                            title="Nouveau capteur" data-toggle="modal" type="button"
+                                                            (click)="selectCapteur(capteur, i)"
+                                                            data-target="#editCapteurModal"
+                                                            class="btn btn-primary btn-lg"
+                                                            style="padding: 0;border: none; background: none;">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-warning btn-lg"
+                                                            mwlConfirmationPopover popoverTitle="Delete Sensor ?"
+                                                            placement="top" (confirm)="deleteCapteur(capteur, i)"
+                                                            style="padding: 0;border: none; background: none;">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+
+
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <br><br>
                 </div>
-                <div class="col-sm-3 sidenav" style="background-color: white; height:1500px;border-color:black;">
-                    <h4 class="text-center"></h4>
-                    <h5 class="text-center"><b></b></h5>
-                    <p class="text-center"><b> </b></p>
-                </div>
+                <br><br>
+            </div>
+            <div class="col-sm-3 sidenav" style="background-color: white; height:1500px;border-color:black;">
+                <h4 class="text-center"></h4>
+                <h5 class="text-center"><b></b></h5>
+                <p class="text-center"><b> </b></p>
             </div>
         </div>
     </div>
+</div>
 
 
 
 
-    <!-- New capteur Modal -->
-    <div class="modal fade" id="newCapteurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center" id="exampleModalLabel">
-                        <h3>New Sensor</h3>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form [formGroup]="newCapteurForm">
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="ref" class="col-form-label">Reference (*):</label>
-                                <input #ref formControlName="reference" placeholder="xx:xx:xx" name="ref" type="text"
-                                    class="form-control" id="ref">
-                                <div class="invalid-feedback" *ngIf="getSensorRef().errors?.pattern">
-                                    You should select a valid reference
-                                </div>
-                                <div class="alert alert-danger" *ngIf="getSensorRef().errors?.sensorCheck">
-                                    Sensor already exist !
-                                </div>
-
+<!-- New capteur Modal -->
+<div class="modal fade" id="newCapteurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">
+                    <h3>New Sensor</h3>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="newCapteurForm">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="ref" class="col-form-label">Reference (*):</label>
+                            <input #ref formControlName="reference" placeholder="xx:xx:xx" name="ref" type="text"
+                                class="form-control" id="ref">
+                            <div class="invalid-feedback" *ngIf="getSensorRef().errors?.pattern">
+                                You should select a valid reference
                             </div>
-                            <div class="col-md-6">
-                                <label class="col-form-label">Type :</label>
-                                <select [disabled]="true" id="typeSensor" class="form-control">
-                                    <option
-                                        *ngFor="let capteur of (capteurService.capteursType | sensorType:getSensorRef().value);">
-                                        {{capteur.type}}</option>
-                                </select>
-                                <div class="alert alert-danger" hidden>
-                                    Select your sensor reference
-                                </div>
+                            <div class="alert alert-danger" *ngIf="getSensorRef().errors?.sensorCheck">
+                                Sensor already exist !
                             </div>
 
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-form-label">Type :</label>
+                            <select [disabled]="true" id="typeSensor" class="form-control">
+                                <option
+                                    *ngFor="let capteur of (capteurService.capteursType | sensorType:getSensorRef().value);">
+                                    {{capteur.type}}</option>
+                            </select>
+                            <div class="alert alert-danger" hidden>
+                                Select your sensor reference
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Description :</label>
+                        <input formControlName="description" class="form-control" id="message-text">
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-form-label" for="exampleRadios1">Link to :</label>
+                        <div class="form-check">
+                            <input class="form-check-input" value="stock" type="radio" formControlName="checkbox">
+                            <label class="form-check-label" for="exampleRadios1">Stock </label><br />
+                            <input class="form-check-input" value="ruche" type="radio" formControlName="checkbox">
+                            <label class="form-check-label" for="exampleRadios1">Hive </label>
+                        </div>
+                    </div>
+                    <div *ngIf="getTypeAffectation().value=='ruche'">
+                        <div class="form-group">
+                            <label class="col-form-label">Apiary</label>
+                            <select [(ngModel)]="apiarySensorSelect" [ngModelOptions]="{standalone: true}"
+                                class="form-control" (change)="onSelectRucher();">
+                                <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}
+                                </option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="message-text" class="col-form-label">Description :</label>
-                            <input formControlName="description" class="form-control" id="message-text">
+                            <label class="col-form-label">Hive</label>
+                            <select [(ngModel)]="hiveSensorSelect" [ngModelOptions]="{standalone: true}"
+                                class="form-control">
+                                <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="ruche">
+                                    {{ruche.name}}</option>
+                            </select>
+                            <div class="alert alert-danger" hidden>Select a hive</div>
                         </div>
-                        <div class="form-group ">
-                            <label class="col-form-label" for="exampleRadios1">Link to :</label>
-                            <div class="form-check">
-                                <input class="form-check-input" value="stock" type="radio" formControlName="checkbox">
-                                <label class="form-check-label" for="exampleRadios1">Stock </label><br />
-                                <input class="form-check-input" value="ruche" type="radio" formControlName="checkbox">
-                                <label class="form-check-label" for="exampleRadios1">Hive </label>
-                            </div>
-                        </div>
-                        <div *ngIf="getTypeAffectation().value=='ruche'">
-                            <div class="form-group">
-                                <label class="col-form-label">Apiary</label>
-                                <select [(ngModel)]="apiarySensorSelect" [ngModelOptions]="{standalone: true}"
-                                    class="form-control" (change)="onSelectRucher();">
-                                    <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label">Hive</label>
-                                <select [(ngModel)]="hiveSensorSelect" [ngModelOptions]="{standalone: true}"
-                                    class="form-control">
-                                    <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="ruche">
-                                        {{ruche.name}}</option>
-                                </select>
-                                <div class="alert alert-danger" hidden>Select a hive</div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" ngbTooltip="Tooltip on top" class="btn btn-primary" data-dismiss="modal"
-                                (click)="createCapteur()" [disabled]="newCapteurForm.invalid">Add sensor</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" ngbTooltip="Tooltip on top" class="btn btn-primary" data-dismiss="modal"
+                            (click)="createCapteur()" [disabled]="newCapteurForm.invalid">Add sensor</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- End of new Rucher Modal -->
+</div>
+<!-- End of new Rucher Modal -->
 
 
-    <!-- EDIT CAPTEUR Modal -->
-    <div class="modal fade" id="editCapteurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center" id="exampleModalLabel">
-                        <h3>Edit sensor</h3>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form [formGroup]="editCapteurForm">
-                        <div class="form-group ">
-                            <label class="col-form-label" for="exampleRadios1">
-                                Link to :
-                            </label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" formControlName="checkbox" value="stock"
-                                    [checked]="!editCapteurCheckbox" (click)="onchange($event)">
-                                <label class="form-check-label" for="exampleRadios1">Stock </label><br />
-                                <input class="form-check-input" type="radio" formControlName="checkbox" value="ruche"
-                                    [checked]="editCapteurCheckbox" (click)="onchange($event)">
-                                <label class="form-check-label" for="exampleRadios1">Hive </label>
-                            </div>
+<!-- EDIT CAPTEUR Modal -->
+<div class="modal fade" id="editCapteurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">
+                    <h3>Edit sensor</h3>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editCapteurForm">
+                    <div class="form-group ">
+                        <label class="col-form-label" for="exampleRadios1">
+                            Link to :
+                        </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="checkbox" value="stock"
+                                [checked]="!editCapteurCheckbox" (click)="onchange($event)">
+                            <label class="form-check-label" for="exampleRadios1">Stock </label><br />
+                            <input class="form-check-input" type="radio" formControlName="checkbox" value="ruche"
+                                [checked]="editCapteurCheckbox" (click)="onchange($event)">
+                            <label class="form-check-label" for="exampleRadios1">Hive </label>
                         </div>
-                        <div *ngIf="editCapteurCheckbox">
-                            <div class="form-group">
-                                <label class="col-form-label">Apiary</label>
-                                <select [(ngModel)]="apiarySensorSelect" [ngModelOptions]="{standalone: true}"
-                                    class="form-control" (change)="onSelectRucher();">
-                                    <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label">Hive</label>
-                                <select [(ngModel)]="hiveSensorSelect" [ngModelOptions]="{standalone: true}"
-                                    class="form-control">
-                                    <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="ruche">
-                                        {{ruche.name}}</option>
-                                </select>
-                                <div class="alert alert-danger" hidden>Select a hive</div>
-                            </div>
+                    </div>
+                    <div *ngIf="editCapteurCheckbox">
+                        <div class="form-group">
+                            <label class="col-form-label">Apiary</label>
+                            <select [(ngModel)]="apiarySensorSelect" [ngModelOptions]="{standalone: true}"
+                                class="form-control" (change)="onSelectRucher();">
+                                <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}
+                                </option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="message-text" class="col-form-label">Description</label>
-                            <input formControlName="description" class="form-control" id="message-text">
+                            <label class="col-form-label">Hive</label>
+                            <select [(ngModel)]="hiveSensorSelect" [ngModelOptions]="{standalone: true}"
+                                class="form-control">
+                                <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="ruche">
+                                    {{ruche.name}}</option>
+                            </select>
+                            <div class="alert alert-danger" hidden>Select a hive</div>
                         </div>
-                        <div class="form-group ">
-                            <div class="alert alert-success" *ngIf="editedSensorMsgE">
-                                Sensor edit <strong>successful!</strong>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Description</label>
+                        <input formControlName="description" class="form-control" id="message-text">
+                    </div>
+                    <div class="form-group ">
+                        <div class="alert alert-success" *ngIf="editedSensorMsgE">
+                            Sensor edit <strong>successful!</strong>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" id="editVal" class="btn btn-primary" data-dismiss="modal"
-                                (click)="updateCapteur()" [disabled]="!editCapteurForm.valid"> Save</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="editVal" class="btn btn-primary" data-dismiss="modal"
+                            (click)="updateCapteur()" [disabled]="!editCapteurForm.valid"> Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- End EDIT capteur Modal -->
+</div>
+<!-- End EDIT capteur Modal -->

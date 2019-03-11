@@ -100,7 +100,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         switch (colonne) {
             case 'hive':
                 this.capteurService.capteursByUser.sort((a, b) => {
-                    return (a.hiveName > b.hiveName) ? 1 : -1;
+                    return (a.apiaryName > b.apiaryName) ? 1 : -1;
                 });
                 break;
             case 'type':
@@ -159,7 +159,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.capteurService.capteur.description = formValue.description;
         this.capteurService.capteur.username = this.username;
         this.capteurService.capteur.reference = formValue.reference;
-        this.capteurService.capteur.type = sensorType;
+        this.capteurService.capteur.type = sensorType.trim();
         this.initForm();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
             this.notifier.notify('success', 'Created sensor');
