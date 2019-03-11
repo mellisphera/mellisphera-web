@@ -42,11 +42,20 @@ export class RecordService {
   private rangeHourly: Date[];
   public mergeOptionStack: any = null;
   public mergeOptionStackApiary: any;
+  private mergeTemp: any;
   private legendOption: Array<string>;
   constructor(private http: HttpClient) {
     this.currentIdHive = null;
+    // this.echarts.clear();
+    this.mergeTemp = this.mergeOptionStackApiary;
+    this.mergeTemp = {
+      legend: {
+        data: []
+      },
+      series: [],
+    };
     this.updateMergeStack();
-   // this.echarts.clear();
+
     this.mergeOptionStack = {
       series: []
     };
@@ -85,40 +94,48 @@ export class RecordService {
             });
           } else {
             this.mapRecord(() => {
+              this.updateMergeStack();
+              console.log(this.mergeTemp);
               this.cleanTemplate();
               this.templateSerie.tInt.data = this.recArrrayTint;
               this.templateSerie.tInt.name = hiveName + '-Tint';
               this.legendOption.push(hiveName + '-Tint');
-  
+
               this.templateSerie.tExt.name = hiveName + '-Text';
               this.legendOption.push(hiveName + '-Text');
               this.templateSerie.tExt.data = this.recArrayText;
-  
+
               this.templateSerie.hInt.name = hiveName + '-Hint';
               this.templateSerie.hInt.data = this.recArrayHint;
               this.legendOption.push(hiveName + '-Hint');
-  
+
               this.templateSerie.hExt.name = hiveName + '-hext';
               this.templateSerie.hExt.data = this.recArrayHext;
               this.legendOption.push(hiveName + '-hext');
-  
+
               this.templateSerie.bInt.name = hiveName + '-B_int';
               this.templateSerie.bInt.data = this.recArrayBatteryInt;
               this.legendOption.push(hiveName + '-B_int');
-  
+
               this.templateSerie.bExt.name = hiveName + '-B_Ext';
               this.templateSerie.bExt.data = this.recArrayBatteryExt;
               this.legendOption.push(hiveName + '-B_Ext');
-  
-              this.mergeOptionStackApiary.series.push(this.templateSerie.tInt);
-              this.mergeOptionStackApiary.series.push(this.templateSerie.tExt);
-              this.mergeOptionStackApiary.series.push(this.templateSerie.hInt);
-              this.mergeOptionStackApiary.series.push(this.templateSerie.hExt);
-              this.mergeOptionStackApiary.series.push(this.templateSerie.bInt);
-              this.mergeOptionStackApiary.series.push(this.templateSerie.bExt);
-  
-              this.mergeOptionStackApiary.legend.data = this.legendOption;
-              console.log(this.mergeOptionStackApiary);
+
+              this.mergeTemp.series.push(this.templateSerie.tInt);
+              this.mergeTemp.series.push(this.templateSerie.tExt);
+              this.mergeTemp.series.push(this.templateSerie.hInt);
+              this.mergeTemp.series.push(this.templateSerie.hExt);
+              this.mergeTemp.series.push(this.templateSerie.bInt);
+              this.mergeTemp.series.push(this.templateSerie.bExt);
+
+              this.mergeTemp.legend.data = this.legendOption;
+              this.updateMergeStack();
+              /*               this.mergeOptionStackApiary = {
+                              legend: {
+                                data: this.legendOption
+                              },
+                              series: this.mergeTemp.series,
+                            }; */
             });
           }
           /**
@@ -136,189 +153,195 @@ export class RecordService {
    * @description Supprime les ruche déselectionnée du graph
    */
   removeHiveStack(hiveName: string) {
-    this.mergeOptionStackApiary.series.filter(serie => hiveName === serie.name.split('-')[0]).forEach(element => {
-      const index = this.mergeOptionStackApiary.series.indexOf(element);
-      this.mergeOptionStackApiary.series.splice(index, 1);
+    this.mergeTemp.series.filter(serie => hiveName === serie.name.split('-')[0]).forEach(element => {
+      const index = this.mergeTemp.series.indexOf(element);
+      this.mergeTemp.series.splice(index, 1);
       this.legendOption.splice(index, 1);
     });
-  }
-
-
-  /**
-   * @param {DataRange} scale
-   * @memberof RecordService
-   */
-  setRange(scale: DataRange): void {
-    let date;
-    if (scale.type === 'DAY') {
-      date = new Date();
-      date.setDate((new Date().getDate() - scale.scale));
-    } else {
-      date = new Date();
-      date.setMonth((new Date().getMonth() - scale.scale));
-    }
-    this.rangeHourly = MyDate.getRange(date);
-  }
-
-  updateMergeStack() {
     this.mergeOptionStackApiary = {
       legend: {
-        data: []
+        data: this.legendOption
       },
-      series: [],
+      series: this.mergeTemp.series
     };
   }
 
-  /**
-   *
-   *
-   * @memberof RecordService
-   */
-  updateMerge(): void {
-    this.mergeOptionHourly = {
-      series: [
-        {
-          data: this.recArrayWeight
-        },
-        {
-          data: this.recArrrayTint
-        },
-        {
-          data: this.recArrayText
-        }
-      ]
-    };
-    this.mergeOptionStack = {
-      series: [
-        {
-          data: this.recArrrayTint
-        },
-        {
-          data: this.recArrayText
-        },
-        {
-          data: this.recArrayHint
-        },
-        {
-          data: this.recArrayHext
-        },
-        {
-          data: this.recArrayBatteryInt
-        },
-        {
-          data: this.recArrayBatteryExt
-        }
-      ]
-    };
+
+/**
+ * @param {DataRange} scale
+ * @memberof RecordService
+ */
+setRange(scale: DataRange): void {
+  let date;
+  if(scale.type === 'DAY') {
+  date = new Date();
+  date.setDate((new Date().getDate() - scale.scale));
+} else {
+  date = new Date();
+  date.setMonth((new Date().getMonth() - scale.scale));
+}
+this.rangeHourly = MyDate.getRange(date);
   }
-  cleanTemplate() {
-    this.templateSerie = {
-      tInt: {
-        name: 'Tint',
-        type: 'line',
-        showSymbol: false,
-        data: []
+
+updateMergeStack() {
+  this.mergeOptionStackApiary = {
+    legend: {
+      data: this.legendOption
+    },
+    series: this.mergeTemp.series,
+  };
+}
+
+/**
+ *
+ *
+ * @memberof RecordService
+ */
+updateMerge(): void {
+  this.mergeOptionHourly = {
+    series: [
+      {
+        data: this.recArrayWeight
       },
-      tExt: {
-        name: 'Text',
-        type: 'line',
-        showSymbol: false,
-        data: []
+      {
+        data: this.recArrrayTint
       },
-      hInt: {
-        name: 'Hint',
-        type: 'line',
-        xAxisIndex: 1,
-        yAxisIndex: 1,
-        showSymbol: false,
-        data: []
-      },
-      hExt: {
-        name: 'Hext',
-        type: 'line',
-        xAxisIndex: 1,
-        yAxisIndex: 1,
-        showSymbol: false,
-        data: []
-      },
-      bInt: {
-        name: 'Batery-int',
-        type: 'bar',
-        xAxisIndex: 2,
-        yAxisIndex: 2,
-        showSymbol: false,
-        color: 'red',
-        large: true,
-        largeThreshold: 10,
-        barGap: '30%',
-        data: []
-      },
-      bExt: {
-        name: 'Batery-ext',
-        type: 'bar',
-        xAxisIndex: 2,
-        yAxisIndex: 2,
-        showSymbol: false,
-        color: 'blue',
-        large: true,
-        largeThreshold: 10,
-        barGap: '30%',
-        data: []
+      {
+        data: this.recArrayText
       }
-    };
-  }
-  mapRecord(next) {
-    this.recArrrayTint = [];
-    this.recArrayText = [];
-    this.recArrayDateInt = [];
-    this.recArrayWeight = [];
-    this.recArrayDateExt = [];
-    this.recArrayBatteryExt = [];
-    this.recArrayBatteryInt = [];
-    this.recArrayHext = [];
-    this.recArrayHint = [];
-    this.recArray.forEach((element, index) => {
-      if (element.temp_ext != null) {
-        this.recArrayText.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.temp_ext
-          ]
-        });
-        this.recArrayWeight.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.weight
-          ]
-        });
-        this.recArrayBatteryExt.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.battery_ext
-          ]
-        });
-        this.recArrayHext.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.humidity_ext
-          ]
-        });
-        // this.recArrayDateExt.push(element.recordDate,element.recordDate);
-      } else if (element.temp_int != null) {
-        this.recArrrayTint.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.temp_int
-          ]
-        });
-        this.recArrayBatteryInt.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.battery_int
-          ]
-        });
-        this.recArrayHint.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.humidity_int
-          ]
-        });
-        // this.recArrayDateInt.push(element.recordDate);
+    ]
+  };
+  this.mergeOptionStack = {
+    series: [
+      {
+        data: this.recArrrayTint
+      },
+      {
+        data: this.recArrayText
+      },
+      {
+        data: this.recArrayHint
+      },
+      {
+        data: this.recArrayHext
+      },
+      {
+        data: this.recArrayBatteryInt
+      },
+      {
+        data: this.recArrayBatteryExt
       }
-    });
-    next();
-  }
+    ]
+  };
+}
+cleanTemplate() {
+  this.templateSerie = {
+    tInt: {
+      name: 'Tint',
+      type: 'line',
+      showSymbol: false,
+      data: []
+    },
+    tExt: {
+      name: 'Text',
+      type: 'line',
+      showSymbol: false,
+      data: []
+    },
+    hInt: {
+      name: 'Hint',
+      type: 'line',
+      xAxisIndex: 1,
+      yAxisIndex: 1,
+      showSymbol: false,
+      data: []
+    },
+    hExt: {
+      name: 'Hext',
+      type: 'line',
+      xAxisIndex: 1,
+      yAxisIndex: 1,
+      showSymbol: false,
+      data: []
+    },
+    bInt: {
+      name: 'Batery-int',
+      type: 'bar',
+      xAxisIndex: 2,
+      yAxisIndex: 2,
+      showSymbol: false,
+      color: 'red',
+      large: true,
+      largeThreshold: 10,
+      barGap: '30%',
+      data: []
+    },
+    bExt: {
+      name: 'Batery-ext',
+      type: 'bar',
+      xAxisIndex: 2,
+      yAxisIndex: 2,
+      showSymbol: false,
+      color: 'blue',
+      large: true,
+      largeThreshold: 10,
+      barGap: '30%',
+      data: []
+    }
+  };
+}
+mapRecord(next) {
+  this.recArrrayTint = [];
+  this.recArrayText = [];
+  this.recArrayDateInt = [];
+  this.recArrayWeight = [];
+  this.recArrayDateExt = [];
+  this.recArrayBatteryExt = [];
+  this.recArrayBatteryInt = [];
+  this.recArrayHext = [];
+  this.recArrayHint = [];
+  this.recArray.forEach((element, index) => {
+    if (element.temp_ext != null) {
+      this.recArrayText.push({
+        name: element.recordDate, value: [
+          element.recordDate, element.temp_ext
+        ]
+      });
+      this.recArrayWeight.push({
+        name: element.recordDate, value: [
+          element.recordDate, element.weight
+        ]
+      });
+      this.recArrayBatteryExt.push({
+        name: element.recordDate, value: [
+          element.recordDate, element.battery_ext
+        ]
+      });
+      this.recArrayHext.push({
+        name: element.recordDate, value: [
+          element.recordDate, element.humidity_ext
+        ]
+      });
+      // this.recArrayDateExt.push(element.recordDate,element.recordDate);
+    } else if (element.temp_int != null) {
+      this.recArrrayTint.push({
+        name: element.recordDate, value: [
+          element.recordDate, element.temp_int
+        ]
+      });
+      this.recArrayBatteryInt.push({
+        name: element.recordDate, value: [
+          element.recordDate, element.battery_int
+        ]
+      });
+      this.recArrayHint.push({
+        name: element.recordDate, value: [
+          element.recordDate, element.humidity_int
+        ]
+      });
+      // this.recArrayDateInt.push(element.recordDate);
+    }
+  });
+  next();
+}
 }
