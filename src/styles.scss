@@ -14,7 +14,10 @@
 .nav-open .main-panel{
     transform: translate3d(-60px, 0, 0) !important;
 }
-
+.login{
+     background: url('./assets/background/rucher_login.jpg') no-repeat center fixed;
+     background-size: cover;
+}
 @media (max-width: 991px){
     .main-panel{
         width: 100%;

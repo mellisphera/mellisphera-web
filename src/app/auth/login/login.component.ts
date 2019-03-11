@@ -1,5 +1,5 @@
 import { NotifierService } from 'angular-notifier';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterContentInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserloggedService } from '../../userlogged.service';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -13,7 +13,7 @@ import { SignupService } from '../../admin/service/signup.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
 
   formLogin: boolean;
   loginErrorMsg: boolean;
@@ -59,6 +59,11 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  ngAfterContentInit(): void {
+    document.querySelector('body').className = 'login';
+    
+  }
+
   innitForm() {
     this.signupForm = this.formBuilder.group({
       'email': [null, Validators.required],
@@ -101,4 +106,7 @@ export class LoginComponent implements OnInit {
     return JSON.parse(localStorage.getItem('currentUser'));
   }
 
+  ngOnDestroy(): void {
+    document.querySelector('body').classList.remove('login');
+  }
 }
