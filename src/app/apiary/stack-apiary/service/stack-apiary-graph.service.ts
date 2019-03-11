@@ -22,7 +22,6 @@ export class StackApiaryGraphService {
       },
       legend: {
         orient: 'horizontal',
-        y: '2%',
         /*       x: '5%',
               y: '2%' */
       },
@@ -74,9 +73,9 @@ export class StackApiaryGraphService {
         }
       ],
       grid: [
-        { x: '3%', y: '5%', width: '93%', height: '40%' },
-        { x: '3%', y: '54%', width: '93%', height: '33%' },
-        { x: '3%', y: '96%', width: '93%', height: '20%' },
+        { x: '3%', y: '5%', width: '95%', height: '40%' },
+        { x: '3%', y: '54%', width: '95%', height: '33%' },
+        { x: '3%', y: '96%', width: '95%', height: '20%' },
       ],
       xAxis: [
         {

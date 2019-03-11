@@ -12,6 +12,7 @@ import { RecordService } from '../ruche-rucher/ruche-detail/service/Record/recor
 export class StackApiaryComponent implements OnInit {
 
   private arrayHiveSelect: Array<RucheInterface>;
+  private echartInstance: any;
   message: string;
   constructor(public rucheService: RucheService,
     private render: Renderer2,
@@ -21,6 +22,11 @@ export class StackApiaryComponent implements OnInit {
     this.message = '';
   }
 
+  onChartInit(e: any) {
+    this.echartInstance = e;
+    console.log(e);
+    console.log('on chart init:', e);
+  }
 
   ngOnInit() {
 
