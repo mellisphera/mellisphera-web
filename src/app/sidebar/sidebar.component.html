@@ -1,68 +1,79 @@
-<div class="sidebar-wrapper">
-    <div class="logo">
-        <a routerLink="/position-Ruche">
-            <img [src]="url_sideImg" style="width:30px;height: 30px;" />
-        </a>
-    </div>
-    <ul class="nav responsive-nav">
-        <li class="dropdown" *ngIf="isMobileMenu()">
 
-        <li *ngIf="isMobileMenu()">
-            <a href="#">
-                <img (click)="logout();" src="./assets/img/logout.png" style="width:30px;height: 30px;" />
+<div class="sidebar-wrapper">
+        <div class="logo">
+            <a href="http://www.creative-tim.com" class="simple-text">
+                <div class="logo-img">
+                    <img src="/assets/img/angular2-logo-white.png"/>
+                </div>
+                Creative Tim
             </a>
-        </li>
-        <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
-        <li>
-            <a routerLink="/home" data-toggle="tooltip" data-placement="top" title="Apiary">
-                <img src="./assets/img/bee-icon.svg" style="width:30px;height: 30px;" />
-            </a>
-        </li>
-        <li>
-            <a routerLink="/ruche-et-rucher" data-toggle="tooltip" data-placement="top" title="Hives">
-                <img src="./assets/img/apiary-icon.png"
-                    style="width:45px;height: 45px; margin-left: -7px; margin-top:-10px;" />
-            </a>
-        </li>
-        <li>
-            <a routerLink="/apiary-notes" data-toggle="tooltip" data-placement="top" title="Apiary notes">
-                <img src="./assets/img/report-icon.png" style="width:30px;height: 30px; margin-top:-6px;" />
-            </a>
-        </li>
-        <!--         <li>
-            <a routerLink="/rapport" data-toggle="tooltip" data-placement="top" title="Report">
-                <img src="./assets/img/report-icon.png" style="width:30px;height: 30px; margin-top:-6px;"/>
-            </a>
-        </li> -->
-        <li>
-            <a routerLink="/fleurs-floraison" data-toggle="tooltip" data-placement="top" title="Flower">
-                <img src="./assets/img/flower-icon.png" style="width:30px;height: 30px;" />
-            </a>
-        </li>
-        <!--         <li>
-            <a routerLink="/meteo" data-toggle="tooltip" data-placement="top" title="Weather">
-                <img src="./assets/img/weather-icon.png" style="width:30px;height: 30px; margin-top:-8px; "/>
-            </a>
-        </li> -->
-        <li>
-            <a routerLink="/capteurs" data-toggle="tooltip" data-placement="top" title="Sensors">
-                <img src="./assets/img/sensor-icon.png" style="width:30px;height: 30px; margin-top:-6px;" />
-            </a>
-        </li>
-        <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')">
-            <a routerLink="/admin" data-toggle="tooltip" data-placement="top" title="admin">
-                <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;" />
-            </a>
-        </li>
-        <li *ngIf="this.userService.getUser() == 'fstl'">
-            <a routerLink="/fstl" data-toggle="tooltip" data-placement="top" title="FSTL">
-                FSTL
-            </a>
-        </li>
-        <li>
-            <a routerLink="/stack-apiary" data-toggle="tooltip" data-placement="top" title="FSTL">
-                STACK
-            </a>
-        </li>
-    </ul>
-</div>
+        </div>
+        <ul class="nav responsive-nav">
+            <li *ngIf="isMobileMenu()">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-dashboard"></i>
+                    <p class="hidden-lg hidden-md">Dashboard</p>
+                </a>
+            </li>
+            <li class="dropdown" *ngIf="isMobileMenu()">
+                  <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-globe"></i>
+                        <b class="caret hidden-sm hidden-xs"></b>
+                        <span class="notification hidden-sm hidden-xs">5</span>
+                        <p class="hidden-lg hidden-md">
+                            5 Notifications
+                            <b class="caret"></b>
+                        </p>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Notification 1</a></li>
+                    <li><a href="#">Notification 2</a></li>
+                    <li><a href="#">Notification 3</a></li>
+                    <li><a href="#">Notification 4</a></li>
+                    <li><a href="#">Another notification</a></li>
+                  </ul>
+            </li>
+            <li *ngIf="isMobileMenu()">
+               <a>
+                    <i class="fa fa-search"></i>
+                    <p class="hidden-lg hidden-md">Search</p>
+                </a>
+            </li>
+            <li *ngIf="isMobileMenu()">
+               <a href="">
+                   <p>Account</p>
+                </a>
+            </li>
+            <li class="dropdown" *ngIf="isMobileMenu()">
+                  <a class="dropdown-toggle" data-toggle="dropdown">
+                        <p>
+                            Dropdown
+                            <b class="caret"></b>
+                        </p>
+    
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+            </li>
+            <li *ngIf="isMobileMenu()">
+                <a>
+                    <p>Log out</p>
+                </a>
+            </li>
+            <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
+            <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
+                <a  [routerLink]="[menuItem.path]">
+                    <i class="{{menuItem.icon}}"></i>
+                    <p>{{menuItem.title}}</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
