@@ -20,7 +20,6 @@ import { AppComponent } from './app.component';
 import { MeteoComponent } from './meteo/meteo.component';
 import { RucheRucherComponent } from './apiary/ruche-rucher/ruche.rucher.component';
 import { CapteurComponent } from './capteur/capteur.component';
-import { NouveauCapteurComponent } from './capteur/nouveau-capteur/nouveau-capteur.component';
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
 
 import { LoginComponent } from './auth/login/login.component';
@@ -69,7 +68,6 @@ import { ApiaryNotesComponent } from './apiary-notes/apiary-notes.component';
 
 @NgModule({
   declarations: [
-    NouveauCapteurComponent,
     CapteurComponent,
     AppComponent,
     LoginComponent,
