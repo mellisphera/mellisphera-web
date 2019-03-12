@@ -46,7 +46,7 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
         right: 30,
         height:'auto',
         cellSize: ['20', '20'],
-        range:null,
+        range:MyDate.getPersoDate(),
         itemStyle: {
             normal: {borderWidth: 0.5}
         },

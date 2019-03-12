@@ -19,6 +19,22 @@ export class MyDate {
         return new Array(start, new Date());
     }
 
+   static convertDate(date){
+        var jour = ''+date.getDate();
+        var mois = ''+(date.getMonth()+1);
+        var anee = date.getFullYear();
+        if(parseInt(jour) < 10 ){ jour = '0'+jour; }
+        if(parseInt(mois) < 10 ){ mois = '0'+mois; }
+        return anee + '-' +mois+'-'+ jour;
+      }
+
+    static getPersoDate(){
+        let max = new Date();
+        let tmp = (max.getFullYear()-1)+'-'+(max.getMonth()+1)+'-'+max.getDate();
+        let min = (max.getFullYear()-1)+'-'+(max.getMonth()+1)+'-'+max.getDate();
+        let rangeCalendar = [min ,MyDate.convertDate(max)];
+        return rangeCalendar;
+      }
     /**
      *
      *
