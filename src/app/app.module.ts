@@ -63,6 +63,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 import { ApiaryNotesComponent } from './apiary-notes/apiary-notes.component';
+import { WizardComponent } from './accueil/wizard/wizard.component';
 
 
 
@@ -88,6 +89,7 @@ import { ApiaryNotesComponent } from './apiary-notes/apiary-notes.component';
     Erreur404ComponentComponent,
     StackApiaryComponent,
     ApiaryNotesComponent,
+    WizardComponent,
   ],
   imports: [
     BrowserModule,

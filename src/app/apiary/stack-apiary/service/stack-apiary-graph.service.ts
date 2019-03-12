@@ -6,7 +6,7 @@ import { EChartOption } from 'echarts';
 })
 export class StackApiaryGraphService {
 
-  options: object;
+  options: any;
   constructor() {
     this.options = {
       title: {
@@ -48,7 +48,7 @@ export class StackApiaryGraphService {
           realtime: true,
           start: 80,
           end: 100,
-          bottom: -1,
+          bottom: 50,
           xAxisIndex: [0, 1, 2]
         },
         {
