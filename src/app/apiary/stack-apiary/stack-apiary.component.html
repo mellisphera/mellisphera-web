@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                     <div id="stackGraph" echarts [options]="stackApiaryGraph.options" (chartInit)="onChartInit($event)"
-                        [merge]="recordService.mergeOptionStackApiary" [autoResize]="true"></div>
+                        [merge]="recordService.getMerge()" [autoResize]="true"></div>
                 </div>
             </div>
 

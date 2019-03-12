@@ -18,6 +18,10 @@
     background: url('./assets/background/rucher_login.jpg') no-repeat center;
     background-size: cover;
 }
+.wizard-active{
+    background-color: black;
+    filter: blur(10px);
+}
 @media (max-width: 991px){
     .main-panel{
         width: 100% !important;

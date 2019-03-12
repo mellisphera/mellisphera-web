@@ -132,7 +132,6 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                 this.dailyStockHoneyService.getDailyStockHoneyByHive(this.rucheService.getCurrentHive());
             }
             if (this.dailyRecordWservice.currentIdHive != this.rucheService.getCurrentHive()) {
-                console.log('calendrier');
                 this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
             }
         } else if (this.currentTab.indexOf('hourly') != -1) {
