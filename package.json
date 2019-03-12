@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
     "@auth0/angular-jwt": "^2.0.0",
+    "angular-archwizard": "^4.0.0",
     "angular-calendar": "^0.26.0",
     "angular-confirmation-popover": "^4.2.0",
     "angular-notifier": "^4.1.1",

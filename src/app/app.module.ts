@@ -64,6 +64,8 @@ import { Erreur404ComponentComponent } from './erreur404-component/erreur404-com
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 import { ApiaryNotesComponent } from './apiary-notes/apiary-notes.component';
 import { WizardComponent } from './accueil/wizard/wizard.component';
+import { ArchwizardModule } from 'angular-archwizard';
+
 
 
 
@@ -106,6 +108,7 @@ import { WizardComponent } from './accueil/wizard/wizard.component';
     NgxEchartsModule,
     ngfModule,
     SharedModule,
+    ArchwizardModule,
     NotifierModule.withConfig({
       position: {
         horizontal: {
