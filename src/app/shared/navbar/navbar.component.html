@@ -23,10 +23,10 @@
             <i class="fa fa-plus fa-2x"></i>
           </button>
           <button data-backdrop="false" type="button" (click)="editRucherClicked()"
-            class="crud btn btn-success btn-lg crud-apiary" data-toggle="modal" data-target="#editRucher">
+            class="crud btn btn-success btn-lg crud-apiary" data-toggle="tooltip" data-html="true" title="Edit apiary" data-toggle="modal" data-target="#editRucher">
             <i class="fa fa-edit fa-2x"></i>
           </button>
-          <button type="button" class="btn btn-warning btn-lg crud-apiary" mwlConfirmationPopover
+          <button type="button" class="btn btn-warning btn-lg crud-apiary" data-toggle="tooltip" data-html="true" title="Delete apiary" mwlConfirmationPopover
             popoverTitle="Delete Apiary ?" placement="bottom" (confirm)="deleteRucher()">
             <i class="fa fa-times fa-2x"></i>
           </button>

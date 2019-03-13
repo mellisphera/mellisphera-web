@@ -35,7 +35,7 @@
                   <tr>
                     <th scope="col">Date</th>
                     <th scope="col">Sentence</th>
-                    <th scope="col">Actions</th>
+                    <th class="text-right" scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -47,7 +47,7 @@
                     <td>
                       {{ap.sentence}}
                     </td>
-                    <td>
+                    <td class="text-right">
                       <button data-toggle="tooltip" data-html="true" title="Edit observation" data-toggle="modal"
                         type="button" data-target="#editObservationModal" (click)="onSelectObs(ap)"
                         class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">

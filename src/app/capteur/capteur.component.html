@@ -49,7 +49,7 @@
                                                             <i class="fa fa-angle-down fa-2x"></i>
                                                         </button>
                                                     </th>
-                                                    <th scope="col">Description
+                                                    <th class="text-left" scope="col">Description
                                                         <button data-toggle="tooltip" data-html="true"
                                                             (click)="sortSensors('description');"
                                                             class="btn btn-success btn-xs">
@@ -70,6 +70,7 @@
                                                             <i class="fa fa-angle-down fa-2x"></i>
                                                         </button>
                                                     </th>
+                                                    <th class="text-right" scope="col">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -79,10 +80,10 @@
                                                         <td class=" hive-link" *ngIf="capteur.apiaryName != null"
                                                             (click)="navToHive(capteur.idHive, capteur.idApiary)">
                                                             {{capteur.apiaryName}} | {{capteur.hiveName}}</td>
-                                                        <td>{{capteur.description}}</td>
+                                                        <td class="text-left">{{capteur.description}}</td>
                                                         <td>{{capteur.reference}}</td>
                                                         <td>{{capteur.type}}</td>
-                                                        <td>
+                                                        <td class="text-right">
                                                             <button data-toggle="tooltip" data-html="true"
                                                                 title="Nouveau capteur" data-toggle="modal"
                                                                 type="button" (click)="selectCapteur(capteur, i)"
@@ -135,7 +136,7 @@
                                                             <i class="fa fa-angle-down fa-2x"></i>
                                                         </button> -->
                                                     </th>
-                                                    <th scope="col">Description
+                                                    <th class="text-left" scope="col">Description
 <!--                                                         <button data-toggle="tooltip" data-html="true"
                                                             (click)="sortSensors('description',true);"
                                                             class="btn btn-success btn-xs">
@@ -156,6 +157,7 @@
                                                             <i class="fa fa-angle-down fa-2x"></i>
                                                         </button> -->
                                                     </th>
+                                                    <th class="text-right" scope="col">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -163,10 +165,10 @@
                                                     *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch); let i = index">
                                                     <tr *ngIf="capteur.apiaryName == null">
                                                         <td *ngIf="capteur.apiaryName == null">Stock</td>
-                                                        <td>{{capteur.description}}</td>
-                                                        <td>{{capteur.reference}}</td>
+                                                        <td class="text-left">{{capteur.description}}</td>
+                                                        <td >{{capteur.reference}}</td>
                                                         <td>{{capteur.type}}</td>
-                                                        <td>
+                                                        <td class="text-right">
                                                             <button data-toggle="tooltip" data-html="true"
                                                                 title="Nouveau capteur" data-toggle="modal"
                                                                 type="button" (click)="selectCapteur(capteur, i)"
