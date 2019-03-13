@@ -33,7 +33,8 @@ export class AuthService {
 
   constructor(private router: Router,
               private http : HttpClient,
-              private tokenService : AtokenStorageService) {
+              private tokenService : AtokenStorageService,
+              private userService: UserloggedService) {
                 this.login = { email : '', password : ''};
                 this.errLogin = false;
                 this.isAuthenticated = false;
@@ -50,8 +51,11 @@ export class AuthService {
         this.connexionStatus.next(data);
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
-        this.setConnexion(this.jwtReponse.connexions);
-        this.setUser(this.jwtReponse);
+        this.userService.setConnexion(this.jwtReponse.connexions);
+        if (this.jwtReponse.connexions === 1) {
+          this.userService.setWizardActive();
+        }
+        this.userService.setUser(this.jwtReponse);
         this.router.navigate(['/home']);
       },
       (err) => {
@@ -60,13 +64,9 @@ export class AuthService {
       }
     );
   }
-  setUser(user: JwtResponse) {
+/*   setUser(user: JwtResponse) {
     window.sessionStorage.removeItem('currentUser');
     window.sessionStorage.setItem('currentUser', JSON.stringify(user));
-  }
-
-  setConnexion(nbConnection: number){
-    window.sessionStorage.setItem('connexions', '' + nbConnection);
-  }
+  } */
 
 }

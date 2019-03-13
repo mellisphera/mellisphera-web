@@ -10,8 +10,10 @@ export class UserloggedService {
   private messageSource = new BehaviorSubject<string>('');
   currentMessage = this.messageSource.asObservable();
 
+  private wizardActive: Boolean;
 
-  constructor(private authService : AuthService) {
+  constructor() {
+    this.wizardActive = false;
    }
 
    changeMessage(message: string) {
@@ -26,6 +28,17 @@ export class UserloggedService {
     window.sessionStorage.setItem('currentUser', JSON.stringify(user));
   }
 
+  setConnexion(nbConnection: number) {
+    window.sessionStorage.setItem('connexions', '' + nbConnection);
+  }
+
+
+  getWizardActive() {
+    return this.wizardActive;
+  }
+  setWizardActive() {
+    this.wizardActive = !this.wizardActive;
+  }
   getUser() {
     try {
       return JSON.parse(window.sessionStorage.getItem('currentUser')).username.toLowerCase();

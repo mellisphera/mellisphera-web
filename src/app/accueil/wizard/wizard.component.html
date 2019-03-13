@@ -22,9 +22,12 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-centered">
-                                <input formControlName="name" type="text" placeholder="Apiary name" class="form-control" id="name">
-                                <input formControlName="ville" type="text" placeholder="City" class="form-control" id="city">
-                                <input formControlName="codePostal" type="text" placeholder="Zip code" class="form-control" id="zipCode">
+                                <input formControlName="name" type="text" placeholder="Apiary name" class="form-control"
+                                    id="name">
+                                <input formControlName="ville" type="text" placeholder="City" class="form-control"
+                                    id="city">
+                                <input formControlName="codePostal" type="text" placeholder="Zip code"
+                                    class="form-control" id="zipCode">
                             </div>
                         </div>
                     </div>
@@ -33,7 +36,8 @@
             </div>
             <div class="btn-group">
                 <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
-                <button type="button" class="btn btn-secondary" [disabled]="apiaryForm.invalid" (click)="subApiary()" awNextStep>Continue</button>
+                <button type="button" class="btn btn-secondary" [disabled]="apiaryForm.invalid" (click)="subApiary()"
+                    awNextStep>Continue</button>
             </div>
         </div>
     </aw-wizard-step>
@@ -48,7 +52,8 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-centered">
-                                <input formControlName="name" type="text" placeholder="Hive name" class="form-control" id="name">
+                                <input formControlName="name" type="text" placeholder="Hive name" class="form-control"
+                                    id="name">
                             </div>
                         </div>
                     </div>
@@ -56,7 +61,8 @@
             </div>
             <div class="btn-group">
                 <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
-                <button type="button" class="btn btn-secondary" [disabled]="hiveForm.invalid" (click)="subHive()" awNextStep>Continue</button>
+                <button type="button" class="btn btn-secondary" [disabled]="hiveForm.invalid" (click)="subHive()"
+                    awNextStep>Continue</button>
             </div>
         </div>
     </aw-wizard-step>
@@ -69,7 +75,8 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-centered">
-                                <input formControlName="reference" type="text" placeholder="4x:xx:xx" class="form-control" id="name">
+                                <input formControlName="reference" type="text" placeholder="4x:xx:xx"
+                                    class="form-control" id="name">
                             </div>
                         </div>
                     </div>
@@ -78,7 +85,8 @@
 
             <div class="btn-group">
                 <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
-                <button type="button" class="btn btn-secondary" [disabled]="sensorForm.invalid" (click)="subSensor()" awNextStep>Continue</button>
+                <button type="button" class="btn btn-secondary" [disabled]="sensorForm.invalid" (click)="subSensor()"
+                    awNextStep>Continue</button>
             </div>
         </div>
     </aw-wizard-step>
@@ -97,7 +105,7 @@
             </div>
         </div>
     </aw-wizard-step>
-    <aw-wizard-step [stepTitle]="'End'">
+    <!--     <aw-wizard-step [stepTitle]="'End'">
         <ng-template awWizardStepSymbol><img src="./assets/img/flower-icon.png" style="width:2em">
         </ng-template>
         <div class="centered-content">
@@ -116,5 +124,25 @@
                 <button type="button" class="btn btn-secondary" awResetWizard>Reset</button>
             </div>
         </div>
-    </aw-wizard-step>
+    </aw-wizard-step> -->
+    <aw-wizard-completion-step [stepTitle]="'End'" awEnableBackLinks>
+        <ng-template awWizardStepSymbol><img src="./assets/wizard/finish.png" style="width:2em">
+        </ng-template>
+        <div class="centered-content">
+            <div>
+                <h2>You’re done!</h2>
+                <p>Navigating the different pages you’ll find the following symbolst</p>
+                <ul>
+                    <li><i class="fa fa-plus fa-2x"></i>Add an item (apiary, hive, sensor, flower)</li>
+                    <li><i class="fa fa-edit fa-2x"></i>Edit an item</li>
+                    <li><i class="fa fa-times fa-2x"></i>Delete an item</li>
+                </ul>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
+                <button type="button" class="btn btn-secondary" (click)="finishWizard()" awResetWizard>Finish</button>
+            </div>
+        </div>
+    </aw-wizard-completion-step>
 </aw-wizard>

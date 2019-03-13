@@ -15,6 +15,10 @@ import { CapteurService } from '../../capteur/capteur.service';
 export class WizardComponent implements OnInit, OnDestroy {
 
   private wrapper: Element;
+  private mainPanel: Element;
+  private sidebar: Element;
+
+
   public apiaryForm: FormGroup;
   public sensorForm: FormGroup;
   public hiveForm: FormGroup;
@@ -33,12 +37,14 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.paternRef = /[4][0-3]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9]|[a-z])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
     this.initForm();
     this.wrapper = document.getElementsByClassName('wrapper')[0];
+    this.mainPanel = document.getElementsByClassName('main-panel')[0]
+    this.sidebar = document.getElementsByClassName('sidebar')[0];
+
     this.wrapper.classList.add('wizard-active');
+    this.mainPanel.classList.add('wizard-z-index');
+    this.sidebar.classList.add('wizard-z-index');
   }
 
-  ngOnDestroy(): void {
-    this.wrapper.classList.remove('wizard-active');
-  }
 
   initForm() {
     this.apiaryForm = this.formBuilder.group({
@@ -78,7 +84,6 @@ export class WizardComponent implements OnInit, OnDestroy {
   subHive() {
     this.hive = this.hiveForm.value;
     this.hive.id = null;
-    this.hive.idApiary = this.rucherService.rucher.id;
     this.hive.username = this.userService.getUser();
    // this.initForm();
 /*     this.rucherService.rucheService.createRuche(this.hive).subscribe((hive) => {
@@ -96,12 +101,41 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.sensor.idHive = this.rucherService.rucheService.getCurrentHive();
     this.sensor.apiaryName = this.apiary.name;
     this.sensor.hiveName = this.apiary.name;
-    this.sensor.idApiary = this.rucherService.getCurrentApiary();
     this.sensor.username = this.userService.getUser();
     this.capteurService.capteur = this.sensor;
 /*     this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
       this.capteurService.getUserCapteurs();
     }); */
+  }
+
+  finishWizard() {
+    this.rucherService.createRucher(this.apiary).subscribe((apiary) => {
+      if (this.rucherService.ruchers != null) {
+        this.rucherService.ruchers.push(apiary);
+      } else {
+        this.rucherService.ruchers = new Array(apiary);
+      }
+      this.rucherService.saveCurrentApiaryId(apiary.id);
+    }, () => { }, () => {
+      console.log(this.rucherService.ruchers);
+      this.rucherService.emitApiarySubject();
+      this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
+      this.initForm();
+      this.hive.idApiary = this.rucherService.getCurrentApiary();
+      console.log(this.rucherService.getCurrentApiary());
+      this.rucherService.rucheService.createRuche(this.hive).subscribe((hive) => {
+        this.rucherService.rucheService.ruches.push(hive);
+        this.rucherService.rucheService.saveCurrentHive(hive.id);
+      }, () => { }, () => {
+        console.log(this.rucherService.rucheService.ruches);
+        this.rucherService.rucheService.emitHiveSubject();
+        this.sensor.idApiary = this.rucherService.getCurrentApiary();
+        this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
+          this.capteurService.getUserCapteurs();
+          this.userService.setWizardActive();
+        });
+      });
+    });
   }
 
   /**
@@ -119,5 +153,11 @@ export class WizardComponent implements OnInit, OnDestroy {
     } else {
       return 'weight';
     }
+  }
+
+  ngOnDestroy(): void {
+    this.wrapper.classList.remove('wizard-active');
+    this.mainPanel.classList.remove('wizard-z-index');
+    this.sidebar.classList.remove('wizard-z-index');
   }
 }
