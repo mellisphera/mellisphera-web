@@ -12,3 +12,17 @@
 .centered-content{
     text-align: center;   
 }
+.col-centered{
+    float: none;
+    margin: auto;
+}
+li{
+    list-style: none;
+}
+li .fa{
+    padding-right: 30px;
+}
+ul{
+    padding-left: 30%;
+    text-align: left;
+}

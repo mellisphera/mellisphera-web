@@ -50,6 +50,7 @@ export class AuthService {
         this.connexionStatus.next(data);
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
+        this.setConnexion(this.jwtReponse.connexions);
         this.setUser(this.jwtReponse);
         this.router.navigate(['/home']);
       },
@@ -62,6 +63,10 @@ export class AuthService {
   setUser(user: JwtResponse) {
     window.sessionStorage.removeItem('currentUser');
     window.sessionStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  setConnexion(nbConnection: number){
+    window.sessionStorage.setItem('connexions', '' + nbConnection);
   }
 
 }

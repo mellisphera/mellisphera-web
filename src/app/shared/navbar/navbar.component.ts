@@ -184,6 +184,7 @@ export class NavbarComponent implements OnInit{
             if (this.rucherService.ruchers.length < 1) {
                 this.rucherService.initRucher();
             }
+            this.rucheService.getRucheByApiary(this.rucherService.rucher.id);
         });
     }
 
@@ -252,9 +253,11 @@ export class NavbarComponent implements OnInit{
             } else {
                 this.rucherService.ruchers = new Array(apiary);
             }
+            this.rucherService.saveCurrentApiaryId(apiary.id);
         }, () => {}, () => {
             console.log(this.rucherService.ruchers);
             this.rucherService.emitApiarySubject();
+            this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
             this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
             this.notifier.notify('success', 'Created Apiary');
             this.initForm();

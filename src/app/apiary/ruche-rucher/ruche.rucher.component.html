@@ -37,18 +37,19 @@
                               <tr>
                                 <th scope="col">Hive</th>
                                 <th scope="col">Description</th>
-                                <th scope="col">Action</th>
+                                <th class="text-right" scope="col">Action</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr *ngFor="let ruche of rucheService.ruches; index as i">
-                                  <td>
-                                      <a [routerLink]="['/ruche-detail']" routerLinkActive="active"
-                                        (click)="clickOnRuche(ruche)"> {{ruche.name}}</a>
+                                  <td class="hive-select" (click)="clickOnRuche(ruche)">{{ruche.name}}
+                                      <!-- <a [routerLink]="['/ruche-detail']" routerLinkActive="active"
+                                        (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> -->
+                                        
                                     </td>
         
-                                    <td>{{ruche.description}}</td>
-                                    <td>
+                                    <td (click)="clickOnRuche(ruche)" class="hive-select">{{ruche.description}}</td>
+                                    <td (click)="clickOnRuche(ruche)" class="text-right">
                                       <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal"
                                         type="button" (click)="onSelectRuche(ruche,index)" data-target="#editRucheModal"
                                         class="btn btn-primary btn-lg " style="padding: 0;border: none; background: none;">

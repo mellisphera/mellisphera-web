@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
   rucheOnClick : Ruche;
 
   constructor( public dailyRecTh:  DailyRecordService, private draggable: DragAndCheckModule, 
-    private login: UserloggedService,
+    public login: UserloggedService,
     public rucheService: RucheService,
     public rucherService: RucherService,
     private route: Router,
