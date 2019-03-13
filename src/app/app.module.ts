@@ -65,9 +65,7 @@ import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.compone
 import { ApiaryNotesComponent } from './apiary-notes/apiary-notes.component';
 import { WizardComponent } from './accueil/wizard/wizard.component';
 import { ArchwizardModule } from 'angular-archwizard';
-
-
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -109,6 +107,7 @@ import { ArchwizardModule } from 'angular-archwizard';
     ngfModule,
     SharedModule,
     ArchwizardModule,
+    BrowserAnimationsModule,
     NotifierModule.withConfig({
       position: {
         horizontal: {

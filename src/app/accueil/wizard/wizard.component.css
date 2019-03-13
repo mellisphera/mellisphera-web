@@ -5,7 +5,7 @@
     transform: translate(-50%, -50%);
     z-index: 1000;
     box-shadow: 8px 8px 5px black;
-    background-color: #acc87b;
+    background-color: #8FACD6;
     padding: 20px;
     width: 50%;
 }
@@ -25,4 +25,12 @@ li .fa{
 ul{
     padding-left: 30%;
     text-align: left;
+}
+.group-btn{
+    display: flex !important;
+    justify-content: space-between !important;
+}
+.btn{
+    color: white !important;
+    border-color: white !important;
 }
