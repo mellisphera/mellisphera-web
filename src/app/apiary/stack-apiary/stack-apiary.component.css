@@ -23,6 +23,8 @@ li{
 }
 .row{
     height: 50vh !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
 }
 #stackGraph{
     height: 80vh;

@@ -6,19 +6,16 @@ import { EChartOption } from 'echarts';
 })
 export class StackApiaryGraphService {
 
-  options: any;
+  options: EChartOption;
   constructor() {
     this.options = {
       title: {
         text: 'Stack',
-        x: 'center',
+        left: 'center',
         /* top: -5 */
       },
       tooltip: {
         trigger: 'axis',
-        axisPointer: {
-          animation: false
-        }
       },
       legend: {
         orient: 'horizontal',
@@ -39,9 +36,9 @@ export class StackApiaryGraphService {
           saveAsImage: {}
         }
       },
-      axisPointer: {
+/*       axisPointer: {
         link: { xAxisIndex: 'all' }
-      },
+      }, */
       dataZoom: [
         {
           show: true,
@@ -132,8 +129,6 @@ export class StackApiaryGraphService {
           inverse: false
         }
       ],
-      series: [
-      ]
     };
   }
 }

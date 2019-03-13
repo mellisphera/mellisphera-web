@@ -33,3 +33,24 @@
 notifier-container ul{
     margin-bottom: 0px;
 }
+.current .label{
+    color: white !important;
+}
+.default .label{
+    color: black !important;
+}
+.done .label{
+    color:greenyellow !important;
+}
+.step-indicator{
+    background-color: white !important;
+}
+.editing .label{
+    color: white !important;
+}
+aw-wizard-navigation-bar{
+    margin-bottom: 40px !important;
+}
+.btn-group{
+    margin-top: 50px !important;
+}
