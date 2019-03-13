@@ -34,6 +34,13 @@ export class UserloggedService {
     }
   }
 
+  getConnexion() {
+    try {
+      return JSON.parse(window.sessionStorage.getItem('connexions'));
+    } catch (e) {
+      return false;
+    }
+  }
   logOut(){
     return localStorage.removeItem('currentUser');
   }

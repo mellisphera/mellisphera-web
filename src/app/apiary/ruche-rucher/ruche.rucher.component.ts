@@ -95,6 +95,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
   clickOnRuche(ruche: RucherModel) {
     this.rucheService.saveCurrentHive(ruche.id);
+    this.router.navigateByUrl('/ruche-detail');
   }
 
   resetForm() {
@@ -120,6 +121,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     this.selectHive.username = this.username.toLowerCase();
     this.initForm();
     this.rucheService.createRuche(this.selectHive).subscribe((hive) => {
+      // this.rucheService.saveCurrentHive(hive.id);
       this.rucheService.ruches.push(hive);
     }, () => { }, () => {
       console.log(this.rucheService.ruches);

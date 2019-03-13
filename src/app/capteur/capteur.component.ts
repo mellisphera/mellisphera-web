@@ -58,7 +58,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         public capteurService: CapteurService,
         private _selectedRucherService: selectedRucherService,
         public notifierService: NotifierService) {
-        this.paternRef = /[4][0-5]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9]|[a-z])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
+        this.paternRef = /[4][0-3]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9]|[a-z])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
         this.username = userService.getUser();
         this.notifier = notifierService;
         this.initForm();
