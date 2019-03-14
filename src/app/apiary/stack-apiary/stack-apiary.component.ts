@@ -3,6 +3,9 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RucheService } from '../../accueil/Service/ruche.service';
 import { RucheInterface } from '../../_model/ruche';
 import { RecordService } from '../ruche-rucher/ruche-detail/service/Record/record.service';
+import { EChartOption } from 'echarts';
+import { BehaviorSubject } from 'rxjs';
+/* import * as echarts from 'echarts'; */
 
 @Component({
   selector: 'app-stack-apiary',
@@ -13,12 +16,21 @@ export class StackApiaryComponent implements OnInit {
 
   private arrayHiveSelect: Array<RucheInterface>;
   private echartInstance: any;
+  public merge: any;
+  private subjectEchart: BehaviorSubject<any>;
   message: string;
   constructor(public rucheService: RucheService,
     private render: Renderer2,
     public stackApiaryGraph: StackApiaryGraphService,
-    public recordService: RecordService) {
+    public recordService: RecordService, ) {
     this.arrayHiveSelect = [];
+    /* this.subjectEchart = new BehaviorSubject({}); */
+    this.merge = {
+      series : [],
+      legend:{
+        data: []
+      }
+    };
     this.message = '';
   }
 
@@ -38,17 +50,40 @@ export class StackApiaryComponent implements OnInit {
       this.render.removeClass(event.target, 'active');
       const index = this.arrayHiveSelect.indexOf(arrayFilter[0]);
       this.arrayHiveSelect.splice(index, 1);
-      this.recordService.removeHiveStack(selectHive.name);
+      let option = this.echartInstance.getOption();
+      this.removeHiveStack(selectHive.name);
+      this.echartInstance.clear();
+      option.series = this.merge.series;
+      option.legend = this.merge.legend;
+      this.echartInstance.setOption(option);
+      console.log(this.merge);
+      // this.echartInstance.clear();
     } else {
       this.render.addClass(event.target, 'active');
       this.arrayHiveSelect.push(selectHive);
       this.recordService.setRange({ scale: 15, type: 'DAY' });
-      this.recordService.getRecordByIdHive(selectHive.id, selectHive.name);
+      this.recordService.getRecordStackApiaryByIdHive(selectHive.id, selectHive.name, this.merge).subscribe((data) => {
+        console.log(data);
+        this.merge = data;
+      });
     }
   }
 
   receiveMessage($event) {
     this.message = $event;
-}
+  }
 
+/*   getMergeObs() {
+    return this.subjectEchart.asObservable();
+  } */
+
+   removeHiveStack(hiveName: string) {
+    this.merge.series.filter(serie => hiveName === serie.name.split('-')[0]).forEach(element => {
+      const index = this.merge.series.indexOf(element);
+      this.merge.series.splice(index, 1);
+      this.merge.legend.data.splice(index, 1);
+    });
+    /* this.subjectEchart.next(this.merge); */
+    console.log(this.merge);
+  }
 }

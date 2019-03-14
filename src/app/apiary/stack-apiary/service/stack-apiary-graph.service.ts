@@ -6,7 +6,7 @@ import { EChartOption } from 'echarts';
 })
 export class StackApiaryGraphService {
 
-  options: EChartOption;
+  options: any;
   constructor() {
     this.options = {
       title: {
@@ -16,11 +16,17 @@ export class StackApiaryGraphService {
       },
       tooltip: {
         trigger: 'axis',
+        axisPointer: {
+          animation: false
+        }
       },
       legend: {
         orient: 'horizontal',
-        /*       x: '5%',
-              y: '2%' */
+        data: [],
+        y: '2%'
+      },
+      axisPointer: {
+        link: { xAxisIndex: 'all' }
       },
       toolbox: {
         orient: 'horizontal',
@@ -36,16 +42,17 @@ export class StackApiaryGraphService {
           saveAsImage: {}
         }
       },
-/*       axisPointer: {
-        link: { xAxisIndex: 'all' }
-      }, */
+      /*       axisPointer: {
+              link: { xAxisIndex: 'all' }
+            }, */
       dataZoom: [
         {
           show: true,
           realtime: true,
           start: 80,
           end: 100,
-          bottom: 50,
+          // bottom: 50,
+          bottom: -10,
           xAxisIndex: [0, 1, 2]
         },
         {
@@ -70,9 +77,9 @@ export class StackApiaryGraphService {
         }
       ],
       grid: [
-        { x: '3%', y: '5%', width: '95%', height: '40%' },
-        { x: '3%', y: '54%', width: '95%', height: '33%' },
-        { x: '3%', y: '96%', width: '95%', height: '20%' },
+        { x: '3%', y: '5%', width: '95%', height: '25%' },
+        { x: '3%', y: '35%', width: '95%', height: '25%' },
+        { x: '3%', y: '65%', width: '95%', height: '25%' },
       ],
       xAxis: [
         {
@@ -124,11 +131,12 @@ export class StackApiaryGraphService {
         },
         {
           gridIndex: 2,
-          name: 'Batery',
+          name: 'Weight',
           type: 'value',
           inverse: false
         }
       ],
+      series: []
     };
   }
 }

@@ -42,7 +42,7 @@ export class RecordService {
   private rangeHourly: Date[];
   public mergeOptionStack: any = null;
   public mergeOptionStackApiary: EChartOption;
-  public stackSubject: BehaviorSubject<any>;;
+  public stackSubject: BehaviorSubject<EChartOption>;
   private mergeTemp: any;
   private legendOption: Array<string>;
   constructor(private http: HttpClient) {
@@ -130,7 +130,7 @@ export class RecordService {
               this.mergeTemp.series.push(this.templateSerie.bExt);
 
               this.mergeTemp.legend.data = this.legendOption;
-              this.updateMergeStack();
+              // this.updateMergeStack();
               /*               this.mergeOptionStackApiary = {
                               legend: {
                                 data: this.legendOption
@@ -138,6 +138,8 @@ export class RecordService {
                               series: this.mergeTemp.series,
                             }; */
             });
+            this.stackSubject.next(this.mergeTemp);
+            // this.stackSubject.complete();
           }
           /**
            * Pourquoi le graph ne s'affiche pas
@@ -147,6 +149,99 @@ export class RecordService {
     );
   }
 
+  getRecordStackApiaryByIdHive(idHive: string, hiveName: string, lastMerge: any): Observable<any> {
+    return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
+      this.recArrayText = records.filter(record => record.temp_ext != null)
+      .map((rec) => {
+        return { name: rec.recordDate, value: [rec.recordDate, rec.temp_ext]};
+      });
+      this.recArrayWeight = records.filter(record => record.weight != null)
+      .map((rec) => {
+        return { name: rec.recordDate, value: [rec.recordDate, rec.weight]};
+      });
+      this.recArrayBatteryExt = records.filter(record => record.battery_ext != null)
+      .map((rec) => {
+        return { name: rec.recordDate, value: [rec.recordDate, rec.battery_ext]};
+      });
+      this.recArrayBatteryInt = records.filter(record => record.battery_int != null)
+      .map((rec) => {
+        return { name: rec.recordDate, value: [rec.recordDate, rec.battery_int]};
+      });
+      this.recArrayHext = records.filter(record => record.humidity_ext != null)
+      .map((rec) => {
+        return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_ext]};
+      });
+      this.recArrayHint = records.filter(record => record.humidity_int != null)
+      .map((rec) => {
+        return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_int]};
+      });
+      this.recArrrayTint = records.filter(record => record.temp_int != null)
+      .map((rec) => {
+        return { name: rec.recordDate, value: [rec.recordDate, rec.temp_int]};
+      });
+
+      return {
+        series:[
+          {
+            name:  hiveName + '-Tint',
+            type: 'line',
+            showSymbol: false,
+            data: this.recArrrayTint
+          },
+          {
+            name:  hiveName + '-Text',
+            type: 'line',
+            showSymbol: false,
+            data: this.recArrayText
+          },
+          {
+            name: hiveName + '-Hint',
+            type: 'line',
+            xAxisIndex: 1,
+            yAxisIndex: 1,
+            showSymbol: false,
+            data: this.recArrayHint
+          },
+          {
+            name: hiveName + '-Hext',
+            type: 'line',
+            xAxisIndex: 1,
+            yAxisIndex: 1,
+            showSymbol: false,
+            data: this.recArrayHext
+          },
+          {
+            name: hiveName + '-weight',
+            type: 'line',
+            xAxisIndex: 2,
+            yAxisIndex: 2,
+            showSymbol: false,
+/*             color: 'red',
+            large: true,
+            largeThreshold: 10,
+            barGap: '30%', */
+            data: this.recArrayWeight
+          }
+/*           {
+            name: hiveName + '-Batery-ext',
+            type: 'bar',
+            xAxisIndex: 2,
+            yAxisIndex: 2,
+            showSymbol: false,
+            color: 'blue',
+            large: true,
+            largeThreshold: 10,
+            barGap: '30%',
+            data: this.recArrayBatteryExt
+          } */
+        ].concat(lastMerge.series),
+        legend: {
+          data: [hiveName + '-Tint', hiveName + '-Text', hiveName + '-Hint', hiveName + '-hext', hiveName + '-B_int', hiveName + '-B_Ext' ]
+          .concat(lastMerge.legend.data)
+        }
+      };
+    });
+  }
   /**
    *
    * @param {string} hiveName
@@ -159,12 +254,18 @@ export class RecordService {
       this.mergeTemp.series.splice(index, 1);
       this.legendOption.splice(index, 1);
     });
-    this.updateMergeStack();
+    this.stackSubject.next(this.mergeTemp);
+    // this.stackSubject.complete();
   }
 
   /** */
   getMerge() {
-    return this.mergeOptionStackApiary;
+    return {
+      legend: {
+        data: this.legendOption
+      },
+      series: this.mergeTemp.series,
+    };
   }
 
 
