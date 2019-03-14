@@ -41,15 +41,13 @@ export class RecordService {
   private templateSerie: any;
   private rangeHourly: Date[];
   public mergeOptionStack: any = null;
-  public mergeOptionStackApiary: EChartOption;
+  public mergeOptionStackApiary: any;
   public stackSubject: BehaviorSubject<EChartOption>;
   private mergeTemp: any;
   private legendOption: Array<string>;
   constructor(private http: HttpClient) {
     this.currentIdHive = null;
     this.stackSubject = new BehaviorSubject({});
-    // this.echarts.clear();
-    this.mergeTemp = this.mergeOptionStackApiary;
     this.mergeTemp = {
       legend: {
         data: []
@@ -181,7 +179,7 @@ export class RecordService {
       });
 
       return {
-        series:[
+        series: [
           {
             name:  hiveName + '-Tint',
             type: 'line',

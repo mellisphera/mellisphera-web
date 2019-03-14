@@ -52,7 +52,7 @@ export class StackApiaryGraphService {
           start: 80,
           end: 100,
           // bottom: 50,
-          bottom: -10,
+           bottom: 20,
           xAxisIndex: [0, 1, 2]
         },
         {
