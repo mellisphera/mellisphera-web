@@ -66,6 +66,7 @@ import { ApiaryNotesComponent } from './apiary-notes/apiary-notes.component';
 import { WizardComponent } from './accueil/wizard/wizard.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 
 @NgModule({
@@ -90,6 +91,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     StackApiaryComponent,
     ApiaryNotesComponent,
     WizardComponent,
+    FeedbackComponent,
   ],
   imports: [
     BrowserModule,

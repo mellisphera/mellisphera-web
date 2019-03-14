@@ -1,0 +1,19 @@
+#btn-feedback{
+    position: fixed;
+    bottom: 2%;
+    right: 2%;
+    width: 70px;
+    box-shadow: 2px 2px black;
+    opacity: 0.5;
+    z-index: 5;
+    border: none; 
+    border-radius: 50%;
+    padding: 0px;
+}
+img{
+    width: 100%;
+}
+#btn-feedback:hover{
+    opacity: 1;
+    box-shadow: none;
+}

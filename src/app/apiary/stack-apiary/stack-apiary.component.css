@@ -8,6 +8,7 @@ ul{
 li{
     list-style: none;
     background-image: url('../../../assets/img/apiary-icon.png');
+    background-color: red;
     background-position: left center;
     background-repeat: no-repeat;
     background-size:25px;
@@ -29,7 +30,7 @@ li{
 #stackGraph{
     height: 95vh;
 }
-@media (max-width:767px){
+@media  (max-width:767px){
     #col-graph{
         width: 100% !important;
     }

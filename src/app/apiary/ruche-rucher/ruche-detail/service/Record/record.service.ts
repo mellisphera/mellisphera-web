@@ -181,45 +181,39 @@ export class RecordService {
       return {
         series: [
           {
-            name:  hiveName + '-Tint',
-            type: 'line',
-            showSymbol: false,
-            data: this.recArrrayTint
-          },
-          {
-            name:  hiveName + '-Text',
-            type: 'line',
-            showSymbol: false,
-            data: this.recArrayText
-          },
-          {
-            name: hiveName + '-Hint',
-            type: 'line',
-            xAxisIndex: 1,
-            yAxisIndex: 1,
-            showSymbol: false,
-            data: this.recArrayHint
-          },
-          {
-            name: hiveName + '-Hext',
-            type: 'line',
-            xAxisIndex: 1,
-            yAxisIndex: 1,
-            showSymbol: false,
-            data: this.recArrayHext
-          },
-          {
             name: hiveName + '-weight',
             type: 'line',
-            xAxisIndex: 2,
-            yAxisIndex: 2,
             showSymbol: false,
 /*             color: 'red',
             large: true,
             largeThreshold: 10,
             barGap: '30%', */
             data: this.recArrayWeight
-          }
+          },
+          {
+            name:  hiveName + '-Tint',
+            type: 'line',
+            xAxisIndex: 1,
+            yAxisIndex: 1,
+            showSymbol: false,
+            data: this.recArrrayTint
+          },
+          {
+            name:  hiveName + '-Text',
+            type: 'line',
+            xAxisIndex: 1,
+            yAxisIndex: 1,
+            showSymbol: false,
+            data: this.recArrayText
+          },
+          {
+            name: hiveName + '-Hint',
+            type: 'line',
+            xAxisIndex: 2,
+            yAxisIndex: 2,
+            showSymbol: false,
+            data: this.recArrayHint
+          },
 /*           {
             name: hiveName + '-Batery-ext',
             type: 'bar',
@@ -234,7 +228,7 @@ export class RecordService {
           } */
         ].concat(lastMerge.series),
         legend: {
-          data: [hiveName + '-Tint', hiveName + '-Text', hiveName + '-Hint', hiveName + '-hext', hiveName + '-B_int', hiveName + '-B_Ext' ]
+          data: [hiveName + '-Tint', hiveName + '-Text', hiveName + '-Hint', hiveName + '-B_int', hiveName + '-B_Ext' ]
           .concat(lastMerge.legend.data)
         }
       };

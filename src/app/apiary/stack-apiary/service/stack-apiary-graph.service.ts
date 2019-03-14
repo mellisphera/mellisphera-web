@@ -23,7 +23,8 @@ export class StackApiaryGraphService {
       legend: {
         orient: 'horizontal',
         data: [],
-        y: '2%'
+        y: '2%',
+        show: false
       },
       axisPointer: {
         link: { xAxisIndex: 'all' }
@@ -49,7 +50,7 @@ export class StackApiaryGraphService {
         {
           show: true,
           realtime: true,
-          start: 80,
+          start: 0,
           end: 100,
           // bottom: 50,
            bottom: 20,
@@ -83,7 +84,6 @@ export class StackApiaryGraphService {
       ],
       xAxis: [
         {
-          //Temp
           type: 'time',
           boundaryGap: false,
           axisLine: { onZero: true },
@@ -94,18 +94,19 @@ export class StackApiaryGraphService {
           },
         },
         {
-          //Humdity
           type: 'time',
           boundaryGap: false,
-          axisLine: { onZero: true },
+          axisLine: { onZero: true},
           position: 'bottom',
           gridIndex: 1,
           splitLine: {
             show: false
+          },
+          axisLabel: {
+            show: false
           }
         },
         {
-          //batery
           type: 'time',
           boundaryGap: false,
           axisLine: { onZero: true },
@@ -118,23 +119,25 @@ export class StackApiaryGraphService {
       ],
       yAxis: [
         {
+          name: 'Weight',
+          type: 'value',
+          inverse: false
+        },
+        {
+          gridIndex: 1,
           name: 'Temp',
           type: 'value',
           min: 0,
           max: 40,
         },
         {
-          gridIndex: 1,
+          gridIndex: 2,
           name: 'Humidity',
           type: 'value',
+          min: 0,
+          max: 100,
           inverse: false
         },
-        {
-          gridIndex: 2,
-          name: 'Weight',
-          type: 'value',
-          inverse: false
-        }
       ],
       series: []
     };
