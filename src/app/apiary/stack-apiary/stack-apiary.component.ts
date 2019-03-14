@@ -53,18 +53,18 @@ export class StackApiaryComponent implements OnInit {
       let option = this.echartInstance.getOption();
       this.removeHiveStack(selectHive.name);
       this.echartInstance.clear();
-      option.series = this.merge.series;
-      option.legend = this.merge.legend;
+      option.series = this.recordService.mergeOptionStackApiary.series;
+      option.legend = this.recordService.mergeOptionStackApiary.legend;
       this.echartInstance.setOption(option);
-      console.log(this.merge);
+      console.log(this.recordService.mergeOptionStackApiary);
       // this.echartInstance.clear();
     } else {
       this.render.addClass(event.target, 'active');
       this.arrayHiveSelect.push(selectHive);
       this.recordService.setRange({ scale: 15, type: 'DAY' });
-      this.recordService.getRecordStackApiaryByIdHive(selectHive.id, selectHive.name, this.merge).subscribe((data) => {
+      this.recordService.getRecordStackApiaryByIdHive(selectHive.id, selectHive.name, this.recordService.mergeOptionStackApiary).subscribe((data) => {
         console.log(data);
-        this.merge = data;
+        this.recordService.mergeOptionStackApiary = data;
       });
     }
   }
@@ -78,12 +78,12 @@ export class StackApiaryComponent implements OnInit {
   } */
 
    removeHiveStack(hiveName: string) {
-    this.merge.series.filter(serie => hiveName === serie.name.split('-')[0]).forEach(element => {
-      const index = this.merge.series.indexOf(element);
-      this.merge.series.splice(index, 1);
-      this.merge.legend.data.splice(index, 1);
+    this.recordService.mergeOptionStackApiary.series.filter(serie => hiveName === serie.name.split('-')[0]).forEach(element => {
+      const index = this.recordService.mergeOptionStackApiary.series.indexOf(element);
+      this.recordService.mergeOptionStackApiary.series.splice(index, 1);
+      this.recordService.mergeOptionStackApiary.legend.data.splice(index, 1);
     });
     /* this.subjectEchart.next(this.merge); */
-    console.log(this.merge);
+    console.log(this.recordService.mergeOptionStackApiary);
   }
 }
