@@ -25,7 +25,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   send() {
-    const body = { text: this.feedbackForm.value};
+    const body = { text: this.feedbackForm.value.comment};
     console.log(body);
     this.httpClient.post<any>(this.urlSlack, body, httpOptions).subscribe((data) => {
       console.log(data);
