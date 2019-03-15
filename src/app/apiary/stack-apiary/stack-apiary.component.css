@@ -33,6 +33,9 @@ li{
     vertical-align: text-top;
     margin-right: 5px;
 }
+.sub-items{
+    padding-left: 17%;
+}
 .active{
     background-color: #53B74F;
     color: white;
