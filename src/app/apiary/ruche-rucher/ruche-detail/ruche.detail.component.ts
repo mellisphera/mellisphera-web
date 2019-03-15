@@ -41,7 +41,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         private dailyRecordThService: DailyRecordService,
         private dailyRecordWservice: DailyRecordsWService,
         private dailyStockHoneyService: DailyStockHoneyService,
-        private recordService: RecordService,
+        public recordService: RecordService,
         private userService: UserloggedService,
         public tokenService: AtokenStorageService,
         public calendrierTempInt: CalendrierTempIntService,
