@@ -15,6 +15,7 @@ import { CONFIG } from '../../../../config';
 import { CalendrierTempIntService } from './daily/service/calendrier-temp-int.service';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { RucheInterface } from '../../../_model/ruche';
+import { GraphStackService } from './stack/service/graph-stack.service';
 
 @Component({
     selector: 'app-ruche-detail',
@@ -28,7 +29,9 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     compteurHive: number;
     currentTab: string;
     public img: string;
+    private merge: any;
     public range: DataRange;
+    private echartInstance: any;
     public ranges: DataRange[];
     constructor(private activatedRoute: ActivatedRoute,
         private route: Router,
@@ -40,7 +43,8 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         private recordService: RecordService,
         private userService: UserloggedService,
         public tokenService: AtokenStorageService,
-        public calendrierTempInt: CalendrierTempIntService) {
+        public calendrierTempInt: CalendrierTempIntService,
+        public graphStack: GraphStackService) {
         this.compteurHive = 0;
         this.currentTab = 'notes';
         this.hiveSelect = {
@@ -52,6 +56,12 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             hivePosX: '',
             hivePosY: '',
             sharingUser: []
+        };
+        this.merge = {
+            series: [],
+            legend: {
+                data: []
+            }
         };
         this.ranges = [
             { scale: 15, type: 'DAY' },
@@ -70,7 +80,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive());
         }
         if (!this.rucheService.hiveSubject.closed) {
-            this.rucheService.hiveSubject.subscribe(() => {}, () => { }, () => {
+            this.rucheService.hiveSubject.subscribe(() => { }, () => { }, () => {
                 console.log(this.rucheService.ruches);
                 this.rucheService.findRucheById(this.rucheService.getCurrentHive(), (hive) => {
                     this.hiveSelect = hive[0];
@@ -83,6 +93,10 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     }
 
+    onChartInit($event) {
+        this.echartInstance = $event;
+        console.log(this.echartInstance);
+    }
 
     receiveMessage($event) {
         this.message = $event;
@@ -93,7 +107,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.compteurHive--;
             this.hiveSelect = this.rucheService.ruches[this.compteurHive];
             this.rucheService.saveCurrentHive(this.hiveSelect.id);
-            this.exeData();
+            this.exeData(true);
         }
 
     }
@@ -105,23 +119,34 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.hiveSelect = this.rucheService.ruches[this.compteurHive];
         this.rucheService.saveCurrentHive(this.hiveSelect.id);
         this.rucheService.saveCurrentHive(this.hiveSelect.id);
-        this.exeData();
+        this.exeData(true);
     }
 
+    updateEchartInstance() {
+        const option = this.echartInstance.getOption();
+        console.log(option);
+        this.echartInstance.clear();
+        option.series = this.recordService.mergeOptionStack.series;
+        option.legend.data = this.recordService.mergeOptionStack.legend.data;
+        this.echartInstance.setOption(option);
+    }
     selectRange() {
         console.log(this.range);
         this.recordService.setRange(this.range);
-        this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive());
+        this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
+        .subscribe(
+            (record) => {
+                console.log(record);
+                this.recordService.mergeOptionStack = record;
+            }
+        );
     }
 
     onTab(event: string) {
         this.currentTab = event;
-        console.log(this.currentTab);
         this.exeData();
-
-
     }
-    exeData() {
+    exeData(switchHive?: boolean) {
         if (this.currentTab.indexOf('notes') != -1) {
             this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive());
         } else if (this.currentTab.indexOf('daily') != -1) {
@@ -136,13 +161,29 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             }
         } else if (this.currentTab.indexOf('hourly') != -1) {
             if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
-                this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive());
+                this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
+                .subscribe(
+                    (record) => {
+                        console.log(record);
+                        this.recordService.mergeOptionStack = record;
+                    }
+                );
             }
         } else if (this.currentTab.indexOf('health') != -1) {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
         } else if (this.currentTab.indexOf('stack') != -1) {
             if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
-                this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive());
+                this.recordService.setRange(this.range);
+                this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
+                .subscribe(
+                    (record) => {
+                        console.log(record);
+                        this.recordService.mergeOptionStack = record;
+                        if (switchHive) {
+                            this.updateEchartInstance();
+                        }
+                    }
+                );
             }
         }
         console.log(this.hiveSelect);
