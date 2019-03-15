@@ -5,6 +5,8 @@ import { RucheInterface } from '../../_model/ruche';
 import { RecordService } from '../ruche-rucher/ruche-detail/service/Record/record.service';
 import { EChartOption } from 'echarts';
 import { BehaviorSubject } from 'rxjs';
+import { UserloggedService } from '../../userlogged.service';
+import { RucherService } from '../ruche-rucher/rucher.service';
 /* import * as echarts from 'echarts'; */
 
 @Component({
@@ -20,7 +22,9 @@ export class StackApiaryComponent implements OnInit {
   private subjectEchart: BehaviorSubject<any>;
   message: string;
   constructor(public rucheService: RucheService,
+    public rucherService: RucherService,
     private render: Renderer2,
+    private userService: UserloggedService,
     public stackApiaryGraph: StackApiaryGraphService,
     public recordService: RecordService, ) {
     this.arrayHiveSelect = [];
@@ -41,9 +45,33 @@ export class StackApiaryComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    if (!this.rucherService.rucherSubject.closed) {
+      this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
+        this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).map((hives) => {
+          hives.forEach(elt => {
+            this.rucherService.findRucherById(elt.idApiary, (apiary) => {
+              elt.apiaryName = apiary[0].name;
+            });
+          });
+          return hives;
+        }).subscribe((hives) => {
+          this.rucherService.rucheService.ruchesAllApiary = hives;
+        });
+      });
+    }
   }
 
+  getHiveByApiary(idApiary: string) {
+    try{
+      return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === idApiary);
+    }
+    catch(e){
+      return false;
+    }
+  }
+  getId(index: number) {
+    return '#' + index;
+  }
   selectHive(selectHive: RucheInterface, event: MouseEvent) {
     const arrayFilter = this.arrayHiveSelect.filter(hive => hive.id === selectHive.id);
     if (arrayFilter.length > 0) {
@@ -56,14 +84,12 @@ export class StackApiaryComponent implements OnInit {
       option.series = this.recordService.mergeOptionStackApiary.series;
       option.legend = this.recordService.mergeOptionStackApiary.legend;
       this.echartInstance.setOption(option);
-      console.log(this.recordService.mergeOptionStackApiary);
       // this.echartInstance.clear();
     } else {
       this.render.addClass(event.target, 'active');
       this.arrayHiveSelect.push(selectHive);
       this.recordService.setRange({ scale: 15, type: 'DAY' });
       this.recordService.getRecordStackApiaryByIdHive(selectHive.id, selectHive.name, this.recordService.mergeOptionStackApiary).subscribe((data) => {
-        console.log(data);
         this.recordService.mergeOptionStackApiary = data;
       });
     }
@@ -83,7 +109,5 @@ export class StackApiaryComponent implements OnInit {
       this.recordService.mergeOptionStackApiary.series.splice(index, 1);
       this.recordService.mergeOptionStackApiary.legend.data.splice(index, 1);
     });
-    /* this.subjectEchart.next(this.merge); */
-    console.log(this.recordService.mergeOptionStackApiary);
   }
 }

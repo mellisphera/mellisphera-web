@@ -119,17 +119,7 @@ export class RucheService {
 
 
    getRucheByUsername(username: string) {
-     this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + username);
-     this.ruchesObs.subscribe(
-       (data)=>{
-         this.ruchesAllApiary = data;
-       },
-       (err) => {
-         console.log(err);
-       },
-       () => {
-       }
-     );
+     return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + username);
    }
    updateCoordonneesRuche(ruche){
     this.rucheObs = this.http.put<RucheInterface>(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,ruche,httpOptions)
