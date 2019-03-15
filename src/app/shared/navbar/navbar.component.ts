@@ -141,7 +141,7 @@ export class NavbarComponent implements OnInit{
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/stack-apiary':
-                this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+                // this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/apiary-notes':
                 this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());

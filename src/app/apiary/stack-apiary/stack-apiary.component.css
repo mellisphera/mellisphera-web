@@ -1,4 +1,4 @@
-#hive-list li:hover{
+.list-group-item:hover{
     cursor: pointer;
     background-color: aqua;
 }
@@ -8,15 +8,33 @@ ul{
 li{
     list-style: none;
     background-image: url('../../../assets/img/apiary-icon.png');
-    background-color: red;
     background-position: left center;
     background-repeat: no-repeat;
     background-size:25px;
     padding: 5px;
     padding-left: 30px;
 }
+.puce-hive{
+    background-image: url('../../../assets/img/apiary-icon.png');
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size:25px;
+    width: 25px;
+    height: 23px;
+    margin-bottom: -4px;
+}
+.puce-apiary{
+    background-image: url('../../../assets//wizard//apiary.png');
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size:25px;
+    width: 25px;
+    height: 23px;
+    vertical-align: text-top;
+    margin-right: 5px;
+}
 .active{
-    background-color: green;
+    background-color: #53B74F;
     color: white;
 }
 .col-xs{
@@ -29,6 +47,9 @@ li{
 }
 #stackGraph{
     height: 95vh;
+}
+.panel-body{
+    padding: 2px !important;
 }
 @media  (max-width:767px){
     #col-graph{

@@ -229,7 +229,8 @@ export class RecordService {
         ].concat(lastMerge.series),
         legend: {
           data: [hiveName + '-Tint', hiveName + '-Text', hiveName + '-Hint', hiveName + '-B_int', hiveName + '-B_Ext' ]
-          .concat(lastMerge.legend.data)
+          .concat(lastMerge.legend.data),
+          show: false
         }
       };
     });
