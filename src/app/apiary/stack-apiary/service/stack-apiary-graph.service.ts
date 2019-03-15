@@ -92,6 +92,9 @@ export class StackApiaryGraphService {
           splitLine: {
             show: false
           },
+          axisLabel: {
+            show: false
+          }
         },
         {
           type: 'time',
@@ -114,7 +117,10 @@ export class StackApiaryGraphService {
           gridIndex: 2,
           splitLine: {
             show: false
-          }
+          },
+/*           axisLabel: {
+            show: false
+          } */
         },
       ],
       yAxis: [

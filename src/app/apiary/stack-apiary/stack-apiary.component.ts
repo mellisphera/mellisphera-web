@@ -7,6 +7,7 @@ import { EChartOption } from 'echarts';
 import { BehaviorSubject } from 'rxjs';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
+import { DataRange } from '../ruche-rucher/ruche-detail/service/Record/data-range';
 /* import * as echarts from 'echarts'; */
 
 @Component({
@@ -19,6 +20,8 @@ export class StackApiaryComponent implements OnInit {
   private arrayHiveSelect: Array<RucheInterface>;
   private echartInstance: any;
   public merge: any;
+  public range: DataRange;
+  public ranges: DataRange[];
   private subjectEchart: BehaviorSubject<any>;
   message: string;
   constructor(public rucheService: RucheService,
@@ -30,11 +33,19 @@ export class StackApiaryComponent implements OnInit {
     this.arrayHiveSelect = [];
     /* this.subjectEchart = new BehaviorSubject({}); */
     this.merge = {
-      series : [],
-      legend:{
+      series: [],
+      legend: {
         data: []
       }
     };
+    this.ranges = [
+      { scale: 15, type: 'DAY' },
+      { scale: 30, type: 'DAY' },
+      { scale: 3, type: 'MONTH' },
+      { scale: 6, type: 'MONTH' }
+    ];
+    this.range = this.ranges[0];
+    this.recordService.setRange(this.range);
     this.message = '';
   }
 
@@ -46,7 +57,7 @@ export class StackApiaryComponent implements OnInit {
 
   ngOnInit() {
     if (!this.rucherService.rucherSubject.closed) {
-      this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
+      this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
         this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).map((hives) => {
           hives.forEach(elt => {
             this.rucherService.findRucherById(elt.idApiary, (apiary) => {
@@ -62,15 +73,25 @@ export class StackApiaryComponent implements OnInit {
   }
 
   getHiveByApiary(idApiary: string) {
-    try{
+    try {
       return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === idApiary);
     }
-    catch(e){
+    catch (e) {
       return false;
     }
   }
   getId(index: number) {
     return '#' + index;
+  }
+  selectRange() {
+    this.recordService.setRange(this.range);
+    
+    this.arrayHiveSelect.forEach(element => {
+      this.recordService.getRecordStackApiaryByIdHive(element.id, element.name, this.merge)
+      .subscribe((data) => {
+        this.recordService.mergeOptionStackApiary = data;
+      });
+    });
   }
   selectHive(selectHive: RucheInterface, event: MouseEvent) {
     const arrayFilter = this.arrayHiveSelect.filter(hive => hive.id === selectHive.id);
@@ -88,7 +109,7 @@ export class StackApiaryComponent implements OnInit {
     } else {
       this.render.addClass(event.target, 'active');
       this.arrayHiveSelect.push(selectHive);
-      this.recordService.setRange({ scale: 15, type: 'DAY' });
+      this.recordService.setRange(this.range);
       this.recordService.getRecordStackApiaryByIdHive(selectHive.id, selectHive.name, this.recordService.mergeOptionStackApiary).subscribe((data) => {
         this.recordService.mergeOptionStackApiary = data;
       });
@@ -99,11 +120,11 @@ export class StackApiaryComponent implements OnInit {
     this.message = $event;
   }
 
-/*   getMergeObs() {
-    return this.subjectEchart.asObservable();
-  } */
+  /*   getMergeObs() {
+      return this.subjectEchart.asObservable();
+    } */
 
-   removeHiveStack(hiveName: string) {
+  removeHiveStack(hiveName: string) {
     this.recordService.mergeOptionStackApiary.series.filter(serie => hiveName === serie.name.split('-')[0]).forEach(element => {
       const index = this.recordService.mergeOptionStackApiary.series.indexOf(element);
       this.recordService.mergeOptionStackApiary.series.splice(index, 1);
