@@ -75,34 +75,33 @@ export class RecordService {
    */
   getRecordByIdHive(idHive: string, hiveName: string, lastMerge: any, hive?: boolean): Observable<any> {
     return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
-      console.log(records);
       this.recArrayText = records.filter(record => record.temp_ext != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_ext], sensorRef: rec.sensorRef};
+          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_ext], sensorRef: rec.sensorRef };
         });
       this.recArrayWeight = records.filter(record => record.weight != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.weight], sensorRef: rec.sensorRef};
+          return { name: rec.recordDate, value: [rec.recordDate, rec.weight], sensorRef: rec.sensorRef };
         });
       this.recArrayBatteryExt = records.filter(record => record.battery_ext != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.battery_ext], sensorRef: rec.sensorRef};
+          return { name: rec.recordDate, value: [rec.recordDate, rec.battery_ext], sensorRef: rec.sensorRef };
         });
       this.recArrayBatteryInt = records.filter(record => record.battery_int != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.battery_int], sensorRef: rec.sensorRef};
+          return { name: rec.recordDate, value: [rec.recordDate, rec.battery_int], sensorRef: rec.sensorRef };
         });
       this.recArrayHext = records.filter(record => record.humidity_ext != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_ext], sensorRef: rec.sensorRef};
+          return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_ext], sensorRef: rec.sensorRef };
         });
       this.recArrayHint = records.filter(record => record.humidity_int != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_int], sensorRef: rec.sensorRef};
+          return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_int], sensorRef: rec.sensorRef };
         });
       this.recArrrayTint = records.filter(record => record.temp_int != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_int], sensorRef: rec.sensorRef};
+          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_int], sensorRef: rec.sensorRef };
         });
       console.log(records.filter(record => record.temp_ext != null));
       if (!hive) {
@@ -150,52 +149,52 @@ export class RecordService {
         return {
           series: [
             (this.recArrrayTint.length > 0) ?
-            {
-              type: 'line',
-              name: this.recArrrayTint[0].sensorRef + ' | Tint',
-              data: this.recArrrayTint,
-              showSymbol: false,
-            } : null,
+              {
+                type: 'line',
+                name: this.recArrrayTint[0].sensorRef + ' | Tint',
+                data: this.recArrrayTint,
+                showSymbol: false,
+              } : null,
             (this.recArrayText.length > 0) ?
-            {
-              type: 'line',
-              name: this.recArrayText[0].sensorRef + ' | Text',
-              data: this.recArrayText
-            } : null,
+              {
+                type: 'line',
+                name: this.recArrayText[0].sensorRef + ' | Text',
+                data: this.recArrayText
+              } : null,
             (this.recArrayHint.length > 0) ?
-            {
-              type: 'line',
-              name: this.recArrayHint[0].sensorRef + ' | Hint',
-              data: this.recArrayHint,
-              xAxisIndex: 1,
-              yAxisIndex: 1,
-              showSymbol: false,
-            } : null,
-            (this.recArrayBatteryInt.length > 0) ?
-            {
-              type: 'line',
-              name: this.recArrayBatteryInt[0].sensorRef + ' | Batery-int',
-              data: this.recArrayBatteryInt,
-              xAxisIndex: 2,
-              yAxisIndex: 2,
-              showSymbol: false,
-            } : null,
+              {
+                type: 'line',
+                name: this.recArrayHint[0].sensorRef + ' | Hint',
+                data: this.recArrayHint,
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                showSymbol: false,
+              } : null,
             (this.recArrayBatteryExt.length > 0) ?
-            {
-              type: 'line',
-              name: this.recArrayBatteryExt[0].sensorRef + ' | Batery-ext',
-              data: this.recArrayBatteryExt,
-              xAxisIndex: 2,
-              yAxisIndex: 2,
-              showSymbol: false,
-            } : null
+              {
+                type: 'line',
+                name: this.recArrayBatteryInt[0].sensorRef + ' | Batery-int',
+                data: this.recArrayBatteryInt,
+                xAxisIndex: 2,
+                yAxisIndex: 2,
+                showSymbol: false,
+              } : null,
+            (this.recArrayBatteryExt.length > 0) ?
+              {
+                type: 'line',
+                name: this.recArrayBatteryExt[0].sensorRef + ' | Batery-ext',
+                data: this.recArrayBatteryExt,
+                xAxisIndex: 2,
+                yAxisIndex: 2,
+                showSymbol: false,
+              } : null
           ],
           legend: {
             data: [
               (this.recArrrayTint.length > 0) ? this.recArrrayTint[0].sensorRef + ' | Tint' : null,
               (this.recArrayText.length > 0) ? this.recArrayText[0].sensorRef + ' | Text' : null,
               (this.recArrayHint.length > 0) ? this.recArrayHint[0].sensorRef + ' | Hint' : null,
-              (this.recArrayBatteryInt.length > 0) ? this.recArrayBatteryInt[0].sensorRef + ' | Batery-int' : null,
+              (this.recArrayBatteryExt.length > 0) ? this.recArrayBatteryInt[0].sensorRef + ' | Batery-int' : null,
               (this.recArrayBatteryExt.length > 0) ? this.recArrayBatteryExt[0].sensorRef + ' | Batery-ext' : null
             ],
           }
@@ -219,14 +218,56 @@ export class RecordService {
     // this.stackSubject.complete();
   }
 
-  /** */
-  getMerge() {
-    return {
-      legend: {
-        data: this.legendOption
-      },
-      series: this.mergeTemp.series,
-    };
+  getHourlyByHive(idHive: string) {
+    return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
+      this.recArrayText = records.filter(record => record.temp_ext != null)
+        .map((rec) => {
+          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_ext], sensorRef: rec.sensorRef };
+        });
+      this.recArrayWeight = records.filter(record => record.weight != null)
+        .map((rec) => {
+          return { name: rec.recordDate, value: [rec.recordDate, rec.weight], sensorRef: rec.sensorRef };
+        });
+        this.recArrrayTint = records.filter(record => record.temp_int != null)
+        .map((rec) => {
+          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_int], sensorRef: rec.sensorRef };
+        });
+
+      return {
+        series: [
+          {
+            data: this.recArrayWeight,
+            name:'Weight',
+            type:'line',
+            showSymbol: false,
+            hoverAnimation: true,
+            yAxisIndex: 0,
+            color : 'black'
+          },
+          {
+            data: this.recArrrayTint,
+            name:'Temp-int',
+            type:'line',
+            showSymbol: false,
+            hoverAnimation: true,
+            yAxisIndex: 1,
+            color : 'red'
+          },
+          {
+            name:'Temp-ext',
+            type:'line',
+            showSymbol: false,
+            hoverAnimation: true,
+            data : '',
+            yAxisIndex: 1,
+            color : 'blue'
+          }
+        ],
+        legend: {
+          data: ['Weight', 'Temp-int', 'Temp-ext']
+        }
+      };
+    });
   }
 
 
@@ -249,9 +290,9 @@ export class RecordService {
   updateMergeStack() {
     this.mergeOptionStackApiary = {
       legend: {
-        data: this.legendOption
+        data: [this.legendOption]
       },
-      series: this.mergeTemp.series,
+      series: [],
     };
   }
 
@@ -264,13 +305,13 @@ export class RecordService {
     this.mergeOptionHourly = {
       series: [
         {
-          data: this.recArrayWeight
+          data: []
         },
         {
-          data: this.recArrrayTint
+          data: []
         },
         {
-          data: this.recArrayText
+          data: []
         }
       ]
     };

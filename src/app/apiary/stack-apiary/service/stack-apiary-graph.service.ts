@@ -23,8 +23,8 @@ export class StackApiaryGraphService {
       legend: {
         orient: 'horizontal',
         data: [],
-        y: '2%',
-        show: false
+        y: '2%'
+       // show: false
       },
       axisPointer: {
         link: { xAxisIndex: 'all' }

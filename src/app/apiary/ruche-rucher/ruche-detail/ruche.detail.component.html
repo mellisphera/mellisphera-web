@@ -79,13 +79,14 @@
                             </div>
                         </div>
 
-                        <app-hourly></app-hourly>
+                        <div echarts [options]="graphRecordService.option" [loading]="!recordService.loading" 
+                        [merge]="recordService.mergeOptionHourly" [autoResize]="true" style="width:92vw;height:70vh;"></div>
                     </div>
                     <div id="stack" class="tab-pane fade">
                         <div class="row">
                             <div class="col-sm-3" id="range-div">
                                 <label>Range :</label>
-                                <select (change)="selectRange()" [(ngModel)]="range" name="range" class="form-control">
+                                <select (change)="selectRange('stack')" [(ngModel)]="range" name="range" class="form-control">
                                     <option *ngFor="let range of ranges;" [ngValue]="range"
                                         [selected]="range.scale == 15">
                                         {{ 'last '+ range.scale+'  '+range.type | lowercase}}</option>

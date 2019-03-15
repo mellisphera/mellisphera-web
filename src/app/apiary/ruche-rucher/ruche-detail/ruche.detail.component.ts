@@ -16,6 +16,7 @@ import { CalendrierTempIntService } from './daily/service/calendrier-temp-int.se
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { RucheInterface } from '../../../_model/ruche';
 import { GraphStackService } from './stack/service/graph-stack.service';
+import { GraphRecordService } from './hourly/service/graph-record.service';
 
 @Component({
     selector: 'app-ruche-detail',
@@ -44,7 +45,8 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         private userService: UserloggedService,
         public tokenService: AtokenStorageService,
         public calendrierTempInt: CalendrierTempIntService,
-        public graphStack: GraphStackService) {
+        public graphStack: GraphStackService,
+        public graphRecordService: GraphRecordService) {
         this.compteurHive = 0;
         this.currentTab = 'notes';
         this.hiveSelect = {
@@ -130,16 +132,26 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         option.legend.data = this.recordService.mergeOptionStack.legend.data;
         this.echartInstance.setOption(option);
     }
-    selectRange() {
+    selectRange(type?: string) {
         console.log(this.range);
         this.recordService.setRange(this.range);
-        this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
-        .subscribe(
-            (record) => {
-                console.log(record);
-                this.recordService.mergeOptionStack = record;
-            }
-        );
+        if (type === 'stack') {
+            this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
+            .subscribe(
+                (record) => {
+                    console.log(record);
+                    this.recordService.mergeOptionStack = record;
+                }
+            );
+        } else {
+            this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
+            .subscribe(
+                (record) => {
+                    console.log(record);
+                    this.recordService.mergeOptionHourly = record;
+                }
+            );
+        }
     }
 
     onTab(event: string) {
@@ -161,11 +173,11 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             }
         } else if (this.currentTab.indexOf('hourly') != -1) {
             if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
-                this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
+                this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
                 .subscribe(
                     (record) => {
                         console.log(record);
-                        this.recordService.mergeOptionStack = record;
+                        this.recordService.mergeOptionHourly = record;
                     }
                 );
             }
