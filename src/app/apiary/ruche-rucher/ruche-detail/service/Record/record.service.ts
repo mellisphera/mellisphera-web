@@ -63,176 +63,144 @@ export class RecordService {
     this.legendOption = [];
   }
 
+
   /**
    *
-   *
    * @param {string} idHive
-   * @param {Date[]} [range]
+   * @param {string} hiveName
+   * @param {*} lastMerge
+   * @param {boolean} [hive]
+   * @returns {Observable<any>}
    * @memberof RecordService
-   * @return {void}
    */
-  getRecordByIdHive(idHive: string, hiveName?: string): void {
-    this.loading = false;
-    this.currentIdHive = idHive;
-    this.recArray = [];
-    this.recordObs = this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions);
-    this.recordObs.subscribe(
-      (data) => {
-        this.recArray = data;
-      },
-      (err) => {
-        console.log(err);
-      },
-      () => {
-        if (this.recArray.length > 0) {
-          if (!hiveName) {
-            console.log('not name');
-            this.mapRecord(() => {
-              this.updateMerge();
-              this.updateMergeStack();
-              this.loading = !this.loading;
-            });
-          } else {
-            this.mapRecord(() => {
-              this.updateMergeStack();
-              this.cleanTemplate();
-              this.templateSerie.tInt.data = this.recArrrayTint;
-              this.templateSerie.tInt.name = hiveName + '-Tint';
-              this.legendOption.push(hiveName + '-Tint');
-
-              this.templateSerie.tExt.name = hiveName + '-Text';
-              this.legendOption.push(hiveName + '-Text');
-              this.templateSerie.tExt.data = this.recArrayText;
-
-              this.templateSerie.hInt.name = hiveName + '-Hint';
-              this.templateSerie.hInt.data = this.recArrayHint;
-              this.legendOption.push(hiveName + '-Hint');
-
-              this.templateSerie.hExt.name = hiveName + '-hext';
-              this.templateSerie.hExt.data = this.recArrayHext;
-              this.legendOption.push(hiveName + '-hext');
-
-              this.templateSerie.bInt.name = hiveName + '-B_int';
-              this.templateSerie.bInt.data = this.recArrayBatteryInt;
-              this.legendOption.push(hiveName + '-B_int');
-
-              this.templateSerie.bExt.name = hiveName + '-B_Ext';
-              this.templateSerie.bExt.data = this.recArrayBatteryExt;
-              this.legendOption.push(hiveName + '-B_Ext');
-
-              this.mergeTemp.series.push(this.templateSerie.tInt);
-              this.mergeTemp.series.push(this.templateSerie.tExt);
-              this.mergeTemp.series.push(this.templateSerie.hInt);
-              this.mergeTemp.series.push(this.templateSerie.hExt);
-              this.mergeTemp.series.push(this.templateSerie.bInt);
-              this.mergeTemp.series.push(this.templateSerie.bExt);
-
-              this.mergeTemp.legend.data = this.legendOption;
-              // this.updateMergeStack();
-              /*               this.mergeOptionStackApiary = {
-                              legend: {
-                                data: this.legendOption
-                              },
-                              series: this.mergeTemp.series,
-                            }; */
-            });
-            this.stackSubject.next(this.mergeTemp);
-            // this.stackSubject.complete();
-          }
-          /**
-           * Pourquoi le graph ne s'affiche pas
-           */
-        }
-      }
-    );
-  }
-
-  getRecordStackApiaryByIdHive(idHive: string, hiveName: string, lastMerge: any): Observable<any> {
+  getRecordByIdHive(idHive: string, hiveName: string, lastMerge: any, hive?: boolean): Observable<any> {
     return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
+      console.log(records);
       this.recArrayText = records.filter(record => record.temp_ext != null)
-      .map((rec) => {
-        return { name: rec.recordDate, value: [rec.recordDate, rec.temp_ext]};
-      });
+        .map((rec) => {
+          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_ext], sensorRef: rec.sensorRef};
+        });
       this.recArrayWeight = records.filter(record => record.weight != null)
-      .map((rec) => {
-        return { name: rec.recordDate, value: [rec.recordDate, rec.weight]};
-      });
+        .map((rec) => {
+          return { name: rec.recordDate, value: [rec.recordDate, rec.weight], sensorRef: rec.sensorRef};
+        });
       this.recArrayBatteryExt = records.filter(record => record.battery_ext != null)
-      .map((rec) => {
-        return { name: rec.recordDate, value: [rec.recordDate, rec.battery_ext]};
-      });
+        .map((rec) => {
+          return { name: rec.recordDate, value: [rec.recordDate, rec.battery_ext], sensorRef: rec.sensorRef};
+        });
       this.recArrayBatteryInt = records.filter(record => record.battery_int != null)
-      .map((rec) => {
-        return { name: rec.recordDate, value: [rec.recordDate, rec.battery_int]};
-      });
+        .map((rec) => {
+          return { name: rec.recordDate, value: [rec.recordDate, rec.battery_int], sensorRef: rec.sensorRef};
+        });
       this.recArrayHext = records.filter(record => record.humidity_ext != null)
-      .map((rec) => {
-        return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_ext]};
-      });
+        .map((rec) => {
+          return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_ext], sensorRef: rec.sensorRef};
+        });
       this.recArrayHint = records.filter(record => record.humidity_int != null)
-      .map((rec) => {
-        return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_int]};
-      });
+        .map((rec) => {
+          return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_int], sensorRef: rec.sensorRef};
+        });
       this.recArrrayTint = records.filter(record => record.temp_int != null)
-      .map((rec) => {
-        return { name: rec.recordDate, value: [rec.recordDate, rec.temp_int]};
-      });
+        .map((rec) => {
+          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_int], sensorRef: rec.sensorRef};
+        });
+      console.log(records.filter(record => record.temp_ext != null));
+      if (!hive) {
+        return {
+          series: [
+            {
+              name: hiveName + '-weight',
+              type: 'line',
+              showSymbol: false,
+              data: this.recArrayWeight
+            },
+            {
+              name: hiveName + '-Tint',
+              type: 'line',
+              xAxisIndex: (hive) ? 0 : 1,
+              yAxisIndex: (hive) ? 0 : 1,
+              showSymbol: false,
+              data: this.recArrrayTint
+            },
+            {
+              name: hiveName + '-Text',
+              type: 'line',
+              xAxisIndex: (hive) ? 0 : 1,
+              yAxisIndex: (hive) ? 0 : 1,
+              showSymbol: false,
+              data: this.recArrayText
+            },
+            {
+              name: hiveName + '-Hint',
+              type: 'line',
+              xAxisIndex: (hive) ? 1 : 2,
+              yAxisIndex: (hive) ? 0 : 2,
+              showSymbol: false,
+              data: this.recArrayHint
+            },
 
-      return {
-        series: [
-          {
-            name: hiveName + '-weight',
-            type: 'line',
-            showSymbol: false,
-/*             color: 'red',
-            large: true,
-            largeThreshold: 10,
-            barGap: '30%', */
-            data: this.recArrayWeight
-          },
-          {
-            name:  hiveName + '-Tint',
-            type: 'line',
-            xAxisIndex: 1,
-            yAxisIndex: 1,
-            showSymbol: false,
-            data: this.recArrrayTint
-          },
-          {
-            name:  hiveName + '-Text',
-            type: 'line',
-            xAxisIndex: 1,
-            yAxisIndex: 1,
-            showSymbol: false,
-            data: this.recArrayText
-          },
-          {
-            name: hiveName + '-Hint',
-            type: 'line',
-            xAxisIndex: 2,
-            yAxisIndex: 2,
-            showSymbol: false,
-            data: this.recArrayHint
-          },
-/*           {
-            name: hiveName + '-Batery-ext',
-            type: 'bar',
-            xAxisIndex: 2,
-            yAxisIndex: 2,
-            showSymbol: false,
-            color: 'blue',
-            large: true,
-            largeThreshold: 10,
-            barGap: '30%',
-            data: this.recArrayBatteryExt
-          } */
-        ].concat(lastMerge.series),
-        legend: {
-          data: [hiveName + '-Tint', hiveName + '-Text', hiveName + '-Hint', hiveName + '-B_int', hiveName + '-B_Ext' ]
-          .concat(lastMerge.legend.data),
-          show: false
-        }
-      };
+          ].concat(lastMerge.series),
+          legend: {
+            data: [hiveName + '-Tint', hiveName + '-Text', hiveName + '-Hint', hiveName + '-weight']
+              .concat(lastMerge.legend.data),
+            show: false
+          }
+        };
+      } else {
+        return {
+          series: [
+            (this.recArrrayTint.length > 0) ?
+            {
+              type: 'line',
+              name: this.recArrrayTint[0].sensorRef + ' | Tint',
+              data: this.recArrrayTint,
+              showSymbol: false,
+            } : null,
+            (this.recArrayText.length > 0) ?
+            {
+              type: 'line',
+              name: this.recArrayText[0].sensorRef + ' | Text',
+              data: this.recArrayText
+            } : null,
+            (this.recArrayHint.length > 0) ?
+            {
+              type: 'line',
+              name: this.recArrayHint[0].sensorRef + ' | Hint',
+              data: this.recArrayHint,
+              xAxisIndex: 1,
+              yAxisIndex: 1,
+              showSymbol: false,
+            } : null,
+            (this.recArrayBatteryInt.length > 0) ?
+            {
+              type: 'line',
+              name: this.recArrayBatteryInt[0].sensorRef + ' | Batery-int',
+              data: this.recArrayBatteryInt,
+              xAxisIndex: 2,
+              yAxisIndex: 2,
+              showSymbol: false,
+            } : null,
+            (this.recArrayBatteryExt.length > 0) ?
+            {
+              type: 'line',
+              name: this.recArrayBatteryExt[0].sensorRef + ' | Batery-ext',
+              data: this.recArrayBatteryExt,
+              xAxisIndex: 2,
+              yAxisIndex: 2,
+              showSymbol: false,
+            } : null
+          ],
+          legend: {
+            data: [
+              (this.recArrrayTint.length > 0) ? this.recArrrayTint[0].sensorRef + ' | Tint' : null,
+              (this.recArrayText.length > 0) ? this.recArrayText[0].sensorRef + ' | Text' : null,
+              (this.recArrayHint.length > 0) ? this.recArrayHint[0].sensorRef + ' | Hint' : null,
+              (this.recArrayBatteryInt.length > 0) ? this.recArrayBatteryInt[0].sensorRef + ' | Batery-int' : null,
+              (this.recArrayBatteryExt.length > 0) ? this.recArrayBatteryExt[0].sensorRef + ' | Batery-ext' : null
+            ],
+          }
+        };
+      }
     });
   }
   /**

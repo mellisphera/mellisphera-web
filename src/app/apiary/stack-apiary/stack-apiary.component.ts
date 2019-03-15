@@ -87,7 +87,7 @@ export class StackApiaryComponent implements OnInit {
     this.recordService.setRange(this.range);
     
     this.arrayHiveSelect.forEach(element => {
-      this.recordService.getRecordStackApiaryByIdHive(element.id, element.name, this.merge)
+      this.recordService.getRecordByIdHive(element.id, element.name, this.merge)
       .subscribe((data) => {
         this.recordService.mergeOptionStackApiary = data;
       });
@@ -110,7 +110,8 @@ export class StackApiaryComponent implements OnInit {
       this.render.addClass(event.target, 'active');
       this.arrayHiveSelect.push(selectHive);
       this.recordService.setRange(this.range);
-      this.recordService.getRecordStackApiaryByIdHive(selectHive.id, selectHive.name, this.recordService.mergeOptionStackApiary).subscribe((data) => {
+      this.recordService.getRecordByIdHive(selectHive.id, selectHive.name, this.recordService.mergeOptionStackApiary)
+      .subscribe((data) => {
         this.recordService.mergeOptionStackApiary = data;
       });
     }

@@ -82,7 +82,17 @@
                         <app-hourly></app-hourly>
                     </div>
                     <div id="stack" class="tab-pane fade">
-                        <app-stack></app-stack>
+                        <div class="row">
+                            <div class="col-sm-3" id="range-div">
+                                <label>Range :</label>
+                                <select (change)="selectRange()" [(ngModel)]="range" name="range" class="form-control">
+                                    <option *ngFor="let range of ranges;" [ngValue]="range"
+                                        [selected]="range.scale == 15">
+                                        {{ 'last '+ range.scale+'  '+range.type | lowercase}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div echarts [options]="graphStack.option" [autoResize]="true" (chartInit)="onChartInit($event)" [merge]="recordService.mergeOptionStack" style="width:92vw;height:95vh;"></div>
                     </div>
                     <!--<router-outlet></router-outlet>>-->
                 </div>
