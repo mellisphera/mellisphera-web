@@ -113,6 +113,7 @@ export class StackApiaryComponent implements OnInit {
       this.recordService.getRecordByIdHive(selectHive.id, selectHive.name, this.recordService.mergeOptionStackApiary)
       .subscribe((data) => {
         this.recordService.mergeOptionStackApiary = data;
+        console.log(this.recordService.mergeOptionStackApiary);
       });
     }
   }
