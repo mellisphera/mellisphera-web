@@ -15,7 +15,6 @@ export class MyDate {
         } else {
             start = min;
         }
-        console.log(new Array(start, new Date()));
         return new Array(start, new Date());
     }
 
