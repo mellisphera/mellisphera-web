@@ -36,6 +36,9 @@ li{
 .sub-items{
     padding-left: 17%;
 }
+.apiary{
+    font-weight: bold;
+}
 .active{
     background-color: #53B74F;
     color: white;

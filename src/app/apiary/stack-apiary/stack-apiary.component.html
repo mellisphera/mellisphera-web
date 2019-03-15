@@ -20,7 +20,7 @@
                     </div> -->
                     <div id="main-menu" class="list-group">
                         <ng-container *ngFor="let rucher of rucherService.ruchers; let i = index;">
-                            <a [href]="getId(i)" class="list-group-item" data-toggle="collapse"
+                            <a [href]="getId(i)" class="list-group-item apiary" data-toggle="collapse"
                                 data-parent="#main-menu"><span class="puce-apiary"></span>{{ rucher.name }}<span
                                     class="caret"></span></a>
                             <div class="collapse list-group-level1" [id]="i">
