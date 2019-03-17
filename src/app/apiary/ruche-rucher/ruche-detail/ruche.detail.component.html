@@ -58,7 +58,7 @@
                         <app-observation></app-observation>
                     </div>
                     <div id="stock" class="tab-pane fade">
-                        <app-stock></app-stock>
+                        <div echarts [options]="grapheMielService.option" *ngIf="currentTab==='stock'" (chartInit)="onChartInit($event)" [loadingOpts]="dailyStockHoneyService.loadingOpts" style="width:93vw; height: 40vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
                     </div>
                     <div id="health" class="tab-pane fade">
                         <app-health></app-health>

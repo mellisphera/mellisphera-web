@@ -17,6 +17,8 @@ import { AtokenStorageService } from '../../../auth/Service/atoken-storage.servi
 import { RucheInterface } from '../../../_model/ruche';
 import { GraphStackService } from './stack/service/graph-stack.service';
 import { GraphRecordService } from './hourly/service/graph-record.service';
+import { GrapheReserveMielService } from './stock/service/graphe-reserve-miel.service';
+
 
 @Component({
     selector: 'app-ruche-detail',
@@ -40,11 +42,12 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         private observationService: ObservationService,
         private dailyRecordThService: DailyRecordService,
         private dailyRecordWservice: DailyRecordsWService,
-        private dailyStockHoneyService: DailyStockHoneyService,
+        public dailyStockHoneyService: DailyStockHoneyService,
         public recordService: RecordService,
         private userService: UserloggedService,
         public tokenService: AtokenStorageService,
         public calendrierTempInt: CalendrierTempIntService,
+        public grapheMielService: GrapheReserveMielService,
         public graphStack: GraphStackService,
         public graphRecordService: GraphRecordService) {
         this.compteurHive = 0;
@@ -120,7 +123,6 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         }
         this.hiveSelect = this.rucheService.ruches[this.compteurHive];
         this.rucheService.saveCurrentHive(this.hiveSelect.id);
-        this.rucheService.saveCurrentHive(this.hiveSelect.id);
         this.exeData(true);
     }
 
@@ -128,8 +130,13 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         const option = this.echartInstance.getOption();
         console.log(option);
         this.echartInstance.clear();
-        option.series = this.recordService.mergeOptionStack.series;
-        option.legend.data = this.recordService.mergeOptionStack.legend.data;
+        if (this.currentTab === 'stock') {
+            option.series = this.dailyStockHoneyService.mergeOption.series;
+            option.legend.data = this.dailyStockHoneyService.mergeOption.legend.data;
+        } else {
+            option.series = this.recordService.mergeOptionStack.series;
+            option.legend.data = this.recordService.mergeOptionStack.legend.data;
+        }
         this.echartInstance.setOption(option);
     }
     selectRange(type?: string) {
@@ -166,9 +173,17 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
         } else if (this.currentTab.indexOf('stock') != -1) {
             if (this.dailyStockHoneyService.currentIdHive !== this.rucheService.getCurrentHive()) {
-                this.dailyStockHoneyService.getDailyStockHoneyByHIve(this.rucheService.getCurrentHive()).subscribe(merge => {
+                this.dailyStockHoneyService.getDailyStockHoneyByHIve(this.rucheService.getCurrentHive())
+                .subscribe(merge => {
                     console.log(merge);
                     this.dailyStockHoneyService.mergeOption = merge;
+                    if (switchHive) {
+                        this.updateEchartInstance();
+                    }
+                },
+                err => {
+                    this.dailyStockHoneyService.cleanMerge();
+                    this.updateEchartInstance();
                 });
             }
             if (this.dailyRecordWservice.currentIdHive != this.rucheService.getCurrentHive()) {
