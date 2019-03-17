@@ -38,7 +38,7 @@ export class DemoComponent implements OnInit,OnDestroy {
     private user: UserloggedService) {
     }
   ngOnInit() {
-    this.saveToken(() => {
+/*     this.saveToken(() => {
       this.rucherService.getApiaryByUser(this.user.getUser());
       this.rucheService.hiveSubject.subscribe(
         () => {}, () => {},
@@ -49,7 +49,7 @@ export class DemoComponent implements OnInit,OnDestroy {
         }
       );
 
-    });
+    }); */
   }
 
   saveToken(next?) {

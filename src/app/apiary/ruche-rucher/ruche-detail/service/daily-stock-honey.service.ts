@@ -27,7 +27,7 @@ export class DailyStockHoneyService {
   dailySubject: BehaviorSubject<DailyStockHoney[]>;
   mergeOption: any = null;
 
-  dailyStockByFlower : Object;
+  dailyStockByFlower: Array<any>;
   typeFlower: any[];
   arrayDate: any[];
   loading: boolean;
@@ -47,55 +47,36 @@ export class DailyStockHoneyService {
     this.cleanTemplate();
     this.loading = false;
     this.dailyStock = [];
+    this.dailyStockByFlower = [];
+    this.typeFlower = [];
     this.currentIdHive = null;
     //this.getDailyStockHoneyByHive(this.rucheService.getCurrentHive());
   }
-  /* Requete API*/
-  getDailyStockHoneyByHive(idHive : string){
-    console.log(idHive);
-    this.currentIdHive = idHive;
-    this.loading = false;
-    this.dailyStockObs = this.http.get<DailyStockHoney[]>(CONFIG.URL+'dailyStockHoney'+'/hive/'+idHive);
-    this.dailyStockObs.subscribe(
-      (data)=>{
-        this.dailyStock = data;
-        this.cleanMerge();
-      },
-      (err)=>{
-        //this.templateSerie.show = false;
-        this.templateSerie.data = null;
-        this.cleanMerge();
-        this.mergeOption.series.push(this.templateSerie);
-        console.log(this.mergeOption);
-      },
-      ()=>{
-        if(this.dailyStock.length > 1){
-          this.nextQuery();
+
+  getDailyStockHoneyByHIve(idHive: string) {
+    return this.http.get<DailyStockHoney[]>(CONFIG.URL + 'dailyStockHoney' + '/hive/' + idHive).map(dailyStock => {
+      const series = [];
+      dailyStock.forEach(element => {
+        if (this.typeFlower.indexOf(element.nom) === -1) {
+          this.typeFlower.push(element.nom);
+          this.dailyStockByFlower['' + element.nom] = dailyStock.filter(stock => stock.nom === element.nom).map(stock => {
+            return {name : stock.date, value : [stock.date, stock.stockJ]};
+          });
+          this.templateSerie.name = element.nom;
+          this.templateSerie.data = this.dailyStockByFlower['' + element.nom];
+          series.push(this.templateSerie);
+          this.cleanTemplate();
         }
-      }
-    );
-  }
+      });
 
-
-  nextQuery(){
-    /* Mise à jour du template avec les info récupèrer */
-    this.countFlower();
-    this.dailyStockByFleur();
-    console.log(this.dailyStockByFlower);
-    for(var elt in this.dailyStockByFlower){
-      this.templateSerie.name = elt;
-      this.templateSerie.data = [];
-      this.templateSerie.data = this.dailyStockByFlower[elt];
-      this.mergeOption.series.push(this.templateSerie)
-      this.cleanTemplate();
-    }
-    this.mergeOption.legend.data = this.typeFlower;
-    //this.mergeOption.xAxis[0].min = new MyDate(this.arrayDate[0]).getIso();
-    //this.mergeOption.xAxis[0].max = new MyDate(this.arrayDate[this.arrayDate.length - 1]).getIso();
-    console.log(this.mergeOption.xAxis);
-    this.loading = !this.loading;
+      return {
+        series : series,
+        legend: {
+          data: this.typeFlower
+        }
+      };
+    });
   }
-  
   convertDate(date){
     var dateIso = new Date(date);
     var jour = ''+dateIso.getDate();

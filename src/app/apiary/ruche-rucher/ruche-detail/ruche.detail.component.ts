@@ -165,14 +165,17 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
             this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
         } else if (this.currentTab.indexOf('stock') != -1) {
-            if (this.dailyStockHoneyService.currentIdHive != this.rucheService.getCurrentHive()) {
-                this.dailyStockHoneyService.getDailyStockHoneyByHive(this.rucheService.getCurrentHive());
+            if (this.dailyStockHoneyService.currentIdHive !== this.rucheService.getCurrentHive()) {
+                this.dailyStockHoneyService.getDailyStockHoneyByHIve(this.rucheService.getCurrentHive()).subscribe(merge => {
+                    console.log(merge);
+                    this.dailyStockHoneyService.mergeOption = merge;
+                });
             }
             if (this.dailyRecordWservice.currentIdHive != this.rucheService.getCurrentHive()) {
                 this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
             }
         } else if (this.currentTab.indexOf('hourly') != -1) {
-            if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
+            if (this.recordService.currentIdHive !== this.rucheService.getCurrentHive()) {
                 this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
                 .subscribe(
                     (record) => {
