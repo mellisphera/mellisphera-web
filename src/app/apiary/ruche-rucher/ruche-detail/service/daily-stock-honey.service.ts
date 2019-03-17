@@ -54,6 +54,7 @@ export class DailyStockHoneyService {
   }
 
   getDailyStockHoneyByHIve(idHive: string) {
+    this.typeFlower = [];
     return this.http.get<DailyStockHoney[]>(CONFIG.URL + 'dailyStockHoney' + '/hive/' + idHive).map(dailyStock => {
       const series = [];
       dailyStock.forEach(element => {
@@ -108,8 +109,7 @@ export class DailyStockHoneyService {
     };
   }
 
-  cleanMerge(){
-    this.typeFlower = new Array();
+  cleanMerge() {
     this.mergeOption = {
       /*xAxis: [{
         min:'',
@@ -121,7 +121,6 @@ export class DailyStockHoneyService {
       series : []
     };
   }
-  
 
 
 
