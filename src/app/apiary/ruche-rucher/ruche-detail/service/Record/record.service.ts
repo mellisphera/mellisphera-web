@@ -169,7 +169,7 @@ export class RecordService {
                 yAxisIndex: 1,
                 showSymbol: false,
               } : null,
-            (this.recArrayBatteryExt.length > 0) ?
+            (this.recArrayBatteryInt.length > 0) ?
               {
                 type: 'line',
                 name: this.recArrayBatteryInt[0].sensorRef + ' | Batery-int',
@@ -193,7 +193,7 @@ export class RecordService {
               (this.recArrrayTint.length > 0) ? this.recArrrayTint[0].sensorRef + ' | Tint' : null,
               (this.recArrayText.length > 0) ? this.recArrayText[0].sensorRef + ' | Text' : null,
               (this.recArrayHint.length > 0) ? this.recArrayHint[0].sensorRef + ' | Hint' : null,
-              (this.recArrayBatteryExt.length > 0) ? this.recArrayBatteryInt[0].sensorRef + ' | Batery-int' : null,
+              (this.recArrayBatteryInt.length > 0) ? this.recArrayBatteryInt[0].sensorRef + ' | Batery-int' : null,
               (this.recArrayBatteryExt.length > 0) ? this.recArrayBatteryExt[0].sensorRef + ' | Batery-ext' : null
             ],
           }

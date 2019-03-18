@@ -242,6 +242,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
         } else if (this.currentTab.indexOf('stack') != -1) {
             if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
+                console.log('ok');
                 this.loadingStack = true;
                 this.recordService.setRange(this.range);
                 this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
@@ -251,7 +252,9 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                         if (switchHive) {
                             this.updateEchartInstance();
                         }
-                    }, () => {}, () => {
+                    }, (err) => {
+                        console.log(err);
+                    }, () => {
                         this.loadingStack = false;
                     }
                 );
