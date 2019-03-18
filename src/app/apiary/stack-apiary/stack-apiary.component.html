@@ -24,7 +24,7 @@
                                 data-parent="#main-menu"><span class="puce-apiary"></span>{{ rucher.name }}<span
                                     class="caret"></span></a>
                             <div class="collapse list-group-level1" [id]="i">
-                                <a class="list-group-item sub-items"
+                                <a [class]="'list-group-item sub-items ' + stackService.checkHiveisActive(ruche.id)"
                                     *ngFor="let ruche of getHiveByApiary(rucher.id); let i = index"
                                     (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><span
                                         class="puce-hive"></span>{{ ruche.name }}</a>
