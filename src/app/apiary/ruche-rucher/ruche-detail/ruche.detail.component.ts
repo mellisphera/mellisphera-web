@@ -208,6 +208,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                 this.loadingStockHoney = true;
                 this.dailyStockHoneyService.getDailyStockHoneyByHIve(this.rucheService.getCurrentHive())
                 .subscribe(merge => {
+                    console.log(merge);
                     this.dailyStockHoneyService.mergeOption = merge;
                     if (switchHive) {
                         this.updateEchartInstance();
