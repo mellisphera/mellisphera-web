@@ -158,6 +158,7 @@ export class RecordService {
               {
                 type: 'line',
                 name: this.recArrayText[0].sensorRef + ' | Text',
+                showSymbol: false,
                 data: this.recArrayText
               } : null,
             (this.recArrayHint.length > 0) ?
