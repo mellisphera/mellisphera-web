@@ -103,7 +103,6 @@ export class RecordService {
         .map((rec) => {
           return { name: rec.recordDate, value: [rec.recordDate, rec.temp_int], sensorRef: rec.sensorRef };
         });
-      console.log(records.filter(record => record.temp_ext != null));
       if (!hive) {
         return {
           series: [

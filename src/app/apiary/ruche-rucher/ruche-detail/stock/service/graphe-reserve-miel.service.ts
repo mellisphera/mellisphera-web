@@ -76,7 +76,7 @@ export class GrapheReserveMielService {
         {
             name : 'Weight variation (kg)',
             type : 'value',
-            min: -10
+            min: -5
             // max: 'dataMax'
 
         }

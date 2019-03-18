@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
 import { DataRange } from '../ruche-rucher/ruche-detail/service/Record/data-range';
+import { StackService } from './service/stack.service';
 /* import * as echarts from 'echarts'; */
 
 @Component({
@@ -17,7 +18,6 @@ import { DataRange } from '../ruche-rucher/ruche-detail/service/Record/data-rang
 })
 export class StackApiaryComponent implements OnInit {
 
-  private arrayHiveSelect: Array<RucheInterface>;
   private echartInstance: any;
   public merge: any;
   public range: DataRange;
@@ -29,8 +29,8 @@ export class StackApiaryComponent implements OnInit {
     private render: Renderer2,
     private userService: UserloggedService,
     public stackApiaryGraph: StackApiaryGraphService,
+    public stackService: StackService,
     public recordService: RecordService, ) {
-    this.arrayHiveSelect = [];
     /* this.subjectEchart = new BehaviorSubject({}); */
     this.merge = {
       series: [],
@@ -85,8 +85,7 @@ export class StackApiaryComponent implements OnInit {
   }
   selectRange() {
     this.recordService.setRange(this.range);
-    
-    this.arrayHiveSelect.forEach(element => {
+    this.stackService.getHiveSelect().forEach(element => {
       this.recordService.getRecordByIdHive(element.id, element.name, this.merge)
       .subscribe((data) => {
         this.recordService.mergeOptionStackApiary = data;
@@ -94,11 +93,10 @@ export class StackApiaryComponent implements OnInit {
     });
   }
   selectHive(selectHive: RucheInterface, event: MouseEvent) {
-    const arrayFilter = this.arrayHiveSelect.filter(hive => hive.id === selectHive.id);
+    const arrayFilter = this.stackService.getHiveSelect().filter(hive => hive.id === selectHive.id);
     if (arrayFilter.length > 0) {
       this.render.removeClass(event.target, 'active');
-      const index = this.arrayHiveSelect.indexOf(arrayFilter[0]);
-      this.arrayHiveSelect.splice(index, 1);
+      this.stackService.removeHive(arrayFilter[0]);
       let option = this.echartInstance.getOption();
       this.removeHiveStack(selectHive.name);
       this.echartInstance.clear();
@@ -108,7 +106,7 @@ export class StackApiaryComponent implements OnInit {
       // this.echartInstance.clear();
     } else {
       this.render.addClass(event.target, 'active');
-      this.arrayHiveSelect.push(selectHive);
+      this.stackService.addHive(selectHive);
       this.recordService.setRange(this.range);
       this.recordService.getRecordByIdHive(selectHive.id, selectHive.name, this.recordService.mergeOptionStackApiary)
       .subscribe((data) => {
