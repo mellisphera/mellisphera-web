@@ -64,12 +64,12 @@
           <div id="stock" class="tab-pane fade">
             <div id="no-data" *ngIf="currentTab === 'stock' && dailyStockHoneyService.mergeOption.series.length < 1"
               class="alert alert-info">
-              <strong><i class="fa fa-info-circle fa-2x"></i>No data !</strong>
+              <strong><i class="fa fa-info-circle fa-2x"></i>Honey Stock No data !</strong>
             </div>
             <div echarts [options]="grapheMielService.option" *ngIf="currentTab === 'stock' && currentTab === 'stock' && dailyStockHoneyService.mergeOption.series.length > 0"
               (chartInit)="onChartInit($event)" [loading]="loadingStockHoney"
               style="width:93vw; height: 40vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
-            <div *ngIf="currentTab === 'stock' && dailyStockHoneyService.mergeOption.series.length > 0" echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecordWservice.mergeOption"
+            <div *ngIf="currentTab === 'stock'" echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecordWservice.mergeOption"
               style="width:93vw;height:40vh;" id="calendrierPoids"></div>
 
           </div>
