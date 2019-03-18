@@ -62,3 +62,12 @@ li{
         width: 100% !important;
     }
 }
+.sub-items{
+    transition: all 0.5s linear;
+}
+.sub-items:hover{
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    z-index: 3;
+}
