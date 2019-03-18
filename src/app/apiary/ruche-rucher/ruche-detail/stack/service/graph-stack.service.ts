@@ -49,7 +49,7 @@ export class GraphStackService {
           realtime: true,
           start: 80,
           end: 100,
-          bottom: -1,
+          bottom: 150,
           xAxisIndex: [0, 1, 2]
         },
         {
