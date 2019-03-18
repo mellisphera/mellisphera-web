@@ -18,15 +18,50 @@ import { RucheInterface } from '../../../_model/ruche';
 import { GraphStackService } from './stack/service/graph-stack.service';
 import { GraphRecordService } from './hourly/service/graph-record.service';
 import { GrapheReserveMielService } from './stock/service/graphe-reserve-miel.service';
+import { CalendrierPoidsService } from './stock/service/calendrier-poids.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 
 @Component({
     selector: 'app-ruche-detail',
     templateUrl: './ruche.detail.component.html',
-    styleUrls: ['./ruche.detail.component.scss']
+    styleUrls: ['./ruche.detail.component.scss'],
+    animations: [
+        trigger('animationOption1', [
+          state('start', style({
+            backgroundColor: 'yellow',
+            width: '150px',
+            height: '150px'
+          })),
+          state('end', style({
+            backgroundColor: 'green',
+            width: '300px',
+            height: '300px'
+          })),
+          transition('start => end', animate(1500)),
+          transition('end => start', animate('800ms 0.5s ease-out'))
+        ]),
+        trigger('animationOption2', [
+          state('close', style({
+            opacity: 0,
+            backgroundColor: 'yellow'
+          })),
+          state('open', style({
+            opacity: 1,
+            backgroundColor: 'green'
+          })),
+          transition('close <=> open', animate(3000)),
+        ])
+      ]
 })
 
 export class RucheDetailComponent implements OnInit, OnDestroy {
+
+
+    public loadingStockHoney: boolean;
+    public loaddingHourly: boolean;
+    public loadingStack: boolean;
+
     message: string;
     hiveSelect: RucheInterface;
     compteurHive: number;
@@ -47,6 +82,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         private userService: UserloggedService,
         public tokenService: AtokenStorageService,
         public calendrierTempInt: CalendrierTempIntService,
+        public calendrierPoids: CalendrierPoidsService,
         public grapheMielService: GrapheReserveMielService,
         public graphStack: GraphStackService,
         public graphRecordService: GraphRecordService) {
@@ -86,10 +122,8 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         }
         if (!this.rucheService.hiveSubject.closed) {
             this.rucheService.hiveSubject.subscribe(() => { }, () => { }, () => {
-                console.log(this.rucheService.ruches);
                 this.rucheService.findRucheById(this.rucheService.getCurrentHive(), (hive) => {
                     this.hiveSelect = hive[0];
-                    console.log(this.hiveSelect);
                     this.compteurHive = this.rucheService.ruches.indexOf(this.hiveSelect);
                     this.rucheService.saveCurrentHive(this.hiveSelect.id);
                 });
@@ -100,7 +134,6 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     onChartInit($event) {
         this.echartInstance = $event;
-        console.log(this.echartInstance);
     }
 
     receiveMessage($event) {
@@ -128,7 +161,6 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     updateEchartInstance() {
         const option = this.echartInstance.getOption();
-        console.log(option);
         this.echartInstance.clear();
         if (this.currentTab === 'stock') {
             option.series = this.dailyStockHoneyService.mergeOption.series;
@@ -140,22 +172,22 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.echartInstance.setOption(option);
     }
     selectRange(type?: string) {
-        console.log(this.range);
         this.recordService.setRange(this.range);
         if (type === 'stack') {
             this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
             .subscribe(
                 (record) => {
-                    console.log(record);
                     this.recordService.mergeOptionStack = record;
                 }
             );
         } else {
+            this.loaddingHourly = !this.loaddingHourly;
             this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
             .subscribe(
                 (record) => {
-                    console.log(record);
                     this.recordService.mergeOptionHourly = record;
+                }, () => {} , () => {
+                    this.loaddingHourly = !this.loaddingHourly;
                 }
             );
         }
@@ -173,9 +205,9 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
         } else if (this.currentTab.indexOf('stock') != -1) {
             if (this.dailyStockHoneyService.currentIdHive !== this.rucheService.getCurrentHive()) {
+                this.loadingStockHoney = true;
                 this.dailyStockHoneyService.getDailyStockHoneyByHIve(this.rucheService.getCurrentHive())
                 .subscribe(merge => {
-                    console.log(merge);
                     this.dailyStockHoneyService.mergeOption = merge;
                     if (switchHive) {
                         this.updateEchartInstance();
@@ -183,7 +215,11 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                 },
                 err => {
                     this.dailyStockHoneyService.cleanMerge();
+                    this.loadingStockHoney = false;
                     this.updateEchartInstance();
+                },
+                () => {
+                    this.loadingStockHoney = false;
                 });
             }
             if (this.dailyRecordWservice.currentIdHive != this.rucheService.getCurrentHive()) {
@@ -191,11 +227,14 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             }
         } else if (this.currentTab.indexOf('hourly') != -1) {
             if (this.recordService.currentIdHive !== this.rucheService.getCurrentHive()) {
+                this.loaddingHourly = true;
                 this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
                 .subscribe(
                     (record) => {
-                        console.log(record);
                         this.recordService.mergeOptionHourly = record;
+                    },
+                    () => {}, () => {
+                        this.loaddingHourly = false;
                     }
                 );
             }
@@ -203,20 +242,21 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
         } else if (this.currentTab.indexOf('stack') != -1) {
             if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
+                this.loadingStack = true;
                 this.recordService.setRange(this.range);
                 this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
                 .subscribe(
                     (record) => {
-                        console.log(record);
                         this.recordService.mergeOptionStack = record;
                         if (switchHive) {
                             this.updateEchartInstance();
                         }
+                    }, () => {}, () => {
+                        this.loadingStack = false;
                     }
                 );
             }
         }
-        console.log(this.hiveSelect);
     }
 
     ngOnDestroy() {

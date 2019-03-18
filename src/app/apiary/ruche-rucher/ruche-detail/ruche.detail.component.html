@@ -1,10 +1,7 @@
 <div class="wrapper">
   <div class="sidebar" data-color="blue" data-image="">
     <app-sidebar></app-sidebar>
-    <div
-      class="sidebar-background"
-      style="background-image: url(./assets/img/sidebar-5.jpg)"
-    ></div>
+    <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
   </div>
   <div class="main-panel">
     <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
@@ -17,15 +14,11 @@
           <li class="active onglets" (click)="onTab('notes')">
             <a data-toggle="tab" href="#notes">
               <i class="fa fa fa-book fa-lg" aria-hidden="true"></i>
-              Notes</a
-            >
+              Notes</a>
           </li>
           <li (click)="onTab('stock')" class="onglets">
             <a data-toggle="tab" href="#stock">
-              <i
-                class="padding fa fa-balance-scale fa-lg"
-                aria-hidden="true"
-              ></i>
+              <i class="padding fa fa-balance-scale fa-lg" aria-hidden="true"></i>
               Stock
             </a>
           </li>
@@ -55,11 +48,11 @@
           <div id="navHive">
             <ul class="flex">
               <li width="35" (click)="previousHive()" class="navRuche">
-                <a><img [src]="img" width="35"/></a>
+                <a><img [src]="img" width="35" /></a>
               </li>
               <li id="hiveName">{{ hiveSelect.name }}</li>
               <li (click)="nextHive()" class="navRuche">
-                <a><img [src]="img" width="35"/></a>
+                <a><img [src]="img" width="35" /></a>
               </li>
             </ul>
           </div>
@@ -69,22 +62,16 @@
             <app-observation></app-observation>
           </div>
           <div id="stock" class="tab-pane fade">
-            <div
-              *ngIf="currentTab === 'stock' && dailyStockHoneyService.mergeOption.series.length < 1"
-              class="alert alert-info"
-            >
-              <strong>Info!</strong> No data.
+            <div id="no-data" *ngIf="currentTab === 'stock' && dailyStockHoneyService.mergeOption.series.length < 1"
+              class="alert alert-info">
+              <strong><i class="fa fa-info-circle fa-2x"></i>No data !</strong>
             </div>
-            <div
-              echarts
-              [options]="grapheMielService.option"
-              *ngIf="currentTab === 'stock'"
-              (chartInit)="onChartInit($event)"
-              [loadingOpts]="dailyStockHoneyService.loadingOpts"
-              style="width:93vw; height: 40vh;"
-              [merge]="dailyStockHoneyService.mergeOption"
-              [autoResize]="true"
-            ></div>
+            <div echarts [options]="grapheMielService.option" *ngIf="currentTab === 'stock' && currentTab === 'stock' && dailyStockHoneyService.mergeOption.series.length > 1"
+              (chartInit)="onChartInit($event)" [loading]="loadingStockHoney"
+              style="width:93vw; height: 40vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
+            <div *ngIf="currentTab === 'stock' && dailyStockHoneyService.mergeOption.series.length > 1" echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecordWservice.mergeOption"
+              style="width:93vw;height:40vh;" id="calendrierPoids"></div>
+
           </div>
           <div id="health" class="tab-pane fade">
             <app-health></app-health>
@@ -96,64 +83,32 @@
             <div class="row">
               <div class="col-sm-3" id="range-div">
                 <label>Range :</label>
-                <select
-                  (change)="selectRange()"
-                  [(ngModel)]="range"
-                  name="range"
-                  class="form-control"
-                >
-                  <option
-                    *ngFor="let range of ranges"
-                    [ngValue]="range"
-                    [selected]="range.scale == 15"
-                  >
+                <select (change)="selectRange()" [(ngModel)]="range" name="range" class="form-control">
+                  <option *ngFor="let range of ranges" [ngValue]="range" [selected]="range.scale == 15">
                     {{
                       "last " + range.scale + "  " + range.type | lowercase
-                    }}</option
-                  >
+                    }}</option>
                 </select>
               </div>
             </div>
 
-            <div
-              echarts
-              [options]="graphRecordService.option"
-              [loading]="!recordService.loading"
-              [merge]="recordService.mergeOptionHourly"
-              [autoResize]="true"
-              style="width:92vw;height:70vh;"
-            ></div>
+            <div echarts [options]="graphRecordService.option" [loading]="loaddingHourly"
+              [merge]="recordService.mergeOptionHourly" [autoResize]="true" style="width:92vw;height:70vh;"></div>
           </div>
           <div id="stack" class="tab-pane fade">
             <div class="row">
               <div class="col-sm-3" id="range-div">
                 <label>Range :</label>
-                <select
-                  (change)="selectRange('stack')"
-                  [(ngModel)]="range"
-                  name="range"
-                  class="form-control"
-                >
-                  <option
-                    *ngFor="let range of ranges"
-                    [ngValue]="range"
-                    [selected]="range.scale == 15"
-                  >
+                <select (change)="selectRange('stack')" [(ngModel)]="range" name="range" class="form-control">
+                  <option *ngFor="let range of ranges" [ngValue]="range" [selected]="range.scale == 15">
                     {{
                       "last " + range.scale + "  " + range.type | lowercase
-                    }}</option
-                  >
+                    }}</option>
                 </select>
               </div>
             </div>
-            <div
-              echarts
-              [options]="graphStack.option"
-              [autoResize]="true"
-              (chartInit)="onChartInit($event)"
-              [merge]="recordService.mergeOptionStack"
-              style="width:92vw;height:95vh;"
-            ></div>
+            <div echarts [options]="graphStack.option" [autoResize]="true" (chartInit)="onChartInit($event)"
+              [merge]="recordService.mergeOptionStack" [loading]="loadingStack" style="width:92vw;height:95vh;"></div>
           </div>
           <!--<router-outlet></router-outlet>>-->
         </div>

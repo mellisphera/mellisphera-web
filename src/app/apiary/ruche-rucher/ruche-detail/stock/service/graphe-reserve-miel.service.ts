@@ -75,7 +75,10 @@ export class GrapheReserveMielService {
     yAxis :
         {
             name : 'Weight variation (kg)',
-            type : 'value'
+            type : 'value',
+            min: -10
+            // max: 'dataMax'
+
         }
 };
 

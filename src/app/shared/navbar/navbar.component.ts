@@ -16,6 +16,7 @@ import { AtokenStorageService } from '../../auth/Service/atoken-storage.service'
 import { DailyRecordService } from '../../accueil/Service/dailyRecordService';
 import { Subscription } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
+import { CapteurService } from '../../capteur/capteur.service';
 
 
 
@@ -57,6 +58,7 @@ export class NavbarComponent implements OnInit{
         private meteoService: MeteoService,
         private fleursFloraisonService : FleursFloraisonService,
         private observationService : ObservationService,
+        private capteurService: CapteurService,
         private formBuilder: FormBuilder,
         private tokenService: AtokenStorageService,
         private dailyRecordService: DailyRecordService,
@@ -96,6 +98,7 @@ export class NavbarComponent implements OnInit{
         this.observationService.obsApiarySubject.unsubscribe();
         this.observationService.obsHiveSubject.unsubscribe();
         this.authService.isAuthenticated = false;
+        this.capteurService.sensorSubject.unsubscribe();
         this.tokenService.signOut();
         this.authService.connexionStatus.next(false);
         this.router.navigate(['/login']);

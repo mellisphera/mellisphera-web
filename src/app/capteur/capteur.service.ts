@@ -39,7 +39,6 @@ export class CapteurService {
      */
     constructor(private http: HttpClient, private user: UserloggedService) {
         this.sensorSubject = new BehaviorSubject([]);
-        this.getUserCapteurs();
         this.capteursType =
             [
                 {'reference' : '41', 'type' : 'T2'},
