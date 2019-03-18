@@ -63,3 +63,14 @@ ul{
 #range-div{
     padding-left: 30px;
 }
+#no-data{
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    font-size: x-large;
+    min-width: 16%;
+    transform: translate(-50%, -50%);
+}
+#no-data i{
+    margin-right: 25%;
+}

@@ -64,12 +64,28 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.initForm();
     }
 
+    getApiaryNameById(idApiary: string) {
+        try{
+            return this.rucherService.ruchers.filter(apiary => apiary.id === idApiary)[0];
+        } catch(e) {
+            return this.rucherService.rucher;
+        }
+    }
 
     ngOnInit() {
+        this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).subscribe( ruches => {
+            console.log(ruches);
+            this.rucherService.rucheService.ruchesAllApiary = ruches;
+            this.hiveSensorSelect = ruches[0];
+        })
+        this.capteurService.getUserCapteurs();
     }
 
     onChangeCapteur($event) {
         this.capteurService.capteur = $event.target.value;
+    }
+    merde() {
+        console.log(this.hiveSensorSelect);
     }
     selectCapteur(capteur: CapteurInterface, index: number) {
         this.indexSensorSelect = index;
@@ -86,6 +102,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
                 this.apiarySensorSelect = apiary[0];
             });
             this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive, (hive) => {
+                console.log(hive);
                 this.hiveSensorSelect = hive[0];
             });
         }
@@ -140,6 +157,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     //CREATE CAPTEUR
     createCapteur() {
         const formValue = this.newCapteurForm.value;
+        console.log(this.hiveSensorSelect);
         /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIVLE */
         const sensorType = document.querySelector('#typeSensor > option').innerHTML;
         const tempType = this.capteurService.capteur.type;
@@ -147,8 +165,8 @@ export class CapteurComponent implements OnInit, OnDestroy {
         //this.capteurService.capteur = formValue;
         if (formValue.checkbox != 'stock') {
             this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
-            this.capteurService.capteur.idApiary = this.apiarySensorSelect.id;
-            this.capteurService.capteur.apiaryName = this.apiarySensorSelect.name;
+            this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+            this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
             this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
         } else {
             this.capteurService.capteur.idHive = null;
@@ -195,8 +213,8 @@ export class CapteurComponent implements OnInit, OnDestroy {
         //this.capteurService.capteur = formValue;
         if (formValue.checkbox !== 'stock') {
             this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
-            this.capteurService.capteur.idApiary = this.apiarySensorSelect.id;
-            this.capteurService.capteur.apiaryName = this.apiarySensorSelect.name;
+            this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+            this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
             this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
         } else {
             this.capteurService.capteur.idHive = null;
@@ -263,7 +281,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     }
     ngOnDestroy() {
         /* this.rucherService.rucherSubject.unsubscribe(); */
-        this.capteurService.sensorSubject.unsubscribe();
+        // this.capteurService.sensorSubject.unsubscribe();
         // this.rucherService.rucheService.hiveSubject.unsubscribe();
         // this.rucherService.rucheService.hiveSubject.unsubscribe();
     }

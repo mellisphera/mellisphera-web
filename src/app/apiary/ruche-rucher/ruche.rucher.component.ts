@@ -121,6 +121,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     this.selectHive.apiaryName = this.rucherService.rucher.name;
     this.selectHive.username = this.username.toLowerCase();
     this.initForm();
+    console.log(this.selectHive);
     this.rucheService.createRuche(this.selectHive).subscribe((hive) => {
       // this.rucheService.saveCurrentHive(hive.id);
       this.rucheService.ruches.push(hive);

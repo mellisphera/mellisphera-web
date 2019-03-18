@@ -50,6 +50,7 @@ export class RucheService {
       description : '',
       username : '',
       idApiary: '',
+      apiaryName: '',
       hivePosX : '',
       hivePosY : '',
       sharingUser : []

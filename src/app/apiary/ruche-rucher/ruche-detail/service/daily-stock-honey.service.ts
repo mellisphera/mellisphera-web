@@ -45,7 +45,7 @@ export class DailyStockHoneyService {
   templateSerie  : any;
   constructor(private http : HttpClient,public rucheService : RucheService) {
     this.cleanTemplate();
-    this.loading = false;
+    this.cleanMerge();
     this.dailyStock = [];
     this.dailyStockByFlower = [];
     this.typeFlower = [];
