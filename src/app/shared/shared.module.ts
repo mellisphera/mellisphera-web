@@ -23,11 +23,12 @@ import { RecordService } from '../apiary/ruche-rucher/ruche-detail/service/Recor
 import { CalendrierHealthService } from '../apiary/ruche-rucher/ruche-detail/health/service/calendrier-health.service';
 import { DemoComponent } from '../demo/demo.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { FeedbackComponent } from '../feedback/feedback.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    SidebarModule,
+    SidebarModule, 
     NavbarModule,
     RouterModule,
     BrowserModule,
@@ -51,7 +52,7 @@ import { BrowserModule } from '@angular/platform-browser';
   exports:[
     RucheDetailComponent,
     NavbarModule,
-    RouterModule
+    RouterModule,
   ],
   declarations: [
     RucheDetailComponent,
@@ -61,7 +62,7 @@ import { BrowserModule } from '@angular/platform-browser';
     HealthComponent,
     ObservationComponent,
     StackComponent,
-    DemoComponent
+    DemoComponent,
   ],
   providers : [
     CalendrierPoidsService,

@@ -217,7 +217,14 @@ export class RecordService {
     // this.stackSubject.complete();
   }
 
-  getHourlyByHive(idHive: string) {
+  /**
+   *
+   *
+   * @param {string} idHive
+   * @returns {Observable<any>}
+   * @memberof RecordService
+   */
+  getHourlyByHive(idHive: string): Observable<any> {
     return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
       this.recArrayText = records.filter(record => record.temp_ext != null)
         .map((rec) => {

@@ -2,18 +2,36 @@
     position: fixed;
     bottom: 2%;
     right: 2%;
-    width: 70px;
+    width: 50px;
     box-shadow: 2px 2px black;
     opacity: 0.5;
     z-index: 5;
     border: none; 
     border-radius: 50%;
     padding: 0px;
+    transition: all 0.7s linear;
 }
 img{
     width: 100%;
 }
 #btn-feedback:hover{
     opacity: 1;
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    transform: rotate(180deg);
     box-shadow: none;
 }
+textarea{
+    width: 100%;
+}
+
+/* @-webkit-keyframes rotating {
+    from{
+        -webkit-transform: rotate(0deg);
+    }
+    to{
+        -webkit-transform: rotate(360deg);
+    }
+}
+ */
