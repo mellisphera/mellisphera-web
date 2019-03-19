@@ -150,21 +150,21 @@ export class RecordService {
             (this.recArrrayTint.length > 0) ?
               {
                 type: 'line',
-                name: this.recArrrayTint[0].sensorRef + ' | Tint',
+                name: 'Tint(' + this.recArrrayTint[0].sensorRef + ')',
                 data: this.recArrrayTint,
                 showSymbol: false,
               } : null,
             (this.recArrayText.length > 0) ?
               {
                 type: 'line',
-                name: this.recArrayText[0].sensorRef + ' | Text',
+                name: 'Text(' + this.recArrayText[0].sensorRef + ')',
                 showSymbol: false,
                 data: this.recArrayText
               } : null,
             (this.recArrayHint.length > 0) ?
               {
                 type: 'line',
-                name: this.recArrayHint[0].sensorRef + ' | Hint',
+                name: 'Hint(' + this.recArrayHint[0].sensorRef + ')',
                 data: this.recArrayHint,
                 xAxisIndex: 1,
                 yAxisIndex: 1,
@@ -173,7 +173,7 @@ export class RecordService {
             (this.recArrayBatteryInt.length > 0) ?
               {
                 type: 'line',
-                name: this.recArrayBatteryInt[0].sensorRef + ' | Batery-int',
+                name:  'Batery-int(' + this.recArrayBatteryInt[0].sensorRef + ')',
                 data: this.recArrayBatteryInt,
                 xAxisIndex: 2,
                 yAxisIndex: 2,
@@ -182,7 +182,7 @@ export class RecordService {
             (this.recArrayBatteryExt.length > 0) ?
               {
                 type: 'line',
-                name: this.recArrayBatteryExt[0].sensorRef + ' | Batery-ext',
+                name: 'Batery-ext(' +this.recArrayBatteryExt[0].sensorRef + ')',
                 data: this.recArrayBatteryExt,
                 xAxisIndex: 2,
                 yAxisIndex: 2,
@@ -191,11 +191,11 @@ export class RecordService {
           ],
           legend: {
             data: [
-              (this.recArrrayTint.length > 0) ? this.recArrrayTint[0].sensorRef + ' | Tint' : null,
-              (this.recArrayText.length > 0) ? this.recArrayText[0].sensorRef + ' | Text' : null,
-              (this.recArrayHint.length > 0) ? this.recArrayHint[0].sensorRef + ' | Hint' : null,
-              (this.recArrayBatteryInt.length > 0) ? this.recArrayBatteryInt[0].sensorRef + ' | Batery-int' : null,
-              (this.recArrayBatteryExt.length > 0) ? this.recArrayBatteryExt[0].sensorRef + ' | Batery-ext' : null
+              (this.recArrrayTint.length > 0) ? 'Tint(' + this.recArrrayTint[0].sensorRef + ')'  : null,
+              (this.recArrayText.length > 0) ? 'Text(' + this.recArrayText[0].sensorRef + ')' : null,
+              (this.recArrayHint.length > 0) ? 'Hint(' + this.recArrayHint[0].sensorRef + ')' : null,
+              (this.recArrayBatteryInt.length > 0) ? 'Batery-int(' + this.recArrayBatteryInt[0].sensorRef + ')' : null,
+              (this.recArrayBatteryExt.length > 0) ? 'Batery-ext(' + this.recArrayBatteryExt[0].sensorRef + ')' : null
             ],
           }
         };
