@@ -18,7 +18,7 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
     },
     tooltip : {
         formatter: (params)=>{
-            return new MyDate(params.data[0]).getIso()+'<br/>'+params.data[1];
+            return  MyDate.getIsoFromDate(MyDate.getWekitDate(params.data[0])) + '<br/>' + params.data[1];
         }   
     },
     toolbox: {
