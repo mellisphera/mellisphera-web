@@ -47,7 +47,7 @@ export class RecordService {
   private legendOption: Array<string>;
   constructor(private http: HttpClient) {
     this.currentIdHive = null;
-    this.stackSubject = new BehaviorSubject({});
+   // this.stackSubject = new BehaviorSubject({});
     this.mergeTemp = {
       legend: {
         data: []
@@ -214,7 +214,6 @@ export class RecordService {
       this.mergeTemp.series.splice(index, 1);
       this.legendOption.splice(index, 1);
     });
-    this.stackSubject.next(this.mergeTemp);
     // this.stackSubject.complete();
   }
 
@@ -340,115 +339,5 @@ export class RecordService {
         }
       ]
     };
-  }
-  cleanTemplate() {
-    this.templateSerie = {
-      tInt: {
-        name: 'Tint',
-        type: 'line',
-        showSymbol: false,
-        data: []
-      },
-      tExt: {
-        name: 'Text',
-        type: 'line',
-        showSymbol: false,
-        data: []
-      },
-      hInt: {
-        name: 'Hint',
-        type: 'line',
-        xAxisIndex: 1,
-        yAxisIndex: 1,
-        showSymbol: false,
-        data: []
-      },
-      hExt: {
-        name: 'Hext',
-        type: 'line',
-        xAxisIndex: 1,
-        yAxisIndex: 1,
-        showSymbol: false,
-        data: []
-      },
-      bInt: {
-        name: 'Batery-int',
-        type: 'bar',
-        xAxisIndex: 2,
-        yAxisIndex: 2,
-        showSymbol: false,
-        color: 'red',
-        large: true,
-        largeThreshold: 10,
-        barGap: '30%',
-        data: []
-      },
-      bExt: {
-        name: 'Batery-ext',
-        type: 'bar',
-        xAxisIndex: 2,
-        yAxisIndex: 2,
-        showSymbol: false,
-        color: 'blue',
-        large: true,
-        largeThreshold: 10,
-        barGap: '30%',
-        data: []
-      }
-    };
-  }
-  mapRecord(next) {
-    this.recArrrayTint = [];
-    this.recArrayText = [];
-    this.recArrayDateInt = [];
-    this.recArrayWeight = [];
-    this.recArrayDateExt = [];
-    this.recArrayBatteryExt = [];
-    this.recArrayBatteryInt = [];
-    this.recArrayHext = [];
-    this.recArrayHint = [];
-    this.recArray.forEach((element, index) => {
-      if (element.temp_ext != null) {
-        this.recArrayText.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.temp_ext
-          ]
-        });
-        this.recArrayWeight.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.weight
-          ]
-        });
-        this.recArrayBatteryExt.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.battery_ext
-          ]
-        });
-        this.recArrayHext.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.humidity_ext
-          ]
-        });
-        // this.recArrayDateExt.push(element.recordDate,element.recordDate);
-      } else if (element.temp_int != null) {
-        this.recArrrayTint.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.temp_int
-          ]
-        });
-        this.recArrayBatteryInt.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.battery_int
-          ]
-        });
-        this.recArrayHint.push({
-          name: element.recordDate, value: [
-            element.recordDate, element.humidity_int
-          ]
-        });
-        // this.recArrayDateInt.push(element.recordDate);
-      }
-    });
-    next();
   }
 }
