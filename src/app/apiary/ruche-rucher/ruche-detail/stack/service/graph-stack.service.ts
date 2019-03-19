@@ -146,13 +146,17 @@ export class GraphStackService {
           gridIndex: 1,
           name: 'Humidity',
           type: 'value',
-          inverse: false
+          inverse: false,
+          min: 0,
+          max: 100
         },
         {
           gridIndex: 2,
           name: 'Batery',
           type: 'value',
-          inverse: false
+          inverse: false,
+          min: 0,
+          max: 100
         }
       ],
       series: [

@@ -40,7 +40,8 @@ export class GraphRecordService {
         type: 'time',
         splitLine: {
             show: false
-        }
+        },
+        max: new Date()
     },
     legend: {
         top:30,
