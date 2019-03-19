@@ -21,7 +21,7 @@ export class CalendrierPoidsService{
     tooltip : {
         trigger: 'item',
         formatter: (params) => {
-            return new MyDate(params.data[0]).getIso() + '<br/>' + params.seriesName + ' : ' + params.data[1];
+            return MyDate.getIsoFromDate(MyDate.getWekitDate(params.data[0])) + '<br/>' + params.seriesName + ' : ' + params.data[1];
         }
     },
     toolbox: {
@@ -36,14 +36,15 @@ export class CalendrierPoidsService{
                     var series = opt.series;
                     //var table = '<table style="width:100%;">';
                     var table='<textarea style="width:100%; height:500px;" >'
-                    table += series[0].name+"\n";
+                    table += series[0].name + '\n';
                     let data;
                     series[0].data.forEach(element => {
-                        table+=new MyDate(element[0]).getIso()+' => '+element[1]+'\n';
+                        console.log(MyDate.getIsoFromDate(MyDate.getWekitDate(element[0])));
+                        table += MyDate.getIsoFromDate(MyDate.getWekitDate(element[0])) + ' => ' + element[1] + '\n';
                     });
-                    table += series[1].name+"\n";
+                    table += series[1].name + '\n';
                     series[1].data.forEach(element => {
-                        table+=new MyDate(element[0]).getIso()+' => '+element[1]+'\n';
+                        table += MyDate.getIsoFromDate(new Date(element[1])) + ' => ' + element[1] + '\n';
                     });
                     table+='</textarea>';
                     return table;
