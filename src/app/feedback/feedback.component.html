@@ -28,7 +28,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" [disabled]="feedbackForm.invalid" class="btn btn-default" data-dismiss="modal">
+        <button type="submit" class="btn btn-default" data-dismiss="modal">
           Close
         </button>
         <button
@@ -36,6 +36,7 @@
           (click)="send()"
           class="btn btn-primary"
           data-dismiss="modal"
+          [disabled]="feedbackForm.invalid"
         >
           Send
         </button>

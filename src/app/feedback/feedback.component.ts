@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UserloggedService } from '../userlogged.service';
+import { NotifierService } from 'angular-notifier';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,8 +16,13 @@ export class FeedbackComponent implements OnInit {
 
   private urlSlack: string;
   public feedbackForm: FormGroup;
-  constructor(private httpClient: HttpClient, private formBuilder: FormBuilder) {
+  private notify: NotifierService;
+  constructor(private httpClient: HttpClient,
+    private formBuilder: FormBuilder,
+    private userService: UserloggedService,
+    private notifyService: NotifierService) {
     this.urlSlack = 'https://hooks.slack.com/services/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'
+    this.notify = notifyService;
   }
 
   ngOnInit() {
@@ -25,10 +32,10 @@ export class FeedbackComponent implements OnInit {
   }
 
   send() {
-    const body = { text: this.feedbackForm.value.comment};
+    const body = { 'text': this.userService.getUser() + ' : ' + this.feedbackForm.value.comment};
     console.log(body);
-    this.httpClient.post<any>(this.urlSlack, body, httpOptions).subscribe((data) => {
-      console.log(data);
+    this.httpClient.post(this.urlSlack, JSON.stringify(body)).subscribe(() => {}, () => {}, () => {
+      this.notify.notify('success','Feedback sent');
     });
   }
 }

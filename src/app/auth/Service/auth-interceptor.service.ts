@@ -14,20 +14,20 @@ export class AuthInterceptorService implements HttpInterceptor {
   TOKEN_HEADER_KEY = 'Authorization';
   constructor(private tokenService : AtokenStorageService,private userService : UserloggedService) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) : Observable<HttpEvent<any>>{
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
     //const token = this.tokenService.getToken() ? this.tokenService.getToken() : CONFIG.PUBLIC_TOKEN;
     let authReq = req.clone({
       setHeaders : {
         Authorization : `Bearer ${this.tokenService.getToken()}`
       }
     });
-    if(req.url.indexOf("openweathermap")!=-1){
+    if(req.url.indexOf("openweathermap") !== -1) {
       return next.handle(req);
-    }
-    else{
+    } else if(req.url.indexOf('slack') !== -1) {
+      return next.handle(req);
+    } else{
       return next.handle(authReq);
     }
-    
   }
 
 }
