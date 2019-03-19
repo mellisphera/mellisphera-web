@@ -280,9 +280,12 @@ export class RecordService {
     if (scale.type === 'DAY') {
       date = new Date();
       date.setDate((new Date().getDate() - scale.scale));
-    } else {
+    } else if (scale.type === 'MONTH') {
       date = new Date();
       date.setMonth((new Date().getMonth() - scale.scale));
+    } else {
+      date = new Date();
+      date.setFullYear(new Date().getFullYear() - 1);
     }
     this.rangeHourly = MyDate.getRange(date);
   }

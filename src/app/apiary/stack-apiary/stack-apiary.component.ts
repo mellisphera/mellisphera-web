@@ -42,7 +42,8 @@ export class StackApiaryComponent implements OnInit {
       { scale: 15, type: 'DAY' },
       { scale: 30, type: 'DAY' },
       { scale: 3, type: 'MONTH' },
-      { scale: 6, type: 'MONTH' }
+      { scale: 6, type: 'MONTH' },
+      { scale: 1, type: 'YEAR' }
     ];
     this.range = this.ranges[0];
     this.recordService.setRange(this.range);
