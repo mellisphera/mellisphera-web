@@ -28,7 +28,7 @@ import { FeedbackComponent } from '../feedback/feedback.component';
 @NgModule({
   imports: [
     CommonModule,
-    SidebarModule, 
+    SidebarModule,
     NavbarModule,
     RouterModule,
     BrowserModule,
