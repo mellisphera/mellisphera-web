@@ -101,7 +101,6 @@ import { FeedbackComponent } from './feedback/feedback.component';
     FooterModule,
     SidebarModule,
     RouterModule,
-    SharedModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,

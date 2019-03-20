@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { AtokenStorageService } from './auth/Service/atoken-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ export class AppComponent implements OnInit {
 
   showLogin : boolean;
  
-     constructor(public location: Location,public router: Router) {
+     constructor(public location: Location,public router: Router, public tokenService: AtokenStorageService) {
+       console.log(location);
        this.showLogin=true;
        
      }
