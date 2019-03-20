@@ -264,7 +264,7 @@ export class RecordService {
             type:'line',
             showSymbol: false,
             hoverAnimation: true,
-            data : '',
+            data : this.recArrayText,
             yAxisIndex: 1,
             color : 'blue'
           }
