@@ -100,7 +100,7 @@ export class StackApiaryComponent implements OnInit {
   }
 
   selectHive(selectHive: RucheInterface, event: MouseEvent) {
-    if (!this.loadingStack){
+    if (!this.loadingStack) {
       this.loadingStack = true;
       const arrayFilter = this.stackService.getHiveSelect().filter(hive => hive.id === selectHive.id);
       if (arrayFilter.length > 0) {
