@@ -148,7 +148,7 @@ export class StackApiaryComponent implements OnInit {
     } */
 
   removeHiveStack(hiveName: string) {
-    this.recordService.mergeOptionStackApiary.series.filter(serie => hiveName === serie.name.split('/')[0]).forEach(element => {
+    this.recordService.mergeOptionStackApiary.series.filter(serie => hiveName === serie.name.split(' / ')[0]).forEach(element => {
       const index = this.recordService.mergeOptionStackApiary.series.indexOf(element);
       console.log(index);
       this.recordService.mergeOptionStackApiary.series.splice(index, 1);
