@@ -69,7 +69,7 @@ export class GrapheReserveMielService {
                 show: false
             },
             min: MyDate.getIsoFromDate(MyDate.calcLastYear(new Date())),
-            max: 'dataMax'
+            max: new Date(),
         }
     ],
     yAxis :
