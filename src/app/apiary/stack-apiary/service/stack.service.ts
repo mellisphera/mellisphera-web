@@ -8,8 +8,25 @@ import { DeprecatedDatePipe } from '@angular/common';
 export class StackService {
 
   private arrayHiveSelect: Array<RucheInterface>;
+  private arrayColor: Array<string>;
   constructor() {
     this.arrayHiveSelect = [];
+    this.arrayColor = [
+      'green',
+      'orange',
+      'red',
+      '#40A497',
+      'blue',
+      'yellow',
+      '#5C33B3',
+      '#6493E0',
+      '#40F24F',
+      '#108C8B',
+      '#074784',
+      'grey',
+      '#DF5451',
+      '#00FEEA'
+    ];
   }
   /**
    *
@@ -24,12 +41,42 @@ export class StackService {
   /**
    *
    *
+   * @param {number} index
+   * @returns
+   * @memberof StackService
+   */
+  getColorByIndex(index: number, hive: RucheInterface) {
+    if (this.arrayHiveSelect.filter(elt => elt.id === hive.id).length > 0) {
+      return (index < this.arrayColor.length - 1) ? this.arrayColor[index] : null ;
+    } else {
+      return null;
+    }
+  }
+
+
+  /**
+   *
+   *
    * @param {RucheInterface} hive
    * @memberof StackService
    */
   removeHive(hive: RucheInterface) {
     const index = this.arrayHiveSelect.indexOf(hive);
-    this.arrayHiveSelect.splice(index, 1);
+    this.arrayHiveSelect.splice(index, 1, this.getEmptyHive());
+  }
+
+  getEmptyHive(): RucheInterface {
+    return {
+      id : '',
+      name : '',
+      description : '',
+      username : '',
+      idApiary: '',
+      apiaryName: '',
+      hivePosX : '',
+      hivePosY : '',
+      sharingUser : []
+    };
   }
 
   /**

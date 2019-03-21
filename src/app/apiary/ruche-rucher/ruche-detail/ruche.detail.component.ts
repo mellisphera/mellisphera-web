@@ -172,9 +172,9 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         }
         this.echartInstance.setOption(option);
     }
-    selectRange(type?: string) {
+    selectRange(page?: string) {
         this.recordService.setRange(this.range);
-        if (type === 'stack') {
+        if (page === 'stack') {
             this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
             .subscribe(
                 (record) => {
@@ -243,7 +243,6 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
         } else if (this.currentTab.indexOf('stack') != -1) {
             if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
-                console.log('ok');
                 this.loadingStack = true;
                 this.recordService.setRange(this.range);
                 this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)

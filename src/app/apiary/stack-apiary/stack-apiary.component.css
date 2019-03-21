@@ -1,7 +1,3 @@
-.list-group-item:hover{
-    cursor: pointer;
-    background-color: aqua;
-}
 ul{
     padding: 0px;
 }
@@ -39,10 +35,10 @@ li{
 .apiary{
     font-weight: bold;
 }
-.active{
+/* .active{
     background-color: #53B74F;
     color: white;
-}
+} */
 .col-xs{
     margin: auto !important;
 }
@@ -57,17 +53,16 @@ li{
 .panel-body{
     padding: 2px !important;
 }
+.complete:hover{
+    cursor: pointer;
+    background-color: aqua;
+}
+.loading:hover{
+    cursor: wait;
+    background-color: aqua;
+}
 @media  (max-width:767px){
     #col-graph{
         width: 100% !important;
     }
-}
-.sub-items{
-    transition: all 0.5s linear;
-}
-.sub-items:hover{
-    -webkit-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    transform: scale(1.1);
-    z-index: 3;
 }
