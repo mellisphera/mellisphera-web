@@ -4,6 +4,7 @@ import { type } from 'os';
 import { webSocket } from 'rxjs/webSocket';
 import { CONFIG } from '../../../../../../config';
 import { CalendrierService } from '../../service/calendrier.service';
+import { MyDate } from '../../../../../class/MyDate';
 //import { ECharts } from 'echarts';
 
 @Injectable({
@@ -20,7 +21,7 @@ export class CalendrierHealthService  extends CalendrierService {
     backgroundColor: 'white',
     title: {
         top: 70,
-        text: 'Brood level',
+        text: 'Brood Dynamics',
         left: 'center',
         textStyle: {
             color: 'black'
@@ -52,7 +53,7 @@ export class CalendrierHealthService  extends CalendrierService {
         right: '4%',
         height:'30%',
         width:'93%',
-        range: ['2018-09-01', '2019-03-31'],
+        range: MyDate.getPersoDate(),
         orient: 'horizontal',
         cellSize: ['auto', 50],
         splitLine: {

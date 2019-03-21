@@ -9,6 +9,8 @@ import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
 import { DataRange } from '../ruche-rucher/ruche-detail/service/Record/data-range';
 import { StackService } from './service/stack.service';
+import { element } from '@angular/core/src/render3/instructions';
+import { resolve } from 'q';
 /* import * as echarts from 'echarts'; */
 
 @Component({
@@ -20,6 +22,7 @@ export class StackApiaryComponent implements OnInit {
 
   private echartInstance: any;
   public merge: any;
+  public loadingStack: boolean;
   public range: DataRange;
   public ranges: DataRange[];
   private subjectEchart: BehaviorSubject<any>;
@@ -56,6 +59,9 @@ export class StackApiaryComponent implements OnInit {
     console.log('on chart init:', e);
   }
 
+  selectAllHive(idApiary: string) {
+  }
+
   ngOnInit() {
     if (!this.rucherService.rucherSubject.closed) {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
@@ -76,8 +82,7 @@ export class StackApiaryComponent implements OnInit {
   getHiveByApiary(idApiary: string) {
     try {
       return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === idApiary);
-    }
-    catch (e) {
+    } catch (e) {
       return false;
     }
   }
@@ -87,38 +92,55 @@ export class StackApiaryComponent implements OnInit {
   selectRange() {
     this.recordService.setRange(this.range);
     this.stackService.getHiveSelect().forEach(element => {
-      this.recordService.getRecordByIdHive(element.id, element.name, this.merge)
+      this.recordService.getRecordByIdHive(element.id, element.name, this.merge, false)
       .subscribe((data) => {
         this.recordService.mergeOptionStackApiary = data;
       });
     });
   }
+
   selectHive(selectHive: RucheInterface, event: MouseEvent) {
-    const arrayFilter = this.stackService.getHiveSelect().filter(hive => hive.id === selectHive.id);
-    if (arrayFilter.length > 0) {
-      this.render.removeClass(event.target, 'active');
-      this.stackService.removeHive(arrayFilter[0]);
-      let option = this.echartInstance.getOption();
-      this.removeHiveStack(selectHive.name);
-      this.echartInstance.clear();
-      option.series = this.recordService.mergeOptionStackApiary.series;
-      option.legend = this.recordService.mergeOptionStackApiary.legend;
-      this.echartInstance.setOption(option);
-      // this.echartInstance.clear();
-    } else {
-      this.render.addClass(event.target, 'active');
-      this.stackService.addHive(selectHive);
-      this.recordService.setRange(this.range);
-      this.recordService.getRecordByIdHive(selectHive.id, selectHive.name, this.recordService.mergeOptionStackApiary)
-      .subscribe((data) => {
-        this.recordService.mergeOptionStackApiary = data;
-        console.log(this.recordService.mergeOptionStackApiary);
-      });
+    if (!this.loadingStack){
+      this.loadingStack = true;
+      const arrayFilter = this.stackService.getHiveSelect().filter(hive => hive.id === selectHive.id);
+      if (arrayFilter.length > 0) {
+        // this.render.removeClass(event.target, 'active');
+        /* this.render.removeStyle(event.target, 'background-color'); */
+        this.stackService.removeHive(arrayFilter[0]);
+        console.log(arrayFilter[0]);
+        let option = this.echartInstance.getOption();
+        this.removeHiveStack(selectHive.name);
+        this.echartInstance.clear();
+        option.series = this.recordService.mergeOptionStackApiary.series;
+        option.legend = this.recordService.mergeOptionStackApiary.legend;
+        this.echartInstance.setOption(option);
+        this.loadingStack = false;
+        // this.echartInstance.clear();
+      } else {
+        this.loadingStack = true;
+        this.stackService.addHive(selectHive);
+        this.recordService.setRange(this.range);
+        this.recordService.getRecordByIdHive(selectHive.id, selectHive.name,
+          this.recordService.mergeOptionStackApiary, false, this.getColor(selectHive))
+        .subscribe((data) => {
+          this.recordService.mergeOptionStackApiary = data;
+          console.log(this.recordService.mergeOptionStackApiary);
+        },() => {}, () => {
+          this.loadingStack = false;
+        });
+      }
     }
+  }
+  checkLoadingDone() {
+    return !this.loadingStack ? 'complete' : 'loading';
   }
 
   receiveMessage($event) {
     this.message = $event;
+  }
+
+  getColor(hive: RucheInterface): string {
+    return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.indexOf(hive), hive);
   }
 
   /*   getMergeObs() {
@@ -126,8 +148,9 @@ export class StackApiaryComponent implements OnInit {
     } */
 
   removeHiveStack(hiveName: string) {
-    this.recordService.mergeOptionStackApiary.series.filter(serie => hiveName === serie.name.split('-')[0]).forEach(element => {
+    this.recordService.mergeOptionStackApiary.series.filter(serie => hiveName === serie.name.split('/')[0]).forEach(element => {
       const index = this.recordService.mergeOptionStackApiary.series.indexOf(element);
+      console.log(index);
       this.recordService.mergeOptionStackApiary.series.splice(index, 1);
       this.recordService.mergeOptionStackApiary.legend.data.splice(index, 1);
     });

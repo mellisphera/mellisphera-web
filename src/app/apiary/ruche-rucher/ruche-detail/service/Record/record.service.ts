@@ -73,7 +73,7 @@ export class RecordService {
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getRecordByIdHive(idHive: string, hiveName: string, lastMerge: any, hive?: boolean): Observable<any> {
+  getRecordByIdHive(idHive: string, hiveName: string, lastMerge: any, hive: boolean, color?: string): Observable<any> {
     return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
       this.recArrayText = records.filter(record => record.temp_ext != null)
         .map((rec) => {
@@ -107,39 +107,51 @@ export class RecordService {
         return {
           series: [
             {
-              name: hiveName + '-weight',
+              name: hiveName + '/weight',
               type: 'line',
               showSymbol: false,
-              data: this.recArrayWeight
+              data: this.recArrayWeight,
+              lineStyle: {
+                color: color
+              }
             },
             {
-              name: hiveName + '-Tint',
-              type: 'line',
-              xAxisIndex: (hive) ? 0 : 1,
-              yAxisIndex: (hive) ? 0 : 1,
-              showSymbol: false,
-              data: this.recArrrayTint
-            },
-            {
-              name: hiveName + '-Text',
+              name: hiveName + '/Tint',
               type: 'line',
               xAxisIndex: (hive) ? 0 : 1,
               yAxisIndex: (hive) ? 0 : 1,
               showSymbol: false,
-              data: this.recArrayText
+              data: this.recArrrayTint,
+              lineStyle: {
+                color: color
+              }
             },
             {
-              name: hiveName + '-Hint',
+              name: hiveName + '/Text',
+              type: 'line',
+              xAxisIndex: (hive) ? 0 : 1,
+              yAxisIndex: (hive) ? 0 : 1,
+              showSymbol: false,
+              data: this.recArrayText,
+              lineStyle: {
+                color: color
+              }
+            },
+            {
+              name: hiveName + '/Hint',
               type: 'line',
               xAxisIndex: (hive) ? 1 : 2,
               yAxisIndex: (hive) ? 0 : 2,
               showSymbol: false,
-              data: this.recArrayHint
+              data: this.recArrayHint,
+              lineStyle: {
+                color: color
+              }
             },
 
           ].concat(lastMerge.series),
           legend: {
-            data: [hiveName + '-Tint', hiveName + '-Text', hiveName + '-Hint', hiveName + '-weight']
+            data: [hiveName + '/Tint', hiveName + '/Text', hiveName + '/Hint', hiveName + '/weight']
               .concat(lastMerge.legend.data),
             show: false
           }
@@ -201,20 +213,6 @@ export class RecordService {
         };
       }
     });
-  }
-  /**
-   *
-   * @param {string} hiveName
-   * @memberof RecordService
-   * @description Supprime les ruche déselectionnée du graph
-   */
-  removeHiveStack(hiveName: string) {
-    this.mergeTemp.series.filter(serie => hiveName === serie.name.split('-')[0]).forEach(element => {
-      const index = this.mergeTemp.series.indexOf(element);
-      this.mergeTemp.series.splice(index, 1);
-      this.legendOption.splice(index, 1);
-    });
-    // this.stackSubject.complete();
   }
 
   /**
