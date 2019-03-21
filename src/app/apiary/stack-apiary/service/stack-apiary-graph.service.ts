@@ -145,7 +145,7 @@ export class StackApiaryGraphService {
           inverse: false
         },
       ],
-      series: []
+      series: [],
     };
   }
 }

@@ -113,7 +113,10 @@ export class RecordService {
               data: this.recArrayWeight,
               lineStyle: {
                 color: color
-              }
+              },
+              itemStyle: {
+                color: color
+              },
             },
             {
               name: hiveName + '/Tint',
@@ -122,6 +125,9 @@ export class RecordService {
               yAxisIndex: (hive) ? 0 : 1,
               showSymbol: false,
               data: this.recArrrayTint,
+              itemStyle: {
+                color: color
+              },
               lineStyle: {
                 color: color
               }
@@ -135,7 +141,10 @@ export class RecordService {
               data: this.recArrayText,
               lineStyle: {
                 color: color
-              }
+              },
+              itemStyle: {
+                color: color
+              },
             },
             {
               name: hiveName + '/Hint',
@@ -146,7 +155,10 @@ export class RecordService {
               data: this.recArrayHint,
               lineStyle: {
                 color: color
-              }
+              },
+              itemStyle: {
+                color: color
+              },
             },
 
           ].concat(lastMerge.series),
