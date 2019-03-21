@@ -107,7 +107,7 @@ export class RecordService {
         return {
           series: [
             {
-              name: hiveName + '/weight',
+              name: hiveName + ' / weight',
               type: 'line',
               showSymbol: false,
               data: this.recArrayWeight,
@@ -119,7 +119,7 @@ export class RecordService {
               },
             },
             {
-              name: hiveName + '/Tint',
+              name: hiveName + ' / Tint',
               type: 'line',
               xAxisIndex: (hive) ? 0 : 1,
               yAxisIndex: (hive) ? 0 : 1,
@@ -133,7 +133,7 @@ export class RecordService {
               }
             },
             {
-              name: hiveName + '/Text',
+              name: hiveName + ' / Text',
               type: 'line',
               xAxisIndex: (hive) ? 0 : 1,
               yAxisIndex: (hive) ? 0 : 1,
@@ -147,7 +147,7 @@ export class RecordService {
               },
             },
             {
-              name: hiveName + '/Hint',
+              name: hiveName + ' / Hint',
               type: 'line',
               xAxisIndex: (hive) ? 1 : 2,
               yAxisIndex: (hive) ? 0 : 2,
@@ -163,7 +163,7 @@ export class RecordService {
 
           ].concat(lastMerge.series),
           legend: {
-            data: [hiveName + '/Tint', hiveName + '/Text', hiveName + '/Hint', hiveName + '/weight']
+            data: [hiveName + ' / Tint', hiveName + ' / Text', hiveName + ' / Hint', hiveName + ' / weight']
               .concat(lastMerge.legend.data),
             show: false
           }

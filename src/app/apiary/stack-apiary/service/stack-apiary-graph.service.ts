@@ -89,6 +89,7 @@ export class StackApiaryGraphService {
           axisLine: { onZero: true },
           position: 'bottom',
           gridIndex: 0,
+          max: new Date(),
           splitLine: {
             show: false
           },
@@ -102,6 +103,7 @@ export class StackApiaryGraphService {
           axisLine: { onZero: true},
           position: 'bottom',
           gridIndex: 1,
+          max: new Date(),
           splitLine: {
             show: false
           },
@@ -115,6 +117,7 @@ export class StackApiaryGraphService {
           axisLine: { onZero: true },
           position: 'bottom',
           gridIndex: 2,
+          max: new Date(),
           splitLine: {
             show: false
           },
