@@ -1,5 +1,5 @@
 import { StackApiaryGraphService } from './service/stack-apiary-graph.service';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, AfterViewInit } from '@angular/core';
 import { RucheService } from '../../accueil/Service/ruche.service';
 import { RucheInterface } from '../../_model/ruche';
 import { RecordService } from '../ruche-rucher/ruche-detail/service/Record/record.service';
@@ -55,8 +55,6 @@ export class StackApiaryComponent implements OnInit {
 
   onChartInit(e: any) {
     this.echartInstance = e;
-    console.log(e);
-    console.log('on chart init:', e);
   }
 
   selectAllHive(idApiary: string) {
@@ -78,7 +76,6 @@ export class StackApiaryComponent implements OnInit {
       });
     }
   }
-
   getHiveByApiary(idApiary: string) {
     try {
       return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === idApiary);
@@ -90,12 +87,17 @@ export class StackApiaryComponent implements OnInit {
     return '#' + index;
   }
   selectRange() {
+    this.loadingStack = true;
     this.recordService.setRange(this.range);
     this.stackService.getHiveSelect().forEach(element => {
-      this.recordService.getRecordByIdHive(element.id, element.name, this.merge, false,  this.getColor(element))
-      .subscribe((data) => {
-        this.recordService.mergeOptionStackApiary = data;
-      });
+      if (this.loadingStack) {
+        this.recordService.getRecordByIdHive(element.id, element.name, this.merge, false,  this.getColor(element))
+        .subscribe((data) => {
+          this.recordService.mergeOptionStackApiary = data;
+        }, () => {}, () => {
+          this.loadingStack = false;
+        });
+      }
     });
   }
 
@@ -111,7 +113,7 @@ export class StackApiaryComponent implements OnInit {
         let option = this.echartInstance.getOption();
         this.removeHiveStack(selectHive.name);
         this.echartInstance.clear();
-        option.series = this.recordService.mergeOptionStackApiary.series;
+        option.series = this.recordService.mergeOptionStackApiary.series; 
         option.legend = this.recordService.mergeOptionStackApiary.legend;
         this.echartInstance.setOption(option);
         this.loadingStack = false;
@@ -140,7 +142,7 @@ export class StackApiaryComponent implements OnInit {
   }
 
   getColor(hive: RucheInterface): string {
-    return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.indexOf(hive), hive);
+    return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
   }
 
   /*   getMergeObs() {
