@@ -23,7 +23,6 @@ export class StackApiaryComponent implements OnInit {
   private echartInstance: any;
   public merge: any;
   public loadingStack: boolean;
-  public range: DataRange;
   public ranges: DataRange[];
   private subjectEchart: BehaviorSubject<any>;
   message: string;
@@ -48,19 +47,21 @@ export class StackApiaryComponent implements OnInit {
       { scale: 6, type: 'MONTH' },
       { scale: 1, type: 'YEAR' }
     ];
-    this.range = this.ranges[0];
-    this.recordService.setRange(this.range);
+    this.stackService.range = this.ranges[0];
+    this.recordService.setRange(this.stackService.range);
     this.message = '';
   }
 
   onChartInit(e: any) {
     this.echartInstance = e;
+    console.log(e.getOption());
   }
 
   selectAllHive(idApiary: string) {
   }
 
   ngOnInit() {
+    console.log(this.recordService.mergeOptionStackApiary);
     if (!this.rucherService.rucherSubject.closed) {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
         this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).map((hives) => {
@@ -87,18 +88,20 @@ export class StackApiaryComponent implements OnInit {
     return '#' + index;
   }
   selectRange() {
+    console.log(this.echartInstance.getOption());
     this.loadingStack = true;
-    this.recordService.setRange(this.range);
-    this.stackService.getHiveSelect().forEach(element => {
-      if (this.loadingStack) {
-        this.recordService.getRecordByIdHive(element.id, element.name, this.merge, false,  this.getColor(element))
-        .subscribe((data) => {
-          this.recordService.mergeOptionStackApiary = data;
-        }, () => {}, () => {
-          this.loadingStack = false;
-        });
-      }
-    });
+    this.recordService.setRange(this.stackService.range);
+      this.stackService.getHiveSelect().forEach((element, index) => {
+        if (!this.loadingStack || index === 0) {
+          this.recordService.getRecordByIdHive(element.id, element.name, this.recordService.mergeOptionStackApiary, false,  this.getColor(element))
+          .subscribe((data) => {
+            console.log(data);
+            this.recordService.mergeOptionStackApiary = data;
+          }, () => {}, () => {
+            this.loadingStack = false;
+          });
+        }
+      });
   }
 
   selectHive(selectHive: RucheInterface, event: MouseEvent) {
@@ -113,7 +116,7 @@ export class StackApiaryComponent implements OnInit {
         let option = this.echartInstance.getOption();
         this.removeHiveStack(selectHive.name);
         this.echartInstance.clear();
-        option.series = this.recordService.mergeOptionStackApiary.series; 
+        option.series = this.recordService.mergeOptionStackApiary.series;
         option.legend = this.recordService.mergeOptionStackApiary.legend;
         this.echartInstance.setOption(option);
         this.loadingStack = false;
@@ -121,7 +124,7 @@ export class StackApiaryComponent implements OnInit {
       } else {
         this.loadingStack = true;
         this.stackService.addHive(selectHive);
-        this.recordService.setRange(this.range);
+        this.recordService.setRange(this.stackService.range);
         this.recordService.getRecordByIdHive(selectHive.id, selectHive.name,
           this.recordService.mergeOptionStackApiary, false, this.getColor(selectHive))
         .subscribe((data) => {
