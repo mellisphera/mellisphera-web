@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RucheInterface } from '../../../_model/ruche';
 import { DeprecatedDatePipe } from '@angular/common';
+import { DataRange } from '../../ruche-rucher/ruche-detail/service/Record/data-range';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { DeprecatedDatePipe } from '@angular/common';
 export class StackService {
 
   private arrayHiveSelect: Array<RucheInterface>;
+  public range: DataRange;
   private arrayColor: Array<string>;
   constructor() {
     this.arrayHiveSelect = [];
