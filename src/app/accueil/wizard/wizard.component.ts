@@ -43,6 +43,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.wrapper.classList.add('wizard-active');
     this.mainPanel.classList.add('wizard-z-index');
     this.sidebar.classList.add('wizard-z-index');
+    console.log(this.userService.getWizardActive());
   }
 
 
@@ -66,41 +67,21 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.apiary = this.apiaryForm.value;
     this.apiary.createdAt = new Date();
     this.apiary.username = this.userService.getUser();
-/*     this.rucherService.createRucher(this.apiary).subscribe((apiary) => {
-      if (this.rucherService.ruchers != null) {
-        this.rucherService.ruchers.push(apiary);
-      } else {
-        this.rucherService.ruchers = new Array(apiary);
-      }
-      this.rucherService.saveCurrentApiaryId(apiary.id);
-    }, () => { }, () => {
-      console.log(this.rucherService.ruchers);
-      this.rucherService.emitApiarySubject();
-      this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
-      this.initForm();
-    }); */
+    this.apiary.photo = './assets/imageClient/testAccount.png';
   }
 
   subHive() {
     this.hive = this.hiveForm.value;
     this.hive.id = null;
     this.hive.username = this.userService.getUser();
-   // this.initForm();
-/*     this.rucherService.rucheService.createRuche(this.hive).subscribe((hive) => {
-      this.rucherService.rucheService.ruches.push(hive);
-      this.rucherService.rucheService.saveCurrentHive(hive.id);
-    }, () => { }, () => {
-      console.log(this.rucherService.rucheService.ruches);
-      this.rucherService.rucheService.emitHiveSubject();
-    }); */
+
   }
   subSensor() {
     this.sensor = this.sensorForm.value;
     this.sensor.apiaryName = this.apiary.name;
     this.sensor.type = this.getTypeFromRef(this.sensor.reference);
-    this.sensor.idHive = this.rucherService.rucheService.getCurrentHive();
     this.sensor.apiaryName = this.apiary.name;
-    this.sensor.hiveName = this.apiary.name;
+    this.sensor.hiveName = this.hive.name;
     this.sensor.username = this.userService.getUser();
     this.capteurService.capteur = this.sensor;
 /*     this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
@@ -129,10 +110,12 @@ export class WizardComponent implements OnInit, OnDestroy {
       }, () => { }, () => {
         console.log(this.rucherService.rucheService.ruches);
         this.rucherService.rucheService.emitHiveSubject();
+        this.sensor.idHive = this.rucherService.rucheService.getCurrentHive();
         this.sensor.idApiary = this.rucherService.getCurrentApiary();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
           this.capteurService.getUserCapteurs();
           this.userService.setWizardActive();
+          console.log(this.userService.getWizardActive());
         });
       });
     });

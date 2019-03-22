@@ -79,7 +79,7 @@ export class DailyRecordsWService {
           data : this.arrayTempExt
         },
         title: {
-          text: 'External Temperature (max)'
+          text: 'External Temperature (max,°C)'
       },
       visualMap: {
           min: -10,
