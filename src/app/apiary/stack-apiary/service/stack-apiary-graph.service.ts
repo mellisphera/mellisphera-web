@@ -128,24 +128,28 @@ export class StackApiaryGraphService {
       ],
       yAxis: [
         {
-          name: 'Weight',
+          name: 'Weight (kg)',
+          nameLocation: 'middle',
+          nameGap: 25,
           type: 'value',
-          inverse: false
         },
         {
           gridIndex: 1,
-          name: 'Temp',
+          name: 'Temperature (°C)',
           type: 'value',
+          nameGap: 25,
+          nameLocation: 'middle',
           min: 0,
           max: 40,
         },
         {
           gridIndex: 2,
-          name: 'Humidity',
+          name: 'Humidity (%)',
           type: 'value',
+          nameLocation: 'middle',
+          nameGap: 25,
           min: 0,
           max: 100,
-          inverse: false
         },
       ],
       series: [],

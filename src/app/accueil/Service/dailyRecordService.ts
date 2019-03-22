@@ -11,7 +11,7 @@ import { CONFIG } from '../../../config';
 import { UserloggedService } from '../../userlogged.service';
 
 @Injectable()
-export class DailyRecordService{
+export class DailyRecordService {
     dailyRecObs: Observable<DailyRecordTh>;
     dailyRecObsArray: Observable<DailyRecordTh[]>;
     dailyRecTabObs: Observable<DailyRecordTh[]>;
@@ -40,10 +40,10 @@ export class DailyRecordService{
     getDailyRecThByIdHivelas(idHive) {
         this.dailyRecObs = this.http.get<DailyRecordTh>(CONFIG.URL + '/dailyRecordsTH/last/' + idHive);
         this.dailyRecObs.subscribe(
-            (data)=>{
+            (data) => {
                 this.dailyRecord = data;
             },
-            (err)=>{
+            (err) => {
                 console.log(err);
             }
         );
@@ -77,41 +77,44 @@ export class DailyRecordService{
             }
         };
         this.mergeOptionTint = {
-            series : {
-                    data: this.arrayTempInt
-                },
+            series: {
+                data: this.arrayTempInt
+            },
             title: {
-                    text: 'Internal Temperature (max, °C)'
-                },
+                text: 'Internal Temperature (max, °C)'
+            },
             visualMap: {
-                    calculable: true,
-                    min: -10,
-                    max: 40,
-                    inRange: {
-                        color: ['#abd9e9', '#CC0000']
-                    }
+                calculable: true,
+                min: -10,
+                max: 40,
+                inRange: {
+                    /* color: ['#abd9e9', '#CC0000'] */
+                    color: ['#313695', '#4575b4', '#74add1', 
+                    '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                }
             },
         };
         this.mergeOptionHint = {
-            series : {
-                data : this.arrayHint
+            series: {
+                data: this.arrayHint
             },
             title: {
                 text: 'Internal Relative Humidity (max)'
             },
             visualMap: {
+                left: 'center',
                 orient: 'horizontal',
-                top : 20,
+                top: 50,
                 right: '3%',
                 type: 'piecewise',
                 pieces: [
                     // Range of a piece can be specified by property min and max,
                     // where min will be set as -Infinity if ignored,
                     // and max will be set as Infinity if ignored.
-                    {min: 20, max : 50},
-                    {min: 50, max: 75},
-                    {min: 75, max: 87},
-                    {min: 87, max: 100},
+                    { min: 20, max: 50 },
+                    { min: 50, max: 75 },
+                    { min: 75, max: 87 },
+                    { min: 87, max: 100 },
                     // Label of the piece can be specified.
                 ],
                 inRange: {
@@ -122,8 +125,8 @@ export class DailyRecordService{
         this.statusLoading = true;
     }
 
-    getDailyRecThByApiary(idApiary){
-        this.dailyRecTabObs = this.http.get<DailyRecordTh[]>(CONFIG.URL+'dailyRecordsTH/'+this.user.getUser()+'/'+idApiary);
+    getDailyRecThByApiary(idApiary) {
+        this.dailyRecTabObs = this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/' + this.user.getUser() + '/' + idApiary);
         this.dailyRecords = [];
         this.dailyRecTabObs.subscribe(
             (data) => {
@@ -146,22 +149,22 @@ export class DailyRecordService{
 
     verifId(idHive: string) {
         this.dailyRecords.forEach((element, index) => {
-            if (element.idHive === idHive ) {
-                this.status =  'ruche ' + element.health_status + element.health_trend;
+            if (element.idHive === idHive) {
+                this.status = 'ruche ' + element.health_status + element.health_trend;
             }
         });
     }
 
-    convertDate(date : string){
+    convertDate(date: string) {
         var dateIso = new Date(date);
-        var jour = ''+dateIso.getDate();
-        var mois = ''+(dateIso.getMonth()+1);
+        var jour = '' + dateIso.getDate();
+        var mois = '' + (dateIso.getMonth() + 1);
         var anee = dateIso.getFullYear();
-        if(parseInt(jour) < 10 ){ jour = '0'+jour; }
-        if(parseInt(mois) < 10 ){ mois = '0'+mois; }
-    
-        return anee + '-' +mois+'-'+ jour;
-      }
-    
+        if (parseInt(jour) < 10) { jour = '0' + jour; }
+        if (parseInt(mois) < 10) { mois = '0' + mois; }
+
+        return anee + '-' + mois + '-' + jour;
+    }
+
 
 }
