@@ -20,7 +20,7 @@ export class CalendrierHealthService  extends CalendrierService {
     option = {
     backgroundColor: 'white',
     title: {
-        top: 70,
+        top: 5,
         text: 'Brood Dynamics',
         left: 'center',
         textStyle: {
@@ -28,16 +28,19 @@ export class CalendrierHealthService  extends CalendrierService {
         }
     },
     tooltip : {
-        trigger: 'item',
-        formatter: (params)=>{
-            return params.data[0]+'<br/>'+params.seriesName;
-        }    
+        trigger: 'axis',
+        formatter: (params) => {
+            console.log(params.data);
+            return params.data[0] + '<br/>' + params.data[2];
+        } 
     },
     toolbox: {
+        orient: 'vertical',
+        itemSize: 15,
+        top: 'middle',
         feature: {
-            /*dataView: {show: true, readOnly: false},
-            magicType: {show: true, type: ['line', 'line']},
-            restore: {show: true},*/
+            dataView: {show: true, readOnly: false},
+            restore: {show: true},
             saveAsImage: {show: true}
         }
     },
@@ -48,14 +51,14 @@ export class CalendrierHealthService  extends CalendrierService {
         }
     },
    calendar: [{
-        top: 140,
-        left: '5%',
-        right: '4%',
-        height:'30%',
-        width:'93%',
+        top: 100,
+        left: '3%',
+        bottom: '3%',
+        height: '45%',
+        width: '92%',
         range: MyDate.getPersoDate(),
         orient: 'horizontal',
-        cellSize: ['auto', 50],
+        cellSize: ['20', '20'],
         splitLine: {
             show: true,
             lineStyle: {
@@ -65,34 +68,21 @@ export class CalendrierHealthService  extends CalendrierService {
             }
         },
         dayLabel: {
-            //nameMap: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
             nameMap: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
             firstDay: 1, // start on Monday
 
           },
-          monthLabel: {
-            margin: 10,
-            nameMap: [
-                'Jan.', 'Feb.', 'Mar.',
-
-                'Apr.', 'May', 'Jun.',
-
-                'Jul.', 'Aug.', 'Sep.',
-
-                'Oct.', 'Nov.', 'Dec.'
-            ]
-        },
-        yearLabel: {
+          yearLabel: {
             formatter: '{start}-{end}',
-            show:false,
-            margin : 50,
+            show: false,
+            margin: 40,
             textStyle: {
                 color: 'black'
             }
         },
         itemStyle: {
             normal: {
-                color: 'lightgrey',
+                color: '#EBEBEB',
                 borderWidth: 1,
                 borderColor: '#111'
             }
@@ -158,14 +148,13 @@ export class CalendrierHealthService  extends CalendrierService {
                 img = 'wos.png';
         }
         img = CONFIG.URL_FRONT+'assets/icons/'+img;
-        //img = CONFIG.URL_FRONT+'assets/icons/'+this.getIcon(api.value(1),api.value(2));
-        var group = {
+        const group = {
             type: 'group',
-            children:[{ // enfant de ce groupe(image et text)
-                type:'image', // image
-                style:{ // style de cette image
+            children: [{ // enfant de ce groupe(image et text)
+                type: 'image', // image
+                style: { // style de cette image
                     image: img, // image à afficher
-                    width: cellWidth / 3, // largeur
+                    width: cellWidth / 2, // largeur
                     x: cellPoint[0] - cellWidth / 2+10,
                     y: cellPoint[1] - cellHeight / 2+3
                 },

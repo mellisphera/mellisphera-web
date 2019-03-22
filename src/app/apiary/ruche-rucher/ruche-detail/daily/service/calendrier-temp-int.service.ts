@@ -13,7 +13,7 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
 
   option = {
     title : {
-        top: 28,
+        top: 5,
         left: 'center',
     },
     tooltip : {
@@ -23,10 +23,10 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
     },
     toolbox: {
         orient : 'vertical',
+        itemSize: 15,
         top : 'middle',
         feature: {
             dataView: {show: true, readOnly: false},
-            magicType: {show: true, type: ['line', 'line']},
             restore: {show: true},
             saveAsImage: {show: true}
         }
@@ -35,25 +35,30 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
         orient: 'horizontal',
         top : 30,
         itemWidth : 15,
-       /*  itemHeight : 200, */
         itemSymbol : 'diamond',
-        left: 'right',
+        left: 'center',
     },
     calendar: {
-        top: 80,
-        bottom:10,
-        left: 60,
-        right: 30,
-        height:'auto',
+        top: 100,
+        left: '3%',
+        right: '2%',
+        width: '92%',
+        //right: '4%',
+        height: '45%',
+        //height:'auto',
         cellSize: ['20', '20'],
         range:MyDate.getPersoDate(),
         itemStyle: {
-            normal: {borderWidth: 0.5}
+            normal: {
+                color: '#EBEBEB',
+                borderWidth: 1,
+                borderColor: '#111'
+            }
         },
         yearLabel: {
             formatter: '{start}-{end}',
             margin : 40,
-            show:false,
+            show: false,
             textStyle: {
                 color: 'black'
             }

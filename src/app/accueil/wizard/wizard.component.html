@@ -4,7 +4,7 @@
         <div class="centered-content">
             <div>
                 <h2>Welcome !</h2>
-                <p>we want to guide your first steps creating apiary and other hives.<br />
+                <p>We want to guide your first steps creating apiary and other hives.<br />
                     Once you’re done you’ll be able to fly with your own wings</p>
             </div>
 
@@ -125,7 +125,7 @@
             </div>
         </div>
     </aw-wizard-step> -->
-    <aw-wizard-completion-step [stepTitle]="'End'" awEnableBackLinks>
+    <aw-wizard-completion-step [stepTitle]="'Done!'" awEnableBackLinks>
         <ng-template awWizardStepSymbol><img src="./assets/wizard/finish.png" style="width:2em">
         </ng-template>
         <div class="centered-content">
@@ -139,7 +139,7 @@
                 </ul>
             </div>
 
-            <div class="btn-group">
+            <div class="btn-group group-btn">
                 <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
                 <button type="button" class="btn btn-secondary" (click)="finishWizard()" awResetWizard>Finish</button>
             </div>

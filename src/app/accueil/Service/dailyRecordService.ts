@@ -81,7 +81,7 @@ export class DailyRecordService{
                     data: this.arrayTempInt
                 },
             title: {
-                    text: 'Internal Temperature (max)'
+                    text: 'Internal Temperature (max, °C)'
                 },
             visualMap: {
                     calculable: true,

@@ -1,159 +1,170 @@
+<div class="row content">
+  <div class="col-sm-12">
+    <div class="bs-example">
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-info ">
+          <div class="panel-heading ">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                <b>Actions and observations</b>
+              </a>
+            </h4>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <div>
+                <button data-toggle="tooltip" data-html="true" title="New sensor" data-backdrop="false"
+                  data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
+                  data-target="#newObservationModal" class="btn btn-success btn-lg">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
+              <!-- tables ruche -->
+              <div>
 
-    <div class="row content">
-            <div class="col-sm-12">                        
-                  <div class="bs-example">
-                      <div class="panel-group" id="accordion">
-                            <div class="panel panel-info ">
-                              <div class="panel-heading "  >
-                                  <h4 class="panel-title" >
-                                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                        <b>Actions and observations</b>
-                                      </a>
-                                  </h4>
-                              </div>
-                              <div id="collapseOne" class="panel-collapse collapse in">
-                                  <div class="panel-body">
-                                      <div>
-                                        <button data-toggle="tooltip" data-html="true" title="New sensor" data-backdrop="false"  data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
-                                        data-target="#newObservationModal"  class="btn btn-success btn-lg" >
-                                                  <i class="fa fa-plus"></i>
-                                        </button>
-                                      </div>
-                                        <!-- tables ruche -->
-                                        <div>
 
 
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Date</th>
+                      <th scope="col">Sentence</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let hiveObs of observationService.observationsHive; index as i">
+                      <ng-container *ngIf="hiveObs.type =='HiveObs'">
+                        <tr>
+                          <td>{{hiveObs.date}}</td>
+                          <td>{{hiveObs.sentence}}</td>
+                          <td>Observation</td>
+                          <td>
+                            <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal"
+                              type="button" (click)="onSelectObsR(hiveObs)" data-target="#editObservationModal"
+                              data-backdrop="false" class="btn btn-primary  btn-lg "
+                              style="padding: 0;border: none; background: none;">
+                              <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-warning btn-lg " title="Delete hive"
+                              style="padding: 0;border: none; background: none;" mwlConfirmationPopover
+                              popoverTitle="Delete notes ?" placement="top" (confirm)="deleteObsR(i,hiveObs)">
+                              <i class="fa fa-times"></i>
+                            </button>
+                          </td>
 
-                                            <table class="table">
-                                                <thead>
-                                                  <tr>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Sentence</th>
-                                                    <th scope="col">Type</th>
-                                                    <th scope="col">Actions</th>
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <ng-container *ngFor="let hiveObs of observationService.observationsHive; index as i" >
-                                                        <ng-container *ngIf="hiveObs.type =='HiveObs'">
-                                                            <tr >
-                                                                <td>{{hiveObs.date}}</td>
-                                                                <td>{{hiveObs.sentence}}</td>
-                                                                <td>Observation</td>
-                                                                <td>
-                                                                    <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal" type="button" (click)="onSelectObsR(hiveObs)"
-                                                                        data-target="#editObservationModal" data-backdrop="false" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
-                                                                        <i class="fa fa-edit"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-warning btn-lg "  title="Delete hive" style="padding: 0;border: none; background: none;"
-                                                                    mwlConfirmationPopover
-                                                                    popoverTitle="Delete notes ?"
-                                                                    placement="top"
-                                                                    (confirm)="deleteObsR(i,hiveObs)">
-                                                                        <i class="fa fa-times"></i>
-                                                                    </button>
-                                                                </td>
-                                                                
-                                                            </tr>
-                                                        </ng-container>
-                                                        <ng-container *ngIf="hiveObs.type =='HiveAct'">
-                                                                <tr style="color: blue;">
-                                                                    <td>{{hiveObs.date}}</td>
-                                                                    <td>{{hiveObs.sentence}}</td>
-                                                                    <td>Action</td>
-                                                                    <td>
-                                                                        <button  data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal" type="button" (click)="onSelectObsR(hiveObs)"
-                                                                            data-target="#editObservationModal" data-backdrop="false" class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
-                                                                            <i class="fa fa-edit"></i>
-                                                                        </button>
-                                                                        <button  type="button" class="btn btn-warning btn-lg "  title="Delete hive" style="padding: 0;border: none; background: none;" 
-                                                                        mwlConfirmationPopover
-                                                                        popoverTitle="Delete notes ?"
-                                                                        placement="top"
-                                                                        (confirm)="deleteObsR(i,hiveObs)">
-                                                                            <i class="fa fa-times"></i>
-                                                                        </button>
-                                                                    </td>
-                                                                    
-                                                                </tr>
-                                                            </ng-container>   
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="hiveObs.type =='HiveAct'">
+                        <tr style="color: blue;">
+                          <td>{{hiveObs.date}}</td>
+                          <td>{{hiveObs.sentence}}</td>
+                          <td>Action</td>
+                          <td>
+                            <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal"
+                              type="button" (click)="onSelectObsR(hiveObs)" data-target="#editObservationModal"
+                              data-backdrop="false" class="btn btn-primary  btn-lg "
+                              style="padding: 0;border: none; background: none;">
+                              <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-warning btn-lg " title="Delete hive"
+                              style="padding: 0;border: none; background: none;" mwlConfirmationPopover
+                              popoverTitle="Delete notes ?" placement="top" (confirm)="deleteObsR(i,hiveObs)">
+                              <i class="fa fa-times"></i>
+                            </button>
+                          </td>
 
-                                                    </ng-container>
-                                                </tbody>
-                                              </table>
-                                        </div>
-                                      <b class="text-success"></b>                                                        
-                                  </div>
-                              </div>
-                            </div>
-                    
-                      </div>
-                    
-                  </div>  
-                </div>
+                        </tr>
+                      </ng-container>
+
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+              <b class="text-success"></b>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
+  </div>
+</div>
 
-  <!-- MODALS ARE DECLARE HERE !!! -->
+<!-- MODALS ARE DECLARE HERE !!! -->
 
-  <!-- New Observation Modal -->
-  <div class="modal fade" id="newObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- New Observation Modal -->
+<div class="modal fade" id="newObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
-  <div class="modal-content">
-  <div class="modal-header">
-    <h5 *ngIf="!typeObs" class="modal-title" id="exampleModalLabel"><h3 class="text-center">New observation</h3> </h5>
-    <h5 *ngIf="typeObs" class="modal-title" id="exampleModalLabel"><h3 class="text-center">New Action</h3> </h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
-  <div class="modal-body" id="popupObs">
-    <form  [formGroup]="ObservationForm">
-      <div class="form-group">
-        <label for="sentence" class="col-form-label">Observations/Actions</label>
-        <input type="date" formControlName="date">
-        <input formControlName="sentence" type="text" class="form-control" id="sentence">
-    </div>
-
-  
-    
-      
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="submit" class="btn btn-primary" (click)="createObservation()" data-dismiss="modal" [disabled]="!ObservationForm.valid" > Créer Observation</button>
-    <button type="submit" class="btn btn-primary" (click)="createAction()" data-dismiss="modal" [disabled]="!ObservationForm.valid" > Créer Action</button>
-    <button type="button" class="btn btn-secondary" (click)="resetObservationForm()" data-dismiss="modal">Fermer</button>
-  
-  </div>
-  </div>
-  </div>
-  </div>
-  <!-- End of new Observation Modal -->
-
-
-
-  <!-- Edit Observation Modal -->
-  <div class="modal fade" id="editObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><h3 class="text-center">Editer Observation</h3> </h5>
+        <h5 *ngIf="!typeObs" class="modal-title" id="exampleModalLabel">
+          <h3 class="text-center">New observation</h3>
+        </h5>
+        <h5 *ngIf="typeObs" class="modal-title" id="exampleModalLabel">
+          <h3 class="text-center">New Action</h3>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body" id="popupObs">
+        <form [formGroup]="ObservationForm">
+          <div class="form-group">
+            <label for="sentence" class="col-form-label">Observations/Actions</label>
+            <input type="date" formControlName="date">
+            <input formControlName="sentence" type="text" class="form-control" id="sentence">
+          </div>
+
+
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="createObservation()" data-dismiss="modal"
+          [disabled]="!ObservationForm.valid"> Créer Observation</button>
+        <button type="submit" class="btn btn-primary" (click)="createAction()" data-dismiss="modal"
+          [disabled]="!ObservationForm.valid"> Créer Action</button>
+        <button type="button" class="btn btn-secondary" (click)="resetObservationForm()"
+          data-dismiss="modal">Fermer</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of new Observation Modal -->
+
+
+
+<!-- Edit Observation Modal -->
+<div class="modal fade" id="editObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h3 class="text-center">Editer Observation</h3>
+        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form  [formGroup]="ObservationForm" (ngSubmit)="onEditObservation()">
-            <div class="form-group">
-                <label  class="col-form-label" for="exampleRadios1" >Type</label>
-                <div class="form-check">
-                    <input class="form-c  heck-input" type="radio" formControlName="type" value="HiveObs" [checked]>
-                    <label class="form-check-label" for="exampleRadios1" >Observation</label><br/>
-                    <input class="form-check-input" type="radio" formControlName="type" value="HiveAct">
-                    <label class="form-check-label" for="exampleRadios1">Action</label>
-                </div>
+        <form [formGroup]="ObservationForm" (ngSubmit)="onEditObservation()">
+          <div class="form-group">
+            <label class="col-form-label" for="exampleRadios1">Type</label>
+            <div class="form-check">
+              <input class="form-c  heck-input" type="radio" formControlName="type" value="HiveObs" [checked]>
+              <label class="form-check-label" for="exampleRadios1">Observation</label><br />
+              <input class="form-check-input" type="radio" formControlName="type" value="HiveAct">
+              <label class="form-check-label" for="exampleRadios1">Action</label>
             </div>
+          </div>
           <div class="form-group">
             <input type="date" formControlName="date">
             <label for="recipient-editobs" class="col-form-label">Observations :</label>
@@ -162,10 +173,12 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="onEditObservation()" [disabled]="!ObservationForm.valid" > Modifier Observation</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetObservationForm()">Fermer</button>
+        <button type="submit" class="btn btn-primary" (click)="onEditObservation()" [disabled]="!ObservationForm.valid">
+          Modifier Observation</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+          (click)="resetObservationForm()">Fermer</button>
       </div>
     </div>
-    </div>
-    </div>
-    <!-- End of edit Observation Modal -->
+  </div>
+</div>
+<!-- End of edit Observation Modal -->

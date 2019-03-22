@@ -54,7 +54,6 @@ export class StackApiaryComponent implements OnInit {
 
   onChartInit(e: any) {
     this.echartInstance = e;
-    console.log(e.getOption());
   }
 
   selectAllHive(idApiary: string) {
@@ -88,12 +87,12 @@ export class StackApiaryComponent implements OnInit {
     return '#' + index;
   }
   selectRange() {
-    console.log(this.echartInstance.getOption());
     this.loadingStack = true;
     this.recordService.setRange(this.stackService.range);
       this.stackService.getHiveSelect().forEach((element, index) => {
         if (!this.loadingStack || index === 0) {
-          this.recordService.getRecordByIdHive(element.id, element.name, this.recordService.mergeOptionStackApiary, false,  this.getColor(element))
+          this.recordService.getRecordByIdHive(element.id, element.name, 
+            this.recordService.mergeOptionStackApiary, false,  this.getColor(element))
           .subscribe((data) => {
             console.log(data);
             this.recordService.mergeOptionStackApiary = data;
@@ -112,7 +111,6 @@ export class StackApiaryComponent implements OnInit {
         // this.render.removeClass(event.target, 'active');
         /* this.render.removeStyle(event.target, 'background-color'); */
         this.stackService.removeHive(arrayFilter[0]);
-        console.log(arrayFilter[0]);
         let option = this.echartInstance.getOption();
         this.removeHiveStack(selectHive.name);
         this.echartInstance.clear();
@@ -129,7 +127,6 @@ export class StackApiaryComponent implements OnInit {
           this.recordService.mergeOptionStackApiary, false, this.getColor(selectHive))
         .subscribe((data) => {
           this.recordService.mergeOptionStackApiary = data;
-          console.log(this.recordService.mergeOptionStackApiary);
         },() => {}, () => {
           this.loadingStack = false;
         });
