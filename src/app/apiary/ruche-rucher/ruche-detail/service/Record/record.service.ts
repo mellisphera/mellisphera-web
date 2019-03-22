@@ -47,7 +47,7 @@ export class RecordService {
   private legendOption: Array<string>;
   constructor(private http: HttpClient) {
     this.currentIdHive = null;
-   // this.stackSubject = new BehaviorSubject({});
+    // this.stackSubject = new BehaviorSubject({});
     this.mergeTemp = {
       legend: {
         data: []
@@ -130,7 +130,21 @@ export class RecordService {
               },
               lineStyle: {
                 color: color
-              }
+              },
+              markArea: {
+                silent: true,
+                itemStyle: {
+                  color: '#EBEBEB'
+                },
+                label: {
+                  show: true
+                },
+                data: [[{
+                  yAxis: '33'
+                }, {
+                  yAxis: '37'
+                }]]
+              },
             },
             {
               name: hiveName + ' / Text',
@@ -152,6 +166,20 @@ export class RecordService {
               xAxisIndex: (hive) ? 1 : 2,
               yAxisIndex: (hive) ? 0 : 2,
               showSymbol: false,
+              markArea: {
+                silent: true,
+                itemStyle: {
+                  color: '#EBEBEB'
+                },
+                label: {
+                  show: true
+                },
+                data: [[{
+                  yAxis: '50'
+                }, {
+                  yAxis: '75'
+                }]]
+              },
               data: this.recArrayHint,
               lineStyle: {
                 color: color
@@ -197,7 +225,7 @@ export class RecordService {
             (this.recArrayBatteryInt.length > 0) ?
               {
                 type: 'line',
-                name:  'Batery-int(' + this.recArrayBatteryInt[0].sensorRef + ')',
+                name: 'Batery-int(' + this.recArrayBatteryInt[0].sensorRef + ')',
                 data: this.recArrayBatteryInt,
                 xAxisIndex: 2,
                 yAxisIndex: 2,
@@ -206,7 +234,7 @@ export class RecordService {
             (this.recArrayBatteryExt.length > 0) ?
               {
                 type: 'line',
-                name: 'Batery-ext(' +this.recArrayBatteryExt[0].sensorRef + ')',
+                name: 'Batery-ext(' + this.recArrayBatteryExt[0].sensorRef + ')',
                 data: this.recArrayBatteryExt,
                 xAxisIndex: 2,
                 yAxisIndex: 2,
@@ -215,7 +243,7 @@ export class RecordService {
           ],
           legend: {
             data: [
-              (this.recArrrayTint.length > 0) ? 'Tint(' + this.recArrrayTint[0].sensorRef + ')'  : null,
+              (this.recArrrayTint.length > 0) ? 'Tint(' + this.recArrrayTint[0].sensorRef + ')' : null,
               (this.recArrayText.length > 0) ? 'Text(' + this.recArrayText[0].sensorRef + ')' : null,
               (this.recArrayHint.length > 0) ? 'Hint(' + this.recArrayHint[0].sensorRef + ')' : null,
               (this.recArrayBatteryInt.length > 0) ? 'Batery-int(' + this.recArrayBatteryInt[0].sensorRef + ')' : null,
@@ -244,7 +272,7 @@ export class RecordService {
         .map((rec) => {
           return { name: rec.recordDate, value: [rec.recordDate, rec.weight], sensorRef: rec.sensorRef };
         });
-        this.recArrrayTint = records.filter(record => record.temp_int != null)
+      this.recArrrayTint = records.filter(record => record.temp_int != null)
         .map((rec) => {
           return { name: rec.recordDate, value: [rec.recordDate, rec.temp_int], sensorRef: rec.sensorRef };
         });
@@ -253,30 +281,30 @@ export class RecordService {
         series: [
           {
             data: this.recArrayWeight,
-            name:'Weight',
-            type:'line',
+            name: 'Weight',
+            type: 'line',
             showSymbol: false,
             hoverAnimation: true,
             yAxisIndex: 0,
-            color : 'black'
+            color: 'black'
           },
           {
             data: this.recArrrayTint,
-            name:'Temp-int',
-            type:'line',
+            name: 'Temp-int',
+            type: 'line',
             showSymbol: false,
             hoverAnimation: true,
             yAxisIndex: 1,
-            color : 'red'
+            color: 'red'
           },
           {
-            name:'Temp-ext',
-            type:'line',
+            name: 'Temp-ext',
+            type: 'line',
             showSymbol: false,
             hoverAnimation: true,
-            data : this.recArrayText,
+            data: this.recArrayText,
             yAxisIndex: 1,
-            color : 'blue'
+            color: 'blue'
           }
         ],
         legend: {

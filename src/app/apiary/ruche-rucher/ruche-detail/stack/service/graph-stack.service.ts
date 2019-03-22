@@ -142,6 +142,7 @@ export class GraphStackService {
         {
           name: 'Temp',
           type: 'value',
+          nameLocation: 'middle',
           min: 0,
           max: 40,
         },
@@ -149,6 +150,7 @@ export class GraphStackService {
           gridIndex: 1,
           name: 'Humidity',
           type: 'value',
+          nameLocation: 'middle',
           inverse: false,
           min: 0,
           max: 100
@@ -157,6 +159,7 @@ export class GraphStackService {
           gridIndex: 2,
           name: 'Batery',
           type: 'value',
+          nameLocation: 'middle',
           inverse: false,
           min: 0,
           max: 100

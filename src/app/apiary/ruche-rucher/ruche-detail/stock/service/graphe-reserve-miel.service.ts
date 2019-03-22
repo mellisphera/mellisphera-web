@@ -12,7 +12,7 @@ export class GrapheReserveMielService {
     title: {
         text: 'Honey Stock',
         left: 'center',
-        top:'-5'
+        top: '5'
     },
     tooltip : {
         trigger: 'axis',
@@ -56,9 +56,10 @@ export class GrapheReserveMielService {
         }
     ],
     grid: {
-        left: '2%',
-        right: '2%',
+        left: '1%',
+        right: 0,
         top: 70,
+        width: '94%',
         bottom: 0,
         containLabel: true
     },
@@ -74,7 +75,7 @@ export class GrapheReserveMielService {
     ],
     yAxis :
         {
-            name : 'Weight variation (kg)',
+            name : 'Weight \n variation (kg)',
             type : 'value'
             // max: 'dataMax'
 

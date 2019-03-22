@@ -19,7 +19,6 @@ export class StackService {
       'red',
       '#40A497',
       'blue',
-      'yellow',
       '#5C33B3',
       '#6493E0',
       '#40F24F',
@@ -78,6 +77,12 @@ export class StackService {
     this.arrayHiveSelect.splice(index, 1, this.getEmptyHive());
   }
 
+  /**
+   *
+   *
+   * @returns {RucheInterface}
+   * @memberof StackService
+   */
   getEmptyHive(): RucheInterface {
     return {
       id : '',

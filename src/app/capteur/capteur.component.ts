@@ -84,9 +84,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
     onChangeCapteur($event) {
         this.capteurService.capteur = $event.target.value;
     }
-    merde() {
-        console.log(this.hiveSensorSelect);
-    }
     selectCapteur(capteur: CapteurInterface, index: number) {
         this.indexSensorSelect = index;
         this.capteurService.capteur = capteur;
@@ -117,7 +114,8 @@ export class CapteurComponent implements OnInit, OnDestroy {
         switch (colonne) {
             case 'hive':
                 this.capteurService.capteursByUser.sort((a, b) => {
-                    return (a.apiaryName > b.apiaryName) ? 1 : -1;
+                    console.log((a.hiveName > b.hiveName));
+                    return (a.hiveName > b.hiveName) ? 1 : -1;
                 });
                 break;
             case 'type':
@@ -142,7 +140,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.editCapteurCheckbox = (event.target.value === 'ruche');
     }
 
-    navToHive(idHive: string, idApiary: string) {
+/*     navToHive(idHive: string, idApiary: string) {
         this.rucherService.rucheService.saveCurrentHive(idHive);
         console.log(idHive);
         this.rucherService.saveCurrentApiaryId(idApiary);
@@ -152,7 +150,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
             console.log(this.rucherService.rucheService.ruches);
             this._router.navigateByUrl('/ruche-detail');
         });
-    }
+    } */
 
     //CREATE CAPTEUR
     createCapteur() {

@@ -5,51 +5,59 @@
     </div>
     <div class="main-panel">
         <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
-        <div class="content">
 
-            <div class="row">
-                <div class="col-sm-2 col-md-2 col-lg-2">
+        <div class="container-fluid" style="background-color: white;">
+            <div class="content">
 
-                    <!--                     <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Hive</h3>
+                <div class="row">
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+
+                        <!--                     <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Hive</h3>
+                                    </div>
+                                    <div class="panel-body">
+            
+                                    </div>
+                                </div> -->
+                        <div id="main-menu" class="list-group">
+                            <ng-container *ngFor="let rucher of rucherService.ruchers; let i = index;">
+                                <a [href]="getId(i)" class="list-group-item apiary" data-toggle="collapse"
+                                    data-parent="#main-menu"><span class="puce-apiary"></span>{{ rucher.name }}<span
+                                        class="caret"></span></a>
+                                <div class="collapse list-group-level1" [id]="i">
+                                    <a [class]="'list-group-item sub-items ' + checkLoadingDone()"
+                                        *ngFor="let ruche of getHiveByApiary(rucher.id); let i = index"
+                                        (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i
+                                            class="fa fa-circle" [style.color]="getColor(ruche)"></i><span
+                                            class="puce-hive"></span>{{ ruche.name }}</a>
+                                </div>
+                            </ng-container>
+
+
+                            <!--                         <a href="#" class="list-group-item">Item 2</a>
+                                    <a href="#" class="list-group-item">Item 3</a>
+                                    <a href="#" class="list-group-item">Item 4</a>
+                                    <a href="#" class="list-group-item">Item 5</a> -->
                         </div>
-                        <div class="panel-body">
-
-                        </div>
-                    </div> -->
-                    <div id="main-menu" class="list-group">
-                        <ng-container *ngFor="let rucher of rucherService.ruchers; let i = index;">
-                            <a [href]="getId(i)" class="list-group-item apiary" data-toggle="collapse"
-                                data-parent="#main-menu"><span class="puce-apiary"></span>{{ rucher.name }}<span
-                                    class="caret"></span></a>
-                            <div class="collapse list-group-level1" [id]="i">
-                                <a [class]="'list-group-item sub-items ' + checkLoadingDone()"
-                                    *ngFor="let ruche of getHiveByApiary(rucher.id); let i = index"
-                                    (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i class="fa fa-circle" [style.color]="getColor(ruche)"></i><span
-                                        class="puce-hive"></span>{{ ruche.name }}</a>
-                            </div>
-                        </ng-container>
-
-
-                        <!--                         <a href="#" class="list-group-item">Item 2</a>
-                        <a href="#" class="list-group-item">Item 3</a>
-                        <a href="#" class="list-group-item">Item 4</a>
-                        <a href="#" class="list-group-item">Item 5</a> -->
+                        <select (change)="selectRange()" [(ngModel)]="stackService.range" name="range"
+                            class="form-control">
+                            <option *ngFor="let range of ranges;" [ngValue]="range" [selected]="range.scale == 15">
+                                {{ 'last '+ range.scale+'  '+range.type | lowercase}}</option>
+                        </select>
                     </div>
-                    <select (change)="selectRange()" [(ngModel)]="stackService.range" name="range" class="form-control">
-                        <option *ngFor="let range of ranges;" [ngValue]="range" [selected]="range.scale == 15">
-                            {{ 'last '+ range.scale+'  '+range.type | lowercase}}</option>
-                    </select>
-                </div>
-                <div id="col-graph" class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                    <div id="stackGraph" echarts [options]="stackApiaryGraph.options" [loading]="loadingStack" (chartInit)="onChartInit($event)"
-                        [merge]="recordService.mergeOptionStackApiary" [autoResize]="true"></div>
-                </div>
-                <!-- <div id="stackGraph"></div> -->
+                    <div id="col-graph" class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <div id="stackGraph" echarts [options]="stackApiaryGraph.options" [loading]="loadingStack"
+                            (chartInit)="onChartInit($event)" [merge]="recordService.mergeOptionStackApiary"
+                            [autoResize]="true"></div>
+                    </div>
+                    <!-- <div id="stackGraph"></div> -->
 
+                </div>
             </div>
+
         </div>
+
 
 
     </div>
