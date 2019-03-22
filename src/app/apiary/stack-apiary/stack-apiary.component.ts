@@ -92,7 +92,7 @@ export class StackApiaryComponent implements OnInit {
   selectRange() {
     this.recordService.setRange(this.range);
     this.stackService.getHiveSelect().forEach(element => {
-      this.recordService.getRecordByIdHive(element.id, element.name, this.merge, false)
+      this.recordService.getRecordByIdHive(element.id, element.name, this.merge, false,  this.getColor(element))
       .subscribe((data) => {
         this.recordService.mergeOptionStackApiary = data;
       });
