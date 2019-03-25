@@ -34,3 +34,15 @@ ul{
     color: white !important;
     border-color: white !important;
 }
+.flower-select{
+    cursor: pointer;
+    transition: transform .2s;
+}
+.flower-select:hover{
+    transform: scale(2);
+    -webkit-transform: scale(2);
+    z-index: 2;
+}
+.flower-active{
+    border: 2px solid white;
+}

@@ -62,19 +62,22 @@
             <app-observation></app-observation>
           </div>
           <div id="stock" class="tab-pane fade">
-            <div id="no-data" *ngIf="currentTab === 'stock' && dailyStockHoneyService.mergeOption.series.length < 1"
-              class="alert alert-info">
-              <strong><i class="fa fa-info-circle fa-2x"></i>Honey Stock No data !</strong>
+            <div id="no-data" class="alert alert-info" *ngIf="dailyStockHoneyService.mergeOption.series.length < 1 && !loadingStockHoney || dailyRecordWservice.mergeOption.series[0].data.length < 1 && !dailyRecordWservice.loading">
+                <i class="fa fa-info-circle fa-2x"></i><label>No data :</label>
+                <div *ngIf="currentTab === 'stock' &&  dailyStockHoneyService.mergeOption.series.length < 1 && !loadingStockHoney">
+                <strong>Honey Stock</strong>
+              </div>             
+              <div *ngIf="currentTab === 'stock' &&  dailyRecordWservice.mergeOption.series[0].data.length < 1 && !dailyRecordWservice.loading">
+                <strong>Weight incomes</strong>
+              </div>
             </div>
-<!--             <div id="no-data" *ngIf="currentTab === 'stock'"
-            class="alert alert-info">
-            <strong><i class="fa fa-info-circle fa-2x"></i>>eight incomes No data !</strong>
-          </div> -->
-            <div echarts [options]="grapheMielService.option" *ngIf="currentTab === 'stock' && currentTab === 'stock' && dailyStockHoneyService.mergeOption.series.length > 0"
-              (chartInit)="onChartInit($event)" [loading]="loadingStockHoney"
-              style="width:93vw; height: 40vh;" [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
-            <div *ngIf="currentTab === 'stock'" echarts [options]="calendrierPoids.option" [autoResize]="true" [merge]="dailyRecordWservice.mergeOption"
-              style="width:93vw;height:40vh;" id="calendrierPoids"></div>
+            <div echarts [options]="grapheMielService.option"
+              *ngIf="currentTab === 'stock' && currentTab === 'stock' && dailyStockHoneyService.mergeOption.series.length > 0"
+              (chartInit)="onChartInit($event)" [loading]="loadingStockHoney" style="width:93vw; height: 40vh;"
+              [merge]="dailyStockHoneyService.mergeOption" [autoResize]="true"></div>
+            <div *ngIf="currentTab === 'stock' && dailyRecordWservice.mergeOption.series[0].data.length > 0" echarts [options]="calendrierPoids.option" [autoResize]="true"
+              [merge]="dailyRecordWservice.mergeOption" [loading]="dailyRecordWservice.loading" style="width:93vw;height:40vh;" id="calendrierPoids">
+            </div>
 
           </div>
           <div id="health" class="tab-pane fade">
