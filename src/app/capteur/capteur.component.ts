@@ -65,15 +65,15 @@ export class CapteurComponent implements OnInit, OnDestroy {
     }
 
     getApiaryNameById(idApiary: string) {
-        try{
+        try {
             return this.rucherService.ruchers.filter(apiary => apiary.id === idApiary)[0];
-        } catch(e) {
+        } catch (e) {
             return this.rucherService.rucher;
         }
     }
 
     ngOnInit() {
-        this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).subscribe( ruches => {
+        this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).subscribe(ruches => {
             console.log(ruches);
             this.rucherService.rucheService.ruchesAllApiary = ruches;
             this.hiveSensorSelect = ruches[0];
@@ -145,7 +145,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     createCapteur() {
         const formValue = this.newCapteurForm.value;
         console.log(this.hiveSensorSelect);
-        /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIVLE */
+        /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIBLE */
         const sensorType = document.querySelector('#typeSensor > option').innerHTML;
         const tempType = this.capteurService.capteur.type;
         this.capteurService.initCapteur();
@@ -192,8 +192,11 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.capteurService.deleteCapteur(capteur).subscribe(() => { }, () => { }, () => {
             if (capteur.idHive) {
                 const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(capteur.idHive);
-                this.rucherService.rucheService.ruches[index].sensor = false;
-                this.rucherService.rucheService.emitHiveSubject();
+                const tempHive = this.rucherService.rucheService.ruches[index];
+                if (this.capteurService.capteursByUser.filter(sensor => sensor.idHive === tempHive.id).length <= 1) {
+                    this.rucherService.rucheService.ruches[index].sensor = false;
+                    this.rucherService.rucheService.emitHiveSubject();
+                }
             }
             this.capteurService.capteursByUser.splice(index, 1);
             this.capteurService.emitSensorSubject();
