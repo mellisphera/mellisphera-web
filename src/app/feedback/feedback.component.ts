@@ -21,7 +21,7 @@ export class FeedbackComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserloggedService,
     private notifyService: NotifierService) {
-    this.urlSlack = 'https://hooks.slack.com/services/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'
+    this.urlSlack = '***REMOVED***';
     this.notify = notifyService;
   }
 
@@ -35,7 +35,7 @@ export class FeedbackComponent implements OnInit {
     const body = { 'text': this.userService.getUser() + ' : ' + this.feedbackForm.value.comment};
     console.log(body);
     this.httpClient.post(this.urlSlack, JSON.stringify(body)).subscribe(() => {}, () => {}, () => {
-      this.notify.notify('success','Feedback sent');
     });
+    this.notify.notify('success', 'Feedback sent');
   }
 }
