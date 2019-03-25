@@ -188,11 +188,9 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     });
   }
 
-  cancelUpdateRucher() {
-    this.updateRucherInput = false;
-    this.initForm();
+  checkSensor(hive: RucheInterface) {
+    return hive.sensor ? 'sensor' : null;
   }
-
   receiveMessage($event) {
     this.message = $event;
   }
