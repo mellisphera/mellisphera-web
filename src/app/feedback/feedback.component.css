@@ -26,7 +26,13 @@ textarea{
     width: 100%;
     height: 100px;
 }
-
+.modal-footer{
+    display: flex;
+    justify-content: space-between;
+}
+.modal-footer p{
+    padding-top: 5px;
+}
 /* @-webkit-keyframes rotating {
     from{
         -webkit-transform: rotate(0deg);
