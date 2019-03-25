@@ -253,6 +253,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                             this.updateEchartInstance();
                         }
                     }, (err) => {
+                        this.loadingStack = false;
                         console.log(err);
                     }, () => {
                         this.loadingStack = false;
@@ -262,6 +263,19 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         }
     }
 
+    checkData(data: string) {
+        return setTimeout(() => {
+            if (data === 'honey') {
+                if (this.dailyStockHoneyService.mergeOption.series.length < 1) {
+                    return true;
+                }
+            } else if (data === 'stock') {
+                if (this.dailyRecordWservice.mergeOption.series[0].data.length < 1) {
+                    return true;
+                }
+            }
+        }, 100);
+    }
     ngOnDestroy() {
         //this.rucheService.hiveSubject.unsubscribe();
         //this.observationService.obsHiveSubject.unsubscribe();

@@ -19,25 +19,26 @@ export class DailyRecordsWService {
   *
   */
 
-  dailyObs : Observable<DailyRecordsW[]>;
-
-  dailyRec : DailyRecordsW[];
-  dailyRecArray: any[];
+  dailyObs: Observable<DailyRecordsW[]>;
+  private loading: boolean;
+  private dailyRec: DailyRecordsW[];
+  private dailyRecArray: any[];
   mergeOption: any = null;
-  rangeCalendar: Array<string>;
+  private rangeCalendar: Array<string>;
   currentIdHive: string;
 
   arrayTempExt: any[];
   mergeOptionTempExt: any;
 
-  timeLine : any[];
+  timeLine: any[];
 
   constructor(private http : HttpClient) {
     this.dailyRecArray = [];
     this.updateCalendar();
   }
 
-  getDailyRecordsWbyIdHive(idHive: string){
+  getDailyRecordsWbyIdHive(idHive: string) {
+    this.loading = true;
     this.currentIdHive = idHive;
     this.dailyRecArray = [];
     this.arrayTempExt = [];
@@ -56,6 +57,9 @@ export class DailyRecordsWService {
       },
       (err) => {
         console.log(err);
+      },
+      () => {
+        this.loading = false;
       }
 
     );

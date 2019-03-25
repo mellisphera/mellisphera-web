@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RucherModel } from '../../_model/rucher-model';
 import { RucherService } from '../../apiary/ruche-rucher/rucher.service';
@@ -6,6 +6,7 @@ import { UserloggedService } from '../../userlogged.service';
 import { RucheInterface } from '../../_model/ruche';
 import { CapteurInterface } from '../../_model/capteur';
 import { CapteurService } from '../../capteur/capteur.service';
+import { FleurObservees } from '../../_model/fleur-observees';
 
 @Component({
   selector: 'app-wizard',
@@ -27,11 +28,13 @@ export class WizardComponent implements OnInit, OnDestroy {
   private hive: RucheInterface;
   private apiary: RucherModel;
   private sensor: CapteurInterface;
+  private newFlower: FleurObservees;
 
   constructor(private formBuilder: FormBuilder,
     private rucherService: RucherService,
     private userService: UserloggedService,
-    private capteurService: CapteurService) { }
+    private capteurService: CapteurService,
+    private render: Renderer2) { }
 
   ngOnInit() {
     this.paternRef = /[4][0-3]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9]|[a-z])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
@@ -87,6 +90,22 @@ export class WizardComponent implements OnInit, OnDestroy {
 /*     this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
       this.capteurService.getUserCapteurs();
     }); */
+  }
+
+  addFlower(flower: string, event: MouseEvent) {
+    console.log(flower);
+    this.render.addClass(event.target, 'flower-active');
+    console.log(event.target);
+/*     this.newFlower.nom = flower;
+    this.newFlower.dateDebutd = 
+    this.newFlower.dateFind = fleur.flowerApi.flomaxd;
+    this.newFlower.dateThDebutd = fleur.flowerApi.flomind;
+    this.newFlower.dateThFind = fleur.flowerApi.flomaxd;
+    this.newFlower.dateThDebutdate = fleur.flowerApi.flomindate;
+    this.newFlower.dateThFindate = fleur.flowerApi.flomaxdate;
+    this.newFlower.presence = "";
+    this.newFlower.username = this.userService.currentUser().username;
+    this.newFlower.photo = fleur.photo; */
   }
 
   finishWizard() {

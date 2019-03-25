@@ -99,6 +99,7 @@ export class    FleursFloraisonService {
         this.fleursObs.subscribe(
             (data)=>{
                 this.fleursByRucher = data;
+                console.log(this.fleursByRucher);
                 this.subjectFlower.next(data);
             },
             (err)=>{
