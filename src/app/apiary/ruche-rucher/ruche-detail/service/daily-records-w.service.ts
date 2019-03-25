@@ -20,7 +20,7 @@ export class DailyRecordsWService {
   */
 
   dailyObs: Observable<DailyRecordsW[]>;
-  private loading: boolean;
+  public loading: boolean;
   private dailyRec: DailyRecordsW[];
   private dailyRecArray: any[];
   mergeOption: any = null;
