@@ -37,6 +37,7 @@
                               <tr>
                                 <th scope="col">Hive</th>
                                 <th scope="col">Description</th>
+                                <th scope="col" class="text-center">Sensor</th>
                                 <th class="text-right" scope="col">Action</th>
                               </tr>
                             </thead>
@@ -49,6 +50,7 @@
                                     </td>
         
                                     <td (click)="clickOnRuche(ruche)" class="hive-select">{{ruche.description}}</td>
+                                    <td class="text-center"><i [class]="'fa fa-circle ' + checkSensor(ruche)"></i></td>
                                     <td class="text-right">
                                       <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal"
                                         type="button" (click)="onSelectRuche(ruche,index)" data-target="#editRucheModal"
