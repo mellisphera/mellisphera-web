@@ -32,21 +32,32 @@ export class UserloggedService {
     window.sessionStorage.setItem('connexions', '' + nbConnection);
   }
 
+  setCountry(country: string) {
+    window.sessionStorage.removeItem('country');
+    window.sessionStorage.setItem('country', JSON.stringify(country));
+  }
 
-  getWizardActive() {
+  getWizardActive(): Boolean {
     return this.wizardActive;
   }
-  setWizardActive() {
+  setWizardActive(): void{
     this.wizardActive = !this.wizardActive;
   }
-  getUser() {
+  getUser(): string {
     try {
       return JSON.parse(window.sessionStorage.getItem('currentUser')).username.toLowerCase();
     } catch (e) {
-      return false;
+      return '';
     }
   }
 
+  getCountry(): string{
+    try {
+      return JSON.parse(window.sessionStorage.getItem('country'));
+    } catch (e) {
+      return '';
+    }
+  }
   getConnexion() {
     try {
       return JSON.parse(window.sessionStorage.getItem('connexions'));
