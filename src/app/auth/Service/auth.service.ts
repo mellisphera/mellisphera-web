@@ -41,7 +41,7 @@ export class AuthService {
               }
 
   signIn() {
-    this.loginObs = this.http.post<JwtResponse>(CONFIG.URL+'api/auth/signin', this.login, httpOptions);
+    this.loginObs = this.http.post<JwtResponse>(CONFIG.URL + 'api/auth/signin', this.login, httpOptions);
     this.loginObs.subscribe(
       (data) => {
         this.jwtReponse = data;
@@ -51,6 +51,7 @@ export class AuthService {
         this.connexionStatus.next(data);
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
+        this.userService.setCountry(this.jwtReponse.country);
         this.userService.setConnexion(this.jwtReponse.connexions);
         console.log(this.jwtReponse);
         if (this.jwtReponse.connexions === 1) {
