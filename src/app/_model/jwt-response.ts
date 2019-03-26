@@ -4,5 +4,6 @@ export interface JwtResponse {
     username: string;
     email: string;
     connexions?: number;
-    authorities?: string[];
+    authorities: string[];
+    country: string;
 }
