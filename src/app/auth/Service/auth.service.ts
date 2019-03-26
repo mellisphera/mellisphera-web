@@ -43,7 +43,7 @@ export class AuthService {
   signIn() {
     this.loginObs = this.http.post<JwtResponse>(CONFIG.URL+'api/auth/signin', this.login, httpOptions);
     this.loginObs.subscribe(
-      (data)=>{
+      (data) => {
         this.jwtReponse = data;
         this.tokenService.saveToken(this.jwtReponse.accessToken);
         this.tokenService.saveAuthorities(this.jwtReponse.authorities);
@@ -52,6 +52,7 @@ export class AuthService {
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
         this.userService.setConnexion(this.jwtReponse.connexions);
+        console.log(this.jwtReponse);
         if (this.jwtReponse.connexions === 1) {
           this.userService.setWizardActive();
         }
@@ -64,9 +65,5 @@ export class AuthService {
       }
     );
   }
-/*   setUser(user: JwtResponse) {
-    window.sessionStorage.removeItem('currentUser');
-    window.sessionStorage.setItem('currentUser', JSON.stringify(user));
-  } */
 
 }
