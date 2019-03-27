@@ -263,7 +263,7 @@ export class NavbarComponent implements OnInit{
             this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
             this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
             this.notifier.notify('success', 'Created Apiary');
-            this.initForm();
+            this.photoApiary = null;
         });
     }
 }
