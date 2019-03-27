@@ -17,9 +17,9 @@ export class SignupService {
   errSignup:boolean;
   errSignupLabel : string;
 
-  constructor(private http : HttpClient) {
+  constructor(private http: HttpClient) {
     this.errSignup = false;
-    this.user = { 
+    this.user = {
       id : null,
       createdAt : new Date(),
       login : { email: null, password: null},
@@ -34,25 +34,24 @@ export class SignupService {
       position : null,
       country : null,
       city : null,
-      levelUser : null, 
+      levelUser : null,
     }
   }
 
   signupUser(callback){
-    this.http.post(CONFIG.URL+'api/auth/signup',this.user,httpOptions).subscribe(
-      ()=>{},
-      (err)=>{
+    this.http.post(CONFIG.URL + 'api/auth/signup', this.user, httpOptions).subscribe(
+      () => {},
+      (err) => {
         this.errSignup = true;
         console.log(err);
         this.errSignupLabel = err.error.message.split('->')[1];
         console.log(this.errSignup);
       },
-      ()=>{
-        if(!this.errSignup){
+      () => {
+        if (!this.errSignup) {
           callback();
         }
-        
       }
-    )
+    );
   }
 }

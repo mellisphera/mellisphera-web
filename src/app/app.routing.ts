@@ -1,4 +1,4 @@
-import { ApiaryNotesComponent } from './apiary-notes/apiary-notes.component';
+import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
 import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
 import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';

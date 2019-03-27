@@ -42,7 +42,7 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let ruche of rucheService.ruches; index as i">
+                              <tr *ngFor="let ruche of rucheService.ruches; let i = index;">
                                   <td class="hive-select" (click)="clickOnRuche(ruche)">{{ruche.name}}
                                       <!-- <a [routerLink]="['/ruche-detail']" routerLinkActive="active"
                                         (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> -->
@@ -53,7 +53,7 @@
                                     <td class="text-center"><i [class]="'fa fa-circle ' + checkSensor(ruche)"></i></td>
                                     <td class="text-right">
                                       <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal"
-                                        type="button" (click)="onSelectRuche(ruche,index)" data-target="#editRucheModal"
+                                        type="button" (click)="onSelectRuche(ruche, i)" data-target="#editRucheModal"
                                         class="btn btn-primary btn-lg " style="padding: 0;border: none; background: none;">
                                         <i class="fa fa-edit"></i>
                                       </button>
