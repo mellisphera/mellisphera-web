@@ -1,0 +1,38 @@
+{
+    "WIZARD" :{
+        "STEP_TITLE": "Welcome",
+        "WELCOME": "Welcome",
+        "DESCRIPTION": "We want to guide your first steps creating apiary and other hives.",
+        "DESCRIPTION_2": "Once you’re done you’ll be able to fly with your own wings",
+        "APIARY":{
+            "STEP_TITLE": "Apiary",
+            "TITLE": "Create your apiary"
+        },
+        "HIVE": {
+            "STEP_TITLE": "Hive",
+            "TITLE": "Create one hive",
+            "DESCRIPTION": "Later you’ll create as much hives as you want"
+        },
+        "FLOWER": {
+            "TITLE": "Add some flowers",
+            "DESCRIPTION": "Later you’ll edit and complete this list"
+        },
+        "SENSOR": {
+            "STEP_TITLE": "Sensor",
+            "TITLE": "Add a Broodminder sensor ID"
+        },
+        "DONE": {
+            "STEP_TITLE": "End",
+            "TITLE": "You're done !",
+            "DESCRIPTION": "Navigating the different pages you’ll find the following symbols",
+            "ICONS": {
+                "ADD": "Add an item (apiary, hive, sensor, flower)",
+                "EDIT": "Edit an item",
+                "DELETE": "Delete an item"
+            }
+        },
+        "NEXT":"Next",
+        "BACK": "Back",
+        "FINISH": "Finish"
+    }
+}

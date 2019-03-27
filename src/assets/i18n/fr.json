@@ -1,0 +1,40 @@
+{
+    "WIZARD" :{
+        "STEP_TITLE": "Bienvenue",
+        "WELCOME": "Bienvenue",
+        "DESCRIPTION": "Nous voulons guider vos premiers pas en créant un rucher et d’autres ruches.",
+        "DESCRIPTION_2": " Une fois que vous avez terminé, vous pourrez voler de vos propres ailes",
+
+        "APIARY":{
+            "STEP_TITLE": "Rucher",
+            "TITLE": "Créer votre rucher"
+        },
+        "HIVE": {
+            "STEP_TITLE": "Ruche",
+            "TITLE": "Créer une ruche",
+            "DESCRIPTION": "Plus tard tu pourras créer toutes les ruches que tu veut"
+        },
+        "FLOWER": {
+            "TITLE": "Ajouter des fleurs",
+            "DESCRIPTION": "Later you’ll add and complete this list"
+        },
+        "SENSOR": {
+            "STEP_TITLE": "Capteur",
+            "TITLE": "Ajouter un capteur"
+        },
+
+        "DONE": {
+            "STEP_TITLE": "Fin",
+            "TITLE": "Tu as finis !",
+            "DESCRIPTION": "En parcourant les différentes pages, vous trouverez les symboles suivants",
+            "ICONS": {
+                "ADD": "Ajoute un élement (rucher, ruche, capteur, fleur)",
+                "EDIT": "Modifier un élements",
+                "DELETE": "Supprimer un élément"
+            }
+        },
+        "NEXT":"Suivant",
+        "BACK": "Retour",
+        "FINISH": "Terminer"
+    }
+}

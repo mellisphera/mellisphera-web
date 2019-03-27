@@ -92,12 +92,14 @@ export class CapteurComponent implements OnInit, OnDestroy {
         const donnee = {
             checkbox: this.editCapteurCheckbox ? 'ruche' : 'stock',
             description: this.capteurService.capteur.description,
-        };
+        }; 
         this.editCapteurForm.setValue(donnee);
         if (this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
             this.rucherService.findRucherById(this.capteurService.capteur.idApiary, (apiary) => {
                 this.apiarySensorSelect = apiary[0];
             });
+            console.log(this.capteurService.capteur.idHive);
+            console.log(this.rucherService.rucheService.ruchesAllApiary)
             this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive, (hive) => {
                 console.log(hive);
                 this.hiveSensorSelect = hive[0];
