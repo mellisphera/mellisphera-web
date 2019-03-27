@@ -33,8 +33,8 @@ export class AuthService {
   public showNavBarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private router: Router,
-              private http : HttpClient,
-              private tokenService : AtokenStorageService,
+              private http: HttpClient,
+              private tokenService: AtokenStorageService,
               private userService: UserloggedService,
               private translateService: TranslateService) {
                 this.login = { email : '', password : ''};
@@ -54,11 +54,13 @@ export class AuthService {
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
         this.userService.setCountry(this.jwtReponse.country);
-/*         if (this.jwtReponse.country === null || this.jwtReponse.country === 'en') {
+         if (this.jwtReponse.country === null || this.jwtReponse.country === 'en') {
+           this.translateService.use('en');
           this.translateService.setDefaultLang('en')
         } else if (this.jwtReponse.country === 'fr') {
+          this.translateService.use('fr');
           this.translateService.setDefaultLang('fr');
-        } */
+        }
         this.userService.setConnexion(this.jwtReponse.connexions);
         console.log(this.jwtReponse);
         if (this.jwtReponse.connexions === 1) {

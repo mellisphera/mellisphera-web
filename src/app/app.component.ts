@@ -13,11 +13,17 @@ export class AppComponent implements OnInit {
 
   showLogin : boolean;
  
-     constructor(public location: Location,public router: Router, public tokenService: AtokenStorageService, private translateService: TranslateService) {
+     constructor(public location: Location,
+      public router: Router, 
+      public tokenService: AtokenStorageService,
+      private translateService: TranslateService) {
        console.log(location);
        this.showLogin = true;
-       this.translateService.setDefaultLang('en');
-       this.translateService.use('en');
+       translateService.addLangs(['en', 'fr']);
+       translateService.setDefaultLang('en');
+   
+       const browserLang = translateService.getBrowserLang();
+       translateService.use(browserLang.match(/en|fr/) ? browserLang : 'en');
      }
 
     ngOnInit(){
