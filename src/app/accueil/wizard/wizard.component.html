@@ -8,7 +8,7 @@
             </div>
 
             <div class="btn-group">
-                <button type="button" class="btn btn-secondary" awNextStep>Continue</button>
+                <button type="button" class="btn btn-secondary" awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>
         </div>
     </aw-wizard-step>
@@ -34,7 +34,7 @@
 
             </div>
             <div class="btn-group group-btn">
-                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK | translate' }}</button>
+                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK' | translate }}</button>
                 <button type="button" class="btn btn-secondary" [disabled]="apiaryForm.invalid" (click)="subApiary()"
                     awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>
@@ -59,7 +59,7 @@
                 </form>
             </div>
             <div class="btn-group group-btn">
-                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK | translate' }}</button>
+                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK' | translate }}</button>
                 <button type="button" class="btn btn-secondary" [disabled]="hiveForm.invalid" (click)="subHive()"
                     awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>
@@ -83,7 +83,7 @@
             </div>
 
             <div class="btn-group group-btn">
-                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK | translate' }}</button>
+                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK' | translate }}</button>
                 <button type="button" class="btn btn-secondary" [disabled]="sensorForm.invalid" (click)="subSensor()"
                     awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>
@@ -118,8 +118,8 @@
         </ng-template>
         <div class="centered-content">
             <div>
-                <h2>{{ 'DONE.TITLE' | translate }}</h2>
-                <p>{{ 'DONE.DESCRIPTION' | translate }}</p>
+                <h2>{{ 'WIZARD.DONE.TITLE' | translate }}</h2>
+                <p>{{ 'WIZARD.DONE.DESCRIPTION' | translate }}</p>
                 <ul>
                     <li><i class="fa fa-plus fa-2x"></i>{{ 'DONE.ICONS.ADD' | translate }}</li>
                     <li><i class="fa fa-edit fa-2x"></i>{{ 'DONE.ICONS.EDIT' | translate }}</li>
@@ -128,7 +128,7 @@
             </div>
 
             <div class="btn-group group-btn">
-                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK | translate' }}</button>
+                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK' | translate }}</button>
                 <button type="button" class="btn btn-secondary" (click)="finishWizard()" awResetWizard>{{ 'WIZARD.FINISH' | translate }}</button>
             </div>
         </div>
