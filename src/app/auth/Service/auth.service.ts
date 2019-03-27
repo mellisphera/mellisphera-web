@@ -54,16 +54,11 @@ export class AuthService {
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
         this.userService.setCountry(this.jwtReponse.country);
-        console.log(this.jwtReponse.country);
         this.translateService.addLangs(['en', 'fr']);
          if (this.jwtReponse.country === null || this.jwtReponse.country === 'US') {
            this.translateService.use('en');
-           this.translateService.setDefaultLang('en');
         } else if (this.jwtReponse.country === 'FR') {
           this.translateService.use('fr');
-          console.log('fr');
-          console.log(this.translateService.currentLang);
-          this.translateService.setDefaultLang('fr');
         }
         this.userService.setConnexion(this.jwtReponse.connexions);
         console.log(this.jwtReponse);
