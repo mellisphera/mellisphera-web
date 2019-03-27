@@ -55,8 +55,9 @@ export class AuthService {
         this.errLogin = !this.isAuthenticated;
         this.userService.setCountry(this.jwtReponse.country);
          if (this.jwtReponse.country === null || this.jwtReponse.country === 'en') {
+           this.translateService.addLangs(['en', 'fr']);
            this.translateService.use('en');
-          this.translateService.setDefaultLang('en')
+           this.translateService.setDefaultLang('en');
         } else if (this.jwtReponse.country === 'fr') {
           this.translateService.use('fr');
           this.translateService.setDefaultLang('fr');
