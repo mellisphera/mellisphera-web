@@ -38,7 +38,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     private capteurService: CapteurService,
     private render: Renderer2,
     private translateService: TranslateService) {
-      // this.translateService.use('fr');
+      console.log(this.translateService.getLangs());
     }
 
   ngOnInit() {
