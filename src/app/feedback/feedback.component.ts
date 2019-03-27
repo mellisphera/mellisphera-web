@@ -27,21 +27,29 @@ export class FeedbackComponent implements OnInit {
         } else {
           this.urlSlack = 'https://hooks.slack.com/services/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';
         }
+      } else {
+        this.urlSlack = 'https://hooks.slack.com/services/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';
       }
     this.notify = notifyService;
   }
 
   ngOnInit() {
-    this.feedbackForm = this.formBuilder.group({
-      'comment': [null, Validators.required]
-    });
+    this.initForm();
   }
 
   send() {
     const body = { 'text': this.userService.getUser() + ' : ' + this.feedbackForm.value.comment};
-    console.log(body);
-    this.httpClient.post(this.urlSlack, JSON.stringify(body)).subscribe(() => {}, () => {}, () => {
-    });
+    this.httpClient.post(this.urlSlack, JSON.stringify(body)).subscribe();
     this.notify.notify('success', 'Feedback sent');
+    this.resForm();
+  }
+
+  resForm() {
+    this.feedbackForm.reset();
+  }
+  initForm() {
+    this.feedbackForm = this.formBuilder.group({
+      'comment': [null, Validators.required]
+    });
   }
 }
