@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit {
 
-  showLogin : boolean;
+  showLogin: boolean;
  
      constructor(public location: Location,
       public router: Router, 
