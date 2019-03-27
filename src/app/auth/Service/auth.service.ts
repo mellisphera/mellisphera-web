@@ -10,6 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { AtokenStorageService } from './atoken-storage.service';
 import { JwtResponse } from '../../_model/jwt-response';
+import { TranslateService } from '@ngx-translate/core';
 
 
 const httpOptions = {
@@ -34,7 +35,8 @@ export class AuthService {
   constructor(private router: Router,
               private http : HttpClient,
               private tokenService : AtokenStorageService,
-              private userService: UserloggedService) {
+              private userService: UserloggedService,
+              private translateService: TranslateService) {
                 this.login = { email : '', password : ''};
                 this.errLogin = false;
                 this.isAuthenticated = false;
@@ -52,6 +54,11 @@ export class AuthService {
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
         this.userService.setCountry(this.jwtReponse.country);
+        if (this.jwtReponse.country === null || this.jwtReponse.country === 'en') {
+          this.translateService.use('en');
+        } else if (this.jwtReponse.country === 'fr') {
+          this.translateService.use('fr');
+        }
         this.userService.setConnexion(this.jwtReponse.connexions);
         console.log(this.jwtReponse);
         if (this.jwtReponse.connexions === 1) {
