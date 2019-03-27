@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
 import { AppRoutingModule } from './app.routing';
 import { FooterModule } from './shared/footer/footer.module';
@@ -67,7 +67,12 @@ import { WizardComponent } from './accueil/wizard/wizard.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
+   return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -110,6 +115,13 @@ import { FeedbackComponent } from './feedback/feedback.component';
     SharedModule,
     ArchwizardModule,
     BrowserAnimationsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     NotifierModule.withConfig({
       position: {
         horizontal: {

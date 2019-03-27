@@ -1,11 +1,10 @@
 <aw-wizard id="wizard-id" #wizard [navBarLayout]="'large-empty-symbols'">
-    <aw-wizard-step [stepTitle]="'Welcome'">
+    <aw-wizard-step [stepTitle]="'WIZARD.STEP_TITLE' | translate">
         <ng-template awWizardStepSymbol><img src="./assets/logo.png" style="width:2em"></ng-template>
         <div class="centered-content">
             <div>
-                <h2>Welcome !</h2>
-                <p>We want to guide your first steps creating apiary and other hives.<br />
-                    Once you’re done you’ll be able to fly with your own wings</p>
+                <h2>{{'WIZARD.WELCOME' | translate }}</h2>
+                <p>{{ 'WIZARD.DESCRIPTION' | translate }}<br/>{{ 'WIZARD.DESCRIPTION_2' | translate }}</p>
             </div>
 
             <div class="btn-group">
@@ -13,11 +12,11 @@
             </div>
         </div>
     </aw-wizard-step>
-    <aw-wizard-step [stepTitle]="'Apiary'">
+    <aw-wizard-step [stepTitle]="'WIZARD.APIARY.STEP_TITLE' | translate">
         <ng-template awWizardStepSymbol><img src="./assets/wizard/apiary.png" style="width:2em"></ng-template>
         <div class="centered-content">
             <div>
-                <h2>Create your apiary</h2>
+                <h2>{{ 'WIZARD.APIARY.TITLE' | translate}}</h2>
                 <form [formGroup]="apiaryForm">
                     <div class="form-group">
                         <div class="row">
@@ -35,19 +34,19 @@
 
             </div>
             <div class="btn-group group-btn">
-                <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
+                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK | translate' }}</button>
                 <button type="button" class="btn btn-secondary" [disabled]="apiaryForm.invalid" (click)="subApiary()"
-                    awNextStep>Continue</button>
+                    awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>
         </div>
     </aw-wizard-step>
-    <aw-wizard-step [stepTitle]="'Hive'">
+    <aw-wizard-step [stepTitle]="'WIZARD.HIVE.STEP_TITLE' | translate">
         <ng-template awWizardStepSymbol><img src=" ./assets/img/apiary-icon.png" style="width:2em">
         </ng-template>
         <div class="centered-content">
             <div>
-                <h2 class="titre">Create one hive</h2>
-                <p>Later you’ll create as much hives as you want</p>
+                <h2 class="titre">{{ 'WIZARD.HIVE.TITLE' | translate }}</h2>
+                <p>{{ 'WIZARD.DESCRIPTION' | translate }}</p>
                 <form [formGroup]="hiveForm">
                     <div class="form-group">
                         <div class="row">
@@ -60,17 +59,17 @@
                 </form>
             </div>
             <div class="btn-group group-btn">
-                <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
+                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK | translate' }}</button>
                 <button type="button" class="btn btn-secondary" [disabled]="hiveForm.invalid" (click)="subHive()"
-                    awNextStep>Continue</button>
+                    awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>
         </div>
     </aw-wizard-step>
-    <aw-wizard-step [stepTitle]="'Sensor'">
+    <aw-wizard-step [stepTitle]="'WIZARD.SENSOR.STEP_TITLE' | translate">
         <ng-template awWizardStepSymbol><img src="./assets/img/sensor-icon.png" style="width:2em"></ng-template>
         <div class="centered-content">
             <div>
-                <h2 class="titre">Add a Broodminder sensor ID</h2>
+                <h2 class="titre">{{ 'WIZARD.SENSOR.TITLE' | translate }}</h2>
                 <form [formGroup]="sensorForm">
                     <div class="form-group">
                         <div class="row">
@@ -84,20 +83,20 @@
             </div>
 
             <div class="btn-group group-btn">
-                <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
+                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK | translate' }}</button>
                 <button type="button" class="btn btn-secondary" [disabled]="sensorForm.invalid" (click)="subSensor()"
-                    awNextStep>Continue</button>
+                    awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>
         </div>
     </aw-wizard-step>
-    <aw-wizard-step [stepTitle]="'Flower'">
+<!--     <aw-wizard-step [stepTitle]="'Flower'">
         <ng-template awWizardStepSymbol><img src="./assets/img/flower-icon.png" style="width:2em">
         </ng-template>
         <div class="centered-content">
             <div>
                 <h2>Add some flowers</h2>
                 <p>Later you’ll edit and complete this list</p>
-<!--                 <div class="row">
+                    <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <label>Tilia</label>
                             <p><img class="flower-select" (click)="addFlower('Tilia',$event)" src="https://kyle.sig.inra.fr/FLEURS/1150883980tilleul_5.jpg" alt="Tilia" width="200px"></p>
@@ -106,52 +105,31 @@
                             <label>Cherry tree	</label>
                             <p><img class="flower-select" (click)="addFlower('Cherry tree', $event)" src="https://kyle.sig.inra.fr/FLEURS/Cerisier4.jpg" alt="Cherry tree" width="200px"></p>
                         </div>
-                    </div> -->
+                    </div>
             </div>
 
             <div class="btn-group group-btn">
-                <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
-                <button type="button" class="btn btn-secondary" awNextStep>Continue</button>
+                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK | translate' }}</button>
+                <button type="button" class="btn btn-secondary" awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>
-        </div>
-    </aw-wizard-step>
-    <!--     <aw-wizard-step [stepTitle]="'End'">
-        <ng-template awWizardStepSymbol><img src="./assets/img/flower-icon.png" style="width:2em">
-        </ng-template>
-        <div class="centered-content">
-            <div>
-                <h2>You’re done!</h2>
-                <p>Navigating the different pages you’ll find the following symbolst</p>
-                <ul>
-                    <li><i class="fa fa-plus fa-2x"></i>Add an item (apiary, hive, sensor, flower)</li>
-                    <li><i class="fa fa-edit fa-2x"></i>Edit an item</li>
-                    <li><i class="fa fa-times fa-2x"></i>Delete an item</li>
-                </ul>
-            </div>
-
-            <div class="btn-group">
-                <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
-                <button type="button" class="btn btn-secondary" awResetWizard>Reset</button>
-            </div>
-        </div>
-    </aw-wizard-step> -->
-    <aw-wizard-completion-step [stepTitle]="'Done!'" awEnableBackLinks>
+        </div>-->
+    <aw-wizard-completion-step [stepTitle]="'WIZARD.DONE.STEP_TITLE' | translate" awEnableBackLinks>
         <ng-template awWizardStepSymbol><img src="./assets/wizard/finish.png" style="width:2em">
         </ng-template>
         <div class="centered-content">
             <div>
-                <h2>You’re done!</h2>
-                <p>Navigating the different pages you’ll find the following symbols</p>
+                <h2>{{ 'DONE.TITLE' | translate }}</h2>
+                <p>{{ 'DONE.DESCRIPTION' | translate }}</p>
                 <ul>
-                    <li><i class="fa fa-plus fa-2x"></i>Add an item (apiary, hive, sensor, flower)</li>
-                    <li><i class="fa fa-edit fa-2x"></i>Edit an item</li>
-                    <li><i class="fa fa-times fa-2x"></i>Delete an item</li>
+                    <li><i class="fa fa-plus fa-2x"></i>{{ 'DONE.ICONS.ADD' | translate }}</li>
+                    <li><i class="fa fa-edit fa-2x"></i>{{ 'DONE.ICONS.EDIT' | translate }}</li>
+                    <li><i class="fa fa-times fa-2x"></i>{{ 'DONE.ICONS.DELETE' | translate }}</li>
                 </ul>
             </div>
 
             <div class="btn-group group-btn">
-                <button type="button" class="btn btn-secondary" awPreviousStep>Back</button>
-                <button type="button" class="btn btn-secondary" (click)="finishWizard()" awResetWizard>Finish</button>
+                <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK | translate' }}</button>
+                <button type="button" class="btn btn-secondary" (click)="finishWizard()" awResetWizard>{{ 'WIZARD.FINISH' | translate }}</button>
             </div>
         </div>
     </aw-wizard-completion-step>

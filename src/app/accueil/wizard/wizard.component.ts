@@ -7,6 +7,7 @@ import { RucheInterface } from '../../_model/ruche';
 import { CapteurInterface } from '../../_model/capteur';
 import { CapteurService } from '../../capteur/capteur.service';
 import { FleurObservees } from '../../_model/fleur-observees';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-wizard',
@@ -15,6 +16,7 @@ import { FleurObservees } from '../../_model/fleur-observees';
 })
 export class WizardComponent implements OnInit, OnDestroy {
 
+  title = 'wizard';
   private wrapper: Element;
   private mainPanel: Element;
   private sidebar: Element;
@@ -34,7 +36,9 @@ export class WizardComponent implements OnInit, OnDestroy {
     private rucherService: RucherService,
     private userService: UserloggedService,
     private capteurService: CapteurService,
-    private render: Renderer2) { }
+    private render: Renderer2,
+    private translateService: TranslateService) {
+    }
 
   ngOnInit() {
     this.paternRef = /[4][0-3]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9]|[a-z])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
