@@ -1,13 +1,13 @@
-import { RucherService } from './../apiary/ruche-rucher/rucher.service';
-import { RucheService } from './../accueil/Service/ruche.service';
-import { UserloggedService } from './../userlogged.service';
-import { MyDate } from './../class/MyDate';
+import { RucherService } from '../ruche-rucher/rucher.service';
+import { RucheService } from '../../accueil/Service/ruche.service';
+import { UserloggedService } from '../../userlogged.service';
+import { MyDate } from '../../class/MyDate';
 import { NotifierService } from 'angular-notifier';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { RucheInterface } from '../_model/ruche';
-import { Observation } from '../_model/observation';
-import { ObservationService } from '../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { RucheInterface } from '../../_model/ruche';
+import { Observation } from '../../_model/observation';
+import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
 
 @Component({
   selector: 'app-apiary-notes',

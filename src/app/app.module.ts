@@ -62,7 +62,7 @@ import { NotifierModule } from 'angular-notifier';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
-import { ApiaryNotesComponent } from './apiary-notes/apiary-notes.component';
+import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
 import { WizardComponent } from './accueil/wizard/wizard.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
