@@ -54,11 +54,11 @@ export class AuthService {
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
         this.userService.setCountry(this.jwtReponse.country);
-         if (this.jwtReponse.country === null || this.jwtReponse.country === 'en') {
+         if (this.jwtReponse.country === null || this.jwtReponse.country === 'US') {
            this.translateService.addLangs(['en', 'fr']);
            this.translateService.use('en');
            this.translateService.setDefaultLang('en');
-        } else if (this.jwtReponse.country === 'fr') {
+        } else if (this.jwtReponse.country === 'FR') {
           this.translateService.use('fr');
           this.translateService.setDefaultLang('fr');
         }
