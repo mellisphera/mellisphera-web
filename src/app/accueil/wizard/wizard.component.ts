@@ -81,6 +81,7 @@ export class WizardComponent implements OnInit, OnDestroy {
   subHive() {
     this.hive = this.hiveForm.value;
     this.hive.id = null;
+    this.hive.sensor = true;
     this.hive.username = this.userService.getUser();
 
   }
