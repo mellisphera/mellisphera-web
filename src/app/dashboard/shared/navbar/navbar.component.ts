@@ -10,13 +10,13 @@ import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { RucherService } from '../../apiary/ruche-rucher/rucher.service';
 import { RucheService } from '../../service/ruche.service';
 import { FleursFloraisonService } from '../../fleurs-floraison/service/fleurs.floraison.service';
-import { MeteoService } from '../../../meteo/Service/MeteoService';
+import { MeteoService } from '../../meteo/Service/MeteoService';
 import { ObservationService } from '../../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { DailyRecordService } from '../../service/dailyRecordService';
 import { Subscription } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
-import { CapteurService } from '../../../capteur/capteur.service';
+import { CapteurService } from '../../capteur/capteur.service';
 
 
 

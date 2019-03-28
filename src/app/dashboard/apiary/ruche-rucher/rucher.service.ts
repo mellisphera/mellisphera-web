@@ -14,7 +14,7 @@ import { UserloggedService } from '../../../userlogged.service';
 import { RucheService } from '../../service/ruche.service';
 import { DailyRecordService } from '../../service/dailyRecordService';
 import { RucherModel } from '../../../_model/rucher-model';
-import { MeteoService } from '../../../meteo/Service/MeteoService';
+import { MeteoService } from '../../meteo/Service/MeteoService';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

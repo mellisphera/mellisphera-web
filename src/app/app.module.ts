@@ -17,39 +17,39 @@ import { FooterModule } from './dashboard/shared/footer/footer.module';
 import { SidebarModule } from './dashboard/sidebar/sidebar.module';
 
 import { AppComponent } from './app.component';
-import { MeteoComponent } from './meteo/meteo.component';
+import { MeteoComponent } from './dashboard/meteo/meteo.component';
 import { RucheRucherComponent } from './dashboard/apiary/ruche-rucher/ruche.rucher.component';
-import { CapteurComponent } from './capteur/capteur.component';
-import { NouveauCapteurComponent } from './capteur/nouveau-capteur/nouveau-capteur.component';
+import { CapteurComponent } from './dashboard/capteur/capteur.component';
+import { NouveauCapteurComponent } from './dashboard/capteur/nouveau-capteur/nouveau-capteur.component';
 import { FleursFloraisonComponent } from './dashboard/fleurs-floraison/fleurs.floraison.component';
 
 import { LoginComponent } from './auth/login/login.component';
-import { RapportComponent } from './rapport/rapport.component';
+import { RapportComponent } from './dashboard/rapport/rapport.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { CapteurService } from './capteur/capteur.service';
+import { CapteurService } from './dashboard/capteur/capteur.service';
 import { RucherService } from './dashboard/apiary/ruche-rucher/rucher.service';
 import { UserloggedService } from './userlogged.service';
 import { AuthService } from './auth/Service/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { RapportService } from './rapport/rapport.service';
+import { RapportService } from './dashboard/rapport/rapport.service';
 import { FleursFloraisonService } from './dashboard/fleurs-floraison/service/fleurs.floraison.service';
 import { RucheDetailService } from './dashboard/apiary/ruche-rucher/ruche-detail/ruche.detail.service';
 
 import { DailyRecordService } from './dashboard/service/dailyRecordService';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
-import { MeteoService } from './meteo/Service/MeteoService';
+import { MeteoService } from './dashboard/meteo/Service/MeteoService';
 import { RucheService } from './dashboard/service/ruche.service';
 
 import { NgxEchartsModule } from 'ngx-echarts';
-import { CalendrierService } from './meteo/Service/calendrier.service';
-import { GraphMeteoService } from './meteo/Service/graph-meteo.service';
+import { CalendrierService } from './dashboard/meteo/Service/calendrier.service';
+import { GraphMeteoService } from './dashboard/meteo/Service/graph-meteo.service';
 import { ObservationService } from './dashboard/apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './dashboard/shared/shared.module';
-import { PipeCapteur, SearchCapteur } from './capteur/capteur.pipe';
+import { PipeCapteur, SearchCapteur } from './dashboard/capteur/capteur.pipe';
 import { SearchFleurPipe, searchFleurByType, searchFleurByDate } from './dashboard/fleurs-floraison/service/search-fleur.pipe';
 import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
