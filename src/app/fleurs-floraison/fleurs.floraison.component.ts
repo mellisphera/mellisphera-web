@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { FleursFloraisonService } from './service/fleurs.floraison.service';
 import { FleursINRA } from "../_model/fleursINRA";
 import { FleurITSAP } from "../_model/fleurITSAP";
-import { Rucher } from '../apiary/ruche-rucher/rucher';
+import { Rucher } from '../dashboard/apiary/ruche-rucher/rucher';
 import { FleursTheorique } from '../_model/fleurstheorique'
 import { UserloggedService } from '../userlogged.service';
 import { Observable, Subscription } from 'rxjs';
 import { AnonymousSubscription } from "rxjs/Subscription";
 import { selectedRucherService } from '../accueil/_shared-services/selected-rucher.service';
-import { RucherService } from '../apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../dashboard/apiary/ruche-rucher/rucher.service';
 import * as echarts from '../../assets/echarts';
 import { GraphiqueFloraisonService } from './service/graphique-floraison.service';
 
