@@ -1,12 +1,12 @@
-import { CapteurInterface } from './../_model/capteur';
-import { RucherModel } from './../_model/rucher-model';
-import { RucheInterface } from './../_model/ruche';
+import { CapteurInterface } from '../../_model/capteur';
+import { RucherModel } from '../../_model/rucher-model';
+import { RucheInterface } from '../../_model/ruche';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CapteurService } from './capteur.service';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RucherService } from '../dashboard/apiary/ruche-rucher/rucher.service';
-import { UserloggedService } from '../userlogged.service';
+import { RucherService } from '../apiary/ruche-rucher/rucher.service';
+import { UserloggedService } from '../../userlogged.service';
 
 import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";

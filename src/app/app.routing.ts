@@ -5,12 +5,12 @@ import { CommonModule, } from '@angular/common';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 import { RucheRucherComponent } from './dashboard/apiary/ruche-rucher/ruche.rucher.component';
-import { MeteoComponent } from './meteo/meteo.component';
+import { MeteoComponent } from './dashboard/meteo/meteo.component';
 
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuardService as AuthGuard } from './auth/auth-guard.service';
-import { CapteurComponent } from './capteur/capteur.component';
-import { RapportComponent } from './rapport/rapport.component';
+import { CapteurComponent } from './dashboard/capteur/capteur.component';
+import { RapportComponent } from './dashboard/rapport/rapport.component';
 import { FleursFloraisonComponent } from './dashboard/fleurs-floraison/fleurs.floraison.component';
 import { HomeComponent } from './dashboard/home/home.component';
 import { DemoComponent } from './demo/demo.component';
