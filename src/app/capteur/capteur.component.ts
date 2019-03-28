@@ -10,7 +10,6 @@ import { UserloggedService } from '../userlogged.service';
 
 import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";
-import { selectedRucherService } from '../accueil/_shared-services/selected-rucher.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
@@ -56,7 +55,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
         private formBuilder: FormBuilder,
         public rucherService: RucherService,
         public capteurService: CapteurService,
-        private _selectedRucherService: selectedRucherService,
         public notifierService: NotifierService) {
         this.paternRef = /[4][0-3]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9]|[a-z])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
         this.username = userService.getUser();

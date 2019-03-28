@@ -11,7 +11,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthGuardService as AuthGuard } from './auth/auth-guard.service';
 import { CapteurComponent } from './capteur/capteur.component';
 import { RapportComponent } from './rapport/rapport.component';
-import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
+import { FleursFloraisonComponent } from './dashboard/fleurs-floraison/fleurs.floraison.component';
 import { HomeComponent } from './dashboard/home/home.component';
 import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';

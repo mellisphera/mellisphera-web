@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RucherModel } from '../../_model/rucher-model';
-import { RucherService } from '../../dashboard/apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../apiary/ruche-rucher/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 import { RucheInterface } from '../../_model/ruche';
 import { CapteurInterface } from '../../_model/capteur';

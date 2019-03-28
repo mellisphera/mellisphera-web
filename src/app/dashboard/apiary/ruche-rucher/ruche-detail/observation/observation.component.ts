@@ -11,7 +11,7 @@ import { DailyStockHoneyService } from '../service/daily-stock-honey.service';
 import { RecordService } from '../service/Record/record.service';
 import { ObservationService } from './service/observation.service';
 import { FormGroup, FormBuilder,Validators } from '@angular/forms';
-import { RucheService } from '../../../../../accueil/Service/ruche.service';
+import { RucheService } from '../../../../service/ruche.service';
 import { Observation } from '../../../../../_model/observation';
 @Component({
   selector: 'app-observation',
