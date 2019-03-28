@@ -17,6 +17,8 @@ import { DailyRecordService } from '../../service/dailyRecordService';
 import { Subscription } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { CapteurService } from '../../capteur/capteur.service';
+import { ngf } from 'angular-file';
+
 
 
 
