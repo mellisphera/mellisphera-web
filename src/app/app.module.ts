@@ -64,11 +64,7 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-/*     DragAndCheckModule,
-    NgxEchartsModule,
-    ngfModule, */
-/*     ArchwizardModule,
- */    BrowserAnimationsModule,
+    BrowserAnimationsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
