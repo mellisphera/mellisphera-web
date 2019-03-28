@@ -24,6 +24,7 @@ import { CalendrierHealthService } from '../apiary/ruche-rucher/ruche-detail/hea
 import { DemoComponent } from '../../demo/demo.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FeedbackComponent } from '../../feedback/feedback.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -31,47 +32,19 @@ import { FeedbackComponent } from '../../feedback/feedback.component';
     SidebarModule,
     NavbarModule,
     RouterModule,
-    BrowserModule,
+    // BrowserModule,
     FormsModule,
-    NgxEchartsModule,
-    ReactiveFormsModule,
-    NotifierModule.withConfig({
-      position: {
-        horizontal: {
-          position: 'middle'
-        },
-        vertical: {
-          position: 'top',
-        }
-      }
-    }),
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger' // set defaults here
-    })
+    }),
   ],
-  exports:[
-    RucheDetailComponent,
-    NavbarModule,
-    RouterModule,
+  exports: [
+    TranslateModule
   ],
   declarations: [
-    RucheDetailComponent,
-    DailyComponent,
-    HourlyComponent,
-    StockComponent,
-    HealthComponent,
-    ObservationComponent,
-    StackComponent,
-    DemoComponent,
+
   ],
   providers : [
-    CalendrierPoidsService,
-    DailyRecordsWService,
-    DailyStockHoneyService,
-    GrapheReserveMielService,
-    GraphRecordService,
-    RecordService,
-    CalendrierHealthService
   ]
 })
 export class SharedModule { }

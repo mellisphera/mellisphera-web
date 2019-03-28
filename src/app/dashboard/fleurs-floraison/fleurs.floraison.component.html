@@ -1,60 +1,44 @@
-<div class="wrapper">
-    <div class="sidebar" data-color="blue" data-image="">
-        <app-sidebar></app-sidebar>
-        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
-    </div>
-    <div class="main-panel">
-        <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
-        <router-outlet></router-outlet>
+<div class="row content">
+    <div class="col-sm-12">
+        <div class="form-inline">
+            <div class="form-group">
+                <!--<label><h4>Apiary </h4> </label>
+                   <select  [(ngModel)]="fleursFloraisonService.rucherService.rucher" class="form-control " (change)="fleursFloraisonService.getUserFleur(fleursFloraisonService.rucherService.rucher.id);" id="sel1">
+                       <option  *ngFor="let rucher of fleursFloraisonService.rucherService.ruchers" [ngValue]="rucher" >
+                           {{rucher.name}}
+                       </option>
+                   </select>-->
+            </div>
+        </div>
+        <div class="bs-example">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-info ">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapseOne">
+                                <button class="btn btn-primary" style="right:0px" data-toggle="modal"
+                                    data-target="#biblioteque"> <i class="fa fa-book"></i>Apiary
+                                    plants</button>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#recherche"> <i
+                                        class="fa fa-search"></i>Plant
+                                    directory</button>
+                            </a>
+                        </h4>
+                    </div>
+                    <div>
+                        <div class="panel-body">
+                            <br />
+                            <div echarts [options]="grahFleur.option" [merge]="fleursFloraisonService.mergeOption"
+                                [autoResize]="true"></div>
 
-        <!-- change component content here-->
-        <div class="container-fluid" style="background-color:white;">
-            <div class="row content">
-                <div class="col-sm-12">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <!--<label><h4>Apiary </h4> </label>
-                               <select  [(ngModel)]="fleursFloraisonService.rucherService.rucher" class="form-control " (change)="fleursFloraisonService.getUserFleur(fleursFloraisonService.rucherService.rucher.id);" id="sel1">
-                                   <option  *ngFor="let rucher of fleursFloraisonService.rucherService.ruchers" [ngValue]="rucher" >
-                                       {{rucher.name}}
-                                   </option>
-                               </select>-->
                         </div>
                     </div>
-                    <div class="bs-example">
-                        <div class="panel-group" id="accordion">
-                            <div class="panel panel-info ">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" href="#collapseOne">
-                                            <button class="btn btn-primary" style="right:0px" data-toggle="modal"
-                                                data-target="#biblioteque"> <i class="fa fa-book"></i>Apiary
-                                                plants</button>
-                                            <button class="btn btn-primary" data-toggle="modal"
-                                                data-target="#recherche"> <i class="fa fa-search"></i>Plant
-                                                directory</button>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div>
-                                    <div class="panel-body">
-                                        <br />
-                                        <div echarts [options]="grahFleur.option"
-                                            [merge]="fleursFloraisonService.mergeOption" [autoResize]="true"></div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br />
                 </div>
             </div>
         </div>
+        <br />
     </div>
 </div>
-
-
 
 
 <div class="modal fade" id="biblioteque" tabindex="-1" role="dialog" aria-hidden="true">

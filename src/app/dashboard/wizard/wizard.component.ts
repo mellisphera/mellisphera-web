@@ -37,7 +37,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     private userService: UserloggedService,
     private capteurService: CapteurService,
     private render: Renderer2,
-    private translateService: TranslateService) {
+    public translateService: TranslateService) {
       console.log(this.translateService.currentLang);
     }
 
