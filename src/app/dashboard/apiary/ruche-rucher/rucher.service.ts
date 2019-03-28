@@ -11,8 +11,8 @@ import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
 import { CONFIG } from '../../../../config';
 import { UserloggedService } from '../../../userlogged.service';
-import { RucheService } from '../../../accueil/Service/ruche.service';
-import { DailyRecordService } from '../../../accueil/Service/dailyRecordService';
+import { RucheService } from '../../service/ruche.service';
+import { DailyRecordService } from '../../service/dailyRecordService';
 import { RucherModel } from '../../../_model/rucher-model';
 import { MeteoService } from '../../../meteo/Service/MeteoService';
 

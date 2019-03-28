@@ -13,15 +13,15 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule,HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
 import { AppRoutingModule } from './app.routing';
-import { FooterModule } from './shared/footer/footer.module';
-import { SidebarModule } from './sidebar/sidebar.module';
+import { FooterModule } from './dashboard/shared/footer/footer.module';
+import { SidebarModule } from './dashboard/sidebar/sidebar.module';
 
 import { AppComponent } from './app.component';
 import { MeteoComponent } from './meteo/meteo.component';
 import { RucheRucherComponent } from './dashboard/apiary/ruche-rucher/ruche.rucher.component';
 import { CapteurComponent } from './capteur/capteur.component';
 import { NouveauCapteurComponent } from './capteur/nouveau-capteur/nouveau-capteur.component';
-import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
+import { FleursFloraisonComponent } from './dashboard/fleurs-floraison/fleurs.floraison.component';
 
 import { LoginComponent } from './auth/login/login.component';
 import { RapportComponent } from './rapport/rapport.component';
@@ -31,27 +31,26 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CapteurService } from './capteur/capteur.service';
 import { RucherService } from './dashboard/apiary/ruche-rucher/rucher.service';
 import { UserloggedService } from './userlogged.service';
-import { selectedRucherService } from './accueil/_shared-services/selected-rucher.service';
 import { AuthService } from './auth/Service/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { RapportService } from './rapport/rapport.service';
-import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';
+import { FleursFloraisonService } from './dashboard/fleurs-floraison/service/fleurs.floraison.service';
 import { RucheDetailService } from './dashboard/apiary/ruche-rucher/ruche-detail/ruche.detail.service';
 
-import { DailyRecordService } from './accueil/Service/dailyRecordService';
+import { DailyRecordService } from './dashboard/service/dailyRecordService';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
 import { MeteoService } from './meteo/Service/MeteoService';
-import { RucheService } from './accueil/Service/ruche.service';
+import { RucheService } from './dashboard/service/ruche.service';
 
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CalendrierService } from './meteo/Service/calendrier.service';
 import { GraphMeteoService } from './meteo/Service/graph-meteo.service';
 import { ObservationService } from './dashboard/apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './dashboard/shared/shared.module';
 import { PipeCapteur, SearchCapteur } from './capteur/capteur.pipe';
-import { SearchFleurPipe, searchFleurByType, searchFleurByDate } from './fleurs-floraison/service/search-fleur.pipe';
+import { SearchFleurPipe, searchFleurByType, searchFleurByDate } from './dashboard/fleurs-floraison/service/search-fleur.pipe';
 import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
 import { SignupService } from './admin/service/signup.service';
@@ -62,7 +61,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
 import { StackApiaryComponent } from './dashboard/apiary/stack-apiary/stack-apiary.component';
 import { ApiaryNotesComponent } from './dashboard/apiary/apiary-notes/apiary-notes.component';
-import { WizardComponent } from './accueil/wizard/wizard.component';
+import { WizardComponent } from './dashboard/wizard/wizard.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FeedbackComponent } from './feedback/feedback.component';
@@ -141,7 +140,6 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     AuthGuardService,
     JwtHelperService,
     RucherService,
-    selectedRucherService,
     RapportService,
     FleursFloraisonService,
     RucheDetailService,
