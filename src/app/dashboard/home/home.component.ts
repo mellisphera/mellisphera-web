@@ -1,12 +1,12 @@
-import { User } from './../../_model/user';
+import { User } from '../../_model/user';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
 import { UserloggedService } from '../../userlogged.service';
-import { RucherService } from '../../dashboard/apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../apiary/ruche-rucher/rucher.service';
 import { Ruche } from './ruche';
-import { DailyRecordService } from '../Service/dailyRecordService';
+import { DailyRecordService } from '../../accueil/Service/dailyRecordService';
 import { DailyRecordsTH } from './DailyRecordTH';
-import { RucheService } from '../Service/ruche.service';
+import { RucheService } from '../../accueil/Service/ruche.service';
 import { RucheInterface } from '../../_model/ruche';
 import { Route, Router } from '@angular/router';
 import { CONFIG } from '../../../config';

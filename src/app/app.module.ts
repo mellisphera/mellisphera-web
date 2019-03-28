@@ -1,7 +1,7 @@
 import { GraphFlowerService } from './demo/graph/graph-flower.service';
 import { GraphHoneyService } from './demo/graph/graph-honey.service';
 import { CalendrierFSTLervice } from './demo/graph/calendrierFSTL';
-import { HomeComponent } from './accueil/home/home.component';
+import { HomeComponent } from './dashboard/home/home.component';
 import { ConnectionService } from './admin/service/connection.service';
 import { ConnectionsMapService } from './admin/service/connections-map.service';
 import { GraphStackService } from './dashboard/apiary/ruche-rucher/ruche-detail/stack/service/graph-stack.service';
@@ -24,7 +24,6 @@ import { NouveauCapteurComponent } from './capteur/nouveau-capteur/nouveau-capte
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
 
 import { LoginComponent } from './auth/login/login.component';
-import { ControldashboardComponent } from './controldashboard/controldashboard.component';
 import { RapportComponent } from './rapport/rapport.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -80,7 +79,6 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     CapteurComponent,
     AppComponent,
     LoginComponent,
-    ControldashboardComponent,
     RucheRucherComponent,
     MeteoComponent,
     RapportComponent,
