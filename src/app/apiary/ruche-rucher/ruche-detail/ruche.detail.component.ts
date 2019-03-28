@@ -233,6 +233,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                 .subscribe(
                     (record) => {
                         this.recordService.mergeOptionHourly = record;
+                        console.log(this.recordService.mergeOptionHourly);
                     },
                     () => {}, () => {
                         this.loaddingHourly = false;
