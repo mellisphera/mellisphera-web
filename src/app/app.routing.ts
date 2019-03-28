@@ -12,7 +12,7 @@ import { AuthGuardService as AuthGuard } from './auth/auth-guard.service';
 import { CapteurComponent } from './capteur/capteur.component';
 import { RapportComponent } from './rapport/rapport.component';
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
-import { HomeComponent } from './accueil/home/home.component';
+import { HomeComponent } from './dashboard/home/home.component';
 import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
 import { RucheDetailComponent } from './dashboard/apiary/ruche-rucher/ruche-detail/ruche.detail.component';
