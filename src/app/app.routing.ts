@@ -1,22 +1,22 @@
-import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
+import { ApiaryNotesComponent } from './dashboard/apiary/apiary-notes/apiary-notes.component';
 import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
 import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 
-import { RucheRucherComponent } from './apiary/ruche-rucher/ruche.rucher.component';
+import { RucheRucherComponent } from './dashboard/apiary/ruche-rucher/ruche.rucher.component';
 import { MeteoComponent } from './meteo/meteo.component';
 
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuardService as AuthGuard } from './auth/auth-guard.service';
 import { CapteurComponent } from './capteur/capteur.component';
 import { RapportComponent } from './rapport/rapport.component';
-import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
-import { HomeComponent } from './accueil/home/home.component';
+import { FleursFloraisonComponent } from './dashboard/fleurs-floraison/fleurs.floraison.component';
+import { HomeComponent } from './dashboard/home/home.component';
 import { DemoComponent } from './demo/demo.component';
 import { AdminComponent } from './admin/admin.component';
-import { RucheDetailComponent } from './apiary/ruche-rucher/ruche-detail/ruche.detail.component';
-import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
+import { RucheDetailComponent } from './dashboard/apiary/ruche-rucher/ruche-detail/ruche.detail.component';
+import { StackApiaryComponent } from './dashboard/apiary/stack-apiary/stack-apiary.component';
 
 const routes: Routes = [
     { path: '',                 component: LoginComponent },
