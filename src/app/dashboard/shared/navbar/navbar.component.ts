@@ -1,22 +1,22 @@
-import { RucherModel } from './../../_model/rucher-model';
-import { CONFIG } from './../../../config';
+import { RucherModel } from '../../../_model/rucher-model';
+import { CONFIG } from '../../../../config';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
-import { UserloggedService } from '../../userlogged.service';
+import { UserloggedService } from '../../../userlogged.service';
 import {Router} from '@angular/router';
-import { AuthService } from '../../auth/Service/auth.service';
+import { AuthService } from '../../../auth/Service/auth.service';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
-import { RucherService } from '../../dashboard/apiary/ruche-rucher/rucher.service';
-import { RucheService } from '../../accueil/Service/ruche.service';
+import { RucherService } from '../../apiary/ruche-rucher/rucher.service';
+import { RucheService } from '../../service/ruche.service';
 import { FleursFloraisonService } from '../../fleurs-floraison/service/fleurs.floraison.service';
-import { MeteoService } from '../../meteo/Service/MeteoService';
-import { ObservationService } from '../../dashboard/apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
-import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
-import { DailyRecordService } from '../../accueil/Service/dailyRecordService';
+import { MeteoService } from '../../../meteo/Service/MeteoService';
+import { ObservationService } from '../../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
+import { DailyRecordService } from '../../service/dailyRecordService';
 import { Subscription } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
-import { CapteurService } from '../../capteur/capteur.service';
+import { CapteurService } from '../../../capteur/capteur.service';
 
 
 

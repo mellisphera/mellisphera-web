@@ -8,11 +8,10 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { ProcessReport } from './processedReport';
 import { RucherService } from './rucher.service';
 import { UserloggedService } from '../../../userlogged.service';
-import { selectedRucherService } from '../../../accueil/_shared-services/selected-rucher.service';
 import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";
 import { RapportService } from '../../../rapport/rapport.service';
-import { RucheService } from '../../../accueil/Service/ruche.service';
+import { RucheService } from '../../service/ruche.service';
 import { ObservationService } from './ruche-detail/observation/service/observation.service';
 import { RucherModel } from '../../../_model/rucher-model';
 import { AuthService } from '../../../auth/Service/auth.service';
@@ -55,7 +54,6 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     public router: Router,
     public rucherService: RucherService,
     private userService: UserloggedService,
-    private _selectedRucherService: selectedRucherService,
     private _rapportService: RapportService,
     public observationService: ObservationService,
     public rucheService: RucheService,

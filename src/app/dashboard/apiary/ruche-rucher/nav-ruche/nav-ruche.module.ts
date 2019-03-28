@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavRucheRoutingModule } from './nav-ruche-routing.module';
-import { SharedModule } from '../../../../shared/shared.module';
+import { SharedModule } from '../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CalendrierPoidsService } from '../ruche-detail/stock/service/calendrier-poids.service';
 import { DailyRecordsWService } from '../ruche-detail/service/daily-records-w.service';

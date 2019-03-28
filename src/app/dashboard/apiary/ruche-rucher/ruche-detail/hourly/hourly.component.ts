@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecordService } from '../service/Record/record.service';
 import { GraphRecordService } from './service/graph-record.service';
-import { RucheService } from '../../../../../accueil/Service/ruche.service';
+import { RucheService } from '../../../../service/ruche.service';
 import { DataRange } from '../service/Record/data-range';
 
 @Component({

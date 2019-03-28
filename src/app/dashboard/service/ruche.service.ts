@@ -11,7 +11,7 @@ import { UserloggedService } from '../../userlogged.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { Observable, Subscription } from 'rxjs';
-import { ObservationService } from '../../dashboard/apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { ObservationService } from '../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { MeteoService } from '../../meteo/Service/MeteoService';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendrierTempIntService } from './service/calendrier-temp-int.service';
 import { ActivatedRoute } from '@angular/router';
-import { DailyRecordService } from '../../../../../accueil/Service/dailyRecordService';
+import { DailyRecordService } from '../../../../service/dailyRecordService';
 import { DailyRecordsWService } from '../service/daily-records-w.service';
-import { RucheService } from '../../../../../accueil/Service/ruche.service';
+import { RucheService } from '../../../../service/ruche.service';
 
 @Component({
   selector: 'app-daily',

@@ -1,6 +1,6 @@
 import { StackApiaryGraphService } from './service/stack-apiary-graph.service';
 import { Component, OnInit, Renderer2, AfterViewInit } from '@angular/core';
-import { RucheService } from '../../../accueil/Service/ruche.service';
+import { RucheService } from '../../service/ruche.service';
 import { RucheInterface } from '../../../_model/ruche';
 import { RecordService } from '../ruche-rucher/ruche-detail/service/Record/record.service';
 import { EChartOption } from 'echarts';

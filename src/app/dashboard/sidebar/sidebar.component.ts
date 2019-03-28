@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { UserloggedService } from "../userlogged.service";
-import { CONFIG } from "../../config";
-import { AuthService } from "../auth/Service/auth.service";
-import { AtokenStorageService } from "../auth/Service/atoken-storage.service";
+import { UserloggedService } from "../../userlogged.service";
+import { CONFIG } from "../../../config";
+import { AuthService } from "../../auth/Service/auth.service";
+import { AtokenStorageService } from "../../auth/Service/atoken-storage.service";
 
 declare const $: any;
 declare interface RouteInfo {
