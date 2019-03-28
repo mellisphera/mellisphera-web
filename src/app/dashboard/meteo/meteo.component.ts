@@ -2,8 +2,8 @@ import { OnInit, DoCheck } from '@angular/core';
 import { Component, Input } from '@angular/core';
 import { MeteoService } from './Service/MeteoService';
 //import * as echarts from '../../../assets/echarts';
-import { UserloggedService } from '../userlogged.service';
-import { RucherService } from '../dashboard/apiary/ruche-rucher/rucher.service';
+import { UserloggedService } from '../../userlogged.service';
+import { RucherService } from '../apiary/ruche-rucher/rucher.service';
 import { ECharts, EChartOption} from 'echarts';
 //import * as echarts from 'node_modules/echarts/dist/echarts.min.js'
 import { CalendrierService } from './Service/calendrier.service';

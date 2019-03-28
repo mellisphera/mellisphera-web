@@ -10,7 +10,7 @@ import { RucherService } from './rucher.service';
 import { UserloggedService } from '../../../userlogged.service';
 import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";
-import { RapportService } from '../../../rapport/rapport.service';
+import { RapportService } from '../../rapport/rapport.service';
 import { RucheService } from '../../service/ruche.service';
 import { ObservationService } from './ruche-detail/observation/service/observation.service';
 import { RucherModel } from '../../../_model/rucher-model';
