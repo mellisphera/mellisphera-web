@@ -1,16 +1,16 @@
 import { UserloggedService } from './../userlogged.service';
 import { CONFIG } from './../../config';
 import { AtokenStorageService } from './../auth/Service/atoken-storage.service';
-import { RucherService } from '../apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../dashboard/apiary/ruche-rucher/rucher.service';
 import { GraphFlowerService } from './graph/graph-flower.service';
 import { GraphHoneyService } from './graph/graph-honey.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FleursFloraisonService } from '../fleurs-floraison/service/fleurs.floraison.service';
-import { DailyStockHoneyService } from '../apiary/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
-import { DailyRecordsWService } from '../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
+import { DailyStockHoneyService } from '../dashboard/apiary/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
+import { DailyRecordsWService } from '../dashboard/apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
 import { GraphiqueFloraisonService } from '../fleurs-floraison/service/graphique-floraison.service';
-import { GrapheReserveMielService } from '../apiary/ruche-rucher/ruche-detail/stock/service/graphe-reserve-miel.service';
-import { CalendrierPoidsService } from '../apiary/ruche-rucher/ruche-detail/stock/service/calendrier-poids.service';
+import { GrapheReserveMielService } from '../dashboard/apiary/ruche-rucher/ruche-detail/stock/service/graphe-reserve-miel.service';
+import { CalendrierPoidsService } from '../dashboard/apiary/ruche-rucher/ruche-detail/stock/service/calendrier-poids.service';
 import { CalendrierFSTLervice } from './graph/calendrierFSTL';
 import { RucheService } from '../accueil/Service/ruche.service';
 
