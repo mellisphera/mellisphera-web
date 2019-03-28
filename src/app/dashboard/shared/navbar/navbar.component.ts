@@ -18,6 +18,8 @@ import { Subscription } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { CapteurService } from '../../capteur/capteur.service';
 import { ngf } from 'angular-file';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { DialogApiaryComponent } from './dialog-apiary/dialog-apiary.component';
 
 
 
@@ -64,7 +66,8 @@ export class NavbarComponent implements OnInit{
         private formBuilder: FormBuilder,
         private tokenService: AtokenStorageService,
         private dailyRecordService: DailyRecordService,
-        public notifierService: NotifierService) {
+        public notifierService: NotifierService,
+        private dialog: MatDialog) {
       this.location = location;
       this.notifier = this.notifierService;
       this.sidebarVisible = false;
@@ -115,6 +118,13 @@ export class NavbarComponent implements OnInit{
         };
         fileReader.readAsDataURL(this.photoApiary);
     }
+
+    openNewApiary() {
+        const dialogRef = this.dialog.open(DialogApiaryComponent, {
+            data: {name: 'test'},
+            width: '40%'
+        });
+      }
 
     ngOnInit() {
       this.listTitles = ROUTES.filter(listTitle => listTitle);
@@ -219,14 +229,18 @@ export class NavbarComponent implements OnInit{
             }
     }
     editRucherClicked() {
-        const donnée = {
+        const dialogRef = this.dialog.open(DialogApiaryComponent, {
+            data: this.rucherService.rucher.name,
+            width: '40%'
+        });
+/*         const donnée = {
           name: this.rucherService.rucher.name,
           description: this.rucherService.rucher.description,
           ville: this.rucherService.rucher.ville,
           codePostal: this.rucherService.rucher.codePostal,
           validate : ''
         };
-        this.rucherForm.setValue(donnée);
+        this.rucherForm.setValue(donnée); */
     }
 
     getTitle(){

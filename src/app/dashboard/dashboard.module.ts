@@ -31,6 +31,9 @@ import { SearchCapteur } from './capteur/capteur.pipe';
 import { PipeCapteur } from './capteur/capteur.pipe';
 import { SearchFleurPipe, searchFleurByDate, searchFleurByType } from './fleurs-floraison/service/search-fleur.pipe';
 import { RapportService } from './rapport/rapport.service';
+import { DialogApiaryComponent } from './shared/navbar/dialog-apiary/dialog-apiary.component';
+import { MatDialogModule } from '@angular/material';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   imports: [
@@ -38,6 +41,7 @@ import { RapportService } from './rapport/rapport.service';
     DasboardRoutingModule,
     NavbarModule,
     SidebarModule,
+    MaterialModule,
     RouterModule,
     // BrowserModule,
     FormsModule,
@@ -46,7 +50,7 @@ import { RapportService } from './rapport/rapport.service';
     DragAndCheckModule,
     NgxEchartsModule,
     ArchwizardModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     RucherService,
@@ -74,6 +78,9 @@ import { RapportService } from './rapport/rapport.service';
     ApiaryNotesComponent,
     FleursFloraisonComponent,
     WizardComponent
+  ],
+  entryComponents: [
+    DialogApiaryComponent
   ]
 })
 export class DashboardModule { }

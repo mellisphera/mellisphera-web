@@ -44,6 +44,8 @@ import { Erreur404ComponentComponent } from './erreur404-component/erreur404-com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MaterialModule } from './material.module';
+
 
 export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
    return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
@@ -62,6 +64,8 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     HttpModule,
     RouterModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
