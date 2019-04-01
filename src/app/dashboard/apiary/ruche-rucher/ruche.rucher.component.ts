@@ -93,7 +93,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
   clickOnRuche(ruche: RucherModel) {
     this.rucheService.saveCurrentHive(ruche.id);
-    this.router.navigateByUrl('/ruche-detail');
+    this.router.navigateByUrl('dashboard/ruche-detail');
   }
 
   resetForm() {

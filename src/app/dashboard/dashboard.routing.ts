@@ -8,7 +8,7 @@ import { RucheRucherComponent } from './apiary/ruche-rucher/ruche.rucher.compone
 import { RapportComponent } from './rapport/rapport.component';
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
 import { MeteoComponent } from './meteo/meteo.component';
-import { AdminComponent } from '../admin/admin.component';
+import { AdminComponent } from './admin/admin.component';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
 import { CapteurComponent } from './capteur/capteur.component';
@@ -18,11 +18,11 @@ const routes: Routes = [
         path: '', component: DashboardComponent, children: [
             { path: 'home', component: HomeComponent, canLoad: [AuthGuardService]},
             { path: 'ruche-et-rucher', component: RucheRucherComponent, canLoad: [AuthGuardService]},
-            // { path: 'ruche-detail', loadChildren: './dashboard/dashboard.module#DashboardModule'},
+            { path: 'ruche-detail', loadChildren: './apiary/ruche-rucher/ruche-detail/ruche.module#RucheModule'},
             { path: 'rapport', component: RapportComponent, canLoad: [AuthGuardService]},
             { path: 'fleurs-floraison', component: FleursFloraisonComponent, canLoad: [AuthGuardService]},
             { path: 'home', component: HomeComponent, canLoad: [AuthGuardService]},
-/*             { path: 'admin', component: AdminComponent, canLoad: [AuthGuardService]},*/
+            { path: 'admin', loadChildren : './admin/admin.module#AdminModule'},
             { path: 'stack-apiary', component: StackApiaryComponent, canLoad: [AuthGuardService]},
             { path: 'capteurs', component: CapteurComponent, canLoad: [AuthGuardService]},
             { path: 'apiary-notes', component: ApiaryNotesComponent, canLoad: [AuthGuardService]}
