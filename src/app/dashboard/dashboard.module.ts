@@ -33,6 +33,8 @@ import { RapportService } from './rapport/rapport.service';
 import { MeteoService } from './meteo/Service/MeteoService';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { SidebarService } from './service/sidebar.service';
+import { DemoComponent } from '../demo/demo.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -69,6 +71,7 @@ import { SidebarService } from './service/sidebar.service';
     FeedbackComponent,
     MeteoComponent,
     PipeCapteur,
+    DemoComponent,
     SearchCapteur,
     SearchFleurPipe,
     searchFleurByDate,
@@ -76,6 +79,7 @@ import { SidebarService } from './service/sidebar.service';
     CapteurComponent,
     StackApiaryComponent,
     RapportComponent,
+
     ApiaryNotesComponent,
     FleursFloraisonComponent,
     WizardComponent

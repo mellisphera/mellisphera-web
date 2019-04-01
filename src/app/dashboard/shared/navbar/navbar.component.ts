@@ -105,7 +105,6 @@ export class NavbarComponent implements OnInit{
         this.capteurService.sensorSubject.unsubscribe();
         this.tokenService.signOut();
         this.authService.connexionStatus.next(false);
-        this.router.navigate(['/login']);
     }
     onPictureLoad(next) {
         const fileReader = new FileReader();
