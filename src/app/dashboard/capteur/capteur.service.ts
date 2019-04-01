@@ -11,12 +11,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
-import { CONFIG } from '../../config';
+import { CONFIG } from '../../../config';
 import { Capteur } from './capteur';
-import { Rucher } from '../dashboard/apiary/ruche-rucher/rucher';
-import { CapteurInterface } from '../_model/capteur';
-import { UserloggedService } from '../userlogged.service';
-import { stringify } from '@angular/core/src/util';
+import { Rucher } from '../apiary/ruche-rucher/rucher';
+import { CapteurInterface } from '../../_model/capteur';
+import { UserloggedService } from '../../userlogged.service';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -79,7 +78,7 @@ export class CapteurService {
     }
 
     getCapteurs() {
-        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sensors/all')
+        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL + 'sensors/all');
         this.capteursObs.subscribe(
             (data)=>{
                 this.capteurs = data;
@@ -92,7 +91,7 @@ export class CapteurService {
     }
 
     getSoldDevicesByUser() {
-        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sold_devices/username/'+ this.user.getUser());
+        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL + 'sold_devices/username/' + this.user.getUser());
         this.capteursObs.subscribe(
             (data) => {
                 this.capteurAcheter = data;
@@ -104,7 +103,7 @@ export class CapteurService {
     }
 
     getUserCapteurs() {
-        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL+'sensors/'+ this.user.getUser());
+        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL + 'sensors/' + this.user.getUser());
         this.capteursObs.subscribe(
             (data) => {
                 this.capteursByUser = data;

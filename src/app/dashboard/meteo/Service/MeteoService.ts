@@ -1,9 +1,9 @@
-import { RucherService } from '../../dashboard/apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../../apiary/ruche-rucher/rucher.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Meteo } from '../../_model/meteo';
+import { Meteo } from '../../../_model/meteo';
 import { element } from 'protractor';
-import { UserloggedService } from '../../userlogged.service';
+import { UserloggedService } from '../../../userlogged.service';
 import { Observable } from 'rxjs';
 import { CalendrierService } from './calendrier.service';
 import { GraphMeteoService } from './graph-meteo.service';

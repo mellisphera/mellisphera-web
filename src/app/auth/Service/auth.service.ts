@@ -66,7 +66,7 @@ export class AuthService {
           this.userService.setWizardActive();
         }
         this.userService.setUser(this.jwtReponse);
-        this.router.navigate(['/home']);
+        this.router.navigateByUrl('dashboard/home');
       },
       (err) => {
         this.errLogin = true;

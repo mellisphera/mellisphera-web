@@ -1,6 +1,6 @@
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper" [style.background-color]="sidebarService.getCurrentColor().color">
     <div class="logo">
-        <a routerLink="/home">
+        <a routerLink="./home">
             <img [src]="url_sideImg" style="width:30px;height: 30px;" />
         </a>
     </div>
@@ -16,18 +16,18 @@
         </li>
         <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
         <li>
-            <a routerLink="/home" data-toggle="tooltip" data-placement="top" title="Apiary">
+            <a routerLink="./home" data-toggle="tooltip" data-placement="top" title="Apiary">
                 <img src="./assets/wizard/apiary.png" style="width:40px;"/>
             </a>
         </li>
         <li>
-            <a routerLink="/ruche-et-rucher" data-toggle="tooltip" data-placement="top" title="Hives">
+            <a routerLink="./ruche-et-rucher" data-toggle="tooltip" data-placement="top" title="Hives">
                 <img src="./assets/img/apiary-icon.png"
                     style="width:45px;height: 45px; margin-left: -7px; margin-top:-10px;" />
             </a>
         </li>
         <li>
-            <a routerLink="/apiary-notes" data-toggle="tooltip" data-placement="top" title="Apiary notes">
+            <a routerLink="./apiary-notes" data-toggle="tooltip" data-placement="top" title="Apiary notes">
                 <img src="./assets/img/report-icon.png" style="width:30px;height: 30px; margin-top:-6px;" />
             </a>
         </li>
@@ -37,7 +37,7 @@
             </a>
         </li> -->
         <li>
-            <a routerLink="/fleurs-floraison" data-toggle="tooltip" data-placement="top" title="Flower">
+            <a routerLink="./fleurs-floraison" data-toggle="tooltip" data-placement="top" title="Flower">
                 <img src="./assets/img/flower-icon.png" style="width:30px;height: 30px;" />
             </a>
         </li>
@@ -47,22 +47,22 @@
             </a>
         </li> -->
         <li>
-            <a routerLink="/capteurs" data-toggle="tooltip" data-placement="top" title="Sensors">
+            <a routerLink="./capteurs" data-toggle="tooltip" data-placement="top" title="Sensors">
                 <img src="./assets/img/sensor-icon.png" style="width:30px;height: 30px; margin-top:-6px;" />
             </a>
         </li>
         <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')">
-            <a routerLink="/admin" data-toggle="tooltip" data-placement="top" title="admin">
+            <a routerLink="./admin" data-toggle="tooltip" data-placement="top" title="admin">
                 <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;" />
             </a>
         </li>
         <li *ngIf="this.userService.getUser() == '***REMOVED***'">
-            <a routerLink="/***REMOVED***" data-tog  gle="tooltip" data-placement="top" title="FSTL">
+            <a routerLink="./***REMOVED***" data-tog  gle="tooltip" data-placement="top" title="FSTL">
                 FSTL
             </a>
         </li>
          <li>
-            <a routerLink="/stack-apiary" data-toggle="tooltip" data-placement="top" title="Stack data">
+            <a routerLink="./stack-apiary" data-toggle="tooltip" data-placement="top" title="Stack data">
                 <img src="./assets/img/stack.png" style="width:30px;height: 30px; margin-top:-6px;" />
             </a>
         </li>

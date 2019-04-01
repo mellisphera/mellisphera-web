@@ -46,3 +46,6 @@ ul{
 .flower-active{
     border: 2px solid white;
 }
+#apiary-form input[type="text"]{
+    margin: 5px;
+}
