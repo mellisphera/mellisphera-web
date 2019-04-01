@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserloggedService } from '../userlogged.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  message: string;
+  constructor(public login: UserloggedService) {
+    this.message = '';
+  }
 
   ngOnInit() {
   }
 
+  receiveMessage($event) {
+    this.message = $event;
+  }
 }
