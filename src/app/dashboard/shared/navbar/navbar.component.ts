@@ -18,8 +18,6 @@ import { Subscription } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { CapteurService } from '../../capteur/capteur.service';
 import { ngf } from 'angular-file';
-import { MatDialog, MatDialogConfig } from '@angular/material';
-import { DialogApiaryComponent } from './dialog-apiary/dialog-apiary.component';
 
 
 
@@ -59,15 +57,14 @@ export class NavbarComponent implements OnInit{
         private authService: AuthService,
         public rucherService: RucherService,
         private rucheService: RucheService,
-        private meteoService: MeteoService,
+       // private meteoService: MeteoService,
         private fleursFloraisonService : FleursFloraisonService,
         private observationService : ObservationService,
         private capteurService: CapteurService,
         private formBuilder: FormBuilder,
         private tokenService: AtokenStorageService,
         private dailyRecordService: DailyRecordService,
-        public notifierService: NotifierService,
-        private dialog: MatDialog) {
+        public notifierService: NotifierService) {
       this.location = location;
       this.notifier = this.notifierService;
       this.sidebarVisible = false;
@@ -119,13 +116,6 @@ export class NavbarComponent implements OnInit{
         fileReader.readAsDataURL(this.photoApiary);
     }
 
-    openNewApiary() {
-        const dialogRef = this.dialog.open(DialogApiaryComponent, {
-            data: {name: 'test'},
-            width: '40%'
-        });
-      }
-
     ngOnInit() {
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
@@ -149,9 +139,9 @@ export class NavbarComponent implements OnInit{
             case '/fleurs-floraison':
                 this.fleursFloraisonService.getUserFleur(this.rucherService.getCurrentApiary());
                 break;
-            case '/meteo':
+/*             case '/meteo':
                 this.meteoService.getWeather(this.rucherService.rucher.codePostal);
-                break;
+                break; */
             case '/ruche-detail':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
@@ -229,18 +219,14 @@ export class NavbarComponent implements OnInit{
             }
     }
     editRucherClicked() {
-        const dialogRef = this.dialog.open(DialogApiaryComponent, {
-            data: this.rucherService.rucher.name,
-            width: '40%'
-        });
-/*         const donnée = {
+        const donnée = {
           name: this.rucherService.rucher.name,
           description: this.rucherService.rucher.description,
           ville: this.rucherService.rucher.ville,
           codePostal: this.rucherService.rucher.codePostal,
           validate : ''
         };
-        this.rucherForm.setValue(donnée); */
+        this.rucherForm.setValue(donnée);
     }
 
     getTitle(){
