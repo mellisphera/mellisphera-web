@@ -4,6 +4,7 @@ import { UserloggedService } from "../../userlogged.service";
 import { CONFIG } from "../../../config";
 import { AuthService } from "../../auth/Service/auth.service";
 import { AtokenStorageService } from "../../auth/Service/atoken-storage.service";
+import { SidebarService } from '../service/sidebar.service';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -53,7 +54,8 @@ export class SidebarComponent implements OnInit {
     public userService: UserloggedService,
     public router: Router,
     public authService: AuthService,
-    public tokenService: AtokenStorageService
+    public tokenService: AtokenStorageService,
+    public sidebarService: SidebarService
   ) {
     this.url_sideImg = CONFIG.URL_FRONT + "assets/logo.png";
   }
