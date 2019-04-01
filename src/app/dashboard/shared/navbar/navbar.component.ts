@@ -129,26 +129,26 @@ export class NavbarComponent implements OnInit{
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
         console.log(location);
         switch (location) {
-            case '/ruche-et-rucher':
+            case '/dashboard/ruche-et-rucher':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
-            case '/home':
+            case '/dashboard/home':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 break;
-            case '/fleurs-floraison':
+            case '/dashboard/fleurs-floraison':
                 this.fleursFloraisonService.getUserFleur(this.rucherService.getCurrentApiary());
                 break;
 /*             case '/meteo':
                 this.meteoService.getWeather(this.rucherService.rucher.codePostal);
                 break; */
-            case '/ruche-detail':
+            case '/dashboard/ruche-detail':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
-            case '/stack-apiary':
+            case '/dashboard/stack-apiary':
                 // this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
-            case '/apiary-notes':
+            case '/dashboard/apiary-notes':
                 this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
                 break;
             default:
