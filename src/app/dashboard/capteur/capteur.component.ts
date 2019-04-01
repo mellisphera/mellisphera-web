@@ -48,7 +48,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     editedSensorMsg: boolean;
     editedSensorMsgE: boolean;
     public errorMsg;
-    private readonly notifier: NotifierService;
+    private notifier: NotifierService;
     constructor(
         private userService: UserloggedService,
         private _router: Router,
@@ -154,6 +154,9 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
             this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
             this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
+            const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
+            this.rucherService.rucheService.ruches[index].sensor = true;
+            this.rucherService.rucheService.emitHiveSubject();
         } else {
             this.capteurService.capteur.idHive = null;
             this.capteurService.capteur.idApiary = null;
@@ -165,9 +168,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.capteurService.capteur.reference = formValue.reference;
         this.capteurService.capteur.type = sensorType.trim();
         this.initForm();
-        const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
-        this.rucherService.rucheService.ruches[index].sensor = true;
-        this.rucherService.rucheService.emitHiveSubject();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
             this.notifier.notify('success', 'Created sensor');
             this.capteurService.getUserCapteurs();
@@ -212,6 +212,9 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
             this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
             this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
+            const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
+            this.rucherService.rucheService.ruches[index].sensor = true;
+            this.rucherService.rucheService.emitHiveSubject();
         } else {
             this.capteurService.capteur.idHive = null;
             this.capteurService.capteur.idApiary = null;
@@ -220,11 +223,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
         }
         this.capteurService.capteur.description = formValue.description;
         this.capteurService.capteur.id = idTemp;
-
-        const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
-        this.rucherService.rucheService.ruches[index].sensor = true;
-        this.rucherService.rucheService.emitHiveSubject();
-
         this.initForm();
         this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
             this.capteurService.capteursByUser[this.indexSensorSelect] = this.capteurService.capteur;
