@@ -13,9 +13,9 @@ export class HealthComponent implements OnInit, OnDestroy{
   rucheId;
   message="";
   rucheName : string;
-  constructor(private activatedRoute : ActivatedRoute,
-    public calendrierHealthService : CalendrierHealthService,
-    public dailyRecordThService : DailyRecordService) { }
+  constructor(private activatedRoute: ActivatedRoute,
+    public calendrierHealthService: CalendrierHealthService,
+    public dailyRecordThService: DailyRecordService) { }
 
   ngOnInit() {
     /*9this.rucheId = this.activatedRoute.snapshot.params.id;
@@ -27,7 +27,7 @@ export class HealthComponent implements OnInit, OnDestroy{
         this.message=$event;
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
 
   }
 
