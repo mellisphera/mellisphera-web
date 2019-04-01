@@ -32,6 +32,7 @@ import { SearchFleurPipe, searchFleurByDate, searchFleurByType } from './fleurs-
 import { RapportService } from './rapport/rapport.service';
 import { MeteoService } from './meteo/Service/MeteoService';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import { SidebarService } from './service/sidebar.service';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
     MeteoService,
     DailyRecordService,
     FleursFloraisonService,
-    CapteurService
+    CapteurService,
+    SidebarService
   ],
   declarations: [
     DashboardComponent,

@@ -1,4 +1,4 @@
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper" [style.background-color]="sidebarService.getCurrentColor().color">
     <div class="logo">
         <a routerLink="./home">
             <img [src]="url_sideImg" style="width:30px;height: 30px;" />
