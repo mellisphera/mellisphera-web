@@ -18,9 +18,7 @@ import { Subscription } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { CapteurService } from '../../capteur/capteur.service';
 import { ngf } from 'angular-file';
-
-
-
+import { SidebarService } from '../../service/sidebar.service';
 
 @Component({
     // moduleId: module.id,
@@ -46,6 +44,8 @@ export class NavbarComponent implements OnInit{
     private sidebarVisible: boolean;
     public updateStatus: boolean;
     public newApiary: RucherModel;
+    public colorSidebar: Array<any>;
+    public currentColor: any;
     baseDropValid: string;
     public lastConnexion: string;
     private readonly notifier: NotifierService;
@@ -64,6 +64,7 @@ export class NavbarComponent implements OnInit{
         private formBuilder: FormBuilder,
         private tokenService: AtokenStorageService,
         private dailyRecordService: DailyRecordService,
+        public sidebarService: SidebarService,
         public notifierService: NotifierService) {
       this.location = location;
       this.notifier = this.notifierService;
@@ -82,6 +83,7 @@ export class NavbarComponent implements OnInit{
             codePostal : '',
             ville : ''
          };
+
 
     }
 
@@ -227,6 +229,10 @@ export class NavbarComponent implements OnInit{
           validate : ''
         };
         this.rucherForm.setValue(donnée);
+    }
+
+    setColor(color: any) {
+        this.sidebarService.setCurrentColor(color);
     }
 
     getTitle(){
