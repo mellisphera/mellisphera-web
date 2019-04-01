@@ -33,12 +33,20 @@ textarea{
 .modal-footer p{
     padding-top: 5px;
 }
-/* @-webkit-keyframes rotating {
-    from{
-        -webkit-transform: rotate(0deg);
-    }
-    to{
-        -webkit-transform: rotate(360deg);
-    }
+#description-slack p:first-child{
+    margin-bottom: 0px;
 }
- */
+#group-btn{
+    position: relative;
+}
+#group-btn button{
+    position: absolute;
+    bottom: 0px;
+}
+#group-btn button:first-child{
+    left: 0px;
+    margin-left: 8px;
+}
+#group-btn button:last-child{
+    right: 0px;
+}

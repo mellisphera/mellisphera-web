@@ -35,5 +35,24 @@
         "NEXT":"Suivant",
         "BACK": "Retour",
         "FINISH": "Terminer"
+    },
+    "NAVBAR": {
+        "ACCOUNT": {
+            "CHANGE_PASSWORD": "Modifier le mot de passe",
+            "LOG_OUT": "Deconnexion"
+        }
+    },
+    "MODAL_APIARY": {
+        "TITLE": "Nouveaux Rucher",
+        "FORM": {
+            "NAME_INVALID": "Entrez un nom entre 1 et 20 caractères",
+            "DESCRIPTION_INVALID": "40 caractéres maximum",
+            "CITY_INVALID": "Selectionner une ville",
+            "ZIP_INVALID": "Entrez un code postal"
+        },
+        "UPLOAD_PICTURE": {
+            "LABEL":"Selectionner une photos pour votre rucher",
+            "DROP": "Faite glisser une photos ici"
+        }
     }
 }
