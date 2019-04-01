@@ -5,7 +5,7 @@ import { RucherService } from '../apiary/ruche-rucher/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 import { RucheInterface } from '../../_model/ruche';
 import { CapteurInterface } from '../../_model/capteur';
-import { CapteurService } from '../../capteur/capteur.service';
+import { CapteurService } from '../capteur/capteur.service';
 import { FleurObservees } from '../../_model/fleur-observees';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -37,7 +37,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     private userService: UserloggedService,
     private capteurService: CapteurService,
     private render: Renderer2,
-    private translateService: TranslateService) {
+    public translateService: TranslateService) {
       console.log(this.translateService.currentLang);
     }
 
