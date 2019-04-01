@@ -1,25 +1,13 @@
-<button
-  id="btn-feedback"
-  type="button"
-  data-toggle="tooltip" 
-  data-html="true" title="Your feedback"
-  class="btn btn-default"
-  data-toggle="modal"
-  href="#feedback"
->
- <img src="./assets/img/feedback.svg" />
+<button id="btn-feedback" type="button" data-toggle="tooltip" data-html="true" title="Your feedback"
+  class="btn btn-default" data-toggle="modal" href="#feedback">
+  <img src="./assets/img/feedback.svg" />
 </button>
 
 <div class="modal fade" id="feedback">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-hidden="true"
-        >
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           &times;
         </button>
         <h4 class="modal-title">Send us your feedback</h4>
@@ -30,20 +18,23 @@
         </form>
       </div>
       <div class="modal-footer">
-        <p>You can also join the conversation on <a href="https://join.slack.com/t/mellisphera/shared_invite/enQtNTgyMzk4MzkyODgxLTAzODk2YTEzNzM3Y2NlZTE0NzM2NDliZmUxMzc3ZWJmYzVmODMwMWI1ZTQwY2E5ZmVmMGEwMGY3YzczMTA0ZTM" target="_blank">Slack</a></p>
-        <div>
-            <button type="submit" class="btn btn-default" (click)="resForm();" data-dismiss="modal">
-                Close
-              </button>
-              <button
-                type="button"
-                (click)="send()"
-                class="btn btn-primary"
-                data-dismiss="modal"
-                [disabled]="feedbackForm.invalid"
-              >
-                Send
-              </button>
+        <div id="description-slack">
+          <p>You can also join the conversation on slack<br /></p>
+          <p style="text-align:center;"><a
+              href="https://join.slack.com/t/mellisphera/shared_invite/enQtNTgyMzk4MzkyODgxLTAzODk2YTEzNzM3Y2NlZTE0NzM2NDliZmUxMzc3ZWJmYzVmODMwMWI1ZTQwY2E5ZmVmMGEwMGY3YzczMTA0ZTM"
+              target="_blank">sign-up</a> or 
+            <a target="_blank"
+              href="https://join.slack.com/t/mellisphera/shared_invite/enQtNTgyMzk4MzkyODgxLTAzODk2YTEzNzM3Y2NlZTE0NzM2NDliZmUxMzc3ZWJmYzVmODMwMWI1ZTQwY2E5ZmVmMGEwMGY3YzczMTA0ZTM">login</a>
+          </p>
+        </div>
+        <div id="group-btn">
+          <button type="submit" class="btn btn-default" (click)="resForm();" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" (click)="send()" class="btn btn-primary" data-dismiss="modal"
+            [disabled]="feedbackForm.invalid">
+            Send
+          </button>
         </div>
       </div>
     </div>
