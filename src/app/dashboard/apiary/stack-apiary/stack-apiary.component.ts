@@ -80,6 +80,7 @@ export class StackApiaryComponent implements OnInit {
     try {
       return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === idApiary);
     } catch (e) {
+      console.log(e);
       return false;
     }
   }
