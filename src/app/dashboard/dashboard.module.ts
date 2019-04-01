@@ -14,7 +14,6 @@ import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RucherService } from './apiary/ruche-rucher/rucher.service';
 import { RucheService } from './service/ruche.service';
-import { MeteoService } from './meteo/Service/MeteoService';
 import { DailyRecordService } from './service/dailyRecordService';
 import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';
 import { CapteurService } from './capteur/capteur.service';
@@ -31,9 +30,7 @@ import { SearchCapteur } from './capteur/capteur.pipe';
 import { PipeCapteur } from './capteur/capteur.pipe';
 import { SearchFleurPipe, searchFleurByDate, searchFleurByType } from './fleurs-floraison/service/search-fleur.pipe';
 import { RapportService } from './rapport/rapport.service';
-import { DialogApiaryComponent } from './shared/navbar/dialog-apiary/dialog-apiary.component';
-import { MatDialogModule } from '@angular/material';
-import { MaterialModule } from '../material.module';
+import { MeteoService } from './meteo/Service/MeteoService';
 
 @NgModule({
   imports: [
@@ -41,22 +38,20 @@ import { MaterialModule } from '../material.module';
     DasboardRoutingModule,
     NavbarModule,
     SidebarModule,
-    MaterialModule,
     RouterModule,
-    // BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     ngfModule,
     DragAndCheckModule,
-    NgxEchartsModule,
     ArchwizardModule,
-    SharedModule,
+    SharedModule
   ],
   providers: [
     RucherService,
-    MeteoService,
     RucheService,
     RapportService,
+    MeteoService,
     DailyRecordService,
     FleursFloraisonService,
     CapteurService
@@ -78,9 +73,6 @@ import { MaterialModule } from '../material.module';
     ApiaryNotesComponent,
     FleursFloraisonComponent,
     WizardComponent
-  ],
-  entryComponents: [
-    DialogApiaryComponent
   ]
 })
 export class DashboardModule { }
