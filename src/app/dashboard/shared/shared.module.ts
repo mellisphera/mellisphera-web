@@ -34,9 +34,6 @@ import { TranslateModule } from '@ngx-translate/core';
     RouterModule,
     // BrowserModule,
     FormsModule,
-    ConfirmationPopoverModule.forRoot({
-      confirmButtonType: 'danger' // set defaults here
-    }),
   ],
   exports: [
     TranslateModule,
