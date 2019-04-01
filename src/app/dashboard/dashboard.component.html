@@ -11,3 +11,4 @@
   </div>
 </div>
 <app-feedback></app-feedback>
+<app-wizard *ngIf="login.getConnexion() == 1 && login.getWizardActive()" [@enterAnimation]></app-wizard>

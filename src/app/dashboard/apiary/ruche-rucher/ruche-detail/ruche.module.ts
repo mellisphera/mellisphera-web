@@ -8,10 +8,13 @@ import { HealthComponent } from './health/health.component';
 import { DailyComponent } from './daily/daily.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StockComponent } from './stock/stock.component';
+import { StackComponent } from './stack/stack.component';
+import { HourlyComponent } from './hourly/hourly.component';
 
 @NgModule({
   imports: [
-    CommonModule,
+  CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RucheRoutingModule,
@@ -23,7 +26,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RucheDetailComponent,
     ObservationComponent,
     HealthComponent,
-    DailyComponent
+    DailyComponent,
+    HourlyComponent,
+    StackComponent,
+    StockComponent
   ]
 })
 export class RucheModule { }

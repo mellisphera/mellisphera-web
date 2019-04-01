@@ -1,10 +1,3 @@
-import { GraphFlowerService } from './demo/graph/graph-flower.service';
-import { GraphHoneyService } from './demo/graph/graph-honey.service';
-import { CalendrierFSTLervice } from './demo/graph/calendrierFSTL';
-import { HomeComponent } from './dashboard/home/home.component';
-import { ConnectionService } from './dashboard/admin/service/connection.service';
-import { ConnectionsMapService } from './dashboard/admin/service/connections-map.service';
-import { GraphStackService } from './dashboard/apiary/ruche-rucher/ruche-detail/stack/service/graph-stack.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +17,6 @@ import { AuthService } from './auth/Service/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CommonModule } from '@angular/common';
-import { AdminComponent } from './dashboard/admin/admin.component';
 import { SignupService } from './auth/Service/signup.service';
 import { AuthInterceptorService } from './auth/Service/auth-interceptor.service';
 import { NotifierModule } from 'angular-notifier';
