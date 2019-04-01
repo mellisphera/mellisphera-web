@@ -31,6 +31,7 @@ import { PipeCapteur } from './capteur/capteur.pipe';
 import { SearchFleurPipe, searchFleurByDate, searchFleurByType } from './fleurs-floraison/service/search-fleur.pipe';
 import { RapportService } from './rapport/rapport.service';
 import { MeteoService } from './meteo/Service/MeteoService';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 @NgModule({
   imports: [
@@ -43,6 +44,9 @@ import { MeteoService } from './meteo/Service/MeteoService';
     ReactiveFormsModule,
     SharedModule,
     ngfModule,
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger' // set defaults here
+    }),
     DragAndCheckModule,
     ArchwizardModule,
     SharedModule

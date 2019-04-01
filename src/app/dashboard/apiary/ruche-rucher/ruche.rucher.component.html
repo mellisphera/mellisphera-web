@@ -12,7 +12,7 @@
             <div class="panel-body">
               <b class="text-success"></b>
               <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
-                title="New hive" data-toggle="modal"
+                title="New hive" data-toggle="modal" data-backdrop="false"
                 style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newRucheModal"
                 class="btn btn-success btn-lg">
                 <i class="fa fa-plus"></i>
@@ -40,7 +40,7 @@
                       <td (click)="clickOnRuche(ruche)" class="hive-select">{{ruche.description}}</td>
                       <td class="text-center"><i [class]="'fa fa-circle ' + checkSensor(ruche)"></i></td>
                       <td class="text-right">
-                        <button data-toggle="tooltip" data-html="true" title="Edit hive" data-toggle="modal"
+                        <button data-toggle="tooltip" data-html="true" data-backdrop="false" title="Edit hive" data-toggle="modal"
                           type="button" (click)="onSelectRuche(ruche, i)" data-target="#editRucheModal"
                           class="btn btn-primary btn-lg " style="padding: 0;border: none; background: none;">
                           <i class="fa fa-edit"></i>
