@@ -9,7 +9,7 @@ import { RecordService } from '../service/Record/record.service';
 })
 export class StackComponent implements OnInit {
 
-  constructor(public graphStack : GraphStackService, public recordService : RecordService) { }
+  constructor(public graphStack: GraphStackService, public recordService : RecordService) { }
 
   ngOnInit() {
   }

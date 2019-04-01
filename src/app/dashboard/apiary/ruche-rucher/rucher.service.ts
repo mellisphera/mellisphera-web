@@ -14,7 +14,6 @@ import { UserloggedService } from '../../../userlogged.service';
 import { RucheService } from '../../service/ruche.service';
 import { DailyRecordService } from '../../service/dailyRecordService';
 import { RucherModel } from '../../../_model/rucher-model';
-import { MeteoService } from '../../../meteo/Service/MeteoService';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -35,15 +34,15 @@ export class RucherService {
     constructor(private http: HttpClient, private user: UserloggedService,
         public rucheService: RucheService,
         private dailyRec: DailyRecordService,
-        /*public observationService: ObservationService,*/
-        public meteoService: MeteoService) {
-        this.rucherSubject = new BehaviorSubject([]);
-        this.initRucher();
-        if (this.user.getUser()) {
-            this.getApiaryByUser(this.user.getUser());
-        }
+        /*public observationService: ObservationService,*/)
+        {
+            this.rucherSubject = new BehaviorSubject([]);
+            this.initRucher();
+            if (this.user.getUser()) {
+                this.getApiaryByUser(this.user.getUser());
+            }
 
-    }
+        }
 
     emitApiarySubject() {
         this.rucherSubject.next(this.ruchers.slice());

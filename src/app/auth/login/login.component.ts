@@ -6,7 +6,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthService } from '../Service/auth.service';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { Login } from '../../_model/login';
-import { SignupService } from '../../admin/service/signup.service';
+import { SignupService } from '../Service/signup.service';
 
 @Component({
   selector: 'app-login',

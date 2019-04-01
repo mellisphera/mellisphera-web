@@ -5,6 +5,9 @@
 .sidebar,.sidebar-wrapper{
     width: 70px !important;
 }
+/* .sidebar-wrapper{
+    background-color: #59B53D;
+} */
 .sidebar{
     background-color: blue;
 }
@@ -53,4 +56,10 @@ aw-wizard-navigation-bar{
 }
 .btn-group{
     margin-top: 50px !important;
+}
+.modal-backdrop {
+    display: none;
+}
+.modal {
+    background: rgba(0,0,0,0.5);
 }

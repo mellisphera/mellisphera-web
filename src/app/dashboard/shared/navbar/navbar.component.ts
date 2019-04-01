@@ -10,15 +10,15 @@ import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { RucherService } from '../../apiary/ruche-rucher/rucher.service';
 import { RucheService } from '../../service/ruche.service';
 import { FleursFloraisonService } from '../../fleurs-floraison/service/fleurs.floraison.service';
-import { MeteoService } from '../../../meteo/Service/MeteoService';
+import { MeteoService } from '../../meteo/Service/MeteoService';
 import { ObservationService } from '../../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { DailyRecordService } from '../../service/dailyRecordService';
 import { Subscription } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
-import { CapteurService } from '../../../capteur/capteur.service';
-
-
+import { CapteurService } from '../../capteur/capteur.service';
+import { ngf } from 'angular-file';
+import { SidebarService } from '../../service/sidebar.service';
 
 @Component({
     // moduleId: module.id,
@@ -44,6 +44,8 @@ export class NavbarComponent implements OnInit{
     private sidebarVisible: boolean;
     public updateStatus: boolean;
     public newApiary: RucherModel;
+    public colorSidebar: Array<any>;
+    public currentColor: any;
     baseDropValid: string;
     public lastConnexion: string;
     private readonly notifier: NotifierService;
@@ -55,13 +57,14 @@ export class NavbarComponent implements OnInit{
         private authService: AuthService,
         public rucherService: RucherService,
         private rucheService: RucheService,
-        private meteoService: MeteoService,
+       // private meteoService: MeteoService,
         private fleursFloraisonService : FleursFloraisonService,
         private observationService : ObservationService,
         private capteurService: CapteurService,
         private formBuilder: FormBuilder,
         private tokenService: AtokenStorageService,
         private dailyRecordService: DailyRecordService,
+        public sidebarService: SidebarService,
         public notifierService: NotifierService) {
       this.location = location;
       this.notifier = this.notifierService;
@@ -80,6 +83,7 @@ export class NavbarComponent implements OnInit{
             codePostal : '',
             ville : ''
          };
+
 
     }
 
@@ -101,7 +105,6 @@ export class NavbarComponent implements OnInit{
         this.capteurService.sensorSubject.unsubscribe();
         this.tokenService.signOut();
         this.authService.connexionStatus.next(false);
-        this.router.navigate(['/login']);
     }
     onPictureLoad(next) {
         const fileReader = new FileReader();
@@ -127,26 +130,26 @@ export class NavbarComponent implements OnInit{
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
         console.log(location);
         switch (location) {
-            case '/ruche-et-rucher':
+            case '/dashboard/ruche-et-rucher':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
-            case '/home':
+            case '/dashboard/home':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 break;
-            case '/fleurs-floraison':
+            case '/dashboard/fleurs-floraison':
                 this.fleursFloraisonService.getUserFleur(this.rucherService.getCurrentApiary());
                 break;
-            case '/meteo':
+/*             case '/meteo':
                 this.meteoService.getWeather(this.rucherService.rucher.codePostal);
-                break;
-            case '/ruche-detail':
+                break; */
+            case '/dashboard/ruche-detail':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
-            case '/stack-apiary':
+            case '/dashboard/stack-apiary':
                 // this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
-            case '/apiary-notes':
+            case '/dashboard/apiary-notes':
                 this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
                 break;
             default:
@@ -225,6 +228,10 @@ export class NavbarComponent implements OnInit{
           validate : ''
         };
         this.rucherForm.setValue(donnée);
+    }
+
+    setColor(color: any) {
+        this.sidebarService.setCurrentColor(color);
     }
 
     getTitle(){
