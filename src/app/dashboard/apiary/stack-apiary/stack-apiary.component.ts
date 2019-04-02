@@ -11,6 +11,8 @@ import { DataRange } from '../ruche-rucher/ruche-detail/service/Record/data-rang
 import { StackService } from './service/stack.service';
 import { element } from '@angular/core/src/render3/instructions';
 import { resolve } from 'q';
+import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
+import { AdminService } from '../../admin/service/admin.service';
 /* import * as echarts from 'echarts'; */
 
 @Component({
@@ -32,7 +34,9 @@ export class StackApiaryComponent implements OnInit {
     private userService: UserloggedService,
     public stackApiaryGraph: StackApiaryGraphService,
     public stackService: StackService,
-    public recordService: RecordService, ) {
+    public recordService: RecordService,
+    private adminService:AdminService,
+    private tokenService: AtokenStorageService) {
     /* this.subjectEchart = new BehaviorSubject({}); */
     this.merge = {
       series: [],
@@ -62,18 +66,40 @@ export class StackApiaryComponent implements OnInit {
   ngOnInit() {
     console.log(this.recordService.mergeOptionStackApiary);
     if (!this.rucherService.rucherSubject.closed) {
-      this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-        this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).map((hives) => {
-          hives.forEach(elt => {
-            this.rucherService.findRucherById(elt.idApiary, (apiary) => {
-              elt.apiaryName = apiary[0].name;
+      if (!this.tokenService.checkAuthorities('ROLE_ADMIN')) {
+        this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
+          this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).map((hives) => {
+            hives.forEach(elt => {
+              this.rucherService.findRucherById(elt.idApiary, (apiary) => {
+                elt.apiaryName = apiary[0].name;
+              });
             });
+            return hives;
+          }).subscribe((hives) => {
+            this.rucherService.rucheService.ruchesAllApiary = hives;
           });
-          return hives;
-        }).subscribe((hives) => {
-          this.rucherService.rucheService.ruchesAllApiary = hives;
         });
-      });
+      } else {
+        console.log(this.rucherService.rucherSubject);
+        this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
+          this.adminService.getAllHive().map((hives) => {
+            hives.forEach(elt => {
+              this.rucherService.findRucherById(elt.idApiary, (apiary) => {
+                console.log(apiary);
+                try {
+                  elt.apiaryName = apiary[0].name;
+                } catch (e) {
+                  console.log(e);
+                }
+              });
+            });
+            return hives;
+          }).subscribe((hives) => {
+            console.log(hives);
+            this.rucherService.rucheService.ruchesAllApiary = hives;
+          });
+        });
+      }
     }
   }
   getHiveByApiary(idApiary: string) {

@@ -7,13 +7,14 @@
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { CONFIG } from '../../../../config';
 import { UserloggedService } from '../../../userlogged.service';
 import { RucheService } from '../../service/ruche.service';
 import { DailyRecordService } from '../../service/dailyRecordService';
 import { RucherModel } from '../../../_model/rucher-model';
+import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -31,14 +32,13 @@ export class RucherService {
     rucherObs: Observable<RucherModel>;
     ruchersObs: Observable<RucherModel[]>;
     rucherSubject: BehaviorSubject<RucherModel[]>;
-    constructor(private http: HttpClient, private user: UserloggedService,
+    constructor(private http: HttpClient,
+        private user: UserloggedService,
         public rucheService: RucheService,
-        private dailyRec: DailyRecordService,
-        /*public observationService: ObservationService,*/)
-        {
+        private tokenService: AtokenStorageService) {
             this.rucherSubject = new BehaviorSubject([]);
             this.initRucher();
-            if (this.user.getUser()) {
+            if (this.user.getUser() && !this.tokenService.checkAuthorities('ROLE_ADMIN')) {
                 this.getApiaryByUser(this.user.getUser());
             }
 
