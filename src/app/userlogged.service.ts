@@ -65,9 +65,9 @@ export class UserloggedService {
       return false;
     }
   }
-  logOut(){
+/*   logOut() {
     return localStorage.removeItem('currentUser');
-  }
+  } */
 
   signOut() {
     window.sessionStorage.clear();

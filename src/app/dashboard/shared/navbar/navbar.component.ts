@@ -19,6 +19,7 @@ import { NotifierService } from 'angular-notifier';
 import { CapteurService } from '../../capteur/capteur.service';
 import { ngf } from 'angular-file';
 import { SidebarService } from '../../service/sidebar.service';
+import { AdminService } from '../../admin/service/admin.service';
 
 @Component({
     // moduleId: module.id,
@@ -56,6 +57,7 @@ export class NavbarComponent implements OnInit{
         private router: Router,
         private authService: AuthService,
         public rucherService: RucherService,
+        private adminService: AdminService,
         private rucheService: RucheService,
        // private meteoService: MeteoService,
         private fleursFloraisonService : FleursFloraisonService,

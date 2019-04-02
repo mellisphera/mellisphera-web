@@ -35,6 +35,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { SidebarService } from './service/sidebar.service';
 import { DemoComponent } from '../demo/demo.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdminService } from './admin/service/admin.service';
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MeteoService,
     DailyRecordService,
     FleursFloraisonService,
+    AdminService,
     CapteurService,
     SidebarService
   ],
