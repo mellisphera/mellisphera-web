@@ -78,7 +78,8 @@ export class StackApiaryComponent implements OnInit {
             this.rucherService.rucheService.ruchesAllApiary = hives;
           });
         });
-      } else {        this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
+      } else {
+        this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
           this.adminService.getAllHive().map((hives) => {
             hives.forEach(elt => {
               this.rucherService.findRucherById(elt.idApiary, (apiary) => {
@@ -107,20 +108,28 @@ export class StackApiaryComponent implements OnInit {
     return '#' + index;
   }
   selectRange() {
+    let tmpSerieDone = 0;
     this.loadingStack = true;
+    this.recordService.mergeOptionStackApiary = this.merge;
     this.recordService.setRange(this.stackService.range);
-      this.stackService.getHiveSelect().forEach((element, index) => {
-        if (!this.loadingStack || index === 0) {
-          this.recordService.getRecordByIdHive(element.id, element.name, 
-            this.recordService.mergeOptionStackApiary, false,  this.getColor(element))
-          .subscribe((data) => {
-            console.log(data);
-            this.recordService.mergeOptionStackApiary = data;
-          }, () => {}, () => {
+    console.log(this.stackService.getHiveSelect());
+      this.stackService.getHiveSelect().filter(res => res.id !== '').forEach((element, index) => {
+        this.recordService.getRecordByIdHive(element.id, element.name, 
+          this.recordService.mergeOptionStackApiary, false,  this.getColor(element))
+        .subscribe((data) => {
+          console.log(data);
+          this.recordService.mergeOptionStackApiary = data;
+        }, (err) => {
+          console.log(err);
+        }, () => {
+          tmpSerieDone ++;
+          if (tmpSerieDone === this.stackService.getHiveSelect().filter(res => res.id !== '').length) {
+            console.log(this.recordService.mergeOptionStackApiary);
             this.loadingStack = false;
-          });
-        }
+          }
+        });
       });
+
   }
 
   selectHive(selectHive: RucheInterface, event: MouseEvent) {
@@ -130,14 +139,17 @@ export class StackApiaryComponent implements OnInit {
       if (arrayFilter.length > 0) {
         // this.render.removeClass(event.target, 'active');
         /* this.render.removeStyle(event.target, 'background-color'); */
+        console.log(arrayFilter);
         this.stackService.removeHive(arrayFilter[0]);
         let option = this.echartInstance.getOption();
         this.removeHiveStack(selectHive.name);
+        // console.log(this.recordService.mergeOptionStackApiary);
         this.echartInstance.clear();
         option.series = this.recordService.mergeOptionStackApiary.series;
         option.legend = this.recordService.mergeOptionStackApiary.legend;
         this.echartInstance.setOption(option);
         this.loadingStack = false;
+        console.log(this.stackService.getHiveSelect());
         // this.echartInstance.clear();
       } else {
         this.loadingStack = true;
@@ -170,11 +182,17 @@ export class StackApiaryComponent implements OnInit {
     } */
 
   removeHiveStack(hiveName: string) {
+    console.log(hiveName);
     this.recordService.mergeOptionStackApiary.series.filter(serie => hiveName === serie.name.split(' / ')[0]).forEach(element => {
-      const index = this.recordService.mergeOptionStackApiary.series.indexOf(element);
+      const index = this.recordService.mergeOptionStackApiary.series.map(res => {
+        console.log(res);
+        return res.name;
+      }).indexOf(element.name);
       console.log(index);
       this.recordService.mergeOptionStackApiary.series.splice(index, 1);
       this.recordService.mergeOptionStackApiary.legend.data.splice(index, 1);
+      console.log(this.recordService.mergeOptionStackApiary);
+      
     });
   }
 }
