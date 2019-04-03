@@ -2,6 +2,9 @@
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import "../node_modules/angular-notifier/styles";
 
+body{
+    overflow: hidden;
+}
 .sidebar,.sidebar-wrapper{
     width: 70px !important;
 }
@@ -62,4 +65,7 @@ aw-wizard-navigation-bar{
 }
 .modal {
     background: rgba(0,0,0,0.5);
+}
+.backdrop{
+    width: 100%;
 }

@@ -1,3 +1,5 @@
 <router-outlet></router-outlet>
 <!-- <app-feedback *ngIf="tokenService.getToken()"></app-feedback> -->
 <notifier-container></notifier-container>
+<ngx-loading [show]="loadingService.loading" [config]="{animationType: ngxLoadingAnimationTypes.circleSwish, primaryColour: primaryColour, backdropBorderRadius: '3px'}"
+></ngx-loading>
