@@ -177,14 +177,12 @@ export class NavbarComponent implements OnInit{
         );
     }
 
-    //delete rucher
     deleteRucher() {
         this.rucherService.deleteRucher().subscribe( () => {}, () => {} , () => {
             const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
             this.rucherService.ruchers.splice(index, 1);
             this.rucherService.emitApiarySubject();
             this.notifier.notify('success', 'Deleted Apaiary');
-            console.log(this.rucherService.ruchers);
             if (this.rucherService.ruchers.length > 0) {
                 this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
                 this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);

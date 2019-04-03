@@ -15,6 +15,7 @@ import { RucheService } from '../../service/ruche.service';
 import { DailyRecordService } from '../../service/dailyRecordService';
 import { RucherModel } from '../../../_model/rucher-model';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
+import { LoadingService } from '../../service/loading.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -35,6 +36,7 @@ export class RucherService {
     constructor(private http: HttpClient,
         private user: UserloggedService,
         public rucheService: RucheService,
+        private loadingService: LoadingService,
         private tokenService: AtokenStorageService) {
             this.rucherSubject = new BehaviorSubject([]);
             this.initRucher();
@@ -46,7 +48,6 @@ export class RucherService {
 
     emitApiarySubject() {
         this.rucherSubject.next(this.ruchers.slice());
-        console.log(this.rucherSubject);
     }
     initRucher() {
          this.rucher = {
@@ -88,6 +89,7 @@ export class RucherService {
     }
 
     getApiaryByUser(username: string) {
+        this.loadingService.loading = true;
         this.ruchersObs = this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username);
         this.ruchersObs.subscribe(
             (data) => {
@@ -116,6 +118,7 @@ export class RucherService {
                     this.rucheService.getRucheByApiary(this.getCurrentApiary());
                 } else {
                 }
+                this.loadingService.loading = false;
             }
         );
     }

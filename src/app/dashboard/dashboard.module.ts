@@ -36,6 +36,7 @@ import { SidebarService } from './service/sidebar.service';
 import { DemoComponent } from '../demo/demo.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminService } from './admin/service/admin.service';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   imports: [
@@ -53,7 +54,7 @@ import { AdminService } from './admin/service/admin.service';
     }),
     DragAndCheckModule,
     ArchwizardModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     RucherService,

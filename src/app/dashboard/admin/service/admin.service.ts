@@ -5,6 +5,7 @@ import { CONFIG } from '../../../../config';
 import { RucherService } from '../../apiary/ruche-rucher/rucher.service';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { RucheInterface } from '../../../_model/ruche';
+import { LoadingService } from '../../service/loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,15 @@ export class AdminService {
   constructor(
     private httpClient: HttpClient,
     private rucherService: RucherService,
-    private tokenService: AtokenStorageService) {
+    private tokenService: AtokenStorageService,
+    private loadingService: LoadingService) {
       if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
         this.getAllApiary();
       }
     }
 
   getAllApiary() {
+    this.loadingService.loading = true;
     this.httpClient.get<RucherModel[]>(CONFIG.URL + 'apiaries/all').subscribe(
       (data) => {
         this.rucherService.ruchers = data;
@@ -29,6 +32,7 @@ export class AdminService {
       (err) => {},
       () => {
         this.rucherService.rucherSubject.complete();
+        this.loadingService.loading = false;
       }
     );
   }

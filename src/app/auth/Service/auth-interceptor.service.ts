@@ -15,13 +15,12 @@ export class AuthInterceptorService implements HttpInterceptor {
   constructor(private tokenService : AtokenStorageService,private userService : UserloggedService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
-    //const token = this.tokenService.getToken() ? this.tokenService.getToken() : CONFIG.PUBLIC_TOKEN;
-    let authReq = req.clone({
+    const authReq = req.clone({
       setHeaders : {
         Authorization : `Bearer ${this.tokenService.getToken()}`
       }
     });
-    if(req.url.indexOf("openweathermap") !== -1) {
+    if (req.url.indexOf('openweathermap') !== -1) {
       return next.handle(req);
     } else if(req.url.indexOf('slack') !== -1) {
       return next.handle(req);
