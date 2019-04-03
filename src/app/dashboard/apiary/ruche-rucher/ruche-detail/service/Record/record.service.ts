@@ -1,7 +1,7 @@
 import { NgxEchartsModule } from 'ngx-echarts';
 /**
  * @author mickael
- * @description Ensemble des requetes pour la récupérer les données heure/heure
+ * @description Ensemble des requetes pour récupérer les données heure/heure
  *
  */
 

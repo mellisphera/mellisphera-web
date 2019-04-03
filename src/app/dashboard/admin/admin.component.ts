@@ -15,6 +15,14 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.connectionService.getConnection().subscribe(
+      data => {
+        console.log(data);
+      },
+      err => {
+        console.log(err);
+      }
+    );
 
   }
 

@@ -15,7 +15,7 @@
                     </div>
                 </ng-container>
             </div>
-            <select (change)="selectRange()" [(ngModel)]="stackService.range" name="range" class="form-control">
+            <select (change)="selectRange()" [disabled]="loadingStack" [(ngModel)]="stackService.range" name="range" class="form-control">
                 <option *ngFor="let range of ranges;" [ngValue]="range" [selected]="range.scale == 15">
                     {{ 'last '+ range.scale+'  '+range.type | lowercase}}</option>
             </select>
