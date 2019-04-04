@@ -111,8 +111,6 @@ export class StackApiaryComponent implements OnInit {
     this.loadingStack = true;
     this.recordService.updateMergeStack();
     this.recordService.setRange(this.stackService.range);
-    console.log(this.stackService.getHiveSelect());
-    console.log(this.recordService.mergeOptionStackApiary);
     const observable = this.stackService.getHiveSelect().filter(hive => hive.id !== '')
     .map(hive => this.recordService.getRecordByIdHive(hive.id, hive.name, this.merge, false, this.getColor(hive)));
     Observable.forkJoin(observable).subscribe(data => {
@@ -126,9 +124,8 @@ export class StackApiaryComponent implements OnInit {
           this.recordService.mergeOptionStackApiary.legend.data.push(element);
         });
       });
-/*       this.recordService.mergeOptionStackApiary.series = data.map(elt => elt.series).flat();
+      this.recordService.mergeOptionStackApiary.series = data.map(elt => elt.series).flat();
       this.recordService.mergeOptionStackApiary.legend.data = data.map(elt => elt.legend.data);
-      console.log(this.recordService.mergeOptionStackApiary); */
     },
     (err) => {},
     () => {
@@ -139,7 +136,6 @@ export class StackApiaryComponent implements OnInit {
       option.legend.show = false;
       this.echartInstance.setOption(option);
       this.loadingStack = false;
-      console.log(this.recordService.mergeOptionStackApiary);
     });
   }
 
