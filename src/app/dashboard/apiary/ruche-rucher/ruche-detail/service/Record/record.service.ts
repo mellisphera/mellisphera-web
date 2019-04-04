@@ -338,7 +338,7 @@ export class RecordService {
   updateMergeStack() {
     this.mergeOptionStackApiary = {
       legend: {
-        data: [this.legendOption]
+        data: []
       },
       series: [],
     };
