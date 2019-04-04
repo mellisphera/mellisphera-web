@@ -4,7 +4,7 @@ import { RucheService } from '../../service/ruche.service';
 import { RucheInterface } from '../../../_model/ruche';
 import { RecordService } from '../ruche-rucher/ruche-detail/service/Record/record.service';
 import { EChartOption } from 'echarts';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserloggedService } from '../../../userlogged.service';
 import { RucherService } from '../ruche-rucher/rucher.service';
 import { DataRange } from '../ruche-rucher/ruche-detail/service/Record/data-range';
@@ -13,7 +13,7 @@ import { element } from '@angular/core/src/render3/instructions';
 import { resolve } from 'q';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { AdminService } from '../../admin/service/admin.service';
-/* import * as echarts from 'echarts'; */
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'app-stack-apiary',
@@ -35,7 +35,7 @@ export class StackApiaryComponent implements OnInit {
     public stackApiaryGraph: StackApiaryGraphService,
     public stackService: StackService,
     public recordService: RecordService,
-    private adminService:AdminService,
+    private adminService: AdminService,
     private tokenService: AtokenStorageService) {
     /* this.subjectEchart = new BehaviorSubject({}); */
     this.merge = {
@@ -66,7 +66,7 @@ export class StackApiaryComponent implements OnInit {
   ngOnInit() {
     if (!this.rucherService.rucherSubject.closed) {
       if (!this.tokenService.checkAuthorities('ROLE_ADMIN')) {
-        this.rucherService.rucherSubject.subscribe(() => { }, () => {}, () => {
+        this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
           this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).map((hives) => {
             hives.forEach(elt => {
               this.rucherService.findRucherById(elt.idApiary, (apiary) => {
@@ -85,7 +85,7 @@ export class StackApiaryComponent implements OnInit {
               this.rucherService.findRucherById(elt.idApiary, (apiary) => {
                 try {
                   elt.apiaryName = apiary[0].name;
-                } catch (e) {}
+                } catch (e) { }
               });
             });
             return hives;
@@ -109,27 +109,37 @@ export class StackApiaryComponent implements OnInit {
   }
   selectRange() {
     let tmpSerieDone = 0;
-    this.loadingStack = true;
     this.recordService.mergeOptionStackApiary = this.merge;
     this.recordService.setRange(this.stackService.range);
     console.log(this.stackService.getHiveSelect());
-      this.stackService.getHiveSelect().filter(res => res.id !== '').forEach((element, index) => {
-        this.recordService.getRecordByIdHive(element.id, element.name, 
-          this.recordService.mergeOptionStackApiary, false,  this.getColor(element))
-        .subscribe((data) => {
-          console.log(data);
-          this.recordService.mergeOptionStackApiary = data;
-        }, (err) => {
-          console.log(err);
-        }, () => {
-          tmpSerieDone ++;
-          if (tmpSerieDone === this.stackService.getHiveSelect().filter(res => res.id !== '').length) {
-            console.log(this.recordService.mergeOptionStackApiary);
-            this.loadingStack = false;
-          }
-        });
-      });
-
+/*     this.stackService.getHiveSelect().filter(res => res.id !== '').forEach((element, index) => {
+      if (!this.loadingStack) {
+        this.loadingStack = true;
+        this.recordService.getRecordByIdHive(element.id, element.name,
+          this.recordService.mergeOptionStackApiary, false, this.getColor(element))
+          .subscribe((data) => {
+            console.log(data);
+            this.recordService.mergeOptionStackApiary = data;
+          }, (err) => {
+            console.log(err);
+          }, () => {
+            tmpSerieDone++;
+            console.log(tmpSerieDone);
+            if (tmpSerieDone === this.stackService.getHiveSelect().filter(res => res.id !== '').length) {
+              this.loadingStack = false;
+            }
+          });
+      }
+    }); */
+    const observable = this.stackService.getHiveSelect().filter(hive => hive.id !== '')
+    .map(hive => this.recordService.getRecordByIdHive(hive.id, hive.name, this.merge, false, this.getColor(hive)));
+    Observable.forkJoin(observable).subscribe(data => {
+      console.log(data);
+      console.log(data.map(elt => elt.series));
+      this.recordService.mergeOptionStackApiary.series = data.map(elt => elt.series);
+      this.recordService.mergeOptionStackApiary.legend.data = data.map(elt => elt.legend.data);
+      // console.log(this.recordService.mergeOptionStackApiary);
+    });
   }
 
   selectHive(selectHive: RucheInterface, event: MouseEvent) {
@@ -139,7 +149,7 @@ export class StackApiaryComponent implements OnInit {
       if (arrayFilter.length > 0) {
         // this.render.removeClass(event.target, 'active');
         /* this.render.removeStyle(event.target, 'background-color'); */
-        console.log(arrayFilter);
+        console.log(this.echartInstance.getOption());
         this.stackService.removeHive(arrayFilter[0]);
         let option = this.echartInstance.getOption();
         this.removeHiveStack(selectHive.name);
@@ -157,11 +167,11 @@ export class StackApiaryComponent implements OnInit {
         this.recordService.setRange(this.stackService.range);
         this.recordService.getRecordByIdHive(selectHive.id, selectHive.name,
           this.recordService.mergeOptionStackApiary, false, this.getColor(selectHive))
-        .subscribe((data) => {
-          this.recordService.mergeOptionStackApiary = data;
-        },() => {}, () => {
-          this.loadingStack = false;
-        });
+          .subscribe((data) => {
+            this.recordService.mergeOptionStackApiary = data;
+          }, () => { }, () => {
+            this.loadingStack = false;
+          });
       }
     }
   }
@@ -192,7 +202,7 @@ export class StackApiaryComponent implements OnInit {
       this.recordService.mergeOptionStackApiary.series.splice(index, 1);
       this.recordService.mergeOptionStackApiary.legend.data.splice(index, 1);
       console.log(this.recordService.mergeOptionStackApiary);
-      
+
     });
   }
 }
