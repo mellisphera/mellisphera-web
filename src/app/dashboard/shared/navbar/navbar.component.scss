@@ -1,53 +1,8 @@
-/* ul li a{
-    margin: 0px;
-    padding-top: 18px;
-}
-#selectRucher{
-    margin-top: 5px;
-}
-button{
-    margin: 0px !important;
-}
-.navbar-nav a{
-    padding-top: 16px !important;
-}
-.valid-drag{
-    border:3px dashed blue;
-}
-#upload-group{
-    display: flex;
-}
-#upload-group div{
-    width: 50%;
-    min-height: 20px;
-}
-label{
-    margin-right: 6px;
-}
-.crud{
-    /* haut | droit | bas | gauche */
-/*     padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-
-@media screen and (max-width:755px){
-    #select-Apiary{
-        width: auto;
-        font-size: 10px;
-    }
-}
-@media screen and (max-width:400px){
-    .btn-lg{
-        font-size: 7px;
-        padding: 2px;
-    }
-    .btn-primary{
-        font-size: 8px;
-    }
-} */
 .navbar .navbar-nav > li > a{
     margin: 5px 3px !important;
+}
+nav{
+    background-color: currentColor;
 }
 #select-Apiary{
     padding-top: 5px;
@@ -75,4 +30,16 @@ label{
 .color-items{
     cursor: pointer;
     text-align: center;
+}
+#lang-group{
+    display: inline-block;
+    position: absolute;
+    top: 14px;
+    right: 30%;
+}
+#lang-group img{
+    padding: 2px;
+}
+#lang-group img:hover{
+    cursor: pointer;
 }

@@ -8,6 +8,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ngfModule } from 'angular-file';
 import { DragAndCheckModule } from 'ng2-drag-and-check';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '../shared.module';
+
 
 @NgModule({
     imports: [
@@ -16,6 +19,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
         ReactiveFormsModule,
         CommonModule,
         FormsModule,
+        TranslateModule,
         ngfModule,
         ConfirmationPopoverModule.forRoot({
             confirmButtonType: 'danger' // set defaults here

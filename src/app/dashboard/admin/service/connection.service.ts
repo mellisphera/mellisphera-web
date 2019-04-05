@@ -17,25 +17,39 @@ export class ConnectionService {
   connectionsArray: any[];
   constructor(private httpClient: HttpClient) {
     this.arrayIp = [];
+    this.connectionsArray = []
     this.connectionsByIp = {};
   }
 
 
   getConnection(): Observable<any> {
     return this.httpClient.get<Connection[]>(CONFIG.URL + 'logs').map((connections) => {
-      connections.forEach(elt => {
+      this.connectionsArray = connections.filter(res => res.location != null && res.username != null)
+      .map(elt => {
+        return { name: elt.username, value: [elt.location.longitude, elt.location.latitude, 10]};
+      });
+/*       connections.filter(res => res.username !== null).forEach(elt => {
         if (elt.location != null && elt.location !== undefined) {
           if (this.arrayIp.indexOf(elt.location.ip) === -1) {
-            this.connectionsByIp[elt.location.ip] = connections.filter(eltFilter => {
+            this.connectionsArray[elt.location.ip] = connections.filter(eltFilter => {
               return (eltFilter.location !== null) ? eltFilter.location.ip === elt.location.ip : null;
             }).map(res => {
-              return { name: res.username, value: [res.location.longitude, res.location.latitude]};
+              return { name: res.username, value: [res.location.longitude, res.location.latitude,
+                connections.filter(eltF => {
+                  return (eltF.location !== null) ? eltF.location.ip === elt.location.ip : null;
+                }).length]};
             });
             this.arrayIp.push(elt.location.ip);
           }
         }
-      });
-      return this.connectionsByIp;
+      }); */
+      return {
+        series: [
+          {
+            data: this.connectionsArray
+          }
+        ]
+      };
     });
   }
 

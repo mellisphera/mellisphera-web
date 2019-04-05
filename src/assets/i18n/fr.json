@@ -42,17 +42,42 @@
             "LOG_OUT": "Deconnexion"
         }
     },
-    "MODAL_APIARY": {
+    "MODAL_NEW_APIARY": {
         "TITLE": "Nouveaux Rucher",
         "FORM": {
+            "TITLE_NAME": "Nom",
             "NAME_INVALID": "Entrez un nom entre 1 et 20 caractères",
+            "TITLE_DESCRIPTION": "Description",
             "DESCRIPTION_INVALID": "40 caractéres maximum",
+            "TITLE_CITY": "Ville",
             "CITY_INVALID": "Selectionner une ville",
+            "TITLE_ZIP_CODE": "Code postale",
             "ZIP_INVALID": "Entrez un code postal"
         },
         "UPLOAD_PICTURE": {
             "LABEL":"Selectionner une photos pour votre rucher",
             "DROP": "Faite glisser une photos ici"
+        },
+        "INPUT": {
+            "SUBMIT": "Créer",
+            "CLOSE": "Fermer"
+        }
+    },
+    "MODAL_EDIT_APIARY": {
+        "TITLE": "Editer un rucher",
+        "FORM": {
+            "TITLE_NAME": "Nom",
+            "NAME_INVALID": "Entrez un nom entre 1 et 20 caractères",
+            "TITLE_DESCRIPTION": "Description",
+            "DESCRIPTION_INVALID": "40 caractéres maximum",
+            "TITLE_CITY": "Ville",
+            "CITY_INVALID": "Selectionner une ville",
+            "TITLE_ZIP_CODE": "Code postale",
+            "ZIP_INVALID": "Entrez un code postal"
+        },
+        "INPUT": {
+            "SUBMIT": "Sauvegarder",
+            "CLOSE": "Fermer"
         }
     }
 }

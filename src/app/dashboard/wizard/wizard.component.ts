@@ -54,7 +54,6 @@ export class WizardComponent implements OnInit, OnDestroy {
     console.log(this.userService.getWizardActive());
   }
 
-
   initForm() {
     this.apiaryForm = this.formBuilder.group({
       'name': [null, Validators.required],
