@@ -37,6 +37,7 @@ export class StackApiaryComponent implements OnInit {
     public recordService: RecordService,
     private adminService: AdminService,
     private tokenService: AtokenStorageService) {
+
     /* this.subjectEchart = new BehaviorSubject({}); */
     this.merge = {
       series: [],
@@ -124,8 +125,8 @@ export class StackApiaryComponent implements OnInit {
           this.recordService.mergeOptionStackApiary.legend.data.push(element);
         });
       });
-      this.recordService.mergeOptionStackApiary.series = data.map(elt => elt.series).flat();
-      this.recordService.mergeOptionStackApiary.legend.data = data.map(elt => elt.legend.data);
+/*       this.recordService.mergeOptionStackApiary.series = data.map(elt => elt.series).flat();
+      this.recordService.mergeOptionStackApiary.legend.data = data.map(elt => elt.legend.data); */
     },
     (err) => {},
     () => {
@@ -144,8 +145,6 @@ export class StackApiaryComponent implements OnInit {
       this.loadingStack = true;
       const arrayFilter = this.stackService.getHiveSelect().filter(hive => hive.id === selectHive.id);
       if (arrayFilter.length > 0) {
-        // this.render.removeClass(event.target, 'active');
-        /* this.render.removeStyle(event.target, 'background-color'); */
         this.stackService.removeHive(arrayFilter[0]);
         let option = this.echartInstance.getOption();
         this.removeHiveStack(selectHive.name);
@@ -155,8 +154,6 @@ export class StackApiaryComponent implements OnInit {
         option.legend = this.recordService.mergeOptionStackApiary.legend;
         this.echartInstance.setOption(option);
         this.loadingStack = false;
-        console.log(this.stackService.getHiveSelect());
-        // this.echartInstance.clear();
       } else {
         this.loadingStack = true;
         this.stackService.addHive(selectHive);

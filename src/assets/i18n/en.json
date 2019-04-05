@@ -1,10 +1,10 @@
 {
-    "WIZARD" :{
+    "WIZARD": {
         "STEP_TITLE": "Welcome",
         "WELCOME": "Welcome",
         "DESCRIPTION": "We want to guide your first steps creating apiary and other hives.",
         "DESCRIPTION_2": "Once you’re done you’ll be able to fly with your own wings",
-        "APIARY":{
+        "APIARY": {
             "STEP_TITLE": "Apiary",
             "TITLE": "Create your apiary"
         },
@@ -31,8 +31,48 @@
                 "DELETE": "Delete an item"
             }
         },
-        "NEXT":"Next",
+        "NEXT": "Next",
         "BACK": "Back",
         "FINISH": "Finish"
+    },
+    "NAVBAR": {
+        "ACCOUNT": {
+            "CHANGE_PASSWORD": "change password",
+            "LOG_OUT": "Logout"
+        }
+    },
+    "MODAL_NEW_APIARY": {
+        "TITLE": "New Apiary",
+        "FORM": {
+            "TITLE_NAME": "Name",
+            "NAME_INVALID": "select a name from 1 to 20 chars",
+            "TITLE_DESCRIPTION": "Description",
+            "DESCRIPTION_INVALID": "description can be 40 chars max",
+            "TITLE_CITY": "City",
+            "CITY_INVALID": "select city name",
+            "TITLE_ZIP_CODE": "Zip code",
+            "ZIP_INVALID": "select zip code"
+        },
+        "UPLOAD_PICTURE": {
+            "LABEL": "Select picture from Apiary",
+            "DROP": "Base drop zone"
+        },
+        "INPUT": {
+            "SUBMIT": "New Apiary",
+            "CLOSE": "Close"
+        }
+    },
+    "MODAL_EDIT_APIARY": {
+        "TITLE": "Edit Apiary",
+        "FORM": {
+            "NAME_INVALID": "select a name from 1 to 20 chars",
+            "DESCRIPTION_INVALID": "description can be 40 chars max",
+            "CITY_INVALID": "select city name",
+            "ZIP_INVALID": "select zip code"
+        },
+        "INPUT": {
+            "SUBMIT": "Save",
+            "CLOSE": "Close"
+        }
     }
 }

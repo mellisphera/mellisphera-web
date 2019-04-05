@@ -2,11 +2,11 @@ import { RucherModel } from '../../../_model/rucher-model';
 import { CONFIG } from '../../../../config';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { UserloggedService } from '../../../userlogged.service';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/Service/auth.service';
-import { FormGroup,FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RucherService } from '../../apiary/ruche-rucher/rucher.service';
 import { RucheService } from '../../service/ruche.service';
 import { FleursFloraisonService } from '../../fleurs-floraison/service/fleurs.floraison.service';
@@ -20,19 +20,20 @@ import { CapteurService } from '../../capteur/capteur.service';
 import { ngf } from 'angular-file';
 import { SidebarService } from '../../service/sidebar.service';
 import { AdminService } from '../../admin/service/admin.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     // moduleId: module.id,
     selector: 'navbar-cmp',
     templateUrl: 'navbar.component.html',
-    styleUrls : ['./navbar.component.scss']
+    styleUrls: ['./navbar.component.scss']
 })
 
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
     message: string;
     username: string;
 
-    photoApiary: File ;
+    photoApiary: File;
     private listTitles: any[];
 
     private apiaryUpdate: RucherModel;
@@ -59,32 +60,33 @@ export class NavbarComponent implements OnInit{
         public rucherService: RucherService,
         private adminService: AdminService,
         private rucheService: RucheService,
-       // private meteoService: MeteoService,
-        private fleursFloraisonService : FleursFloraisonService,
-        private observationService : ObservationService,
+        // private meteoService: MeteoService,
+        private fleursFloraisonService: FleursFloraisonService,
+        private observationService: ObservationService,
         private capteurService: CapteurService,
         private formBuilder: FormBuilder,
         private tokenService: AtokenStorageService,
         private dailyRecordService: DailyRecordService,
         public sidebarService: SidebarService,
-        public notifierService: NotifierService) {
-      this.location = location;
-      this.notifier = this.notifierService;
-      this.sidebarVisible = false;
+        public notifierService: NotifierService,
+        public translateService: TranslateService) {
+        this.location = location;
+        this.notifier = this.notifierService;
+        this.sidebarVisible = false;
         this.username = userService.getUser();
         this.initForm();
         this.newApiary = {
-            id : null,
+            id: null,
             latitude: '',
             longitude: '',
             name: '',
-            description : '',
-            createdAt : null,
-            photo : 'void',
-            username : '',
-            codePostal : '',
-            ville : ''
-         };
+            description: '',
+            createdAt: null,
+            photo: 'void',
+            username: '',
+            codePostal: '',
+            ville: ''
+        };
 
 
     }
@@ -95,8 +97,8 @@ export class NavbarComponent implements OnInit{
             'description': [null],
             'ville': [null, Validators.compose([Validators.required])],
             'codePostal': [null, Validators.compose([Validators.required])],
-            'validate' : ``,
-          });
+            'validate': ``,
+        });
     }
     logout() {
         this.rucherService.rucherSubject.unsubscribe();
@@ -108,6 +110,10 @@ export class NavbarComponent implements OnInit{
         this.tokenService.signOut();
         this.authService.connexionStatus.next(false);
     }
+/*     setLang(lang: string) {
+        this.translateService.use(lang);
+        console.log(this.translateService.getLangs());
+    } */
     onPictureLoad(next) {
         const fileReader = new FileReader();
         fileReader.onload = (e) => {
@@ -120,12 +126,12 @@ export class NavbarComponent implements OnInit{
     }
 
     ngOnInit() {
-      this.listTitles = ROUTES.filter(listTitle => listTitle);
-      const navbar: HTMLElement = this.element.nativeElement;
-      this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
-      console.log(this.toggleButton);
-      this.userService.currentMessage.subscribe(message => this.message = message);
-      this.initForm();
+        this.listTitles = ROUTES.filter(listTitle => listTitle);
+        const navbar: HTMLElement = this.element.nativeElement;
+        this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+        console.log(this.toggleButton);
+        this.userService.currentMessage.subscribe(message => this.message = message);
+        this.initForm();
     }
     onSelectRucher() {
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
@@ -142,9 +148,9 @@ export class NavbarComponent implements OnInit{
             case '/dashboard/fleurs-floraison':
                 this.fleursFloraisonService.getUserFleur(this.rucherService.getCurrentApiary());
                 break;
-/*             case '/meteo':
-                this.meteoService.getWeather(this.rucherService.rucher.codePostal);
-                break; */
+            /*             case '/meteo':
+                            this.meteoService.getWeather(this.rucherService.rucher.codePostal);
+                            break; */
             case '/dashboard/ruche-detail':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
@@ -156,8 +162,8 @@ export class NavbarComponent implements OnInit{
                 break;
             default:
         }
-      }
-      //Editer Rucher
+    }
+    //Editer Rucher
     onEditerRucher() {
         const formValue = this.rucherForm.value;
         const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
@@ -167,7 +173,7 @@ export class NavbarComponent implements OnInit{
         this.apiaryUpdate.username = this.rucherService.rucher.username;
         console.log(this.apiaryUpdate);
         this.rucherService.updateRucher(this.rucherService.rucher.id, this.apiaryUpdate).subscribe(
-            () => {}, () => {} , () => {
+            () => { }, () => { }, () => {
                 this.rucherService.ruchers[index] = this.apiaryUpdate;
                 this.rucherService.emitApiarySubject();
                 this.rucherService.rucher = this.apiaryUpdate;
@@ -178,7 +184,7 @@ export class NavbarComponent implements OnInit{
     }
 
     deleteRucher() {
-        this.rucherService.deleteRucher().subscribe( () => {}, () => {} , () => {
+        this.rucherService.deleteRucher().subscribe(() => { }, () => { }, () => {
             const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
             this.rucherService.ruchers.splice(index, 1);
             this.rucherService.emitApiarySubject();
@@ -197,7 +203,7 @@ export class NavbarComponent implements OnInit{
     sidebarOpen() {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];
-        setTimeout(function() {
+        setTimeout(function () {
             toggleButton.classList.add('toggled');
         }, 500);
         body.classList.add('nav-open');
@@ -211,21 +217,21 @@ export class NavbarComponent implements OnInit{
         body.classList.remove('nav-open');
     }
     sidebarToggle() {
-         const toggleButton = this.toggleButton;
-         const body = document.getElementsByTagName('body')[0];
-            if (this.sidebarVisible === false) {
-                this.sidebarOpen();
-            } else {
-                this.sidebarClose();
-            }
+        const toggleButton = this.toggleButton;
+        const body = document.getElementsByTagName('body')[0];
+        if (this.sidebarVisible === false) {
+            this.sidebarOpen();
+        } else {
+            this.sidebarClose();
+        }
     }
     editRucherClicked() {
         const donnée = {
-          name: this.rucherService.rucher.name,
-          description: this.rucherService.rucher.description,
-          ville: this.rucherService.rucher.ville,
-          codePostal: this.rucherService.rucher.codePostal,
-          validate : ''
+            name: this.rucherService.rucher.name,
+            description: this.rucherService.rucher.description,
+            ville: this.rucherService.rucher.ville,
+            codePostal: this.rucherService.rucher.codePostal,
+            validate: ''
         };
         this.rucherForm.setValue(donnée);
     }
@@ -234,15 +240,15 @@ export class NavbarComponent implements OnInit{
         this.sidebarService.setCurrentColor(color);
     }
 
-    getTitle(){
-      let title = this.location.prepareExternalUrl(this.location.path());
-      title = title.split('/').pop();
-      for ( let item = 0; item < this.listTitles.length; item++) {
-          if (this.listTitles[item].path === title) {
-              return this.listTitles[item].title;
-          }
-      }
-      return 'Dashboard';
+    getTitle() {
+        let title = this.location.prepareExternalUrl(this.location.path());
+        title = title.split('/').pop();
+        for (let item = 0; item < this.listTitles.length; item++) {
+            if (this.listTitles[item].path === title) {
+                return this.listTitles[item].title;
+            }
+        }
+        return 'Dashboard';
     }
     apiarySubmit() {
         const formValue = this.rucherForm.value;
@@ -257,14 +263,14 @@ export class NavbarComponent implements OnInit{
         this.newApiary.createdAt = new Date();
         this.newApiary.username = this.username;
         this.initForm();
-        this.rucherService.createRucher(this.newApiary).subscribe( (apiary) => {
+        this.rucherService.createRucher(this.newApiary).subscribe((apiary) => {
             if (this.rucherService.ruchers != null) {
                 this.rucherService.ruchers.push(apiary);
             } else {
                 this.rucherService.ruchers = new Array(apiary);
             }
             this.rucherService.saveCurrentApiaryId(apiary.id);
-        }, () => {}, () => {
+        }, () => { }, () => {
             console.log(this.rucherService.ruchers);
             this.rucherService.emitApiarySubject();
             this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
