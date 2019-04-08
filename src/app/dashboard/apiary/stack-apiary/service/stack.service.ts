@@ -61,7 +61,7 @@ export class StackService {
     if (this.arrayHiveSelect.filter(elt => elt.id === hive.id).length > 0) {
       return (index < this.arrayColor.length - 1) ? this.arrayColor[index] : null ;
     } else {
-      return 'gray';
+      return 'white';
     }
   }
 
@@ -108,6 +108,6 @@ export class StackService {
   }
 
   checkHiveisActive(idHive: string) {
-    return this.arrayHiveSelect.filter(hive => hive.id === idHive).length > 0 ? 'fa fa-circle' : 'disabled';
+    return this.arrayHiveSelect.filter(hive => hive.id === idHive).length > 0 ? 'active' : '';
   }
 }

@@ -36,7 +36,7 @@ li{
 .apiary{
     font-weight: bold;
 }
-.disabled{
+.circle{
     border: 1px solid black;
     display: inline-block;
     border-radius: 50%;
