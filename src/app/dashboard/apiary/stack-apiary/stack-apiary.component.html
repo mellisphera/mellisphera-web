@@ -10,7 +10,7 @@
                     <div class="collapse list-group-level1" [id]="i">
                         <a [class]="'list-group-item sub-items ' + checkLoadingDone()"
                             *ngFor="let ruche of getHiveByApiary(rucher.id); let i = index"
-                            (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i class="fa fa-circle"
+                            (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i [class]="stackService.checkHiveisActive(ruche.id)"
                                 [style.color]="getColor(ruche)"></i><span class="puce-hive"></span>{{ ruche.name }}</a>
                     </div>
                 </ng-container>
