@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RucheInterface } from '../../../../_model/ruche';
 import { DeprecatedDatePipe } from '@angular/common';
 import { DataRange } from '../../ruche-rucher/ruche-detail/service/Record/data-range';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,35 +11,18 @@ export class StackService {
 
   private arrayHiveSelect: Array<RucheInterface>;
   public range: DataRange;
-  private arrayColor: Array<string>;
-  constructor() {
+  private arrayColor: Array<any>;
+  constructor(private httpClient: HttpClient) {
     this.arrayHiveSelect = [];
-    this.arrayColor = [
-      'green',
-      'orange',
-      'red',
-      '#40A497',
-      'blue',
-      '#5C33B3',
-      '#6493E0',
-      '#40F24F',
-      '#108C8B',
-      '#074784',
-      'grey',
-      '#DF5451',
-      '#00FEEA',
-      '#c23531',
-      '#2f4554',
-      '#61a0a8',
-      '#d48265',
-      '#91c7ae',
-      '#749f83',
-      '#ca8622',
-      '#bda29a',
-      '#6e7074',
-      '#546570',
-      '#c4ccd3'
-    ];
+    this.getColor();
+  }
+
+  getColor() {
+    this.httpClient.get<any>('./assets/data/color.json').subscribe(
+      data => {
+        this.arrayColor = data;
+      }
+    );
   }
   /**
    *
@@ -59,7 +43,7 @@ export class StackService {
    */
   getColorByIndex(index: number, hive: RucheInterface) {
     if (this.arrayHiveSelect.filter(elt => elt.id === hive.id).length > 0) {
-      return (index < this.arrayColor.length - 1) ? this.arrayColor[index] : null ;
+      return (index < this.arrayColor.length - 1) ? this.arrayColor[index].hexString : null ;
     } else {
       return 'white';
     }

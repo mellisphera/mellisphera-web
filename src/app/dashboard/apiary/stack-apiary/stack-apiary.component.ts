@@ -188,10 +188,8 @@ export class StackApiaryComponent implements OnInit {
     console.log(hiveName);
     this.recordService.mergeOptionStackApiary.series.filter(serie => hiveName === serie.name.split(' / ')[0]).forEach(element => {
       const index = this.recordService.mergeOptionStackApiary.series.map(res => res.name).indexOf(element.name);
-      console.log(index);
       this.recordService.mergeOptionStackApiary.series.splice(index, 1);
       this.recordService.mergeOptionStackApiary.legend.data.splice(index, 1);
-      console.log(this.recordService.mergeOptionStackApiary);
 
     });
   }
