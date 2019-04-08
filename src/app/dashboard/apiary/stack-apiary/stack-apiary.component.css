@@ -19,6 +19,7 @@ li{
     height: 23px;
     margin-bottom: -4px;
 }
+
 .puce-apiary{
     background-image: url('../../../../assets/wizard/apiary.png');
     display: inline-block;
@@ -35,10 +36,14 @@ li{
 .apiary{
     font-weight: bold;
 }
-/* .active{
-    background-color: #53B74F;
-    color: white;
-} */
+.disabled{
+    border: 1px solid black;
+    display: inline-block;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+
+}
 .col-xs{
     margin: auto !important;
 }
