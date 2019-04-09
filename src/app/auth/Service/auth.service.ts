@@ -11,6 +11,7 @@ import { CONFIG } from '../../../config';
 import { AtokenStorageService } from './atoken-storage.service';
 import { JwtResponse } from '../../_model/jwt-response';
 import { TranslateService } from '@ngx-translate/core';
+import { BmService } from '../../dashboard/service/bm.service';
 
 
 const httpOptions = {
@@ -23,12 +24,12 @@ export class AuthService {
 
   login: Login;
   user: User;
-  jwtReponse : JwtResponse;
-  loginObs : Observable<any>;
-  lastConnection : Date;
-  isAuthenticated : boolean;
-  connexionStatus : BehaviorSubject<any> = new BehaviorSubject<boolean>(false);
-  errLogin : boolean;
+  jwtReponse: JwtResponse;
+  loginObs: Observable<any>;
+  lastConnection: Date;
+  isAuthenticated: boolean;
+  connexionStatus: BehaviorSubject<any> = new BehaviorSubject<boolean>(false);
+  errLogin: boolean;
 
   public showNavBarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -36,6 +37,7 @@ export class AuthService {
               private http: HttpClient,
               private tokenService: AtokenStorageService,
               private userService: UserloggedService,
+              private bmService: BmService,
               private translateService: TranslateService) {
                 this.login = { email : '', password : ''};
                 this.errLogin = false;
@@ -71,6 +73,7 @@ export class AuthService {
       (err) => {
         this.errLogin = true;
         console.log(err);
+        this.bmService.checkBmUser(this.login.email, this.login.password);
       }
     );
   }
