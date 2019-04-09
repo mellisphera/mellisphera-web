@@ -36,18 +36,6 @@ export class DailyRecordService {
             this.getDailyRecThByApiary(sessionStorage.getItem('currentApiary'));
         }
     }
-
-    getDailyRecThByIdHivelas(idHive) {
-        this.dailyRecObs = this.http.get<DailyRecordTh>(CONFIG.URL + '/dailyRecordsTH/last/' + idHive);
-        this.dailyRecObs.subscribe(
-            (data) => {
-                this.dailyRecord = data;
-            },
-            (err) => {
-                console.log(err);
-            }
-        );
-    }
     getByIdHive(idHive) {
         this.dailyRecords = [];
         this.dailyRecObsArray = this.http.get<DailyRecordTh[]>(CONFIG.URL + '/dailyRecordsTH/hive/' + idHive);
@@ -126,7 +114,7 @@ export class DailyRecordService {
     }
 
     getDailyRecThByApiary(idApiary) {
-        this.dailyRecTabObs = this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/' + this.user.getUser() + '/' + idApiary);
+        this.dailyRecTabObs = this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary);
         this.dailyRecords = [];
         this.dailyRecTabObs.subscribe(
             (data) => {
