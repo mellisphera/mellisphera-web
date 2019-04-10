@@ -4,6 +4,19 @@
 nav{
     background-color: currentColor;
 }
+.navbar-header{
+    width: 45% !important;
+}
+#apiary-group{
+    width: 100% !important;
+}
+#apiary-group li:first-child{
+    width: 75%;
+}
+#apiary-group li:last-child{
+    //width: 20%;
+}
+
 #select-Apiary{
     padding-top: 5px;
     margin-top: 5px;
@@ -17,11 +30,6 @@ label{
     padding: 5px;
     margin-top: 5px;
     margin-bottom: 0px;
-}
-@media (max-width: 991px){
-    .navbar-nav > li {
-        float: left !important;
-    }
 }
 .dropdown-toggle{
     padding-bottom: 0px !important;
@@ -42,4 +50,38 @@ label{
 }
 #lang-group img:hover{
     cursor: pointer;
+}
+@media (max-width: 991px){
+    .navbar-nav > li {
+        float: left !important;
+    }
+    .navbar-header{
+        width: initial !important;
+    }
+    #apiary-group{
+        width: 70% !important;
+    }
+    .navbar-toggle{
+        margin-bottom: 0px !important;
+    }
+}
+
+@media (max-width: 500px){
+    .navbar-header{
+        width: initial !important;
+    }
+    #apiary-group{
+        width: 100% !important;
+    }
+    #apiary-group li:first-child{
+        width: 55% !important;
+    }
+    #apiary-group li:last-child{
+        width: initial !important;
+    }
+}
+@media (max-width: 350px){
+    #apiary-group li:first-child{
+        width: 45% !important;
+    }
 }
