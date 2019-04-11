@@ -253,7 +253,7 @@ export class NavbarComponent implements OnInit {
     apiarySubmit() {
         const formValue = this.rucherForm.value;
         if (this.photoApiary == null) {
-            this.newApiary.photo = CONFIG.URL_FRONT + 'assets/imageClient/testAccount.png';
+            this.newApiary.photo = './assets/imageClient/testAccount.png';
         }
         this.newApiary.id = null;
         this.newApiary.description = formValue.description;
