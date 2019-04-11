@@ -161,6 +161,7 @@ export class StackApiaryComponent implements OnInit {
         this.recordService.getRecordByIdHive(selectHive.id, selectHive.name,
           this.recordService.mergeOptionStackApiary, false, this.getColor(selectHive))
           .subscribe((data) => {
+            console.log(data);
             this.recordService.mergeOptionStackApiary = data;
           }, () => { }, () => {
             this.loadingStack = false;

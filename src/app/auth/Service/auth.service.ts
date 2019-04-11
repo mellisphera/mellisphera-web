@@ -11,8 +11,6 @@ import { CONFIG } from '../../../config';
 import { AtokenStorageService } from './atoken-storage.service';
 import { JwtResponse } from '../../_model/jwt-response';
 import { TranslateService } from '@ngx-translate/core';
-import { BmService } from '../../dashboard/service/bm.service';
-
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -37,7 +35,6 @@ export class AuthService {
               private http: HttpClient,
               private tokenService: AtokenStorageService,
               private userService: UserloggedService,
-              private bmService: BmService,
               private translateService: TranslateService) {
                 this.login = { email : '', password : ''};
                 this.errLogin = false;
