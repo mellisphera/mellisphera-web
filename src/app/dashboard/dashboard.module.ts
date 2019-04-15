@@ -37,6 +37,8 @@ import { DemoComponent } from '../demo/demo.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminService } from './admin/service/admin.service';
 import { NgxLoadingModule } from 'ngx-loading';
+import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-component.component';
+
 
 @NgModule({
   imports: [

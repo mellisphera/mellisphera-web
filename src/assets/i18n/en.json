@@ -1,4 +1,14 @@
 {
+    "LOGIN": {
+        "SIGN_IN": {
+            "DENIED": "Access denied",
+            "SUBMIT": "Login",
+            "SIGN_UP_LINK": "Create account"
+        },
+        "SIGN_UP": {
+
+        }
+    },
     "WIZARD": {
         "STEP_TITLE": "Welcome",
         "WELCOME": "Welcome",
