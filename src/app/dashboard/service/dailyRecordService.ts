@@ -24,7 +24,7 @@ export class DailyRecordService {
     dailyRecords: DailyRecordTh[] = null;
 
     statusLoading: boolean;
-
+    public rangeDailyRecord: Date;
     mergeOptionTint: any;
     mergeOptionHint: any;
     mergeOptionCalendarHealth: any;
@@ -32,6 +32,8 @@ export class DailyRecordService {
     constructor(private http: HttpClient, private user: UserloggedService) {
         this.statusLoading = false;
         this.status = 'Inconnu';
+        this.rangeDailyRecord = new Date();
+        this.rangeDailyRecord.setDate(new Date().getDate() - 1);
         if (this.user.getUser()) {
             this.getDailyRecThByApiary(sessionStorage.getItem('currentApiary'));
         }
@@ -49,7 +51,14 @@ export class DailyRecordService {
             }
         );
     }
-
+    nextDay(idApiary: string) {
+        this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() + 1);
+        this.getDailyRecThByApiary(idApiary);
+    }
+    previousDay(idApiary: string) {
+        this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() - 1);
+        this.getDailyRecThByApiary(idApiary);
+    }
     dailyRecordToArray() {
         this.arrayTempInt = [];
         this.arrayHint = [];
@@ -114,7 +123,7 @@ export class DailyRecordService {
     }
 
     getDailyRecThByApiary(idApiary) {
-        this.dailyRecTabObs = this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary);
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, this.rangeDailyRecord);
         this.dailyRecords = [];
         this.dailyRecTabObs.subscribe(
             (data) => {
