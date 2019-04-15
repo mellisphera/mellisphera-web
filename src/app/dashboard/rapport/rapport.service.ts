@@ -35,7 +35,7 @@ export class RapportService {
     getNluResult(texte, idApiary){
         let body = JSON.stringify({"texte":texte.texte,"idApiary":idApiary});
         //LOCAL
-        //return this.http.post('***REMOVED***:5000/nlu/nluAnalyse',body, httpOptions);
+        //return this.http.post('http://localhost:5000/nlu/nluAnalyse',body, httpOptions);
         //SERVEUR
         this.http.post<Rapport>(CONFIG.API_PY+'/nlu/nluAnalyse',body, httpOptions).subscribe(
             (data)=>{
