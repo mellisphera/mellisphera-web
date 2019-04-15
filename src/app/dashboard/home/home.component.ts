@@ -90,7 +90,9 @@ export class HomeComponent implements OnInit {
 
   }
 
-
+  getDateDaily() {
+    return this.dailyRecTh.rangeDailyRecord.toDateString();
+  }
   ngOnInit() {
     if (!this.rucherService.rucherSubject.closed) {
       this.rucherService.rucherSubject.subscribe( () => {}, () => {}, () => {
@@ -101,7 +103,7 @@ export class HomeComponent implements OnInit {
 
   onClick(ruche: RucheInterface)  {
     this.rucheService.saveCurrentHive(ruche.id);
-    this.route.navigate(['/ruche-detail']);
+    this.route.navigateByUrl('dashboard/ruche-detail');
 
   }
 
@@ -166,7 +168,6 @@ export class HomeComponent implements OnInit {
     return ((valeur/100) * valeurTotal);
   }
   /* Pour chaque rucher selectionner */
-
   saveBackground(){
     this.rucherService.updateBackgroundApiary(this.rucherService.rucher.id);
     this.photoApiary = null;

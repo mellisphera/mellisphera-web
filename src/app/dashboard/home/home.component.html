@@ -1,4 +1,15 @@
 <div class="row content">
+    <nav>
+        <ul class="nav nav-tabs">
+            <li width="35" class="range-date" (click)="dailyRecTh.previousDay(rucherService.getCurrentApiary())">
+                <a><img src="./assets/icons/next-button-4.png" width="35" /></a>
+            </li>
+            <li id="date">{{ getDateDaily() }}</li>
+            <li class="range-date" (click)="dailyRecTh.nextDay(rucherService.getCurrentApiary())">
+                <a><img src="./assets/icons/next-button-4.png" width="35" /></a>
+            </li>
+        </ul>
+    </nav>
     <div id="cadre" [ngStyle]="{'background-image':'url('+rucherService.rucher.photo+')',
                                         'background-position' : 'top',
                                         'background-repeat' : 'no-repeat'}" ngfDrop [(validDrag)]="baseDropValid"
