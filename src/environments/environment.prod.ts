@@ -1,3 +1,3 @@
 export const environment = {
-  ***REMOVED***: true
+  production: true
 };
