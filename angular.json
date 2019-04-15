@@ -31,7 +31,7 @@
             ]
           },
           "configurations": {
-            "***REMOVED***": {
+            "production": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -56,8 +56,8 @@
             "browserTarget": "cleanversion:build"
           },
           "configurations": {
-            "***REMOVED***": {
-              "browserTarget": "cleanversion:build:***REMOVED***"
+            "production": {
+              "browserTarget": "cleanversion:build:production"
             }
           }
         },
@@ -109,8 +109,8 @@
             "devServerTarget": "cleanversion:serve"
           },
           "configurations": {
-            "***REMOVED***": {
-              "devServerTarget": "cleanversion:serve:***REMOVED***"
+            "production": {
+              "devServerTarget": "cleanversion:serve:production"
             }
           }
         },
