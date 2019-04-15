@@ -39,7 +39,7 @@ export class MeteoService{
     getWeather(zipCode: string) {
         this.status = false;
         this.arrayMeteo = [];
-        this.meteoObs = this.httpClient.get<Meteo[]>('https://api.openweathermap.org/data/2.5/forecast?zip='+zipCode+',fr&units=metric&appid=***REMOVED***');
+        this.meteoObs = this.httpClient.get<Meteo[]>('https://api.openweathermap.org/data/2.5/forecast?zip='+zipCode+',fr&units=metric&appid=110ff02ed24ccd819801248373c3b208');
         this.meteoObs.subscribe(
             (data)=>{
                 var date = null;

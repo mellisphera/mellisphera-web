@@ -55,10 +55,10 @@ export class DemoComponent implements OnInit,OnDestroy {
   saveToken(next?) {
     this.tokenService.saveToken(CONFIG.PUBLIC_TOKEN);
     this.user.setUser({
-      'email': '***REMOVED***@null',
-      'username': '***REMOVED***',
+      'email': 'fstl@null',
+      'username': 'fstl',
       'accessToken': CONFIG.PUBLIC_TOKEN,
-      'authorities': new Array('***REMOVED***'),
+      'authorities': new Array('ROLE_STANDARD'),
       'country': 'FR'
     });
     next();

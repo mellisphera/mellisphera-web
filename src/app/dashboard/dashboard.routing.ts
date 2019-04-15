@@ -12,6 +12,7 @@ import { AdminComponent } from './admin/admin.component';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
 import { CapteurComponent } from './capteur/capteur.component';
+import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-component.component';
 
 const routes: Routes = [
     {
@@ -52,6 +53,6 @@ export class DasboardRoutingModule { }
     { path: 'home', canActivate : [AuthGuard], component: HomeComponent},
     { path: 'admin', canActivate : [AuthGuard], component : AdminComponent},
     { path: 'stack-apiary', canActivate : [AuthGuard], component : StackApiaryComponent},
-    { path: '***REMOVED***', component : DemoComponent},
+    { path: 'fstl', component : DemoComponent},
     { path: 'apiary-notes', canActivate: [AuthGuard], component : ApiaryNotesComponent},
 */

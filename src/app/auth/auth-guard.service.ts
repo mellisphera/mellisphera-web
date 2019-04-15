@@ -11,19 +11,19 @@ export class AuthGuardService implements CanActivate, CanLoad {
   constructor(
     private router: Router,
     private authService: AuthService,
-    public tokenService : AtokenStorageService) {}
+    public tokenService: AtokenStorageService) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,): Observable<boolean> | boolean {
 
-    if(this.tokenService.getToken()){
+    if(this.tokenService.getToken()) {
       return true;
     }
     this.router.navigate(['/login']);
   }
   canLoad(route: Route): boolean {
-    if(sessionStorage.getItem("connexion") == "true"){
+    if (this.tokenService.getToken()) {
       return true;
     }
     this.router.navigate(['/login']);
