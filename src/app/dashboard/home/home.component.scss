@@ -1,100 +1,130 @@
-#cadre{
-    margin: auto;
-    width: 100%;
+#cadre {
+  margin: auto;
+  width: 100%;
+  margin: 0px;
+  //margin-top: 10px;
+  height: 93vh;
+  // border-radius: 10px;
+  overflow: hidden;
+  //background: url("../../../assets/imageClient/testAccount.png") no-repeat center;
+  background-size: contain;
+  // background-size: 100%;
+  // box-shadow: 8px 8px 5px black;
+  transform: rotate(0deg);
+}
+.ruche {
+  display: flex;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  font-size: 15px;
+  /*border-radius: 40px;*/
+  padding: 2px;
+  cursor: move;
+  border-radius: 50px;
+  //box-shadow: 3px 2px 2px black;
+}
+#health_trend {
+  width: 50%;
+  height: 100%;
+  border: 2px solid orangered;
+  border-radius: 8px;
+}
+#health_status {
+  width: 50%;
+  height: 100%;
+  /* background-color: green;*/
+  border: 2px solid orangered;
+  border-radius: 8px;
+}
+select {
+  padding: 8px;
+}
+.ruche:hover {
+  //border: 3px solid blue;
+  //box-shadow: none;
+}
+#detail {
+  margin: auto;
+  width: 30%;
+}
+
+.statusCFluctuation {
+  background: url("../../../assets/icons/wfbfl.png") no-repeat center;
+}
+.statusCDecline {
+  background: url("../../../assets/icons/wfbde.png") no-repeat center;
+}
+.statusCStable {
+  background: url("../../../assets/icons/wfbst.png") no-repeat center;
+}
+.statusCImprove {
+  background: url("../../../assets/icons/wfbim.png") no-repeat center;
+}
+
+.statusBImprove {
+  background: url("../../../assets/icons/wnbim.png") no-repeat center;
+}
+.statusBFluctuation {
+  background: url("../../../assets/icons/wnbfl.png") no-repeat center;
+}
+.statusBDecline {
+  background: url("../../../assets/icons/wnbde.png") no-repeat center;
+}
+.statusBStable {
+  background: url("../../../assets/icons/wnbst.png") no-repeat center;
+}
+
+.statusAImprove {
+  background: url("../../../assets/icons/wobim.png") no-repeat center;
+}
+.statusAFluctuation {
+  background: url("../../../assets/icons/wobfl.png") no-repeat center;
+}
+
+.Inconnu {
+  background: white url("../../../assets/icons/wos.png") no-repeat center;
+}
+.valid-drag {
+  border: 3px dashed blue;
+}
+#modal {
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  box-shadow: 8px 8px 5px black;
+}
+.flex {
+  display: flex;
+}
+li:first-child img{
+    transform: rotate(180deg);
+}
+nav{
+    background-color: #333F3D;
     margin: 0px;
-    //margin-top: 10px;
-    height: 93vh;
-    // border-radius: 10px;
-    overflow: hidden;
-    //background: url("../../../assets/imageClient/testAccount.png") no-repeat center;
-    background-size: contain;
-   // background-size: 100%;
-    // box-shadow: 8px 8px 5px black;
-    transform: rotate(0deg);
-}
-.ruche{
-    display: flex;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    position: absolute;
-    font-size: 15px;
-    /*border-radius: 40px;*/
-    padding: 2px;
-    cursor: move;
-    border-radius: 50px;
-    //box-shadow: 3px 2px 2px black;
-}
-#health_trend{
-    width: 50%;
-    height:100%;
-    border: 2px solid orangered;
-    border-radius: 8px;
-}
-#health_status{
-    width: 50%;
+    padding: 0px;
     height: 100%;
-   /* background-color: green;*/
-    border: 2px solid orangered;
-    border-radius: 8px;
 }
-select{
-    padding: 8px;
+ul{
+    font-size: 10px;
+    list-style: none;
+    text-align: center;
 }
-.ruche:hover{
-    //border: 3px solid blue;
-    //box-shadow: none;
+.nav li{
+    display: inline-block;
+    float: none !important;
 }
-#detail{
-    margin: auto;
-    width: 30%;
+.nav a:hover{
+    border: none !important;
 }
-
-.statusCFluctuation{
-   background: url("../../../assets/icons/wfbfl.png") no-repeat center;
+#date{
+    color: white;
 }
-.statusCDecline{
-    background: url("../../../assets/icons/wfbde.png") no-repeat center;
-}
-.statusCStable{
-    background: url("../../../assets/icons/wfbst.png") no-repeat center;
-}
-.statusCImprove{
-    background: url("../../../assets/icons/wfbim.png") no-repeat center;
-}
-
-.statusBImprove{
-    background: url("../../../assets/icons/wnbim.png") no-repeat center;
-}
-.statusBFluctuation{
-    background: url("../../../assets/icons/wnbfl.png") no-repeat center;
-}
-.statusBDecline{
-     background: url("../../../assets/icons/wnbde.png") no-repeat center;
-}
-.statusBStable{
-    background: url("../../../assets/icons/wnbst.png") no-repeat center;
-}
-
-.statusAImprove{
-    background: url("../../../assets/icons/wobim.png") no-repeat center;
-}
-.statusAFluctuation{
-    background: url("../../../assets/icons/wobfl.png") no-repeat center;
-}
-
-.Inconnu{
-    background: white url("../../../assets/icons/wos.png") no-repeat center;
-}
-.valid-drag{
-    border:3px dashed blue;
-}
-#modal{
-    background-color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    box-shadow: 8px 8px 5px black;
+.range-date{
+    cursor: pointer;
 }
