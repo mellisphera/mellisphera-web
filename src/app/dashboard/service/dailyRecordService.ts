@@ -1,6 +1,6 @@
 /**
  * @author mickael
- * @description Ensemble des requetes pour la record Journalier des ruches
+ * @description Ensemble des requetes pour les records Journalier des ruches
  *
  */
 import { HttpClient, HttpResponse } from '@angular/common/http';

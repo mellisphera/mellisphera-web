@@ -199,12 +199,12 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.exeData();
     }
     exeData(switchHive?: boolean) {
-        if (this.currentTab.indexOf('notes') != -1) {
+        if (this.currentTab.indexOf('notes') !== -1) {
             this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive());
-        } else if (this.currentTab.indexOf('daily') != -1) {
+        } else if (this.currentTab.indexOf('daily') !== -1) {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
             this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
-        } else if (this.currentTab.indexOf('stock') != -1) {
+        } else if (this.currentTab.indexOf('stock') !== -1) {
             if (this.dailyStockHoneyService.currentIdHive !== this.rucheService.getCurrentHive()) {
                 this.loadingStockHoney = true;
                 this.dailyStockHoneyService.getDailyStockHoneyByHIve(this.rucheService.getCurrentHive())
@@ -223,10 +223,10 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                     this.loadingStockHoney = false;
                 });
             }
-            if (this.dailyRecordWservice.currentIdHive != this.rucheService.getCurrentHive()) {
+            if (this.dailyRecordWservice.currentIdHive !== this.rucheService.getCurrentHive()) {
                 this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
             }
-        } else if (this.currentTab.indexOf('hourly') != -1) {
+        } else if (this.currentTab.indexOf('hourly') !== -1) {
             if (this.recordService.currentIdHive !== this.rucheService.getCurrentHive()) {
                 this.loaddingHourly = true;
                 this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
@@ -240,10 +240,10 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                     }
                 );
             }
-        } else if (this.currentTab.indexOf('health') != -1) {
+        } else if (this.currentTab.indexOf('health') !== -1) {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
-        } else if (this.currentTab.indexOf('stack') != -1) {
-            if (this.recordService.currentIdHive != this.rucheService.getCurrentHive()) {
+        } else if (this.currentTab.indexOf('stack') !== -1) {
+            if (this.recordService.currentIdHive !== this.rucheService.getCurrentHive()) {
                 this.loadingStack = true;
                 this.recordService.setRange(this.range);
                 this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
