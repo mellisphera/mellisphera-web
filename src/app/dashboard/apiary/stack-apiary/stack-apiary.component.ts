@@ -55,6 +55,7 @@ export class StackApiaryComponent implements OnInit {
       { scale: 1, type: 'YEAR' }
     ];
     this.stackService.range = this.ranges[0];
+    this.observationService.setRange(this.ranges[0]);
     this.recordService.setRange(this.stackService.range);
     this.message = '';
   }
@@ -99,9 +100,9 @@ export class StackApiaryComponent implements OnInit {
         });
       }
     }
-    if (!this.observationService.obsApiarySubject.closed) {
+/*     if (!this.observationService.obsApiarySubject.closed) {
       this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
-    }
+    } */
   }
   getHiveByApiary(idApiary: string) {
     try {
@@ -117,9 +118,10 @@ export class StackApiaryComponent implements OnInit {
     this.loadingStack = true;
     this.recordService.updateMergeStack();
     this.recordService.setRange(this.stackService.range);
-    const observable = this.stackService.getHiveSelect().filter(hive => hive.id !== '')
+    this.observationService.setRange(this.stackService.range);
+    const observableRecord = this.stackService.getHiveSelect().filter(hive => hive.id !== '')
     .map(hive => this.recordService.getRecordByIdHive(hive.id, hive.name, this.merge, false, this.getColor(hive)));
-    Observable.forkJoin(observable).subscribe(data => {
+    Observable.forkJoin(observableRecord).subscribe(data => {
        data.map(elt => elt.series).forEach(elt => {
         elt.forEach(element => {
           this.recordService.mergeOptionStackApiary.series.push(element);
@@ -135,14 +137,22 @@ export class StackApiaryComponent implements OnInit {
     },
     (err) => {},
     () => {
-      this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsApiary);
-      let option = this.echartInstance.getOption();
-      this.echartInstance.clear();
-      option.series = this.recordService.mergeOptionStackApiary.series;
-      option.legend = this.recordService.mergeOptionStackApiary.legend;
-      option.legend.show = false;
-      this.echartInstance.setOption(option);
-      this.loadingStack = false;
+      const observableObs = this.stackService.getHiveSelect().filter(hive => hive.id !== '')
+      .map(hive => this.observationService.getObservationByIdHive(hive.id));
+      Observable.forkJoin(observableObs).subscribe(data => {
+        this.recordService.mergeOptionStackApiary.series = this.recordService.mergeOptionStackApiary.series.concat(data);
+        console.log(this.recordService.mergeOptionStackApiary);
+      },
+      err => {},
+      () => {
+        let option = this.echartInstance.getOption();
+        this.echartInstance.clear();
+        option.series = this.recordService.mergeOptionStackApiary.series;
+        option.legend = this.recordService.mergeOptionStackApiary.legend;
+        option.legend.show = false;
+        this.echartInstance.setOption(option);
+        this.loadingStack = false;
+      });
     });
   }
 
@@ -161,17 +171,21 @@ export class StackApiaryComponent implements OnInit {
         this.echartInstance.setOption(option);
         this.loadingStack = false;
       } else {
-        this.observationService.getObservationByIdHive(selectHive.id);
         this.loadingStack = true;
         this.stackService.addHive(selectHive);
         this.recordService.setRange(this.stackService.range);
         this.recordService.getRecordByIdHive(selectHive.id, selectHive.name,
           this.recordService.mergeOptionStackApiary, false, this.getColor(selectHive))
           .subscribe((data) => {
-            console.log(data);
-            this.recordService.mergeOptionStackApiary = data;
-            this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsApiary);
-            this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsHIve);
+            // this.recordService.mergeOptionStackApiary = data;
+            this.observationService.getObservationByIdHive(selectHive.id).subscribe(
+              obsData => {
+                data.series.push(obsData);
+                this.recordService.mergeOptionStackApiary = data;
+              }
+            );
+   /*          this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsApiary);
+            this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsHIve); */
             console.log(this.recordService.mergeOptionStackApiary);
           }, () => { }, () => {
             this.loadingStack = false;

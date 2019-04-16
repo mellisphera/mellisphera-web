@@ -32,6 +32,7 @@ export class ObservationService {
     this.obsApiarySubject = new BehaviorSubject([]);
     this.imgApiaryObs = './assets/icons/apiaryAct.png';
     this.imgApiaryAct = './assets/icons/apiaryObs.png';
+    this.rangeObs = [new Date('2010-01-01'), new Date()];
   }
 
   emitHiveSubject() {
@@ -58,10 +59,13 @@ export class ObservationService {
     this.rangeObs = MyDate.getRange(date);
   }
   getObservationByIdHive(idHive: string) {
-    this.observationsObs = this.http.get<Observation[]>(CONFIG.URL + 'report/hive/' + idHive).map(res => {
-      this.mergeStackObsHIve = {
+    return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, this.rangeObs).map(res => {
+      this.observationsHive = res;
+      return {
         name: idHive,
         type: 'custom',
+        xAxisIndex: 1,
+        yAxisIndex: 1,
         tooltip: {
           trigger: 'item',
           formatter: (param) => {
@@ -75,7 +79,7 @@ export class ObservationService {
             api.value(0),
             0
           ]);
-          const img = './assets/asterisk.png';
+          const img = this.imgApiaryAct;
           return {
             type: 'group',
             children: [{
@@ -93,24 +97,11 @@ export class ObservationService {
         },
         z: 11
       }
-      return res;
     });
-    this.observationsObs.subscribe(
-      (data) => {
-        this.observationsHive = data;
-        this.obsHiveSubject.next(data);
-      },
-      (err) => {
-        console.log(err);
-      },
-      () => {
-        this.obsHiveSubject.complete();
-      }
-    );
   }
 
   getObservationByIdApiary(idApiary: string) {
-    this.http.get<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary).map(res => {
+    this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, this.rangeObs).map(res => {
       this.mergeStackObsApiary = {
         name: idApiary,
         type: 'custom',
