@@ -16,58 +16,78 @@ export class DailyRecordService {
     dailyRecObsArray: Observable<DailyRecordTh[]>;
     dailyRecTabObs: Observable<DailyRecordTh[]>;
 
-    arrayTempInt: any[];
-    arrayHint: any[];
-    arrayHealth: any[];
-    status: string;
-    dailyRecord: DailyRecordTh;
-    dailyRecords: DailyRecordTh[] = null;
-
-    statusLoading: boolean;
+    private arrayTempInt: any[];
+    private arrayHint: any[];
+    private arrayHealth: any[];
+    public dailyRecords: DailyRecordTh[];
+    public statusLoading: boolean;
     public rangeDailyRecord: Date;
-    mergeOptionTint: any;
-    mergeOptionHint: any;
-    mergeOptionCalendarHealth: any;
+    public mergeOptionTint: any;
+    public mergeOptionHint: any;
+    public mergeOptionCalendarHealth: any;
 
     constructor(private http: HttpClient, private user: UserloggedService) {
         this.statusLoading = false;
-        this.status = 'Inconnu';
         this.rangeDailyRecord = new Date();
+        this.arrayTempInt = [];
+        this.arrayHint = [];
+        this.arrayHealth = [];
         this.rangeDailyRecord.setDate(new Date().getDate() - 1);
         if (this.user.getUser()) {
             this.getDailyRecThByApiary(sessionStorage.getItem('currentApiary'));
         }
     }
-    getByIdHive(idHive) {
+    /**
+     *
+     * @public
+     * @param {string} idHive
+     * @memberof DailyRecordService
+     */
+    public getByIdHive(idHive: string): void {
         this.dailyRecords = [];
-        this.dailyRecObsArray = this.http.get<DailyRecordTh[]>(CONFIG.URL + '/dailyRecordsTH/hive/' + idHive);
-        this.dailyRecObsArray.subscribe(
+        this.http.get<DailyRecordTh[]>(CONFIG.URL + '/dailyRecordsTH/hive/' + idHive).map(daily => {
+            this.arrayTempInt = daily.filter(elt => elt.temp_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.temp_int_max]);
+            this.arrayHint = daily.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
+            this.arrayHealth = daily.map(elt => [elt.recordDate, elt.health_status, elt.health_trend]);
+            return daily;
+        })
+        .subscribe(
             (data) => {
                 this.dailyRecords = data;
-                this.dailyRecordToArray();
+                this.updateMerge();
             },
             (err) => {
                 console.log(err);
             }
         );
     }
-    nextDay(idApiary: string) {
+    /**
+     *
+     * @public
+     * @param {string} idApiary
+     * @memberof DailyRecordService
+     */
+    public nextDay(idApiary: string): void{
         this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() + 1);
         this.getDailyRecThByApiary(idApiary);
     }
-    previousDay(idApiary: string) {
+    /**
+     *
+     * @public
+     * @param {string} idApiary
+     * @memberof DailyRecordService
+     */
+    public previousDay(idApiary: string): void {
         this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() - 1);
         this.getDailyRecThByApiary(idApiary);
     }
-    dailyRecordToArray() {
-        this.arrayTempInt = [];
-        this.arrayHint = [];
-        this.arrayHealth = [];
-        this.dailyRecords.forEach(element => {
-            this.arrayTempInt.push([element.recordDate, element.temp_int_max]);
-            this.arrayHint.push([element.recordDate, element.humidity_int_max]);
-            this.arrayHealth.push([element.recordDate, element.health_status, element.health_trend]);
-        });
+    /**
+     *
+     *
+     * @public
+     * @memberof DailyRecordService
+     */
+    public updateMerge(): void {
         this.mergeOptionCalendarHealth = {
             series: {
                 data: this.arrayHealth
@@ -121,8 +141,13 @@ export class DailyRecordService {
         };
         this.statusLoading = true;
     }
-
-    getDailyRecThByApiary(idApiary) {
+    /**
+     *
+     * @public
+     * @param {string} idApiary
+     * @memberof DailyRecordService
+     */
+    public getDailyRecThByApiary(idApiary: string): void {
         this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, this.rangeDailyRecord);
         this.dailyRecords = [];
         this.dailyRecTabObs.subscribe(
@@ -138,30 +163,15 @@ export class DailyRecordService {
         );
     }
 
-    getStatus(idHive: string) {
-        this.status = 'ruche Inconnu';
-        this.verifId(idHive);
-        return this.status;
+    /**
+     *
+     * @public
+     * @param {string} idHive
+     * @returns {string}
+     * @memberof DailyRecordService
+     */
+    public getStatus(idHive: string): string {
+        const selectHive = this.dailyRecords.filter(elt => elt.idHive === idHive);
+        return (selectHive.length > 0) ? 'ruche ' + selectHive[0].health_status + selectHive[0].health_trend : 'ruche Inconnu';
     }
-
-    verifId(idHive: string) {
-        this.dailyRecords.forEach((element, index) => {
-            if (element.idHive === idHive) {
-                this.status = 'ruche ' + element.health_status + element.health_trend;
-            }
-        });
-    }
-
-    convertDate(date: string) {
-        var dateIso = new Date(date);
-        var jour = '' + dateIso.getDate();
-        var mois = '' + (dateIso.getMonth() + 1);
-        var anee = dateIso.getFullYear();
-        if (parseInt(jour) < 10) { jour = '0' + jour; }
-        if (parseInt(mois) < 10) { mois = '0' + mois; }
-
-        return anee + '-' + mois + '-' + jour;
-    }
-
-
 }
