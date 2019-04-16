@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
-import { EChartOption } from 'echarts';
+import * as echarts from 'echarts';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StackApiaryGraphService {
 
+  echartsUtil: any;
   options: any;
+  img: string;
   constructor() {
+    this.img = './assets/asterisk.png';
+    this.echartsUtil = (<any>echarts).util;
     this.options = {
-      title: {
-        text: 'Stack',
-        left: 'center',
-        /* top: -5 */
-      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -155,4 +154,34 @@ export class StackApiaryGraphService {
       series: [],
     };
   }
+
+  renderObs(param, api) {
+    var point = api.coord([
+        api.value(0),
+        0
+    ]);
+    return {
+        type: 'group',
+        children: [{
+            type: 'image',
+            style: {
+                image: api.value(this.img),
+                x: -this.img / 2,
+                y: -this.img / 2,
+                width: 45,
+                height: 45
+            },
+            position: [point[0], 110]
+        }, {
+            type: 'text',
+            style: {
+                text: api.value(1) + ' - ' + api.value(2) + '°',
+                textFont: api.font({fontSize: 14}),
+                textAlign: 'center',
+                textVerticalAlign: 'bottom'
+            },
+            position: [point[0], 80]
+        }]
+    };
+}
 }

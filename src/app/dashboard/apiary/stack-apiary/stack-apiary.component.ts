@@ -14,6 +14,7 @@ import { resolve } from 'q';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { AdminService } from '../../admin/service/admin.service';
 import 'rxjs/add/observable/forkJoin';
+import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
 
 @Component({
   selector: 'app-stack-apiary',
@@ -36,7 +37,8 @@ export class StackApiaryComponent implements OnInit {
     public stackService: StackService,
     public recordService: RecordService,
     private adminService: AdminService,
-    private tokenService: AtokenStorageService) {
+    private tokenService: AtokenStorageService,
+    private observationService: ObservationService) {
 
     /* this.subjectEchart = new BehaviorSubject({}); */
     this.merge = {
@@ -59,6 +61,7 @@ export class StackApiaryComponent implements OnInit {
 
   onChartInit(e: any) {
     this.echartInstance = e;
+    
   }
 
   selectAllHive(idApiary: string) {
@@ -91,11 +94,13 @@ export class StackApiaryComponent implements OnInit {
             });
             return hives;
           }).subscribe((hives) => {
-            console.log(hives);
             this.rucherService.rucheService.ruchesAllApiary = hives;
           });
         });
       }
+    }
+    if (!this.observationService.obsApiarySubject.closed) {
+      this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
     }
   }
   getHiveByApiary(idApiary: string) {
@@ -130,6 +135,7 @@ export class StackApiaryComponent implements OnInit {
     },
     (err) => {},
     () => {
+      this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsApiary);
       let option = this.echartInstance.getOption();
       this.echartInstance.clear();
       option.series = this.recordService.mergeOptionStackApiary.series;
@@ -155,6 +161,7 @@ export class StackApiaryComponent implements OnInit {
         this.echartInstance.setOption(option);
         this.loadingStack = false;
       } else {
+        this.observationService.getObservationByIdHive(selectHive.id);
         this.loadingStack = true;
         this.stackService.addHive(selectHive);
         this.recordService.setRange(this.stackService.range);
@@ -163,6 +170,9 @@ export class StackApiaryComponent implements OnInit {
           .subscribe((data) => {
             console.log(data);
             this.recordService.mergeOptionStackApiary = data;
+            this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsApiary);
+            this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsHIve);
+            console.log(this.recordService.mergeOptionStackApiary);
           }, () => { }, () => {
             this.loadingStack = false;
           });
