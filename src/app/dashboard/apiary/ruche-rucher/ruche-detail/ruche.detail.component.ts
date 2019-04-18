@@ -119,6 +119,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (!this.observationService.obsHiveSubject.closed) {
+            this.observationService.setRange({ scale: 1, type: 'YEAR' });
             this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive()).subscribe();
         }
         if (!this.rucheService.hiveSubject.closed) {

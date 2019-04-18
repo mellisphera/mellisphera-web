@@ -94,7 +94,7 @@ export class ObservationService {
           trigger: 'item',
           formatter: (param) => {
             return param.value[0] + ': </br>'
-                + param.value[3];
+                + param.value[2];
           }
         },
         data: res.map(elt => [elt.date, 0, elt.sentence, elt.type, elt.idHive]),
