@@ -119,7 +119,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (!this.observationService.obsHiveSubject.closed) {
-            this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive());
+            this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive()).subscribe();
         }
         if (!this.rucheService.hiveSubject.closed) {
             this.rucheService.hiveSubject.subscribe(() => { }, () => { }, () => {
@@ -200,7 +200,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     }
     exeData(switchHive?: boolean) {
         if (this.currentTab.indexOf('notes') !== -1) {
-            this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive());
+            this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive()).subscribe();
         } else if (this.currentTab.indexOf('daily') !== -1) {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
             this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());

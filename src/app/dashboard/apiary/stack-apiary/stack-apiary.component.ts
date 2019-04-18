@@ -138,10 +138,9 @@ export class StackApiaryComponent implements OnInit {
     (err) => {},
     () => {
       const observableObs = this.stackService.getHiveSelect().filter(hive => hive.id !== '')
-      .map(hive => this.observationService.getObservationByIdHive(hive.id));
+      .map(hive => this.observationService.getObservationByIdHive(hive.id, hive.name));
       Observable.forkJoin(observableObs).subscribe(data => {
         this.recordService.mergeOptionStackApiary.series = this.recordService.mergeOptionStackApiary.series.concat(data);
-        console.log(this.recordService.mergeOptionStackApiary);
       },
       err => {},
       () => {
@@ -164,6 +163,7 @@ export class StackApiaryComponent implements OnInit {
         this.stackService.removeHive(arrayFilter[0]);
         let option = this.echartInstance.getOption();
         this.removeHiveStack(selectHive.name);
+        console.log(this.recordService.mergeOptionStackApiary);
         // console.log(this.recordService.mergeOptionStackApiary);
         this.echartInstance.clear();
         option.series = this.recordService.mergeOptionStackApiary.series;
@@ -173,20 +173,23 @@ export class StackApiaryComponent implements OnInit {
       } else {
         this.loadingStack = true;
         this.stackService.addHive(selectHive);
+        this.stackService.addColorForObs(selectHive, this.getColor(selectHive));
         this.recordService.setRange(this.stackService.range);
         this.recordService.getRecordByIdHive(selectHive.id, selectHive.name,
           this.recordService.mergeOptionStackApiary, false, this.getColor(selectHive))
           .subscribe((data) => {
             // this.recordService.mergeOptionStackApiary = data;
-            this.observationService.getObservationByIdHive(selectHive.id).subscribe(
+            this.observationService.getObservationByIdHive(selectHive.id, selectHive.name).subscribe(
               obsData => {
                 data.series.push(obsData);
+                data.legend.data.push(selectHive.name + ' / note');
                 this.recordService.mergeOptionStackApiary = data;
+                console.log(this.recordService.mergeOptionStackApiary);
+
               }
             );
    /*          this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsApiary);
             this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsHIve); */
-            console.log(this.recordService.mergeOptionStackApiary);
           }, () => { }, () => {
             this.loadingStack = false;
           });
@@ -205,17 +208,17 @@ export class StackApiaryComponent implements OnInit {
     return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
   }
 
+
   /*   getMergeObs() {
       return this.subjectEchart.asObservable();
     } */
 
   removeHiveStack(hiveName: string) {
-    console.log(hiveName);
     this.recordService.mergeOptionStackApiary.series.filter(serie => hiveName === serie.name.split(' / ')[0]).forEach(element => {
       const index = this.recordService.mergeOptionStackApiary.series.map(res => res.name).indexOf(element.name);
       this.recordService.mergeOptionStackApiary.series.splice(index, 1);
       this.recordService.mergeOptionStackApiary.legend.data.splice(index, 1);
-
+      console.log(element);
     });
   }
 }

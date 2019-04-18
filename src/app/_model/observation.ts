@@ -1,6 +1,6 @@
 export interface Observation {
     id?: string;
-    date: string;
+    date: Date;
     type: string;
     sentence: string;
     idApiary?: string;
