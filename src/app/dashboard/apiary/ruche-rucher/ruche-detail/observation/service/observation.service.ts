@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { Observation } from '../../../../../../_model/observation';
 import { MyDate } from '../../../../../../class/MyDate';
 import { DataRange } from '../../service/Record/data-range';
+import { StackService } from '../../../../stack-apiary/service/stack.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -24,14 +25,36 @@ export class ObservationService {
   obsApiarySubject: BehaviorSubject<Observation[]>;
   mergeStackObsApiary: any;
   mergeStackObsHIve: any;
-  private imgApiaryObs: string;
-  private imgApiaryAct: string;
+  private imgHiveObs: string;
+  private imgHiveAct: string;
   private rangeObs: Date[];
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+      private stackService: StackService) {
     this.obsHiveSubject = new BehaviorSubject([]);
     this.obsApiarySubject = new BehaviorSubject([]);
-    this.imgApiaryObs = './assets/icons/apiaryAct.png';
-    this.imgApiaryAct = './assets/icons/apiaryObs.png';
+    
+    this.imgHiveObs = 'M256,96C144.341,96,47.559,161.021,0,256c47.559,94.979,144.341,160,256,160c111.656,0,208.439-65.021,256-160' +
+		'C464.441,161.021,367.656,96,256,96z M382.225,180.852c30.082,19.187,55.572,44.887,74.719,75.148' +
+		'c-19.146,30.261-44.639,55.961-74.719,75.148C344.428,355.257,300.779,368,256,368c-44.78,0-88.428-12.743-126.225-36.852' +
+		'c-30.08-19.188-55.57-44.888-74.717-75.148c19.146-30.262,44.637-55.962,74.717-75.148c1.959-1.25,3.938-2.461,5.929-3.65' +
+		'C130.725,190.866,128,205.613,128,221c0,70.691,57.308,128,128,128c70.691,0,128-57.309,128-128' +
+		'c0-15.387-2.725-30.134-7.703-43.799C378.285,178.39,380.266,179.602,382.225,180.852z M256,205c0,26.51-21.49,48-48,48' +
+    's-48-21.49-48-48s21.49-48,48-48S256,178.49,256,205z';
+    
+
+    this.imgHiveAct = 'M162.9,198.9v-22.95c-22.95-15.3-38.25-42.075-38.25-70.763c0-47.812,38.25-86.062,86.062-86.062' +
+    'c47.812,0,86.062,38.25,86.062,86.062c0,17.212-5.737,34.425-15.3,47.812c1.913,0,3.825,0,5.737,0c5.738,0,11.476,0,15.301,1.913' +
+    'c7.649-15.3,13.387-32.513,13.387-49.725C315.9,47.812,268.087,0,210.713,0c-57.375,0-105.188,47.812-105.188,105.188' +
+    'C105.525,145.35,128.475,181.688,162.9,198.9z' +
+    'M277.65,105.188c0-36.337-30.6-66.938-66.937-66.938s-66.938,30.6-66.938,66.938c0,19.125,7.65,34.425,19.125,45.9v-45.9' +
+    'c0-26.775,21.038-47.812,47.812-47.812s47.812,21.038,47.812,47.812v45.9C270,139.612,277.65,124.312,277.65,105.188z' +
+    'M440.212,210.375c-15.3,0-28.688,13.388-28.688,28.688v42.075v5.737H392.4v-43.987v-22.95' +
+    'c0-15.3-13.387-28.688-28.688-28.688c-15.3,0-28.688,13.388-28.688,28.688v19.125v28.688H315.9v-28.688v-38.25' +
+    'c0-15.3-13.387-28.688-28.688-28.688c-15.3,0-28.688,13.388-28.688,28.688v36.337v49.725H239.4v-47.812V105.188' +
+    'c0-15.3-13.388-28.688-28.688-28.688c-15.3,0-28.688,13.388-28.688,28.688v196.987c-40.163-42.075-91.8-87.975-112.837-66.938' +
+    'C48.15,256.275,103.613,313.65,178.2,439.875c34.425,57.375,76.5,95.625,149.175,95.625c78.412,0,143.438-65.025,143.438-143.438' +
+    'V328.95v-89.888C468.9,223.763,455.513,210.375,440.212,210.375z';
+
     this.rangeObs = [new Date('2010-01-01'), new Date()];
   }
 
@@ -58,51 +81,54 @@ export class ObservationService {
     }
     this.rangeObs = MyDate.getRange(date);
   }
-  getObservationByIdHive(idHive: string) {
+  getObservationByIdHive(idHive: string, hiveName?: string) {
     return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, this.rangeObs).map(res => {
       this.observationsHive = res;
+      console.log(this.observationsHive);
       return {
-        name: idHive,
+        name: (hiveName) ? hiveName + ' / note' : idHive,
         type: 'custom',
         xAxisIndex: 1,
         yAxisIndex: 1,
         tooltip: {
           trigger: 'item',
           formatter: (param) => {
-            return param.value[0] + ': '
-              + param.value[1] + ' - ' + param.value[2];
+            return param.value[0] + ': </br>'
+                + param.value[3];
           }
         },
-        data: res.map(elt => [elt.date, elt.type, elt.sentence]),
+        data: res.map(elt => [elt.date, 0, elt.sentence, elt.type, elt.idHive]),
         renderItem: (param, api) => {
           const point = api.coord([
             api.value(0),
             0
           ]);
-          const img = this.imgApiaryAct;
           return {
             type: 'group',
             children: [{
-              type: 'image',
-              style: {
-                image: img,
-                x: -img / 2,
-                y: -img / 2,
-                width: 25,
-                height: 25
+              type: 'path',
+              shape: {
+                pathData: (api.value(3)) === 'HiveAct' ? this.imgHiveAct : this.imgHiveObs,
+                x: -45 / 2,
+                y: -45 / 2,
+                width: 30,
+                height: 30
               },
-              position: [point[0], 50]
+              position: [point[0], 50],
+              style: api.style({
+                fill: this.stackService.getColorByHive(idHive)
+              })
             }]
           };
         },
         z: 11
-      }
+      };
     });
   }
 
   getObservationByIdApiary(idApiary: string) {
     this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, this.rangeObs).map(res => {
-      this.mergeStackObsApiary = {
+      /* this.mergeStackObsApiary = {
         name: idApiary,
         type: 'custom',
         tooltip: {
@@ -135,7 +161,7 @@ export class ObservationService {
           };
         },
         z: 11
-      };
+      }; */
       return res;
     })
       .subscribe(
@@ -163,4 +189,5 @@ export class ObservationService {
   deleteObservation(idObs: string): Observable<Observation> {
     return this.http.delete<Observation>(CONFIG.URL + 'report/' + idObs);
   }
+  
 }
