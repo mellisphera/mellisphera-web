@@ -29,7 +29,7 @@
           <tbody>
             <tr *ngFor="let ap of observationService.observationsApiary; let i = index;">
               <td>
-                {{ap.date}}
+                {{ap.date | date: userParams.formatDate }}
               </td>
 
               <td>
@@ -70,7 +70,7 @@
       <div class="modal-body">
         <form [formGroup]="observationForm" (ngSubmit)="createObservation()">
           <div class="form-group">
-            <input type="date" formControlName="date"><br />
+            <input type="datetime-local" formControlName="date"><br />
             <label for="recipient-obs" class="col-form-label">Note</label>
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
           </div>
@@ -102,7 +102,7 @@
       <div class="modal-body">
         <form [formGroup]="observationForm">
           <div class="form-group">
-            <input type="date" formControlName="date"><br />
+            <input type="datetime-local" formControlName="date"><br />
             <label for="recipient-editobs" class="col-form-label">Note</label>
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
           </div>
@@ -111,7 +111,7 @@
             <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditObservation()"
               [disabled]="!observationForm.valid">Save</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button id="btn-mvToAction" data-toggle="tooltip" data-dismiss="modal" data-html="true" title="Move to hive"
+            <button id="btn-mvToAction" data-toggle="tooltip" data-dismiss="modal" id="btn-mv" data-html="true" title="Move to hive"
               data-toggle="modal" type="button" data-target="#selectHiveModal" class="btn btn-primary  btn-lg "
               style="padding: 0;border: none; background: none;">
               <i class="fa fa-arrow-circle-right"></i>

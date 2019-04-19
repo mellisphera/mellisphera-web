@@ -32,6 +32,7 @@ export class ObservationService {
       private stackService: StackService) {
     this.obsHiveSubject = new BehaviorSubject([]);
     this.obsApiarySubject = new BehaviorSubject([]);
+    this.setRange({scale: 1, type: 'YEAR'});
     
     this.imgHiveObs = 'M256,96C144.341,96,47.559,161.021,0,256c47.559,94.979,144.341,160,256,160c111.656,0,208.439-65.021,256-160' +
 		'C464.441,161.021,367.656,96,256,96z M382.225,180.852c30.082,19.187,55.572,44.887,74.719,75.148' +
@@ -55,7 +56,7 @@ export class ObservationService {
     'C48.15,256.275,103.613,313.65,178.2,439.875c34.425,57.375,76.5,95.625,149.175,95.625c78.412,0,143.438-65.025,143.438-143.438' +
     'V328.95v-89.888C468.9,223.763,455.513,210.375,440.212,210.375z';
 
-    this.rangeObs = [new Date('2010-01-01'), new Date()];
+    // this.setRange({ scale: 1, type: 'YEAR' });
   }
 
   emitHiveSubject() {

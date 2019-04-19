@@ -38,6 +38,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminService } from './admin/service/admin.service';
 import { NgxLoadingModule } from 'ngx-loading';
 import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-component.component';
+import { UserParamsService } from './preference-config/service/user-params.service';
+import { PreferenceConfigComponent } from './preference-config/preference-config.component';
 
 
 @NgModule({
@@ -67,7 +69,8 @@ import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-co
     FleursFloraisonService,
     AdminService,
     CapteurService,
-    SidebarService
+    SidebarService,
+    UserParamsService
   ],
   declarations: [
     DashboardComponent,
@@ -87,7 +90,8 @@ import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-co
 
     ApiaryNotesComponent,
     FleursFloraisonComponent,
-    WizardComponent
+    WizardComponent,
+    PreferenceConfigComponent
   ]
 })
 export class DashboardModule { }
