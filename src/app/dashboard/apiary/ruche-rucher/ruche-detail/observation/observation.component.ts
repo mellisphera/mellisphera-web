@@ -50,10 +50,6 @@ export class ObservationComponent implements OnInit {
     }
 
   ngOnInit() {
-    console.log(new Date().toLocaleTimeString());
-    /*this.rucheId = this.activatedRoute.snapshot.params.id;
-    this.rucheName = this.activatedRoute.snapshot.params.name;
-    this.observationService.getObservationByIdHive(this.rucheService.ruche.id);*/
   }
 
 
