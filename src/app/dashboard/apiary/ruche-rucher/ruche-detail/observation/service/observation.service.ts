@@ -61,11 +61,9 @@ export class ObservationService {
 
   emitHiveSubject() {
     this.obsHiveSubject.next(this.observationsHive.slice());
-    console.log(this.obsHiveSubject);
   }
   emitApiarySubject() {
     this.obsApiarySubject.next(this.observationsApiary.slice());
-    console.log(this.obsApiarySubject);
   }
 
   setRange(scale: DataRange): void {
@@ -175,7 +173,6 @@ export class ObservationService {
         },
         () => {
           this.obsApiarySubject.complete();
-          console.log(this.mergeStackObsApiary);
         }
       );
   }
