@@ -112,6 +112,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             { scale: 1, type: 'YEAR' }
         ];
         this.range = this.ranges[0];
+        this.observationService.setRange(this.ranges[4]);
         this.recordService.setRange(this.range);
         this.message = '';
         this.img = CONFIG.URL_FRONT + 'assets/icons/next-button-4.png';
@@ -119,7 +120,6 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (!this.observationService.obsHiveSubject.closed) {
-            this.observationService.setRange({ scale: 1, type: 'YEAR' });
             this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive()).subscribe();
         }
         if (!this.rucheService.hiveSubject.closed) {

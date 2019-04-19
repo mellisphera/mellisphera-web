@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StockComponent } from './stock/stock.component';
 import { StackComponent } from './stack/stack.component';
 import { HourlyComponent } from './hourly/hourly.component';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 @NgModule({
   imports: [
@@ -18,7 +19,10 @@ import { HourlyComponent } from './hourly/hourly.component';
     FormsModule,
     ReactiveFormsModule,
     RucheRoutingModule,
-    SharedModule
+    SharedModule,
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger' // set defaults here
+    }),
   ],
   providers: [
   ],

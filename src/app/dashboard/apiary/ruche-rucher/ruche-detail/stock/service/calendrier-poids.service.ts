@@ -70,7 +70,7 @@ export class CalendrierPoidsService {
             height: '45%',
             //height:'auto',
             cellSize: ['20', '20'],
-            range: MyDate.getPersoDate(),
+            range: MyDate.getRangeForCalendar(),
             orient: 'horizontal',
             /*cellSize: 'auto',
             height:'200',*/

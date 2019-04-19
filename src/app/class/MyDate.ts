@@ -15,7 +15,8 @@ export class MyDate {
         } else {
             start = min;
         }
-        return new Array(start, new Date());
+        let end = new Date();
+        return new Array(start, end);
     }
 
     /**
@@ -43,7 +44,7 @@ export class MyDate {
         return anee + '-' +mois+'-'+ jour;
       }
 
-    static getPersoDate(){
+    static getRangeForCalendar(){
         let max = new Date();
         let tmp = (max.getFullYear()-1)+'-'+(max.getMonth()+1)+'-'+max.getDate();
         let min = (max.getFullYear()-1)+'-'+(max.getMonth()+1)+'-'+max.getDate();
@@ -73,7 +74,6 @@ export class MyDate {
      * @memberof MyDate
      */
     static getIsoFromDate(date: Date): string {
-        console.log(date);
         return  (date.getFullYear()) + '-' + (date.getMonth()) + '-' + date.getDate();
     }
 

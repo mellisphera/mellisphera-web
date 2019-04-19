@@ -47,7 +47,7 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
         height: '45%',
         //height:'auto',
         cellSize: ['20', '20'],
-        range:MyDate.getPersoDate(),
+        range:MyDate.getRangeForCalendar(),
         itemStyle: {
             normal: {
                 color: '#EBEBEB',

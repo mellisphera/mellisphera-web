@@ -1,6 +1,6 @@
 import { MyDate } from '../../../../../class/MyDate';
 import { NotifierService } from 'angular-notifier';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { RucherService } from '../../rucher.service';
 import { Ruche } from '../../ruche';
 import { RucheDetailService } from '../ruche.detail.service';
@@ -13,6 +13,8 @@ import { ObservationService } from './service/observation.service';
 import { FormGroup, FormBuilder,Validators } from '@angular/forms';
 import { RucheService } from '../../../../service/ruche.service';
 import { Observation } from '../../../../../_model/observation';
+import { Console } from '@angular/core/src/console';
+import { UserParamsService } from '../../../../preference-config/service/user-params.service';
 @Component({
   selector: 'app-observation',
   templateUrl: './observation.component.html',
@@ -39,7 +41,8 @@ export class ObservationComponent implements OnInit {
     private recordService: RecordService,
     public observationService: ObservationService,
     private rucheService: RucheService,
-    private notifyService: NotifierService
+    private notifyService: NotifierService,
+    public userParamService: UserParamsService
     ) {
       this.typeObs = false;
       this.notifier = notifyService;
@@ -47,17 +50,20 @@ export class ObservationComponent implements OnInit {
     }
 
   ngOnInit() {
+    console.log(new Date().toLocaleTimeString());
     /*this.rucheId = this.activatedRoute.snapshot.params.id;
     this.rucheName = this.activatedRoute.snapshot.params.name;
     this.observationService.getObservationByIdHive(this.rucheService.ruche.id);*/
   }
 
 
-  initForm(){
+  initForm() {
+    const defautDate = new Date();
+    // defautDate.setUTCHours(new Date().getHours());
     this.ObservationForm = this.formBuilder.group({
-      'sentence': [null,Validators.compose([Validators.required])],
+      'sentence': [null, Validators.compose([Validators.required])],
       'type': 'HiveObs',
-      'date': new MyDate(new Date()).getIso()
+      'date': defautDate.toISOString().split('.')[0]
     });
   }
 
@@ -67,7 +73,7 @@ export class ObservationComponent implements OnInit {
     this.newObs.type = 'HiveObs';
     this.newObs.idHive = this.rucheService.getCurrentHive();
     this.newObs.idLHive = [this.rucheService.getCurrentHive()];
-    this.initForm();
+    this.ObservationForm.reset();
     this.observationService.createObservation(this.newObs).subscribe( (obs) => {
       this.observationService.observationsHive.push(obs);
     }, () => {}, () => {
@@ -81,7 +87,7 @@ export class ObservationComponent implements OnInit {
     this.newObs.type = 'HiveAct';
     this.newObs.idHive = this.rucheService.getCurrentHive();
     this.newObs.idLHive = [this.rucheService.getCurrentHive()];
-    this.initForm();
+    this.ObservationForm.reset();
     this.observationService.createObservation(this.newObs).subscribe( (obs) => {
       this.observationService.observationsHive.push(obs);
     }, () => {}, () => {
@@ -91,11 +97,14 @@ export class ObservationComponent implements OnInit {
   }
   onSelectObsR(hiveOBS) {
     this.newObs = hiveOBS;
+    console.log(new Date(this.newObs.date));
+    console.log(new Date(this.newObs.date).toISOString().split('.')[0]);
     const donnée = {
       sentence : this.newObs.sentence,
       type : this.newObs.type,
-      date : this.newObs.date
+      date : new Date(this.newObs.date).toISOString().split('.')[0]
     };
+    console.log(this.newObs.date);
     this.ObservationForm.setValue(donnée);
   }
 
@@ -105,6 +114,7 @@ export class ObservationComponent implements OnInit {
    this.newObs.date = formValue.date;
    this.newObs.type = formValue.type;
    const index = this.observationService.observationsHive.indexOf(this.newObs);
+   this.ObservationForm.reset();
    this.observationService.updateObservation(this.newObs).subscribe(() => {}, () => {}, () => {
      this.observationService.observationsHive[index] = this.newObs;
      this.observationService.emitHiveSubject();
@@ -113,7 +123,6 @@ export class ObservationComponent implements OnInit {
   }
 
   deleteObsR(index: number, hiveObs: Observation) {
-    console.log(hiveObs);
     this.observationService.deleteObservation(hiveObs.id).subscribe(() => {}, () => {}, () => {
       this.observationService.observationsHive.splice(index, 1);
       this.observationService.emitHiveSubject();

@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { RucheInterface } from '../../../_model/ruche';
 import { Observation } from '../../../_model/observation';
 import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
+import { UserParamsService } from '../../preference-config/service/user-params.service';
 
 @Component({
   selector: 'app-apiary-notes',
@@ -32,7 +33,8 @@ export class ApiaryNotesComponent implements OnInit {
     private userService: UserloggedService,
     public rucherService: RucherService,
     private formBuilder: FormBuilder,
-    public observationService: ObservationService) {
+    public observationService: ObservationService,
+    public userParams: UserParamsService) {
     this.username = userService.getUser();
     this.type = 'ApiaryObs';
     this.message = '';
@@ -52,7 +54,7 @@ export class ApiaryNotesComponent implements OnInit {
     this.newObs = obs;
     const donnée = {
       sentence: this.newObs.sentence,
-      date: new MyDate(new Date()).getIso()
+      date: new Date(this.newObs.date).toISOString().split('.')[0]
     };
     this.observationForm.setValue(donnée);
   }
@@ -105,7 +107,7 @@ export class ApiaryNotesComponent implements OnInit {
   initForm() {
     this.observationForm = this.formBuilder.group({
       'sentence': [null, Validators.compose([Validators.required])],
-      'date': new MyDate(new Date()).getIso(),
+      'date': new Date().toISOString().split('.')[0],
     });
   }
   cancelUpdateRucher() {

@@ -73,6 +73,7 @@ export class StackApiaryComponent implements OnInit {
       if (!this.tokenService.checkAuthorities('ROLE_ADMIN')) {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
           this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).map((hives) => {
+            console.log(hives);
             hives.forEach(elt => {
               this.rucherService.findRucherById(elt.idApiary, (apiary) => {
                 elt.apiaryName = apiary[0].name;

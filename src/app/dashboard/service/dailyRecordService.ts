@@ -69,6 +69,9 @@ export class DailyRecordService {
      */
     public nextDay(idApiary: string): void{
         this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() + 1);
+        this.rangeDailyRecord.setHours(0);
+        this.rangeDailyRecord.setMinutes(0);
+        console.log(this.rangeDailyRecord);
         this.getDailyRecThByApiary(idApiary);
     }
     /**
@@ -79,6 +82,9 @@ export class DailyRecordService {
      */
     public previousDay(idApiary: string): void {
         this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() - 1);
+        this.rangeDailyRecord.setHours(0);
+        this.rangeDailyRecord.setMinutes(0);
+        console.log(this.rangeDailyRecord);
         this.getDailyRecThByApiary(idApiary);
     }
     /**
