@@ -22,8 +22,6 @@
               <!-- tables ruche -->
               <div>
 
-
-
                 <table class="table">
                   <thead>
                     <tr>
@@ -37,7 +35,7 @@
                     <ng-container *ngFor="let hiveObs of observationService.observationsHive; index as i">
                       <ng-container *ngIf="hiveObs.type =='HiveObs'">
                         <tr>
-                          <td>{{hiveObs.date | date: userParamService.formatDate}}</td>
+                          <td>{{getLocalDate(hiveObs.date) | date: userParamService.formatDate}}</td>
                           <td>{{hiveObs.sentence}}</td>
                           <td>Observation</td>
                           <td>
@@ -58,7 +56,7 @@
                       </ng-container>
                       <ng-container *ngIf="hiveObs.type =='HiveAct'">
                         <tr style="color: blue;">
-                          <td>{{hiveObs.date}}</td>
+                          <td>{{getLocalDate(hiveObs.date) | date: userParamService.formatDate}}</td>
                           <td>{{hiveObs.sentence}}</td>
                           <td>Action</td>
                           <td>
@@ -166,7 +164,7 @@
             </div>
           </div>
           <div class="form-group">
-            <input type="datetime-local" formControlName="date">
+            <input type="datetime-local" formControlName="date"><br/>
             <label for="recipient-editobs" class="col-form-label">Observations :</label>
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
           </div>

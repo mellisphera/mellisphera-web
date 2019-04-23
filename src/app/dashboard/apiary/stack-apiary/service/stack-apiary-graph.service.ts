@@ -90,11 +90,11 @@ export class StackApiaryGraphService {
           gridIndex: 0,
           max: new Date(),
           splitLine: {
-            show: false
+            show: true
           },
-          axisLabel: {
+/*           axisLabel: {
             show: false
-          }
+          } */
         },
         {
           type: 'time',
@@ -104,11 +104,11 @@ export class StackApiaryGraphService {
           gridIndex: 1,
           max: new Date(),
           splitLine: {
-            show: false
+            show: true
           },
-          axisLabel: {
+/*           axisLabel: {
             show: false
-          }
+          } */
         },
         {
           type: 'time',
@@ -118,11 +118,8 @@ export class StackApiaryGraphService {
           gridIndex: 2,
           max: new Date(),
           splitLine: {
-            show: false
-          },
-/*           axisLabel: {
-            show: false
-          } */
+            show: true
+          }
         },
       ],
       yAxis: [

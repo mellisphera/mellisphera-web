@@ -92,11 +92,14 @@ export class ObservationService {
         tooltip: {
           trigger: 'item',
           formatter: (param) => {
-            return param.value[0] + ': </br>'
-                + param.value[2];
+            return new Date(param.name).toLocaleString() + ': </br>'
+                + param.value[3];
           }
         },
-        data: res.map(elt => [elt.date, 0, elt.sentence, elt.type, elt.idHive]),
+        // data: res.map(elt => [elt.date, 0, elt.sentence, elt.type, elt.idHive]),
+        data: res.map(elt => {
+          return { name: elt.date, value: [elt.date, 5, elt.type, elt.sentence]};
+        }),
         renderItem: (param, api) => {
           const point = api.coord([
             api.value(0),
@@ -107,7 +110,7 @@ export class ObservationService {
             children: [{
               type: 'path',
               shape: {
-                pathData: (api.value(3)) === 'HiveAct' ? this.imgHiveAct : this.imgHiveObs,
+                pathData: (api.value(2)) === 'HiveAct' ? this.imgHiveAct : this.imgHiveObs,
                 x: -45 / 2,
                 y: -45 / 2,
                 width: 30,

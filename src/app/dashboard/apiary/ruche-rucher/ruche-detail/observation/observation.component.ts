@@ -118,6 +118,16 @@ export class ObservationComponent implements OnInit {
    });
   }
 
+  /**
+   *
+   *
+   * @param {Date} date
+   * @returns {Date}
+   * @memberof ObservationComponent
+   */
+  getLocalDate(date: Date): Date {
+    return new Date(date.toLocaleString());
+  }
   deleteObsR(index: number, hiveObs: Observation) {
     this.observationService.deleteObservation(hiveObs.id).subscribe(() => {}, () => {}, () => {
       this.observationService.observationsHive.splice(index, 1);

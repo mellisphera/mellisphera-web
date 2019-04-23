@@ -30,7 +30,7 @@
             <tr *ngFor="let ap of observationService.observationsApiary; let i = index;">
               <td>
                 <!-- {{ap.date | date: userParams.formatDate }} -->
-                {{ getLocalDate(ap.date) }}
+                {{ getLocalDate(ap.date) | date: 'medium' }}
               </td>
 
               <td>
