@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserloggedService } from '../userlogged.service';
 import { LoadingService } from './service/loading.service';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
+import { RucherService } from './apiary/ruche-rucher/rucher.service';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -25,11 +26,20 @@ export class DashboardComponent implements OnInit {
   public config = { animationType: ngxLoadingAnimationTypes.none, primaryColour: this.primaryColour, secondaryColour: this.secondaryColour}
 
   constructor(public login: UserloggedService,
-    public loadingService: LoadingService) {
+    public loadingService: LoadingService,
+    public rucherService: RucherService) {
     this.message = '';
+    this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
+      console.log(this.rucherService.checkIfApiary());
+      if (this.rucherService.checkIfApiary()) {
+        this.login.setWizardActive(false);
+        console.log(this.login.getWizardActive());
+      }
+    });
   }
 
   ngOnInit() {
+
   }
 
   receiveMessage($event) {

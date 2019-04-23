@@ -45,7 +45,6 @@ export class SignupService {
         this.errSignup = true;
         console.log(err);
         this.errSignupLabel = err.error.message.split('->')[1];
-        console.log(this.errSignup);
       },
       () => {
         if (!this.errSignup) {
