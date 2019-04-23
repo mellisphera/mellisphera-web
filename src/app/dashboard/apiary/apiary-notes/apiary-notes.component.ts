@@ -50,8 +50,15 @@ export class ApiaryNotesComponent implements OnInit {
     }
   }
 
-  getLocalDate(date: Date) {
-    return date.toLocaleDateString();
+  /**
+   *
+   *
+   * @param {Date} date
+   * @returns {Date}
+   * @memberof ApiaryNotesComponent
+   */
+  getLocalDate(date: Date): Date{
+    return new Date(date.toLocaleString());
   }
   onSelectObs(obs) {
     this.hiveToMv = this.rucherService.rucheService.ruches[0];

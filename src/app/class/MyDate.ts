@@ -41,14 +41,14 @@ export class MyDate {
         let anee = date.getFullYear();
         if (parseInt(jour, 10) < 10 ){ jour = '0'+jour; }
         if (parseInt(mois, 10) < 10 ){ mois = '0'+mois; }
-        return anee + '-' +mois+'-'+ jour;
+        return anee + '-' + mois + '-' + jour;
       }
 
     static getRangeForCalendar(){
         let max = new Date();
-        let tmp = (max.getFullYear()-1)+'-'+(max.getMonth()+1)+'-'+max.getDate();
-        let min = (max.getFullYear()-1)+'-'+(max.getMonth()+1)+'-'+max.getDate();
-        let rangeCalendar = [min ,MyDate.convertDate(max)];
+        let tmp = (max.getFullYear() - 1) + '-' + (max.getMonth() + 1) + '-' + max.getDate();
+        let min = (max.getFullYear() - 1) + '-' + (max.getMonth() + 1) + '-' + max.getDate();
+        let rangeCalendar = [min, MyDate.convertDate(max)];
         return rangeCalendar;
       }
     /**
@@ -64,6 +64,17 @@ export class MyDate {
         newDate.setFullYear(date.getFullYear() - 1);
         return newDate;
     }
+
+    /**
+     *
+     *
+     * @param {Date} date
+     * @returns {Date}
+     * @memberof MyDate
+     */
+    static getLocalDate(date: Date): Date {
+        return new Date(date.toLocaleString());
+      }
 
     /**
      *
