@@ -62,7 +62,7 @@ export class AuthService {
         this.userService.setConnexion(this.jwtReponse.connexions);
         console.log(this.jwtReponse);
         if (this.jwtReponse.connexions === 1) {
-          this.userService.setWizardActive();
+          this.userService.setWizardActive(true);
         }
         this.userService.setUser(this.jwtReponse);
         this.router.navigateByUrl('dashboard/home');

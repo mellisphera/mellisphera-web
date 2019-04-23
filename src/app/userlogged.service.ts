@@ -23,7 +23,7 @@ export class UserloggedService {
     return JSON.parse(sessionStorage.getItem('currentUser'));
   }
 
-  setUser(user: JwtResponse) {
+  setUser(user: JwtResponse): void {
     window.sessionStorage.removeItem('currentUser');
     window.sessionStorage.setItem('currentUser', JSON.stringify(user));
   }
@@ -32,17 +32,29 @@ export class UserloggedService {
     window.sessionStorage.setItem('connexions', '' + nbConnection);
   }
 
-  setCountry(country: string) {
+  setCountry(country: string): void{
     window.sessionStorage.removeItem('country');
     window.sessionStorage.setItem('country', JSON.stringify(country));
   }
 
+  /**
+   *
+   *
+   * @returns {Boolean}
+   * @memberof UserloggedService
+   */
   getWizardActive(): Boolean {
     return this.wizardActive;
   }
-  setWizardActive(): void{
-    this.wizardActive = !this.wizardActive;
+  setWizardActive(status: boolean): void{
+    this.wizardActive = status;
   }
+  /**
+   *
+   *
+   * @returns {string}
+   * @memberof UserloggedService
+   */
   getUser(): string {
     try {
       return JSON.parse(window.sessionStorage.getItem('currentUser')).username.toLowerCase();
@@ -50,7 +62,12 @@ export class UserloggedService {
       return '';
     }
   }
-
+  /**
+   *
+   *
+   * @returns {string}
+   * @memberof UserloggedService
+   */
   getCountry(): string{
     try {
       return JSON.parse(window.sessionStorage.getItem('country'));
@@ -58,14 +75,21 @@ export class UserloggedService {
       return '';
     }
   }
-  getConnexion() {
+  /**
+   *
+   *
+   * @returns {number}
+   * @memberof UserloggedService
+   */
+  getConnexion(): number {
     try {
       return JSON.parse(window.sessionStorage.getItem('connexions'));
     } catch (e) {
-      return false;
+      return NaN;
     }
   }
-  signOut() {
+
+  signOut(): void {
     window.sessionStorage.clear();
   }
 }

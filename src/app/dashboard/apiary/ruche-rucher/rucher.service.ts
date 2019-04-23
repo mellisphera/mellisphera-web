@@ -49,6 +49,7 @@ export class RucherService {
     emitApiarySubject() {
         this.rucherSubject.next(this.ruchers.slice());
     }
+    
     initRucher() {
          this.rucher = {
             id : null,
@@ -163,6 +164,16 @@ export class RucherService {
      */
     findRucherById(idApiary: string, next?) {
         next(this.ruchers.filter(apiary => apiary.id === idApiary));
+    }
+
+    /**
+     *
+     *
+     * @returns {boolean}
+     * @memberof RucherService
+     */
+    checkIfApiary(): boolean {
+        return this.ruchers.length > 0;
     }
 
 }
