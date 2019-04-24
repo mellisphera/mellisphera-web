@@ -40,6 +40,7 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-component.component';
 import { UserParamsService } from './preference-config/service/user-params.service';
 import { PreferenceConfigComponent } from './preference-config/preference-config.component';
+import { MelliChartsComponent } from './melli-charts/melli-charts.component';
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import { PreferenceConfigComponent } from './preference-config/preference-config
     ApiaryNotesComponent,
     FleursFloraisonComponent,
     WizardComponent,
-    PreferenceConfigComponent
+    PreferenceConfigComponent,
+    MelliChartsComponent
   ]
 })
 export class DashboardModule { }

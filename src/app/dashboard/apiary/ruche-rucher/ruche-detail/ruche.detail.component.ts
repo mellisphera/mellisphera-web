@@ -272,7 +272,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                     return true;
                 }
             } else if (data === 'stock') {
-                if (this.dailyRecordWservice.mergeOption.series[0].data.length < 1) {
+                if (this.dailyRecordWservice.mergeOptionWeight.series[0].data.length < 1) {
                     return true;
                 }
             }
