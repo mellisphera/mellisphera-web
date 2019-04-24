@@ -1,0 +1,25 @@
+<div class="row content">
+    <nav>
+        <ul id="hive-list">
+            <li *ngFor="let hive of rucherService.rucheService.ruchesAllApiary" class="hive-items"
+                (click)="onSelectHive($event, hive)">{{ hive.name }}</li>
+        </ul>
+    </nav>
+
+    <div class="row">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            <div echarts [options]="templateCalendar.options" [loading]="loading" (chartInit)="onChartInit($event)"></div>
+
+        </div>
+
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <ul id="type-graph">
+                <li><i (click)="selectType($event,'tempExt')" class="fa fa-calendar fa-2x"></i></li>
+                <li><i (click)="selectType($event, 'hInt')" class="fa fa-thermometer-3 fa-2x"></i></li>
+                <li><i class="fa fa-plus-square fa-2x"></i></li>
+                <li><i (click)="selectType($event, 'weightIncome')" class="fa fa-balance-scale fa-2x"></i></li>
+            </ul>
+        </div>
+    </div>
+
+</div>

@@ -101,6 +101,8 @@ export class DailyRecordService {
         };
         this.mergeOptionTint = {
             series: {
+                type: 'heatmap',
+                coordinateSystem: 'calendar',
                 data: this.arrayTempInt
             },
             title: {

@@ -1,0 +1,24 @@
+#hive-list{
+    text-align: center;
+}
+#hive-list li{
+    display: inline-block;
+    list-style: none;
+    padding: 5px;
+    background-color: gray;
+}
+#hive-list li:hover{
+    background-color: aliceblue;
+    cursor: pointer;
+}
+.hive-active{
+    background-color: white;
+    color: white;
+}
+#type-graph li{
+    list-style: none;
+    cursor: pointer;
+}
+.type-active{
+    color: orange;
+}
