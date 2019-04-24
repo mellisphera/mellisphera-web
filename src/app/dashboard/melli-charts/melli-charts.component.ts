@@ -31,6 +31,17 @@ export class MelliChartsComponent implements OnInit {
     this.loading = false;
     this.currentHiveItem = null;
     this.currentType = null;
+    this.hiveSelect = {
+      id : null,
+      name : '',
+      description : '',
+      username : '',
+      idApiary: '',
+      apiaryName: '',
+      hivePosX : '',
+      hivePosY : '',
+      sharingUser : []
+    };
     this.typeChart = null;
     this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).subscribe(
       data => {
@@ -56,27 +67,32 @@ export class MelliChartsComponent implements OnInit {
       this.currentHiveItem = event.target;
       this.renderer.addClass(this.currentHiveItem, 'hive-active');
     }
+    console.log(this.hiveSelect.name + '-' + hive.name);
     this.hiveSelect = hive;
-    if (this.currentType !== null) {
+    if (this.typeChart != null) {
       this.setData();
     }
   }
   public selectType(event: MouseEvent, type: string) {
     this.typeChart = type;
+    /* Si je n'ai pas de type et qu'il est different du précédent */
     if (this.currentType !== null && this.currentType !== event.target) {
       this.renderer.removeClass(this.currentType, 'type-active');
       this.currentType = event.target;
       this.renderer.addClass(this.currentType, 'type-active');
-      this.setData();
     } else if (this.currentType === null) {
       this.currentType = event.target;
       this.renderer.addClass(this.currentType, 'type-active');
+    }
+    /* Si le type est different du précedent*/
+    if (this.currentType !== event.target || this.currentHiveItem !== null || !this.melliService.checkMerge()) {
       this.setData();
     }
   }
 
   setData() {
     this.loading = true;
+    console.log(this.hiveSelect.id + '-' + this.hiveSelect.name);
     this.dailyRecordWService.getDailyRecordWByHive(this.hiveSelect.id, this.hiveSelect.name).subscribe(
       data => {
         this.melliService.setMerge(data[this.typeChart]);

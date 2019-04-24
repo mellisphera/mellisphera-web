@@ -21,10 +21,8 @@ export class MelliChartsService {
    * @memberof MelliChartsService
    */
   public setMerge(merge: any): void {
-    console.log(merge);
     this.mergeMilliCharts.series = [];
     if (isArray(merge)) {
-      console.log(this.mergeMilliCharts.series.concat(merge));
       this.mergeMilliCharts.series = this.mergeMilliCharts.series.concat(merge);
     } else {
       this.mergeMilliCharts.series.push(merge);
@@ -39,5 +37,9 @@ export class MelliChartsService {
    */
   public getMerge(): any {
     return this.mergeMilliCharts;
+  }
+
+  public checkMerge(): boolean {
+    return this.mergeMilliCharts.series.length > 0;
   }
 }
