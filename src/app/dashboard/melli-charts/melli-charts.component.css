@@ -17,6 +17,7 @@
 }
 #type-graph li{
     list-style: none;
+    text-align: center;
     cursor: pointer;
 }
 .type-active{
