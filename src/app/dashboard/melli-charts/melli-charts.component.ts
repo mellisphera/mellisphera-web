@@ -68,9 +68,13 @@ export class MelliChartsComponent implements OnInit {
       this.renderer.addClass(this.currentHiveItem, 'hive-active');
     }
     console.log(this.hiveSelect.name + '-' + hive.name);
-    this.hiveSelect = hive;
-    if (this.typeChart != null) {
-      this.setData();
+    if (this.typeChart != null) { // Si un type à été selectionné
+      if (this.hiveSelect.id !== hive.id) { // si la ruche est differente de la précedente
+        this.hiveSelect = hive;
+        this.setData();
+      }
+    } else {
+      this.hiveSelect = hive;
     }
   }
   public selectType(event: MouseEvent, type: string) {
@@ -84,10 +88,21 @@ export class MelliChartsComponent implements OnInit {
       this.currentType = event.target;
       this.renderer.addClass(this.currentType, 'type-active');
     }
-    /* Si le type est different du précedent*/
-    if (this.currentType !== event.target || this.currentHiveItem !== null || !this.melliService.checkMerge()) {
+    /* Si une ruche est séléctionné ET que aucune donnée n'existe la concernant */
+    if (this.currentHiveItem !== null && this.melliService.getMergeAllData() !== null) {
+      this.melliService.setMerge(this.melliService.getMergeAllData()[this.typeChart]);
+    } else {
       this.setData();
     }
+    this.refreshGraph();
+  }
+
+  refreshGraph() {
+    const options = this.echartInstance.getOption();
+    options.series = this.melliService.getMerge().series;
+    this.echartInstance.clear();
+    this.echartInstance.setOption(options);
+    console.log(this.melliService.getMerge());
   }
 
   setData() {
@@ -95,12 +110,9 @@ export class MelliChartsComponent implements OnInit {
     console.log(this.hiveSelect.id + '-' + this.hiveSelect.name);
     this.dailyRecordWService.getDailyRecordWByHive(this.hiveSelect.id, this.hiveSelect.name).subscribe(
       data => {
+        this.melliService.setMergeAllData(data);
         this.melliService.setMerge(data[this.typeChart]);
-        const options = this.echartInstance.getOption();
-        options.series = this.melliService.getMerge().series;
-        this.echartInstance.clear();
-        this.echartInstance.setOption(options);
-        console.log(this.melliService.getMerge());
+        this.refreshGraph();
         console.log(this.echartInstance.getOption());
       },
       err => {},
