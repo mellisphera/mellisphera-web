@@ -6,10 +6,12 @@ import { isArray } from 'util';
 })
 export class MelliChartsService {
 
-  private mergeMilliCharts: any;
+  private mergeMillichartsActif: any; // Merge utilsé
+  private mergeAllData: any; // Merge de toute les données pour la ruche
 
   constructor() {
-    this.mergeMilliCharts = {
+    this.mergeAllData = null;
+    this.mergeMillichartsActif = {
       series: []
     };
   }
@@ -18,14 +20,33 @@ export class MelliChartsService {
    *
    *
    * @param {*} merge
+   * @returns {*}
+   * @memberof MelliChartsService
+   */
+  public setMergeAllData(merge: any): any{
+    this.mergeAllData = merge;
+  }
+  /**
+   *
+   *
+   * @returns {*}
+   * @memberof MelliChartsService
+   */
+  public getMergeAllData(): any {
+    return this.mergeAllData;
+  }
+  /**
+   *
+   *
+   * @param {*} merge
    * @memberof MelliChartsService
    */
   public setMerge(merge: any): void {
-    this.mergeMilliCharts.series = [];
+    this.mergeMillichartsActif.series = [];
     if (isArray(merge)) {
-      this.mergeMilliCharts.series = this.mergeMilliCharts.series.concat(merge);
+      this.mergeMillichartsActif.series = this.mergeMillichartsActif.series.concat(merge);
     } else {
-      this.mergeMilliCharts.series.push(merge);
+      this.mergeMillichartsActif.series.push(merge);
     }
   }
 
@@ -36,10 +57,6 @@ export class MelliChartsService {
    * @memberof MelliChartsService
    */
   public getMerge(): any {
-    return this.mergeMilliCharts;
-  }
-
-  public checkMerge(): boolean {
-    return this.mergeMilliCharts.series.length > 0;
+    return this.mergeMillichartsActif;
   }
 }
