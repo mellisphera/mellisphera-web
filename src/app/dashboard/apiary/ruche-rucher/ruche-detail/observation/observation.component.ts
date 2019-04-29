@@ -59,7 +59,7 @@ export class ObservationComponent implements OnInit {
     this.ObservationForm = this.formBuilder.group({
       'sentence': [null, Validators.compose([Validators.required])],
       'type': 'HiveObs',
-      'date': defautDate.toISOString().split('.')[0]
+      'date': new Date()
     });
   }
 
@@ -98,7 +98,7 @@ export class ObservationComponent implements OnInit {
     const donnée = {
       sentence : this.newObs.sentence,
       type : this.newObs.type,
-      date : new Date(this.newObs.date).toISOString().split('.')[0]
+      date : new Date(this.newObs.date)
     };
     console.log(this.newObs.date);
     this.ObservationForm.setValue(donnée);
