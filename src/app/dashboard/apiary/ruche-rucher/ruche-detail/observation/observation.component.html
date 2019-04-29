@@ -35,7 +35,7 @@
                     <ng-container *ngFor="let hiveObs of observationService.observationsHive; index as i">
                       <ng-container *ngIf="hiveObs.type =='HiveObs'">
                         <tr>
-                          <td>{{getLocalDate(hiveObs.date) | date: 'dd/MM/y'}}</td>
+                          <td>{{userParamService.getFormatDate(hiveObs.date)}}</td>
                           <td>{{hiveObs.sentence}}</td>
                           <td>Observation</td>
                           <td>
@@ -56,7 +56,7 @@
                       </ng-container>
                       <ng-container *ngIf="hiveObs.type =='HiveAct'">
                         <tr style="color: blue;">
-                          <td>{{getLocalDate(hiveObs.date)}}</td>
+                          <td>{{userParamService.getFormatDate(hiveObs.date)}}</td>
                           <td>{{hiveObs.sentence}}</td>
                           <td>Action</td>
                           <td>
@@ -113,15 +113,13 @@
       <div class="modal-body" id="popupObs">
         <form [formGroup]="ObservationForm">
           <div class="form-group">
-            <label for="sentence" class="col-form-label">Observations/Actions</label><br/>
+            <label for="sentence" class="col-form-label">Observations/Actions</label><br />
             <!-- <input type="date" formControlName="date"> -->
             <label class="example-input-wrapper">
-                Date Time:
-                <input placeholder="Date Time:"
-                      formControlName="date"
-                       [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
-                <owl-date-time #dt></owl-date-time>
-            </label><br/>
+              Date Time:
+              <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+              <owl-date-time #dt></owl-date-time>
+            </label><br />
             <input formControlName="sentence" type="text" class="form-control" id="sentence">
           </div>
 
@@ -164,20 +162,19 @@
           <div class="form-group">
             <label class="col-form-label" for="exampleRadios1">Type</label>
             <div class="form-check">
-              <input class="form-c  heck-input" type="radio" formControlName="type" value="HiveObs" [checked]>
+              <input class="form-check-input" type="radio" formControlName="type" value="HiveObs" [checked]>
               <label class="form-check-label" for="exampleRadios1">Observation</label><br />
               <input class="form-check-input" type="radio" formControlName="type" value="HiveAct">
               <label class="form-check-label" for="exampleRadios1">Action</label>
             </div>
           </div>
           <div class="form-group">
-              <label class="example-input-wrapper">
-                  Date Time:
-                  <input placeholder="Date Time:"
-                        formControlName="date"
-                         [owlDateTimeTrigger]="dtUpdate" [owlDateTime]="dtUpdate">
-                  <owl-date-time #dtUpdate></owl-date-time>
-              </label><br/>
+            <label class="example-input-wrapper">
+              Date Time:
+              <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dtUpdate"
+                [owlDateTime]="dtUpdate">
+              <owl-date-time #dtUpdate></owl-date-time>
+            </label><br />
             <label for="recipient-editobs" class="col-form-label">Observations :</label>
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
           </div>

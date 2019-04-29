@@ -5,11 +5,21 @@ import { Injectable } from '@angular/core';
 })
 export class UserParamsService {
 
-  
+  private dtFormat: Array<string>;
   private formatDate: string;
+  private regexDate: RegExp;
   constructor() {
-    this.formatDate = 'medium';
+    this.dtFormat = [
+      'Y-M-D h:m',
+      'D-M-Y h:m',
+      'D/M/D h:m'
+
+    ];
+    this.setFormatDate(this.dtFormat[0]);
   }
+
+
+  
 
   /**
    *
@@ -17,8 +27,8 @@ export class UserParamsService {
    * @param {string} datePipe
    * @memberof UserService
    */
-  setFormatDate(datePipe: string): void {
-    this.formatDate = datePipe;
+  setFormatDate(dtFormat: string): void {
+    this.formatDate = dtFormat;
   }
 
   /**
@@ -27,7 +37,12 @@ export class UserParamsService {
    * @returns {string}
    * @memberof UserService
    */
-  getFormatDate(): string {
-    return this.formatDate;
+  getFormatDate(date: Date): string {
+    const newInstanceDate = new Date(date);
+    return this.formatDate.replace(/Y/g, String(newInstanceDate.getFullYear()))
+    .replace(/M/g, String(newInstanceDate.getMonth()))
+    .replace(/D/g, String(newInstanceDate.getDate()))
+    .replace(/h/g, String(newInstanceDate.getHours()))
+    .replace(/m/g, String(newInstanceDate.getMinutes()));
   }
 }
