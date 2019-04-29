@@ -35,7 +35,7 @@
                     <ng-container *ngFor="let hiveObs of observationService.observationsHive; index as i">
                       <ng-container *ngIf="hiveObs.type =='HiveObs'">
                         <tr>
-                          <td>{{getLocalDate(hiveObs.date) | date: userParamService.formatDate}}</td>
+                          <td>{{getLocalDate(hiveObs.date) | date: 'dd/MM/y'}}</td>
                           <td>{{hiveObs.sentence}}</td>
                           <td>Observation</td>
                           <td>
@@ -56,7 +56,7 @@
                       </ng-container>
                       <ng-container *ngIf="hiveObs.type =='HiveAct'">
                         <tr style="color: blue;">
-                          <td>{{getLocalDate(hiveObs.date) | date: userParamService.formatDate}}</td>
+                          <td>{{getLocalDate(hiveObs.date)}}</td>
                           <td>{{hiveObs.sentence}}</td>
                           <td>Action</td>
                           <td>
@@ -114,7 +114,7 @@
         <form [formGroup]="ObservationForm">
           <div class="form-group">
             <label for="sentence" class="col-form-label">Observations/Actions</label><br/>
-            <input type="datetime-local" formControlName="date">
+            <input type="date" formControlName="date">
             <input formControlName="sentence" type="text" class="form-control" id="sentence">
           </div>
 
@@ -164,7 +164,7 @@
             </div>
           </div>
           <div class="form-group">
-            <input type="datetime-local" formControlName="date"><br/>
+            <input type="date" formControlName="date"><br/>
             <label for="recipient-editobs" class="col-form-label">Observations :</label>
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
           </div>

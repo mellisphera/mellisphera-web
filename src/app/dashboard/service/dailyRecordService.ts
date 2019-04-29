@@ -33,6 +33,8 @@ export class DailyRecordService {
         this.arrayHint = [];
         this.arrayHealth = [];
         this.rangeDailyRecord.setDate(new Date().getDate() - 1);
+        this.rangeDailyRecord.setHours(0);
+        this.rangeDailyRecord.setMinutes(0);
         if (this.user.getUser()) {
             this.getDailyRecThByApiary(sessionStorage.getItem('currentApiary'));
         }
@@ -156,6 +158,7 @@ export class DailyRecordService {
      * @memberof DailyRecordService
      */
     public getDailyRecThByApiary(idApiary: string): void {
+        console.log(this.rangeDailyRecord);
         this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, this.rangeDailyRecord);
         this.dailyRecords = [];
         this.dailyRecTabObs.subscribe(

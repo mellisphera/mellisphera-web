@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { isArray } from 'util';
+import { MyDate } from '../../../class/MyDate';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,13 @@ export class MelliChartsService {
   private mergeMillichartsActif: any; // Merge utilsé
   private mergeAllData: any; // Merge de toute les données pour la ruche
 
+  public startCalendar: Date;
+  public endCalendar: Date;
+
   constructor() {
     this.mergeAllData = null;
+    this.endCalendar = new Date();
+    this.startCalendar = new Date(this.endCalendar.getFullYear() - 1, this.endCalendar.getMonth(), this.endCalendar.getDate());
     this.mergeMillichartsActif = {
       series: []
     };
@@ -23,7 +29,7 @@ export class MelliChartsService {
    * @returns {*}
    * @memberof MelliChartsService
    */
-  public setMergeAllData(merge: any): any{
+  public setMergeAllData(merge: any): any {
     this.mergeAllData = merge;
   }
   /**
@@ -59,4 +65,5 @@ export class MelliChartsService {
   public getMerge(): any {
     return this.mergeMillichartsActif;
   }
+  
 }

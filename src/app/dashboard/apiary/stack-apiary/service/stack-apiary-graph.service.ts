@@ -128,6 +128,7 @@ export class StackApiaryGraphService {
           nameLocation: 'middle',
           nameGap: 25,
           type: 'value',
+          min: 10
         },
         {
           gridIndex: 1,

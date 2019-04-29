@@ -52,8 +52,8 @@ export class DailyRecordsWService {
   getDailyRecordWByHive(idHive: string, hiveName?: string): Observable<any> {
     this.currentIdHive = idHive;
     return this.http.get<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/hive/' + idHive).map(res => {
-      this.arrayTempExt = res.map(elt => [MyDate.convertDate(new Date(elt.recordDate)), elt.temp_ext_max]);
-      this.weightIncome = res.map(elt => [MyDate.convertDate(new Date(elt.recordDate)), elt.weight_income_gain]);
+      this.arrayTempExt = res.map(elt => [MyDate.getWekitDate(MyDate.convertDate(new Date(elt.recordDate))), elt.temp_ext_max]);
+      this.weightIncome = res.map(elt => [MyDate.getWekitDate(MyDate.convertDate(new Date(elt.recordDate))), elt.weight_income_gain]);
       return {
         tempExt: {
           name: hiveName,

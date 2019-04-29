@@ -57,8 +57,9 @@ export class ApiaryNotesComponent implements OnInit {
    * @returns {Date}
    * @memberof ApiaryNotesComponent
    */
-  getLocalDate(date: Date): Date{
-    return new Date(date.toLocaleString());
+  getLocalDate(date: Date): string{
+    let dt = new Date(date);
+    return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
   }
   onSelectObs(obs) {
     this.hiveToMv = this.rucherService.rucheService.ruches[0];
@@ -118,7 +119,7 @@ export class ApiaryNotesComponent implements OnInit {
   initForm() {
     this.observationForm = this.formBuilder.group({
       'sentence': [null, Validators.compose([Validators.required])],
-      'date': new Date().toISOString().split('.')[0],
+      'date': new Date(),
     });
   }
   cancelUpdateRucher() {

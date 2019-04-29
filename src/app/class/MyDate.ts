@@ -8,14 +8,14 @@ export class MyDate {
      * @returns {Date[]}
      * @memberof MyDate
      */
-    static getRange(min?: Date): Date[] {
+    static getRange(min?: Date, max?: Date): Date[] {
         let start = new Date();
         if (!min) {
             start.setDate((start.getDate() - 15));
         } else {
             start = min;
         }
-        let end = new Date();
+        const end = max ? max : new Date();
         return new Array(start, end);
     }
 
@@ -35,12 +35,12 @@ export class MyDate {
         date.setDate(parseInt(parseInt(tmp[2][0], 10) + '' + parseInt(tmp[2][1], 10), 10));
         return date;
     }
-   static convertDate(date){
-        let jour = ''+date.getDate();
-        let mois = ''+(date.getMonth()+1);
+   static convertDate(date: Date){
+        let jour = '' + date.getDate();
+        let mois = '' + (date.getMonth() + 1);
         let anee = date.getFullYear();
-        if (parseInt(jour, 10) < 10 ){ jour = '0'+jour; }
-        if (parseInt(mois, 10) < 10 ){ mois = '0'+mois; }
+        if (parseInt(jour, 10) < 10 ) { jour = '0' + jour; }
+        if (parseInt(mois, 10) < 10 ) { mois = '0' + mois; }
         return anee + '-' + mois + '-' + jour;
       }
 
@@ -51,6 +51,10 @@ export class MyDate {
         let rangeCalendar = [min, MyDate.convertDate(max)];
         return rangeCalendar;
       }
+    
+/*     static getRangeFromDate(date: Date[]) {
+
+    } */
     /**
      *
      *

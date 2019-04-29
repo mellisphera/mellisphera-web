@@ -296,7 +296,21 @@ export class RecordService {
             showSymbol: false,
             hoverAnimation: true,
             yAxisIndex: 1,
-            color: 'red'
+            color: 'red',
+            markArea: {
+              silent: true,
+              itemStyle: {
+                color: '#EBEBEB'
+              },
+              label: {
+                show: true
+              },
+              data: [[{
+                yAxis: '33'
+              }, {
+                yAxis: '37'
+              }]]
+            },
           },
           {
             name: 'Temp-ext',

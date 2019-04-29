@@ -5,14 +5,16 @@
                 (click)="onSelectHive($event, hive)">{{ hive.name }}</li>
         </ul>
     </nav>
-
+    
     <div class="row">
-        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            <div echarts [options]="templateCalendar.options" [loading]="loading" (chartInit)="onChartInit($event)"></div>
+        <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 text-center">
+            <label>Start : </label><input [(ngModel)]="melliService.startCalendar" (ngModelChange)="setRangeCalendar()" type="date"/>
+            <label>End : </label><input [(ngModel)]="melliService.endCalendar"  (ngModelChange)="setRangeCalendar()" type="date"/>
+            <div echarts [options]="templateCalendar.options" [merge]="melliService.getMerge()" [loading]="loading" (chartInit)="onChartInit($event)"></div>
 
         </div>
 
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
             <ul id="type-graph">
                 <li><i (click)="selectType($event,'tempExt')" class="fa fa-calendar fa-2x"></i></li>
                 <li><i (click)="selectType($event, 'hInt')" class="fa fa-thermometer-3 fa-2x"></i></li>
