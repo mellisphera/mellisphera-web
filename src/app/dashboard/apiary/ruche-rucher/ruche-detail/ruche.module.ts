@@ -12,11 +12,14 @@ import { StockComponent } from './stock/stock.component';
 import { StackComponent } from './stack/stack.component';
 import { HourlyComponent } from './hourly/hourly.component';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   imports: [
   CommonModule,
     FormsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     ReactiveFormsModule,
     RucheRoutingModule,
     SharedModule,

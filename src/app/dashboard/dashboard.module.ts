@@ -42,6 +42,7 @@ import { UserParamsService } from './preference-config/service/user-params.servi
 import { PreferenceConfigComponent } from './preference-config/preference-config.component';
 import { MelliChartsComponent } from './melli-charts/melli-charts.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { MyDatePipe } from '../pipe/my-date.pipe';
 
 
 @NgModule({
@@ -79,11 +80,13 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
   declarations: [
     DashboardComponent,
     HomeComponent,
-    RucheRucherComponent,
+/*     MyDatePipe,
+ */    RucheRucherComponent,
     FeedbackComponent,
     MeteoComponent,
     PipeCapteur,
     DemoComponent,
+    MyDatePipe,
     SearchCapteur,
     SearchFleurPipe,
     searchFleurByDate,

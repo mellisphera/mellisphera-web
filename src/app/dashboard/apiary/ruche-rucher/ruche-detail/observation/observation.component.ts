@@ -117,24 +117,6 @@ export class ObservationComponent implements OnInit {
      this.notifier.notify('success', 'Updated Note');
    });
   }
-
-  /**
-   *
-   *
-   * @param {Date} date
-   * @returns {Date}
-   * @memberof ObservationComponent
-   */
-  getLocalDate(date: Date): Date | string {
-    let dt = new Date(date);
-    console.log(navigator.appCodeName);
-    console.log(dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate());
-    try{
-      return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
-    } catch(e) {
-      return 'ERREUR';
-    }
-  }
   deleteObsR(index: number, hiveObs: Observation) {
     this.observationService.deleteObservation(hiveObs.id).subscribe(() => {}, () => {}, () => {
       this.observationService.observationsHive.splice(index, 1);

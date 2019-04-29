@@ -27,6 +27,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxLoadingModule } from 'ngx-loading';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { MyDatePipe } from './pipe/my-date.pipe';
 
 export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
    return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
@@ -36,7 +37,7 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
   declarations: [
     LoginComponent,
     AppComponent,
-    Erreur404ComponentComponent
+    Erreur404ComponentComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +50,6 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    
     BrowserAnimationsModule,
     TranslateModule.forRoot({
       loader: {
