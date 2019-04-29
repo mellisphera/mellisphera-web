@@ -20,7 +20,7 @@ export class MelliChartsComponent implements OnInit {
   private currentTypeElt: EventTarget;
   private hiveSelect: RucheInterface;
   private typeStrChart: string;
-  private loading: boolean;
+  public loading: boolean;
 
   constructor(
     public templateCalendar: CalendarTemplateService,
