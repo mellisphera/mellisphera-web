@@ -114,7 +114,14 @@
         <form [formGroup]="ObservationForm">
           <div class="form-group">
             <label for="sentence" class="col-form-label">Observations/Actions</label><br/>
-            <input type="date" formControlName="date">
+            <!-- <input type="date" formControlName="date"> -->
+            <label class="example-input-wrapper">
+                Date Time:
+                <input placeholder="Date Time:"
+                      formControlName="date"
+                       [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                <owl-date-time #dt></owl-date-time>
+            </label><br/>
             <input formControlName="sentence" type="text" class="form-control" id="sentence">
           </div>
 
@@ -164,7 +171,13 @@
             </div>
           </div>
           <div class="form-group">
-            <input type="date" formControlName="date"><br/>
+              <label class="example-input-wrapper">
+                  Date Time:
+                  <input placeholder="Date Time:"
+                        formControlName="date"
+                         [owlDateTimeTrigger]="dtUpdate" [owlDateTime]="dtUpdate">
+                  <owl-date-time #dtUpdate></owl-date-time>
+              </label><br/>
             <label for="recipient-editobs" class="col-form-label">Observations :</label>
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
           </div>

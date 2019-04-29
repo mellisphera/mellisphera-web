@@ -26,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxLoadingModule } from 'ngx-loading';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
    return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
@@ -38,15 +39,17 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     Erreur404ComponentComponent
   ],
   imports: [
-
-  BrowserModule,
+    BrowserModule,
     CommonModule,
     FormsModule,
     HttpModule,
     RouterModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    
     BrowserAnimationsModule,
     TranslateModule.forRoot({
       loader: {

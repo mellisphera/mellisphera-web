@@ -24,11 +24,12 @@ export class ApiaryNotesComponent implements OnInit {
   observationForm: FormGroup;
   private hiveIndex: number;
   type: string;
+  public noteDateTime: Date;
   private username: string;
   private notify: NotifierService;
   private newObs: Observation;
   updateRucherInput: boolean;
-
+  public settings: any;
   constructor(private notifyService: NotifierService,
     private userService: UserloggedService,
     public rucherService: RucherService,
@@ -61,12 +62,12 @@ export class ApiaryNotesComponent implements OnInit {
     let dt = new Date(date);
     return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
   }
-  onSelectObs(obs) {
+  onSelectObs(obs: Observation) {
     this.hiveToMv = this.rucherService.rucheService.ruches[0];
     this.newObs = obs;
     const donnée = {
       sentence: this.newObs.sentence,
-      date: new Date(this.newObs.date).toISOString().split('.')[0]
+      date: new Date(obs.date)
     };
     this.observationForm.setValue(donnée);
   }

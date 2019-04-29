@@ -41,12 +41,15 @@ import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-co
 import { UserParamsService } from './preference-config/service/user-params.service';
 import { PreferenceConfigComponent } from './preference-config/preference-config.component';
 import { MelliChartsComponent } from './melli-charts/melli-charts.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 @NgModule({
   imports: [
     CommonModule,
     DasboardRoutingModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     NavbarModule,
     SidebarModule,
     RouterModule,
