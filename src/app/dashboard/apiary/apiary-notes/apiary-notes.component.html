@@ -30,7 +30,7 @@
             <tr *ngFor="let ap of observationService.observationsApiary; let i = index;">
               <td>
                 <!-- {{ap.date | date: userParams.formatDate }} -->
-                {{ getLocalDate(ap.date) | date: 'medium' }}
+                {{ getLocalDate(ap.date) }}
               </td>
 
               <td>
@@ -71,7 +71,7 @@
       <div class="modal-body">
         <form [formGroup]="observationForm" (ngSubmit)="createObservation()">
           <div class="form-group">
-            <input type="datetime-local" formControlName="date"><br />
+            <input type="date" formControlName="date"><br />
             <label for="recipient-obs" class="col-form-label">Note</label>
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
           </div>
@@ -103,7 +103,7 @@
       <div class="modal-body">
         <form [formGroup]="observationForm">
           <div class="form-group">
-            <input type="datetime-local" formControlName="date"><br />
+            <input type="date" formControlName="date"><br />
             <label for="recipient-editobs" class="col-form-label">Note</label>
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
           </div>

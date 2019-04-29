@@ -6,6 +6,7 @@ import { UserloggedService } from '../../userlogged.service';
 import { RucheInterface } from '../../_model/ruche';
 import { DailyRecordsWService } from '../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
 import { MelliChartsService } from './service/melli-charts.service';
+import { DailyRecordService } from '../service/dailyRecordService';
 
 @Component({
   selector: 'app-melli-charts',
@@ -16,9 +17,9 @@ export class MelliChartsComponent implements OnInit {
 
   public echartInstance: ECharts;
   private currentHiveItem: EventTarget;
-  private currentType: EventTarget;
+  private currentTypeElt: EventTarget;
   private hiveSelect: RucheInterface;
-  private typeChart: string;
+  private typeStrChart: string;
   private loading: boolean;
 
   constructor(
@@ -26,11 +27,12 @@ export class MelliChartsComponent implements OnInit {
     public rucherService: RucherService,
     private userService: UserloggedService,
     public melliService: MelliChartsService,
+    public dailyReccordThService: DailyRecordService,
     public dailyRecordWService: DailyRecordsWService,
     private renderer: Renderer2) {
     this.loading = false;
     this.currentHiveItem = null;
-    this.currentType = null;
+    this.currentTypeElt = null;
     this.hiveSelect = {
       id : null,
       name : '',
@@ -42,7 +44,7 @@ export class MelliChartsComponent implements OnInit {
       hivePosY : '',
       sharingUser : []
     };
-    this.typeChart = null;
+    this.typeStrChart = null;
     this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).subscribe(
       data => {
         this.rucherService.rucheService.ruchesAllApiary = data;
@@ -55,7 +57,6 @@ export class MelliChartsComponent implements OnInit {
 
   public onChartInit(event: ECharts) {
     this.echartInstance = event;
-    console.log(this.echartInstance);
   }
 
   public onSelectHive(event: MouseEvent, hive: RucheInterface) {
@@ -68,7 +69,7 @@ export class MelliChartsComponent implements OnInit {
       this.renderer.addClass(this.currentHiveItem, 'hive-active');
     }
     console.log(this.hiveSelect.name + '-' + hive.name);
-    if (this.typeChart != null) { // Si un type à été selectionné
+    if (this.typeStrChart != null) { // Si un type à été selectionné
       if (this.hiveSelect.id !== hive.id) { // si la ruche est differente de la précedente
         this.hiveSelect = hive;
         this.setData();
@@ -78,42 +79,47 @@ export class MelliChartsComponent implements OnInit {
     }
   }
   public selectType(event: MouseEvent, type: string) {
-    this.typeChart = type;
+    this.typeStrChart = type;
     /* Si je n'ai pas de type et qu'il est different du précédent */
-    if (this.currentType !== null && this.currentType !== event.target) {
-      this.renderer.removeClass(this.currentType, 'type-active');
-      this.currentType = event.target;
-      this.renderer.addClass(this.currentType, 'type-active');
-    } else if (this.currentType === null) {
-      this.currentType = event.target;
-      this.renderer.addClass(this.currentType, 'type-active');
+    if (this.currentTypeElt !== null && this.currentTypeElt !== event.target) {
+      this.renderer.removeClass(this.currentTypeElt, 'type-active');
+      this.currentTypeElt = event.target;
+      this.renderer.addClass(this.currentTypeElt, 'type-active');
+    } else if (this.currentTypeElt === null) {
+      this.currentTypeElt = event.target;
+      this.renderer.addClass(this.currentTypeElt, 'type-active');
     }
     /* Si une ruche est séléctionné ET que aucune donnée n'existe la concernant */
     if (this.currentHiveItem !== null && this.melliService.getMergeAllData() !== null) {
-      this.melliService.setMerge(this.melliService.getMergeAllData()[this.typeChart]);
-    } else {
+      this.melliService.setMerge(this.melliService.getMergeAllData()[this.typeStrChart]);
+    } else if (this.currentHiveItem !== null) {
       this.setData();
     }
-    this.refreshGraph();
+    this.refreshDataGraph();
   }
 
-  refreshGraph() {
+  refreshDataGraph() {
     const options = this.echartInstance.getOption();
     options.series = this.melliService.getMerge().series;
     this.echartInstance.clear();
     this.echartInstance.setOption(options);
-    console.log(this.melliService.getMerge());
   }
 
+
+  setRangeCalendar() {
+    const options = this.echartInstance.getOption();
+    options.calendar[0].range = [this.melliService.startCalendar, this.melliService.endCalendar];
+    this.echartInstance.clear();
+    this.echartInstance.setOption(options);
+  }
   setData() {
     this.loading = true;
     console.log(this.hiveSelect.id + '-' + this.hiveSelect.name);
     this.dailyRecordWService.getDailyRecordWByHive(this.hiveSelect.id, this.hiveSelect.name).subscribe(
       data => {
         this.melliService.setMergeAllData(data);
-        this.melliService.setMerge(data[this.typeChart]);
-        this.refreshGraph();
-        console.log(this.echartInstance.getOption());
+        this.melliService.setMerge(data[this.typeStrChart]);
+        this.refreshDataGraph();
       },
       err => {},
       () => {

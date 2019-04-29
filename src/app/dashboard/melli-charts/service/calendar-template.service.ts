@@ -22,12 +22,15 @@ export class CalendarTemplateService {
           saveAsImage: { show: true }
         }
       },
+      tooltip: {
+        trigger: 'item',
+      },
       calendar: {
-        left: '3%',
-        right: '2%',
-        width: '92%',
+        left: '5%',
+        right: '5%',
+        width: '90%',
         height: '45%',
-        cellSize: ['20', '20'],
+        cellSize: ['20', 'auto'],
         range: MyDate.getRangeForCalendar(),
         itemStyle: {
           normal: {
@@ -38,7 +41,7 @@ export class CalendarTemplateService {
         },
         yearLabel: {
           formatter: '{start}-{end}',
-          margin: 40,
+         // margin: 40,
           show: true,
           textStyle: {
             color: 'black'
