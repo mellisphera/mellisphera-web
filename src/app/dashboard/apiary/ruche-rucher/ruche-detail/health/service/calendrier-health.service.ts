@@ -7,6 +7,7 @@ import { CalendrierService } from '../../service/calendrier.service';
 import { MyDate } from '../../../../../../class/MyDate';
 //import { ECharts } from 'echarts';
 import { ICON } from './icon';
+import { UserParamsService } from '../../../../../preference-config/service/user-params.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +16,7 @@ export class CalendrierHealthService {
 
     option: any;
 
-    constructor() {
+    constructor(private userParamService: UserParamsService) {
         this.option = {
             backgroundColor: 'white',
             title: {
@@ -27,10 +28,9 @@ export class CalendrierHealthService {
                 }
             },
             tooltip: {
-                trigger: 'axis',
+                trigger: 'item',
                 formatter: (params) => {
-                    console.log(params.data);
-                    return params.data[0] + '<br/>' + params.data[2];
+                    return params.marker + userParamService.getFormatCalendar(params.data[0]) + '<br/>' + params.data[2];
                 }
             },
             toolbox: {
@@ -96,68 +96,62 @@ export class CalendrierHealthService {
     }
 
     renderItem(params, api) {
-        var cellPoint = api.coord(api.value(0));
-        console.log(cellPoint);
-        var cellWidth = params.coordSys.cellWidth;
-        var cellHeight = params.coordSys.cellHeight;
+        const cellPoint = api.coord(api.value(0));
+        const cellWidth = params.coordSys.cellWidth;
+        const cellHeight = params.coordSys.cellHeight;
         var img;
+        var color;
         var value = api.value(1);
         if (isNaN(cellPoint[0]) || isNaN(cellPoint[1])) {
             return;
         }
         switch (api.value(1)) {
             case 'statusC':
+                color = 'green';
                 if (api.value(2) === 'Fluctuation') {
-                    img = ICON.wfbfl;
+                    img = ICON.circle;
                     // img = 'wfbfl';
-                }
-                else if (api.value(2) === 'Decline') {
-                    img = ICON.wfbde;
+                } else if (api.value(2) === 'Decline') {
+                    img = ICON.slide_down;
                     // img = 'wfbde';
-                }
-                else if (api.value(2) === 'Stable') {
-                    img = ICON.wfbst;
+                } else if (api.value(2) === 'Stable') {
+                    img = ICON.circle;
                     // img = 'wfbst';
-                }
-                else if (api.value(2) === 'Improve') {
-                    img = ICON.wfbim;
+                } else if (api.value(2) === 'Improve') {
+                    img = ICON.slide_up;
                     // img = 'wfbim';
                 }
                 break;
             case 'statusB':
+                color = '#E1AF13';
                 if (api.value(2) === 'Fluctuation') {
-                    img = ICON.wnbfl;
+                    img = ICON.circle;
                     // img = 'wnbfl';
-                }
-                else if (api.value(2) === 'Decline') {
-                    img = ICON.wnbde;
+                } else if (api.value(2) === 'Decline') {
+                    img = ICON.slide_down;
                     // img = 'wnbde';
-                }
-                else if (api.value(2) === 'Stable') {
-                    img = ICON.wnbst;
+                } else if (api.value(2) === 'Stable') {
+                    img = ICON.circle;
                     // img = 'wnbst';
-                }
-                else if (api.value(2) === 'Improve') {
-                    img = ICON.wnbim;
+                } else if (api.value(2) === 'Improve') {
+                    img = ICON.slide_up;
                     // img = 'wnbim';
                 }
                 break;
             case 'statusA':
+                color = 'red';
                 if (api.value(2) === 'Fluctuation') {
-                    img = ICON.wobfl;
+                    img = ICON.circle;
                     // img = 'wobfl';
-                }
-                else if (api.value(2) === 'Improve') {
-                    img = ICON.wobim;
+                } else if (api.value(2) === 'Improve') {
+                    img = ICON.slide_up;
                     // img = 'wobim.';
                 }
                 break;
             default:
-                img = ICON.wos;
+                color = 'white';
+                img = ICON.circle;
         }
-        console.log(img);
-        // img = 'M 30.302,-17.672 C 22.73,-26.3 12.531,-32.546 0.939,-35.115 c -2.161,5.888 -3.272721,12.678295 -3.272721,19.305295 0,5.663 0.864,11.1260003 2.39786051,16.03985264 C 11.983,-2.433 22.524,-8.81 30.302,-17.672 ZM 30.302,-17.672 C 22.73,-26.3 12.531,-32.546 0.939,-35.115 c -2.161,5.888 -3.272721,12.678295 -3.272721,19.305295 0,5.663 0.864,11.1260003 2.39786051,16.03985264 C 11.983,-2.433 22.524,-8.81 30.302,-17.672 Z';
-        img = 'M 30.302,-17.672 C 22.73,-26.3 12.531,-32.546 0.939,-35.115 c -2.161,5.888 -3.272721,12.678295 -3.272721,19.305295 0,5.663 0.864,11.1260003 2.39786051,16.03985264 C 11.983,-2.433 22.524,-8.81 30.302,-17.672 ZM 30.302,-17.672 C 22.73,-26.3 12.531,-32.546 0.939,-35.115 c -2.161,5.888 -3.272721,12.678295 -3.272721,19.305295 0,5.663 0.864,11.1260003 2.39786051,16.03985264 C 11.983,-2.433 22.524,-8.81 30.302,-17.672 Z';
         const group = {
             type: 'group',
             children: [{
@@ -171,14 +165,14 @@ export class CalendrierHealthService {
               },
               position: [cellPoint[0], cellPoint[1]],
               style: api.style({
-                fill: 'green'
+                fill: color
               })
             }]
         };
         return group;
     }
-    /* 
-        getIcon(value1, value2){
+    
+/*         getIcon(value1, value2){
             switch (value1){
                 case 'statusC':
                     if(value2 === 'Fluctuation'){

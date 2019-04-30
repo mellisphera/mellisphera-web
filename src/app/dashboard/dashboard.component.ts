@@ -30,10 +30,8 @@ export class DashboardComponent implements OnInit {
     public rucherService: RucherService) {
     this.message = '';
     this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
-      console.log(this.rucherService.checkIfApiary());
       if (this.rucherService.checkIfApiary()) {
         this.login.setWizardActive(false);
-        console.log(this.login.getWizardActive());
       }
     });
   }

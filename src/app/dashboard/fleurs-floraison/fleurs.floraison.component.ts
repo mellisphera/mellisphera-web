@@ -66,8 +66,6 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
 
   //Au chargement de la page on execute ces fonctions
   ngOnInit(){
-    console.log(this.fleursFloraisonService.subjectFlower);
-    console.log(this.rucherService.rucherSubject);
     if (!this.fleursFloraisonService.subjectFlower.closed) {
         this.rucherService.rucherSubject.subscribe(() => {}, () => {},
           () => {

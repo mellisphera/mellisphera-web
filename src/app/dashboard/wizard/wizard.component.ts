@@ -38,7 +38,6 @@ export class WizardComponent implements OnInit, OnDestroy {
     private capteurService: CapteurService,
     private render: Renderer2,
     public translateService: TranslateService) {
-      console.log(this.translateService.currentLang);
     }
 
   ngOnInit() {
@@ -51,7 +50,6 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.wrapper.classList.add('wizard-active');
     this.mainPanel.classList.add('wizard-z-index');
     this.sidebar.classList.add('wizard-z-index');
-    console.log(this.userService.getWizardActive());
   }
 
   initForm() {
@@ -98,9 +96,7 @@ export class WizardComponent implements OnInit, OnDestroy {
   }
 
   addFlower(flower: string, event: MouseEvent) {
-    console.log(flower);
     this.render.addClass(event.target, 'flower-active');
-    console.log(event.target);
 /*     this.newFlower.nom = flower;
     this.newFlower.dateDebutd = 
     this.newFlower.dateFind = fleur.flowerApi.flomaxd;
@@ -122,24 +118,20 @@ export class WizardComponent implements OnInit, OnDestroy {
       }
       this.rucherService.saveCurrentApiaryId(apiary.id);
     }, () => { }, () => {
-      console.log(this.rucherService.ruchers);
       this.rucherService.emitApiarySubject();
       this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
       this.initForm();
       this.hive.idApiary = this.rucherService.getCurrentApiary();
-      console.log(this.rucherService.getCurrentApiary());
       this.rucherService.rucheService.createRuche(this.hive).subscribe((hive) => {
         this.rucherService.rucheService.ruches.push(hive);
         this.rucherService.rucheService.saveCurrentHive(hive.id);
       }, () => { }, () => {
-        console.log(this.rucherService.rucheService.ruches);
         this.rucherService.rucheService.emitHiveSubject();
         this.sensor.idHive = this.rucherService.rucheService.getCurrentHive();
         this.sensor.idApiary = this.rucherService.getCurrentApiary();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
           this.capteurService.getUserCapteurs();
           this.userService.setWizardActive(false);
-          console.log(this.userService.getWizardActive());
         });
       });
     });

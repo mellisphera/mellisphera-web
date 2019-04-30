@@ -19,7 +19,6 @@ export class AdminComponent implements OnInit {
 
   onChartInit(event) {
     this.echartInstance = event;
-    console.log(this.echartInstance);
   }
   ngOnInit() {
     this.connectionService.getConnection().subscribe(

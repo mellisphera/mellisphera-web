@@ -34,7 +34,6 @@ export class MeteoComponent implements OnInit {
   }
   ngOnInit() {
     this.username = this.login.getUser();
-    console.log(this.rucherService.rucher.codePostal);
     this.meteoService.getWeather(this.rucherService.rucher.codePostal);
   }
 }

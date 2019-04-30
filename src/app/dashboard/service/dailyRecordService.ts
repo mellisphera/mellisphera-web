@@ -73,7 +73,6 @@ export class DailyRecordService {
         this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() + 1);
         this.rangeDailyRecord.setHours(0);
         this.rangeDailyRecord.setMinutes(0);
-        console.log(this.rangeDailyRecord);
         this.getDailyRecThByApiary(idApiary);
     }
     /**
@@ -86,7 +85,6 @@ export class DailyRecordService {
         this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() - 1);
         this.rangeDailyRecord.setHours(0);
         this.rangeDailyRecord.setMinutes(0);
-        console.log(this.rangeDailyRecord);
         this.getDailyRecThByApiary(idApiary);
     }
     /**
@@ -158,14 +156,12 @@ export class DailyRecordService {
      * @memberof DailyRecordService
      */
     public getDailyRecThByApiary(idApiary: string): void {
-        console.log(this.rangeDailyRecord);
         this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, this.rangeDailyRecord);
         this.dailyRecords = [];
         this.dailyRecTabObs.subscribe(
             (data) => {
                 if (data[0] != null) {
                     this.dailyRecords = data;
-                    console.log(this.dailyRecords);
                 }
             },
             (err) => {

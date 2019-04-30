@@ -77,7 +77,6 @@ export class SidebarComponent implements OnInit {
 
   hideSidebar() {
     const body = document.getElementsByTagName('body')[0];
-    console.log(body);
     body.classList.remove('nav-open');
   }
 
