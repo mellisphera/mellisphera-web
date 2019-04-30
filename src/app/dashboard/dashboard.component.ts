@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserloggedService } from '../userlogged.service';
 import { LoadingService } from './service/loading.service';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
-import { RucherService } from './apiary/ruche-rucher/rucher.service';
+import { RucherService } from './service/rucher.service';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';

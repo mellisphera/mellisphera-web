@@ -46,7 +46,7 @@ export class UserloggedService {
   getWizardActive(): Boolean {
     return this.wizardActive;
   }
-  setWizardActive(status: boolean): void{
+  setWizardActive(status: boolean): void {
     this.wizardActive = status;
   }
   /**

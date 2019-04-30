@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CalendarTemplateService } from './service/calendar-template.service';
 import { ECharts } from 'echarts';
-import { RucherService } from '../apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../service/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 import { RucheInterface } from '../../_model/ruche';
 import { DailyRecordsWService } from '../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';

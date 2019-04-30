@@ -12,7 +12,7 @@ import { WizardComponent } from './wizard/wizard.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RucherService } from './apiary/ruche-rucher/rucher.service';
+import { RucherService } from './service/rucher.service';
 import { RucheService } from './service/ruche.service';
 import { DailyRecordService } from './service/dailyRecordService';
 import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';

@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef } from '@angular/core';
 import { ProcessReport } from './processedReport';
-import { RucherService } from './rucher.service';
+import { RucherService } from '../../service/rucher.service';
 import { UserloggedService } from '../../../userlogged.service';
 import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";

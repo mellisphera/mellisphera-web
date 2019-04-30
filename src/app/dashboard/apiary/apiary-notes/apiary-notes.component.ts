@@ -1,4 +1,4 @@
-import { RucherService } from '../ruche-rucher/rucher.service';
+import { RucherService } from '../../service/rucher.service';
 import { RucheService } from '../../service/ruche.service';
 import { UserloggedService } from '../../../userlogged.service';
 import { MyDate } from '../../../class/MyDate';
