@@ -10,7 +10,7 @@ import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { RapportService } from './rapport.service';
 import { Rucher } from '../apiary/ruche-rucher/rucher';
 import { UserloggedService } from '../../userlogged.service';
-import { RucherService } from '../apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../service/rucher.service';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { ProcessReport } from '../apiary/ruche-rucher/processedReport';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';

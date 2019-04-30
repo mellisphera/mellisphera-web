@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RucherModel } from '../../_model/rucher-model';
-import { RucherService } from '../apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../service/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 import { RucheInterface } from '../../_model/ruche';
 import { CapteurInterface } from '../../_model/capteur';
@@ -146,7 +146,6 @@ export class WizardComponent implements OnInit, OnDestroy {
     const ref = sensorRef.split(':')[0];
     if (parseInt(ref, 10) === 41){
       return 'T2';
-
     } else if (parseInt(ref, 10) === 42) {
       return 'T_HR';
     } else {

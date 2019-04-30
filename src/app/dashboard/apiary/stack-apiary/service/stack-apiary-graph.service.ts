@@ -8,9 +8,7 @@ export class StackApiaryGraphService {
 
   echartsUtil: any;
   options: any;
-  img: string;
   constructor() {
-    this.img = './assets/asterisk.png';
     this.echartsUtil = (<any>echarts).util;
     this.options = {
       tooltip: {
@@ -77,9 +75,9 @@ export class StackApiaryGraphService {
         }
       ],
       grid: [
-        { x: '3%', y: '5%', width: '95%', height: '25%' },
-        { x: '3%', y: '35%', width: '95%', height: '25%' },
-        { x: '3%', y: '65%', width: '95%', height: '25%' },
+        { x: '3%', y: '5%', width: '90%', height: '25%' },
+        { x: '3%', y: '35%', width: '90%', height: '25%' },
+        { x: '3%', y: '65%', width: '90%', height: '25%' },
       ],
       xAxis: [
         {
@@ -153,33 +151,4 @@ export class StackApiaryGraphService {
     };
   }
 
-  renderObs(param, api) {
-    var point = api.coord([
-        api.value(0),
-        0
-    ]);
-    return {
-        type: 'group',
-        children: [{
-            type: 'image',
-            style: {
-                image: api.value(this.img),
-                x: -this.img / 2,
-                y: -this.img / 2,
-                width: 45,
-                height: 45
-            },
-            position: [point[0], 110]
-        }, {
-            type: 'text',
-            style: {
-                text: api.value(1) + ' - ' + api.value(2) + '°',
-                textFont: api.font({fontSize: 14}),
-                textAlign: 'center',
-                textVerticalAlign: 'bottom'
-            },
-            position: [point[0], 80]
-        }]
-    };
-}
 }

@@ -66,6 +66,10 @@ li{
     cursor: wait;
     background-color: aqua;
 }
+/* #col-graph{
+    position: fixed;
+    left: 18%;
+} */
 @media  (max-width:767px){
     #col-graph{
         width: 100% !important;

@@ -7,7 +7,7 @@ import { UserloggedService } from '../../../userlogged.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/Service/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RucherService } from '../../apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../../service/rucher.service';
 import { RucheService } from '../../service/ruche.service';
 import { FleursFloraisonService } from '../../fleurs-floraison/service/fleurs.floraison.service';
 import { MeteoService } from '../../meteo/Service/MeteoService';
@@ -55,17 +55,15 @@ export class NavbarComponent implements OnInit {
     constructor(location: Location,
         private element: ElementRef,
         private userService: UserloggedService,
-        private router: Router,
         private authService: AuthService,
         public rucherService: RucherService,
         private adminService: AdminService,
         private rucheService: RucheService,
-        // private meteoService: MeteoService,
         private fleursFloraisonService: FleursFloraisonService,
         private observationService: ObservationService,
         private capteurService: CapteurService,
         private formBuilder: FormBuilder,
-        private tokenService: AtokenStorageService,
+        public tokenService: AtokenStorageService,
         private dailyRecordService: DailyRecordService,
         public sidebarService: SidebarService,
         public notifierService: NotifierService,

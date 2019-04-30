@@ -1,4 +1,4 @@
-import { RucherService } from '../../apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../../service/rucher.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Meteo } from '../../../_model/meteo';

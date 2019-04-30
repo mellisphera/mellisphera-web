@@ -1,4 +1,4 @@
-import { RucherService } from './../rucher.service';
+import { RucherService } from '../../../service/rucher.service';
 import { DataRange } from './service/Record/data-range';
 import { MyDate } from '../../../../class/MyDate';
 import { Component, OnInit, OnDestroy, Output, Input } from '@angular/core';

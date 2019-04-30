@@ -1,7 +1,7 @@
 import { UserloggedService } from './../userlogged.service';
 import { CONFIG } from './../../config';
 import { AtokenStorageService } from './../auth/Service/atoken-storage.service';
-import { RucherService } from '../dashboard/apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../dashboard/service/rucher.service';
 import { GraphFlowerService } from './graph/graph-flower.service';
 import { GraphHoneyService } from './graph/graph-honey.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';

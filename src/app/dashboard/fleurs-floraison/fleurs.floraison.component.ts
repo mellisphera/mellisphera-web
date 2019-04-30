@@ -10,7 +10,7 @@ import { FleursTheorique } from '../../_model/fleurstheorique'
 import { UserloggedService } from '../../userlogged.service';
 import { Observable, Subscription } from 'rxjs';
 import { AnonymousSubscription } from "rxjs/Subscription";
-import { RucherService } from '../../dashboard/apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../service/rucher.service';
 import * as echarts from '../../../assets/echarts';
 import { GraphiqueFloraisonService } from './service/graphique-floraison.service';
 

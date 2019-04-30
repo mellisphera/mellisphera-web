@@ -1,7 +1,7 @@
 import { MyDate } from '../../../../../class/MyDate';
 import { NotifierService } from 'angular-notifier';
 import { Component, OnInit, ɵConsole } from '@angular/core';
-import { RucherService } from '../../rucher.service';
+import { RucherService } from '../../../../service/rucher.service';
 import { Ruche } from '../../ruche';
 import { RucheDetailService } from '../ruche.detail.service';
 import { ProcessReport } from '../../processedReport';

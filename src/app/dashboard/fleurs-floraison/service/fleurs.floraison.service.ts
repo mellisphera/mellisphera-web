@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { CONFIG } from '../../../../config';
 import { FleursTheorique } from '../../../_model/fleurstheorique';
-import { RucherService } from '../../../dashboard/apiary/ruche-rucher/rucher.service';
+import { RucherService } from '../../service/rucher.service';
 import { FleurObservees } from '../../../_model/fleur-observees'
 import { UserloggedService } from '../../../userlogged.service';
 const httpOptions = {
