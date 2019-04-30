@@ -28,21 +28,6 @@ export class ConnectionService {
       .map(elt => {
         return { name: elt.username, value: [elt.location.longitude, elt.location.latitude, 10]};
       });
-/*       connections.filter(res => res.username !== null).forEach(elt => {
-        if (elt.location != null && elt.location !== undefined) {
-          if (this.arrayIp.indexOf(elt.location.ip) === -1) {
-            this.connectionsArray[elt.location.ip] = connections.filter(eltFilter => {
-              return (eltFilter.location !== null) ? eltFilter.location.ip === elt.location.ip : null;
-            }).map(res => {
-              return { name: res.username, value: [res.location.longitude, res.location.latitude,
-                connections.filter(eltF => {
-                  return (eltF.location !== null) ? eltF.location.ip === elt.location.ip : null;
-                }).length]};
-            });
-            this.arrayIp.push(elt.location.ip);
-          }
-        }
-      }); */
       return {
         series: [
           {
@@ -53,19 +38,4 @@ export class ConnectionService {
     });
   }
 
-  /*   formData() {
-      this.connections.forEach(elt => {
-        if (elt.location != null) {
-          let ipTmp = elt.location['ip'];
-          if (this.connectionsByIp[ipTmp]) {
-            this.connectionsByIp[ipTmp].push({name : elt.username, value : new Array(elt.location['longitude'], elt.location['latitude'])});
-          }
-          else{
-            this.connectionsByIp[ipTmp] = [];
-            this.connectionsByIp[ipTmp].push({name : elt.username, value : new Array(elt.location['longitude'], elt.location['latitude'])});
-          }
-        }
-      });
-      console.log(this.connectionsByIp);
-    } */
 }

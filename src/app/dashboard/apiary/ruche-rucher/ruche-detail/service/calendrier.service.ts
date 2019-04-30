@@ -12,7 +12,6 @@ export class CalendrierService {
     var max = new Date();
     var min = new Date((max.getFullYear()-1)+'-'+(max.getMonth()+1)+'-'+max.getDate());
     this.rangeCalendar = [this.convertDate(min),this.convertDate(max)];
-    console.log(this.rangeCalendar);
   }
 
   convertDate(date : Date){

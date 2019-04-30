@@ -119,12 +119,10 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     this.selectHive.apiaryName = this.rucherService.rucher.name;
     this.selectHive.username = this.username.toLowerCase();
     this.initForm();
-    console.log(this.selectHive);
     this.rucheService.createRuche(this.selectHive).subscribe((hive) => {
       // this.rucheService.saveCurrentHive(hive.id);
       this.rucheService.ruches.push(hive);
     }, () => { }, () => {
-      console.log(this.rucheService.ruches);
       this.rucheService.emitHiveSubject();
       this.notify.notify('success', 'Crated Hive');
     });
@@ -142,12 +140,10 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
   }
   // pour editer une ruche
   onEditeRuche() {
-    console.log(this.hiveIndex);
     const formValue = this.newRucheForm.value;
     this.selectHive.idApiary = this.rucherService.rucherSelectUpdate.id;
     this.selectHive.name = formValue.nomRuche;
     this.selectHive.description = formValue.descriptionRuche;
-    console.log(this.selectHive);
     this.rucheService.updateRuche(this.hiveIndex, this.selectHive).subscribe(() => { }, () => { }, () => {
       if (this.selectHive.idApiary === this.rucherService.getCurrentApiary()) {
         this.rucheService.ruches[this.hiveIndex] = this.selectHive;
@@ -155,7 +151,6 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
       } else {
         this.rucheService.ruches.splice(this.hiveIndex, 1);
         this.rucheService.emitHiveSubject();
-        console.log(this.rucheService.ruches);
       }
       this.notify.notify('success', 'Updated Hive');
     });

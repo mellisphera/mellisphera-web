@@ -93,14 +93,11 @@ export class ObservationComponent implements OnInit {
   }
   onSelectObsR(hiveOBS) {
     this.newObs = hiveOBS;
-    console.log(new Date(this.newObs.date));
-    console.log(new Date(this.newObs.date).toISOString().split('.')[0]);
     const donnée = {
       sentence : this.newObs.sentence,
       type : this.newObs.type,
       date : new Date(this.newObs.date)
-    };
-    console.log(this.newObs.date);
+    };;
     this.ObservationForm.setValue(donnée);
   }
 

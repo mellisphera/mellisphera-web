@@ -68,7 +68,6 @@ export class MelliChartsComponent implements OnInit {
       this.currentHiveItem = event.target;
       this.renderer.addClass(this.currentHiveItem, 'hive-active');
     }
-    console.log(this.hiveSelect.name + '-' + hive.name);
     if (this.typeStrChart != null) { // Si un type à été selectionné
       if (this.hiveSelect.id !== hive.id) { // si la ruche est differente de la précedente
         this.hiveSelect = hive;
@@ -114,7 +113,6 @@ export class MelliChartsComponent implements OnInit {
   }
   setData() {
     this.loading = true;
-    console.log(this.hiveSelect.id + '-' + this.hiveSelect.name);
     this.dailyRecordWService.getDailyRecordWByHive(this.hiveSelect.id, this.hiveSelect.name).subscribe(
       data => {
         this.melliService.setMergeAllData(data);

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { DailyRecordsWService } from '../../service/daily-records-w.service';
 import { CalendrierService } from '../../service/calendrier.service';
 import { MyDate } from '../../../../../../class/MyDate';
+import { UserParamsService } from '../../../../../preference-config/service/user-params.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CalendrierPoidsService {
 
-    constructor(private dailyRec: DailyRecordsWService) {
+    constructor(private userPärams: UserParamsService) {
     }
 
     option = {
@@ -21,7 +22,7 @@ export class CalendrierPoidsService {
         tooltip: {
             trigger: 'item',
             formatter: (params) => {
-                return MyDate.getIsoFromDate(MyDate.getWekitDate(params.data[0])) + '<br/>' + params.seriesName + ' : ' + params.data[1];
+                return params.marker + this.userPärams.getFormatCalendar(params.data[0]) + '<br/>' + params.seriesName + ' : ' + params.data[1];
             }
         },
         toolbox: {

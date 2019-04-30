@@ -78,12 +78,10 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
   signup() {
     if (this.signupForm.valid) {
       const data = this.signupForm.value;
-      console.log(data);
       this.signupService.user = data;
       this.signupService.user.username = this.signupService.user.email.split('@')[0];
       this.signupService.user.role = new Array<string>('ROLE_STANDARD');
       this.signupService.user.createdAt = new Date();
-      console.log(this.signupService.user);
       this.signupService.signupUser(() => {
         this.authService.login.email = this.signupService.user.email;
         this.authService.login.password = this.signupService.user.password;
@@ -98,7 +96,6 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
     }
   }
   verifLogin() {
-    console.log(this.authService.login)
     this.authService.signIn();
   }
   currentUser() {

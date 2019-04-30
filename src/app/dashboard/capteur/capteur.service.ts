@@ -64,7 +64,6 @@ export class CapteurService {
     }
     emitSensorSubject() {
         this.sensorSubject.next(this.capteursByUser.slice());
-        console.log(this.sensorSubject);
     }
     /**
      *

@@ -58,7 +58,6 @@ export class RucheService {
 
    emitHiveSubject() {
     this.hiveSubject.next(this.ruches.slice());
-    console.log(this.hiveSubject);
   }
 
    getRucheByApiary(idApiary: string) {
@@ -66,7 +65,6 @@ export class RucheService {
       this.ruchesObs.subscribe(
         (data) => {
           this.ruches = data;
-          console.log(this.ruches);
           this.hiveSubject.next(data);
         },
         (err) => {
@@ -83,7 +81,6 @@ export class RucheService {
             if (this.ruche === undefined) {
               this.ruche = this.ruches[0];
             }
-            console.log(this.ruche);
           }
           this.hiveSubject.complete();
         }
@@ -173,7 +170,6 @@ export class RucheService {
    * @memberof RucheService
    */
   findRucheById(idHive: string, next?) {
-    console.log(this.ruches);
     next(this.ruches.filter(hive => hive.id === idHive));
   }
 }

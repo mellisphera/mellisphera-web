@@ -38,8 +38,6 @@ export class StackService {
 
   addColorForObs(hive: RucheInterface, color: string){
     this.colorByHive.push({idHive: hive.id, color: color});
-    console.log('ajout ruche');
-    console.log(this.colorByHive);
   }
 
   /**
@@ -78,7 +76,6 @@ export class StackService {
   removeHive(hive: RucheInterface) {
     const index = this.arrayHiveSelect.indexOf(hive);
     const indexColor = this.colorByHive.map(elt => elt.idHive).indexOf(hive.id);
-    console.log(indexColor);
     this.arrayHiveSelect.splice(index, 1, this.getEmptyHive());
     this.colorByHive.splice(indexColor, 1);
   }

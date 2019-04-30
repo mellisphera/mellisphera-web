@@ -104,7 +104,6 @@ export class RecordService {
           return { name: rec.recordDate, value: [rec.recordDate, rec.temp_int], sensorRef: rec.sensorRef };
         });
       if (!hive) {
-        console.log(lastMerge);
         return {
           series: [
             {

@@ -73,7 +73,6 @@ export class StackApiaryComponent implements OnInit {
       if (!this.tokenService.checkAuthorities('ROLE_ADMIN')) {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
           this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).map((hives) => {
-            console.log(hives);
             hives.forEach(elt => {
               this.rucherService.findRucherById(elt.idApiary, (apiary) => {
                 elt.apiaryName = apiary[0].name;
@@ -164,8 +163,6 @@ export class StackApiaryComponent implements OnInit {
         this.stackService.removeHive(arrayFilter[0]);
         let option = this.echartInstance.getOption();
         this.removeHiveStack(selectHive.name);
-        console.log(this.recordService.mergeOptionStackApiary);
-        // console.log(this.recordService.mergeOptionStackApiary);
         this.echartInstance.clear();
         option.series = this.recordService.mergeOptionStackApiary.series;
         option.legend = this.recordService.mergeOptionStackApiary.legend;
@@ -185,7 +182,6 @@ export class StackApiaryComponent implements OnInit {
                 data.series.push(obsData);
                 data.legend.data.push(selectHive.name + ' / note');
                 this.recordService.mergeOptionStackApiary = data;
-                console.log(this.recordService.mergeOptionStackApiary);
 
               }
             );
@@ -219,7 +215,6 @@ export class StackApiaryComponent implements OnInit {
       const index = this.recordService.mergeOptionStackApiary.series.map(res => res.name).indexOf(element.name);
       this.recordService.mergeOptionStackApiary.series.splice(index, 1);
       this.recordService.mergeOptionStackApiary.legend.data.splice(index, 1);
-      console.log(element);
     });
   }
 }

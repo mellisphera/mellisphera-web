@@ -45,4 +45,11 @@ export class UserParamsService {
     .replace(/h/g, String(newInstanceDate.getHours()))
     .replace(/m/g, String(newInstanceDate.getMinutes()));
   }
+  getFormatCalendar(date: Date): string {
+    const newInstanceDate = new Date(date);
+    return this.formatDate.replace(/Y/g, String(newInstanceDate.getFullYear()))
+    .replace(/M/g, String(newInstanceDate.getMonth()))
+    .replace(/D/g, String(newInstanceDate.getDate()))
+    .replace(/h:m/g, '');
+  }
 }

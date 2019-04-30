@@ -78,7 +78,6 @@ export class ApiaryNotesComponent implements OnInit {
     this.newObs.idHive = this.hiveToMv.id;
     this.newObs.idLHive = new Array(this.hiveToMv.id);
     const index = this.observationService.observationsApiary.indexOf(this.newObs);
-    console.log(this.newObs);
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
       this.observationService.observationsApiary.splice(index, 1);
       this.observationService.emitApiarySubject();
@@ -105,7 +104,6 @@ export class ApiaryNotesComponent implements OnInit {
     const index = this.observationService.observationsApiary.indexOf(this.newObs);
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
       this.observationService.observationsApiary[index] = this.newObs;
-      console.log(this.observationService.observationsApiary);
       this.observationService.emitApiarySubject();
       this.notify.notify('success', 'Updated Note');
     });

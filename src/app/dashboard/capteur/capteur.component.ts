@@ -72,7 +72,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).subscribe(ruches => {
-            console.log(ruches);
             this.rucherService.rucheService.ruchesAllApiary = ruches;
             this.hiveSensorSelect = ruches[0];
         })
@@ -96,10 +95,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.rucherService.findRucherById(this.capteurService.capteur.idApiary, (apiary) => {
                 this.apiarySensorSelect = apiary[0];
             });
-            console.log(this.capteurService.capteur.idHive);
-            console.log(this.rucherService.rucheService.ruchesAllApiary)
             this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive, (hive) => {
-                console.log(hive);
                 this.hiveSensorSelect = hive[0];
                 const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
                 this.rucherService.rucheService.ruches[index].sensor = false;
@@ -117,7 +113,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
         switch (colonne) {
             case 'hive':
                 this.capteurService.capteursByUser.sort((a, b) => {
-                    console.log((a.hiveName > b.hiveName));
                     return (a.hiveName > b.hiveName) ? 1 : -1;
                 });
                 break;
@@ -144,7 +139,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
     }
     createCapteur() {
         const formValue = this.newCapteurForm.value;
-        console.log(this.hiveSensorSelect);
         /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIBLE */
         const sensorType = document.querySelector('#typeSensor > option').innerHTML;
         const tempType = this.capteurService.capteur.type;

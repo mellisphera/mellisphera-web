@@ -182,28 +182,3 @@ export class DailyStockHoneyService {
     });
   }
 }
-
-
-/*    if(this.dailyStock.length > 1){
-      this.countFlower();
-      this.dailyStockByFleur();
-      for(var elt in this.dailyStockByFlower){
-        this.templateSerie.name = elt;
-        this.templateSerie.data = [];
-        this.templateSerie.data = this.dailyStockByFlower[elt];
-        this.mergeOption.series.push(this.templateSerie)
-        this.cleanTemplate();
-        console.log(this.templateSerie)
-      }
-      this.mergeOption.legend.data = this.typeFlower;
-    }
-    else{
-      console.log("clean");
-      this.dailyStock = new Array();
-      this.cleanTemplate();
-      this.cleanMerge();
-      console.log(this.templateSerie);
-      console.log(this.mergeOption);
-    }
-    this.countFlower();
-    this.dailyStockByFleur();*/

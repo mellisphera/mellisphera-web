@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
       public tokenService: AtokenStorageService,
       private translateService: TranslateService,
       public loadingService: LoadingService) {
-       console.log(location);
        this.showLogin = true;
        translateService.addLangs(['en', 'fr']);
        translateService.setDefaultLang('en');

@@ -39,9 +39,7 @@ export class RapportService {
         //SERVEUR
         this.http.post<Rapport>(CONFIG.API_PY+'/nlu/nluAnalyse',body, httpOptions).subscribe(
             (data)=>{
-                console.log(data);
                 this.rapport = data;
-                console.log(this.rapport);
             },
             (err)=>{
                 console.log(err);
@@ -68,7 +66,6 @@ export class RapportService {
         this.http.get<Rapport[]>(CONFIG.URL+'report_temp/'+username).subscribe(
             (data)=>{
                 this.rapports = data;
-                console.log(this.rapports);
             },
             (err)=>{
                 console.log(err);
@@ -81,7 +78,6 @@ export class RapportService {
         this.http.delete(CONFIG.URL+'report_temp/delete/'+rapport.id).subscribe(
             ()=>{},
             (err)=>{
-                console.log(err);
             },
             ()=>{
                 this.getRapportTemp(this.username.getUser());

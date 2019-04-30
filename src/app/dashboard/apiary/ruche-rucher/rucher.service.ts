@@ -103,10 +103,8 @@ export class RucherService {
             () => {
                 if (this.ruchers != null ) {
                     if (!this.getCurrentApiary()) {
-                        console.log(this.ruchers);
                         this.rucher = this.ruchers[0];
                         this.saveCurrentApiaryId(this.rucher.id);
-                        console.log(this.rucher);
                     } else {
                         this.rucher = this.ruchers.filter(apiary => apiary.id === this.getCurrentApiary())[0];
                         if (this.rucher === undefined) {

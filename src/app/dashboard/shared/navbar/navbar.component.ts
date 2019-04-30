@@ -110,10 +110,6 @@ export class NavbarComponent implements OnInit {
         this.tokenService.signOut();
         this.authService.connexionStatus.next(false);
     }
-/*     setLang(lang: string) {
-        this.translateService.use(lang);
-        console.log(this.translateService.getLangs());
-    } */
     onPictureLoad(next) {
         const fileReader = new FileReader();
         fileReader.onload = (e) => {
@@ -129,14 +125,12 @@ export class NavbarComponent implements OnInit {
         this.listTitles = ROUTES.filter(listTitle => listTitle);
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
-        console.log(this.toggleButton);
         this.userService.currentMessage.subscribe(message => this.message = message);
         this.initForm();
     }
     onSelectRucher() {
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
-        console.log(location);
         switch (location) {
             case '/dashboard/ruche-et-rucher':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
@@ -171,7 +165,6 @@ export class NavbarComponent implements OnInit {
         this.apiaryUpdate.id = this.rucherService.rucher.id;
         this.apiaryUpdate.photo = this.rucherService.rucher.photo;
         this.apiaryUpdate.username = this.rucherService.rucher.username;
-        console.log(this.apiaryUpdate);
         this.rucherService.updateRucher(this.rucherService.rucher.id, this.apiaryUpdate).subscribe(
             () => { }, () => { }, () => {
                 this.rucherService.ruchers[index] = this.apiaryUpdate;
@@ -271,7 +264,6 @@ export class NavbarComponent implements OnInit {
             }
             this.rucherService.saveCurrentApiaryId(apiary.id);
         }, () => { }, () => {
-            console.log(this.rucherService.ruchers);
             this.rucherService.emitApiarySubject();
             this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
             this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
