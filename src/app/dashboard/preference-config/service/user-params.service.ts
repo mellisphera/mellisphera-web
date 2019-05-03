@@ -40,7 +40,7 @@ export class UserParamsService {
   getFormatDate(date: Date): string {
     const newInstanceDate = new Date(date);
     return this.formatDate.replace(/Y/g, String(newInstanceDate.getFullYear()))
-    .replace(/M/g, String(newInstanceDate.getMonth()))
+    .replace(/M/g, String(newInstanceDate.getMonth() + 1))
     .replace(/D/g, String(newInstanceDate.getDate()))
     .replace(/h/g, String(newInstanceDate.getHours()))
     .replace(/m/g, String(newInstanceDate.getMinutes()));
@@ -48,7 +48,7 @@ export class UserParamsService {
   getFormatCalendar(date: Date): string {
     const newInstanceDate = new Date(date);
     return this.formatDate.replace(/Y/g, String(newInstanceDate.getFullYear()))
-    .replace(/M/g, String(newInstanceDate.getMonth()))
+    .replace(/M/g, String(newInstanceDate.getMonth() + 1))
     .replace(/D/g, String(newInstanceDate.getDate()))
     .replace(/h:m/g, '');
   }

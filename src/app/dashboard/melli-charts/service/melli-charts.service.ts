@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { isArray } from 'util';
 import { MyDate } from '../../../class/MyDate';
+import { EChartOption } from 'echarts';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MelliChartsService {
 
-  private mergeMillichartsActif: any; // Merge utilsé
+  private mergeMillichartsActif: EChartOption; // Merge utilsé
   private mergeAllData: any; // Merge de toute les données pour la ruche
 
   public startCalendar: Date;
@@ -47,13 +48,16 @@ export class MelliChartsService {
    * @param {*} merge
    * @memberof MelliChartsService
    */
-  public setMerge(merge: any): void {
+  public setMerge(merge: EChartOption): void {
     this.mergeMillichartsActif.series = [];
-    if (isArray(merge)) {
-      this.mergeMillichartsActif.series = this.mergeMillichartsActif.series.concat(merge);
+    if (isArray(merge.series)) {
+      this.mergeMillichartsActif.series = this.mergeMillichartsActif.series.concat(merge.series);
     } else {
-      this.mergeMillichartsActif.series.push(merge);
+      this.mergeMillichartsActif.series.push(merge.series);
     }
+    this.mergeMillichartsActif.tooltip = merge.tooltip;
+    this.mergeMillichartsActif.legend = merge.legend;
+    this.mergeMillichartsActif.visualMap = merge.visualMap;
   }
 
   /**

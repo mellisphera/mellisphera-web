@@ -5,6 +5,8 @@ import { CONFIG } from '../../../../../../config';
 import { DailyRecordsW } from '../../../../../_model/daily-records-w';
 import { ElementSchemaRegistry } from '@angular/compiler';
 import { MyDate } from '../../../../../class/MyDate';
+import { User } from '../../../../../_model/user';
+import { UserParamsService } from '../../../../preference-config/service/user-params.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -34,7 +36,7 @@ export class DailyRecordsWService {
 
   timeLine: any[];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userConfig: UserParamsService) {
     this.dailyRecArray = [];
     this.arrayTempExt = [];
     this.weightIncome = [];
@@ -56,55 +58,84 @@ export class DailyRecordsWService {
       this.weightIncome = res.map(elt => [MyDate.getWekitDate(MyDate.convertDate(new Date(elt.recordDate))), elt.weight_income_gain]);
       return {
         tempExt: {
-          name: hiveName,
-          type: 'heatmap',
-          coordinateSystem: 'calendar',
-          data: this.arrayTempExt
+          series: {
+            name: hiveName,
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: this.arrayTempExt
+          },
+          title: {
+            text: 'External Temperature (max,°C)'
+          },
+          visualMap: {
+            min: -10,
+            max: 40,
+            calculable: true,
+            inRange: {
+              /* color: ['#abd9e9','#CC0000'] */
+              color: ['#313695', '#4575b4', '#74add1',
+                '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+            },
+          }
         },
-        weightIncome: [
-          {
-            name: 'gain',
-            type: 'effectScatter',
-            coordinateSystem: 'calendar',
-            data: this.weightIncome,
-            symbolSize: (val) => {
-              if (val[1] >= 0) { return 0.5 * Math.sqrt(1000 * val[1]); }
-              else { return 0; }
-            },
-            showEffectOn: 'emphasis',
-            rippleEffect: {
-              brushType: 'stroke'
-            },
-            hoverAnimation: true,
-            itemStyle: {
-              normal: {
-                color: '#00FE0C'
-              }
+        weightIncome: {
+          tooltip: {
+            trigger: 'item',
+            formatter: (params: any) => {
+              return params.marker + this.userConfig.getFormatCalendar(params.data[0]) + '<br/>' +
+              params.seriesName + ' : ' + params.data[1];
             }
           },
-          {
-            name: 'loss',
-            type: 'effectScatter',
-            coordinateSystem: 'calendar',
-            data: this.weightIncome,
-            symbolSize: (val) => {
-              if (val[1] < 0) { return 0.5 * Math.sqrt(Math.abs(1000 * val[1])); }
-              else { return 0; }
-            },
-            showEffectOn: 'emphasis',
-            rippleEffect: {
-              brushType: 'stroke'
-            },
-            hoverAnimation: true,
-  
-            itemStyle: {
-              normal: {
-                color: '#FE0000'
-  
-              }
+          legend: {
+            top: 30,
+            data: ['gain', 'loss'],
+            textStyle: {
+              color: 'black'
             }
           },
-        ]
+          series: [
+            {
+              name: 'gain',
+              type: 'effectScatter',
+              coordinateSystem: 'calendar',
+              data: this.weightIncome,
+              symbolSize: (val: any) => {
+                if (val[1] >= 0) { return 0.5 * Math.sqrt(1000 * val[1]); }
+                else { return 0; }
+              },
+              showEffectOn: 'emphasis',
+              rippleEffect: {
+                brushType: 'stroke'
+              },
+              hoverAnimation: true,
+              itemStyle: {
+                normal: {
+                  color: '#00FE0C'
+                }
+              }
+            },
+            {
+              name: 'loss',
+              type: 'effectScatter',
+              coordinateSystem: 'calendar',
+              data: this.weightIncome,
+              symbolSize: (val: any) => {
+                if (val[1] < 0) { return 0.5 * Math.sqrt(Math.abs(1000 * val[1])); }
+                else { return 0; }
+              },
+              showEffectOn: 'emphasis',
+              rippleEffect: {
+                brushType: 'stroke'
+              },
+              hoverAnimation: true,
+              itemStyle: {
+                normal: {
+                  color: '#FE0000'
+                }
+              }
+            },
+          ]
+        }
       };
     });
 

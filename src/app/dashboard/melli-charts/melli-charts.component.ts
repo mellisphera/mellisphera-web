@@ -7,6 +7,8 @@ import { RucheInterface } from '../../_model/ruche';
 import { DailyRecordsWService } from '../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
 import { MelliChartsService } from './service/melli-charts.service';
 import { DailyRecordService } from '../service/dailyRecordService';
+import { Observable } from 'rxjs';
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'app-melli-charts',
@@ -34,15 +36,15 @@ export class MelliChartsComponent implements OnInit {
     this.currentHiveItem = null;
     this.currentTypeElt = null;
     this.hiveSelect = {
-      id : null,
-      name : '',
-      description : '',
-      username : '',
+      id: null,
+      name: '',
+      description: '',
+      username: '',
       idApiary: '',
       apiaryName: '',
-      hivePosX : '',
-      hivePosY : '',
-      sharingUser : []
+      hivePosX: '',
+      hivePosY: '',
+      sharingUser: []
     };
     this.typeStrChart = null;
     this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).subscribe(
@@ -97,29 +99,47 @@ export class MelliChartsComponent implements OnInit {
     this.refreshDataGraph();
   }
 
-  refreshDataGraph() {
+  refreshDataGraph(): void {
     const options = this.echartInstance.getOption();
     options.series = this.melliService.getMerge().series;
+    options.tooltip = this.melliService.getMerge().tooltip;
+    options.legend = this.melliService.getMerge().legend;
+    options.visualMap = this.melliService.getMerge().visualMap;
     this.echartInstance.clear();
     this.echartInstance.setOption(options);
   }
 
 
-  setRangeCalendar() {
+  setRangeCalendar(): void {
     const options = this.echartInstance.getOption();
     options.calendar[0].range = [this.melliService.startCalendar, this.melliService.endCalendar];
     this.echartInstance.clear();
     this.echartInstance.setOption(options);
+    console.log(this.melliService.startCalendar);
+    console.log(this.melliService.endCalendar);
   }
-  setData() {
+  setData(): void {
     this.loading = true;
+/*     const obsData = [
+      this.dailyRecordWService.getDailyRecordWByHive(this.hiveSelect.id, this.hiveSelect.name),
+      this.dailyReccordThService.getByHive(this.hiveSelect.id)
+    ];
+    console.log(obsData);
+    Observable.forkJoin(obsData).flatMap(res => {
+      console.log(res);
+      return res;
+    }).subscribe(
+      data => {
+        console.log(data);
+      }
+    ); */
     this.dailyRecordWService.getDailyRecordWByHive(this.hiveSelect.id, this.hiveSelect.name).subscribe(
       data => {
         this.melliService.setMergeAllData(data);
         this.melliService.setMerge(data[this.typeStrChart]);
         this.refreshDataGraph();
       },
-      err => {},
+      err => { },
       () => {
         this.loading = false;
       }
