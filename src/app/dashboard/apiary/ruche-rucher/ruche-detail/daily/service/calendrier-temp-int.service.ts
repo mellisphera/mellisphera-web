@@ -26,7 +26,15 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
         itemSize: 15,
         top : 'middle',
         feature: {
-            dataView: {show: true, readOnly: false},
+            dataView: {show: true, readOnly: false, optionToContent: (opt) => {
+                const series = opt.series[0].data;
+                let table = '<textarea style="width:100%; height:500px;" >';
+                series.map((elt: any) => {
+                    table += MyDate.getIsoFromDate(MyDate.getWekitDate(elt[0])) + ' => ' + elt[1] + '\n';
+                });
+                table += '</textarea>';
+                return table;
+            }},
             restore: {show: true},
             saveAsImage: {show: true}
         }

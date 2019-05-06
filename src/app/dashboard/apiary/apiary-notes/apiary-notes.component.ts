@@ -4,7 +4,7 @@ import { UserloggedService } from '../../../userlogged.service';
 import { MyDate } from '../../../class/MyDate';
 import { NotifierService } from 'angular-notifier';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RucheInterface } from '../../../_model/ruche';
 import { Observation } from '../../../_model/observation';
 import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
@@ -13,7 +13,8 @@ import { UserParamsService } from '../../preference-config/service/user-params.s
 @Component({
   selector: 'app-apiary-notes',
   templateUrl: './apiary-notes.component.html',
-  styleUrls: ['./apiary-notes.component.css']
+  styleUrls: ['./apiary-notes.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ApiaryNotesComponent implements OnInit {
 
