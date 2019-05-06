@@ -17,10 +17,6 @@ export class UserParamsService {
     ];
     this.setFormatDate(this.dtFormat[0]);
   }
-
-
-  
-
   /**
    *
    *
