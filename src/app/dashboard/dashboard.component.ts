@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserloggedService } from '../userlogged.service';
 import { LoadingService } from './service/loading.service';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { RucherService } from './service/rucher.service';
+import { NavbarComponent } from './shared/navbar/navbar.component';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -24,7 +25,7 @@ export class DashboardComponent implements OnInit {
   public secondaryColour = SecondaryGrey;
   public coloursEnabled = false;
   public config = { animationType: ngxLoadingAnimationTypes.none, primaryColour: this.primaryColour, secondaryColour: this.secondaryColour}
-
+  @ViewChild(NavbarComponent) public navComponent: NavbarComponent;
   constructor(public login: UserloggedService,
     public loadingService: LoadingService,
     public rucherService: RucherService) {

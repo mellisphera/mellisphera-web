@@ -15,6 +15,7 @@ import { AtokenStorageService } from '../../../auth/Service/atoken-storage.servi
 import { AdminService } from '../../admin/service/admin.service';
 import 'rxjs/add/observable/forkJoin';
 import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
+import { Console } from '@angular/core/src/console';
 
 @Component({
   selector: 'app-stack-apiary',
@@ -27,6 +28,7 @@ export class StackApiaryComponent implements OnInit {
   public merge: any;
   public loadingStack: boolean;
   public ranges: DataRange[];
+  private zoomChange: number;
   private subjectEchart: BehaviorSubject<any>;
   message: string;
   constructor(public rucheService: RucheService,
@@ -47,7 +49,10 @@ export class StackApiaryComponent implements OnInit {
         data: []
       }
     };
+    this.zoomChange = 0;
     this.ranges = [
+      { scale: 3, type: 'DAY' },
+      { scale: 7, type: 'DAY' },
       { scale: 15, type: 'DAY' },
       { scale: 30, type: 'DAY' },
       { scale: 3, type: 'MONTH' },
@@ -62,7 +67,6 @@ export class StackApiaryComponent implements OnInit {
 
   onChartInit(e: any) {
     this.echartInstance = e;
-    
   }
 
   selectAllHive(idApiary: string) {
@@ -176,6 +180,7 @@ export class StackApiaryComponent implements OnInit {
         this.recordService.getRecordByIdHive(selectHive.id, selectHive.name,
           this.recordService.mergeOptionStackApiary, false, this.getColor(selectHive))
           .subscribe((data) => {
+            console.log(data);
             // this.recordService.mergeOptionStackApiary = data;
             this.observationService.getObservationByIdHive(selectHive.id, selectHive.name).subscribe(
               obsData => {
@@ -199,6 +204,18 @@ export class StackApiaryComponent implements OnInit {
 
   receiveMessage($event) {
     this.message = $event;
+  }
+
+  onZoom(event: any) {
+    console.log(this.zoomChange);
+    if (event.batch[0].end === 100 && event.batch[0].start === 0) {
+      this.zoomChange ++;
+    } else {
+      this.zoomChange --;
+    }
+    if (this.zoomChange > 1) {
+      console.log('ok');
+    }
   }
 
   getColor(hive: RucheInterface): string {

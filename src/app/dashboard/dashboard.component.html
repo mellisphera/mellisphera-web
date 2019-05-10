@@ -11,4 +11,5 @@
   </div>
 </div>
 <app-feedback></app-feedback>
+<button id="hideSideBar" (click)="navComponent.sidebarToggle()" style="background:none; border: none;"><i class="fa fa-arrow-circle-left fa-3x"></i></button> 
 <app-wizard *ngIf="login.getConnexion() == 1 && login.getWizardActive()"></app-wizard>

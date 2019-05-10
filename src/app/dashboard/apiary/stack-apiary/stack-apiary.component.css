@@ -70,6 +70,10 @@ li{
     position: fixed;
     left: 18%;
 } */
+#apiary-group{
+    overflow: auto;
+    height: 90vh;
+}
 @media  (max-width:767px){
     #col-graph{
         width: 100% !important;

@@ -1,0 +1,6 @@
+#hideSideBar{
+    position: fixed;
+    left: 2px;
+    bottom: 100px;
+    z-index: 5;
+}
