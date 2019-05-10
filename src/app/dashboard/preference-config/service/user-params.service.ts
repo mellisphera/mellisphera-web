@@ -12,7 +12,7 @@ export class UserParamsService {
     this.dtFormat = [
       'Y-M-D h:m',
       'D-M-Y h:m',
-      'D/M/D h:m'
+      'D/M/Y h:m'
 
     ];
     this.setFormatDate(this.dtFormat[0]);
