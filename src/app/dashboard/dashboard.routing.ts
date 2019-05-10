@@ -14,6 +14,7 @@ import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.compone
 import { CapteurComponent } from './capteur/capteur.component';
 import { MelliChartsComponent } from './melli-charts/melli-charts.component';
 import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-component.component';
+import { PreferenceConfigComponent } from './preference-config/preference-config.component';
 
 const routes: Routes = [
     {
@@ -28,7 +29,8 @@ const routes: Routes = [
             { path: 'stack-apiary', component: StackApiaryComponent, canActivate: [AuthGuardService]},
             { path: 'capteurs', component: CapteurComponent},
             { path: 'apiary-notes', component: ApiaryNotesComponent, canActivate: [AuthGuardService]},
-            { path: 'melli-charts', component: MelliChartsComponent, canActivate: [AuthGuardService]}
+            { path: 'melli-charts', component: MelliChartsComponent, canActivate: [AuthGuardService]},
+            { path: 'preferences', component: PreferenceConfigComponent, canActivate: [AuthGuardService]}
 
 
         ]

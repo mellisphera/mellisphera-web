@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserParamsService } from './service/user-params.service';
 
 @Component({
   selector: 'app-preference-config',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PreferenceConfigComponent implements OnInit {
 
-  constructor() { }
+  constructor(public userConfig: UserParamsService) { }
 
   ngOnInit() {
   }
