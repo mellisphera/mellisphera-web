@@ -1,10 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserloggedService } from "../../userlogged.service";
 import { CONFIG } from "../../../config";
 import { AuthService } from "../../auth/Service/auth.service";
 import { AtokenStorageService } from "../../auth/Service/atoken-storage.service";
 import { SidebarService } from '../service/sidebar.service';
+import { NavbarComponent } from "../shared/navbar/navbar.component";
 
 declare const $: any;
 declare interface RouteInfo {
@@ -49,7 +50,7 @@ export class SidebarComponent implements OnInit {
   menuItems: any[];
   username;
   url_sideImg: string;
-
+  /* @ViewChild(NavbarComponent) public navComponent: NavbarComponent; */
   constructor(
     public userService: UserloggedService,
     public router: Router,

@@ -141,9 +141,8 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     receiveMessage($event) {
         this.message = $event;
     }
-
     previousHive() {
-        if (this.compteurHive != 0 && this.compteurHive != -1) {
+        if (this.compteurHive !== 0 && this.compteurHive !== -1) {
             this.compteurHive--;
             this.hiveSelect = this.rucheService.ruches[this.compteurHive];
             this.rucheService.saveCurrentHive(this.hiveSelect.id);

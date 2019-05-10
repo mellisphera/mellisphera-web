@@ -19,7 +19,7 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
     tooltip : {
         formatter: (params)=>{
             return  MyDate.getIsoFromDate(MyDate.getWekitDate(params.data[0])) + '<br/>' + params.data[1];
-        }   
+        }
     },
     toolbox: {
         orient : 'vertical',
