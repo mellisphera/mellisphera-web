@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserParamsService {
 
-  private dtFormat: Array<string>;
+  public dtFormat: Array<string>;
   private formatDate: string;
   private regexDate: RegExp;
   constructor() {
