@@ -123,7 +123,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
                 break;
             case 'ref':
                 this.capteurService.capteursByUser.sort((a, b) => {
-                    return (a.reference > b.reference) ? 1 : -1;
+                    return (a.sensorRef > b.sensorRef) ? 1 : -1;
                 });
                 break;
             case 'description':
@@ -159,7 +159,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         }
         this.capteurService.capteur.description = formValue.description;
         this.capteurService.capteur.username = this.username;
-        this.capteurService.capteur.reference = formValue.reference;
+        this.capteurService.capteur.sensorRef = formValue.reference;
         this.capteurService.capteur.type = sensorType.trim();
         this.initForm();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
@@ -247,7 +247,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     }
     /**
      *
-     * @description Verifie la valeur du control reference du formulaire
+     * @description Verifie la valeur du control sensorRef du formulaire
      * @param {AbstractControl} control
      * @returns {Observable<any>}
      * @memberof CapteurComponent

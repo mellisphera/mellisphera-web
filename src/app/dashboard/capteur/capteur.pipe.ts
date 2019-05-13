@@ -9,8 +9,8 @@ export class PipeCapteur implements PipeTransform {
     if (!filtre) return values;
 
     return values.filter(v => {
-        if (v.reference) {
-            return v.reference.indexOf(filtre.toUpperCase()) >= 0;
+        if (v.sensorRef) {
+            return v.sensorRef.indexOf(filtre.toUpperCase()) >= 0;
         }
     });
   }
