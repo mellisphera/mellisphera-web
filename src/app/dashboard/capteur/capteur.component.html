@@ -71,7 +71,7 @@
                                                 (click)="navToHive(capteur.idHive, capteur.idApiary)">
                                                 {{capteur.apiaryName}} | {{capteur.hiveName}}</td>
                                             <td class="text-left">{{capteur.description}}</td>
-                                            <td>{{capteur.reference}}</td>
+                                            <td>{{capteur.sensorRef}}</td>
                                             <td>{{capteur.type}}</td>
                                             <td class="text-right">
                                                 <button data-toggle="tooltip" data-html="true"
@@ -156,7 +156,7 @@
                                         <tr *ngIf="capteur.apiaryName == null">
                                             <td *ngIf="capteur.apiaryName == null">Stock</td>
                                             <td class="text-left">{{capteur.description}}</td>
-                                            <td >{{capteur.reference}}</td>
+                                            <td >{{capteur.sensorRef}}</td>
                                             <td>{{capteur.type}}</td>
                                             <td class="text-right">
                                                 <button data-toggle="tooltip" data-html="true"

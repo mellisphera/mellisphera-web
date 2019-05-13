@@ -42,7 +42,7 @@ export class CapteurService {
             [
                 {'reference' : '41', 'type' : 'T2'},
                 {'reference' : '42', 'type' : 'T_HR'},
-                {'reference' : '43', 'type' : 'weight'}
+                {'reference' : '43', 'type' : 'WEIGHT'}
 
             ];
         this.initCapteur();
@@ -51,7 +51,7 @@ export class CapteurService {
     initCapteur() {
         this.capteur = {
             id : null,
-            reference : '',
+            sensorRef: '',
             name : '',
             type : '' ,
             description : '',
@@ -134,7 +134,7 @@ export class CapteurService {
      */
     checkSensorExist(reference: string): Observable<Boolean> {
         return this.http.get<CapteurInterface>(CONFIG.URL + 'sensors/check/' + reference)
-        .map(res => res.reference !== reference);
+        .map(res => res.sensorRef !== reference);
     }
 
     /**

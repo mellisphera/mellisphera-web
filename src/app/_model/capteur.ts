@@ -1,6 +1,6 @@
 export interface CapteurInterface {
     id? : string;
-	reference : string;
+	sensorRef : string;
 	name? : string;
 	type : string ;
 	description : string;
