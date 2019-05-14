@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UserPref } from '../../../_model/user-pref';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class UserParamsService {
       'D/M/Y h:m'
 
     ];
-    this.setFormatDate(this.dtFormat[0]);
+    this.formatDate = this.getUserPref() ?  this.getUserPref().timeFormat : this.dtFormat[0] ;
   }
   /**
    *
@@ -25,6 +26,10 @@ export class UserParamsService {
    */
   setFormatDate(dtFormat: string): void {
     this.formatDate = dtFormat;
+  }
+
+  getUserPref(): UserPref {
+    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).userPref;
   }
 
   /**
@@ -48,4 +53,5 @@ export class UserParamsService {
     .replace(/D/g, String(newInstanceDate.getDate()))
     .replace(/h:m/g, '');
   }
+
 }

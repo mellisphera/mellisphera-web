@@ -52,19 +52,17 @@ export class AuthService {
         this.connexionStatus.next(data);
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
-        this.userService.setCountry(this.jwtReponse.country);
+        this.userService.setJwtReponse(this.jwtReponse);
         this.translateService.addLangs(['en', 'fr']);
          if (this.jwtReponse.country === null || this.jwtReponse.country === 'US') {
            this.translateService.use('en');
         } else if (this.jwtReponse.country === 'FR') {
           this.translateService.use('fr');
         }
-        this.userService.setConnexion(this.jwtReponse.connexions);
         console.log(this.jwtReponse);
         if (this.jwtReponse.connexions === 1) {
           this.userService.setWizardActive(true);
         }
-        this.userService.setUser(this.jwtReponse);
         this.router.navigateByUrl('dashboard/home');
       },
       (err) => {

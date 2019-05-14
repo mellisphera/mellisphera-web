@@ -23,18 +23,13 @@ export class UserloggedService {
     return JSON.parse(sessionStorage.getItem('currentUser'));
   }
 
-  setUser(user: JwtResponse): void {
-    window.sessionStorage.removeItem('currentUser');
-    window.sessionStorage.setItem('currentUser', JSON.stringify(user));
+  setJwtReponse(auth: JwtResponse) {
+    window.sessionStorage.removeItem('jwtReponse');
+    window.sessionStorage.setItem('jwtReponse', JSON.stringify(auth));
   }
 
-  setConnexion(nbConnection: number) {
-    window.sessionStorage.setItem('connexions', '' + nbConnection);
-  }
-
-  setCountry(country: string): void{
-    window.sessionStorage.removeItem('country');
-    window.sessionStorage.setItem('country', JSON.stringify(country));
+  getJwtReponse(): JwtResponse {
+    return JSON.parse(window.sessionStorage.getItem('jwtReponse'));
   }
 
   /**
@@ -57,7 +52,7 @@ export class UserloggedService {
    */
   getUser(): string {
     try {
-      return JSON.parse(window.sessionStorage.getItem('currentUser')).username.toLowerCase();
+      return JSON.parse(window.sessionStorage.getItem('jwtReponse')).username.toLowerCase();
     } catch (e) {
       return '';
     }
@@ -68,9 +63,9 @@ export class UserloggedService {
    * @returns {string}
    * @memberof UserloggedService
    */
-  getCountry(): string{
+  getCountry(): string {
     try {
-      return JSON.parse(window.sessionStorage.getItem('country'));
+      return JSON.parse(window.sessionStorage.getItem('jwtReponse')).country;
     } catch (e) {
       return '';
     }
@@ -83,7 +78,7 @@ export class UserloggedService {
    */
   getConnexion(): number {
     try {
-      return JSON.parse(window.sessionStorage.getItem('connexions'));
+      return JSON.parse(window.sessionStorage.getItem('jwtReponse')).connexions;
     } catch (e) {
       return NaN;
     }
