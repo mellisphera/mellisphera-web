@@ -8,5 +8,5 @@ export interface JwtResponse {
     connexions?: number;
     authorities: string[];
     country: string;
-    userPref: UserPref;
+    userPrefœ: UserPref;
 }

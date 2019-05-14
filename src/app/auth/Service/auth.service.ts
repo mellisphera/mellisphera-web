@@ -48,11 +48,11 @@ export class AuthService {
         this.jwtReponse = data;
         this.tokenService.saveToken(this.jwtReponse.accessToken);
         this.tokenService.saveAuthorities(this.jwtReponse.authorities);
+        this.userService.setJwtReponse(this.jwtReponse);
         this.login.email = this.jwtReponse.email;
         this.connexionStatus.next(data);
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
-        this.userService.setJwtReponse(this.jwtReponse);
         this.translateService.addLangs(['en', 'fr']);
          if (this.jwtReponse.country === null || this.jwtReponse.country === 'US') {
            this.translateService.use('en');

@@ -57,7 +57,7 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
                 private data : UserloggedService,
                 private rucherService: RucherService) {
 
-                this.username= data.currentUser().username; 
+                this.username= data.getUser();
                 this.selectedType = '';
                 this.currentMonth = 0;
                 //this.currentMonthStr = ['','Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];

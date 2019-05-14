@@ -168,6 +168,7 @@ export class ObservationService {
       .subscribe(
         (data) => {
           this.observationsApiary = data;
+          console.log(data);
           this.obsApiarySubject.next(data);
         },
         (err) => {
