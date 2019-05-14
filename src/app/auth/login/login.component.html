@@ -12,7 +12,7 @@
             </div>
             <button type="submit" name="go" class="btn btn-lg btn-block btn-info">Login</button>
 			<div>
-				<a (click)="formLogin = !formLogin" href="#">Create account</a> or <a href="#">reset password</a>
+				<a (click)="formLogin = !formLogin" href="#">Create account</a><!--  or <a href="#">reset password</a> -->
             </div>
         </form>
         <form *ngIf="!formLogin" role="login" [formGroup]="signupForm" (ngSubmit)="signup();" #fsignUp="ngForm">
