@@ -26,8 +26,8 @@ export class SearchCapteur implements PipeTransform {
     const patern  = /[4][0-9]\:*/g;
 
     return values.filter(v => {
-        if (v.reference) {
-            return filtre.startsWith(v.reference);
+        if (v.sensorRef) {
+            return filtre.startsWith(v.sensorRef);
         }
     });
   }
