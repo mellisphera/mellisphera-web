@@ -199,7 +199,7 @@ export class    FleursFloraisonService {
         this.newFlower.dateThDebutdate = fleur.flowerApi.flomindate;
         this.newFlower.dateThFindate = fleur.flowerApi.flomaxdate;
         this.newFlower.presence = "";
-        this.newFlower.username = this.userService.currentUser().username;
+        this.newFlower.username = this.userService.getUser();
         this.newFlower.photo = fleur.photo;
         this.http.put(CONFIG.URL+'flowersOb/add/'+this.rucherService.rucher.id,this.newFlower).subscribe(
             ()=>{},
