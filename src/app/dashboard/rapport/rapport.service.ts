@@ -45,7 +45,7 @@ export class RapportService {
                 console.log(err);
             },
             ()=>{
-                this.getRapportTemp(this.username.currentUser().username);
+                this.getRapportTemp(this.username.getUser());
             }
         );
     }
