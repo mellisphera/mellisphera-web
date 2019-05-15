@@ -37,9 +37,11 @@
             </div>
             <div id="collapse2" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p *ngFor="let format of userConfig.dtFormat">
-                        <input type="radio"><label>{{ format }}</label>
-                    </p>
+                    <div class="form-group" *ngFor="let format of userConfig.dtFormat; let i = index;">
+                        <input type="radio" [(ngModel)]="formatDt" [value]="i"
+                            placeholder="Input field"><label>{{ format }}</label>
+                    </div>
+                    <button type="button" (click)="saveFormat()" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </div>
@@ -47,13 +49,20 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                        Collapsible Group 3</a>
+                        Unit systems</a>
                 </h4>
             </div>
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <input type="radio" /><label>°C</label>
-                    <input type="radio" /><label>°F</label>
+                    <div id="unité">
+                        <div class="form-group">
+                            <input [(ngModel)]="unitSys" value="METRIC" type="radio" /><label>Metric</label>
+                        </div>
+                        <div class="form-group">
+                            <input [(ngModel)]="unitSys" value="IMPERIAL" type="radio" /><label>Imperial</label>
+                        </div>
+                        <button type="button" (click)="saveUnit()" class="btn btn-primary">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>

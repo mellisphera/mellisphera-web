@@ -43,13 +43,13 @@ export class    FleursFloraisonService {
     // Récupère la liste des fleurs théoriques
     getFleurTest(){
         this.http.get<FleursTheorique[]>(CONFIG.URL+'flowersTh/all').subscribe(
-            (data)=>{
+            (data) => {
                 this.fleurThs = data;
             },
-            (err)=>{
+            (err) => {
                 console.log(err);
             },
-            ()=>{
+            () => {
                 this.getType();
             }
         );
