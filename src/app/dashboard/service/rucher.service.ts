@@ -49,7 +49,6 @@ export class RucherService {
     emitApiarySubject() {
         this.rucherSubject.next(this.ruchers.slice());
     }
-    
     initRucher() {
          this.rucher = {
             id : null,
@@ -104,11 +103,13 @@ export class RucherService {
                 if (this.ruchers != null ) {
                     if (!this.getCurrentApiary()) {
                         this.rucher = this.ruchers[0];
+                        this.rucherSelectUpdate = this.rucher;
                         this.saveCurrentApiaryId(this.rucher.id);
                     } else {
                         this.rucher = this.ruchers.filter(apiary => apiary.id === this.getCurrentApiary())[0];
                         if (this.rucher === undefined) {
                             this.rucher = this.ruchers[0];
+                            this.rucherSelectUpdate = this.rucher;
                             this.saveCurrentApiaryId(this.rucher.id);
                         }
                     }

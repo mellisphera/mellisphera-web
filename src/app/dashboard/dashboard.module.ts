@@ -43,6 +43,7 @@ import { PreferenceConfigComponent } from './preference-config/preference-config
 import { MelliChartsComponent } from './melli-charts/melli-charts.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MyDatePipe } from '../pipe/my-date.pipe';
+import { UnitService } from './service/unit.service';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { MyDatePipe } from '../pipe/my-date.pipe';
     DailyRecordService,
     FleursFloraisonService,
     AdminService,
+    UnitService,
     CapteurService,
     SidebarService,
     UserParamsService

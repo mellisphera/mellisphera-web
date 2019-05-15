@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DailyRecordService } from '../../../../service/dailyRecordService';
 import { DailyRecordsWService } from '../service/daily-records-w.service';
 import { RucheService } from '../../../../service/ruche.service';
+import { CALENDRIER_DAILY } from '../../../../graph-echarts/calendrierDaily';
 
 @Component({
   selector: 'app-daily',
@@ -16,10 +17,9 @@ export class DailyComponent implements OnInit {
   rucheId;
   rucheName : string;
 
-  constructor(public calendrierTempInt : CalendrierTempIntService, private activatedRoute : ActivatedRoute, 
-    public dailyRecordThService : DailyRecordService,
-    public dailyRecordWservice : DailyRecordsWService,
-    private rucheService : RucheService) { }
+  constructor(public calendrierTempInt : CalendrierTempIntService, private activatedRoute: ActivatedRoute,
+    public dailyRecordThService: DailyRecordService,
+    public dailyRecordWservice: DailyRecordsWService) { }
 
   ngOnInit() {
     /*this.rucheId = this.activatedRoute.snapshot.params.id;
