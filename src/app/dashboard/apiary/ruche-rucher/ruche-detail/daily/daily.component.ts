@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { DailyRecordService } from '../../../../service/dailyRecordService';
 import { DailyRecordsWService } from '../service/daily-records-w.service';
 import { RucheService } from '../../../../service/ruche.service';
-import { CALENDRIER_DAILY } from '../../../../graph-echarts/calendrierDaily';
 
 @Component({
   selector: 'app-daily',

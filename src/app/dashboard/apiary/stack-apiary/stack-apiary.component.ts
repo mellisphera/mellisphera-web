@@ -16,6 +16,7 @@ import { AdminService } from '../../admin/service/admin.service';
 import 'rxjs/add/observable/forkJoin';
 import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
 import { Console } from '@angular/core/src/console';
+import { UserParamsService } from '../../preference-config/service/user-params.service';
 
 @Component({
   selector: 'app-stack-apiary',
@@ -40,7 +41,8 @@ export class StackApiaryComponent implements OnInit {
     public recordService: RecordService,
     private adminService: AdminService,
     private tokenService: AtokenStorageService,
-    private observationService: ObservationService) {
+    private observationService: ObservationService,
+    private userConfig: UserParamsService) {
 
     /* this.subjectEchart = new BehaviorSubject({}); */
     this.merge = {
@@ -73,6 +75,11 @@ export class StackApiaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userConfig.getSubject().subscribe(
+      data => {
+        this.recordService.setUnitSystem(data.unitSystem);
+      }
+    )
     if (!this.rucherService.rucherSubject.closed) {
       if (!this.tokenService.checkAuthorities('ROLE_ADMIN')) {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {

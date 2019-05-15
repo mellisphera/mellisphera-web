@@ -7,6 +7,7 @@ import { ElementSchemaRegistry } from '@angular/compiler';
 import { MyDate } from '../../../../../class/MyDate';
 import { User } from '../../../../../_model/user';
 import { UserParamsService } from '../../../../preference-config/service/user-params.service';
+import { UnitService } from '../../../../service/unit.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -27,6 +28,7 @@ export class DailyRecordsWService {
   private dailyRec: DailyRecordsW[];
   private dailyRecArray: any[];
   private weightIncome: any[];
+  private unitSystem: string;
   mergeOptionWeight: any = null;
   private rangeCalendar: Array<string>;
   currentIdHive: string;
@@ -36,7 +38,7 @@ export class DailyRecordsWService {
 
   timeLine: any[];
 
-  constructor(private http: HttpClient, private userConfig: UserParamsService) {
+  constructor(private http: HttpClient, private userConfig: UserParamsService, private unitService: UnitService) {
     this.dailyRecArray = [];
     this.arrayTempExt = [];
     this.weightIncome = [];
@@ -54,7 +56,8 @@ export class DailyRecordsWService {
   getDailyRecordWByHive(idHive: string, hiveName?: string): Observable<any> {
     this.currentIdHive = idHive;
     return this.http.get<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/hive/' + idHive).map(res => {
-      this.arrayTempExt = res.map(elt => [MyDate.getWekitDate(MyDate.convertDate(new Date(elt.recordDate))), elt.temp_ext_max]);
+      this.arrayTempExt = res.map(elt => [MyDate.getWekitDate(MyDate.convertDate(new Date(elt.recordDate))),
+        this.unitService.convertTempFromUsePref(elt.temp_ext_max, this.unitSystem)]);
       this.weightIncome = res.map(elt => [MyDate.getWekitDate(MyDate.convertDate(new Date(elt.recordDate))), elt.weight_income_gain]);
       return {
         tempExt: {
@@ -140,6 +143,10 @@ export class DailyRecordsWService {
     });
 
   }
+  setUnitSystem(unit: string): void {
+    this.unitSystem = unit;
+  }
+
   getDailyRecordsWbyIdHive(idHive: string) {
     this.loading = true;
     this.currentIdHive = idHive;
@@ -153,6 +160,7 @@ export class DailyRecordsWService {
           this.dailyRec = data;
           this.getArray();
           this.updateCalendar();
+          console.log(this.dailyRecArray);
         } else {
           console.log('Aucune');
           this.updateCalendar();
@@ -229,15 +237,15 @@ export class DailyRecordsWService {
     this.timeLine = [];
     let lastMonth = null;
     this.dailyRec.forEach((element, index) => {
-      this.arrayTempExt.push([element.recordDate, element.temp_ext_max])
-      if (this.getMonth(element.recordDate) != lastMonth) {
+      this.arrayTempExt.push([element.recordDate, this.unitService.convertTempFromUsePref(element.temp_ext_max, this.unitSystem)])
+      if (this.getMonth(element.recordDate) !== lastMonth) {
         this.timeLine.push(element.recordDate);
       }
       this.dailyRecArray.push([
         element.recordDate,
-        element.weight_income_gain
+        this.unitService.convertWeightFromuserPref(element.weight_income_gain, this.unitSystem)
       ]);
-      lastMonth = this.getMonth(element.recordDate)
+      lastMonth = this.getMonth(element.recordDate);
     });
   }
 
