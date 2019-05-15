@@ -3,6 +3,7 @@ import { UserParamsService } from './service/user-params.service';
 import { Subscription } from 'rxjs';
 import { UserPref } from '../../_model/user-pref';
 import { AuthService } from '../../auth/Service/auth.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-preference-config',
@@ -15,8 +16,11 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   public formatDt: number;
   public unitSys: string;
   public suscribPref: Subscription;
+  private notifyService: NotifierService;
   private userPref: UserPref;
-  constructor(public userConfig: UserParamsService, private authService: AuthService) { }
+  constructor(public userConfig: UserParamsService, private authService: AuthService, private notifier: NotifierService) {
+    this.notifyService = notifier;
+  }
   ngOnInit() {
     this.suscribPref = this.userConfig.getSubject().subscribe(
       data => {
@@ -49,6 +53,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
         }
         this.authService.jwtReponse.userPref = this.userPref;
         this.userConfig.emitPrefSubject();
+        this.notifyService.notify('success', 'Settings saved');
         window.sessionStorage.removeItem('jwtReponse');
         window.sessionStorage.setItem('jwtReponse', JSON.stringify(this.authService.jwtReponse));
       }
