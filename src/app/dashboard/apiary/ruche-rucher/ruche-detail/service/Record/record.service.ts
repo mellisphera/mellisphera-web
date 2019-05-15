@@ -14,6 +14,7 @@ import { DataRange } from './data-range';
 import { MyDate } from '../../../../../../class/MyDate';
 import { store } from '@angular/core/src/render3/instructions';
 import { EChartsOptionConfig, ECharts, EChartOption } from 'echarts';
+import { UnitService } from '../../../../../service/unit.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -40,12 +41,13 @@ export class RecordService {
   public currentIdHive: string;
   private templateSerie: any;
   private rangeHourly: Date[];
+  private unitSystem: string;
   public mergeOptionStack: any = null;
   public mergeOptionStackApiary: any;
   public stackSubject: BehaviorSubject<EChartOption>;
   private mergeTemp: any;
   private legendOption: Array<string>;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private unitService: UnitService) {
     this.currentIdHive = null;
     // this.stackSubject = new BehaviorSubject({});
     this.mergeTemp = {
@@ -77,11 +79,13 @@ export class RecordService {
     return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
       this.recArrayText = records.filter(record => record.temp_ext != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_ext], sensorRef: rec.sensorRef };
+          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertTempFromUsePref(rec.temp_ext, this.unitSystem)], 
+            sensorRef: rec.sensorRef };
         });
       this.recArrayWeight = records.filter(record => record.weight != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.weight], sensorRef: rec.sensorRef };
+          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertWeightFromuserPref(rec.weight, this.unitSystem)],
+             sensorRef: rec.sensorRef };
         });
       this.recArrayBatteryExt = records.filter(record => record.battery_ext != null)
         .map((rec) => {
@@ -101,7 +105,8 @@ export class RecordService {
         });
       this.recArrrayTint = records.filter(record => record.temp_int != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_int], sensorRef: rec.sensorRef };
+          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertTempFromUsePref(rec.temp_int, this.unitSystem)], 
+            sensorRef: rec.sensorRef };
         });
       if (!hive) {
         return {
@@ -266,15 +271,18 @@ export class RecordService {
     return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
       this.recArrayText = records.filter(record => record.temp_ext != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_ext], sensorRef: rec.sensorRef };
+          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertTempFromUsePref(rec.temp_ext, this.unitSystem)],
+            sensorRef: rec.sensorRef };
         });
       this.recArrayWeight = records.filter(record => record.weight != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.weight], sensorRef: rec.sensorRef };
+          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertWeightFromuserPref(rec.weight, this.unitSystem)],
+            sensorRef: rec.sensorRef };
         });
       this.recArrrayTint = records.filter(record => record.temp_int != null)
         .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.temp_int], sensorRef: rec.sensorRef };
+          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertTempFromUsePref(rec.temp_int, this.unitSystem)],
+            sensorRef: rec.sensorRef };
         });
 
       return {
@@ -328,7 +336,9 @@ export class RecordService {
     });
   }
 
-
+  setUnitSystem(unit: string): void {
+    this.unitSystem = unit;
+  }
   /**
    * @param {DataRange} scale
    * @memberof RecordService

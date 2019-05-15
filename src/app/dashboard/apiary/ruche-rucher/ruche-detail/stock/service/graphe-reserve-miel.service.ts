@@ -1,13 +1,14 @@
 import { MyDate } from '../../../../../../class/MyDate';
 import { Injectable } from '@angular/core';
 import { EChartOption } from 'echarts';
+import { GraphGlobal } from '../../../../../graph-echarts/GlobalGraph';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GrapheReserveMielService {
 
-  constructor() { }
+  constructor(private graphGlobal: GraphGlobal) { }
   option = {
     title: {
         text: 'Honey Stock',
@@ -75,7 +76,7 @@ export class GrapheReserveMielService {
     ],
     yAxis :
         {
-            name : 'Weight \n variation (kg)',
+            name : this.graphGlobal.weight.name,
             type : 'value'
             // max: 'dataMax'
 

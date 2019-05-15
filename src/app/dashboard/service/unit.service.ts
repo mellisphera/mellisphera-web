@@ -17,7 +17,7 @@ export class UnitService {
    */
    convertTempFromUsePref(temp: number, unit: string): number {
     if (unit === 'IMPERIAL') {
-      return temp * 9 / 5 + 32;
+      return this.getValRound(temp * 9 / 5 + 32);
     } else {
       return temp;
     }
@@ -32,9 +32,14 @@ export class UnitService {
    */
   convertWeightFromuserPref(weight: number, unit: string): number {
     if (unit === 'IMPERIAL') {
-      return weight * 2.2046;
+      return this.getValRound(weight * 2.2046);
     } else {
       return weight;
     }
+  }
+
+  getValRound(value: number): number{
+    const tmp = Math.pow(10, 3);
+    return Math.round( value * tmp ) / tmp;
   }
 }

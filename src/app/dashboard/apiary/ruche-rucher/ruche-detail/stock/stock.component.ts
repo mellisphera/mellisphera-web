@@ -40,7 +40,7 @@ export class StockComponent implements OnInit, OnDestroy {
       //Called once, before the instance is destroyed.
       //Add 'implements OnDestroy' to the class.
       this.dailyRecWService.cleanQuery();
-      this.dailyStockHoneyService.cleanQuery();
+     // this.dailyStockHoneyService.cleanQuery();
   }
   chartChange(event){
   }

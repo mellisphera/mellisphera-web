@@ -20,6 +20,8 @@ import { GraphRecordService } from './hourly/service/graph-record.service';
 import { GrapheReserveMielService } from './stock/service/graphe-reserve-miel.service';
 import { CalendrierPoidsService } from './stock/service/calendrier-poids.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { UnitService } from '../../../service/unit.service';
+import { UserParamsService } from '../../../preference-config/service/user-params.service';
 
 
 @Component({
@@ -85,7 +87,8 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         public calendrierPoids: CalendrierPoidsService,
         public grapheMielService: GrapheReserveMielService,
         public graphStack: GraphStackService,
-        public graphRecordService: GraphRecordService) {
+        public graphRecordService: GraphRecordService,
+        private userConfig: UserParamsService) {
         this.compteurHive = 0;
         this.currentTab = 'notes';
         this.hiveSelect = {
@@ -119,6 +122,14 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.userConfig.getSubject().subscribe(
+            data => {
+                this.recordService.setUnitSystem(data.unitSystem);
+                this.dailyRecordThService.setUnitSystem(data.unitSystem);
+                this.dailyRecordWservice.setUnitSystem(data.unitSystem);
+                this.dailyStockHoneyService.setUnitSystem(data.unitSystem);
+            }
+        )
         if (!this.observationService.obsHiveSubject.closed) {
             this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive()).subscribe();
         }

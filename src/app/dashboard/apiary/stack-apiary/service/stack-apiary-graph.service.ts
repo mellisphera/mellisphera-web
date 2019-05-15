@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as echarts from 'echarts';
+import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class StackApiaryGraphService {
 
   echartsUtil: any;
   options: any;
-  constructor() {
+  constructor(private configGraph: GraphGlobal) {
     this.echartsUtil = (<any>echarts).util;
     this.options = {
       tooltip: {
@@ -122,20 +123,20 @@ export class StackApiaryGraphService {
       ],
       yAxis: [
         {
-          name: 'Weight (kg)',
+          name: this.configGraph.weight.name,
           nameLocation: 'middle',
           nameGap: 25,
           type: 'value',
-          min: 10
+          min: this.configGraph.weight.min
         },
         {
           gridIndex: 1,
-          name: 'Temperature (°C)',
+          name: this.configGraph.temp.name,
           type: 'value',
           nameGap: 25,
           nameLocation: 'middle',
-          min: 0,
-          max: 40,
+          min: this.configGraph.temp.min,
+          max: this.configGraph.temp.max,
         },
         {
           gridIndex: 2,

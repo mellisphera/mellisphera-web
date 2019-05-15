@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { DailyRecordTh } from '../../_model/daily-record-th';
 import { CONFIG } from '../../../config';
 import { UserloggedService } from '../../userlogged.service';
+import { UnitService } from './unit.service';
 
 @Injectable()
 export class DailyRecordService {
@@ -24,9 +25,10 @@ export class DailyRecordService {
     public rangeDailyRecord: Date;
     public mergeOptionTint: any;
     public mergeOptionHint: any;
+    private unitSystem: string;
     public mergeOptionCalendarHealth: any;
 
-    constructor(private http: HttpClient, private user: UserloggedService) {
+    constructor(private http: HttpClient, private user: UserloggedService, private unitService: UnitService) {
         this.statusLoading = false;
         this.rangeDailyRecord = new Date();
         this.arrayTempInt = [];
@@ -42,7 +44,8 @@ export class DailyRecordService {
 
     getByHive(idHive: string) {
         return this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/hive/' + idHive).map(res => {
-            this.arrayTempInt = res.filter(elt => elt.temp_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.temp_int_max]);
+            this.arrayTempInt = res.filter(elt => elt.temp_int_max !== null).
+            map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
             this.arrayHint = res.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
             this.arrayHealth = res.map(elt => [elt.recordDate, elt.health_status, elt.health_trend]);
             return {
@@ -113,7 +116,8 @@ export class DailyRecordService {
     public getByIdHive(idHive: string): void {
         this.dailyRecords = [];
         this.http.get<DailyRecordTh[]>(CONFIG.URL + '/dailyRecordsTH/hive/' + idHive).map(daily => {
-            this.arrayTempInt = daily.filter(elt => elt.temp_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.temp_int_max]);
+            this.arrayTempInt = daily.filter(elt => elt.temp_int_max !== null).
+            map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
             this.arrayHint = daily.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
             this.arrayHealth = daily.map(elt => [elt.recordDate, elt.health_status, elt.health_trend]);
             return daily;
@@ -152,6 +156,9 @@ export class DailyRecordService {
         this.rangeDailyRecord.setMinutes(0);
         this.getDailyRecThByApiary(idApiary);
     }
+    setUnitSystem(unit: string): void {
+        this.unitSystem = unit;
+      }
     /**
      *
      *

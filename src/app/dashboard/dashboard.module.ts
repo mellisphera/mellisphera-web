@@ -44,11 +44,12 @@ import { MelliChartsComponent } from './melli-charts/melli-charts.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MyDatePipe } from '../pipe/my-date.pipe';
 import { UnitService } from './service/unit.service';
+import { GraphGlobal } from './graph-echarts/GlobalGraph';
 
 
 @NgModule({
   imports: [
-    CommonModule,
+  CommonModule,
     DasboardRoutingModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
@@ -75,6 +76,7 @@ import { UnitService } from './service/unit.service';
     FleursFloraisonService,
     AdminService,
     UnitService,
+    GraphGlobal,
     CapteurService,
     SidebarService,
     UserParamsService

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { GraphGlobal } from '../../../../../graph-echarts/GlobalGraph';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GraphRecordService {
 
-  constructor() { }
+  constructor(private globalGraph: GraphGlobal) { }
    
   option = {
     title: {
@@ -78,9 +79,9 @@ export class GraphRecordService {
     yAxis: [
         {
             type: 'value',
-            name: 'Weight (kg)',
-            min: 0,
-            max: 80,
+            name: this.globalGraph.weight.name,
+            min: this.globalGraph.weight.min,
+            max: this.globalGraph.weight.max,
             interval: 5,
             axisLabel: {
                 formatter: '{value}'
@@ -88,9 +89,9 @@ export class GraphRecordService {
         },
         {
             type: 'value',
-            name: 'Temp.(°C)',
-            min: 0,
-            max: 40,
+            name: this.globalGraph.temp.name,
+            min: this.globalGraph.temp.min,
+            max: this.globalGraph.temp.max,
             interval: 5,
             axisLabel: {
                 formatter: '{value}'
