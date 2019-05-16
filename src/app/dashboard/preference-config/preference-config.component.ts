@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { UserPref } from '../../_model/user-pref';
 import { AuthService } from '../../auth/Service/auth.service';
 import { NotifierService } from 'angular-notifier';
+import { UserloggedService } from '../../userlogged.service';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-preference-config',
@@ -18,7 +20,10 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   public suscribPref: Subscription;
   private notifyService: NotifierService;
   private userPref: UserPref;
-  constructor(public userConfig: UserParamsService, private authService: AuthService, private notifier: NotifierService) {
+  public passwordForm: FormGroup;
+  constructor(public userConfig: UserParamsService, private authService: AuthService,
+    private notifier: NotifierService, private loginService: UserloggedService,
+    private formBuilder: FormBuilder) {
     this.notifyService = notifier;
   }
   ngOnInit() {
@@ -28,12 +33,21 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
         this.formatDt = this.userConfig.dtFormat.indexOf(this.userPref.timeFormat);
         this.unitSys = this.userPref.unitSystem;
       }
-    )
+    );
+    this.passwordForm = this.formBuilder.group({
+      'password': ['', [Validators.required, Validators.minLength(6)]],
+      'confirmPassword': ['', [Validators.required, Validators.minLength(6)]]
+    });
+    console.log(this.passwordForm);
   }
 
   saveFormat(): void {
     this.userConfig.setFormatDt(this.formatDt);
     this.saveUserPref();
+  }
+
+  getConfirmPassword() {
+    return this.passwordForm.get('confirmPassword');
   }
 
   saveUnit(): void {
@@ -45,6 +59,21 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     this.suscribPref.unsubscribe();
   }
 
+  checkPassword(): string {
+    return this.passwordForm.get('confirmPassword').value === this.passwordForm.get('password').value ? 'checkOk' : 'checkError';
+  }
+
+  setNewPassword() {
+    this.userConfig.updatePassword(this.passwordForm.get('confirmPassword').value).subscribe(
+      () => {}, () => {}, () => {
+        this.notifier.notify('success', 'Password saved');
+      }
+    )
+  }
+
+  test(event: any) {
+    console.log(event);
+  }
   saveUserPref(): void {
     this.userConfig.setUserPref().subscribe(
       () => {}, () => {}, () => {

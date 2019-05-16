@@ -20,7 +20,7 @@ export class UserParamsService {
   private userPref: UserPref;
   private regexDate: RegExp;
   private prefSubject: BehaviorSubject<UserPref>;
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, ) {
     this.prefSubject = new BehaviorSubject({
       timeZone: '',
       timeFormat: '',
@@ -76,6 +76,10 @@ export class UserParamsService {
     return this.httpClient.put<UserPref>(CONFIG.URL + 'userPref/update/' + this.getUsername(), this.userPref, httpOptions);
   }
 
+
+  updatePassword(password: string): Observable<String> {
+    return this.httpClient.put<String>(CONFIG.URL + 'userPref/updatePassword/' + this.getIdUser(), password, httpOptions);
+  }
   /**
    *
    *
@@ -94,6 +98,10 @@ export class UserParamsService {
    */
   getUsername(): string {
     return JSON.parse(window.sessionStorage.getItem('jwtReponse')).username;
+  }
+
+  getIdUser() {
+    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).idUser;
   }
 
   /**

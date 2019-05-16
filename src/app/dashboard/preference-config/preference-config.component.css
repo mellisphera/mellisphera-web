@@ -1,0 +1,6 @@
+.checkError{
+    border: 1px solid red;
+}
+.checkOk{
+    border: 1px solid green;
+}
