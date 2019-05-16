@@ -30,6 +30,7 @@ export class ObservationService {
   private rangeObs: Date[];
   constructor(private http: HttpClient,
       private stackService: StackService) {
+      //  this.observationsApiary = [];
     this.obsHiveSubject = new BehaviorSubject([]);
     this.obsApiarySubject = new BehaviorSubject([]);
     this.setRange({scale: 1, type: 'YEAR'});
@@ -128,48 +129,12 @@ export class ObservationService {
   }
 
   getObservationByIdApiary(idApiary: string) {
-    this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, this.rangeObs).map(res => {
-      /* this.mergeStackObsApiary = {
-        name: idApiary,
-        type: 'custom',
-        tooltip: {
-          trigger: 'item',
-          formatter: (param) => {
-            return param.value[0] + ': '
-              + param.value[1] + ' - ' + param.value[2];
-          }
-        },
-        data: res.map(elt => [elt.date, elt.type, elt.sentence]),
-        renderItem: (param, api) => {
-          const point = api.coord([
-            api.value(0),
-            0
-          ]);
-          const img = (api.value(1) === 'imgApiaryObs') ? this.imgApiaryObs : this.imgApiaryAct;
-          return {
-            type: 'group',
-            children: [{
-              type: 'image',
-              style: {
-                image: img,
-                x: -img / 2,
-                y: -img / 2,
-                width: 25,
-                height: 25
-              },
-              position: [point[0], 50]
-            }]
-          };
-        },
-        z: 11
-      }; */
-      return res;
-    })
+    this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, this.rangeObs)
       .subscribe(
         (data) => {
           this.observationsApiary = data;
-          console.log(data);
           this.obsApiarySubject.next(data);
+                    console.log(data);
         },
         (err) => {
           console.log(err);
