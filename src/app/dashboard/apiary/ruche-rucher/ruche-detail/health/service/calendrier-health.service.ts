@@ -30,7 +30,7 @@ export class CalendrierHealthService {
             tooltip: {
                 trigger: 'item',
                 formatter: (params) => {
-                    return params.marker + userParamService.getFormatCalendar(params.data[0]) + '<br/>' + params.data[2];
+                    return params.marker + userParamService.getDailyDate(params.data[0]) + '<br/>' + params.data[2];
                 }
             },
             toolbox: {

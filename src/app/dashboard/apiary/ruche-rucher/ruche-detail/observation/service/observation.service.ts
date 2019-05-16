@@ -6,6 +6,7 @@ import { Observation } from '../../../../../../_model/observation';
 import { MyDate } from '../../../../../../class/MyDate';
 import { DataRange } from '../../service/Record/data-range';
 import { StackService } from '../../../../stack-apiary/service/stack.service';
+import { UserParamsService } from '../../../../../preference-config/service/user-params.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -29,7 +30,8 @@ export class ObservationService {
   private imgHiveAct: string;
   private rangeObs: Date[];
   constructor(private http: HttpClient,
-      private stackService: StackService) {
+      private stackService: StackService,
+      private useConfig: UserParamsService) {
       //  this.observationsApiary = [];
     this.obsHiveSubject = new BehaviorSubject([]);
     this.obsApiarySubject = new BehaviorSubject([]);
@@ -92,7 +94,8 @@ export class ObservationService {
         tooltip: {
           trigger: 'item',
           formatter: (param) => {
-            return new Date(param.name).toLocaleString() + ': </br>'
+            console.log(param.name);
+            return this.useConfig.getHourlyDate(param.name) + ': </br>'
                 + param.value[3];
           }
         },
