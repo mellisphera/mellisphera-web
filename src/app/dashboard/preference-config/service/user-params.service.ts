@@ -110,8 +110,13 @@ export class UserParamsService {
    * @returns {string}
    * @memberof UserService
    */
-  getFormatDate(date: Date): string {
-    const newInstanceDate = new Date(date);
+  getFormatDate(date: string): string {
+    const dtSplit = date.split('T');
+    const daily = dtSplit[0];
+    const hourly = dtSplit[1].split(':');
+    const newInstanceDate = new Date(daily);
+    newInstanceDate.setHours(parseInt(hourly[0], 10));
+    newInstanceDate.setMinutes(parseInt(hourly[1], 10));
     return this.formatDate.replace(/Y/g, String(newInstanceDate.getFullYear()))
     .replace(/M/g, String(newInstanceDate.getMonth() + 1))
     .replace(/D/g, String(newInstanceDate.getDate()))
