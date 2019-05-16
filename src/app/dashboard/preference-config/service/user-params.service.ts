@@ -110,7 +110,7 @@ export class UserParamsService {
    * @returns {string}
    * @memberof UserService
    */
-  getFormatDate(date: string): string {
+  getHourlyDate(date: string): string {
     const dtSplit = date.split('T');
     const daily = dtSplit[0];
     const hourly = dtSplit[1].split(':');
@@ -130,7 +130,8 @@ export class UserParamsService {
    * @returns {string}
    * @memberof UserParamsService
    */
-  getFormatCalendar(date: Date): string {
+  getDailyDate(date: Date): string {
+    console.log(date);
     const newInstanceDate = new Date(date);
     return this.formatDate.replace(/Y/g, String(newInstanceDate.getFullYear()))
     .replace(/M/g, String(newInstanceDate.getMonth() + 1))

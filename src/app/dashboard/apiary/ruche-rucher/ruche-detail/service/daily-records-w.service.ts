@@ -85,7 +85,7 @@ export class DailyRecordsWService {
           tooltip: {
             trigger: 'item',
             formatter: (params: any) => {
-              return params.marker + this.userConfig.getFormatCalendar(params.data[0]) + '<br/>' +
+              return params.marker + this.userConfig.getDailyDate(params.data[0]) + '<br/>' +
               params.seriesName + ' : ' + params.data[1];
             }
           },

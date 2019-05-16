@@ -8,7 +8,7 @@ export class MyDatePipe implements PipeTransform {
 
   constructor(private userService: UserParamsService){}
   transform(value: any, args?: any): any {
-    return this.userService.getFormatDate(value);
+    return this.userService.getHourlyDate(value);
   }
 
 }

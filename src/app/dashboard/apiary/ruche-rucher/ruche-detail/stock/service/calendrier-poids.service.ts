@@ -22,7 +22,8 @@ export class CalendrierPoidsService {
         tooltip: {
             trigger: 'item',
             formatter: (params) => {
-                return params.marker + this.userPärams.getFormatCalendar(params.data[0]) + '<br/>' + params.seriesName + ' : ' + params.data[1];
+                console.log(params.data[0]);
+                return params.marker + this.userPärams.getDailyDate(params.data[0].split('T')[0]) + '<br/>' + params.seriesName + ' : ' + params.data[1];
             }
         },
         toolbox: {
