@@ -30,7 +30,7 @@ export class GraphGlobal {
             this.temp.max = null;
         } else { // US
             this.weight.name = 'Weight Kg';
-            this.weight.min = 50;
+            this.weight.min = 0;
             this.weight.max = null;
             this.temp.name = 'Temperature (°C)';
             this.temp.min = 0;
