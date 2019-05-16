@@ -7,10 +7,7 @@
     </div>
     <div id="collapseTwo" class="panel-collapse collapse in">
       <div class="panel-body">
-
         <b class="text-success"></b>
-
-
         <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
           title="New observation" data-toggle="modal" data-backdrop="false"
           style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newObservationModal"
@@ -27,9 +24,9 @@
             </tr>
           </thead>
           <tbody>
+            <span style="display:none;">{{  observationService.observationsApiary.length }}</span>
             <tr *ngFor="let ap of observationService.observationsApiary; let i = index;">
               <td>
-                <!-- {{ap.date | date: userParams.formatDate }} -->
                 {{ ap.date | myDate }}
               </td>
 
