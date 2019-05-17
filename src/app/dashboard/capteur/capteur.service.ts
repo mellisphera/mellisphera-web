@@ -40,9 +40,9 @@ export class CapteurService {
         this.sensorSubject = new BehaviorSubject([]);
         this.capteursType =
             [
-                {'reference' : '41', 'type' : 'T2'},
-                {'reference' : '42', 'type' : 'T_HR'},
-                {'reference' : '43', 'type' : 'WEIGHT'}
+                {'sensorRef' : '41', 'type' : 'T2'},
+                {'sensorRef' : '42', 'type' : 'T_HR'},
+                {'sensorRef' : '43', 'type' : 'WEIGHT'}
 
             ];
         this.initCapteur();

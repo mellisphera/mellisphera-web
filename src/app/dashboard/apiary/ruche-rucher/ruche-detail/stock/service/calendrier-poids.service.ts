@@ -23,7 +23,8 @@ export class CalendrierPoidsService {
             trigger: 'item',
             formatter: (params) => {
                 console.log(params.data[0]);
-                return params.marker + this.userPärams.getDailyDate(params.data[0].split('T')[0]) + '<br/>' + params.seriesName + ' : ' + params.data[1];
+                return params.marker + this.userPärams.getDailyDate(params.data[0].split('T')[0]) + 
+                '<br/>' + params.seriesName + ' : ' + params.data[1];
             }
         },
         toolbox: {
