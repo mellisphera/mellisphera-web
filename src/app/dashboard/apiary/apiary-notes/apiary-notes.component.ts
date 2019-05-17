@@ -47,7 +47,7 @@ export class ApiaryNotesComponent implements OnInit {
   ngOnInit() {
     this.observationService.setRange({scale: 1, type: 'YEAR'});
     this.initForm();
-    console.log(this.rucherService.rucher)
+    console.log(this.rucherService.rucher);
     if (!this.observationService.obsApiarySubject.closed) {
       this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
     }
