@@ -73,4 +73,8 @@ export class AuthService {
     );
   }
 
+  resetPassword(email: string): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'api/auth/reset', email, httpOptions);
+  }
+
 }
