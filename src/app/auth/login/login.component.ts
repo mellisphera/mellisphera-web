@@ -17,12 +17,14 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
 
   formLogin: boolean;
   loginErrorMsg: boolean;
+  resetPassword: boolean;
   //@Output() messageEvent = new EventEmitter<string>();
 
   users: Login[];
 
-  public username;
-  public password;
+  public username: string;
+  public password: string;
+  public emailForReset: string;
   myform: FormGroup;
   //loginForm: FormGroup;
   message: string;
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
     public signupService: SignupService,
     private notifier: NotifierService) {
 
+    this.resetPassword = false;
     this.loginErrorMsg = false;
     this.formLogin = true;
     this.notif = notifier;
@@ -98,11 +101,25 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
   verifLogin() {
     this.authService.signIn();
   }
+
+  activeReset() {
+    this.formLogin = !this.formLogin;
+    this.resetPassword = !this.resetPassword
+  }
   currentUser() {
     return JSON.parse(localStorage.getItem('currentUser'));
   }
 
   ngOnDestroy(): void {
     document.querySelector('body').classList.remove('login');
+  }
+
+  sendMail() {
+    this.authService.resetPassword(this.emailForReset).subscribe(
+      () => {}, () => {}, () => {
+        this.notif.notify('success', 'You have received an email with a new password');
+        this.activeReset();
+      }
+    );
   }
 }
