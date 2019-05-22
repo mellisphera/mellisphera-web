@@ -65,6 +65,7 @@ export class RucheService {
       this.ruchesObs.subscribe(
         (data) => {
           this.ruches = data;
+          console.log(this.ruches);
           this.hiveSubject.next(data);
         },
         (err) => {

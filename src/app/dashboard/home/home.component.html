@@ -18,8 +18,8 @@
         <div data-toggle="tooltip" data-placement="top" [title]="infoRuche"
             *ngFor="let ruche of rucheService.ruches; let i = index" [style.left.%]="ruche.hivePosX"
             [style.top.%]="ruche.hivePosY" [id]="i" (mouseover)="onMouseover(ruche)" (dblclick)="onClick(ruche);"
-            (stopped)="onDragEnd($event)" [allowedOffsets]="offset" ngDraggable
-            [class]="dailyRecTh.getStatus(ruche.id)">
+            (stopped)="onDragEnd($event)" [allowedOffsets]="offset" class="ruche" ngDraggable
+            [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)"><div id="vitality">{{ dailyRecTh.getPourcentByHive(ruche.id) }}</div>
         </div>
     </div>
 </div>

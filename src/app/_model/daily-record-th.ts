@@ -12,6 +12,7 @@ export interface DailyRecordTh {
 	health_status : string;
 	health_trend  :string;
     r_int_text : string;
-    timestamp : number;
+	timestamp : number;
+	vitality: number;
     //[class]="getColorStatus(i)"
 }
