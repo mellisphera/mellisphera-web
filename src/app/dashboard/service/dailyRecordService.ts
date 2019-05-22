@@ -260,7 +260,7 @@ export class DailyRecordService {
             } else if (selectHive[0].vitality >= 90 && selectHive[0].vitality <= 95) {
                 return '#63C908';
             } else if (selectHive[0].vitality >= 75 && selectHive[0].vitality <= 90) {
-                return '#CAF106';
+                return '#yellow';
             } else if (selectHive[0].vitality >= 60 && selectHive[0].vitality <=75) {
                 return '#FD6204';
             } else {
