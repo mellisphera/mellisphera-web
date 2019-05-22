@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 #cadre {
   margin: auto;
   width: 100%;
@@ -20,10 +21,15 @@
   position: absolute;
   font-size: 15px;
   /*border-radius: 40px;*/
+  background-color: 'white';
+  font-family: 'poppins';
   padding: 2px;
   cursor: move;
   border-radius: 50px;
   //box-shadow: 3px 2px 2px black;
+}
+#vitality{
+  color: 'white' !important;
 }
 #health_trend {
   width: 50%;

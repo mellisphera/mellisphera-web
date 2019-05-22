@@ -234,6 +234,8 @@ export class DailyRecordService {
             (data) => {
                 if (data[0] != null) {
                     this.dailyRecords = data;
+                    console.log(this.dailyRecords);
+
                 }
             },
             (err) => {
@@ -249,8 +251,34 @@ export class DailyRecordService {
      * @returns {string}
      * @memberof DailyRecordService
      */
-    public getStatus(idHive: string): string {
+    public getColorByPourcent(idHive?: string): any {
+        console.log(idHive);
         const selectHive = this.dailyRecords.filter(elt => elt.idHive === idHive);
-        return (selectHive.length > 0) ? 'ruche ' + selectHive[0].health_status + selectHive[0].health_trend : 'ruche Inconnu';
+        console.log(selectHive);
+        //return (selectHive.length > 0) ? 'ruche ' + selectHive[0].health_status + selectHive[0].health_trend : 'ruche Inconnu';
+        console.log(selectHive.length > 0 || selectHive[0] !== undefined);
+        if (selectHive.length > 0 || selectHive[0] !== undefined && selectHive) {
+            console.log(selectHive);
+            if (selectHive[0].vitality >= 95 && selectHive[0].vitality <= 100) {
+                return '#498513';
+            } else if (selectHive[0].vitality >= 90 && selectHive[0].vitality <= 95) {
+                return '#63C908';
+            } else if (selectHive[0].vitality >= 75 && selectHive[0].vitality <= 90) {
+                return '#CAF106';
+            } else if (selectHive[0].vitality >= 60 && selectHive[0].vitality <=75) {
+                return '#FD6204';
+            } else {
+                return 'red';
+            }
+        }
+        else {
+            console.log('pas de donné');
+            return 'white';
+        }
+    }
+
+    public getPourcentByHive(idHive: string) {
+        return this.dailyRecords.filter(elt => elt.idHive === idHive)[0].vitality;
+
     }
 }
