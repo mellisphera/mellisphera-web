@@ -252,13 +252,9 @@ export class DailyRecordService {
      * @memberof DailyRecordService
      */
     public getColorByPourcent(idHive?: string): any {
-        console.log(idHive);
         const selectHive = this.dailyRecords.filter(elt => elt.idHive === idHive);
-        console.log(selectHive);
         //return (selectHive.length > 0) ? 'ruche ' + selectHive[0].health_status + selectHive[0].health_trend : 'ruche Inconnu';
-        console.log(selectHive.length > 0 || selectHive[0] !== undefined);
         if (selectHive.length > 0 || selectHive[0] !== undefined && selectHive) {
-            console.log(selectHive);
             if (selectHive[0].vitality >= 95 && selectHive[0].vitality <= 100) {
                 return '#498513';
             } else if (selectHive[0].vitality >= 90 && selectHive[0].vitality <= 95) {
@@ -272,7 +268,6 @@ export class DailyRecordService {
             }
         }
         else {
-            console.log('pas de donné');
             return 'white';
         }
     }
