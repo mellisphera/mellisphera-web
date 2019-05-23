@@ -261,19 +261,19 @@ export class DailyRecordService {
                 return '#63C908';
             } else if (selectHive[0].vitality >= 75 && selectHive[0].vitality <= 90) {
                 return 'yellow';
-            } else if (selectHive[0].vitality >= 60 && selectHive[0].vitality <=75) {
+            } else if (selectHive[0].vitality >= 60 && selectHive[0].vitality <= 75) {
                 return '#FD6204';
             } else {
                 return 'red';
             }
-        }
-        else {
+        } else {
             return 'white';
         }
     }
 
-    public getPourcentByHive(idHive: string) {
-        return this.dailyRecords.filter(elt => elt.idHive === idHive)[0].vitality;
+    public getPourcentByHive(idHive: string): any {
+        const selectHive = this.dailyRecords.filter(elt => elt.idHive === idHive)[0];
+        return selectHive !== undefined ? selectHive.vitality + ' %' : null;
 
     }
 }
