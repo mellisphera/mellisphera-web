@@ -104,40 +104,6 @@ export class UserParamsService {
     return JSON.parse(window.sessionStorage.getItem('jwtReponse')).idUser;
   }
 
-  /**
-   *
-   *
-   * @returns {string}
-   * @memberof UserService
-   */
-  getHourlyDate(date: string): string {
-    const dtSplit = date.split('T');
-    const daily = dtSplit[0];
-    const hourly = dtSplit[1].split(':');
-    const newInstanceDate = new Date(daily);
-    newInstanceDate.setHours(parseInt(hourly[0], 10));
-    newInstanceDate.setMinutes(parseInt(hourly[1], 10));
-    return this.formatDate.replace(/Y/g, String(newInstanceDate.getFullYear()))
-    .replace(/M/g, String(newInstanceDate.getMonth() + 1))
-    .replace(/D/g, String(newInstanceDate.getDate()))
-    .replace(/h/g, String(newInstanceDate.getHours()))
-    .replace(/m/g, String(newInstanceDate.getMinutes()));
-  }
-  /**
-   *
-   *
-   * @param {Date} date
-   * @returns {string}
-   * @memberof UserParamsService
-   */
-  getDailyDate(date: Date): string {
-    console.log(date);
-    const newInstanceDate = new Date(date);
-    return this.formatDate.replace(/Y/g, String(newInstanceDate.getFullYear()))
-    .replace(/M/g, String(newInstanceDate.getMonth() + 1))
-    .replace(/D/g, String(newInstanceDate.getDate()))
-    .replace(/h:m/g, '');
-  }
 
   /**
    *

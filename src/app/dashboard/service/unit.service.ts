@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UserPref } from '../../_model/user-pref';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,44 @@ import { Injectable } from '@angular/core';
 export class UnitService {
 
   constructor() { }
+
+
+ /**
+  *
+  *
+  * @param {string} date
+  * @returns {string}
+  * @memberof UnitService
+  */
+ getHourlyDate(date: string): string {
+   const dtSplit = date.split('T');
+   const daily = dtSplit[0];
+   const hourly = dtSplit[1].split(':');
+   const newInstanceDate = new Date(daily);
+   newInstanceDate.setHours(parseInt(hourly[0], 10));
+   newInstanceDate.setMinutes(parseInt(hourly[1], 10));
+   return this.getUserPref().timeFormat.replace(/Y/g, String(newInstanceDate.getFullYear()))
+   .replace(/M/g, String(newInstanceDate.getMonth() + 1))
+   .replace(/D/g, String(newInstanceDate.getDate()))
+   .replace(/h/g, String(newInstanceDate.getHours()))
+   .replace(/m/g, String(newInstanceDate.getMinutes()));
+ }
+
+ /**
+  *
+  *
+  * @param {Date} date
+  * @returns {string}
+  * @memberof UnitService
+  */
+ getDailyDate(date: Date): string {
+   console.log(date);
+   const newInstanceDate = new Date(date);
+   return this.getUserPref().timeFormat.replace(/Y/g, String(newInstanceDate.getFullYear()))
+   .replace(/M/g, String(newInstanceDate.getMonth() + 1))
+   .replace(/D/g, String(newInstanceDate.getDate()))
+   .replace(/h:m/g, '');
+ }
 
 
     /**
@@ -23,6 +62,10 @@ export class UnitService {
     }
   }
 
+  getUserPref(): UserPref {
+    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).userPref;
+  }
+
   /**
    *
    *
@@ -37,6 +80,8 @@ export class UnitService {
       return weight;
     }
   }
+
+
 
   getValRound(value: number): number{
     const tmp = Math.pow(10, 3);

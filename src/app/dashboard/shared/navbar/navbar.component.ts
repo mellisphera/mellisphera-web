@@ -129,9 +129,10 @@ export class NavbarComponent implements OnInit {
     onSelectRucher() {
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
+        this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+        this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
         switch (location) {
             case '/dashboard/ruche-et-rucher':
-                this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/dashboard/home':
                 this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());

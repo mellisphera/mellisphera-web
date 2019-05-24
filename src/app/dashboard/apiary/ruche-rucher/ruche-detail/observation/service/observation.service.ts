@@ -7,6 +7,7 @@ import { MyDate } from '../../../../../../class/MyDate';
 import { DataRange } from '../../service/Record/data-range';
 import { StackService } from '../../../../stack-apiary/service/stack.service';
 import { UserParamsService } from '../../../../../preference-config/service/user-params.service';
+import { UnitService } from '../../../../../service/unit.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -31,9 +32,10 @@ export class ObservationService {
   private rangeObs: Date[];
   constructor(private http: HttpClient,
       private stackService: StackService,
-      private useConfig: UserParamsService) {
+      private unitService: UnitService) {
       //  this.observationsApiary = [];
     this.obsHiveSubject = new BehaviorSubject([]);
+    this.observationsApiary = [];
     this.obsApiarySubject = new BehaviorSubject([]);
     this.setRange({scale: 1, type: 'YEAR'});
     
@@ -95,7 +97,7 @@ export class ObservationService {
           trigger: 'item',
           formatter: (param) => {
             console.log(param.name);
-            return this.useConfig.getHourlyDate(param.name) + ': </br>'
+            return this.unitService.getHourlyDate(param.name) + ': </br>'
                 + param.value[3];
           }
         },
@@ -137,7 +139,7 @@ export class ObservationService {
         (data) => {
           this.observationsApiary = data;
           this.obsApiarySubject.next(data);
-                    console.log(data);
+          console.log(data);
         },
         (err) => {
           console.log(err);

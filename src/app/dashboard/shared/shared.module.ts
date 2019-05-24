@@ -25,6 +25,8 @@ import { DemoComponent } from '../../demo/demo.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FeedbackComponent } from '../../feedback/feedback.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MyDatePipe } from '../../pipe/my-date.pipe';
+
 
 @NgModule({
   imports: [
@@ -37,12 +39,14 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   exports: [
     TranslateModule,
-    NgxEchartsModule
+    NgxEchartsModule,
+    MyDatePipe,
   ],
   declarations: [
+    MyDatePipe
 
   ],
-  providers : [
+  providers: [
   ]
 })
 export class SharedModule { }

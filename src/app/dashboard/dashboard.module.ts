@@ -42,9 +42,9 @@ import { UserParamsService } from './preference-config/service/user-params.servi
 import { PreferenceConfigComponent } from './preference-config/preference-config.component';
 import { MelliChartsComponent } from './melli-charts/melli-charts.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { MyDatePipe } from '../pipe/my-date.pipe';
 import { UnitService } from './service/unit.service';
 import { GraphGlobal } from './graph-echarts/GlobalGraph';
+import { MyDatePipe } from '../pipe/my-date.pipe';
 
 
 @NgModule({
@@ -84,13 +84,11 @@ import { GraphGlobal } from './graph-echarts/GlobalGraph';
   declarations: [
     DashboardComponent,
     HomeComponent,
-/*     MyDatePipe,
- */    RucheRucherComponent,
+    RucheRucherComponent,
     FeedbackComponent,
     MeteoComponent,
     PipeCapteur,
     DemoComponent,
-    MyDatePipe,
     SearchCapteur,
     SearchFleurPipe,
     searchFleurByDate,

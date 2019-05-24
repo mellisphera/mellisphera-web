@@ -38,7 +38,7 @@ export class DailyRecordsWService {
 
   timeLine: any[];
 
-  constructor(private http: HttpClient, private userConfig: UserParamsService, private unitService: UnitService) {
+  constructor(private http: HttpClient, private unitService: UnitService) {
     this.dailyRecArray = [];
     this.arrayTempExt = [];
     this.weightIncome = [];
@@ -85,7 +85,7 @@ export class DailyRecordsWService {
           tooltip: {
             trigger: 'item',
             formatter: (params: any) => {
-              return params.marker + this.userConfig.getDailyDate(params.data[0]) + '<br/>' +
+              return params.marker + this.unitService.getDailyDate(params.data[0]) + '<br/>' +
               params.seriesName + ' : ' + params.data[1];
             }
           },

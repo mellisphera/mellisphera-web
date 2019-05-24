@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { DailyRecordsWService } from '../../service/daily-records-w.service';
-import { CalendrierService } from '../../service/calendrier.service';
 import { MyDate } from '../../../../../../class/MyDate';
-import { UserParamsService } from '../../../../../preference-config/service/user-params.service';
+import { UnitService } from '../../../../../service/unit.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CalendrierPoidsService {
 
-    constructor(private userPärams: UserParamsService) {
+    constructor(private unitService: UnitService) {
     }
 
     option = {
@@ -23,7 +21,7 @@ export class CalendrierPoidsService {
             trigger: 'item',
             formatter: (params) => {
                 console.log(params.data[0]);
-                return params.marker + this.userPärams.getDailyDate(params.data[0].split('T')[0]) + 
+                return params.marker + this.unitService.getDailyDate(params.data[0].split('T')[0]) + 
                 '<br/>' + params.seriesName + ' : ' + params.data[1];
             }
         },

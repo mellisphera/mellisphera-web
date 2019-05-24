@@ -35,7 +35,7 @@
                     <ng-container *ngFor="let hiveObs of observationService.observationsHive; index as i">
                       <ng-container *ngIf="hiveObs.type =='HiveObs'">
                         <tr>
-                          <td>{{userParamService.getHourlyDate(hiveObs.date)}}</td>
+                          <td>{{ hiveObs.date | myDate }}</td>
                           <td>{{hiveObs.sentence}}</td>
                           <td>Observation</td>
                           <td>
@@ -56,7 +56,7 @@
                       </ng-container>
                       <ng-container *ngIf="hiveObs.type =='HiveAct'">
                         <tr style="color: blue;">
-                          <td>{{userParamService.getHourlyDate(hiveObs.date)}}</td>
+                          <td>{{hiveObs.date | myDate}}</td>
                           <td>{{hiveObs.sentence}}</td>
                           <td>Action</td>
                           <td>
