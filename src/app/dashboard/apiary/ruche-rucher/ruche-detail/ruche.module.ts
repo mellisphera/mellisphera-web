@@ -14,9 +14,10 @@ import { HourlyComponent } from './hourly/hourly.component';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
+
 @NgModule({
   imports: [
-  CommonModule,
+    CommonModule,
     FormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,

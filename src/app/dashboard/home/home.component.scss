@@ -13,17 +13,19 @@
   transform: rotate(0deg);
 }
 .ruche {
-  display: flex;
-  justify-content: center;
-  width: 60px;
+  width: 80%;
   height: 60px;
-  position: absolute;
   font-size: 15px;
   padding: 2px;
-  border: 1px dashed black;
+  border: 1px solid black;
   cursor: move;
-  border-radius: 50px;
+  //border-radius: 50px;
   //box-shadow: 3px 2px 2px black;
+}
+.hive-group{
+  position: absolute;
+  background-color: white;
+  width: 100px;
 }
 #vitality{
   color: black;

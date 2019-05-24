@@ -8,6 +8,7 @@ import { MyDate } from '../../../../../../class/MyDate';
 //import { ECharts } from 'echarts';
 import { ICON } from './icon';
 import { UserParamsService } from '../../../../../preference-config/service/user-params.service';
+import { UnitService } from '../../../../../service/unit.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,7 @@ export class CalendrierHealthService {
 
     option: any;
 
-    constructor(private userParamService: UserParamsService) {
+    constructor(private unitService: UnitService) {
         this.option = {
             backgroundColor: 'white',
             title: {
@@ -30,7 +31,7 @@ export class CalendrierHealthService {
             tooltip: {
                 trigger: 'item',
                 formatter: (params) => {
-                    return params.marker + userParamService.getDailyDate(params.data[0]) + '<br/>' + params.data[2];
+                    return params.marker + unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[2];
                 }
             },
             toolbox: {

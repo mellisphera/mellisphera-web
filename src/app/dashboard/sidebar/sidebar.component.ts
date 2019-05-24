@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, Renderer2 } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserloggedService } from "../../userlogged.service";
 import { CONFIG } from "../../../config";
@@ -49,6 +49,7 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[];
   username;
+  private eltOnClick: EventTarget;
   url_sideImg: string;
   /* @ViewChild(NavbarComponent) public navComponent: NavbarComponent; */
   constructor(
@@ -56,9 +57,11 @@ export class SidebarComponent implements OnInit {
     public router: Router,
     public authService: AuthService,
     public tokenService: AtokenStorageService,
-    public sidebarService: SidebarService
+    public sidebarService: SidebarService,
+    private renderer: Renderer2
   ) {
-    this.url_sideImg = CONFIG.URL_FRONT + "assets/logo.png";
+    this.eltOnClick = null;
+    // this.url_sideImg = CONFIG.URL_FRONT + "assets/logo.png";
   }
 
   ngOnInit() {
@@ -74,6 +77,18 @@ export class SidebarComponent implements OnInit {
   }
   goAccueil() {
     this.router.navigate(["home"]);
+  }
+
+  focus(id: string) {
+    console.log(id);
+    if (this.eltOnClick === null ) {
+      this.eltOnClick = document.getElementById(id);
+      this.renderer.addClass(this.eltOnClick, 'side-active');
+    } else {
+      this.renderer.removeClass(this.eltOnClick, 'side-active');
+      this.eltOnClick = document.getElementById(id);
+      this.renderer.addClass(this.eltOnClick, 'side-active');
+    }
   }
 
   hideSidebar() {

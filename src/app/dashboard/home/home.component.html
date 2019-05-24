@@ -15,11 +15,13 @@
                                         'background-repeat' : 'no-repeat'}" ngfDrop [(validDrag)]="baseDropValid"
         [(file)]="photoApiary" class="my-drop-zone" [class.valid-drag]="baseDropValid"
         [(lastBaseUrl)]="rucherService.rucher.photo">
-        <div data-toggle="tooltip" data-placement="top" [title]="infoRuche"
-            *ngFor="let ruche of rucheService.ruches; let i = index" [style.left.%]="ruche.hivePosX"
-            [style.top.%]="ruche.hivePosY" [id]="i" (mouseover)="onMouseover(ruche)" (dblclick)="onClick(ruche);"
-            (stopped)="onDragEnd($event)" [allowedOffsets]="offset" class="ruche" ngDraggable
-            [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)"><div id="vitality">{{ dailyRecTh.getPourcentByHive(ruche.id) }}</div>
+        <div class="hive-group" *ngFor="let ruche of rucheService.ruches; let i = index" [id]="i" [style.top.%]="ruche.hivePosY" 
+                [style.left.%]="ruche.hivePosX"  [allowedOffsets]="offset" ngDraggable (mouseover)="onMouseover(ruche)" (stopped)="onDragEnd($event)">
+                <div data-toggle="tooltip" data-placement="top" [title]="infoRuche"
+                (dblclick)="onClick(ruche);"
+                 class="ruche" 
+                [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)"><div id="vitality">{{ dailyRecTh.getPourcentByHive(ruche.id) }}</div>
+            </div>
         </div>
     </div>
 </div>
@@ -41,3 +43,9 @@
     </div>
 
 </div>
+
+<!--        <div data-toggle="tooltip" data-placement="top" [title]="infoRuche"
+            *ngFor="let ruche of rucheService.ruches; let i = index" [style.left.%]="ruche.hivePosX"
+            [style.top.%]="ruche.hivePosY" [id]="i" (mouseover)="onMouseover(ruche)" (dblclick)="onClick(ruche);"
+            (stopped)="onDragEnd($event)" [allowedOffsets]="offset" class="ruche" ngDraggable
+            [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)"><div id="vitality">{{ dailyRecTh.getPourcentByHive(ruche.id) }}</div>-->

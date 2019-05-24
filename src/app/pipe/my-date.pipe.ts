@@ -1,14 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { UserParamsService } from '../dashboard/preference-config/service/user-params.service';
+import { UnitService } from '../dashboard/service/unit.service';
 
 @Pipe({
   name: 'myDate'
 })
 export class MyDatePipe implements PipeTransform {
 
-  constructor(private userService: UserParamsService){}
+  constructor(private unitService: UnitService){}
   transform(value: any, args?: any): any {
-    return this.userService.getHourlyDate(value);
+    return this.unitService.getHourlyDate(value);
   }
 
 }
