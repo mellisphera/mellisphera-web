@@ -179,7 +179,7 @@ export class DailyRecordService {
                 data: this.arrayTempInt
             },
             title: {
-                text: 'Internal Temperature (max, °C)'
+                text: 'Internal Temperature (max, ' + (this.unitSystem === 'METRIX' ? '°C' : '°F') + ')'
             },
             visualMap: {
                 calculable: true,
