@@ -68,11 +68,11 @@ export class DailyRecordsWService {
             data: this.arrayTempExt
           },
           title: {
-            text: 'External Temperature (max,°C)'
+            text: 'External Temperature (max, ' + (this.unitSystem === 'METRIX' ? '°C' : '°F') + ')'
           },
           visualMap: {
-            min: this.unitSystem === 'METRIC' ? -10 : 30,
-            max: this.unitSystem === 'METRIC' ? 40 : 100, 
+            min: this.unitSystem === 'METRIC' ? -10 : 15,
+            max: this.unitSystem === 'METRIC' ? 40 : 105,
             calculable: true,
             inRange: {
               /* color: ['#abd9e9','#CC0000'] */
@@ -194,11 +194,11 @@ export class DailyRecordsWService {
         data: this.arrayTempExt
       },
       title: {
-        text: 'External Temperature (max,°C)'
+        text: 'External Temperature (max, ' + (this.unitSystem === 'METRIX' ? '°C' : '°F') + ')'
       },
       visualMap: {
-        min: -10,
-        max: 40,
+        min: this.unitSystem === 'METRIC' ? -10 : 30,
+        max: this.unitSystem === 'METRIC' ? 40 : 100,
         calculable: true,
         inRange: {
           /* color: ['#abd9e9','#CC0000'] */

@@ -112,7 +112,7 @@ export class CalendrierPoidsService {
                 coordinateSystem: 'calendar',
                 data: '',
                 symbolSize: function (val) {
-                    if (val[1] >= 0) { return 0.5 * Math.sqrt(1000 * val[1]); }
+                    if (val[1] >= 0) { return (0.5 * Math.sqrt(1000 * val[1])) * 0.45; }
                     else { return 0; }
                 },
                 showEffectOn: 'emphasis',
@@ -132,7 +132,7 @@ export class CalendrierPoidsService {
                 coordinateSystem: 'calendar',
                 data: '',
                 symbolSize: function (val) {
-                    if (val[1] < 0) { return 0.5 * Math.sqrt(Math.abs(1000 * val[1])); }
+                    if (val[1] < 0) { return (0.5 * Math.sqrt(Math.abs(1000 * val[1]))) * 0.45; }
                     else { return 0; }
                 },
                 showEffectOn: 'emphasis',

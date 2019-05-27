@@ -77,186 +77,321 @@ export class RecordService {
    */
   getRecordByIdHive(idHive: string, hiveName: string, lastMerge: any, hive: boolean, color?: string): Observable<any> {
     return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
-      this.recArrayText = records.filter(record => record.temp_ext != null)
-        .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertTempFromUsePref(rec.temp_ext, this.unitSystem)], 
-            sensorRef: rec.sensorRef };
-        });
-      this.recArrayWeight = records.filter(record => record.weight != null)
-        .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertWeightFromuserPref(rec.weight, this.unitSystem)],
-             sensorRef: rec.sensorRef };
-        });
-      this.recArrayBatteryExt = records.filter(record => record.battery_ext != null)
-        .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.battery_ext], sensorRef: rec.sensorRef };
-        });
-      this.recArrayBatteryInt = records.filter(record => record.battery_int != null)
-        .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.battery_int], sensorRef: rec.sensorRef };
-        });
-      this.recArrayHext = records.filter(record => record.humidity_ext != null)
-        .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_ext], sensorRef: rec.sensorRef };
-        });
-      this.recArrayHint = records.filter(record => record.humidity_int != null)
-        .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, rec.humidity_int], sensorRef: rec.sensorRef };
-        });
-      this.recArrrayTint = records.filter(record => record.temp_int != null)
-        .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertTempFromUsePref(rec.temp_int, this.unitSystem)], 
-            sensorRef: rec.sensorRef };
-        });
-      if (!hive) {
-        return {
-          series: [
-            {
-              name: hiveName + ' / weight',
-              type: 'line',
-              showSymbol: false,
-              data: this.recArrayWeight,
-              lineStyle: {
-                color: color
-              },
+      var sensor = [];
+      var series = [];
+      records.map(res => {
+        if (sensor.indexOf(res.sensorRef) === -1) {
+          sensor.push(res.sensorRef);
+        }
+      });
+      sensor.forEach(elt => {
+        console.log(elt);
+        console.log(elt.startsWith('43'));
+        if (elt.startsWith('41')) {
+          series.push({
+            name: hiveName + ' / Temp-int (' + elt + ')',
+            type: 'line',
+            data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+              return {
+                name: recRes.recordDate,
+                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                sensorRef: recRes.sensorRef
+              };
+            }),
+            showSymbol: false,
+            hoverAnimation: true,
+            xAxisIndex: (hive) ? 0 : 1,
+            yAxisIndex: (hive) ? 0 : 1,
+            lineStyle: {
+              color: color
+            },
+            itemStyle: {
+              color: color
+            },
+            markArea: {
+              silent: true,
               itemStyle: {
-                color: color
+                color: '#EBEBEB'
               },
+              label: {
+                show: true
+              },
+              data: [[{
+                yAxis: '33'
+              }, {
+                yAxis: '37'
+              }]]
+            },
+          });
+        } else if (elt.startsWith('42')) {
+          series.push({
+            data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+              return {
+                name: recRes.recordDate,
+                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                sensorRef: recRes.sensorRef
+              };
+            }),
+            name: hiveName + ' / Temp-int (' + elt + ')',
+            type: 'line',
+            xAxisIndex: (hive) ? 0 : 1,
+            yAxisIndex: (hive) ? 0 : 1,
+            showSymbol: false,
+            hoverAnimation: true,
+            lineStyle: {
+              color: color
+            },
+            itemStyle: {
+              color: color
+            },
+            markArea: {
+              silent: true,
+              itemStyle: {
+                color: '#EBEBEB'
+              },
+              label: {
+                show: true
+              },
+              data: [[{
+                yAxis: '33'
+              }, {
+                yAxis: '37'
+              }]]
+            },
+          });
+        } else if (elt.startsWith('43')) {
+          series = series.concat([
+            {
+              name: hiveName + ' / Weight (' + elt + ')',
+              type: 'line',
+              data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+                return {
+                  name: recRes.recordDate,
+                  value: [recRes.recordDate, this.unitService.convertWeightFromuserPref(recRes.weight, this.unitSystem)],
+                  sensorRef: recRes.sensorRef
+                };
+              }),
+              showSymbol: false,
+              hoverAnimation: true,
+              yAxisIndex: 0,
+              color: 'black'
             },
             {
-              name: hiveName + ' / Tint',
+              name: hiveName + ' / Temp-ext (' + elt + ')',
               type: 'line',
               xAxisIndex: (hive) ? 0 : 1,
               yAxisIndex: (hive) ? 0 : 1,
               showSymbol: false,
-              data: this.recArrrayTint,
-              itemStyle: {
-                color: color
-              },
-              lineStyle: {
-                color: color
-              },
-              markArea: {
-                silent: true,
-                itemStyle: {
-                  color: '#EBEBEB'
-                },
-                label: {
-                  show: true
-                },
-                data: [[{
-                  yAxis: '33'
-                }, {
-                  yAxis: '37'
-                }]]
-              },
-            },
-            {
-              name: hiveName + ' / Text',
-              type: 'line',
-              xAxisIndex: (hive) ? 0 : 1,
-              yAxisIndex: (hive) ? 0 : 1,
-              showSymbol: false,
-              data: this.recArrayText,
+              hoverAnimation: true,
+              data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+                return {
+                  name: recRes.recordDate,
+                  value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_ext, this.unitSystem)],
+                  sensorRef: recRes.sensorRef
+                };
+              }),
               lineStyle: {
                 color: color
               },
               itemStyle: {
                 color: color
               },
-            },
-            {
-              name: hiveName + ' / Hint',
-              type: 'line',
-              xAxisIndex: (hive) ? 1 : 2,
-              yAxisIndex: (hive) ? 0 : 2,
-              showSymbol: false,
-              markArea: {
-                silent: true,
-                itemStyle: {
-                  color: '#EBEBEB'
-                },
-                label: {
-                  show: true
-                },
-                data: [[{
-                  yAxis: '50'
-                }, {
-                  yAxis: '75'
-                }]]
-              },
-              data: this.recArrayHint,
-              lineStyle: {
-                color: color
-              },
+            }
+          ]);
+        } else if (elt.startsWith('39')) {
+          series.push({
+            name: hiveName + ' / Temp-int (' + elt + ')',
+            type: 'line',
+            data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+              return {
+                name: recRes.recordDate,
+                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                sensorRef: recRes.sensorRef
+              };
+            }),
+            xAxisIndex: (hive) ? 0 : 1,
+            yAxisIndex: (hive) ? 0 : 1,
+            showSymbol: false,
+            markArea: {
+              silent: true,
               itemStyle: {
-                color: color
+                color: '#EBEBEB'
               },
+              label: {
+                show: true
+              },
+              data: [[{
+                yAxis: '50'
+              }, {
+                yAxis: '75'
+              }]]
             },
-
-          ].concat(lastMerge.series),
-          legend: {
-            data: [hiveName + ' / Tint', hiveName + ' / Text', hiveName + ' / Hint', hiveName + ' / weight']
-              .concat(lastMerge.legend.data),
-            show: false
-          }
-        };
-      } else {
-        return {
-          series: [
-            (this.recArrrayTint.length > 0) ?
-              {
-                type: 'line',
-                name: 'Tint(' + this.recArrrayTint[0].sensorRef + ')',
-                data: this.recArrrayTint,
-                showSymbol: false,
-              } : null,
-            (this.recArrayText.length > 0) ?
-              {
-                type: 'line',
-                name: 'Text(' + this.recArrayText[0].sensorRef + ')',
-                showSymbol: false,
-                data: this.recArrayText
-              } : null,
-            (this.recArrayHint.length > 0) ?
-              {
-                type: 'line',
-                name: 'Hint(' + this.recArrayHint[0].sensorRef + ')',
-                data: this.recArrayHint,
-                xAxisIndex: 1,
-                yAxisIndex: 1,
-                showSymbol: false,
-              } : null,
-            (this.recArrayBatteryInt.length > 0) ?
-              {
-                type: 'line',
-                name: 'Batery-int(' + this.recArrayBatteryInt[0].sensorRef + ')',
-                data: this.recArrayBatteryInt,
-                xAxisIndex: 2,
-                yAxisIndex: 2,
-                showSymbol: false,
-              } : null,
-            (this.recArrayBatteryExt.length > 0) ?
-              {
-                type: 'line',
-                name: 'Batery-ext(' + this.recArrayBatteryExt[0].sensorRef + ')',
-                data: this.recArrayBatteryExt,
-                xAxisIndex: 2,
-                yAxisIndex: 2,
-                showSymbol: false,
-              } : null
-          ],
-          legend: {
-            data: [
-              (this.recArrrayTint.length > 0) ? 'Tint(' + this.recArrrayTint[0].sensorRef + ')' : null,
-              (this.recArrayText.length > 0) ? 'Text(' + this.recArrayText[0].sensorRef + ')' : null,
-              (this.recArrayHint.length > 0) ? 'Hint(' + this.recArrayHint[0].sensorRef + ')' : null,
-              (this.recArrayBatteryInt.length > 0) ? 'Batery-int(' + this.recArrayBatteryInt[0].sensorRef + ')' : null,
-              (this.recArrayBatteryExt.length > 0) ? 'Batery-ext(' + this.recArrayBatteryExt[0].sensorRef + ')' : null
-            ],
-          }
-        };
-      }
+            hoverAnimation: true,
+            lineStyle: {
+              color: color
+            },
+            itemStyle: {
+              color: color
+            },
+          });
+        }
+      });
+      return {
+        series: series.concat(lastMerge.series),
+        legend: {
+          data: series.map(legend => legend.name).concat(lastMerge.legend.data),
+          show: false
+        }
+      };
+      /*        if (!hive) {
+              return {
+                series: [
+                  {
+                    name: hiveName + ' / weight',
+                    type: 'line',
+                    showSymbol: false,
+                    data: this.recArrayWeight,
+                    lineStyle: {
+                      color: color
+                    },
+                    itemStyle: {
+                      color: color
+                    },
+                  },
+                  {
+                    name: hiveName + ' / Tint',
+                    type: 'line',
+                    xAxisIndex: (hive) ? 0 : 1,
+                    yAxisIndex: (hive) ? 0 : 1,
+                    showSymbol: false,
+                    data: this.recArrrayTint,
+                    itemStyle: {
+                      color: color
+                    },
+                    lineStyle: {
+                      color: color
+                    },
+                    markArea: {
+                      silent: true,
+                      itemStyle: {
+                        color: '#EBEBEB'
+                      },
+                      label: {
+                        show: true
+                      },
+                      data: [[{
+                        yAxis: '33'
+                      }, {
+                        yAxis: '37'
+                      }]]
+                    },
+                  },
+                  {
+                    name: hiveName + ' / Text',
+                    type: 'line',
+                    xAxisIndex: (hive) ? 0 : 1,
+                    yAxisIndex: (hive) ? 0 : 1,
+                    showSymbol: false,
+                    data: this.recArrayText,
+                    lineStyle: {
+                      color: color
+                    },
+                    itemStyle: {
+                      color: color
+                    },
+                  },
+                  {
+                    name: hiveName + ' / Hint',
+                    type: 'line',
+                    xAxisIndex: (hive) ? 1 : 2,
+                    yAxisIndex: (hive) ? 0 : 2,
+                    showSymbol: false,
+                    markArea: {
+                      silent: true,
+                      itemStyle: {
+                        color: '#EBEBEB'
+                      },
+                      label: {
+                        show: true
+                      },
+                      data: [[{
+                        yAxis: '50'
+                      }, {
+                        yAxis: '75'
+                      }]]
+                    },
+                    data: this.recArrayHint,
+                    lineStyle: {
+                      color: color
+                    },
+                    itemStyle: {
+                      color: color
+                    },
+                  },
+      
+                ].concat(lastMerge.series),
+                legend: {
+                  data: [hiveName + ' / Tint', hiveName + ' / Text', hiveName + ' / Hint', hiveName + ' / weight']
+                    .concat(lastMerge.legend.data),
+                  show: false
+                }
+              };
+            } else {
+              return {
+                series: [
+                  (this.recArrrayTint.length > 0) ?
+                    {
+                      type: 'line',
+                      name: 'Tint(' + this.recArrrayTint[0].sensorRef + ')',
+                      data: this.recArrrayTint,
+                      showSymbol: false,
+                    } : null,
+                  (this.recArrayText.length > 0) ?
+                    {
+                      type: 'line',
+                      name: 'Text(' + this.recArrayText[0].sensorRef + ')',
+                      showSymbol: false,
+                      data: this.recArrayText
+                    } : null,
+                  (this.recArrayHint.length > 0) ?
+                    {
+                      type: 'line',
+                      name: 'Hint(' + this.recArrayHint[0].sensorRef + ')',
+                      data: this.recArrayHint,
+                      xAxisIndex: 1,
+                      yAxisIndex: 1,
+                      showSymbol: false,
+                    } : null,
+                  (this.recArrayBatteryInt.length > 0) ?
+                    {
+                      type: 'line',
+                      name: 'Batery-int(' + this.recArrayBatteryInt[0].sensorRef + ')',
+                      data: this.recArrayBatteryInt,
+                      xAxisIndex: 2,
+                      yAxisIndex: 2,
+                      showSymbol: false,
+                    } : null,
+                  (this.recArrayBatteryExt.length > 0) ?
+                    {
+                      type: 'line',
+                      name: 'Batery-ext(' + this.recArrayBatteryExt[0].sensorRef + ')',
+                      data: this.recArrayBatteryExt,
+                      xAxisIndex: 2,
+                      yAxisIndex: 2,
+                      showSymbol: false,
+                    } : null
+                ],
+                legend: {
+                  data: [
+                    (this.recArrrayTint.length > 0) ? 'Tint(' + this.recArrrayTint[0].sensorRef + ')' : null,
+                    (this.recArrayText.length > 0) ? 'Text(' + this.recArrayText[0].sensorRef + ')' : null,
+                    (this.recArrayHint.length > 0) ? 'Hint(' + this.recArrayHint[0].sensorRef + ')' : null,
+                    (this.recArrayBatteryInt.length > 0) ? 'Batery-int(' + this.recArrayBatteryInt[0].sensorRef + ')' : null,
+                    (this.recArrayBatteryExt.length > 0) ? 'Batery-ext(' + this.recArrayBatteryExt[0].sensorRef + ')' : null
+                  ],
+                }
+              };
+            } */
     });
   }
 
@@ -269,36 +404,54 @@ export class RecordService {
    */
   getHourlyByHive(idHive: string): Observable<any> {
     return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
-      this.recArrayText = records.filter(record => record.temp_ext != null)
-        .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertTempFromUsePref(rec.temp_ext, this.unitSystem)],
-            sensorRef: rec.sensorRef };
-        });
-      this.recArrayWeight = records.filter(record => record.weight != null)
-        .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertWeightFromuserPref(rec.weight, this.unitSystem)],
-            sensorRef: rec.sensorRef };
-        });
-      this.recArrrayTint = records.filter(record => record.temp_int != null)
-        .map((rec) => {
-          return { name: rec.recordDate, value: [rec.recordDate, this.unitService.convertTempFromUsePref(rec.temp_int, this.unitSystem)],
-            sensorRef: rec.sensorRef };
-        });
-
-      return {
-        series: [
-          {
-            data: this.recArrayWeight,
-            name: 'Weight',
+      var sensor = [];
+      var series = [];
+      records.map(res => {
+        if (sensor.indexOf(res.sensorRef) === -1) {
+          sensor.push(res.sensorRef);
+        }
+      });
+      sensor.forEach(elt => {
+        if (elt.startsWith('41')) {
+          series.push({
+            data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+              return {
+                name: recRes.recordDate,
+                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                sensorRef: recRes.sensorRef
+              };
+            }),
+            name: 'Temp-int (' + elt + ')',
             type: 'line',
             showSymbol: false,
             hoverAnimation: true,
-            yAxisIndex: 0,
-            color: 'black'
-          },
-          {
-            data: this.recArrrayTint,
-            name: 'Temp-int',
+            yAxisIndex: 1,
+            color: 'green',
+            markArea: {
+              silent: true,
+              itemStyle: {
+                color: '#EBEBEB'
+              },
+              label: {
+                show: true
+              },
+              data: [[{
+                yAxis: '33'
+              }, {
+                yAxis: '37'
+              }]]
+            },
+          });
+        } else if (elt.startsWith('42')) {
+          series.push({
+            data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+              return {
+                name: recRes.recordDate,
+                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                sensorRef: recRes.sensorRef
+              };
+            }),
+            name: 'Temp-int (' + elt + ')',
             type: 'line',
             showSymbol: false,
             hoverAnimation: true,
@@ -318,19 +471,77 @@ export class RecordService {
                 yAxis: '37'
               }]]
             },
-          },
-          {
-            name: 'Temp-ext',
+          });
+        } else if (elt.startsWith('43')) {
+          console.log('ok');
+          series = series.concat([
+            {
+              data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+                return {
+                  name: recRes.recordDate,
+                  value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.weight, this.unitSystem)],
+                  sensorRef: recRes.sensorRef
+                };
+              }),
+              name: 'Weight (' + elt + ')',
+              type: 'line',
+              showSymbol: false,
+              hoverAnimation: true,
+              yAxisIndex: 0,
+              color: 'black'
+            },
+            {
+              name: 'Temp-ext (' + elt + ')',
+              type: 'line',
+              showSymbol: false,
+              hoverAnimation: true,
+              data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+                return {
+                  name: recRes.recordDate,
+                  value: [recRes.recordDate, this.unitService.convertWeightFromuserPref(recRes.temp_ext, this.unitSystem)],
+                  sensorRef: recRes.sensorRef
+                };
+              }),
+              yAxisIndex: 1,
+              color: 'blue'
+            }
+          ]);
+        } else if (elt.startsWith('39')) {
+          series.push({
+            data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+              return {
+                name: recRes.recordDate,
+                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                sensorRef: recRes.sensorRef
+              };
+            }),
+            name: 'Temp-int (' + elt + ')',
             type: 'line',
             showSymbol: false,
             hoverAnimation: true,
-            data: this.recArrayText,
             yAxisIndex: 1,
-            color: 'blue'
-          }
-        ],
+            color: 'green',
+            markArea: {
+              silent: true,
+              itemStyle: {
+                color: '#ff00ff'
+              },
+              label: {
+                show: true
+              },
+              data: [[{
+                yAxis: '33'
+              }, {
+                yAxis: '37'
+              }]]
+            },
+          });
+        }
+      });
+      return {
+        series: series,
         legend: {
-          data: ['Weight', 'Temp-int', 'Temp-ext']
+          data: series.map(legend => legend.name)
         }
       };
     });

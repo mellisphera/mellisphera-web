@@ -148,6 +148,7 @@ export class StackApiaryComponent implements OnInit {
     },
     (err) => {},
     () => {
+      console.log(this.recordService.mergeOptionStackApiary.series);
       const observableObs = this.stackService.getHiveSelect().filter(hive => hive.id !== '')
       .map(hive => this.observationService.getObservationByIdHive(hive.id, hive.name));
       Observable.forkJoin(observableObs).subscribe(data => {
@@ -157,6 +158,7 @@ export class StackApiaryComponent implements OnInit {
       () => {
         let option = this.echartInstance.getOption();
         this.echartInstance.clear();
+        console.log(this.recordService.mergeOptionStackApiary.series.map(elt => elt.data.map(sub => sub.value)));
         option.series = this.recordService.mergeOptionStackApiary.series;
         option.legend = this.recordService.mergeOptionStackApiary.legend;
         option.legend.show = false;
@@ -189,7 +191,7 @@ export class StackApiaryComponent implements OnInit {
           .subscribe((data) => {
             console.log(data);
             // this.recordService.mergeOptionStackApiary = data;
-            this.observationService.getObservationByIdHive(selectHive.id, selectHive.name).subscribe(
+             this.observationService.getObservationByIdHive(selectHive.id, selectHive.name).subscribe(
               obsData => {
                 data.series.push(obsData);
                 data.legend.data.push(selectHive.name + ' / note');
@@ -197,8 +199,8 @@ export class StackApiaryComponent implements OnInit {
 
               }
             );
-   /*          this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsApiary);
-            this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsHIve); */
+            this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsApiary);
+            this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsHIve);
           }, () => { }, () => {
             this.loadingStack = false;
           });

@@ -120,7 +120,7 @@ export class DailyRecordService {
             this.arrayTempInt = daily.filter(elt => elt.temp_int_max !== null).
             map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
             this.arrayHint = daily.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
-            this.arrayHealth = daily.map(elt => [elt.recordDate, elt.health_status, elt.health_trend]);
+            this.arrayHealth = daily.map(elt => [elt.recordDate, elt.vitality, elt.health_trend]);
             return daily;
         })
         .subscribe(
@@ -183,8 +183,8 @@ export class DailyRecordService {
             },
             visualMap: {
                 calculable: true,
-                min: this.unitSystem === 'METRIC' ? -10 : 30,
-                max: this.unitSystem === 'METRIC' ? 40 : 100,
+                min: this.unitSystem === 'METRIC' ? -10 : 15,
+                max: this.unitSystem === 'METRIC' ? 40 : 105,
                 inRange: {
                     /* color: ['#abd9e9', '#CC0000'] */
                     color: ['#313695', '#4575b4', '#74add1', 
