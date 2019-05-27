@@ -84,7 +84,7 @@ export class UnitService {
 
 
   getValRound(value: number): number{
-    const tmp = Math.pow(10, 3);
+    const tmp = Math.pow(10, 2);
     return Math.round( value * tmp ) / tmp;
   }
 }
