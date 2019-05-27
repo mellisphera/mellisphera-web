@@ -71,8 +71,8 @@ export class DailyRecordsWService {
             text: 'External Temperature (max,°C)'
           },
           visualMap: {
-            min: -10,
-            max: 40,
+            min: this.unitSystem === 'METRIC' ? -10 : 30,
+            max: this.unitSystem === 'METRIC' ? 40 : 100, 
             calculable: true,
             inRange: {
               /* color: ['#abd9e9','#CC0000'] */
