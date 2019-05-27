@@ -43,6 +43,7 @@ export class DailyRecordService {
     }
 
     getByHive(idHive: string) {
+        console.log(this.unitSystem);
         return this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/hive/' + idHive).map(res => {
             this.arrayTempInt = res.filter(elt => elt.temp_int_max !== null).
             map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
@@ -60,8 +61,8 @@ export class DailyRecordService {
                     },
                     visualMap: {
                         calculable: true,
-                        min: -10,
-                        max: 40,
+                        min: this.unitSystem === 'METRIC' ? -10 : 50,
+                        max: this.unitSystem === 'METRIC' ? 40 : 100,
                         inRange: {
                             /* color: ['#abd9e9', '#CC0000'] */
                             color: ['#313695', '#4575b4', '#74add1', 
@@ -182,8 +183,8 @@ export class DailyRecordService {
             },
             visualMap: {
                 calculable: true,
-                min: -10,
-                max: 40,
+                min: this.unitSystem === 'METRIC' ? -10 : 30,
+                max: this.unitSystem === 'METRIC' ? 40 : 100,
                 inRange: {
                     /* color: ['#abd9e9', '#CC0000'] */
                     color: ['#313695', '#4575b4', '#74add1', 
