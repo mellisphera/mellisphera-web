@@ -6,7 +6,6 @@ import { CONFIG } from '../../../../../../../config';
 import { CalendrierService } from '../../service/calendrier.service';
 import { MyDate } from '../../../../../../class/MyDate';
 //import { ECharts } from 'echarts';
-import { ICON } from './icon';
 import { UserParamsService } from '../../../../../preference-config/service/user-params.service';
 import { UnitService } from '../../../../../service/unit.service';
 
@@ -31,7 +30,7 @@ export class CalendrierHealthService {
             tooltip: {
                 trigger: 'item',
                 formatter: (params) => {
-                    return params.marker + unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[2];
+                    return params.marker + unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + ' %';
                 }
             },
             toolbox: {
@@ -102,56 +101,20 @@ export class CalendrierHealthService {
         const cellHeight = params.coordSys.cellHeight;
         var img;
         var color;
-        var value = api.value(1);
         if (isNaN(cellPoint[0]) || isNaN(cellPoint[1])) {
             return;
         }
-        switch (api.value(1)) {
-            case 'statusC':
-                color = 'green';
-                if (api.value(2) === 'Fluctuation') {
-                    img = ICON.circle;
-                    // img = 'wfbfl';
-                } else if (api.value(2) === 'Decline') {
-                    img = ICON.slide_down;
-                    // img = 'wfbde';
-                } else if (api.value(2) === 'Stable') {
-                    img = ICON.circle;
-                    // img = 'wfbst';
-                } else if (api.value(2) === 'Improve') {
-                    img = ICON.slide_up;
-                    // img = 'wfbim';
-                }
-                break;
-            case 'statusB':
-                color = '#E1AF13';
-                if (api.value(2) === 'Fluctuation') {
-                    img = ICON.circle;
-                    // img = 'wnbfl';
-                } else if (api.value(2) === 'Decline') {
-                    img = ICON.slide_down;
-                    // img = 'wnbde';
-                } else if (api.value(2) === 'Stable') {
-                    img = ICON.circle;
-                    // img = 'wnbst';
-                } else if (api.value(2) === 'Improve') {
-                    img = ICON.slide_up;
-                    // img = 'wnbim';
-                }
-                break;
-            case 'statusA':
-                color = 'red';
-                if (api.value(2) === 'Fluctuation') {
-                    img = ICON.circle;
-                    // img = 'wobfl';
-                } else if (api.value(2) === 'Improve') {
-                    img = ICON.slide_up;
-                    // img = 'wobim.';
-                }
-                break;
-            default:
-                color = 'white';
-                img = ICON.circle;
+        img = 'M 100, 100m -75, 0a 75,75 0 1,0 150,0a 75,75 0 1,0 -150,0';
+        if (api.value(1) >= 95 && api.value(1) <= 100) {
+            color = '#498513';
+        } else if (api.value(1) >= 90 && api.value(1) <= 95) {
+            color = '#63C908';
+        } else if (api.value(1) >= 75 && api.value(1) <= 90) {
+            color = 'yellow';
+        } else if (api.value(1) >= 60 && api.value(1) <= 75) {
+            color = '#FD6204';
+        } else {
+            color = 'red';
         }
         const group = {
             type: 'group',
@@ -172,47 +135,5 @@ export class CalendrierHealthService {
         };
         return group;
     }
-    
-/*         getIcon(value1, value2){
-            switch (value1){
-                case 'statusC':
-                    if(value2 === 'Fluctuation'){
-                        return 'wfbfl.png';
-                    }
-                    else if(value2==='Decline'){
-                        return 'wfbde.png';
-                    }
-                    else if(value2 === 'Stable'){
-                        return 'wfbst.png';
-                    }
-                    else if(value2 === 'Improve'){
-                        return 'wfbim.png';
-                    }
-                    break;
-                case 'statusB':
-                    if(value2 === 'Fluctuation'){
-                        return 'wnbfl.png';
-                    }
-                    else if(value2==='Decline'){
-                        return 'wnbde.png';
-                    }
-                    else if(value2 === 'Stable'){
-                        return 'wnbst.png';
-                    }
-                    else if(value2 === 'Improve'){
-                        return 'wnbim.png';
-                    }
-                    break;
-                case 'statusA':
-                    if(value2 === 'Fluctuation'){
-                        return 'wobfl.png';
-                    }
-                    else if(value2 === 'Improve'){
-                        return 'wobim.png';
-                    }
-                    break;
-                default:
-                    return 'wos.png';
-                }
-        } */
+
 }
