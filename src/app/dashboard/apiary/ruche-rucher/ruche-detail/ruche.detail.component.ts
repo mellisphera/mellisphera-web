@@ -243,6 +243,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                 this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
                 .subscribe(
                     (record) => {
+                        console.log(record);
                         this.recordService.mergeOptionHourly = record;
                     },
                     () => {}, () => {

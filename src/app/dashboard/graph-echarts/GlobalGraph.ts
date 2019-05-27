@@ -22,7 +22,7 @@ export class GraphGlobal {
             max: 0
         };
         if (this.userConfig.getUserPref().unitSystem === 'IMPERIAL') { // FR
-            this.weight.name = 'Weight LD';
+            this.weight.name = 'Weight LB';
             this.weight.min = 50;
             this.weight.max = null;
             this.temp.name = 'Temperature (°F)';
