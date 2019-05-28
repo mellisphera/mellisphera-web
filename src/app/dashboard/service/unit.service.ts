@@ -38,12 +38,15 @@ export class UnitService {
   * @memberof UnitService
   */
  getDailyDate(date: Date): string {
-   console.log(date);
    const newInstanceDate = new Date(date);
    return this.getUserPref().timeFormat.replace(/Y/g, String(newInstanceDate.getFullYear()))
    .replace(/M/g, String(newInstanceDate.getMonth() + 1))
    .replace(/D/g, String(newInstanceDate.getDate()))
    .replace(/h:m/g, '');
+ }
+
+ getLocalDate(date: Date): Date {
+   return new Date(new Date(date).toLocaleDateString() + new Date(date).toTimeString());
  }
 
 
