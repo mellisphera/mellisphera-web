@@ -1,13 +1,14 @@
 import { MyDate } from '../../../../../../class/MyDate';
 import { Injectable } from '@angular/core';
 import { CalendrierService } from '../../service/calendrier.service';
+import { UnitService } from '../../../../../service/unit.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendrierTempIntService /*extends CalendrierService*/{
 
-  constructor() {
+  constructor(private unitService: UnitService) {
 
    }
 
@@ -16,11 +17,7 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
         top: 5,
         left: 'center',
     },
-    tooltip : {
-        formatter: (params)=>{
-            return  MyDate.getIsoFromDate(MyDate.getWekitDate(params.data[0])) + '<br/>' + params.data[1];
-        }
-    },
+
     toolbox: {
         orient : 'vertical',
         itemSize: 15,
