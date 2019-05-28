@@ -94,7 +94,7 @@ export class RecordService {
             data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
               return {
                 name: recRes.recordDate,
-                value: [this.unitService.getLocalDate(recRes.recordDate),
+                value: [this.unitService.getHourlyDate(recRes.recordDate + ''),
                   this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
                 sensorRef: recRes.sensorRef
               };
