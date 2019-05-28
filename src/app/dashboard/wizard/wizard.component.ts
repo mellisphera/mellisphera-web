@@ -62,7 +62,7 @@ export class WizardComponent implements OnInit, OnDestroy {
       'name': [null, Validators.required]
     });
     this.sensorForm = this.formBuilder.group({
-      'reference': [null, Validators.compose(
+      'sensorRef': [null, Validators.compose(
         [Validators.required, Validators.pattern(this.paternRef)])
       ]
     });
@@ -132,6 +132,7 @@ export class WizardComponent implements OnInit, OnDestroy {
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
           this.capteurService.getUserCapteurs();
           this.userService.setWizardActive(false);
+          console.log(this.userService.getWizardActive());
         });
       });
     });
@@ -143,6 +144,7 @@ export class WizardComponent implements OnInit, OnDestroy {
    * @memberof WizardComponent
    */
   getTypeFromRef(sensorRef: string): string {
+    console.log(sensorRef);
     const ref = sensorRef.split(':')[0];
     if (parseInt(ref, 10) === 41){
       return 'T2';
