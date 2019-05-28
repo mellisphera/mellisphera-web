@@ -45,10 +45,6 @@ export class UnitService {
    .replace(/h:m/g, '');
  }
 
- getLocalDate(date: Date): Date {
-   return new Date(new Date(date).toLocaleDateString() + new Date(date).toTimeString());
- }
-
 
     /**
    *
