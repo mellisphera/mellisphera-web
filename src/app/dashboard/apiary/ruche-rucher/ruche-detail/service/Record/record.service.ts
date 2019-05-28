@@ -77,8 +77,8 @@ export class RecordService {
    */
   getRecordByIdHive(idHive: string, hiveName: string, lastMerge: any, hive: boolean, color?: string): Observable<any> {
     return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
-      var sensor = [];
-      var series = [];
+      let sensor = [];
+      let series = [];
       records.map(res => {
         if (sensor.indexOf(res.sensorRef) === -1) {
           sensor.push(res.sensorRef);
@@ -94,7 +94,8 @@ export class RecordService {
             data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
               return {
                 name: recRes.recordDate,
-                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                value: [this.unitService.getLocalDate(recRes.recordDate),
+                  this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
                 sensorRef: recRes.sensorRef
               };
             }),
