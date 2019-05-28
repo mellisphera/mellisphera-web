@@ -43,12 +43,6 @@ export class CalendrierHealthService {
                     saveAsImage: { show: true }
                 }
             },
-            legend: {
-                top: '30',
-                textStyle: {
-                    color: 'black'
-                }
-            },
             calendar: [{
                 top: 100,
                 left: '3%',
@@ -66,6 +60,20 @@ export class CalendrierHealthService {
                         type: 'solid'
                     }
                 },
+/*                 visualMap: {
+                    calculable: true,
+                    min: 0,
+                    max: 100,
+                    orient: 'horizontal',
+                    top : 100,
+                    itemWidth : 15,
+                    itemSymbol : 'diamond',
+                    left: 'center',
+                    inRange: {
+                        color: ['red', '#FD6204', 'yellow',
+                        '#63C908', '#498513']
+                    }
+                }, */
                 dayLabel: {
                     nameMap: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
                     firstDay: 1, // start on Monday
@@ -74,6 +82,11 @@ export class CalendrierHealthService {
                     formatter: '{start}-{end}',
                     show: false,
                     margin: 40,
+                    orient: 'horizontal',
+                    top : 30,
+                    itemWidth : 15,
+                    itemSymbol : 'diamond',
+                    left: 'center',
                     textStyle: {
                         color: 'black'
                     }
@@ -87,53 +100,12 @@ export class CalendrierHealthService {
                 }
             }],
             series: {
-                type: 'custom',
+                type: 'heatmap',
                 coordinateSystem: 'calendar',
-                renderItem: this.renderItem,
             }
         };
 
     }
 
-    renderItem(params, api) {
-        const cellPoint = api.coord(api.value(0));
-        const cellWidth = params.coordSys.cellWidth;
-        const cellHeight = params.coordSys.cellHeight;
-        var img;
-        var color;
-        if (isNaN(cellPoint[0]) || isNaN(cellPoint[1])) {
-            return;
-        }
-        img = 'M 100, 100m -75, 0a 75,75 0 1,0 150,0a 75,75 0 1,0 -150,0';
-        if (api.value(1) >= 95 && api.value(1) <= 100) {
-            color = '#498513';
-        } else if (api.value(1) >= 90 && api.value(1) <= 95) {
-            color = '#63C908';
-        } else if (api.value(1) >= 75 && api.value(1) <= 90) {
-            color = 'yellow';
-        } else if (api.value(1) >= 60 && api.value(1) <= 75) {
-            color = '#FD6204';
-        } else {
-            color = 'red';
-        }
-        const group = {
-            type: 'group',
-            children: [{
-              type: 'path',
-              shape: {
-                pathData: img,
-                x: -8,
-                y: -9,
-                width: 20,
-                height: 20
-              },
-              position: [cellPoint[0], cellPoint[1]],
-              style: api.style({
-                fill: color
-              })
-            }]
-        };
-        return group;
-    }
 
 }

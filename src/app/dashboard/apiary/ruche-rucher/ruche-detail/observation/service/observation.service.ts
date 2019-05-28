@@ -87,7 +87,9 @@ export class ObservationService {
   }
   getObservationByIdHive(idHive: string, hiveName?: string) {
     return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, this.rangeObs).map(res => {
-      this.observationsHive = res;
+      this.observationsHive = res.sort((a, b) => {
+        return <any>a.date - <any>b.date;
+      });
       return {
         name: (hiveName) ? hiveName + ' / note' : idHive,
         type: 'custom',

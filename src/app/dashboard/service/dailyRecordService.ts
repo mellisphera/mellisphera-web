@@ -48,7 +48,7 @@ export class DailyRecordService {
             this.arrayTempInt = res.filter(elt => elt.temp_int_max !== null).
             map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
             this.arrayHint = res.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
-            this.arrayHealth = res.map(elt => [elt.recordDate, elt.health_status, elt.health_trend]);
+            this.arrayHealth = res.map(elt => [elt.recordDate, elt.vitality]);
             return {
                 tempInt: {
                     series: {
@@ -101,8 +101,7 @@ export class DailyRecordService {
                 health: {
                     series: {
                         data: this.arrayHealth,
-                        type: 'custom',
-                        coordinateSystem: 'calendar',
+                        type: 'heatmap',
                     }
                 }
             }
@@ -120,7 +119,7 @@ export class DailyRecordService {
             this.arrayTempInt = daily.filter(elt => elt.temp_int_max !== null).
             map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
             this.arrayHint = daily.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
-            this.arrayHealth = daily.map(elt => [elt.recordDate, elt.vitality, elt.health_trend]);
+            this.arrayHealth = daily.map(elt => [elt.recordDate, elt.vitality]);
             return daily;
         })
         .subscribe(
@@ -170,7 +169,21 @@ export class DailyRecordService {
         this.mergeOptionCalendarHealth = {
             series: {
                 data: this.arrayHealth
-            }
+            },
+            visualMap: {
+                calculable: true,
+                min: 0,
+                max: 100,
+                orient: 'horizontal',
+                top : 30,
+                itemWidth : 15,
+                itemSymbol : 'diamond',
+                left: 'center',
+                inRange: {
+                    color: ['red', '#FD6204', 'yellow',
+                    '#63C908', '#498513']
+                }
+            },
         };
         this.mergeOptionTint = {
             series: {
