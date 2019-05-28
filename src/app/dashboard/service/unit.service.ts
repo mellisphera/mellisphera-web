@@ -37,8 +37,13 @@ export class UnitService {
   * @returns {string}
   * @memberof UnitService
   */
- getDailyDate(date: Date): string {
-   const newInstanceDate = new Date(date);
+ getDailyDate(date: string): string {
+   let newInstanceDate = null;
+   if (date.indexOf('T')) {
+    newInstanceDate = new Date(date.split('T')[0]);
+   } else {
+    newInstanceDate = new Date(date);
+   }
    return this.getUserPref().timeFormat.replace(/Y/g, String(newInstanceDate.getFullYear()))
    .replace(/M/g, String(newInstanceDate.getMonth() + 1))
    .replace(/D/g, String(newInstanceDate.getDate()))
