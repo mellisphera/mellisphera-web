@@ -218,6 +218,12 @@ export class DailyRecordService {
             title: {
                 text: 'Internal Relative Humidity (max)'
             },
+            tooltip: {
+                formatter: (params) => {
+                    return params.marker +
+                        this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + ' %';
+                }
+            },
             visualMap: {
                 left: 'center',
                 orient: 'horizontal',
