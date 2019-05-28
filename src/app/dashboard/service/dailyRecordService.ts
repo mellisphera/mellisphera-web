@@ -46,7 +46,7 @@ export class DailyRecordService {
         console.log(this.unitSystem);
         return this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/hive/' + idHive).map(res => {
             this.arrayTempInt = res.filter(elt => elt.temp_int_max !== null).
-            map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
+                map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
             this.arrayHint = res.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
             this.arrayHealth = res.map(elt => [elt.recordDate, elt.vitality]);
             return {
@@ -65,8 +65,8 @@ export class DailyRecordService {
                         max: this.unitSystem === 'METRIC' ? 40 : 100,
                         inRange: {
                             /* color: ['#abd9e9', '#CC0000'] */
-                            color: ['#313695', '#4575b4', '#74add1', 
-                            '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                            color: ['#313695', '#4575b4', '#74add1',
+                                '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
                         }
                     },
                 },
@@ -117,20 +117,20 @@ export class DailyRecordService {
         this.dailyRecords = [];
         this.http.get<DailyRecordTh[]>(CONFIG.URL + '/dailyRecordsTH/hive/' + idHive).map(daily => {
             this.arrayTempInt = daily.filter(elt => elt.temp_int_max !== null).
-            map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
+                map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
             this.arrayHint = daily.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
             this.arrayHealth = daily.map(elt => [elt.recordDate, elt.vitality]);
             return daily;
         })
-        .subscribe(
-            (data) => {
-                this.dailyRecords = data;
-                this.updateMerge();
-            },
-            (err) => {
-                console.log(err);
-            }
-        );
+            .subscribe(
+                (data) => {
+                    this.dailyRecords = data;
+                    this.updateMerge();
+                },
+                (err) => {
+                    console.log(err);
+                }
+            );
     }
     /**
      *
@@ -138,7 +138,7 @@ export class DailyRecordService {
      * @param {string} idApiary
      * @memberof DailyRecordService
      */
-    public nextDay(idApiary: string): void{
+    public nextDay(idApiary: string): void {
         this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() + 1);
         this.rangeDailyRecord.setHours(0);
         this.rangeDailyRecord.setMinutes(0);
@@ -158,7 +158,7 @@ export class DailyRecordService {
     }
     setUnitSystem(unit: string): void {
         this.unitSystem = unit;
-      }
+    }
     /**
      *
      *
@@ -175,13 +175,13 @@ export class DailyRecordService {
                 min: 0,
                 max: 100,
                 orient: 'horizontal',
-                top : 30,
-                itemWidth : 15,
-                itemSymbol : 'diamond',
+                top: 30,
+                itemWidth: 15,
+                itemSymbol: 'diamond',
                 left: 'center',
                 inRange: {
                     color: ['red', '#FD6204', 'yellow',
-                    '#63C908', '#498513']
+                        '#63C908', '#498513']
                 }
             },
         };
@@ -190,6 +190,12 @@ export class DailyRecordService {
                 type: 'heatmap',
                 coordinateSystem: 'calendar',
                 data: this.arrayTempInt
+            },
+            tooltip: {
+                formatter: (params) => {
+                    return params.marker +
+                        this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + (this.unitSystem === 'METRIX' ? '°C' : '°F');
+                }
             },
             title: {
                 text: 'Internal Temperature (max, ' + (this.unitSystem === 'METRIX' ? '°C' : '°F') + ')'
@@ -200,8 +206,8 @@ export class DailyRecordService {
                 max: this.unitSystem === 'METRIC' ? 40 : 105,
                 inRange: {
                     /* color: ['#abd9e9', '#CC0000'] */
-                    color: ['#313695', '#4575b4', '#74add1', 
-                    '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                    color: ['#313695', '#4575b4', '#74add1',
+                        '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
                 }
             },
         };

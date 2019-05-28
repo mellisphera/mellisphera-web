@@ -57,7 +57,7 @@ export class DailyRecordsWService {
     this.currentIdHive = idHive;
     return this.http.get<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/hive/' + idHive).map(res => {
       this.arrayTempExt = res.map(elt => [MyDate.getWekitDate(MyDate.convertDate(new Date(elt.recordDate))),
-        this.unitService.convertTempFromUsePref(elt.temp_ext_max, this.unitSystem)]);
+      this.unitService.convertTempFromUsePref(elt.temp_ext_max, this.unitSystem)]);
       this.weightIncome = res.map(elt => [MyDate.getWekitDate(MyDate.convertDate(new Date(elt.recordDate))), elt.weight_income_gain]);
       return {
         tempExt: {
@@ -66,6 +66,12 @@ export class DailyRecordsWService {
             type: 'heatmap',
             coordinateSystem: 'calendar',
             data: this.arrayTempExt
+          },
+          tooltip: {
+            formatter: (params) => {
+              return params.marker +
+                this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + (this.unitSystem === 'METRIX' ? '°C' : '°F');
+            }
           },
           title: {
             text: 'External Temperature (max, ' + (this.unitSystem === 'METRIX' ? '°C' : '°F') + ')'
@@ -86,7 +92,7 @@ export class DailyRecordsWService {
             trigger: 'item',
             formatter: (params: any) => {
               return params.marker + this.unitService.getDailyDate(params.data[0]) + '<br/>' +
-              params.seriesName + ' : ' + params.data[1];
+                params.seriesName + ' : ' + params.data[1];
             }
           },
           legend: {
@@ -192,6 +198,12 @@ export class DailyRecordsWService {
     this.mergeOptionWeightTempExt = {
       series: {
         data: this.arrayTempExt
+      },
+      tooltip: {
+        formatter: (params) => {
+          return params.marker +
+            this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + (this.unitSystem === 'METRIX' ? '°C' : '°F');
+        }
       },
       title: {
         text: 'External Temperature (max, ' + (this.unitSystem === 'METRIX' ? '°C' : '°F') + ')'
