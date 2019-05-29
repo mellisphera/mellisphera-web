@@ -6,7 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ngfModule } from 'angular-file';
-import { DragAndCheckModule } from 'ng2-drag-and-check';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../shared.module';

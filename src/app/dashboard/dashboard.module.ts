@@ -7,7 +7,6 @@ import { NavbarModule } from './shared/navbar/navbar.module';
 import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
 import { ngfModule } from 'angular-file';
-import { DragAndCheckModule } from 'ng2-drag-and-check';
 import { WizardComponent } from './wizard/wizard.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { SharedModule } from './shared/shared.module';
