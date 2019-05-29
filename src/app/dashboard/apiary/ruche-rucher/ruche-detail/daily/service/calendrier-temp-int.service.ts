@@ -53,6 +53,14 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
         //height:'auto',
         cellSize: ['20', '20'],
         range:MyDate.getRangeForCalendar(),
+        splitLine: {
+            show: true,
+            lineStyle: {
+                color: '#000',
+                width: 2,
+                type: 'solid'
+            }
+        },
         itemStyle: {
             normal: {
                 color: '#EBEBEB',
