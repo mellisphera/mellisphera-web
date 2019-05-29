@@ -181,8 +181,9 @@ export class DailyRecordService {
                 left: 'center',
                 inRange: {
                     color: ['red', '#FD6204', 'yellow',
-                        '#63C908', '#498513']
-                }
+                        '#63C908', '#498513'],
+                },
+
             },
         };
         this.mergeOptionTint = {
