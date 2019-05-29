@@ -2,39 +2,37 @@
   margin: auto;
   width: 100%;
   margin: 0px;
-  //margin-top: 10px;
   height: 93vh;
-  // border-radius: 10px;
   overflow: hidden;
   //background: url("../../../assets/imageClient/testAccount.png") no-repeat center;
   background-size: contain;
-  // background-size: 100%;
-  // box-shadow: 8px 8px 5px black;
+  position: relative;
+
   transform: rotate(0deg);
 }
 .ruche {
-  display: flex;
   justify-content: center;
+ // position: absolute;
+  font-size: 15px;
   width: 60px;
   height: 60px;
-  position: absolute;
-  font-size: 15px;
   padding: 2px;
-  border: 1px dashed black;
-  cursor: move;
   border-radius: 50px;
+  border: 1px dashed black;
+  //border-radius: 50px;
   //box-shadow: 3px 2px 2px black;
 }
 
 .hive-group{
   position: absolute;
+  cursor: move;
+  border-radius: 50px;
   background-color: white;
-  width: 100px;
 }
-#vitality{
+.vitality{  
   color: black;
-  font-weight: bold;
-  padding-top: 14px;
+  //font-weight: bold;
+  //padding-top: 14px;
   font-size: 20px;
 }
 #health_trend {

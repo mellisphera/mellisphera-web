@@ -1,5 +1,5 @@
 import { User } from '../../_model/user';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { DragAndCheckModule, Offsets } from 'ng2-drag-and-check';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../service/rucher.service';
@@ -18,6 +18,7 @@ import {
   transition,
   // ...
 } from '@angular/animations';
+import { Position } from 'angular2-draggable';
 
 @Component({
   selector: 'app-home',
@@ -44,10 +45,11 @@ export class HomeComponent implements OnInit {
   public bottom: any = Offsets.HANDLE_HEIGHT;
   public left: any = Offsets.HALF_WIDTH;
   infoRuche: any = null;
-  offset: Offsets;
+  public offset: Offsets;
   photoApiary: File;
   username: string;
   rucheSelect: RucheInterface;
+  positionHive: any;
   baseDropValid: string;
   rucherSelectId: string;
   message: string;
@@ -57,13 +59,13 @@ export class HomeComponent implements OnInit {
     'background-repeat': string
   };
   position: {
-    'x': string,
-    'y': string
+    'x': number,
+    'y': number
   };
 
   rucheOnClick : Ruche;
 
-  constructor( public dailyRecTh:  DailyRecordService, private draggable: DragAndCheckModule, 
+  constructor( public dailyRecTh:  DailyRecordService, 
     public login: UserloggedService,
     public rucheService: RucheService,
     public rucherService: RucherService,
@@ -78,8 +80,8 @@ export class HomeComponent implements OnInit {
         'background-repeat': 'no-repeat'
       };
       this.position = {
-        x : '0',
-        y : '0'
+        x : 0,
+        y : 0
       };
     this.offset = new Offsets(this.top, this.right, this.bottom, this.left);
   }
@@ -88,7 +90,6 @@ export class HomeComponent implements OnInit {
     this.message = $event;
 
   }
-
   getDateDaily() {
     return this.dailyRecTh.rangeDailyRecord.toDateString();
   }
@@ -106,65 +107,73 @@ export class HomeComponent implements OnInit {
 
   }
 
-  onDragEnd($event) {
-    const id = $event.id;
-
-    this.getPosition($event.style);
-    try {
-          this.rucheSelect = this.rucheService.ruches[id];
-          let rucheUpdate = new Ruche(this.rucheSelect.id,this.rucheSelect.name,
-            this.rucheSelect.description,this.rucheSelect.username,this.rucheSelect.idApiary,
-            this.rucheSelect.hivePosX,this.rucheSelect.hivePosY);
-          rucheUpdate.setX(this.position.x);
-          rucheUpdate.setY(this.position.y);
-          this.rucheService.updateCoordonneesRuche(rucheUpdate);
-          this.position.x = ''+0;
-          this.position.y = ''+0;
-
-    } catch(e) {}
-
-    //this.rucheService.getRucheByApiary(this.username,rucheUpdate.idApiary);
-
+  onMoveEnd(event, ruche: RucheInterface) {
+    const container = document.getElementById("cadre");
+    const widthcontainer = container.offsetWidth;
+    console.log('largeur', + widthcontainer);
+    const heightcontainer = container.offsetHeight;
+    console.log(ruche);
+    let xHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosX, 10), widthcontainer);
+    let yHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosY, 10), heightcontainer);
+    console.log('ruche en px : ' + xHivePx + '-' + yHivePx);
+    this.position.x = this.getPourcentToPx(xHivePx + event.x, widthcontainer);
+    this.position.y = this.getPourcentToPx(yHivePx + event.y, heightcontainer);
+    if (this.position.y < 0) {
+      this.position.y = 0;
+    } else if (this.position.x < 0) {
+      this.position.x = 0;
+    }
+    let rucheUpdate = Object.assign({}, ruche);
+    rucheUpdate.hivePosX = '' + this.position.x;
+    rucheUpdate.hivePosY = '' + this.position.y;
+    console.log(this.position);
+     this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
+      () => {}, () => {}, () => {
+        this.position.x = 0;
+        this.position.y = 0;
+      }
+    )
+    console.log(event.x + '-' + event.y);
   }
+
   
+  getPositionPxToPourcent(value: number, total: number): any{
+    return (value * total) / 100;
+  }
   /* Calcule les positions */
-  getPosition(position) {
+/*   getPosition(position: any) {
     const container = document.getElementById("cadre");
 
-    /* Dimensions block parent */
     const widthcontainer = container.offsetWidth;
     const heightcontainer = container.offsetHeight; 
 
     const coordonnes = position.transform.slice(10, position.transform.length - 1);
-    /* Position en pourcentage */
-    let left = parseInt(position.left);
-    let top = parseInt(position.top);
-    /* Convertir en px */
-    left = this.getPourccentToPx(left,widthcontainer);
-    top = this.getPourccentToPx(top,heightcontainer);
+    let left = parseInt(position.left, 10);
+    let top = parseInt(position.top, 10);
+    left = this.getPourcentToPx(left,widthcontainer);
+    top = this.getPourcentToPx(top,heightcontainer);
 
     const deplacement = coordonnes.split(',');
 
     deplacement[0] = parseInt(deplacement[0].slice(0,deplacement[0].length-2));
     deplacement[1] = parseInt(deplacement[1].slice(0,deplacement[1].length-2));
 
-    this.position.x = ''+(parseInt(left+deplacement[0]) *100) / widthcontainer;
-    this.position.y  =''+(parseInt(top+deplacement[1]) *100) / heightcontainer;
-    if(parseInt(this.position.x) > 99 || parseInt(this.position.x) < 0){ this.position.x = ''+50;
+    this.position.x = '' + (parseInt(left+deplacement[0]) *100) / widthcontainer;
+    this.position.y  ='' + (parseInt(top+deplacement[1]) *100) / heightcontainer;
+    if(parseInt(this.position.x) > 99 || parseInt(this.position.x) < 0){
       this.position.x = ""+50;
       this.position.y = ""+50;
-      //this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
     }
-    if(parseInt(this.position.y) > 99 || parseInt(this.position.y) < 0){ this.position.y = ''+50;
+    if(parseInt(this.position.y) > 99 || parseInt(this.position.y) < 0){
       this.position.x = ""+50;
       this.position.y = ""+50;
-      //this.rucheService.getRucheByApiary(this.username,this.rucherService.rucher.id); 
     }
     console.log(this.position);
-  }
+  } */
 
-  getPourccentToPx(valeur, valeurTotal){
-    return ((valeur/100) * valeurTotal);
+  getPourcentToPx(valuePx: number, total: number) {
+    return (valuePx / total) * 100;
+
   }
   /* Pour chaque rucher selectionner */
   saveBackground(){

@@ -45,6 +45,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { UnitService } from './service/unit.service';
 import { GraphGlobal } from './graph-echarts/GlobalGraph';
 import { MyDatePipe } from '../pipe/my-date.pipe';
+import { AngularDraggableModule } from 'angular2-draggable';
 
 
 @NgModule({
@@ -59,11 +60,12 @@ import { MyDatePipe } from '../pipe/my-date.pipe';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    AngularDraggableModule,
     ngfModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger' // set defaults here
     }),
-    DragAndCheckModule,
+   //  DragAndCheckModule,
     ArchwizardModule,
     SharedModule,
   ],
