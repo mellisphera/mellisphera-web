@@ -194,11 +194,12 @@ export class DailyRecordService {
             tooltip: {
                 formatter: (params) => {
                     return params.marker +
-                        this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + (this.unitSystem === 'METRIX' ? '°C' : '°F');
+                        this.unitService.getDailyDate(params.data[0]) + '<br/>' 
+                        + params.data[1] + (this.unitSystem === 'METRIC' ? '°C' : '°F');
                 }
             },
             title: {
-                text: 'Internal Temperature (max, ' + (this.unitSystem === 'METRIX' ? '°C' : '°F') + ')'
+                text: 'Internal Temperature (max, ' + (this.unitSystem === 'METRIC' ? '°C' : '°F') + ')'
             },
             visualMap: {
                 calculable: true,
