@@ -10,17 +10,17 @@
             </li>
         </ul>
     </nav>
-    <div id="cadre" [ngStyle]="{'background-image':'url('+rucherService.rucher.photo+')',
+    <div class="grid-container" #myBounds id="cadre" [ngStyle]="{'background-image':'url('+rucherService.rucher.photo+')',
                                         'background-position' : 'top',
                                         'background-repeat' : 'no-repeat'}" ngfDrop [(validDrag)]="baseDropValid"
         [(file)]="photoApiary" class="my-drop-zone" [class.valid-drag]="baseDropValid"
         [(lastBaseUrl)]="rucherService.rucher.photo">
-        <div class="hive-group" *ngFor="let ruche of rucheService.ruches; let i = index" [id]="i" [style.top.%]="ruche.hivePosY" 
-                [style.left.%]="ruche.hivePosX"  [allowedOffsets]="offset" ngDraggable (mouseover)="onMouseover(ruche)" (stopped)="onDragEnd($event)">
-                <div data-toggle="tooltip" data-placement="top" [title]="infoRuche"
-                (dblclick)="onClick(ruche);"
-                 class="ruche" 
-                [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)"><div id="vitality">{{ dailyRecTh.getPourcentByHive(ruche.id) }}</div>
+        <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true" data-toggle="tooltip"
+            (endOffset)="onMoveEnd($event, ruche)" ngDraggable class="hive-group drag-grid"
+            *ngFor="let ruche of rucheService.ruches; let i = index" [id]="i" [style.top.%]="ruche.hivePosY"
+            [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)">
+            <div data-placement="top" [title]="infoRuche" (dblclick)="onClick(ruche);" class="ruche"
+                [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)"><p class="vitality">{{ dailyRecTh.getPourcentByHive(ruche.id) }}</p>
             </div>
         </div>
     </div>

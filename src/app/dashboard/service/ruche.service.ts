@@ -119,15 +119,7 @@ export class RucheService {
      return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + username);
    }
    updateCoordonneesRuche(ruche){
-    this.rucheObs = this.http.put<RucheInterface>(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,ruche,httpOptions)
-    this.rucheObs.subscribe(
-      () => {
-        this.getRucheByApiary(ruche.idApiary);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    return this.http.put<RucheInterface>(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,ruche,httpOptions); 
   }
 
   /**
@@ -140,7 +132,7 @@ export class RucheService {
     return this.http.put<RucheInterface>(CONFIG.URL + 'hives/update/' + hive.id, hive, httpOptions);
   }
 
-  /**
+  /**   
    *
    *
    * @param {RucheInterface} ruche
