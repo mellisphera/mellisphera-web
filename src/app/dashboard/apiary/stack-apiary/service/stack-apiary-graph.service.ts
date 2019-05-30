@@ -126,6 +126,7 @@ export class StackApiaryGraphService {
           name: this.configGraph.weight.name,
           nameLocation: 'middle',
           nameGap: 25,
+          interval: this.configGraph.weight.interval,
           type: 'value',
           min: this.configGraph.weight.min
         },

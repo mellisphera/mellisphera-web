@@ -14,7 +14,8 @@ export class GraphGlobal {
         this.weight = {
             name: '',
             min: null,
-            max: 0
+            max: 0,
+            interval : 0
         };
         this.temp = {
             name: '',
@@ -22,15 +23,18 @@ export class GraphGlobal {
             max: 0
         };
         if (this.userConfig.getUserPref().unitSystem === 'IMPERIAL') { // FR
-            this.weight.name = 'Weight LB';
-            this.weight.min = 50;
+            this.weight.name = 'Weight lbs';
+            this.weight.min = 40;
             this.weight.max = null;
+            this.weight.interval = 5;
             this.temp.name = 'Temperature (°F)';
             this.temp.min = 0;
             this.temp.max = null;
+
         } else { // US
             this.weight.name = 'Weight Kg';
             this.weight.min = 0;
+            this.weight.interval = 10;
             this.weight.max = null;
             this.temp.name = 'Temperature (°C)';
             this.temp.min = 0;
