@@ -82,7 +82,7 @@ export class GraphRecordService {
             name: this.globalGraph.weight.name,
             min: this.globalGraph.weight.min,
             max: this.globalGraph.weight.max,
-            interval: 5,
+            interval: this.globalGraph.weight.interval,
             axisLabel: {
                 formatter: '{value}'
             }
