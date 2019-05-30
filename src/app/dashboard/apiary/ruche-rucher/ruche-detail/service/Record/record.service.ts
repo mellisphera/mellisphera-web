@@ -118,9 +118,9 @@ export class RecordService {
                 show: true
               },
               data: [[{
-                yAxis: '33'
+                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
               }, {
-                yAxis: '37'
+                yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
               }]]
             },
           });
@@ -154,9 +154,9 @@ export class RecordService {
                 show: true
               },
               data: [[{
-                yAxis: '33'
+                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
               }, {
-                yAxis: '37'
+                yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
               }]]
             },
           });
@@ -222,9 +222,9 @@ export class RecordService {
                 show: true
               },
               data: [[{
-                yAxis: '50'
+                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
               }, {
-                yAxis: '75'
+                yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
               }]]
             },
             hoverAnimation: true,
@@ -244,155 +244,6 @@ export class RecordService {
           show: false
         }
       };
-      /*        if (!hive) {
-              return {
-                series: [
-                  {
-                    name: hiveName + ' / weight',
-                    type: 'line',
-                    showSymbol: false,
-                    data: this.recArrayWeight,
-                    lineStyle: {
-                      color: color
-                    },
-                    itemStyle: {
-                      color: color
-                    },
-                  },
-                  {
-                    name: hiveName + ' / Tint',
-                    type: 'line',
-                    xAxisIndex: (hive) ? 0 : 1,
-                    yAxisIndex: (hive) ? 0 : 1,
-                    showSymbol: false,
-                    data: this.recArrrayTint,
-                    itemStyle: {
-                      color: color
-                    },
-                    lineStyle: {
-                      color: color
-                    },
-                    markArea: {
-                      silent: true,
-                      itemStyle: {
-                        color: '#EBEBEB'
-                      },
-                      label: {
-                        show: true
-                      },
-                      data: [[{
-                        yAxis: '33'
-                      }, {
-                        yAxis: '37'
-                      }]]
-                    },
-                  },
-                  {
-                    name: hiveName + ' / Text',
-                    type: 'line',
-                    xAxisIndex: (hive) ? 0 : 1,
-                    yAxisIndex: (hive) ? 0 : 1,
-                    showSymbol: false,
-                    data: this.recArrayText,
-                    lineStyle: {
-                      color: color
-                    },
-                    itemStyle: {
-                      color: color
-                    },
-                  },
-                  {
-                    name: hiveName + ' / Hint',
-                    type: 'line',
-                    xAxisIndex: (hive) ? 1 : 2,
-                    yAxisIndex: (hive) ? 0 : 2,
-                    showSymbol: false,
-                    markArea: {
-                      silent: true,
-                      itemStyle: {
-                        color: '#EBEBEB'
-                      },
-                      label: {
-                        show: true
-                      },
-                      data: [[{
-                        yAxis: '50'
-                      }, {
-                        yAxis: '75'
-                      }]]
-                    },
-                    data: this.recArrayHint,
-                    lineStyle: {
-                      color: color
-                    },
-                    itemStyle: {
-                      color: color
-                    },
-                  },
-      
-                ].concat(lastMerge.series),
-                legend: {
-                  data: [hiveName + ' / Tint', hiveName + ' / Text', hiveName + ' / Hint', hiveName + ' / weight']
-                    .concat(lastMerge.legend.data),
-                  show: false
-                }
-              };
-            } else {
-              return {
-                series: [
-                  (this.recArrrayTint.length > 0) ?
-                    {
-                      type: 'line',
-                      name: 'Tint(' + this.recArrrayTint[0].sensorRef + ')',
-                      data: this.recArrrayTint,
-                      showSymbol: false,
-                    } : null,
-                  (this.recArrayText.length > 0) ?
-                    {
-                      type: 'line',
-                      name: 'Text(' + this.recArrayText[0].sensorRef + ')',
-                      showSymbol: false,
-                      data: this.recArrayText
-                    } : null,
-                  (this.recArrayHint.length > 0) ?
-                    {
-                      type: 'line',
-                      name: 'Hint(' + this.recArrayHint[0].sensorRef + ')',
-                      data: this.recArrayHint,
-                      xAxisIndex: 1,
-                      yAxisIndex: 1,
-                      showSymbol: false,
-                    } : null,
-                  (this.recArrayBatteryInt.length > 0) ?
-                    {
-                      type: 'line',
-                      name: 'Batery-int(' + this.recArrayBatteryInt[0].sensorRef + ')',
-                      data: this.recArrayBatteryInt,
-                      xAxisIndex: 2,
-                      yAxisIndex: 2,
-                      showSymbol: false,
-                    } : null,
-                  (this.recArrayBatteryExt.length > 0) ?
-                    {
-                      type: 'line',
-                      name: 'Batery-ext(' + this.recArrayBatteryExt[0].sensorRef + ')',
-                      data: this.recArrayBatteryExt,
-                      xAxisIndex: 2,
-                      yAxisIndex: 2,
-                      showSymbol: false,
-                    } : null
-                ],
-                legend: {
-                  data: [
-                    (this.recArrrayTint.length > 0) ? 'Tint(' + this.recArrrayTint[0].sensorRef + ')' : null,
-                    (this.recArrayText.length > 0) ? 'Text(' + this.recArrayText[0].sensorRef + ')' : null,
-                    (this.recArrayHint.length > 0) ? 'Hint(' + this.recArrayHint[0].sensorRef + ')' : null,
-                    (this.recArrayBatteryInt.length > 0) ? 'Batery-int(' + this.recArrayBatteryInt[0].sensorRef + ')' : null,
-                    (this.recArrayBatteryExt.length > 0) ? 'Batery-ext(' + this.recArrayBatteryExt[0].sensorRef + ')' : null
-                  ],
-                }
-              };
-            } */
     });
   }
 
@@ -437,9 +288,9 @@ export class RecordService {
                 show: true
               },
               data: [[{
-                yAxis: '33'
+                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
               }, {
-                yAxis: '37'
+                yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
               }]]
             },
           });
@@ -458,7 +309,7 @@ export class RecordService {
             hoverAnimation: true,
             yAxisIndex: 1,
             color: 'red',
-            markArea: {
+             markArea: {
               silent: true,
               itemStyle: {
                 color: '#EBEBEB'
@@ -467,9 +318,9 @@ export class RecordService {
                 show: true
               },
               data: [[{
-                yAxis: '33'
+                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
               }, {
-                yAxis: '37'
+                yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
               }]]
             },
           });
@@ -522,7 +373,7 @@ export class RecordService {
             hoverAnimation: true,
             yAxisIndex: 1,
             color: 'green',
-            markArea: {
+             markArea: {
               silent: true,
               itemStyle: {
                 color: '#ff00ff'
@@ -531,9 +382,9 @@ export class RecordService {
                 show: true
               },
               data: [[{
-                yAxis: '33'
+                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
               }, {
-                yAxis: '37'
+                yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
               }]]
             },
           });
