@@ -84,9 +84,6 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-    if (!this.observationService.obsApiarySubject.closed) {
-      this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
-    }
 
   }
 
@@ -174,10 +171,6 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    this.observationForm = this.formBuilder.group({
-      'sentence': [null, Validators.compose([Validators.required])],
-      'date': new MyDate(new Date()).getIso(),
-    });
     this.newRucheForm = this.formBuilder.group({
       'nomRuche': [null, Validators.compose([Validators.required])],
       'descriptionRuche': [null],
