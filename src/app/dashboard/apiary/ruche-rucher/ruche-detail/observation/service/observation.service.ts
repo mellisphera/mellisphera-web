@@ -136,19 +136,7 @@ export class ObservationService {
   }
 
   getObservationByIdApiary(idApiary: string) {
-    this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, this.rangeObs)
-      .subscribe(
-        (data) => {
-          this.observationsApiary = data;
-          this.obsApiarySubject.next(data);
-        },
-        (err) => {
-          console.log(err);
-        },
-        () => {
-          this.obsApiarySubject.complete();
-        }
-      );
+    return this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, this.rangeObs);
   }
   createObservation(observation: Observation): Observable<Observation> {
     return this.http.put<Observation>(CONFIG.URL + 'report/insert', observation);
