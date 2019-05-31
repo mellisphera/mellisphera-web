@@ -28,33 +28,6 @@ import { UserParamsService } from '../../../preference-config/service/user-param
     selector: 'app-ruche-detail',
     templateUrl: './ruche.detail.component.html',
     styleUrls: ['./ruche.detail.component.scss'],
-    animations: [
-        trigger('animationOption1', [
-          state('start', style({
-            backgroundColor: 'yellow',
-            width: '150px',
-            height: '150px'
-          })),
-          state('end', style({
-            backgroundColor: 'green',
-            width: '300px',
-            height: '300px'
-          })),
-          transition('start => end', animate(1500)),
-          transition('end => start', animate('800ms 0.5s ease-out'))
-        ]),
-        trigger('animationOption2', [
-          state('close', style({
-            opacity: 0,
-            backgroundColor: 'yellow'
-          })),
-          state('open', style({
-            opacity: 1,
-            backgroundColor: 'green'
-          })),
-          transition('close <=> open', animate(3000)),
-        ])
-      ]
 })
 
 export class RucheDetailComponent implements OnInit, OnDestroy {
@@ -108,6 +81,8 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             }
         };
         this.ranges = [
+            { scale: 3, type: 'DAY' },
+            { scale: 7, type: 'DAY' },
             { scale: 15, type: 'DAY' },
             { scale: 30, type: 'DAY' },
             { scale: 3, type: 'MONTH' },

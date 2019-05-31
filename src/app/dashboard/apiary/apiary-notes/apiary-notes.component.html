@@ -24,16 +24,13 @@
               </tr>
             </thead>
             <tbody>
-              <span style="display:none;">{{  observationService.observationsApiary.length }}</span>
-              <tr *ngFor="let ap of observationService.observationsApiary; let i = index;">
+              <tr *ngFor="let apiaryNote of obsApiary | async">
                 <td>
-                  {{ ap.date | myDate }}
+                  i
                 </td>
-  
                 <td>
-                  {{ap.sentence}}
                 </td>
-                <td class="text-right">
+<!--                 <td class="text-right">
                   <button data-toggle="tooltip" data-html="true" title="Edit observation" data-toggle="modal"
                     type="button" data-target="#editObservationModal" (click)="onSelectObs(ap)"
                     class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
@@ -45,7 +42,7 @@
                     style="padding: 0;border: none; background: none;">
                     <i class="fa fa-times"></i>
                   </button>
-                </td>
+                </td> -->
               </tr>
             </tbody>
           </table>
