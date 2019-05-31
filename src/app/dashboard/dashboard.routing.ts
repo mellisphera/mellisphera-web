@@ -10,11 +10,11 @@ import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.co
 import { MeteoComponent } from './meteo/meteo.component';
 import { AdminComponent } from './admin/admin.component';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
-import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
 import { CapteurComponent } from './capteur/capteur.component';
 import { MelliChartsComponent } from './melli-charts/melli-charts.component';
 import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-component.component';
 import { PreferenceConfigComponent } from './preference-config/preference-config.component';
+import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
 
 const routes: Routes = [
     {

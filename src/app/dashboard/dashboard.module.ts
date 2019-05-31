@@ -19,7 +19,6 @@ import { CapteurService } from './capteur/capteur.service';
 import { RucheRucherComponent } from './apiary/ruche-rucher/ruche.rucher.component';
 import { MeteoComponent } from './meteo/meteo.component';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
-import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
 import { RapportComponent } from './rapport/rapport.component';
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
 import { CapteurComponent } from './capteur/capteur.component';
@@ -45,6 +44,8 @@ import { UnitService } from './service/unit.service';
 import { GraphGlobal } from './graph-echarts/GlobalGraph';
 import { MyDatePipe } from '../pipe/my-date.pipe';
 import { AngularDraggableModule } from 'angular2-draggable';
+import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
+import { ObservationService } from './apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
 
 
 @NgModule({
@@ -80,6 +81,7 @@ import { AngularDraggableModule } from 'angular2-draggable';
     GraphGlobal,
     CapteurService,
     SidebarService,
+    ObservationService,
     UserParamsService
   ],
   declarations: [
@@ -94,15 +96,15 @@ import { AngularDraggableModule } from 'angular2-draggable';
     SearchFleurPipe,
     searchFleurByDate,
     searchFleurByType,
+    ApiaryNotesComponent,
     CapteurComponent,
     StackApiaryComponent,
     RapportComponent,
 
-    ApiaryNotesComponent,
     FleursFloraisonComponent,
     WizardComponent,
     PreferenceConfigComponent,
-    MelliChartsComponent
+    MelliChartsComponent,
   ]
 })
 export class DashboardModule { }
