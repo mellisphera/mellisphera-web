@@ -46,11 +46,16 @@ export class ApiaryNotesComponent implements OnInit {
     this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary()).subscribe(
       data => {
         this.apiaryObs = data;
-        this.observationService.emitApiarySubject();
       }
     )
   }
 
+  /**
+   *
+   *
+   * @param {Observation} obs
+   * @memberof ApiaryNotesComponent
+   */
   onSelectObs(obs: Observation) {
     this.hiveToMv = this.rucherService.rucheService.ruches[0];
     this.newObs = obs;
@@ -62,6 +67,11 @@ export class ApiaryNotesComponent implements OnInit {
     this.observationForm.setValue(donnée);
   }
 
+  /**
+   *
+   *
+   * @memberof ApiaryNotesComponent
+   */
   mvToActions() {
     this.newObs.type = this.typeToMv === 0 ? 'HiveObs' : 'HiveAct';
     this.newObs.idApiary = null;
@@ -70,10 +80,14 @@ export class ApiaryNotesComponent implements OnInit {
     const index = this.apiaryObs.indexOf(this.newObs);
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
       this.apiaryObs.splice(index, 1);
-      this.observationService.emitApiarySubject();
       this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
     });
   }
+  /**
+   *
+   *
+   * @memberof ApiaryNotesComponent
+   */
   createObservation() {
     const formValue = this.observationForm.value;
     this.newObs = formValue;
@@ -82,11 +96,18 @@ export class ApiaryNotesComponent implements OnInit {
     this.initForm();
     this.observationService.createObservation(this.newObs).subscribe((obs) => {
       this.apiaryObs.push(obs);
+      this.apiaryObs.sort((a: Observation, b: Observation) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
     }, () => { }, () => {
-      this.observationService.emitApiarySubject();
       this.notify.notify('success', 'Created Note');
     });
   }
+  /**
+   *
+   *
+   * @memberof ApiaryNotesComponent
+   */
   onEditObservation() {
     const formValue = this.observationForm.value;
     this.newObs.sentence = formValue.sentence;
@@ -94,23 +115,38 @@ export class ApiaryNotesComponent implements OnInit {
     const index = this.apiaryObs.indexOf(this.newObs);
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
       this.apiaryObs[index] = this.newObs;
-      this.observationService.emitApiarySubject();
       this.notify.notify('success', 'Updated Note');
     });
   }
+  /**
+   *
+   *
+   * @param {number} index
+   * @param {Observation} obsApiary
+   * @memberof ApiaryNotesComponent
+   */
   deleteObs(index: number, obsApiary: Observation) {
     this.observationService.deleteObservation(obsApiary.id).subscribe(() => { }, () => { }, () => {
       this.apiaryObs.splice(index, 1);
-      this.observationService.emitApiarySubject();
       this.notify.notify('success', 'Deleted Note');
     });
   }
+  /**
+   *
+   *
+   * @memberof ApiaryNotesComponent
+   */
   initForm() {
     this.observationForm = this.formBuilder.group({
       'sentence': [null, Validators.compose([Validators.required])],
       'date': new Date(),
     });
   }
+  /**
+   *
+   *
+   * @memberof ApiaryNotesComponent
+   */
   cancelUpdateRucher() {
     this.updateRucherInput = false;
     this.initForm();
