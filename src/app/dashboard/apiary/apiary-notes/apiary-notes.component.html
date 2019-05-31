@@ -24,10 +24,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let obs of apiaryObs">
+            <tr *ngFor="let obs of apiaryObs; let i = index;">
               <td>{{ obs.date | myDate }}</td>
               <td>{{ obs.sentence }}</td>
-              <td>
+              <td class="text-right">
                 <button data-toggle="tooltip" data-html="true" title="Edit observation" data-toggle="modal"
                   type="button" data-target="#editObservationModal" (click)="onSelectObs(obs)"
                   class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
@@ -46,9 +46,6 @@
       </div>
     </div>
   </div>
-  <ul>
-    <li *ngFor="let obs of apiaryObs">{{ obs.date }}</li>
-  </ul>
 </div>
 
 
