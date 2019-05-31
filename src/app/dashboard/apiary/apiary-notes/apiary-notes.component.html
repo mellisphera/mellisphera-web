@@ -1,56 +1,59 @@
 <div class="row content">
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" href="#collapseTwo"><b>Apiary notes </b></a>
-        </h4>
-      </div>
-      <div id="collapseTwo" class="panel-collapse collapse in">
-        <div class="panel-body">
-          <b class="text-success"></b>
-          <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
-            title="New observation" data-toggle="modal" data-backdrop="false"
-            style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newObservationModal"
-            class="btn btn-success btn-lg">
-            <i class="fa fa-plus"></i>
-          </button>
-  
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Sentence</th>
-                <th class="text-right" scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let apiaryNote of obsApiary | async">
-                <td>
-                  i
-                </td>
-                <td>
-                </td>
-<!--                 <td class="text-right">
-                  <button data-toggle="tooltip" data-html="true" title="Edit observation" data-toggle="modal"
-                    type="button" data-target="#editObservationModal" (click)="onSelectObs(ap)"
-                    class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
-                    <i class="fa fa-edit"></i>
-                  </button>
-                  <button type="button" class="btn btn-warning btn-lg" title="Delete observation"
-                    style="padding: 0;border: none; background: none;" mwlConfirmationPopover
-                    popoverTitle="Delete notes ?" placement="top" (confirm)="deleteObs(i,ap)"
-                    style="padding: 0;border: none; background: none;">
-                    <i class="fa fa-times"></i>
-                  </button>
-                </td> -->
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapseTwo"><b>Apiary notes </b></a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <b class="text-success"></b>
+        <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
+          title="New observation" data-toggle="modal" data-backdrop="false"
+          style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newObservationModal"
+          class="btn btn-success btn-lg">
+          <i class="fa fa-plus"></i>
+        </button>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Sentence</th>
+              <th class="text-right" scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obs of apiaryObs">
+              <td>{{ obs.date | myDate }}</td>
+              <td>{{ obs.sentence }}</td>
+              <td>
+                <button data-toggle="tooltip" data-html="true" title="Edit observation" data-toggle="modal"
+                  type="button" data-target="#editObservationModal" (click)="onSelectObs(obs)"
+                  class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-warning btn-lg" title="Delete observation"
+                  style="padding: 0;border: none; background: none;" mwlConfirmationPopover
+                  popoverTitle="Delete notes ?" placement="top" (confirm)="deleteObs(i,obs)"
+                  style="padding: 0;border: none; background: none;">
+                  <i class="fa fa-times"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-  <div class="modal fade" id="newObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  <ul>
+    <li *ngFor="let obs of apiaryObs">{{ obs.date }}</li>
+  </ul>
+</div>
+
+
+
+<div class="modal fade" id="newObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

@@ -17,6 +17,7 @@ export class UnitService {
   * @memberof UnitService
   */
  getHourlyDate(date: string): string {
+   console.log(date);
    const dtSplit = date.split('T');
    const daily = dtSplit[0];
    const hourly = dtSplit[1].split(':');
