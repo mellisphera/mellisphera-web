@@ -55,6 +55,9 @@ label{
     font-weight: bold;
     color: red;
 }
+#color-items{
+    text-align: center;
+}
 @media (max-width: 991px){
     .navbar-nav > li {
         float: left !important;

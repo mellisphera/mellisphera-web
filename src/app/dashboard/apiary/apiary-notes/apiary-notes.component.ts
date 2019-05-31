@@ -9,6 +9,7 @@ import { RucheInterface } from '../../../_model/ruche';
 import { Observation } from '../../../_model/observation';
 import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-apiary-notes',
@@ -20,7 +21,7 @@ export class ApiaryNotesComponent implements OnInit {
 
   public hiveToMv: RucheInterface;
   public typeToMv: number;
-  message: string;
+  public message: string;
   private selectHive: RucheInterface;
   observationForm: FormGroup;
   private hiveIndex: number;
@@ -28,9 +29,11 @@ export class ApiaryNotesComponent implements OnInit {
   public noteDateTime: Date;
   private username: string;
   private notify: NotifierService;
+  private subscribe: Subscription;
   private newObs: Observation;
   updateRucherInput: boolean;
   public settings: any;
+  public obsApiary: Array<Observation>;
   constructor(private notifyService: NotifierService,
     private userService: UserloggedService,
     public rucherService: RucherService,
@@ -38,6 +41,8 @@ export class ApiaryNotesComponent implements OnInit {
     public observationService: ObservationService,
     public userParams: UserParamsService) {
     this.username = userService.getUser();
+    this.observationService.setRange({scale: 1, type: 'YEAR'});
+    this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
     this.type = 'ApiaryObs';
     this.message = '';
     this.typeToMv = 0;
@@ -45,12 +50,14 @@ export class ApiaryNotesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.observationService.setRange({scale: 1, type: 'YEAR'});
     this.initForm();
     console.log(this.rucherService.rucher);
-    if (!this.observationService.obsApiarySubject.closed) {
-      this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
-    }
+    this.subscribe = this.observationService.obsApiarySubject.subscribe(
+      data => {
+        this.obsApiary = data;
+        console.log(data);
+      }
+    )
   }
 
   /**

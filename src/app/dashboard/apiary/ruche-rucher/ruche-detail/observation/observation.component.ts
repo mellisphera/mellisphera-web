@@ -15,6 +15,7 @@ import { RucheService } from '../../../../service/ruche.service';
 import { Observation } from '../../../../../_model/observation';
 import { Console } from '@angular/core/src/console';
 import { UserParamsService } from '../../../../preference-config/service/user-params.service';
+import { d } from '@angular/core/src/render3';
 @Component({
   selector: 'app-observation',
   templateUrl: './observation.component.html',
