@@ -1,21 +1,16 @@
+import { Component, OnInit } from '@angular/core';
 import { RucherService } from '../../service/rucher.service';
-import { RucheService } from '../../service/ruche.service';
-import { UserloggedService } from '../../../userlogged.service';
-import { MyDate } from '../../../class/MyDate';
-import { NotifierService } from 'angular-notifier';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { RucheInterface } from '../../../_model/ruche';
-import { Observation } from '../../../_model/observation';
 import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
-import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { Subscription } from 'rxjs';
+import { Observation } from '../../../_model/observation';
+import { NotifierService } from 'angular-notifier';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RucheInterface } from '../../../_model/ruche';
 
 @Component({
   selector: 'app-apiary-notes',
   templateUrl: './apiary-notes.component.html',
-  styleUrls: ['./apiary-notes.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./apiary-notes.component.css']
 })
 export class ApiaryNotesComponent implements OnInit {
 
@@ -23,57 +18,43 @@ export class ApiaryNotesComponent implements OnInit {
   public typeToMv: number;
   public message: string;
   private selectHive: RucheInterface;
-  observationForm: FormGroup;
+  public observationForm: FormGroup;
   private hiveIndex: number;
-  type: string;
+  public type: string;
   public noteDateTime: Date;
   private username: string;
   private notify: NotifierService;
   private subscribe: Subscription;
   private newObs: Observation;
-  updateRucherInput: boolean;
+  public updateRucherInput: boolean;
   public settings: any;
-  public obsApiary: Array<Observation>;
-  constructor(private notifyService: NotifierService,
-    private userService: UserloggedService,
-    public rucherService: RucherService,
-    private formBuilder: FormBuilder,
-    public observationService: ObservationService,
-    public userParams: UserParamsService) {
-    this.username = userService.getUser();
-    this.observationService.setRange({scale: 1, type: 'YEAR'});
-    this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
-    this.type = 'ApiaryObs';
-    this.message = '';
-    this.typeToMv = 0;
-    this.notify = notifyService;
+  private obsSubject: Subscription;
+  public apiaryObs: Array<Observation>;
+  constructor(public rucherService: RucherService,
+    private notifyService: NotifierService,
+    private observationService: ObservationService,
+    private formBuilder: FormBuilder) {
+      this.type = 'ApiaryObs';
+      this.message = '';
+      this.typeToMv = 0;
+      this.notify = notifyService;
   }
 
   ngOnInit() {
     this.initForm();
-    console.log(this.rucherService.rucher);
-    this.subscribe = this.observationService.obsApiarySubject.subscribe(
+    this.observationService.setRange({ scale: 1, type: 'YEARS' });
+    this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary()).subscribe(
       data => {
-        this.obsApiary = data;
-        console.log(data);
+        this.apiaryObs = data;
+        this.observationService.emitApiarySubject();
       }
     )
   }
 
-  /**
-   *
-   *
-   * @param {Date} date
-   * @returns {Date}
-   * @memberof ApiaryNotesComponent
-   */
-  getLocalDate(date: Date): string{
-    let dt = new Date(date);
-    return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
-  }
   onSelectObs(obs: Observation) {
     this.hiveToMv = this.rucherService.rucheService.ruches[0];
     this.newObs = obs;
+    console.log(this.newObs);
     const donnée = {
       sentence: this.newObs.sentence,
       date: new Date(obs.date)
@@ -86,9 +67,9 @@ export class ApiaryNotesComponent implements OnInit {
     this.newObs.idApiary = null;
     this.newObs.idHive = this.hiveToMv.id;
     this.newObs.idLHive = new Array(this.hiveToMv.id);
-    const index = this.observationService.observationsApiary.indexOf(this.newObs);
+    const index = this.apiaryObs.indexOf(this.newObs);
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
-      this.observationService.observationsApiary.splice(index, 1);
+      this.apiaryObs.splice(index, 1);
       this.observationService.emitApiarySubject();
       this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
     });
@@ -100,7 +81,7 @@ export class ApiaryNotesComponent implements OnInit {
     this.newObs.type = 'ApiaryObs';
     this.initForm();
     this.observationService.createObservation(this.newObs).subscribe((obs) => {
-      this.observationService.observationsApiary.push(obs);
+      this.apiaryObs.push(obs);
     }, () => { }, () => {
       this.observationService.emitApiarySubject();
       this.notify.notify('success', 'Created Note');
@@ -110,16 +91,16 @@ export class ApiaryNotesComponent implements OnInit {
     const formValue = this.observationForm.value;
     this.newObs.sentence = formValue.sentence;
     this.newObs.date = formValue.date;
-    const index = this.observationService.observationsApiary.indexOf(this.newObs);
+    const index = this.apiaryObs.indexOf(this.newObs);
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
-      this.observationService.observationsApiary[index] = this.newObs;
+      this.apiaryObs[index] = this.newObs;
       this.observationService.emitApiarySubject();
       this.notify.notify('success', 'Updated Note');
     });
   }
   deleteObs(index: number, obsApiary: Observation) {
     this.observationService.deleteObservation(obsApiary.id).subscribe(() => { }, () => { }, () => {
-      this.observationService.observationsApiary.splice(index, 1);
+      this.apiaryObs.splice(index, 1);
       this.observationService.emitApiarySubject();
       this.notify.notify('success', 'Deleted Note');
     });
@@ -137,5 +118,6 @@ export class ApiaryNotesComponent implements OnInit {
   receiveMessage($event) {
     this.message = $event;
   }
+
 
 }
