@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DailyStockHoneyService } from '../service/daily-stock-honey.service';
 import { RecordService } from '../service/Record/record.service';
 import { ObservationService } from './service/observation.service';
-import { FormGroup, FormBuilder,Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RucheService } from '../../../../service/ruche.service';
 import { Observation } from '../../../../../_model/observation';
 import { Console } from '@angular/core/src/console';
@@ -23,14 +23,14 @@ import { d } from '@angular/core/src/render3';
 })
 export class ObservationComponent implements OnInit {
 
-  ObservationForm : FormGroup;
+  ObservationForm: FormGroup;
   radioObs: boolean;
   typeAjout: any;
   private newObs: Observation;
   private notifier: NotifierService;
   typeObs: boolean;
   optionsDate = {
-    weekday:'short',year:'numeric',month:'long',day:'2-digit',hour: 'numeric', minute: 'numeric', second: 'numeric',
+    weekday: 'short', year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric',
   };
 
   //observationsHive : ProcessReport[] = [];
@@ -44,11 +44,11 @@ export class ObservationComponent implements OnInit {
     private rucheService: RucheService,
     private notifyService: NotifierService,
     public userParamService: UserParamsService
-    ) {
-      this.typeObs = false;
-      this.notifier = notifyService;
-      this.initForm();
-    }
+  ) {
+    this.typeObs = false;
+    this.notifier = notifyService;
+    this.initForm();
+  }
 
   ngOnInit() {
   }
@@ -67,59 +67,69 @@ export class ObservationComponent implements OnInit {
   createObservation() {
     const formValue = this.ObservationForm.value;
     this.newObs = formValue;
+    console.log(this.newObs.date);
     this.newObs.type = 'HiveObs';
     this.newObs.idHive = this.rucheService.getCurrentHive();
     this.newObs.idLHive = [this.rucheService.getCurrentHive()];
     this.ObservationForm.reset();
-    this.observationService.createObservation(this.newObs).subscribe( (obs) => {
+    this.observationService.createObservation(this.newObs).subscribe((obs) => {
       this.observationService.observationsHive.push(obs);
-    }, () => {}, () => {
+      this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
+    }, () => { }, () => {
       this.observationService.emitHiveSubject();
+      this.initForm();
       this.notifier.notify('success', 'Created Note');
     });
   }
   createAction() {
     const formValue = this.ObservationForm.value;
     this.newObs = formValue;
+    console.log(this.newObs.date);
     this.newObs.type = 'HiveAct';
     this.newObs.idHive = this.rucheService.getCurrentHive();
     this.newObs.idLHive = [this.rucheService.getCurrentHive()];
     this.ObservationForm.reset();
-    this.observationService.createObservation(this.newObs).subscribe( (obs) => {
+    this.observationService.createObservation(this.newObs).subscribe((obs) => {
       this.observationService.observationsHive.push(obs);
-    }, () => {}, () => {
+      this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
+    }, () => { }, () => {
       this.observationService.emitHiveSubject();
-      this.notifier.notify('success','Created Action');
+      this.notifier.notify('success', 'Created Action');
     });
   }
   onSelectObsR(hiveOBS) {
     this.newObs = hiveOBS;
     const donnée = {
-      sentence : this.newObs.sentence,
-      type : this.newObs.type,
-      date : new Date(this.newObs.date)
+      sentence: this.newObs.sentence,
+      type: this.newObs.type,
+      date: new Date(this.newObs.date)
     };;
     this.ObservationForm.setValue(donnée);
   }
 
   onEditObservation() {
-   const formValue = this.ObservationForm.value;
-   this.newObs.sentence = formValue.sentence;
-   this.newObs.date = formValue.date;
-   this.newObs.type = formValue.type;
-   const index = this.observationService.observationsHive.indexOf(this.newObs);
-   this.ObservationForm.reset();
-   this.observationService.updateObservation(this.newObs).subscribe(() => {}, () => {}, () => {
-     this.observationService.observationsHive[index] = this.newObs;
-     this.observationService.emitHiveSubject();
-     this.notifier.notify('success', 'Updated Note');
-   });
+    const formValue = this.ObservationForm.value;
+    this.newObs.sentence = formValue.sentence;
+    this.newObs.date = formValue.date;
+    this.newObs.type = formValue.type;
+    console.log(this.newObs.date);
+   /*  const index = this.observationService.observationsHive.indexOf(this.newObs);
+    this.initForm();
+    this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
+      this.observationService.observationsHive[index] = this.newObs;
+      this.observationService.emitHiveSubject();
+      this.notifier.notify('success', 'Updated Note');
+    }); */
   }
   deleteObsR(index: number, hiveObs: Observation) {
-    this.observationService.deleteObservation(hiveObs.id).subscribe(() => {}, () => {}, () => {
+    this.observationService.deleteObservation(hiveObs.id).subscribe(() => { }, () => { }, () => {
       this.observationService.observationsHive.splice(index, 1);
       this.observationService.emitHiveSubject();
-      this.notifier.notify('success','Deleted Note');
+      this.notifier.notify('success', 'Deleted Note');
     });
   }
   resetObservationForm() {

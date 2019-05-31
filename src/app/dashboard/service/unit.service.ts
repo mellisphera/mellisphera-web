@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserPref } from '../../_model/user-pref';
+import { isObject } from 'rxjs/internal/util/isObject';
+import { isString } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +19,17 @@ export class UnitService {
   * @memberof UnitService
   */
  getHourlyDate(date: string): string {
-   const dtSplit = date.split('T');
-   const daily = dtSplit[0];
-   const hourly = dtSplit[1].split(':');
-   const newInstanceDate = new Date(daily);
-   newInstanceDate.setHours(parseInt(hourly[0], 10));
-   newInstanceDate.setMinutes(parseInt(hourly[1], 10));
+   if (isString(date)) {
+    const dtSplit = date.split('T');
+    const daily = dtSplit[0];
+    const hourly = dtSplit[1].split(':');
+    var newInstanceDate = new Date(daily);
+    newInstanceDate.setHours(parseInt(hourly[0], 10));
+    newInstanceDate.setMinutes(parseInt(hourly[1], 10));
+   } else {
+     var newInstanceDate = new Date(date);
+   }
+   
    return this.getUserPref().timeFormat.replace(/Y/g, String(newInstanceDate.getFullYear()))
    .replace(/M/g, String(newInstanceDate.getMonth() + 1))
    .replace(/D/g, String(newInstanceDate.getDate()))

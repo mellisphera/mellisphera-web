@@ -101,7 +101,6 @@ export class NavbarComponent implements OnInit {
     logout() {
         this.rucherService.rucherSubject.unsubscribe();
         this.rucheService.hiveSubject.unsubscribe();
-        this.observationService.obsApiarySubject.unsubscribe();
         this.observationService.obsHiveSubject.unsubscribe();
         this.authService.isAuthenticated = false;
         this.capteurService.sensorSubject.unsubscribe();
