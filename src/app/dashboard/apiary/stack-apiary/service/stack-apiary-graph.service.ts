@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as echarts from 'echarts';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
+import { UnitService } from '../../../service/unit.service';
+import { Timestamp } from 'rxjs/Rx';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +11,26 @@ export class StackApiaryGraphService {
 
   echartsUtil: any;
   options: any;
-  constructor(private configGraph: GraphGlobal) {
+  constructor(private configGraph: GraphGlobal, private unitService: UnitService) {
     this.echartsUtil = (<any>echarts).util;
     this.options = {
       tooltip: {
         trigger: 'axis',
         axisPointer: {
           animation: false
+        },
+        formatter: (params) => {
+          return this.unitService.getHourlyDate(params[0].name) + '<br/>' +
+            params.map((elt: any) => {
+              return elt.marker + elt.seriesName + ': ' + elt.data.value[1];
+            }).join('<br/>');
         }
       },
       legend: {
         orient: 'horizontal',
         data: [],
         y: '2%'
-       // show: false
+        // show: false
       },
       axisPointer: {
         link: { xAxisIndex: 'all' }
@@ -51,7 +59,7 @@ export class StackApiaryGraphService {
           start: 0,
           end: 100,
           // bottom: 50,
-           bottom: 20,
+          bottom: 20,
           xAxisIndex: [0, 1, 2]
         },
         {
@@ -91,23 +99,29 @@ export class StackApiaryGraphService {
           splitLine: {
             show: true
           },
-/*           axisLabel: {
-            show: false
-          } */
+          axisLabel: {
+            show: true,
+            formatter: (value: number, index: number) => {
+              return new Date(value).getHours() === 0 ? this.unitService.getDailyDate(new Date(value)) :  this.unitService.getHourlyDate(new Date(value));
+            }
+          }
         },
         {
           type: 'time',
           boundaryGap: false,
-          axisLine: { onZero: true},
+          axisLine: { onZero: true },
           position: 'bottom',
           gridIndex: 1,
           max: new Date(),
           splitLine: {
             show: true
           },
-/*           axisLabel: {
-            show: false
-          } */
+          axisLabel: {
+            show: true,
+            formatter: (value: number, index: number) => {
+              return new Date(value).getHours() === 0 ? this.unitService.getDailyDate(new Date(value)) :  this.unitService.getHourlyDate(new Date(value));
+            }
+          }
         },
         {
           type: 'time',
@@ -118,6 +132,12 @@ export class StackApiaryGraphService {
           max: new Date(),
           splitLine: {
             show: true
+          },
+          axisLabel: {
+            show: true,
+            formatter: (value: number, index: number) => {
+              return new Date(value).getHours() === 0 ? this.unitService.getDailyDate(new Date(value)) :  this.unitService.getHourlyDate(new Date(value));
+            }
           }
         },
       ],
