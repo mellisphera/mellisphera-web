@@ -82,6 +82,7 @@ export class RecordService {
       records.map(res => {
         if (sensor.indexOf(res.sensorRef) === -1) {
           sensor.push(res.sensorRef);
+          res.recordDate = new Date(res.recordDate);
         }
       });
       sensor.forEach(elt => {
@@ -92,7 +93,7 @@ export class RecordService {
             data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
               return {
                 name: recRes.recordDate,
-                value: [this.unitService.getHourlyDate(recRes.recordDate + ''),
+                value: [recRes.recordDate,
                   this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
                 sensorRef: recRes.sensorRef
               };
