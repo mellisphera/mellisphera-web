@@ -92,6 +92,7 @@ export class ApiaryNotesComponent implements OnInit {
     this.newObs = formValue;
     this.newObs.idApiary = this.rucherService.rucher.id;
     this.newObs.type = 'ApiaryObs';
+    console.log(this.newObs);
     this.initForm();
     this.observationService.createObservation(this.newObs).subscribe((obs) => {
       this.apiaryObs.push(obs);
