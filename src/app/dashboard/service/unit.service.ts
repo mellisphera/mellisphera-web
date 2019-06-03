@@ -19,7 +19,7 @@ export class UnitService {
    * @memberof UnitService
    */
   getHourlyDate(date: string | Date): string {
-    if (isString(date)) {
+    if (isString(date)) {  
       const dtSplit = date.split('T');
       const daily = dtSplit[0];
       const hourly = dtSplit[1].split(':');
@@ -77,6 +77,11 @@ export class UnitService {
 
   getUserPref(): UserPref {
     return JSON.parse(window.sessionStorage.getItem('jwtReponse')).userPref;
+  }
+
+  getLocalDate(dateUtc: Date): Date {
+    console.log(dateUtc);
+    return new Date(Date.UTC(dateUtc.getFullYear(), dateUtc.getMonth(), dateUtc.getDate(), dateUtc.getHours(), dateUtc.getMinutes()));
   }
 
   /**
