@@ -166,7 +166,6 @@ export class DailyRecordsWService {
           this.dailyRec = data;
           this.getArray();
           this.updateCalendar();
-          console.log(this.dailyRecArray);
         } else {
           console.log('Aucune');
           this.updateCalendar();

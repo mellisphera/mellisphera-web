@@ -78,4 +78,7 @@ li{
     #col-graph{
         width: 100% !important;
     }
+    #apiary-group{
+        height: 100%;
+    }
 }

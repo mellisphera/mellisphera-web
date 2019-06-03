@@ -85,8 +85,6 @@ export class RecordService {
         }
       });
       sensor.forEach(elt => {
-        console.log(elt);
-        console.log(elt.startsWith('43'));
         if (elt.startsWith('41')) {
           series.push({
             name: hiveName + ' / Temp-int (' + elt + ')',
@@ -325,7 +323,6 @@ export class RecordService {
             },
           });
         } else if (elt.startsWith('43')) {
-          console.log('ok');
           series = series.concat([
             {
               data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
