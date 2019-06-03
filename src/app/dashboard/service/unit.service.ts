@@ -30,7 +30,8 @@ export class UnitService {
      var newInstanceDate = new Date(date);
    }
    
-   return this.getUserPref().timeFormat.replace(/Y/g, String(newInstanceDate.getFullYear()))
+   return this.getUserPref().timeFormat
+   .replace(/Y/g, String(newInstanceDate.getFullYear()))
    .replace(/M/g, String(newInstanceDate.getMonth() + 1))
    .replace(/D/g, String(newInstanceDate.getDate()))
    .replace(/h/g, String(newInstanceDate.getHours()))
@@ -92,8 +93,13 @@ export class UnitService {
     }
   }
 
-
-
+  /**
+   *
+   *
+   * @param {number} value
+   * @returns {number}
+   * @memberof UnitService
+   */
   getValRound(value: number): number{
     const tmp = Math.pow(10, 2);
     return Math.round( value * tmp ) / tmp;
