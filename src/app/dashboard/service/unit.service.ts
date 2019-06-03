@@ -11,62 +11,63 @@ export class UnitService {
   constructor() { }
 
 
- /**
-  *
-  *
-  * @param {string} date
-  * @returns {string}
-  * @memberof UnitService
-  */
- getHourlyDate(date: string): string {
-   if (isString(date)) {
-    const dtSplit = date.split('T');
-    const daily = dtSplit[0];
-    const hourly = dtSplit[1].split(':');
-    var newInstanceDate = new Date(daily);
-    newInstanceDate.setHours(parseInt(hourly[0], 10));
-    newInstanceDate.setMinutes(parseInt(hourly[1], 10));
-   } else {
-     var newInstanceDate = new Date(date);
-   }
-   
-   return this.getUserPref().timeFormat
-   .replace(/Y/g, String(newInstanceDate.getFullYear()))
-   .replace(/M/g, String(newInstanceDate.getMonth() + 1))
-   .replace(/D/g, String(newInstanceDate.getDate()))
-   .replace(/h/g, String(newInstanceDate.getHours()))
-   .replace(/m/g, String(newInstanceDate.getMinutes()));
- }
-
- /**
-  *
-  *
-  * @param {Date} date
-  * @returns {string}
-  * @memberof UnitService
-  */
- getDailyDate(date: string): string {
-   let newInstanceDate = null;
-   if (date.indexOf('T')) {
-    newInstanceDate = new Date(date.split('T')[0]);
-   } else {
-    newInstanceDate = new Date(date);
-   }
-   return this.getUserPref().timeFormat.replace(/Y/g, String(newInstanceDate.getFullYear()))
-   .replace(/M/g, String(newInstanceDate.getMonth() + 1))
-   .replace(/D/g, String(newInstanceDate.getDate()))
-   .replace(/h:m/g, '');
- }
-
-
-    /**
+  /**
    *
    *
-   * @param {number} temp
-   * @returns {number}
-   * @memberof UserParamsService
+   * @param {string} date
+   * @returns {string}
+   * @memberof UnitService
    */
-   convertTempFromUsePref(temp: number, unit: string): number {
+  getHourlyDate(date: string | Date): string {
+    if (isString(date)) {
+      const dtSplit = date.split('T');
+      const daily = dtSplit[0];
+      const hourly = dtSplit[1].split(':');
+      var newInstanceDate = new Date(daily);
+      newInstanceDate.setHours(parseInt(hourly[0], 10));
+      newInstanceDate.setMinutes(parseInt(hourly[1], 10));
+    } else {
+      var newInstanceDate = new Date(date);
+    }
+
+    return this.getUserPref().timeFormat
+      .replace(/Y/g, String(newInstanceDate.getFullYear()))
+      .replace(/M/g, String(newInstanceDate.getMonth() + 1))
+      .replace(/D/g, String(newInstanceDate.getDate()))
+      .replace(/h/g, String(newInstanceDate.getHours()))
+      .replace(/m/g, String(newInstanceDate.getMinutes()));
+  }
+
+  /**
+   *
+   *
+   * @param {Date} date
+   * @returns {string}
+   * @memberof UnitService
+   */
+  getDailyDate(date: string | Date): string {
+    let newInstanceDate = null;
+    if (isString(date)) {
+      if (date.indexOf('T')) {
+        newInstanceDate = new Date(date.split('T')[0]);
+      }
+    }
+    newInstanceDate = new Date(date);
+   return this.getUserPref().timeFormat.replace(/Y/g, String(newInstanceDate.getFullYear()))
+      .replace(/M/g, String(newInstanceDate.getMonth() + 1))
+      .replace(/D/g, String(newInstanceDate.getDate()))
+      .replace(/h:m/g, '');
+  }
+
+
+  /**
+ *
+ *
+ * @param {number} temp
+ * @returns {number}
+ * @memberof UserParamsService
+ */
+  convertTempFromUsePref(temp: number, unit: string): number {
     if (unit === 'IMPERIAL') {
       return this.getValRound(temp * 9 / 5 + 32);
     } else {
@@ -100,8 +101,8 @@ export class UnitService {
    * @returns {number}
    * @memberof UnitService
    */
-  getValRound(value: number): number{
+  getValRound(value: number): number {
     const tmp = Math.pow(10, 2);
-    return Math.round( value * tmp ) / tmp;
+    return Math.round(value * tmp) / tmp;
   }
 }
