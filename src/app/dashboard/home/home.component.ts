@@ -107,7 +107,6 @@ export class HomeComponent implements OnInit {
     const widthcontainer = container.offsetWidth;
     console.log('largeur', + widthcontainer);
     const heightcontainer = container.offsetHeight;
-    console.log(ruche);
     let xHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosX, 10), widthcontainer);
     let yHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosY, 10), heightcontainer);
     console.log('ruche en px : ' + xHivePx + '-' + yHivePx);
