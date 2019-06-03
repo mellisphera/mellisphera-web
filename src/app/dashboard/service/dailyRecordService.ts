@@ -43,7 +43,6 @@ export class DailyRecordService {
     }
 
     getByHive(idHive: string) {
-        console.log(this.unitSystem);
         return this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/hive/' + idHive).map(res => {
             this.arrayTempInt = res.filter(elt => elt.temp_int_max !== null).
                 map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
@@ -262,7 +261,6 @@ export class DailyRecordService {
             (data) => {
                 if (data[0] != null) {
                     this.dailyRecords = data;
-                    console.log(this.dailyRecords);
 
                 }
             },
