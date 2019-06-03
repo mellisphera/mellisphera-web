@@ -148,7 +148,6 @@ export class StackApiaryComponent implements OnInit {
     },
     (err) => {},
     () => {
-      console.log(this.recordService.mergeOptionStackApiary.series);
       const observableObs = this.stackService.getHiveSelect().filter(hive => hive.id !== '')
       .map(hive => this.observationService.getObservationByIdHive(hive.id, hive.name));
       Observable.forkJoin(observableObs).subscribe(data => {
@@ -189,7 +188,6 @@ export class StackApiaryComponent implements OnInit {
         this.recordService.getRecordByIdHive(selectHive.id, selectHive.name,
           this.recordService.mergeOptionStackApiary, false, this.getColor(selectHive))
           .subscribe((data) => {
-            console.log(data);
             // this.recordService.mergeOptionStackApiary = data;
              this.observationService.getObservationByIdHive(selectHive.id, selectHive.name).subscribe(
               obsData => {
@@ -223,7 +221,6 @@ export class StackApiaryComponent implements OnInit {
       this.zoomChange --;
     }
     if (this.zoomChange > 1) {
-      console.log('ok');
     }
   }
 

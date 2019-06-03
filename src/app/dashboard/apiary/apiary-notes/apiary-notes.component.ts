@@ -59,7 +59,6 @@ export class ApiaryNotesComponent implements OnInit {
   onSelectObs(obs: Observation) {
     this.hiveToMv = this.rucherService.rucheService.ruches[0];
     this.newObs = obs;
-    console.log(this.newObs);
     const donnée = {
       sentence: this.newObs.sentence,
       date: new Date(obs.date)
