@@ -18,6 +18,7 @@ import {
   // ...
 } from '@angular/animations';
 import { Position } from 'angular2-draggable';
+import { UnitService } from '../service/unit.service';
 
 @Component({
   selector: 'app-home',
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit {
     public rucheService: RucheService,
     public rucherService: RucherService,
     private route: Router,
+    private unitService: UnitService,
     public authService: AuthService) {
     this.username = this.login.getUser();
     this.photoApiary = null;
@@ -70,10 +72,16 @@ export class HomeComponent implements OnInit {
     this.message = $event;
 
   }
-  getDateDaily() {
-    return this.dailyRecTh.rangeDailyRecord.toDateString();
+  /**
+   *
+   *
+   * @returns {string}
+   * @memberof HomeComponent
+   */
+  getDateDaily(): string {
+    return this.unitService.getDailyDate(this.dailyRecTh.rangeDailyRecord.toISOString());
   }
-  ngOnInit() {
+  ngOnInit(): void {
     if (!this.rucherService.rucherSubject.closed) {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
         this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
@@ -87,12 +95,18 @@ export class HomeComponent implements OnInit {
 
   }
 
-  onMoveEnd(event, ruche: RucheInterface) {
+  /**
+   *
+   *
+   * @param {*} event
+   * @param {RucheInterface} ruche
+   * @memberof HomeComponent
+   */
+  onMoveEnd(event, ruche: RucheInterface): void {
     const container = document.getElementById("cadre");
     const widthcontainer = container.offsetWidth;
     console.log('largeur', + widthcontainer);
     const heightcontainer = container.offsetHeight;
-    console.log(ruche);
     let xHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosX, 10), widthcontainer);
     let yHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosY, 10), heightcontainer);
     console.log('ruche en px : ' + xHivePx + '-' + yHivePx);
@@ -113,55 +127,49 @@ export class HomeComponent implements OnInit {
         this.position.y = 0;
       }
     )
-    console.log(event.x + '-' + event.y);
   }
 
 
-  getPositionPxToPourcent(value: number, total: number): any {
+  /**
+   *
+   *
+   * @param {number} value
+   * @param {number} total
+   * @returns {number}
+   * @memberof HomeComponent
+   */
+  getPositionPxToPourcent(value: number, total: number): number {
     return (value * total) / 100;
   }
-  /* Calcule les positions */
-  /*   getPosition(position: any) {
-      const container = document.getElementById("cadre");
-  
-      const widthcontainer = container.offsetWidth;
-      const heightcontainer = container.offsetHeight; 
-  
-      const coordonnes = position.transform.slice(10, position.transform.length - 1);
-      let left = parseInt(position.left, 10);
-      let top = parseInt(position.top, 10);
-      left = this.getPourcentToPx(left,widthcontainer);
-      top = this.getPourcentToPx(top,heightcontainer);
-  
-      const deplacement = coordonnes.split(',');
-  
-      deplacement[0] = parseInt(deplacement[0].slice(0,deplacement[0].length-2));
-      deplacement[1] = parseInt(deplacement[1].slice(0,deplacement[1].length-2));
-  
-      this.position.x = '' + (parseInt(left+deplacement[0]) *100) / widthcontainer;
-      this.position.y  ='' + (parseInt(top+deplacement[1]) *100) / heightcontainer;
-      if(parseInt(this.position.x) > 99 || parseInt(this.position.x) < 0){
-        this.position.x = ""+50;
-        this.position.y = ""+50;
-      }
-      if(parseInt(this.position.y) > 99 || parseInt(this.position.y) < 0){
-        this.position.x = ""+50;
-        this.position.y = ""+50;
-      }
-      console.log(this.position);
-    } */
 
-  getPourcentToPx(valuePx: number, total: number) {
+  /**
+   *
+   *
+   * @param {number} valuePx
+   * @param {number} total
+   * @returns {number}
+   * @memberof HomeComponent
+   */
+  getPourcentToPx(valuePx: number, total: number): number {
     return (valuePx / total) * 100;
 
   }
-  /* Pour chaque rucher selectionner */
-  saveBackground() {
+  /**
+   *
+   *
+   * @memberof HomeComponent
+   */
+  saveBackground(): void {
     this.rucherService.updateBackgroundApiary(this.rucherService.rucher.id);
     this.photoApiary = null;
   }
 
-  cancelBackground() {
+  /**
+   *
+   *
+   * @memberof HomeComponent
+   */
+  cancelBackground(): void {
     this.rucherService.rucher.photo = this.rucherService.currentBackground;
     this.photoApiary = null;
   }
