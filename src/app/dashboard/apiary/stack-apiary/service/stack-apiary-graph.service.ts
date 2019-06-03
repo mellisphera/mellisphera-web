@@ -20,7 +20,7 @@ export class StackApiaryGraphService {
           animation: false
         },
         formatter: (params) => {
-          return this.unitService.getHourlyDate(params[0].name) + '<br/>' +
+          return this.unitService.getHourlyDate(new Date(params[0].name)) + '<br/>' +
             params.map((elt: any) => {
               return elt.marker + elt.seriesName + ': ' + elt.data.value[1];
             }).join('<br/>');
@@ -94,6 +94,7 @@ export class StackApiaryGraphService {
           boundaryGap: false,
           axisLine: { onZero: true },
           position: 'bottom',
+          minInterval: 1,
           gridIndex: 0,
           max: new Date(),
           splitLine: {
@@ -101,9 +102,9 @@ export class StackApiaryGraphService {
           },
           axisLabel: {
             show: true,
-            formatter: (value: number, index: number) => {
-              return new Date(value).getHours() === 0 ? this.unitService.getDailyDate(new Date(value)) :  this.unitService.getHourlyDate(new Date(value));
-            }
+             formatter: (value: number, index: number) => {
+              return this.unitService.getHourlyDate(new Date(value));
+            } 
           }
         },
         {
@@ -118,9 +119,9 @@ export class StackApiaryGraphService {
           },
           axisLabel: {
             show: true,
-            formatter: (value: number, index: number) => {
-              return new Date(value).getHours() === 0 ? this.unitService.getDailyDate(new Date(value)) :  this.unitService.getHourlyDate(new Date(value));
-            }
+             formatter: (value: number, index: number) => {
+              return this.unitService.getHourlyDate(new Date(value));
+            } 
           }
         },
         {
@@ -135,10 +136,10 @@ export class StackApiaryGraphService {
           },
           axisLabel: {
             show: true,
-            formatter: (value: number, index: number) => {
-              return new Date(value).getHours() === 0 ? this.unitService.getDailyDate(new Date(value)) :  this.unitService.getHourlyDate(new Date(value));
-            }
-          }
+             formatter: (value: number, index: number) => {
+              return this.unitService.getHourlyDate(new Date(value));
+            } 
+          } 
         },
       ],
       yAxis: [
