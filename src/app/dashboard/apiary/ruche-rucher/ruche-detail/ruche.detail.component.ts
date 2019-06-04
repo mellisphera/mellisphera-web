@@ -228,25 +228,6 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             }
         } else if (this.currentTab.indexOf('health') !== -1) {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
-        } else if (this.currentTab.indexOf('stack') !== -1) {
-            if (this.recordService.currentIdHive !== this.rucheService.getCurrentHive()) {
-                this.loadingStack = true;
-                this.recordService.setRange(this.range);
-                this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
-                .subscribe(
-                    (record) => {
-                        this.recordService.mergeOptionStack = record;
-                        if (switchHive) {
-                            this.updateEchartInstance();
-                        }
-                    }, (err) => {
-                        this.loadingStack = false;
-                        console.log(err);
-                    }, () => {
-                        this.loadingStack = false;
-                    }
-                );
-            }
         }
     }
 

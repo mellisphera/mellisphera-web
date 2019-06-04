@@ -90,6 +90,9 @@ export class CalendrierPoidsService {
                 nameMap: this.graphGlobal.getDays(),
                 firstDay: 1, // start on Monday
             },
+            monthLabel: {
+                nameMap: this.graphGlobal.getMonth()
+            },
             yearLabel: {
                 formatter: '{start}-{end}',
                 show: false,
