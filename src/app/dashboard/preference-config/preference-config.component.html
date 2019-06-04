@@ -4,7 +4,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                        Change Password</a>
+                        {{ 'PREFERENCE_CONFIG.TITLE_PASSWORD' | translate}}</a>
                 </h4>
             </div>
             <div id="collapse1" class="panel-collapse collapse in">
@@ -14,29 +14,29 @@
                         <div class="row">
                             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                                 <div class="form-group">
-                                    <label for="newPassword">New password</label>
+                                    <label for="newPassword">{{ 'PREFERENCE_CONFIG.FORM_PASSWORD.NEW' | translate}}</label>
                                     <input formControlName="password" type="password" minlength="6" #passwordVerif
                                         [class]="'form-control ' + checkPassword()" id="newPassword"
-                                        placeholder="password">
+                                        placeholder="{{ 'PREFERENCE_CONFIG.FORM_PASSWORD.PASSWORD' | translate}}">
                                     <span *ngIf="formChangePassword.invalid && formChangePassword.untouched"
-                                        style="color:red;">6 character min</span>
+                                        style="color:red;">{{ 'PREFERENCE_CONFIG.FORM_PASSWORD.CHARACTER' | translate}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="confirmPassword">Confirm password</label>
+                                    <label for="confirmPassword">{{ 'PREFERENCE_CONFIG.FORM_PASSWORD.CONFIRM' | translate}}</label>
                                     <input #login formControlName="confirmPassword"
                                         [class]="'form-control ' + checkPassword()" type="password" class="form-control"
-                                        id="confirmPassword" placeholder="Confirm password">
+                                        id="confirmPassword" placeholder="{{ 'PREFERENCE_CONFIG.FORM_PASSWORD.CONFIRM' | translate}}">
                                 </div>
                                 <div *ngIf="checkPassword() == 'checkOk' ? false: true" class="alert alert-danger">
                                     <button type="button" class="close" data-dismiss="alert"
                                         aria-hidden="true">&times;</button>
-                                    <strong>Error !</strong> Passwords do not match
+                                    <strong>{{ 'PREFERENCE_CONFIG.FORM_PASSWORD.ERROR' | translate}}</strong> {{ 'PREFERENCE_CONFIG.FORM_PASSWORD.NOT_MATCH' | translate}}
                                 </div>
 
                             </div>
                         </div>
                         <button type="submit" [disabled]="formChangePassword.invalid"
-                            class="btn btn-primary">Submit</button>
+                            class="btn btn-primary">{{ 'PREFERENCE_CONFIG.FORM_PASSWORD.SUBMIT' | translate}}</button>
                     </form>
                 </div>
             </div>
@@ -45,7 +45,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                        Format Date</a>
+                        {{ 'PREFERENCE_CONFIG.TITLE_DATE' | translate}}</a>
                 </h4>
             </div>
             <div id="collapse2" class="panel-collapse collapse">
@@ -54,7 +54,7 @@
                         <input type="radio" [(ngModel)]="formatDt" [value]="i"
                             placeholder="Input field"><label>{{ format }}</label>
                     </div>
-                    <button type="button" (click)="saveFormat()" class="btn btn-primary">Save</button>
+                    <button type="button" (click)="saveFormat()" class="btn btn-primary">{{ 'PREFERENCE_CONFIG.SAVE_DATE' | translate}}</button>
                 </div>
             </div>
         </div>
@@ -62,19 +62,19 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                        Unit systems</a>
+                        {{ 'PREFERENCE_CONFIG.TITLE_UNIT' | translate}}</a>
                 </h4>
             </div>
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="panel-body">
                     <div id="unité">
                         <div class="form-group">
-                            <input [(ngModel)]="unitSys" value="METRIC" type="radio" /><label>Metric</label>
+                            <input [(ngModel)]="unitSys" value="METRIC" type="radio" /><label>{{ 'PREFERENCE_CONFIG.FORM_UNIT.METRIC' | translate}}</label>
                         </div>
                         <div class="form-group">
-                            <input [(ngModel)]="unitSys" value="IMPERIAL" type="radio" /><label>Imperial</label>
+                            <input [(ngModel)]="unitSys" value="IMPERIAL" type="radio" /><label>{{ 'PREFERENCE_CONFIG.FORM_UNIT.IMPERIAL' | translate}}</label>
                         </div>
-                        <button type="button" (click)="saveUnit()" class="btn btn-primary">Save</button>
+                        <button type="button" (click)="saveUnit()" class="btn btn-primary">{{ 'PREFERENCE_CONFIG.FORM_UNIT.SAVE' | translate}}</button>
                     </div>
                 </div>
             </div>

@@ -32,7 +32,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class NavbarComponent implements OnInit {
     message: string;
     username: string;
-
+    
     photoApiary: File;
     private listTitles: any[];
 
@@ -72,6 +72,11 @@ export class NavbarComponent implements OnInit {
         this.notifier = this.notifierService;
         this.sidebarVisible = false;
         this.username = userService.getUser();
+        if(this.userService.getJwtReponse().country === "FR"){
+            this.translateService.use("fr");
+        }else{
+            this.translateService.use("en");
+        }
         this.initForm();
         this.newApiary = {
             id: null,
@@ -91,8 +96,8 @@ export class NavbarComponent implements OnInit {
 
     initForm() {
         this.rucherForm = this.formBuilder.group({
-            'name': [null, Validators.compose([Validators.required])],
-            'description': [null],
+            'name': [null, Validators.compose([Validators.required, Validators.maxLength(20)])],
+            'description': [null, Validators.compose([Validators.maxLength(40)])],
             'ville': [null, Validators.compose([Validators.required])],
             'codePostal': [null, Validators.compose([Validators.required])],
             'validate': ``,
@@ -168,7 +173,11 @@ export class NavbarComponent implements OnInit {
                 this.rucherService.ruchers[index] = this.apiaryUpdate;
                 this.rucherService.emitApiarySubject();
                 this.rucherService.rucher = this.apiaryUpdate;
-                this.notifier.notify('success', 'Updated Apiary');
+                if(this.userService.getJwtReponse().country === "FR"){
+                    this.notifier.notify('success', 'Rucher mis à jour');
+                }else{
+                    this.notifier.notify('success', 'Updated Apiary');
+                }
                 this.initForm();
             }
         );
@@ -179,7 +188,11 @@ export class NavbarComponent implements OnInit {
             const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
             this.rucherService.ruchers.splice(index, 1);
             this.rucherService.emitApiarySubject();
-            this.notifier.notify('success', 'Deleted Apaiary');
+            if(this.userService.getJwtReponse().country === "FR"){
+                this.notifier.notify('success', 'Rucher supprimé');
+            }else{
+                this.notifier.notify('success', 'Deleted Apaiary');
+            }
             if (this.rucherService.ruchers.length > 0) {
                 this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
                 this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
@@ -265,7 +278,11 @@ export class NavbarComponent implements OnInit {
             this.rucherService.emitApiarySubject();
             this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
             this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
-            this.notifier.notify('success', 'Created Apiary');
+            if(this.userService.getJwtReponse().country === "FR"){
+                this.notifier.notify('success', 'Rucher créé');
+            }else{
+                this.notifier.notify('success', 'Created Apaiary');
+            }
             this.photoApiary = null;
         });
     }

@@ -163,7 +163,11 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.capteurService.capteur.type = sensorType.trim();
         this.initForm();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
-            this.notifier.notify('success', 'Created sensor');
+            if(this.userService.getJwtReponse().country === "FR"){
+                this.notifier.notify('success', 'Capteur créé');
+              }else{
+                this.notifier.notify('success', 'Created sensor');
+              }
             this.capteurService.getUserCapteurs();
         });
     }
@@ -194,7 +198,11 @@ export class CapteurComponent implements OnInit, OnDestroy {
             }
             this.capteurService.capteursByUser.splice(index, 1);
             this.capteurService.emitSensorSubject();
-            this.notifier.notify('success', 'deleted sensor !');
+            if(this.userService.getJwtReponse().country === "FR"){
+                this.notifier.notify('success', 'Capteur supprimé');
+              }else{
+                this.notifier.notify('success', 'Deleted sensor');
+              }
         });
     }
 
@@ -221,7 +229,11 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
             this.capteurService.capteursByUser[this.indexSensorSelect] = this.capteurService.capteur;
             this.capteurService.emitSensorSubject();
-            this.notifier.notify('success', 'Sensor Update !');
+            if(this.userService.getJwtReponse().country === "FR"){
+                this.notifier.notify('success', 'Capteur mis à jour');
+              }else{
+                this.notifier.notify('success', 'Updated sensor');
+              }
         });
     }
 

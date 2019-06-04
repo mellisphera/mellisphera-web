@@ -34,11 +34,11 @@
 
 <div *ngIf="photoApiary!=null" id="modal">
     <div class="modal-body">
-        <p>Save background?</p>
+        <p>{{ 'HOME.BACK' | translate}}</p>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="saveBackground();">Save changes</button>
+            <button type="button" class="btn btn-primary" (click)="saveBackground();">{{ 'HOME.CHANGE' | translate}}</button>
             <button type="button" class="btn btn-secondary" (click)="cancelBackground();"
-                data-dismiss="modal">Cancel</button>
+                data-dismiss="modal">{{ 'HOME.CANCEL' | translate}}</button>
         </div>
     </div>
 

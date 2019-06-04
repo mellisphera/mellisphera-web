@@ -6,6 +6,7 @@ import { Observation } from '../../../_model/observation';
 import { NotifierService } from 'angular-notifier';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RucheInterface } from '../../../_model/ruche';
+import { UserloggedService } from '../../../userlogged.service';
 
 @Component({
   selector: 'app-apiary-notes',
@@ -33,7 +34,8 @@ export class ApiaryNotesComponent implements OnInit {
   constructor(public rucherService: RucherService,
     private notifyService: NotifierService,
     private observationService: ObservationService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private userService: UserloggedService) {
       this.type = 'ApiaryObs';
       this.message = '';
       this.typeToMv = 0;
@@ -80,7 +82,11 @@ export class ApiaryNotesComponent implements OnInit {
     const index = this.apiaryObs.indexOf(this.newObs);
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
       this.apiaryObs.splice(index, 1);
-      this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
+      if(this.userService.getJwtReponse().country === "FR"){
+        this.notify.notify('success', 'Note déplacée ' + this.hiveToMv.name);
+      }else{
+        this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
+      }
     });
   }
   /**
@@ -100,7 +106,11 @@ export class ApiaryNotesComponent implements OnInit {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       });
     }, () => { }, () => {
-      this.notify.notify('success', 'Created Note');
+      if(this.userService.getJwtReponse().country === "FR"){
+        this.notify.notify('success', 'Note créée');
+      }else{
+        this.notify.notify('success', 'Created Note');
+      }
     });
   }
   /**
@@ -115,7 +125,11 @@ export class ApiaryNotesComponent implements OnInit {
     const index = this.apiaryObs.indexOf(this.newObs);
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
       this.apiaryObs[index] = this.newObs;
-      this.notify.notify('success', 'Updated Note');
+      if(this.userService.getJwtReponse().country === "FR"){
+        this.notify.notify('success', 'Note mis à jour');
+      }else{
+        this.notify.notify('success', 'Updated Note');
+      }
     });
   }
   /**
@@ -128,7 +142,11 @@ export class ApiaryNotesComponent implements OnInit {
   deleteObs(index: number, obsApiary: Observation) {
     this.observationService.deleteObservation(obsApiary.id).subscribe(() => { }, () => { }, () => {
       this.apiaryObs.splice(index, 1);
-      this.notify.notify('success', 'Deleted Note');
+      if(this.userService.getJwtReponse().country === "FR"){
+        this.notify.notify('success', 'Note supprimée');
+      }else{
+        this.notify.notify('success', 'Deleted Note');
+      }
     });
   }
   /**
