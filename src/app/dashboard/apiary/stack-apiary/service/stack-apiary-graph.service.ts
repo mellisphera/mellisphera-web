@@ -20,9 +20,9 @@ export class StackApiaryGraphService {
           animation: false
         },
         formatter: (params) => {
-          return this.unitService.getHourlyDate(new Date(params[0].name)) + '<br/>' +
+          return '<strong>' + this.unitService.getHourlyDate(new Date(params[0].name)) + '</strong></br>' +
             params.map((elt: any) => {
-              return elt.marker + elt.seriesName + ': ' + elt.data.value[1];
+              return elt.marker  + elt.seriesName + ': <b>' + elt.data.value[1] + ' ' + this.configGraph.getUnitBySerieName(elt.seriesName) + '</b>';
             }).join('<br/>');
         }
       },

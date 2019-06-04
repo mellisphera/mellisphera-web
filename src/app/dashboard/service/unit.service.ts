@@ -32,10 +32,10 @@ export class UnitService {
 
     return this.getUserPref().timeFormat
       .replace(/Y/g, String(newInstanceDate.getFullYear()))
-      .replace(/M/g, String(newInstanceDate.getMonth() + 1))
-      .replace(/D/g, String(newInstanceDate.getDate()))
-      .replace(/h/g, String(newInstanceDate.getHours()))
-      .replace(/m/g, String(newInstanceDate.getMinutes()));
+      .replace(/M/g, newInstanceDate.getMonth()+1 < 10 ? '0' + String(newInstanceDate.getMonth() + 1) : String(newInstanceDate.getMonth() + 1 ))
+      .replace(/D/g, newInstanceDate.getDate() < 10 ? '0' + String(newInstanceDate.getDate()) : String(newInstanceDate.getDate()))
+      .replace(/h/g, newInstanceDate.getHours() < 10 ? '0' + String(newInstanceDate.getHours()) : String(newInstanceDate.getHours()))
+      .replace(/m/g, newInstanceDate.getMinutes() < 10 ?  '0' + String(newInstanceDate.getMinutes()) :  String(newInstanceDate.getMinutes()));
   }
 
   /**
@@ -54,8 +54,8 @@ export class UnitService {
     }
     newInstanceDate = new Date(date);
    return this.getUserPref().timeFormat.replace(/Y/g, String(newInstanceDate.getFullYear()))
-      .replace(/M/g, String(newInstanceDate.getMonth() + 1))
-      .replace(/D/g, String(newInstanceDate.getDate()))
+      .replace(/M/g, newInstanceDate.getMonth()+1 < 10 ? '0' + String(newInstanceDate.getMonth() + 1) : String(newInstanceDate.getMonth() + 1 ))
+      .replace(/D/g, newInstanceDate.getDate() < 10 ? '0' + String(newInstanceDate.getDate()) : String(newInstanceDate.getDate()))
       .replace(/h:m/g, '');
   }
 
@@ -71,7 +71,7 @@ export class UnitService {
     if (unit === 'IMPERIAL') {
       return this.getValRound(temp * 9 / 5 + 32);
     } else {
-      return temp;
+      return  this.getValRound(temp);
     }
   }
 
@@ -95,7 +95,7 @@ export class UnitService {
     if (unit === 'IMPERIAL') {
       return this.getValRound(weight * 2.2046);
     } else {
-      return weight;
+      return this.getValRound(weight);
     }
   }
 
@@ -107,7 +107,7 @@ export class UnitService {
    * @memberof UnitService
    */
   getValRound(value: number): number {
-    const tmp = Math.pow(10, 2);
+    const tmp = Math.pow(10, 1);
     return Math.round(value * tmp) / tmp;
   }
 }
