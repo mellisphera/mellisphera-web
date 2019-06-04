@@ -81,6 +81,9 @@ export class CalendrierTempIntService /*extends CalendrierService*/{
             nameMap: this.graphGlobal.getDays(),
             firstDay: 1, // start on Monday
         },
+        monthLabel: {
+            nameMap: this.graphGlobal.getMonth()
+        },
     },
     series: {
         type: 'heatmap',

@@ -201,5 +201,16 @@
             "SENSOR_EDIT" : "Sensor edit",
             "SUCCES" : "successfull !"
         }
+    },
+    "FEEDBACK" : {
+        "TITLE" : "Your feedback",
+        "MESSAGE" : "Send us your feedback",
+        "COMMENT" : "Your comment",
+        "SLACK" : "You can also join the conversation on Slack by",
+        "SIGNUP" : "sign-up",
+        "OR" : "or",
+        "LOGIN" : "login",
+        "SEND" : "Send",
+        "CLOSE" : "Close"
     }
 }

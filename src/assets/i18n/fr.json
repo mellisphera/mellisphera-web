@@ -201,5 +201,16 @@
             "SENSOR_EDIT" : "Capteur modifié",
             "SUCCES" : "Avec succès !"
         }
+    },
+    "FEEDBACK" : {
+        "TITLE" : "Ecrivez-nous !",
+        "MESSAGE" : "Ecrivez-nous !",
+        "COMMENT" : "Votre commentaire",
+        "SLACK" : "Vous pouvez aussi rejoindre notre conversation sur Slack en",
+        "SIGNUP" : "créant un compte",
+        "OR" : "ou",
+        "LOGIN" : "vous connectant",
+        "SEND" : "Envoyer",
+        "CLOSE" : "Fermer"
     }
 }
