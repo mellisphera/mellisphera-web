@@ -12,19 +12,20 @@
           <select [(ngModel)]="rucherService.rucher" style="width: 100%" class="form-control"
             (change)="onSelectRucher()" id="select-Apiary">
             <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">
-              {{rucher.name}} <span class="admin_userApiary" *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" style="color:red;"> => {{ rucher.username }}</span>
+              {{rucher.name}} <span class="admin_userApiary" *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
+                style="color:red;"> => {{ rucher.username }}</span>
             </option>
           </select>
 
         </li>
         <li>
-          <button data-backdrop="false" data-toggle="tooltip" data-html="true" title="New apiary" data-backdrop="false" data-toggle="modal"
-            data-target="#newRucherModal" class="btn btn-success btn-lg crud-apiary">
+          <button data-backdrop="false" data-toggle="tooltip" data-html="true" title="New apiary" data-backdrop="false"
+            data-toggle="modal" data-target="#newRucherModal" class="btn btn-success btn-lg crud-apiary">
             <i class="fa fa-plus fa-2x"></i>
           </button>
           <button data-backdrop="false" type="button" (click)="editRucherClicked()"
-            class="crud btn btn-success btn-lg crud-apiary" data-toggle="tooltip" data-backdrop="false" data-html="true" title="Edit apiary"
-            data-toggle="modal" data-target="#editRucher">
+            class="crud btn btn-success btn-lg crud-apiary" data-toggle="tooltip" data-backdrop="false" data-html="true"
+            title="Edit apiary" data-toggle="modal" data-target="#editRucher">
             <i class="fa fa-edit fa-2x"></i>
           </button>
           <button type="button" class="btn btn-warning btn-lg crud-apiary" data-toggle="tooltip" data-html="true"
@@ -34,7 +35,7 @@
           </button>
         </li>
       </ul>
-<!--       <div id="lang-group">
+      <!--       <div id="lang-group">
         <img (click)="translateService.use('fr')" src="./assets/img/fr.png" alt="FR"/>
         <img (click)="translateService.use('en')" src="./assets/img/en.png" alt="EN"/>
       </div> -->
@@ -61,7 +62,8 @@
             <li><a [routerLink]="[ './preferences']">Preference</a></li>
             <li class="divider"></li>
             <li><a href="#" (click)="logout()">{{ 'NAVBAR.ACCOUNT.LOG_OUT' | translate }}</a></li>
-            <li id="color-items"><span class="color-items" *ngFor="let color of sidebarService.getColors()" (click)="setColor(color)"><i class="fa fa-circle" [style.color]="color.color"></i></span></li>
+            <li id="color-items"><span class="color-items" *ngFor="let color of sidebarService.getColors()"
+                (click)="setColor(color)"><i class="fa fa-circle" [style.color]="color.color"></i></span></li>
           </ul>
         </li>
         <!--         <li>
@@ -123,24 +125,28 @@
               select zip code
             </div>
           </div>
-          <!--
-                <div class="form-group">
-                  <label for="">Image</label>
-                  <input name="image" (change)="onPictureLoad($event)" type="file">
-               </div>-->
 
           <label>Select picture from Apiary :</label>
           <input style="display: none" type="file" ngf [(file)]="photoApiary" [(lastBaseUrl)]="newApiary.photo"
             #fileInput>
           <button (click)="fileInput.click()" class="btn btn-large btn-block btn-info">Select File</button>
           <div id="upload-group">
-            <div ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary" class="well my-drop-zone"
-              [(lastBaseUrl)]="newApiary.photo" [class.valid-drag]="baseDropValid">
-              Base drop zone
+
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary" class="well my-drop-zone"
+                  [(lastBaseUrl)]="newApiary.photo" [class.valid-drag]="baseDropValid">
+                  Base drop zone
+                </div>
+              </div>
+              <div class="img-zone" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div [ngfBackground]="photoApiary"
+                  style="background-size:cover;background-repeat:no-repeat; background-position:center; height:100%; width:100%;">
+                </div>
+              </div>
+
             </div>
-            <div [ngfBackground]="photoApiary"
-              style="background-size:cover;background-repeat:no-repeat; background-position:center; min-height:20px;">
-            </div>
+
           </div>
 
           <div class="modal-footer">
@@ -201,6 +207,18 @@
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
               select zip code
+            </div>
+          </div>
+          <div id="edit-img-group">
+
+            <label>Select picture from Apiary :</label>
+            <input style="display: none" type="file" ngf [(file)]="photoApiary" [(lastBaseUrl)]="editPhotoApiary"
+              #fileEdit>
+            <button (click)="fileEdit.click()" class="btn btn-large btn-block btn-info">Select File</button>
+            <div class="img-zone" >
+              <div [ngfBackground]="photoApiary"
+                style="background-size:cover;background-repeat:no-repeat; background-position:center; height:100%; width:100%;">
+              </div>
             </div>
           </div>
           <!--
