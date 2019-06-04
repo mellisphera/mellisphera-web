@@ -15,6 +15,7 @@ import { MyDate } from '../../../../../../class/MyDate';
 import { store } from '@angular/core/src/render3/instructions';
 import { EChartsOptionConfig, ECharts, EChartOption } from 'echarts';
 import { UnitService } from '../../../../../service/unit.service';
+import { GraphGlobal } from '../../../../../graph-echarts/GlobalGraph';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -47,7 +48,7 @@ export class RecordService {
   public stackSubject: BehaviorSubject<EChartOption>;
   private mergeTemp: any;
   private legendOption: Array<string>;
-  constructor(private http: HttpClient, private unitService: UnitService) {
+  constructor(private http: HttpClient, private unitService: UnitService, private graphGlobal: GraphGlobal) {
     this.currentIdHive = null;
     // this.stackSubject = new BehaviorSubject({});
     this.mergeTemp = {
@@ -163,7 +164,7 @@ export class RecordService {
         } else if (elt.startsWith('43')) {
           series = series.concat([
             {
-              name: hiveName + ' / Weight (' + elt + ')',
+              name: hiveName + ' / ' + this.graphGlobal.getTitle("Weight") + ' (' + elt + ')',
               type: 'line',
               data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
                 return {
@@ -335,7 +336,7 @@ export class RecordService {
                   sensorRef: recRes.sensorRef
                 };
               }),
-              name: 'Weight (' + elt + ')',
+              name: this.graphGlobal.getTitle("Weight") + ' (' + elt + ')',
               type: 'line',
               showSymbol: false,
               hoverAnimation: true,

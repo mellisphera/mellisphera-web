@@ -80,7 +80,8 @@ export class GraphGlobal {
             {'graph' : 'ExternalTemperature', 'titre' : 'Température externe'},
             {'graph' : 'WeightTemperature', 'titre' : 'Poids & Température'},
             {'graph' : 'Humidity', 'titre' : 'Humidité (%)'},
-            {'graph' : 'loss', 'titre' : 'perte'}
+            {'graph' : 'loss', 'titre' : 'perte'},
+            {'graph' : 'Weight', 'titre' : 'Poids'}
         ]
 
         // EN
@@ -93,7 +94,8 @@ export class GraphGlobal {
             {'graph' : 'ExternalTemperature', 'titre' : 'External Temperature'},
             {'graph' : 'WeightTemperature', 'titre' : 'Weight & Temperature'},
             {'graph' : 'Humidity', 'titre' : 'Humidity (%)'},
-            {'graph' : 'loss', 'titre' : 'loss'}
+            {'graph' : 'loss', 'titre' : 'loss'},
+            {'graph' : 'Weight', 'titre' : 'Weight'}
         ]
 
     }
@@ -130,6 +132,16 @@ export class GraphGlobal {
         // EN
         }else{
             return(['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']);
+        }
+    }
+
+    getMonth() : String[] {
+        // If he is French
+        if(this.userService.getJwtReponse().country === "FR"){
+            return(['Jan','Fev','Mar','Avr','Mai','Juin','Jui','Aou','Sep','Oct','Nov','Dec']);
+        // EN
+        }else{
+            return(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']);
         }
     }
 }
