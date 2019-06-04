@@ -70,7 +70,7 @@ export class DailyRecordsWService {
           tooltip: {
             formatter: (params) => {
               return params.marker +
-                this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + (this.unitSystem === 'METRIC' ? '°C' : '°F');
+                 this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + (this.unitSystem === 'METRIC' ? '°C' : '°F');
             }
           },
           title: {
