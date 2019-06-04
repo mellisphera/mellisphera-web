@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { MyDate } from '../../../../../../class/MyDate';
 import { UnitService } from '../../../../../service/unit.service';
+import { GraphGlobal } from '../../../../../graph-echarts/GlobalGraph';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CalendrierPoidsService {
 
-    constructor(private unitService: UnitService) {
+    constructor(private unitService: UnitService, private graphGlobal: GraphGlobal) {
     }
 
     option = {
         //backgroundColor: 'white',
         title: {
             top: 5,
-            text: 'Daily weight incomes',
+            text: this.graphGlobal.getTitle("DailyWeightIncomes"),
             left: 'center',
         },
         tooltip: {
@@ -57,7 +58,7 @@ export class CalendrierPoidsService {
         },
         legend: {
             top: 30,
-            data: ['gain', 'loss'],
+            data: ['gain', this.graphGlobal.getTitle("loss")],
             textStyle: {
                 color: 'black'
             }
@@ -86,7 +87,7 @@ export class CalendrierPoidsService {
                 }
             },
             dayLabel: {
-                nameMap: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                nameMap: this.graphGlobal.getDays(),
                 firstDay: 1, // start on Monday
             },
             yearLabel: {
@@ -127,7 +128,7 @@ export class CalendrierPoidsService {
                 }
             },
             {
-                name: 'loss',
+                name: this.graphGlobal.getTitle("loss"),
                 type: 'effectScatter',
                 coordinateSystem: 'calendar',
                 data: '',

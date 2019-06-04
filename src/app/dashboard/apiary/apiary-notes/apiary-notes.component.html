@@ -2,14 +2,14 @@
   <div class="panel panel-info">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse" href="#collapseTwo"><b>Apiary notes </b></a>
+        <a data-toggle="collapse" href="#collapseTwo"><b>{{ 'APIARY_NOTES.TITLE' | translate}} </b></a>
       </h4>
     </div>
     <div id="collapseTwo" class="panel-collapse collapse in">
       <div class="panel-body">
         <b class="text-success"></b>
         <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
-          title="New observation" data-toggle="modal" data-backdrop="false"
+          title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}" data-toggle="modal" data-backdrop="false"
           style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newObservationModal"
           class="btn btn-success btn-lg">
           <i class="fa fa-plus"></i>
@@ -18,9 +18,9 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Sentence</th>
-              <th class="text-right" scope="col">Actions</th>
+              <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.DATE' | translate}}</th>
+              <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.SENTENCE' | translate}}</th>
+              <th class="text-right" scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.ACTIONS' | translate}}</th>
             </tr>
           </thead>
           <tbody>
@@ -28,14 +28,16 @@
               <td>{{ obs.date | myDate }}</td>
               <td>{{ obs.sentence }}</td>
               <td class="text-right">
-                <button data-toggle="tooltip" data-html="true" title="Edit observation" data-toggle="modal"
+                <button data-toggle="tooltip" data-html="true" title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal"
                   type="button" data-target="#editObservationModal" (click)="onSelectObs(obs)"
                   class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button type="button" class="btn btn-warning btn-lg" title="Delete observation"
+                <button type="button" class="btn btn-warning btn-lg" title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE' | translate}}"
                   style="padding: 0;border: none; background: none;" mwlConfirmationPopover
-                  popoverTitle="Delete notes ?" placement="top" (confirm)="deleteObs(i,obs)"
+                  popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top" 
+                  confirmText = "{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}" cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}"
+                  (confirm)="deleteObs(i,obs)"
                   style="padding: 0;border: none; background: none;">
                   <i class="fa fa-times"></i>
                 </button>
@@ -56,7 +58,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
-            <h3 class="text-center">New Apiary Note</h3>
+            <h3 class="text-center">{{ 'APIARY_NOTES.FORM.NEW' | translate}}</h3>
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -67,19 +69,19 @@
             <div class="form-group">
   
                 <label class="example-input-wrapper">
-                    Date Time:
+                    {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
                     <input placeholder="Date Time:"
                           formControlName="date"
                            [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
                     <owl-date-time #dt></owl-date-time>
                 </label><br/>
   <!--             <input type="date" formControlName="date"><br />
-   -->           <label for="recipient-obs" class="col-form-label">Note</label>
+   -->           <label for="recipient-obs" class="col-form-label">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
               <textarea formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" [disabled]="!observationForm.valid"> Create note</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!observationForm.valid"> {{ 'APIARY_NOTES.FORM.CREATE' | translate}}</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
             </div>
           </form>
         </div>
@@ -96,7 +98,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
-            <h3 class="text-center">Edit Note</h3>
+            <h3 class="text-center">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}</h3>
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -106,20 +108,20 @@
           <form [formGroup]="observationForm">
             <div class="form-group">
                 <label class="example-input-wrapper">
-                    Date Time:
+                    {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
                     <input placeholder="Date Time:"
                           formControlName="date"
                            [owlDateTimeTrigger]="dtUpdate" [owlDateTime]="dtUpdate">
                     <owl-date-time #dtUpdate></owl-date-time>
                 </label><br/>
-              <label for="recipient-editobs" class="col-form-label">Note</label>
+              <label for="recipient-editobs" class="col-form-label">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
               <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
             </div>
             <div class="modal-footer">
               <!--fa fa-sign-in-alt"-->
               <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditObservation()"
-                [disabled]="!observationForm.valid">Save</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                [disabled]="!observationForm.valid">{{ 'APIARY_NOTES.FORM.SAVE' | translate}}</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
               <button id="btn-mvToAction" data-toggle="tooltip" data-dismiss="modal" id="btn-mv" data-html="true" title="Move to hive"
                 data-toggle="modal" type="button" data-target="#selectHiveModal" class="btn btn-primary  btn-lg "
                 style="padding: 0;border: none; background: none;">
@@ -138,7 +140,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
-            <h3 class="text-center">Select your hive</h3>
+            <h3 class="text-center">{{ 'APIARY_NOTES.FORM.SELECT' | translate}}</h3>
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -151,15 +153,15 @@
                 {{ruche.name}}
               </option>
             </select>
-            <label>Type :</label>
+            <label>{{ 'APIARY_NOTES.FORM.TYPE' | translate}}</label>
             <select (change)="typeToMv = $event.target.value" id="input" class="form-control" required="required">
-              <option value="0">Observation</option>
-              <option value="1">Action</option>
+              <option value="0">{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}</option>
+              <option value="1">{{ 'HIVE_DETAIL.OBSERVATIONS.ACTION' | translate}}</option>
             </select>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="mvToActions()">Move</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">Close</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="mvToActions()">{{ 'APIARY_NOTES.FORM.MOVE' | translate}}</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
           </div>
         </div>
       </div>

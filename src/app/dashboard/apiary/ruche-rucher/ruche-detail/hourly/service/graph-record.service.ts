@@ -10,7 +10,7 @@ export class GraphRecordService {
    
   option = {
     title: {
-        text: 'Weight & Temperature',
+        text: this.globalGraph.getTitle("WeightTemperature"),
         left: 'center',
         top:'-5'
     },

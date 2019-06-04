@@ -8,6 +8,7 @@ import { MyDate } from '../../../../../class/MyDate';
 import { User } from '../../../../../_model/user';
 import { UserParamsService } from '../../../../preference-config/service/user-params.service';
 import { UnitService } from '../../../../service/unit.service';
+import { GraphGlobal } from '../../../../graph-echarts/GlobalGraph';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -38,7 +39,7 @@ export class DailyRecordsWService {
 
   timeLine: any[];
 
-  constructor(private http: HttpClient, private unitService: UnitService) {
+  constructor(private http: HttpClient, private unitService: UnitService,  private graphGlobal: GraphGlobal) {
     this.dailyRecArray = [];
     this.arrayTempExt = [];
     this.weightIncome = [];
@@ -74,7 +75,7 @@ export class DailyRecordsWService {
             }
           },
           title: {
-            text: 'External Temperature (max, ' + (this.unitSystem === 'METRIX' ? '°C' : '°F') + ')'
+            text: this.graphGlobal.getTitle("ExternalTemperature") + '(max, ' + (this.unitSystem === 'METRIX' ? '°C' : '°F') + ')'
           },
           visualMap: {
             min: this.unitSystem === 'METRIC' ? -10 : 15,
@@ -206,7 +207,7 @@ export class DailyRecordsWService {
         }
       },
       title: {
-        text: 'External Temperature (max, ' + (this.unitSystem === 'METRIC' ? '°C' : '°F') + ')'
+        text: this.graphGlobal.getTitle("ExternalTemperature") + ' (max, ' + (this.unitSystem === 'METRIC' ? '°C' : '°F') + ')'
       },
       visualMap: {
         min: this.unitSystem === 'METRIC' ? -10 : 30,

@@ -102,7 +102,11 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
     this.rucheService.deleteRuche(index, ruche).subscribe(() => { }, () => { }, () => {
       this.rucheService.ruches.splice(index, 1);
       this.rucheService.emitHiveSubject();
-      this.notify.notify('success', 'Deleted Hive');
+      if(this.userService.getJwtReponse().country === "FR"){
+        this.notify.notify('success', 'Ruche supprimée');
+      }else{
+        this.notify.notify('success', 'Deleted Hive');
+      }
     });
   }
 
@@ -121,7 +125,11 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
       this.rucheService.ruches.push(hive);
     }, () => { }, () => {
       this.rucheService.emitHiveSubject();
-      this.notify.notify('success', 'Crated Hive');
+      if(this.userService.getJwtReponse().country === "FR"){
+        this.notify.notify('success', 'Ruche créée');
+      }else{
+        this.notify.notify('success', 'Crated Hive');
+      }
     });
   }
 
@@ -149,7 +157,11 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
         this.rucheService.ruches.splice(this.hiveIndex, 1);
         this.rucheService.emitHiveSubject();
       }
-      this.notify.notify('success', 'Updated Hive');
+      if(this.userService.getJwtReponse().country === "FR"){
+        this.notify.notify('success', 'Ruche mis à jour');
+      }else{
+        this.notify.notify('success', 'Updated Hive');
+      }
     });
   }
 
