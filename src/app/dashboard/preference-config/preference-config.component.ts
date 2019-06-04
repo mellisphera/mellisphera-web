@@ -23,6 +23,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   public passwordForm: FormGroup;
   constructor(public userConfig: UserParamsService, private authService: AuthService,
     private notifier: NotifierService, private loginService: UserloggedService,
+    private userService: UserloggedService,
     private formBuilder: FormBuilder) {
     this.notifyService = notifier;
   }
@@ -66,7 +67,11 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   setNewPassword() {
     this.userConfig.updatePassword(this.passwordForm.get('confirmPassword').value).subscribe(
       () => {}, () => {}, () => {
-        this.notifier.notify('success', 'Password saved');
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notifier.notify('success', 'Mot de passe sauvegardé');
+        }else{
+          this.notifier.notify('success', 'Password saved');
+        }
       }
     )
   }
@@ -82,7 +87,11 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
         }
         this.authService.jwtReponse.userPref = this.userPref;
         this.userConfig.emitPrefSubject();
-        this.notifyService.notify('success', 'Settings saved');
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notifier.notify('success', 'Paramètres sauvegardés');
+        }else{
+          this.notifier.notify('success', 'Settings saved');
+        }
         window.sessionStorage.removeItem('jwtReponse');
         window.sessionStorage.setItem('jwtReponse', JSON.stringify(this.authService.jwtReponse));
       }

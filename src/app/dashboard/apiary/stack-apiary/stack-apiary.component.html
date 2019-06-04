@@ -22,7 +22,10 @@
             <select (change)="selectRange()" [disabled]="loadingStack" [(ngModel)]="stackService.range" name="range"
                 class="form-control">
                 <option *ngFor="let range of ranges;" [ngValue]="range" [selected]="range.scale == 15">
-                    {{ 'last '+ range.scale+'  '+range.type | lowercase}}</option>
+                        {{ 'HIVE_DETAIL.HOURLY.LAST' | translate}}
+                        {{
+                           range.scale + "  " + traduction(range.type)
+                        }}</option>
             </select>
         </div>
         <div id="col-graph" class="col-xs-10 col-sm-10 col-md-10 col-lg-10">

@@ -16,6 +16,8 @@ import { Observation } from '../../../../../_model/observation';
 import { Console } from '@angular/core/src/console';
 import { UserParamsService } from '../../../../preference-config/service/user-params.service';
 import { d } from '@angular/core/src/render3';
+import { UserloggedService } from '../../../../../userlogged.service';
+
 @Component({
   selector: 'app-observation',
   templateUrl: './observation.component.html',
@@ -43,7 +45,8 @@ export class ObservationComponent implements OnInit {
     public observationService: ObservationService,
     private rucheService: RucheService,
     private notifyService: NotifierService,
-    public userParamService: UserParamsService
+    public userParamService: UserParamsService,
+    private userService: UserloggedService
   ) {
     this.typeObs = false;
     this.notifier = notifyService;
@@ -80,7 +83,11 @@ export class ObservationComponent implements OnInit {
     }, () => { }, () => {
       this.observationService.emitHiveSubject();
       this.initForm();
-      this.notifier.notify('success', 'Created Note');
+      if(this.userService.getJwtReponse().country === "FR"){
+        this.notifier.notify('success', 'Observation créée');
+      }else{
+        this.notifier.notify('success', 'Created Observation');
+      }
     });
   }
   createAction() {
@@ -98,7 +105,11 @@ export class ObservationComponent implements OnInit {
       });
     }, () => { }, () => {
       this.observationService.emitHiveSubject();
-      this.notifier.notify('success', 'Created Action');
+      if(this.userService.getJwtReponse().country === "FR"){
+        this.notifier.notify('success', 'Action créée');
+      }else{
+        this.notifier.notify('success', 'Created Action');
+      }
     });
   }
   onSelectObsR(hiveOBS) {
@@ -129,7 +140,11 @@ export class ObservationComponent implements OnInit {
     this.observationService.deleteObservation(hiveObs.id).subscribe(() => { }, () => { }, () => {
       this.observationService.observationsHive.splice(index, 1);
       this.observationService.emitHiveSubject();
-      this.notifier.notify('success', 'Deleted Note');
+      if(this.userService.getJwtReponse().country === "FR"){
+        this.notifier.notify('success', 'Note supprimée');
+      }else{
+        this.notifier.notify('success', 'Deleted Note');
+      }
     });
   }
   resetObservationForm() {

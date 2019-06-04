@@ -8,6 +8,7 @@ import { MyDate } from '../../../../../../class/MyDate';
 //import { ECharts } from 'echarts';
 import { UserParamsService } from '../../../../../preference-config/service/user-params.service';
 import { UnitService } from '../../../../../service/unit.service';
+import { GraphGlobal } from '../../../../../graph-echarts/GlobalGraph';
 
 @Injectable({
     providedIn: 'root'
@@ -16,12 +17,12 @@ export class CalendrierHealthService {
 
     option: any;
 
-    constructor(private unitService: UnitService) {
+    constructor(private unitService: UnitService, private graphGlobal: GraphGlobal) {
         this.option = {
             backgroundColor: 'white',
             title: {
                 top: 5,
-                text: 'Brood Dynamics',
+                text: this.graphGlobal.getTitle("BroodDynamics"),
                 left: 'center',
                 textStyle: {
                     color: 'black'
@@ -75,7 +76,7 @@ export class CalendrierHealthService {
                     }
                 }, */
                 dayLabel: {
-                    nameMap: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                    nameMap: this.graphGlobal.getDays(),
                     firstDay: 1, // start on Monday
                 },
                 yearLabel: {

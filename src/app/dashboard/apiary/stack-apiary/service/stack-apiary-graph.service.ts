@@ -141,7 +141,7 @@ export class StackApiaryGraphService {
         },
         {
           gridIndex: 2,
-          name: 'Humidity (%)',
+          name: this.configGraph.getTitle("Humidity"),
           type: 'value',
           nameLocation: 'middle',
           nameGap: 25,

@@ -243,4 +243,28 @@ export class StackApiaryComponent implements OnInit {
       this.recordService.mergeOptionStackApiary.legend.data.splice(index, 1);
     });
   }
+
+  traduction(type : any) : String{
+    var texte : String;
+    switch (type) {
+        case 'DAY' : {
+            texte = this.userService.getJwtReponse().country === "FR" ? 'jours' : 'days';
+            break;
+        }
+        case 'MONTH' : {
+            texte = this.userService.getJwtReponse().country === "FR" ? 'mois' : 'months';
+            break;
+        }
+        case 'YEAR' : {
+            texte = this.userService.getJwtReponse().country === "FR" ? 'an' : 'year';
+            break;
+        }
+        default: {
+            texte = 'Erreur traduction';
+        }
+    }
+
+    return(texte);
+}
+
 }

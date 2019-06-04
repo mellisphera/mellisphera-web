@@ -10,6 +10,7 @@ import { DailyRecordTh } from '../../_model/daily-record-th';
 import { CONFIG } from '../../../config';
 import { UserloggedService } from '../../userlogged.service';
 import { UnitService } from './unit.service';
+import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 
 @Injectable()
 export class DailyRecordService {
@@ -28,7 +29,7 @@ export class DailyRecordService {
     private unitSystem: string;
     public mergeOptionCalendarHealth: any;
 
-    constructor(private http: HttpClient, private user: UserloggedService, private unitService: UnitService) {
+    constructor(private http: HttpClient, private user: UserloggedService, private unitService: UnitService, private graphGlobal: GraphGlobal) {
         this.statusLoading = false;
         this.rangeDailyRecord = new Date();
         this.arrayTempInt = [];
@@ -57,7 +58,7 @@ export class DailyRecordService {
                         data: this.arrayTempInt
                     },
                     title: {
-                        text: 'Internal Temperature (max, °C)'
+                        text: this.graphGlobal.getTitle("InternalTemperature") + '(max, °C)'
                     },
                     visualMap: {
                         calculable: true,
@@ -75,7 +76,7 @@ export class DailyRecordService {
                         data: this.arrayHint
                     },
                     title: {
-                        text: 'Internal Relative Humidity (max)'
+                        text: this.graphGlobal.getTitle("InternalRelativeHumidity")
                     },
                     visualMap: {
                         left: 'center',
@@ -200,7 +201,7 @@ export class DailyRecordService {
                 }
             },
             title: {
-                text: 'Internal Temperature (max, ' + (this.unitSystem === 'METRIC' ? '°C' : '°F') + ')'
+                text: this.graphGlobal.getTitle("InternalTemperature") + ' (max, ' + (this.unitSystem === 'METRIC' ? '°C' : '°F') + ')'
             },
             visualMap: {
                 calculable: true,
@@ -218,7 +219,7 @@ export class DailyRecordService {
                 data: this.arrayHint
             },
             title: {
-                text: 'Internal Relative Humidity (max)'
+                text: this.graphGlobal.getTitle("InternalRelativeHumidity")
             },
             tooltip: {
                 formatter: (params) => {

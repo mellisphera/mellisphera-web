@@ -46,43 +46,160 @@
         "FINISH": "Finish"
     },
     "NAVBAR": {
+        "NEW_APIARY" : "New apiary",
+        "EDIT_APIARY" : "Edit apiary",
+        "DELETE_APIARY" : "Delete apiary",
+        "DELETE_ASK" : "Delete Apiary ?",
         "ACCOUNT": {
-            "CHANGE_PASSWORD": "change password",
+            "PREFERENCES" : "Preferences",
             "LOG_OUT": "Logout"
+        },
+        "CRUD" : {
+            "NAME" : "Name",
+            "NAME_ERROR" : "select a name from 1 to 20 chars",
+            "DESCRIPTION_ERROR" : "description can be 40 chars max",
+            "CITY" : "City",
+            "CITY_ERROR" : "select city name",
+            "ZIP_CODE" : "Zip code",
+            "ZIP_ERROR" : "select zip code",
+            "PICTURE" : "Select picture from Apiary :",
+            "FILE" : "Select File",
+            "DROP" : "Base drop zone",
+            "CLOSE" : "Close",
+            "SAVE" : "Save Apiary",
+            "CANCEL" : "Cancel",
+            "CONFIRM" : "Confirm",
+            "CREATE" : "New apiary"
         }
     },
-    "MODAL_NEW_APIARY": {
-        "TITLE": "New Apiary",
-        "FORM": {
-            "TITLE_NAME": "Name",
-            "NAME_INVALID": "select a name from 1 to 20 chars",
-            "TITLE_DESCRIPTION": "Description",
-            "DESCRIPTION_INVALID": "description can be 40 chars max",
-            "TITLE_CITY": "City",
-            "CITY_INVALID": "select city name",
-            "TITLE_ZIP_CODE": "Zip code",
-            "ZIP_INVALID": "select zip code"
+    "SIDEBAR" : {
+        "APIARY" : "Apiary",
+        "HIVES" : "Hives",
+        "NOTES" : "Apiary notes",
+        "FLOWER" : "Flower",
+        "SENSORS" : "Sensors",
+        "DATA" : "Stack data"    
+    },
+    "PREFERENCE_CONFIG" : {
+        "TITLE_PASSWORD" : "Change Password",
+        "FORM_PASSWORD" : {
+            "NEW" : "New password",
+            "PASSWORD" : "password",
+            "CHARACTER" : "6 character min",
+            "CONFIRM" : "Confirm password",
+            "ERROR" : "Error !",
+            "NOT_MATCH" : "Passwords do not match",
+            "SUBMIT" : "Submit"
         },
-        "UPLOAD_PICTURE": {
-            "LABEL": "Select picture from Apiary",
-            "DROP": "Base drop zone"
-        },
-        "INPUT": {
-            "SUBMIT": "New Apiary",
-            "CLOSE": "Close"
+        "TITLE_DATE" : "Format Date",
+        "SAVE_DATE" : "Save",
+        "TITLE_UNIT" : "Unit Systems",
+        "FORM_UNIT" : {
+            "METRIC" : "Metric",
+            "IMPERIAL" : "Imperial",
+            "SAVE" : "Save"
         }
     },
-    "MODAL_EDIT_APIARY": {
-        "TITLE": "Edit Apiary",
-        "FORM": {
-            "NAME_INVALID": "select a name from 1 to 20 chars",
-            "DESCRIPTION_INVALID": "description can be 40 chars max",
-            "CITY_INVALID": "select city name",
-            "ZIP_INVALID": "select zip code"
+    "HOME" : {
+        "BACK" : "Save background?",
+        "CHANGE" : "Save changes",
+        "CANCEL" : "Cancel"
+    },
+    "HIVES" : {
+        "HIVES" : "Hives",
+        "HIVE" : "Hive",
+        "SENSOR" : "Sensor",
+        "FORM" : {
+            "NEW" : "New hive",
+            "EDIT" : "Edit hive",
+            "DELETE" : "Delete hive",
+            "DELETE_ASK" : "Delete hive ?",
+            "CANCEL" : "Cancel",
+            "CONFIRM" : "Confirm",
+            "NAME" : "Name",
+            "CREATE" : "Create hive",
+            "CLOSE" : "Close",
+            "APIARY" : "Apiary"
+        }
+    },
+    "HIVE_DETAIL" : {
+        "NAV" : {
+            "NOTES" : "Notes",
+            "STOCK" : "Stock",
+            "HEALTH" : "Health",
+            "DAILY" : "Daily",
+            "CONDENSED" : "Condensed"
         },
-        "INPUT": {
-            "SUBMIT": "Save",
-            "CLOSE": "Close"
+        "OBSERVATIONS" : {
+            "AO" : "Actions and observations",
+            "DATE" : "Dates",
+            "SENTENCE" : "Sentences",
+            "TYPES" : "Types",
+            "ACTIONS" : "Edit",
+            "OBSERVATION" : "Observation",
+            "ACTION" : "Action",
+            "FORM" : {
+                "NEW" : "New",
+                "NEW_NOTES" : "New note",
+                "DATE" : "Date Time : ",
+                "CREATE_OBS" : "Create observation",
+                "CREATE_ACT" : "Create action",
+                "CLOSE" : "Close",
+                "EDIT" : "Edit note",
+                "DELETE" : "Delete note",
+                "DELETE_ASK" : "Delete note ?",
+                "CANCEL" : "Cancel",
+                "CONFIRM" : "Confirm",
+                "NOTES" : "Note : ",
+                "TYPE" : "Type"
+            }
+        },
+        "STOCK" : {
+            "NO_DATA" : "No data :",
+            "STOCK" : "Honey Stock",
+            "WEIGHT" :  "Weight incomes"
+        },
+        "HOURLY" : {
+            "RANGE" : "Range :",
+            "LAST" : "last"
+        }
+    },
+    "APIARY_NOTES" : {
+        "TITLE" : "Apiary notes",
+        "FORM" : {
+            "NEW" : "New Apiary Note",
+            "CREATE" : "Create note",
+            "SAVE" : "Save",
+            "SELECT" : "Select your hive",
+            "TYPE" : "Type : ",
+            "MOVE" : "Move"
+        }
+    },
+    "CAPTEUR" : {
+        "SENSORS" : "Sensors",
+        "REFERENCES" : "References",
+        "SEARCH" : "Search sensor id",
+        "FORM" : {
+            "NEW" : "New sensor",
+            "DELETE" : "Delete sensor",
+            "DELETE_ASK" : "Delete sensor ?",
+            "CONFIRM" : "Confirm",
+            "CANCEL" : "Cancel",
+            "REFERENCE" : "Reference (*) : ",
+            "REF_ERROR" : "You should select a valid reference",
+            "SENS_ERROR" : "Sensor already exist !",
+            "SELECT_ERROR" : "Select your sensor reference",
+            "LINK" : "Link to : ",
+            "HIVE" : "Hive",
+            "HIVEAPIARY" : "Hive | Apiary",
+            "SELECT_HIVE" : "Select a hive",
+            "ADD" : "Add sensor",
+            "CLOSE" : "Close",
+            "APIARY" : "Apiary",
+            "SAVE" : "Save",
+            "EDIT" : "Edit sensor",
+            "SENSOR_EDIT" : "Sensor edit",
+            "SUCCES" : "successfull !"
         }
     }
 }

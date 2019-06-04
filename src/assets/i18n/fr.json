@@ -1,10 +1,19 @@
 {
+    "LOGIN": {
+        "SIGN_IN": {
+            "DENIED": "Accès refusé",
+            "SUBMIT": "S'identifier",
+            "SIGN_UP_LINK": "Créer un compte"
+        },
+        "SIGN_UP": {
+
+        }
+    },
     "WIZARD" :{
         "STEP_TITLE": "Bienvenue",
         "WELCOME": "Bienvenue",
         "DESCRIPTION": "Nous voulons guider vos premiers pas en créant un rucher et d’autres ruches.",
         "DESCRIPTION_2": " Une fois que vous avez terminé, vous pourrez voler de vos propres ailes",
-
         "APIARY":{
             "STEP_TITLE": "Rucher",
             "TITLE": "Créer votre rucher"
@@ -37,47 +46,160 @@
         "FINISH": "Terminer"
     },
     "NAVBAR": {
+        "NEW_APIARY" : "Nouveau rucher",
+        "EDIT_APIARY" : "Modifier le rucher",
+        "DELETE_APIARY" : "Supprimer le rucher",
+        "DELETE_ASK" : "Supprimer le rucher ?",
         "ACCOUNT": {
-            "CHANGE_PASSWORD": "Modifier le mot de passe",
-            "LOG_OUT": "Deconnexion"
+            "PREFERENCES" : "Préférences",
+            "LOG_OUT": "Déconnexion"
+        },
+        "CRUD" : {
+            "NAME" : "Nom",
+            "NAME_ERROR" : "Entrez un nom entre 1 et 20 caractères",
+            "DESCRIPTION_ERROR" : "La description comporte 40 caractères max.",
+            "CITY" : "Ville",
+            "CITY_ERROR" : "Entrez un nom de ville",
+            "ZIP_CODE" : "Code postal",
+            "ZIP_ERROR" : "Entrez un code postal",
+            "PICTURE" : "Ajouter une image du rucher :",
+            "FILE" : "Choisir le dossier",
+            "DROP" : "Faites glisser une photos ici",
+            "CLOSE" : "Fermer",
+            "SAVE" : "Sauver le rucher",
+            "CANCEL" : "Annuler",
+            "CONFIRM" : "Confirmer",
+            "CREATE" : "Créer le rucher"
         }
     },
-    "MODAL_NEW_APIARY": {
-        "TITLE": "Nouveaux Rucher",
-        "FORM": {
-            "TITLE_NAME": "Nom",
-            "NAME_INVALID": "Entrez un nom entre 1 et 20 caractères",
-            "TITLE_DESCRIPTION": "Description",
-            "DESCRIPTION_INVALID": "40 caractéres maximum",
-            "TITLE_CITY": "Ville",
-            "CITY_INVALID": "Selectionner une ville",
-            "TITLE_ZIP_CODE": "Code postale",
-            "ZIP_INVALID": "Entrez un code postal"
+    "SIDEBAR" : {
+        "APIARY" : "Rucher",
+        "HIVES" : "Ruches",
+        "NOTES" : "Notes du rucher",
+        "FLOWER" : "Fleur",
+        "SENSORS" : "Capteurs",
+        "DATA" : "Données enregistrées"
+    },
+    "PREFERENCE_CONFIG" : {
+        "TITLE_PASSWORD" : "Changer de mot de passe",
+        "FORM_PASSWORD" : {
+            "NEW" : "Nouveau mot de passe",
+            "PASSWORD" : "Mot de passe",
+            "CHARACTER" : "6 caractères min",
+            "CONFIRM" : "Confirmez votre mot de passe",
+            "ERROR" : "Erreur !",
+            "NOT_MATCH" : "Les mots de passe ne correspondent pas",
+            "SUBMIT" : "Changer"
         },
-        "UPLOAD_PICTURE": {
-            "LABEL":"Selectionner une photos pour votre rucher",
-            "DROP": "Faite glisser une photos ici"
-        },
-        "INPUT": {
-            "SUBMIT": "Créer",
-            "CLOSE": "Fermer"
+        "TITLE_DATE" : "Format de la date",
+        "SAVE_DATE" : "Sauvegarder",
+        "TITLE_UNIT" : "Systèmes unitaires",
+        "FORM_UNIT" : {
+            "METRIC" : "Métrique",
+            "IMPERIAL" : "Impérial",
+            "SAVE" : "Sauvegarder"
         }
     },
-    "MODAL_EDIT_APIARY": {
-        "TITLE": "Editer un rucher",
-        "FORM": {
-            "TITLE_NAME": "Nom",
-            "NAME_INVALID": "Entrez un nom entre 1 et 20 caractères",
-            "TITLE_DESCRIPTION": "Description",
-            "DESCRIPTION_INVALID": "40 caractéres maximum",
-            "TITLE_CITY": "Ville",
-            "CITY_INVALID": "Selectionner une ville",
-            "TITLE_ZIP_CODE": "Code postale",
-            "ZIP_INVALID": "Entrez un code postal"
+    "HOME" : {
+        "BACK" : "Sauvegarder l'image ?",
+        "CHANGE" : "Sauvegarder",
+        "CANCEL" : "Annuler"
+    },
+    "HIVES" : {
+        "HIVES" : "Ruches",
+        "HIVE" : "Ruche",
+        "SENSOR" : "Capteur",
+        "FORM" : {
+            "NEW" : "Nouvelle ruche",
+            "EDIT" : "Modifier la ruche",
+            "DELETE" : "Supprimer la ruche",
+            "DELETE_ASK" : "Supprimer la ruche ?",
+            "CANCEL" : "Annuler",
+            "CONFIRM" : "Confirmer",
+            "NAME" : "Nom",
+            "CREATE" : "Créer la ruche",
+            "CLOSE" : "Fermer",
+            "APIARY" : "Rucher"
+        }
+    },
+    "HIVE_DETAIL" : {
+        "NAV" : {
+            "NOTES" : "Notes",
+            "STOCK" : "Stock",
+            "HEALTH" : "Santé",
+            "DAILY" : "Journalié",
+            "CONDENSED" : "Condensé"
         },
-        "INPUT": {
-            "SUBMIT": "Sauvegarder",
-            "CLOSE": "Fermer"
+        "OBSERVATIONS" : {
+            "AO" : "Actions et observations",
+            "DATE" : "Dates",
+            "SENTENCE" : "Notes",
+            "TYPES" : "Types",
+            "ACTIONS" : "Modifier",
+            "OBSERVATION" : "Observation",
+            "ACTION" : "Action",
+            "FORM" : {
+                "NEW" : "Nouveau",
+                "NEW_NOTES" : "Nouvelle note",
+                "DATE" : "Date Heure : ",
+                "CREATE_OBS" : "Créer une observation",
+                "CREATE_ACT" : "Créer une action",
+                "CLOSE" : "Fermer",
+                "EDIT" : "Modifier la note",
+                "DELETE" : "Supprimer la note",
+                "DELETE_ASK" : "Supprimer la note ?",
+                "CANCEL" : "Annuler",
+                "CONFIRM" : "Confirmer",
+                "NOTES" : "Note : ",
+                "TYPE" : "Type"
+            }
+        },
+        "STOCK" : {
+            "NO_DATA" : "Pas de données :",
+            "STOCK" : "Stock de miel",
+            "WEIGHT" :  "Gain de poids"
+        },
+        "HOURLY" : {
+            "RANGE" : "Intervalle :",
+            "LAST" : "Depuis"
+        }
+    },
+    "APIARY_NOTES" : {
+        "TITLE" : "Notes du rucher",
+        "FORM" : {
+            "NEW" : "Nouvelle note de rucher",
+            "CREATE" : "Créer une note",
+            "SAVE" : "Enregistrer",
+            "SELECT" : "Selectionnez votre ruche",
+            "TYPE" : "Type : ",
+            "MOVE" : "Déplacer"
+        }
+    },
+    "CAPTEUR" : {
+        "SENSORS" : "Capteurs",
+        "REFERENCES" : "Références",
+        "SEARCH" : "Recherchez l'id du capteur",
+        "FORM" : {
+            "NEW" : "Nouveau capteur",
+            "DELETE" : "Supprimer le capteur",
+            "DELETE_ASK" : "Supprimer le capteur ?",
+            "CONFIRM" : "Confirmer",
+            "CANCEL" : "Annuler",
+            "REFERENCE" : "Référence (*) : ",
+            "REF_ERROR" : "Vous devez sélectionner une référence valide.",
+            "SENS_ERROR" : "Le capteur existe déjà !",
+            "SELECT_ERROR" : "Sélectionnez la référence de votre capteur",
+            "LINK" : "Lien vers : ",
+            "HIVE" : "Ruche",
+            "HIVEAPIARY" : "Ruche | Rucher",
+            "SELECT_HIVE" : "Sélectionnez une Ruche",
+            "ADD" : "Ajouter un capteur",
+            "CLOSE" : "Fermer",
+            "APIARY" : "Rucher",
+            "SAVE" : "Sauvegarder",
+            "EDIT" : "Modifier le capteur",
+            "SENSOR_EDIT" : "Capteur modifié",
+            "SUCCES" : "Avec succès !"
         }
     }
 }
