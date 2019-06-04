@@ -157,7 +157,6 @@ export class StackApiaryComponent implements OnInit {
       () => {
         let option = this.echartInstance.getOption();
         this.echartInstance.clear();
-        console.log(this.recordService.mergeOptionStackApiary.series.map(elt => elt.data.map(sub => sub.value)));
         option.series = this.recordService.mergeOptionStackApiary.series;
         option.legend = this.recordService.mergeOptionStackApiary.legend;
         option.legend.show = false;
@@ -188,6 +187,7 @@ export class StackApiaryComponent implements OnInit {
         this.recordService.getRecordByIdHive(selectHive.id, selectHive.name,
           this.recordService.mergeOptionStackApiary, false, this.getColor(selectHive))
           .subscribe((data) => {
+            console.log(data);
             // this.recordService.mergeOptionStackApiary = data;
              this.observationService.getObservationByIdHive(selectHive.id, selectHive.name).subscribe(
               obsData => {
