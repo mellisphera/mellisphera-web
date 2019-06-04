@@ -2,13 +2,14 @@ import { MyDate } from '../../../../../../class/MyDate';
 import { Injectable } from '@angular/core';
 import { CalendrierService } from '../../service/calendrier.service';
 import { UnitService } from '../../../../../service/unit.service';
+import { GraphGlobal } from '../../../../../graph-echarts/GlobalGraph';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendrierTempIntService /*extends CalendrierService*/{
 
-  constructor(private unitService: UnitService) {
+  constructor(private unitService: UnitService, private graphGlobalService: GraphGlobal) {
 
    }
 
