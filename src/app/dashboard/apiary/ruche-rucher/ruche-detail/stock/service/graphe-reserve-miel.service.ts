@@ -25,10 +25,10 @@ export class GrapheReserveMielService {
                 }
             },
             formatter: (params: any) => {
-                return this.unitService.getDailyDate(params[0].name) + '<br/>' +
-                    params.map((elt: any) => {
-                        return elt.marker + elt.seriesName + ': ' + elt.data.value[1];
-                    }).join('<br/>');
+                return '<strong>' + this.unitService.getHourlyDate(new Date(params[0].name)) + '</strong></br>' +
+                params.map((elt: any) => {
+                  return elt.marker  + elt.seriesName + ': <b>' + elt.data.value[1] + ' ' + this.graphGlobal.weight.unitW + '</b>';
+                }).join('<br/>');
             }
         },
         legend: {
