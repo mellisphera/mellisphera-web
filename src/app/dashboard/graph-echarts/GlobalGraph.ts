@@ -35,7 +35,7 @@ export class GraphGlobal {
             max: 0,
             unitT: '° C',
         };
-        if (this.userConfig.getUserPref().unitSystem === 'IMPERIAL') { // FR
+        if (this.userConfig.getUserPref().unitSystem === 'IMPERIAL') { // US
             this.weight.name = 'Weight lbs';
             this.weight.min = 40;
             this.weight.max = null;
@@ -46,7 +46,7 @@ export class GraphGlobal {
             this.temp.unitT = '° F';
             this.temp.max = null;
 
-        } else { // US
+        } else { // FR
             this.weight.name = 'Weight Kg';
             this.weight.min = 0;
             this.weight.unitW = 'Kg';
