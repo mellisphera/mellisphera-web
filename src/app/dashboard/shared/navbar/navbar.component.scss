@@ -58,6 +58,12 @@ label{
 #color-items{
     text-align: center;
 }
+.my-drop-zone{
+    margin-bottom: 0px;
+}
+.img-zone{
+    height: 60px;
+}
 @media (max-width: 991px){
     .navbar-nav > li {
         float: left !important;

@@ -41,6 +41,7 @@ export class NavbarComponent implements OnInit {
 
     location: Location;
     file: File;
+    public editPhotoApiary: string;
     hasBaseDropZoneOver: Boolean = false;
     private toggleButton: any;
     private sidebarVisible: boolean;
@@ -73,7 +74,8 @@ export class NavbarComponent implements OnInit {
         this.sidebarVisible = false;
         this.username = userService.getUser();
         this.initForm();
-        this.newApiary = {
+        this.editPhotoApiary = null;
+        this.apiaryUpdate = this.newApiary = {
             id: null,
             latitude: '',
             longitude: '',
@@ -161,12 +163,20 @@ export class NavbarComponent implements OnInit {
         const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
         this.apiaryUpdate = formValue;
         this.apiaryUpdate.id = this.rucherService.rucher.id;
-        this.apiaryUpdate.photo = this.rucherService.rucher.photo;
+        console.log(this.photoApiary);
+        if (this.photoApiary === null) {
+            this.apiaryUpdate.photo = this.rucherService.rucher.photo
+            console.log(this.apiaryUpdate.photo);
+        } else {
+            this.apiaryUpdate.photo = this.editPhotoApiary;
+        }
         this.apiaryUpdate.username = this.rucherService.rucher.username;
         this.rucherService.updateRucher(this.rucherService.rucher.id, this.apiaryUpdate).subscribe(
             () => { }, () => { }, () => {
                 this.rucherService.ruchers[index] = this.apiaryUpdate;
                 this.rucherService.emitApiarySubject();
+                this.photoApiary = null;
+                this.editPhotoApiary = null;
                 this.rucherService.rucher = this.apiaryUpdate;
                 this.notifier.notify('success', 'Updated Apiary');
                 this.initForm();
