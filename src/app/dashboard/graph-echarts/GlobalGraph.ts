@@ -7,9 +7,20 @@ import { UserloggedService } from '../../userlogged.service';
   providedIn: 'root'
 })
 export class GraphGlobal {
-    public weight: any;
+    public weight: {
+        name: string,
+        min: number,
+        max: number,
+        interval: number,
+        unitW: string
+    };
 
-    public temp: any;
+    public temp: {
+        name: string,
+        min: number,
+        max: number,
+        unitT: string,
+    };
 
     public titresFR : Array<any>;
     public titresEN : Array<any>;
@@ -19,12 +30,14 @@ export class GraphGlobal {
             name: '',
             min: null,
             max: 0,
-            interval : 0
+            interval : 0,
+            unitW: 'Kg'
         };
         this.temp = {
             name: '',
             min: null,
-            max: 0
+            max: 0,
+            unitT: '° C',
         };
         if (this.userConfig.getUserPref().unitSystem === 'IMPERIAL') { // US
             // If he is French
@@ -36,6 +49,7 @@ export class GraphGlobal {
             }
             this.weight.min = 40;
             this.weight.max = null;
+            this.weight.unitW = 'lbs';
             this.weight.interval = 5;
             // If he is French
             if(this.userService.getJwtReponse().country === "FR"){
@@ -45,6 +59,7 @@ export class GraphGlobal {
                 this.temp.name = 'Temperature (°F)';
             }
             this.temp.min = 0;
+            this.temp.unitT = '° F';
             this.temp.max = null;
 
         } else { // FR
@@ -56,6 +71,7 @@ export class GraphGlobal {
                 this.weight.name = 'Weight kg';
             }
             this.weight.min = 0;
+            this.weight.unitW = 'Kg';
             this.weight.interval = 10;
             this.weight.max = null;
             // If he is French
@@ -65,6 +81,7 @@ export class GraphGlobal {
             }else{
                 this.temp.name = 'Temperature (°C)';
             }
+            this.temp.unitT = '° C';
             this.temp.min = 0;
             this.temp.max = null;
         }
@@ -142,6 +159,13 @@ export class GraphGlobal {
         // EN
         }else{
             return(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']);
+        }
+    }
+    getUnitBySerieName(serie: string): string {
+        if (/Temp/g.test(serie)) {
+            return this.temp.unitT;
+        } else if (/Weight/g.test(serie)) {
+            return this.weight.unitW;
         }
     }
 }

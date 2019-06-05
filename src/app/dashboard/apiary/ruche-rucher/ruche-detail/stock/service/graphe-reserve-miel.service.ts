@@ -2,6 +2,7 @@ import { MyDate } from '../../../../../../class/MyDate';
 import { Injectable } from '@angular/core';
 import { EChartOption } from 'echarts';
 import { GraphGlobal } from '../../../../../graph-echarts/GlobalGraph';
+import { UnitService } from '../../../../../service/unit.service';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +10,7 @@ import { GraphGlobal } from '../../../../../graph-echarts/GlobalGraph';
 export class GrapheReserveMielService {
 
     option: any;
-    constructor(private graphGlobal: GraphGlobal) {
+    constructor(private graphGlobal: GraphGlobal, private unitService: UnitService) {
         this.option = {
             title: {
                 text: this.graphGlobal.getTitle("reserveMiel"),
@@ -23,6 +24,12 @@ export class GrapheReserveMielService {
                     label: {
                         backgroundColor: '#6a7985'
                     }
+                },
+                formatter: (params: any) => {
+                    return '<strong>' + this.unitService.getHourlyDate(new Date(params[0].name)) + '</strong></br>' +
+                        params.map((elt: any) => {
+                            return elt.marker + elt.seriesName + ': <b>' + elt.data.value[1] + ' ' + this.graphGlobal.weight.unitW + '</b>';
+                        }).join('<br/>');
                 }
             },
             legend: {
@@ -73,6 +80,12 @@ export class GrapheReserveMielService {
                     },
                     min: MyDate.getIsoFromDate(MyDate.calcLastYear(new Date())),
                     max: new Date(),
+                    axisLabel: {
+                        show: true,
+                        formatter: (value: number, index: number) => {
+                            return new Date(value).getHours() === 0 ? this.unitService.getDailyDate(new Date(value)) : this.unitService.getHourlyDate(new Date(value));
+                        }
+                    }
                 }
             ],
             yAxis:
@@ -84,7 +97,6 @@ export class GrapheReserveMielService {
             }
         };
     }
-
 
 
 

@@ -115,8 +115,6 @@ export class MelliChartsComponent implements OnInit {
     options.calendar[0].range = [this.melliService.startCalendar, this.melliService.endCalendar];
     this.echartInstance.clear();
     this.echartInstance.setOption(options);
-    console.log(this.melliService.startCalendar);
-    console.log(this.melliService.endCalendar);
   }
   setData(): void {
     this.loading = true;

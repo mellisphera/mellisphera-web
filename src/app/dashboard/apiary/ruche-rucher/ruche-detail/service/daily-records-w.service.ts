@@ -71,7 +71,7 @@ export class DailyRecordsWService {
           tooltip: {
             formatter: (params) => {
               return params.marker +
-                this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + (this.unitSystem === 'METRIC' ? '°C' : '°F');
+                 this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + (this.unitSystem === 'METRIC' ? '°C' : '°F');
             }
           },
           title: {
@@ -167,7 +167,6 @@ export class DailyRecordsWService {
           this.dailyRec = data;
           this.getArray();
           this.updateCalendar();
-          console.log(this.dailyRecArray);
         } else {
           console.log('Aucune');
           this.updateCalendar();

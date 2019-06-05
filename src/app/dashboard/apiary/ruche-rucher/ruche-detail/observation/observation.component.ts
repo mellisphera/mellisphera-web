@@ -70,7 +70,6 @@ export class ObservationComponent implements OnInit {
   createObservation() {
     const formValue = this.ObservationForm.value;
     this.newObs = formValue;
-    console.log(this.newObs.date);
     this.newObs.type = 'HiveObs';
     this.newObs.idHive = this.rucheService.getCurrentHive();
     this.newObs.idLHive = [this.rucheService.getCurrentHive()];
@@ -93,7 +92,6 @@ export class ObservationComponent implements OnInit {
   createAction() {
     const formValue = this.ObservationForm.value;
     this.newObs = formValue;
-    console.log(this.newObs.date);
     this.newObs.type = 'HiveAct';
     this.newObs.idHive = this.rucheService.getCurrentHive();
     this.newObs.idLHive = [this.rucheService.getCurrentHive()];
@@ -127,7 +125,6 @@ export class ObservationComponent implements OnInit {
     this.newObs.sentence = formValue.sentence;
     this.newObs.date = formValue.date;
     this.newObs.type = formValue.type;
-    console.log(this.newObs.date);
    /*  const index = this.observationService.observationsHive.indexOf(this.newObs);
     this.initForm();
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
