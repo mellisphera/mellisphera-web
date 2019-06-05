@@ -22,7 +22,7 @@ export class StackApiaryGraphService {
         formatter: (params) => {
           return '<strong>' + this.unitService.getHourlyDate(new Date(params[0].name)) + '</strong></br>' +
             params.map((elt: any) => {
-              return elt.marker  + elt.seriesName + ': <b>' + elt.data.value[1] + ' ' + this.configGraph.getUnitBySerieName(elt.seriesName) + '</b>';
+              return elt.marker  + elt.seriesName + ': <b>' + this.configGraph.getNumberFormat(elt.data.value[1]) + ' ' + this.configGraph.getUnitBySerieName(elt.seriesName) + '</b>';
             }).join('<br/>');
         }
       },
