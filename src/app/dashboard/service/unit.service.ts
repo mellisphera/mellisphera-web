@@ -75,10 +75,23 @@ export class UnitService {
     }
   }
 
+  /**
+   *
+   *
+   * @returns {UserPref}
+   * @memberof UnitService
+   */
   getUserPref(): UserPref {
     return JSON.parse(window.sessionStorage.getItem('jwtReponse')).userPref;
   }
 
+  /**
+   *
+   *
+   * @param {Date} dateUtc
+   * @returns {Date}
+   * @memberof UnitService
+   */
   getLocalDate(dateUtc: Date): Date {
     console.log(dateUtc);
     return new Date(Date.UTC(dateUtc.getFullYear(), dateUtc.getMonth(), dateUtc.getDate(), dateUtc.getHours(), dateUtc.getMinutes()));
