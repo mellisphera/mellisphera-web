@@ -25,7 +25,7 @@ export class GraphGlobal {
     public titresFR : Array<any>;
     public titresEN : Array<any>;
 
-    constructor(private userConfig: UserParamsService, private userService: UserloggedService) {
+    constructor(private userConfig: UserParamsService, public userService: UserloggedService) {
         this.weight = {
             name: '',
             min: null,
@@ -157,10 +157,18 @@ export class GraphGlobal {
             return(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']);
         }
     }
+
+    getNumberFormat(value: number): string | number {
+        if (this.userService.getCountry() === 'FR') {
+            return value.toString().replace(/\./g, ',');
+        } else {
+            return value;
+        }
+    }
     getUnitBySerieName(serie: string): string {
         if (/Temp/g.test(serie)) {
             return this.temp.unitT;
-        } else if (/Weight/g.test(serie)) {
+        } else if (/Weight/g.test(serie) || /Poids/g.test(serie)) {
             return this.weight.unitW;
         }
     }
