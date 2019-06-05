@@ -22,7 +22,7 @@ export class CalendrierPoidsService {
             trigger: 'item',
             formatter: (params: any) => {
                 return params.marker + this.unitService.getDailyDate(params.data[0].split('T')[0]) + 
-                '<br/>' + params.seriesName + ' : ' + this.unitService.getUserPref().unitSystem === 'METRIC' ? this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])) : this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1] * 2.205)) + ' ' + this.graphGlobal.weight.unitW;
+                '<br/>' + params.seriesName + ' : ' + this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])) + ' ' + this.graphGlobal.weight.unitW;
             }
         },
         toolbox: {

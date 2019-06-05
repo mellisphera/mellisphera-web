@@ -62,7 +62,6 @@ export class DailyStockHoneyService {
   getDailyStockHoneyByHIve(idHive: string) {
     this.typeFlower = [];
     return this.http.get<DailyStockHoney[]>(CONFIG.URL + 'dailyStockHoney' + '/hive/' + idHive).map(dailyStock => {
-      console.log(dailyStock);
       const series = [];
       dailyStock.forEach(element => {
         if (this.typeFlower.indexOf(element.nom) === -1) {
