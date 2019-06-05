@@ -28,7 +28,7 @@ export class GrapheReserveMielService {
                 formatter: (params: any) => {
                     return '<strong>' + this.unitService.getHourlyDate(new Date(params[0].name)) + '</strong></br>' +
                         params.map((elt: any) => {
-                            return elt.marker + elt.seriesName + ': <b>' + elt.data.value[1] + ' ' + this.graphGlobal.weight.unitW + '</b>';
+                            return elt.marker + elt.seriesName + ': <b>' + this.graphGlobal.getNumberFormat(elt.data.value[1]) + ' ' + this.graphGlobal.weight.unitW + '</b>';
                         }).join('<br/>');
                 }
             },
