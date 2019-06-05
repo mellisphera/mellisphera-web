@@ -12,7 +12,8 @@
           <select [(ngModel)]="rucherService.rucher" style="width: 100%" class="form-control"
             (change)="onSelectRucher()" id="select-Apiary">
             <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">
-              {{rucher.name}} <span class="admin_userApiary" *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" style="color:red;"> => {{ rucher.username }}</span>
+              {{rucher.name}} <span class="admin_userApiary" *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
+                style="color:red;"> => {{ rucher.username }}</span>
             </option>
           </select>
 
@@ -34,7 +35,7 @@
           </button>
         </li>
       </ul>
-<!--       <div id="lang-group">
+      <!--       <div id="lang-group">
         <img (click)="translateService.use('fr')" src="./assets/img/fr.png" alt="FR"/>
         <img (click)="translateService.use('en')" src="./assets/img/en.png" alt="EN"/>
       </div> -->
@@ -61,7 +62,8 @@
             <li><a [routerLink]="[ './preferences']">{{ 'NAVBAR.ACCOUNT.PREFERENCES' | translate }}</a></li>
             <li class="divider"></li>
             <li><a href="#" (click)="logout()">{{ 'NAVBAR.ACCOUNT.LOG_OUT' | translate }}</a></li>
-            <li id="color-items"><span class="color-items" *ngFor="let color of sidebarService.getColors()" (click)="setColor(color)"><i class="fa fa-circle" [style.color]="color.color"></i></span></li>
+            <li id="color-items"><span class="color-items" *ngFor="let color of sidebarService.getColors()"
+                (click)="setColor(color)"><i class="fa fa-circle" [style.color]="color.color"></i></span></li>
           </ul>
         </li>
         <!--         <li>
@@ -123,24 +125,26 @@
               {{ 'NAVBAR.CRUD.ZIP_ERROR' | translate }}
             </div>
           </div>
-          <!--
-                <div class="form-group">
-                  <label for="">Image</label>
-                  <input name="image" (change)="onPictureLoad($event)" type="file">
-               </div>-->
 
           <label>{{ 'NAVBAR.CRUD.PICTURE' | translate }}</label>
           <input style="display: none" type="file" ngf [(file)]="photoApiary" [(lastBaseUrl)]="newApiary.photo"
             #fileInput>
           <button (click)="fileInput.click()" class="btn btn-large btn-block btn-info">{{ 'NAVBAR.CRUD.FILE' | translate }}</button>
           <div id="upload-group">
-            <div ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary" class="well my-drop-zone"
-              [(lastBaseUrl)]="newApiary.photo" [class.valid-drag]="baseDropValid">
-              {{ 'NAVBAR.CRUD.DROP' | translate }}
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary" class="well my-drop-zone"
+                  [(lastBaseUrl)]="newApiary.photo" [class.valid-drag]="baseDropValid">
+                  {{ 'NAVBAR.CRUD.DROP' | translate }}
+                </div>
+              </div>
+              <div class="img-zone" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div [ngfBackground]="photoApiary"
+                  style="background-size:cover;background-repeat:no-repeat; background-position:center; height:100%; width:100%;">
+                </div>
+              </div>
             </div>
-            <div [ngfBackground]="photoApiary"
-              style="background-size:cover;background-repeat:no-repeat; background-position:center; min-height:20px;">
-            </div>
+
           </div>
 
           <div class="modal-footer">
@@ -201,6 +205,18 @@
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
               {{ 'NAVBAR.CRUD.ZIP_ERROR' | translate }}
+            </div>
+          </div>
+          <div id="edit-img-group">
+
+            <label>{{ 'NAVBAR.CRUD.PICTURE' | translate }}</label>
+            <input style="display: none" type="file" ngf [(file)]="photoApiary" [(lastBaseUrl)]="editPhotoApiary"
+              #fileEdit>
+            <button (click)="fileEdit.click()" class="btn btn-large btn-block btn-info">Select File</button>
+            <div class="img-zone" >
+              <div [ngfBackground]="photoApiary"
+                style="background-size:cover;background-repeat:no-repeat; background-position:center; height:100%; width:100%;">
+              </div>
             </div>
           </div>
           <!--
