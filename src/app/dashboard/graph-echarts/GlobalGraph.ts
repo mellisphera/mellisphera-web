@@ -47,6 +47,7 @@ export class GraphGlobal {
             }else{
                 this.weight.name = 'Weight lbs';
             }
+            this.weight.name = 'Weight lbs';
             this.weight.min = 40;
             this.weight.max = null;
             this.weight.unitW = 'lbs';
@@ -63,13 +64,8 @@ export class GraphGlobal {
             this.temp.max = null;
 
         } else { // FR
-            // If he is French
-            if(this.userService.getJwtReponse().country === "FR"){
-                this.weight.name = 'Poids kg';
-            // EN
-            }else{
-                this.weight.name = 'Weight kg';
-            }
+
+            this.weight.name = 'Weight Kg';
             this.weight.min = 0;
             this.weight.unitW = 'Kg';
             this.weight.interval = 10;
