@@ -20,10 +20,9 @@ export class CalendrierPoidsService {
         },
         tooltip: {
             trigger: 'item',
-            formatter: (params) => {
-                console.log(params.data[0]);
+            formatter: (params: any) => {
                 return params.marker + this.unitService.getDailyDate(params.data[0].split('T')[0]) + 
-                '<br/>' + params.seriesName + ' : ' + params.data[1];
+                '<br/>' + params.seriesName + ' : ' + this.unitService.getUserPref().unitSystem === 'METRIC' ? this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])) : this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1] * 2.205)) + ' ' + this.graphGlobal.weight.unitW;
             }
         },
         toolbox: {
@@ -41,7 +40,6 @@ export class CalendrierPoidsService {
                         table += series[0].name + '\n';
                         let data;
                         series[0].data.forEach(element => {
-                            console.log(MyDate.getIsoFromDate(MyDate.getWekitDate(element[0])));
                             table += MyDate.getIsoFromDate(MyDate.getWekitDate(element[0])) + ' => ' + element[1] + '\n';
                         });
                         table += series[1].name + '\n';
@@ -115,8 +113,14 @@ export class CalendrierPoidsService {
                 type: 'effectScatter',
                 coordinateSystem: 'calendar',
                 data: '',
-                symbolSize: function (val) {
-                    if (val[1] >= 0) { return (0.5 * Math.sqrt(1000 * val[1])) * 0.45; }
+                symbolSize: (val: Array<any>) => {
+                    if (val[1] >= 0) {
+                        if (this.unitService.getUserPref().unitSystem === 'METRIC') {
+                            return (0.5 * Math.sqrt((1000 * val[1])));
+                        } else {
+                            return (0.5 * Math.sqrt((1000 * val[1] * 0.45)));
+                        }  
+                    }
                     else { return 0; }
                 },
                 showEffectOn: 'emphasis',
@@ -135,8 +139,14 @@ export class CalendrierPoidsService {
                 type: 'effectScatter',
                 coordinateSystem: 'calendar',
                 data: '',
-                symbolSize: function (val) {
-                    if (val[1] < 0) { return (0.5 * Math.sqrt(Math.abs(1000 * val[1]))) * 0.45; }
+                symbolSize: (val: Array<any>) => {
+                    if (val[1] < 0) {
+                        if (this.unitService.getUserPref().unitSystem === 'METRIC') {
+                            return (0.5 * Math.sqrt(Math.abs(1000 * val[1])));
+                        } else {
+                            return (0.5 * Math.sqrt(Math.abs(1000 * val[1] * 0.45)));
+                        }  
+                    }
                     else { return 0; }
                 },
                 showEffectOn: 'emphasis',
