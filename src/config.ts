@@ -5,3 +5,4 @@ export const CONFIG = {
     URL_FRONT :'https://test.mellisphera.com/',
     PUBLIC_TOKEN : '',
 }
+
