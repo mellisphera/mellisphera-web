@@ -1,3 +1,10 @@
 select{
     display: inline-block;
 }
+nav[role=admin-navigation] {
+    color: white;
+    background-color: #333F3D;
+}
+.active{
+    background-color: white;
+}
