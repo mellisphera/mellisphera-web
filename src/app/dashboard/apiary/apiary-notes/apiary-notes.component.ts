@@ -61,7 +61,6 @@ export class ApiaryNotesComponent implements OnInit {
   onSelectObs(obs: Observation) {
     this.hiveToMv = this.rucherService.rucheService.ruches[0];
     this.newObs = obs;
-    console.log(this.newObs);
     const donnée = {
       sentence: this.newObs.sentence,
       date: new Date(obs.date)
@@ -99,6 +98,7 @@ export class ApiaryNotesComponent implements OnInit {
     this.newObs = formValue;
     this.newObs.idApiary = this.rucherService.rucher.id;
     this.newObs.type = 'ApiaryObs';
+    console.log(this.newObs);
     this.initForm();
     this.observationService.createObservation(this.newObs).subscribe((obs) => {
       this.apiaryObs.push(obs);

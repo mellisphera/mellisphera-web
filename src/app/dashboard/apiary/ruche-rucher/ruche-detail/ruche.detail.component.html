@@ -29,11 +29,6 @@
         {{ 'HIVE_DETAIL.NAV.CONDENSED' | translate}}
       </a>
     </li>
-<!--      <li class="onglets" (click)="onTab('stack')">
-      <a data-toggle="tab" href="#stack">
-        hourly
-      </a>
-    </li> -->
     <div id="navHive">
       <ul class="flex">
         <li width="35" (click)="previousHive()" class="navRuche">
@@ -93,7 +88,7 @@
         </div>
       </div>
 
-      <div echarts [options]="graphRecordService.option" [loading]="loaddingHourly"
+      <div echarts [options]="graphRecordService.option" (chartInit)="onChartInit($event)" [loading]="loaddingHourly"
         [merge]="recordService.mergeOptionHourly" [autoResize]="true" style="width:92vw;height:70vh;"></div>
     </div>
     <!--<router-outlet></router-outlet>>-->

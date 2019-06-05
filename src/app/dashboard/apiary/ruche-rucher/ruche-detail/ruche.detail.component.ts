@@ -120,14 +120,19 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     }
 
-    onChartInit($event) {
+    onChartInit($event: any) {
         this.echartInstance = $event;
     }
 
     receiveMessage($event) {
         this.message = $event;
     }
-    previousHive() {
+    /**
+     *
+     *
+     * @memberof RucheDetailComponent
+     */
+    previousHive(): void {
         if (this.compteurHive !== 0 && this.compteurHive !== -1) {
             this.compteurHive--;
             this.hiveSelect = this.rucheService.ruches[this.compteurHive];
@@ -137,7 +142,12 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     }
 
-    nextHive() {
+    /**
+     *
+     *
+     * @memberof RucheDetailComponent
+     */
+    nextHive(): void {
         if (this.compteurHive != this.rucheService.ruches.length - 1) {
             this.compteurHive++;
         }
@@ -146,103 +156,107 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.exeData(true);
     }
 
-    updateEchartInstance() {
+    /**
+     *
+     *
+     * @memberof RucheDetailComponent
+     */
+    updateEchartInstance(): void {
         const option = this.echartInstance.getOption();
         this.echartInstance.clear();
         if (this.currentTab === 'stock') {
             option.series = this.dailyStockHoneyService.mergeOption.series;
             option.legend.data = this.dailyStockHoneyService.mergeOption.legend.data;
         } else {
-            option.series = this.recordService.mergeOptionStack.series;
-            option.legend.data = this.recordService.mergeOptionStack.legend.data;
+            option.series = this.recordService.mergeOptionHourly.series;
+            option.legend.data = this.recordService.mergeOptionHourly.legend.data;
         }
         this.echartInstance.setOption(option);
     }
     selectRange(page?: string) {
         this.recordService.setRange(this.range);
-        if (page === 'stack') {
-            this.recordService.getRecordByIdHive(this.rucheService.getCurrentHive(), this.hiveSelect.name, this.merge, true)
-            .subscribe(
-                (record) => {
-                    this.recordService.mergeOptionStack = record;
-                }
-            );
-        } else {
-            this.loaddingHourly = !this.loaddingHourly;
-            this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
+        this.loaddingHourly = !this.loaddingHourly;
+        this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
             .subscribe(
                 (record) => {
                     this.recordService.mergeOptionHourly = record;
-                }, () => {} , () => {
+                }, () => { }, () => {
                     this.loaddingHourly = !this.loaddingHourly;
                 }
             );
-        }
     }
 
     onTab(event: string) {
         this.currentTab = event;
         this.exeData();
     }
+
+    /**
+     *
+     *
+     * @returns {Promise<Boolean>}
+     * @memberof RucheDetailComponent
+     */
+    checkHiveActive(): Promise<Boolean> {
+        return new Promise((resolve, reject) => {
+            if (this.dailyStockHoneyService.currentIdHive !== this.rucheService.getCurrentHive()) {
+                resolve(true);
+            } else {
+                reject(false);
+            }
+        });
+    }
     exeData(switchHive?: boolean) {
         if (this.currentTab.indexOf('notes') !== -1) {
             this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive()).subscribe();
-        } else if (this.currentTab.indexOf('daily') !== -1) {
+        }
+
+        else if (this.currentTab.indexOf('daily') !== -1) {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
             this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
-        } else if (this.currentTab.indexOf('stock') !== -1) {
-            if (this.dailyStockHoneyService.currentIdHive !== this.rucheService.getCurrentHive()) {
+        }
+        else if (this.currentTab.indexOf('stock') !== -1) {
+            this.checkHiveActive().then(() => {
                 this.loadingStockHoney = true;
                 this.dailyStockHoneyService.getDailyStockHoneyByHIve(this.rucheService.getCurrentHive())
-                .subscribe(merge => {
-                    this.dailyStockHoneyService.mergeOption = merge;
-                    if (switchHive) {
-                        this.updateEchartInstance();
-                    }
-                },
-                err => {
-                    this.dailyStockHoneyService.cleanMerge();
-                    this.loadingStockHoney = false;
-                    this.updateEchartInstance();
-                },
-                () => {
-                    this.loadingStockHoney = false;
-                });
-            }
-            if (this.dailyRecordWservice.currentIdHive !== this.rucheService.getCurrentHive()) {
+                    .subscribe(merge => {
+                        this.dailyStockHoneyService.mergeOption = merge;
+                        if (switchHive) {
+                            this.updateEchartInstance();
+                        }
+                    },
+                        err => {
+                            this.dailyStockHoneyService.cleanMerge();
+                            this.loadingStockHoney = false;
+                            this.echartInstance.clear();
+                        },
+                        () => {
+                            this.loadingStockHoney = false;
+                        });
                 this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
-            }
-        } else if (this.currentTab.indexOf('hourly') !== -1) {
-            if (this.recordService.currentIdHive !== this.rucheService.getCurrentHive()) {
+            });
+        }
+        else if (this.currentTab.indexOf('hourly') !== -1) {
+            this.checkHiveActive().then(() => {
                 this.loaddingHourly = true;
                 this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
-                .subscribe(
-                    (record) => {
-                        console.log(record);
-                        this.recordService.mergeOptionHourly = record;
-                    },
-                    () => {}, () => {
-                        this.loaddingHourly = false;
-                    }
-                );
-            }
-        } else if (this.currentTab.indexOf('health') !== -1) {
+
+                    .subscribe(
+                        (record) => {
+                            this.recordService.mergeOptionHourly = record;
+                            if (switchHive) {
+                                this.updateEchartInstance();
+                            }
+                        },
+                        () => { }, () => {
+                            this.loaddingHourly = false;
+                        }
+                    );
+            });
+        }
+        else if (this.currentTab.indexOf('health') !== -1) {
             this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
         }
-    }
-
-    checkData(data: string) {
-        return setTimeout(() => {
-            if (data === 'honey') {
-                if (this.dailyStockHoneyService.mergeOption.series.length < 1) {
-                    return true;
-                }
-            } else if (data === 'stock') {
-                if (this.dailyRecordWservice.mergeOptionWeight.series[0].data.length < 1) {
-                    return true;
-                }
-            }
-        }, 100);
     }
     ngOnDestroy() {
         //this.rucheService.hiveSubject.unsubscribe();

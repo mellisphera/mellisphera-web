@@ -83,11 +83,10 @@ export class RecordService {
       records.map(res => {
         if (sensor.indexOf(res.sensorRef) === -1) {
           sensor.push(res.sensorRef);
+          res.recordDate = new Date(res.recordDate);
         }
       });
       sensor.forEach(elt => {
-        console.log(elt);
-        console.log(elt.startsWith('43'));
         if (elt.startsWith('41')) {
           series.push({
             name: hiveName + ' / Temp-int (' + elt + ')',
@@ -95,7 +94,7 @@ export class RecordService {
             data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
               return {
                 name: recRes.recordDate,
-                value: [this.unitService.getHourlyDate(recRes.recordDate + ''),
+                value: [recRes.recordDate,
                   this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
                 sensorRef: recRes.sensorRef
               };
@@ -326,7 +325,6 @@ export class RecordService {
             },
           });
         } else if (elt.startsWith('43')) {
-          console.log('ok');
           series = series.concat([
             {
               data: records.filter(ref => ref.sensorRef === elt).map(recRes => {

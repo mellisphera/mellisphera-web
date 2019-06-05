@@ -10,7 +10,6 @@ import { GraphGlobal } from '../../../../../graph-echarts/GlobalGraph';
 export class CalendrierTempIntService /*extends CalendrierService*/{
 
   constructor(private unitService: UnitService, private graphGlobal: GraphGlobal) {
-
    }
 
   option = {
