@@ -40,7 +40,11 @@ export class FeedbackComponent implements OnInit {
   send() {
     const body = { 'text': this.userService.getUser() + ' : ' + this.feedbackForm.value.comment};
     this.httpClient.post(this.urlSlack, JSON.stringify(body)).subscribe();
-    this.notify.notify('success', 'Feedback sent');
+    if(this.userService.getJwtReponse().country === "FR"){
+      this.notify.notify('success', 'Commentaire envoyé');
+    }else{
+      this.notify.notify('success', 'Feedback sent');
+    }
     this.resForm();
   }
 

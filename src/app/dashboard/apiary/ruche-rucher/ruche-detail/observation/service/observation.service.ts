@@ -111,7 +111,6 @@ export class ObservationService {
         tooltip: {
           trigger: 'item',
           formatter: (param) => {
-            console.log(param.name);
             return this.unitService.getHourlyDate(param.name) + ': </br>'
                 + param.value[3];
           }

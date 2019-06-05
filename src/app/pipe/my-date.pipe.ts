@@ -9,7 +9,11 @@ export class MyDatePipe implements PipeTransform {
 
   constructor(private unitService: UnitService){}
   transform(value: any, args?: any): any {
-    return this.unitService.getHourlyDate(value);
+    if (args === 'DAILY') {
+      return this.unitService.getDailyDate(value);
+    } else {
+      return this.unitService.getHourlyDate(new Date(value));
+    }
   }
 
 }

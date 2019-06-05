@@ -132,7 +132,6 @@ export class WizardComponent implements OnInit, OnDestroy {
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
           this.capteurService.getUserCapteurs();
           this.userService.setWizardActive(false);
-          console.log(this.userService.getWizardActive());
         });
       });
     });

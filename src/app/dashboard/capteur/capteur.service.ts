@@ -107,7 +107,6 @@ export class CapteurService {
             (data) => {
                 this.capteursByUser = data;
                 this.sensorSubject.next(data);
-                console.log(this.capteursByUser);
             },
             (err) => {
                 console.log(err);
