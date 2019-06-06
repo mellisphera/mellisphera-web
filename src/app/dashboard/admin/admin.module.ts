@@ -9,6 +9,7 @@ import { AdminRoutingModule } from './admin.routing';
 import { KpisynclogComponent } from './kpisynclog/kpisynclog.component';
 import { RouterModule } from '@angular/router';
 import { KpisynclogService } from './service/kpisynclog.service';
+import { GlobalStatusComponent } from './global-status/global-status.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { KpisynclogService } from './service/kpisynclog.service';
   ],
   declarations: [
     AdminComponent,
-    KpisynclogComponent
+    KpisynclogComponent,
+    GlobalStatusComponent
   ]
 })
 export class AdminModule { }

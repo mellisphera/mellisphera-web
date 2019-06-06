@@ -69,8 +69,8 @@ export class KpisynclogComponent implements OnInit {
           borderColor: '#777',
           borderWidth: 1,
           formatter: (params) => {
-            return '<bold>' + params.marker + params.data[3] + '</bold/><br/>' + 
-            'sync : <bold>' + params.data[1] + '</bold><br/>log : <bold/>' + params.data[0] + '</bold>';
+            return '<strong>' + params.marker + params.data[3] + '</strong/><br/>' + 
+            'sync : <strong>' + params.data[1] + '</strong><br/>log : <strong/>' + params.data[0] + '</strong>';
           }
         },
         visualMap: [
@@ -96,6 +96,7 @@ export class KpisynclogComponent implements OnInit {
         grid: {
           //top: 100,
           containLabel: true,
+          height: '95%'
           //width: '95%'
           // right: '110'
         },
@@ -158,10 +159,8 @@ export class KpisynclogComponent implements OnInit {
       }
     }).subscribe(
       data => {
-        console.log(data);
         this.dataKpisynclog = data;
         this.option.baseOption.visualMap[0].categories = this.dataKpisynclog.user;
-        console.log(this.option.baseOption.visualMap[0].categories);
         this.option.baseOption.timeline.data = this.dataKpisynclog.timeline.sort((a, b) => {
           return new Date(a).getTime() - new Date(b).getTime();
         }).map(elt => this.unitService.getDailyDate(elt));
@@ -172,7 +171,7 @@ export class KpisynclogComponent implements OnInit {
               'text': this.unitService.getDailyDate(<string>elt[0].date)
             },
             series: {
-              name: elt[0].date ,
+              name: elt[0].date,
               type: 'scatter',
               data: elt.map(res => {
                 return [res.lastSync, res.lastLog,10,res.user, res.date];
@@ -181,11 +180,9 @@ export class KpisynclogComponent implements OnInit {
             }
           };
         }).forEach(opt => {
-          console.log(opt);
           this.option.options.push(opt);
         });
         this.echartsInstance.setOption(this.option);
-       console.log(this.echartsInstance.getOption());
       },
       err => {
         console.log(err);
