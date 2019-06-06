@@ -14,11 +14,11 @@ export class AdminComponent implements OnInit {
   message= "";
 
   constructor(private router: Router) {
+    this.router.navigateByUrl('dashboard/admin/kpisynclog');
+
   }
 
   ngOnInit() {
-    this.router.navigate['./kpisynclog']
-
   }
 
   receiveMessage($event) {
