@@ -28,10 +28,11 @@ export class AdminService {
     private loadingService: LoadingService) {
       if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
         this.rangeStart = new Date();
-        this.rangeStart.setHours(8);
+        this.rangeStart.setHours(this.rangeStart.getHours() - 3);
+        this.allUsers =  this.allSensors = this.lastConnection = [];
         this.getAllApiary();
         this.getAllSensor();
-        this.getAllUsers();
+        //    this.getAllUsers();
         this.getLastConnection(this.rangeStart);
       }
     }
@@ -66,12 +67,8 @@ export class AdminService {
    *
    * @memberof AdminService
    */
-  getAllSensor(): void{
-    this.httpClient.get<CapteurInterface[]>(CONFIG.URL + 'sensors/all').subscribe(
-      sensors => {
-        this.allSensors = sensors;
-      }
-    );
+  getAllSensor(): Observable<CapteurInterface[]>{
+    return this.httpClient.get<CapteurInterface[]>(CONFIG.URL + 'sensors/all');
   }
 
 
@@ -80,12 +77,8 @@ export class AdminService {
    *
    * @memberof AdminService
    */
-  getAllUsers(): void {
-    this.httpClient.get<User[]>(CONFIG.URL + 'user/all').subscribe(
-      users => {
-        this.allUsers = users;
-      }
-    )
+  getAllUsers(): Observable<User[]> {
+    return this.httpClient.get<User[]>(CONFIG.URL + 'user/all');
   }
 
   getLastConnection(startDt: Date):void {
