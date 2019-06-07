@@ -132,13 +132,13 @@ export class KpisynclogComponent implements OnInit {
   }
   onChartInit(event) {
     this.echartsInstance = event;
-    console.log((this.echartsInstance));
+    console.log(this.echartsInstance);
   }
   ngOnInit() {
     var oldDate = [];
     var oldUser = [];
-    var elt = <HTMLDivElement>document.getElementById('chart-kpisynclog');
-    this.echartsInstance = echarts.init(elt);
+/*     var elt = <HTMLDivElement>document.getElementById('chart-kpisynclog');
+    this.echartsInstance = echarts.init(elt); */
     this.kpisynclogService.getKpisnclog(this.startRequestDate).map(res => {
       return {
         user: res.map(elt => {

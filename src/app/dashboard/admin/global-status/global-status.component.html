@@ -2,17 +2,24 @@
   <div class="info-group">
     <p class="icon-group float"><img src="./assets/img/sensor-icon.png" /></p>
     <h3 class="stop-float">Sensors : {{ adminService.allSensors.length }} </h3>
+<!--     <ul>
+      <li>T2 : {{ getT2Sensor().length }}</li>
+      <li>TH_R : {{ getTHRSensor().length }}</li>
+      <li>WEIGHT : {{ getWeightSensor().length }} </li>
+    </ul> -->
+    <div class="charts" echarts [options]="optionsSensorChart" (chartInit)="onChartInitSensor($event)" [autoResize]="true" id="chart-sensor" style="width:100%;height: 60%;"></div>
+
   </div>
-  <div class="info-group">
+  <div id="group-chart" class="info-group">
     <p class="icon-group float"><img src="./assets/img/admin.png"></p>
     <h3 class="stop-float">Users : {{ adminService.allUsers.length }}</h3>
-    <div class="charts" echarts [options]="options"  id="chart-pie" style="width:100%;height: 400px;"></div>
+    <div class="charts" echarts [options]="optionsUserChart" (chartInit)="onChartInit($event)" [autoResize]="true" id="chart-pie" style="width:100%;height: 60%;"></div>
 </div>
   <div class="info-group ">
     <p class="float"><img src="./assets/icons/login-icon.png" /></p>
     <h3 class="stop-float">Dernières connections : </h3>
-    <ul class="float">
-      <li *ngFor="let connexion of adminService.lastConnection">{{ connexion.connectionDate | myDate }}
+    <ul id="log-list" class="float">
+      <li *ngFor="let connexion of adminService.lastConnection">{{ connexion.connectionDate | myDate }} : 
         {{ connexion.username }}</li>
     </ul>
   </div>

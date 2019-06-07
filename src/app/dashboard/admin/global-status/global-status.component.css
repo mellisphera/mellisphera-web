@@ -1,5 +1,6 @@
 .info-group{
     padding: 10px;
+    height: 400px;
     position: relative;
     width: calc(100% / 3);
     background-color: #3F60A6;
@@ -21,6 +22,9 @@ img{
 p{
     margin-right: 8px;
 }
+ul {
+    list-style: none;
+}
 .row {
     margin:0px !important;
     min-height: 39vh;
@@ -39,5 +43,8 @@ p{
     }
     .info-group {
         width: 100%;
+    }
+    .charts {
+        height: 200px;
     }
 }
