@@ -9,6 +9,7 @@ import { LoadingService } from '../../service/loading.service';
 import { Observable } from 'rxjs';
 import { CapteurInterface } from '../../../_model/capteur';
 import { User } from '../../../_model/user';
+import { Connection } from '../../../_model/connection';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,8 @@ export class AdminService {
 
   public allSensors: CapteurInterface[]
   public allUsers: User[];
+  public lastConnection: Connection[];
+  private rangeStart: Date;
 
   constructor(
     private httpClient: HttpClient,
@@ -24,9 +27,12 @@ export class AdminService {
     private tokenService: AtokenStorageService,
     private loadingService: LoadingService) {
       if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
+        this.rangeStart = new Date();
+        this.rangeStart.setHours(8);
         this.getAllApiary();
         this.getAllSensor();
         this.getAllUsers();
+        this.getLastConnection(this.rangeStart);
       }
     }
 
@@ -80,6 +86,15 @@ export class AdminService {
         this.allUsers = users;
       }
     )
+  }
+
+  getLastConnection(startDt: Date):void {
+    this.httpClient.post<Connection[]>(CONFIG.URL + 'logs/between', startDt).subscribe(
+      connection => {
+        this.lastConnection =  connection;
+        console.log(this.lastConnection);
+      }
+    );
   }
 
 
