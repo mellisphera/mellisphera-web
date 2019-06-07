@@ -1,187 +1,178 @@
-<div class="row content">
-    <div class="col-sm-12">
-        <div class="form-inline">
-            <div class="form-group">
-            </div>
-        </div>
-        <div class="bs-example">
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-info ">
-                    <div class="panel-heading ">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                <b>{{ 'CAPTEUR.SENSORS' | translate}} </b>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <button data-toggle="tooltip" data-html="true" title="{{ 'CAPTEUR.FORM.NEW' | translate}}"
-                                data-toggle="modal"
-                                style="margin-left: 98%; padding: 0;border: none; background: none;"
-                                data-target="#newCapteurModal" class="btn btn-success btn-lg">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                            <div class="form-group row">
-                                <div class="col-xs-2">
-                                    <input class="form-control" placeholder="{{ 'CAPTEUR.SEARCH' | translate}}" type="search"
-                                        [(ngModel)]="capteurSearch">
-                                </div>
+ <div class="content-page">
+    <div class="bs-example">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-info ">
+                <div class="panel-heading ">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <b>{{ 'CAPTEUR.SENSORS' | translate}} </b>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <button data-toggle="tooltip" data-html="true" title="{{ 'CAPTEUR.FORM.NEW' | translate}}"
+                            data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
+                            data-target="#newCapteurModal" class="btn btn-success btn-lg">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <div class="form-group row">
+                            <div class="col-xs-2">
+                                <input class="form-control" placeholder="{{ 'CAPTEUR.SEARCH' | translate}}"
+                                    type="search" [(ngModel)]="capteurSearch">
                             </div>
-                            <!-- tables ruche -->
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Associations
-                                            <button data-toggle="tooltip" data-html="true"
-                                                (click)="sortSensors('hive');"
-                                                class="btn btn-success btn-xs">
-                                                <i class="fa fa-angle-down fa-2x"></i>
-                                            </button>
-                                        </th>
-                                        <th class="text-left" scope="col">Descriptions
-                                            <button data-toggle="tooltip" data-html="true"
-                                                (click)="sortSensors('description');"
-                                                class="btn btn-success btn-xs">
-                                                <i class="fa fa-angle-down fa-2x"></i>
-                                            </button>
-                                        </th>
-                                        <th scope="col">{{ 'CAPTEUR.REFERENCES' | translate}}
-                                            <button data-toggle="tooltip" data-html="true"
-                                                (click)="sortSensors('ref');"
-                                                class="btn btn-success btn-xs">
-                                                <i class="fa fa-angle-down fa-2x"></i>
-                                            </button>
-                                        </th>
-                                        <th scope="col">Type
-                                            <button data-toggle="tooltip" data-html="true"
-                                                (click)="sortSensors('type');"
-                                                class="btn btn-success btn-xs">
-                                                <i class="fa fa-angle-down fa-2x"></i>
-                                            </button>
-                                        </th>
-                                        <th class="text-right" scope="col">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <ng-container
-                                        *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch); let i = index">
-                                        <tr *ngIf="capteur.apiaryName != null">
-                                            <td class=" hive-link" *ngIf="capteur.apiaryName != null"
-                                                (click)="navToHive(capteur.idHive, capteur.idApiary)">
-                                                {{capteur.apiaryName}} | {{capteur.hiveName}}</td>
-                                            <td class="text-left">{{capteur.description}}</td>
-                                            <td>{{capteur.sensorRef}}</td>
-                                            <td>{{capteur.type}}</td>
-                                            <td class="text-right">
-                                                <button data-toggle="tooltip" data-html="true"
-                                                    title="{{ 'CAPTEUR.FORM.EDIT' | translate}}" data-toggle="modal"
-                                                    type="button" (click)="selectCapteur(capteur, i)"
-                                                    data-target="#editCapteurModal"
-                                                    class="btn btn-primary btn-lg"
-                                                    style="padding: 0;border: none; background: none;">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-warning btn-lg" title="{{ 'CAPTEUR.FORM.DELETE' | translate}}"
-                                                    mwlConfirmationPopover popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
-                                                    confirmText = "{{ 'CAPTEUR.FORM.CONFIRM' | translate}}" cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}"
-                                                    placement="top" (confirm)="deleteCapteur(capteur, i)"
-                                                    style="padding: 0;border: none; background: none;">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </ng-container>
-                                </tbody>
-                            </table>
                         </div>
+                        <!-- tables ruche -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Associations
+                                        <button data-toggle="tooltip" data-html="true" (click)="sortSensors('hive');"
+                                            class="btn btn-success btn-xs">
+                                            <i class="fa fa-angle-down fa-2x"></i>
+                                        </button>
+                                    </th>
+                                    <th class="text-left" scope="col">Descriptions
+                                        <button data-toggle="tooltip" data-html="true"
+                                            (click)="sortSensors('description');" class="btn btn-success btn-xs">
+                                            <i class="fa fa-angle-down fa-2x"></i>
+                                        </button>
+                                    </th>
+                                    <th scope="col">{{ 'CAPTEUR.REFERENCES' | translate}}
+                                        <button data-toggle="tooltip" data-html="true" (click)="sortSensors('ref');"
+                                            class="btn btn-success btn-xs">
+                                            <i class="fa fa-angle-down fa-2x"></i>
+                                        </button>
+                                    </th>
+                                    <th scope="col">Type
+                                        <button data-toggle="tooltip" data-html="true" (click)="sortSensors('type');"
+                                            class="btn btn-success btn-xs">
+                                            <i class="fa fa-angle-down fa-2x"></i>
+                                        </button>
+                                    </th>
+                                    <th class="text-right" scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container
+                                    *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch); let i = index">
+                                    <tr *ngIf="capteur.apiaryName != null">
+                                        <td class=" hive-link" *ngIf="capteur.apiaryName != null"
+                                            (click)="navToHive(capteur.idHive, capteur.idApiary)">
+                                            {{capteur.apiaryName}} | {{capteur.hiveName}}</td>
+                                        <td class="text-left">{{capteur.description}}</td>
+                                        <td>{{capteur.sensorRef}}</td>
+                                        <td>{{capteur.type}}</td>
+                                        <td class="text-right">
+                                            <button data-toggle="tooltip" data-html="true"
+                                                title="{{ 'CAPTEUR.FORM.EDIT' | translate}}" data-toggle="modal"
+                                                type="button" (click)="selectCapteur(capteur, i)"
+                                                data-target="#editCapteurModal" class="btn btn-primary btn-lg"
+                                                style="padding: 0;border: none; background: none;">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-warning btn-lg"
+                                                title="{{ 'CAPTEUR.FORM.DELETE' | translate}}" mwlConfirmationPopover
+                                                popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
+                                                confirmText="{{ 'CAPTEUR.FORM.CONFIRM' | translate}}"
+                                                cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}" placement="top"
+                                                (confirm)="deleteCapteur(capteur, i)"
+                                                style="padding: 0;border: none; background: none;">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-info ">
-                    <div class="panel-heading ">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                <b>Stock </b>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <!--                                         <div class="form-group row">
-                                <div class="col-xs-2">
-                                    <label>Search sensors reference :</label>
-                                    <input class="form-control" placeholder="search" type="search"
-                                        [(ngModel)]="capteurSearch">
-                                </div>
-                            </div> -->
-                            <!-- tables ruche -->
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Associations
-<!--                                                         <button data-toggle="tooltip" data-html="true"
-                                                (click)="sortSensors('hive');"
-                                                class="btn btn-success btn-xs">
-                                                <i class="fa fa-angle-down fa-2x"></i>
-                                            </button> -->
-                                        </th>
-                                        <th class="text-left" scope="col">Descriptions
-<!--                                                         <button data-toggle="tooltip" data-html="true"
-                                                (click)="sortSensors('description',true);"
-                                                class="btn btn-success btn-xs">
-                                                <i class="fa fa-angle-down fa-2x"></i>
-                                            </button> -->
-                                        </th>
-                                        <th scope="col">{{ 'CAPTEUR.REFERENCES' | translate}}
-<!--                                                         <button data-toggle="tooltip" data-html="true"
-                                                (click)="sortSensors('ref',true);"
-                                                class="btn btn-success btn-xs">
-                                                <i class="fa fa-angle-down fa-2x"></i>
-                                            </button> -->
-                                        </th>
-                                        <th scope="col">Type
-<!--                                                         <button data-toggle="tooltip" data-html="true"
-                                                (click)="sortSensors('type',true);"
-                                                class="btn btn-success btn-xs">
-                                                <i class="fa fa-angle-down fa-2x"></i>
-                                            </button> -->
-                                        </th>
-                                        <th class="text-right" scope="col">Actions</th>
+        </div>
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-info ">
+                <div class="panel-heading ">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <b>Stock </b>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <!--                                         <div class="form-group row">
+                                    <div class="col-xs-2">
+                                        <label>Search sensors reference :</label>
+                                        <input class="form-control" placeholder="search" type="search"
+                                            [(ngModel)]="capteurSearch">
+                                    </div>
+                                </div> -->
+                        <!-- tables ruche -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Associations
+                                        <!--                                                         <button data-toggle="tooltip" data-html="true"
+                                                    (click)="sortSensors('hive');"
+                                                    class="btn btn-success btn-xs">
+                                                    <i class="fa fa-angle-down fa-2x"></i>
+                                                </button> -->
+                                    </th>
+                                    <th class="text-left" scope="col">Descriptions
+                                        <!--                                                         <button data-toggle="tooltip" data-html="true"
+                                                    (click)="sortSensors('description',true);"
+                                                    class="btn btn-success btn-xs">
+                                                    <i class="fa fa-angle-down fa-2x"></i>
+                                                </button> -->
+                                    </th>
+                                    <th scope="col">{{ 'CAPTEUR.REFERENCES' | translate}}
+                                        <!--                                                         <button data-toggle="tooltip" data-html="true"
+                                                    (click)="sortSensors('ref',true);"
+                                                    class="btn btn-success btn-xs">
+                                                    <i class="fa fa-angle-down fa-2x"></i>
+                                                </button> -->
+                                    </th>
+                                    <th scope="col">Type
+                                        <!--                                                         <button data-toggle="tooltip" data-html="true"
+                                                    (click)="sortSensors('type',true);"
+                                                    class="btn btn-success btn-xs">
+                                                    <i class="fa fa-angle-down fa-2x"></i>
+                                                </button> -->
+                                    </th>
+                                    <th class="text-right" scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container
+                                    *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch); let i = index">
+                                    <tr *ngIf="capteur.apiaryName == null">
+                                        <td *ngIf="capteur.apiaryName == null">Stock</td>
+                                        <td class="text-left">{{capteur.description}}</td>
+                                        <td>{{capteur.sensorRef}}</td>
+                                        <td>{{capteur.type}}</td>
+                                        <td class="text-right">
+                                            <button data-toggle="tooltip" data-html="true"
+                                                title="{{ 'CAPTEUR.FORM.EDIT' | translate}}" data-toggle="modal"
+                                                type="button" (click)="selectCapteur(capteur, i)"
+                                                data-target="#editCapteurModal" class="btn btn-primary btn-lg"
+                                                style="padding: 0;border: none; background: none;">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-warning btn-lg"
+                                                title="{{ 'CAPTEUR.FORM.DELETE' | translate}}" mwlConfirmationPopover
+                                                popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
+                                                confirmText="{{ 'CAPTEUR.FORM.CONFIRM' | translate}}"
+                                                cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}" placement="top"
+                                                (confirm)="deleteCapteur(capteur, i)"
+                                                style="padding: 0;border: none; background: none;">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <ng-container
-                                        *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch); let i = index">
-                                        <tr *ngIf="capteur.apiaryName == null">
-                                            <td *ngIf="capteur.apiaryName == null">Stock</td>
-                                            <td class="text-left">{{capteur.description}}</td>
-                                            <td >{{capteur.sensorRef}}</td>
-                                            <td>{{capteur.type}}</td>
-                                            <td class="text-right">
-                                                <button data-toggle="tooltip" data-html="true"
-                                                    title="{{ 'CAPTEUR.FORM.EDIT' | translate}}" data-toggle="modal"
-                                                    type="button" (click)="selectCapteur(capteur, i)"
-                                                    data-target="#editCapteurModal"
-                                                    class="btn btn-primary btn-lg"
-                                                    style="padding: 0;border: none; background: none;">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-warning btn-lg" title="{{ 'CAPTEUR.FORM.DELETE' | translate}}"
-                                                    mwlConfirmationPopover popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
-                                                    confirmText = "{{ 'CAPTEUR.FORM.CONFIRM' | translate}}" cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}"
-                                                    placement="top" (confirm)="deleteCapteur(capteur, i)"
-                                                    style="padding: 0;border: none; background: none;">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </ng-container>
+                                </ng-container>
 
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -214,10 +205,10 @@
                             <input #ref formControlName="reference" placeholder="xx:xx:xx" name="ref" type="text"
                                 class="form-control" id="ref">
                             <div class="alert alert-danger" *ngIf="getSensorRef().errors?.pattern">
-                                    {{ 'CAPTEUR.FORM.REF_ERROR' | translate}}
+                                {{ 'CAPTEUR.FORM.REF_ERROR' | translate}}
                             </div>
                             <div class="alert alert-danger" *ngIf="getSensorRef().errors?.sensorCheck">
-                                    {{ 'CAPTEUR.FORM.SENS_ERROR' | translate}}
+                                {{ 'CAPTEUR.FORM.SENS_ERROR' | translate}}
                             </div>
 
                         </div>
@@ -229,7 +220,7 @@
                                     {{capteur.type}}</option>
                             </select>
                             <div class="alert alert-danger" hidden>
-                                    {{ 'CAPTEUR.FORM.SELECT_ERROR' | translate}}
+                                {{ 'CAPTEUR.FORM.SELECT_ERROR' | translate}}
                             </div>
                         </div>
 
@@ -244,11 +235,12 @@
                             <input class="form-check-input" value="stock" type="radio" formControlName="checkbox">
                             <label class="form-check-label" for="exampleRadios1">Stock </label><br />
                             <input class="form-check-input" value="ruche" type="radio" formControlName="checkbox">
-                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.HIVE' | translate}} </label>
+                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.HIVE' | translate}}
+                            </label>
                         </div>
                     </div>
                     <div *ngIf="getTypeAffectation().value=='ruche'">
-<!--                         <div class="form-group">
+                        <!--                         <div class="form-group">
                             <label class="col-form-label">Apiary</label>
                             <select [(ngModel)]="apiarySensorSelect" [ngModelOptions]="{standalone: true}"
                                 class="form-control" (change)="onSelectRucher();">
@@ -260,7 +252,8 @@
                             <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVEAPIARY' | translate}}</label>
                             <select [(ngModel)]="hiveSensorSelect" [ngModelOptions]="{standalone: true}"
                                 class="form-control">
-                                <option *ngFor="let ruche of rucherService.rucheService.ruchesAllApiary" [ngValue]="ruche">
+                                <option *ngFor="let ruche of rucherService.rucheService.ruchesAllApiary"
+                                    [ngValue]="ruche">
                                     {{ruche.name + ' | ' + getApiaryNameById(ruche.idApiary).name }}</option>
                             </select>
                             <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
@@ -268,8 +261,10 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" ngbTooltip="Tooltip on top" class="btn btn-primary" data-dismiss="modal"
-                            (click)="createCapteur()" [disabled]="newCapteurForm.invalid">{{ 'CAPTEUR.FORM.ADD' | translate}}</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>
+                            (click)="createCapteur()"
+                            [disabled]="newCapteurForm.invalid">{{ 'CAPTEUR.FORM.ADD' | translate}}</button>
+                        <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>
                     </div>
                 </form>
             </div>
@@ -296,7 +291,7 @@
                 <form [formGroup]="editCapteurForm">
                     <div class="form-group ">
                         <label class="col-form-label" for="exampleRadios1">
-                                {{ 'CAPTEUR.FORM.LINK' | translate}}
+                            {{ 'CAPTEUR.FORM.LINK' | translate}}
                         </label>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" formControlName="checkbox" value="stock"
@@ -304,7 +299,8 @@
                             <label class="form-check-label" for="exampleRadios1">Stock </label><br />
                             <input class="form-check-input" type="radio" formControlName="checkbox" value="ruche"
                                 [checked]="editCapteurCheckbox" (click)="onchange($event)">
-                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.HIVE' | translate}} </label>
+                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.HIVE' | translate}}
+                            </label>
                         </div>
                     </div>
                     <div *ngIf="editCapteurCheckbox">
@@ -332,13 +328,16 @@
                     </div>
                     <div class="form-group ">
                         <div class="alert alert-success" *ngIf="editedSensorMsgE">
-                                {{ 'CAPTEUR.FORM.SENSOR_EDIT' | translate}} <strong>{{ 'CAPTEUR.FORM.SUCCES' | translate}}</strong>
+                            {{ 'CAPTEUR.FORM.SENSOR_EDIT' | translate}}
+                            <strong>{{ 'CAPTEUR.FORM.SUCCES' | translate}}</strong>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="editVal" class="btn btn-primary" data-dismiss="modal"
-                            (click)="updateCapteur()" [disabled]="!editCapteurForm.valid"> {{ 'CAPTEUR.FORM.SAVE' | translate}}</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>
+                            (click)="updateCapteur()" [disabled]="!editCapteurForm.valid">
+                            {{ 'CAPTEUR.FORM.SAVE' | translate}}</button>
+                        <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>
                     </div>
                 </form>
             </div>

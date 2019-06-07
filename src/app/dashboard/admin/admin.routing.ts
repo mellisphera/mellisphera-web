@@ -5,11 +5,13 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { AuthGuardService } from '../../auth/auth-guard.service';
 import { SharedModule } from '../shared/shared.module';
 import { KpisynclogComponent } from './kpisynclog/kpisynclog.component';
+import { GlobalStatusComponent } from './global-status/global-status.component';
 
 const routes: Routes = [
     {
       path: '', component: AdminComponent, canActivate: [AuthGuardService], children: [
-        { path: 'kpisynclog', component: KpisynclogComponent, canActivate: [AuthGuardService]}
+        { path: 'kpisynclog', component: KpisynclogComponent, canActivate: [AuthGuardService]},
+        { path: 'status', component: GlobalStatusComponent, canActivate: [AuthGuardService]}
       ]
     }
 ];

@@ -1,0 +1,13 @@
+.info-group{
+    padding: 10px;
+}
+.float{
+    float: left;
+}
+.row {
+    margin:0px !important;
+}
+.container-fluid {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}

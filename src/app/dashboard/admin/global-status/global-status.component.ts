@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from '../service/admin.service';
+import { CapteurInterface } from '../../../_model/capteur';
 
 @Component({
   selector: 'app-global-status',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GlobalStatusComponent implements OnInit {
 
-  constructor() { }
+  constructor(public adminService: AdminService) { }
 
   ngOnInit() {
   }
