@@ -1,16 +1,10 @@
 <div class="content-page">
     <nav class="navbar navbar-default" role="admin-navigation">
         <div class="navbar-header">
-<!--             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button> -->
-            <a class="navbar-brand" href="#">Admin</a>
+            <a class="navbar-brand"  (click)="focus('status')" [routerLink]="['./status']">Admin</a>
         </div>
         <ul class="nav navbar-nav">
-            <li id="status" (click)="focus('status')"><a [routerLink]="['./status']">Status global</a></li>
+            <li id="status" (click)="focus('status')"><a [routerLink]="['./status']">General</a></li>
             <li id="kpisynclog" (click)="focus('kpisynclog')"><a [routerLink]="[ './kpisynclog']">kpisynclog</a></li>
             <li><a>Page 2</a></li>
             <li><a>Page 3</a></li>
