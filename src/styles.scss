@@ -21,6 +21,10 @@
 .nav-open .main-panel{
     transform: translate3d(-60px, 0, 0) !important;
 }
+.container-fluid {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
 .login{
     background: url('./assets/background/rucher_login.jpg') no-repeat center;
     background-size: cover;

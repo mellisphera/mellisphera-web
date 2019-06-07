@@ -96,7 +96,7 @@ export class KpisynclogComponent implements OnInit {
         grid: {
           //top: 100,
           containLabel: true,
-          height: '95%'
+          //height: '95%'
           //width: '95%'
           // right: '110'
         },

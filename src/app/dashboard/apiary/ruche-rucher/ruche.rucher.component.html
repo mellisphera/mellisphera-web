@@ -1,76 +1,76 @@
-<div class="row content">
-  <div class="col-sm-12">
-    <div class="bs-example">
-      <div class="panel-group" id="accordion">
-        <div class="panel panel-info ">
-          <div class="panel-heading ">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><b>{{ 'HIVES.HIVES' | translate}}</b></a>
-            </h4>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse in">
-            <div class="panel-body">
-              <b class="text-success"></b>
-              <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
-                title="{{ 'HIVES.FORM.NEW' | translate}}" data-toggle="modal" data-backdrop="false"
-                style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newRucheModal"
-                class="btn btn-success btn-lg">
-                <i class="fa fa-plus"></i>
-              </button>
+<div class="content-page">
+  <div class="bs-example">
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-info ">
+        <div class="panel-heading ">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion"
+              href="#collapseOne"><b>{{ 'HIVES.HIVES' | translate}}</b></a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+          <div class="panel-body">
+            <b class="text-success"></b>
+            <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
+              title="{{ 'HIVES.FORM.NEW' | translate}}" data-toggle="modal" data-backdrop="false"
+              style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newRucheModal"
+              class="btn btn-success btn-lg">
+              <i class="fa fa-plus"></i>
+            </button>
 
-              <!-- tables ruche -->
-              <div>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">{{ 'HIVES.HIVE' | translate}}</th>
-                      <th scope="col">Description</th>
-                      <th scope="col" class="text-center">{{ 'HIVES.SENSOR' | translate}}</th>
-                      <th class="text-right" scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let ruche of rucheService.ruches; let i = index;">
-                      <td class="hive-select" (click)="clickOnRuche(ruche)">{{ruche.name}}
-                        <!-- <a [routerLink]="['/ruche-detail']" routerLinkActive="active"
-                              (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> -->
+            <!-- tables ruche -->
+            <div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">{{ 'HIVES.HIVE' | translate}}</th>
+                    <th scope="col">Description</th>
+                    <th scope="col" class="text-center">{{ 'HIVES.SENSOR' | translate}}</th>
+                    <th class="text-right" scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let ruche of rucheService.ruches; let i = index;">
+                    <td class="hive-select" (click)="clickOnRuche(ruche)">{{ruche.name}}
+                      <!-- <a [routerLink]="['/ruche-detail']" routerLinkActive="active"
+                                (click)="clickOnRuche(ruche)"> {{ruche.name}}</a> -->
 
-                      </td>
+                    </td>
 
-                      <td (click)="clickOnRuche(ruche)" class="hive-select">{{ruche.description}}</td>
-                      <td class="text-center"><i [class]="'fa fa-circle ' + checkSensor(ruche)"></i></td>
-                      <td class="text-right">
-                        <button data-toggle="tooltip" data-html="true" data-backdrop="false" title="{{ 'HIVES.FORM.EDIT' | translate}}" data-toggle="modal"
-                          type="button" (click)="onSelectRuche(ruche, i)" data-target="#editRucheModal"
-                          class="btn btn-primary btn-lg " style="padding: 0;border: none; background: none;">
-                          <i class="fa fa-edit"></i>
-                        </button>
-                        <button type="button" class="btn btn-warning btn-lg" mwlConfirmationPopover
-                          popoverTitle="{{ 'HIVES.FORM.DELETE_ASK' | translate}}" placement="top" confirmText = "{{ 'HIVES.FORM.CONFIRM' | translate}}" cancelText="{{ 'HIVES.FORM.CANCEL' | translate}}" 
-                          (confirm)="deleteRuche(ruche,i)" title="{{ 'HIVES.FORM.DELETE' | translate}}" style="padding: 0;border: none; background: none;">
-                          <i class="fa fa-times"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-
+                    <td (click)="clickOnRuche(ruche)" class="hive-select">{{ruche.description}}</td>
+                    <td class="text-center"><i [class]="'fa fa-circle ' + checkSensor(ruche)"></i></td>
+                    <td class="text-right">
+                      <button data-toggle="tooltip" data-html="true" data-backdrop="false"
+                        title="{{ 'HIVES.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
+                        (click)="onSelectRuche(ruche, i)" data-target="#editRucheModal" class="btn btn-primary btn-lg "
+                        style="padding: 0;border: none; background: none;">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button type="button" class="btn btn-warning btn-lg" mwlConfirmationPopover
+                        popoverTitle="{{ 'HIVES.FORM.DELETE_ASK' | translate}}" placement="top"
+                        confirmText="{{ 'HIVES.FORM.CONFIRM' | translate}}"
+                        cancelText="{{ 'HIVES.FORM.CANCEL' | translate}}" (confirm)="deleteRuche(ruche,i)"
+                        title="{{ 'HIVES.FORM.DELETE' | translate}}" style="padding: 0;border: none; background: none;">
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+
+
           </div>
         </div>
-
-
-
       </div>
+
+
 
     </div>
 
-    <br><br>
   </div>
 
-  <!---->
+  <br><br>
 
 </div>
 <!-- New Ruche Modal -->
@@ -99,7 +99,8 @@
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="createRuche();"
               [disabled]="!newRucheForm.valid"> {{ 'HIVES.FORM.CREATE' | translate}}</button>
-            <button type="reset" class="btn btn-secondary" (click)="initForm()" data-dismiss="modal">{{ 'HIVES.FORM.CLOSE' | translate}}</button>
+            <button type="reset" class="btn btn-secondary" (click)="initForm()"
+              data-dismiss="modal">{{ 'HIVES.FORM.CLOSE' | translate}}</button>
           </div>
         </form>
       </div>
@@ -140,7 +141,8 @@
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditeRuche()"
               [disabled]="!newRucheForm.valid">{{ 'HIVES.FORM.EDIT' | translate}}</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">{{ 'HIVES.FORM.CLOSE' | translate}}</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              (click)="initForm()">{{ 'HIVES.FORM.CLOSE' | translate}}</button>
           </div>
         </form>
       </div>
