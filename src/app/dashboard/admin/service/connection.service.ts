@@ -22,6 +22,12 @@ export class ConnectionService {
   }
 
 
+  /**
+   *
+   *
+   * @returns {Observable<any>}
+   * @memberof ConnectionService
+   */
   getConnection(): Observable<any> {
     return this.httpClient.get<Connection[]>(CONFIG.URL + 'logs').map((connections) => {
       this.connectionsArray = connections.filter(res => res.location != null && res.username != null)
