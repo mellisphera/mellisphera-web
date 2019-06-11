@@ -174,7 +174,7 @@ export class KpisynclogComponent implements OnInit {
               name: elt[0].date,
               type: 'scatter',
               data: elt.map(res => {
-                return [res.lastSync, res.lastLog,10,res.user, res.date];
+                return [res.lastLog, res.lastSync,10,res.user, res.date];
               }),
               symbolSize: 10
             }
