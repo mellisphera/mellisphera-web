@@ -18,18 +18,19 @@ export class UnitService {
    * @returns {string}
    * @memberof UnitService
    */
-  getHourlyDate(date: string | Date): string {
+  getHourlyDate(date: string | Date, convertUtc?: boolean): string {
+    let newInstanceDate = null;
     if (isString(date)) {  
       const dtSplit = date.split('T');
       const daily = dtSplit[0];
       const hourly = dtSplit[1].split(':');
-      var newInstanceDate = new Date(daily);
-      newInstanceDate.setHours(parseInt(hourly[0], 10));
-      newInstanceDate.setMinutes(parseInt(hourly[1], 10));
+      let dtTemp = new Date(daily);
+      dtTemp.setHours(parseInt(hourly[0], 10));
+      dtTemp.setMinutes(parseInt(hourly[1], 10));
+      newInstanceDate = new Date(Date.UTC(dtTemp.getFullYear(), dtTemp.getMonth(), dtTemp.getDate(), dtTemp.getHours(), dtTemp.getMinutes()));
     } else {
-      var newInstanceDate = new Date(date);
+      newInstanceDate = new Date(date);
     }
-
     return this.getUserPref().timeFormat
       .replace(/Y/g, String(newInstanceDate.getFullYear()))
       .replace(/M/g, newInstanceDate.getMonth()+1 < 10 ? '0' + String(newInstanceDate.getMonth() + 1) : String(newInstanceDate.getMonth() + 1 ))
@@ -51,8 +52,9 @@ export class UnitService {
       if (date.indexOf('T')) {
         newInstanceDate = new Date(date.split('T')[0]);
       }
+    } else {
+      newInstanceDate = new Date(date);
     }
-    newInstanceDate = new Date(date);
    return this.getUserPref().timeFormat.replace(/Y/g, String(newInstanceDate.getFullYear()))
       .replace(/M/g, newInstanceDate.getMonth()+1 < 10 ? '0' + String(newInstanceDate.getMonth() + 1) : String(newInstanceDate.getMonth() + 1 ))
       .replace(/D/g, newInstanceDate.getDate() < 10 ? '0' + String(newInstanceDate.getDate()) : String(newInstanceDate.getDate()))
@@ -93,7 +95,6 @@ export class UnitService {
    * @memberof UnitService
    */
   getLocalDate(dateUtc: Date): Date {
-    console.log(dateUtc);
     return new Date(Date.UTC(dateUtc.getFullYear(), dateUtc.getMonth(), dateUtc.getDate(), dateUtc.getHours(), dateUtc.getMinutes()));
   }
 
