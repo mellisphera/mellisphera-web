@@ -12,7 +12,7 @@ export class MyDatePipe implements PipeTransform {
     if (args === 'DAILY') {
       return this.unitService.getDailyDate(value);
     } else {
-      return this.unitService.getHourlyDate(new Date(value));
+      return this.unitService.getHourlyDate(value);
     }
   }
 

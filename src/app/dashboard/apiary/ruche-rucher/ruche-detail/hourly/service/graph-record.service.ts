@@ -24,7 +24,7 @@ export class GraphRecordService {
                 }
             },
             formatter: (params: any) => {
-                return '<strong>' + this.unitService.getHourlyDate(new Date(params[0].name)) + '</strong></br>' +
+                return '<strong>' + this.unitService.getHourlyDate(params[0].name) + '</strong></br>' +
                     params.map((elt: any) => {
                         return elt.marker + elt.seriesName + ': <b>' + this.globalGraph.getNumberFormat(elt.data.value[1]) + ' ' + this.globalGraph.getUnitBySerieName(elt.seriesName) + '</b>';
                     }).join('<br/>');

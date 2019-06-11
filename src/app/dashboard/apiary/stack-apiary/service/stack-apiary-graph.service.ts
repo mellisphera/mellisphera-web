@@ -3,6 +3,7 @@ import * as echarts from 'echarts';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { UnitService } from '../../../service/unit.service';
 import { Timestamp } from 'rxjs/Rx';
+import { truncate } from 'fs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class StackApiaryGraphService {
           animation: false
         },
         formatter: (params) => {
-          return '<strong>' + this.unitService.getHourlyDate(new Date(params[0].name)) + '</strong></br>' +
+          return '<strong>' + this.unitService.getHourlyDate(params[0].name) + '</strong></br>' +
             params.map((elt: any) => {
               return elt.marker  + elt.seriesName + ': <b>' + this.configGraph.getNumberFormat(elt.data.value[1]) + ' ' + this.configGraph.getUnitBySerieName(elt.seriesName) + '</b>';
             }).join('<br/>');
@@ -100,6 +101,10 @@ export class StackApiaryGraphService {
           splitLine: {
             show: true
           },
+          splitArea: {
+            show: true,
+            interval: 24
+          },
           axisLabel: {
             show: true,
              formatter: (value: number, index: number) => {
@@ -117,6 +122,10 @@ export class StackApiaryGraphService {
           splitLine: {
             show: true
           },
+          splitArea: {
+            show: true,
+            interval: 24
+          },
           axisLabel: {
             show: true,
              formatter: (value: number, index: number) => {
@@ -133,6 +142,10 @@ export class StackApiaryGraphService {
           max: new Date(),
           splitLine: {
             show: true
+          },
+          splitArea: {
+            show: true,
+            interval: 24
           },
           axisLabel: {
             show: true,
