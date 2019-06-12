@@ -180,8 +180,7 @@ export class DailyRecordService {
                 itemSymbol: 'diamond',
                 left: 'center',
                 inRange: {
-                    color: ['red', '#FD6204', 'yellow',
-                        '#63C908', '#498513'],
+                    color: ['red', 'yellow', '#129001'],
                 },
 
             },
