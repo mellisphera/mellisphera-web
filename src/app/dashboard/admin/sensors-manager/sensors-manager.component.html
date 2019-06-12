@@ -1,0 +1,25 @@
+<div id="user-group">
+  <ng-container *ngFor="let user of adminService.allUsers">
+    <div *ngIf="adminService.getSensorByUser(user.username).length > 0" [id]="user.username"
+      class="panel panel-primary">
+      <div class="panel-heading">{{ user.username }} </div>
+      <div class="user-sensors panel-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Ref</th>
+              <th scope="col">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sensor of adminService.getSensorByUser(user.username)">
+              <td>{{ sensor.sensorRef }}</td>
+              <td>{{ sensor.type }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+
+</div>

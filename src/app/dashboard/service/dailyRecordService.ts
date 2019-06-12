@@ -281,13 +281,13 @@ export class DailyRecordService {
         const selectHive = this.dailyRecords.filter(elt => elt.idHive === idHive);
         //return (selectHive.length > 0) ? 'ruche ' + selectHive[0].health_status + selectHive[0].health_trend : 'ruche Inconnu';
         if (selectHive.length > 0 || selectHive[0] !== undefined && selectHive) {
-            if (selectHive[0].vitality >= 95 && selectHive[0].vitality <= 100) {
+            if (selectHive[0].vitality >= 90 && selectHive[0].vitality <= 100) {
                 return '#498513';
-            } else if (selectHive[0].vitality >= 90 && selectHive[0].vitality <= 95) {
+            } else if (selectHive[0].vitality >= 80 && selectHive[0].vitality <= 90) {
                 return '#63C908';
-            } else if (selectHive[0].vitality >= 75 && selectHive[0].vitality <= 90) {
+            } else if (selectHive[0].vitality >= 60 && selectHive[0].vitality <= 80) {
                 return 'yellow';
-            } else if (selectHive[0].vitality >= 60 && selectHive[0].vitality <= 75) {
+            } else if (selectHive[0].vitality >= 30 && selectHive[0].vitality <= 60) {
                 return '#FD6204';
             } else {
                 return 'red';

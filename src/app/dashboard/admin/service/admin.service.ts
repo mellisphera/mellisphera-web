@@ -52,6 +52,7 @@ export class AdminService {
     );
   }
 
+
   /**
    *
    *
@@ -81,6 +82,21 @@ export class AdminService {
     return this.httpClient.get<User[]>(CONFIG.URL + 'user/all');
   }
 
+  /**
+   *
+   *
+   * @returns {Array<CapteurInterface>}
+   * @memberof AdminService
+   */
+  getSensorByUser(username: string): Array<CapteurInterface> {
+    let sensorByUser = this.allSensors.filter(_filter => _filter.username === username.toLocaleLowerCase());
+    if (sensorByUser.length > 0) {
+      return sensorByUser;
+    } else {
+      return [];
+    }
+  }
+  
   getLastConnection(startDt: Date):void {
     this.httpClient.post<Connection[]>(CONFIG.URL + 'logs/between', startDt).subscribe(
       connection => {

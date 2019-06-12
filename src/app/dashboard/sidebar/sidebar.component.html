@@ -36,7 +36,7 @@
                 <img src="./assets/img/report-icon.png" style="width:30px;height: 30px; margin-top:-6px;"/>
             </a>
         </li> -->
-        <li (click)="focus('flower')">
+        <li *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('flower')">
             <a routerLink="./fleurs-floraison" id="flower" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.FLOWER' | translate }}">
                 <img src="./assets/img/flower-icon.png" style="width:30px;height: 30px;" />
             </a>
@@ -46,7 +46,7 @@
                 <img src="./assets/img/weather-icon.png" style="width:30px;height: 30px; margin-top:-8px; "/>
             </a>
         </li> -->
-        <li (click)="focus('sensor')">
+        <li *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('sensor')">
             <a routerLink="./capteurs" data-toggle="tooltip" data-placement="top" id="sensor" title="{{ 'SIDEBAR.SENSORS' | translate }}">
                 <img src="./assets/img/sensor-icon.png" style="width:30px;height: 30px; margin-top:-6px;" />
             </a>

@@ -63,16 +63,6 @@ export class KpisynclogComponent implements OnInit {
           data: []
       },
         backgroundColor: 'white',
-        tooltip: {
-          padding: 5,
-          backgroundColor: '#222',
-          borderColor: '#777',
-          borderWidth: 1,
-          formatter: (params) => {
-            return '<strong>' + params.marker + params.data[3] + '</strong/><br/>' + 
-            'sync : <strong>' + params.data[1] + '</strong><br/>log : <strong/>' + params.data[0] + '</strong>';
-          }
-        },
         visualMap: [
           {
               show: true,
@@ -124,6 +114,11 @@ export class KpisynclogComponent implements OnInit {
             type: 'scatter',
             data: [5, 5, 'toto', new Date()],
             symbolSize: 10
+          },
+          {
+            type: 'line',
+            data: [0, 10, 20, 30, 40 , 50, 60],
+            symbol: 'none'
           }
         ],
       },
@@ -160,12 +155,23 @@ export class KpisynclogComponent implements OnInit {
     }).subscribe(
       data => {
         this.dataKpisynclog = data;
+        console.log(this.dataKpisynclog.series.filter(filt => filt !== undefined));
         this.option.baseOption.visualMap[0].categories = this.dataKpisynclog.user;
         this.option.baseOption.timeline.data = this.dataKpisynclog.timeline.sort((a, b) => {
           return new Date(a).getTime() - new Date(b).getTime();
         }).map(elt => this.unitService.getDailyDate(elt));
         this.dataKpisynclog.series.filter(_filter => _filter !== undefined).map((elt: Kpisynclog[], index) => {
           return {
+            tooltip: {
+              padding: 5,
+              backgroundColor: '#222',
+              borderColor: '#777',
+              borderWidth: 1,
+              formatter: (params) => {
+                return '<strong>' + params.marker + params.data[3] + '</strong/><br/>' + 
+                'sync : <strong>' + params.data[1] + '</strong><br/>log : <strong/>' + params.data[0] + '</strong>';
+              }
+            },
             title: {
               show: true,
               'text': this.unitService.getDailyDate(<string>elt[0].date)
@@ -176,7 +182,8 @@ export class KpisynclogComponent implements OnInit {
               data: elt.map(res => {
                 return [res.lastLog, res.lastSync,10,res.user, res.date];
               }),
-              symbolSize: 10
+              symbolSize: 30,
+            
             }
           };
         }).forEach(opt => {
