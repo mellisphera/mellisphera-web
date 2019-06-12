@@ -59,7 +59,8 @@ export class CapteurService {
             idHive: '',
             idApiary: '',
             hiveName: '',
-            apiaryName: ''
+            apiaryName: '',
+            sensorBat: 0
         };
     }
     emitSensorSubject() {

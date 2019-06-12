@@ -1,6 +1,9 @@
+<!-- <nav id="nav-sensor-page">
+    <input type="search" name="" id="input" class="form-control" value="" required="required" title="">
+</nav> -->
 <div id="user-group">
   <ng-container *ngFor="let user of adminService.allUsers">
-    <div *ngIf="adminService.getSensorByUser(user.username).length > 0" [id]="user.username"
+    <div ngDraggable *ngIf="adminService.getSensorByUser(user.username).length > 0" [id]="user.username"
       class="panel panel-primary">
       <div class="panel-heading">{{ user.username }} </div>
       <div class="user-sensors panel-body">
@@ -9,12 +12,16 @@
             <tr>
               <th scope="col">Ref</th>
               <th scope="col">Type</th>
+              <th scope="col">Sensor Time</th>
+              <th scope="col">Battery</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let sensor of adminService.getSensorByUser(user.username)">
               <td>{{ sensor.sensorRef }}</td>
               <td>{{ sensor.type }}</td>
+              <td>{{ sensor.sensorTime | myDate }}</td>
+              <td class="battery-contain"><div class="battery-level" [style.background-color]="getColorByBatLevel(sensor.sensorBat)" [style.width]="sensor.sensorBat + '%'">{{ sensor.sensorBat }} %</div></td>
             </tr>
           </tbody>
         </table>
