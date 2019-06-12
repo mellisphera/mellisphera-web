@@ -1,0 +1,34 @@
+#user-group{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.panel{
+    width: calc(100% / 4);
+    margin-bottom:1px !important;
+    padding: 4px;
+}
+.user-sensors{
+    /*background-color: #70A8B2;*/
+    border: 1px dashed gray;
+    padding: .5em;
+    
+    white-space: pre-wrap;
+    height: 5em;
+    overflow-y: scroll;
+    height: 290px;
+    scrollbar-width: none;
+}
+.user-sensors::-webkit-scrollbar { 
+    /* This is the magic bit for WebKit */
+    display: none;
+  }
+.panel-body{
+    background-color: #70A8B2;
+}
+.user-title{
+    text-align: center;
+}
+th{
+    color: black !important;
+}

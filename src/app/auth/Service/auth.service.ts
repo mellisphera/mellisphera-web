@@ -63,7 +63,14 @@ export class AuthService {
         if (this.jwtReponse.connexions === 1) {
           this.userService.setWizardActive(true);
         }
-        this.router.navigateByUrl('dashboard/home');
+        console.log(this.tokenService.getAuthorities());
+        if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
+            this.router.navigateByUrl('dashboard/admin');
+
+        } else {
+          this.router.navigateByUrl('dashboard/home');
+
+        }
       },
       (err) => {
         this.errLogin = true;

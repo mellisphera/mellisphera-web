@@ -1,7 +1,7 @@
 <div id="content">
   <div class="info-group">
     <p class="icon-group float"><img src="./assets/img/sensor-icon.png" /></p>
-    <h3 class="stop-float">Sensors : {{ adminService.allSensors.length }} </h3>
+    <h3 class="stop-float"><a [routerLink]="['../sensor-manager']" routerLinkActive="router-link-active">Sensors</a> : {{ adminService.allSensors.length }} </h3>
     <div class="charts" echarts [options]="optionsSensorChart" (chartInit)="onChartInitSensor($event)" [autoResize]="true" id="chart-sensor" style="width:100%;height: 60%;"></div>
 
   </div>
