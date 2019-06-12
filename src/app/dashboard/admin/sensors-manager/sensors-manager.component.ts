@@ -13,4 +13,13 @@ export class SensorsManagerComponent implements OnInit {
   ngOnInit() {
   }
 
+  getColorByBatLevel(batteryLevel: number) {
+    if (batteryLevel <= 50) {
+      return 'red';
+    } else if (batteryLevel <= 80) {
+      return '#CAEA0D';
+    } else {
+      return '#07DE26';
+    }
+  }
 }

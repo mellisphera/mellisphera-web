@@ -18,6 +18,7 @@ import { SensorsManagerComponent } from './sensors-manager/sensors-manager.compo
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    //    AngularDraggableModule,
     AdminRoutingModule,
     SharedModule,
   ],

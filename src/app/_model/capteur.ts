@@ -10,4 +10,5 @@ export interface CapteurInterface {
 	hiveName?: string;
 	apiaryName?:string;
 	sensorTime?: Date;
+	sensorBat: number;
 }
