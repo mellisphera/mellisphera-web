@@ -26,7 +26,7 @@ import { UnitService } from '../service/unit.service';
   styleUrls: ['./home.component.scss'],
 
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   infoRuche: any = null;
   photoApiary: File;
   username: string;
@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
   positionHive: any;
   baseDropValid: string;
   rucherSelectId: string;
+  private hiveUpdateForDestroyPage: Array<RucheInterface>;
   message: string;
   style: {
     'background-image': string,
@@ -57,6 +58,7 @@ export class HomeComponent implements OnInit {
     this.username = this.login.getUser();
     this.photoApiary = null;
     this.message = '';
+    this.hiveUpdateForDestroyPage = [];
     this.style = {
       'background-image': 'url(' + CONFIG.URL_FRONT + 'assets/imageClient/testAccount.png)',
       'background-position': 'center',
@@ -79,7 +81,9 @@ export class HomeComponent implements OnInit {
    * @memberof HomeComponent
    */
   getDateDaily(): string {
-    return this.unitService.getDailyDate(this.dailyRecTh.rangeDailyRecord.toISOString());
+    let showDate = new Date();
+    showDate.setDate(this.dailyRecTh.rangeDailyRecord.getDate() + 1);
+    return this.unitService.getDailyDate(showDate.toISOString());
   }
   ngOnInit(): void {
     if (!this.rucherService.rucherSubject.closed) {
@@ -125,6 +129,7 @@ export class HomeComponent implements OnInit {
       () => { }, () => { }, () => {
         this.position.x = 0;
         this.position.y = 0;
+        this.hiveUpdateForDestroyPage.push(rucheUpdate);
       }
     )
   }
@@ -177,4 +182,13 @@ export class HomeComponent implements OnInit {
     const ruche = JSON.parse(JSON.stringify($ruche))
     this.infoRuche = ruche.name + ' : ' + ruche.description;
   }
+
+  ngOnDestroy(): void {
+    this.hiveUpdateForDestroyPage.forEach((hiveUpdate: RucheInterface) => {
+      let hiveUpdateIndex = this.rucheService.ruches.map(hive => hive.id).indexOf(hiveUpdate.id);
+      this.rucheService.ruches[hiveUpdateIndex].hivePosX = hiveUpdate.hivePosX;
+      this.rucheService.ruches[hiveUpdateIndex].hivePosY = hiveUpdate.hivePosY;
+    });
+  }
+  
 }

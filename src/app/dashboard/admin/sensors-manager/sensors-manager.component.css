@@ -43,7 +43,7 @@ th{
     position: relative;
 }
 .battery-level{
-    padding: 2px;
+    padding-left: 2px;
     color: black;
     font-weight: bold;
 }
