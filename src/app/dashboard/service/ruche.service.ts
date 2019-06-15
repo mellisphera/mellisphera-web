@@ -95,11 +95,11 @@ export class RucheService {
     */
    saveCurrentHive(idHive?: string) {
      if (idHive) {
-      window.sessionStorage.removeItem('currentHive');
-      window.sessionStorage.setItem('currentHive', idHive);
+      window.localStorage.removeItem('currentHive');
+      window.localStorage.setItem('currentHive', idHive);
      } else {
-      window.sessionStorage.removeItem('currentHive');
-      window.sessionStorage.setItem('currentHive', this.ruche.id);
+      window.localStorage.removeItem('currentHive');
+      window.localStorage.setItem('currentHive', this.ruche.id);
      }
    }
 
@@ -110,7 +110,7 @@ export class RucheService {
     * @memberof RucheService
     */
    getCurrentHive(): string {
-     return window.sessionStorage.getItem('currentHive');
+     return window.localStorage.getItem('currentHive');
    }
 
 

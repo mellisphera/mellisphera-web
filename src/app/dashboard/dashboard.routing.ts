@@ -46,17 +46,3 @@ const routes: Routes = [
   ],
 })
 export class DasboardRoutingModule { }
-
-/*
-    { path: 'ruche-et-rucher',  canActivate : [AuthGuard], component: RucheRucherComponent },
-    { path: 'capteurs',         canActivate : [AuthGuard], component: CapteurComponent },
-    { path: 'meteo',            canActivate : [AuthGuard], component: MeteoComponent },
-    { path: 'ruche-detail', canActivate : [AuthGuard], component : RucheDetailComponent},
-    { path: 'rapport',          canActivate : [AuthGuard], component: RapportComponent},
-    { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
-    { path: 'home', canActivate : [AuthGuard], component: HomeComponent},
-    { path: 'admin', canActivate : [AuthGuard], component : AdminComponent},
-    { path: 'stack-apiary', canActivate : [AuthGuard], component : StackApiaryComponent},
-    { path: 'fstl', component : DemoComponent},
-    { path: 'apiary-notes', canActivate: [AuthGuard], component : ApiaryNotesComponent},
-*/

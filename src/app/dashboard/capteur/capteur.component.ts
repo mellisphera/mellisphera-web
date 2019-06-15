@@ -163,7 +163,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
         this.capteurService.capteur.type = sensorType.trim();
         this.initForm();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
-            if(this.userService.getJwtReponse().country === "FR"){
+            if(this.userService.getJwtReponse().country === 'FR'){
                 this.notifier.notify('success', 'Capteur créé');
               }else{
                 this.notifier.notify('success', 'Created sensor');

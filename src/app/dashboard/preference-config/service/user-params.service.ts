@@ -87,7 +87,7 @@ export class UserParamsService {
    * @memberof UserParamsService
    */
   getUserPref(): UserPref {
-    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).userPref;
+    return JSON.parse(window.localStorage.getItem('jwtReponse')).userPref;
   }
 
   /**
@@ -97,11 +97,11 @@ export class UserParamsService {
    * @memberof UserParamsService
    */
   getUsername(): string {
-    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).username;
+    return JSON.parse(window.localStorage.getItem('jwtReponse')).username;
   }
 
   getIdUser() {
-    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).idUser;
+    return JSON.parse(window.localStorage.getItem('jwtReponse')).idUser;
   }
 
 

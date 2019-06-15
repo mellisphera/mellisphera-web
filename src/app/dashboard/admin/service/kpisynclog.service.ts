@@ -12,7 +12,7 @@ export class KpisynclogService {
   constructor(private httpClient: HttpClient) { }
 
   getKpisnclog(start: Date) {
-    return this.httpClient.post<any[]>(CONFIG.URL + '/kpisynclog/between', start);
+    return this.httpClient.post<any[]>(CONFIG.URL + 'kpisynclog/between', start);
   }
 
 

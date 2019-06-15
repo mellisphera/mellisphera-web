@@ -147,7 +147,9 @@ export class KpisynclogComponent implements OnInit {
         series: res.map(elt => {
           if (oldDate.indexOf(elt.date) === -1) {
             oldDate.push(elt.date);
-            return res.filter(_filter => _filter.date === elt.date);
+            return res.filter(_filter => _filter.date === elt.date).sort((a, b) => {
+              return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+            });
           }
         }),
         timeline: oldDate,
