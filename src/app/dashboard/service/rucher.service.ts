@@ -75,8 +75,8 @@ export class RucherService {
         return this.http.post<RucherModel>(CONFIG.URL + 'apiaries' , newApiary).map(apiary => apiary.id != null ? apiary : null);
     }
     saveCurrentApiaryId(idApiary: string){
-        window.sessionStorage.removeItem('currentApiary');
-        window.sessionStorage.setItem('currentApiary', idApiary);
+        window.localStorage.removeItem('currentApiary');
+        window.localStorage.setItem('currentApiary', idApiary);
     }
 
     /**
@@ -85,7 +85,7 @@ export class RucherService {
      * @memberof RucherService
      */
     getCurrentApiary(): string {
-        return window.sessionStorage.getItem('currentApiary');
+        return window.localStorage.getItem('currentApiary');
     }
 
     getApiaryByUser(username: string) {

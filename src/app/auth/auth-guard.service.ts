@@ -19,13 +19,18 @@ export class AuthGuardService implements CanActivate, CanLoad {
 
     if(this.tokenService.getToken()) {
       return true;
+    } else {
+      this.router.navigate(['/login']);
+      return false;
+
     }
-    this.router.navigate(['/login']);
   }
   canLoad(route: Route): boolean {
     if (this.tokenService.getToken()) {
       return true;
+    }else {
+      this.router.navigate(['/login']);
+      return false;
     }
-    this.router.navigate(['/login']);
   }
 }

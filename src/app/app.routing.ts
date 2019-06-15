@@ -7,12 +7,15 @@ import { Erreur404ComponentComponent } from './erreur404-component/erreur404-com
 
 
 const routes: Routes = [
+
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule',
-      canActivate: [AuthGuardService], canLoad: [AuthGuardService] },
+  {
+    path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule',
+    canActivate: [AuthGuardService], canLoad: [AuthGuardService]
+  },
   { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: '**', component: Erreur404ComponentComponent}
+  { path: '**', component: Erreur404ComponentComponent }
 ];
 
 @NgModule({

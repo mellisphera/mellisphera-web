@@ -11,15 +11,13 @@
           <thead>
             <tr>
               <th scope="col">Ref</th>
-              <th scope="col">Type</th>
-              <th scope="col">Sensor Time</th>
+              <th scope="col">Last Sync</th>
               <th scope="col">Battery (%)</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let sensor of adminService.getSensorByUser(user.username)">
               <td>{{ sensor.sensorRef }}</td>
-              <td>{{ sensor.type }}</td>
               <td>{{ sensor.sensorTime | myDate }}</td>
               <td class="battery-contain"><div class="battery-level" [style.background-color]="getColorByBatLevel(sensor.sensorBat)" [style.width]="sensor.sensorBat + '%'">{{ sensor.sensorBat }}</div></td>
             </tr>

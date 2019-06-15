@@ -159,7 +159,7 @@ export class StackApiaryGraphService {
         {
           name: this.configGraph.weight.name,
           nameLocation: 'middle',
-          nameGap: 25,
+          nameGap: 18,
           interval: this.configGraph.weight.interval,
           type: 'value',
           min: this.configGraph.weight.min
@@ -168,7 +168,7 @@ export class StackApiaryGraphService {
           gridIndex: 1,
           name: this.configGraph.temp.name,
           type: 'value',
-          nameGap: 25,
+          nameGap: 18,
           nameLocation: 'middle',
           min: this.configGraph.temp.min,
           max: this.configGraph.temp.max,
@@ -178,7 +178,7 @@ export class StackApiaryGraphService {
           name: this.configGraph.getTitle("Humidity"),
           type: 'value',
           nameLocation: 'middle',
-          nameGap: 25,
+          nameGap: 18,
           min: 0,
           max: 100,
         },

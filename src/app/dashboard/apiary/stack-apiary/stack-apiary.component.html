@@ -31,7 +31,7 @@
         <div id="col-graph" class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <div id="stackGraph" echarts [options]="stackApiaryGraph.options" [loading]="loadingStack"
                 (chartInit)="onChartInit($event)"
-                [merge]="recordService.mergeOptionStackApiary" [autoResize]="true">
+                [merge]="recordService.mergeOptionStackApiary" style="width: 100%;" [autoResize]="true">
             </div>
         </div>
     </div>
