@@ -84,7 +84,7 @@ export class UnitService {
    * @memberof UnitService
    */
   getUserPref(): UserPref {
-    return JSON.parse(window.localStorage.getItem('jwtReponse')).userPref;
+    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).userPref;
   }
 
   /**

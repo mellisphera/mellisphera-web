@@ -8,7 +8,7 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CONFIG } from '../../../config';
 import { UserloggedService } from '../../userlogged.service';
 import { RucheService } from './ruche.service';
@@ -16,6 +16,8 @@ import { DailyRecordService } from './dailyRecordService';
 import { RucherModel } from '../../_model/rucher-model';
 import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
 import { LoadingService } from './loading.service';
+import { SharingApiary } from '../../_model/sharing-apiary';
+import 'rxjs/add/observable/forkJoin';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -75,8 +77,8 @@ export class RucherService {
         return this.http.post<RucherModel>(CONFIG.URL + 'apiaries' , newApiary).map(apiary => apiary.id != null ? apiary : null);
     }
     saveCurrentApiaryId(idApiary: string){
-        window.localStorage.removeItem('currentApiary');
-        window.localStorage.setItem('currentApiary', idApiary);
+        window.sessionStorage.removeItem('currentApiary');
+        window.sessionStorage.setItem('currentApiary', idApiary);
     }
 
     /**
@@ -85,13 +87,30 @@ export class RucherService {
      * @memberof RucherService
      */
     getCurrentApiary(): string {
-        return window.localStorage.getItem('currentApiary');
+        return window.sessionStorage.getItem('currentApiary');
     }
 
+
+    /**
+     *
+     *
+     * @param {string} idUsername
+     * @returns {Observable<SharingApiary>}
+     * @memberof RucherService
+     */
+    getSharingApiaryByUser(idUsername: string): Observable<SharingApiary> {
+        return this.http.get<SharingApiary>(CONFIG.URL + 'sharing/user/' + idUsername);
+    }
+    
     getApiaryByUser(username: string) {
         this.loadingService.loading = true;
-        this.ruchersObs = this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username);
-        this.ruchersObs.subscribe(
+/*         const ObservableApiaryQuery = [this.getSharingApiaryByUser(this.user.getIdUserLoged()), this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username)];
+        Observable.forkJoin(ObservableApiaryQuery).subscribe(
+            apiary => {
+                console.log(apiary);
+            }
+        ) */
+         this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username).subscribe(
             (data) => {
                 this.ruchers = data;
                 this.rucherSubject.next(data);

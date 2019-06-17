@@ -125,13 +125,13 @@ export class ObservationComponent implements OnInit {
     this.newObs.sentence = formValue.sentence;
     this.newObs.date = formValue.date;
     this.newObs.type = formValue.type;
-   /*  const index = this.observationService.observationsHive.indexOf(this.newObs);
+    const index = this.observationService.observationsHive.indexOf(this.newObs);
     this.initForm();
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
       this.observationService.observationsHive[index] = this.newObs;
       this.observationService.emitHiveSubject();
       this.notifier.notify('success', 'Updated Note');
-    }); */
+    });
   }
   deleteObsR(index: number, hiveObs: Observation) {
     this.observationService.deleteObservation(hiveObs.id).subscribe(() => { }, () => { }, () => {
