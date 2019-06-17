@@ -40,7 +40,7 @@ export class DailyRecordService {
         this.rangeDailyRecord.setMinutes(0);
         console.log(this.rangeDailyRecord);
         if (this.user.getUser()) {
-            this.getDailyRecThByApiary(localStorage.getItem('currentApiary'));
+            this.getDailyRecThByApiary(sessionStorage.getItem('currentApiary'));
         }
     }
 
