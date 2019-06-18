@@ -17,6 +17,7 @@ import 'rxjs/add/observable/forkJoin';
 import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
 import { Console } from '@angular/core/src/console';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
+import { RucherModel } from '../../../_model/rucher-model';
 
 @Component({
   selector: 'app-stack-apiary',
@@ -85,20 +86,21 @@ export class StackApiaryComponent implements OnInit {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
           this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).map((hives) => {
             hives.forEach(elt => {
-              this.rucherService.findRucherById(elt.idApiary, (apiary) => {
+              this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
                 elt.apiaryName = apiary[0].name;
               });
             });
             return hives;
           }).subscribe((hives) => {
             this.rucherService.rucheService.ruchesAllApiary = hives;
+            // this.rucheService.getRucheByApiary(this.rucherService)
           });
         });
       } else {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
           this.adminService.getAllHive().map((hives) => {
             hives.forEach(elt => {
-              this.rucherService.findRucherById(elt.idApiary, (apiary) => {
+              this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
                 try {
                   elt.apiaryName = apiary[0].name;
                 } catch (e) { }
