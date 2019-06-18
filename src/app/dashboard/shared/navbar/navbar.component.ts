@@ -21,7 +21,6 @@ import { ngf } from 'angular-file';
 import { SidebarService } from '../../service/sidebar.service';
 import { AdminService } from '../../admin/service/admin.service';
 import { TranslateService } from '@ngx-translate/core';
-import { NOTIF } from '../../../../constants/notify';
 
 @Component({
     // moduleId: module.id,

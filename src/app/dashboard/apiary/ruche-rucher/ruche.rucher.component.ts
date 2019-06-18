@@ -154,9 +154,6 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
       if (this.selectHive.idApiary === this.rucherService.getCurrentApiary()) {
         this.rucheService.ruches[this.hiveIndex] = this.selectHive;
         this.rucheService.emitHiveSubject();
-      } else {
-        this.rucheService.ruches.splice(this.hiveIndex, 1);
-        this.rucheService.emitHiveSubject();
       }
       if(this.userService.getJwtReponse().country === "FR"){
         this.notify.notify('success', 'Ruche mis à jour');
