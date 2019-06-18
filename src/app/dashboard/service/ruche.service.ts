@@ -115,7 +115,14 @@ export class RucheService {
    }
 
 
-   getRucheByUsername(username: string) {
+   /**
+    *
+    *
+    * @param {string} username
+    * @returns {Observable<RucheInterface[]>}
+    * @memberof RucheService
+    */
+   getRucheByUsername(username: string): Observable<RucheInterface[]> {
      return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + username);
    }
    updateCoordonneesRuche(ruche){
@@ -155,14 +162,15 @@ export class RucheService {
     return this.http.delete<RucheInterface>(CONFIG.URL + 'hives/' + hive.id);
   }
 
+
   /**
    *
    *
    * @param {string} idHive
-   * @param {*} [next]
+   * @param {Function} next
    * @memberof RucheService
    */
-  findRucheById(idHive: string, next?) {
+  findRucheById(idHive: string, next: Function) {
     next(this.ruches.filter(hive => hive.id === idHive));
   }
 }

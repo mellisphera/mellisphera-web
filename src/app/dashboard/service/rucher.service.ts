@@ -28,7 +28,7 @@ export class RucherService {
     rucher: RucherModel;
     ruchers: RucherModel[];
     rucherUpdate: RucherModel;
-
+    private sharingApiary: RucherModel[];
     currentBackground: string;
 
     rucherSelectUpdate: RucherModel;
@@ -80,6 +80,11 @@ export class RucherService {
     saveCurrentApiaryId(idApiary: string){
         window.sessionStorage.removeItem('currentApiary');
         window.sessionStorage.setItem('currentApiary', idApiary);
+        this.sharingApiary = this.ruchers.filter(hive => hive.idUsername !== this.user.getIdUserLoged());
+    }
+
+    getSharingApiary(): RucherModel[] {
+        return this.sharingApiary;
     }
 
     /**
