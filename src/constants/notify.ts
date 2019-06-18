@@ -1,20 +1,25 @@
-export const NOTIF = {
-    FR: {
+export const NOTIF_MSG = {
         SUCCESS: {
+            FR: {
 
+            },
+            EN: {
+
+            }
         },
         FAIL: {
-            AUTH_WRITE_APIARY: 'Vous n\'avez pas le droit de modifier ce rucher',
-            AUTH_WRITE_HIVE: 'Vous n\'avez pas le droit de modifier cette ruche'
+            FR: {
+                AUTH_WRITE_APIARY: 'Vous n\'avez pas le droit de modifier ce rucher',
+                AUTH_WRITE_HIVE: 'Vous n\'avez pas le droit de modifier cette ruche'
+            },
+            EN: {
+                AUTH_WRITE_APIARY: 'You are not allowed to modify this apiary',
+                AUTH_WRITE_HIVE: 'you are not allowed to modify this hive'
+            }
         }
-    },
-    EN: {
-        SUCCESS: {
+}
+export enum NotifList{
+    AUTH_WRITE_APIARY = 'AUTH_WRITE_APIARY',
+    AUTH_WRITE_HIVE = 'AUTH_WRITE_HIVE',
 
-        },
-        FAIL: {
-            AUTH_WRITE_APIARY: 'You are not allowed to modify this apiary',
-            AUTH_WRITE_HIVE: 'you are not allowed to modify this hive'
-        }
-    }
 }
