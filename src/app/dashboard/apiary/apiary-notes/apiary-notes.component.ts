@@ -36,20 +36,20 @@ export class ApiaryNotesComponent implements OnInit {
     private observationService: ObservationService,
     private formBuilder: FormBuilder,
     private userService: UserloggedService) {
-      this.type = 'ApiaryObs';
-      this.message = '';
-      this.typeToMv = 0;
-      this.notify = notifyService;
+    this.type = 'ApiaryObs';
+    this.message = '';
+    this.typeToMv = 0;
+    this.notify = notifyService;
   }
 
   ngOnInit() {
     this.initForm();
     this.observationService.setRange({ scale: 1, type: 'YEARS' });
-    this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary()).subscribe(
-      data => {
-        this.apiaryObs = data;
-      }
-    )
+    this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+  }
+
+  loadObservation() {
+
   }
 
   /**
@@ -78,12 +78,12 @@ export class ApiaryNotesComponent implements OnInit {
     this.newObs.idApiary = null;
     this.newObs.idHive = this.hiveToMv.id;
     this.newObs.idLHive = new Array(this.hiveToMv.id);
-    const index = this.apiaryObs.indexOf(this.newObs);
+    const index = this.observationService.observationsApiary.indexOf(this.newObs);
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
-      this.apiaryObs.splice(index, 1);
-      if(this.userService.getJwtReponse().country === "FR"){
+      this.observationService.observationsApiary.splice(index, 1);
+      if (this.userService.getJwtReponse().country === "FR") {
         this.notify.notify('success', 'Note déplacée ' + this.hiveToMv.name);
-      }else{
+      } else {
         this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
       }
     });
@@ -101,14 +101,14 @@ export class ApiaryNotesComponent implements OnInit {
     console.log(this.newObs);
     this.initForm();
     this.observationService.createObservation(this.newObs).subscribe((obs) => {
-      this.apiaryObs.push(obs);
-      this.apiaryObs.sort((a: Observation, b: Observation) => {
+      this.observationService.observationsApiary.push(obs);
+      this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       });
     }, () => { }, () => {
-      if(this.userService.getJwtReponse().country === "FR"){
+      if (this.userService.getJwtReponse().country === "FR") {
         this.notify.notify('success', 'Note créée');
-      }else{
+      } else {
         this.notify.notify('success', 'Created Note');
       }
     });
@@ -122,12 +122,12 @@ export class ApiaryNotesComponent implements OnInit {
     const formValue = this.observationForm.value;
     this.newObs.sentence = formValue.sentence;
     this.newObs.date = formValue.date;
-    const index = this.apiaryObs.indexOf(this.newObs);
+    const index = this.observationService.observationsApiary.indexOf(this.newObs);
     this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
-      this.apiaryObs[index] = this.newObs;
-      if(this.userService.getJwtReponse().country === "FR"){
+      this.observationService.observationsApiary[index] = this.newObs;
+      if (this.userService.getJwtReponse().country === "FR") {
         this.notify.notify('success', 'Note mis à jour');
-      }else{
+      } else {
         this.notify.notify('success', 'Updated Note');
       }
     });
@@ -141,10 +141,10 @@ export class ApiaryNotesComponent implements OnInit {
    */
   deleteObs(index: number, obsApiary: Observation) {
     this.observationService.deleteObservation(obsApiary.id).subscribe(() => { }, () => { }, () => {
-      this.apiaryObs.splice(index, 1);
-      if(this.userService.getJwtReponse().country === "FR"){
+      this.observationService.observationsApiary.splice(index, 1);
+      if (this.userService.getJwtReponse().country === "FR") {
         this.notify.notify('success', 'Note supprimée');
-      }else{
+      } else {
         this.notify.notify('success', 'Deleted Note');
       }
     });
