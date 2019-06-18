@@ -7,7 +7,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DailyRecordTh } from '../../_model/daily-record-th';
-import { CONFIG } from '../../../config';
+import { CONFIG } from '../../../constants/config';
 import { UserloggedService } from '../../userlogged.service';
 import { UnitService } from './unit.service';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';

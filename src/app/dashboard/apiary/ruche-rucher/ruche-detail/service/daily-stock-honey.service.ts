@@ -3,7 +3,7 @@ import { MyDate } from '../../../../../class/MyDate';
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CONFIG } from '../../../../../../config';
+import { CONFIG } from '../../../../../../constants/config';
 import { DailyStockHoney } from '../../../../../_model/daily-stock-honey';
 import { isEmpty } from 'rxjs-compat/operator/isEmpty';
 import { IfStmt } from '@angular/compiler';

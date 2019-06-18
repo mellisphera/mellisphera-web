@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CONFIG } from '../../../../../../config';
+import { CONFIG } from '../../../../../../constants/config';
 import { DailyRecordsW } from '../../../../../_model/daily-records-w';
 import { ElementSchemaRegistry } from '@angular/compiler';
 import { MyDate } from '../../../../../class/MyDate';

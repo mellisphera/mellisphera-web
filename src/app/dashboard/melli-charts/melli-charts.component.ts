@@ -42,6 +42,7 @@ export class MelliChartsComponent implements OnInit {
       username: '',
       idApiary: '',
       apiaryName: '',
+      idUsername: '',
       hivePosX: '',
       hivePosY: '',
       sharingUser: []

@@ -92,7 +92,7 @@ export class GraphGlobal {
             {'graph' : 'reserveMiel', 'titre' : 'Stock de miel'},
             {'graph' : 'DailyWeightIncomes', 'titre' : 'Poids journaliers'},
             {'graph' : 'BroodDynamics', 'titre' : 'Dynamique du couvain'},
-            {'graph' : 'InternalRelativeHumidity', 'titre' : 'Humidité interne reslative (max)'},
+            {'graph' : 'InternalRelativeHumidity', 'titre' : 'Humidité interne relative (max)'},
             {'graph' : 'InternalTemperature', 'titre' : 'Température interne'},
             {'graph' : 'ExternalTemperature', 'titre' : 'Température externe'},
             {'graph' : 'WeightTemperature', 'titre' : 'Poids & Température'},

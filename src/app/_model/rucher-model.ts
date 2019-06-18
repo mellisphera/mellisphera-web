@@ -7,6 +7,8 @@ export interface RucherModel {
     createdAt: Date;
     photo: string;
     username: string;
+    idUsername: string;
     codePostal: string;
     ville: string;
+    
 }

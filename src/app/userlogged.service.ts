@@ -14,15 +14,24 @@ export class UserloggedService {
 
   constructor() {
     this.wizardActive = false;
-   }
+  }
 
-   changeMessage(message: string) {
-     this.messageSource.next(message);
-   }
-   currentUser(): JwtResponse {
+  changeMessage(message: string) {
+    this.messageSource.next(message);
+  }
+  currentUser(): JwtResponse {
     return JSON.parse(sessionStorage.getItem('currentUser'));
   }
 
+  /**
+   *
+   *
+   * @returns {boolean}
+   * @memberof UserloggedService
+   */
+  checkWriteObject(idUsername: string): boolean {
+    return idUsername === this.getIdUserLoged();
+  }
   setJwtReponse(auth: JwtResponse) {
     window.sessionStorage.removeItem('jwtReponse');
     window.sessionStorage.setItem('jwtReponse', JSON.stringify(auth));

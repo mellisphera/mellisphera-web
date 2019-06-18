@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { RucheInterface } from '../../_model/ruche';
 import { UserloggedService } from '../../userlogged.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { CONFIG } from '../../../config';
+import { CONFIG } from '../../../constants/config';
 import { Observable} from 'rxjs';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -47,6 +47,7 @@ export class RucheService {
       description : '',
       username : '',
       idApiary: '',
+      idUsername: '',
       apiaryName: '',
       hivePosX : '',
       hivePosY : '',
