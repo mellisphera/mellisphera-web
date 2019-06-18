@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { Login } from '../../_model/login';
 import { User } from '../../_model/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CONFIG } from '../../../config';
+import { CONFIG } from '../../../constants/config';
 import { AtokenStorageService } from './atoken-storage.service';
 import { JwtResponse } from '../../_model/jwt-response';
 import { TranslateService } from '@ngx-translate/core';

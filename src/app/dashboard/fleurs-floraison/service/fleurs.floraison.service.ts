@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
-import { CONFIG } from '../../../../config';
+import { CONFIG } from '../../../../constants/config';
 import { FleursTheorique } from '../../../_model/fleurstheorique';
 import { RucherService } from '../../service/rucher.service';
 import { FleurObservees } from '../../../_model/fleur-observees'

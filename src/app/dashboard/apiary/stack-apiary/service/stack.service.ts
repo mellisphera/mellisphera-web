@@ -93,6 +93,7 @@ export class StackService {
       description : '',
       username : '',
       idApiary: '',
+      idUsername: '',
       apiaryName: '',
       hivePosX : '',
       hivePosY : '',

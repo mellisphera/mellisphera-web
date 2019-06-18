@@ -7,7 +7,7 @@ import { DailyRecordService } from '../service/dailyRecordService';
 import { RucheService } from '../service/ruche.service';
 import { RucheInterface } from '../../_model/ruche';
 import { Route, Router } from '@angular/router';
-import { CONFIG } from '../../../config';
+import { CONFIG } from '../../../constants/config';
 import { AuthService } from '../../auth/Service/auth.service';
 import {
   trigger,

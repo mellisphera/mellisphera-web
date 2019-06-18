@@ -1,5 +1,5 @@
 import { UserloggedService } from './../userlogged.service';
-import { CONFIG } from './../../config';
+import { CONFIG } from '../../constants/config';
 import { AtokenStorageService } from './../auth/Service/atoken-storage.service';
 import { RucherService } from '../dashboard/service/rucher.service';
 import { GraphFlowerService } from './graph/graph-flower.service';

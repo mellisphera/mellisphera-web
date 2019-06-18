@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../../_model/user';
 import { AuthService } from './auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CONFIG } from '../../../config';
+import { CONFIG } from '../../../constants/config';
 
 
 const httpOptions = {

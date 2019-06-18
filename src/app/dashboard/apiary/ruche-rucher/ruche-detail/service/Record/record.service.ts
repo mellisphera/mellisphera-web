@@ -7,7 +7,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { CONFIG } from '../../../../../../../config';
+import { CONFIG } from '../../../../../../../constants/config';
 import { Record } from '../../../../../../_model/record';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { DataRange } from './data-range';
@@ -175,7 +175,12 @@ export class RecordService {
               showSymbol: false,
               hoverAnimation: true,
               yAxisIndex: 0,
-              color: 'black'
+              lineStyle: {
+                color: color
+              },
+              itemStyle: {
+                color: color
+              },
             },
             {
               name: hiveName + ' / Temp-ext (' + elt + ')',

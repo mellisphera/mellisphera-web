@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CONFIG } from '../../../config';
+import { CONFIG } from '../../../constants/config';
 import { UserloggedService } from '../../userlogged.service';
 import { RucheService } from './ruche.service';
 import { DailyRecordService } from './dailyRecordService';
@@ -26,7 +26,7 @@ const httpOptions = {
 export class RucherService {
  
     rucher: RucherModel;
-    ruchers: RucherModel[] = null;
+    ruchers: RucherModel[];
     rucherUpdate: RucherModel;
 
     currentBackground: string;
@@ -56,6 +56,7 @@ export class RucherService {
             id : null,
             latitude: '',
             longitude: '',
+            idUsername: '',
             name: '',
             description : '',
             createdAt : null,
@@ -98,34 +99,28 @@ export class RucherService {
      * @returns {Observable<SharingApiary>}
      * @memberof RucherService
      */
-    getSharingApiaryByUser(idUsername: string): Observable<SharingApiary> {
-        return this.http.get<SharingApiary>(CONFIG.URL + 'sharing/user/' + idUsername);
+    getSharingApiaryByUser(idUsername: string): Observable<RucherModel[]> {
+        return this.http.get<RucherModel[]>(CONFIG.URL + 'sharing/user/' + idUsername);
     }
     
     getApiaryByUser(username: string) {
         this.loadingService.loading = true;
-/*         const ObservableApiaryQuery = [this.getSharingApiaryByUser(this.user.getIdUserLoged()), this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username)];
+        const ObservableApiaryQuery = [this.getSharingApiaryByUser(this.user.getIdUserLoged()), this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username)];
         Observable.forkJoin(ObservableApiaryQuery).subscribe(
-            apiary => {
-                console.log(apiary);
-            }
-        ) */
-         this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username).subscribe(
-            (data) => {
-                this.ruchers = data;
-                this.rucherSubject.next(data);
+            (apiary) => {
+                this.ruchers = apiary.flat().filter(apiary => apiary !== null);
             },
             (err) => {
                 console.log(err);
-            },
-            () => {
-                if (this.ruchers != null ) {
+            }, () => {
+                if (this.ruchers.length > 0 ) {
                     if (!this.getCurrentApiary()) {
                         this.rucher = this.ruchers[0];
                         this.rucherSelectUpdate = this.rucher;
                         this.saveCurrentApiaryId(this.rucher.id);
                     } else {
-                        this.rucher = this.ruchers.filter(apiary => apiary.id === this.getCurrentApiary())[0];
+                        console.log(this.ruchers.filter(apiary => apiary.id === this.getCurrentApiary()).length);
+                         this.rucher = this.ruchers.filter(apiary => apiary.id === this.getCurrentApiary())[0];
                         if (this.rucher === undefined) {
                             this.rucher = this.ruchers[0];
                             this.rucherSelectUpdate = this.rucher;
@@ -135,11 +130,12 @@ export class RucherService {
                     this.currentBackground = this.rucher.photo;
                     this.rucherSubject.complete();
                     this.rucheService.getRucheByApiary(this.getCurrentApiary());
-                } else {
                 }
+                console.log( this.loadingService.loading);
                 this.loadingService.loading = false;
+                console.log( this.loadingService.loading);
             }
-        );
+        )
     }
 
     /**

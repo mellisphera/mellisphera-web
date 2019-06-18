@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CONFIG } from '../../../../config';
+import { CONFIG } from '../../../../constants/config';
 import { Kpisynclog } from '../../../_model/kpisynclog';
 import { Observable } from 'rxjs';
 

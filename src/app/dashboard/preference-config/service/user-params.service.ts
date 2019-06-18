@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserPref } from '../../../_model/user-pref';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CONFIG } from '../../../../config';
+import { CONFIG } from '../../../../constants/config';
 import { UserloggedService } from '../../../userlogged.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 

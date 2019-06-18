@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
-import { CONFIG } from '../../../../../config';
+import { CONFIG } from '../../../../../constants/config';
 import { Rucher } from '../rucher';
 import { Ruche } from '../ruche';
 import { ProcessReport } from '../processedReport';
