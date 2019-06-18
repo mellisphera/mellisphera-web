@@ -33,7 +33,7 @@ export class ApiaryNotesComponent implements OnInit {
   public apiaryObs: Array<Observation>;
   constructor(public rucherService: RucherService,
     private notifyService: NotifierService,
-    private observationService: ObservationService,
+    public observationService: ObservationService,
     private formBuilder: FormBuilder,
     private userService: UserloggedService) {
     this.type = 'ApiaryObs';
