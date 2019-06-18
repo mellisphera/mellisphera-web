@@ -24,7 +24,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let obs of apiaryObs; let i = index;">
+            <tr *ngFor="let obs of observationService.observationsApiary; let i = index;">
               <td>{{ obs.date | myDate }}</td>
               <td>{{ obs.sentence }}</td>
               <td class="text-right">

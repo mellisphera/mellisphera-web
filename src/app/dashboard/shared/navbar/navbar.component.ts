@@ -1,6 +1,6 @@
 import { RucherModel } from '../../../_model/rucher-model';
 import { CONFIG } from '../../../../config';
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { UserloggedService } from '../../../userlogged.service';
@@ -21,6 +21,7 @@ import { ngf } from 'angular-file';
 import { SidebarService } from '../../service/sidebar.service';
 import { AdminService } from '../../admin/service/admin.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ApiaryNotesComponent } from '../../apiary/apiary-notes/apiary-notes.component';
 
 @Component({
     // moduleId: module.id,

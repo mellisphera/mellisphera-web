@@ -155,8 +155,11 @@ export class ObservationService {
    * @returns {Observable<Observation[]>}
    * @memberof ObservationService
    */
-  getObservationByIdApiary(idApiary: string): Observable<Observation[]> {
-    return this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, this.rangeObs);
+  getObservationByIdApiary(idApiary: string){
+    this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, this.rangeObs).subscribe(
+      obs => {
+          this.observationsApiary = obs;
+      });
   }
   /**
    *
