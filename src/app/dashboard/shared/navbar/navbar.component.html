@@ -11,7 +11,7 @@
         <li>
           <select [(ngModel)]="rucherService.rucher" style="width: 100%" class="form-control"
             (change)="onSelectRucher()" id="select-Apiary">
-            <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">
+            <option *ngFor="let rucher of rucherService.allApiaryAccount" [ngValue]="rucher">
               {{rucher.name}} <span class="admin_userApiary" *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
                 style="color:red;"> => {{ rucher.username }}</span>
             </option>
