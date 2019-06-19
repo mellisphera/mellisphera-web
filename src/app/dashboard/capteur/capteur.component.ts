@@ -71,7 +71,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).subscribe(ruches => {
+        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
             this.rucherService.rucheService.ruchesAllApiary = ruches;
             this.hiveSensorSelect = ruches[0];
         })
@@ -100,6 +100,8 @@ export class CapteurComponent implements OnInit, OnDestroy {
                 const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
                 this.rucherService.rucheService.ruches[index].sensor = false;
                 this.rucherService.rucheService.emitHiveSubject();
+            }, (err: string) => {
+                console.error(err);
             });
         }
 
@@ -238,7 +240,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     }
 
     onSelectRucher() {
-        this.rucherService.rucheService.getRucheByApiary(this.apiarySensorSelect.id);
+        this.rucherService.rucheService.loadHiveByApiary(this.apiarySensorSelect.id);
     }
 
     initForm() {

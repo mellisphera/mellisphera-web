@@ -137,12 +137,12 @@ export class NavbarComponent implements OnInit {
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
         this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
-        this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+        this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
         switch (location) {
             case '/dashboard/ruche-et-rucher':
                 break;
             case '/dashboard/home':
-                this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/dashboard/fleurs-floraison':
@@ -152,10 +152,10 @@ export class NavbarComponent implements OnInit {
                             this.meteoService.getWeather(this.rucherService.rucher.codePostal);
                             break; */
             case '/dashboard/ruche-detail':
-                this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/dashboard/stack-apiary':
-                // this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+                // this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/dashboard/apiary-notes':
                 this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
@@ -213,7 +213,7 @@ export class NavbarComponent implements OnInit {
                 if (this.rucherService.ruchers.length < 1) {
                     this.rucherService.initRucher();
                 }
-                this.rucheService.getRucheByApiary(this.rucherService.rucher.id);
+                this.rucheService.loadHiveByApiary(this.rucherService.rucher.id);
             });
         }
     }
@@ -293,7 +293,7 @@ export class NavbarComponent implements OnInit {
             this.rucherService.saveCurrentApiaryId(apiary.id);
         }, () => { }, () => {
             this.rucherService.emitApiarySubject();
-            this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
             this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
             if(this.userService.getJwtReponse().country === "FR"){
                 this.notifier.notify('success', 'Rucher créé');

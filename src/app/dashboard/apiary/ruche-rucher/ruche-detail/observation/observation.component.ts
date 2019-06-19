@@ -131,7 +131,11 @@ export class ObservationComponent implements OnInit {
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsHive[index] = this.newObs;
         this.observationService.emitHiveSubject();
-        this.notifier.notify('success', 'Updated Note');
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notifier.notify('success', 'Note mis à jour');
+        }else{
+          this.notifier.notify('success', 'Updated Note');
+        }
       });
     }
   }

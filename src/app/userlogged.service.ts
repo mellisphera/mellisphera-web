@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth/Service/auth.service';
 import { Login } from './_model/login';
+import { RucherModel } from './_model/rucher-model';
 
 @Injectable()
 export class UserloggedService {
@@ -39,6 +40,16 @@ export class UserloggedService {
 
   getJwtReponse(): JwtResponse {
     return JSON.parse(window.sessionStorage.getItem('jwtReponse'));
+  }
+
+  /**
+   *
+   *
+   * @returns {RucherModelodel[]}
+   * @memberof UserloggedService
+   */
+  getSharingApiaryId(): Array<string> {
+    return JSON.parse(window.sessionStorage.getItem('sharingApiary'));
   }
 
   /**

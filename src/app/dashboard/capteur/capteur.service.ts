@@ -143,6 +143,6 @@ export class CapteurService {
      * @memberof CapteurService
      */
     updateCapteur(): Observable<CapteurInterface> {
-        return this.http.put<CapteurInterface>(CONFIG.URL + 'sensors/update/' + this.capteur.id, this.capteur, httpOptions);
+        return this.http.put<CapteurInterface>(CONFIG.URL + 'sensors/', this.capteur, httpOptions);
     }
 }

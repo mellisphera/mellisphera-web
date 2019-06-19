@@ -84,17 +84,23 @@ export class StackApiaryComponent implements OnInit {
     if (!this.rucherService.rucherSubject.closed) {
       if (!this.tokenService.checkAuthorities('ROLE_ADMIN')) {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-          this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).map((hives) => {
-            hives.forEach(elt => {
+          this.rucherService.rucheService.getAllHiveByAccount(this.userService.getUser()).map((hives: RucheInterface[][]) => {
+            let allHives = hives.flat();
+            allHives.forEach((elt: RucheInterface) => {
               this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
                 elt.apiaryName = apiary[0].name;
               });
             });
-            return hives;
-          }).subscribe((hives) => {
-            this.rucherService.rucheService.ruchesAllApiary = hives;
-            // this.rucheService.getRucheByApiary(this.rucherService)
-          });
+            return allHives;
+          }).subscribe(
+            hives => {
+              console.log(hives);
+              this.rucherService.rucheService.ruchesAllApiary = hives;
+            },
+            (err) => {
+              console.log(err);
+            }
+          )
         });
       } else {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
