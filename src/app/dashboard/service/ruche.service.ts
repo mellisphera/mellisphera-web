@@ -134,6 +134,18 @@ export class RucheService {
      return window.sessionStorage.getItem('currentHive');
    }
 
+   
+   /**
+    *
+    *
+    * @returns {RucheInterface[]}
+    * @memberof RucheService
+    * @description without hives shared 
+    */
+   getUserHive(): RucheInterface[] {
+    return this.ruches.filter(hive => hive.idUsername === this.user.getIdUserLoged());
+   }
+
 
    /**
     *

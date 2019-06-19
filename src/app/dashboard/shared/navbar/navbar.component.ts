@@ -134,6 +134,7 @@ export class NavbarComponent implements OnInit {
         this.initForm();
     }
     onSelectRucher() {
+        console.log(this.rucherService.rucher);
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
         this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());

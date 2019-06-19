@@ -151,7 +151,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
             this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
             const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
-            this.rucherService.rucheService.ruches[index].sensor = true;
             this.rucherService.rucheService.emitHiveSubject();
         } else {
             this.capteurService.capteur.idHive = null;
@@ -217,7 +216,6 @@ export class CapteurComponent implements OnInit, OnDestroy {
             this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
             this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
             const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
-            this.rucherService.rucheService.ruches[index].sensor = true;
             this.rucherService.rucheService.emitHiveSubject();
         } else {
             this.capteurService.capteur.idHive = null;
