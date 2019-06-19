@@ -158,10 +158,16 @@ export class RucheService {
    *
    *
    * @param {string} idHive
-   * @param {*} [next]
+   * @param {Function} next
+   * @param {Function} error
    * @memberof RucheService
    */
-  findRucheById(idHive: string, next?) {
-    next(this.ruches.filter(hive => hive.id === idHive));
+  findRucheById(idHive: string, next: Function, error: Function) {
+    if (this.ruches.filter(hive => hive.id === idHive).length > 0) {
+      next(this.ruches.filter(hive => hive.id === idHive));
+
+    } else {
+      error('Not hive');
+    }
   }
 }

@@ -114,10 +114,11 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                     this.hiveSelect = hive[0];
                     this.compteurHive = this.rucheService.ruches.indexOf(this.hiveSelect);
                     this.rucheService.saveCurrentHive(this.hiveSelect.id);
+                }, (err: string) => {
+                    console.log(err);
                 });
             });
         }
-
     }
 
     onChartInit($event: any) {

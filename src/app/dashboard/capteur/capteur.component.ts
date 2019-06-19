@@ -100,6 +100,8 @@ export class CapteurComponent implements OnInit, OnDestroy {
                 const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
                 this.rucherService.rucheService.ruches[index].sensor = false;
                 this.rucherService.rucheService.emitHiveSubject();
+            }, (err: string) => {
+                console.error(err);
             });
         }
 
