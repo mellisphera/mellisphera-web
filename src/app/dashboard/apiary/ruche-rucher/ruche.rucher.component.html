@@ -25,8 +25,8 @@
                   <tr>
                     <th scope="col">{{ 'HIVES.HIVE' | translate}}</th>
                     <th scope="col">Description</th>
-                    <th scope="col" class="text-center">{{ 'HIVES.SENSOR' | translate}}</th>
-                    <th class="text-right" scope="col">Action</th>
+                     <th scope="col" class="text-center">{{ 'HIVES.SENSOR' | translate}}</th>
+                     <th class="text-right" scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -38,8 +38,8 @@
                     </td>
 
                     <td (click)="clickOnRuche(ruche)" class="hive-select">{{ruche.description}}</td>
-                    <td class="text-center"><i [class]="'fa fa-circle ' + checkSensor(ruche)"></i></td>
-                    <td class="text-right">
+<!--                     <td class="text-center"><i [class]="'fa fa-circle ' + checkSensor(ruche)"></i></td>
+ -->                    <td class="text-right">
                       <button [disabled]="!userService.checkWriteObject(rucherService.rucher.idUsername)" data-toggle="tooltip" data-html="true" data-backdrop="false"
                         title="{{ 'HIVES.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
                         (click)="onSelectRuche(ruche, i)" data-target="#editRucheModal" class="btn btn-primary btn-lg "
