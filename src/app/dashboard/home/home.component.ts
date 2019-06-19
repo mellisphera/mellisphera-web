@@ -107,31 +107,33 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @memberof HomeComponent
    */
   onMoveEnd(event, ruche: RucheInterface): void {
-    const container = document.getElementById("cadre");
-    const widthcontainer = container.offsetWidth;
-    console.log('largeur', + widthcontainer);
-    const heightcontainer = container.offsetHeight;
-    let xHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosX, 10), widthcontainer);
-    let yHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosY, 10), heightcontainer);
-    console.log('ruche en px : ' + xHivePx + '-' + yHivePx);
-    this.position.x = this.getPourcentToPx(xHivePx + event.x, widthcontainer);
-    this.position.y = this.getPourcentToPx(yHivePx + event.y, heightcontainer);
-    if (this.position.y < 0) {
-      this.position.y = 0;
-    } else if (this.position.x < 0) {
-      this.position.x = 0;
-    }
-    let rucheUpdate = Object.assign({}, ruche);
-    rucheUpdate.hivePosX = '' + this.position.x;
-    rucheUpdate.hivePosY = '' + this.position.y;
-    console.log(this.position);
-    this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
-      () => { }, () => { }, () => {
-        this.position.x = 0;
+    if (ruche.idUsername === this.login.getIdUserLoged()) {
+      const container = document.getElementById("cadre");
+      const widthcontainer = container.offsetWidth;
+      console.log('largeur', + widthcontainer);
+      const heightcontainer = container.offsetHeight;
+      let xHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosX, 10), widthcontainer);
+      let yHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosY, 10), heightcontainer);
+      console.log('ruche en px : ' + xHivePx + '-' + yHivePx);
+      this.position.x = this.getPourcentToPx(xHivePx + event.x, widthcontainer);
+      this.position.y = this.getPourcentToPx(yHivePx + event.y, heightcontainer);
+      if (this.position.y < 0) {
         this.position.y = 0;
-        this.hiveUpdateForDestroyPage.push(rucheUpdate);
+      } else if (this.position.x < 0) {
+        this.position.x = 0;
       }
-    )
+      let rucheUpdate = Object.assign({}, ruche);
+      rucheUpdate.hivePosX = '' + this.position.x;
+      rucheUpdate.hivePosY = '' + this.position.y;
+      console.log(this.position);
+      this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
+        () => { }, () => { }, () => {
+          this.position.x = 0;
+          this.position.y = 0;
+          this.hiveUpdateForDestroyPage.push(rucheUpdate);
+        }
+      )
+    }
   }
 
 

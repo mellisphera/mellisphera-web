@@ -52,6 +52,26 @@ export class AdminService {
     );
   }
 
+  /**
+   *
+   *
+   * @returns {Observable<RucherModel>}
+   * @memberof AdminService
+   */
+  getDemoApiary(): Observable<RucherModel> {
+    return this.httpClient.get<RucherModel>(CONFIG.URL + 'sharing/demo-apiary');
+  }
+
+  /**
+   *
+   *
+   * @param {string} name
+   * @returns {Observable<RucherModel>}
+   * @memberof AdminService
+   */
+  updateDemoApiaryName(name: string): Observable<RucherModel>  {
+    return this.httpClient.put<RucherModel>(CONFIG.URL + 'sharing/name', name);
+  }
 
   /**
    *

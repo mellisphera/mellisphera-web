@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { KpisynclogService } from './service/kpisynclog.service';
 import { GlobalStatusComponent } from './global-status/global-status.component';
 import { SensorsManagerComponent } from './sensors-manager/sensors-manager.component';
+import { DemoApiaryComponent } from './demo-apiary/demo-apiary.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { SensorsManagerComponent } from './sensors-manager/sensors-manager.compo
     AdminComponent,
     KpisynclogComponent,
     GlobalStatusComponent,
-    SensorsManagerComponent
+    SensorsManagerComponent,
+    DemoApiaryComponent
   ]
 })
 export class AdminModule { }
