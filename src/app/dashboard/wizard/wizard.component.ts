@@ -153,8 +153,10 @@ export class WizardComponent implements OnInit, OnDestroy {
       return 'T2';
     } else if (parseInt(ref, 10) === 42) {
       return 'T_HR';
+    } else if (parseInt(ref, 10) === 43) {
+      return 'WEIGHT';
     } else {
-      return 'weight';
+      return 'ALIEN';
     }
   }
 

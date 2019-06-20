@@ -50,7 +50,7 @@ export class UserloggedService {
    * @memberof UserloggedService
    */
   getSharingApiaryId(): Array<string> {
-    return JSON.parse(window.sessionStorage.getItem('sharingApiary'));
+    return JSON.parse(window.sessionStorage.getItem('sharingApiary')) || [];
   }
 
   /**
