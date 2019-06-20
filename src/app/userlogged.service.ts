@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth/Service/auth.service';
 import { Login } from './_model/login';
 import { RucherModel } from './_model/rucher-model';
+import { AtokenStorageService } from './auth/Service/atoken-storage.service';
 
 @Injectable()
 export class UserloggedService {
@@ -13,7 +14,7 @@ export class UserloggedService {
 
   private wizardActive: Boolean;
 
-  constructor() {
+  constructor(private tokenService: AtokenStorageService) {
     this.wizardActive = false;
   }
 
@@ -31,7 +32,7 @@ export class UserloggedService {
    * @memberof UserloggedService
    */
   checkWriteObject(idUsername: string): boolean {
-    return idUsername === this.getIdUserLoged();
+    return idUsername === this.getIdUserLoged() || this.tokenService.checkAuthorities('ROLE_ADMIN');
   }
   setJwtReponse(auth: JwtResponse) {
     window.sessionStorage.removeItem('jwtReponse');

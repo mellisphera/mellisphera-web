@@ -1,6 +1,15 @@
 <div class="content">
-
     <div class="row">
+        <div id="range-group">
+            <select (change)="selectRange()" [disabled]="loadingStack" [(ngModel)]="stackService.range" name="range"
+                class="form-control">
+                <option *ngFor="let range of ranges;" [ngValue]="range" [selected]="range.scale == 15">
+                    {{ 'HIVE_DETAIL.HOURLY.LAST' | translate}}
+                    {{
+                           range.scale + "  " + traduction(range.type)
+                        }}</option>
+            </select>
+        </div>
         <div class="col-sm-2 col-md-2 col-lg-2">
             <div id="apiary-group">
                 <div id="main-menu" class="list-group">
@@ -19,19 +28,11 @@
                     </ng-container>
                 </div>
             </div>
-            <select (change)="selectRange()" [disabled]="loadingStack" [(ngModel)]="stackService.range" name="range"
-                class="form-control">
-                <option *ngFor="let range of ranges;" [ngValue]="range" [selected]="range.scale == 15">
-                        {{ 'HIVE_DETAIL.HOURLY.LAST' | translate}}
-                        {{
-                           range.scale + "  " + traduction(range.type)
-                        }}</option>
-            </select>
         </div>
         <div id="col-graph" class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <div id="stackGraph" echarts [options]="stackApiaryGraph.options" [loading]="loadingStack"
-                (chartInit)="onChartInit($event)"
-                [merge]="recordService.mergeOptionStackApiary" style="width: 100%;" [autoResize]="true">
+                (chartInit)="onChartInit($event)" [merge]="recordService.mergeOptionStackApiary" style="width: 100%;"
+                [autoResize]="true">
             </div>
         </div>
     </div>

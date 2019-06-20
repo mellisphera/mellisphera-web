@@ -12,7 +12,8 @@ export class StackApiaryGraphService {
 
   echartsUtil: any;
   options: any;
-  constructor(private configGraph: GraphGlobal, private unitService: UnitService) {
+  constructor(private configGraph: GraphGlobal, 
+    private unitService: UnitService) {
     this.echartsUtil = (<any>echarts).util;
     this.options = {
       tooltip: {
@@ -38,6 +39,7 @@ export class StackApiaryGraphService {
       },
       toolbox: {
         orient: 'horizontal',
+        itemSize: 20,
         //right: '0',
         /*       left: '80%', */
         feature: {
@@ -85,9 +87,9 @@ export class StackApiaryGraphService {
         }
       ],
       grid: [
-        { x: '3%', y: '5%', width: '90%', height: '25%' },
-        { x: '3%', y: '35%', width: '90%', height: '25%' },
-        { x: '3%', y: '65%', width: '90%', height: '25%' },
+        { x: '3%', y: '5%', width: '90%', height: '25%', background: 'white' },
+        { x: '3%', y: '35%', width: '90%', height: '25%', background: 'white' },
+        { x: '3%', y: '65%', width: '90%', height: '25%', background: 'white' },
       ],
       xAxis: [
         {
@@ -103,7 +105,6 @@ export class StackApiaryGraphService {
           },
           splitArea: {
             show: true,
-            interval: 24
           },
           axisLabel: {
             show: true,
@@ -124,7 +125,6 @@ export class StackApiaryGraphService {
           },
           splitArea: {
             show: true,
-            interval: 24
           },
           axisLabel: {
             show: true,
@@ -145,7 +145,6 @@ export class StackApiaryGraphService {
           },
           splitArea: {
             show: true,
-            interval: 24
           },
           axisLabel: {
             show: true,

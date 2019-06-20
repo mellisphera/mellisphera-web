@@ -12,8 +12,10 @@
 }
 .ruche {
   justify-content: center;
+  display: inline-block;
  // position: absolute;
   font-size: 15px;
+  margin-bottom: 2px;
   width: 60px;
   height: 60px;
   padding: 2px;
@@ -25,9 +27,20 @@
 
 .hive-group{
   position: absolute;
+  text-align: center;
   cursor: move;
-  border-radius: 50px;
-  background-color: white;
+  //background-color: white;
+}
+.hive-name{
+  text-align: center;
+  background-color: rgba($color: white, $alpha: 0.5);
+  font-weight: bold;
+  font-size: 20px;
+  padding: 2px;
+}
+.hive-name:hover{
+  cursor: pointer;
+  background-color: lightblue;
 }
 .vitality{  
   color: black;

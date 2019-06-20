@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @memberof HomeComponent
    */
   onMoveEnd(event, ruche: RucheInterface): void {
-    if (ruche.idUsername === this.login.getIdUserLoged()) {
+    if (this.login.checkWriteObject(ruche.idUsername)) {
       const container = document.getElementById("cadre");
       const widthcontainer = container.offsetWidth;
       console.log('largeur', + widthcontainer);
