@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { CONFIG } from '../../../../../../../config';
+import { CONFIG } from '../../../../../../../constants/config';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Observation } from '../../../../../../_model/observation';
 import { MyDate } from '../../../../../../class/MyDate';

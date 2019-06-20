@@ -4,6 +4,11 @@ import { CapteurInterface } from '../../../_model/capteur';
 import * as echarts from 'echarts';
 import { User } from '../../../_model/user';
 
+
+const USER_EXCLU = ['lpo', 'admin', 'mickael'];
+const WEIGHT= 'WEIGHT';
+const T2 = 'T2';
+const TH_R = 'TH_R';
 @Component({
   selector: 'app-global-status',
   templateUrl: './global-status.component.html',
@@ -77,10 +82,10 @@ export class GlobalStatusComponent implements OnInit, AfterViewInit {
     this.adminService.getAllUsers().subscribe(
       users => {
         this.adminService.allUsers = users;
-        this.optionsUserChart.baseOption.series[0].data = this.adminService.allUsers.filter(_filter => _filter.username !== 'LPO').map((res: User) => {
+        this.optionsUserChart.baseOption.series[0].data = this.adminService.allUsers.filter(_filter => _filter.username !== 'lpo').map((res: User) => {
           return { name: res.username, value: res.connexions };
         })
-        this.optionsUserChart.baseOption.legend.data = this.adminService.allUsers.filter(_filter => _filter.username !== 'LPO').map((res: User) => res.username);
+        this.optionsUserChart.baseOption.legend.data = this.adminService.allUsers.filter(_filter => _filter.username !== 'lpo').map((res: User) => res.username);
         this.echartsInstace.setOption(this.optionsUserChart);
         console.log(this.echartsInstace.getOption());
       }
@@ -90,10 +95,10 @@ export class GlobalStatusComponent implements OnInit, AfterViewInit {
         this.adminService.allSensors = sensors;
         this.optionsSensorChart.baseOption.series[0].name = 'Sensors';
         this.optionsSensorChart.baseOption.series[0].data = new Array();
-        this.optionsSensorChart.baseOption.series[0].data.push({name: 'T2', value: this.getT2Sensor().length});
-        this.optionsSensorChart.baseOption.series[0].data.push({name: 'TH_R', value: this.getTHRSensor().length});
-        this.optionsSensorChart.baseOption.series[0].data.push({name: 'WEIGHT', value: this.getWeightSensor().length});
-        this.optionsUserChart.baseOption.legend.data = ['T2', 'TH_R', 'WEIGHT'];
+        this.optionsSensorChart.baseOption.series[0].data.push({name: T2, value: this.getT2Sensor().length});
+        this.optionsSensorChart.baseOption.series[0].data.push({name: TH_R, value: this.getTHRSensor().length});
+        this.optionsSensorChart.baseOption.series[0].data.push({name: WEIGHT, value: this.getWeightSensor().length});
+        this.optionsUserChart.baseOption.legend.data = [T2, TH_R, WEIGHT];
         console.log(this.optionsSensorChart);
         this.echartsSensorInstace.setOption(this.optionsSensorChart);
         console.log(this.echartsSensorInstace.getOption());

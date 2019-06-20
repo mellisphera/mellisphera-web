@@ -7,6 +7,8 @@ import { NotifierService } from 'angular-notifier';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RucheInterface } from '../../../_model/ruche';
 import { UserloggedService } from '../../../userlogged.service';
+import { MyNotifierService } from '../../service/my-notifier.service';
+import { NotifList } from '../../../../constants/notify';
 
 @Component({
   selector: 'app-apiary-notes',
@@ -18,28 +20,24 @@ export class ApiaryNotesComponent implements OnInit {
   public hiveToMv: RucheInterface;
   public typeToMv: number;
   public message: string;
-  private selectHive: RucheInterface;
   public observationForm: FormGroup;
-  private hiveIndex: number;
   public type: string;
   public noteDateTime: Date;
-  private username: string;
-  private notify: NotifierService;
-  private subscribe: Subscription;
   private newObs: Observation;
   public updateRucherInput: boolean;
   public settings: any;
-  private obsSubject: Subscription;
+  private notify: NotifierService;
   public apiaryObs: Array<Observation>;
   constructor(public rucherService: RucherService,
-    private notifyService: NotifierService,
+    private myNoitifier: MyNotifierService,
+    private notiferService: NotifierService,
     public observationService: ObservationService,
     private formBuilder: FormBuilder,
-    private userService: UserloggedService) {
-    this.type = 'ApiaryObs';
-    this.message = '';
-    this.typeToMv = 0;
-    this.notify = notifyService;
+    public userService: UserloggedService) {
+      this.type = 'ApiaryObs';
+      this.notify = notiferService;
+      this.message = '';
+      this.typeToMv = 0;
   }
 
   ngOnInit() {
@@ -74,19 +72,23 @@ export class ApiaryNotesComponent implements OnInit {
    * @memberof ApiaryNotesComponent
    */
   mvToActions() {
-    this.newObs.type = this.typeToMv === 0 ? 'HiveObs' : 'HiveAct';
-    this.newObs.idApiary = null;
-    this.newObs.idHive = this.hiveToMv.id;
-    this.newObs.idLHive = new Array(this.hiveToMv.id);
-    const index = this.observationService.observationsApiary.indexOf(this.newObs);
-    this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
-      this.observationService.observationsApiary.splice(index, 1);
-      if (this.userService.getJwtReponse().country === "FR") {
-        this.notify.notify('success', 'Note déplacée ' + this.hiveToMv.name);
-      } else {
-        this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
-      }
-    });
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      this.newObs.type = this.typeToMv === 0 ? 'HiveObs' : 'HiveAct';
+      this.newObs.idApiary = null;
+      this.newObs.idHive = this.hiveToMv.id;
+      this.newObs.idLHive = new Array(this.hiveToMv.id);
+      const index = this.apiaryObs.indexOf(this.newObs);
+      this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
+        this.observationService.observationsApiary.splice(index, 1);
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notify.notify('success', 'Note déplacée ' + this.hiveToMv.name);
+        }else{
+          this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
+        }
+      });
+    } else {
+      this.myNoitifier.sendWarningNotif(NotifList.AUTH_WRITE_NOTES)
+    }
   }
   /**
    *
@@ -94,24 +96,29 @@ export class ApiaryNotesComponent implements OnInit {
    * @memberof ApiaryNotesComponent
    */
   createObservation() {
-    const formValue = this.observationForm.value;
-    this.newObs = formValue;
-    this.newObs.idApiary = this.rucherService.rucher.id;
-    this.newObs.type = 'ApiaryObs';
-    console.log(this.newObs);
-    this.initForm();
-    this.observationService.createObservation(this.newObs).subscribe((obs) => {
-      this.observationService.observationsApiary.push(obs);
-      this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      const formValue = this.observationForm.value;
+      this.newObs = formValue;
+      this.newObs.idApiary = this.rucherService.rucher.id;
+      this.newObs.type = 'ApiaryObs';
+      console.log(this.newObs);
+      this.initForm();
+      this.observationService.createObservation(this.newObs).subscribe((obs) => {
+        this.observationService.observationsApiary.push(obs);
+        this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
+      }, () => { }, () => {
+         if(this.userService.getJwtReponse().country === "FR"){
+          this.notify.notify('success', 'Note créée');
+        }else{
+          this.notify.notify('success', 'Created Note');
+        }
       });
-    }, () => { }, () => {
-      if (this.userService.getJwtReponse().country === "FR") {
-        this.notify.notify('success', 'Note créée');
-      } else {
-        this.notify.notify('success', 'Created Note');
-      }
-    });
+    } else {
+      this.myNoitifier.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+    }
   }
   /**
    *
@@ -119,18 +126,23 @@ export class ApiaryNotesComponent implements OnInit {
    * @memberof ApiaryNotesComponent
    */
   onEditObservation() {
-    const formValue = this.observationForm.value;
-    this.newObs.sentence = formValue.sentence;
-    this.newObs.date = formValue.date;
-    const index = this.observationService.observationsApiary.indexOf(this.newObs);
-    this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
-      this.observationService.observationsApiary[index] = this.newObs;
-      if (this.userService.getJwtReponse().country === "FR") {
-        this.notify.notify('success', 'Note mis à jour');
-      } else {
-        this.notify.notify('success', 'Updated Note');
-      }
-    });
+
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      const formValue = this.observationForm.value;
+      this.newObs.sentence = formValue.sentence;
+      this.newObs.date = formValue.date;
+      const index = this.apiaryObs.indexOf(this.newObs);
+      this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
+        this.observationService.observationsApiary[index] = this.newObs;
+         if(this.userService.getJwtReponse().country === "FR"){
+          this.notify.notify('success', 'Note mis à jour');
+        }else{
+          this.notify.notify('success', 'Updated Note');
+        }
+      });
+    } else {
+      this.myNoitifier.sendWarningNotif(NotifList.AUTH_WRITE_NOTES)
+    }
   }
   /**
    *
@@ -140,14 +152,19 @@ export class ApiaryNotesComponent implements OnInit {
    * @memberof ApiaryNotesComponent
    */
   deleteObs(index: number, obsApiary: Observation) {
-    this.observationService.deleteObservation(obsApiary.id).subscribe(() => { }, () => { }, () => {
-      this.observationService.observationsApiary.splice(index, 1);
-      if (this.userService.getJwtReponse().country === "FR") {
-        this.notify.notify('success', 'Note supprimée');
-      } else {
-        this.notify.notify('success', 'Deleted Note');
-      }
-    });
+
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      this.observationService.deleteObservation(obsApiary.id).subscribe(() => { }, () => { }, () => {
+        this.observationService.observationsApiary.splice(index, 1);
+         if(this.userService.getJwtReponse().country === "FR"){
+          this.notify.notify('success', 'Note supprimée');
+        }else{
+          this.notify.notify('success', 'Deleted Note');
+        }
+      });
+    } else {
+      this.myNoitifier.sendWarningNotif(NotifList.AUTH_WRITE_NOTES)
+    }
   }
   /**
    *

@@ -42,10 +42,10 @@ import { MelliChartsComponent } from './melli-charts/melli-charts.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { UnitService } from './service/unit.service';
 import { GraphGlobal } from './graph-echarts/GlobalGraph';
-import { MyDatePipe } from '../pipe/my-date.pipe';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
 import { ObservationService } from './apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { MyNotifierService } from './service/my-notifier.service';
 
 
 @NgModule({
@@ -82,6 +82,7 @@ import { ObservationService } from './apiary/ruche-rucher/ruche-detail/observati
     CapteurService,
     SidebarService,
     ObservationService,
+    MyNotifierService,
     UserParamsService
   ],
   declarations: [

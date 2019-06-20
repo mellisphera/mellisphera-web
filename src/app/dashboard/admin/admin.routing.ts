@@ -7,13 +7,15 @@ import { SharedModule } from '../shared/shared.module';
 import { KpisynclogComponent } from './kpisynclog/kpisynclog.component';
 import { GlobalStatusComponent } from './global-status/global-status.component';
 import { SensorsManagerComponent } from './sensors-manager/sensors-manager.component';
+import { DemoApiaryComponent } from './demo-apiary/demo-apiary.component';
 
 const routes: Routes = [
     {
       path: '', component: AdminComponent, canActivate: [AuthGuardService], children: [
         { path: 'kpisynclog', component: KpisynclogComponent, canActivate: [AuthGuardService]},
         { path: 'status', component: GlobalStatusComponent, canActivate: [AuthGuardService]},
-        { path: 'sensor-manager', component: SensorsManagerComponent, canActivate: [AuthGuardService]}
+        { path: 'sensor-manager', component: SensorsManagerComponent, canActivate: [AuthGuardService]},
+        { path: 'demo-apiary', component: DemoApiaryComponent, canActivate: [AuthGuardService]}
       ]
     }
 ];

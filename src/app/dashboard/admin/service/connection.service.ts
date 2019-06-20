@@ -1,7 +1,7 @@
 import { Connection } from '../../../_model/connection';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CONFIG } from '../../../../config';
+import { CONFIG } from '../../../../constants/config';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
