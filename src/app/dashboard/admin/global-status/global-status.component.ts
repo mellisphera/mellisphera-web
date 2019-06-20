@@ -5,10 +5,13 @@ import * as echarts from 'echarts';
 import { User } from '../../../_model/user';
 
 
-const USER_EXCLU = ['lpo', 'admin', 'mickael'];
-const WEIGHT= 'WEIGHT';
-const T2 = 'T2';
-const TH_R = 'TH_R';
+const USER_EXCLU = ['lpo', 'admin', 'mickael', 'demo'];
+const WEIGHT= { type: 'WEIGHT', ref: 43};
+const T2 = { type: 'T2', ref: 41};
+const TH_R = { type: 'TH_R', ref: 42};
+const T2_39 = { type: 'T2', ref: 39};
+const T2_B5 = { type: 'T2', ref: 'B5'};
+
 @Component({
   selector: 'app-global-status',
   templateUrl: './global-status.component.html',
@@ -82,10 +85,10 @@ export class GlobalStatusComponent implements OnInit, AfterViewInit {
     this.adminService.getAllUsers().subscribe(
       users => {
         this.adminService.allUsers = users;
-        this.optionsUserChart.baseOption.series[0].data = this.adminService.allUsers.filter(_filter => _filter.username !== 'lpo').map((res: User) => {
+        this.optionsUserChart.baseOption.series[0].data = this.adminService.allUsers.filter(_filter => USER_EXCLU.indexOf(_filter.username) === -1).map((res: User) => {
           return { name: res.username, value: res.connexions };
         })
-        this.optionsUserChart.baseOption.legend.data = this.adminService.allUsers.filter(_filter => _filter.username !== 'lpo').map((res: User) => res.username);
+        this.optionsUserChart.baseOption.legend.data = this.adminService.allUsers.filter(_filter => USER_EXCLU.indexOf(_filter.username) === -1)  .map((res: User) => res.username);
         this.echartsInstace.setOption(this.optionsUserChart);
         console.log(this.echartsInstace.getOption());
       }
@@ -95,10 +98,11 @@ export class GlobalStatusComponent implements OnInit, AfterViewInit {
         this.adminService.allSensors = sensors;
         this.optionsSensorChart.baseOption.series[0].name = 'Sensors';
         this.optionsSensorChart.baseOption.series[0].data = new Array();
-        this.optionsSensorChart.baseOption.series[0].data.push({name: T2, value: this.getT2Sensor().length});
-        this.optionsSensorChart.baseOption.series[0].data.push({name: TH_R, value: this.getTHRSensor().length});
-        this.optionsSensorChart.baseOption.series[0].data.push({name: WEIGHT, value: this.getWeightSensor().length});
-        this.optionsUserChart.baseOption.legend.data = [T2, TH_R, WEIGHT];
+        this.optionsSensorChart.baseOption.series[0].data.push({name: T2.type, value: this.getT2Sensor().length});
+        this.optionsSensorChart.baseOption.series[0].data.push({name: TH_R.type, value: this.getTHRSensor().length});
+        this.optionsSensorChart.baseOption.series[0].data.push({name: WEIGHT.type, value: this.getWeightSensor().length});
+        this.optionsUserChart.baseOption.legend.data = [T2.type, TH_R.type, WEIGHT.type];
+        console.log(this.optionsUserChart.baseOption.legend.data);
         console.log(this.optionsSensorChart);
         this.echartsSensorInstace.setOption(this.optionsSensorChart);
         console.log(this.echartsSensorInstace.getOption());
@@ -110,13 +114,13 @@ export class GlobalStatusComponent implements OnInit, AfterViewInit {
   }
 
   getT2Sensor(): Array<CapteurInterface> {
-    return this.adminService.allSensors.filter(sensor => sensor.sensorRef.startsWith('41') || sensor.sensorRef.startsWith('39') || sensor.sensorRef.startsWith('B5'));
+    return this.adminService.allSensors.filter(sensor => sensor.sensorRef.startsWith(String(TH_R.ref)) || sensor.sensorRef.startsWith(String(T2_39.ref)) || sensor.sensorRef.startsWith(String(T2_B5.ref)));
   }
   getTHRSensor(): Array<CapteurInterface> {
-    return this.adminService.allSensors.filter(sensor => sensor.sensorRef.startsWith('42'));
+    return this.adminService.allSensors.filter(sensor => sensor.sensorRef.startsWith(String(T2.ref)));
   }
   getWeightSensor(): Array<CapteurInterface> {
-    return this.adminService.allSensors.filter(sensor => sensor.sensorRef.startsWith('43'));
+    return this.adminService.allSensors.filter(sensor => sensor.sensorRef.startsWith(String(WEIGHT.ref)));
   }
   onChartInit(e: any) {
     console.log(e);

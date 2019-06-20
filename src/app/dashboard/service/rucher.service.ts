@@ -41,6 +41,7 @@ export class RucherService {
         private loadingService: LoadingService,
         private tokenService: AtokenStorageService) {
         this.rucherSubject = new BehaviorSubject([]);
+        this.allApiaryAccount = [];
         this.initRucher();
         if (this.user.getUser() && !this.tokenService.checkAuthorities('ROLE_ADMIN')) {
             this.getApiaryByUser(this.user.getUser());
