@@ -11,6 +11,7 @@ import { CONFIG } from '../../../constants/config';
 import { UserloggedService } from '../../userlogged.service';
 import { UnitService } from './unit.service';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
+import { RucherService } from './rucher.service';
 
 @Injectable()
 export class DailyRecordService {
@@ -29,7 +30,7 @@ export class DailyRecordService {
     private unitSystem: string;
     public mergeOptionCalendarHealth: any;
 
-    constructor(private http: HttpClient, private user: UserloggedService, private unitService: UnitService, private graphGlobal: GraphGlobal) {
+    constructor(private http: HttpClient, private user: UserloggedService, private unitService: UnitService, private rucherService: RucherService, private graphGlobal: GraphGlobal) {
         this.statusLoading = false;
         this.rangeDailyRecord = new Date();
         this.arrayTempInt = [];
@@ -40,7 +41,10 @@ export class DailyRecordService {
         this.rangeDailyRecord.setMinutes(0);
         console.log(this.rangeDailyRecord);
         if (this.user.getUser()) {
-            this.getDailyRecThByApiary(sessionStorage.getItem('currentApiary'));
+            this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
+                console.log(sessionStorage.getItem('currentApiary'));
+                this.getDailyRecThByApiary(sessionStorage.getItem('currentApiary'));
+            });
         }
     }
 
