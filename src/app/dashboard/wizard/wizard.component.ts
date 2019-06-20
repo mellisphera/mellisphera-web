@@ -78,6 +78,7 @@ export class WizardComponent implements OnInit, OnDestroy {
   subHive() {
     this.hive = this.hiveForm.value;
     this.hive.id = null;
+    this.hive.idUsername = this.userService.getIdUserLoged();
     this.hive.sensor = true;
     this.hive.username = this.userService.getUser();
 
@@ -86,6 +87,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.sensor = this.sensorForm.value;
     this.sensor.apiaryName = this.apiary.name;
     this.sensor.type = this.getTypeFromRef(this.sensor.sensorRef);
+    this.apiary.idUsername = this.userService.getIdUserLoged()
     this.sensor.apiaryName = this.apiary.name;
     this.sensor.hiveName = this.hive.name;
     this.sensor.username = this.userService.getUser();
@@ -112,9 +114,11 @@ export class WizardComponent implements OnInit, OnDestroy {
   finishWizard() {
     this.rucherService.createRucher(this.apiary).subscribe((apiary) => {
       if (this.rucherService.ruchers != null) {
+        this.rucherService.allApiaryAccount.push(apiary);
         this.rucherService.ruchers.push(apiary);
       } else {
         this.rucherService.ruchers = new Array(apiary);
+        this.rucherService.allApiaryAccount.push(apiary)
       }
       this.rucherService.saveCurrentApiaryId(apiary.id);
     }, () => { }, () => {
@@ -123,7 +127,7 @@ export class WizardComponent implements OnInit, OnDestroy {
       this.initForm();
       this.hive.idApiary = this.rucherService.getCurrentApiary();
       this.rucherService.rucheService.createRuche(this.hive).subscribe((hive) => {
-        this.rucherService.rucheService.ruches.push(hive);
+        this.rucherService.rucheService.ruches = new Array(hive);
         this.rucherService.rucheService.saveCurrentHive(hive.id);
       }, () => { }, () => {
         this.rucherService.rucheService.emitHiveSubject();
