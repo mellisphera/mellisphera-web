@@ -19,9 +19,10 @@
             (endOffset)="onMoveEnd($event, ruche)" ngDraggable class="hive-group drag-grid"
             *ngFor="let ruche of rucheService.ruches; let i = index" [id]="i" [style.top.%]="ruche.hivePosY"
             [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)">
-            <div data-placement="top" [title]="infoRuche" (dblclick)="onClick(ruche);" class="ruche"
+            <div data-placement="top" [title]="infoRuche" class="ruche"
                 [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)"><p class="vitality">{{ dailyRecTh.getPourcentByHive(ruche.id) }}</p>
             </div>
+            <div (click)="onClick(ruche);" class="hive-name">{{ ruche.name }}</div>
         </div>
     </div>
 </div>

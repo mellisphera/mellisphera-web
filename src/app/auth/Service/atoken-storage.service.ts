@@ -89,7 +89,7 @@ export class AtokenStorageService {
    * @returns {Boolean}
    * @memberof AtokenStorageService
    */
-  checkAuthorities(role: string): Boolean{
+  checkAuthorities(role: string): boolean{
     return this.getAuthorities().indexOf(role) !== -1 ? true : false;
   }
 

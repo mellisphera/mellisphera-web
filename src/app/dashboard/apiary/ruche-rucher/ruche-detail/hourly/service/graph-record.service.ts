@@ -34,6 +34,7 @@ export class GraphRecordService {
             orient: 'horizontal',
             /*right: '0',
             left : '99%',*/
+            itemSize: 20,
             feature: {
                 dataZoom: {
                     yAxisIndex: 'none'

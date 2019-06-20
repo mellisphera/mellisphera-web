@@ -47,6 +47,7 @@ li{
 .col-xs{
     margin: auto !important;
 }
+
 .row{
     height: 50vh !important;
     margin-left: 0px !important;
@@ -70,15 +71,36 @@ li{
     position: fixed;
     left: 18%;
 } */
+#range-group select{
+    display: inline-block;
+    width: 25%;
+}
+#range-group{
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 2px;
+    background-color: #333F3D;
+}
 #apiary-group{
     overflow: auto;
+    scrollbar-width: none;
+    white-space: pre-wrap;
+    overflow-y: scroll;
+    justify-content: space-between;
     height: 90vh;
 }
+#apiary-group::-webkit-scrollbar { 
+    /* This is the magic bit for WebKit */
+    display: none;
+  }
 @media  (max-width:767px){
     #col-graph{
         width: 100% !important;
     }
     #apiary-group{
         height: 100%;
+    }
+    #range-group select{
+        width: 100%;
     }
 }

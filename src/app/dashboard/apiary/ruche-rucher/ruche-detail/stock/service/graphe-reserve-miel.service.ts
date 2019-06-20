@@ -38,6 +38,7 @@ export class GrapheReserveMielService {
             toolbox: {
                 top: 'middle',
                 orient: 'vertical',
+                itemSize: 20,
                 feature: {
                     dataZoom: {
                         yAxisIndex: 'none'
