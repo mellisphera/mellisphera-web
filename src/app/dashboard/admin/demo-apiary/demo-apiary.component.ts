@@ -14,11 +14,11 @@ export class DemoApiaryComponent implements OnInit {
 
   public nameDemoAPiary: string;
   constructor(public adminService: AdminService, private myNotifer: MyNotifierService) {
-    this.adminService.getDemoApiary().subscribe(
+/*     this.adminService.getDemoApiary().subscribe(
       (apiary: RucherModel) => {
         this.nameDemoAPiary = apiary.name;
       }
-    )
+    ) */
   }
 
   ngOnInit() {
