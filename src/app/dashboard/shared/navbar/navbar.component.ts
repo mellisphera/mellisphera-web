@@ -1,6 +1,6 @@
 import { RucherModel } from '../../../_model/rucher-model';
-import { CONFIG } from '../../../../config';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { CONFIG } from '../../../../constants/config';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { UserloggedService } from '../../../userlogged.service';
@@ -22,6 +22,8 @@ import { SidebarService } from '../../service/sidebar.service';
 import { AdminService } from '../../admin/service/admin.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiaryNotesComponent } from '../../apiary/apiary-notes/apiary-notes.component';
+import { MyNotifierService } from '../../service/my-notifier.service';
+import { NotifList } from '../../../../constants/notify';
 
 @Component({
     // moduleId: module.id,
@@ -56,13 +58,14 @@ export class NavbarComponent implements OnInit {
     public rucherForm: FormGroup;
     constructor(location: Location,
         private element: ElementRef,
-        private userService: UserloggedService,
+        public userService: UserloggedService,
         private authService: AuthService,
         public rucherService: RucherService,
         private adminService: AdminService,
         private rucheService: RucheService,
         private fleursFloraisonService: FleursFloraisonService,
         private observationService: ObservationService,
+        private myNotifer: MyNotifierService,
         private capteurService: CapteurService,
         private formBuilder: FormBuilder,
         public tokenService: AtokenStorageService,
@@ -86,6 +89,7 @@ export class NavbarComponent implements OnInit {
             latitude: '',
             longitude: '',
             name: '',
+            idUsername : '',
             description: '',
             createdAt: null,
             photo: 'void',
@@ -134,15 +138,16 @@ export class NavbarComponent implements OnInit {
         this.initForm();
     }
     onSelectRucher() {
+        console.log(this.rucherService.rucher);
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
         this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
-        this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+        this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
         switch (location) {
             case '/dashboard/ruche-et-rucher':
                 break;
             case '/dashboard/home':
-                this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/dashboard/fleurs-floraison':
@@ -152,10 +157,10 @@ export class NavbarComponent implements OnInit {
                             this.meteoService.getWeather(this.rucherService.rucher.codePostal);
                             break; */
             case '/dashboard/ruche-detail':
-                this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/dashboard/stack-apiary':
-                // this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+                // this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/dashboard/apiary-notes':
                 this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
@@ -165,53 +170,63 @@ export class NavbarComponent implements OnInit {
     }
     //Editer Rucher
     onEditerRucher() {
-        const formValue = this.rucherForm.value;
-        const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
-        this.apiaryUpdate = formValue;
-        this.apiaryUpdate.id = this.rucherService.rucher.id;
-        if (this.photoApiary === null || this.photoApiary === undefined) {
-            this.apiaryUpdate.photo = this.rucherService.rucher.photo
-        } else {
-            this.apiaryUpdate.photo = this.editPhotoApiary;
-        }
-        this.apiaryUpdate.username = this.rucherService.rucher.username;
-        this.rucherService.updateRucher(this.rucherService.rucher.id, this.apiaryUpdate).subscribe(
-            () => { }, () => { }, () => {
-                this.rucherService.ruchers[index] = this.apiaryUpdate;
-                this.rucherService.emitApiarySubject();
-                this.photoApiary = null;
-                this.editPhotoApiary = null;
-                this.rucherService.rucher = this.apiaryUpdate;
-                if(this.userService.getJwtReponse().country === "FR"){
-                    this.notifier.notify('success', 'Rucher mis à jour');
-                }else{
-                    this.notifier.notify('success', 'Updated Apiary');
-                }
-                this.initForm();
+        if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+            const formValue = this.rucherForm.value;
+            const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
+            this.apiaryUpdate = formValue;
+            this.apiaryUpdate.id = this.rucherService.rucher.id;
+            if (this.photoApiary === null || this.photoApiary === undefined) {
+                this.apiaryUpdate.photo = this.rucherService.rucher.photo
+            } else {
+                this.apiaryUpdate.photo = this.editPhotoApiary;
             }
-        );
+            this.apiaryUpdate.username = this.rucherService.rucher.username;
+            this.rucherService.updateRucher(this.rucherService.rucher.id, this.apiaryUpdate).subscribe(
+                () => { }, () => { }, () => {
+                    this.rucherService.ruchers[index] = this.apiaryUpdate;
+                    this.rucherService.emitApiarySubject();
+                    this.photoApiary = null;
+                    this.editPhotoApiary = null;
+                    this.rucherService.rucher = this.apiaryUpdate;
+                    if(this.userService.getJwtReponse().country === "FR"){
+                        this.notifier.notify('success', 'Rucher mis à jour');
+                    }else{
+                        this.notifier.notify('success', 'Updated Apiary');
+                    }
+                    this.initForm();
+                }
+            );
+        } else {
+            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+        }
     }
 
     deleteRucher() {
-        this.rucherService.deleteRucher().subscribe(() => { }, () => { }, () => {
-            const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
-            this.rucherService.ruchers.splice(index, 1);
-            this.rucherService.emitApiarySubject();
-            if(this.userService.getJwtReponse().country === "FR"){
-                this.notifier.notify('success', 'Rucher supprimé');
-            }else{
-                this.notifier.notify('success', 'Deleted Apaiary');
-            }
-            if (this.rucherService.ruchers.length > 0) {
-                this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
-                this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
-            }
-            if (this.rucherService.ruchers.length < 1) {
-                this.rucherService.initRucher();
-            }
-            this.rucheService.getRucheByApiary(this.rucherService.rucher.id);
-        });
+        if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+            this.rucherService.deleteRucher().subscribe(() => { }, () => { }, () => {
+                const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
+                this.rucherService.ruchers.splice(index, 1);
+                this.rucherService.emitApiarySubject();
+                if(this.userService.getJwtReponse().country === "FR"){
+                    this.notifier.notify('success', 'Rucher supprimé');
+                }else{
+                    this.notifier.notify('success', 'Deleted Apaiary');
+                }
+                if (this.rucherService.ruchers.length > 0) {
+                    this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
+                    this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
+                }
+                if (this.rucherService.ruchers.length < 1) {
+                    this.rucherService.initRucher();
+                }
+                this.rucheService.loadHiveByApiary(this.rucherService.rucher.id);
+            });
+        } else {
+            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+
+        }
     }
+
 
     sidebarOpen() {
         const toggleButton = this.toggleButton;
@@ -263,12 +278,14 @@ export class NavbarComponent implements OnInit {
         }
         return 'Dashboard';
     }
+
     apiarySubmit() {
         const formValue = this.rucherForm.value;
         if (this.photoApiary == null) {
             this.newApiary.photo = './assets/imageClient/testAccount.png';
         }
         this.newApiary.id = null;
+        this.newApiary.idUsername = this.userService.getIdUserLoged();
         this.newApiary.description = formValue.description;
         this.newApiary.name = formValue.name;
         this.newApiary.ville = formValue.ville;
@@ -285,7 +302,7 @@ export class NavbarComponent implements OnInit {
             this.rucherService.saveCurrentApiaryId(apiary.id);
         }, () => { }, () => {
             this.rucherService.emitApiarySubject();
-            this.rucheService.getRucheByApiary(this.rucherService.getCurrentApiary());
+            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
             this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
             if(this.userService.getJwtReponse().country === "FR"){
                 this.notifier.notify('success', 'Rucher créé');

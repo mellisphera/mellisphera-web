@@ -11,7 +11,7 @@
         <li>
           <select [(ngModel)]="rucherService.rucher" style="width: 100%" class="form-control"
             (change)="onSelectRucher()" id="select-Apiary">
-            <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">
+            <option *ngFor="let rucher of rucherService.allApiaryAccount" [ngValue]="rucher">
               {{rucher.name}} <span class="admin_userApiary" *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
                 style="color:red;"> => {{ rucher.username }}</span>
             </option>
@@ -19,16 +19,16 @@
 
         </li>
         <li>
-          <button data-backdrop="false" data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.NEW_APIARY' | translate }}" data-backdrop="false" data-toggle="modal"
+          <button [disabled]="!userService.checkWriteObject(rucherService.rucher.idUsername)" data-backdrop="false" data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.NEW_APIARY' | translate }}" data-backdrop="false" data-toggle="modal"
             data-target="#newRucherModal" class="btn btn-success btn-lg crud-apiary">
             <i class="fa fa-plus fa-2x"></i>
           </button>
-          <button data-backdrop="false" type="button" (click)="editRucherClicked()"
+          <button [disabled]="!userService.checkWriteObject(rucherService.rucher.idUsername)" data-backdrop="false" type="button" (click)="editRucherClicked()"
             class="crud btn btn-success btn-lg crud-apiary" data-toggle="tooltip" data-backdrop="false" data-html="true" title="{{ 'NAVBAR.EDIT_APIARY' | translate }}"
             data-toggle="modal" data-target="#editRucher">
             <i class="fa fa-edit fa-2x"></i>
           </button>
-          <button type="button" class="btn btn-warning btn-lg crud-apiary" data-toggle="tooltip" data-html="true"
+          <button [disabled]="!userService.checkWriteObject(rucherService.rucher.idUsername)" type="button" class="btn btn-warning btn-lg crud-apiary" data-toggle="tooltip" data-html="true"
             title="{{ 'NAVBAR.DELETE_APIARY' | translate }}" mwlConfirmationPopover popoverTitle="{{ 'NAVBAR.DELETE_ASK' | translate }}" placement="bottom" confirmText = "{{ 'NAVBAR.CRUD.CONFIRM' | translate }}" cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}"
             (confirm)="deleteRucher()">
             <i class="fa fa-times fa-2x"></i>

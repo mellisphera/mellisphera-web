@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DailyRecordService } from '../../../../../service/dailyRecordService';
 import { type } from 'os';
 import { webSocket } from 'rxjs/webSocket';
-import { CONFIG } from '../../../../../../../config';
+import { CONFIG } from '../../../../../../../constants/config';
 import { CalendrierService } from '../../service/calendrier.service';
 import { MyDate } from '../../../../../../class/MyDate';
 //import { ECharts } from 'echarts';

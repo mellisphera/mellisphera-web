@@ -17,6 +17,8 @@ import { Console } from '@angular/core/src/console';
 import { UserParamsService } from '../../../../preference-config/service/user-params.service';
 import { d } from '@angular/core/src/render3';
 import { UserloggedService } from '../../../../../userlogged.service';
+import { MyNotifierService } from '../../../../service/my-notifier.service';
+import { NotifList } from '../../../../../../constants/notify';
 
 @Component({
   selector: 'app-observation',
@@ -38,15 +40,12 @@ export class ObservationComponent implements OnInit {
   //observationsHive : ProcessReport[] = [];
   constructor(public rucherService: RucherService,
     private formBuilder: FormBuilder,
-    private dailyRecWService: DailyRecordsWService,
-    private activatedRoute: ActivatedRoute,
-    private dailyStockHoneyService: DailyStockHoneyService,
-    private recordService: RecordService,
+    private myNotifer: MyNotifierService,
     public observationService: ObservationService,
     private rucheService: RucheService,
     private notifyService: NotifierService,
     public userParamService: UserParamsService,
-    private userService: UserloggedService
+    public userService: UserloggedService
   ) {
     this.typeObs = false;
     this.notifier = notifyService;
@@ -68,47 +67,55 @@ export class ObservationComponent implements OnInit {
   }
 
   createObservation() {
-    const formValue = this.ObservationForm.value;
-    this.newObs = formValue;
-    this.newObs.type = 'HiveObs';
-    this.newObs.idHive = this.rucheService.getCurrentHive();
-    this.newObs.idLHive = [this.rucheService.getCurrentHive()];
-    this.ObservationForm.reset();
-    this.observationService.createObservation(this.newObs).subscribe((obs) => {
-      this.observationService.observationsHive.push(obs);
-      this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      const formValue = this.ObservationForm.value;
+      this.newObs = formValue;
+      this.newObs.type = 'HiveObs';
+      this.newObs.idHive = this.rucheService.getCurrentHive();
+      this.newObs.idLHive = [this.rucheService.getCurrentHive()];
+      this.ObservationForm.reset();
+      this.observationService.createObservation(this.newObs).subscribe((obs) => {
+        this.observationService.observationsHive.push(obs);
+        this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
+      }, () => { }, () => {
+        this.observationService.emitHiveSubject();
+        this.initForm();
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notifier.notify('success', 'Observation créée');
+        }else{
+          this.notifier.notify('success', 'Created Observation');
+        }
       });
-    }, () => { }, () => {
-      this.observationService.emitHiveSubject();
-      this.initForm();
-      if(this.userService.getJwtReponse().country === "FR"){
-        this.notifier.notify('success', 'Observation créée');
-      }else{
-        this.notifier.notify('success', 'Created Observation');
-      }
-    });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_NOTES_HIVE);
+    }
   }
   createAction() {
-    const formValue = this.ObservationForm.value;
-    this.newObs = formValue;
-    this.newObs.type = 'HiveAct';
-    this.newObs.idHive = this.rucheService.getCurrentHive();
-    this.newObs.idLHive = [this.rucheService.getCurrentHive()];
-    this.ObservationForm.reset();
-    this.observationService.createObservation(this.newObs).subscribe((obs) => {
-      this.observationService.observationsHive.push(obs);
-      this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      const formValue = this.ObservationForm.value;
+      this.newObs = formValue;
+      this.newObs.type = 'HiveAct';
+      this.newObs.idHive = this.rucheService.getCurrentHive();
+      this.newObs.idLHive = [this.rucheService.getCurrentHive()];
+      this.ObservationForm.reset();
+      this.observationService.createObservation(this.newObs).subscribe((obs) => {
+        this.observationService.observationsHive.push(obs);
+        this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
+      }, () => { }, () => {
+        this.observationService.emitHiveSubject();
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notifier.notify('success', 'Action créée');
+        }else{
+          this.notifier.notify('success', 'Created Action');
+        }
       });
-    }, () => { }, () => {
-      this.observationService.emitHiveSubject();
-      if(this.userService.getJwtReponse().country === "FR"){
-        this.notifier.notify('success', 'Action créée');
-      }else{
-        this.notifier.notify('success', 'Created Action');
-      }
-    });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_NOTES_HIVE);
+    }
   }
   onSelectObsR(hiveOBS) {
     this.newObs = hiveOBS;
@@ -121,28 +128,40 @@ export class ObservationComponent implements OnInit {
   }
 
   onEditObservation() {
-    const formValue = this.ObservationForm.value;
-    this.newObs.sentence = formValue.sentence;
-    this.newObs.date = formValue.date;
-    this.newObs.type = formValue.type;
-    const index = this.observationService.observationsHive.indexOf(this.newObs);
-    this.initForm();
-    this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
-      this.observationService.observationsHive[index] = this.newObs;
-      this.observationService.emitHiveSubject();
-      this.notifier.notify('success', 'Updated Note');
-    });
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      const formValue = this.ObservationForm.value;
+      this.newObs.sentence = formValue.sentence;
+      this.newObs.date = formValue.date;
+      this.newObs.type = formValue.type;
+      const index = this.observationService.observationsHive.indexOf(this.newObs);
+      this.initForm();
+      this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
+        this.observationService.observationsHive[index] = this.newObs;
+        this.observationService.emitHiveSubject();
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notifier.notify('success', 'Note mis à jour');
+        }else{
+          this.notifier.notify('success', 'Updated Note');
+        }
+      });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_NOTES_HIVE);
+    }
   }
   deleteObsR(index: number, hiveObs: Observation) {
-    this.observationService.deleteObservation(hiveObs.id).subscribe(() => { }, () => { }, () => {
-      this.observationService.observationsHive.splice(index, 1);
-      this.observationService.emitHiveSubject();
-      if(this.userService.getJwtReponse().country === "FR"){
-        this.notifier.notify('success', 'Note supprimée');
-      }else{
-        this.notifier.notify('success', 'Deleted Note');
-      }
-    });
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      this.observationService.deleteObservation(hiveObs.id).subscribe(() => { }, () => { }, () => {
+        this.observationService.observationsHive.splice(index, 1);
+        this.observationService.emitHiveSubject();
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notifier.notify('success', 'Note supprimée');
+        }else{
+          this.notifier.notify('success', 'Deleted Note');
+        }
+      });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_NOTES_HIVE);
+    }
   }
   resetObservationForm() {
     this.ObservationForm.get('sentence').reset();

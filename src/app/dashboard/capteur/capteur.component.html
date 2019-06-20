@@ -308,7 +308,7 @@
                             <label class="col-form-label">{{ 'CAPTEUR.FORM.APIARY' | translate}}</label>
                             <select [(ngModel)]="apiarySensorSelect" [ngModelOptions]="{standalone: true}"
                                 class="form-control" (change)="onSelectRucher();">
-                                <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}
+                                <option *ngFor="let rucher of rucherService.getUserApiary()" [ngValue]="rucher">{{rucher.name}}
                                 </option>
                             </select>
                         </div>

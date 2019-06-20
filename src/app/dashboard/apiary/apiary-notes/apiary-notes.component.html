@@ -8,7 +8,7 @@
     <div id="collapseTwo" class="panel-collapse collapse in">
       <div class="panel-body">
         <b class="text-success"></b>
-        <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
+        <button [disabled]="rucherService.rucher.id == null || !userService.checkWriteObject(rucherService.rucher.idUsername)" data-toggle="tooltip" data-html="true"
           title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}" data-toggle="modal" data-backdrop="false"
           style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newObservationModal"
           class="btn btn-success btn-lg">
@@ -28,12 +28,12 @@
               <td>{{ obs.date | myDate }}</td>
               <td>{{ obs.sentence }}</td>
               <td class="text-right">
-                <button data-toggle="tooltip" data-html="true" title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal"
+                <button [disabled]="!userService.checkWriteObject(rucherService.rucher.idUsername)" data-toggle="tooltip" data-html="true" title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal"
                   type="button" data-target="#editObservationModal" (click)="onSelectObs(obs)"
                   class="btn btn-primary  btn-lg " style="padding: 0;border: none; background: none;">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button type="button" class="btn btn-warning btn-lg" title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE' | translate}}"
+                <button [disabled]="!userService.checkWriteObject(rucherService.rucher.idUsername)" type="button" class="btn btn-warning btn-lg" title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE' | translate}}"
                   style="padding: 0;border: none; background: none;" mwlConfirmationPopover
                   popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top" 
                   confirmText = "{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}" cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}"

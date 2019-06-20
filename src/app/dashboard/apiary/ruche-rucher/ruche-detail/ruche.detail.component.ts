@@ -11,7 +11,7 @@ import { RecordService } from './service/Record/record.service';
 import { DailyRecordService } from '../../../service/dailyRecordService';
 import { RucheService } from '../../../service/ruche.service';
 import { ObservationService } from './observation/service/observation.service';
-import { CONFIG } from '../../../../../config';
+import { CONFIG } from '../../../../../constants/config';
 import { CalendrierTempIntService } from './daily/service/calendrier-temp-int.service';
 import { AtokenStorageService } from '../../../../auth/Service/atoken-storage.service';
 import { RucheInterface } from '../../../../_model/ruche';
@@ -54,7 +54,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         public dailyRecordWservice: DailyRecordsWService,
         public dailyStockHoneyService: DailyStockHoneyService,
         public recordService: RecordService,
-        private userService: UserloggedService,
+        public userService: UserloggedService,
         public tokenService: AtokenStorageService,
         public calendrierTempInt: CalendrierTempIntService,
         public calendrierPoids: CalendrierPoidsService,
@@ -68,6 +68,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             id: null,
             name: '....',
             description: '',
+            idUsername: '',
             username: '',
             idApiary: '',
             hivePosX: '',

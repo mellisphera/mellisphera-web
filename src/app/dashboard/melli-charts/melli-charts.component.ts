@@ -42,12 +42,13 @@ export class MelliChartsComponent implements OnInit {
       username: '',
       idApiary: '',
       apiaryName: '',
+      idUsername: '',
       hivePosX: '',
       hivePosY: '',
       sharingUser: []
     };
     this.typeStrChart = null;
-    this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).subscribe(
+    this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(
       data => {
         this.rucherService.rucheService.ruchesAllApiary = data;
       }

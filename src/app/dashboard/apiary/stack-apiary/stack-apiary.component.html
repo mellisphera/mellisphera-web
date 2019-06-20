@@ -4,7 +4,7 @@
         <div class="col-sm-2 col-md-2 col-lg-2">
             <div id="apiary-group">
                 <div id="main-menu" class="list-group">
-                    <ng-container *ngFor="let rucher of rucherService.ruchers; let i = index;">
+                    <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
                         <a [href]="getId(i)" class="list-group-item apiary" data-toggle="collapse"
                             data-parent="#main-menu"><span class="puce-apiary"></span>{{ rucher.name }}<span
                                 class="caret"></span></a>

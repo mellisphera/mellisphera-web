@@ -7,6 +7,7 @@ export interface RucheInterface {
     username: string;
     apiaryName?: string;
     idApiary: string;
+    idUsername: string;
     hivePosX: string;
     hivePosY: string;
     sharingUser: User[];

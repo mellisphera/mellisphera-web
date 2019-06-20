@@ -17,6 +17,7 @@ import 'rxjs/add/observable/forkJoin';
 import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
 import { Console } from '@angular/core/src/console';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
+import { RucherModel } from '../../../_model/rucher-model';
 
 @Component({
   selector: 'app-stack-apiary',
@@ -83,22 +84,30 @@ export class StackApiaryComponent implements OnInit {
     if (!this.rucherService.rucherSubject.closed) {
       if (!this.tokenService.checkAuthorities('ROLE_ADMIN')) {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-          this.rucherService.rucheService.getRucheByUsername(this.userService.getUser()).map((hives) => {
-            hives.forEach(elt => {
-              this.rucherService.findRucherById(elt.idApiary, (apiary) => {
+          this.rucherService.rucheService.getAllHiveByAccount(this.userService.getUser()).map((hives: RucheInterface[][]) => {
+            let allHives = hives.flat();
+            console.log(allHives);
+            allHives.forEach((elt: RucheInterface) => {
+              this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
                 elt.apiaryName = apiary[0].name;
               });
             });
-            return hives;
-          }).subscribe((hives) => {
-            this.rucherService.rucheService.ruchesAllApiary = hives;
-          });
+            return allHives;
+          }).subscribe(
+            hives => {
+              console.log(hives);
+              this.rucherService.rucheService.ruchesAllApiary = hives;
+            },
+            (err) => {
+              console.log(err);
+            }
+          )
         });
       } else {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
           this.adminService.getAllHive().map((hives) => {
             hives.forEach(elt => {
-              this.rucherService.findRucherById(elt.idApiary, (apiary) => {
+              this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
                 try {
                   elt.apiaryName = apiary[0].name;
                 } catch (e) { }

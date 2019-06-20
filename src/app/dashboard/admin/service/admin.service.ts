@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RucherModel } from './../../../_model/rucher-model';
-import { CONFIG } from '../../../../config';
+import { CONFIG } from '../../../../constants/config';
 import { RucherService } from '../../service/rucher.service';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { RucheInterface } from '../../../_model/ruche';
@@ -31,8 +31,6 @@ export class AdminService {
         this.rangeStart.setHours(this.rangeStart.getHours() - 3);
         this.allUsers =  this.allSensors = this.lastConnection = [];
         this.getAllApiary();
-        this.getAllSensor();
-        //    this.getAllUsers();
         this.getLastConnection(this.rangeStart);
       }
     }
@@ -41,7 +39,7 @@ export class AdminService {
     this.loadingService.loading = true;
     this.httpClient.get<RucherModel[]>(CONFIG.URL + 'apiaries/all').subscribe(
       (data) => {
-        this.rucherService.ruchers = data;
+        this.rucherService.allApiaryAccount = data;
         this.rucherService.rucherSubject.next(data);
       },
       (err) => {},
@@ -52,6 +50,26 @@ export class AdminService {
     );
   }
 
+  /**
+   *
+   *
+   * @returns {Observable<RucherModel>}
+   * @memberof AdminService
+   */
+  getDemoApiary(): Observable<RucherModel> {
+    return this.httpClient.get<RucherModel>(CONFIG.URL + 'sharing/demo-apiary');
+  }
+
+  /**
+   *
+   *
+   * @param {string} name
+   * @returns {Observable<RucherModel>}
+   * @memberof AdminService
+   */
+  updateDemoApiaryName(name: string): Observable<RucherModel>  {
+    return this.httpClient.put<RucherModel>(CONFIG.URL + 'sharing/name', name);
+  }
 
   /**
    *
