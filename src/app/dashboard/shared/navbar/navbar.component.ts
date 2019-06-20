@@ -21,6 +21,8 @@ import { ngf } from 'angular-file';
 import { SidebarService } from '../../service/sidebar.service';
 import { AdminService } from '../../admin/service/admin.service';
 import { TranslateService } from '@ngx-translate/core';
+import { MyNotifierService } from '../../service/my-notifier.service';
+import { NotifList } from '../../../../constants/notify';
 
 @Component({
     // moduleId: module.id,
@@ -62,6 +64,7 @@ export class NavbarComponent implements OnInit {
         private rucheService: RucheService,
         private fleursFloraisonService: FleursFloraisonService,
         private observationService: ObservationService,
+        private myNotifer: MyNotifierService,
         private capteurService: CapteurService,
         private formBuilder: FormBuilder,
         public tokenService: AtokenStorageService,
@@ -193,6 +196,7 @@ export class NavbarComponent implements OnInit {
                 }
             );
         } else {
+            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
         }
     }
 
@@ -216,6 +220,9 @@ export class NavbarComponent implements OnInit {
                 }
                 this.rucheService.loadHiveByApiary(this.rucherService.rucher.id);
             });
+        } else {
+            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+
         }
     }
 

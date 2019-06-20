@@ -17,6 +17,8 @@ import { Console } from '@angular/core/src/console';
 import { UserParamsService } from '../../../../preference-config/service/user-params.service';
 import { d } from '@angular/core/src/render3';
 import { UserloggedService } from '../../../../../userlogged.service';
+import { MyNotifierService } from '../../../../service/my-notifier.service';
+import { NotifList } from '../../../../../../constants/notify';
 
 @Component({
   selector: 'app-observation',
@@ -38,6 +40,7 @@ export class ObservationComponent implements OnInit {
   //observationsHive : ProcessReport[] = [];
   constructor(public rucherService: RucherService,
     private formBuilder: FormBuilder,
+    private myNotifer: MyNotifierService,
     public observationService: ObservationService,
     private rucheService: RucheService,
     private notifyService: NotifierService,
@@ -85,6 +88,8 @@ export class ObservationComponent implements OnInit {
           this.notifier.notify('success', 'Created Observation');
         }
       });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_NOTES_HIVE);
     }
   }
   createAction() {
@@ -108,6 +113,8 @@ export class ObservationComponent implements OnInit {
           this.notifier.notify('success', 'Created Action');
         }
       });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_NOTES_HIVE);
     }
   }
   onSelectObsR(hiveOBS) {
@@ -137,6 +144,8 @@ export class ObservationComponent implements OnInit {
           this.notifier.notify('success', 'Updated Note');
         }
       });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_NOTES_HIVE);
     }
   }
   deleteObsR(index: number, hiveObs: Observation) {
@@ -150,6 +159,8 @@ export class ObservationComponent implements OnInit {
           this.notifier.notify('success', 'Deleted Note');
         }
       });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_NOTES_HIVE);
     }
   }
   resetObservationForm() {

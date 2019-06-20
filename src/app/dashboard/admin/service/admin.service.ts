@@ -31,8 +31,6 @@ export class AdminService {
         this.rangeStart.setHours(this.rangeStart.getHours() - 3);
         this.allUsers =  this.allSensors = this.lastConnection = [];
         this.getAllApiary();
-        this.getAllSensor();
-        //    this.getAllUsers();
         this.getLastConnection(this.rangeStart);
       }
     }
@@ -41,7 +39,7 @@ export class AdminService {
     this.loadingService.loading = true;
     this.httpClient.get<RucherModel[]>(CONFIG.URL + 'apiaries/all').subscribe(
       (data) => {
-        this.rucherService.ruchers = data;
+        this.rucherService.allApiaryAccount = data;
         this.rucherService.rucherSubject.next(data);
       },
       (err) => {},

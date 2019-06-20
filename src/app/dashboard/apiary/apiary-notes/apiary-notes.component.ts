@@ -26,13 +26,16 @@ export class ApiaryNotesComponent implements OnInit {
   private newObs: Observation;
   public updateRucherInput: boolean;
   public settings: any;
+  private notify: NotifierService;
   public apiaryObs: Array<Observation>;
   constructor(public rucherService: RucherService,
     private myNoitifier: MyNotifierService,
+    private notiferService: NotifierService,
     private observationService: ObservationService,
     private formBuilder: FormBuilder,
     public userService: UserloggedService) {
       this.type = 'ApiaryObs';
+      this.notify = notiferService;
       this.message = '';
       this.typeToMv = 0;
   }
@@ -77,12 +80,14 @@ export class ApiaryNotesComponent implements OnInit {
       const index = this.apiaryObs.indexOf(this.newObs);
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.apiaryObs.splice(index, 1);
-/*         if(this.userService.getJwtReponse().country === "FR"){
+         if(this.userService.getJwtReponse().country === "FR"){
           this.notify.notify('success', 'Note déplacée ' + this.hiveToMv.name);
         }else{
           this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
-        } */
+        }
       });
+    } else {
+      this.myNoitifier.sendWarningNotif(NotifList.AUTH_WRITE_NOTES)
     }
   }
   /**
@@ -104,11 +109,11 @@ export class ApiaryNotesComponent implements OnInit {
           return new Date(b.date).getTime() - new Date(a.date).getTime();
         });
       }, () => { }, () => {
-/*         if(this.userService.getJwtReponse().country === "FR"){
+         if(this.userService.getJwtReponse().country === "FR"){
           this.notify.notify('success', 'Note créée');
         }else{
           this.notify.notify('success', 'Created Note');
-        } */
+        }
       });
     } else {
       this.myNoitifier.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
@@ -127,12 +132,14 @@ export class ApiaryNotesComponent implements OnInit {
       const index = this.apiaryObs.indexOf(this.newObs);
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.apiaryObs[index] = this.newObs;
-/*         if(this.userService.getJwtReponse().country === "FR"){
+         if(this.userService.getJwtReponse().country === "FR"){
           this.notify.notify('success', 'Note mis à jour');
         }else{
           this.notify.notify('success', 'Updated Note');
-        } */
+        }
       });
+    } else {
+      this.myNoitifier.sendWarningNotif(NotifList.AUTH_WRITE_NOTES)
     }
   }
   /**
@@ -146,12 +153,14 @@ export class ApiaryNotesComponent implements OnInit {
     if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
       this.observationService.deleteObservation(obsApiary.id).subscribe(() => { }, () => { }, () => {
         this.apiaryObs.splice(index, 1);
-/*         if(this.userService.getJwtReponse().country === "FR"){
+         if(this.userService.getJwtReponse().country === "FR"){
           this.notify.notify('success', 'Note supprimée');
         }else{
           this.notify.notify('success', 'Deleted Note');
-        } */
+        }
       });
+    } else {
+      this.myNoitifier.sendWarningNotif(NotifList.AUTH_WRITE_NOTES)
     }
   }
   /**

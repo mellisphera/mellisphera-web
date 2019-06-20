@@ -30,7 +30,7 @@ export class RucherService {
     rucherUpdate: RucherModel;
     private sharingApiary: RucherModel[];
     currentBackground: string;
-    private allApiaryAccount: RucherModel[];
+    public allApiaryAccount: RucherModel[];
     rucherSelectUpdate: RucherModel;
     rucherObs: Observable<RucherModel>;
     ruchersObs: Observable<RucherModel[]>;
@@ -127,7 +127,9 @@ export class RucherService {
     getApiaryByUser(username: string) {
         this.loadingService.loading = true;
         const ObservableApiaryQuery = [this.getSharingApiaryByUser(this.user.getIdUserLoged()), this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username)];
-        Observable.forkJoin(ObservableApiaryQuery).subscribe(
+        Observable.forkJoin(ObservableApiaryQuery).map(elt => {
+            return elt.filter(_filter => _filter != null);
+        }  ).subscribe(
             (apiary) => {
                 this.ruchers = apiary.flat().filter(apiary => apiary !== null && apiary.idUsername === this.user.getIdUserLoged());
                 this.sharingApiary = apiary.flat().filter(apiary => apiary.idUsername !== this.user.getIdUserLoged());
@@ -137,7 +139,7 @@ export class RucherService {
             (err) => {
                 console.log(err);
             }, () => {
-                if (this.ruchers.length > 0 ) {
+                if (this.checkIfApiary() ) {
                     if (!this.getCurrentApiary()) {
                         this.rucher = this.ruchers[0];
                         this.rucherSelectUpdate = this.rucher;
@@ -150,10 +152,15 @@ export class RucherService {
                             this.saveCurrentApiaryId(this.rucher.id);
                         }
                     }
-                    this.currentBackground = this.rucher.photo;
-                    this.rucherSubject.complete();
-                    this.rucheService.loadHiveByApiary(this.getCurrentApiary());
+                } else {
+                    if (this.checkSharingApiary()) {
+                        this.rucher = this.sharingApiary[0];
+                        this.saveCurrentApiaryId(this.rucher.id);
+
+                    }
                 }
+                this.currentBackground = this.rucher.photo;
+                this.rucheService.loadHiveByApiary(this.getCurrentApiary());
                 this.loadingService.loading = false;
             }
         )
@@ -209,6 +216,15 @@ export class RucherService {
      */
     checkIfApiary(): boolean {
         return this.ruchers.length > 0;
+    }
+    /**
+     *
+     *
+     * @returns {boolean}
+     * @memberof RucherService
+     */
+    checkSharingApiary(): boolean {
+        return this.sharingApiary.length > 0;
     }
 
 }
