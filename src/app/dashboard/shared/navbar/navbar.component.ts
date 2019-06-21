@@ -173,7 +173,9 @@ export class NavbarComponent implements OnInit {
         if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
             const formValue = this.rucherForm.value;
             const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
+            const indexAllApiary = this.rucherService.allApiaryAccount.indexOf(this.rucherService.rucher);
             this.apiaryUpdate = formValue;
+            this.apiaryUpdate.idUsername = this.rucherService.rucher.idUsername;
             this.apiaryUpdate.id = this.rucherService.rucher.id;
             if (this.photoApiary === null || this.photoApiary === undefined) {
                 this.apiaryUpdate.photo = this.rucherService.rucher.photo
@@ -184,6 +186,7 @@ export class NavbarComponent implements OnInit {
             this.rucherService.updateRucher(this.rucherService.rucher.id, this.apiaryUpdate).subscribe(
                 () => { }, () => { }, () => {
                     this.rucherService.ruchers[index] = this.apiaryUpdate;
+                    this.rucherService.allApiaryAccount[indexAllApiary] = this.apiaryUpdate;
                     this.rucherService.emitApiarySubject();
                     this.photoApiary = null;
                     this.editPhotoApiary = null;
@@ -204,10 +207,12 @@ export class NavbarComponent implements OnInit {
     deleteRucher() {
         if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
             this.rucherService.deleteRucher().subscribe(() => { }, () => { }, () => {
-                const index = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
-                this.rucherService.ruchers.splice(index, 1);
+                const indexApiaryUser = this.rucherService.ruchers.indexOf(this.rucherService.rucher);
+                const indexApiaryAllAccount = this.rucherService.allApiaryAccount.indexOf(this.rucherService.rucher);
+                this.rucherService.allApiaryAccount.splice(indexApiaryAllAccount, 1);
+                this.rucherService.ruchers.splice(indexApiaryUser, 1);
                 this.rucherService.emitApiarySubject();
-                if(this.userService.getJwtReponse().country === "FR"){
+                if(this.userService.getJwtReponse().country === "FR"){ 
                     this.notifier.notify('success', 'Rucher supprimé');
                 }else{
                     this.notifier.notify('success', 'Deleted Apaiary');
@@ -218,6 +223,7 @@ export class NavbarComponent implements OnInit {
                 }
                 if (this.rucherService.ruchers.length < 1) {
                     this.rucherService.initRucher();
+                    this.rucherService.rucher = this.rucherService.allApiaryAccount[0];
                 }
                 this.rucheService.loadHiveByApiary(this.rucherService.rucher.id);
             });
@@ -296,8 +302,10 @@ export class NavbarComponent implements OnInit {
         this.rucherService.createRucher(this.newApiary).subscribe((apiary) => {
             if (this.rucherService.ruchers != null) {
                 this.rucherService.ruchers.push(apiary);
+                this.rucherService.allApiaryAccount.push(apiary);
             } else {
                 this.rucherService.ruchers = new Array(apiary);
+                this.rucherService.allApiaryAccount.push(apiary);
             }
             this.rucherService.saveCurrentApiaryId(apiary.id);
         }, () => { }, () => {
