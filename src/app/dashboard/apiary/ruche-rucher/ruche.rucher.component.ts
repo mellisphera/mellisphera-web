@@ -162,6 +162,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
       const formValue = this.newRucheForm.value;
       this.selectHive.idApiary = this.rucherService.rucherSelectUpdate.id;
       this.selectHive.name = formValue.nomRuche;
+      this.selectHive.idUsername = this.rucherService.rucherSelectUpdate.idUsername;
       this.selectHive.description = formValue.descriptionRuche;
       this.rucheService.updateRuche(this.hiveIndex, this.selectHive).subscribe(() => { }, () => { }, () => {
         if (this.selectHive.idApiary === this.rucherService.getCurrentApiary()) {
