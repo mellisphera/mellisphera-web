@@ -212,7 +212,7 @@ export class NavbarComponent implements OnInit {
                 this.rucherService.allApiaryAccount.splice(indexApiaryAllAccount, 1);
                 this.rucherService.ruchers.splice(indexApiaryUser, 1);
                 this.rucherService.emitApiarySubject();
-                if(this.userService.getJwtReponse().country === "FR"){
+                if(this.userService.getJwtReponse().country === "FR"){ 
                     this.notifier.notify('success', 'Rucher supprimé');
                 }else{
                     this.notifier.notify('success', 'Deleted Apaiary');
