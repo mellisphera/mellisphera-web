@@ -138,9 +138,9 @@
                   {{ 'NAVBAR.CRUD.DROP' | translate }}
                 </div>
               </div>
-              <div class="img-zone" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div [ngfBackground]="photoApiary"
-                  style="background-size:cover;background-repeat:no-repeat; background-position:center; height:100%; width:100%;">
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="img-zone"  [ngfBackground]="photoApiary"
+                  style="background-size:cover;background-repeat:no-repeat; background-position:center; width:100%;">
                 </div>
               </div>
             </div>
@@ -214,7 +214,7 @@
               #fileEdit>
             <button (click)="fileEdit.click()" class="btn btn-large btn-block btn-info">Select File</button>
             <div class="img-zone" >
-              <div [ngfBackground]="photoApiary"
+              <div class="img-zone" [ngfBackground]="photoApiary"
                 style="background-size:cover;background-repeat:no-repeat; background-position:center; height:100%; width:100%;">
               </div>
             </div>
