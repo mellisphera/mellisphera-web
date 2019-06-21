@@ -73,6 +73,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.apiary.createdAt = new Date();
     this.apiary.username = this.userService.getUser();
     this.apiary.photo = './assets/imageClient/testAccount.png';
+    this.apiary.idUsername = this.userService.getIdUserLoged()
   }
 
   subHive() {
@@ -87,7 +88,6 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.sensor = this.sensorForm.value;
     this.sensor.apiaryName = this.apiary.name;
     this.sensor.type = this.getTypeFromRef(this.sensor.sensorRef);
-    this.apiary.idUsername = this.userService.getIdUserLoged()
     this.sensor.apiaryName = this.apiary.name;
     this.sensor.hiveName = this.hive.name;
     this.sensor.username = this.userService.getUser();

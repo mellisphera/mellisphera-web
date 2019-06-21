@@ -11,14 +11,14 @@
   transform: rotate(0deg);
 }
 .ruche {
-  justify-content: center;
-  display: inline-block;
+  // display: inline-block;
  // position: absolute;
   font-size: 15px;
   margin-bottom: 2px;
   width: 60px;
   height: 60px;
   padding: 2px;
+  margin: auto;
   border-radius: 50px;
   border: 1px solid black;
   //border-radius: 50px;
@@ -29,12 +29,14 @@
   position: absolute;
   text-align: center;
   cursor: move;
+  width: 6%;
   //background-color: white;
 }
 .hive-name{
   text-align: center;
   background-color: rgba($color: white, $alpha: 0.5);
   font-weight: bold;
+  overflow-wrap: break-word;
   font-size: 20px;
   padding: 2px;
 }
