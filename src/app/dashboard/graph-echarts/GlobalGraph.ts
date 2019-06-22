@@ -21,6 +21,12 @@ export class GraphGlobal {
         max: number,
         unitT: string,
     };
+    public humidity: {
+        name: string,
+        min: number,
+        max: number,
+        unitT: string,
+    };
 
     public titresFR : Array<any>;
     public titresEN : Array<any>;
@@ -39,16 +45,27 @@ export class GraphGlobal {
             max: 0,
             unitT: '° C',
         };
+        this.humidity = {
+            name: '',
+            min: null,
+            max: 0,
+            unitT: '° C',
+        }
         if (this.userConfig.getUserPref().unitSystem === 'IMPERIAL') { // US
             // If he is French
             if(this.userService.getJwtReponse().country === "FR"){
                 this.weight.name = 'Poids lbs';
+                this.humidity.name = 'HUmidité %';
             // EN
             }else{
                 this.weight.name = 'Weight lbs';
+                this.humidity.name = 'Humidity %'
             }
+            this.humidity.min = 0;
+            this.humidity.max = 100;
             this.weight.min = 40;
             this.weight.max = null;
+            this.humidity.unitT = '%';
             this.weight.unitW = 'lbs';
             this.weight.interval = 5;
             // If he is French
@@ -66,11 +83,19 @@ export class GraphGlobal {
             // If he is French
             if(this.userService.getJwtReponse().country === "FR"){
                 this.weight.name = 'Poids Kg';
+                this.humidity.name = 'HUmidité %';
+
             // EN
             }else{
                 this.weight.name = 'Weight Kg';
+                this.humidity.name = 'Humidity %'
+
             }
+            this.humidity.name = 'Humidity %'
+            this.humidity.min = 0;
+            this.humidity.max = 100;
             this.weight.min = 0;
+            this.humidity.unitT = '%';
             this.weight.unitW = 'Kg';
             this.weight.interval = 10;
             this.weight.max = null;
@@ -174,6 +199,8 @@ export class GraphGlobal {
             return this.temp.unitT;
         } else if (/Weight/g.test(serie) || /Poids/g.test(serie)) {
             return this.weight.unitW;
+        } else if (/Hum/g.test(serie)) {
+            return this.humidity.unitT
         }
     }
 }
