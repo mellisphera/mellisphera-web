@@ -95,7 +95,7 @@ export class RecordService {
               return {
                 name: recRes.recordDate,
                 value: [recRes.recordDate,
-                  this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
                 sensorRef: recRes.sensorRef
               };
             }),
@@ -118,48 +118,71 @@ export class RecordService {
                 show: true
               },
               data: [[{
-                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
+                yAxis: this.unitSystem === 'METRIC' ? '33' : '90'
               }, {
                 yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
               }]]
             },
           });
         } else if (elt.startsWith('42')) {
-          series.push({
-            data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
-              return {
-                name: recRes.recordDate,
-                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
-                sensorRef: recRes.sensorRef
-              };
-            }),
-            name: hiveName + ' / Temp-int (' + elt + ')',
-            type: 'line',
-            xAxisIndex: (hive) ? 0 : 1,
-            yAxisIndex: (hive) ? 0 : 1,
-            showSymbol: false,
-            hoverAnimation: true,
-            lineStyle: {
-              color: color
-            },
-            itemStyle: {
-              color: color
-            },
-            markArea: {
-              silent: true,
+          series = series.concat([
+            {
+              data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+                return {
+                  name: recRes.recordDate,
+                  value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                  sensorRef: recRes.sensorRef
+                };
+              }),
+              name: hiveName + ' / Temp-int (' + elt + ')',
+              type: 'line',
+              xAxisIndex: (hive) ? 0 : 1,
+              yAxisIndex: (hive) ? 0 : 1,
+              showSymbol: false,
+              hoverAnimation: true,
+              lineStyle: {
+                color: color
+              },
               itemStyle: {
-                color: '#EBEBEB'
+                color: color
               },
-              label: {
-                show: true
+              markArea: {
+                silent: true,
+                itemStyle: {
+                  color: '#EBEBEB'
+                },
+                label: {
+                  show: true
+                },
+                data: [[{
+                  yAxis: this.unitSystem === 'METRIC' ? '33' : '90'
+                }, {
+                  yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
+                }]]
               },
-              data: [[{
-                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
-              }, {
-                yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
-              }]]
             },
-          });
+            {
+              data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
+                return {
+                  name: recRes.recordDate,
+                  value: [recRes.recordDate, recRes.humidity_int, this.unitSystem],
+                  sensorRef: recRes.sensorRef
+                };
+              }),
+              name: hiveName + ' / Hum-int (' + elt + ')',
+              type: 'line',
+              xAxisIndex: 2,
+              yAxisIndex: 2,
+              showSymbol: false,
+              hoverAnimation: true,
+              lineStyle: {
+                color: color
+              },
+              itemStyle: {
+                color: color
+              },
+            }
+          ]);
         } else if (elt.startsWith('43')) {
           series = series.concat([
             {
@@ -227,7 +250,7 @@ export class RecordService {
                 show: true
               },
               data: [[{
-                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
+                yAxis: this.unitSystem === 'METRIC' ? '33' : '90'
               }, {
                 yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
               }]]
@@ -293,7 +316,7 @@ export class RecordService {
                 show: true
               },
               data: [[{
-                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
+                yAxis: this.unitSystem === 'METRIC' ? '33' : '90'
               }, {
                 yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
               }]]
@@ -314,7 +337,7 @@ export class RecordService {
             hoverAnimation: true,
             yAxisIndex: 1,
             color: 'red',
-             markArea: {
+            markArea: {
               silent: true,
               itemStyle: {
                 color: '#EBEBEB'
@@ -323,7 +346,7 @@ export class RecordService {
                 show: true
               },
               data: [[{
-                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
+                yAxis: this.unitSystem === 'METRIC' ? '33' : '90'
               }, {
                 yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
               }]]
@@ -377,7 +400,7 @@ export class RecordService {
             hoverAnimation: true,
             yAxisIndex: 1,
             color: 'green',
-             markArea: {
+            markArea: {
               silent: true,
               itemStyle: {
                 color: '#ff00ff'
@@ -386,7 +409,7 @@ export class RecordService {
                 show: true
               },
               data: [[{
-                yAxis: this.unitSystem === 'METRIC' ? '33': '90'
+                yAxis: this.unitSystem === 'METRIC' ? '33' : '90'
               }, {
                 yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
               }]]
