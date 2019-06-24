@@ -1,9 +1,67 @@
 <div class="content-page">
-    <nav class="navbar navbar-default" role="admin-navigation">
-        <div class="navbar-header">
+  <nav class="navbar navbar-default" role="admin-navigation">
+    <div class="navbar-header">
+    </div>
+    <ul class="nav navbar-nav">
+      <li *ngFor="let btn of btnNav"><button type="button" [id]="btn" (click)="selectType(btn)"
+          class="btn btn-outline-success">{{ btn }}</button></li>
+    </ul>
+    <ul class="nav nav-date navbar-nav navbar-right">
+      <li>
+        <div class="dropdown">
+          <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-calendar"></i>{{ getRangeSelect() }}
+            <span class="caret"></span></button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div id="input-date">
+              <div class="form-group">
+                <label>Start : </label>
+                <input type="date" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>End : </label>
+                <input type="date" class="form-control" />
+              </div>
+            </div>
+            <div>
+              <ul>
+                <li class="dt-format" *ngFor="let dt of melliChartDate.ranges" (click)="setRangeSelect(dt)">
+                  {{ dt.scale }} {{ dt.type | lowercase }}</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <ul class="nav navbar-nav">
+      </li>
+    </ul>
 
+  </nav>
+  <div class="row nopadding">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <div id="apiary-group">
+        <div id="main-menu" class="list-group">
+          <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
+            <a [href]="'#' + i" class="list-group-item apiary" data-toggle="collapse" data-parent="#main-menu"><span
+                class="puce-apiary"></span>{{ rucher.name }}<span class="caret"></span></a>
+            <div class="collapse list-group-level1" [id]="i">
+              <a [class]="'list-group-item sub-items'" *ngFor="let ruche of getHiveByApiary(rucher.id); let i = index"
+                (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i></i><span
+                  class="puce-hive"></span>{{ ruche.name }}</a>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div id="content" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+
+    </div>
+
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <div id="sidebar-tools" class="sidebar-wrapper">
+        <ul class="nav responsive-nav">
+          <li></li>
         </ul>
-    </nav>
+      </div>
+    </div>
+
+  </div>
 </div>

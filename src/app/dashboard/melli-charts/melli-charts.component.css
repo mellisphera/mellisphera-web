@@ -1,7 +1,55 @@
+#sidebar-tools{
+    position: fixed;
+    height: 50vh;
+    width: 5% !important;
+    right: 2px;
+    background-color: lightseagreen;
+}
+#apiary-group{
+    position: fixed;
+    height: 93vh;
+}
+#apiary-group, .list-group-item {
+    background-color: #1E8AB6;
+    color: white;
+}
+.dropdown-menu{
+    padding: 10px;
+    color: black !important;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
 nav[role=admin-navigation] {
     color: white;
     background-color: #333F3D;
 }
+.nav li .btn{
+    color: white !important;
+}
 .active{
     background-color: white;
+}
+.nopadding{
+    padding: 0px !important;
+    margin-right: 0px !important;
+}
+.nav-date{
+     margin-right: 10px;
+     width: 25%;
+}
+.nav-date li:first-child{
+    width: 100%;
+}
+ .nav-date .btn-primary {
+    width: 100% !important;
+}
+
+.dt-format{
+    white-space: nowrap;
+    list-style: none;
+}
+.dt-format:hover{
+    background-color: lightslategray;
+    cursor: pointer;
 }
