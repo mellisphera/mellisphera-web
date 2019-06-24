@@ -6,6 +6,7 @@ import { AuthService } from '../../auth/Service/auth.service';
 import { NotifierService } from 'angular-notifier';
 import { UserloggedService } from '../../userlogged.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 
 @Component({
   selector: 'app-preference-config',
@@ -22,7 +23,8 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   private userPref: UserPref;
   public passwordForm: FormGroup;
   constructor(public userConfig: UserParamsService, private authService: AuthService,
-    private notifier: NotifierService, private loginService: UserloggedService,
+    private notifier: NotifierService,
+    private graphGlobalService: GraphGlobal,
     private userService: UserloggedService,
     private formBuilder: FormBuilder) {
     this.notifyService = notifier;
@@ -52,6 +54,11 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
 
   saveUnit(): void {
     this.userPref.unitSystem = this.unitSys;
+    if (this.unitSys === 'IMPERIAL') {
+      this.graphGlobalService.setImperial();
+    } else {
+      this.graphGlobalService.setMetric();
+    }
     this.userConfig.setUnit(this.unitSys);
     this.saveUserPref();
   }

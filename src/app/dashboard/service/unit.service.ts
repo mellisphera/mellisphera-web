@@ -18,7 +18,7 @@ export class UnitService {
    * @returns {string}
    * @memberof UnitService
    */
-  getHourlyDate(date: string | Date, convertUtc?: boolean): string {
+  getHourlyDate(date: string | Date): string {
     let newInstanceDate = null;
     if (isString(date)) {  
       const dtSplit = date.split('T');
