@@ -13,6 +13,6 @@ export interface DailyRecordTh {
 	health_trend  :string;
     r_int_text : string;
 	timestamp : number;
-	vitality: number;
+	brood: number;
     //[class]="getColorStatus(i)"
 }

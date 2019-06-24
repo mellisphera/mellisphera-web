@@ -434,16 +434,22 @@ export class RecordService {
    * @memberof RecordService
    */
   setRange(scale: DataRange): void {
-    let date;
-    if (scale.type === 'DAY') {
-      date = new Date();
-      date.setDate((new Date().getDate() - scale.scale));
-    } else if (scale.type === 'MONTH') {
-      date = new Date();
-      date.setMonth((new Date().getMonth() - scale.scale));
-    } else {
-      date = new Date();
-      date.setFullYear(new Date().getFullYear() - 1);
+    let date = new Date();
+    switch(scale.type){
+      case 'DAY':
+        date.setDate((new Date().getDate() - scale.scale));
+        break;
+      case 'MONTH':
+        date.setMonth((new Date().getMonth() - scale.scale));
+        break;
+      case 'YEAR':
+        date.setFullYear(new Date().getFullYear() - 1);
+        break;
+      case 'HOUR':
+        date.setHours(scale.scale);
+        break;
+      default:
+        date.setDate(date.getDate() - 15);
     }
     this.rangeHourly = MyDate.getRange(date);
   }

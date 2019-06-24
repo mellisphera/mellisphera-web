@@ -2,7 +2,7 @@
   margin: auto;
   width: 100%;
   margin: 0px;
-  //height: 93vh;
+  height: 93vh;
   overflow: hidden;
   //background: url("../../../assets/imageClient/testAccount.png") no-repeat center;
   background-size: contain;
@@ -10,13 +10,11 @@
 
   transform: rotate(0deg);
 }
-#img-apiary{
-  width: 100%;
-}
 .ruche {
   // display: inline-block;
  // position: absolute;
   font-size: 15px;
+  margin-bottom: 2px;
   width: 60px;
   height: 60px;
   padding: 2px;
@@ -36,7 +34,6 @@
 }
 .hive-name{
   text-align: center;
-  margin-top: 3px;
   background-color: rgba($color: white, $alpha: 0.5);
   font-weight: bold;
   overflow-wrap: break-word;
@@ -47,7 +44,7 @@
   cursor: pointer;
   background-color: lightblue;
 }
-.vitality{  
+.brood{  
   color: black;
   //font-weight: bold;
   //padding-top: 14px;
@@ -150,7 +147,7 @@ ul{
     width: 30px;
     height: 30px;
   }
-  .vitality{
+  .brood{
     font-size: 10px;
     margin-top: 5px;
   }

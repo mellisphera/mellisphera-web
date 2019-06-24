@@ -53,7 +53,7 @@ export class DailyRecordService {
             this.arrayTempInt = res.filter(elt => elt.temp_int_max !== null).
                 map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
             this.arrayHint = res.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
-            this.arrayHealth = res.map(elt => [elt.recordDate, elt.vitality]);
+            this.arrayHealth = res.map(elt => [elt.recordDate, elt.brood]);
             return {
                 tempInt: {
                     series: {
@@ -124,7 +124,7 @@ export class DailyRecordService {
             this.arrayTempInt = daily.filter(elt => elt.temp_int_max !== null).
                 map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
             this.arrayHint = daily.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
-            this.arrayHealth = daily.map(elt => [elt.recordDate, elt.vitality]);
+            this.arrayHealth = daily.map(elt => [elt.recordDate, elt.brood]);
             return daily;
         })
             .subscribe(
@@ -288,13 +288,13 @@ export class DailyRecordService {
         const selectHive = this.dailyRecords.filter(elt => elt.idHive === idHive);
         //return (selectHive.length > 0) ? 'ruche ' + selectHive[0].health_status + selectHive[0].health_trend : 'ruche Inconnu';
         if (selectHive.length > 0 || selectHive[0] !== undefined && selectHive) {
-            if (selectHive[0].vitality >= 90 && selectHive[0].vitality <= 100) {
+            if (selectHive[0].brood >= 90 && selectHive[0].brood <= 100) {
                 return '#498513';
-            } else if (selectHive[0].vitality >= 80 && selectHive[0].vitality <= 90) {
+            } else if (selectHive[0].brood >= 80 && selectHive[0].brood <= 90) {
                 return '#63C908';
-            } else if (selectHive[0].vitality >= 60 && selectHive[0].vitality <= 80) {
+            } else if (selectHive[0].brood >= 60 && selectHive[0].brood <= 80) {
                 return 'yellow';
-            } else if (selectHive[0].vitality >= 30 && selectHive[0].vitality <= 60) {
+            } else if (selectHive[0].brood >= 30 && selectHive[0].brood <= 60) {
                 return '#FD6204';
             } else {
                 return 'red';
@@ -306,7 +306,7 @@ export class DailyRecordService {
 
     public getPourcentByHive(idHive: string): any {
         const selectHive = this.dailyRecords.filter(elt => elt.idHive === idHive)[0];
-        return selectHive !== undefined ? selectHive.vitality + ' %' : null;
+        return selectHive !== undefined ? selectHive.brood + ' %' : null;
 
     }
 }
