@@ -29,9 +29,8 @@ const routes: Routes = [
             { path: 'stack-apiary', component: StackApiaryComponent, canActivate: [AuthGuardService]},
             { path: 'capteurs', component: CapteurComponent},
             { path: 'apiary-notes', component: ApiaryNotesComponent, canActivate: [AuthGuardService]},
-            { path: 'melli-charts', component: MelliChartsComponent, canActivate: [AuthGuardService]},
             { path: 'preferences', component: PreferenceConfigComponent, canActivate: [AuthGuardService]},
-            { path: 'melli-charts', loadChildren: './melli-charts/melli-charts#MelliChartsModule', canLoad: [AuthGuardService]}
+            { path: 'melli-charts', loadChildren: './melli-charts/melli-charts.module#MelliChartsModule', canLoad: [AuthGuardService]}
 
 
         ]

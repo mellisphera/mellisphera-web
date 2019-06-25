@@ -15,10 +15,15 @@
 }
 .dropdown-menu{
     padding: 10px;
-    color: black !important;
+    color: white !important;
     display: flex;
+    background-color: #333F3D;
     justify-content: space-between;
+    flex-wrap: wrap;
     width: 100%;
+}
+.fa-calendar{
+    margin-right: 5px !important;
 }
 nav[role=admin-navigation] {
     color: white;
@@ -36,7 +41,7 @@ nav[role=admin-navigation] {
 }
 .nav-date{
      margin-right: 10px;
-     width: 25%;
+     width: 35%;
 }
 .nav-date li:first-child{
     width: 100%;
@@ -44,12 +49,17 @@ nav[role=admin-navigation] {
  .nav-date .btn-primary {
     width: 100% !important;
 }
-
-.dt-format{
+#arrow{
+    font-size: 20px;
+}
+.time{
     white-space: nowrap;
     list-style: none;
 }
-.dt-format:hover{
+.time:hover{
     background-color: lightslategray;
     cursor: pointer;
+}
+#dt-scale{
+    display: flex;
 }
