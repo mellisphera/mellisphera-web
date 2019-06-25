@@ -13,17 +13,18 @@ export class MelliChartsDateService {
   /* Display */
   public start: Date;
   public end: Date;
+
   public ranges: DataRange[];
   constructor() {
     this.ranges = [
-      { scale: 1, type: 'HOURS'},
+      { scale: 1, type: 'HOUR'},
       { scale: 6, type: 'HOURS'},
       { scale: 12, type: 'HOURS'},
-      { scale: 1, type: 'DAYS'},
+      { scale: 1, type: 'DAY'},
       { scale: 3, type: 'DAYS' },
       { scale: 7, type: 'DAYS' },
       { scale: 15, type: 'DAYS' },
-      { scale: 30, type: 'DAYS' },
+      { scale: 1, type: 'MONTH' },
       { scale: 3, type: 'MONTHS' },
       { scale: 6, type: 'MONTHS' },
       { scale: 1, type: 'YEAR' }

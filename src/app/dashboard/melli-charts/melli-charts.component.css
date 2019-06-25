@@ -3,14 +3,14 @@
     height: 50vh;
     width: 5% !important;
     right: 2px;
-    background-color: lightseagreen;
+    background-color: #333F3D;
 }
 #apiary-group{
     position: fixed;
     height: 93vh;
 }
 #apiary-group, .list-group-item {
-    background-color: #1E8AB6;
+    background-color: #333F3D;
     color: white;
 }
 .dropdown-menu{
@@ -18,9 +18,16 @@
     color: white !important;
     display: flex;
     background-color: #333F3D;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
     width: 100%;
+}
+.date-arrow{
+    border: none;
+    padding: 0px !important;
+}
+.date-arrow .fa{
+    font-size: 35px;
 }
 .fa-calendar{
     margin-right: 5px !important;
@@ -32,6 +39,8 @@ nav[role=admin-navigation] {
 .nav li .btn{
     color: white !important;
 }
+#input-date, #dt-scale{
+}
 .active{
     background-color: white;
 }
@@ -41,16 +50,22 @@ nav[role=admin-navigation] {
 }
 .nav-date{
      margin-right: 10px;
-     width: 35%;
+     display: flex;
+     justify-content: center;
+     width: 38%;
 }
-.nav-date li:first-child{
+#dropdown{
     width: 100%;
 }
- .nav-date .btn-primary {
+.nav-date .btn-primary {
     width: 100% !important;
 }
-#arrow{
-    font-size: 20px;
+#previous-date {
+    margin-right: 10px;
+
+}
+#next-date{
+    margin-left: 10px;
 }
 .time{
     white-space: nowrap;
@@ -63,3 +78,37 @@ nav[role=admin-navigation] {
 #dt-scale{
     display: flex;
 }
+@media screen and (max-width:1300px) {
+    #input-date{
+        width: 100%;
+    }
+    .nav-date{
+        /* justify-content: end; */
+        width: 63%;
+    }
+
+}@media screen and (max-width:1700px){
+    #input-date{
+        width: 100%;
+    }
+}
+@media screen and (max-width:1000px){
+    .navbar-nav {
+        display: flex !important;
+    }
+    .nav-date{
+        /* justify-content: end; */
+        width: 100%;
+    }
+    .navbar-nav{
+        justify-content: center !important;
+    }
+}
+@media screen and (max-width:500px){
+    #dropdown{
+        width: 52%
+    }
+    #btn-date{
+    }
+}
+

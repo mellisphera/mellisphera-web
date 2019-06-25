@@ -110,7 +110,7 @@ export class MelliChartsComponent implements OnInit {
   }
 
   getRangeByType(type: string): Array<DataRange> {
-    return this.melliChartDate.ranges.filter(elt => elt.type === type);
+    return this.melliChartDate.ranges.filter(elt => elt.type === type || elt.type === type + 'S');
   }
 
   setDateFromInput(): void {
