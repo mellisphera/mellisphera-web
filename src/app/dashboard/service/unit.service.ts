@@ -20,7 +20,7 @@ export class UnitService {
    */
   getHourlyDate(date: string | Date): string {
     let newInstanceDate = null;
-    if (isString(date)) {  
+    if (isString(date) && /T/g.test(date)) {
       const dtSplit = date.split('T');
       const daily = dtSplit[0];
       const hourly = dtSplit[1].split(':');

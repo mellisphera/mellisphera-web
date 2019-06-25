@@ -56,7 +56,6 @@ import { MyNotifierService } from './service/my-notifier.service';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule,
     AngularDraggableModule,
     ngfModule,
     ConfirmationPopoverModule.forRoot({
@@ -102,7 +101,6 @@ import { MyNotifierService } from './service/my-notifier.service';
     FleursFloraisonComponent,
     WizardComponent,
     PreferenceConfigComponent,
-    MelliChartsComponent,
   ]
 })
 export class DashboardModule { }

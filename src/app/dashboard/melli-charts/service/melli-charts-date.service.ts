@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataRange } from '../../apiary/ruche-rucher/ruche-detail/service/Record/data-range';
 import { MyDate } from '../../../class/MyDate';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,11 @@ import { MyDate } from '../../../class/MyDate';
 export class MelliChartsDateService {
 
 
-  private rangeDateForRequest: Date[];
-  private ranges: DataRange[];
-  public rangeUserSelect: DataRange;
+  private rangeDateForRequest: Date[]; // for request
+  /* Display */
+  public start: Date;
+  public end: Date;
+  public ranges: DataRange[];
   constructor() {
     this.ranges = [
       { scale: 1, type: 'HOURS'},
@@ -25,7 +28,7 @@ export class MelliChartsDateService {
       { scale: 6, type: 'MONTHS' },
       { scale: 1, type: 'YEAR' }
     ];
-    this.rangeUserSelect = this.ranges[6];
+    this.setRange(this.ranges[6]);
   }
 
   
@@ -42,11 +45,23 @@ export class MelliChartsDateService {
         date.setFullYear(new Date().getFullYear() - 1);
         break;
       case 'HOURS':
-        date.setHours(scale.scale);
+        date.setHours(new Date().getHours() - scale.scale);
         break;
       default:
         date.setDate(date.getDate() - 15);
     }
     this.rangeDateForRequest = MyDate.getRange(date);
+    this.start = this.rangeDateForRequest[0];
+    this.end = this.rangeDateForRequest[1];
+  }
+
+  /**
+   *
+   *
+   * @returns {Date[]}
+   * @memberof MelliChartsDateService
+   */
+  getRangeForReqest(): Date[] {
+    return this.rangeDateForRequest;
   }
 }

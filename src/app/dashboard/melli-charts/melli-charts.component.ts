@@ -12,6 +12,7 @@ import { RucheInterface } from '../../_model/ruche';
 import { RucherModel } from '../../_model/rucher-model';
 import { MelliChartsDateService } from './service/melli-charts-date.service';
 import { DataRange } from '../apiary/ruche-rucher/ruche-detail/service/Record/data-range';
+import { stringify } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-melli-charts',
@@ -21,13 +22,12 @@ import { DataRange } from '../apiary/ruche-rucher/ruche-detail/service/Record/da
 export class MelliChartsComponent implements OnInit {
 
 
-  public btnNav: Array<string>;
+  public btnNav: Array<Object>;
   private btnTypeElement: HTMLElement;
 
   constructor(public rucheService: RucheService,
     public rucherService: RucherService,
     private userService: UserloggedService,
-    public stackApiaryGraph: StackApiaryGraphService,
     public melliChartDate: MelliChartsDateService,
     public stackService: StackService,
     public recordService: RecordService,
@@ -35,10 +35,10 @@ export class MelliChartsComponent implements OnInit {
     private tokenService: AtokenStorageService,
     private userConfig: UserParamsService) {
       this.btnNav = [
-        'Vitality',
-        'Map',
-        'Hives',
-        'Stack'
+        { name: 'Vitality', path: './vitality'},
+        { name: 'Map', path: './map'},
+        { name: 'Hives',path: './hives'},
+        { name: 'Stack', path: './stack'}
       ];
     }
 
@@ -89,20 +89,11 @@ export class MelliChartsComponent implements OnInit {
   /**
    *
    *
-   * @returns {string}
-   * @memberof MelliChartsComponent
-   */
-  getRangeSelect(): string {
-    return (this.melliChartDate.rangeUserSelect.scale + ' ' + this.melliChartDate.rangeUserSelect.type).toLowerCase();
-  }
-  /**
-   *
-   *
    * @param {DataRange} rangeSelect
    * @memberof MelliChartsComponent
    */
   setRangeSelect(rangeSelect: DataRange): void {
-    this.melliChartDate.rangeUserSelect = rangeSelect;
+    this.melliChartDate.setRange(rangeSelect);
   }
 
   getHiveByApiary(idApiary: string): RucheInterface[] | boolean {
@@ -117,8 +108,32 @@ export class MelliChartsComponent implements OnInit {
     this.btnTypeElement = document.getElementById(id);
     console.log(this.btnTypeElement);
   }
-  selectHive(ruche: RucheInterface, event: MouseEvent) {
-     
+
+  getRangeByType(type: string): Array<DataRange> {
+    return this.melliChartDate.ranges.filter(elt => elt.type === type);
+  }
+
+  setDateFromInput(): void {
+  }
+
+  /**
+   *
+   *
+   * @returns {string}
+   * @memberof MelliChartsComponent
+   */
+  getStartDate(): string {
+    return new Date(this.melliChartDate.start).toISOString().substring(0, 10);
+  }
+
+  /**
+   *
+   *
+   * @returns {string}
+   * @memberof MelliChartsComponent
+   */
+  getEndDate(): string {
+    return new Date(this.melliChartDate.end).toISOString().substring(0, 10);
   }
 
 }
