@@ -4,10 +4,11 @@
     </div>
     <ul class="nav navbar-nav">
       <li *ngFor="let btn of btnNav"><button type="button" [id]="btn" (click)="selectType(btn)"
-          class="btn btn-outline-success">{{ btn.name }}</button></li>
+          class="btn btn-success">{{ btn.name }}</button></li>
     </ul>
     <ul class="nav nav-date navbar-nav navbar-right">
-      <li>
+        <li><button type="button" class="btn btn-info date-arrow"><i class="fa fa-arrow-circle-left" id="previous-date"></i></button></li>
+      <li id="dropdown">        
         <div class="dropdown">
           <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
               class="fa fa-calendar"></i>{{ melliChartDate.start | myDate }} <span id="arrow">&#8680;</span>
@@ -23,19 +24,19 @@
                 <label>End : </label>
                 <input type="date" [ngModel]="getEndDate()" (ngModelChange)="melliChartDate.end = $event" class="form-control" />
               </div>
-              <button type="button" (click)="setDateFromInput()" class="btn btn-large btn-block btn-primary">Aplly</button>
+              <button type="button" (click)="setDateFromInput()" class="btn btn-large btn-block btn-primary">Apply</button>
             </div>
             <div id="dt-scale">
               <ul>
-                <li class="time" *ngFor="let dt of getRangeByType('HOURS')" (click)="setRangeSelect(dt)">
+                <li class="time" *ngFor="let dt of getRangeByType('HOUR')" (click)="setRangeSelect(dt)">
                   {{ dt.scale }} {{ dt.type | lowercase }}</li>
               </ul>
               <ul>
-                <li class="time" *ngFor="let dt of getRangeByType('DAYS')" (click)="setRangeSelect(dt)">
+                <li class="time" *ngFor="let dt of getRangeByType('DAY')" (click)="setRangeSelect(dt)">
                   {{ dt.scale }} {{ dt.type | lowercase }}</li>
               </ul>
               <ul>
-                <li class="time" *ngFor="let dt of getRangeByType('MONTHS')" (click)="setRangeSelect(dt)">
+                <li class="time" *ngFor="let dt of getRangeByType('MONTH')" (click)="setRangeSelect(dt)">
                   {{ dt.scale }} {{ dt.type | lowercase }}</li>
               </ul>
               <ul>
@@ -46,6 +47,8 @@
           </div>
         </div>
       </li>
+      <li><button type="button" class="btn btn-info date-arrow"><i id="next-date" class="fa fa-arrow-circle-right"></i></button></li>
+
     </ul>
 
   </nav>
