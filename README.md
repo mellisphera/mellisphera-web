@@ -4,7 +4,7 @@ This is the front end of MelliHealth beekeeping platform.
 It is closely linked with [mellihealth-api](https://github.com/mellisphera/mellihealth-api) backend.
 An overview of the whole architecture is given below :
 
-![](mellihealth_scheme.png)
+![](img/mellihealth_scheme.png)
 
 ## Getting Started
 
