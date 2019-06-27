@@ -37,15 +37,19 @@ export class MelliChartsDateService {
     let date = new Date();
     switch(scale.type){
       case 'DAYS':
+      case 'DAY':
+        console.log(new Date().getDate() - scale.scale);
         date.setDate((new Date().getDate() - scale.scale));
         break;
       case 'MONTHS':
+      case 'MONTH':
         date.setMonth((new Date().getMonth() - scale.scale));
         break;
       case 'YEAR':
         date.setFullYear(new Date().getFullYear() - 1);
         break;
       case 'HOURS':
+      case 'HOUR':
         date.setHours(new Date().getHours() - scale.scale);
         break;
       default:

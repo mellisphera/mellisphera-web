@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MelliChartsDateService } from './melli-charts-date.service';
+import { MelliChartsDateService } from '../hive/service/melli-charts-date.service';
 
 describe('MelliChartsDateService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

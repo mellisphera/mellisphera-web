@@ -1,6 +1,11 @@
-<div>
-  <div echarfts (chartInit)="onChartInit($event)"></div>
+<div id="daily">
+  <div class="chart" [options]="dailyManager.baseOpions" echarts (chartInit)="onChartInit($event)"></div>
 </div>
+
+<div id="hourly">
+  <div class="chart" [options]="hourlyManager.baseOpions" echarts (chartInit)="onChartInit($event)"></div>
+</div>
+
 
 <div id="sidebar-tools" class="sidebar-wrapper">
   <ul class="nav responsive-nav">
