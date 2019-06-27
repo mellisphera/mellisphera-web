@@ -76,7 +76,7 @@ export class RecordService {
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getRecordByIdHive(idHive: string, hiveName: string, lastMerge: any, hive: boolean, color?: string): Observable<any> {
+  getRecordByIdHive(idHive: string, hiveName: string, lastMerge: any, color?: string): Observable<any> {
     return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
       let sensor = [];
       let series = [];
@@ -101,8 +101,8 @@ export class RecordService {
             }),
             showSymbol: false,
             hoverAnimation: true,
-            xAxisIndex: (hive) ? 0 : 1,
-            yAxisIndex: (hive) ? 0 : 1,
+            xAxisIndex: 1,
+            yAxisIndex: 1,
             lineStyle: {
               color: color
             },
@@ -136,8 +136,8 @@ export class RecordService {
               }),
               name: hiveName + ' / Temp-int (' + elt + ')',
               type: 'line',
-              xAxisIndex: (hive) ? 0 : 1,
-              yAxisIndex: (hive) ? 0 : 1,
+              xAxisIndex: 1,
+              yAxisIndex: 1,
               showSymbol: false,
               hoverAnimation: true,
               lineStyle: {
@@ -208,8 +208,8 @@ export class RecordService {
             {
               name: hiveName + ' / Temp-ext (' + elt + ')',
               type: 'line',
-              xAxisIndex: (hive) ? 0 : 1,
-              yAxisIndex: (hive) ? 0 : 1,
+              xAxisIndex: 1,
+              yAxisIndex: 1,
               showSymbol: false,
               hoverAnimation: true,
               data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
@@ -238,8 +238,8 @@ export class RecordService {
                 sensorRef: recRes.sensorRef
               };
             }),
-            xAxisIndex: (hive) ? 0 : 1,
-            yAxisIndex: (hive) ? 0 : 1,
+            xAxisIndex: 1,
+            yAxisIndex: 1,
             showSymbol: false,
             markArea: {
               silent: true,
@@ -504,5 +504,10 @@ export class RecordService {
         }
       ]
     };
+  }
+
+  getWeightByHive(idHive: string, range: Date[]) :Observable<any> {
+    return this.http.post<number>(CONFIG.URL + 'records/weight/' + idHive, range);
+
   }
 }

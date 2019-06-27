@@ -1,9 +1,7 @@
 export const CALENDAR = {
     calendar: {
-        top: 100,
-        left: '3%',
-        right: '2%',
-        width: '92%',
+        left: '3    %',
+        width: '90%',
         height: '45%',
         cellSize: ['20', '20'],
         range: [],

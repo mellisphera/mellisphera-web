@@ -20,4 +20,7 @@ export const WEIGHT_CHARTS = {
         }
         else { return 0; }
     },
+    tooltipWeightCalendar: {
+        trigger: 'item',
+    },
 }

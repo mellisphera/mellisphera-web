@@ -179,10 +179,10 @@ export class GraphGlobal {
     getDays(): String[] {
         // If he is French
         if (this.userService.getJwtReponse().country === "FR") {
-            return (['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa']);
+            return ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'];
             // EN
         } else {
-            return (['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']);
+            return ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
         }
     }
 

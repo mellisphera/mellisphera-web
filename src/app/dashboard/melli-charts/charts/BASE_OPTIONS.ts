@@ -43,6 +43,12 @@ export const BASE_OPTIONS = {
                 filterMode: 'empty',
                 realtime: true,
             },
+            {
+                type: 'inside',
+                yAxisIndex: 0,
+                filterMode: 'empty',
+                left: 'left'
+            },
         ],
         grid: [{
             containLabel: true

@@ -140,7 +140,7 @@ export class StackApiaryComponent implements OnInit {
     this.recordService.setRange(this.stackService.range);
     this.observationService.setRange(this.stackService.range);
     const observableRecord = this.stackService.getHiveSelect().filter(hive => hive.id !== '')
-    .map(hive => this.recordService.getRecordByIdHive(hive.id, hive.name, this.merge, false, this.getColor(hive)));
+    .map(hive => this.recordService.getRecordByIdHive(hive.id, hive.name, this.merge, this.getColor(hive)));
     Observable.forkJoin(observableRecord).subscribe(data => {
        data.map(elt => elt.series).forEach(elt => {
         elt.forEach(element => {
@@ -194,7 +194,7 @@ export class StackApiaryComponent implements OnInit {
         this.stackService.addColorForObs(selectHive, this.getColor(selectHive));
         this.recordService.setRange(this.stackService.range);
         this.recordService.getRecordByIdHive(selectHive.id, selectHive.name,
-          this.recordService.mergeOptionStackApiary, false, this.getColor(selectHive))
+          this.recordService.mergeOptionStackApiary, this.getColor(selectHive))
           .subscribe((data) => {
             console.log(data);
             // this.recordService.mergeOptionStackApiary = data;
