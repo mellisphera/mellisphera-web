@@ -1,15 +1,20 @@
 <div id="daily">
-  <div class="chart" [options]="dailyManager.baseOpions" echarts (chartInit)="onChartInit($event)"></div>
+  <div class="chart" [options]="dailyManager.baseOpions" echarts (chartInit)="onDailyChartInit($event)"></div>
 </div>
 
 <div id="hourly">
-  <div class="chart" [options]="hourlyManager.baseOpions" echarts (chartInit)="onChartInit($event)"></div>
+  <div class="chart" [options]="hourlyManager.baseOpions" echarts (chartInit)="onHourlyChartInit($event)"></div>
+</div>
+<div id="sidebar-tools-daily" class="sidebar-wrapper">
+  <ul class="nav responsive-nav">
+    <li *ngFor="let type of getlabelByType('DAILY')" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}
+    </li>
+  </ul>
 </div>
 
-
-<div id="sidebar-tools" class="sidebar-wrapper">
+<div id="sidebar-tools-hourly" class="sidebar-wrapper">
   <ul class="nav responsive-nav">
-    <li *ngFor="let type of typeData" (click)="setType(type.name)" [class]="type.class" [id]="type.name">{{ type.name }}
+    <li *ngFor="let type of getlabelByType('HOURLY')" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}
     </li>
   </ul>
 </div>

@@ -1,7 +1,16 @@
-#sidebar-tools{
+#sidebar-tools-daily{
     position: fixed;
     height: 50vh;
     width: 5% !important;
+    top: 10%;
+    right: 2px;
+    background-color: #333F3D;
+}
+#sidebar-tools-hourly{
+    position: fixed;
+    height: 50vh;
+    width: 5% !important;
+    top: 50%;
     right: 2px;
     background-color: #333F3D;
 }

@@ -6,6 +6,8 @@ import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 import { CALENDAR } from '../../charts/CALENDAR';
 import { SERIES } from '../../charts/SERIES';
 import { UnitService } from '../../../service/unit.service';
+import { WEIGHT_CHARTS } from '../../charts/weight/WEIGHT_CHART';
+import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,7 @@ export class DailyManagerService {
   constructor(
     private dailyWService: DailyRecordsWService,
     private dailyHService: DailyRecordService,
+    private graphGlobal: GraphGlobal,
     private dailyStock: DailyStockHoneyService,
     private unitService: UnitService
   ) {
@@ -23,15 +26,23 @@ export class DailyManagerService {
   }
 
 
-  getWeightincome(idHive: string, echartsInstance: any, range: Date[]) {
+  getChartWeightincome(idHive: string, echartsInstance: any, range: Date[]) {
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive).subscribe(
       _daliW => {
         let option = echartsInstance.getOption()
         option.calendar = CALENDAR.calendar;
         option.calendar.range = range;
+        option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+        option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+        console.log(option.calendar.dayLabel);
         if (option.series.length > 0) {
           option.series = new Array();
         }
+        option.tooltip = WEIGHT_CHARTS.tooltipWeightCalendar;
+        option.tooltip.formatter = (params: any) => {
+          return params.marker + this.unitService.getDailyDate(params.data[0].split('T')[0]) +
+            '<br/>' + params.seriesName + ' : ' + this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])) + ' ' + this.graphGlobal.weight.unitW;
+        };
         option.series.push(Object.assign({}, SERIES.effectScatter));
         option.series[0].name = 'gain';
         option.series[0].coordinateSystem = 'calendar';
@@ -72,10 +83,11 @@ export class DailyManagerService {
           }
           return 0;
         },
-        option.legend[0].data = ['gain', 'loss'];
-          echartsInstance.clear();
+          option.legend[0].data = ['gain', 'loss'];
+        echartsInstance.clear();
         console.log(option);
         echartsInstance.setOption(option);
+        this.baseOpions = option;
       }
     )
   }

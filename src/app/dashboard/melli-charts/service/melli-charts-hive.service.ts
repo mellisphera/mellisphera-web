@@ -8,7 +8,8 @@ import { HttpClient } from '@angular/common/http';
 export class MelliChartsHiveService {
 
   private hiveSelect: RucheInterface;
-  private echartInstances: any;
+  private dailyEchartInstances: any;
+  private hourlyEchartInstances: any
   private arrayColor: Array<any>;
   constructor(private httpClient: HttpClient) {
     this.hiveSelect = null;
@@ -38,7 +39,7 @@ export class MelliChartsHiveService {
    * @param {number} index
    * @param {RucheInterface} hive
    * @returns
-   * @memberof MelliChartsHiveService
+   * @memberof MelliChartsHonHourlyChartInitiveService
    */
   getColorByIndex(index: number, hive: RucheInterface) {
     if (this.hiveSelect === hive) {
@@ -57,8 +58,8 @@ export class MelliChartsHiveService {
    * @param {*} echarInstance
    * @memberof MelliChartsHiveService
    */
-  setChartInstance(echarInstance: any): void {
-    this.echartInstances = echarInstance;
+  setDailyChartInstance(echarInstance: any): void {
+    this.dailyEchartInstances = echarInstance;
   }
 
   /**
@@ -67,8 +68,28 @@ export class MelliChartsHiveService {
    * @returns {*}
    * @memberof MelliChartsHiveService
    */
-  getChartInstance(): any {
-    return this.echartInstances;
+  getDailyChartInstance(): any {
+    return this.dailyEchartInstances;
+  }
+
+  /**
+   *
+   *
+   * @returns {*}
+   * @memberof MelliChartsHiveService
+   */
+  getHourlyChartInstance(): any {
+    return this.hourlyEchartInstances;
+  }
+  
+  /**
+   *
+   *
+   * @param {*} echarInstance
+   * @memberof MelliChartsHiveService
+   */
+  setHourlyChartInstnace(echarInstance: any): void {
+    this.hourlyEchartInstances = echarInstance;
   }
 
   /**
