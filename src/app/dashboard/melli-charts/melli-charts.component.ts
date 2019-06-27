@@ -12,7 +12,6 @@ import { RucheInterface } from '../../_model/ruche';
 import { RucherModel } from '../../_model/rucher-model';
 import { MelliChartsDateService } from './service/melli-charts-date.service';
 import { DataRange } from '../apiary/ruche-rucher/ruche-detail/service/Record/data-range';
-import { stringify } from '@angular/core/src/render3/util';
 import { Router } from '@angular/router';
 import { MelliChartsHiveService } from './service/melli-charts-hive.service';
 import { HiveComponent } from './hive/hive.component';
@@ -104,6 +103,7 @@ export class MelliChartsComponent implements OnInit {
    */
   setRangeSelect(rangeSelect: DataRange): void {
     this.melliChartDate.setRange(rangeSelect);
+    this.hiveComponent.setRangeChart();
   }
 
   getHiveByApiary(idApiary: string): RucheInterface[] | boolean {

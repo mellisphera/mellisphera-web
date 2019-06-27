@@ -48,7 +48,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   rucheOnClick: Ruche;
 
-  constructor(public dailyRecTh: DailyRecordService,
+  constructor(
+    public dailyRecTh: DailyRecordService,
     public login: UserloggedService,
     public rucheService: RucheService,
     public rucherService: RucherService,
