@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { RucheService } from '../service/ruche.service';
 import { RucherService } from '../service/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
@@ -13,7 +13,11 @@ import { RucherModel } from '../../_model/rucher-model';
 import { MelliChartsDateService } from './service/melli-charts-date.service';
 import { DataRange } from '../apiary/ruche-rucher/ruche-detail/service/Record/data-range';
 import { stringify } from '@angular/core/src/render3/util';
+import { Router } from '@angular/router';
+import { MelliChartsHiveService } from './service/melli-charts-hive.service';
+import { HiveComponent } from './hive/hive.component';
 
+const PREFIX_PATH = '/dashboard/melli-charts/';
 @Component({
   selector: 'app-melli-charts',
   templateUrl: './melli-charts.component.html',
@@ -24,23 +28,27 @@ export class MelliChartsComponent implements OnInit {
 
   public btnNav: Array<Object>;
   private btnTypeElement: HTMLElement;
+  public typeNav: Array<Object>;
+
+  hiveComponent: HiveComponent;
 
   constructor(public rucheService: RucheService,
     public rucherService: RucherService,
     private userService: UserloggedService,
+    private router: Router,
     public melliChartDate: MelliChartsDateService,
-    public stackService: StackService,
+    public melliChartHive: MelliChartsHiveService,
     public recordService: RecordService,
     private adminService: AdminService,
     private tokenService: AtokenStorageService,
     private userConfig: UserParamsService) {
-      this.btnNav = [
-        { name: 'Vitality', path: './vitality'},
-        { name: 'Map', path: './map'},
-        { name: 'Hives',path: './hives'},
-        { name: 'Stack', path: './stack'}
-      ];
-    }
+    this.btnNav = [
+      { name: 'Vitality', path: 'vitality' },
+      { name: 'Map', path: 'map' },
+      { name: 'Hives', path: 'hive' },
+      { name: 'Stack', path: 'stack' }
+    ];
+  }
 
   ngOnInit() {
     this.userConfig.getSubject().subscribe(
@@ -53,6 +61,7 @@ export class MelliChartsComponent implements OnInit {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
           this.rucherService.rucheService.getAllHiveByAccount(this.userService.getUser()).map((hives: RucheInterface[][]) => {
             let allHives = hives.flat();
+            this.melliChartHive.setHiveSelect(allHives[0]);
             console.log(allHives);
             allHives.forEach((elt: RucheInterface) => {
               this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
@@ -84,6 +93,7 @@ export class MelliChartsComponent implements OnInit {
         });
       }
     }
+    this.router.navigateByUrl(PREFIX_PATH + 'hive');
   }
 
   /**
@@ -104,11 +114,18 @@ export class MelliChartsComponent implements OnInit {
     }
   }
 
-  selectType(id: string) {
-    this.btnTypeElement = document.getElementById(id);
-    console.log(this.btnTypeElement);
+  onActivate(componentRef) {
+    this.hiveComponent = componentRef;
   }
 
+
+  /**
+   *
+   *
+   * @param {string} type
+   * @returns {Array<DataRange>}
+   * @memberof MelliChartsComponent
+   */
   getRangeByType(type: string): Array<DataRange> {
     return this.melliChartDate.ranges.filter(elt => elt.type === type || elt.type === type + 'S');
   }
@@ -116,6 +133,27 @@ export class MelliChartsComponent implements OnInit {
   setDateFromInput(): void {
   }
 
+
+  navToPage(path: string) {
+    this.router.navigateByUrl(PREFIX_PATH + path);
+  }
+
+
+  selectHive(hive: RucheInterface, event: MouseEvent) {
+    this.melliChartHive.setHiveSelect(hive);
+    this.nextByRoute();
+
+  }
+
+
+  nextByRoute() {
+    console.log(this.router.url);
+     switch(this.router.url){
+      case PREFIX_PATH + 'hive':
+        this.hiveComponent.newHive();
+      break;
+    }
+  }
   /**
    *
    *
@@ -126,6 +164,7 @@ export class MelliChartsComponent implements OnInit {
     return new Date(this.melliChartDate.start).toISOString().substring(0, 10);
   }
 
+
   /**
    *
    *
@@ -134,6 +173,10 @@ export class MelliChartsComponent implements OnInit {
    */
   getEndDate(): string {
     return new Date(this.melliChartDate.end).toISOString().substring(0, 10);
+  }
+
+  getColor(hive: RucheInterface): string {
+    return this.melliChartHive.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
   }
 
 }

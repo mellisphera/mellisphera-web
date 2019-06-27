@@ -154,6 +154,7 @@ export class DailyRecordsWService {
     this.unitSystem = unit;
   }
 
+  /* FOR HIVE CLICK */
   getDailyRecordsWbyIdHive(idHive: string) {
     this.loading = true;
     this.currentIdHive = idHive;
@@ -180,6 +181,23 @@ export class DailyRecordsWService {
       }
 
     );
+  }
+
+  /* FOR MELLI_CHARTS */
+  getDailyRecordsWbyHiveForMelliCharts(idHive: string): Observable<any>{
+    return this.http.get<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/hive/' + idHive).map(dailyW => {
+      return {
+        tempExt: dailyW.map(_dailyW => [_dailyW.recordDate, this.unitService.convertTempFromUsePref(_dailyW.temp_ext_max, this.unitSystem)]),
+        weightIncomeHight: dailyW.filter(_filter => _filter.weight_income_gain >= 0).map(_dailyW => [
+          _dailyW.recordDate,
+          this.unitService.convertWeightFromuserPref(_dailyW.weight_income_gain, this.unitSystem)
+        ]),
+        weightIncomeLow: dailyW.filter(_filter => _filter.weight_income_gain < 0).map(_dailyW => [
+          _dailyW.recordDate,
+          this.unitService.convertWeightFromuserPref(_dailyW.weight_income_gain, this.unitSystem)
+        ]),
+      }
+    })
   }
 
   updateCalendar() {

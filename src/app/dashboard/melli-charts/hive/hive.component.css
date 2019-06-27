@@ -1,0 +1,17 @@
+#sidebar-tools{
+    position: fixed;
+    height: 50vh;
+    width: 5% !important;
+    right: 2px;
+    background-color: #333F3D;
+}
+.item-type{
+    color: white;
+}
+.active{
+    background-color: white;
+    color: black;
+}
+.item-type:hover {
+    cursor:pointer;
+}

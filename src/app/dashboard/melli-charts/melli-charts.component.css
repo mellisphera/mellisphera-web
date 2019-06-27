@@ -1,24 +1,18 @@
-#sidebar-tools{
-    position: fixed;
-    height: 50vh;
-    width: 5% !important;
-    right: 2px;
-    background-color: #333F3D;
-}
 #apiary-group{
     position: fixed;
     height: 93vh;
+    width: 12%;
 }
 #apiary-group, .list-group-item {
-    background-color: #333F3D;
-    color: white;
+/*     background-color: #204d74;
+ */    color: black;
 }
 .dropdown-menu{
     padding: 10px;
     color: white !important;
     display: flex;
     background-color: #333F3D;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
     width: 100%;
 }
@@ -39,14 +33,12 @@ nav[role=admin-navigation] {
 .nav li .btn{
     color: white !important;
 }
-#input-date, #dt-scale{
-}
 .active{
     background-color: white;
 }
 .nopadding{
     padding: 0px !important;
-    margin-right: 0px !important;
+    margin: 0 !important;
 }
 .nav-date{
      margin-right: 10px;
@@ -60,6 +52,9 @@ nav[role=admin-navigation] {
 .nav-date .btn-primary {
     width: 100% !important;
 }
+#btn-date{
+    background-color: #204d74;
+}
 #previous-date {
     margin-right: 10px;
 
@@ -71,12 +66,48 @@ nav[role=admin-navigation] {
     white-space: nowrap;
     list-style: none;
 }
+#content{
+    position: relative !important;
+    left: 13% !important;
+    width: calc(100% - 13%);
+}
+.circle{
+    border: 1px solid black;
+    display: inline-block;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+
+}
+.puce-hive{
+    background-image: url('../../../assets/img//apiary-icon.png');
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size:25px;
+    width: 25px;
+    height: 23px;
+    margin-bottom: -4px;
+}
+
+.puce-apiary{
+    background-image: url('../../../assets/wizard/apiary.png');
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size:25px;
+    width: 25px;
+    height: 23px;
+    vertical-align: text-top;
+    margin-right: 5px;
+}
 .time:hover{
     background-color: lightslategray;
     cursor: pointer;
 }
 #dt-scale{
     display: flex;
+}
+.sub-items{
+    cursor: pointer;
 }
 @media screen and (max-width:1300px) {
     #input-date{
@@ -106,9 +137,7 @@ nav[role=admin-navigation] {
 }
 @media screen and (max-width:500px){
     #dropdown{
-        width: 52%
-    }
-    #btn-date{
+        width: 52%;
     }
 }
 
