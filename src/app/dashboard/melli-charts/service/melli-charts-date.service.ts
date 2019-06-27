@@ -65,4 +65,12 @@ export class MelliChartsDateService {
   getRangeForReqest(): Date[] {
     return this.rangeDateForRequest;
   }
+
+  nextDate() {
+    
+  }
+
+  previousDate() {
+
+  }
 }

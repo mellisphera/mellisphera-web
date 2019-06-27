@@ -102,4 +102,15 @@ export class SidebarComponent implements OnInit {
     this.authService.connexionStatus.next(false);
     this.router.navigate(["/login"]);
   }
+
+
+  openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  }
+  
+  closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+  }
 }

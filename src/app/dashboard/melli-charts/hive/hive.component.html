@@ -1,0 +1,10 @@
+<div>
+  <div echarfts (chartInit)="onChartInit($event)"></div>
+</div>
+
+<div id="sidebar-tools" class="sidebar-wrapper">
+  <ul class="nav responsive-nav">
+    <li *ngFor="let type of typeData" (click)="setType(type.name)" [class]="type.class" [id]="type.name">{{ type.name }}
+    </li>
+  </ul>
+</div>
