@@ -1,9 +1,9 @@
 <div id="daily">
-  <div class="chart" [options]="dailyManager.baseOpions" echarts (chartInit)="onDailyChartInit($event)"></div>
+  <div class="chart calendar" [options]="dailyManager.baseOpions" echarts (chartInit)="onDailyChartInit($event)"></div>
 </div>
 
 <div id="hourly">
-  <div class="chart" [options]="hourlyManager.baseOpions" echarts (chartInit)="onHourlyChartInit($event)"></div>
+  <div class="chart hourly" [options]="hourlyManager.baseOpions" echarts (chartInit)="onHourlyChartInit($event)"></div>
 </div>
 <div id="sidebar-tools-daily" class="sidebar-wrapper">
   <ul class="nav responsive-nav">

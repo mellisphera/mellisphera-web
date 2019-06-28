@@ -507,7 +507,16 @@ export class RecordService {
   }
 
   getWeightByHive(idHive: string, range: Date[]) :Observable<any> {
-    return this.http.post<number>(CONFIG.URL + 'records/weight/' + idHive, range);
-
+    return this.http.post<any>(CONFIG.URL + 'records/weight/' + idHive, range);
   }
+
+  getTempIntByHive(idHive: string, range: Date[]):Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'records/temp_int/' + idHive, range);
+  }
+
+  getHintIntByHive(idHive: string, range: Date[]):Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'records/hint/' + idHive, range);
+  }
+
+
 }

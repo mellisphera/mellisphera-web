@@ -1,8 +1,8 @@
 export const CALENDAR = {
     calendar: {
-        left: '3    %',
+        left: '3%',
         width: '90%',
-        height: '45%',
+        height: '70%',
         cellSize: ['20', '20'],
         range: [],
         orient: 'horizontal',
