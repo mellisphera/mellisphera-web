@@ -1,5 +1,5 @@
 export const BASE_OPTIONS = {
-    basepPtions: {
+    baseOptionHourly: {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -11,10 +11,6 @@ export const BASE_OPTIONS = {
             orient: 'horizontal',
             data: [],
         },
-      
-        series: [],
-    },
-    line: {
         axisPointer: {
             link: { xAxisIndex: 'all' }
         },
@@ -36,7 +32,7 @@ export const BASE_OPTIONS = {
                 realtime: true,
                 start: 0,
                 end: 100,
-                bottom: 20,
+                bottom: 0,
             },
             {
                 type: 'inside',
@@ -51,11 +47,19 @@ export const BASE_OPTIONS = {
             },
         ],
         grid: [{
-            containLabel: true
+            containLabel: true,
+            height: '80%',
+            left: '3%',
+            width:'100%'
         }],
+        yAxis: {
+            name: '',
+            nameLocation: 'middle',
+            type: 'value',
+        },
         xAxis: [
             {
-                type: '',
+                type: 'time',
                 boundaryGap: false,
                 axisLine: { onZero: true },
                 position: 'bottom',
@@ -68,14 +72,36 @@ export const BASE_OPTIONS = {
                 axisLabel:{}
             },
         ],
-        yAxis: [
-            {
-                name: '',
-                nameLocation: 'middle',
-                type: 'value',
+        series: []
+      
+    },
+    baseOptionDaily: {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
             },
-        ],
+            formatter: null
+        },
+        legend: {
+            orient: 'horizontal',
+            data: [],
+        },
+        axisPointer: {
+            link: { xAxisIndex: 'all' }
+        },
+        toolbox: {
+            orient: 'horizontal',
+            itemSize: 20,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none',
+                },
+                dataView: { readOnly: false },
+                restore: {},
+                saveAsImage: {}
+            }
+        }
     }
-
 
 }

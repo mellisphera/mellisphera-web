@@ -22,7 +22,7 @@ export class DailyManagerService {
     private dailyStock: DailyStockHoneyService,
     private unitService: UnitService
   ) {
-    this.baseOpions = BASE_OPTIONS.basepPtions;
+    this.baseOpions = BASE_OPTIONS.baseOptionDaily;
   }
 
 

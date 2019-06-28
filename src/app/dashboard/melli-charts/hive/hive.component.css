@@ -24,3 +24,10 @@
 .item-type:hover {
     cursor:pointer;
 }
+.calendar{
+
+}
+.hourly{
+    height: 600px;
+    width: 90%;
+}

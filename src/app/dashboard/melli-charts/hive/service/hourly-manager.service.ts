@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RecordService } from '../../../apiary/ruche-rucher/ruche-detail/service/Record/record.service';
 import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 import { SERIES } from '../../charts/SERIES';
-import { Record } from '../../../../_model/record';
+import { isUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -13,31 +13,61 @@ export class HourlyManagerService {
   constructor(
     private recordService: RecordService
   ) {
-    this.baseOpions = BASE_OPTIONS.basepPtions;
+    this.baseOpions = Object.assign(BASE_OPTIONS.baseOptionHourly);
   }
 
-  getChartWeight(idHive: string, chartInstance: any, range: Date[]){
+  getChartWeight(idHive: string, chartInstance: any, range: Date[]) {
     this.recordService.getWeightByHive(idHive, range).subscribe(
-      (_weight: Record[]) => {
+      (_weight: any) => {
         console.log(_weight);
-        let option = chartInstance.getOption();
-        if (option.series.length > 0) {
+        let option = this.baseOpions;
+        let series = Object.assign({}, SERIES.line);
+        let yAxis = Object.assign({}, BASE_OPTIONS);
+        series.name = 'Weight';
+        series.data = _weight.map((elt) => {
+          return { name: elt.date, value: [elt.date, elt.value] };
+        });
+        console.log(!this.existSeries(option.series, 'Weight'));
+        console.log(option.series);
+        if(!this.existSeries(option.series, 'Weight')) {
+          console.log('NEW');
           option.series = new Array();
         }
-        option = Object.assign(option , BASE_OPTIONS.line);
+        option.series.push(series);
+        console.log(this.baseOpions);
         console.log(option);
-        option.xAxis[0].type = 'time';
-        option.grid[0].left = '0%';
-        console.log(BASE_OPTIONS.line);
-        option.series.push(Object.assign({}, SERIES.line));
-        option.series[0].data =_weight.map((elt: Record) => {
-          return { name: elt.recordDate, value: [elt.recordDate, elt.weight]};
-        });
-        chartInstance.clear();
         chartInstance.setOption(option);
-        this.baseOpions = option;
+
+       // this.baseOpions = option;
       }
     )
-
   }
+
+
+  getChartTempInt(idHive: string, chartInstance: any, range: Date[]) {
+    this.recordService.getTempIntByHive(idHive, range).subscribe(
+      (_temp) => {
+        let option = chartInstance.getOption();
+        let series = Object.assign({}, SERIES.line);
+        let yAxis = Object.assign({}, BASE_OPTIONS);
+
+      }
+    )
+  }
+
+  existSeries(serieArray, name: string): boolean {
+    if (isUndefined(serieArray) || serieArray.length < 0 || serieArray.filter(_filter => _filter.name === name).length > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  getChartHint(idHive: string, chartInstance: any, range: Date[]) {
+    this.recordService.getHintIntByHive(idHive, range).subscribe(
+      (_hint) => {
+        console.log(_hint);
+      }
+    )
+  }
+
 }

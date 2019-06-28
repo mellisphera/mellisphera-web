@@ -150,7 +150,8 @@ export class MelliChartsComponent implements OnInit {
     console.log(this.router.url);
      switch(this.router.url){
       case PREFIX_PATH + 'hive':
-        this.hiveComponent.newHive();
+        this.hiveComponent.loadDailyData();
+        this.hiveComponent.loadHourlyData();
       break;
     }
   }

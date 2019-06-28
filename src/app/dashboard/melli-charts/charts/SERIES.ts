@@ -18,6 +18,7 @@ export const SERIES = {
     line: {
         name: '',
         type: 'line',
+        yAxisIndex: 0,
         data: [],
         showSymbol: false,
         hoverAnimation: true,
