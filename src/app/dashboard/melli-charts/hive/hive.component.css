@@ -25,7 +25,8 @@
     cursor:pointer;
 }
 .calendar{
-
+    height: 400px;
+    width: 90%;
 }
 .hourly{
     height: 600px;

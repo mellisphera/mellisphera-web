@@ -1,3 +1,5 @@
+import { CALENDAR } from "./CALENDAR";
+
 export const BASE_OPTIONS = {
     baseOptionHourly: {
         tooltip: {
@@ -52,11 +54,13 @@ export const BASE_OPTIONS = {
             left: '3%',
             width:'100%'
         }],
-        yAxis: {
+        
+        yAxis: [{
             name: '',
             nameLocation: 'middle',
             type: 'value',
-        },
+        }],
+
         xAxis: [
             {
                 type: 'time',
@@ -83,6 +87,7 @@ export const BASE_OPTIONS = {
             },
             formatter: null
         },
+       // visualMap: {},
         legend: {
             orient: 'horizontal',
             data: [],
@@ -101,7 +106,14 @@ export const BASE_OPTIONS = {
                 restore: {},
                 saveAsImage: {}
             }
-        }
-    }
+        },
+        calendar: CALENDAR.calendar
+    },
+
+    yAxis: {
+        name: '',
+        nameLocation: 'middle',
+        type: 'value',
+    },
 
 }

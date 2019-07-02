@@ -31,15 +31,15 @@ export class HiveComponent implements OnInit, AfterViewInit {
       { name: 'HRIN', id: 'HRIN_DAILY', type: 'DAILY', class: 'item-type' },
       { name: 'BROOD', id: 'BROOD_DAILY', type: 'DAILY', class: 'item-type' },
 
-      { name: 'WINCOME', id: 'WINCOME_HOURLY', type: 'HOURLY', class: 'item-type active' },
-      { name: 'TEMP_INT', id: 'TEMP_INT_MAX_HOURLY', type: 'HOURLY', class: 'item-type' },
+      { name: 'WINCOME', id: 'WINCOME_HOURLY', type: 'HOURLY', class: 'item-type' },
+      { name: 'TEMP_INT', id: 'TEMP_INT_MAX_HOURLY', type: 'HOURLY', class: 'item-type active' },
       { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX_DAILY', type: 'DAILY', class: 'item-type' },
       { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN_HOURLY', type: 'HOURLY', class: 'item-type' },
       { name: 'HRIN', id: 'HRIN_HOURLY', type: 'HOURLY', class: 'item-type' },
       { name: 'BAT', id: 'BAT_HOURLY', type: 'HOURLY', class: 'item-type' }
     ];
     this.currentTypeDaily = this.typeData[0];
-    this.currentTypeHourly = new Array(this.typeData[5]);
+    this.currentTypeHourly = new Array(this.typeData[6]);
   }
 
   ngOnInit() {
@@ -64,11 +64,12 @@ export class HiveComponent implements OnInit, AfterViewInit {
         this.dailyManager.getChartWeightincome(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
         break;
       case 'TEMP_INT_MAX':
+        this.dailyManager.getChartTmax(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
         break;
       case 'TEMP_INT_MIN':
         break;
       case 'HRIN':
-        this.hourlyManager.getChartHint(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
+        this.dailyManager.getChartHint(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
         break;
       case 'BROOD':
         break;
@@ -149,12 +150,8 @@ export class HiveComponent implements OnInit, AfterViewInit {
   }
 
   setRangeChart() {
-    let options = this.melliHive.getDailyChartInstance().getOption();
-    options.calendar[0].range = this.melliDate.getRangeForReqest();
-    console.log(options);
-    this.melliHive.getDailyChartInstance().clear();
-    this.melliHive.getDailyChartInstance().setOption(options);
     this.loadHourlyData();
+    this.loadDailyData();
   }
 
   onDailyChartInit(event: any): void {
