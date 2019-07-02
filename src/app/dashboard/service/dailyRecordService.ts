@@ -309,4 +309,22 @@ export class DailyRecordService {
         return selectHive !== undefined ? selectHive.brood + ' %' : null;
 
     }
+
+    /**
+     * 
+     * @param idHIve 
+     * @param range 
+     */
+    public getTmaxByHive(idHIve: string, range: Date[]): Observable<any> {
+        return this.http.post<any>(CONFIG.URL + 'dailyRecordsTH/tMax/' + idHIve, range);
+    }
+
+    /**
+     * 
+     * @param idHIve 
+     * @param range 
+     */
+    public getHintByHive(idHIve: string, range: Date[]): Observable<any> {
+        return this.http.post<any>(CONFIG.URL + 'dailyRecordsTH/hInt/' + idHIve, range);
+    }
 }

@@ -4,16 +4,18 @@ export const SERIES = {
         type: 'effectScatter',
         coordinateSystem: '',
         data: '',
-        symbolSize: null,
+        symbolSize: {},
         showEffectOn: 'emphasis',
         rippleEffect: {
             brushType: 'stroke'
         },
+        itemStyle: {},
         hoverAnimation: true,
     },
     heatmap: {
         type: 'heatmap',
-        coordinateSystem: '',
+        coordinateSystem: 'calendar',
+        data: []
     },
     line: {
         name: '',

@@ -1,10 +1,10 @@
 export const CALENDAR = {
     calendar: {
-        left: '3%',
-        width: '90%',
-        height: '70%',
+        height: '40%',
+        left: 'center',
+        width:'70%',
         cellSize: ['20', '20'],
-        range: [],
+        range: [new Date().getFullYear() + '-' +( new Date().getMonth() - 1) + '-' + '01', new Date()],
         orient: 'horizontal',
         splitLine: {
             show: true,
@@ -35,6 +35,21 @@ export const CALENDAR = {
                 borderWidth: 1,
                 borderColor: '#111'
             }
+        }
+    },
+    visualMap: {
+        type: '',
+        min: 0,
+        max: 10000,
+        pieces: [],
+        calculable: true,
+        inRange: {
+            color: []
+        },
+        orient: 'horizontal',
+        left: 'center',
+        textStyle: {
+            color: '#000'
         }
     },
 }
