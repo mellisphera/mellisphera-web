@@ -28,13 +28,18 @@ export class HiveComponent implements OnInit, AfterViewInit {
       { name: 'WINCOME', id: 'WINCOME_DAILY', type: 'DAILY', class: 'item-type active' },
       { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX_DAILY', type: 'DAILY', class: 'item-type' },
       { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN_DAILY', type: 'DAILY', class: 'item-type' },
+      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX_DAILY', type: 'DAILY', class: 'item-type' },
+      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN_DAILY', type: 'DAILY', class: 'item-type' },
+      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX_DAILY', type: 'DAILY', class: 'item-type' },
       { name: 'HRIN', id: 'HRIN_DAILY', type: 'DAILY', class: 'item-type' },
       { name: 'BROOD', id: 'BROOD_DAILY', type: 'DAILY', class: 'item-type' },
 
       { name: 'WINCOME', id: 'WINCOME_HOURLY', type: 'HOURLY', class: 'item-type' },
       { name: 'TEMP_INT', id: 'TEMP_INT_MAX_HOURLY', type: 'HOURLY', class: 'item-type active' },
-      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX_DAILY', type: 'DAILY', class: 'item-type' },
-      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN_HOURLY', type: 'HOURLY', class: 'item-type' },
+      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX_HOURLY', type: 'DAILY', class: 'item-type' },
+      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN_HOURLY', type: 'DAILY', class: 'item-type' },
+      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX_HOURLY', type: 'DAILY', class: 'item-type' },
+      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN_HOURLY', type: 'DAILY', class: 'item-type' },
       { name: 'HRIN', id: 'HRIN_HOURLY', type: 'HOURLY', class: 'item-type' },
       { name: 'BAT', id: 'BAT_HOURLY', type: 'HOURLY', class: 'item-type' }
     ];
@@ -67,11 +72,16 @@ export class HiveComponent implements OnInit, AfterViewInit {
         this.dailyManager.getChartTmax(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
         break;
       case 'TEMP_INT_MIN':
+        this.dailyManager.getChartTmin(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
         break;
       case 'HRIN':
         this.dailyManager.getChartHint(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
         break;
       case 'BROOD':
+        this.dailyManager.getChartBrood(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
+        break;
+      case 'WEIGHT_MAX':
+        this.dailyManager.getChartWeight(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
         break;
       default:
         break;
