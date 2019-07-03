@@ -17,6 +17,11 @@ export const SERIES = {
         coordinateSystem: 'calendar',
         data: []
     },
+    custom: {
+      type: 'custom',
+      coordinateSystem: 'calendar',
+      data: []
+    },
     line: {
         name: '',
         type: 'line',
