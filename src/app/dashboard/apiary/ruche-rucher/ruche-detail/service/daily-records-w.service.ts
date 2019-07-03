@@ -279,4 +279,14 @@ export class DailyRecordsWService {
     });
   }
 
+  /**
+   * 
+   * @param idHive 
+   * @param range 
+   */
+  getWeightByHive(idHive: string, range: Date[]): Observable<any>{
+    return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightMax/' + idHive, range);
+
+  }
+
 }

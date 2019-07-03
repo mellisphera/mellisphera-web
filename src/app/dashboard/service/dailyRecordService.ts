@@ -48,70 +48,6 @@ export class DailyRecordService {
         }
     }
 
-    getByHive(idHive: string) {
-        return this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/hive/' + idHive).map(res => {
-            this.arrayTempInt = res.filter(elt => elt.temp_int_max !== null).
-                map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
-            this.arrayHint = res.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
-            this.arrayHealth = res.map(elt => [elt.recordDate, elt.brood]);
-            return {
-                tempInt: {
-                    series: {
-                        type: 'heatmap',
-                        coordinateSystem: 'calendar',
-                        data: this.arrayTempInt
-                    },
-                    title: {
-                        text: this.graphGlobal.getTitle("InternalTemperature") + '(max, °C)'
-                    },
-                    visualMap: {
-                        calculable: true,
-                        min: this.unitSystem === 'METRIC' ? -10 : 50,
-                        max: this.unitSystem === 'METRIC' ? 40 : 100,
-                        inRange: {
-                            /* color: ['#abd9e9', '#CC0000'] */
-                            color: ['#313695', '#4575b4', '#74add1',
-                                '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
-                        }
-                    },
-                },
-                hInt: {
-                    series: {
-                        data: this.arrayHint
-                    },
-                    title: {
-                        text: this.graphGlobal.getTitle("InternalRelativeHumidity")
-                    },
-                    visualMap: {
-                        left: 'center',
-                        orient: 'horizontal',
-                        top: 50,
-                        right: '3%',
-                        type: 'piecewise',
-                        pieces: [
-                            // Range of a piece can be specified by property min and max,
-                            // where min will be set as -Infinity if ignored,
-                            // and max will be set as Infinity if ignored.
-                            { min: 20, max: 50 },
-                            { min: 50, max: 75 },
-                            { min: 75, max: 87 },
-                            { min: 87, max: 100 },
-                            // Label of the piece can be specified.
-                        ],
-                        inRange: {
-                            color: ['#97A6C5', '#6987C5', '#3C68C5', '#05489B'],
-                        },
-                    },
-                },
-                health: {
-                    series: {
-                        data: this.arrayHealth,
-                        type: 'heatmap',
-                    }
-                }
-            }
-        })
-    }
     /**
      *
      * @public
@@ -188,7 +124,6 @@ export class DailyRecordService {
                 inRange: {
                     color: ['red', 'yellow', '#129001'],
                 },
-
             },
         };
         this.mergeOptionTint = {
@@ -327,4 +262,24 @@ export class DailyRecordService {
     public getHintByHive(idHIve: string, range: Date[]): Observable<any> {
         return this.http.post<any>(CONFIG.URL + 'dailyRecordsTH/hInt/' + idHIve, range);
     }
+
+    /**
+     * 
+     * @param idHive 
+     * @param range 
+     */
+    public getBroodByHive(idHive: string, range: Date[]): Observable<any> {
+        return this.http.post<any>(CONFIG.URL + 'dailyRecordsTH/brood/' + idHive, range);
+    }
+
+    /**
+     * 
+     * @param idHive 
+     * @param range 
+     */
+    public getTminByHive(idHive: string, range: Date[]): Observable<any> {
+        return this.http.post<any>(CONFIG.URL + 'dailyRecordsTH/tMin/' + idHive, range);
+    }
+
+
 }

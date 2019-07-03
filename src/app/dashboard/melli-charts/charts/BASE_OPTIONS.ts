@@ -80,13 +80,6 @@ export const BASE_OPTIONS = {
       
     },
     baseOptionDaily: {
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                animation: false
-            },
-            formatter: null
-        },
        // visualMap: {},
         legend: {
             orient: 'horizontal',
@@ -114,6 +107,10 @@ export const BASE_OPTIONS = {
         name: '',
         nameLocation: 'middle',
         type: 'value',
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: {}
     },
 
 }
