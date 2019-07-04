@@ -6,10 +6,14 @@
   import { CALENDAR } from '../../charts/CALENDAR';
   import { SERIES } from '../../charts/SERIES';
   import { UnitService } from '../../../service/unit.service';
+  import 'rxjs/add/observable/forkJoin';
   import { WEIGHT_CHARTS } from '../../charts/weight/WEIGHT_CHART';
   import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
   import { isUndefined } from 'util';
 import { WeatherService } from '../../../service/api/weather.service';
+import { ICONS } from '../../charts/weather/ICONS';
+import { flatMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
   @Injectable({
     providedIn: 'root'
@@ -30,9 +34,50 @@ import { WeatherService } from '../../../service/api/weather.service';
     }
 
     getChartDailyWeather(idApiary: string, chartInstance: any, range: Date[]) {
-      this.weatherService.getCurrentDailyWeather(idApiary, range).subscribe(
+      const weatherObs = [this.weatherService.getCurrentDailyWeather(idApiary, range), this.weatherService.getForecastDailyWeather(idApiary, range)];
+      Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
         _weather => {
           console.log(_weather);
+          let option = Object.assign({}, this.baseOpions);
+          if(this.ifRangeChanged(range)) {
+            option.calendar.range = range;
+            option.series[0].data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay']));
+          } else {
+            if (this.existSeries(option.series, 'Weather')) {
+              option.series = new Array();
+            }
+            this.cleanChartsInstance(chartInstance, 'Weather');
+            let serie = Object.assign({}, SERIES.custom);
+            serie.data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay']));
+            serie.renderItem = (params, api) => {
+              let cellPoint = api.coord(api.value(0));
+              let cellWidth = params.coordSys.cellWidth;
+              let cellHeight = params.coordSys.cellHeight;
+          
+              let value = api.value(1);
+              return {
+                  type: 'path',
+                  shape: {
+                    pathData: ICONS[api.value(2)],
+                    x: -11,
+                    y: -10,
+
+                    width: 25,
+                    height: 25
+                },
+                position: [cellPoint[0], cellPoint[1]],
+              }
+            }
+            option.tooltip = this.getTooltipBySerie('Weather');
+            option.calendar.range = range;
+            option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+            option.visualMap = null;
+            option.series.push(serie);
+          }
+          this.currentRange = range;
+          chartInstance.setOption(option);
+          this.baseOpions = option;
+          console.log(chartInstance.getOption());
         }
       )
     }

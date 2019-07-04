@@ -131,6 +131,10 @@ export class MelliChartsComponent implements OnInit {
   }
 
   setDateFromInput(): void {
+    let start = this.melliChartDate.start;
+    let end = this.melliChartDate.end;
+    this.melliChartDate.setRangeForRequest([start, end]);
+    this.hiveComponent.setRangeChart();
   }
 
 
