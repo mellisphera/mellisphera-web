@@ -20,6 +20,7 @@ export const SERIES = {
     custom: {
       type: 'custom',
       coordinateSystem: 'calendar',
+      renderItem: null,
       data: []
     },
     line: {

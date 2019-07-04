@@ -58,6 +58,8 @@ export class MelliChartsDateService {
     this.rangeDateForRequest = MyDate.getRange(date);
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
+
+
   }
 
   /**
@@ -68,6 +70,12 @@ export class MelliChartsDateService {
    */
   getRangeForReqest(): Date[] {
     return this.rangeDateForRequest;
+  }
+
+  setRangeForRequest(range: Date[] ) {
+    this.rangeDateForRequest = [range[0], range[1]];
+    this.start = this.rangeDateForRequest[0];
+    this.end = this.rangeDateForRequest[1];
   }
 
   nextDate() {
