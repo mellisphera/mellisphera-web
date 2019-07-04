@@ -1,4 +1,4 @@
-import { RucherService } from '../../../service/rucher.service';
+import { RucherService } from '../../../service/api/rucher.service';
 import { DataRange } from './service/Record/data-range';
 import { MyDate } from '../../../../class/MyDate';
 import { Component, OnInit, OnDestroy, Output, Input } from '@angular/core';
@@ -8,8 +8,8 @@ import { UserloggedService } from '../../../../userlogged.service';
 import { DailyRecordsWService } from './service/daily-records-w.service';
 import { DailyStockHoneyService } from './service/daily-stock-honey.service';
 import { RecordService } from './service/Record/record.service';
-import { DailyRecordService } from '../../../service/dailyRecordService';
-import { RucheService } from '../../../service/ruche.service';
+import { DailyRecordService } from '../../../service/api/dailyRecordService';
+import { RucheService } from '../../../service/api/ruche.service';
 import { ObservationService } from './observation/service/observation.service';
 import { CONFIG } from '../../../../../constants/config';
 import { CalendrierTempIntService } from './daily/service/calendrier-temp-int.service';

@@ -1,10 +1,10 @@
 import { User } from '../../_model/user';
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { UserloggedService } from '../../userlogged.service';
-import { RucherService } from '../service/rucher.service';
+import { RucherService } from '../service/api/rucher.service';
 import { Ruche } from './ruche';
-import { DailyRecordService } from '../service/dailyRecordService';
-import { RucheService } from '../service/ruche.service';
+import { DailyRecordService } from '../service/api/dailyRecordService';
+import { RucheService } from '../service/api/ruche.service';
 import { RucheInterface } from '../../_model/ruche';
 import { Route, Router } from '@angular/router';
 import { CONFIG } from '../../../constants/config';

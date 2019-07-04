@@ -9,14 +9,14 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CONFIG } from '../../../constants/config';
-import { UserloggedService } from '../../userlogged.service';
+import { CONFIG } from '../../../../constants/config';
+import { UserloggedService } from '../../../userlogged.service';
 import { RucheService } from './ruche.service';
 import { DailyRecordService } from './dailyRecordService';
-import { RucherModel } from '../../_model/rucher-model';
-import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
-import { LoadingService } from './loading.service';
-import { SharingApiary } from '../../_model/sharing-apiary';
+import { RucherModel } from '../../../_model/rucher-model';
+import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
+import { LoadingService } from '../loading.service';
+import { SharingApiary } from '../../../_model/sharing-apiary';
 import 'rxjs/add/observable/forkJoin';
 
 const httpOptions = {

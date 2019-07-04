@@ -1,7 +1,7 @@
 import { MyDate } from '../../../../../class/MyDate';
 import { NotifierService } from 'angular-notifier';
 import { Component, OnInit, ɵConsole } from '@angular/core';
-import { RucherService } from '../../../../service/rucher.service';
+import { RucherService } from '../../../../service/api/rucher.service';
 import { Ruche } from '../../ruche';
 import { RucheDetailService } from '../ruche.detail.service';
 import { ProcessReport } from '../../processedReport';
@@ -11,7 +11,7 @@ import { DailyStockHoneyService } from '../service/daily-stock-honey.service';
 import { RecordService } from '../service/Record/record.service';
 import { ObservationService } from './service/observation.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RucheService } from '../../../../service/ruche.service';
+import { RucheService } from '../../../../service/api/ruche.service';
 import { Observation } from '../../../../../_model/observation';
 import { Console } from '@angular/core/src/console';
 import { UserParamsService } from '../../../../preference-config/service/user-params.service';

@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { RucheService } from '../service/ruche.service';
-import { RucherService } from '../service/rucher.service';
+import { RucheService } from '../service/api/ruche.service';
+import { RucherService } from '../service/api/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 import { StackApiaryGraphService } from '../apiary/stack-apiary/service/stack-apiary-graph.service';
 import { StackService } from '../apiary/stack-apiary/service/stack.service';
