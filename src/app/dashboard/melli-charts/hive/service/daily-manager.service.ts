@@ -1,6 +1,6 @@
   import { Injectable } from '@angular/core';
   import { DailyRecordsWService } from '../../../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
-  import { DailyRecordService } from '../../../service/dailyRecordService';
+  import { DailyRecordService } from '../../../service/api/dailyRecordService';
   import { DailyStockHoneyService } from '../../../apiary/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
   import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
   import { CALENDAR } from '../../charts/CALENDAR';
@@ -9,6 +9,7 @@
   import { WEIGHT_CHARTS } from '../../charts/weight/WEIGHT_CHART';
   import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
   import { isUndefined } from 'util';
+import { WeatherService } from '../../../service/api/weather.service';
 
   @Injectable({
     providedIn: 'root'
@@ -20,6 +21,7 @@
     constructor(
       private dailyWService: DailyRecordsWService,
       private dailyHService: DailyRecordService,
+      private weatherService: WeatherService,
       private graphGlobal: GraphGlobal,
       private dailyStock: DailyStockHoneyService,
       private unitService: UnitService
@@ -27,6 +29,13 @@
       this.baseOpions = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
     }
 
+    getChartDailyWeather(idApiary: string, chartInstance: any, range: Date[]) {
+      this.weatherService.getCurrentDailyWeather(idApiary, range).subscribe(
+        _weather => {
+          console.log(_weather);
+        }
+      )
+    }
 
     getChartWeightincome(idHive: string, chartInstance: any, range: Date[]) {
       this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive).subscribe(
@@ -83,6 +92,10 @@
             };
             option.series.push(seriesGain);
             option.series.push(seriesLoss);
+            option.visualMap = null;
+            option.legend.data = ['gain', 'loss'];
+            console.log(option);
+            option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
             option.calendar.range = range;
           }
           this.currentRange = range;
@@ -100,7 +113,7 @@
           let option = Object.assign({}, this.baseOpions);
           if(this.ifRangeChanged(range)) {
             option.calendar.range = range;
-          option.series[0].data = _tMax.map(_data => new Array(_data.date, _data.value));
+            option.series[0].data = _tMax.map(_data => new Array(_data.date, _data.value));
           } else {
             if (this.existSeries(option.series, 'tMax')) {
               option.series = new Array();
@@ -111,6 +124,7 @@
             option.visualMap = this.getVisualMapBySerie('tMax');
             option.tooltip = this.getTooltipBySerie('tMax');
             option.calendar.range = range;
+            option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
             option.series.push(serie);
           }
           this.currentRange = range;
@@ -128,7 +142,7 @@
           let option = Object.assign({}, this.baseOpions);
           if(this.ifRangeChanged(range)) {
             option.calendar.range = range;
-          option.series[0].data = _hInt.map(_data => new Array(_data.date, _data.value));
+            option.series[0].data = _hInt.map(_data => new Array(_data.date, _data.value));
           } else {
             if (this.existSeries(option.series, 'hInt')) {
               option.series = new Array();
@@ -138,6 +152,7 @@
             serie.data = _hInt.map(_data => new Array(_data.date, _data.value));
             option.tooltip = this.getTooltipBySerie('hInt');
             option.visualMap = this.getVisualMapBySerie('hInt');
+            option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
             option.calendar.range = range;
             option.series.push(serie);
           }
@@ -149,7 +164,6 @@
         }
       )
     }
-
     getChartBrood(idHive: string, chartInstance: any, range: Date[]) {
       this.dailyHService.getBroodByHive(idHive, range).subscribe(
         _brood => {
@@ -166,6 +180,7 @@
             serie.data = _brood.map(_data => new Array(_data.date, _data.value));
             option.visualMap = this.getVisualMapBySerie('brood');
             option.tooltip = this.getTooltipBySerie('brood');
+            option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
             option.calendar.range = range;
             option.series.push(serie);
           }
@@ -194,6 +209,7 @@
             serie.data = _tMin.map(_data => new Array(_data.date, _data.value));
             option.visualMap = this.getVisualMapBySerie('tMin');
             option.tooltip = this.getTooltipBySerie('tMin');
+            option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
             option.calendar.range = range;
             option.series.push(serie);
           }
@@ -221,6 +237,7 @@
             serie.data = _weightMax.map(_data => new Array(_data.date, _data.value));
             option.visualMap = this.getVisualMapBySerie('Weight-Max');
             option.tooltip = this.getTooltipBySerie('Weight-Max');
+            option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
             option.calendar.range = range;
             option.series.push(serie);
           }

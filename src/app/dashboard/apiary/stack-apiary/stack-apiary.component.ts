@@ -1,12 +1,12 @@
 import { StackApiaryGraphService } from './service/stack-apiary-graph.service';
 import { Component, OnInit, Renderer2, AfterViewInit } from '@angular/core';
-import { RucheService } from '../../service/ruche.service';
+import { RucheService } from '../../service/api/ruche.service';
 import { RucheInterface } from '../../../_model/ruche';
 import { RecordService } from '../ruche-rucher/ruche-detail/service/Record/record.service';
 import { EChartOption } from 'echarts';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserloggedService } from '../../../userlogged.service';
-import { RucherService } from '../../service/rucher.service';
+import { RucherService } from '../../service/api/rucher.service';
 import { DataRange } from '../ruche-rucher/ruche-detail/service/Record/data-range';
 import { StackService } from './service/stack.service';
 import { element } from '@angular/core/src/render3/instructions';

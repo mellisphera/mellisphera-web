@@ -1,7 +1,7 @@
 import { UserloggedService } from './../userlogged.service';
 import { CONFIG } from '../../constants/config';
 import { AtokenStorageService } from './../auth/Service/atoken-storage.service';
-import { RucherService } from '../dashboard/service/rucher.service';
+import { RucherService } from '../dashboard/service/api/rucher.service';
 import { GraphFlowerService } from './graph/graph-flower.service';
 import { GraphHoneyService } from './graph/graph-honey.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -12,7 +12,7 @@ import { GraphiqueFloraisonService } from '../dashboard/fleurs-floraison/service
 import { GrapheReserveMielService } from '../dashboard/apiary/ruche-rucher/ruche-detail/stock/service/graphe-reserve-miel.service';
 import { CalendrierPoidsService } from '../dashboard/apiary/ruche-rucher/ruche-detail/stock/service/calendrier-poids.service';
 import { CalendrierFSTLervice } from './graph/calendrierFSTL';
-import { RucheService } from '../dashboard/service/ruche.service';
+import { RucheService } from '../dashboard/service/api/ruche.service';
 
 @Component({
   selector: 'app-demo',

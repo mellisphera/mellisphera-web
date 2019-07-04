@@ -5,7 +5,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CapteurService } from './capteur.service';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RucherService } from '../service/rucher.service';
+import { RucherService } from '../service/api/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 
 import { Observable, Subscription } from 'rxjs';

@@ -9,7 +9,7 @@ import { isEmpty } from 'rxjs-compat/operator/isEmpty';
 import { IfStmt } from '@angular/compiler';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { graphic, registerMap } from 'echarts';
-import { RucheService } from '../../../../service/ruche.service';
+import { RucheService } from '../../../../service/api/ruche.service';
 import { UnitService } from '../../../../service/unit.service';
 
 

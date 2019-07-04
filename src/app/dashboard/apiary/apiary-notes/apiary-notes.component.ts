@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RucherService } from '../../service/rucher.service';
+import { RucherService } from '../../service/api/rucher.service';
 import { ObservationService } from '../ruche-rucher/ruche-detail/observation/service/observation.service';
 import { Subscription } from 'rxjs';
 import { Observation } from '../../../_model/observation';

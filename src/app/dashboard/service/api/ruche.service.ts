@@ -6,11 +6,11 @@
 
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { RucheInterface } from '../../_model/ruche';
-import { UserloggedService } from '../../userlogged.service';
+import { RucheInterface } from '../../../_model/ruche';
+import { UserloggedService } from '../../../userlogged.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/observable/forkJoin';
-import { CONFIG } from '../../../constants/config';
+import { CONFIG } from '../../../../constants/config';
 import { Observable} from 'rxjs';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

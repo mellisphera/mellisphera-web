@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CalendrierHealthService } from './service/calendrier-health.service';
-import { DailyRecordService } from '../../../../service/dailyRecordService';
+import { DailyRecordService } from '../../../../service/api/dailyRecordService';
 
 @Component({
   selector: 'app-health',
