@@ -58,7 +58,7 @@ export class DailyRecordsWService {
     this.currentIdHive = idHive;
     return this.http.get<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/hive/' + idHive).map(res => {
       this.arrayTempExt = res.map(elt => [MyDate.getWekitDate(MyDate.convertDate(new Date(elt.recordDate))),
-      this.unitService.convertTempFromUsePref(elt.temp_ext_max, this.unitSystem)]);
+      this.unitService.convertTempFromUsePref(elt.temp_ext_max, this.unitSystem, false)]);
       this.weightIncome = res.map(elt => [MyDate.getWekitDate(MyDate.convertDate(new Date(elt.recordDate))), elt.weight_income_gain]);
       return {
         tempExt: {
@@ -71,7 +71,7 @@ export class DailyRecordsWService {
           tooltip: {
             formatter: (params) => {
               return params.marker +
-                 this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + (this.unitSystem === 'METRIC' ? '°C' : '°F');
+                 this.unitService.getDailyDate(params.data[0]) + '<br/>' + this.unitService.getValRound(params.data[1]) + (this.unitSystem === 'METRIC' ? '°C' : '°F');
             }
           },
           title: {
@@ -93,7 +93,7 @@ export class DailyRecordsWService {
             trigger: 'item',
             formatter: (params: any) => {
               return params.marker + this.unitService.getDailyDate(params.data[0]) + '<br/>' +
-                params.seriesName + ' : ' + params.data[1];
+                params.seriesName + ' : ' + this.unitService.getValRound(params.data[1]);
             }
           },
           legend: {
@@ -202,7 +202,7 @@ export class DailyRecordsWService {
       tooltip: {
         formatter: (params) => {
           return params.marker +
-            this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + (this.unitSystem === 'METRIC' ? '°C' : '°F');
+            this.unitService.getDailyDate(params.data[0]) + '<br/>' + this.unitService.getValRound(params.data[1]) + (this.unitSystem === 'METRIC' ? '°C' : '°F');
         }
       },
       title: {
@@ -249,13 +249,13 @@ export class DailyRecordsWService {
     this.timeLine = [];
     let lastMonth = null;
     this.dailyRec.forEach((element, index) => {
-      this.arrayTempExt.push([element.recordDate, this.unitService.convertTempFromUsePref(element.temp_ext_max, this.unitSystem)])
+      this.arrayTempExt.push([element.recordDate, this.unitService.convertTempFromUsePref(element.temp_ext_max, this.unitSystem, false)])
       if (this.getMonth(element.recordDate) !== lastMonth) {
         this.timeLine.push(element.recordDate);
       }
       this.dailyRecArray.push([
         element.recordDate,
-        this.unitService.convertWeightFromuserPref(element.weight_income_gain, this.unitSystem)
+        this.unitService.convertWeightFromuserPref(element.weight_income_gain, this.unitSystem, false)
       ]);
       lastMonth = this.getMonth(element.recordDate);
     });
