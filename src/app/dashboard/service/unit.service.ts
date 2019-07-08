@@ -69,13 +69,13 @@ export class UnitService {
  * @returns {number}
  * @memberof UserParamsService
  */
-  convertTempFromUsePref(temp: number, unit: string, round? : boolean): number {
-    if (unit === 'IMPERIAL') {
-      return  round ? this.getValRound(temp * 9 / 5 + 32): temp;
-    } else {
-      return   round ? this.getValRound(temp): temp;
-    }
+convertTempFromUsePref(temp: number, unit: string, round? : boolean): number {
+  if (unit === 'IMPERIAL') {
+    return  round ? this.getValRound(temp * 9 / 5 + 32): temp;
+  } else {
+    return   round ? this.getValRound(temp): temp;
   }
+}
 
   /**
    *
