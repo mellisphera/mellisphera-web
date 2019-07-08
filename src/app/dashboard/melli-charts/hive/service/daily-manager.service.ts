@@ -46,6 +46,7 @@ export class DailyManagerService {
         } else {
           if (this.existSeries(option.series, 'Weather')) {
             option.series = new Array();
+            console.log('vide');
           }
           this.cleanChartsInstance(chartInstance, 'Weather');
           let serie = Object.assign({}, SERIES.custom);
@@ -55,14 +56,13 @@ export class DailyManagerService {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
             let cellHeight = params.coordSys.cellHeight;
-        
             let value = api.value(1);
             return {
                 type: 'group',
                 children: [
                   {
                     type: 'path',
-                    z2: 10,
+                    z2: 1000 ,
                     shape: {
                       pathData: ICONS[api.value(2)],
                       x: -11,
@@ -75,13 +75,13 @@ export class DailyManagerService {
                 {
                   type: 'rect',
                   z2: 0,
-                  position: [cellPoint[0], cellPoint[1]],
                   shape: {
                     x: -cellWidth / 2,
                     y: -cellHeight / 2,
                     width: cellWidth,
                     height: cellHeight,
                   },
+                  position: [cellPoint[0], cellPoint[1]],
                   style: {
                     fill: this.getColorCalendarByDate(api.value(0)),
                     stroke: 'black'
@@ -99,7 +99,8 @@ export class DailyManagerService {
           option.series.push(serie);
         }
         this.currentRange = range;
-        chartInstance.setOption(option);
+       // chartInstance.clear();
+        chartInstance.setOption(option, true);
         this.baseOpions = option;
         console.log(chartInstance.getOption());
       }
@@ -333,7 +334,10 @@ export class DailyManagerService {
    * @memberof DailyManagerService
    */
   existSeries(serieArray, name: string): boolean {
-    if (isUndefined(serieArray) || serieArray.length < 1 || serieArray.filter(_filter => _filter.name != name).length > 0) {
+    if (!isUndefined(serieArray)) {
+      console.log(serieArray);
+    }
+    if (isUndefined(serieArray) || serieArray.length < 1 || serieArray.length > 0) {
       return true;
     } else {
       return false;
