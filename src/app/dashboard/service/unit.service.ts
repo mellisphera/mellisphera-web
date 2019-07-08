@@ -69,11 +69,11 @@ export class UnitService {
  * @returns {number}
  * @memberof UserParamsService
  */
-  convertTempFromUsePref(temp: number, unit: string): number {
+  convertTempFromUsePref(temp: number, unit: string, round? : boolean): number {
     if (unit === 'IMPERIAL') {
-      return this.getValRound(temp * 9 / 5 + 32);
+      return  round ? this.getValRound(temp * 9 / 5 + 32): temp;
     } else {
-      return  this.getValRound(temp);
+      return   round ? this.getValRound(temp): temp;
     }
   }
 
@@ -105,11 +105,11 @@ export class UnitService {
    * @returns {number}
    * @memberof UserParamsService
    */
-  convertWeightFromuserPref(weight: number, unit: string): number {
+  convertWeightFromuserPref(weight: number, unit: string, round?: boolean): number {
     if (unit === 'IMPERIAL') {
-      return this.getValRound(weight * 2.2046);
+      return round? this.getValRound(weight * 2.2046): weight;
     } else {
-      return this.getValRound(weight);
+      return round? this.getValRound(weight): weight;
     }
   }
 
