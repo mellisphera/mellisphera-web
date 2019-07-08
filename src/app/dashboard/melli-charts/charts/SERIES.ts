@@ -13,12 +13,14 @@ export const SERIES = {
         hoverAnimation: true,
     },
     heatmap: {
+        name: '',
         type: 'heatmap',
         coordinateSystem: 'calendar',
         data: []
     },
     custom: {
       type: 'custom',
+      name: '',
       coordinateSystem: 'calendar',
       renderItem: null,
       data: []

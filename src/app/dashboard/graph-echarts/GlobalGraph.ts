@@ -204,7 +204,7 @@ export class GraphGlobal {
         }
     }
     getUnitBySerieName(serie: string): string {
-        if (/Temp/g.test(serie)) {
+        if (/Temp/g.test(serie) || /Weather/g.test(serie)) {
             return this.temp.unitT;
         } else if (/Weight/g.test(serie) || /Poids/g.test(serie)) {
             return this.weight.unitW;
