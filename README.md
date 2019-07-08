@@ -6,6 +6,11 @@ An overview of the whole architecture is given below :
 
 ![](img/mellihealth_scheme.png)
 
+## Give it a test
+Go to [app.mellisphera.com](https://app.mellisphera.com)
+create an account and visit a demo apiary
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -35,6 +40,9 @@ Navigate to `http://localhost:4200/`.\
 ## Install the back-end API
 To have the whole platform running you need to install the back-end API.\
 See details at [mellihealth-api](https://github.com/mellisphera/mellihealth-api).
+
+## Need help?
+if something goes wrong, contact us at info@mellisphera.com we'll be glad to help.
 
 ## Wish to contribute?
 Please review [CONTRIBUTING](https://github.com/mellisphera/mellihealth-web/blob/master/CONTRIBUTING.md) 
