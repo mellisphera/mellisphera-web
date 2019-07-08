@@ -95,7 +95,7 @@ export class RecordService {
               return {
                 name: recRes.recordDate,
                 value: [recRes.recordDate,
-                this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem, false)],
                 sensorRef: recRes.sensorRef
               };
             }),
@@ -130,7 +130,7 @@ export class RecordService {
               data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
                 return {
                   name: recRes.recordDate,
-                  value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                  value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem, false)],
                   sensorRef: recRes.sensorRef
                 };
               }),
@@ -191,7 +191,7 @@ export class RecordService {
               data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
                 return {
                   name: recRes.recordDate,
-                  value: [recRes.recordDate, this.unitService.convertWeightFromuserPref(recRes.weight, this.unitSystem)],
+                  value: [recRes.recordDate, this.unitService.convertWeightFromuserPref(recRes.weight, this.unitSystem, false)],
                   sensorRef: recRes.sensorRef
                 };
               }),
@@ -215,7 +215,7 @@ export class RecordService {
               data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
                 return {
                   name: recRes.recordDate,
-                  value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_ext, this.unitSystem)],
+                  value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_ext, this.unitSystem, false)],
                   sensorRef: recRes.sensorRef
                 };
               }),
@@ -234,7 +234,7 @@ export class RecordService {
             data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
               return {
                 name: recRes.recordDate,
-                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem, false)],
                 sensorRef: recRes.sensorRef
               };
             }),
@@ -297,7 +297,7 @@ export class RecordService {
             data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
               return {
                 name: recRes.recordDate,
-                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem, false)],
                 sensorRef: recRes.sensorRef
               };
             }),
@@ -358,7 +358,7 @@ export class RecordService {
               data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
                 return {
                   name: recRes.recordDate,
-                  value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.weight, this.unitSystem)],
+                  value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.weight, this.unitSystem, false)],
                   sensorRef: recRes.sensorRef
                 };
               }),
@@ -377,7 +377,7 @@ export class RecordService {
               data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
                 return {
                   name: recRes.recordDate,
-                  value: [recRes.recordDate, this.unitService.convertWeightFromuserPref(recRes.temp_ext, this.unitSystem)],
+                  value: [recRes.recordDate, this.unitService.convertWeightFromuserPref(recRes.temp_ext, this.unitSystem, false)],
                   sensorRef: recRes.sensorRef
                 };
               }),
@@ -390,7 +390,7 @@ export class RecordService {
             data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
               return {
                 name: recRes.recordDate,
-                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
+                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem, false)],
                 sensorRef: recRes.sensorRef
               };
             }),

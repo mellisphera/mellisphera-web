@@ -51,7 +51,7 @@ export class DailyRecordService {
     getByHive(idHive: string) {
         return this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/hive/' + idHive).map(res => {
             this.arrayTempInt = res.filter(elt => elt.temp_int_max !== null).
-                map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
+                map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem, false)]);
             this.arrayHint = res.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
             this.arrayHealth = res.map(elt => [elt.recordDate, elt.brood]);
             return {
@@ -122,7 +122,7 @@ export class DailyRecordService {
         this.dailyRecords = [];
         this.http.get<DailyRecordTh[]>(CONFIG.URL + '/dailyRecordsTH/hive/' + idHive).map(daily => {
             this.arrayTempInt = daily.filter(elt => elt.temp_int_max !== null).
-                map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem)]);
+                map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem, false)]);
             this.arrayHint = daily.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
             this.arrayHealth = daily.map(elt => [elt.recordDate, elt.brood]);
             return daily;
@@ -201,7 +201,7 @@ export class DailyRecordService {
                 formatter: (params) => {
                     return params.marker +
                         this.unitService.getDailyDate(params.data[0]) + '<br/>' 
-                        + params.data[1] + (this.unitSystem === 'METRIC' ? '°C' : '°F');
+                        + this.unitService.getValRound(params.data[1]) + (this.unitSystem === 'METRIC' ? '°C' : '°F');
                 }
             },
             title: {
@@ -228,7 +228,7 @@ export class DailyRecordService {
             tooltip: {
                 formatter: (params) => {
                     return params.marker +
-                        this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + ' %';
+                        this.unitService.getDailyDate(params.data[0]) + '<br/>' + this.unitService.getValRound(params.data[1]) + ' %';
                 }
             },
             visualMap: {
