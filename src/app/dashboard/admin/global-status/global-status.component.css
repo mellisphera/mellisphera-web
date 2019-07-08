@@ -37,6 +37,15 @@ ul {
     padding-right: 0px !important;
     padding-left: 0px !important;
 }
+#log-list {
+    scrollbar-width: none;
+    white-space: pre-wrap;
+    overflow-y: scroll;
+}
+#log-list::-webkit-scrollbar { 
+    /* This is the magic bit for WebKit */
+    display: none;
+  }
 @media (max-width:800px) {
     .float{
         float: none;
