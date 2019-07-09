@@ -87,9 +87,9 @@ export class StackApiaryGraphService {
         }
       ],
       grid: [
-        { x: '3%', y: '5%', width: '90%', height: '25%', background: 'white' },
-        { x: '3%', y: '35%', width: '90%', height: '25%', background: 'white' },
-        { x: '3%', y: '65%', width: '90%', height: '25%', background: 'white' },
+        { x: '5%', y: '5%', width: '90%', height: '25%', background: 'white' },
+        { x: '5%', y: '35%', width: '90%', height: '25%', background: 'white' },
+        { x: '5%', y: '65%', width: '90%', height: '25%', background: 'white' },
       ],
       xAxis: [
         {
@@ -109,7 +109,7 @@ export class StackApiaryGraphService {
           axisLabel: {
             show: true,
              formatter: (value: number, index: number) => {
-              return this.unitService.getHourlyDate(new Date(value));
+              return this.unitService.getDailyDate(new Date(value));
             } 
           }
         },
@@ -129,7 +129,7 @@ export class StackApiaryGraphService {
           axisLabel: {
             show: true,
              formatter: (value: number, index: number) => {
-              return this.unitService.getHourlyDate(new Date(value));
+              return this.unitService.getDailyDate(new Date(value));
             } 
           }
         },
@@ -149,7 +149,7 @@ export class StackApiaryGraphService {
           axisLabel: {
             show: true,
              formatter: (value: number, index: number) => {
-              return this.unitService.getHourlyDate(new Date(value));
+              return this.unitService.getDailyDate(new Date(value));
             } 
           } 
         },
@@ -158,7 +158,7 @@ export class StackApiaryGraphService {
         {
           name: this.configGraph.weight.name,
           nameLocation: 'middle',
-          nameGap: 18,
+          nameGap: 30,
           interval: this.configGraph.weight.interval,
           type: 'value',
           min: this.configGraph.weight.min
@@ -167,7 +167,7 @@ export class StackApiaryGraphService {
           gridIndex: 1,
           name: this.configGraph.temp.name,
           type: 'value',
-          nameGap: 18,
+          nameGap: 30,
           nameLocation: 'middle',
           min: this.configGraph.temp.min,
           max: this.configGraph.temp.max,
@@ -177,7 +177,7 @@ export class StackApiaryGraphService {
           name: this.configGraph.getTitle("Humidity"),
           type: 'value',
           nameLocation: 'middle',
-          nameGap: 18,
+          nameGap: 30,
           min: 0,
           max: 100,
         },

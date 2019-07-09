@@ -112,7 +112,7 @@ export class RecordService {
             markArea: {
               silent: true,
               itemStyle: {
-                color: '#EBEBEB'
+                color: '#28D81D'
               },
               label: {
                 show: true
@@ -148,12 +148,10 @@ export class RecordService {
               },
               markArea: {
                 silent: true,
-                itemStyle: {
-                  color: '#EBEBEB'
-                },
                 label: {
                   show: true
                 },
+
                 data: [[{
                   yAxis: this.unitSystem === 'METRIC' ? '33' : '90'
                 }, {
@@ -177,6 +175,30 @@ export class RecordService {
               hoverAnimation: true,
               lineStyle: {
                 color: color
+              },
+              markArea: {
+                silent: true,
+                itemStyle: {
+                  itemStyle: {
+                    color: {
+                      type: 'linear',
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: 'green',
+                      global: true // false by default
+                  }
+                },
+              },
+                label: {
+                  show: true
+                },
+                data: [[{
+                  yAxis: '50'
+                }, {
+                  yAxis: '70'
+                }]]
               },
               itemStyle: {
                 color: color
