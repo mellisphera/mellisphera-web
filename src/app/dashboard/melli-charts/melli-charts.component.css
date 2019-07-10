@@ -1,12 +1,22 @@
 #apiary-group{
+    overflow: auto;
+    scrollbar-width: none;
+    white-space: pre-wrap;
+    overflow-y: scroll;
     position: fixed;
     height: 93vh;
     width: 12%;
+    justify-content: space-between;
+    height: 90vh;
 }
 #apiary-group, .list-group-item {
 /*     background-color: #204d74;
  */    color: black;
 }
+#apiary-group::-webkit-scrollbar { 
+    /* This is the magic bit for WebKit */
+    display: none;
+  }
 .dropdown-menu{
     padding: 10px;
     color: white !important;

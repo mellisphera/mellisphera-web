@@ -11,7 +11,7 @@ import { WEIGHT_CHARTS } from '../../charts/weight/WEIGHT_CHART';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { isUndefined } from 'util';
 import { WeatherService } from '../../../service/api/weather.service';
-import { ICONS } from '../../charts/weather/ICONS';
+import { ICONS_WEATHER } from '../../charts/icons/icons_weather';
 import { flatMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -64,7 +64,7 @@ export class DailyManagerService {
                     type: 'path',
                     z2: 1000 ,
                     shape: {
-                      pathData: ICONS[api.value(2)],
+                      pathData: ICONS_WEATHER[api.value(2)],
                       x: -11,
                       y: -10,
                       width: 25,
@@ -99,7 +99,7 @@ export class DailyManagerService {
           option.series.push(serie);
         }
         this.currentRange = range;
-       // chartInstance.clear();
+        chartInstance.clear();
         chartInstance.setOption(option, true);
         this.baseOpions = option;
         console.log(chartInstance.getOption());
@@ -107,6 +107,9 @@ export class DailyManagerService {
     )
   }
 
+  getChartAstro(idApiary: string, chartInstance: any, range: Date[]) {
+    
+  }
   getChartWeightincome(idHive: string, chartInstance: any, range: Date[]) {
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive).subscribe(
       _daliW => {
@@ -325,6 +328,7 @@ export class DailyManagerService {
       }
     )
   }
+
   /**
    *
    *
