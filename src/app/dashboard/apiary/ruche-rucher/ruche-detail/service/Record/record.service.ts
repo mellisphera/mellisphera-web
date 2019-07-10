@@ -77,6 +77,22 @@ export class RecordService {
    * @memberof RecordService
    */
   getRecordByIdHive(idHive: string, hiveName: string, lastMerge: any, hive: boolean, color?: string): Observable<any> {
+
+    let markArea = lastMerge.series.filter(_serie => /Hum/g.test(_serie.name)).length <= 1 ? {
+      silent: true,
+      itemStyle: {
+        color: '#29D33C',
+        opacity: '0.3'
+      },
+      label: {
+        show: true
+      },
+      data: [[{
+        yAxis: '50'
+      }, {
+        yAxis: '75'
+      }]]
+    }: null;
     return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
       let sensor = [];
       let series = [];
@@ -112,7 +128,7 @@ export class RecordService {
             markArea: {
               silent: true,
               itemStyle: {
-                color: '#28D81D'
+                color: '#29D33C'
               },
               label: {
                 show: true
@@ -151,7 +167,10 @@ export class RecordService {
                 label: {
                   show: true
                 },
-
+                itemStyle: {
+                  color: '#29D33C',
+                  opacity: '0.3'
+                },
                 data: [[{
                   yAxis: this.unitSystem === 'METRIC' ? '33' : '90'
                 }, {
@@ -176,33 +195,11 @@ export class RecordService {
               lineStyle: {
                 color: color
               },
-              markArea: {
-                silent: true,
-                itemStyle: {
-                  itemStyle: {
-                    color: {
-                      type: 'linear',
-                      x: 0,
-                      y: 0,
-                      x2: 0,
-                      y2: 1,
-                      colorStops: 'green',
-                      global: true // false by default
-                  }
-                },
-              },
-                label: {
-                  show: true
-                },
-                data: [[{
-                  yAxis: '50'
-                }, {
-                  yAxis: '70'
-                }]]
-              },
+
               itemStyle: {
                 color: color
               },
+              markArea: markArea
             }
           ]);
         } else if (elt.startsWith('43')) {
@@ -265,9 +262,7 @@ export class RecordService {
             showSymbol: false,
             markArea: {
               silent: true,
-              itemStyle: {
-                color: '#EBEBEB'
-              },
+
               label: {
                 show: true
               },
@@ -332,7 +327,8 @@ export class RecordService {
             markArea: {
               silent: true,
               itemStyle: {
-                color: '#EBEBEB'
+                color: '#29D33C',
+                opacity: '0.3'
               },
               label: {
                 show: true
@@ -361,8 +357,10 @@ export class RecordService {
             color: 'red',
             markArea: {
               silent: true,
+ 
               itemStyle: {
-                color: '#EBEBEB'
+                color: '#29D33C',
+                opacity: '0.3'
               },
               label: {
                 show: true
@@ -423,10 +421,10 @@ export class RecordService {
             yAxisIndex: 1,
             color: 'green',
             markArea: {
-              silent: true,
               itemStyle: {
-                color: '#ff00ff'
+                color: '#29D33C'
               },
+              silent: true,
               label: {
                 show: true
               },

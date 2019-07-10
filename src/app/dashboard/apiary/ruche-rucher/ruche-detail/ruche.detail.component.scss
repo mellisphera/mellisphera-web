@@ -18,6 +18,16 @@ nav{
     display: inline;
     cursor: pointer;
 }
+#range-group select{
+    display: inline-block;
+    width: 25%;
+}
+#range-group{
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 2px;
+    background-color: #333F3D;
+}
 #hiveName{
     padding: 5px;
     color: #23CCEF;
@@ -52,7 +62,6 @@ ul{
 }
 .nav{
     background-color: #333F3D;
-    margin-top: 6px;
 }
 .tab-content{
     //margin-top: 10px;

@@ -159,18 +159,20 @@ export class StackApiaryGraphService {
           name: this.configGraph.weight.name,
           nameLocation: 'middle',
           nameGap: 30,
+          scale: true,
           interval: this.configGraph.weight.interval,
           type: 'value',
-          min: this.configGraph.weight.min
+          //min: this.configGraph.weight.min
         },
         {
           gridIndex: 1,
           name: this.configGraph.temp.name,
           type: 'value',
+          scale: true,
           nameGap: 30,
           nameLocation: 'middle',
-          min: this.configGraph.temp.min,
-          max: this.configGraph.temp.max,
+         // min: this.configGraph.temp.min,
+         // max: this.configGraph.temp.max,
         },
         {
           gridIndex: 2,
@@ -178,8 +180,9 @@ export class StackApiaryGraphService {
           type: 'value',
           nameLocation: 'middle',
           nameGap: 30,
-          min: 0,
-          max: 100,
+          scale: true
+         // min: 0,
+          //max: 100,
         },
       ],
       series: [],

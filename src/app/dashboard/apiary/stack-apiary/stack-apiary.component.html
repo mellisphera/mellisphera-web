@@ -5,9 +5,7 @@
                 class="form-control">
                 <option *ngFor="let range of ranges;" [ngValue]="range" [selected]="range.scale == 15">
                     {{ 'HIVE_DETAIL.HOURLY.LAST' | translate}}
-                    {{
-                           range.scale + "  " + traduction(range.type)
-                        }}</option>
+                    {{range.scale + "  " + traduction(range.type)}}</option>
             </select>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-2">
