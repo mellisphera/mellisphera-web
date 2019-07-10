@@ -94,9 +94,10 @@ export class GraphRecordService {
             {
                 type: 'value',
                 name: this.globalGraph.weight.name,
-                min: this.globalGraph.weight.min,
-                max: this.globalGraph.weight.max,
-                interval: this.globalGraph.weight.interval,
+                //min: 'dataMin',
+                scale: true,
+               // max: 'dataMax',
+                interval: 5,
                 axisLabel: {
                     formatter: '{value}'
                 }
@@ -104,8 +105,9 @@ export class GraphRecordService {
             {
                 type: 'value',
                 name: this.globalGraph.temp.name,
-                min: this.globalGraph.temp.min,
-                max: this.globalGraph.temp.max,
+                scale: true,
+                // min: 0,
+                // max: 'dataMax',
                 interval: 5,
                 axisLabel: {
                     formatter: '{value}'
