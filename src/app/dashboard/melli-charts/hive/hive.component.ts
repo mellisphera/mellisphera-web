@@ -67,7 +67,7 @@ export class HiveComponent implements OnInit, AfterViewInit {
   loadDailyData(): void {
     switch (this.currentTypeDaily.name) {
       case 'WINCOME':
-        this.dailyManager.getChartWeightincome(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
+        this.dailyManager.getChartWeightincome(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'TEMP_INT_MAX':
         this.dailyManager.getChartTmax(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());

@@ -134,6 +134,7 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
     this.selectHive.idApiary = this.currentApiary.id;
     this.selectHive.description = formValue.descriptionRuche;
     this.selectHive.name = formValue.nomRuche;
+    this.selectHive.idUsername = this.userService.getIdUserLoged();
     this.selectHive.apiaryName = this.currentApiary.name;
     this.selectHive.username = this.username.toLowerCase();
     this.initForm();

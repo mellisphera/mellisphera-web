@@ -347,6 +347,7 @@ export class NavbarComponent implements OnInit {
     this.selectHive.description = formValue.descriptionRuche;
     this.selectHive.name = formValue.nomRuche;
     this.selectHive.apiaryName = this.rucherService.rucherSelectUpdate.name;
+    this.selectHive.idUsername = this.userService.getIdUserLoged();
     this.selectHive.username = this.username.toLowerCase();
     this.initHiveForm();
     this.rucheService.createRuche(this.selectHive).subscribe((hive) => {
