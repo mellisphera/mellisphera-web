@@ -1,0 +1,31 @@
+<div class="title">
+    <img src="../../assets/img/apiary-icon.png" style="width:45px;height: 45px; margin-left: -7px; margin-top:-10px;" />
+    {{this.rucheService.getCurrentHive().name}}
+    <span
+        *ngIf="this.rucheService.getCurrentHive().description!=''">{{': ' + this.rucheService.getCurrentHive().description}}</span>
+</div>
+<hr />
+<div class="tabRankAlert">
+    <i class="fa fa-info-circle fa-2x" title="{{ 'HIVE_DETAIL.CLICK.BROODINFO' | translate}}"></i><span
+        *ngIf="this.dailyRecordThService.getPourcentByHive(this.rucheService.getCurrentHive().id) != null">{{ 'HIVE_DETAIL.CLICK.BROOD' | translate}}
+        : {{ this.dailyRecordThService.getPourcentByHive(this.rucheService.getCurrentHive().id) }}</span>
+    <span
+        *ngIf="this.dailyRecordThService.getPourcentByHive(this.rucheService.getCurrentHive().id) === null">{{ 'HIVE_DETAIL.CLICK.BROOD' | translate}}
+        : {{ 'HIVE_DETAIL.CLICK.UNKNOWN' | translate}}</span>
+</div>
+<app-alerts-hive></app-alerts-hive>
+<!-- <hr/> -->
+<app-notes-hives></app-notes-hives>
+<!-- <hr/> -->
+<div id="graphs">
+    <div id="health">
+        <app-health-hive></app-health-hive>
+    </div>
+    <div id="weight">
+        <app-weight-hives></app-weight-hives>
+        <!-- <hr/> -->
+    </div>
+    <br clear="both" />
+</div>
+<!-- <hr/> -->
+<app-sensors-hive></app-sensors-hive>

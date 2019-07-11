@@ -8,6 +8,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MyDatePipe } from '../../pipe/my-date.pipe';
+import { ngfModule } from 'angular-file';
 
 
 @NgModule({

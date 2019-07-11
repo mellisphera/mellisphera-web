@@ -4,16 +4,13 @@ import { DashboardComponent } from './dashboard.component';
 import { DasboardRoutingModule } from './dashboard.routing';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { NavbarModule } from './shared/navbar/navbar.module';
-import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
 import { ngfModule } from 'angular-file';
 import { WizardComponent } from './wizard/wizard.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RucherService } from './service/api/rucher.service';
-import { RucheService } from './service/api/ruche.service';
-import { DailyRecordService } from './service/api/dailyRecordService';
+import { AlertsService } from './service/api/alerts.service';
 import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';
 import { CapteurService } from './capteur/capteur.service';
 import { RucheRucherComponent } from './apiary/ruche-rucher/ruche.rucher.component';
@@ -43,6 +40,14 @@ import { AngularDraggableModule } from 'angular2-draggable';
 import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
 import { ObservationService } from './apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { MyNotifierService } from './service/my-notifier.service';
+import { MyDatePipe } from '../pipe/my-date.pipe';
+// import { AngularDraggableModule } from 'angular2-draggable';
+import { ManageHivesComponent } from './manage/manage-hives/manage-hives.component';
+import { ManageApiarysComponent } from './manage/manage-apiarys/manage-apiarys.component';
+import { ManageSensorsComponent } from './manage/manage-sensors/manage-sensors.component';
+import { RucherService } from './service/api/rucher.service';
+import { RucheService } from './service/api/ruche.service';
+import { DailyRecordService } from './service/api/dailyRecordService';
 
 
 @NgModule({
@@ -56,18 +61,19 @@ import { MyNotifierService } from './service/my-notifier.service';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularDraggableModule,
+    SharedModule,
+    // AngularDraggableModule,
     ngfModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger' // set defaults here
     }),
    //  DragAndCheckModule,
     ArchwizardModule,
-    SharedModule,
   ],
   providers: [
     RucherService,
     RucheService,
+    AlertsService,
     RapportService,
     MeteoService,
     DailyRecordService,
@@ -83,7 +89,6 @@ import { MyNotifierService } from './service/my-notifier.service';
   ],
   declarations: [
     DashboardComponent,
-    HomeComponent,
     RucheRucherComponent,
     FeedbackComponent,
     MeteoComponent,
@@ -101,6 +106,9 @@ import { MyNotifierService } from './service/my-notifier.service';
     FleursFloraisonComponent,
     WizardComponent,
     PreferenceConfigComponent,
+    ManageHivesComponent,
+    ManageApiarysComponent,
+    ManageSensorsComponent,
   ]
 })
 export class DashboardModule { }

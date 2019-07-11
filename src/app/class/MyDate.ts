@@ -51,6 +51,14 @@ export class MyDate {
         let rangeCalendar = [min, MyDate.convertDate(max)];
         return rangeCalendar;
       }
+
+      static getRangeForCalendarHome(){
+        let max = new Date();
+        let tmp = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
+        let min = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
+        let rangeCalendar = [min, MyDate.convertDate(max)];
+        return rangeCalendar;
+      }
     
 /*     static getRangeFromDate(date: Date[]) {
 

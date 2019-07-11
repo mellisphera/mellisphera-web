@@ -23,6 +23,7 @@ export class DailyRecordService {
     private arrayHint: any[];
     private arrayHealth: any[];
     public dailyRecords: DailyRecordTh[];
+    public dailyRecordsGraph: DailyRecordTh[];
     public statusLoading: boolean;
     public rangeDailyRecord: Date;
     public mergeOptionTint: any;
@@ -30,7 +31,11 @@ export class DailyRecordService {
     private unitSystem: string;
     public mergeOptionCalendarHealth: any;
 
-    constructor(private http: HttpClient, private user: UserloggedService, private unitService: UnitService, private rucherService: RucherService, private graphGlobal: GraphGlobal) {
+    constructor(private http: HttpClient,
+        private user: UserloggedService,
+        private unitService: UnitService,
+        private rucherService: RucherService,
+        private graphGlobal: GraphGlobal) {
         this.statusLoading = false;
         this.rangeDailyRecord = new Date();
         this.arrayTempInt = [];
@@ -39,7 +44,7 @@ export class DailyRecordService {
         this.rangeDailyRecord.setDate(new Date().getDate() - 2);
         this.rangeDailyRecord.setHours(23);
         this.rangeDailyRecord.setMinutes(0);
-        console.log(this.rangeDailyRecord);
+        this.dailyRecords = [];
         if (this.user.getUser()) {
             this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
                 console.log(sessionStorage.getItem('currentApiary'));
@@ -119,7 +124,7 @@ export class DailyRecordService {
      * @memberof DailyRecordService
      */
     public getByIdHive(idHive: string): void {
-        this.dailyRecords = [];
+        this.dailyRecordsGraph = [];
         this.http.get<DailyRecordTh[]>(CONFIG.URL + '/dailyRecordsTH/hive/' + idHive).map(daily => {
             this.arrayTempInt = daily.filter(elt => elt.temp_int_max !== null).
                 map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem, false)]);
@@ -129,7 +134,7 @@ export class DailyRecordService {
         })
             .subscribe(
                 (data) => {
-                    this.dailyRecords = data;
+                    this.dailyRecordsGraph = data;
                     this.updateMerge();
                 },
                 (err) => {
@@ -261,7 +266,6 @@ export class DailyRecordService {
      */
     public getDailyRecThByApiary(idApiary: string): void {
         this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, this.rangeDailyRecord);
-        this.dailyRecords = [];
         this.dailyRecTabObs.subscribe(
             (data) => {
                 console.log(data);

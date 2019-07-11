@@ -167,8 +167,8 @@ export class RucherService {
      * @returns {Observable<RucherModel>}
      * @memberof RucherService
      */
-    deleteRucher(): Observable<RucherModel> {
-        return this.http.delete<RucherModel>(CONFIG.URL + 'apiaries/' + this.rucher.id);
+    deleteRucher(apiary: RucherModel): Observable<RucherModel> {
+        return this.http.delete<RucherModel>(CONFIG.URL + 'apiaries/' + apiary.id);
     }
     updateBackgroundApiary(idApiary: string) {
         this.http.put(CONFIG.URL + 'apiaries/update/background/' + idApiary, this.rucher.photo).subscribe(
@@ -239,5 +239,10 @@ export class RucherService {
             }
         }
     }
+
+    getRucherNameById(idApiary: string) : RucherModel{
+        return (this.ruchers.filter(apiary => apiary.id === idApiary)[0]);
+    }
+
 
 }

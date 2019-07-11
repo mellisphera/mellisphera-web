@@ -27,7 +27,6 @@
               "src/assets/sass/light-bootstrap-dashboard.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.js",
             ]
           },
           "configurations": {

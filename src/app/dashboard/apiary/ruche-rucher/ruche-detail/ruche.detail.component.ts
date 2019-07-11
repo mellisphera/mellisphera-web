@@ -97,7 +97,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         this.img = CONFIG.URL_FRONT + 'assets/icons/next-button-4.png';
     }
 
-    ngOnInit() {
+        ngOnInit() {
         this.userConfig.getSubject().subscribe(
             data => {
                 this.recordService.setUnitSystem(data.unitSystem);
@@ -107,14 +107,14 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             }
         )
         if (!this.observationService.obsHiveSubject.closed) {
-            this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive()).subscribe();
+            this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive().id).subscribe();
         }
         if (!this.rucheService.hiveSubject.closed) {
             this.rucheService.hiveSubject.subscribe(() => { }, () => { }, () => {
-                this.rucheService.findRucheById(this.rucheService.getCurrentHive(), (hive) => {
+                this.rucheService.findRucheById(this.rucheService.getCurrentHive().id, (hive) => {
                     this.hiveSelect = hive[0];
                     this.compteurHive = this.rucheService.ruches.indexOf(this.hiveSelect);
-                    this.rucheService.saveCurrentHive(this.hiveSelect.id);
+                    this.rucheService.saveCurrentHive(this.hiveSelect);
                 }, (err: string) => {
                     console.log(err);
                 });
@@ -124,6 +124,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
 
     onChartInit($event: any) {
         this.echartInstance = $event;
+        console.log(this.echartInstance);
     }
 
     receiveMessage($event) {
@@ -138,7 +139,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
         if (this.compteurHive !== 0 && this.compteurHive !== -1) {
             this.compteurHive--;
             this.hiveSelect = this.rucheService.ruches[this.compteurHive];
-            this.rucheService.saveCurrentHive(this.hiveSelect.id);
+            this.rucheService.saveCurrentHive(this.hiveSelect);
             this.exeData(true);
         }
 
@@ -154,7 +155,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             this.compteurHive++;
         }
         this.hiveSelect = this.rucheService.ruches[this.compteurHive];
-        this.rucheService.saveCurrentHive(this.hiveSelect.id);
+        this.rucheService.saveCurrentHive(this.hiveSelect);
         this.exeData(true);
     }
 
@@ -178,7 +179,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     selectRange(page?: string) {
         this.recordService.setRange(this.range);
         this.loaddingHourly = !this.loaddingHourly;
-        this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
+        this.recordService.getHourlyByHive(this.rucheService.getCurrentHive().id)
             .subscribe(
                 (record) => {
                     console.log(record);
@@ -203,7 +204,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
      */
     checkHiveActive(): Promise<Boolean> {
         return new Promise((resolve, reject) => {
-            if (this.dailyStockHoneyService.currentIdHive !== this.rucheService.getCurrentHive()) {
+            if (this.dailyStockHoneyService.currentIdHive !== this.rucheService.getCurrentHive().id) {
                 resolve(true);
             } else {
                 reject(false);
@@ -212,17 +213,17 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
     }
     exeData(switchHive?: boolean) {
         if (this.currentTab.indexOf('notes') !== -1) {
-            this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive()).subscribe();
+            this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive().id).subscribe();
         }
 
         else if (this.currentTab.indexOf('daily') !== -1) {
-            this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
-            this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
+            this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive().id);
+            this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive().id);
         }
         else if (this.currentTab.indexOf('stock') !== -1) {
             this.checkHiveActive().then(() => {
                 this.loadingStockHoney = true;
-                this.dailyStockHoneyService.getDailyStockHoneyByHIve(this.rucheService.getCurrentHive())
+                this.dailyStockHoneyService.getDailyStockHoneyByHIve(this.rucheService.getCurrentHive().id)
                     .subscribe(merge => {
                         this.dailyStockHoneyService.mergeOption = merge;
                         if (switchHive) {
@@ -237,13 +238,13 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
                         () => {
                             this.loadingStockHoney = false;
                         });
-                this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive());
+                this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive().id);
             });
         }
         else if (this.currentTab.indexOf('hourly') !== -1) {
             this.checkHiveActive().then(() => {
                 this.loaddingHourly = true;
-                this.recordService.getHourlyByHive(this.rucheService.getCurrentHive())
+                this.recordService.getHourlyByHive(this.rucheService.getCurrentHive().id)
 
                     .subscribe(
                         (record) => {
@@ -259,7 +260,7 @@ export class RucheDetailComponent implements OnInit, OnDestroy {
             });
         }
         else if (this.currentTab.indexOf('health') !== -1) {
-            this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive());
+            this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive().id);
         }
     }
     ngOnDestroy() {

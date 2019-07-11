@@ -4,10 +4,10 @@ export interface RucheInterface {
     id?: string;
     name: string;
     description: string;
+    idUsername : string;
     username: string;
     apiaryName?: string;
     idApiary: string;
-    idUsername: string;
     hivePosX: string;
     hivePosY: string;
     sharingUser: User[];
