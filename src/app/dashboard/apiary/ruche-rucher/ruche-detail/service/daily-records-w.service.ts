@@ -27,6 +27,7 @@ export class DailyRecordsWService {
   dailyObs: Observable<DailyRecordsW[]>;
   public loading: boolean;
   private dailyRec: DailyRecordsW[];
+  public dailyWeightRecords: DailyRecordsW[];
   private dailyRecArray: any[];
   private weightIncome: any[];
   private unitSystem: string;
@@ -38,11 +39,16 @@ export class DailyRecordsWService {
   mergeOptionWeightTempExt: any;
 
   timeLine: any[];
+  public rangeDailyRecord: Date;
 
   constructor(private http: HttpClient, private unitService: UnitService,  private graphGlobal: GraphGlobal) {
     this.dailyRecArray = [];
     this.arrayTempExt = [];
     this.weightIncome = [];
+    this.rangeDailyRecord = new Date();
+    this.rangeDailyRecord.setDate(new Date().getDate() - 1);
+    this.rangeDailyRecord.setHours(2);
+    this.rangeDailyRecord.setMinutes(0);
     this.updateCalendar();
   }
 
@@ -288,5 +294,61 @@ export class DailyRecordsWService {
     return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightMax/' + idHive, range);
 
   }
+    /**
+     *
+     * @public
+     * @param {string} idApiary
+     * @memberof DailyRecordsWService
+     */
+    public nextDay(idApiary: string): void {
+      this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() + 1);
+      this.rangeDailyRecord.setHours(2);
+      this.rangeDailyRecord.setMinutes(0);
+      this.getDailyWeightIncomeByApiary(idApiary);
+  }
+  /**
+   *
+   * @public
+   * @param {string} idApiary
+   * @memberof DailyRecordsWService
+   */
+  public previousDay(idApiary: string): void {
+      this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() - 1);
+      this.rangeDailyRecord.setHours(2);
+      this.rangeDailyRecord.setMinutes(0);
+      this.getDailyWeightIncomeByApiary(idApiary);
+  }
+
+  public getWeightIncomeByHive(idHive: string): any {
+    const selectHive = this.dailyWeightRecords.filter(elt => elt.idHive === idHive)[0];
+    if (this.unitSystem === 'METRIC'){
+      return selectHive !== undefined ? selectHive.weight_income_gain + ' kg' : null;
+    }else{
+      return selectHive !== undefined ? selectHive.weight_income_gain + ' lbs' : null;
+    }
+
+}
+
+public getDailyWeightIncomeByApiary(idApiary: string): void {
+  this.dailyWeightRecords = [];
+  var tabDate : Date [];
+  var previousDay : Date;
+  previousDay = new Date();
+  previousDay.setDate(this.rangeDailyRecord.getDate() - 1);
+  previousDay.setHours(2);
+  previousDay.setMinutes(0);
+  tabDate = [previousDay,this.rangeDailyRecord];
+  console.log(tabDate);
+  this.http.post<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/apiary/' + idApiary, tabDate).subscribe(
+      (data) => {
+          if (data[0] != null) {
+              this.dailyWeightRecords = data.flat();
+          }
+      },
+      (err) => {
+          console.log(err);
+      }
+  );
+}
 
 }

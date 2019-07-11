@@ -1,7 +1,7 @@
 export const CALENDAR = {
     calendar: {
         height: '40%',
-        left: 'center',
+       // left: 'center',
         width:'80%',
         cellSize: ['20', '20'],
         range: [new Date().getFullYear() + '-' +( new Date().getMonth() - 1) + '-' + '01', new Date()],

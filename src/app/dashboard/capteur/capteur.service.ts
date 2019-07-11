@@ -16,6 +16,8 @@ import { Capteur } from './capteur';
 import { Rucher } from '../apiary/ruche-rucher/rucher';
 import { CapteurInterface } from '../../_model/capteur';
 import { UserloggedService } from '../../userlogged.service';
+import { RucheService } from '../service/api/ruche.service';
+import { stringify } from 'querystring';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -25,6 +27,7 @@ export class CapteurService {
     capteur: CapteurInterface;
     capteurs: CapteurInterface[];
     capteursByUser: CapteurInterface[];
+    capteursByHive : CapteurInterface[];
     capteurAcheter: CapteurInterface[];
     capteursType: Object;
     capteurObs: Observable<CapteurInterface>;
@@ -36,7 +39,8 @@ export class CapteurService {
      * @param {UserloggedService} user
      * @memberof CapteurService
      */
-    constructor(private http: HttpClient, private user: UserloggedService) {
+    constructor(private http: HttpClient, private user: UserloggedService,
+        public rucheService: RucheService) {
         this.sensorSubject = new BehaviorSubject([]);
         this.capteursType =
             [
@@ -108,12 +112,28 @@ export class CapteurService {
             (data) => {
                 this.capteursByUser = data;
                 this.sensorSubject.next(data);
+                this.capteursByHive = this.capteursByUser.filter(sensor => sensor.idHive === this.rucheService.getCurrentHive().id);
+                this.sensorSubject.next(this.capteursByHive);
             },
             (err) => {
                 console.log(err);
             },
             () => { this.sensorSubject.complete(); }
         );
+    }
+
+    getCapteursByHive(idHive : string) :  string[]{
+        let capteursHive : CapteurInterface[];
+        capteursHive = this.capteursByUser.filter(sensor => sensor.idHive === idHive);
+        let returnString : string[];
+        returnString = [];
+        capteursHive.forEach(element => {
+            returnString.push(element.sensorRef);
+        });
+        return returnString;
+        // return capteursHive.map(elt => {
+        //     return elt.sensorRef
+        // }).join('\n');
     }
 
         /**

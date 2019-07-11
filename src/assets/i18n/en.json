@@ -49,18 +49,23 @@
         "NEW_APIARY" : "New apiary",
         "EDIT_APIARY" : "Edit apiary",
         "DELETE_APIARY" : "Delete apiary",
+        "DELETE_APIARY2" : "Delete apiary",
         "DELETE_ASK" : "Delete Apiary ?",
         "ACCOUNT": {
             "PREFERENCES" : "Preferences",
             "LOG_OUT": "Logout"
         },
         "CRUD" : {
+            "APIARY_NAME" : "Apiary name",
+            "APIARY_DESCRIPTION" : "Apiary description",
             "NAME" : "Name",
             "NAME_ERROR" : "select a name from 1 to 20 chars",
             "DESCRIPTION_ERROR" : "description can be 40 chars max",
             "CITY" : "City",
+            "CITY_APIARY" : "Apiary city",
             "CITY_ERROR" : "select city name",
             "ZIP_CODE" : "Zip code",
+            "ZIP_CODE_APIARY" : "Apiary zip code",
             "ZIP_ERROR" : "select zip code",
             "PICTURE" : "Select picture from Apiary :",
             "FILE" : "Select File",
@@ -69,7 +74,20 @@
             "SAVE" : "Save Apiary",
             "CANCEL" : "Cancel",
             "CONFIRM" : "Confirm",
-            "CREATE" : "New apiary"
+            "CREATE" : "New apiary",
+            "APIARY_UPDATE" : "Apiary to update",
+            "APIARY" : "Apiary",
+            "HIVES" : "Hives",
+            "MANAGE": "Manage",
+            "SELECTHIVE" : "Select the hive to update",
+            "EDITAHIVE" : "Edit hive",
+            "DELETEAHIVE" : "Delete hive",
+            "DELETEHIVE" : "Delete hive",
+            "DELETEHIVEASK" : "Delete hive ?",
+            "HIVENAME" : "Hive name",
+            "HIVEDESC" : "Hive description",
+            "EDIT" : "Edit",
+            "FROMAPIARY" : "from apiary"
         }
     },
     "SIDEBAR" : {
@@ -103,7 +121,21 @@
     "HOME" : {
         "BACK" : "Save background?",
         "CHANGE" : "Save changes",
-        "CANCEL" : "Cancel"
+        "CANCEL" : "Cancel",
+        "NODATA" : "No data",
+        "NOSENSORS" : "No sensors",
+        "CLICK" : "Click on a hive for more informations !",
+        "MANAGE" : "Manage",
+        "WARNING" : "Warning! ",
+        "NAVBAR" : {
+            "ALERTS" : "Alerts",
+            "NOTES" : "Notes",
+            "SUMMARY": "Summary",
+            "NAME" : "Name",
+            "BROOD" : "Brood",
+            "WEIGHT" : "Weight",
+            "SENSORS" : "Sensors"
+        }
     },
     "HIVES" : {
         "HIVES" : "Hives",
@@ -116,7 +148,8 @@
             "DELETE_ASK" : "Delete hive ?",
             "CANCEL" : "Cancel",
             "CONFIRM" : "Confirm",
-            "NAME" : "Name",
+            "NAME" : "Hive name",
+            "DESCRIPTION" : "Hive description",
             "CREATE" : "Create hive",
             "CLOSE" : "Close",
             "APIARY" : "Apiary"
@@ -132,6 +165,7 @@
         },
         "OBSERVATIONS" : {
             "AO" : "Actions and observations",
+            "TITLE" : "Notes of the hive",
             "DATE" : "Dates",
             "SENTENCE" : "Sentences",
             "TYPES" : "Types",
@@ -162,7 +196,23 @@
         "HOURLY" : {
             "RANGE" : "Range :",
             "LAST" : "last"
+        },
+        "CLICK" : {
+            "SENSORSTITLE" : "Sensors of the hive",
+            "BROOD" : "Brood",
+            "BROODINFO" : "The brood is calculated from the temperature of the hive. The more stable the temperature is around the brood zone, the higher the percentage is.",
+            "UNKNOWN" : "unknown",
+            "ALERTS" : {
+                "TITLE" : "Alerts of the hive",
+                "TYPE" : "TYPE",
+                "READ" : "READ",
+                "NOALERTS" : "No alerts this week for"
+            }
         }
+    },
+    "ALERTS" : {
+        "TITLE" : "Alerts of the apiary",
+        "NOALERTS" : "No alerts this week !"
     },
     "APIARY_NOTES" : {
         "TITLE" : "Apiary notes",

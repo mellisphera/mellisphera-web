@@ -81,6 +81,7 @@ export class CapteurComponent implements OnInit, OnDestroy {
     onChangeCapteur($event) {
         this.capteurService.capteur = $event.target.value;
     }
+    
     selectCapteur(capteur: CapteurInterface, index: number) {
         this.indexSensorSelect = index;
         this.capteurService.capteur = capteur;

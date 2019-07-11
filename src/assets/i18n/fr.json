@@ -47,20 +47,25 @@
     },
     "NAVBAR": {
         "NEW_APIARY" : "Nouveau rucher",
-        "EDIT_APIARY" : "Modifier le rucher",
-        "DELETE_APIARY" : "Supprimer le rucher",
+        "EDIT_APIARY" : "Modifier un rucher",
+        "DELETE_APIARY" : "Supprimer un rucher",
+        "DELETE_APIARY2" : "Supprimer le rucher",
         "DELETE_ASK" : "Supprimer le rucher ?",
         "ACCOUNT": {
             "PREFERENCES" : "Préférences",
             "LOG_OUT": "Déconnexion"
         },
         "CRUD" : {
+            "APIARY_NAME" : "Nom du rucher",
+            "APIARY_DESCRIPTION" : "Description du rucher",
             "NAME" : "Nom",
             "NAME_ERROR" : "Entrez un nom entre 1 et 20 caractères",
             "DESCRIPTION_ERROR" : "La description comporte 40 caractères max.",
             "CITY" : "Ville",
+            "CITY_APIARY" : "Ville du rucher",
             "CITY_ERROR" : "Entrez un nom de ville",
             "ZIP_CODE" : "Code postal",
+            "ZIP_CODE_APIARY" : "Code postal du rucher",
             "ZIP_ERROR" : "Entrez un code postal",
             "PICTURE" : "Ajouter une image du rucher :",
             "FILE" : "Choisir le dossier",
@@ -69,7 +74,20 @@
             "SAVE" : "Sauver le rucher",
             "CANCEL" : "Annuler",
             "CONFIRM" : "Confirmer",
-            "CREATE" : "Créer le rucher"
+            "CREATE" : "Créer le rucher",
+            "APIARY_UPDATE" : "Rucher à modifier",
+            "APIARY" : "Rucher",
+            "HIVES" : "Ruches",
+            "MANAGE": "Général",
+            "SELECTHIVE" : "Selectionnez la ruche à modifier",
+            "EDITAHIVE" : "Modifier une ruche",
+            "DELETEAHIVE" : "Supprimer une ruche",
+            "DELETEHIVE" : "Supprimer la ruche",
+            "DELETEHIVEASK" : "Supprimer la ruche ?",
+            "HIVENAME" : "Nom de la ruche",
+            "HIVEDESC" : "Description de la ruche",
+            "EDIT" : "Modifier",
+            "FROMAPIARY" : "du rucher"
         }
     },
     "SIDEBAR" : {
@@ -103,7 +121,21 @@
     "HOME" : {
         "BACK" : "Sauvegarder l'image ?",
         "CHANGE" : "Sauvegarder",
-        "CANCEL" : "Annuler"
+        "CANCEL" : "Annuler",
+        "NODATA" : "Pas de données",
+        "NOSENSORS" : "Pas de capteurs",
+        "CLICK" : "Cliquez sur une ruche pour plus d'informations !",
+        "MANAGE" : "Gérer",
+        "WARNING" : "Attention! ",
+        "NAVBAR" : {
+            "ALERTS" : "Alertes",
+            "NOTES" : "Notes",
+            "SUMMARY": "Résumé",
+            "NAME" : "Nom",
+            "BROOD" : "Couvain",
+            "WEIGHT" : "Poids",
+            "SENSORS" : "Capteurs"
+        }
     },
     "HIVES" : {
         "HIVES" : "Ruches",
@@ -116,7 +148,8 @@
             "DELETE_ASK" : "Supprimer la ruche ?",
             "CANCEL" : "Annuler",
             "CONFIRM" : "Confirmer",
-            "NAME" : "Nom",
+            "NAME" : "Nom de la ruche",
+            "DESCRIPTION" : "Description de la ruche",
             "CREATE" : "Créer la ruche",
             "CLOSE" : "Fermer",
             "APIARY" : "Rucher"
@@ -132,6 +165,7 @@
         },
         "OBSERVATIONS" : {
             "AO" : "Actions et observations",
+            "TITLE" : "Notes de la ruche",
             "DATE" : "Date",
             "SENTENCE" : "Note",
             "TYPES" : "Type",
@@ -162,7 +196,23 @@
         "HOURLY" : {
             "RANGE" : "Intervalle :",
             "LAST" : "Depuis"
+        },
+        "CLICK" : {
+            "SENSORSTITLE" : "Capteurs de la ruche",
+            "BROOD" : "Couvain",
+            "BROODINFO" : "Le couvain est calculé à partir de la température de la ruche. Plus la température est stable autour de la zone de couvain, plus le pourcentage est élevé.",
+            "UNKNOWN" : "inconnu",
+            "ALERTS" : {
+                "TITLE" : "Alertes de la ruche",
+                "TYPE" : "TYPE",
+                "READ" : "LUE",
+                "NOALERTS" : "Pas d'alertes cette semaine pour "
+            }
         }
+    },
+    "ALERTS" : {
+        "TITLE" : "Alertes du rucher",
+        "NOALERTS" : "Pas d'alertes cette semaine !"
     },
     "APIARY_NOTES" : {
         "TITLE" : "Notes du rucher",

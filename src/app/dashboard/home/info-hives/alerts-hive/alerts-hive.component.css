@@ -1,0 +1,34 @@
+.false{
+    background-color: white;
+  }
+
+.false:hover{
+    border-left: 6px solid #70A8B2;
+    background-color: #eafffd;
+  }
+
+.true{
+    background-color: #e3e5e8;
+    border-bottom: 2px solid white;
+}
+
+.true:hover{
+  border-left: 6px solid #70A8B2;
+  background-color: #dce8ed;
+}
+
+hr
+{
+    display: inline-block;
+    width: 100%;
+}
+
+.content-page{
+  margin-top: 25px;
+}
+
+ #noAlert{
+   text-align: center;
+   font-size: medium;
+   margin-bottom: 25px;
+ }

@@ -1,0 +1,42 @@
+.button {
+    background-color: #70A8B2;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 16px 1px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  
+.button0 {
+    background-color: white;
+    color: #4F4F51;
+    border: 2px solid #70A8B2;
+  }
+
+  
+.button0:hover {
+    background-color: #4F4F51; 
+    color: white; 
+  }
+
+#divButton{
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {background-color: #f2f2f2;}
