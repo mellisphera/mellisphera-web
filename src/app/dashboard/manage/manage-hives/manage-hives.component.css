@@ -1,0 +1,100 @@
+ /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+ .row.content {height: 1500px}
+ 
+ /* Set gray background color and 100% height */
+ .sidenav {
+   background-color: #f1f1f1;
+   height: 100%;
+ }
+ 
+ /* Set black background color, white text and some padding */
+ footer {
+   background-color: #555;
+   color: white;
+   padding: 15px;
+ }
+ 
+ /* On small screens, set height to 'auto' for sidenav and grid */
+ @media screen and (max-width: 767px) {
+   .sidenav {
+     height: auto;
+     padding: 15px;
+   }
+   .row.content {height: auto;} 
+ }
+
+ .select-width{
+    width: 50px;
+ }
+
+ .btnEditerRucher{
+   position : fixed;
+   margin-left: 1000px;
+   
+ }
+
+ .hidden-id{
+   visibility: hidden;
+ }
+
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+.no-border-btn{
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+
+.demo-chart {
+  height: 400px;
+}
+.action{
+  width: 0px;
+}
+.midle{
+  width: 83%;
+}
+.firstCol{
+  width: 10%;
+}
+#btn-mvToAction{
+  font-size: 38px;
+  margin-right: 5px;
+}
+tbody tr:hover{
+  border-left: 6px solid #70A8B2;
+  background-color: #eafffd;
+}
+.hive-select{
+  cursor: pointer;
+}
+.sensor{
+  color: greenyellow;
+}
+
+.close{
+  font-size: 30px;
+}
+
+.fa-times{
+  margin-left: 15px;
+}

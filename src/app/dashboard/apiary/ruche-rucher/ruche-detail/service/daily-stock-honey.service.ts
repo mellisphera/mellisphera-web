@@ -52,7 +52,7 @@ export class DailyStockHoneyService {
     this.dailyStockByFlower = [];
     this.typeFlower = [];
     this.currentIdHive = null;
-    //this.getDailyStockHoneyByHive(this.rucheService.getCurrentHive());
+    //this.getDailyStockHoneyByHive(this.rucheService.getCurrentHive().id);
   }
 
   setUnitSystem(unit: string): void {

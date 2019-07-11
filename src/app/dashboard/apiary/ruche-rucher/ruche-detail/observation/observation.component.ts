@@ -71,8 +71,8 @@ export class ObservationComponent implements OnInit {
       const formValue = this.ObservationForm.value;
       this.newObs = formValue;
       this.newObs.type = 'HiveObs';
-      this.newObs.idHive = this.rucheService.getCurrentHive();
-      this.newObs.idLHive = [this.rucheService.getCurrentHive()];
+      this.newObs.idHive = this.rucheService.getCurrentHive().id;
+      this.newObs.idLHive = [this.rucheService.getCurrentHive().id];
       this.ObservationForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsHive.push(obs);
@@ -97,8 +97,8 @@ export class ObservationComponent implements OnInit {
       const formValue = this.ObservationForm.value;
       this.newObs = formValue;
       this.newObs.type = 'HiveAct';
-      this.newObs.idHive = this.rucheService.getCurrentHive();
-      this.newObs.idLHive = [this.rucheService.getCurrentHive()];
+      this.newObs.idHive = this.rucheService.getCurrentHive().id;
+      this.newObs.idLHive = [this.rucheService.getCurrentHive().id];
       this.ObservationForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsHive.push(obs);
@@ -140,7 +140,7 @@ export class ObservationComponent implements OnInit {
         this.observationService.emitHiveSubject();
         if(this.userService.getJwtReponse().country === "FR"){
           this.notifier.notify('success', 'Note mis à jour');
-        }else{
+        } else {
           this.notifier.notify('success', 'Updated Note');
         }
       });

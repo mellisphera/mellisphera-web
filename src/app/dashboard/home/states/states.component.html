@@ -1,0 +1,46 @@
+<div id="content" #content>
+  <!-- BUTTONS -->
+    <div id = "divButton">
+      <button class = "button button0" (click)= "downloadPDF()">Export to PDF</button>  
+      <input class = "button button0" type="button" value="Download in PDF" (click)="captureScreen()"/>  
+    </div>
+
+
+  <!-- TO CONVERT -->
+  <div id= "contentToConvert">
+
+
+    <!-- ALERTS -->
+    <!-- If there is alerts -->
+  <div *ngIf="alertsService.apiaryAlerts.length !== 0">
+    <span *ngFor="let alert of alertsService.apiaryAlerts;"><img src="{{ alert.picto }}" width="35" /></span>
+    <!-- <table >
+      <tr>
+        <th>Date</th>
+        <th>Message</th>
+        <th>Picto</th>
+        <th>Date</th>
+        <th>Message</th>
+        <th>Picto</th>
+      </tr>
+      <tr *ngFor="let alert of alertsService.apiaryAlertsFirstHalf; let i = index;">
+            <td *ngIf="alert.time === 'Daily'">{{ alert.date | myDate:'DAILY' }}</td>
+            <td *ngIf="alert.time !== 'Daily'">{{ alert.date | myDate }}</td>
+            <td>{{ alert.message }}</td>
+            <td><img src="{{ alert.picto }}" width="35" /></td>
+            <td *ngIf="alertsService.apiaryAlertsSecondHalf[i] !== undefined && alertsService.apiaryAlertsSecondHalf[i].time === 'Daily'">{{ alertsService.apiaryAlertsSecondHalf[i].date | myDate:'DAILY' }}</td>
+            <td *ngIf="alertsService.apiaryAlertsSecondHalf[i] !== undefined && alertsService.apiaryAlertsSecondHalf[i].time !== 'Daily'">{{ alertsService.apiaryAlertsSecondHalf[i].date | myDate }}</td>
+            <td *ngIf="alertsService.apiaryAlertsSecondHalf[i] !== undefined" >{{ alertsService.apiaryAlertsSecondHalf[i].message }}</td>
+            <td *ngIf="alertsService.apiaryAlertsSecondHalf[i] !== undefined" ><img src="{{ alert.picto }}" width="35" /></td>
+        </tr>
+      </table> -->
+  </div>
+  
+  <!-- If there is'nt alerts -->
+  <div *ngIf="alertsService.apiaryAlerts.length === 0" id = "noAlert">
+      {{ 'ALERTS.NOALERTS' | translate}}
+      </div>
+</div>
+
+
+</div>

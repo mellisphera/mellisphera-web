@@ -128,10 +128,10 @@ export class WizardComponent implements OnInit, OnDestroy {
       this.hive.idApiary = this.rucherService.getCurrentApiary();
       this.rucherService.rucheService.createRuche(this.hive).subscribe((hive) => {
         this.rucherService.rucheService.ruches = new Array(hive);
-        this.rucherService.rucheService.saveCurrentHive(hive.id);
+        this.rucherService.rucheService.saveCurrentHive(hive);
       }, () => { }, () => {
         this.rucherService.rucheService.emitHiveSubject();
-        this.sensor.idHive = this.rucherService.rucheService.getCurrentHive();
+        this.sensor.idHive = this.rucherService.rucheService.getCurrentHive().id;
         this.sensor.idApiary = this.rucherService.getCurrentApiary();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
           this.capteurService.getUserCapteurs();

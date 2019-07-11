@@ -1,0 +1,41 @@
+hr
+{
+    display: inline-block;
+    width: 100%;
+}
+
+.title{
+    text-align: center;
+    margin-top: 50px;
+    font-size : medium;
+    font: bold;
+    font-weight: bold;
+}
+
+.tabRankAlert{
+    text-align: center;
+    font-size : medium;
+}
+@media (min-width: 500px) {
+    #weight{
+        float: right;
+        width: 50%;
+        /* margin-left: 20%; */
+    }
+
+    #health{
+        float: left;
+        width: 50%;
+    }
+  }
+
+.tabRankAlert i{
+    margin-right: 30px;
+    text-align: left !important;
+    vertical-align: middle;
+    margin-bottom: 4px;
+}
+
+.tabRankAlert i:hover{
+    color: #70A8B2;
+}
