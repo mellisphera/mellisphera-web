@@ -124,6 +124,7 @@ export class ManageApiarysComponent implements OnInit, OnDestroy {
     this.newApiary.name = formValue.name;
     this.newApiary.ville = formValue.ville;
     this.newApiary.codePostal = formValue.codePostal;
+    this.newApiary.idUsername = this.userService.getIdUserLoged();
     this.newApiary.createdAt = new Date();
     this.newApiary.username = this.username;
     this.initForm();
