@@ -46,9 +46,9 @@ export class RucheService {
       id : null,
       name : '',
       description : '',
+      idUsername : '',
       username : '',
       idApiary: '',
-      idUsername: '',
       apiaryName: '',
       hivePosX : '',
       hivePosY : '',
@@ -87,7 +87,7 @@ export class RucheService {
           if (!this.getCurrentHive()) {
             this.ruche = this.ruches[0];
           } else {
-            this.ruche = this.ruches.filter(hive => hive.id === this.getCurrentHive())[0];
+            this.ruche = this.ruches.filter(hive => hive.id === this.getCurrentHive().id)[0];
             if (this.ruche === undefined) {
               this.ruche = this.ruches[0];
             }
@@ -114,24 +114,26 @@ export class RucheService {
     * @param {string} [idHive]
     * @memberof RucheService
     */
-   saveCurrentHive(idHive?: string) {
-     if (idHive) {
-      window.sessionStorage.removeItem('currentHive');
-      window.sessionStorage.setItem('currentHive', idHive);
+   saveCurrentHive(hive?: RucheInterface) {
+     if (hive) {
+      // window.sessionStorage.removeItem('currentHive');
+      window.sessionStorage.setItem('currentHive', JSON.stringify(hive));
      } else {
       window.sessionStorage.removeItem('currentHive');
-      window.sessionStorage.setItem('currentHive', this.ruche.id);
+      window.sessionStorage.setItem('currentHive', JSON.stringify(this.ruche));
      }
    }
 
    /**
     *
     *
-    * @returns {string}
+    * @returns {RucheInterface}
     * @memberof RucheService
     */
-   getCurrentHive(): string {
-     return window.sessionStorage.getItem('currentHive');
+   getCurrentHive(): RucheInterface {
+     return JSON.parse(window.sessionStorage.getItem('currentHive'));
+
+
    }
 
    
@@ -166,6 +168,9 @@ export class RucheService {
      return Observable.forkJoin(obsAllHive);
    }
 
+   getRucheByID(id: string) {
+    return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + id);
+  }
    updateCoordonneesRuche(ruche){
     return this.http.put<RucheInterface>(CONFIG.URL+'hives/update/coordonnees/'+ruche.id,ruche,httpOptions); 
   }
@@ -176,7 +181,7 @@ export class RucheService {
    * @returns {Observable<RucheInterface>}
    * @memberof RucheService
    */
-  updateRuche(index: number, hive: RucheInterface): Observable<RucheInterface> {
+  updateRuche(hive: RucheInterface): Observable<RucheInterface> {
     return this.http.put<RucheInterface>(CONFIG.URL + 'hives/update/' + hive.id, hive, httpOptions);
   }
 
@@ -199,9 +204,10 @@ export class RucheService {
    * @returns {Observable<RucheInterface>}
    * @memberof RucheService
    */
-  deleteRuche(index: number, hive: RucheInterface): Observable<RucheInterface> {
+  deleteRuche(hive: RucheInterface): Observable<RucheInterface> {
     return this.http.delete<RucheInterface>(CONFIG.URL + 'hives/' + hive.id);
   }
+
 
 
   /**
@@ -209,10 +215,7 @@ export class RucheService {
    *
    * @param {string} idHive
    * @param {Function} next
-<<<<<<< HEAD
    * @param {Function} error
-=======
->>>>>>> feature/apiary_partage
    * @memberof RucheService
    */
   findRucheById(idHive: string, next: Function, error: Function) {
@@ -223,4 +226,5 @@ export class RucheService {
       error('Not hive');
     }
   }
+
 }

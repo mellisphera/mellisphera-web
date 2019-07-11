@@ -1,0 +1,14 @@
+#no-data{
+    margin-top : 100px;
+    margin-left: 50%;
+    font-size: x-large;
+    text-align: center;
+    width : 320px;
+    transform: translate(-50%, -50%);
+}
+
+#no-data i{
+    margin-right: 10%;
+    text-align: left !important;
+    vertical-align: middle;
+}

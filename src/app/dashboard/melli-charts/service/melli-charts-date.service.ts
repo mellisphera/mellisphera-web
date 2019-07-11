@@ -68,8 +68,15 @@ export class MelliChartsDateService {
    * @returns {Date[]}
    * @memberof MelliChartsDateService
    */
-  getRangeForReqest(): Date[] {
-    return this.rangeDateForRequest;
+  getRangeForReqest(daily?: boolean): Date[] {
+    if (daily) {
+      return this.rangeDateForRequest.map(_date => {
+        _date.setHours(0);
+        return _date;
+      });
+    } else {
+      return this.rangeDateForRequest;
+    }
   }
 
   setRangeForRequest(range: Date[] ) {

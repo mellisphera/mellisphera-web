@@ -1,5 +1,6 @@
 export interface RucherModel {
     id?: string;
+    idUsername : string;
     latitude: string;
     longitude: string;
     name: string;
@@ -7,7 +8,6 @@ export interface RucherModel {
     createdAt: Date;
     photo: string;
     username: string;
-    idUsername: string;
     codePostal: string;
     ville: string;
     

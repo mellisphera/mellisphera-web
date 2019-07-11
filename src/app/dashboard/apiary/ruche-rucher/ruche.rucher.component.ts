@@ -73,8 +73,8 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
       id: null,
       name: '',
       description: '',
+      idUsername : '',
       username: '',
-      idUsername: '',
       idApiary: '',
       hivePosX: '',
       hivePosY: '',
@@ -93,7 +93,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
 
   clickOnRuche(ruche: RucheInterface) {
-    this.rucheService.saveCurrentHive(ruche.id);
+    this.rucheService.saveCurrentHive(ruche);
     this.router.navigateByUrl('dashboard/ruche-detail');
   }
 
@@ -103,19 +103,15 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
 
   //Pour effacer une ruche
   deleteRuche(ruche: RucheInterface, index: number) {
-    if (this.rucherService.rucher.idUsername === this.userService.getIdUserLoged()) {
-      this.rucheService.deleteRuche(index, ruche).subscribe(() => { }, () => { }, () => {
-        this.rucheService.ruches.splice(index, 1);
-        this.rucheService.emitHiveSubject();
-        if(this.userService.getJwtReponse().country === "FR"){
-          this.notify.notify('success', 'Ruche supprimée');
-        }else{
-          this.notify.notify('success', 'Deleted Hive');
-        }
-      });
-    } else {
-      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_HIVE);
-    }
+    this.rucheService.deleteRuche(ruche).subscribe(() => { }, () => { }, () => {
+      this.rucheService.ruches.splice(index, 1);
+      this.rucheService.emitHiveSubject();
+      if(this.userService.getJwtReponse().country === "FR"){
+        this.notify.notify('success', 'Ruche supprimée');
+      } else {
+        this.notify.notify('success', 'Deleted Hive');
+      }
+    });
   }
 
   //Pour créer une ruche
@@ -137,7 +133,7 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
         this.rucheService.emitHiveSubject();
         if(this.userService.getJwtReponse().country === "FR"){
           this.notify.notify('success', 'Ruche créée');
-        }else{
+        } else {
           this.notify.notify('success', 'Crated Hive');
         }
       });
@@ -158,26 +154,24 @@ export class RucheRucherComponent implements OnInit, OnDestroy {
   }
   // pour editer une ruche
   onEditeRuche() {
-    if (this.rucherService.rucher.idUsername === this.userService.getIdUserLoged()) {
-      const formValue = this.newRucheForm.value;
-      this.selectHive.idApiary = this.rucherService.rucherSelectUpdate.id;
-      this.selectHive.name = formValue.nomRuche;
-      this.selectHive.idUsername = this.rucherService.rucherSelectUpdate.idUsername;
-      this.selectHive.description = formValue.descriptionRuche;
-      this.rucheService.updateRuche(this.hiveIndex, this.selectHive).subscribe(() => { }, () => { }, () => {
-        if (this.selectHive.idApiary === this.rucherService.getCurrentApiary()) {
-          this.rucheService.ruches[this.hiveIndex] = this.selectHive;
-          this.rucheService.emitHiveSubject();
-        }
-        if(this.userService.getJwtReponse().country === "FR"){
-          this.notify.notify('success', 'Ruche mis à jour');
-        }else{
-          this.notify.notify('success', 'Updated Hive');
-        }
-      });
-    } else {
-      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_HIVE);
-    }
+    const formValue = this.newRucheForm.value;
+    this.selectHive.idApiary = this.rucherService.rucherSelectUpdate.id;
+    this.selectHive.name = formValue.nomRuche;
+    this.selectHive.description = formValue.descriptionRuche;
+    this.rucheService.updateRuche(this.selectHive).subscribe(() => { }, () => { }, () => {
+      if (this.selectHive.idApiary === this.rucherService.getCurrentApiary()) {
+        this.rucheService.ruches[this.hiveIndex] = this.selectHive;
+        this.rucheService.emitHiveSubject();
+      } else {
+        this.rucheService.ruches.splice(this.hiveIndex, 1);
+        this.rucheService.emitHiveSubject();
+      }
+      if (this.userService.getJwtReponse().country === 'FR') {
+        this.notify.notify('success', 'Ruche mis à jour');
+      } else {
+        this.notify.notify('success', 'Updated Hive');
+      }
+    });
   }
 
   editRucherClicked() {

@@ -1,0 +1,51 @@
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+.action{
+    width: 0px;
+}
+.midle{
+    width: 100%;
+}
+.firstCol{
+    width: 10%;
+}
+/* .hive-link:hover{
+    cursor: pointer;
+} */
+/* .hive-link{
+    text-decoration-line: underline;
+    color: #23CCEF;
+}  */
+.table button{
+    border:none;
+}
+
+.hoverStyle:hover{
+    border-left: 6px solid #70A8B2;
+    background-color: #eafffd;
+  }
+
+.close{
+ font-size: 30px;
+}
+
+.fa-times{
+    margin-left: 15px;
+}
+  

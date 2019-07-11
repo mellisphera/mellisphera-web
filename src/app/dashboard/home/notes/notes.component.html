@@ -1,0 +1,182 @@
+<div class="content-page">
+  <div class="panel panel-info">
+    <div *ngIf="this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()) !== undefined"
+      class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapseTwo"><b>{{ 'APIARY_NOTES.TITLE' | translate}}
+            {{this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()).name}}</b></a>
+      </h4>
+    </div>
+    <div *ngIf="this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()) === undefined"
+      class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapseTwo"><b>{{ 'APIARY_NOTES.TITLE' | translate}}</b></a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <b class="text-success"></b>
+        <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
+          title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}" data-toggle="modal"
+          style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newObservationModal"
+          class="btn btn-success">
+          <i class="fa fa-plus fa-2x"></i>
+        </button>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.DATE' | translate}}</th>
+              <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.SENTENCE' | translate}}</th>
+              <th class="text-right" scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.ACTIONS' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hoverStyle" *ngFor="let obs of observationService.observationsApiary; let i = index;">
+              <td>{{ obs.date | myDate }}</td>
+              <td>{{ obs.sentence }}</td>
+              <td class="text-right">
+                <button data-toggle="tooltip" data-html="true"
+                  title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
+                  data-target="#editObservationModal" (click)="onSelectObs(obs)" class="btn btn-primary  "
+                  style="padding: 0;border: none; background: none;">
+                  <i class="fa fa-edit fa-2x"></i>
+                </button>
+                <button type="button" class="btn btn-warning"
+                  title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE' | translate}}"
+                  style="padding: 0;border: none; background: none;" mwlConfirmationPopover
+                  popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top"
+                  confirmText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}"
+                  cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObs(i,obs)"
+                  style="padding: 0;border: none; background: none;">
+                  <i class="fa fa-times fa-2x"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="newObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h3 class="text-center">{{ 'APIARY_NOTES.FORM.NEW' | translate}}</h3>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="observationForm" (ngSubmit)="createObservation()">
+          <div class="form-group">
+
+            <label class="example-input-wrapper">
+              {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
+              <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+              <owl-date-time #dt></owl-date-time>
+            </label><br />
+            <!--             <input type="date" formControlName="date"><br />
+   --> <label for="recipient-obs" class="col-form-label">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
+            <textarea formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" [disabled]="!observationForm.valid">
+              {{ 'APIARY_NOTES.FORM.CREATE' | translate}}</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              (click)="initForm()">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of new Observation Modal -->
+
+
+<!-- Edit Observation Modal -->
+<div class="modal fade" id="editObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h3 class="text-center">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}</h3>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="observationForm">
+          <div class="form-group">
+            <label class="example-input-wrapper">
+              {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
+              <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dtUpdate"
+                [owlDateTime]="dtUpdate">
+              <owl-date-time #dtUpdate></owl-date-time>
+            </label><br />
+            <label for="recipient-editobs"
+              class="col-form-label">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
+            <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
+          </div>
+          <div class="modal-footer">
+            <!--fa fa-sign-in-alt"-->
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditObservation()"
+              [disabled]="!observationForm.valid">{{ 'APIARY_NOTES.FORM.SAVE' | translate}}</button>
+            <button type="button" class="btn btn-secondary"
+              data-dismiss="modal">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
+            <button id="btn-mvToAction" data-toggle="tooltip" data-dismiss="modal" id="btn-mv" data-html="true"
+              title="Move to hive" data-toggle="modal" type="button" data-target="#selectHiveModal"
+              class="btn btn-primary  " style="padding: 0;border: none; background: none;">
+              <i class="fa fa-arrow-circle-right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="selectHiveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h3 class="text-center">{{ 'APIARY_NOTES.FORM.SELECT' | translate}}</h3>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <select [(ngModel)]="hiveToMv" class="form-control" id="select-Apiary">
+            <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="ruche">
+              {{ruche.name}}
+            </option>
+          </select>
+          <label>{{ 'APIARY_NOTES.FORM.TYPE' | translate}}</label>
+          <select (change)="typeToMv = $event.target.value" id="input" class="form-control" required="required">
+            <option value="0">{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}</option>
+            <option value="1">{{ 'HIVE_DETAIL.OBSERVATIONS.ACTION' | translate}}</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" data-dismiss="modal"
+            (click)="mvToActions()">{{ 'APIARY_NOTES.FORM.MOVE' | translate}}</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"
+            (click)="initForm()">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
