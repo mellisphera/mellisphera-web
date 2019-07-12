@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserloggedService } from '../userlogged.service';
 import { NotifierService } from 'angular-notifier';
+import { CONFIG } from 'src/constants/config';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -23,12 +24,12 @@ export class FeedbackComponent implements OnInit {
     private notifyService: NotifierService) {
       if (this.userService.getCountry()) {
         if (this.userService.getCountry().toUpperCase() === 'FR') {
-          this.urlSlack = 'https://hooks.slack.com/services/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';
+          this.urlSlack = CONFIG.SLACK_FR;
         } else {
-          this.urlSlack = 'https://hooks.slack.com/services/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';
+          this.urlSlack = CONFIG.SLACk_EN;
         }
       } else {
-        this.urlSlack = 'https://hooks.slack.com/services/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';
+        this.urlSlack =  CONFIG.SLACk_EN;
       }
     this.notify = notifyService;
   }

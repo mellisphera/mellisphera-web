@@ -42,6 +42,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-src/config.ts
+src/constants/config.ts
 **config.ts
 config.ts
