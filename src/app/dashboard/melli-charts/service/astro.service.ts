@@ -20,6 +20,6 @@ export class AstroService {
    * @memberof AstroService
    */
   public getAstroByApiary(idApiary: string, range: Date[]): Observable<Astro[]> {
-    return this.httpClient.post<Astro[]>(CONFIG.URL + 'astro/apiary' + idApiary, range);
+    return this.httpClient.post<Astro[]>(CONFIG.URL + 'astro/apiary/' + idApiary, range);
   }
 }

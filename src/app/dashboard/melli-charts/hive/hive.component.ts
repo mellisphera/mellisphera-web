@@ -34,6 +34,7 @@ export class HiveComponent implements OnInit, AfterViewInit {
       { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX_DAILY', type: 'DAILY', class: 'item-type' },
       { name: 'HRIN', id: 'HRIN_DAILY', type: 'DAILY', class: 'item-type' },
       { name: 'BROOD', id: 'BROOD_DAILY', type: 'DAILY', class: 'item-type' },
+      { name: 'ASTRO', id: 'ASTRO_DAILY', type: 'DAILY', class: 'item-type'},
 
       { name: 'WINCOME', id: 'WINCOME_HOURLY', type: 'HOURLY', class: 'item-type' },
       { name: 'TEMP_INT', id: 'TEMP_INT_MAX_HOURLY', type: 'HOURLY', class: 'item-type active' },
@@ -86,6 +87,9 @@ export class HiveComponent implements OnInit, AfterViewInit {
         break;
       case 'WEATHER':
         this.dailyManager.getChartDailyWeather(this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest())
+        break;
+      case 'ASTRO':
+        this.dailyManager.getChartAstro(this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
         break;
       default:
         break;
@@ -160,7 +164,6 @@ export class HiveComponent implements OnInit, AfterViewInit {
         this.removeTypeHourly(type);
       }
     }
-    console.log(this.currentTypeHourly);
   }
 
   setRangeChart() {
