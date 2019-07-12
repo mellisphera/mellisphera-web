@@ -14,6 +14,7 @@ import { WeatherService } from '../../../service/api/weather.service';
 import { ICONS_WEATHER } from '../../charts/icons/icons_weather';
 import { flatMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { AstroService } from '../../service/astro.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class DailyManagerService {
     private dailyHService: DailyRecordService,
     private weatherService: WeatherService,
     private graphGlobal: GraphGlobal,
+    private astroService: AstroService,
     private dailyStock: DailyStockHoneyService,
     private unitService: UnitService
   ) {
@@ -108,7 +110,33 @@ export class DailyManagerService {
   }
 
   getChartAstro(idApiary: string, chartInstance: any, range: Date[]) {
-    
+    this.astroService.getAstroByApiary(idApiary, range).subscribe(
+      _astro => {
+        console.log(_astro);
+        // let option = Object.assign({}, this.baseOpions);
+        // if(this.ifRangeChanged(range)) {
+        //   option.calendar.range = range;
+        //   option.series[0].data = _tMax.map(_data => new Array(_data.date, _data.value));
+        // } else {
+        //   if (this.existSeries(option.series, 'Temp-max')) {
+        //     option.series = new Array();
+        //   }
+        //   this.cleanChartsInstance(chartInstance, 'Temp-max');
+        //   let serie = Object.assign({}, SERIES.heatmap);
+        //   serie.data = _tMax.map(_data => new Array(_data.date, _data.value));
+        //   option.visualMap = this.getVisualMapBySerie('Temp-max');
+        //   option.tooltip = this.getTooltipBySerie('Temp-max');
+        //   option.calendar.range = range;
+        //   option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+        //   option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+        //   option.series.push(serie);
+        // }
+        // this.currentRange = range;
+        // chartInstance.setOption(option);
+        // this.baseOpions = option;
+        // console.log(chartInstance.getOption());
+      }
+    )
   }
   getChartWeightincome(idHive: string, chartInstance: any, range: Date[]) {
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive).subscribe(
