@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserloggedService } from '../userlogged.service';
 import { NotifierService } from 'angular-notifier';
+import { CONFIG } from 'src/config';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -23,12 +24,12 @@ export class FeedbackComponent implements OnInit {
     private notifyService: NotifierService) {
       if (this.userService.getCountry()) {
         if (this.userService.getCountry().toUpperCase() === 'FR') {
-          this.urlSlack = '***REMOVED***';
+          this.urlSlack = CONFIG.SLACK_FR;
         } else {
-          this.urlSlack = '***REMOVED***';
+          this.urlSlack = CONFIG.SLACK_EN;
         }
       } else {
-        this.urlSlack = '***REMOVED***';
+        this.urlSlack = CONFIG.SLACK_EN;
       }
     this.notify = notifyService;
   }
