@@ -180,9 +180,8 @@ export class StackApiaryGraphService {
           type: 'value',
           nameLocation: 'middle',
           nameGap: 30,
-          scale: true
-         // min: 0,
-          //max: 100,
+          min: 0,
+          max: 100,
         },
       ],
       series: [],
