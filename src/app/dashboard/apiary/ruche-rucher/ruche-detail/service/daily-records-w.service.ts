@@ -327,28 +327,52 @@ export class DailyRecordsWService {
       return selectHive !== undefined ? selectHive.weight_income_gain + ' lbs' : null;
     }
 
-}
+  }
 
-public getDailyWeightIncomeByApiary(idApiary: string): void {
-  this.dailyWeightRecords = [];
-  var tabDate : Date [];
-  var previousDay : Date;
-  previousDay = new Date();
-  previousDay.setDate(this.rangeDailyRecord.getDate() - 1);
-  previousDay.setHours(2);
-  previousDay.setMinutes(0);
-  tabDate = [previousDay,this.rangeDailyRecord];
-  console.log(tabDate);
-  this.http.post<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/apiary/' + idApiary, tabDate).subscribe(
-      (data) => {
-          if (data[0] != null) {
-              this.dailyWeightRecords = data.flat();
-          }
-      },
-      (err) => {
-          console.log(err);
-      }
-  );
-}
+  public getDailyWeightIncomeByApiary(idApiary: string): void {
+    this.dailyWeightRecords = [];
+    var tabDate : Date [];
+    var previousDay : Date;
+    previousDay = new Date();
+    previousDay.setDate(this.rangeDailyRecord.getDate() - 1);
+    previousDay.setHours(2);
+    previousDay.setMinutes(0);
+    tabDate = [previousDay,this.rangeDailyRecord];
+    console.log(tabDate);
+    this.http.post<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/apiary/' + idApiary, tabDate).subscribe(
+        (data) => {
+            if (data[0] != null) {
+                this.dailyWeightRecords = data.flat();
+            }
+        },
+        (err) => {
+            console.log(err);
+        }
+    );
+  }
+
+  /**
+   *
+   *
+   * @param {string} idHIve
+   * @param {Date[]} range
+   * @returns {Observable<any>}
+   * @memberof DailyRecordsWService
+   */
+  public getTempMaxExt(idHIve: string, range: Date[]): Observable<any> {
+    return this.http.post(CONFIG.URL + 'dailyRecordsW/tMax/' + idHIve, range);
+  }
+
+  /**
+   *
+   *
+   * @param {string} idHIve
+   * @param {Date[]} range
+   * @returns {Observable<any>}
+   * @memberof DailyRecordsWService
+   */
+  public getTempMinExt(idHIve: string, range: Date[]): Observable<any> {
+    return this.http.post(CONFIG.URL + 'dailyRecordsW/tMin/' + idHIve, range);
+  }
 
 }

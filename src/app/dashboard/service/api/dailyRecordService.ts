@@ -318,7 +318,7 @@ export class DailyRecordService {
      * @param idHIve 
      * @param range 
      */
-    public getTmaxByHive(idHIve: string, range: Date[]): Observable<any> {
+    public getTempIntMaxByHive(idHIve: string, range: Date[]): Observable<any> {
         return this.http.post<any>(CONFIG.URL + 'dailyRecordsTH/tMax/' + idHIve, range);
     }
     /**

@@ -147,10 +147,10 @@ export class DailyManagerService {
           option.series[0].data = _daliW.weightIncomeHight;
           option.series[1].data = _daliW.weightIncomeLow;
         } else {
-          if (this.existSeries(option.series, 'tMax')) {
+          if (this.existSeries(option.series, 'gain')) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, 'tMax');
+          this.cleanChartsInstance(chartInstance, 'gain');
           let seriesGain = Object.assign({}, SERIES.effectScatter);
           let seriesLoss= Object.assign({}, SERIES.effectScatter);
           /** First serie */
@@ -198,6 +198,7 @@ export class DailyManagerService {
           console.log(option);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.tooltip = this.getTooltipBySerie('Weight');
           option.calendar.range = range;
         }
         this.currentRange = range;
@@ -209,26 +210,28 @@ export class DailyManagerService {
     )
   }
 
-  getChartTmax(idHive: string, chartInstance: any, range: Date[]) {
-    this.dailyHService.getTmaxByHive(idHive, range).subscribe(
+  getChartTintMax(idHive: string, chartInstance: any, range: Date[]) {
+    this.dailyHService.getTempIntMaxByHive(idHive, range).subscribe(
       _tMax => {
         let option = Object.assign({}, this.baseOpions);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _tMax.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, 'Temp-max')) {
+          if (this.existSeries(option.series, 'Temp-int-max')) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, 'Temp-max');
+          this.cleanChartsInstance(chartInstance, 'Temp-int-max');
           let serie = Object.assign({}, SERIES.heatmap);
+          serie.name = 'Temp-int-max';
           serie.data = _tMax.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie('Temp-max');
-          option.tooltip = this.getTooltipBySerie('Temp-max');
+          option.visualMap = this.getVisualMapBySerie('Temp-int-max');
+          option.tooltip = this.getTooltipBySerie('Temp-int-max');
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.series.push(serie);
+          console.log(option);
         }
         this.currentRange = range;
         chartInstance.setOption(option);
@@ -239,6 +242,65 @@ export class DailyManagerService {
     )
   }
 
+  getChartTextMax(idHive: string, chartInstance: any, range: Date[]) {
+    this.dailyWService.getTempMaxExt(idHive, range).subscribe(
+      _tmpMaxExt => {
+        let option = Object.assign({}, this.baseOpions);
+        if(this.ifRangeChanged(range)) {
+          option.calendar.range = range;
+          option.series[0].data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
+        } else {
+          if (this.existSeries(option.series, 'Temp-ext-max')) {
+            option.series = new Array();
+          }
+          this.cleanChartsInstance(chartInstance, 'Temp-ext-max');
+          let serie = Object.assign({}, SERIES.heatmap);
+          serie.data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
+          option.visualMap = this.getVisualMapBySerie('Temp-ext-max');
+          option.tooltip = this.getTooltipBySerie('Temp-ext-max');
+          option.calendar.range = range;
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.series.push(serie);
+          console.log(option);
+        }
+        this.currentRange = range;
+        chartInstance.setOption(option);
+        this.baseOpions = option;
+        console.log(chartInstance.getOption());
+
+      }
+    )
+  }
+  getChartTextMin(idHive: string, chartInstance: any, range: Date[]) {
+    this.dailyWService.getTempMinExt(idHive, range).subscribe(
+      _tMinExt => {
+        let option = Object.assign({}, this.baseOpions);
+        if(this.ifRangeChanged(range)) {
+          option.calendar.range = range;
+          option.series[0].data = _tMinExt.map(_data => new Array(_data.date, _data.value));
+        } else {
+          if (this.existSeries(option.series, 'Temp-ext-min')) {
+            option.series = new Array();
+          }
+          this.cleanChartsInstance(chartInstance, 'Temp-ext-min');
+          let serie = Object.assign({}, SERIES.heatmap);
+          serie.data = _tMinExt.map(_data => new Array(_data.date, _data.value));
+          serie.name = 'Temp-ext-min';
+          option.visualMap = this.getVisualMapBySerie('Temp-ext-min');
+          option.tooltip = this.getTooltipBySerie('Temp-ext-min');
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.calendar.range = range;
+          option.series.push(serie);
+        }
+        this.currentRange = range;
+        chartInstance.setOption(option);
+        this.baseOpions = option;
+        console.log(chartInstance.getOption());
+      }
+    )
+  }
   getChartHint(idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getHintByHive(idHive, range).subscribe(
       _hInt => {
@@ -298,7 +360,7 @@ export class DailyManagerService {
     )
   }
 
-  getChartTmin(idHive: string, chartInstance: any, range: Date[]) {
+  getChartTminInt(idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getTminByHive(idHive, range).subscribe(
       _tMin => {
         let option = Object.assign({}, this.baseOpions);
@@ -306,15 +368,15 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series[0].data = _tMin.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, 'Temp-min')) {
+          if (this.existSeries(option.series, 'Temp-int-min')) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, 'Temp-min');
+          this.cleanChartsInstance(chartInstance, 'Temp-int-min');
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tMin.map(_data => new Array(_data.date, _data.value));
-          serie.name = 'Temp-min';
-          option.visualMap = this.getVisualMapBySerie('Temp-min');
-          option.tooltip = this.getTooltipBySerie('Temp-min');
+          serie.name = 'Temp-int-min';
+          option.visualMap = this.getVisualMapBySerie('Temp-int-min');
+          option.tooltip = this.getTooltipBySerie('Temp-int-min');
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -391,7 +453,7 @@ export class DailyManagerService {
   getVisualMapBySerie(serieLabel: string): any {
     let visualMap = Object.assign({}, CALENDAR.visualMap);
     switch(serieLabel) {
-      case 'Temp-max':
+      case 'Temp-int-max':
         visualMap.type = 'continuous';
         visualMap.top = 15;
         visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
@@ -416,7 +478,7 @@ export class DailyManagerService {
           visualMap.inRange.color =  ['red', 'yellow', '#129001'];
           visualMap.top = 15;
           break;
-        case 'Temp-min':
+        case 'Temp-int-min':
             visualMap.type = 'continuous';
             visualMap.top = 15;
             visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
@@ -424,6 +486,13 @@ export class DailyManagerService {
             visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
             '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
             break;
+        case 'Temp-ext-max':
+            visualMap.type = 'continuous';
+            visualMap.top = 15;
+            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
+            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
+            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+            '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
       default:
       break;
     }
@@ -438,25 +507,10 @@ export class DailyManagerService {
    * @memberof DailyManagerService
    */
   getTooltipBySerie(serieLabel: string): any {
-    let tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
-    switch(serieLabel) {
-      case 'brood':
-      case 'Hum':
-          tooltip.formatter =  (params) => {
-            return params.marker + this.unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + ' %';
-          }
-          break;
-      case 'Temp-min':
-      case 'Temp-max':
-        tooltip.formatter =  (params) => {
-          return params.marker  + this.unitService.getDailyDate(params.data[0]) + ': <b>' + this.graphGlobal.getNumberFormat(params.data[1]) + ' ' + this.graphGlobal.getUnitBySerieName(params.seriesName) + '</b>';
-        }
-        break;
-      default:
-          tooltip.formatter =  (params) => {
-            return params.marker  + this.unitService.getDailyDate(params.data[0]) + ': <b>' + this.graphGlobal.getNumberFormat(params.data[1]) + ' ' + this.graphGlobal.getUnitBySerieName(params.seriesName) + '</b>';
-          }
-      break;
+    const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
+    tooltip.formatter =  (params) => {
+      return params.marker  + this.unitService.getDailyDate(params.data[0]) +
+      ': <b>' + this.graphGlobal.getNumberFormat(params.data[1]) + ' ' + this.graphGlobal.getUnitBySerieName(params.seriesName) + '</b>';
     }
     return tooltip;
   }

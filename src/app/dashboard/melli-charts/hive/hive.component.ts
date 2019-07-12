@@ -70,26 +70,32 @@ export class HiveComponent implements OnInit, AfterViewInit {
       case 'WINCOME':
         this.dailyManager.getChartWeightincome(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
+      case 'TEMP_EXT_MAX':
+        this.dailyManager.getChartTextMax(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
+        break;
+      case 'TEMP_EXT_MIN':
+        this.dailyManager.getChartTextMin(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
+        break;
       case 'TEMP_INT_MAX':
-        this.dailyManager.getChartTmax(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
+          this.dailyManager.getChartTintMax(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'TEMP_INT_MIN':
-        this.dailyManager.getChartTmin(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
+        this.dailyManager.getChartTminInt(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'HRIN':
-        this.dailyManager.getChartHint(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
+        this.dailyManager.getChartHint(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'BROOD':
-        this.dailyManager.getChartBrood(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
+        this.dailyManager.getChartBrood(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'WEIGHT_MAX':
-        this.dailyManager.getChartWeight(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
+        this.dailyManager.getChartWeight(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'WEATHER':
-        this.dailyManager.getChartDailyWeather(this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest())
+        this.dailyManager.getChartDailyWeather(this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true))
         break;
       case 'ASTRO':
-        this.dailyManager.getChartAstro(this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
+        this.dailyManager.getChartAstro(this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       default:
         break;
