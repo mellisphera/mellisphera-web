@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RucheInterface } from '../../../_model/ruche';
 import { HttpClient } from '@angular/common/http';
+import { reject } from 'q';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,23 @@ export class MelliChartsHiveService {
       }
     );
   }
+
+  /**
+   *
+   *
+   * @returns {Promise<Boolean>}
+   * @memberof MelliChartsHiveService
+   */
+  checkHiveNotNul(): Promise<Boolean> {
+    return new Promise((resolve, reject) => {
+      if (this.getHiveSelect() !== null) {
+        resolve(true);
+      } else {
+        reject(false);
+      }
+    });
+  }
+
 
   getHiveSelect(): RucheInterface{
     return this.hiveSelect;

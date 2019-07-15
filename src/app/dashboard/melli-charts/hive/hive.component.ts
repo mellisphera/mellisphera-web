@@ -50,14 +50,20 @@ export class HiveComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // this.dailyManager.getWeightincome(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest());
-    this.loadDailyData();
+    this.melliHive.checkHiveNotNul().then(status => {
+      console.log(status);
+      this.loadDailyData();
+    }).catch((err) => {
+      console.log(err);
+    });
+
   }
 
 
   ngAfterViewInit(): void {
     this.currentEltTypeDaily = document.getElementById(this.currentTypeDaily.id);
     this.currentEltTypeHourly = document.getElementById(this.currentTypeHourly[0].id);
+
 
   }
 
