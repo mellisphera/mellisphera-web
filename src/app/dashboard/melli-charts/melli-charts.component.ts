@@ -180,8 +180,32 @@ export class MelliChartsComponent implements OnInit {
     return new Date(this.melliChartDate.end).toISOString().substring(0, 10);
   }
 
+  /**
+   *
+   *
+   * @param {RucheInterface} hive
+   * @returns {string}
+   * @memberof MelliChartsComponent
+   */
   getColor(hive: RucheInterface): string {
     return this.melliChartHive.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
+  }
+  /**
+   *
+   *
+   * @param {string} idApiary
+   * @returns {string}
+   * @memberof MelliChartsComponent
+   */
+  checkApiaryIfAcive(idApiary: string): string {
+    try {
+      if (this.melliChartHive.getHiveSelect().idApiary === idApiary) {
+        return 'apiary-active';
+     } else {
+       return 'not-active';
+     }
+    } catch(TypeError) {
+    } 
   }
 
 }

@@ -56,7 +56,7 @@
         <div id="apiary-group">
           <div id="main-menu" class="list-group">
             <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
-              <a [href]="'#' + i" class="list-group-item apiary" data-toggle="collapse" data-parent="#main-menu"><span
+              <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher.id)" data-toggle="collapse" data-parent="#main-menu"><span
                   class="puce-apiary"></span>{{ rucher.name }}<span class="caret"></span></a>
                   <div class="collapse list-group-level1" [id]="i">
                       <a [class]="'list-group-item sub-items '"

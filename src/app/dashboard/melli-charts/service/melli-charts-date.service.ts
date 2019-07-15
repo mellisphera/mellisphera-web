@@ -70,10 +70,7 @@ export class MelliChartsDateService {
    */
   getRangeForReqest(daily?: boolean): Date[] {
     if (daily) {
-      return this.rangeDateForRequest.map(_date => {
-        _date.setHours(0);
-        return _date;
-      });
+      return this.rangeDateForRequest;
     } else {
       return this.rangeDateForRequest;
     }

@@ -15,6 +15,7 @@ import { ICONS_WEATHER } from '../../charts/icons/icons_weather';
 import { flatMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AstroService } from '../../service/astro.service';
+import { ICONS_ASTRO } from '../../charts/icons/icons_astro';
 
 @Injectable({
   providedIn: 'root'
@@ -113,28 +114,76 @@ export class DailyManagerService {
     this.astroService.getAstroByApiary(idApiary, range).subscribe(
       _astro => {
         console.log(_astro);
-        // let option = Object.assign({}, this.baseOpions);
-        // if(this.ifRangeChanged(range)) {
-        //   option.calendar.range = range;
-        //   option.series[0].data = _tMax.map(_data => new Array(_data.date, _data.value));
-        // } else {
-        //   if (this.existSeries(option.series, 'Temp-max')) {
-        //     option.series = new Array();
-        //   }
-        //   this.cleanChartsInstance(chartInstance, 'Temp-max');
-        //   let serie = Object.assign({}, SERIES.heatmap);
-        //   serie.data = _tMax.map(_data => new Array(_data.date, _data.value));
-        //   option.visualMap = this.getVisualMapBySerie('Temp-max');
-        //   option.tooltip = this.getTooltipBySerie('Temp-max');
-        //   option.calendar.range = range;
-        //   option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
-        //   option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-        //   option.series.push(serie);
-        // }
-        // this.currentRange = range;
-        // chartInstance.setOption(option);
-        // this.baseOpions = option;
-        // console.log(chartInstance.getOption());
+        console.log(_astro);
+        let option = Object.assign({}, this.baseOpions);
+        if(this.ifRangeChanged(range)) {
+          console.log('range');
+          option.calendar.range = range;
+          option.series[0].data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name']));
+        } else {
+          if (this.existSeries(option.series, 'Astro')) {
+            option.series = new Array();
+            console.log('vide');
+          }
+          this.cleanChartsInstance(chartInstance, 'Astro');
+          let serie = Object.assign({}, SERIES.custom);
+          serie.name = 'Weather';
+          serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name']));
+          serie.renderItem = (params, api) => {
+            let cellPoint = api.coord(api.value(0));
+            let cellWidth = params.coordSys.cellWidth;
+            let cellHeight = params.coordSys.cellHeight;
+            let value = api.value(1);
+            console.log(value);
+            return {
+                type: 'group',
+                children: [
+                  {
+                    type: 'path',
+                    z2: 1000 ,
+                    shape: {
+                      pathData: ICONS_ASTRO[api.value(1)],
+                      x: -11,
+                      y: -11,
+                      width: 25,
+                      height: 25
+                  },
+                  style: {
+                    fill: (value === 'NEW_MOON') ? 'white' : 'black'
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                },
+                 {
+                   type: 'rect',
+                   z2: 0,
+                   shape: {
+                     x: -cellWidth / 2,
+                     y: -cellHeight / 2,
+                     width: cellWidth,
+                     height: cellHeight,
+                   },
+                   position: [cellPoint[0], cellPoint[1]],
+                   style: {
+                     fill: this.getColorCalendarByDate(api.value(0)),
+                     stroke: 'black'
+                   }
+                 }
+              ]
+            };
+          }
+          option.tooltip = this.getTooltipBySerie('Astro');
+          option.calendar.range = range;
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.dayLabel.align = 'left';
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.visualMap = null;
+          option.series.push(serie);
+        }
+        this.currentRange = range;
+        chartInstance.clear();
+        chartInstance.setOption(option, true);
+        this.baseOpions = option;
+        console.log(chartInstance.getOption());
       }
     )
   }

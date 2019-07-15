@@ -110,6 +110,9 @@ nav[role=admin-navigation] {
     vertical-align: text-top;
     margin-right: 5px;
 }
+.apiary-active{
+    background-color: #eafffd;
+}
 .time:hover{
     background-color: lightslategray;
     cursor: pointer;
