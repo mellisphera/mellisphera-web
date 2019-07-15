@@ -130,12 +130,12 @@ export class MelliChartsComponent implements OnInit {
     return this.melliChartDate.ranges.filter(elt => elt.type === type || elt.type === type + 'S');
   }
 
-  setDateFromInput(): void {
-    let start = this.melliChartDate.start;
-    let end = this.melliChartDate.end;
-    this.melliChartDate.setRangeForRequest([start, end]);
-    this.hiveComponent.setRangeChart();
-  }
+   setDateFromInput(): void {
+     let start = this.melliChartDate.start;
+     let end = this.melliChartDate.end;
+     this.melliChartDate.setRangeForRequest([start, end]);
+     this.hiveComponent.setRangeChart();
+   }
 
 
   navToPage(path: string) {
@@ -144,21 +144,19 @@ export class MelliChartsComponent implements OnInit {
 
 
   selectHive(hive: RucheInterface, event: MouseEvent) {
-    this.melliChartHive.setHiveSelect(hive);
-    this.nextByRoute();
-
+     this.melliChartHive.setHiveSelect(hive);
+     this.nextByRoute();
   }
 
 
-  nextByRoute() {
-    console.log(this.router.url);
-     switch(this.router.url){
-      case PREFIX_PATH + 'hive':
-        this.hiveComponent.loadDailyData();
-        this.hiveComponent.loadHourlyData();
-      break;
-    }
-  }
+   nextByRoute() {
+     console.log(this.router.url);
+      switch(this.router.url){
+       case PREFIX_PATH + 'hive':
+         this.hiveComponent.loadDataFromHive();
+       break;
+     }
+   }
   /**
    *
    *

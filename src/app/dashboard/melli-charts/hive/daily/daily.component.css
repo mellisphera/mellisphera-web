@@ -1,0 +1,20 @@
+.calendar{
+    height: 600px;
+    width: 80vw;
+}
+#sidebar-tools-daily{
+    position: fixed;
+    height: 50vh;
+    width: 9% !important;
+    color: white;
+    top: 10%;
+    right: 2px;
+    background-color: #333F3D;
+}
+.item-type:hover {
+    cursor:pointer;
+}
+.active{
+    background-color: white;
+    color: black;
+}

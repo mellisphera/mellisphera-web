@@ -14,6 +14,8 @@ export class MelliChartsHiveService {
   private arrayColor: Array<any>;
   constructor(private httpClient: HttpClient) {
     this.hiveSelect = null;
+    this.dailyEchartInstances = null;
+    this.hourlyEchartInstances = null;
     this.getColor();
   }
 
@@ -68,6 +70,15 @@ export class MelliChartsHiveService {
   }
 
 
+  checkifDaillyInstanceChart(): Promise<Boolean> {
+    return new Promise((resolve, reject) => {
+      if (this.dailyEchartInstances !== null) {
+        resolve(true);
+      } else {
+        reject(false);
+      }
+    })
+  }
 
 
   /**

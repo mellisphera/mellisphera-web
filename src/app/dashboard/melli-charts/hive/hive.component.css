@@ -1,19 +1,4 @@
-#sidebar-tools-daily{
-    position: fixed;
-    height: 50vh;
-    width: 9% !important;
-    top: 10%;
-    right: 2px;
-    background-color: #333F3D;
-}
-#sidebar-tools-hourly{
-    position: fixed;
-    height: 50vh;
-    width: 9% !important;
-    top: 50%;
-    right: 2px;
-    background-color: #333F3D;
-}
+
 .item-type{
     color: white;
 }
@@ -23,10 +8,6 @@
 }
 .item-type:hover {
     cursor:pointer;
-}
-.calendar{
-    height: 600px;
-    width: 80vw;
 }
 .hourly{
     height: 600px;

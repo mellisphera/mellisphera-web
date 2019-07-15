@@ -1,0 +1,9 @@
+<div id="daily">
+  <div class="chart calendar" [options]="dailyManager.baseOpions" echarts (chartInit)="onDailyChartInit($event)"></div>
+</div>
+<div id="sidebar-tools-daily" class="sidebar-wrapper">
+  <ul class="nav responsive-nav">
+    <li *ngFor="let type of getlabelByType()" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}
+    </li>
+  </ul>
+</div>

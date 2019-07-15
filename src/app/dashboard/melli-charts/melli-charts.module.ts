@@ -11,6 +11,8 @@ import { VitalityComponent } from './vitality/vitality.component';
 import { DailyManagerService } from './hive/service/daily-manager.service';
 import { HourlyManagerService } from './hive/service/hourly-manager.service';
 import { MelliChartsComponent } from './melli-charts.component';
+import { DailyComponent } from './hive/daily/daily.component';
+import { HourlyComponent } from './hive/hourly/hourly.component';
 
 @NgModule({
   providers:[
@@ -22,7 +24,9 @@ import { MelliChartsComponent } from './melli-charts.component';
     HiveComponent,
     MapComponent,
     StackComponent,
-    VitalityComponent
+    VitalityComponent,
+    DailyComponent,
+    HourlyComponent
    ],
   imports: [
     MelliChartsRouting,

@@ -103,7 +103,7 @@ export class DailyManagerService {
         }
         this.currentRange = range;
         chartInstance.clear();
-        chartInstance.setOption(option, true);
+        chartInstance.setOption(option);
         this.baseOpions = option;
         console.log(chartInstance.getOption());
       }
@@ -134,7 +134,6 @@ export class DailyManagerService {
             let cellWidth = params.coordSys.cellWidth;
             let cellHeight = params.coordSys.cellHeight;
             let value = api.value(1);
-            console.log(value);
             return {
                 type: 'group',
                 children: [
@@ -329,7 +328,7 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series[0].data = _tMinExt.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, 'Temp-ext-min')) {
+          if (this.existSeries(option.series, '52')) {
             option.series = new Array();
           }
           this.cleanChartsInstance(chartInstance, 'Temp-ext-min');
@@ -502,6 +501,14 @@ export class DailyManagerService {
   getVisualMapBySerie(serieLabel: string): any {
     let visualMap = Object.assign({}, CALENDAR.visualMap);
     switch(serieLabel) {
+      case 'Weight-Max':
+          visualMap.type = 'continuous';
+          visualMap.top = 15;
+          visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 10 : 25;
+          visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 100 : 220;
+          visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+          break;
       case 'Temp-int-max':
         visualMap.type = 'continuous';
         visualMap.top = 15;
@@ -540,6 +547,14 @@ export class DailyManagerService {
             visualMap.top = 15;
             visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
             visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
+            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+            '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+            break;
+        case 'Temp-ext-min':
+            visualMap.type = 'continuous';
+            visualMap.top = 15;
+            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
+            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 30 : 90;
             visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
             '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
       default:

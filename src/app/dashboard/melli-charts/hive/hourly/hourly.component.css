@@ -1,0 +1,16 @@
+#sidebar-tools-hourly{
+    position: fixed;
+    height: 50vh;
+    width: 9% !important;
+    top: 50%;
+    color: white;
+    right: 2px;
+    background-color: #333F3D;
+}
+.item-type:hover {
+    cursor:pointer;
+}
+.active{
+    background-color: white;
+    color: black;
+}
