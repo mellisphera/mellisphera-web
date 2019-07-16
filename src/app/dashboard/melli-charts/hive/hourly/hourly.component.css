@@ -1,6 +1,6 @@
 #sidebar-tools-hourly{
     position: absolute;
-    height: 50vh;
+    height: 30vh;
     width: 5% !important;
     top: 50%;
     color: white;
@@ -17,4 +17,17 @@
 .hourly{
     height: 600px;
     width: 95%;
+}
+@media screen and (max-width:1400px) {
+    #sidebar-tools-hourly {
+        position: relative;
+        width: 100% !important;
+        height: auto;
+    }
+    .hourly {
+        width: 100%;
+    }
+    #sidebar-tools-hourly ul {
+        display: flex;
+    }
 }

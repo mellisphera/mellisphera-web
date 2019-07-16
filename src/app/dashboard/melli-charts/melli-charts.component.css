@@ -4,7 +4,6 @@
     white-space: pre-wrap;
     overflow-y: scroll;
     position: fixed;
-    height: 93vh;
     width: 12%;
     justify-content: space-between;
     height: 90vh;
@@ -122,6 +121,18 @@ nav[role=admin-navigation] {
 }
 .sub-items{
     cursor: pointer;
+}
+@media screen and (max-width:1400px) {
+    #apiary-group {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    #content{
+        position: relative;
+        left: auto !important;
+        width: 100% !important;
+    }
 }
 @media screen and (max-width:1300px) {
     #input-date{

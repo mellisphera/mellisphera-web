@@ -4,7 +4,7 @@
 }
 #sidebar-tools-daily{
     position: absolute;
-    height: 50vh;
+    height: 30vh;
     width: 5% !important;
     color: white;
     top: 10%;
@@ -17,4 +17,17 @@
 .active{
     background-color: white;
     color: black;
+}
+@media screen and (max-width:1400px) {
+    #sidebar-tools-daily {
+        position: relative;
+        width: 100% !important;
+        height: auto;
+    }
+    .calendar {
+        width: 100%;
+    }
+    #sidebar-tools-daily ul {
+        display: flex;
+    }
 }

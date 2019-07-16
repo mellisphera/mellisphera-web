@@ -96,7 +96,6 @@ export class ApiaryNotesComponent implements OnInit {
    * @memberof ApiaryNotesComponent
    */
   createObservation() {
-
     if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
       const formValue = this.observationForm.value;
       this.newObs = formValue;
@@ -110,7 +109,7 @@ export class ApiaryNotesComponent implements OnInit {
           return new Date(b.date).getTime() - new Date(a.date).getTime();
         });
       }, () => { }, () => {
-         if(this.userService.getJwtReponse().country === "FR"){
+         if (this.userService.getJwtReponse().country === "FR"){
           this.notify.notify('success', 'Note créée');
         }else{
           this.notify.notify('success', 'Created Note');

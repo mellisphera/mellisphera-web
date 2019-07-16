@@ -32,6 +32,7 @@
     "angular-confirmation-popover": "^4.2.0",
     "angular-notifier": "^4.1.1",
     "angular2-draggable": "^2.3.0",
+    "angular5-csv": "^0.2.11",
     "animate.css": "^3.7.0",
     "bootstrap": "^3.4.1",
     "bootstrap-notify": "^3.1.3",

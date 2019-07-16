@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, Renderer2 } from '@angular/core';
 import { DailyManagerService } from '../service/daily-manager.service';
 import { MelliChartsHiveService } from '../../service/melli-charts-hive.service';
 import { MelliChartsDateService } from '../../service/melli-charts-date.service';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
 
 interface Tools {
@@ -19,7 +20,8 @@ interface Tools {
 export class DailyComponent implements OnInit, AfterViewInit {
 
   private currentEltTypeDaily: HTMLElement;
-  private currentTypeDaily: any;
+  private currentTypeDaily: Tools;
+  private optionCsv: Object;
   private typeData: Tools[];
   constructor(private renderer: Renderer2,
     private dailyManager: DailyManagerService,
@@ -37,6 +39,18 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'BROOD', id: 'BROOD', type: 'DEVICE', class: 'item-type', icons: '' },
       { name: 'ASTRO', id: 'ASTRO', type: 'OTHER', class: 'item-type', icons: ''}
     ];
+    this.optionCsv = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'Your title',
+      useBom: true,
+      noDownload: false,
+      headers: ['Date', 'Value'],
+      nullToEmptyString: false,
+    };
     this.currentTypeDaily = this.typeData[0];
 
   }
@@ -44,6 +58,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
   }
+
 
 
 
@@ -98,10 +113,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
       console.info('CHART INEXISTANT');
       this.melliHive.setDailyChartInstance(event);
       console.log(this.melliHive.getDailyChartInstance().getWidth());
-
     });
   }
-  
   /**
    *
    *
@@ -121,5 +134,10 @@ export class DailyComponent implements OnInit, AfterViewInit {
       this.renderer.addClass(this.currentEltTypeDaily, 'active');
       this.loadDailyData();
     }
+  }
+
+  exportToCsv() {
+    const data = this.melliHive.getDailyChartInstance().getOption().series.map(_series => _series.data).flat();
+    const ngCsv = new Angular5Csv(data, this.currentTypeDaily.name, this.optionCsv);
   }
 }

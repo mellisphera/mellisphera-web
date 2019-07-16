@@ -72,6 +72,10 @@ export class MelliChartsComponent implements OnInit {
             hives => {
               console.log(hives);
               this.rucherService.rucheService.ruchesAllApiary = hives;
+            },
+            err => {},
+            () => {
+              this.hiveComponent.loadDataFromHive();
             }
           )
         });

@@ -8,5 +8,6 @@
   <hr/>
   <ul  class="nav responsive-nav" id="other-group">
     <li *ngFor="let type of getlabelByType('OTHER')" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}</li>
+    <li (click)="exportToCsv()">Export to csv</li>
   </ul>
 </div>

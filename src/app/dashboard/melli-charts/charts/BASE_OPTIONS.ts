@@ -96,7 +96,6 @@ export const BASE_OPTIONS = {
                     yAxisIndex: 'none',
                 },
                 dataView: { readOnly: false },
-                restore: {},
                 saveAsImage: {}
             }
         },
