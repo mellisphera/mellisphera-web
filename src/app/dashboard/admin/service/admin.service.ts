@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RucherModel } from './../../../_model/rucher-model';
 import { CONFIG } from '../../../../constants/config';
-import { RucherService } from '../../service/rucher.service';
+import { RucherService } from '../../service/api/rucher.service';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { RucheInterface } from '../../../_model/ruche';
 import { LoadingService } from '../../service/loading.service';
@@ -28,7 +28,8 @@ export class AdminService {
     private loadingService: LoadingService) {
       if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
         this.rangeStart = new Date();
-        this.rangeStart.setHours(this.rangeStart.getDate() - 3);
+        this.rangeStart.setDate(new Date().getDate() - 3);
+        this.rangeStart.setHours(this.rangeStart.getHours() - 3);
         this.allUsers =  this.allSensors = this.lastConnection = [];
         this.getAllApiary();
         this.getLastConnection(this.rangeStart);
