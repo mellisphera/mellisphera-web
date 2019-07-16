@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RucherModel } from './../../../_model/rucher-model';
 import { CONFIG } from '../../../../constants/config';
-import { RucherService } from '../../service/api/rucher.service';
+import { RucherService } from '../../service/rucher.service';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { RucheInterface } from '../../../_model/ruche';
 import { LoadingService } from '../../service/loading.service';
