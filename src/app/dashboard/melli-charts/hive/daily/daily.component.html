@@ -2,8 +2,11 @@
   <div class="chart calendar" [options]="dailyManager.baseOpions" echarts (chartInit)="onDailyChartInit($event)"></div>
 </div>
 <div id="sidebar-tools-daily" class="sidebar-wrapper">
-  <ul class="nav responsive-nav">
-    <li *ngFor="let type of getlabelByType()" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}
-    </li>
+  <ul class="nav responsive-nav" id="device-group">
+    <li *ngFor="let type of getlabelByType('DEVICE')" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}</li>
+  </ul>
+  <hr/>
+  <ul  class="nav responsive-nav" id="other-group">
+    <li *ngFor="let type of getlabelByType('OTHER')" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}</li>
   </ul>
 </div>

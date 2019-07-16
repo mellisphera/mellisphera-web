@@ -6,8 +6,6 @@ import { HourlyManagerService } from './service/hourly-manager.service';
 import { DailyComponent } from './daily/daily.component';
 import { HourlyComponent } from './hourly/hourly.component';
 
-const HOURLY = 'HOURLY';
-const DAILY = 'DAILY';
 
 @Component({
   selector: 'app-hive',
@@ -19,8 +17,7 @@ export class HiveComponent implements OnInit {
   public typeData: Array<any>;
   @ViewChild(DailyComponent) dailyComponent: DailyComponent;
   @ViewChild(HourlyComponent) hourlyComponent: HourlyComponent;
-  constructor(private melliDate: MelliChartsDateService,
-    private melliHive: MelliChartsHiveService,
+  constructor(
     public dailyManager: DailyManagerService,
     public hourlyManager: HourlyManagerService) {
 

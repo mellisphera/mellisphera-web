@@ -1,9 +1,9 @@
 export const CALENDAR = {
     calendar: {
-        height: '40%',
-       // left: 'center',
-        width:'80%',
-        cellSize: ['20', '20'],
+        height: '80%',
+        left: 'center',
+        //width: '80%',
+        cellSize: [30, 30],
         range: [new Date().getFullYear() + '-' +( new Date().getMonth() - 1) + '-' + '01', new Date()],
         orient: 'horizontal',
         splitLine: {
@@ -15,6 +15,7 @@ export const CALENDAR = {
             }
         },
         dayLabel: {
+            margin: 10,
             nameMap: [],
             firstDay: 1, // start on Monday
         },

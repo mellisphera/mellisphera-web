@@ -25,6 +25,7 @@ export class MelliChartsDateService {
       { scale: 7, type: 'DAYS' },
       { scale: 15, type: 'DAYS' },
       { scale: 1, type: 'MONTH' },
+      { scale: 2, type: 'MONTHS' },
       { scale: 3, type: 'MONTHS' },
       { scale: 6, type: 'MONTHS' },
       { scale: 1, type: 'YEAR' }

@@ -1,11 +1,11 @@
 .calendar{
-    height: 600px;
-    width: 80vw;
+    height: 300px;
+    width: 95%;
 }
 #sidebar-tools-daily{
-    position: fixed;
+    position: absolute;
     height: 50vh;
-    width: 9% !important;
+    width: 5% !important;
     color: white;
     top: 10%;
     right: 2px;

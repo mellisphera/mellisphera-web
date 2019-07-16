@@ -3,6 +3,14 @@ import { DailyManagerService } from '../service/daily-manager.service';
 import { MelliChartsHiveService } from '../../service/melli-charts-hive.service';
 import { MelliChartsDateService } from '../../service/melli-charts-date.service';
 
+
+interface Tools {
+  name: string;
+  id: string;
+  type: string;
+  class: string;
+  icons: string;
+}
 @Component({
   selector: 'app-daily',
   templateUrl: './daily.component.html',
@@ -12,22 +20,22 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
   private currentEltTypeDaily: HTMLElement;
   private currentTypeDaily: any;
-  private typeData: any;
+  private typeData: Tools[];
   constructor(private renderer: Renderer2,
     private dailyManager: DailyManagerService,
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
     this.typeData = [
-      { name: 'WINCOME', id: 'WINCOME_DAILY', type: 'DAILY', class: 'item-type active' },
-      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX_DAILY', type: 'DAILY', class: 'item-type' },
-      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN_DAILY', type: 'DAILY', class: 'item-type' },
-      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX_DAILY', type: 'DAILY', class: 'item-type' },
-      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN_DAILY', type: 'DAILY', class: 'item-type' },
-      { name: 'WEATHER', id: 'WHEATHER_DAILY', type: 'DAILY', class: 'item-type' },
-      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX_DAILY', type: 'DAILY', class: 'item-type' },
-      { name: 'HRIN', id: 'HRIN_DAILY', type: 'DAILY', class: 'item-type' },
-      { name: 'BROOD', id: 'BROOD_DAILY', type: 'DAILY', class: 'item-type' },
-      { name: 'ASTRO', id: 'ASTRO_DAILY', type: 'DAILY', class: 'item-type'}
+      { name: 'WINCOME', id: 'WINCOME', type: 'DEVICE', class: 'item-type active', icons: '' },
+      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', type: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', type: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', type: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', type: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'WEATHER', id: 'WHEATHERs', type: 'OTHER', class: 'item-type', icons: '' },
+      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', type: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'HRIN', id: 'HRIN', type: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'BROOD', id: 'BROOD', type: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'ASTRO', id: 'ASTRO', type: 'OTHER', class: 'item-type', icons: ''}
     ];
     this.currentTypeDaily = this.typeData[0];
 
@@ -46,34 +54,34 @@ export class DailyComponent implements OnInit, AfterViewInit {
   loadDailyData(): void {
     switch (this.currentTypeDaily.name) {
       case 'WINCOME':
-        this.dailyManager.getChartWeightincome(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartWeightincome(this.currentTypeDaily.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'TEMP_EXT_MAX':
-        this.dailyManager.getChartTextMax(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartTextMax(this.currentTypeDaily.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'TEMP_EXT_MIN':
-        this.dailyManager.getChartTextMin(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartTextMin(this.currentTypeDaily.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'TEMP_INT_MAX':
-          this.dailyManager.getChartTintMax(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
+          this.dailyManager.getChartTintMax(this.currentTypeDaily.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'TEMP_INT_MIN':
-        this.dailyManager.getChartTminInt(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartTminInt(this.currentTypeDaily.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'HRIN':
-        this.dailyManager.getChartHint(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartHint(this.currentTypeDaily.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'BROOD':
-        this.dailyManager.getChartBrood(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartBrood(this.currentTypeDaily.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'WEIGHT_MAX':
-        this.dailyManager.getChartWeight(this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartWeight(this.currentTypeDaily.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'WEATHER':
-        this.dailyManager.getChartDailyWeather(this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true))
+        this.dailyManager.getChartDailyWeather(this.currentTypeDaily.name, this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true))
         break;
       case 'ASTRO':
-        this.dailyManager.getChartAstro(this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartAstro(this.currentTypeDaily.name, this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       default:
         break;
@@ -100,11 +108,11 @@ export class DailyComponent implements OnInit, AfterViewInit {
    * @returns {Array<any>}
    * @memberof DailyComponent
    */
-  getlabelByType(): Array<any> {
-    return this.typeData;
+  getlabelByType(type: string): Array<any> {
+    return this.typeData.filter(_filter => _filter.type === type);
   }
 
-  setType(type: any): void {
+  setType(type: Tools): void {
     if (type.id !== this.currentTypeDaily.id) {
       this.renderer.removeClass(this.currentEltTypeDaily, 'active');
       this.currentEltTypeDaily = document.getElementById(type.id);

@@ -3,6 +3,14 @@ import { HourlyManagerService } from '../service/hourly-manager.service';
 import { MelliChartsHiveService } from '../../service/melli-charts-hive.service';
 import { MelliChartsDateService } from '../../service/melli-charts-date.service';
 
+interface Tools {
+  name: string;
+  id: string;
+  type: string;
+  class: string;
+  icons?: string;
+}
+
 @Component({
   selector: 'app-hourly',
   templateUrl: './hourly.component.html',
@@ -10,8 +18,8 @@ import { MelliChartsDateService } from '../../service/melli-charts-date.service'
 })
 export class HourlyComponent implements OnInit {
 
-  private typeData: any;
-  private currentTypeHourly: Array<any>;
+  private typeData: Tools[];
+  private currentTypeHourly: Tools;
   private currentEltTypeHourly: HTMLElement;
   constructor(private hourlyManager: HourlyManagerService,
     private renderer: Renderer2,
@@ -58,22 +66,23 @@ export class HourlyComponent implements OnInit {
   setType(type: any): void{
     this.currentEltTypeHourly = document.getElementById(type.id);
     if (!this.ifTypeHourlyContains(type.name)) {
-      this.currentTypeHourly.push(type);
+      // this.currentTypeHourly.push(type);
       this.renderer.addClass(this.currentEltTypeHourly, 'active');
       this.loadHourlyData();
     } else {
       this.renderer.removeClass(this.currentEltTypeHourly, 'active');
-      this.removeTypeHourly(type);
+     // this.removeTypeHourly(type);
     }
   }
 
-  removeTypeHourly(type: any): void {
-    const index = this.currentTypeHourly.map(_type => _type.id).indexOf(type.id);
-    this.currentTypeHourly.splice(index, 1);
-  }
+  // removeTypeHourly(type: any): void {
+  //   const index = this.currentTypeHourly.map(_type => _type.id).indexOf(type.id);
+  //   this.currentTypeHourly.splice(index, 1);
+  // }
 
   ifTypeHourlyContains(labelType: string): boolean {
-    return this.currentTypeHourly.filter(_filter => _filter.name === labelType).length > 0;
+   //  return this.currentTypeHourly.filter(_filter => _filter.name === labelType).length > 0;
+   return true;
   }
 
   onHourlyChartInit(event: any) {

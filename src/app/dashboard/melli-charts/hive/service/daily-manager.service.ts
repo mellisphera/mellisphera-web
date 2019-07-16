@@ -7,12 +7,10 @@ import { CALENDAR } from '../../charts/CALENDAR';
 import { SERIES } from '../../charts/SERIES';
 import { UnitService } from '../../../service/unit.service';
 import 'rxjs/add/observable/forkJoin';
-import { WEIGHT_CHARTS } from '../../charts/weight/WEIGHT_CHART';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { isUndefined } from 'util';
 import { WeatherService } from '../../../service/api/weather.service';
 import { ICONS_WEATHER } from '../../charts/icons/icons_weather';
-import { flatMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AstroService } from '../../service/astro.service';
 import { ICONS_ASTRO } from '../../charts/icons/icons_astro';
@@ -36,7 +34,7 @@ export class DailyManagerService {
     this.baseOpions = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
   }
 
-  getChartDailyWeather(idApiary: string, chartInstance: any, range: Date[]) {
+  getChartDailyWeather(chartName: string, idApiary: string, chartInstance: any, range: Date[]) {
     const weatherObs = [this.weatherService.getCurrentDailyWeather(idApiary, range), this.weatherService.getForecastDailyWeather(idApiary, range)];
     Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
       _weather => {
@@ -47,13 +45,13 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series[0].data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay']));
         } else {
-          if (this.existSeries(option.series, 'Weather')) {
+          if (this.existSeries(option.series, chartName)) {
             option.series = new Array();
             console.log('vide');
           }
-          this.cleanChartsInstance(chartInstance, 'Weather');
+          this.cleanChartsInstance(chartInstance, chartName);
           let serie = Object.assign({}, SERIES.custom);
-          serie.name = 'Weather';
+          serie.name = chartName;
           serie.data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay']));
           serie.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
@@ -93,7 +91,7 @@ export class DailyManagerService {
               ]
             };
           }
-          option.tooltip = this.getTooltipBySerie('Weather');
+          option.tooltip = this.getTooltipBySerie(chartName);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.dayLabel.align = 'left';
@@ -110,7 +108,7 @@ export class DailyManagerService {
     )
   }
 
-  getChartAstro(idApiary: string, chartInstance: any, range: Date[]) {
+  getChartAstro(chartName: string, idApiary: string, chartInstance: any, range: Date[]) {
     this.astroService.getAstroByApiary(idApiary, range).subscribe(
       _astro => {
         console.log(_astro);
@@ -186,7 +184,7 @@ export class DailyManagerService {
       }
     )
   }
-  getChartWeightincome(idHive: string, chartInstance: any, range: Date[]) {
+  getChartWeightincome(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive).subscribe(
       _daliW => {
         let option = Object.assign({}, this.baseOpions);
@@ -258,7 +256,7 @@ export class DailyManagerService {
     )
   }
 
-  getChartTintMax(idHive: string, chartInstance: any, range: Date[]) {
+  getChartTintMax(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getTempIntMaxByHive(idHive, range).subscribe(
       _tMax => {
         let option = Object.assign({}, this.baseOpions);
@@ -266,15 +264,15 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series[0].data = _tMax.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, 'Temp-int-max')) {
+          if (this.existSeries(option.series, chartName)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, 'Temp-int-max');
+          this.cleanChartsInstance(chartInstance, chartName);
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = 'Temp-int-max';
+          serie.name = chartName;
           serie.data = _tMax.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie('Temp-int-max');
-          option.tooltip = this.getTooltipBySerie('Temp-int-max');
+          option.visualMap = this.getVisualMapBySerie(chartName);
+          option.tooltip = this.getTooltipBySerie(chartName);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
@@ -290,7 +288,7 @@ export class DailyManagerService {
     )
   }
 
-  getChartTextMax(idHive: string, chartInstance: any, range: Date[]) {
+  getChartTextMax(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyWService.getTempMaxExt(idHive, range).subscribe(
       _tmpMaxExt => {
         let option = Object.assign({}, this.baseOpions);
@@ -298,14 +296,14 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series[0].data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, 'Temp-ext-max')) {
+          if (this.existSeries(option.series, chartName)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, 'Temp-ext-max');
+          this.cleanChartsInstance(chartInstance, chartName);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie('Temp-ext-max');
-          option.tooltip = this.getTooltipBySerie('Temp-ext-max');
+          option.visualMap = this.getVisualMapBySerie(chartName);
+          option.tooltip = this.getTooltipBySerie(chartName);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
@@ -320,7 +318,7 @@ export class DailyManagerService {
       }
     )
   }
-  getChartTextMin(idHive: string, chartInstance: any, range: Date[]) {
+  getChartTextMin(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyWService.getTempMinExt(idHive, range).subscribe(
       _tMinExt => {
         let option = Object.assign({}, this.baseOpions);
@@ -331,12 +329,12 @@ export class DailyManagerService {
           if (this.existSeries(option.series, '52')) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, 'Temp-ext-min');
+          this.cleanChartsInstance(chartInstance, chartName);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tMinExt.map(_data => new Array(_data.date, _data.value));
-          serie.name = 'Temp-ext-min';
-          option.visualMap = this.getVisualMapBySerie('Temp-ext-min');
-          option.tooltip = this.getTooltipBySerie('Temp-ext-min');
+          serie.name = chartName;
+          option.visualMap = this.getVisualMapBySerie(chartName);
+          option.tooltip = this.getTooltipBySerie(chartName);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -349,7 +347,7 @@ export class DailyManagerService {
       }
     )
   }
-  getChartHint(idHive: string, chartInstance: any, range: Date[]) {
+  getChartHint(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getHintByHive(idHive, range).subscribe(
       _hInt => {
         let option = Object.assign({}, this.baseOpions);
@@ -357,14 +355,14 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series[0].data = _hInt.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, 'Hum')) {
+          if (this.existSeries(option.series, chartName)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, 'Hum');
+          this.cleanChartsInstance(chartInstance, chartName);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _hInt.map(_data => new Array(_data.date, _data.value));
-          option.tooltip = this.getTooltipBySerie('Hum');
-          option.visualMap = this.getVisualMapBySerie('Hum');
+          option.tooltip = this.getTooltipBySerie(chartName);
+          option.visualMap = this.getVisualMapBySerie(chartName);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -378,7 +376,7 @@ export class DailyManagerService {
       }
     )
   }
-  getChartBrood(idHive: string, chartInstance: any, range: Date[]) {
+  getChartBrood(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getBroodByHive(idHive, range).subscribe(
       _brood => {
         let option = Object.assign({}, this.baseOpions);
@@ -386,14 +384,14 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series[0].data = _brood.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, 'brood')) {
+          if (this.existSeries(option.series, chartName)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, 'brood');
+          this.cleanChartsInstance(chartInstance, chartName);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _brood.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie('brood');
-          option.tooltip = this.getTooltipBySerie('brood');
+          option.visualMap = this.getVisualMapBySerie(chartName);
+          option.tooltip = this.getTooltipBySerie(chartName);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -408,7 +406,7 @@ export class DailyManagerService {
     )
   }
 
-  getChartTminInt(idHive: string, chartInstance: any, range: Date[]) {
+  getChartTminInt(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getTminByHive(idHive, range).subscribe(
       _tMin => {
         let option = Object.assign({}, this.baseOpions);
@@ -416,15 +414,15 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series[0].data = _tMin.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, 'Temp-int-min')) {
+          if (this.existSeries(option.series, chartName)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, 'Temp-int-min');
+          this.cleanChartsInstance(chartInstance, chartName);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tMin.map(_data => new Array(_data.date, _data.value));
-          serie.name = 'Temp-int-min';
-          option.visualMap = this.getVisualMapBySerie('Temp-int-min');
-          option.tooltip = this.getTooltipBySerie('Temp-int-min');
+          serie.name = chartName;
+          option.visualMap = this.getVisualMapBySerie(chartName);
+          option.tooltip = this.getTooltipBySerie(chartName);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -438,7 +436,7 @@ export class DailyManagerService {
     )
   }
 
-  getChartWeight(idHive: string, chartInstance: any, range: Date[]){
+  getChartWeight(chartName: string, idHive: string, chartInstance: any, range: Date[]){
     this.dailyWService.getWeightByHive(idHive, range).subscribe(
       _weightMax => {
         let option = Object.assign({}, this.baseOpions);
@@ -446,14 +444,14 @@ export class DailyManagerService {
           option.calendar.range = range;
         option.series[0].data = _weightMax.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, 'Weight-Max')) {
+          if (this.existSeries(option.series, chartName)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, 'Weight-Max');
+          this.cleanChartsInstance(chartInstance, chartName);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _weightMax.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie('Weight-Max');
-          option.tooltip = this.getTooltipBySerie('Weight-Max');
+          option.visualMap = this.getVisualMapBySerie(chartName);
+          option.tooltip = this.getTooltipBySerie(chartName);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -499,9 +497,9 @@ export class DailyManagerService {
    * @memberof DailyManagerService
    */
   getVisualMapBySerie(serieLabel: string): any {
-    let visualMap = Object.assign({}, CALENDAR.visualMap);
-    switch(serieLabel) {
-      case 'Weight-Max':
+    const visualMap = Object.assign({}, CALENDAR.visualMap);
+    switch (serieLabel) {
+      case 'WEIGHT_MAX':
           visualMap.type = 'continuous';
           visualMap.top = 15;
           visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 10 : 25;
@@ -509,7 +507,7 @@ export class DailyManagerService {
           visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
           break;
-      case 'Temp-int-max':
+      case 'TEMP_INT_MAX':
         visualMap.type = 'continuous';
         visualMap.top = 15;
         visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
@@ -517,7 +515,7 @@ export class DailyManagerService {
         visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
         '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
         break;
-      case 'Hum':
+      case 'HRIN':
         visualMap.type = 'piecewise',
         visualMap.pieces = [
           { min: 20, max: 50 },
@@ -527,36 +525,36 @@ export class DailyManagerService {
           visualMap.top = 15;
           visualMap.inRange.color =  ['#97A6C5', '#6987C5', '#3C68C5', '#05489B'];
           break;
-      case 'brood':
+      case 'BROOD':
           visualMap.type = 'continuous';
           visualMap.min = 0;
           visualMap.max = 100;
           visualMap.inRange.color =  ['red', 'yellow', '#129001'];
           visualMap.top = 15;
           break;
-        case 'Temp-int-min':
-            visualMap.type = 'continuous';
-            visualMap.top = 15;
-            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
-            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
-            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-            '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-            break;
-        case 'Temp-ext-max':
-            visualMap.type = 'continuous';
-            visualMap.top = 15;
-            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
-            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
-            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-            '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-            break;
-        case 'Temp-ext-min':
-            visualMap.type = 'continuous';
-            visualMap.top = 15;
-            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
-            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 30 : 90;
-            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-            '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+      case 'TEMP_INT_MIN':
+          visualMap.type = 'continuous';
+          visualMap.top = 15;
+          visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
+          visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
+          visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+          break;
+      case 'TEMP_EXT_MAX':
+          visualMap.type = 'continuous';
+          visualMap.top = 15;
+          visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
+          visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
+          visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+          break;
+      case 'TEMP_EXT_MIN':
+          visualMap.type = 'continuous';
+          visualMap.top = 15;
+          visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
+          visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 30 : 90;
+          visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
       default:
       break;
     }

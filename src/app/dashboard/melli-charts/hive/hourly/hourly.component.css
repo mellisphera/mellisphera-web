@@ -1,7 +1,7 @@
 #sidebar-tools-hourly{
-    position: fixed;
+    position: absolute;
     height: 50vh;
-    width: 9% !important;
+    width: 5% !important;
     top: 50%;
     color: white;
     right: 2px;
@@ -13,4 +13,8 @@
 .active{
     background-color: white;
     color: black;
+}
+.hourly{
+    height: 600px;
+    width: 95%;
 }
