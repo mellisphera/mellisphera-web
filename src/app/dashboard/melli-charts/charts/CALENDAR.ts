@@ -3,7 +3,7 @@ export const CALENDAR = {
        // height: '80%',
         // width: '80%',
         left: 'center',
-        cellSize: [20 , 'auto'],
+        cellSize: [30 , 'auto'],
         range: [new Date().getFullYear() + '-' +( new Date().getMonth() - 1) + '-' + '01', new Date()],
         orient: 'horizontal',
         splitLine: {

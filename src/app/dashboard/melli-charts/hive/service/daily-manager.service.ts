@@ -43,7 +43,7 @@ export class DailyManagerService {
         if(this.ifRangeChanged(range)) {
           console.log('range');
           option.calendar.range = range;
-          option.series[0].data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay']));
+          option.series[0].data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
         } else {
           if (this.existSeries(option.series, chartName)) {
             option.series = new Array();
@@ -52,7 +52,7 @@ export class DailyManagerService {
           this.cleanChartsInstance(chartInstance, chartName);
           let serie = Object.assign({}, SERIES.custom);
           serie.name = chartName;
-          serie.data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay']));
+          serie.data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'], _data.main));
           serie.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
@@ -570,9 +570,22 @@ export class DailyManagerService {
    */
   getTooltipBySerie(serieLabel: string): any {
     const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
-    tooltip.formatter =  (params) => {
-      return params.marker  + this.unitService.getDailyDate(params.data[0]) +
-      ': <b>' + this.graphGlobal.getNumberFormat(params.data[1]) + ' ' + this.graphGlobal.getUnitBySerieName(params.seriesName) + '</b>';
+
+    switch(serieLabel) {
+      case 'WEATHER':
+          tooltip.formatter =  (params) => {
+            console.log(params.data[3]);
+            return params.marker  + this.unitService.getDailyDate(params.data[0]) +
+            ': <b>' + this.graphGlobal.getNumberFormat(params.data[1]) + '</br>'
+            + params.data[3]['maxHumidityDay'] + '</b>';
+          }
+          break;
+      default:
+          tooltip.formatter =  (params) => {
+            return params.marker  + this.unitService.getDailyDate(params.data[0]) +
+            ': <b>' + this.graphGlobal.getNumberFormat(params.data[1]) + ' '
+             + this.graphGlobal.getUnitBySerieName(params.seriesName) + '</b>';
+          }
     }
     return tooltip;
   }
