@@ -13,6 +13,11 @@ import { isUndefined } from 'util';
 import { type } from 'os';
 import { position } from 'html2canvas/dist/types/css/property-descriptors/position';
 import { reduce } from 'rxjs-compat/operator/reduce';
+import { RucheInterface } from '../../../../_model/ruche';
+import { PassThrough } from 'stream';
+import { Observable } from 'rxjs';
+import { MyNotifierService } from '../../../service/my-notifier.service';
+import { NotifList } from '../../../../../constants/notify';
 
 @Component({
   selector: 'app-alerts-hive',
@@ -36,12 +41,14 @@ export class AlertsHiveComponent implements OnInit {
     public rucherService: RucherService,
     public rucheService: RucheService,
     private userService: UserloggedService,
-    public notifierService: NotifierService) {
+    public notifierService: NotifierService,
+    private myNotifer: MyNotifierService) {
     this.img = 'M581.176,290.588C581.176,130.087,451.09,0,290.588,0S0,130.087,0,290.588s130.087,290.588,290.588,290.588' +
               'c67.901,0,130.208-23.465,179.68-62.476L254.265,302.696h326.306C580.716,298.652,581.176,294.681,581.176,290.588z' +
               'M447.99,217.941c-26.758,0-48.431-21.697-48.431-48.431s21.673-48.431,48.431-48.431c26.758,0,48.431,21.697,48.431,48.431' +
               'S474.749,217.941,447.99,217.941z';
     this.notifier = this.notifierService;
+    this.echartInstance = null;
     this.mapDateNbAlerts = new Map();
     this.tabPos = [
       [
@@ -64,11 +71,15 @@ export class AlertsHiveComponent implements OnInit {
         [0.25,-0.05,-0.2,0.1,0.4],
         [0.3,0.3,-0.15,-0.15,-0.15]      ]
     ];
+    this.getOption();
+  }
+
+  getOption(){
     this.option = {
       backgroundColor: 'white',
       title: {
         top: 5,
-        text: this.graphGlobal.getTitle("Alerts"),
+        text: this.graphGlobal.getTitle("AlertsHive") + ' ' + this.rucheService.getCurrentHive().name,
         left: 'center',
         textStyle: {
           color: 'black'
@@ -77,7 +88,7 @@ export class AlertsHiveComponent implements OnInit {
       tooltip: {
         trigger: 'item',
         formatter: (params) => {
-          return params.marker + unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1].split('|').join('<br/>');
+          return params.marker + (params.data[3] === 'Daily' ?  this.unitService.getDailyDate(params.data[0]) : this.unitService.getHourlyDate(params.data[0])) + '<br/>' + params.data[1].split('|').join('<br/>');
         }
       },
       toolbox: {
@@ -94,7 +105,7 @@ export class AlertsHiveComponent implements OnInit {
         top: 100,
         left: '15%',
         bottom: '3%',
-        height: '50%',
+        height: '45%',
         width: '70%',
         range: MyDate.getRangeForCalendarHome(),
         orient: 'horizontal',
@@ -140,60 +151,85 @@ export class AlertsHiveComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initCalendar();
+    this.alertsService.getAlertsByHive(this.rucheService.getCurrentHive().id).subscribe(
+      _alert => {
+        this.alertsService.hiveAlerts = _alert;
+
+        this.initCalendar();
+      }
+    );
   }
 
   cleanSerie(): void {
+    this.option.series.clear;
     this.option.series = new Array();
+    this.echartInstance.clear();
   }
-  initCalendar(){
-    this.cleanSerie();
-    this.alertsService.alertSubject.subscribe(() => { }, () => { }, () => {
-
-      this.mapDateNbAlerts = new Map();
-
-      // On regarde combien il y a d'alertes par jour pour pouvoir bien les placer
-      this.alertsService.hiveAlerts.forEach(alerts => {
-        // Si il y a deja une alerte ce jour, on incrémente
-        let date = new Date(alerts.date);
-        if(this.mapDateNbAlerts.has(date.getTime())){
-          let nbAlerts = this.mapDateNbAlerts.get(date.getTime());
-          nbAlerts[0] += 1;
-          this.mapDateNbAlerts.set(date.getTime(),nbAlerts);
-        // Si il n'y a pas encore d'alertes ce jour
-        }else{
-          this.mapDateNbAlerts.set(date.getTime(),[0,-1]);
+  initCalendar(hive?: RucheInterface){
+    if (hive) {
+      this.alertsService.getAlertsByHive(hive.id).subscribe(
+        _alert => {
+          this.alertsService.hiveAlerts = _alert;
+          this.cleanSerie();
+          this.getOption();
+          this.loadCalendar();
         }
-        
-      });
+      );
+    } else {
+      this.loadCalendar();
+    }
 
-      // On met les valeurs dans le calendrier
-      let serieTmp = {
-        type: 'custom',
-        itemStyle : {
-          color : ''
-        },
-        name: 'toto',
-        renderItem: null,
-        coordinateSystem: 'calendar',
-        data: []
+  }
+
+  loadCalendar() {
+    // date => [Les nombres d'alertes correspondants][Le rang de la prochaine alerte a placer dans le tableau]
+    this.mapDateNbAlerts.clear;
+    this.mapDateNbAlerts = new Map();
+
+    // On regarde combien il y a d'alertes par jour pour pouvoir bien les placer
+    this.alertsService.hiveAlerts.forEach(alerts => {
+      // Si il y a deja une alerte ce jour, on incrémente
+      let date = new Date(alerts.date);
+      if(this.mapDateNbAlerts.has(date.getTime())){
+        let nbAlerts = this.mapDateNbAlerts.get(date.getTime());
+        nbAlerts[0] += 1;
+        this.mapDateNbAlerts.set(date.getTime(),nbAlerts);
+      // Si il n'y a pas encore d'alertes ce jour
+      }else{
+        this.mapDateNbAlerts.set(date.getTime(),[0,-1]);
       }
-      let type = [];
-      this.alertsService.hiveAlerts.forEach((_alert, index) => {
-        if (type.indexOf(_alert.type) === -1) {   
-          type.push(_alert.type);
-          let newSerie = Object.assign({}, serieTmp);
-          newSerie.name = _alert.type;
-          newSerie.data = this.alertsService.hiveAlerts.filter(_filter => _filter.type === _alert.type).map(_map => [ _map.date, _map.message, _map.picto]);
-          newSerie.itemStyle = {
-            color : this.alertsService.getColor(_alert.type)
-          };
-          newSerie.renderItem = (params, api) => {
+      
+    });
+
+    // On met les valeurs dans le calendrier
+    let serieTmp = {
+      type: 'custom',
+      itemStyle : {
+        color : ''
+      },
+      name: 'toto',
+      renderItem: null,
+      coordinateSystem: 'calendar',
+      data: []
+    }
+    let type = [];
+    this.alertsService.hiveAlerts.forEach((_alert, index) => {
+      if (type.indexOf(_alert.type) === -1) {  
+        type.push(_alert.type);
+        let newSerie = Object.assign({}, serieTmp);
+        newSerie.name = _alert.type;
+        newSerie.data = this.alertsService.hiveAlerts.filter(_filter => _filter.type === _alert.type).map(_map => [ _map.date, _map.message, _map.picto, _map.time]);
+        newSerie.itemStyle = {
+          color : this.alertsService.getColor(_alert.type)
+        };
+        newSerie.renderItem = (params, api) => {
+          try {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
             let cellHeight = params.coordSys.cellHeight;
             // Iteration of alert rang
             let nbAlerts = this.mapDateNbAlerts.get(api.value(0));
+            // if(nbAlerts[1] < nbAlerts[0]){
             nbAlerts[1] += 1;
             this.mapDateNbAlerts.set(api.value(0),nbAlerts);
             // set constants
@@ -235,15 +271,20 @@ export class AlertsHiveComponent implements OnInit {
                 }
             }
             }
-          },
-          this.option.series.push(newSerie);
-        }
-      });
-      this.echartInstance.setOption(this.option);
-
+          } 
+        // }
+          catch {}
+        },
+        this.option.series.push(newSerie);
+      }
     });
-  }
 
+    this.checkChartInstance().then(status => {
+      this.echartInstance.setOption(this.option,false);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
   renderItem() {
 
   }
@@ -283,31 +324,76 @@ export class AlertsHiveComponent implements OnInit {
 
   onClickReadAll(alertList: AlertInterface[]) {
     // Update in database
+    
+    let obs = alertList.map((_alert) => {
+      if (_alert.check === false) {
+        // Update in hiveAlerts table
+        let alertIndexUpdateCheck = this.alertsService.hiveAlerts.map(alertMap => alertMap._id).indexOf(_alert._id);
+        this.alertsService.hiveAlerts[alertIndexUpdateCheck].check = true;
+
+        //  Update the list of active hives
+        let alertIndexUpdate = this.alertsService.apiaryAlertsActives.map(alertMap => alertMap._id).indexOf(_alert._id);
+        this.alertsService.apiaryAlertsActives.splice(alertIndexUpdate, 1);
+
+        return  this.alertsService.updateAlert(_alert._id, true);
+      }
+    });
+
+    obs = obs.filter(_obs => _obs !== undefined);
+
+    if(obs.length > 0){
+      Observable.forkJoin(obs).subscribe(() => { }, () => { }, () => {
+        this.myNotifer.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
+      });
+    }
+
+  }
+
+  readAllHiveAlerts(hive : RucheInterface){
+      this.alertsService.getAlertsByHive(hive.id).subscribe(
+        _alert => {
+          this.alertsService.hiveAlerts = _alert;
+          this.onClickReadAll(this.alertsService.hiveAlerts);
+        }
+      );
+  }
+
+  onClickNotReadAll(alertList: AlertInterface[]) {
+    // Update in database
     alertList.forEach(alert => {
 
-      this.alertsService.updateAlert(alert._id, true).subscribe(() => { }, () => { }, () => {
+      this.alertsService.updateAlert(alert._id, false).subscribe(() => { }, () => { }, () => {
 
         let alertIndexUpdateCheck = this.alertsService.hiveAlerts.map(alertMap => alertMap._id).indexOf(alert._id);
-        if (this.alertsService.hiveAlerts[alertIndexUpdateCheck].check === false) {
+        if (this.alertsService.hiveAlerts[alertIndexUpdateCheck].check === true) {
           // Update in hiveAlerts table
-          this.alertsService.hiveAlerts[alertIndexUpdateCheck].check = true;
+          this.alertsService.hiveAlerts[alertIndexUpdateCheck].check = false;
 
           //  Update the list of active hives
-          let alertIndexUpdate = this.alertsService.apiaryAlertsActives.map(alertMap => alertMap._id).indexOf(alert._id);
-          this.alertsService.apiaryAlertsActives.splice(alertIndexUpdate, 1);
+          this.alertsService.apiaryAlertsActives.push(alert);
 
           if (this.userService.getJwtReponse().country === "FR") {
-            this.notifier.notify('success', 'Alerte lue');
+            this.notifier.notify('success', 'Alerte non lue');
           } else {
-            this.notifier.notify('success', 'Alert read');
+            this.notifier.notify('success', 'Alert not read');
           }
         }
       });
     });
-
   }
 
   onChartInit(event: any) {
     this.echartInstance = event;
+  }
+
+  checkChartInstance(): Promise<Boolean> {
+    return new Promise((resolve, reject) => {
+      if (this.echartInstance === null) {
+        reject(false);
+      }
+      else {
+        resolve(true);
+      }
+    })
   }
 }

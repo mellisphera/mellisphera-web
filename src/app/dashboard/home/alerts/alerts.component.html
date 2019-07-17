@@ -1,5 +1,5 @@
 <!-- If there is alerts -->
-<div *ngIf="alertsService.apiaryAlerts.length !== 0" class="content-page">
+<!-- <div *ngIf="alertsService.apiaryAlerts.length !== 0" class="content-page">
   <div class="panel panel-info">
     <div *ngIf ="this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()) !== undefined" class="panel-heading">
       <h4 class="panel-title">
@@ -47,9 +47,12 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- If there is'nt alerts -->
-<div *ngIf="alertsService.apiaryAlerts.length === 0" class = "noAlert">
+<!-- <div *ngIf="alertsService.apiaryAlerts.length === 0" class = "noAlert">
     {{ 'ALERTS.NOALERTS' | translate}}
-    </div>
+    </div> -->
+
+<div id="graph" echarts (chartInit)="onChartInit($event)" [options]="option" [autoResize]="true"
+  style="width:100%;height:60vh"></div>

@@ -37,7 +37,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy {
     this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive().id);
     this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive().id)
     this.capteurService.getUserCapteurs();
-    this.alertsService.getAlertsByHive(this.rucheService.getCurrentHive().id);
   }
 
 

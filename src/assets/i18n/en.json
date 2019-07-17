@@ -262,5 +262,33 @@
         "LOGIN" : "login",
         "SEND" : "Send",
         "CLOSE" : "Close"
+    },
+    "FLOWER" : {
+        "APIARYPLANTS" : "Apiary plants",
+        "PLANTDIR" : "Plants directory",
+        "MELLIPLANTS" : "Melliferous Plants",
+        "NAME" : "Name",
+        "STARTS" : "Starts",
+        "ENDS" : "Ends",
+        "RELATIVE" : "Relative",
+        "BLOOMING" : "blooming",
+        "THEORICAL" : "theorical",
+        "OBSERVED" : "observed",
+        "ABUNDANCE" : "abundance",
+        "INAPIARY" : "in apiary",
+        "HIGH" : "High",
+        "MEDIUM" : "Medium",
+        "LOW" : "Low",
+        "MELLIDIR" : "Melliferous plants directory",
+        "MYPLANTS" : "My plants",
+        "SEARCHNAME" : "Search by name",
+        "SEARCHMONTH" : "Search by month",
+        "ALLTYPES" : "All types",
+        "BLOOMONTH" : "Blooming month",
+        "COMMON" : "Common",
+        "BLOOMINGPERIOD" : "Blooming perdiod",
+        "CONFIDENCELEVEL" : "Confidence level",
+        "ADDTOAPIARY" : "Add to apiary",
+        "CLOSE" : "Close"
     }
 }
