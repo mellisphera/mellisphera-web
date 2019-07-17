@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 
 @Injectable({
   providedIn: 'root'
@@ -7,12 +6,12 @@ import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 export class GraphiqueFloraisonService {
 
   currentYear = new Date().getFullYear();
-  constructor(private configGraph: GraphGlobal) { 
+  constructor() { 
   }
   option = {
           //Défini le titre du graphique
           title: {
-            text: this.configGraph.getTitle("Blooming"),
+            text: 'Apiary Blooming calendar',
             left:'center',
             top : 0
           },
