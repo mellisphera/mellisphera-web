@@ -22,8 +22,8 @@ export class HourlyComponent implements OnInit {
   private typeData: Tools[];
   private currentTypeHourly: Tools[];
   private currentEltTypeHourly: HTMLElement;
-  constructor(private hourlyManager: HourlyManagerService,
-    private renderer: Renderer2,
+  constructor(
+    private hourlyManager: HourlyManagerService,
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
     this.currentTypeHourly = [];
@@ -31,7 +31,7 @@ export class HourlyComponent implements OnInit {
       { name: 'WEIGHT', id: 'WEIGHT_HOURLY', unit: 'W', origin: 'DEVICE', class: 'item-type active' },
       { name: 'TEMP_INT', id: 'TEMP_INT_HOURLY', unit: 'T', origin: 'DEVICE', class: 'item-type' },
       { name: 'TEMP_EXT', id: 'TEMP_EXT_HOURLY', unit: 'T', origin: 'DEVICE', class: 'item-type' },
-      { name: 'HRIN', id: 'HRIN_HOURLY', unit:'P',  origin: 'DEVICE', class: 'item-type' },
+      { name: 'HRIN', id: 'HRIN_HOURLY', unit: 'P',  origin: 'DEVICE', class: 'item-type' },
       { name: 'BAT', id: 'BAT_HOURLY', unit: 'P', origin: 'DEVICE', class: 'item-type' },
       { name: 'TEMP_WEATHER', id: 'TEMP_WEATHER', unit: 'T', origin: 'OTHER',  class: 'item-type'},
       { name: 'HWEATHER', id: 'HWEATHER', unit: 'P', origin: 'OTHER', class: 'item-type'}
@@ -44,20 +44,15 @@ export class HourlyComponent implements OnInit {
   }
 
   loadHourlyData(): void {
+    const lengthIndex = this.currentTypeHourly.length;
     if (this.ifTypeHourlyContains('WEIGHT')) {
-      this.hourlyManager.getChartWeight(this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
-
-    } if (this.ifTypeHourlyContains('TEMP_INT')) {
-      this.hourlyManager.getChartTempInt(this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
-
-    } if (this.ifTypeHourlyContains('TEMP_INT_MAX')) {
-
-    } if (this.ifTypeHourlyContains('TEMP_INT_MIN')) {
-
-    } if (this.ifTypeHourlyContains('HRIN')) {
-
-    } if (this.ifTypeHourlyContains('BROOD')) {
-
+      this.hourlyManager.getChartWeight(this.currentTypeHourly[lengthIndex - 1].name, this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+    } 
+    if (this.ifTypeHourlyContains('TEMP_INT')) {
+      this.hourlyManager.getChartTempInt(this.currentTypeHourly[lengthIndex - 1].name, this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+    } 
+    if (this.ifTypeHourlyContains('TEMP_EXT')) {
+      this.hourlyManager.getChartTempExt(this.currentTypeHourly[lengthIndex - 1].name, this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
     }
   }
   ngAfterViewInit(): void {
@@ -72,7 +67,7 @@ export class HourlyComponent implements OnInit {
       this.typeData[toolIndex].class += ' active';
       this.addType(type);
       console.log(this.currentTypeHourly);
-      // this.loadHourlyData();
+      this.loadHourlyData();
     } else {
       this.typeData[toolIndex].class = this.typeData[toolIndex].class.replace(/active/g, '');
       console.log(this.typeData[toolIndex]);
@@ -90,6 +85,8 @@ export class HourlyComponent implements OnInit {
   removeTypeHourly(type: Tools): void {
      const index = this.currentTypeHourly.map(_type => _type.id).indexOf(type.id);
      this.currentTypeHourly.splice(index, 1);
+     this.hourlyManager.removeSeriesFromChartInstance(this.melliHive.getHourlyChartInstance(), type.name);
+
    }
 
    addType(type: Tools) {
@@ -99,6 +96,7 @@ export class HourlyComponent implements OnInit {
         this.currentTypeHourly.forEach(_type => {
           let toolIndex: number = this.typeData.map(_map => _map.id).indexOf(_type.id);
           this.typeData[toolIndex].class = this.typeData[toolIndex].class.replace(/active/g, '');
+
         });
         this.currentTypeHourly = new Array();
       }

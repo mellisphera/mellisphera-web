@@ -26,12 +26,22 @@ export class HiveComponent implements OnInit {
   ngOnInit() {
   }
 
-  loadDataFromHive() {
-    this.dailyComponent.loadDailyData();
+  /**
+   *
+   *
+   * @memberof HiveComponent
+   */
+  loadDataFromHive(): void {
+    console.log('LOAD');
+    this.dailyComponent.loadDailyDeviceData();
+    this.dailyComponent.loadDailyOtherData();
+    this.hourlyComponent.loadHourlyData();
   }
 
+  
    setRangeChart() {
-    this.dailyComponent.loadDailyData();
+     this.dailyComponent.loadDailyDeviceData();
+     this.dailyComponent.loadDailyOtherData();
      this.hourlyComponent.loadHourlyData();
    }
 

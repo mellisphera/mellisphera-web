@@ -15,12 +15,18 @@ import { Observable } from 'rxjs';
 import { AstroService } from '../../service/astro.service';
 import { ICONS_ASTRO } from '../../charts/icons/icons_astro';
 
+
+const DEVICE = 'DEVICE';
+const OTHER = 'OTHER';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DailyManagerService {
 
-  public baseOpions: any;
+  public baseOptionsInt: any;
+  public baseOptionExt: any;
+  private optionForCurentChart: any;
   private currentRange: Date[];
   constructor(
     private dailyWService: DailyRecordsWService,
@@ -31,7 +37,8 @@ export class DailyManagerService {
     private dailyStock: DailyStockHoneyService,
     private unitService: UnitService
   ) {
-    this.baseOpions = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
+    this.baseOptionsInt = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
+    this.baseOptionExt = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
   }
 
   getChartDailyWeather(chartName: string, idApiary: string, chartInstance: any, range: Date[]) {
@@ -39,7 +46,8 @@ export class DailyManagerService {
     Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
       _weather => {
         console.log(_weather);
-        let option = Object.assign({}, this.baseOpions);
+        let option = Object.assign({}, this.optionForCurentChart);
+        console.log(option);
         if(this.ifRangeChanged(range)) {
           console.log('range');
           option.calendar.range = range;
@@ -102,7 +110,7 @@ export class DailyManagerService {
         this.currentRange = range;
         chartInstance.clear();
         chartInstance.setOption(option);
-        this.baseOpions = option;
+        this.optionForCurentChart = option;
         console.log(chartInstance.getOption());
       }
     )
@@ -112,8 +120,7 @@ export class DailyManagerService {
     this.astroService.getAstroByApiary(idApiary, range).subscribe(
       _astro => {
         console.log(_astro);
-        console.log(_astro);
-        let option = Object.assign({}, this.baseOpions);
+        let option = Object.assign({}, this.optionForCurentChart);
         if(this.ifRangeChanged(range)) {
           console.log('range');
           option.calendar.range = range;
@@ -179,7 +186,7 @@ export class DailyManagerService {
         this.currentRange = range;
         chartInstance.clear();
         chartInstance.setOption(option, true);
-        this.baseOpions = option;
+        this.optionForCurentChart = option;
         console.log(chartInstance.getOption());
       }
     )
@@ -187,7 +194,7 @@ export class DailyManagerService {
   getChartWeightincome(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive).subscribe(
       _daliW => {
-        let option = Object.assign({}, this.baseOpions);
+        let option = Object.assign({}, this.optionForCurentChart);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _daliW.weightIncomeHight;
@@ -249,7 +256,7 @@ export class DailyManagerService {
         }
         this.currentRange = range;
         chartInstance.setOption(option);
-        this.baseOpions = option;
+        this.optionForCurentChart = option;
         console.log(chartInstance.getOption());
 
       }
@@ -259,7 +266,7 @@ export class DailyManagerService {
   getChartTintMax(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getTempIntMaxByHive(idHive, range).subscribe(
       _tMax => {
-        let option = Object.assign({}, this.baseOpions);
+        let option = Object.assign({}, this.optionForCurentChart);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _tMax.map(_data => new Array(_data.date, _data.value));
@@ -281,7 +288,7 @@ export class DailyManagerService {
         }
         this.currentRange = range;
         chartInstance.setOption(option);
-        this.baseOpions = option;
+        this.optionForCurentChart = option;
         console.log(chartInstance.getOption());
 
       }
@@ -291,7 +298,7 @@ export class DailyManagerService {
   getChartTextMax(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyWService.getTempMaxExt(idHive, range).subscribe(
       _tmpMaxExt => {
-        let option = Object.assign({}, this.baseOpions);
+        let option = Object.assign({}, this.optionForCurentChart);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
@@ -312,7 +319,7 @@ export class DailyManagerService {
         }
         this.currentRange = range;
         chartInstance.setOption(option);
-        this.baseOpions = option;
+        this.optionForCurentChart = option;
         console.log(chartInstance.getOption());
 
       }
@@ -321,7 +328,7 @@ export class DailyManagerService {
   getChartTextMin(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyWService.getTempMinExt(idHive, range).subscribe(
       _tMinExt => {
-        let option = Object.assign({}, this.baseOpions);
+        let option = Object.assign({}, this.optionForCurentChart);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _tMinExt.map(_data => new Array(_data.date, _data.value));
@@ -342,7 +349,7 @@ export class DailyManagerService {
         }
         this.currentRange = range;
         chartInstance.setOption(option);
-        this.baseOpions = option;
+        this.optionForCurentChart = option;
         console.log(chartInstance.getOption());
       }
     )
@@ -350,7 +357,7 @@ export class DailyManagerService {
   getChartHint(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getHintByHive(idHive, range).subscribe(
       _hInt => {
-        let option = Object.assign({}, this.baseOpions);
+        let option = Object.assign({}, this.optionForCurentChart);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _hInt.map(_data => new Array(_data.date, _data.value));
@@ -370,7 +377,7 @@ export class DailyManagerService {
         }
         this.currentRange = range;
         chartInstance.setOption(option);
-        this.baseOpions = option;
+        this.optionForCurentChart = option;
         console.log(chartInstance.getOption());
 
       }
@@ -379,7 +386,7 @@ export class DailyManagerService {
   getChartBrood(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getBroodByHive(idHive, range).subscribe(
       _brood => {
-        let option = Object.assign({}, this.baseOpions);
+        let option = Object.assign({}, this.optionForCurentChart);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _brood.map(_data => new Array(_data.date, _data.value));
@@ -399,7 +406,7 @@ export class DailyManagerService {
         }
         this.currentRange = range;
         chartInstance.setOption(option);
-        this.baseOpions = option;
+        this.optionForCurentChart = option;
         console.log(chartInstance.getOption());
 
       }
@@ -409,7 +416,7 @@ export class DailyManagerService {
   getChartTminInt(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getTminByHive(idHive, range).subscribe(
       _tMin => {
-        let option = Object.assign({}, this.baseOpions);
+        let option = Object.assign({}, this.optionForCurentChart);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _tMin.map(_data => new Array(_data.date, _data.value));
@@ -430,7 +437,7 @@ export class DailyManagerService {
         }
         this.currentRange = range;
         chartInstance.setOption(option);
-        this.baseOpions = option;
+        this.optionForCurentChart = option;
         console.log(chartInstance.getOption());
       }
     )
@@ -439,7 +446,7 @@ export class DailyManagerService {
   getChartWeight(chartName: string, idHive: string, chartInstance: any, range: Date[]){
     this.dailyWService.getWeightByHive(idHive, range).subscribe(
       _weightMax => {
-        let option = Object.assign({}, this.baseOpions);
+        let option = Object.assign({}, this.optionForCurentChart);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
         option.series[0].data = _weightMax.map(_data => new Array(_data.date, _data.value));
@@ -459,7 +466,7 @@ export class DailyManagerService {
         }
         this.currentRange = range;
         chartInstance.setOption(option);
-        this.baseOpions = option;
+        this.optionForCurentChart = option;
         console.log(chartInstance.getOption());
       }
     )
@@ -486,7 +493,7 @@ export class DailyManagerService {
 
   cleanChartsInstance(chartInstance: any, labelSerie: string) {
     if (chartInstance.getOption().series.filter(_filter => _filter.name !== labelSerie).length > 0) {
-      this.baseOpions = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
+      this.optionForCurentChart = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
     }
   }
   /**
@@ -626,6 +633,23 @@ export class DailyManagerService {
     } else {
       return '#EBEBEB';
     }
+  }
+
+  setCurrentBaseOption(type: string): void {
+    if (type === DEVICE) {
+      this.optionForCurentChart = Object.assign({}, this.baseOptionsInt);
+    } else if (type === OTHER) {
+      this.optionForCurentChart = Object.assign({}, this.baseOptionExt);
+    }
+  }
+
+  setOriginChartOption(type: string) {
+    if (type === DEVICE) {
+      this.baseOptionsInt = Object.assign({}, this.optionForCurentChart);
+    } else if (type === OTHER) {
+      this.baseOptionExt = Object.assign({}, this.optionForCurentChart);
+    }
+    console.log(this.baseOptionsInt);
   }
 }
 

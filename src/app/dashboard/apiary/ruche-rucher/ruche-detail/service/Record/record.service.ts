@@ -506,17 +506,51 @@ export class RecordService {
     };
   }
 
-  getWeightByHive(idHive: string, range: Date[]) :Observable<any> {
+  /**
+   *
+   *
+   * @param {string} idHive
+   * @param {Date[]} range
+   * @returns {Observable<any>}
+   * @memberof RecordService
+   */
+  getWeightByHive(idHive: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'records/weight/' + idHive, range);
   }
 
-  getTempIntByHive(idHive: string, range: Date[]):Observable<any> {
+  /**
+   *
+   *
+   * @param {string} idHive
+   * @param {Date[]} range
+   * @returns {Observable<any>}
+   * @memberof RecordService
+   */
+  getTempIntByHive(idHive: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'records/temp_int/' + idHive, range);
   }
 
-  getHintIntByHive(idHive: string, range: Date[]):Observable<any> {
+  /**
+   *
+   *
+   * @param {string} idHive
+   * @param {Date[]} range
+   * @returns {Observable<any>}
+   * @memberof RecordService
+   */
+  getHintIntByHive(idHive: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'records/hint/' + idHive, range);
   }
 
-
+  /**
+   *
+   *
+   * @param {string} idHive
+   * @param {Date[]} range
+   * @returns {Observable<any>}
+   * @memberof RecordService
+   */
+  getTempExtByHive(idHive: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'records/temp_ext/' + idHive, range);
+  }
 }

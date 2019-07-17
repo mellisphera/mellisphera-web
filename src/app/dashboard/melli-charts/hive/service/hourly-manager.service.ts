@@ -17,35 +17,34 @@ export class HourlyManagerService {
     this.baseOpions = Object.assign(BASE_OPTIONS.baseOptionHourly);
   }
 
-  getChartWeight(idHive: string, chartInstance: any, range: Date[]) {
+  getChartWeight(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.recordService.getWeightByHive(idHive, range).subscribe(
       (_weight: any) => {
         console.log(_weight);
-        let option = this.baseOpions;
-        if (this.ifRangeChanged(range)) {
-          option.series[0].data = _weight.map((elt) => {
-            return { name: elt.date, value: [elt.date, elt.value] };
+        let option = Object.assign({}, this.baseOpions);
+        if(this.ifRangeChanged(range)) {
+          const index = option.series.map(_serie => _serie.name).indexOf(chartName);
+          option.series[index].data = _weight.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
           });
         } else {
-          if(!this.existSeries(option.series, 'Weight')) {
-            console.log('NEW');
+          if (this.existSeries(option.series, chartName)) {
             option.series = new Array();
-            option.yAxis = new Array();
           }
-          let series = Object.assign({}, SERIES.line);
-          series.name = 'Weight';
-          series.data = _weight.map((elt) => {
-            return { name: elt.date, value: [elt.date, elt.value] };
+          this.cleanChartsInstance(chartInstance, chartName);
+          let serie = Object.assign({}, SERIES.line);
+          serie.name = chartName;
+          serie.data = _weight.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
           });
-          option = this.addYaxis(option, 'Weight');
-          series.yAxisIndex = option.yAxis.length - 1;
+          // option.tooltip = this.getTooltipBySerie(chartName);
+          option.series.push(serie);
           console.log(option);
-          option.series.push(series);
         }
-        chartInstance.setOption(option);
-
-        this.baseOpions = option;
         this.currentRange = range;
+        chartInstance.setOption(option);
+        this.baseOpions = option;
+        console.log(chartInstance.getOption());
 
       }
       
@@ -53,56 +52,89 @@ export class HourlyManagerService {
   }
 
 
-  getChartTempInt(idHive: string, chartInstance: any, range: Date[]) {
+  getChartTempInt(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
     this.recordService.getTempIntByHive(idHive, range).subscribe(
-      (_temp) => {
+      _temp => {
         console.log(_temp);
-        let option = this.baseOpions;
-        if (this.ifRangeChanged(range)) {
-          option.series[0].data = _temp.map((elt) => {
-            return { name: elt.date, value: [elt.date, elt.value] };
+        let option = Object.assign({}, this.baseOpions);
+        if(this.ifRangeChanged(range)) {
+          const index = option.series.map(_serie => _serie.name).indexOf(chartName);
+          option.series[index].data = _temp.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
           });
         } else {
-          if(!this.existSeries(option.series, 'Temp')) {
-            console.log('NEW');
+          if (this.existSeries(option.series, chartName)) {
             option.series = new Array();
-            option.yAxis = new Array();
           }
-          console.log(option.series);
-          let series = Object.assign({}, SERIES.line);
-          series.name = 'Temp';
-          series.data = _temp.map((elt) => {
-            return { name: elt.date, value: [elt.date, elt.value] };
-          })
-          option = this.addYaxis(option, 'Temp');
-          console.log(option.yAxis.length);
-          series.yAxisIndex = option.yAxis.length - 1;
-          option.series.push(series);
+          this.cleanChartsInstance(chartInstance, chartName);
+          let serie = Object.assign({}, SERIES.line);
+          serie.name = chartName;
+          serie.data = _temp.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
+          });
+          // option.tooltip = this.getTooltipBySerie(chartName);
+          option.series.push(serie);
+          console.log(option);
         }
-        chartInstance.setOption(option);
-
-        this.baseOpions = option;
         this.currentRange = range;
+        chartInstance.setOption(option);
+        this.baseOpions = option;
+        console.log(chartInstance.getOption());
+      }
+    );
+  }
 
+  getChartTempExt(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
+    this.recordService.getTempExtByHive(idHive, range).subscribe(
+      _temp_ext => {
+        console.log(_temp_ext);
+        let option = Object.assign({}, this.baseOpions);
+        if(this.ifRangeChanged(range)) {
+          const index = option.series.map(_serie => _serie.name).indexOf(chartName);
+          option.series[index].data = _temp_ext.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
+          });
+        } else {
+          if (this.existSeries(option.series, chartName)) {
+            option.series = new Array();
+          }
+           this.cleanChartsInstance(chartInstance, chartName);
+          let serie = Object.assign({}, SERIES.line);
+          serie.name = chartName;
+          serie.data = _temp_ext.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
+          });
+          // option.tooltip = this.getTooltipBySerie(chartName);
+          option.series.push(serie);
+          console.log(option);
+        }
+        this.currentRange = range;
+        chartInstance.setOption(option);
+        this.baseOpions = option;
+        console.log(chartInstance.getOption());
       }
     )
   }
 
-  addYaxis(option: any, serieLabel: string): any {
-    if(option.yAxis.filter(y => y.name === serieLabel).length < 1) {
-      let yAxis = Object.assign({}, BASE_OPTIONS.yAxis);
-      yAxis.name = serieLabel;
-      option.yAxis.push(yAxis);
-      return option;
+
+
+  cleanChartsInstance(chartInstance: any, labelSerie: string) {
+    if (chartInstance.getOption().series.filter(_filter => _filter.name !== labelSerie).length > 0) {
+      this.baseOpions = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
     }
   }
+
   existSeries(serieArray, name: string): boolean {
-    if (isUndefined(serieArray) || serieArray.length < 1 || serieArray.filter(_filter => _filter.name === name).length > 0) {
-      return false;
-    } else {
+    if (!isUndefined(serieArray)) {
+      console.log(serieArray);
+    }
+    if (isUndefined(serieArray) || serieArray.length < 1 || serieArray.length > 0) {
       return true;
+    } else {
+      return false;
     }
   }
+
   getChartHint(idHive: string, chartInstance: any, range: Date[]) {
     this.recordService.getHintIntByHive(idHive, range).subscribe(
       (_hint) => {
@@ -120,4 +152,12 @@ export class HourlyManagerService {
      }
   }
 
+  removeSeriesFromChartInstance(echartInstance: any, seriesName: string) {
+    let options = echartInstance.getOption();
+    Object.assign({}, options).series.forEach((element: any, i: number) => {
+      options.series.splice(i, 1);
+    });
+    echartInstance.setOption(options);
+    this.baseOpions = options;
+  }
 }

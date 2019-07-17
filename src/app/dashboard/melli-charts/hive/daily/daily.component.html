@@ -1,5 +1,8 @@
-<div id="daily">
-  <div class="chart calendar" [options]="dailyManager.baseOpions" echarts (chartInit)="onDailyChartInit($event)"></div>
+<div id="daily-int">
+  <div class="chart calendar" [options]="dailyManager.baseOptionsInt" echarts (chartInit)="onDailyDeviceChartInit($event)"></div>
+</div>
+<div id="daily-ext">
+  <div class="chart calendar" [options]="dailyManager.baseOptionExt" echarts (chartInit)="onDailyOtherChartInit($event)"></div>
 </div>
 <div id="sidebar-tools-daily" class="sidebar-wrapper">
   <ul class="nav responsive-nav" id="device-group">

@@ -27,6 +27,7 @@ export const SERIES = {
     },
     line: {
         name: '',
+        // id: '',
         type: 'line',
         yAxisIndex: 0,
         data: [],

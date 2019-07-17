@@ -51,8 +51,8 @@ export const BASE_OPTIONS = {
         grid: [{
             containLabel: true,
             height: '80%',
-            left: '3%',
-            width:'100%'
+            left: 'center',
+            width: '95%'
         }],
         
         yAxis: [{
