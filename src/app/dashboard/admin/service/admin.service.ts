@@ -119,7 +119,13 @@ export class AdminService {
   getLastConnection(startDt: Date):void {
     this.httpClient.post<Connection[]>(CONFIG.URL + 'logs/between', startDt).subscribe(
       connection => {
-        this.lastConnection = connection;
+        this.lastConnection = connection.sort((a, b) => {
+          if ( new Date(a.connectionDate).getTime() < new Date(b.connectionDate).getTime()) {
+            return 1;
+          } else {
+            return -1;
+          }
+        });
         console.log(this.lastConnection);
       }
     );

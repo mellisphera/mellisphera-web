@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserloggedService } from '../userlogged.service';
 import { NotifierService } from 'angular-notifier';
-import { CONFIG } from 'src/constants/config';
+import { CONFIG } from '../../constants/config';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
