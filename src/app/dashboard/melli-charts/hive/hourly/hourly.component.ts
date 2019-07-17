@@ -6,7 +6,8 @@ import { MelliChartsDateService } from '../../service/melli-charts-date.service'
 interface Tools {
   name: string;
   id: string;
-  type: string;
+  origin: string;
+  unit?: string;
   class: string;
   icons?: string;
 }
@@ -19,23 +20,23 @@ interface Tools {
 export class HourlyComponent implements OnInit {
 
   private typeData: Tools[];
-  private currentTypeHourly: Tools;
+  private currentTypeHourly: Tools[];
   private currentEltTypeHourly: HTMLElement;
   constructor(private hourlyManager: HourlyManagerService,
     private renderer: Renderer2,
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
+    this.currentTypeHourly = [];
     this.typeData = [
-      { name: 'WINCOME', id: 'WINCOME_HOURLY', type: 'HOURLY', class: 'item-type' },
-      { name: 'TEMP_INT', id: 'TEMP_INT_MAX_HOURLY', type: 'HOURLY', class: 'item-type active' },
-      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX_HOURLY', type: 'HOURLY', class: 'item-type' },
-      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN_HOURLY', type: 'HOURLY', class: 'item-type' },
-      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX_HOURLY', type: 'HOURLY', class: 'item-type' },
-      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN_HOURLY', type: 'HOURLY', class: 'item-type' },
-      { name: 'HRIN', id: 'HRIN_HOURLY', type: 'HOURLY', class: 'item-type' },
-      { name: 'BAT', id: 'BAT_HOURLY', type: 'HOURLY', class: 'item-type' }
+      { name: 'WEIGHT', id: 'WEIGHT_HOURLY', unit: 'W', origin: 'DEVICE', class: 'item-type active' },
+      { name: 'TEMP_INT', id: 'TEMP_INT_HOURLY', unit: 'T', origin: 'DEVICE', class: 'item-type' },
+      { name: 'TEMP_EXT', id: 'TEMP_EXT_HOURLY', unit: 'T', origin: 'DEVICE', class: 'item-type' },
+      { name: 'HRIN', id: 'HRIN_HOURLY', unit:'P',  origin: 'DEVICE', class: 'item-type' },
+      { name: 'BAT', id: 'BAT_HOURLY', unit: 'P', origin: 'DEVICE', class: 'item-type' },
+      { name: 'TEMP_WEATHER', id: 'TEMP_WEATHER', unit: 'T', origin: 'OTHER',  class: 'item-type'},
+      { name: 'HWEATHER', id: 'HWEATHER', unit: 'P', origin: 'OTHER', class: 'item-type'}
     ];
-    this.currentTypeHourly = this.typeData[6];
+    this.currentTypeHourly.push(this.typeData[0]);
 
  }
 
@@ -43,7 +44,7 @@ export class HourlyComponent implements OnInit {
   }
 
   loadHourlyData(): void {
-    if (this.ifTypeHourlyContains('WINCOME')) {
+    if (this.ifTypeHourlyContains('WEIGHT')) {
       this.hourlyManager.getChartWeight(this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
 
     } if (this.ifTypeHourlyContains('TEMP_INT')) {
@@ -63,34 +64,73 @@ export class HourlyComponent implements OnInit {
     this.currentEltTypeHourly = document.getElementById(this.currentTypeHourly[0].id);
   }
 
-  setType(type: any): void{
+  setType(type: Tools): void {
+    const toolIndex: number = this.typeData.map(_type => _type.id).indexOf(type.id);
     this.currentEltTypeHourly = document.getElementById(type.id);
+    console.log(this.currentTypeHourly);
     if (!this.ifTypeHourlyContains(type.name)) {
-      // this.currentTypeHourly.push(type);
-      this.renderer.addClass(this.currentEltTypeHourly, 'active');
-      this.loadHourlyData();
+      this.typeData[toolIndex].class += ' active';
+      this.addType(type);
+      console.log(this.currentTypeHourly);
+      // this.loadHourlyData();
     } else {
-      this.renderer.removeClass(this.currentEltTypeHourly, 'active');
-     // this.removeTypeHourly(type);
+      this.typeData[toolIndex].class = this.typeData[toolIndex].class.replace(/active/g, '');
+      console.log(this.typeData[toolIndex]);
+      // this.renderer.removeClass(this.currentEltTypeHourly, 'active');
+      this.removeTypeHourly(type);
     }
   }
 
-  // removeTypeHourly(type: any): void {
-  //   const index = this.currentTypeHourly.map(_type => _type.id).indexOf(type.id);
-  //   this.currentTypeHourly.splice(index, 1);
-  // }
+  /**
+   *
+   *
+   * @param {*} type
+   * @memberof HourlyComponent
+   */
+  removeTypeHourly(type: Tools): void {
+     const index = this.currentTypeHourly.map(_type => _type.id).indexOf(type.id);
+     this.currentTypeHourly.splice(index, 1);
+   }
 
+   addType(type: Tools) {
+    if (this.currentTypeHourly.length > 0) {
+      const nbSimilarType: Tools[] = this.currentTypeHourly.filter(_filter => _filter.unit === type.unit);
+      if (nbSimilarType.length < 1) { // Si je n'ai pas d'unité similaire
+        this.currentTypeHourly.forEach(_type => {
+          let toolIndex: number = this.typeData.map(_map => _map.id).indexOf(_type.id);
+          this.typeData[toolIndex].class = this.typeData[toolIndex].class.replace(/active/g, '');
+        });
+        this.currentTypeHourly = new Array();
+      }
+    }
+    this.currentTypeHourly.push(type);
+
+   }
+
+  /**
+   *
+   *
+   * @param {string} labelType
+   * @returns {boolean}
+   * @memberof HourlyComponent
+   */
   ifTypeHourlyContains(labelType: string): boolean {
-   //  return this.currentTypeHourly.filter(_filter => _filter.name === labelType).length > 0;
-   return true;
+    return this.currentTypeHourly.filter(_filter => _filter.name === labelType).length > 0;
   }
 
   onHourlyChartInit(event: any) {
     this.melliHive.setHourlyChartInstnace(event);
   }
 
-  getlabelByType(): Array<any> {
-    return this.typeData;
+  /**
+   *
+   *
+   * @param {string} type
+   * @returns {Array<any>}
+   * @memberof HourlyComponent
+   */
+  getlabelByType(type: string): Array<any> {
+    return this.typeData.filter(_filter => _filter.origin === type);
   }
 
 

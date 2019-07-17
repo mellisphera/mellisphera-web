@@ -18,11 +18,11 @@
               <div id="input-date">
                 <div class="form-group">
                   <label>Start : </label>
-                  <input type="date" [ngModel]="getStartDate()" (ngModelChange)="melliChartDate.start = $event" class="form-control" />
+                  <input type="datetime-local" [ngModel]="getStartDate()" (ngModelChange)="melliChartDate.start = $event" class="form-control" />
                 </div>
                 <div class="form-group">
                   <label>End : </label>
-                  <input type="date" [ngModel]="getEndDate()" (ngModelChange)="melliChartDate.end = $event" class="form-control" />
+                  <input type="datetime-local" [ngModel]="getEndDate()" (ngModelChange)="melliChartDate.end = $event" class="form-control" />
                 </div>
                 <button type="button" (click)="setDateFromInput()" class="btn btn-large btn-block btn-primary">Apply</button>
               </div>

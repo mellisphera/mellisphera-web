@@ -8,9 +8,11 @@ import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 interface Tools {
   name: string;
   id: string;
-  type: string;
+  origin: string;
+  type?: string;
+  unit?: string;
   class: string;
-  icons: string;
+  icons?: string;
 }
 @Component({
   selector: 'app-daily',
@@ -28,16 +30,16 @@ export class DailyComponent implements OnInit, AfterViewInit {
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
     this.typeData = [
-      { name: 'WINCOME', id: 'WINCOME', type: 'DEVICE', class: 'item-type active', icons: '' },
-      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', type: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', type: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', type: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', type: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'WEATHER', id: 'WHEATHERs', type: 'OTHER', class: 'item-type', icons: '' },
-      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', type: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'HRIN', id: 'HRIN', type: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'BROOD', id: 'BROOD', type: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'ASTRO', id: 'ASTRO', type: 'OTHER', class: 'item-type', icons: ''}
+      { name: 'WINCOME', id: 'WINCOME', origin: 'DEVICE', class: 'item-type active', icons: '' },
+      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'WEATHER', id: 'WHEATHERs', origin: 'OTHER', class: 'item-type', icons: '' },
+      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'HRIN', id: 'HRIN', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'BROOD', id: 'BROOD', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'ASTRO', id: 'ASTRO', origin: 'OTHER', class: 'item-type', icons: ''}
     ];
     this.optionCsv = {
       fieldSeparator: ',',
@@ -105,6 +107,12 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
 
 
+  /**
+   *
+   *
+   * @param {*} event
+   * @memberof DailyComponent
+   */
   onDailyChartInit(event: any): void {
     this.melliHive.checkifDaillyInstanceChart().then(success => {
       console.info('CHART DEJA CHARGE');
@@ -122,9 +130,15 @@ export class DailyComponent implements OnInit, AfterViewInit {
    * @memberof DailyComponent
    */
   getlabelByType(type: string): Array<any> {
-    return this.typeData.filter(_filter => _filter.type === type);
+    return this.typeData.filter(_filter => _filter.origin === type);
   }
 
+  /**
+   *
+   *
+   * @param {Tools} type
+   * @memberof DailyComponent
+   */
   setType(type: Tools): void {
     if (type.id !== this.currentTypeDaily.id) {
       this.renderer.removeClass(this.currentEltTypeDaily, 'active');
@@ -136,7 +150,12 @@ export class DailyComponent implements OnInit, AfterViewInit {
     }
   }
 
-  exportToCsv() {
+  /**
+   *
+   *
+   * @memberof DailyComponent
+   */
+  exportToCsv(): void {
     const data = this.melliHive.getDailyChartInstance().getOption().series.map(_series => _series.data).flat();
     const ngCsv = new Angular5Csv(data, this.currentTypeDaily.name, this.optionCsv);
   }

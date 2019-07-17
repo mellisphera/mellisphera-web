@@ -2,8 +2,13 @@
   <div class="chart hourly" [options]="hourlyManager.baseOpions" echarts (chartInit)="onHourlyChartInit($event)"></div>
 </div>
 <div id="sidebar-tools-hourly" class="sidebar-wrapper">
-  <ul class="nav responsive-nav">
-    <li *ngFor="let type of getlabelByType()" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}
+  <ul class="nav responsive-nav" id="device_hourly">
+    <li *ngFor="let type of getlabelByType('DEVICE'); let i = index;" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}
     </li>
+  </ul>
+  <hr/>
+  <ul class="nav responsive-nav" id="other_hourly">
+    <li *ngFor="let type of getlabelByType('OTHER'); let i = index" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}
+
   </ul>
 </div>

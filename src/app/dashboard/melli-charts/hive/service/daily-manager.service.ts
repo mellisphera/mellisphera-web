@@ -84,7 +84,7 @@ export class DailyManagerService {
                   },
                   position: [cellPoint[0], cellPoint[1]],
                   style: {
-                    fill: this.getColorCalendarByDate(api.value(0)),
+                    fill: this.getColorCalendarByValue(api.value(0)),
                     stroke: 'black'
                   }
                 }
@@ -117,16 +117,16 @@ export class DailyManagerService {
         if(this.ifRangeChanged(range)) {
           console.log('range');
           option.calendar.range = range;
-          option.series[0].data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name']));
+          option.series[0].data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name'], _data.moon['ascendant']));
         } else {
-          if (this.existSeries(option.series, 'Astro')) {
+          if (this.existSeries(option.series, chartName)) {
             option.series = new Array();
             console.log('vide');
           }
-          this.cleanChartsInstance(chartInstance, 'Astro');
+          this.cleanChartsInstance(chartInstance, chartName);
           let serie = Object.assign({}, SERIES.custom);
           serie.name = 'Weather';
-          serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name']));
+          serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name'], _data.moon['ascendant']));
           serie.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
@@ -161,14 +161,14 @@ export class DailyManagerService {
                    },
                    position: [cellPoint[0], cellPoint[1]],
                    style: {
-                     fill: this.getColorCalendarByDate(api.value(0)),
+                     fill: this.getColorCalendarByValue(api.value(0), api.value(2)),
                      stroke: 'black'
                    }
                  }
               ]
             };
           }
-          option.tooltip = this.getTooltipBySerie('Astro');
+          option.tooltip = this.getTooltipBySerie(chartName);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.dayLabel.align = 'left';
@@ -612,22 +612,20 @@ export class DailyManagerService {
     * @returns {string}
     * @memberof DailyManagerService
     */
-    getColorCalendarByDate(date: Date): string {
-      let dateToday = new Date();
-      let dateCalendar = new Date(date);
-      dateToday.setHours(2);
-      dateToday.setMinutes(0);
-      dateToday.setSeconds(0);
-      dateToday.setMilliseconds(0);
-      if (dateCalendar.getTime() === dateToday.getTime()) {
-        return '#FF2E2C';
-      } else if (dateCalendar.getTime() > dateToday.getTime()) {
-        return '#37E21F';
-      } else if (dateCalendar.getTime() < dateToday.getTime()) {
-        return '#ABC0C5';
-      } else {
-        return '#EBEBEB';
-      }
-      
-    } 
+   getColorCalendarByValue(date: Date, optionValue?: any): string {
+    let dateToday = new Date();
+    let dateCalendar = new Date(date);
+    dateToday.setHours(2);
+    dateToday.setMinutes(0);
+    dateToday.setSeconds(0);
+    dateToday.setMilliseconds(0);
+    if (dateCalendar.getTime() === dateToday.getTime()) {
+      return '#FF2E2C';
+    } else if (optionValue === 1) {
+      return '#ABC0C5';
+    } else {
+      return '#EBEBEB';
+    }
+  }
 }
+
