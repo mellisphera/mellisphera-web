@@ -338,7 +338,6 @@ public getDailyWeightIncomeByApiary(idApiary: string): void {
   previousDay.setHours(2);
   previousDay.setMinutes(0);
   tabDate = [previousDay,this.rangeDailyRecord];
-  console.log(tabDate);
   this.http.post<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/apiary/' + idApiary, tabDate).subscribe(
       (data) => {
           if (data[0] != null) {

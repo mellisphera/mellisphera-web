@@ -39,3 +39,7 @@ hr
 .tabRankAlert i:hover{
     color: #70A8B2;
 }
+
+#graphs{
+    margin-top : 50px;
+}

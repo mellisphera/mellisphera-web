@@ -70,7 +70,9 @@ export class GraphGlobal {
             {'graph' : 'Humidity', 'titre' : 'Humidité (%)'},
             {'graph' : 'loss', 'titre' : 'perte'},
             {'graph' : 'Weight', 'titre' : 'Poids'},
-            {'graph' : 'Alerts', 'titre' : 'Calendrier des alertes'}
+            {'graph' : 'AlertsHive', 'titre' : 'Calendrier des alertes de la ruche'},
+            {'graph' : 'AlertsApiary', 'titre' : 'Calendrier des alertes du rucher'},
+            {'graph' : 'Blooming', 'titre' : 'Calendrier de floraison du rucher'}
         ];
 
         // EN
@@ -85,7 +87,9 @@ export class GraphGlobal {
             {'graph' : 'Humidity', 'titre' : 'Humidity (%)'},
             {'graph' : 'loss', 'titre' : 'loss'},
             {'graph' : 'Weight', 'titre' : 'Weight'},
-            {'graph' : 'Alerts', 'titre' : 'Alerts calendar'}
+            {'graph' : 'AlertsHive', 'titre' : 'Alerts calendar for the hive'},
+            {'graph' : 'AlertsApiary', 'titre' : 'Alerts calendar for the apiary'},
+            {'graph' : 'Blooming', 'titre' : 'Apiary Blooming calendar'}
         ];
     }
 
@@ -150,7 +154,6 @@ export class GraphGlobal {
         this.temp.unitT = '° C';
         this.temp.min = 0;
         this.temp.max = null;
-        console.log(this.weight);
     }
     getWeight(): Object {
         return this.weight;
@@ -200,6 +203,14 @@ export class GraphGlobal {
     getNumberFormat(value: number): string | number {
         if (this.userService.getCountry() === 'FR') {
             return value.toString().replace(/\./g, ',');
+        } else {
+            return value;
+        }
+    }
+
+    getStringWeightFormat(value: string): string {
+        if (this.userService.getCountry() === 'FR') {
+            return value.replace(/\./g, ',');
         } else {
             return value;
         }

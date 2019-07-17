@@ -110,7 +110,7 @@
         </div>
         <div (click)="onClick(ruche);" class="weight collapse ">
             <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche.id) !== null"
-                class="hive-info">{{ dailyRecordWservice.getWeightIncomeByHive(ruche.id) }}</span>
+                class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightIncomeByHive(ruche.id)) }}</span>
             <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche.id) === null"
                 class="hive-info">{{ 'HOME.NODATA' | translate}}</span>
         </div>

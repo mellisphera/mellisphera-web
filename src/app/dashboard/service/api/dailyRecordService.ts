@@ -47,7 +47,6 @@ export class DailyRecordService {
         this.dailyRecords = [];
         if (this.user.getUser()) {
             this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
-                console.log(sessionStorage.getItem('currentApiary'));
                 this.getDailyRecThByApiary(sessionStorage.getItem('currentApiary'));
             });
         }
@@ -268,7 +267,6 @@ export class DailyRecordService {
         this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, this.rangeDailyRecord);
         this.dailyRecTabObs.subscribe(
             (data) => {
-                console.log(data);
                 if (data[0] != null) {
                     this.dailyRecords = data;
 

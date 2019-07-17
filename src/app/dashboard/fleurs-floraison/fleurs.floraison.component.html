@@ -6,11 +6,9 @@
                     <h4 class="panel-title">
                         <a data-toggle="collapse" href="#collapseOne">
                             <button class="btn btn-primary" style="right:0px" data-toggle="modal"
-                                data-target="#biblioteque"> <i class="fa fa-book"></i>Apiary
-                                plants</button>
+                                data-target="#biblioteque"> <i class="fa fa-book"></i>{{ 'FLOWER.APIARYPLANTS' | translate}}</button>
                             <button class="btn btn-primary" data-toggle="modal" data-target="#recherche"> <i
-                                    class="fa fa-search"></i>Plant
-                                directory</button>
+                                    class="fa fa-search"></i>{{ 'FLOWER.PLANTDIR' | translate}}</button>
                         </a>
                     </h4>
                 </div>
@@ -34,7 +32,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    <h4 class="text-center">Melliferous Plants <br />
+                    <h4 class="text-center">{{ 'FLOWER.MELLIPLANTS' | translate}}<br />
                         {{ fleursFloraisonService.rucherService.rucher.name }}</h4>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -46,12 +44,12 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Photo</th>
-                            <th scope="col">Name</th>
-                            <th class="text-justify" scope="col">Starts <br />blooming <br />theorical</th>
-                            <th class="text-justify" scope="col">Ends <br />blooming <br />theorical</th>
-                            <th class="text-justify" scope="col">Starts<br />blooming <br />observed</th>
-                            <th class="text-justify" scope="col">Ends <br />blooming <br />observed</th>
-                            <th class="text-justify" scope="col">Relative <br />abundance <br />in apiary</th>
+                            <th scope="col">{{ 'FLOWER.NAME' | translate}}</th>
+                            <th class="text-justify" scope="col">{{ 'FLOWER.STARTS' | translate}} <br />{{ 'FLOWER.BLOOMING' | translate}} <br />{{ 'FLOWER.THEORICAL' | translate}}</th>
+                            <th class="text-justify" scope="col">{{ 'FLOWER.ENDS' | translate}} <br />{{ 'FLOWER.BLOOMING' | translate}} <br />{{ 'FLOWER.THEORICAL' | translate}}</th>
+                            <th class="text-justify" scope="col">{{ 'FLOWER.STARTS' | translate}}<br />{{ 'FLOWER.BLOOMING' | translate}} <br />{{ 'FLOWER.OBSERVED' | translate}}</th>
+                            <th class="text-justify" scope="col">{{ 'FLOWER.ENDS' | translate}} <br />{{ 'FLOWER.BLOOMING' | translate}} <br />{{ 'FLOWER.OBSERVED' | translate}}</th>
+                            <th class="text-justify" scope="col">{{ 'FLOWER.RELATIVE' | translate}} <br />{{ 'FLOWER.ABUNDANCE' | translate}} <br />{{ 'FLOWER.INAPIARY' | translate}}</th>
                             <th class="text-justify" scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -76,13 +74,13 @@
                                     <select [disabled]="!(selectedFlo == fleur.id)" [(ngModel)]="fleur.presence"
                                         (click)="onSelectPresence($event)" class="form-control" id="selectPresence">
                                         <option value="Elevée">
-                                            High
+                                            {{ 'FLOWER.HIGH' | translate}}
                                         </option>
                                         <option value="Moyen">
-                                            Medium
+                                            {{ 'FLOWER.MEDIUM' | translate}}
                                         </option>
                                         <option value="Faible">
-                                            Low
+                                            {{ 'FLOWER.LOW' | translate}}
                                         </option>
                                     </select>
                                 </td>
@@ -112,9 +110,9 @@
             <div class="modal-footer">
 
                 <button class="btn btn-primary pull-left" data-toggle="modal" data-target="#recherche"> <i
-                        class="fa fa-search"></i>Plants directory</button>
+                        class="fa fa-search"></i>{{ 'FLOWER.PLANTDIR' | translate}}</button>
                 <!--<button type="button" class="btn btn-primary" (click)="updateTot(fleursBibli)">Enregistrer</button>-->
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'FLOWER.CLOSE' | translate}}</button>
 
             </div>
         </div>
@@ -127,10 +125,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    <h4 class="text-center">Melliferous plant directory</h4>
+                    <h4 class="text-center">{{ 'FLOWER.MELLIDIR' | translate}}</h4>
                 </h5>
                 <button class="btn btn-primary" style="right:0px" data-toggle="modal" data-target="#biblioteque"
-                    data-dismiss="modal"> <i class="fa fa-book"></i>My Plants</button>
+                    data-dismiss="modal"> <i class="fa fa-book"></i>{{ 'FLOWER.MYPLANTS' | translate}}</button>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -142,15 +140,15 @@
                             <div class="panel-body">
 
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#variete">Search by name</a></li>
-                                    <li><a data-toggle="tab" href="#periode">Search by month</a></li>
+                                    <li class="active"><a data-toggle="tab" href="#variete">{{ 'FLOWER.SEARCHNAME' | translate}}</a></li>
+                                    <li><a data-toggle="tab" href="#periode">{{ 'FLOWER.SEARCHMONTH' | translate}}</a></li>
                                 </ul>
 
                                 <div class="tab-content">
                                     <div id="variete" class="tab-pane fade in active">
                                         <div class="form-group">
                                             <br />
-                                            <label>Name </label>
+                                            <label>{{ 'FLOWER.NAME' | translate}} </label>
                                             <input type="text" [(ngModel)]="selectedFr" name="nomfr">
                                         </div>
                                         <br />
@@ -160,7 +158,7 @@
                                             <br />
                                             <select style="width:400px" [(ngModel)]="selectedType"
                                                 class="form-control ">
-                                                <option value="">All types</option>
+                                                <option value="">{{ 'FLOWER.ALLTYPES' | translate}}</option>
                                                 <option *ngFor="let type of fleursFloraisonService.typesFleur"
                                                     [value]="type">
                                                     {{ type }}
@@ -172,7 +170,7 @@
                                                         <br/>
                                                     <button type="submit" (click)="subscribeToDataRecherchePeriode()" class="btn btn-primary" data-toggle="modal" >Rechercher</button>-->
                                         <div id="groupRange">
-                                            <label>Blooming month </label>
+                                            <label>{{ 'FLOWER.BLOOMONTH' | translate}} </label>
                                             <datalist id="tickmarks">
                                                 <option value="0">
                                                 <option value="1">
@@ -203,14 +201,16 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Photo</th>
-                                <th scope="col">Common<br />name</th>
-                                <th scope="col">Latin<br />name</th>
+                                <th scope="col" *ngIf = "this.data.getJwtReponse().country === 'FR'">Nom<br />commun</th>
+                                <th scope="col" *ngIf = "this.data.getJwtReponse().country !== 'FR'">Common<br />name</th>
+                                <th scope="col" *ngIf = "this.data.getJwtReponse().country === 'FR'">Nom<br />Latin</th>
+                                <th scope="col" *ngIf = "this.data.getJwtReponse().country !== 'FR'">Latin<br />name</th>
                                 <th scope="col">Type</th>
-                                <th scope="col">Blooming period</th>
+                                <th scope="col">{{ 'FLOWER.BLOOMINGPERIOD' | translate}}</th>
                                 <th scope="col">Pollen</th>
                                 <th scope="col">Nectar</th>
-                                <th scope="col">Confidence level</th>
-                                <th scope="col">Add to apiary</th>
+                                <th scope="col">{{ 'FLOWER.CONFIDENCELEVEL' | translate}}</th>
+                                <th scope="col">{{ 'FLOWER.ADDTOAPIARY' | translate}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -246,7 +246,7 @@
                 </div>
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'FLOWER.CLOSE' | translate}}</button>
 
                 </div>
             </div>

@@ -262,5 +262,33 @@
         "LOGIN" : "vous connectant",
         "SEND" : "Envoyer",
         "CLOSE" : "Fermer"
+    },
+    "FLOWER" : {
+        "APIARYPLANTS" : "Plantes du rucher",
+        "PLANTDIR" : "Listes des plantes",
+        "MELLIPLANTS" : "Plantes Melliferous",
+        "NAME" : "Nom",
+        "STARTS" : "Débuts",
+        "ENDS" : "Fins",
+        "RELATIVE" : "Relative",
+        "BLOOMING" : "de floraison",
+        "THEORICAL" : "théorique",
+        "OBSERVED" : "observée",
+        "ABUNDANCE" : "abondance",
+        "INAPIARY" : "dans le rucher",
+        "HIGH" : "Haut",
+        "MEDIUM" : "Moyen",
+        "LOW" : "Bas",
+        "MELLIDIR" : "Liste des plantes Melliferous",
+        "MYPLANTS" : "Mes plantes",
+        "SEARCHNAME" : "Rechercher par nom",
+        "SEARCHMONTH" : "Rechercher par mois",
+        "ALLTYPES" : "Tous les types",
+        "BLOOMONTH" : "Mois de floraison",
+        "COMMON" : "commun",
+        "BLOOMINGPERIOD" : "Periode de floraison",
+        "CONFIDENCELEVEL" : "Niveau de confiance",
+        "ADDTOAPIARY" : "Ajouter au rucher",
+        "CLOSE" : "Fermer"
     }
 }

@@ -1,12 +1,14 @@
 export const NOTIF_MSG = {
         SUCCESS: {
             FR: {
-                CHANGE_NAME_DEMO_APIARY: 'Nom modifié'
+                CHANGE_NAME_DEMO_APIARY: 'Nom modifié',
+                READ_ALL_ALERTS_HIVE : 'Alertes lues'
 
 
             },
             EN: {
-                CHANGE_NAME_DEMO_APIARY: 'Name updated'
+                CHANGE_NAME_DEMO_APIARY: 'Name updated',
+                READ_ALL_ALERTS_HIVE : 'Alerts read'
 
             }
         },
@@ -30,6 +32,7 @@ export enum NotifList{
     AUTH_WRITE_HIVE = 'AUTH_WRITE_HIVE',
     CHANGE_NAME_DEMO_APIARY = 'CHANGE_NAME_DEMO_APIARY',
     AUTH_WRITE_NOTES = 'AUTH_WRITE_NOTES',
-    AUTH_WRITE_NOTES_HIVE = 'AUTH_WRITE_NOTES_HIVE'
+    AUTH_WRITE_NOTES_HIVE = 'AUTH_WRITE_NOTES_HIVE',
+    READ_ALL_ALERTS_HIVE = 'READ_ALL_ALERTS_HIVE'
 
 }

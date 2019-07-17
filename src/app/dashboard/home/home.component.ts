@@ -31,6 +31,7 @@ import { stringify } from '@angular/core/src/render3/util';
 import { InfoHivesComponent } from './info-hives/info-hives.component';
 import { AlertsHiveComponent } from './info-hives/alerts-hive/alerts-hive.component';
 import { AlertsComponent } from './alerts/alerts.component';
+import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 
 
 @Component({
@@ -70,6 +71,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private infoHiveComponent: any;
 
   constructor(public dailyRecTh: DailyRecordService,
+    private graphGlobal: GraphGlobal,
     private userService: UserloggedService,
     private notifyService: NotifierService,
     private formBuilder: FormBuilder,
@@ -142,6 +144,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     }
 
+    if (!this.rucheService.getCurrentHive()) {
+          this.rucheService.saveCurrentHive();
+          this.capteurService.getUserCapteurs();
+        } else {
+          this.capteurService.getUserCapteurs();
+        }
+
     // Use the user configuration
     this.userConfig.getSubject().subscribe(
       data => {
@@ -149,13 +158,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.dailyRecordWservice.setUnitSystem(data.unitSystem);
       }
     )
-
-    if (this.rucheService.getCurrentHive() === null) {
-      this.rucheService.saveCurrentHive();
-      this.capteurService.getUserCapteurs();
-    } else {
-      this.capteurService.getUserCapteurs();
-    }
 
     this.initForm();
   }
@@ -212,10 +214,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     )
 
     // For the hive alerts
-    this.alertsService.getAlertsByHive(ruche.id);
     this.checkIfInfoHiveComponent().then(status => {
-      this.infoHiveComponent.alertsHiveComponent.initCalendar();
-      console.log("OK");
+      this.infoHiveComponent.alertsHiveComponent.initCalendar(ruche);
+      this.infoHiveComponent.alertsHiveComponent.readAllHiveAlerts(ruche);
     }).catch(err => {
       console.log(err);
     })
@@ -276,11 +277,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.login.checkWriteObject(ruche.idUsername)) {
       const container = document.getElementById("cadre");
       const widthcontainer = container.offsetWidth;
-      console.log('largeur', + widthcontainer);
       const heightcontainer = container.offsetHeight;
       let xHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosX, 10), widthcontainer);
       let yHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosY, 10), heightcontainer);
-      console.log('ruche en px : ' + xHivePx + '-' + yHivePx);
       this.position.x = this.getPourcentToPx(xHivePx + event.x, widthcontainer);
       this.position.y = this.getPourcentToPx(yHivePx + event.y, heightcontainer);
       if (this.position.y < 0) {
@@ -291,7 +290,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       let rucheUpdate = Object.assign({}, ruche);
       rucheUpdate.hivePosX = '' + this.position.x;
       rucheUpdate.hivePosY = '' + this.position.y;
-      console.log(this.position);
       this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
         () => { }, () => { }, () => {
           this.position.x = 0;
@@ -566,7 +564,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         stringReturn += stringTemp;
         stringReturn += ' are not up-to-date. Please synchronize your datas.'
       }
-    } else if (i > 1) {
+    } else if (i === this.rucheService.ruches.length){
+      if (this.userService.getJwtReponse().country === "FR") {
+        stringReturn += '   Vos données pour les ruches de ce rucher ne sont pas à jour. Veuillez synchroniser vos données.';
+      } else {
+        stringReturn += '   Your datas for the hives of this apiary are not up-to-date. Please synchronize your datas.';
+      }
+    }else if (i > 1) {
       if (this.userService.getJwtReponse().country === "FR") {
         stringReturn += '   Les données pour les ruches ';
         stringReturn += stringTemp;
@@ -583,7 +587,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setRouterPage(event) {
-    console.log(event);
      if (event instanceof InfoHivesComponent) {
       this.infoHiveComponent = event;
     }
