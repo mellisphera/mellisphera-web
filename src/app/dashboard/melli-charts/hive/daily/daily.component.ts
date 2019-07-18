@@ -57,6 +57,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
       headers: ['Date', 'Value'],
       nullToEmptyString: false,
     };
+    this.dailyManager.setCurrentRange(this.melliDate.getRangeForReqest());
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
   }
@@ -72,53 +73,50 @@ export class DailyComponent implements OnInit, AfterViewInit {
   }
 
   loadDailyDeviceData(): void {
-    this.dailyManager.setCurrentBaseOption(this.currentTypeDailyDevice.origin);
-
     switch (this.currentTypeDailyDevice.name) {
       case 'WINCOME':
-        this.dailyManager.getChartWeightincome(this.currentTypeDailyDevice.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartWeightincome(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'TEMP_EXT_MAX':
-        this.dailyManager.getChartTextMax(this.currentTypeDailyDevice.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartTextMax(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'TEMP_EXT_MIN':
-        this.dailyManager.getChartTextMin(this.currentTypeDailyDevice.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartTextMin(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'TEMP_INT_MAX':
-          this.dailyManager.getChartTintMax(this.currentTypeDailyDevice.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
+          this.dailyManager.getChartTintMax(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'TEMP_INT_MIN':
-        this.dailyManager.getChartTminInt(this.currentTypeDailyDevice.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartTminInt(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'HRIN':
-        this.dailyManager.getChartHint(this.currentTypeDailyDevice.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartHint(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'BROOD':
-        this.dailyManager.getChartBrood(this.currentTypeDailyDevice.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartBrood(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       case 'WEIGHT_MAX':
-        this.dailyManager.getChartWeight(this.currentTypeDailyDevice.name, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartWeight(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       default:
         break;
     }
-    this.dailyManager.setOriginChartOption(this.currentTypeDailyDevice.origin);
+   // this.dailyManager.setOriginChartOption(this.currentTypeDailyDevice.origin);
+    
   }
 
   loadDailyOtherData() {
-    this.dailyManager.setCurrentBaseOption(this.currentTypeDailyOther.origin);
-
     switch (this.currentTypeDailyOther.name) {
       case 'WEATHER':
-        this.dailyManager.getChartDailyWeather(this.currentTypeDailyOther.name, this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(true))
+        this.dailyManager.getChartDailyWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(true))
         break;
       case 'ASTRO':
-        this.dailyManager.getChartAstro(this.currentTypeDailyOther.name, this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(true));
+        this.dailyManager.getChartAstro(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(true));
         break;
       default:
         break;
     }
-    this.dailyManager.setOriginChartOption(this.currentTypeDailyOther.origin);
+    // this.dailyManager.setOriginChartOption(this.currentTypeDailyOther.origin);
   }
 
 
@@ -130,10 +128,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
    */
   onDailyDeviceChartInit(event: any): void {
     this.melliHive.checkifDailyDeviceInstanceChart().then(success => {
-      console.info('CHART DEJA CHARGE');
       console.log(this.melliHive.getDailyDeviceChartInstance().getWidth());
     }).catch(err => {
-      console.info('CHART INEXISTANT');
       this.melliHive.setDailyDeviceChartInstance(event);
 
       console.log(this.melliHive.getDailyDeviceChartInstance().getWidth());
@@ -142,12 +138,9 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
   onDailyOtherChartInit(event: any): void {
     this.melliHive.checkifOtherInstanceChart().then(success => {
-      console.info('CHART DEJA CHARGE');
       console.log(this.melliHive.getDailyOtherChartInstance().getWidth());
     }).catch(err => {
-      console.info('CHART INEXISTANT');
       this.melliHive.setDailyOtherChartInstance(event);
-      console.log(this.melliHive.getDailyOtherChartInstance().getWidth());
     });
   }
   /**
@@ -168,7 +161,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
    */
   setType(type: Tools): void {
     if (type.origin === DEVICE) {
-      console.error(DEVICE);
       let oldIndex: number = this.typeData.map(_type => _type.id).indexOf(this.currentTypeDailyDevice.id);
       if (type.id !== this.currentTypeDailyDevice.id) {
         this.typeData[oldIndex].class = this.typeData[oldIndex].class.replace(/active/g, '');
@@ -189,9 +181,17 @@ export class DailyComponent implements OnInit, AfterViewInit {
     }
   }
 }
+}
 
 
 
+/**
+ *
+ *
+ * @memberof DailyComponent
+ */
+afterRangeChange(): void {
+  this.dailyManager.setCurrentRange(this.melliDate.getRangeForReqest());
 }
 
   /**

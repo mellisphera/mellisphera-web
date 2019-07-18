@@ -16,6 +16,16 @@ import { AstroService } from '../../service/astro.service';
 import { ICONS_ASTRO } from '../../charts/icons/icons_astro';
 
 
+interface Tools {
+  name: string;
+  id: string;
+  origin: string;
+  type?: string;
+  unit?: string;
+  class: string;
+  icons?: string;
+}
+
 const DEVICE = 'DEVICE';
 const OTHER = 'OTHER';
 
@@ -41,25 +51,22 @@ export class DailyManagerService {
     this.baseOptionExt = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
   }
 
-  getChartDailyWeather(chartName: string, idApiary: string, chartInstance: any, range: Date[]) {
+  getChartDailyWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[]) {
     const weatherObs = [this.weatherService.getCurrentDailyWeather(idApiary, range), this.weatherService.getForecastDailyWeather(idApiary, range)];
     Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
       _weather => {
-        console.log(_weather);
-        let option = Object.assign({}, this.optionForCurentChart);
-        console.log(option);
-        if(this.ifRangeChanged(range)) {
-          console.log('range');
+        let option = Object.assign({}, this.baseOptionExt);
+        if (this.ifRangeChanged(range)) {
+          console.log('CHANGE');
           option.calendar.range = range;
           option.series[0].data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
         } else {
-          if (this.existSeries(option.series, chartName)) {
+          if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
-            console.log('vide');
           }
-          this.cleanChartsInstance(chartInstance, chartName);
+          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.custom);
-          serie.name = chartName;
+          serie.name = type.name;
           serie.data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'], _data.main));
           serie.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
@@ -99,7 +106,7 @@ export class DailyManagerService {
               ]
             };
           }
-          option.tooltip = this.getTooltipBySerie(chartName);
+          option.tooltip = this.getTooltipBySerie(type.name);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.dayLabel.align = 'left';
@@ -107,30 +114,27 @@ export class DailyManagerService {
           option.visualMap = null;
           option.series.push(serie);
         }
-        this.currentRange = range;
+        
         chartInstance.clear();
         chartInstance.setOption(option);
-        this.optionForCurentChart = option;
-        console.log(chartInstance.getOption());
+        this.baseOptionExt = option;
+
       }
     )
   }
 
-  getChartAstro(chartName: string, idApiary: string, chartInstance: any, range: Date[]) {
+  getChartAstro(type: Tools, idApiary: string, chartInstance: any, range: Date[]) {
     this.astroService.getAstroByApiary(idApiary, range).subscribe(
       _astro => {
-        console.log(_astro);
-        let option = Object.assign({}, this.optionForCurentChart);
+        let option = Object.assign({}, this.baseOptionExt);
         if(this.ifRangeChanged(range)) {
-          console.log('range');
           option.calendar.range = range;
           option.series[0].data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name'], _data.moon['ascendant']));
         } else {
-          if (this.existSeries(option.series, chartName)) {
+          if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
-            console.log('vide');
           }
-          this.cleanChartsInstance(chartInstance, chartName);
+          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.custom);
           serie.name = 'Weather';
           serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name'], _data.moon['ascendant']));
@@ -175,7 +179,7 @@ export class DailyManagerService {
               ]
             };
           }
-          option.tooltip = this.getTooltipBySerie(chartName);
+          option.tooltip = this.getTooltipBySerie(type.name);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.dayLabel.align = 'left';
@@ -183,19 +187,22 @@ export class DailyManagerService {
           option.visualMap = null;
           option.series.push(serie);
         }
-        this.currentRange = range;
+        
         chartInstance.clear();
-        chartInstance.setOption(option, true);
-        this.optionForCurentChart = option;
-        console.log(chartInstance.getOption());
+        chartInstance.setOption(option);
+        this.baseOptionExt = option;
+        // this.setOriginChartOption(type.origin);
+
       }
     )
   }
-  getChartWeightincome(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
+  getChartWeightincome(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive).subscribe(
       _daliW => {
-        let option = Object.assign({}, this.optionForCurentChart);
-        if(this.ifRangeChanged(range)) {
+        let option = Object.assign({}, this.baseOptionsInt);
+        console.error(this.ifRangeChanged(range));
+        if (this.ifRangeChanged(range)) {
+          console.log('CHANGE');
           option.calendar.range = range;
           option.series[0].data = _daliW.weightIncomeHight;
           option.series[1].data = _daliW.weightIncomeLow;
@@ -248,87 +255,81 @@ export class DailyManagerService {
           option.series.push(seriesLoss);
           option.visualMap = null;
           option.legend.data = ['gain', 'loss'];
-          console.log(option);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.tooltip = this.getTooltipBySerie('Weight');
           option.calendar.range = range;
         }
-        this.currentRange = range;
+        
         chartInstance.setOption(option);
-        this.optionForCurentChart = option;
-        console.log(chartInstance.getOption());
+        this.baseOptionsInt = option;
 
       }
     )
   }
 
-  getChartTintMax(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
+  getChartTintMax(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getTempIntMaxByHive(idHive, range).subscribe(
       _tMax => {
-        let option = Object.assign({}, this.optionForCurentChart);
+        let option = Object.assign({}, this.baseOptionsInt);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _tMax.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, chartName)) {
+          if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, chartName);
+          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = chartName;
+          serie.name = type.name;
           serie.data = _tMax.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie(chartName);
-          option.tooltip = this.getTooltipBySerie(chartName);
+          option.visualMap = this.getVisualMapBySerie(type.name);
+          option.tooltip = this.getTooltipBySerie(type.name);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.series.push(serie);
-          console.log(option);
         }
-        this.currentRange = range;
+        
         chartInstance.setOption(option);
-        this.optionForCurentChart = option;
-        console.log(chartInstance.getOption());
+        this.baseOptionsInt = option;
 
       }
     )
   }
 
-  getChartTextMax(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
+  getChartTextMax(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyWService.getTempMaxExt(idHive, range).subscribe(
       _tmpMaxExt => {
-        let option = Object.assign({}, this.optionForCurentChart);
+        let option = Object.assign({}, this.baseOptionsInt);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, chartName)) {
+          if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, chartName);
+          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie(chartName);
-          option.tooltip = this.getTooltipBySerie(chartName);
+          option.visualMap = this.getVisualMapBySerie(type.name);
+          option.tooltip = this.getTooltipBySerie(type.name);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.series.push(serie);
-          console.log(option);
         }
-        this.currentRange = range;
+        
         chartInstance.setOption(option);
-        this.optionForCurentChart = option;
-        console.log(chartInstance.getOption());
+        this.baseOptionsInt = option;
 
       }
     )
   }
-  getChartTextMin(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
+  getChartTextMin(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyWService.getTempMinExt(idHive, range).subscribe(
       _tMinExt => {
-        let option = Object.assign({}, this.optionForCurentChart);
+        let option = Object.assign({}, this.baseOptionsInt);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _tMinExt.map(_data => new Array(_data.date, _data.value));
@@ -336,138 +337,132 @@ export class DailyManagerService {
           if (this.existSeries(option.series, '52')) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, chartName);
+          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tMinExt.map(_data => new Array(_data.date, _data.value));
-          serie.name = chartName;
-          option.visualMap = this.getVisualMapBySerie(chartName);
-          option.tooltip = this.getTooltipBySerie(chartName);
+          serie.name = type.name;
+          option.visualMap = this.getVisualMapBySerie(type.name);
+          option.tooltip = this.getTooltipBySerie(type.name);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
           option.series.push(serie);
         }
-        this.currentRange = range;
+        
         chartInstance.setOption(option);
-        this.optionForCurentChart = option;
-        console.log(chartInstance.getOption());
+        this.baseOptionsInt = option;
       }
     )
   }
-  getChartHint(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
+  getChartHint(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getHintByHive(idHive, range).subscribe(
       _hInt => {
-        let option = Object.assign({}, this.optionForCurentChart);
+        let option = Object.assign({}, this.baseOptionsInt);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _hInt.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, chartName)) {
+          if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, chartName);
+          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _hInt.map(_data => new Array(_data.date, _data.value));
-          option.tooltip = this.getTooltipBySerie(chartName);
-          option.visualMap = this.getVisualMapBySerie(chartName);
+          option.tooltip = this.getTooltipBySerie(type.name);
+          option.visualMap = this.getVisualMapBySerie(type.name);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
           option.series.push(serie);
         }
-        this.currentRange = range;
+        
         chartInstance.setOption(option);
-        this.optionForCurentChart = option;
-        console.log(chartInstance.getOption());
+        this.baseOptionsInt = option;
 
       }
     )
   }
-  getChartBrood(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
+  getChartBrood(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getBroodByHive(idHive, range).subscribe(
       _brood => {
-        let option = Object.assign({}, this.optionForCurentChart);
+        let option = Object.assign({}, this.baseOptionsInt);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _brood.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, chartName)) {
+          if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, chartName);
+          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _brood.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie(chartName);
-          option.tooltip = this.getTooltipBySerie(chartName);
+          option.visualMap = this.getVisualMapBySerie(type.name);
+          option.tooltip = this.getTooltipBySerie(type.name);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
           option.series.push(serie);
         }
-        this.currentRange = range;
+        
         chartInstance.setOption(option);
-        this.optionForCurentChart = option;
-        console.log(chartInstance.getOption());
+        this.baseOptionsInt = option;
 
       }
     )
   }
 
-  getChartTminInt(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
+  getChartTminInt(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.dailyHService.getTminByHive(idHive, range).subscribe(
       _tMin => {
-        let option = Object.assign({}, this.optionForCurentChart);
+        let option = Object.assign({}, this.baseOptionsInt);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
           option.series[0].data = _tMin.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, chartName)) {
+          if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, chartName);
+          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tMin.map(_data => new Array(_data.date, _data.value));
-          serie.name = chartName;
-          option.visualMap = this.getVisualMapBySerie(chartName);
-          option.tooltip = this.getTooltipBySerie(chartName);
+          serie.name = type.name;
+          option.visualMap = this.getVisualMapBySerie(type.name);
+          option.tooltip = this.getTooltipBySerie(type.name);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
           option.series.push(serie);
         }
-        this.currentRange = range;
         chartInstance.setOption(option);
-        this.optionForCurentChart = option;
-        console.log(chartInstance.getOption());
+        this.baseOptionsInt = option;
       }
     )
   }
 
-  getChartWeight(chartName: string, idHive: string, chartInstance: any, range: Date[]){
+  getChartWeight(type: Tools, idHive: string, chartInstance: any, range: Date[]){
     this.dailyWService.getWeightByHive(idHive, range).subscribe(
       _weightMax => {
-        let option = Object.assign({}, this.optionForCurentChart);
+        let option = Object.assign({}, this.baseOptionsInt);
         if(this.ifRangeChanged(range)) {
           option.calendar.range = range;
         option.series[0].data = _weightMax.map(_data => new Array(_data.date, _data.value));
         } else {
-          if (this.existSeries(option.series, chartName)) {
+          if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, chartName);
+          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _weightMax.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie(chartName);
-          option.tooltip = this.getTooltipBySerie(chartName);
+          option.visualMap = this.getVisualMapBySerie(type.name);
+          option.tooltip = this.getTooltipBySerie(type.name);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
           option.series.push(serie);
         }
-        this.currentRange = range;
+        
         chartInstance.setOption(option);
-        this.optionForCurentChart = option;
-        console.log(chartInstance.getOption());
+        this.baseOptionsInt = option;
       }
     )
   }
@@ -482,7 +477,6 @@ export class DailyManagerService {
    */
   existSeries(serieArray, name: string): boolean {
     if (!isUndefined(serieArray)) {
-      console.log(serieArray);
     }
     if (isUndefined(serieArray) || serieArray.length < 1 || serieArray.length > 0) {
       return true;
@@ -581,7 +575,6 @@ export class DailyManagerService {
     switch(serieLabel) {
       case 'WEATHER':
           tooltip.formatter =  (params) => {
-            console.log(params.data[3]);
             return params.marker  + this.unitService.getDailyDate(params.data[0]) +
             ': <b>' + this.graphGlobal.getNumberFormat(params.data[1]) + '</br>'
             + params.data[3]['maxHumidityDay'] + '</b>';
@@ -605,6 +598,8 @@ export class DailyManagerService {
    * @memberof DailyManagerService
    */
   ifRangeChanged(range: Date[]): boolean {
+    console.log(range);
+    console.log(this.currentRange);
     if (isUndefined(this.currentRange) || (this.currentRange[0] === range[0] && this.currentRange[1] === range[1])) {
     return false;
     } else {
@@ -635,21 +630,14 @@ export class DailyManagerService {
     }
   }
 
-  setCurrentBaseOption(type: string): void {
-    if (type === DEVICE) {
-      this.optionForCurentChart = Object.assign({}, this.baseOptionsInt);
-    } else if (type === OTHER) {
-      this.optionForCurentChart = Object.assign({}, this.baseOptionExt);
-    }
-  }
-
-  setOriginChartOption(type: string) {
-    if (type === DEVICE) {
-      this.baseOptionsInt = Object.assign({}, this.optionForCurentChart);
-    } else if (type === OTHER) {
-      this.baseOptionExt = Object.assign({}, this.optionForCurentChart);
-    }
-    console.log(this.baseOptionsInt);
+  /**
+   *
+   *
+   * @param {Date[]} range
+   * @memberof DailyManagerService
+   */
+  setCurrentRange(range: Date[]): void {
+    
   }
 }
 

@@ -63,7 +63,6 @@ export class MelliChartsComponent implements OnInit {
             this.melliChartHive.setHiveSelect(allHives[0]);
             console.log(allHives);
             allHives.forEach((elt: RucheInterface) => {
-              console.log(elt);
               this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
                 elt.apiaryName = apiary[0].name;
               });

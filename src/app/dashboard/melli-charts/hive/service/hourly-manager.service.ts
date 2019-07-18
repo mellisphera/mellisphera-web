@@ -4,6 +4,16 @@ import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 import { SERIES } from '../../charts/SERIES';
 import { isUndefined } from 'util';
 
+
+interface Tools {
+  name: string;
+  id: string;
+  origin: string;
+  unit?: string;
+  class: string;
+  icons?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,23 +27,23 @@ export class HourlyManagerService {
     this.baseOpions = Object.assign(BASE_OPTIONS.baseOptionHourly);
   }
 
-  getChartWeight(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
+  getChartWeight(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.recordService.getWeightByHive(idHive, range).subscribe(
       (_weight: any) => {
         console.log(_weight);
         let option = Object.assign({}, this.baseOpions);
         if(this.ifRangeChanged(range)) {
-          const index = option.series.map(_serie => _serie.name).indexOf(chartName);
+          const index = option.series.map(_serie => _serie.name).indexOf(type.name);
           option.series[index].data = _weight.map(_data => {
             return {name: _data.date, value: [_data.date, _data.value]};
           });
         } else {
-          if (this.existSeries(option.series, chartName)) {
+          if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, chartName);
+          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.line);
-          serie.name = chartName;
+          serie.name = type.name;
           serie.data = _weight.map(_data => {
             return {name: _data.date, value: [_data.date, _data.value]};
           });
@@ -52,23 +62,23 @@ export class HourlyManagerService {
   }
 
 
-  getChartTempInt(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
+  getChartTempInt(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.recordService.getTempIntByHive(idHive, range).subscribe(
       _temp => {
         console.log(_temp);
         let option = Object.assign({}, this.baseOpions);
         if(this.ifRangeChanged(range)) {
-          const index = option.series.map(_serie => _serie.name).indexOf(chartName);
+          const index = option.series.map(_serie => _serie.name).indexOf(type.name);
           option.series[index].data = _temp.map(_data => {
             return {name: _data.date, value: [_data.date, _data.value]};
           });
         } else {
-          if (this.existSeries(option.series, chartName)) {
+          if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, chartName);
+          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.line);
-          serie.name = chartName;
+          serie.name = type.name;
           serie.data = _temp.map(_data => {
             return {name: _data.date, value: [_data.date, _data.value]};
           });
@@ -84,23 +94,23 @@ export class HourlyManagerService {
     );
   }
 
-  getChartTempExt(chartName: string, idHive: string, chartInstance: any, range: Date[]) {
+  getChartTempExt(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.recordService.getTempExtByHive(idHive, range).subscribe(
       _temp_ext => {
         console.log(_temp_ext);
         let option = Object.assign({}, this.baseOpions);
         if(this.ifRangeChanged(range)) {
-          const index = option.series.map(_serie => _serie.name).indexOf(chartName);
+          const index = option.series.map(_serie => _serie.name).indexOf(type.name);
           option.series[index].data = _temp_ext.map(_data => {
             return {name: _data.date, value: [_data.date, _data.value]};
           });
         } else {
-          if (this.existSeries(option.series, chartName)) {
+          if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-           this.cleanChartsInstance(chartInstance, chartName);
+           this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.line);
-          serie.name = chartName;
+          serie.name = type.name;
           serie.data = _temp_ext.map(_data => {
             return {name: _data.date, value: [_data.date, _data.value]};
           });

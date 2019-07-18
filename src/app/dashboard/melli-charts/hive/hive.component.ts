@@ -32,9 +32,9 @@ export class HiveComponent implements OnInit {
    * @memberof HiveComponent
    */
   loadDataFromHive(): void {
-    console.log('LOAD');
     this.dailyComponent.loadDailyDeviceData();
     this.dailyComponent.loadDailyOtherData();
+    this.dailyComponent.afterRangeChange();
     this.hourlyComponent.loadHourlyData();
   }
 
