@@ -20,10 +20,14 @@ interface Tools {
 export class HourlyManagerService {
 
   public baseOpions: any;
+  private currentUnit: string;
+  private currentHive: string;
   private currentRange: Date[];
   constructor(
     private recordService: RecordService
   ) {
+    this.currentUnit = null;
+    this.currentHive = null;
     this.baseOpions = Object.assign(BASE_OPTIONS.baseOptionHourly);
   }
 
@@ -32,13 +36,14 @@ export class HourlyManagerService {
       (_weight: any) => {
         console.log(_weight);
         let option = Object.assign({}, this.baseOpions);
+        console.error(option);
         if(this.ifRangeChanged(range)) {
           const index = option.series.map(_serie => _serie.name).indexOf(type.name);
           option.series[index].data = _weight.map(_data => {
             return {name: _data.date, value: [_data.date, _data.value]};
           });
         } else {
-          if (this.existSeries(option.series, type.name)) {
+          if (this.existSeries(option.series, type.unit, idHive)) {
             option.series = new Array();
           }
           this.cleanChartsInstance(chartInstance, type.name);
@@ -55,7 +60,8 @@ export class HourlyManagerService {
         chartInstance.setOption(option);
         this.baseOpions = option;
         console.log(chartInstance.getOption());
-
+        this.setCurrentUnite(type.unit);
+        this.setCurrentHive(idHive);
       }
       
     )
@@ -73,10 +79,10 @@ export class HourlyManagerService {
             return {name: _data.date, value: [_data.date, _data.value]};
           });
         } else {
-          if (this.existSeries(option.series, type.name)) {
+          if (this.existSeries(option.series, type.name, idHive)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.name);
+          this.cleanChartsInstance(chartInstance, type.unit);
           let serie = Object.assign({}, SERIES.line);
           serie.name = type.name;
           serie.data = _temp.map(_data => {
@@ -90,6 +96,8 @@ export class HourlyManagerService {
         chartInstance.setOption(option);
         this.baseOpions = option;
         console.log(chartInstance.getOption());
+        this.setCurrentUnite(type.unit);
+        this.setCurrentHive(idHive);
       }
     );
   }
@@ -105,7 +113,7 @@ export class HourlyManagerService {
             return {name: _data.date, value: [_data.date, _data.value]};
           });
         } else {
-          if (this.existSeries(option.series, type.name)) {
+          if (this.existSeries(option.series, type.unit, idHive)) {
             option.series = new Array();
           }
            this.cleanChartsInstance(chartInstance, type.name);
@@ -122,6 +130,8 @@ export class HourlyManagerService {
         chartInstance.setOption(option);
         this.baseOpions = option;
         console.log(chartInstance.getOption());
+        this.setCurrentUnite(type.unit);
+        this.setCurrentHive(idHive);
       }
     )
   }
@@ -134,12 +144,18 @@ export class HourlyManagerService {
     }
   }
 
-  existSeries(serieArray, name: string): boolean {
+  existSeries(serieArray, unite: string, hive: string): boolean {
     if (!isUndefined(serieArray)) {
       console.log(serieArray);
     }
-    if (isUndefined(serieArray) || serieArray.length < 1 || serieArray.length > 0) {
+    if (isUndefined(serieArray) || serieArray.length < 1) {
       return true;
+    } else if (serieArray.length > 0) {
+      if (unite === this.currentUnit) {
+        return false;
+      } else {
+        return true;
+      }
     } else {
       return false;
     }
@@ -154,6 +170,13 @@ export class HourlyManagerService {
   }
 
   
+  /**
+   *
+   *
+   * @param {Date[]} range
+   * @returns {boolean}
+   * @memberof HourlyManagerService
+   */
   ifRangeChanged(range: Date[]): boolean {
      if (isUndefined(this.currentRange) || (this.currentRange[0] === range[0] && this.currentRange[1] === range[1])) {
       return false;
@@ -169,5 +192,26 @@ export class HourlyManagerService {
     });
     echartInstance.setOption(options);
     this.baseOpions = options;
+  }
+
+
+  /**
+   *
+   *
+   * @param {string} unite
+   * @memberof HourlyManagerService
+   */
+  setCurrentUnite(unite: string): void {
+    this.currentUnit = unite;
+  }
+
+  /**
+   *
+   *
+   * @param {string} idHive
+   * @memberof HourlyManagerService
+   */
+  setCurrentHive(idHive: string): void {
+    this.currentHive = idHive;
   }
 }

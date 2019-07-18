@@ -43,20 +43,59 @@ export class HourlyComponent implements OnInit {
   ngOnInit() {
   }
 
-  loadHourlyData(): void {
+  /**
+   *
+   *
+   * @param {boolean} newHive
+   * @param {boolean} newType
+   * @memberof HourlyComponent
+   */
+  loadHourlyData(newHive: boolean, newType: string): void {
     const lengthIndex = this.currentTypeHourly.length;
-    if (this.ifTypeHourlyContains('WEIGHT')) {
-      this.hourlyManager.getChartWeight(this.currentTypeHourly[lengthIndex - 1], this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
-    } 
-    if (this.ifTypeHourlyContains('TEMP_INT')) {
-      this.hourlyManager.getChartTempInt(this.currentTypeHourly[lengthIndex - 1], this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
-    } 
-    if (this.ifTypeHourlyContains('TEMP_EXT')) {
-      this.hourlyManager.getChartTempExt(this.currentTypeHourly[lengthIndex - 1], this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
-    }
+     this.currentTypeHourly.forEach(_type => {
+      console.log(newType === _type.name);
+       switch(_type.name) {
+         case 'WEIGHT':
+           if (newHive && this.ifTypeHourlyContains('WEIGHT')  || (!newHive || newType === _type.name)) {
+            this.hourlyManager.getChartWeight(_type,
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+           }
+           break;
+          case 'TEMP_INT':
+            if (newHive && this.ifTypeHourlyContains('TEMP_INT') || !newHive || newType === _type.name) {
+              this.hourlyManager.getChartTempInt(_type,
+                this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+            }
+            break;
+          case 'TEMP_EXT':
+            if (newHive && this.ifTypeHourlyContains('TEMP_EXT') || !newHive || newType === _type.name) {
+              this.hourlyManager.getChartTempExt(_type,
+                this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+            }
+            break;
+          default:
+            break;
+       }
+     })
+    // if ((this.getLastSelectedType() === 'WEIGHT' && !newHive) || (newHive && this.ifTypeHourlyContains('WEIGHT'))) {
+ 
+    // }
+    // if ((this.getLastSelectedType() === 'TEMP_INT'  && !newHive) || (newHive && this.ifTypeHourlyContains('TEMP_INT'))) {
+    //   console.error('TEMP_INT');
+
+    // }
+    // if ((this.getLastSelectedType() === 'TEMP_EXT' && !newHive) || (newHive && this.ifTypeHourlyContains('TEMP_EXT'))) {
+    //   console.error('TEMP_EXT');
+
+    // }
   }
   ngAfterViewInit(): void {
     this.currentEltTypeHourly = document.getElementById(this.currentTypeHourly[0].id);
+  }
+
+  getLastSelectedType(): string {
+    const length = this.currentTypeHourly.length;
+    return this.currentTypeHourly[length - 1].name;
   }
 
   setType(type: Tools): void {
@@ -67,7 +106,7 @@ export class HourlyComponent implements OnInit {
       this.typeData[toolIndex].class += ' active';
       this.addType(type);
       console.log(this.currentTypeHourly);
-      this.loadHourlyData();
+      this.loadHourlyData(false, type.name);
     } else {
       this.typeData[toolIndex].class = this.typeData[toolIndex].class.replace(/active/g, '');
       console.log(this.typeData[toolIndex]);
@@ -128,6 +167,15 @@ export class HourlyComponent implements OnInit {
    */
   getlabelByType(type: string): Array<any> {
     return this.typeData.filter(_filter => _filter.origin === type);
+  }
+
+  /**
+   *
+   *
+   * @memberof HourlyComponent
+   */
+  cleanSerie(): void {
+    this.hourlyManager.baseOpions.series = new Array();
   }
 
 

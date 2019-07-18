@@ -157,7 +157,7 @@ export class MelliChartsComponent implements OnInit {
 
    nextByRoute() {
      console.log(this.router.url);
-      switch(this.router.url){
+      switch (this.router.url) {
        case PREFIX_PATH + 'hive':
          this.hiveComponent.loadDataFromHive();
        break;
