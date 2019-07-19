@@ -1,5 +1,5 @@
-<div id="hourly">
-  <div class="chart hourly" [options]="hourlyManager.baseOpions" echarts (chartInit)="onHourlyChartInit($event)"></div>
+<div id="hourly" (window:resize)="onResize($event)">
+  <div class="chart hourly" id="hourly-chart"></div>
 </div>
 <div id="sidebar-tools-hourly" class="sidebar-wrapper">
   <ul class="nav responsive-nav" id="device_hourly">

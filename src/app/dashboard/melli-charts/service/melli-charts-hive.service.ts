@@ -150,7 +150,7 @@ export class MelliChartsHiveService {
     * @param {*} echarInstance
     * @memberof MelliChartsHiveService
     */
-    setHourlyChartInstnace(echarInstance: any): void {
+    setHourlyChartInstance(echarInstance: any): void {
       this.hourlyEchartInstances = echarInstance;
     }
     

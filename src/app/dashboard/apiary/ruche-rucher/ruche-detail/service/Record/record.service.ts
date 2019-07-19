@@ -553,4 +553,29 @@ export class RecordService {
   getTempExtByHive(idHive: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'records/temp_ext/' + idHive, range);
   }
+
+  /**
+   *
+   *
+   * @param {string} idHive
+   * @param {Date[]} range
+   * @returns {Observable<any>}
+   * @memberof RecordService
+   */
+  getBatExtByHive(idHive: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'records/batExt/' + idHive, range );
+  }
+
+  
+  /**
+   *
+   *
+   * @param {string} idHive
+   * @param {Date[]} range
+   * @returns {Observable<any>}
+   * @memberof RecordService
+   */
+  getBatIntByHive(idHive: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'records/batInt/' + idHive, range);
+  }
 }

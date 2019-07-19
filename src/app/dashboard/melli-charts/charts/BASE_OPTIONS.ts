@@ -59,6 +59,9 @@ export const BASE_OPTIONS = {
             name: '',
             nameLocation: 'middle',
             type: 'value',
+            nameGap: 30,
+            scale: true
+            
         }],
 
         xAxis: [

@@ -3,6 +3,7 @@ import { RecordService } from '../../../apiary/ruche-rucher/ruche-detail/service
 import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 import { SERIES } from '../../charts/SERIES';
 import { isUndefined } from 'util';
+import { BehaviorSubject } from 'rxjs';
 
 
 interface Tools {
@@ -22,10 +23,14 @@ export class HourlyManagerService {
   public baseOpions: any;
   private currentUnit: string;
   private currentHive: string;
+  private numberChartAcive: number;
   private currentRange: Date[];
+  private subjectCountChartComplete: BehaviorSubject<number>;
   constructor(
     private recordService: RecordService
   ) {
+    this.subjectCountChartComplete = new BehaviorSubject(0);
+    this.numberChartAcive = 0;
     this.currentUnit = null;
     this.currentHive = null;
     this.baseOpions = Object.assign(BASE_OPTIONS.baseOptionHourly);
@@ -34,10 +39,10 @@ export class HourlyManagerService {
   getChartWeight(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.recordService.getWeightByHive(idHive, range).subscribe(
       (_weight: any) => {
-        console.log(_weight);
         let option = Object.assign({}, this.baseOpions);
         console.error(option);
         if(this.ifRangeChanged(range)) {
+          console.error('RANGE CHANGED');
           const index = option.series.map(_serie => _serie.name).indexOf(type.name);
           option.series[index].data = _weight.map(_data => {
             return {name: _data.date, value: [_data.date, _data.value]};
@@ -46,7 +51,7 @@ export class HourlyManagerService {
           if (this.existSeries(option.series, type.unit, idHive)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.name);
+          //this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.line);
           serie.name = type.name;
           serie.data = _weight.map(_data => {
@@ -54,14 +59,15 @@ export class HourlyManagerService {
           });
           // option.tooltip = this.getTooltipBySerie(chartName);
           option.series.push(serie);
+          option.yAxis[0].name = type.unit;
           console.log(option);
         }
-        this.currentRange = range;
         chartInstance.setOption(option);
         this.baseOpions = option;
         console.log(chartInstance.getOption());
         this.setCurrentUnite(type.unit);
         this.setCurrentHive(idHive);
+        this.incrementeCharComplete();
       }
       
     )
@@ -71,9 +77,9 @@ export class HourlyManagerService {
   getChartTempInt(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.recordService.getTempIntByHive(idHive, range).subscribe(
       _temp => {
-        console.log(_temp);
         let option = Object.assign({}, this.baseOpions);
         if(this.ifRangeChanged(range)) {
+          console.error('RANGE CHANGED');
           const index = option.series.map(_serie => _serie.name).indexOf(type.name);
           option.series[index].data = _temp.map(_data => {
             return {name: _data.date, value: [_data.date, _data.value]};
@@ -82,7 +88,7 @@ export class HourlyManagerService {
           if (this.existSeries(option.series, type.name, idHive)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.unit);
+         // this.cleanChartsInstance(chartInstance, type.unit);
           let serie = Object.assign({}, SERIES.line);
           serie.name = type.name;
           serie.data = _temp.map(_data => {
@@ -92,12 +98,13 @@ export class HourlyManagerService {
           option.series.push(serie);
           console.log(option);
         }
-        this.currentRange = range;
         chartInstance.setOption(option);
         this.baseOpions = option;
         console.log(chartInstance.getOption());
         this.setCurrentUnite(type.unit);
         this.setCurrentHive(idHive);
+        this.incrementeCharComplete();
+
       }
     );
   }
@@ -105,9 +112,9 @@ export class HourlyManagerService {
   getChartTempExt(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.recordService.getTempExtByHive(idHive, range).subscribe(
       _temp_ext => {
-        console.log(_temp_ext);
         let option = Object.assign({}, this.baseOpions);
         if(this.ifRangeChanged(range)) {
+          console.error('RANGE CHANGED');
           const index = option.series.map(_serie => _serie.name).indexOf(type.name);
           option.series[index].data = _temp_ext.map(_data => {
             return {name: _data.date, value: [_data.date, _data.value]};
@@ -116,7 +123,7 @@ export class HourlyManagerService {
           if (this.existSeries(option.series, type.unit, idHive)) {
             option.series = new Array();
           }
-           this.cleanChartsInstance(chartInstance, type.name);
+          // this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.line);
           serie.name = type.name;
           serie.data = _temp_ext.map(_data => {
@@ -124,14 +131,17 @@ export class HourlyManagerService {
           });
           // option.tooltip = this.getTooltipBySerie(chartName);
           option.series.push(serie);
+          option.yAxis[0].name = type.unit;
+
           console.log(option);
         }
-        this.currentRange = range;
         chartInstance.setOption(option);
         this.baseOpions = option;
         console.log(chartInstance.getOption());
         this.setCurrentUnite(type.unit);
         this.setCurrentHive(idHive);
+        this.incrementeCharComplete();
+
       }
     )
   }
@@ -161,15 +171,115 @@ export class HourlyManagerService {
     }
   }
 
-  getChartHint(idHive: string, chartInstance: any, range: Date[]) {
+  getChartHint(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
     this.recordService.getHintIntByHive(idHive, range).subscribe(
       (_hint) => {
-        console.log(_hint);
+        let option = Object.assign({}, this.baseOpions);
+        if(this.ifRangeChanged(range)) {
+          console.error('RANGE CHANGED');
+          const index = option.series.map(_serie => _serie.name).indexOf(type.name);
+          option.series[index].data = _hint.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
+          });
+        } else {
+          if (this.existSeries(option.series, type.unit, idHive)) {
+            option.series = new Array();
+            console.log('CLEAR');
+          }
+          // this.cleanChartsInstance(chartInstance, type.name);
+          let serie = Object.assign({}, SERIES.line);
+          serie.name = type.name;
+          serie.data = _hint.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
+          });
+          // option.tooltip = this.getTooltipBySerie(chartName);
+          option.series.push(serie);
+          console.log(option);
+        }
+        chartInstance.setOption(option);
+        this.baseOpions = option;
+        console.log(chartInstance.getOption());
+        this.setCurrentUnite(type.unit);
+        this.setCurrentHive(idHive);
+        this.incrementeCharComplete();
+
       }
     )
   }
 
   
+
+  getChartBatInt(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
+    this.recordService.getBatIntByHive(idHive, range).subscribe(
+      _batInt => {
+        let option = Object.assign({}, this.baseOpions);
+        if(this.ifRangeChanged(range)) {
+          console.error('RANGE CHANGED');
+          const index = option.series.map(_serie => _serie.name).indexOf(type.name);
+          option.series[index].data = _batInt.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
+          });
+        } else {
+          if (this.existSeries(option.series, type.unit, idHive)) {
+            option.series = new Array();
+            console.log('CLEAR');
+          }
+          // this.cleanChartsInstance(chartInstance, type.name);
+          let serie = Object.assign({}, SERIES.line);
+          serie.name = type.name;
+          serie.data = _batInt.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
+          });
+          // option.tooltip = this.getTooltipBySerie(chartName);
+          option.series.push(serie);
+          console.log(option);
+        }
+        chartInstance.setOption(option);
+        this.baseOpions = option;
+        console.log(chartInstance.getOption());
+        this.setCurrentUnite(type.unit);
+        this.setCurrentHive(idHive);
+        this.incrementeCharComplete();
+
+      }
+    )
+  }
+
+  getChartBatExt(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
+    this.recordService.getBatExtByHive(idHive, range).subscribe(
+      _batExt => {
+        let option = Object.assign({}, this.baseOpions);
+        if(this.ifRangeChanged(range)) {
+          console.error('RANGE CHANGED');
+          const index = option.series.map(_serie => _serie.name).indexOf(type.name);
+          option.series[index].data = _batExt.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
+          });
+        } else {
+          if (this.existSeries(option.series, type.unit, idHive)) {
+            option.series = new Array();
+            console.log('CLEAR');
+          }
+          // this.cleanChartsInstance(chartInstance, type.name);
+          let serie = Object.assign({}, SERIES.line);
+          serie.name = type.name;
+          serie.data = _batExt.map(_data => {
+            return {name: _data.date, value: [_data.date, _data.value]};
+          });
+          // option.tooltip = this.getTooltipBySerie(chartName);
+          option.series.push(serie);
+          console.log(option);
+        }
+        chartInstance.setOption(option);
+        this.baseOpions = option;
+        console.log(chartInstance.getOption());
+        this.setCurrentUnite(type.unit);
+        this.setCurrentHive(idHive);
+        this.incrementeCharComplete();
+
+      }
+    )
+  }
   /**
    *
    *
@@ -178,6 +288,7 @@ export class HourlyManagerService {
    * @memberof HourlyManagerService
    */
   ifRangeChanged(range: Date[]): boolean {
+
      if (isUndefined(this.currentRange) || (this.currentRange[0] === range[0] && this.currentRange[1] === range[1])) {
       return false;
      } else {
@@ -185,13 +296,23 @@ export class HourlyManagerService {
      }
   }
 
-  removeSeriesFromChartInstance(echartInstance: any, seriesName: string) {
-    let options = echartInstance.getOption();
-    Object.assign({}, options).series.forEach((element: any, i: number) => {
-      options.series.splice(i, 1);
-    });
-    echartInstance.setOption(options);
-    this.baseOpions = options;
+  /**
+   *
+   *
+   * @param {*} echartInstance
+   * @param {string} seriesName
+   * @memberof HourlyManagerService
+   */
+  removeSeriesFromChartInstance(echartInstance: any, seriesName: string): void {
+    let option = echartInstance.getOption();
+    const indexSerie = option.series.map(_serie => _serie.name).indexOf(seriesName);
+    this.baseOpions.series.splice(indexSerie, 1);
+    option.series.splice(indexSerie, 1);
+    // echartInstance.clear();   
+    echartInstance.setOption(option, true);
+    console.log(echartInstance.getOption());
+    console.log(option.series);
+
   }
 
 
@@ -201,7 +322,7 @@ export class HourlyManagerService {
    * @param {string} unite
    * @memberof HourlyManagerService
    */
-  setCurrentUnite(unite: string): void {
+  public setCurrentUnite(unite: string): void {
     this.currentUnit = unite;
   }
 
@@ -211,7 +332,57 @@ export class HourlyManagerService {
    * @param {string} idHive
    * @memberof HourlyManagerService
    */
-  setCurrentHive(idHive: string): void {
+  public setCurrentHive(idHive: string): void {
     this.currentHive = idHive;
+  }
+
+  /**
+   *
+   *
+   * @param {Date[]} range
+   * @memberof HourlyManagerService
+   */
+  public setNewRange(range: Date[]): void {
+    this.currentRange = range;
+  }
+
+  /**
+   *
+   *
+   * @memberof HourlyManagerService
+   */
+  private checkAllChartIsComplete(): void {
+    this.subjectCountChartComplete.subscribe(
+      _value => {
+        console.log(this.baseOpions);
+        if (this.numberChartAcive === _value) {
+          this.subjectCountChartComplete.complete();
+        }
+      }
+    )
+  }
+
+  private incrementeCharComplete(): void {
+    this.numberChartAcive ++;
+    this.subjectCountChartComplete.next(this.numberChartAcive);
+    this.checkAllChartIsComplete();
+  }
+
+  /**
+   *
+   *
+   * @param {number} nbChart
+   * @memberof HourlyManagerService
+   */
+  public setNbChartSelected(nbChart: number): void {
+    this.numberChartAcive = nbChart;
+  }
+
+  public getCountChartSubject(): BehaviorSubject<number> {
+    return this.subjectCountChartComplete;
+  }
+
+  public resetCountSubject() {
+    this.subjectCountChartComplete = new BehaviorSubject(0);
   }
 }

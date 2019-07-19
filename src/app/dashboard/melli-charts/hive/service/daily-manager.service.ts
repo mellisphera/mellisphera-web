@@ -57,14 +57,12 @@ export class DailyManagerService {
       _weather => {
         let option = Object.assign({}, this.baseOptionExt);
         if (this.ifRangeChanged(range)) {
-          console.log('CHANGE');
           option.calendar.range = range;
           option.series[0].data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
         } else {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.custom);
           serie.name = type.name;
           serie.data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'], _data.main));
@@ -134,7 +132,6 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.custom);
           serie.name = 'Weather';
           serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name'], _data.moon['ascendant']));
@@ -200,9 +197,7 @@ export class DailyManagerService {
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive).subscribe(
       _daliW => {
         let option = Object.assign({}, this.baseOptionsInt);
-        console.error(this.ifRangeChanged(range));
         if (this.ifRangeChanged(range)) {
-          console.log('CHANGE');
           option.calendar.range = range;
           option.series[0].data = _daliW.weightIncomeHight;
           option.series[1].data = _daliW.weightIncomeLow;
@@ -210,7 +205,6 @@ export class DailyManagerService {
           if (this.existSeries(option.series, 'gain')) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, 'gain');
           let seriesGain = Object.assign({}, SERIES.effectScatter);
           let seriesLoss= Object.assign({}, SERIES.effectScatter);
           /** First serie */
@@ -279,7 +273,6 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.name = type.name;
           serie.data = _tMax.map(_data => new Array(_data.date, _data.value));
@@ -309,7 +302,6 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
           option.visualMap = this.getVisualMapBySerie(type.name);
@@ -337,7 +329,6 @@ export class DailyManagerService {
           if (this.existSeries(option.series, '52')) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tMinExt.map(_data => new Array(_data.date, _data.value));
           serie.name = type.name;
@@ -365,7 +356,6 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _hInt.map(_data => new Array(_data.date, _data.value));
           option.tooltip = this.getTooltipBySerie(type.name);
@@ -393,7 +383,6 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _brood.map(_data => new Array(_data.date, _data.value));
           option.visualMap = this.getVisualMapBySerie(type.name);
@@ -422,7 +411,6 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tMin.map(_data => new Array(_data.date, _data.value));
           serie.name = type.name;
@@ -450,7 +438,6 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.cleanChartsInstance(chartInstance, type.name);
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _weightMax.map(_data => new Array(_data.date, _data.value));
           option.visualMap = this.getVisualMapBySerie(type.name);
@@ -485,11 +472,6 @@ export class DailyManagerService {
     }
   }
 
-  cleanChartsInstance(chartInstance: any, labelSerie: string) {
-    if (chartInstance.getOption().series.filter(_filter => _filter.name !== labelSerie).length > 0) {
-      this.optionForCurentChart = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
-    }
-  }
   /**
    *
    *
@@ -598,8 +580,6 @@ export class DailyManagerService {
    * @memberof DailyManagerService
    */
   ifRangeChanged(range: Date[]): boolean {
-    console.log(range);
-    console.log(this.currentRange);
     if (isUndefined(this.currentRange) || (this.currentRange[0] === range[0] && this.currentRange[1] === range[1])) {
     return false;
     } else {

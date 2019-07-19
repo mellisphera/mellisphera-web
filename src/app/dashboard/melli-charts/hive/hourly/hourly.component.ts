@@ -1,7 +1,9 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, AfterViewInit } from '@angular/core';
 import { HourlyManagerService } from '../service/hourly-manager.service';
 import { MelliChartsHiveService } from '../../service/melli-charts-hive.service';
 import { MelliChartsDateService } from '../../service/melli-charts-date.service';
+import * as echarts from 'echarts';
+
 
 interface Tools {
   name: string;
@@ -21,9 +23,8 @@ export class HourlyComponent implements OnInit {
 
   private typeData: Tools[];
   private currentTypeHourly: Tools[];
-  private currentEltTypeHourly: HTMLElement;
   constructor(
-    private hourlyManager: HourlyManagerService,
+    public hourlyManager: HourlyManagerService,
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
     this.currentTypeHourly = [];
@@ -31,18 +32,31 @@ export class HourlyComponent implements OnInit {
       { name: 'WEIGHT', id: 'WEIGHT_HOURLY', unit: 'W', origin: 'DEVICE', class: 'item-type active' },
       { name: 'TEMP_INT', id: 'TEMP_INT_HOURLY', unit: 'T', origin: 'DEVICE', class: 'item-type' },
       { name: 'TEMP_EXT', id: 'TEMP_EXT_HOURLY', unit: 'T', origin: 'DEVICE', class: 'item-type' },
-      { name: 'HRIN', id: 'HRIN_HOURLY', unit: 'P',  origin: 'DEVICE', class: 'item-type' },
-      { name: 'BAT', id: 'BAT_HOURLY', unit: 'P', origin: 'DEVICE', class: 'item-type' },
-      { name: 'TEMP_WEATHER', id: 'TEMP_WEATHER', unit: 'T', origin: 'OTHER',  class: 'item-type'},
-      { name: 'HWEATHER', id: 'HWEATHER', unit: 'P', origin: 'OTHER', class: 'item-type'}
+      { name: 'HRIN', id: 'HRIN_HOURLY', unit: 'P', origin: 'DEVICE', class: 'item-type' },
+      { name: 'BAT_INT', id: 'BAT_INT_HOURLY', unit: 'P', origin: 'DEVICE', class: 'item-type' },
+      { name: 'BAT_EXT', id: 'BAT_EXT_HOURLY', unit: 'P', origin: 'DEVICE', class: 'item-type' },
+      { name: 'TEMP_WEATHER', id: 'TEMP_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type' },
+      { name: 'HWEATHER', id: 'HWEATHER', unit: 'P', origin: 'OTHER', class: 'item-type' }
     ];
     this.currentTypeHourly.push(this.typeData[0]);
 
- }
-
-  ngOnInit() {
   }
 
+  ngOnInit() {
+    this.melliHive.setHourlyChartInstance(echarts.init(<HTMLDivElement>document.getElementById("hourly-chart")));
+    this.melliHive.getHourlyChartInstance().setOption(this.hourlyManager.baseOpions);
+  }
+
+  onResize(event: any) {
+    this.melliHive.getHourlyChartInstance().resize({
+      width: 'auto',
+      height: 'auto'
+    });
+    /*
+          width: event.target.innerWidth,
+      height: event.target.innerWidth
+    */
+  }
   /**
    *
    *
@@ -51,47 +65,63 @@ export class HourlyComponent implements OnInit {
    * @memberof HourlyComponent
    */
   loadHourlyData(newHive: boolean, newType: string): void {
-    const lengthIndex = this.currentTypeHourly.length;
-     this.currentTypeHourly.forEach(_type => {
-      console.log(newType === _type.name);
-       switch(_type.name) {
-         case 'WEIGHT':
-           if (newHive && this.ifTypeHourlyContains('WEIGHT')  || (!newHive || newType === _type.name)) {
+    this.hourlyManager.setNbChartSelected(this.currentTypeHourly.length - 1);
+    this.currentTypeHourly.forEach(_type => {
+      switch (_type.name) {
+        case 'WEIGHT':
+          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+            console.error(_type.name);
             this.hourlyManager.getChartWeight(_type,
               this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
-           }
-           break;
-          case 'TEMP_INT':
-            if (newHive && this.ifTypeHourlyContains('TEMP_INT') || !newHive || newType === _type.name) {
-              this.hourlyManager.getChartTempInt(_type,
-                this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
-            }
-            break;
-          case 'TEMP_EXT':
-            if (newHive && this.ifTypeHourlyContains('TEMP_EXT') || !newHive || newType === _type.name) {
-              this.hourlyManager.getChartTempExt(_type,
-                this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
-            }
-            break;
-          default:
-            break;
-       }
-     })
-    // if ((this.getLastSelectedType() === 'WEIGHT' && !newHive) || (newHive && this.ifTypeHourlyContains('WEIGHT'))) {
- 
-    // }
-    // if ((this.getLastSelectedType() === 'TEMP_INT'  && !newHive) || (newHive && this.ifTypeHourlyContains('TEMP_INT'))) {
-    //   console.error('TEMP_INT');
+          }
+          break;
+        case 'TEMP_INT':
+          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+            console.error(_type.name);
+            this.hourlyManager.getChartTempInt(_type,
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+          }
+          break;
+        case 'TEMP_EXT':
+          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+            console.error(_type.name);
+            this.hourlyManager.getChartTempExt(_type,
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+          }
+          break;
+        case 'HRIN':
+          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+            console.error(_type.name);
+            this.hourlyManager.getChartHint(_type,
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+          }
+          break;
+        case 'BAT_INT':
+          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+            console.error(_type.name);
+            this.hourlyManager.getChartBatInt(_type,
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+          }
+          break;
+        case 'BAT_EXT':
+          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+            console.error(_type.name);
+            this.hourlyManager.getChartBatExt(_type,
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+          }
+          break;
+        default:
+          break;
+      }
+    });
 
-    // }
-    // if ((this.getLastSelectedType() === 'TEMP_EXT' && !newHive) || (newHive && this.ifTypeHourlyContains('TEMP_EXT'))) {
-    //   console.error('TEMP_EXT');
+    this.hourlyManager.getCountChartSubject().subscribe(() => {}, () => {}, () => {
+      console.error('COMPLETE');
+      this.hourlyManager.setNewRange(this.melliDate.getRangeForReqest());
+      this.hourlyManager.resetCountSubject();
+    })
+  }
 
-    // }
-  }
-  ngAfterViewInit(): void {
-    this.currentEltTypeHourly = document.getElementById(this.currentTypeHourly[0].id);
-  }
 
   getLastSelectedType(): string {
     const length = this.currentTypeHourly.length;
@@ -100,7 +130,6 @@ export class HourlyComponent implements OnInit {
 
   setType(type: Tools): void {
     const toolIndex: number = this.typeData.map(_type => _type.id).indexOf(type.id);
-    this.currentEltTypeHourly = document.getElementById(type.id);
     console.log(this.currentTypeHourly);
     if (!this.ifTypeHourlyContains(type.name)) {
       this.typeData[toolIndex].class += ' active';
@@ -121,27 +150,29 @@ export class HourlyComponent implements OnInit {
    * @memberof HourlyComponent
    */
   removeTypeHourly(type: Tools): void {
-     const index = this.currentTypeHourly.map(_type => _type.id).indexOf(type.id);
-     this.currentTypeHourly.splice(index, 1);
-     this.hourlyManager.removeSeriesFromChartInstance(this.melliHive.getHourlyChartInstance(), type.name);
+    const index = this.currentTypeHourly.map(_type => _type.id).indexOf(type.id);
+    this.currentTypeHourly.splice(index, 1);
+    this.hourlyManager.removeSeriesFromChartInstance(this.melliHive.getHourlyChartInstance(), type.name);
+  }
 
-   }
-
-   addType(type: Tools) {
+  addType(type: Tools) {
     if (this.currentTypeHourly.length > 0) {
       const nbSimilarType: Tools[] = this.currentTypeHourly.filter(_filter => _filter.unit === type.unit);
       if (nbSimilarType.length < 1) { // Si je n'ai pas d'unité similaire
         this.currentTypeHourly.forEach(_type => {
           let toolIndex: number = this.typeData.map(_map => _map.id).indexOf(_type.id);
           this.typeData[toolIndex].class = this.typeData[toolIndex].class.replace(/active/g, '');
+          console.log(this.melliHive.getHourlyChartInstance().getOption());
+          this.hourlyManager.removeSeriesFromChartInstance(this.melliHive.getHourlyChartInstance(), _type.name);
 
         });
         this.currentTypeHourly = new Array();
       }
+      console.log(this.currentTypeHourly);
     }
     this.currentTypeHourly.push(type);
 
-   }
+  }
 
   /**
    *
@@ -154,8 +185,15 @@ export class HourlyComponent implements OnInit {
     return this.currentTypeHourly.filter(_filter => _filter.name === labelType).length > 0;
   }
 
+  checkSeriesAlreadyExist(serieName: string): Boolean {
+    return this.melliHive.getHourlyChartInstance().getOption().series.filter(_serie => _serie.name === serieName).length > 0;
+
+  }
+
   onHourlyChartInit(event: any) {
-    this.melliHive.setHourlyChartInstnace(event);
+    console.log('ok');
+    this.melliHive.setHourlyChartInstance(event);
+    console.log(event);
   }
 
   /**
@@ -177,6 +215,8 @@ export class HourlyComponent implements OnInit {
   cleanSerie(): void {
     this.hourlyManager.baseOpions.series = new Array();
   }
+
+  
 
 
 }

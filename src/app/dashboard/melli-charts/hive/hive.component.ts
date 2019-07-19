@@ -14,12 +14,9 @@ import { HourlyComponent } from './hourly/hourly.component';
 })
 export class HiveComponent implements OnInit {
 
-  public typeData: Array<any>;
   @ViewChild(DailyComponent) dailyComponent: DailyComponent;
   @ViewChild(HourlyComponent) hourlyComponent: HourlyComponent;
-  constructor(
-    public dailyManager: DailyManagerService,
-    public hourlyManager: HourlyManagerService) {
+  constructor() {
 
   }
 
@@ -32,7 +29,7 @@ export class HiveComponent implements OnInit {
    * @memberof HiveComponent
    */
   loadDataFromHive(): void {
-    this.hourlyComponent.cleanSerie();
+    // this.hourlyComponent.cleanSerie();
     this.dailyComponent.loadDailyDeviceData();
     this.dailyComponent.loadDailyOtherData();
     this.dailyComponent.afterRangeChange();
