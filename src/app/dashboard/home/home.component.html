@@ -29,7 +29,7 @@
             <!-- Name/Rank/Weigth/Sensors -->
             <ul class="nav navbar-nav abs-center-x">
                 <li (click)="collapseAllActiveButton('sensors','weight','brood','name')"><button id="name" type="button"
-                        class="button button1" data-toggle="collapse"
+                        class="button button1 active" data-toggle="collapse"
                         data-target=".name">{{ 'HOME.NAVBAR.NAME' | translate}}</button></li>
                 <li (click)="collapseAllActiveButton('sensors','name','weight','brood')"><button id="brood"
                         type="button" class="button button1" data-toggle="collapse"
@@ -99,7 +99,7 @@
                 class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche.id) }}</span>
         </div>
         <!-- The hidden div when you click on name/Brood/Weight/Sensors -->
-        <div (click)="onClick(ruche);" class="name collapse ">
+        <div (click)="onClick(ruche);" class="name collapse in">
             <span class="hive-info">{{ruche.name.slice(-10)}}</span>
         </div>
         <div (click)="onClick(ruche);" class="brood collapse ">

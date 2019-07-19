@@ -40,6 +40,7 @@ import { AngularDraggableModule } from 'angular2-draggable';
 import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
 import { ObservationService } from './apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { MyNotifierService } from './service/my-notifier.service';
+import { MessagesService } from './service/messages.service';
 import { MyDatePipe } from '../pipe/my-date.pipe';
 // import { AngularDraggableModule } from 'angular2-draggable';
 import { ManageHivesComponent } from './manage/manage-hives/manage-hives.component';
@@ -85,6 +86,7 @@ import { DailyRecordService } from './service/api/dailyRecordService';
     SidebarService,
     ObservationService,
     MyNotifierService,
+    MessagesService,
     UserParamsService
   ],
   declarations: [

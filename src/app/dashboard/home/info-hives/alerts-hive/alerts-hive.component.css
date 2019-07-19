@@ -36,3 +36,18 @@ hr
 #graph{
   margin-bottom : -15vh;
 }
+
+.hideCalendar{
+  visibility: hidden;
+}
+
+#message{
+  font-size: medium;
+  text-align: center;
+  margin-top: -58vh;
+  margin-bottom: 50px;
+}
+
+.hideMessage{
+  display: none;
+}

@@ -35,6 +35,12 @@ export class StatesComponent implements OnInit {
   // Sous la forme date => [Les nombres d'alertes correspondants][Le rang de la prochaine alerte a placer dans le tableau]
   private mapDateNbAlerts : Map<number,number[]>;
 
+  private elementCounter : number;
+
+  private nbDaysNotesForm : number;
+  private nbDaysHivesForm : number;
+  private noAlert : boolean;
+
   @ViewChild('content') content : ElementRef;
 
   constructor(private alertsService: AlertsService,
@@ -54,6 +60,9 @@ export class StatesComponent implements OnInit {
       this.notifier = this.notifierService;
       this.eltOnClickId = null;
       this.username = this.login.getUser();
+      this.elementCounter = 0;
+      this.nbDaysNotesForm = 30;
+      this.nbDaysHivesForm = 30;
 
       this.echartInstance = null;
     this.mapDateNbAlerts = new Map();
@@ -172,8 +181,12 @@ export class StatesComponent implements OnInit {
       _alert => {
         this.alertsService.apiaryAlerts = _alert;
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-        this.getOption();
-        this.loadCalendar();
+        if(_alert.length === 0){
+          this.noAlert = true;
+        }else{
+          this.getOption();
+          this.loadCalendar();
+        }
         });
 
       }
@@ -182,6 +195,9 @@ export class StatesComponent implements OnInit {
     // NOTES
     this.observationService.setRange({ scale: 1, type: 'YEARS' });
     this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+
+    //ALERTS BY HIVE
+    this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
   }
 
   cleanSerie(): void {
@@ -316,7 +332,12 @@ export class StatesComponent implements OnInit {
     let dateSince = new Date();
     let currentObsDate = new Date(obsDate);
     dateSince.setDate(dateSince.getDate() - nbDays);
+    this.elementCounter = 1;
     return (currentObsDate.getTime() > dateSince.getTime());
+  }
+
+  getElementsInDate(listElements : any[], nbDays : number) : any[]{
+    return(listElements.filter(element => this.isValidDate(element.date,nbDays) === true));
   }
 
   public downloadPDF(){

@@ -157,7 +157,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.dailyRecTh.setUnitSystem(data.unitSystem);
         this.dailyRecordWservice.setUnitSystem(data.unitSystem);
       }
-    )
+    );
 
     this.initForm();
   }
@@ -451,7 +451,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Hide right click menu when you click on the picture
   hideRightClick(event) {
     this.eltOnClickClass = document.getElementsByClassName('affiche');
-    console.log(this.eltOnClickClass);
     for (let i = 0; i < this.eltOnClickClass.length; i++) {
       this.eltOnClickClass[i].classList.remove('affiche');
     }

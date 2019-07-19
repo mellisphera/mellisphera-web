@@ -1,8 +1,8 @@
 <div id="content" #content>
   <!-- BUTTONS -->
   <div id="divButton">
-    <button class="button button0" (click)="downloadPDF()">Export to PDF</button>
-    <input class="button button0" type="button" value="Download in PDF" (click)="captureScreen()" />
+    <!-- <button class="button button0" (click)="downloadPDF()">Export to PDF</button> -->
+    <input class="button button0" type="button" value="{{ 'SUMMARY.PDF' | translate}}" (click)="captureScreen()" />
   </div>
 
 
@@ -13,83 +13,125 @@
       <div id="header">
         <span id="date">{{ this.unitService.getDailyDate(this.date) }}</span>
         <span>
-          <h3 id="title">Rucher {{this.rucherService.rucher.name}} : résumé</h3>
+          <h3 id="title">{{ 'SUMMARY.APIARY' | translate}} {{this.rucherService.rucher.name}} : {{ 'SUMMARY.SUMMARY' | translate}}</h3>
         </span>
       </div>
       <br>
       <br>
       <!-- ALERTS -->
-      <div id="graph" echarts (chartInit)="onChartInit($event)" [options]="option" [autoResize]="true"
+      <div *ngIf="!noAlert" id="graph" echarts (chartInit)="onChartInit($event)" [options]="option" [autoResize]="true"
         style="width:100%;height:50vh"></div>
+      <div *ngIf="noAlert" class="noData">
+          {{ 'SUMMARY.NOALERTS' | translate}}
+      </div>
 
       <!-- NOTES -->
-          <div class="panel panel-info">
-            <div *ngIf="this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()) !== undefined"
-              class="panel-heading">
-              <h4 class="panel-title">
-                <a data-toggle="collapse" href="#collapseTwo"><b>{{ 'APIARY_NOTES.TITLE' | translate}}
-                    {{this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()).name}} depuis 30 jours</b></a>
-              </h4>
-            </div>
-            <div *ngIf="this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()) === undefined"
-              class="panel-heading">
-              <h4 class="panel-title">
-                <a data-toggle="collapse" href="#collapseTwo"><b>{{ 'APIARY_NOTES.TITLE' | translate}}</b></a>
-              </h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse in">
-              <div class="panel-body">
-                <b class="text-success"></b>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.DATE' | translate}}</th>
-                      <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.SENTENCE' | translate}}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="hoverStyle" *ngFor="let obs of observationService.observationsApiary; let i = index;">
-                      <ng-container *ngIf = "isValidDate(obs.date,30)">                   
-                      <td>{{ obs.date | myDate }}</td>
-                      <td>{{ obs.sentence }}</td>
+      <div *ngIf="getElementsInDate(observationService.observationsApiary,10000).length > 0" class="panel panel-info">
+        <div *ngIf="this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()) !== undefined"
+          class="panel-heading">
+          <h4 class="panel-title">
+            <a><b>{{ 'APIARY_NOTES.TITLE' | translate}}
+                {{this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()).name}} {{ 'SUMMARY.FOR' | translate}} <input
+                  type="number" class="tentacles" name="tentacles" [(ngModel)]="nbDaysNotesForm" min="1" max="10000">
+                  {{ 'SUMMARY.DAYS' | translate}}</b></a>
+          </h4>
+        </div>
+        <div *ngIf="this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()) === undefined"
+          class="panel-heading">
+          <h4 class="panel-title">
+            <a><b>{{ 'APIARY_NOTES.TITLE' | translate}}</b></a>
+          </h4>
+        </div>
+        <div class="panel-collapse collapse in">
+          <div class="panel-body">
+            <b class="text-success"></b>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.DATE' | translate}}</th>
+                  <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.SENTENCE' | translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hoverStyle"
+                  *ngFor="let obs of getElementsInDate(observationService.observationsApiary,nbDaysNotesForm); let i = index;">
+                  <td>{{ obs.date | myDate }}</td>
+                  <td>{{ obs.sentence }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="getElementsInDate(observationService.observationsApiary,10000).length === 0" class="noData">
+          {{ 'SUMMARY.NONOTES' | translate}}
+      </div>
+
+      <!-- HIVES -->
+      <div *ngIf="rucheService.ruches.length !== 0" class="panel panel-info">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a><b>{{ 'SUMMARY.SUMMARYHIVES' | translate}} <input type="number" class="tentacles" name="tentacles"
+                  [(ngModel)]="nbDaysHivesForm" min="1" max="10000"> {{ 'SUMMARY.DAYS' | translate}}</b></a>
+          </h4>
+        </div>
+        <div class="panel-collapse collapse in">
+          <div class="panel-body">
+            <b class="text-success"></b>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">{{ 'SUMMARY.NAME' | translate}}</th>
+                  <th scope="col">{{ 'SUMMARY.BROOD' | translate}}</th>
+                  <th scope="col">{{ 'SUMMARY.WEIGHT' | translate}}</th>
+                  <th scope="col">{{ 'SUMMARY.SENSORS' | translate}}</th>
+                  <th scope="col">{{ 'SUMMARY.ALERTS' | translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hoverStyle" *ngFor="let hive of rucheService.ruches; let i = index">
+                  <td>{{hive.name}}</td>
+                  <td *ngIf="this.dailyRecTh.getPourcentByHive(hive.id) != null">
+                    {{ this.dailyRecTh.getPourcentByHive(hive.id) }}</td>
+                  <td *ngIf="this.dailyRecTh.getPourcentByHive(hive.id) === null">
+                    {{ 'HIVE_DETAIL.CLICK.UNKNOWN' | translate}}</td>
+                  <td *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive.id) !== null">
+                    {{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightIncomeByHive(hive.id)) }}</td>
+                  <td *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive.id) === null">{{ 'HOME.NODATA' | translate}}
+                  </td>
+                  <td *ngIf="capteurService.getCapteursByHive(hive.id).length === 0">{{ 'HOME.NOSENSORS' | translate}}
+                  </td>
+                  <td *ngIf="capteurService.getCapteursByHive(hive.id).length !== 0">
+                    <ng-container *ngFor="let capt of capteurService.getCapteursByHive(hive.id); let j = index">
+                      <ng-container *ngIf="j === 0">
+                        {{ capt }}
+                      </ng-container>
+                      <ng-container *ngIf="j !== 0">
+                        ; {{ capt }}
+                      </ng-container>
                     </ng-container>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                  </td>
+                  <td>
+                    <ng-container
+                      *ngIf="alertsService.alertsByHiveByApiary.get(hive.id) !== undefined && getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm).length > 0">
+                      <ng-container
+                        *ngFor="let hiveAlert of getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm)">
+                        <img [src]="hiveAlert.picto" class="picto">
+                      </ng-container>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="alertsService.alertsByHiveByApiary.get(hive.id) === undefined || getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm).length === 0">
+                      {{ 'SUMMARY.NOHIVEALERTS' | translate}}
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <!-- HIVES -->
-        <div *ngFor = "let hive of rucheService.ruches; let i = index">
-            {{hive.name}}
-            <div class="brood">
-                <span
-                    *ngIf="this.dailyRecTh.getPourcentByHive(hive.id) != null">{{ 'HIVE_DETAIL.CLICK.BROOD' | translate}}
-                    : {{ this.dailyRecTh.getPourcentByHive(hive.id) }}</span>
-                <span
-                    *ngIf="this.dailyRecTh.getPourcentByHive(hive.id) === null">{{ 'HIVE_DETAIL.CLICK.BROOD' | translate}}
-                    : {{ 'HIVE_DETAIL.CLICK.UNKNOWN' | translate}}</span>
-            </div>
-            <div class="weight">
-            <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive.id) !== null"
-                class="hive-info">Poids : {{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightIncomeByHive(hive.id)) }}</span>
-            <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive.id) === null"
-                class="hive-info">Poids : {{ 'HOME.NODATA' | translate}}</span>
-            </div>
-            <div class = "sensors">
-                <span *ngIf="capteurService.getCapteursByHive(hive.id).length === 0"
-                    class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
-                <span *ngIf="capteurService.getCapteursByHive(hive.id).length !== 0">
-                    <span *ngFor="let capt of capteurService.getCapteursByHive(hive.id); let i = index">
-                        <span class="hive-info">{{ capt }}</span>
-                        <br />
-                    </span>
-                </span>
-            </div>
-        </div>
+      </div>
+      <div *ngIf="rucheService.ruches.length === 0" class="noData">
+          {{ 'SUMMARY.NOHIVES' | translate}}
+      </div>
+
     </div>
-
-  </div>
-
-
-</div>

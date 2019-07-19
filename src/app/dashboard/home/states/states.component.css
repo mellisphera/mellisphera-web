@@ -48,3 +48,17 @@
 #page{
   border: 2px solid black;
 }
+
+.picto{
+  height: 50px;
+}
+
+.noData{
+  text-align: center;
+  font-size: medium;
+  margin-bottom: 10vh;
+}
+
+.tentacles{
+  width: 75px;
+}

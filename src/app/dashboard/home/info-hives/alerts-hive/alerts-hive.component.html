@@ -1,60 +1,3 @@
-<!-- If there is alerts -->
-<!-- <div *ngIf="alertsService.hiveAlerts.length !== 0" class="content-page">
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" href="#collapseTwo"><b>{{ 'HIVE_DETAIL.CLICK.ALERTS.TITLE' | translate}}  {{this.rucheService.getCurrentHive().name}} </b></a>
-      </h4>
-    </div>
-    <div id="collapseTwo" class="panel-collapse collapse in">
-      <div class="panel-body">
-        <b class="text-success"></b>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.DATE' | translate}}</th>
-              <th scope="col">{{ 'HIVE_DETAIL.CLICK.ALERTS.TYPE' | translate}}</th>
-              <th scope="col">MESSAGE</th>
-              <th scope="col">Picto</th>
-              <th class="text-right" scope="col">{{ 'HIVE_DETAIL.CLICK.ALERTS.READ' | translate}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let alert of alertsService.hiveAlerts; let i = index;" class="{{ alert.check }}">
-              <td *ngIf="alert.time === 'Daily'">{{ alert.date | myDate:'DAILY' }}</td>
-              <td *ngIf="alert.time !== 'Daily'">{{ alert.date | myDate }}</td>
-              <td>{{ alert.alert }}</td>
-              <td>{{ alert.message }}</td>
-              <td><img src="{{ alert.picto }}" width="35" /></td>
-              <td *ngIf="!(alert.check)" class="text-right">
-                <button type="button" class=" btn-black btn-lg" title="mark as read"
-                  style="padding: 0;border: none; background: none;" (click)="onClickRead(alert,i)">
-                  <i class="fa fa-envelope-open-o"></i>
-                </button> -->
-<!-- <button type="button" class=" btn-black btn-lg" title="mark as read"
-                  style="padding: 0;border: none; background: none;" (click)="onClickReadAll(alertsService.hiveAlerts)">
-                  <i class="fa fa-envelope-open-o"></i>
-                </button> -->
-<!-- </td>
-              <td *ngIf="alert.check" class="text-right">
-                <button type="button" class=" btn-black btn-lg" title="mark as not read"
-                  style="padding: 0;border: none; background: none;" (click)="onClickNotRead(alert,i)">
-                  <i class="fa fa-envelope"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- If there is'nt alerts -->
-<!-- <div *ngIf="alertsService.hiveAlerts.length === 0" id = "noAlert">
-<hr/>
-{{ 'HIVE_DETAIL.CLICK.ALERTS.NOALERTS' | translate}}  {{this.rucheService.getCurrentHive().name}} !
-</div> -->
-
 <div>
   <!-- <button type="button" class=" btn-black btn-lg" title="mark as read" style="padding: 0;border: none; background: none;"
     (click)="onClickReadAll(alertsService.hiveAlerts)">
@@ -69,3 +12,7 @@
 
 <div id="graph" echarts (chartInit)="onChartInit($event)" [options]="option" [autoResize]="true"
   style="width:100%;height:60vh"></div>
+
+<div id="message">
+    {{ 'HIVE_DETAIL.ALERT.NOALERTS' | translate}}
+</div>

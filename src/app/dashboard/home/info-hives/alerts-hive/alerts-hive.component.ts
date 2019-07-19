@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { AlertsService } from '../../../service/api/alerts.service';
 import { RucherService } from '../../../service/api/rucher.service';
 import { AlertInterface } from '../../../../_model/alert';
@@ -36,12 +36,15 @@ export class AlertsHiveComponent implements OnInit {
   // Sous la forme date => [Les nombres d'alertes correspondants][Le rang de la prochaine alerte a placer dans le tableau]
   private mapDateNbAlerts : Map<number,number[]>;
 
+  private eltOnClickId: EventTarget;
+
   constructor(private unitService: UnitService, private graphGlobal: GraphGlobal, private dailyRecordThService: DailyRecordService,
     private alertsService: AlertsService,
     public rucherService: RucherService,
     public rucheService: RucheService,
     private userService: UserloggedService,
     public notifierService: NotifierService,
+    private renderer: Renderer2,
     private myNotifer: MyNotifierService) {
     this.img = 'M581.176,290.588C581.176,130.087,451.09,0,290.588,0S0,130.087,0,290.588s130.087,290.588,290.588,290.588' +
               'c67.901,0,130.208-23.465,179.68-62.476L254.265,302.696h326.306C580.716,298.652,581.176,294.681,581.176,290.588z' +
@@ -49,6 +52,7 @@ export class AlertsHiveComponent implements OnInit {
               'S474.749,217.941,447.99,217.941z';
     this.notifier = this.notifierService;
     this.echartInstance = null;
+    this.eltOnClickId = null;
     this.mapDateNbAlerts = new Map();
     this.tabPos = [
       [
@@ -154,10 +158,29 @@ export class AlertsHiveComponent implements OnInit {
     this.alertsService.getAlertsByHive(this.rucheService.getCurrentHive().id).subscribe(
       _alert => {
         this.alertsService.hiveAlerts = _alert;
-
-        this.initCalendar();
+        if(_alert.length === 0){
+          this.hideCalendar();
+          this.initCalendar();
+        }else{
+          this.showCalendar();
+          this.initCalendar();
+        }
       }
     );
+  }
+
+  hideCalendar(){
+    this.eltOnClickId = document.getElementById('graph');
+    this.renderer.addClass(this.eltOnClickId, 'hideCalendar');
+    this.eltOnClickId = document.getElementById('message');
+    this.renderer.removeClass(this.eltOnClickId, 'hideMessage');
+  }
+
+  showCalendar(){
+    this.eltOnClickId = document.getElementById('graph');
+    this.renderer.removeClass(this.eltOnClickId, 'hideCalendar');
+    this.eltOnClickId = document.getElementById('message');
+    this.renderer.addClass(this.eltOnClickId, 'hideMessage');
   }
 
   cleanSerie(): void {
@@ -170,9 +193,17 @@ export class AlertsHiveComponent implements OnInit {
       this.alertsService.getAlertsByHive(hive.id).subscribe(
         _alert => {
           this.alertsService.hiveAlerts = _alert;
+          if(_alert.length === 0){
+            this.hideCalendar();
+            this.cleanSerie();
+            this.getOption();
+            this.loadCalendar();
+          }else{
+          this.showCalendar();
           this.cleanSerie();
           this.getOption();
           this.loadCalendar();
+          }
         }
       );
     } else {

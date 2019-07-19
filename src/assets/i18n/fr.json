@@ -68,7 +68,7 @@
             "ZIP_CODE_APIARY" : "Code postal du rucher",
             "ZIP_ERROR" : "Entrez un code postal",
             "PICTURE" : "Ajouter une image du rucher :",
-            "FILE" : "Choisir le dossier",
+            "FILE" : "Choisir le fichier",
             "DROP" : "Faites glisser une photos ici",
             "CLOSE" : "Fermer",
             "SAVE" : "Sauver le rucher",
@@ -208,6 +208,9 @@
                 "READ" : "LUE",
                 "NOALERTS" : "Pas d'alertes cette semaine pour "
             }
+        },
+        "ALERT" : {
+            "NOALERTS" : "Pas d'alertes pour cette ruche !"
         }
     },
     "ALERTS" : {
@@ -290,5 +293,22 @@
         "CONFIDENCELEVEL" : "Niveau de confiance",
         "ADDTOAPIARY" : "Ajouter au rucher",
         "CLOSE" : "Fermer"
+    },
+    "SUMMARY" : {
+        "PDF" : "Télécharger en PDF",
+        "APIARY" : "Rucher",
+        "SUMMARY" : "résumé",
+        "NOALERTS" : "Pas d'alertes de rucher !",
+        "FOR" : "depuis",
+        "DAYS" : "jours",
+        "NONOTES":  "Pas de notes de rucher !",
+        "SUMMARYHIVES" : "Résumé des ruches + alertes depuis",
+        "NAME" : "Nom",
+        "BROOD" : "Couvain",
+        "WEIGHT" : "Poids",
+        "SENSORS" : "Capteurs",
+        "ALERTS" : "Alertes",
+        "NOHIVEALERTS" : "Pas d'alertes",
+        "NOHIVES" : "Vous n'avez pas de ruche dans ce rucher !"
     }
 }
