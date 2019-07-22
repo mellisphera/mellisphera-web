@@ -198,9 +198,9 @@ export class DailyManagerService {
       _daliW => {
         let option = Object.assign({}, this.baseOptionsInt);
         if (this.ifRangeChanged(range)) {
-          option.calendar.range = range;
           option.series[0].data = _daliW.weightIncomeHight;
           option.series[1].data = _daliW.weightIncomeLow;
+          option.calendar.range  = range;
         } else {
           if (this.existSeries(option.series, 'gain')) {
             option.series = new Array();

@@ -57,6 +57,8 @@ export class MelliChartsDateService {
         date.setDate(date.getDate() - 15);
     }
     this.rangeDateForRequest = MyDate.getRange(date);
+    this.rangeDateForRequest[0].setSeconds(0);
+    this.rangeDateForRequest[1].setSeconds(0);
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
 
@@ -69,12 +71,8 @@ export class MelliChartsDateService {
    * @returns {Date[]}
    * @memberof MelliChartsDateService
    */
-  getRangeForReqest(daily?: boolean): Date[] {
-    if (daily) {
-      return this.rangeDateForRequest;
-    } else {
-      return this.rangeDateForRequest;
-    }
+  getRangeForReqest(): Date[] {
+    return this.rangeDateForRequest;
   }
 
   setRangeForRequest(range: Date[] ) {

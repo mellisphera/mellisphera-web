@@ -30,24 +30,18 @@ export class HiveComponent implements OnInit {
    */
   loadDataFromHive(): void {
     // this.hourlyComponent.cleanSerie();
+    this.hourlyComponent.cleanSerie();
     this.dailyComponent.loadDailyDeviceData();
     this.dailyComponent.loadDailyOtherData();
     this.dailyComponent.afterRangeChange();
-    this.hourlyComponent.loadHourlyData(true, '');
+    this.hourlyComponent.loadHourlyData(true, '', false);
   }
 
   
    setRangeChart() {
      this.dailyComponent.loadDailyDeviceData();
      this.dailyComponent.loadDailyOtherData();
-     this.hourlyComponent.loadHourlyData(true, '');
+     this.hourlyComponent.loadHourlyData(true, '', true);
    }
-
-
-
-
-
-
-
 
 }

@@ -64,50 +64,51 @@ export class HourlyComponent implements OnInit {
    * @param {boolean} newType
    * @memberof HourlyComponent
    */
-  loadHourlyData(newHive: boolean, newType: string): void {
-    this.hourlyManager.setNbChartSelected(this.currentTypeHourly.length - 1);
+  loadHourlyData(newHive: boolean, newType: string, rangeChange: boolean ): void {
+    console.log(rangeChange);
+    this.hourlyManager.setNbChartSelected((newType !== '' )? 1: this.currentTypeHourly.length);
     this.currentTypeHourly.forEach(_type => {
       switch (_type.name) {
         case 'WEIGHT':
-          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+          if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || ( !rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartWeight(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         case 'TEMP_INT':
-          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+          if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartTempInt(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         case 'TEMP_EXT':
-          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+          if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartTempExt(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         case 'HRIN':
-          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+          if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartHint(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         case 'BAT_INT':
-          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+          if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartBatInt(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         case 'BAT_EXT':
-          if (newHive && this.ifTypeHourlyContains(_type.name) || (!newHive && newType === _type.name)) {
+          if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartBatExt(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest());
+              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         default:
@@ -117,7 +118,11 @@ export class HourlyComponent implements OnInit {
 
     this.hourlyManager.getCountChartSubject().subscribe(() => {}, () => {}, () => {
       console.error('COMPLETE');
-      this.hourlyManager.setNewRange(this.melliDate.getRangeForReqest());
+      console.log(this.hourlyManager.baseOpions);
+      console.log(this.melliDate.getRangeForReqest());
+      if (rangeChange) {
+        this.hourlyManager.setNewRange(this.melliDate.getRangeForReqest());
+      }
       this.hourlyManager.resetCountSubject();
     })
   }
@@ -135,7 +140,7 @@ export class HourlyComponent implements OnInit {
       this.typeData[toolIndex].class += ' active';
       this.addType(type);
       console.log(this.currentTypeHourly);
-      this.loadHourlyData(false, type.name);
+      this.loadHourlyData(false, type.name, false);
     } else {
       this.typeData[toolIndex].class = this.typeData[toolIndex].class.replace(/active/g, '');
       console.log(this.typeData[toolIndex]);
@@ -215,8 +220,5 @@ export class HourlyComponent implements OnInit {
   cleanSerie(): void {
     this.hourlyManager.baseOpions.series = new Array();
   }
-
-  
-
 
 }
