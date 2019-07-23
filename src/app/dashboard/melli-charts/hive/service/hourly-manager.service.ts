@@ -3,7 +3,10 @@ import { RecordService } from '../../../apiary/ruche-rucher/ruche-detail/service
 import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 import { SERIES } from '../../charts/SERIES';
 import { isUndefined } from 'util';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { WeatherService } from '../../../service/api/weather.service';
+import { ForecastHourlyWeather } from '../../../../_model/forecast-hourly-weather';
+import { CurrentHourlyWeather } from '../../../../_model/current-hourly-weather';
 
 
 interface Tools {
@@ -27,7 +30,8 @@ export class HourlyManagerService {
   private currentRange: Date[];
   private subjectCountChartComplete: BehaviorSubject<number>;
   constructor(
-    private recordService: RecordService
+    private recordService: RecordService,
+    private weatherService: WeatherService
   ) {
     this.subjectCountChartComplete = new BehaviorSubject(0);
     this.numberChartAcive = 0;
@@ -52,7 +56,7 @@ export class HourlyManagerService {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, SERIES.line);
-        serieTmp.name = nameSerie + '(' + _data.sensorRef + ')';
+        serieTmp.name = nameSerie + '|' + _data.sensorRef;
         serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
           return { name: _map.date, value: [_map.date, _map.value, _map.sensorRef] };
         });
@@ -84,7 +88,7 @@ export class HourlyManagerService {
           });
           console.log(option.series);
           // option.tooltip = this.getTooltipBySerie(chartName);
-          option.yAxis[0].name = type.unit;
+          option.yAxis[0].name = type.name;
           chartInstance.setOption(option, true);
         }
         this.baseOpions = option;
@@ -119,6 +123,7 @@ export class HourlyManagerService {
             console.log(serieComplete);
             option.series.push(serieComplete);
           });
+          option.yAxis[0].name = type.name;
           chartInstance.setOption(option, true);
         }
         this.baseOpions = option;
@@ -286,6 +291,46 @@ export class HourlyManagerService {
       }
     )
   }
+
+  getHourlyWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    const arrayObs : Array<Observable<any>> = [
+      this.weatherService.getTempCurrentHourlyWeather(idApiary, range),
+      this.weatherService.getTempForecastHourlyWeather(idApiary, range)
+    ];
+    Observable.forkJoin(arrayObs).map(_elt => _elt.flat()).subscribe(
+      _weather => {
+        _weather = _weather.map(_elt => {
+          return {date: _elt.date, value: _elt.value.temp, sensorRef: _elt.sensorRef};
+        });
+        console.log(_weather);
+         let option = Object.assign({}, this.baseOpions);
+        if (rangeChange) {
+          console.error('RANGE CHANGED');
+          this.getSerieByData(_weather, type.name, (serieComplete: any) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            option.series[index] = Object.assign({}, serieComplete);
+          })
+          chartInstance.setOption(option, true);
+
+        } else {
+          if (this.existSeries(option.series, type.unit, idApiary)) {
+            option.series = new Array();
+          }
+          // this.cleanChartsInstance(chartInstance, type.name);
+          this.getSerieByData(_weather, type.name, (serieComplete: any) => {
+            console.log(serieComplete);
+            option.series.push(serieComplete);
+          });
+          chartInstance.setOption(option, true);
+
+        }
+        this.baseOpions = option;
+        this.setCurrentUnite(type.unit);
+        this.incrementeCharComplete();
+ 
+      }
+    )
+  }
   /**
    *
    *
@@ -323,10 +368,11 @@ export class HourlyManagerService {
    */
   removeSeriesFromChartInstance(echartInstance: any, seriesName: string): void {
     let option = echartInstance.getOption();
-    const series = option.series.filter(_filter => _filter.name.indexOf(seriesName) !== -1);
-    if (series.length > 0) {
+    const series = option.series.filter(_filter => _filter.name.split('|')[0] === seriesName);
+    console.log(series);
+     if (series.length > 0) {
       series.forEach(element => {
-        const indexSerie = option.series.indexOf(element.name);
+        const indexSerie = option.series.map(_serie => _serie.name).indexOf(element.name);
         this.baseOpions.series.splice(indexSerie, 1);
         option.series.splice(indexSerie, 1);
       });

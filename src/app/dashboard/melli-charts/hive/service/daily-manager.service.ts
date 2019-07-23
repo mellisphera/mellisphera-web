@@ -52,7 +52,7 @@ export class DailyManagerService {
   }
 
   getChartDailyWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[]) {
-    const weatherObs = [this.weatherService.getCurrentDailyWeather(idApiary, range), this.weatherService.getForecastDailyWeather(idApiary, range)];
+    const weatherObs: Array<Observable<any>> = [this.weatherService.getCurrentDailyWeather(idApiary, range), this.weatherService.getForecastDailyWeather(idApiary, range)];
     Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
       _weather => {
         let option = Object.assign({}, this.baseOptionExt);

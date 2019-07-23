@@ -111,6 +111,12 @@ export class HourlyComponent implements OnInit {
               this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
+        case 'TEMP_WEATHER':
+            if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
+              console.error(_type.name);
+              this.hourlyManager.getHourlyWeather(_type,
+                this.melliHive.getHiveSelect().idApiary, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+            }
         default:
           break;
       }
