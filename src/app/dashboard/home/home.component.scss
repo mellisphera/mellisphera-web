@@ -94,11 +94,6 @@ li:first-child img{
   border: 2px solid #70A8B2;
 }
 
-// .button0:hover {
-//   border: 2px solid white;
-//   background-color: #E5AF2C;
-// }
-
 .button0:hover {
   background-color: white;
   color: #4F4F51; 
@@ -114,12 +109,15 @@ li:first-child img{
   border: 2px solid #4F4F51;
 }
 
+#global{
+  position: relative;
+  margin : 0px;
+}
+// FOR A CELLPHONE SIZE
+
 // PICTURE
 #cadre {
-  margin: auto;
-  width: 100%;
   margin: 0px;
-  //height: 93vh;
   overflow: hidden;
   //background: url("../../../assets/imageClient/testAccount.png") no-repeat center;
   background-size: contain;
@@ -129,6 +127,48 @@ li:first-child img{
 
   transform: rotate(0deg);
 }
+
+.photo{
+  max-height: 75vh;
+  max-width: 100%;
+
+}
+
+// FOR A NORMAL SCREEN
+@media (min-width : 990px){
+  #cadre {
+    float: left;
+    // height: 50vh;
+    // background-color: #4F4F51;
+    width: 50%;
+    margin: 0px;
+    margin-top: -19px;
+    overflow: hidden;
+    background-size: contain;
+    position: relative;
+    border-bottom: 5px solid transparent;
+    border-color: white;
+  
+    transform: rotate(0deg);
+  }
+
+  .photo{
+    max-height: 50vh;
+    max-width: 100%;
+  
+  }
+
+  #right{
+    margin : 0px;
+    margin-left:50%;
+    margin-top: 20px;
+  }
+}
+
+#clickHive{
+  margin-top: 20px;
+}
+
 
 .hive-group{
     position: absolute;
@@ -235,7 +275,7 @@ li:first-child img{
 }
 
 .photo{
-  max-height: 75vh;
+  max-height: 50vh;
   max-width: 100%;
 
 }

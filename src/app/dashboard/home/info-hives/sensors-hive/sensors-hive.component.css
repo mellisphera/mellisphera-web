@@ -1,51 +1,50 @@
-.btn-circle.btn-xl {
-    width: 70px;
-    height: 70px;
-    padding: 10px 16px;
-    border-radius: 35px;
-    font-size: 24px;
-    line-height: 1.33;
-}
-
-.btn-circle {
-    width: 30px;
-    height: 30px;
-    padding: 6px 0px;
-    border-radius: 15px;
-    text-align: center;
-    font-size: 12px;
-    line-height: 1.42857;
-}
-.action{
-    width: 0px;
-}
-.midle{
-    width: 100%;
-}
-.firstCol{
-    width: 10%;
-}
-/* .hive-link:hover{
-    cursor: pointer;
-} */
-/* .hive-link{
-    text-decoration-line: underline;
-    color: #23CCEF;
-}  */
-.table button{
-    border:none;
-}
-
-.hoverStyle:hover{
-    border-left: 6px solid #70A8B2;
-    background-color: #eafffd;
-  }
-
 .close{
- font-size: 30px;
+    font-size: 30px;
 }
 
 .fa-times{
     margin-left: 15px;
+}
+
+#user-group{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.panel{
+    width: 100%;
+    margin-bottom:1px !important;
+    padding: 4px;
+}
+#sensorsHive{
+    border: 1px dashed gray;
+    padding: .5em;
+    
+    white-space: pre-wrap;
+    overflow-y: scroll;
+}
+.user-title{
+    text-align: center;
+}
+th{
+    color: black !important;
+}
+.battery-contain{
+    position: relative;
+}
+.battery-level{
+    padding-left: 2px;
+    color: black;
+    font-weight: bold;
+}
+@media (max-width:800px) {
+    .panel {
+        width: 100% !important;
+    }
+} 
+
+.fa-plus{
+    margin-top: -3px;
+    vertical-align: center;
 }
   

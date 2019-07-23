@@ -62,7 +62,7 @@
     <strong>{{ 'HOME.WARNING' | translate}} </strong>{{hiveNoDataList()}}
 </div>
 <!-- End of No data hive -->
-
+<div id="global">
 <!-- Apiary picture -->
 <div class="grid-container" #myBounds id="cadre" ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary"
     class="my-drop-zone" [class.valid-drag]="baseDropValid" [(lastBaseUrl)]="rucherService.rucher.photo">
@@ -126,6 +126,13 @@
         </div>
     </div>
 </div>
+
+<div id = "right">
+<router-outlet (activate)="setRouterPage($event)"></router-outlet>
+</div>
+
+</div>
+
 <div *ngIf="photoApiary!=null" id="modal">
     <div class="modal-body">
         <p>{{ 'HOME.BACK' | translate}}</p>
@@ -140,12 +147,11 @@
 
 <!-- Under the picture -->
 <div id="scroll"></div>
-<div *ngIf="router.url === '/dashboard/home'">
+<div *ngIf="router.url === '/dashboard/home'" id = "clickHive">
     <p class="center-classe">
         {{ 'HOME.CLICK' | translate}}
     </p>
 </div>
-<router-outlet (activate)="setRouterPage($event)"></router-outlet>
 
 <!-- Edit Hive Modal -->
 <div class="modal fade" id="editRucheModal" backdrop="false" tabindex="-1" role="dialog"

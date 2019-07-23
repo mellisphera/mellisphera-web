@@ -82,7 +82,6 @@ export class AlertsHiveComponent implements OnInit {
     this.option = {
       backgroundColor: 'white',
       title: {
-        top: 5,
         text: this.graphGlobal.getTitle("AlertsHive") + ' ' + this.rucheService.getCurrentHive().name,
         left: 'center',
         textStyle: {
@@ -106,9 +105,7 @@ export class AlertsHiveComponent implements OnInit {
         }
       },
       calendar: [{
-        top: 100,
         left: '15%',
-        bottom: '3%',
         height: '45%',
         width: '70%',
         range: MyDate.getRangeForCalendarHome(),
