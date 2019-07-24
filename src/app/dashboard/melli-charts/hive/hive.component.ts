@@ -33,7 +33,6 @@ export class HiveComponent implements OnInit {
     this.hourlyComponent.cleanSerie();
     this.dailyComponent.loadDailyDeviceData(false);
     this.dailyComponent.loadDailyOtherData(false);
-    this.dailyComponent.afterRangeChange();
     this.hourlyComponent.loadHourlyData(true, '', false);
   }
 

@@ -14,6 +14,7 @@ import { ICONS_WEATHER } from '../../charts/icons/icons_weather';
 import { Observable } from 'rxjs';
 import { AstroService } from '../../service/astro.service';
 import { ICONS_ASTRO } from '../../charts/icons/icons_astro';
+import { _localeFactory } from '@angular/core/src/application_module';
 
 
 interface Tools {
@@ -35,6 +36,8 @@ const OTHER = 'OTHER';
 export class DailyManagerService {
 
   public baseOptionsInt: any;
+  public meanDevice: number;
+  public meanOther: number;
   public baseOptionExt: any;
   private optionForCurentChart: any;
   private currentRange: Date[];
@@ -89,7 +92,7 @@ export class DailyManagerService {
             return [_map.date].concat(this.getValueBySerie(_map.value, nameSerie),  _map.sensorRef);
           });
         } else {
-          console.log('not object');
+
           serieTmp.data = data;
         }
         next(serieTmp);
@@ -103,7 +106,6 @@ export class DailyManagerService {
       _weather => {
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
-          console.error('RANGE CHANGED');
           this.getSerieByData(_weather, type.name, SERIES.custom, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             serieComplete.renderItem = (params, api) => {
@@ -203,7 +205,6 @@ export class DailyManagerService {
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.visualMap = null;
         }
-        console.log(option);
         chartInstance.clear();
         chartInstance.setOption(option, true);
         this.baseOptionExt = option;
@@ -211,11 +212,11 @@ export class DailyManagerService {
       }
     )
   }
-  getChartAstro(type: Tools, idApiary: string, chartInstance: any, range: Date[], changeRange: boolean) {
+  getChartAstro(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.astroService.getAstroByApiary(idApiary, range).subscribe(
       _astro => {
         let option = Object.assign({}, this.baseOptionExt);
-        if(this.ifRangeChanged(range)) {
+        if(rangeChange) {
           option.calendar.range = range;
           option.series[0].data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name'], _data.moon['ascendant']));
         } else {
@@ -284,10 +285,12 @@ export class DailyManagerService {
     )
   }
   getChartWeightincome(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive).subscribe(
+    this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive, range).subscribe(
       _daliW => {
+        console.log(_daliW.weightIncomeHight.map(_elt => _elt.value).concat(_daliW.weightIncomeLow.map(_elt => _elt.value)));
+        this.meanDevice = this.getMeanData(_daliW.weightIncomeHight.map(_elt => _elt.value).concat(_daliW.weightIncomeLow.map(_elt => _elt.value)), false);
+        console.log(this.meanDevice);
         let option = Object.assign({}, this.baseOptionsInt);
-        console.log(_daliW);
         if (rangeChange) {
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
@@ -380,7 +383,6 @@ export class DailyManagerService {
           option.tooltip = this.getTooltipBySerie('Weight');
           option.calendar.range = range;
         }
-        console.log(option);
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
       }
@@ -394,9 +396,10 @@ export class DailyManagerService {
     ];
     Observable.forkJoin(obs).map(_elt => _elt.flat()).subscribe(
       _rain => {
+        console.log(_rain);
+        this.meanOther = this.getMeanData(_rain.map(_elt => _elt.value.rainDay), false);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
-          console.error('RANGE CHANGED');
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             serieComplete.itemStyle = {
@@ -441,11 +444,12 @@ export class DailyManagerService {
     )
   }
 
-  getChartTintMax(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
+  getChartTintMax(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getTempIntMaxByHive(idHive, range).subscribe(
       _tMax => {
+        this.meanDevice = this.getMeanData(_tMax.map(_elt => _elt.value), true);
         let option = Object.assign({}, this.baseOptionsInt);
-        if(this.ifRangeChanged(range)) {
+        if(rangeChange) {
           option.calendar.range = range;
           option.series[0].data = _tMax.map(_data => new Array(_data.date, _data.value));
         } else {
@@ -474,39 +478,36 @@ export class DailyManagerService {
     this.dailyWService.getTempMaxExt(idHive, range).subscribe(
       _tmpMaxExt => {
         let option = Object.assign({}, this.baseOptionsInt);
+        this.meanDevice = this.getMeanData(_tmpMaxExt.map(_elt => _elt.value), true);
         if(rangeChange) {
-          console.error('RANGE CHANGED');
-          this.getSerieByData(_tmpMaxExt, type.name, SERIES.heatmap, (serieComplete: any) => {
-            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            option.series[index] = serieComplete;
-          })
           option.calendar.range = range;
+          option.series[0].data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
         } else {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.getSerieByData(_tmpMaxExt, type.name, SERIES.heatmap, (serieComplete) => {
-            option.series.push(serieComplete);
-            console.log(serieComplete);
-          })
+          let serie = Object.assign({}, SERIES.heatmap);
+          serie.name = type.name;
+          serie.data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
           option.visualMap = this.getVisualMapBySerie(type.name);
           option.tooltip = this.getTooltipBySerie(type.name);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.series.push(serie);
         }
         
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
-
       }
     )
   }
-  getChartTextMin(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
+  getChartTextMin(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getTempMinExt(idHive, range).subscribe(
       _tMinExt => {
+        this.meanDevice = this.getMeanData(_tMinExt.map(_elt => _elt.value), true);
         let option = Object.assign({}, this.baseOptionsInt);
-        if(this.ifRangeChanged(range)) {
+        if(rangeChange) {
           option.calendar.range = range;
           option.series[0].data = _tMinExt.map(_data => new Array(_data.date, _data.value));
         } else {
@@ -529,11 +530,12 @@ export class DailyManagerService {
       }
     )
   }
-  getChartHint(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
+  getChartHint(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getHintByHive(idHive, range).subscribe(
       _hInt => {
+        this.meanDevice = this.getMeanData(_hInt.map(_elt => _elt.value), true);
         let option = Object.assign({}, this.baseOptionsInt);
-        if(this.ifRangeChanged(range)) {
+        if(rangeChange) {
           option.calendar.range = range;
           option.series[0].data = _hInt.map(_data => new Array(_data.date, _data.value));
         } else {
@@ -556,11 +558,12 @@ export class DailyManagerService {
       }
     )
   }
-  getChartBrood(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
+  getChartBrood(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getBroodByHive(idHive, range).subscribe(
       _brood => {
+        this.meanDevice = this.getMeanData(_brood.map(_elt => _elt.value), true);
         let option = Object.assign({}, this.baseOptionsInt);
-        if(this.ifRangeChanged(range)) {
+        if(rangeChange) {
           option.calendar.range = range;
           option.series[0].data = _brood.map(_data => new Array(_data.date, _data.value));
         } else {
@@ -584,11 +587,12 @@ export class DailyManagerService {
     )
   }
 
-  getChartTminInt(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
+  getChartTminInt(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getTminByHive(idHive, range).subscribe(
       _tMin => {
+        this.meanDevice = this.getMeanData(_tMin.map(_elt => _elt.value), true);
         let option = Object.assign({}, this.baseOptionsInt);
-        if(this.ifRangeChanged(range)) {
+        if(rangeChange) {
           option.calendar.range = range;
           option.series[0].data = _tMin.map(_data => new Array(_data.date, _data.value));
         } else {
@@ -611,11 +615,11 @@ export class DailyManagerService {
     )
   }
 
-  getChartWeight(type: Tools, idHive: string, chartInstance: any, range: Date[]){
+  getChartWeight(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean){
     this.dailyWService.getWeightByHive(idHive, range).subscribe(
       _weightMax => {
         let option = Object.assign({}, this.baseOptionsInt);
-        if(this.ifRangeChanged(range)) {
+        if(rangeChange) {
           option.calendar.range = range;
         option.series[0].data = _weightMax.map(_data => new Array(_data.date, _data.value));
         } else {
@@ -737,21 +741,21 @@ export class DailyManagerService {
    */
   getTooltipBySerie(serieLabel: string): any {
     const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
+    let templateTooltip = '{D} </br>';
+    let templateValue = '{n} : {v} <br/>';
     switch(serieLabel) {
       case 'WEATHER':
           tooltip.formatter =  (params) => {
-            return params.marker  + this.unitService.getDailyDate(params.data[0]) +
-            ': </br>' +
-            ' TempMax: ' +this.graphGlobal.getNumberFormat(params.data[2]) + '</br>' +
-            ' TempMin: ' +this.graphGlobal.getNumberFormat(params.data[3]);
+            return params.marker + templateTooltip.replace(/{D}/g, this.unitService.getDailyDate(params.data[0])) +
+            templateValue.replace(/{n}/g , 'TempMax').replace(/{v}/g, this.graphGlobal.getNumberFormat(params.data[2]).toString()) + 
+            templateValue.replace(/{n}/g, 'TempMin').replace(/{v}/g, this.graphGlobal.getNumberFormat(params.data[3]).toString());
           }
           break;
       default:
-          tooltip.formatter =  (params) => {
-            return params.marker  + this.unitService.getDailyDate(params.data[0]) +
-            ': <b>' + this.graphGlobal.getNumberFormat(params.data[1]) + ' '
-             + this.graphGlobal.getUnitBySerieName(params.seriesName) + '</b>';
-          }
+        tooltip.formatter =  (params) => {
+          return params.marker + templateTooltip.replace(/{D}/g, this.unitService.getDailyDate(params.data[0])) +
+          templateValue.replace(/{n}/g , serieLabel).replace(/{v}/g, this.graphGlobal.getNumberFormat(params.data[1]).toString());
+        }
     }
     return tooltip;
   }
@@ -759,17 +763,18 @@ export class DailyManagerService {
   /**
    *
    *
-   * @param {Date[]} range
-   * @returns {boolean}
+   * @param {Array<any>} _data
+   * @returns {number}
    * @memberof DailyManagerService
    */
-  ifRangeChanged(range: Date[]): boolean {
-    if (isUndefined(this.currentRange) || (this.currentRange[0] === range[0] && this.currentRange[1] === range[1])) {
-    return false;
-    } else {
-      return true;
-    }
+  getMeanData(_data: Array<any>, mean: boolean): number {
+    let value = 0;
+    _data.filter(_elt => _elt !== 'NaN').forEach(_value => {
+      value = value + _value;
+    })
+    return mean? value/_data.length: value;
   }
+  
 
   /**
    *
@@ -792,55 +797,6 @@ export class DailyManagerService {
     } else {
       return '#EBEBEB';
     }
-  }
-
-  getRenderItemFunction(data: any[]): Function {
-    return (params, api) => {
-      let cellPoint = api.coord(api.value(0));
-      let cellWidth = params.coordSys.cellWidth;
-      let cellHeight = params.coordSys.cellHeight;
-      return {
-          type: 'group',
-          children: [
-            {
-              type: 'path',
-              z2: 1000 ,
-              shape: {
-                pathData: ICONS_WEATHER[api.value(1)],
-                x: -11,
-                y: -10,
-                width: 25,
-                height: 25
-            },
-            position: [cellPoint[0], cellPoint[1]],
-          },
-          {
-            type: 'rect',
-            z2: 0,
-            shape: {
-              x: -cellWidth / 2,
-              y: -cellHeight / 2,
-              width: cellWidth,
-              height: cellHeight,
-            },
-            position: [cellPoint[0], cellPoint[1]],
-            style: {
-              fill: this.getColorCalendarByValue(api.value(0)),
-              stroke: 'black'
-            }
-          }
-        ]
-      };
-    }
-  }
-  /**
-   *
-   *
-   * @param {Date[]} range
-   * @memberof DailyManagerService
-   */
-  setCurrentRange(range: Date[]): void {
-    
   }
 }
 

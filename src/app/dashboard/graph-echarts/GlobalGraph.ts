@@ -155,15 +155,34 @@ export class GraphGlobal {
         this.temp.min = 0;
         this.temp.max = null;
     }
+    /**
+     *
+     *
+     * @returns {Object}
+     * @memberof GraphGlobal
+     */
     getWeight(): Object {
         return this.weight;
     }
 
+    /**
+     *
+     *
+     * @returns {Object}
+     * @memberof GraphGlobal
+     */
     getTemp(): Object {
         return this.temp;
     }
 
     // Here there are all the graph titles
+    /**
+     *
+     *
+     * @param {String} nomGraphe
+     * @returns {*}
+     * @memberof GraphGlobal
+     */
     getTitle(nomGraphe: String): any {
         var titre: any;
 
@@ -180,6 +199,12 @@ export class GraphGlobal {
         return titre.titre;
     }
 
+    /**
+     *
+     *
+     * @returns {String[]}
+     * @memberof GraphGlobal
+     */
     getDays(): String[] {
         // If he is French
         if (this.userService.getJwtReponse().country === "FR") {
@@ -190,6 +215,12 @@ export class GraphGlobal {
         }
     }
 
+    /**
+     *
+     *
+     * @returns {String[]}
+     * @memberof GraphGlobal
+     */
     getMonth(): String[] {
         // If he is French
         if (this.userService.getJwtReponse().country === "FR") {
@@ -200,6 +231,13 @@ export class GraphGlobal {
         }
     }
 
+    /**
+     *
+     *
+     * @param {number} value
+     * @returns {(string | number)}
+     * @memberof GraphGlobal
+     */
     getNumberFormat(value: number): string | number {
         if (this.userService.getCountry() === 'FR') {
             return value.toString().replace(/\./g, ',');
@@ -208,6 +246,13 @@ export class GraphGlobal {
         }
     }
 
+    /**
+     *
+     *
+     * @param {string} value
+     * @returns {string}
+     * @memberof GraphGlobal
+     */
     getStringWeightFormat(value: string): string {
         if (this.userService.getCountry() === 'FR') {
             return value.replace(/\./g, ',');
@@ -215,6 +260,13 @@ export class GraphGlobal {
             return value;
         }
     }
+    /**
+     *
+     *
+     * @param {string} serie
+     * @returns {string}
+     * @memberof GraphGlobal
+     */
     getUnitBySerieName(serie: string): string {
         if (/Temp/g.test(serie) || /Weather/g.test(serie)) {
             return this.temp.unitT;

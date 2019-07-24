@@ -190,21 +190,12 @@ export class DailyRecordsWService {
   }
 
   /* FOR MELLI_CHARTS */
-  getDailyRecordsWbyHiveForMelliCharts(idHive: string): Observable<any>{
-    return this.http.get<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/hive/' + idHive).map(dailyW => {
+  getDailyRecordsWbyHiveForMelliCharts(idHive: string, range: Date[]): Observable<any>{
+    return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsW/hive/between/' + idHive, range).map(dailyW => {
       return {
-        tempExt: dailyW.map(_dailyW => [_dailyW.recordDate, this.unitService.convertTempFromUsePref(_dailyW.temp_ext_max, this.unitSystem)]),
-        weightIncomeHight: dailyW.filter(_filter => _filter.weight_income_gain >= 0).map(_dailyW => {
-          /* [
-          _dailyW.recordDate,
-          this.unitService.convertWeightFromuserPref(_dailyW.weight_income_gain, this.unitSystem), _dailyW.sensorRef
-        ] */
-        return { date: _dailyW.recordDate, value: this.unitService.convertWeightFromuserPref(_dailyW.weight_income_gain, this.unitSystem), sensorRef: _dailyW.sensorRef }
-        }),
-        weightIncomeLow: dailyW.filter(_filter => _filter.weight_income_gain < 0).map(_dailyW => {
-          return { date: _dailyW.recordDate, value: this.unitService.convertWeightFromuserPref(_dailyW.weight_income_gain, this.unitSystem), sensorRef: _dailyW.sensorRef }
-        }),
-      }
+        weightIncomeHight: dailyW.filter(_filter => _filter.value >= 0),
+        weightIncomeLow: dailyW.filter(_filter => _filter.value < 0)
+      };
     })
   }
 

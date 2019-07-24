@@ -1,9 +1,21 @@
 <div id="daily-int" (window:resize)="onResize($event)">
   <div id="calendar-device" class="chart calendar"></div>
+  <div>
+      <h2>Moyenne :</h2>
+      <p>Sur la période: {{ dailyManager.meanDevice }}</p>
+      <p>Dernier 7 jours: </p>
+      <p>Dernier 24 heure: </p>
+  </div>
 </div>
 <hr/>
 <div id="daily-ext">
   <div id="calendar-other" class="chart calendar"></div>
+  <div>
+      <h2>Moyenne :</h2>
+      <p>Sur la période: {{ dailyManager.meanOther }}</p>
+      <p>Dernier 7 jours: </p>
+      <p>Dernier 24 heure: </p>
+  </div>
 </div>
 <div id="sidebar-tools-daily" class="sidebar-wrapper">
   <ul class="nav responsive-nav" id="device-group">
