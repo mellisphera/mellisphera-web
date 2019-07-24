@@ -47,7 +47,7 @@ export class HourlyComponent implements OnInit {
     this.melliHive.getHourlyChartInstance().setOption(this.hourlyManager.baseOpions);
   }
 
-  onResize(event: any) {
+  onResize(event: any): void {
     this.melliHive.getHourlyChartInstance().resize({
       width: 'auto',
       height: 'auto'
@@ -114,9 +114,17 @@ export class HourlyComponent implements OnInit {
         case 'TEMP_WEATHER':
             if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
               console.error(_type.name);
-              this.hourlyManager.getHourlyWeather(_type,
+              this.hourlyManager.getTempHourlyWeather(_type,
                 this.melliHive.getHiveSelect().idApiary, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
             }
+            break;
+        case 'HWEATHER':
+            if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
+              console.error(_type.name);
+              this.hourlyManager.getHextHourlyWeather(_type,
+                this.melliHive.getHiveSelect().idApiary, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+            }
+          break;
         default:
           break;
       }

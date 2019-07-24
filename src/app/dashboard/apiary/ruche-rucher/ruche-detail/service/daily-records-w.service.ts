@@ -194,14 +194,16 @@ export class DailyRecordsWService {
     return this.http.get<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/hive/' + idHive).map(dailyW => {
       return {
         tempExt: dailyW.map(_dailyW => [_dailyW.recordDate, this.unitService.convertTempFromUsePref(_dailyW.temp_ext_max, this.unitSystem)]),
-        weightIncomeHight: dailyW.filter(_filter => _filter.weight_income_gain >= 0).map(_dailyW => [
+        weightIncomeHight: dailyW.filter(_filter => _filter.weight_income_gain >= 0).map(_dailyW => {
+          /* [
           _dailyW.recordDate,
-          this.unitService.convertWeightFromuserPref(_dailyW.weight_income_gain, this.unitSystem)
-        ]),
-        weightIncomeLow: dailyW.filter(_filter => _filter.weight_income_gain < 0).map(_dailyW => [
-          _dailyW.recordDate,
-          this.unitService.convertWeightFromuserPref(_dailyW.weight_income_gain, this.unitSystem)
-        ]),
+          this.unitService.convertWeightFromuserPref(_dailyW.weight_income_gain, this.unitSystem), _dailyW.sensorRef
+        ] */
+        return { date: _dailyW.recordDate, value: this.unitService.convertWeightFromuserPref(_dailyW.weight_income_gain, this.unitSystem), sensorRef: _dailyW.sensorRef }
+        }),
+        weightIncomeLow: dailyW.filter(_filter => _filter.weight_income_gain < 0).map(_dailyW => {
+          return { date: _dailyW.recordDate, value: this.unitService.convertWeightFromuserPref(_dailyW.weight_income_gain, this.unitSystem), sensorRef: _dailyW.sensorRef }
+        }),
       }
     })
   }

@@ -84,10 +84,7 @@ export const BASE_OPTIONS = {
     },
     baseOptionDaily: {
        // visualMap: {},
-        legend: {
-            orient: 'horizontal',
-            data: [],
-        },
+        legend: {},
         axisPointer: {
             link: { xAxisIndex: 'all' }
         },
@@ -113,6 +110,11 @@ export const BASE_OPTIONS = {
     tooltip: {
         trigger: 'item',
         formatter: {}
+    },
+    legend: {
+        orient: 'horizontal',
+        data: [],
+        selectedMode: 'multiple'
     },
 
 }

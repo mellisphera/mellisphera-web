@@ -2,8 +2,8 @@ export const SERIES = {
     effectScatter: {
         name: 'gain',
         type: 'effectScatter',
-        coordinateSystem: '',
-        data: '',
+        coordinateSystem: 'calendar',
+        data: [],
         symbolSize: {},
         showEffectOn: 'emphasis',
         rippleEffect: {

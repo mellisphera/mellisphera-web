@@ -3,6 +3,7 @@ import { DailyManagerService } from '../service/daily-manager.service';
 import { MelliChartsHiveService } from '../../service/melli-charts-hive.service';
 import { MelliChartsDateService } from '../../service/melli-charts-date.service';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import * as echarts from 'echarts';
 
 
 interface Tools {
@@ -43,7 +44,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', origin: 'DEVICE', class: 'item-type', icons: '' },
       { name: 'HRIN', id: 'HRIN', origin: 'DEVICE', class: 'item-type', icons: '' },
       { name: 'BROOD', id: 'BROOD', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'ASTRO', id: 'ASTRO', origin: 'OTHER', class: 'item-type', icons: ''}
+      { name: 'ASTRO', id: 'ASTRO', origin: 'OTHER', class: 'item-type', icons: ''},
+      { name: 'RAIN', id: 'RAIN', origin: 'OTHER', class: 'item-type', icons: ''}
     ];
     this.optionCsv = {
       fieldSeparator: ',',
@@ -64,21 +66,30 @@ export class DailyComponent implements OnInit, AfterViewInit {
   
 
   ngOnInit() {
+    this.melliHive.setDailyDeviceChartInstance(echarts.init(<HTMLDivElement>document.getElementById('calendar-device')));
+    this.melliHive.setDailyOtherChartInstance(echarts.init(<HTMLDivElement>document.getElementById('calendar-other')));
   }
 
 
-
+  onResize(event: any) {
+    this.melliHive.getHourlyChartInstance().resize({
+      width: 'auto',
+      height: 'auto'
+    });
+  }
 
   ngAfterViewInit(): void {
   }
 
-  loadDailyDeviceData(): void {
+  loadDailyDeviceData(rangeChange: boolean): void {
     switch (this.currentTypeDailyDevice.name) {
       case 'WINCOME':
-        this.dailyManager.getChartWeightincome(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest());
+        this.dailyManager.getChartWeightincome(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, 
+        this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(),rangeChange);
         break;
       case 'TEMP_EXT_MAX':
-        this.dailyManager.getChartTextMax(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest());
+        this.dailyManager.getChartTextMax(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, 
+        this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'TEMP_EXT_MIN':
         this.dailyManager.getChartTextMin(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest());
@@ -105,13 +116,19 @@ export class DailyComponent implements OnInit, AfterViewInit {
     
   }
 
-  loadDailyOtherData() {
+  loadDailyOtherData(rangeChange: boolean) {
     switch (this.currentTypeDailyOther.name) {
       case 'WEATHER':
-        this.dailyManager.getChartDailyWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest())
+        this.dailyManager.getChartDailyWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary, 
+        this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
         break;
       case 'ASTRO':
-        this.dailyManager.getChartAstro(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary, this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest());
+        this.dailyManager.getChartAstro(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary, 
+        this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        break;
+      case 'RAIN':
+        this.dailyManager.getRainByApiary(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary, 
+        this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
         break;
       default:
         break;
@@ -120,13 +137,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
   }
 
 
-  /**
-   *
-   *
-   * @param {*} event
-   * @memberof DailyComponent
-   */
-  onDailyDeviceChartInit(event: any): void {
+
+/*   onDailyDeviceChartInit(event: any): void {
     this.melliHive.checkifDailyDeviceInstanceChart().then(success => {
       console.log(this.melliHive.getDailyDeviceChartInstance().getWidth());
     }).catch(err => {
@@ -142,7 +154,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     }).catch(err => {
       this.melliHive.setDailyOtherChartInstance(event);
     });
-  }
+  } */
   /**
    *
    *
@@ -167,7 +179,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
         let newIndex: number = this.typeData.map(_type => _type.id).indexOf(type.id);
         this.typeData[newIndex].class += ' active';
         this.currentTypeDailyDevice = type;
-        this.loadDailyDeviceData();
+        this.loadDailyDeviceData(false);
     }
   } else {
     if (type.id !== this.currentTypeDailyOther.id) {
@@ -177,7 +189,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
         let newIndex: number = this.typeData.map(_type => _type.id).indexOf(type.id);
         this.typeData[newIndex].class += ' active';
         this.currentTypeDailyOther = type;
-        this.loadDailyOtherData();
+        this.loadDailyOtherData(false);
     }
   }
 }

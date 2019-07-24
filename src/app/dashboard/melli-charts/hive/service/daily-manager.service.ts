@@ -8,7 +8,7 @@ import { SERIES } from '../../charts/SERIES';
 import { UnitService } from '../../../service/unit.service';
 import 'rxjs/add/observable/forkJoin';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
-import { isUndefined } from 'util';
+import { isUndefined, isArray } from 'util';
 import { WeatherService } from '../../../service/api/weather.service';
 import { ICONS_WEATHER } from '../../charts/icons/icons_weather';
 import { Observable } from 'rxjs';
@@ -51,77 +51,167 @@ export class DailyManagerService {
     this.baseOptionExt = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
   }
 
-  getChartDailyWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[]) {
+
+
+
+  getValueBySerie(_value :any, name: string): Array<any> {
+    let value: any = {};
+    if (isArray(_value)) {
+      _value.forEach(elt => {
+        value = Object.assign(value, elt);
+      })
+    } else {
+      value = _value;
+    }
+    switch(name) {
+      case 'WEATHER':
+        return new Array(value.iconDay, value.maxTempDay, value.minTempDay);
+        break;
+      case 'RAIN':
+        return new Array('' + value.rainDay);
+        break;
+      default:
+        return [value];
+        break;
+    }
+  }
+
+
+  getSerieByData(data: Array<any>, nameSerie: string, serieTemplate: any, next: Function): void {
+    let sensorRef: Array<string> = [];
+    data.forEach((_data) => {
+      if (sensorRef.indexOf(_data.sensorRef) === -1) {
+        sensorRef.push(_data.sensorRef);
+        let serieTmp = Object.assign({}, serieTemplate);
+        serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
+        if (data.map(_elt => _elt.date)[0] !== undefined) {
+          serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
+            return [_map.date].concat(this.getValueBySerie(_map.value, nameSerie),  _map.sensorRef);
+          });
+        } else {
+          console.log('not object');
+          serieTmp.data = data;
+        }
+        next(serieTmp);
+      }
+    });
+  }
+
+  getChartDailyWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     const weatherObs: Array<Observable<any>> = [this.weatherService.getCurrentDailyWeather(idApiary, range), this.weatherService.getForecastDailyWeather(idApiary, range)];
     Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
       _weather => {
         let option = Object.assign({}, this.baseOptionExt);
-        if (this.ifRangeChanged(range)) {
+        if (rangeChange) {
+          console.error('RANGE CHANGED');
+          this.getSerieByData(_weather, type.name, SERIES.custom, (serieComplete: any) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            serieComplete.renderItem = (params, api) => {
+              let cellPoint = api.coord(api.value(0));
+              let cellWidth = params.coordSys.cellWidth;
+              let cellHeight = params.coordSys.cellHeight;
+              return {
+                  type: 'group',
+                  children: [
+                    {
+                      type: 'path',
+                      z2: 1000 ,
+                      shape: {
+                        pathData: ICONS_WEATHER[api.value(1)],
+                        x: -11,
+                        y: -10,
+                        width: 25,
+                        height: 25
+                    },
+                    position: [cellPoint[0], cellPoint[1]],
+                  },
+                  {
+                    type: 'rect',
+                    z2: 0,
+                    shape: {
+                      x: -cellWidth / 2,
+                      y: -cellHeight / 2,
+                      width: cellWidth,
+                      height: cellHeight,
+                    },
+                    position: [cellPoint[0], cellPoint[1]],
+                    style: {
+                      fill: this.getColorCalendarByValue(api.value(0)),
+                      stroke: 'black'
+                    }
+                  }
+                ]
+              };
+            }
+            option.series[index] = serieComplete;
+          })
           option.calendar.range = range;
-          option.series[0].data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
+          // option.series[0].data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
         } else {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          let serie = Object.assign({}, SERIES.custom);
-          serie.name = type.name;
-          serie.data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'], _data.main));
-          serie.renderItem = (params, api) => {
-            let cellPoint = api.coord(api.value(0));
-            let cellWidth = params.coordSys.cellWidth;
-            let cellHeight = params.coordSys.cellHeight;
-            let value = api.value(1);
-            return {
-                type: 'group',
-                children: [
+          option.legend = Object.assign({}, BASE_OPTIONS.legend);
+          option.legend.selectedMode = 'single';
+          // option.legend.selectedMode = 'single';
+          this.getSerieByData(_weather, type.name, SERIES.custom, (serieComplete) => {
+            serieComplete.renderItem = (params, api) => {
+              let cellPoint = api.coord(api.value(0));
+              let cellWidth = params.coordSys.cellWidth;
+              let cellHeight = params.coordSys.cellHeight;
+              return {
+                  type: 'group',
+                  children: [
+                    {
+                      type: 'path',
+                      z2: 1000 ,
+                      shape: {
+                        pathData: ICONS_WEATHER[api.value(1)],
+                        x: -11,
+                        y: -10,
+                        width: 25,
+                        height: 25
+                    },
+                    position: [cellPoint[0], cellPoint[1]],
+                  },
                   {
-                    type: 'path',
-                    z2: 1000 ,
+                    type: 'rect',
+                    z2: 0,
                     shape: {
-                      pathData: ICONS_WEATHER[api.value(2)],
-                      x: -11,
-                      y: -10,
-                      width: 25,
-                      height: 25
-                  },
-                  position: [cellPoint[0], cellPoint[1]],
-                },
-                {
-                  type: 'rect',
-                  z2: 0,
-                  shape: {
-                    x: -cellWidth / 2,
-                    y: -cellHeight / 2,
-                    width: cellWidth,
-                    height: cellHeight,
-                  },
-                  position: [cellPoint[0], cellPoint[1]],
-                  style: {
-                    fill: this.getColorCalendarByValue(api.value(0)),
-                    stroke: 'black'
+                      x: -cellWidth / 2,
+                      y: -cellHeight / 2,
+                      width: cellWidth,
+                      height: cellHeight,
+                    },
+                    position: [cellPoint[0], cellPoint[1]],
+                    style: {
+                      fill: this.getColorCalendarByValue(api.value(0)),
+                      stroke: 'black'
+                    }
                   }
-                }
-              ]
-            };
-          }
+                ]
+              };
+            }
+            option.legend.data.push(serieComplete.name)
+            option.series.push(serieComplete);
+          })
+
           option.tooltip = this.getTooltipBySerie(type.name);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.dayLabel.align = 'left';
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.visualMap = null;
-          option.series.push(serie);
         }
-        
+        console.log(option);
         chartInstance.clear();
-        chartInstance.setOption(option);
+        chartInstance.setOption(option, true);
         this.baseOptionExt = option;
 
       }
     )
   }
-
-  getChartAstro(type: Tools, idApiary: string, chartInstance: any, range: Date[]) {
+  getChartAstro(type: Tools, idApiary: string, chartInstance: any, range: Date[], changeRange: boolean) {
     this.astroService.getAstroByApiary(idApiary, range).subscribe(
       _astro => {
         let option = Object.assign({}, this.baseOptionExt);
@@ -133,7 +223,7 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.custom);
-          serie.name = 'Weather';
+          serie.name = type.name;
           serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name'], _data.moon['ascendant']));
           serie.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
@@ -186,78 +276,167 @@ export class DailyManagerService {
         }
         
         chartInstance.clear();
-        chartInstance.setOption(option);
+        chartInstance.setOption(option, true);
         this.baseOptionExt = option;
         // this.setOriginChartOption(type.origin);
 
       }
     )
   }
-  getChartWeightincome(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
+  getChartWeightincome(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive).subscribe(
       _daliW => {
         let option = Object.assign({}, this.baseOptionsInt);
-        if (this.ifRangeChanged(range)) {
-          option.series[0].data = _daliW.weightIncomeHight;
-          option.series[1].data = _daliW.weightIncomeLow;
+        console.log(_daliW);
+        if (rangeChange) {
+          this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete: any) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            serieComplete.itemStyle = {
+              normal: {
+                color: '#00FE0C'
+              }
+            };
+            serieComplete.symbolSize = (val: Array<any>) => {
+              if (val[1] >= 0) {
+                if (this.unitService.getUserPref().unitSystem === 'METRIC') {
+                  return (0.5 * Math.sqrt((1000 * val[1])));
+                } else {
+                  return (0.5 * Math.sqrt((1000 * val[1] * 0.45)));
+                }
+              }
+              return 0;
+            }
+            option.series[index] = serieComplete;
+            
+          });
+          this.getSerieByData(_daliW.weightIncomeLow, 'loss', SERIES.effectScatter, (serieComplete: any) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            serieComplete.itemStyle = {
+              normal: {
+                color: '#FE0000'
+              }
+            };
+            serieComplete.symbolSize = (val: Array<any>) => {
+              if (val[1] < 0) {
+                if (this.unitService.getUserPref().unitSystem === 'METRIC') {
+                  return (0.5 * Math.sqrt(Math.abs(1000 * val[1])));
+                } else {
+                  return (0.5 * Math.sqrt(Math.abs(1000 * val[1] * 0.45)));
+                }
+              }
+              return 0;
+            };
+            option.series[index] = serieComplete;
+          })
           option.calendar.range  = range;
         } else {
           if (this.existSeries(option.series, 'gain')) {
             option.series = new Array();
           }
-          let seriesGain = Object.assign({}, SERIES.effectScatter);
-          let seriesLoss= Object.assign({}, SERIES.effectScatter);
-          /** First serie */
-          seriesGain.name = 'gain';
-          seriesGain.coordinateSystem = 'calendar';
-          seriesGain.data = _daliW.weightIncomeHight;
-          seriesGain.itemStyle = {
-            normal: {
-              color: '#00FE0C'
-            }
-          };
-          seriesGain.symbolSize = (val: Array<any>) => {
-            if (val[1] >= 0) {
-              if (this.unitService.getUserPref().unitSystem === 'METRIC') {
-                return (0.5 * Math.sqrt((1000 * val[1])));
-              } else {
-                return (0.5 * Math.sqrt((1000 * val[1] * 0.45)));
+          option.legend = Object.assign({}, BASE_OPTIONS.legend);
+          option.legend.selectedMode = 'multiple';
+          this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete) => {
+            option.legend.data.push(serieComplete.name);
+            serieComplete.itemStyle = {
+              normal: {
+                color: '#00FE0C'
               }
-            }
-            return 0;
-          }
-          /** Second serie */
-          seriesLoss.name = 'loss';
-          seriesLoss.coordinateSystem = 'calendar';
-          seriesLoss.data = _daliW.weightIncomeLow;
-          seriesLoss.itemStyle = {
-            normal: {
-              color: '#FE0000'
-            }
-          };
-          seriesLoss.symbolSize = (val: Array<any>) => {
-            if (val[1] < 0) {
-              if (this.unitService.getUserPref().unitSystem === 'METRIC') {
-                return (0.5 * Math.sqrt(Math.abs(1000 * val[1])));
-              } else {
-                return (0.5 * Math.sqrt(Math.abs(1000 * val[1] * 0.45)));
+            };
+            serieComplete.symbolSize = (val: Array<any>) => {
+              if (val[1] >= 0) {
+                if (this.unitService.getUserPref().unitSystem === 'METRIC') {
+                  return (0.5 * Math.sqrt((1000 * val[1])));
+                } else {
+                  return (0.5 * Math.sqrt((1000 * val[1] * 0.45)));
+                }
               }
+              return 0;
             }
-            return 0;
-          };
-          option.series.push(seriesGain);
-          option.series.push(seriesLoss);
+            option.series.push(serieComplete);
+          });
+
+          this.getSerieByData(_daliW.weightIncomeLow, 'loss', SERIES.effectScatter, (serieComplete) => {
+            option.legend.data.push(serieComplete.name);
+            serieComplete.itemStyle = {
+              normal: {
+                color: '#FE0000'
+              }
+            };
+            serieComplete.symbolSize = (val: Array<any>) => {
+              if (val[1] < 0) {
+                if (this.unitService.getUserPref().unitSystem === 'METRIC') {
+                  return (0.5 * Math.sqrt(Math.abs(1000 * val[1])));
+                } else {
+                  return (0.5 * Math.sqrt(Math.abs(1000 * val[1] * 0.45)));
+                }
+              }
+              return 0;
+            };
+            option.series.push(serieComplete);
+          });
           option.visualMap = null;
-          option.legend.data = ['gain', 'loss'];
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.tooltip = this.getTooltipBySerie('Weight');
           option.calendar.range = range;
         }
-        
-        chartInstance.setOption(option);
+        console.log(option);
+        chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
+      }
+    )
+  }
 
+  getRainByApiary(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    const obs: Array<Observable<any>> = [
+      this.weatherService.getRainCurrentDailyWeather(idApiary, range),
+      this.weatherService.getRainForecastDailyWeather(idApiary, range)
+    ];
+    Observable.forkJoin(obs).map(_elt => _elt.flat()).subscribe(
+      _rain => {
+        let option = Object.assign({}, this.baseOptionExt);
+        if (rangeChange) {
+          console.error('RANGE CHANGED');
+          this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete: any) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            serieComplete.itemStyle = {
+              normal: {
+                color: '#00FE0C'
+              }
+            };
+            serieComplete.symbolSize = (val: any[]) => {
+              return val[1];
+            };
+            option.series[index] = serieComplete;
+          });
+          option.calendar.range  = range;
+        } else {
+          option.lengend = Object.assign({}, BASE_OPTIONS.legend);
+          if (this.existSeries(option.series, type.name)) {
+            option.series = new Array();
+          }
+          this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete) => {
+            option.legend.data.push(serieComplete.name);
+            serieComplete.itemStyle = {
+              normal: {
+                color: '#00FE0C'
+              }
+            };
+            serieComplete.symbolSize = (val: any[]) => {
+              return val[1];
+            };
+            option.series.push(serieComplete);
+          })
+    
+          option.visualMap = null;
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          // option.tooltip = this.getTooltipBySerie(type.name);
+          option.calendar.range = range;
+        }
+        
+        chartInstance.setOption(option, true);
+        this.baseOptionExt = option;
       }
     )
   }
@@ -284,35 +463,40 @@ export class DailyManagerService {
           option.series.push(serie);
         }
         
-        chartInstance.setOption(option);
+        chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
 
       }
     )
   }
 
-  getChartTextMax(type: Tools, idHive: string, chartInstance: any, range: Date[]) {
+  getChartTextMax(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getTempMaxExt(idHive, range).subscribe(
       _tmpMaxExt => {
         let option = Object.assign({}, this.baseOptionsInt);
-        if(this.ifRangeChanged(range)) {
+        if(rangeChange) {
+          console.error('RANGE CHANGED');
+          this.getSerieByData(_tmpMaxExt, type.name, SERIES.heatmap, (serieComplete: any) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            option.series[index] = serieComplete;
+          })
           option.calendar.range = range;
-          option.series[0].data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
         } else {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          let serie = Object.assign({}, SERIES.heatmap);
-          serie.data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
+          this.getSerieByData(_tmpMaxExt, type.name, SERIES.heatmap, (serieComplete) => {
+            option.series.push(serieComplete);
+            console.log(serieComplete);
+          })
           option.visualMap = this.getVisualMapBySerie(type.name);
           option.tooltip = this.getTooltipBySerie(type.name);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-          option.series.push(serie);
         }
         
-        chartInstance.setOption(option);
+        chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
 
       }
@@ -340,7 +524,7 @@ export class DailyManagerService {
           option.series.push(serie);
         }
         
-        chartInstance.setOption(option);
+        chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
       }
     )
@@ -366,7 +550,7 @@ export class DailyManagerService {
           option.series.push(serie);
         }
         
-        chartInstance.setOption(option);
+        chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
 
       }
@@ -393,7 +577,7 @@ export class DailyManagerService {
           option.series.push(serie);
         }
         
-        chartInstance.setOption(option);
+        chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
 
       }
@@ -421,7 +605,7 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series.push(serie);
         }
-        chartInstance.setOption(option);
+        chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
       }
     )
@@ -448,7 +632,7 @@ export class DailyManagerService {
           option.series.push(serie);
         }
         
-        chartInstance.setOption(option);
+        chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
       }
     )
@@ -553,13 +737,13 @@ export class DailyManagerService {
    */
   getTooltipBySerie(serieLabel: string): any {
     const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
-
     switch(serieLabel) {
       case 'WEATHER':
           tooltip.formatter =  (params) => {
             return params.marker  + this.unitService.getDailyDate(params.data[0]) +
-            ': <b>' + this.graphGlobal.getNumberFormat(params.data[1]) + '</br>'
-            + params.data[3]['maxHumidityDay'] + '</b>';
+            ': </br>' +
+            ' TempMax: ' +this.graphGlobal.getNumberFormat(params.data[2]) + '</br>' +
+            ' TempMin: ' +this.graphGlobal.getNumberFormat(params.data[3]);
           }
           break;
       default:
@@ -610,6 +794,45 @@ export class DailyManagerService {
     }
   }
 
+  getRenderItemFunction(data: any[]): Function {
+    return (params, api) => {
+      let cellPoint = api.coord(api.value(0));
+      let cellWidth = params.coordSys.cellWidth;
+      let cellHeight = params.coordSys.cellHeight;
+      return {
+          type: 'group',
+          children: [
+            {
+              type: 'path',
+              z2: 1000 ,
+              shape: {
+                pathData: ICONS_WEATHER[api.value(1)],
+                x: -11,
+                y: -10,
+                width: 25,
+                height: 25
+            },
+            position: [cellPoint[0], cellPoint[1]],
+          },
+          {
+            type: 'rect',
+            z2: 0,
+            shape: {
+              x: -cellWidth / 2,
+              y: -cellHeight / 2,
+              width: cellWidth,
+              height: cellHeight,
+            },
+            position: [cellPoint[0], cellPoint[1]],
+            style: {
+              fill: this.getColorCalendarByValue(api.value(0)),
+              stroke: 'black'
+            }
+          }
+        ]
+      };
+    }
+  }
   /**
    *
    *

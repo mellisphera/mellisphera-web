@@ -63,8 +63,6 @@ export class HourlyManagerService {
         next(serieTmp);
       }
     });
-
-
   }
   getChartWeight(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.recordService.getWeightByHive(idHive, range).subscribe(
@@ -292,21 +290,21 @@ export class HourlyManagerService {
     )
   }
 
-  getHourlyWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+  getTempHourlyWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     const arrayObs : Array<Observable<any>> = [
       this.weatherService.getTempCurrentHourlyWeather(idApiary, range),
       this.weatherService.getTempForecastHourlyWeather(idApiary, range)
     ];
     Observable.forkJoin(arrayObs).map(_elt => _elt.flat()).subscribe(
-      _weather => {
-        _weather = _weather.map(_elt => {
+      _tExt => {
+        _tExt = _tExt.map(_elt => {
           return {date: _elt.date, value: _elt.value.temp, sensorRef: _elt.sensorRef};
         });
-        console.log(_weather);
+        console.log(_tExt);
          let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
           console.error('RANGE CHANGED');
-          this.getSerieByData(_weather, type.name, (serieComplete: any) => {
+          this.getSerieByData(_tExt, type.name, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             option.series[index] = Object.assign({}, serieComplete);
           })
@@ -317,7 +315,7 @@ export class HourlyManagerService {
             option.series = new Array();
           }
           // this.cleanChartsInstance(chartInstance, type.name);
-          this.getSerieByData(_weather, type.name, (serieComplete: any) => {
+          this.getSerieByData(_tExt, type.name, (serieComplete: any) => {
             console.log(serieComplete);
             option.series.push(serieComplete);
           });
@@ -329,8 +327,49 @@ export class HourlyManagerService {
         this.incrementeCharComplete();
  
       }
-    )
+    );
   }
+
+  getHextHourlyWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    const arrayObs : Array<Observable<any>> = [
+      this.weatherService.getTempCurrentHourlyWeather(idApiary, range),
+      this.weatherService.getTempForecastHourlyWeather(idApiary, range)
+    ];
+    Observable.forkJoin(arrayObs).map(_elt => _elt.flat()).subscribe(
+      _hExt => {
+        _hExt = _hExt.map(_elt => {
+          return {date: _elt.date, value: _elt.value.humidity, sensorRef: _elt.sensorRef};
+        });
+        console.log(_hExt);
+         let option = Object.assign({}, this.baseOpions);
+        if (rangeChange) {
+          console.error('RANGE CHANGED');
+          this.getSerieByData(_hExt, type.name, (serieComplete: any) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            option.series[index] = Object.assign({}, serieComplete);
+          })
+          chartInstance.setOption(option, true);
+
+        } else {
+          if (this.existSeries(option.series, type.unit, idApiary)) {
+            option.series = new Array();
+          }
+          // this.cleanChartsInstance(chartInstance, type.name);
+          this.getSerieByData(_hExt, type.name, (serieComplete: any) => {
+            console.log(serieComplete);
+            option.series.push(serieComplete);
+          });
+          chartInstance.setOption(option, true);
+
+        }
+        this.baseOpions = option;
+        this.setCurrentUnite(type.unit);
+        this.incrementeCharComplete();
+ 
+      }
+    );
+  }
+
   /**
    *
    *

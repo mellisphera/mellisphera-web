@@ -61,4 +61,32 @@ export class WeatherService {
   public getTempCurrentHourlyWeather(idApiary: string, range: Date[]): Observable<CurrentHourlyWeather[]> {
     return this.httpClient.post<CurrentHourlyWeather[]>(CONFIG.URL + 'hourlyWeather/temp/apiary/' + idApiary, range);
   }
+
+
+  /**
+   *
+   *
+   * @param {string} idApiary
+   * @param {Date[]} range
+   * @returns {Observable<CurrentHourlyWeather[]>}
+   * @memberof WeatherService
+   */
+  public getRainCurrentDailyWeather(idApiary: string, range: Date[]): Observable<CurrentHourlyWeather[]> {
+    return this.httpClient.post<CurrentHourlyWeather[]>(CONFIG.URL + 'dailyWeather/rain/apiary/' + idApiary, range);
+
+  }
+
+
+  /**
+   *
+   *
+   * @param {string} idApiary
+   * @param {Date[]} range
+   * @returns {Observable<ForecastHourlyWeather[]>}
+   * @memberof WeatherService
+   */
+  public getRainForecastDailyWeather(idApiary: string, range: Date[]): Observable<ForecastHourlyWeather[]> {
+    return this.httpClient.post<ForecastHourlyWeather[]>(CONFIG.URL + 'forecastDailyWeather/rain/apiary/' + idApiary, range);
+
+  }
 }
