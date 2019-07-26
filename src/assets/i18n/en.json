@@ -124,7 +124,7 @@
         "CANCEL" : "Cancel",
         "NODATA" : "No data",
         "NOSENSORS" : "No sensors",
-        "CLICK" : "Click on a hive for more informations !",
+        "CLICK" : "Click on a hive name for more informations !",
         "MANAGE" : "Manage",
         "WARNING" : "Warning! ",
         "NAVBAR" : {
@@ -134,7 +134,8 @@
             "NAME" : "Name",
             "BROOD" : "Brood",
             "WEIGHT" : "Weight",
-            "SENSORS" : "Sensors"
+            "SENSORS" : "Sensors",
+            "APIARY" : "Apiary"
         }
     },
     "HIVES" : {
@@ -208,6 +209,9 @@
                 "READ" : "READ",
                 "NOALERTS" : "No alerts this week for"
             }
+        },
+        "ALERT" : {
+            "NOALERTS" : "No alerts for this hive !"
         }
     },
     "ALERTS" : {
@@ -290,5 +294,22 @@
         "CONFIDENCELEVEL" : "Confidence level",
         "ADDTOAPIARY" : "Add to apiary",
         "CLOSE" : "Close"
+    },
+    "SUMMARY" : {
+        "PDF" : "Download in PDF",
+        "APIARY" : "Apiary",
+        "SUMMARY" : "summary",
+        "NOALERTS" : "No apiary alerts !",
+        "FOR" : "for",
+        "DAYS" : "days",
+        "NONOTES":  "No apiary notes !",
+        "SUMMARYHIVES" : "Hives summary + alerts for",
+        "NAME" : "Name",
+        "BROOD" : "Brood",
+        "WEIGHT" : "Weight",
+        "SENSORS" : "Sensors",
+        "ALERTS" : "Alerts",
+        "NOHIVEALERTS" : "No alerts",
+        "NOHIVES" : "There are no hives for this apiary!"
     }
 }

@@ -1,0 +1,89 @@
+<div id="content" #content>
+  <!-- BUTTONS -->
+  <div id="divButton">
+    <!-- <button class="button button0" (click)="downloadPDF()">Export to PDF</button> -->
+    <input class="button button0" type="button" value="{{ 'SUMMARY.PDF' | translate}}" (click)="captureScreen()" />
+  </div>
+
+
+  <!-- TO CONVERT -->
+  <div id="page">
+    <div id="contentToConvert">
+      <br>
+      <div id="header">
+        <span id="date">{{ this.unitService.getDailyDate(this.date) }}</span>
+        <span>
+          <h3 id="title">{{ 'SUMMARY.APIARY' | translate}} {{this.rucherService.rucher.name}} : {{ 'SUMMARY.SUMMARY' | translate}}</h3>
+        </span>
+      </div>
+      <br>
+      <br>
+
+      <!-- HIVES -->
+      <div *ngIf="rucheService.ruches.length !== 0" class="panel panel-info">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a><b>{{ 'SUMMARY.SUMMARYHIVES' | translate}} <input type="number" class="tentacles" name="tentacles"
+                  [(ngModel)]="nbDaysHivesForm" min="1" max="10000"> {{ 'SUMMARY.DAYS' | translate}}</b></a>
+          </h4>
+        </div>
+        <div class="panel-collapse collapse in">
+          <div class="panel-body">
+            <b class="text-success"></b>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">{{ 'SUMMARY.NAME' | translate}}</th>
+                  <th scope="col">{{ 'SUMMARY.BROOD' | translate}}</th>
+                  <th scope="col">{{ 'SUMMARY.WEIGHT' | translate}}</th>
+                  <th scope="col">{{ 'SUMMARY.SENSORS' | translate}}</th>
+                  <th scope="col">{{ 'SUMMARY.ALERTS' | translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hoverStyle" *ngFor="let hive of rucheService.ruches; let i = index">
+                  <td>{{hive.name}}</td>
+                  <td *ngIf="this.dailyRecTh.getPourcentByHive(hive.id) != null">
+                    {{ this.dailyRecTh.getPourcentByHive(hive.id) }}</td>
+                  <td *ngIf="this.dailyRecTh.getPourcentByHive(hive.id) === null">
+                    {{ 'HIVE_DETAIL.CLICK.UNKNOWN' | translate}}</td>
+                  <td *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive.id) !== null">
+                    {{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightIncomeByHive(hive.id)) }}</td>
+                  <td *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive.id) === null">{{ 'HOME.NODATA' | translate}}
+                  </td>
+                  <td *ngIf="capteurService.getCapteursByHive(hive.id).length === 0">{{ 'HOME.NOSENSORS' | translate}}
+                  </td>
+                  <td *ngIf="capteurService.getCapteursByHive(hive.id).length !== 0">
+                    <ng-container *ngFor="let capt of capteurService.getCapteursByHive(hive.id); let j = index">
+                      <ng-container *ngIf="j === 0">
+                        {{ capt }}
+                      </ng-container>
+                      <ng-container *ngIf="j !== 0">
+                        ; {{ capt }}
+                      </ng-container>
+                    </ng-container>
+                  </td>
+                  <td>
+                    <ng-container
+                      *ngIf="alertsService.alertsByHiveByApiary.get(hive.id) !== undefined && getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm).length > 0">
+                      <ng-container
+                        *ngFor="let hiveAlert of getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm)">
+                        <img [src]="hiveAlert.picto" class="picto">
+                      </ng-container>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="alertsService.alertsByHiveByApiary.get(hive.id) === undefined || getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm).length === 0">
+                      {{ 'SUMMARY.NOHIVEALERTS' | translate}}
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="rucheService.ruches.length === 0" class="noData">
+          {{ 'SUMMARY.NOHIVES' | translate}}
+      </div>
+
+    </div>

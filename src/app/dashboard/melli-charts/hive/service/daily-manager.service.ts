@@ -840,8 +840,6 @@ getLastDayForMeanValue(observable: Observable<any>, mean: boolean, type: Tools):
               unit: this.graphGlobal.getUnitByType(type.unit)
             },
           ));
-         /*  return params.marker + templateHeaderTooltip.replace(/{D}/g, this.unitService.getDailyDate(params.data[0])) +
-          templateValue.replace(/{n}/g , serieLabel).replace(/{v}/g, this.graphGlobal.getNumberFormat(params.data[1]).toString()); */
         }
     }
     return tooltip;

@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { UserloggedService } from '../userlogged.service';
 import { LoadingService } from './service/loading.service';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { RucherService } from './service/api/rucher.service';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { MyNotifierService } from './service/my-notifier.service';
+import { MessagesService } from './service/messages.service';
 import { TranslateService } from '@ngx-translate/core';
 
 const PrimaryWhite = '#ffffff';
@@ -31,10 +32,13 @@ export class DashboardComponent implements OnInit {
   constructor(public login: UserloggedService,
     private translateService: TranslateService,
     public loadingService: LoadingService,
+    private renderer: Renderer2,
     private myNotifierService: MyNotifierService,
+    private messagesService : MessagesService,
     public rucherService: RucherService) {
     this.message = '';
     this.myNotifierService.setLang(this.login.getCountry() ? this.login.getCountry(): 'EN');
+    this.messagesService.setLang(this.login.getCountry() ? this.login.getCountry(): 'EN');
     this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
       if (this.rucherService.checkIfApiary()) {
         this.login.setWizardActive(false);
@@ -48,5 +52,16 @@ export class DashboardComponent implements OnInit {
 
   receiveMessage($event) {
     this.message = $event;
+  }
+
+  hideCRUD(event : any){
+    if(event.target.id !== 'menuCheckbox'){
+      let elt : any = document.getElementById("menuCheckbox");
+      elt.checked = false;
+    }
+    if(event.target.id !== 'menuCheckboxHome'){
+      let elt : any = document.getElementById("menuCheckboxHome");
+      elt.checked = false;
+    }
   }
 }

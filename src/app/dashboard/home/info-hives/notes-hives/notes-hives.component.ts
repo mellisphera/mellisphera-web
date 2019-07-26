@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked,HostListener } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
 import { RucherService } from '../../../service/api/rucher.service';
 import { DailyRecordsWService } from '../../../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
@@ -18,9 +18,11 @@ import { UserloggedService } from '../../../../userlogged.service';
   templateUrl: './notes-hives.component.html',
   styleUrls: ['./notes-hives.component.css']
 })
-export class NotesHivesComponent implements OnInit {
+export class NotesHivesComponent implements OnInit,AfterViewChecked {
 
   ObservationForm: FormGroup;
+  screenHeight:any;
+    screenWidth:any;
   radioObs: boolean;
   typeAjout: any;
   private newObs: Observation;
@@ -46,9 +48,31 @@ export class NotesHivesComponent implements OnInit {
     this.typeObs = false;
     this.notifier = notifyService;
     this.initForm();
+    this.getScreenSize();
   }
 
   ngOnInit() {
+  }
+
+  @HostListener('window:resize', ['$event'])
+    getScreenSize(event?) {
+          this.screenHeight = window.innerHeight;
+          this.screenWidth = window.innerWidth;
+    }
+
+  ngAfterViewChecked(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+    const heightPicture = document.getElementById('cadre').offsetHeight;
+    const heightRight = document.getElementById('graphs').offsetHeight;
+    if(this.screenWidth >1550){
+      document.getElementById('notesHives').style.height = ''+(6 + heightRight - heightPicture) + 'px';
+    }else if(this.screenWidth >990){
+      document.getElementById('notesHives').style.height = ''+((heightRight - heightPicture -30)/2) + 'px';
+    }else{
+      document.getElementById('notesHives').style.height = ''+(40) + 'vh';
+    }
+
   }
 
   initForm() {

@@ -30,7 +30,7 @@ import { NotifierService } from 'angular-notifier';
 import { stringify } from '@angular/core/src/render3/util';
 import { InfoHivesComponent } from './info-hives/info-hives.component';
 import { AlertsHiveComponent } from './info-hives/alerts-hive/alerts-hive.component';
-import { AlertsComponent } from './alerts/alerts.component';
+import { AlertsComponent } from './info-apiary/alerts/alerts.component';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 
 
@@ -157,7 +157,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.dailyRecTh.setUnitSystem(data.unitSystem);
         this.dailyRecordWservice.setUnitSystem(data.unitSystem);
       }
-    )
+    );
 
     this.initForm();
   }
@@ -194,12 +194,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   onClick(ruche: RucheInterface) {
     // active button name
     this.clickName();
-    // Desactive alerts, notes, summary buttons
-    this.eltOnClickId = document.getElementById('notes');
-    this.renderer.removeClass(this.eltOnClickId, 'active0');
-    this.eltOnClickId = document.getElementById('summary');
-    this.renderer.removeClass(this.eltOnClickId, 'active0');
-    this.eltOnClickId = document.getElementById('alert');
+    // Desactive alerts buttons
+    this.eltOnClickId = document.getElementById('infoApiaryButton');
     this.renderer.removeClass(this.eltOnClickId, 'active0');
 
     // Save the hive on dataBase
@@ -244,22 +240,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   }
 
-  OnclickAlert() {
-    this.router.navigateByUrl('dashboard/home/alerts');
-    let el = document.getElementById('scroll');
-    el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-
-  }
-
-  OnclickNotes() {
-    this.router.navigateByUrl('dashboard/home/notes');
-    let el = document.getElementById('scroll');
-    el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-
-  }
-
-  OnclickSummary() {
-    this.router.navigateByUrl('dashboard/home/states');
+  OnclickInfoApiary() {
+    this.router.navigateByUrl('dashboard/home/info-apiary');
     let el = document.getElementById('scroll');
     el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
 
@@ -451,7 +433,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Hide right click menu when you click on the picture
   hideRightClick(event) {
     this.eltOnClickClass = document.getElementsByClassName('affiche');
-    console.log(this.eltOnClickClass);
     for (let i = 0; i < this.eltOnClickClass.length; i++) {
       this.eltOnClickClass[i].classList.remove('affiche');
     }

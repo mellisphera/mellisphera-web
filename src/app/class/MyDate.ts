@@ -30,9 +30,13 @@ export class MyDate {
     static getWekitDate(dt: string): Date {
         const tmp = dt.split('-');
         const date = new Date();
-        date.setFullYear(parseInt(tmp[0], 10));
-        date.setMonth(parseInt(tmp[1], 10));
-        date.setDate(parseInt(parseInt(tmp[2][0], 10) + '' + parseInt(tmp[2][1], 10), 10));
+        date.setFullYear(parseInt(tmp[0]));
+        date.setMonth(parseInt(tmp[1])-1);
+        date.setDate(parseInt(parseInt(tmp[2][0]) + '' + parseInt(tmp[2][1])));
+        const hourly = tmp[2].split('T')[1].split(':');
+        date.setHours(parseInt(hourly[0]));
+        date.setMinutes(parseInt(hourly[1]));
+        // date.setHours()
         return date;
     }
    static convertDate(date: Date){
@@ -56,6 +60,15 @@ export class MyDate {
         let max = new Date();
         let tmp = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
         let min = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
+        let rangeCalendar = [min, MyDate.convertDate(max)];
+        return rangeCalendar;
+      }
+
+      static getRangeForCalendarAlerts(){
+        let max = new Date();
+        let min = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
+        max.setDate(max.getDate() + 7);
+        let tmp = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
         let rangeCalendar = [min, MyDate.convertDate(max)];
         return rangeCalendar;
       }

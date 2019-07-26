@@ -6,7 +6,7 @@ hr
 
 .title{
     text-align: center;
-    margin-top: 50px;
+    margin-top: 20px;
     font-size : medium;
     font: bold;
     font-weight: bold;
@@ -16,18 +16,7 @@ hr
     text-align: center;
     font-size : medium;
 }
-@media (min-width: 500px) {
-    #weight{
-        float: right;
-        width: 50%;
-        /* margin-left: 20%; */
-    }
 
-    #health{
-        float: left;
-        width: 50%;
-    }
-  }
 
 .tabRankAlert i{
     margin-right: 30px;
@@ -40,6 +29,74 @@ hr
     color: #70A8B2;
 }
 
-#graphs{
-    margin-top : 50px;
+ #general{
+     margin: 0px;
+ }
+
+    #left{
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 50%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    #notes{
+        width: 50%;
+    }
+    
+    #sensors{
+        width: 50%;
+    }
+    
+    #health{
+        margin-top : 50px;
+        height: 27vh;
+    }
+    #weight{
+        position: relative;
+        height: 20vh;
+    }
+    
+    #alerts{
+        position: relative;
+        height: 20vh;
+    }
+
+/* MEDIA WIDTH */
+@media (min-width : 990px) and (max-width : 1550px){
+    #notes,#sensors{
+        min-width: 100%;
+    }
+}
+
+@media (max-width : 990px){
+    #left{
+        position: relative;
+        top: 0px !important;
+        display: block;
+    }
+
+    #notes{
+        margin-top: 100px;
+        width: 200%;
+    }
+    
+    #sensors{
+        width: 200%;
+    }
+}
+
+/* MEDIA HEIGHT */
+@media (max-height : 1015px){
+    #weight{
+        margin-top: 30px;
+    }
+}
+
+@media (max-height : 700px){
+    #weight{
+        margin-top: 60px;
+    }
 }

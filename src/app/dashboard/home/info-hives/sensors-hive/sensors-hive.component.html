@@ -1,90 +1,52 @@
-<div class="content-page">
-    <div class="bs-example">
-        <div class="panel-group" id="accordionTwo">
-            <div class="panel panel-info ">
-                <div class="panel-heading ">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordionTwo" href="#collapseTwo">
-                            <b>{{ 'HIVE_DETAIL.CLICK.SENSORSTITLE' | translate}}
-                                {{this.rucheService.getCurrentHive().name}}</b>
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <button data-toggle="tooltip" data-html="true" title="{{ 'CAPTEUR.FORM.NEW' | translate}}"
-                            data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
-                            data-target="#newCapteurModal" class="btn btn-success">
-                            <i class="fa fa-plus fa-2x"></i>
-                        </button>
-
-                        <!-- tables ruche -->
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">{{ 'HIVES.HIVE' | translate}}
-                                        <button data-toggle="tooltip" data-html="true" (click)="sortSensors('hive');"
-                                            class="btn btn-success btn-xs">
-                                            <i class="fa fa-angle-down fa-2x"></i>
-                                        </button>
-                                    </th>
-                                    <th class="text-left" scope="col">Description
-                                        <button data-toggle="tooltip" data-html="true"
-                                            (click)="sortSensors('description');" class="btn btn-success btn-xs">
-                                            <i class="fa fa-angle-down fa-2x"></i>
-                                        </button>
-                                    </th>
-                                    <th scope="col">{{ 'CAPTEUR.REFERENCES' | translate}}
-                                        <button data-toggle="tooltip" data-html="true" (click)="sortSensors('ref');"
-                                            class="btn btn-success btn-xs">
-                                            <i class="fa fa-angle-down fa-2x"></i>
-                                        </button>
-                                    </th>
-                                    <th scope="col">Type
-                                        <button data-toggle="tooltip" data-html="true" (click)="sortSensors('type');"
-                                            class="btn btn-success btn-xs">
-                                            <i class="fa fa-angle-down fa-2x"></i>
-                                        </button>
-                                    </th>
-                                    <th class="text-right" scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <ng-container *ngFor="let capteur of ( capteurService.capteursByHive); let i = index">
-                                    <tr class="hoverStyle">
-                                        <td class=" hive-link">
-                                            {{capteur.hiveName}}</td>
-                                        <td class="text-left">{{capteur.description}}</td>
-                                        <td>{{capteur.sensorRef}}</td>
-                                        <td>{{capteur.type}}</td>
-                                        <td class="text-right">
-                                            <button data-toggle="tooltip" data-html="true"
-                                                title="{{ 'CAPTEUR.FORM.EDIT' | translate}}" data-toggle="modal"
-                                                type="button" (click)="selectCapteur(capteur, i)"
-                                                data-target="#editCapteurModal" class="btn btn-primary"
-                                                style="padding: 0;border: none; background: none;">
-                                                <i class="fa fa-edit fa-2x"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-warning"
-                                                title="{{ 'CAPTEUR.FORM.DELETE' | translate}}" mwlConfirmationPopover
-                                                popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
-                                                confirmText="{{ 'CAPTEUR.FORM.CONFIRM' | translate}}"
-                                                cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}" placement="top"
-                                                (confirm)="deleteCapteur(capteur, i)"
-                                                style="padding: 0;border: none; background: none;">
-                                                <i class="fa fa-times fa-2x"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </ng-container>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+<div id="user-group">
+    <div class="panel panel-primary">
+        <div class="panel-heading">{{ 'HIVE_DETAIL.CLICK.SENSORSTITLE' | translate}}
+            {{this.rucheService.getCurrentHive().name}} <button data-toggle="tooltip" data-html="true"
+                title="{{ 'CAPTEUR.FORM.NEW' | translate}}" data-toggle="modal"
+                style="float:right;width: 10%; padding: 0;border: none; background: none;"
+                data-target="#newCapteurModal" class="btn btn-success">
+                <i class="fa fa-plus fa-2x"></i>
+            </button></div>
+        <div class="user-sensors panel-body" id="sensorsHive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-left" scope="col">Description
+                        </th>
+                        <th scope="col">{{ 'CAPTEUR.REFERENCES' | translate}}
+                        </th>
+                        <th class="text-right" scope="col" style="width: 80px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let capteur of ( capteurService.capteursByHive); let i = index">
+                        <tr class="hoverStyle">
+                            <td class="text-left">{{capteur.description}}</td>
+                            <td>{{capteur.sensorRef}}</td>
+                            <td class="text-right">
+                                <button data-toggle="tooltip" data-html="true"
+                                    title="{{ 'CAPTEUR.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
+                                    (click)="selectCapteur(capteur, i)" data-target="#editCapteurModal"
+                                    class="btn btn-primary" style="padding: 0;border: none; background: none;">
+                                    <i class="fa fa-edit fa-2x"></i>
+                                </button>
+                                <button type="button" class="btn btn-warning"
+                                    title="{{ 'CAPTEUR.FORM.DELETE' | translate}}" mwlConfirmationPopover
+                                    popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
+                                    confirmText="{{ 'CAPTEUR.FORM.CONFIRM' | translate}}"
+                                    cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}" placement="top"
+                                    (confirm)="deleteCapteur(capteur, i)"
+                                    style="padding: 0;border: none; background: none;">
+                                    <i class="fa fa-times fa-2x"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
         </div>
     </div>
-    <br><br>
+
 </div>
 
 <!-- New capteur Modal -->

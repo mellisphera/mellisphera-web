@@ -148,7 +148,7 @@ label{
    top: 15px;
    left: 10px;
    
-   z-index: 1;
+   z-index: 2;
    
    -webkit-user-select: none;
    user-select: none;
@@ -166,7 +166,7 @@ label{
    cursor: pointer;
    
    opacity: 0; /* hide this */
-   z-index: 2; /* and place it over the hamburger */
+   z-index: 3; /* and place it over the hamburger */
    
    -webkit-touch-callout: none;
  }
@@ -185,7 +185,7 @@ label{
    background: #cdcdcd;
    border-radius: 3px;
    
-   z-index: 1;
+   z-index: 2;
    
    transform-origin: 2px 0px;
    

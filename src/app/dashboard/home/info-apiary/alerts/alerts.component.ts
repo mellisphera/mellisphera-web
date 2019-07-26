@@ -1,15 +1,15 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { AlertsService } from '../../service/api/alerts.service';
-import { RucherService } from '../../service/api/rucher.service';
-import { AlertInterface } from '../../../_model/alert';
-import { UserloggedService } from '../../../userlogged.service';
+import { AlertsService } from '../../../service/api/alerts.service';
+import { RucherService } from '../../../service/api/rucher.service';
+import { AlertInterface } from '../../../../_model/alert';
+import { UserloggedService } from '../../../../userlogged.service';
 import { NotifierService } from 'angular-notifier';
-import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
-import { MyNotifierService } from '../../service/my-notifier.service';
-import { UnitService } from '../../service/unit.service';
-import { MyDate } from '../../../class/MyDate';
+import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
+import { MyNotifierService } from '../../../service/my-notifier.service';
+import { UnitService } from '../../../service/unit.service';
+import { MyDate } from '../../../../class/MyDate';
 import { Observable } from 'rxjs';
-import { NotifList } from '../../../../constants/notify';
+import { NotifList } from '../../../../../constants/notify';
 
 @Component({
   selector: 'app-alerts',
@@ -28,7 +28,7 @@ export class AlertsComponent implements OnInit {
   private tabPos : number[][][];
   // map repertoriant le nombre d'alerts par jour
   // Sous la forme date => [Les nombres d'alertes correspondants][Le rang de la prochaine alerte a placer dans le tableau]
-  private mapDateNbAlerts : Map<number,number[]>;
+  private mapDateNbAlerts : Map<string,number[]>;
 
   constructor(private alertsService: AlertsService,
               public rucherService: RucherService,
@@ -157,16 +157,6 @@ export class AlertsComponent implements OnInit {
 
       }
     );
-
-    // Active the alert button
-    this.eltOnClickId = document.getElementById('alert');
-    this.renderer.addClass(this.eltOnClickId, 'active0');
-
-    // desactive other buttons
-    this.eltOnClickId = document.getElementById('notes');
-    this.renderer.removeClass(this.eltOnClickId, 'active0');
-    this.eltOnClickId = document.getElementById('summary');
-    this.renderer.removeClass(this.eltOnClickId, 'active0');
   }
 
   cleanSerie(): void {
@@ -182,14 +172,14 @@ export class AlertsComponent implements OnInit {
     // On regarde combien il y a d'alertes par jour pour pouvoir bien les placer
     this.alertsService.apiaryAlerts.forEach(alerts => {
       // Si il y a deja une alerte ce jour, on incrémente
-      let date = new Date(alerts.date);
-      if(this.mapDateNbAlerts.has(date.getTime())){
-        let nbAlerts = this.mapDateNbAlerts.get(date.getTime());
+      let date = MyDate.convertDate(MyDate.getWekitDate(alerts.date.toString()));
+      if(this.mapDateNbAlerts.has(date)){
+        let nbAlerts = this.mapDateNbAlerts.get(date);
         nbAlerts[0] += 1;
-        this.mapDateNbAlerts.set(date.getTime(),nbAlerts);
+        this.mapDateNbAlerts.set(date,nbAlerts);
       // Si il n'y a pas encore d'alertes ce jour
       }else{
-        this.mapDateNbAlerts.set(date.getTime(),[0,-1]);
+        this.mapDateNbAlerts.set(date,[0,-1]);
       }
       
     });
@@ -220,15 +210,15 @@ export class AlertsComponent implements OnInit {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
             let cellHeight = params.coordSys.cellHeight;
-            // Iteration of alert rang
-            let nbAlerts = this.mapDateNbAlerts.get(api.value(0));
+            // Iteration of alert rangxxxxxxxxx
+            let date = MyDate.convertDate(new Date(api.value(0)));
+            let nbAlerts = this.mapDateNbAlerts.get(date);
             // if(nbAlerts[1] < nbAlerts[0]){
             nbAlerts[1] += 1;
-            this.mapDateNbAlerts.set(api.value(0),nbAlerts);
+            this.mapDateNbAlerts.set(MyDate.convertDate(new Date(api.value(0))),nbAlerts);
             // set constants
-            let nbAlertsOfThisDay = this.mapDateNbAlerts.get(api.value(0))[0];
-            let rangAlertsOfThisDay = this.mapDateNbAlerts.get(api.value(0))[1];
-            
+            let nbAlertsOfThisDay = this.mapDateNbAlerts.get(date)[0];
+            let rangAlertsOfThisDay = this.mapDateNbAlerts.get(date)[1];
             // S'il y a moins de 3 alertes
             if(nbAlertsOfThisDay < 2){
               return {
@@ -266,12 +256,15 @@ export class AlertsComponent implements OnInit {
             }
           } 
         // }
-          catch {}
+          catch(e){
+            console.error(e);
+          }
         },
         this.option.series.push(newSerie);
       }
     });
 
+;
     this.checkChartInstance().then(status => {
       this.echartInstance.setOption(this.option,false);
     }).catch(err => {

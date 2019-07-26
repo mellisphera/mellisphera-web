@@ -7,6 +7,7 @@ import { AuthService } from '../Service/auth.service';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { Login } from '../../_model/login';
 import { SignupService } from '../Service/signup.service';
+import { MESSAGES, MessagesList } from '../../../constants/messages';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ import { SignupService } from '../Service/signup.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
-
+  messageList: any;
   formLogin: boolean;
   loginErrorMsg: boolean;
   resetPassword: boolean;
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
   myform: FormGroup;
   //loginForm: FormGroup;
   message: string;
+  navLanguage : string;
 
 
   signupForm: FormGroup;
@@ -41,6 +43,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
     private notifier: NotifierService) {
 
     this.resetPassword = false;
+    this.messageList = MessagesList;
     this.loginErrorMsg = false;
     this.formLogin = true;
     this.notif = notifier;
@@ -59,7 +62,8 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
     this.myform = new FormGroup({
       username: new FormControl(''),
       password: new FormControl('')
-    })
+    });
+    this.navLanguage = navigator.language;
   }
 
   ngAfterContentInit(): void {
@@ -121,5 +125,15 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
         this.activeReset();
       }
     );
+  }
+
+  getMessageTraduction(msg: MessagesList) : string{
+    let language : string;
+    if(this.navLanguage === 'fr'){
+      language = 'FR';
+    }else{
+      language = 'EN';
+    }
+    return(MESSAGES[language][msg]);
   }
 }

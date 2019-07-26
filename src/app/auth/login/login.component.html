@@ -7,15 +7,15 @@
                 </div>
                 <input type="email" name="email" [(ngModel)]="authService.login.email" placeholder="email" required
                     class="form-control input-lg" />
-                <input type="password" [(ngModel)]="authService.login.password" name="password" placeholder="Password"
+                <input type="password" [(ngModel)]="authService.login.password" name="password" [placeholder]="getMessageTraduction(messageList.PASSWORD)"
                     required class="form-control input-lg" />
                 <div *ngIf="authService.errLogin" class="alert alert-danger" role="alert">
-                    Access denied
+                    {{getMessageTraduction(messageList.DENIED)}}
                 </div>
-                <button type="submit" name="go" class="btn btn-lg btn-block btn-info">Login</button>
+                <button type="submit" name="go" class="btn btn-lg btn-block btn-info">{{getMessageTraduction(messageList.LOGIN)}}</button>
                 <div>
-                    <a (click)="formLogin = !formLogin" href="#">Create account</a> or <a href="#"
-                        (click)="activeReset()">reset password</a>
+                    <a (click)="formLogin = !formLogin" href="#">{{getMessageTraduction(messageList.CREATEACCOUNT)}}</a> {{getMessageTraduction(messageList.OR)}} <a href="#"
+                        (click)="activeReset()">{{getMessageTraduction(messageList.RESETPSW)}}</a>
                 </div>
             </form>
             <form *ngIf="!formLogin && !resetPassword" role="login" [formGroup]="signupForm" (ngSubmit)="signup();"
@@ -28,17 +28,17 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                             <input required formControlName="email" type="email" email class="form-control register"
-                                name="email" id="email" placeholder="Enter your Email" />
+                                name="email" id="email" [placeholder]="getMessageTraduction(messageList.ENTEREMAIL)" />
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="cols-sm-10">
-                        <div id="lengthAlert"><span>* 6 caractère min</span></div>
+                        <div id="lengthAlert"><span>* {{getMessageTraduction(messageList.SIXCARACMIN)}}</span></div>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                             <input required formControlName="password" minlength="6" type="password"
-                                class="form-control register" name="password" placeholder="Enter your Password" />
+                                class="form-control register" name="password" [placeholder]="getMessageTraduction(messageList.ENTERPSW)" />
                         </div>
                     </div>
                 </div>
@@ -47,10 +47,10 @@
                 </div>
                 <div class="form-group ">
                     <button [disabled]="fsignUp.invalid" type="submit" name="go"
-                        class="btn btn-lg btn-block btn-info">Sign up</button>
+                        class="btn btn-lg btn-block btn-info">{{getMessageTraduction(messageList.SIGNUP)}}</button>
                 </div>
                 <div>
-                    <a (click)="formLogin = !formLogin" href="#">Back</a>
+                    <a (click)="formLogin = !formLogin" href="#">{{getMessageTraduction(messageList.BACK)}}</a>
                 </div>
             </form>
             <form *ngIf="resetPassword" role="login" id="resetForm">
@@ -62,8 +62,8 @@
                 </div>
                 <div>
                     <button type="button" name="reset" (click)="sendMail()"
-                        class="btn btn-lg btn-block btn-info">Reset</button>
-                    <a (click)="activeReset()" href="#">Back</a>
+                        class="btn btn-lg btn-block btn-info">{{getMessageTraduction(messageList.RESET)}}</button>
+                    <a (click)="activeReset()" href="#">{{getMessageTraduction(messageList.BACK)}}</a>
                 </div>
             </form>
         </section>

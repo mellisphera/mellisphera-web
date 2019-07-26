@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { AlertsService } from '../../../service/api/alerts.service';
 import { RucherService } from '../../../service/api/rucher.service';
 import { AlertInterface } from '../../../../_model/alert';
@@ -34,7 +34,9 @@ export class AlertsHiveComponent implements OnInit {
   private tabPos : number[][][];
   // map repertoriant le nombre d'alerts par jour
   // Sous la forme date => [Les nombres d'alertes correspondants][Le rang de la prochaine alerte a placer dans le tableau]
-  private mapDateNbAlerts : Map<number,number[]>;
+  private mapDateNbAlerts : Map<string,number[]>;
+
+  private eltOnClickId: EventTarget;
 
   constructor(private unitService: UnitService, private graphGlobal: GraphGlobal, private dailyRecordThService: DailyRecordService,
     private alertsService: AlertsService,
@@ -42,6 +44,7 @@ export class AlertsHiveComponent implements OnInit {
     public rucheService: RucheService,
     private userService: UserloggedService,
     public notifierService: NotifierService,
+    private renderer: Renderer2,
     private myNotifer: MyNotifierService) {
     this.img = 'M581.176,290.588C581.176,130.087,451.09,0,290.588,0S0,130.087,0,290.588s130.087,290.588,290.588,290.588' +
               'c67.901,0,130.208-23.465,179.68-62.476L254.265,302.696h326.306C580.716,298.652,581.176,294.681,581.176,290.588z' +
@@ -49,6 +52,7 @@ export class AlertsHiveComponent implements OnInit {
               'S474.749,217.941,447.99,217.941z';
     this.notifier = this.notifierService;
     this.echartInstance = null;
+    this.eltOnClickId = null;
     this.mapDateNbAlerts = new Map();
     this.tabPos = [
       [
@@ -78,7 +82,6 @@ export class AlertsHiveComponent implements OnInit {
     this.option = {
       backgroundColor: 'white',
       title: {
-        top: 5,
         text: this.graphGlobal.getTitle("AlertsHive") + ' ' + this.rucheService.getCurrentHive().name,
         left: 'center',
         textStyle: {
@@ -102,12 +105,10 @@ export class AlertsHiveComponent implements OnInit {
         }
       },
       calendar: [{
-        top: 100,
         left: '15%',
-        bottom: '3%',
         height: '45%',
-        width: '70%',
-        range: MyDate.getRangeForCalendarHome(),
+        width: '77%',
+        range: MyDate.getRangeForCalendarAlerts(),
         orient: 'horizontal',
         cellSize: ['20', '20'],
         splitLine: {
@@ -154,10 +155,29 @@ export class AlertsHiveComponent implements OnInit {
     this.alertsService.getAlertsByHive(this.rucheService.getCurrentHive().id).subscribe(
       _alert => {
         this.alertsService.hiveAlerts = _alert;
-
-        this.initCalendar();
+        if(_alert.length === 0){
+          this.hideCalendar();
+          this.initCalendar();
+        }else{
+          this.showCalendar();
+          this.initCalendar();
+        }
       }
     );
+  }
+
+  hideCalendar(){
+    this.eltOnClickId = document.getElementById('graph');
+    this.renderer.addClass(this.eltOnClickId, 'hideCalendar');
+    this.eltOnClickId = document.getElementById('message');
+    this.renderer.removeClass(this.eltOnClickId, 'hideMessage');
+  }
+
+  showCalendar(){
+    this.eltOnClickId = document.getElementById('graph');
+    this.renderer.removeClass(this.eltOnClickId, 'hideCalendar');
+    this.eltOnClickId = document.getElementById('message');
+    this.renderer.addClass(this.eltOnClickId, 'hideMessage');
   }
 
   cleanSerie(): void {
@@ -170,9 +190,17 @@ export class AlertsHiveComponent implements OnInit {
       this.alertsService.getAlertsByHive(hive.id).subscribe(
         _alert => {
           this.alertsService.hiveAlerts = _alert;
+          if(_alert.length === 0){
+            this.hideCalendar();
+            this.cleanSerie();
+            this.getOption();
+            this.loadCalendar();
+          }else{
+          this.showCalendar();
           this.cleanSerie();
           this.getOption();
           this.loadCalendar();
+          }
         }
       );
     } else {
@@ -189,14 +217,14 @@ export class AlertsHiveComponent implements OnInit {
     // On regarde combien il y a d'alertes par jour pour pouvoir bien les placer
     this.alertsService.hiveAlerts.forEach(alerts => {
       // Si il y a deja une alerte ce jour, on incrémente
-      let date = new Date(alerts.date);
-      if(this.mapDateNbAlerts.has(date.getTime())){
-        let nbAlerts = this.mapDateNbAlerts.get(date.getTime());
+      let date = MyDate.convertDate(MyDate.getWekitDate(alerts.date.toString()));
+      if(this.mapDateNbAlerts.has(date)){
+        let nbAlerts = this.mapDateNbAlerts.get(date);
         nbAlerts[0] += 1;
-        this.mapDateNbAlerts.set(date.getTime(),nbAlerts);
+        this.mapDateNbAlerts.set(date,nbAlerts);
       // Si il n'y a pas encore d'alertes ce jour
       }else{
-        this.mapDateNbAlerts.set(date.getTime(),[0,-1]);
+        this.mapDateNbAlerts.set(date,[0,-1]);
       }
       
     });
@@ -228,13 +256,14 @@ export class AlertsHiveComponent implements OnInit {
             let cellWidth = params.coordSys.cellWidth;
             let cellHeight = params.coordSys.cellHeight;
             // Iteration of alert rang
-            let nbAlerts = this.mapDateNbAlerts.get(api.value(0));
+            let date = MyDate.convertDate(new Date(api.value(0)));
+            let nbAlerts = this.mapDateNbAlerts.get(date);
             // if(nbAlerts[1] < nbAlerts[0]){
             nbAlerts[1] += 1;
-            this.mapDateNbAlerts.set(api.value(0),nbAlerts);
+            this.mapDateNbAlerts.set(MyDate.convertDate(new Date(api.value(0))),nbAlerts);
             // set constants
-            let nbAlertsOfThisDay = this.mapDateNbAlerts.get(api.value(0))[0];
-            let rangAlertsOfThisDay = this.mapDateNbAlerts.get(api.value(0))[1];
+            let nbAlertsOfThisDay = this.mapDateNbAlerts.get(date)[0];
+            let rangAlertsOfThisDay = this.mapDateNbAlerts.get(date)[1];
             
             // S'il y a moins de 3 alertes
             if(nbAlertsOfThisDay < 2){

@@ -1,0 +1,54 @@
+hr
+{
+    display: inline-block;
+    width: 100%;
+}
+
+#allPage{
+    margin-left: -100%;
+    width: 200%;
+}
+
+.title{
+    text-align: center;
+    margin-top: 20px;
+    font-size : medium;
+    font: bold;
+    font-weight: bold;
+}
+
+#general{
+    margin: 0px;
+}
+
+#apiaryLeft{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 50%;
+}
+   
+
+#states{
+    position: relative;
+    width: 200%;
+    margin-left: -100%;
+}
+
+/* MEDIA WIDTH */
+
+@media (max-width : 990px){
+   #apiaryLeft{
+       position: relative;
+       top: 0px !important;
+       display: block;
+       width: 100%;
+   }
+
+   #states{
+    position: relative;
+    width: 100%;
+    margin-left: 0%;
+    }
+   
+}

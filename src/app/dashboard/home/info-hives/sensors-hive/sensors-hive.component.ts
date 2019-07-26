@@ -1,7 +1,7 @@
 import { CapteurInterface } from '../../../../_model/capteur';
 import { RucherModel } from '../../../../_model/rucher-model';
 import { RucheInterface } from '../../../../_model/ruche';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked,HostListener } from '@angular/core';
 import { CapteurService } from '../../../capteur/capteur.service';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,9 +24,11 @@ import { RucheService } from '../../../service/api/ruche.service';
   templateUrl: './sensors-hive.component.html',
   styleUrls: ['./sensors-hive.component.css']
 })
-export class SensorsHiveComponent implements OnInit, OnDestroy {
+export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   username: string;
+  screenHeight:any;
+    screenWidth:any;
 
     hiveSensorSelect: RucheInterface;
     apiarySensorSelect: RucherModel;
@@ -55,6 +57,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy {
         this.username = userService.getUser();
         this.notifier = notifierService;
         this.initForm();
+        this.getScreenSize();
     }
 
     getApiaryNameById(idApiary: string) {
@@ -71,6 +74,27 @@ export class SensorsHiveComponent implements OnInit, OnDestroy {
             this.hiveSensorSelect = ruches[0];
         })
     }
+
+    @HostListener('window:resize', ['$event'])
+    getScreenSize(event?) {
+          this.screenHeight = window.innerHeight;
+          this.screenWidth = window.innerWidth;
+    }
+
+    ngAfterViewChecked(): void {
+        //Called after every check of the component's view. Applies to components only.
+        //Add 'implements AfterViewChecked' to the class.
+        const heightPicture = document.getElementById('cadre').offsetHeight;
+        const heightRight = document.getElementById('graphs').offsetHeight;
+        if(this.screenWidth >1550){
+            document.getElementById('sensorsHive').style.height = ''+(6 + heightRight - heightPicture) + 'px';
+          }else if(this.screenWidth >990){
+            document.getElementById('sensorsHive').style.height = ''+((heightRight - heightPicture - 30)/2) + 'px';
+          }else{
+            document.getElementById('sensorsHive').style.height = ''+((heightRight - heightPicture - 30)/2) + 'px';
+          }
+    
+      }
 
     onChangeCapteur($event) {
         this.capteurService.capteur = $event.target.value;
