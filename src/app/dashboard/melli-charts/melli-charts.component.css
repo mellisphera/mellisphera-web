@@ -122,6 +122,10 @@ nav[role=admin-navigation] {
 .sub-items{
     cursor: pointer;
 }
+
+.loading{
+    cursor: wait !important;
+}
 @media screen and (max-width:1400px) {
     #apiary-group {
         position: relative;

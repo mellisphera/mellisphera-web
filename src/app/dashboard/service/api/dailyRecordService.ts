@@ -318,8 +318,10 @@ export class DailyRecordService {
      * @param idHIve 
      * @param range 
      */
-    public getTempIntMaxByHive(idHIve: string, range: Date[]): Observable<any> {
-        return this.http.post<any>(CONFIG.URL + 'dailyRecordsTH/tMax/' + idHIve, range);
+    public getTempIntMaxByHive(idHIve: string, range: Date[]): Observable<any[]> {
+        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMax/' + idHIve, range).map(_elt => _elt.map(_value => {
+            return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef};
+        }));
     }
     /**
      * 
@@ -327,7 +329,7 @@ export class DailyRecordService {
      * @param range 
      */
     public getHintByHive(idHIve: string, range: Date[]): Observable<any> {
-        return this.http.post<any>(CONFIG.URL + 'dailyRecordsTH/hInt/' + idHIve, range);
+        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/hInt/' + idHIve, range);
     }
 
     /**
@@ -335,8 +337,8 @@ export class DailyRecordService {
      * @param idHive 
      * @param range 
      */
-    public getBroodByHive(idHive: string, range: Date[]): Observable<any> {
-        return this.http.post<any>(CONFIG.URL + 'dailyRecordsTH/brood/' + idHive, range);
+    public getBroodByHive(idHive: string, range: Date[]): Observable<any[]> {
+        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/brood/' + idHive, range);
     }
 
     /**
@@ -344,8 +346,10 @@ export class DailyRecordService {
      * @param idHive 
      * @param range 
      */
-    public getTminByHive(idHive: string, range: Date[]): Observable<any> {
-        return this.http.post<any>(CONFIG.URL + 'dailyRecordsTH/tMin/' + idHive, range);
+    public getTminByHive(idHive: string, range: Date[]): Observable<any[]> {
+        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMin/' + idHive, range).map(_elt => _elt.map(_value => {
+            return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef};
+        }));
     }
 
 

@@ -515,7 +515,9 @@ export class RecordService {
    * @memberof RecordService
    */
   getWeightByHive(idHive: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/weight/' + idHive, range);
+    return this.http.post<any>(CONFIG.URL + 'records/weight/' + idHive, range).map(_elt => _elt.map(_value => {
+      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
+    }));
   }
 
   /**
@@ -527,7 +529,9 @@ export class RecordService {
    * @memberof RecordService
    */
   getTempIntByHive(idHive: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/temp_int/' + idHive, range);
+    return this.http.post<any>(CONFIG.URL + 'records/temp_int/' + idHive, range).map(_elt => _elt.map(_value => {
+      return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
+    }));
   }
 
   /**
@@ -551,7 +555,9 @@ export class RecordService {
    * @memberof RecordService
    */
   getTempExtByHive(idHive: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/temp_ext/' + idHive, range);
+    return this.http.post<any>(CONFIG.URL + 'records/temp_ext/' + idHive, range).map(_elt => _elt.map(_value => {
+      return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
+    }));
   }
 
   /**

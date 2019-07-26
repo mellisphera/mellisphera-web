@@ -1,29 +1,31 @@
-<div id="daily-int" (window:resize)="onResize($event)">
-  <div id="calendar-device" class="chart calendar"></div>
-  <div>
+<div (window:resize)="onResize($event)">
+  <div id="daily-int">
+    <div id="calendar-device" class="chart calendar"></div>
+    <div>
       <h2>Moyenne :</h2>
-      <p>Sur la période: {{ dailyManager.meanDevice }}</p>
-      <p>Dernier 7 jours: </p>
-      <p>Dernier 24 heure: </p>
+      <p>Sur la période: {{ dailyManager.meanPeriodDevice.value }} {{ dailyManager.meanPeriodDevice.unit }}</p>
+      <p>Dernier 7 jours: {{ dailyManager.meanDeviceSevenDay.value }} {{ dailyManager.meanDeviceSevenDay.unit }} </p>
+    </div>
   </div>
-</div>
-<hr/>
-<div id="daily-ext">
-  <div id="calendar-other" class="chart calendar"></div>
-  <div>
-      <h2>Moyenne :</h2>
-      <p>Sur la période: {{ dailyManager.meanOther }}</p>
-      <p>Dernier 7 jours: </p>
-      <p>Dernier 24 heure: </p>
+  <hr />
+  <div id="daily-ext">
+    <div id="calendar-other" class="chart calendar"></div>
+       <div>
+        <h2>Moyenne :</h2>
+        <p>Sur la période: {{ dailyManager.meanPeriodOther.value }} {{ dailyManager.meanPeriodOther.unit }}</p>
+        <p>Dernier 7 jours: {{ dailyManager.meanOtherSevenDay.value }} {{ dailyManager.meanOtherSevenDay.unit }}</p>
+    </div>
   </div>
-</div>
-<div id="sidebar-tools-daily" class="sidebar-wrapper">
-  <ul class="nav responsive-nav" id="device-group">
-    <li *ngFor="let type of getlabelByType('DEVICE')" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}</li>
-  </ul>
-  <hr/>
-  <ul  class="nav responsive-nav" id="other-group">
-    <li *ngFor="let type of getlabelByType('OTHER')" (click)="setType(type)" [class]="type.class" [id]="type.id">{{ type.name }}</li>
-    <li (click)="exportToCsv()">Export to csv</li>
-  </ul>
+  <div id="sidebar-tools-daily" class="sidebar-wrapper">
+    <ul class="nav responsive-nav" id="device-group">
+      <li *ngFor="let type of getlabelByType('DEVICE')" (click)="setType(type)" [class]="type.class" [id]="type.id">
+        {{ type.name }}</li>
+    </ul>
+    <hr />
+    <ul class="nav responsive-nav" id="other-group">
+      <li *ngFor="let type of getlabelByType('OTHER')" (click)="setType(type)" [class]="type.class" [id]="type.id">
+        {{ type.name }}</li>
+      <li (click)="exportToCsv()" class="item-type">Export to csv</li>
+    </ul>
+  </div>
 </div>

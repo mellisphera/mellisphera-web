@@ -6,7 +6,8 @@ import { isString } from 'util';
 @Injectable({
   providedIn: 'root'
 })
-export class UnitService {
+export class 
+UnitService {
 
   constructor() { }
 
@@ -70,11 +71,13 @@ export class UnitService {
  * @memberof UserParamsService
  */
 convertTempFromUsePref(temp: number, unit: string, round? : boolean): number {
+  let value;
   if (unit === 'IMPERIAL') {
-    return  round ? this.getValRound(temp * 9 / 5 + 32): temp;
+    value = round ? this.getValRound(temp * 9 / 5 + 32): temp;
   } else {
-    return   round ? this.getValRound(temp): temp;
+    value =  round ? this.getValRound(temp): temp;
   }
+  return value;
 }
 
   /**
@@ -106,11 +109,23 @@ convertTempFromUsePref(temp: number, unit: string, round? : boolean): number {
    * @memberof UserParamsService
    */
   convertWeightFromuserPref(weight: number, unit: string, round?: boolean): number {
+    let value;
     if (unit === 'IMPERIAL') {
-      return round? this.getValRound(weight * 2.2046): weight;
+      value = round? this.getValRound(weight * 2.2046): weight * 2.046;
     } else {
-      return round? this.getValRound(weight): weight;
+      value = round? this.getValRound(weight): weight;
     }
+    return value
+  }
+
+  convertMilimetreToPouce(rain: number, unit: string, round?: boolean): number {
+    let value;
+    if (unit === 'IMPERIAL') {
+      value = rain / 25.4;
+    } else {
+      value = rain;
+    }
+    return value
   }
 
   /**

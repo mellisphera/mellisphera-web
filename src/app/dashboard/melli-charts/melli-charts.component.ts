@@ -15,6 +15,10 @@ import { DataRange } from '../apiary/ruche-rucher/ruche-detail/service/Record/da
 import { Router } from '@angular/router';
 import { MelliChartsHiveService } from './service/melli-charts-hive.service';
 import { HiveComponent } from './hive/hive.component';
+import { DailyRecordsWService } from '../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
+import { DailyRecordService } from '../service/api/dailyRecordService';
+import { DailyStockHoneyService } from '../apiary/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
+import { WeatherService } from '../service/api/weather.service';
 
 const PREFIX_PATH = '/dashboard/melli-charts/';
 @Component({
@@ -35,10 +39,14 @@ export class MelliChartsComponent implements OnInit {
     public rucherService: RucherService,
     private userService: UserloggedService,
     private router: Router,
+    private dailyRecordThService: DailyRecordService,
+    private dailyRecordWservice: DailyRecordsWService,
+    private dailyStockHoneyService: DailyStockHoneyService,
     public melliChartDate: MelliChartsDateService,
     public melliChartHive: MelliChartsHiveService,
     public recordService: RecordService,
     private adminService: AdminService,
+    private weatherService: WeatherService,
     private tokenService: AtokenStorageService,
     private userConfig: UserParamsService) {
     this.btnNav = [
@@ -53,6 +61,11 @@ export class MelliChartsComponent implements OnInit {
     this.userConfig.getSubject().subscribe(
       data => {
         this.recordService.setUnitSystem(data.unitSystem);
+        this.recordService.setUnitSystem(data.unitSystem);
+        this.dailyRecordThService.setUnitSystem(data.unitSystem);
+        this.dailyRecordWservice.setUnitSystem(data.unitSystem);
+        this.dailyStockHoneyService.setUnitSystem(data.unitSystem);
+        this.weatherService.setUnitSystem(data.unitSystem);
       }
     )
     if (!this.rucherService.rucherSubject.closed) {
@@ -136,12 +149,12 @@ export class MelliChartsComponent implements OnInit {
     return this.melliChartDate.ranges.filter(elt => elt.type === type || elt.type === type + 'S');
   }
 
-   setDateFromInput(): void {
-     let start = this.melliChartDate.start;
-     let end = this.melliChartDate.end;
-     this.melliChartDate.setRangeForRequest([start, end]);
-     this.hiveComponent.setRangeChart();
-   }
+  setDateFromInput(): void {
+    let start = this.melliChartDate.start;
+    let end = this.melliChartDate.end;
+    this.melliChartDate.setRangeForRequest([start, end]);
+    this.hiveComponent.setRangeChart();
+  }
 
 
   navToPage(path: string) {
@@ -150,19 +163,22 @@ export class MelliChartsComponent implements OnInit {
 
 
   selectHive(hive: RucheInterface, event: MouseEvent) {
-     this.melliChartHive.setHiveSelect(hive);
-     this.nextByRoute();
+    console.log(this.hiveComponent.hourlyComponent.chartLoading);
+    if (!this.hiveComponent.hourlyComponent.chartLoading) {
+      this.melliChartHive.setHiveSelect(hive);
+      this.nextByRoute();
+    }
   }
 
 
-   nextByRoute() {
-     console.log(this.router.url);
-      switch (this.router.url) {
-       case PREFIX_PATH + 'hive':
-         this.hiveComponent.loadDataFromHive();
-       break;
-     }
-   }
+  nextByRoute() {
+    console.log(this.router.url);
+    switch (this.router.url) {
+      case PREFIX_PATH + 'hive':
+        this.hiveComponent.loadDataFromHive();
+        break;
+    }
+  }
   /**
    *
    *
@@ -205,11 +221,16 @@ export class MelliChartsComponent implements OnInit {
     try {
       if (this.melliChartHive.getHiveSelect().idApiary === idApiary) {
         return 'apiary-active';
-     } else {
-       return 'not-active';
-     }
-    } catch(TypeError) {
-    } 
+      } else {
+        return 'not-active';
+      }
+    } catch (TypeError) {
+    }
+  }
+
+
+  checkLoadindingIsComplete(): string {
+    return this.hiveComponent.hourlyComponent.chartLoading ? 'loading' : 'complete';
   }
 
 }

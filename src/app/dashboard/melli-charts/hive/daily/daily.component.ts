@@ -35,17 +35,17 @@ export class DailyComponent implements OnInit, AfterViewInit {
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
     this.typeData = [
-      { name: 'WINCOME', id: 'WINCOME', origin: 'DEVICE', class: 'item-type active', icons: '' },
-      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'WEATHER', id: 'WHEATHER', origin: 'OTHER', class: 'item-type active', icons: '' },
-      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'HRIN', id: 'HRIN', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'BROOD', id: 'BROOD', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type active', icons: '' },
+      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: '' },
+      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: '' },
+      { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: '' },
       { name: 'ASTRO', id: 'ASTRO', origin: 'OTHER', class: 'item-type', icons: ''},
-      { name: 'RAIN', id: 'RAIN', origin: 'OTHER', class: 'item-type', icons: ''}
+      { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: ''}
     ];
     this.optionCsv = {
       fieldSeparator: ',',

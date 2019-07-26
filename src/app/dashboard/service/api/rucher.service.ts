@@ -134,7 +134,9 @@ export class RucherService {
             (apiary) => {
                 this.ruchers = apiary.flat().filter(apiary => apiary !== null && apiary.idUsername === this.user.getIdUserLoged());
                 this.sharingApiary = apiary.flat().filter(apiary => apiary.idUsername !== this.user.getIdUserLoged());
-                this.allApiaryAccount = apiary.flat();
+                this.allApiaryAccount = apiary.flat().sort((a, b) => {
+                    return a.name.toLowerCase() < b.name.toLowerCase()? 1: -1;
+                });
                 this.saveSharingApiary();
                 this.rucherSubject.next(this.ruchers);
             },

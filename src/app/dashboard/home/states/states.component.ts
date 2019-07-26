@@ -40,10 +40,10 @@ export class StatesComponent implements OnInit {
   constructor(private alertsService: AlertsService,
     public rucherService: RucherService,
     private userService: UserloggedService,
-    public notifierService: NotifierService,
+    public notifierService: NotifierService, //https://powerspace.tech
     private renderer: Renderer2,
     public login: UserloggedService,
-    public graphGlobal : GraphGlobal,
+    public graphGlobal : GraphGlobal, //https://powerspace.tech
     public unitService : UnitService,
     public observationService : ObservationService,
     public rucheService: RucheService,

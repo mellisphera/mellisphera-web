@@ -20,7 +20,7 @@ export class MyDate {
     }
 
     /**
-     *
+     *getWekitDate
      *
      * @static
      * @param {string} dt

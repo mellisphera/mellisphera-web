@@ -41,7 +41,7 @@ export class DailyRecordsWService {
   timeLine: any[];
   public rangeDailyRecord: Date;
 
-  constructor(private http: HttpClient, private unitService: UnitService,  private graphGlobal: GraphGlobal) {
+  constructor(private http: HttpClient, private unitService: UnitService, private graphGlobal: GraphGlobal) {
     this.dailyRecArray = [];
     this.arrayTempExt = [];
     this.weightIncome = [];
@@ -77,7 +77,7 @@ export class DailyRecordsWService {
           tooltip: {
             formatter: (params) => {
               return params.marker +
-                 this.unitService.getDailyDate(params.data[0]) + '<br/>' + this.unitService.getValRound(params.data[1]) + (this.unitSystem === 'METRIC' ? '°C' : '°F');
+                this.unitService.getDailyDate(params.data[0]) + '<br/>' + this.unitService.getValRound(params.data[1]) + (this.unitSystem === 'METRIC' ? '°C' : '°F');
             }
           },
           title: {
@@ -156,8 +156,10 @@ export class DailyRecordsWService {
     });
 
   }
+
   setUnitSystem(unit: string): void {
     this.unitSystem = unit;
+    console.log(this.unitSystem);
   }
 
   /* FOR HIVE CLICK */
@@ -190,11 +192,16 @@ export class DailyRecordsWService {
   }
 
   /* FOR MELLI_CHARTS */
-  getDailyRecordsWbyHiveForMelliCharts(idHive: string, range: Date[]): Observable<any>{
+  getDailyRecordsWbyHiveForMelliCharts(idHive: string, range: Date[]): Observable<any> {
     return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsW/hive/between/' + idHive, range).map(dailyW => {
+      console.log(dailyW);
       return {
-        weightIncomeHight: dailyW.filter(_filter => _filter.value >= 0),
-        weightIncomeLow: dailyW.filter(_filter => _filter.value < 0)
+        weightIncomeHight: dailyW.filter(_filter => _filter.value >= 0).map(_elt => {
+          return { date: _elt.date, value: this.unitService.convertWeightFromuserPref(_elt.value, this.unitSystem), sensorRef: _elt.sensorRef };
+        }),
+        weightIncomeLow: dailyW.filter(_filter => _filter.value < 0).map(_elt => {
+          return { date: _elt.date, value: this.unitService.convertWeightFromuserPref(_elt.value, this.unitSystem), sensorRef: _elt.sensorRef };
+        })
       };
     })
   }
@@ -283,21 +290,23 @@ export class DailyRecordsWService {
    * @param idHive 
    * @param range 
    */
-  getWeightByHive(idHive: string, range: Date[]): Observable<any>{
-    return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightMax/' + idHive, range);
+  getWeightByHive(idHive: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightMax/' + idHive, range).map(_elt => _elt.map(_value => {
+      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
+    }));;
 
   }
-    /**
-     *
-     * @public
-     * @param {string} idApiary
-     * @memberof DailyRecordsWService
-     */
-    public nextDay(idApiary: string): void {
-      this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() + 1);
-      this.rangeDailyRecord.setHours(2);
-      this.rangeDailyRecord.setMinutes(0);
-      this.getDailyWeightIncomeByApiary(idApiary);
+  /**
+   *
+   * @public
+   * @param {string} idApiary
+   * @memberof DailyRecordsWService
+   */
+  public nextDay(idApiary: string): void {
+    this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() + 1);
+    this.rangeDailyRecord.setHours(2);
+    this.rangeDailyRecord.setMinutes(0);
+    this.getDailyWeightIncomeByApiary(idApiary);
   }
   /**
    *
@@ -306,17 +315,17 @@ export class DailyRecordsWService {
    * @memberof DailyRecordsWService
    */
   public previousDay(idApiary: string): void {
-      this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() - 1);
-      this.rangeDailyRecord.setHours(2);
-      this.rangeDailyRecord.setMinutes(0);
-      this.getDailyWeightIncomeByApiary(idApiary);
+    this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() - 1);
+    this.rangeDailyRecord.setHours(2);
+    this.rangeDailyRecord.setMinutes(0);
+    this.getDailyWeightIncomeByApiary(idApiary);
   }
 
   public getWeightIncomeByHive(idHive: string): any {
     const selectHive = this.dailyWeightRecords.filter(elt => elt.idHive === idHive)[0];
-    if (this.unitSystem === 'METRIC'){
+    if (this.unitSystem === 'METRIC') {
       return selectHive !== undefined ? selectHive.weight_income_gain + ' kg' : null;
-    }else{
+    } else {
       return selectHive !== undefined ? selectHive.weight_income_gain + ' lbs' : null;
     }
 
@@ -324,23 +333,23 @@ export class DailyRecordsWService {
 
   public getDailyWeightIncomeByApiary(idApiary: string): void {
     this.dailyWeightRecords = [];
-    var tabDate : Date [];
-    var previousDay : Date;
+    var tabDate: Date[];
+    var previousDay: Date;
     previousDay = new Date();
     previousDay.setDate(this.rangeDailyRecord.getDate() - 1);
     previousDay.setHours(2);
     previousDay.setMinutes(0);
-    tabDate = [previousDay,this.rangeDailyRecord];
+    tabDate = [previousDay, this.rangeDailyRecord];
     console.log(tabDate);
     this.http.post<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/apiary/' + idApiary, tabDate).subscribe(
-        (data) => {
-            if (data[0] != null) {
-                this.dailyWeightRecords = data.flat();
-            }
-        },
-        (err) => {
-            console.log(err);
+      (data) => {
+        if (data[0] != null) {
+          this.dailyWeightRecords = data.flat();
         }
+      },
+      (err) => {
+        console.log(err);
+      }
     );
   }
 
@@ -353,7 +362,9 @@ export class DailyRecordsWService {
    * @memberof DailyRecordsWService
    */
   public getTempMaxExt(idHIve: string, range: Date[]): Observable<any> {
-    return this.http.post(CONFIG.URL + 'dailyRecordsW/tMax/' + idHIve, range);
+    return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/tMax/' + idHIve, range).map(_elt => _elt.map(_value => {
+      return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
+    }));
   }
 
   /**
@@ -365,7 +376,9 @@ export class DailyRecordsWService {
    * @memberof DailyRecordsWService
    */
   public getTempMinExt(idHIve: string, range: Date[]): Observable<any> {
-    return this.http.post(CONFIG.URL + 'dailyRecordsW/tMin/' + idHIve, range);
+    return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/tMin/' + idHIve, range).map(_elt => _elt.map(_value => {
+      return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
+    }));
   }
 
 }

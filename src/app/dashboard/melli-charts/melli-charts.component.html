@@ -1,78 +1,80 @@
-<div class="content-page">
-    <nav class="navbar navbar-default" role="admin-navigation">
-      <div class="navbar-header">
-      </div>
-      <ul class="nav navbar-nav">
-        <li *ngFor="let btn of btnNav"><button type="button" [id]="btn" (click)="navToPage(btn.path)"
-            class="btn btn-success">{{ btn.name }}</button></li>
-      </ul>
-      <ul class="nav nav-date navbar-nav navbar-right">
-          <li><button type="button" class="btn btn-info date-arrow"><i class="fa fa-arrow-circle-left" id="previous-date"></i></button></li>
-        <li id="dropdown">        
-          <div class="dropdown">
-            <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
-                class="fa fa-calendar"></i>{{ melliChartDate.start | myDate }} <span id="arrow">&#8680;</span>
-              {{ melliChartDate.end | myDate }}
-              <span class="caret"></span></button>
-            <div class="dropdown-menu dropdown-menu-right">
-              <div id="input-date">
-                <div class="form-group">
-                  <label>Start : </label>
-                  <input type="date" [ngModel]="getStartDate()" (ngModelChange)="melliChartDate.start = $event" class="form-control" />
-                </div>
-                <div class="form-group">
-                  <label>End : </label>
-                  <input type="date" [ngModel]="getEndDate()" (ngModelChange)="melliChartDate.end = $event" class="form-control" />
-                </div>
-                <button type="button" (click)="setDateFromInput()" class="btn btn-large btn-block btn-primary">Apply</button>
+<div [class]="'content-page ' + checkLoadindingIsComplete()">
+  <nav class="navbar navbar-default" role="admin-navigation">
+    <div class="navbar-header">
+    </div>
+    <ul class="nav navbar-nav">
+      <li *ngFor="let btn of btnNav"><button type="button" [id]="btn" (click)="navToPage(btn.path)"
+          class="btn btn-success">{{ btn.name }}</button></li>
+    </ul>
+    <ul class="nav nav-date navbar-nav navbar-right">
+      <li><button type="button" class="btn btn-info date-arrow"><i class="fa fa-arrow-circle-left"
+            id="previous-date"></i></button></li>
+      <li id="dropdown">
+        <div class="dropdown">
+          <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
+              class="fa fa-calendar"></i>{{ melliChartDate.start | myDate }} <span id="arrow">&#8680;</span>
+            {{ melliChartDate.end | myDate }}
+            <span class="caret"></span></button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div id="input-date">
+              <div class="form-group">
+                <label>Start : </label>
+                <input type="date" [ngModel]="getStartDate()" (ngModelChange)="melliChartDate.start = $event"
+                  class="form-control" />
               </div>
-              <div id="dt-scale">
-                <ul>
-                  <li class="time" *ngFor="let dt of getRangeByType('HOUR')" (click)="setRangeSelect(dt)">
-                    {{ dt.scale }} {{ dt.type | lowercase }}</li>
-                </ul>
-                <ul>
-                  <li class="time" *ngFor="let dt of getRangeByType('DAY')" (click)="setRangeSelect(dt)">
-                    {{ dt.scale }} {{ dt.type | lowercase }}</li>
-                </ul>
-                <ul>
-                  <li class="time" *ngFor="let dt of getRangeByType('MONTH')" (click)="setRangeSelect(dt)">
-                    {{ dt.scale }} {{ dt.type | lowercase }}</li>
-                </ul>
-                <ul>
-                  <li class="time" *ngFor="let dt of getRangeByType('YEAR')" (click)="setRangeSelect(dt)">
-                    {{ dt.scale }} {{ dt.type | lowercase }}</li>
-                </ul>
+              <div class="form-group">
+                <label>End : </label>
+                <input type="date" [ngModel]="getEndDate()" (ngModelChange)="melliChartDate.end = $event"
+                  class="form-control" />
               </div>
+              <button type="button" (click)="setDateFromInput()"
+                class="btn btn-large btn-block btn-primary">Apply</button>
+            </div>
+            <div id="dt-scale">
+              <ul>
+                <li class="time" *ngFor="let dt of getRangeByType('HOUR')" (click)="setRangeSelect(dt)">
+                  {{ dt.scale }} {{ dt.type | lowercase }}</li>
+              </ul>
+              <ul>
+                <li class="time" *ngFor="let dt of getRangeByType('DAY')" (click)="setRangeSelect(dt)">
+                  {{ dt.scale }} {{ dt.type | lowercase }}</li>
+              </ul>
+              <ul>
+                <li class="time" *ngFor="let dt of getRangeByType('MONTH')" (click)="setRangeSelect(dt)">
+                  {{ dt.scale }} {{ dt.type | lowercase }}</li>
+              </ul>
+              <ul>
+                <li class="time" *ngFor="let dt of getRangeByType('YEAR')" (click)="setRangeSelect(dt)">
+                  {{ dt.scale }} {{ dt.type | lowercase }}</li>
+              </ul>
             </div>
           </div>
-        </li>
-        <li><button type="button" class="btn btn-info date-arrow"><i id="next-date" class="fa fa-arrow-circle-right"></i></button></li>
-  
-      </ul>
-  
-    </nav>
-    <div class="row nopadding">
-        <div id="apiary-group">
-          <div id="main-menu" class="list-group">
-            <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
-              <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher.id)" data-toggle="collapse" data-parent="#main-menu"><span
-                  class="puce-apiary"></span>{{ rucher.name }}<span class="caret"></span></a>
-                  <div class="collapse list-group-level1" [id]="i">
-                      <a [class]="'list-group-item sub-items '"
-                          *ngFor="let ruche of getHiveByApiary(rucher.id); let i = index"
-                          (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i
-                              class="circle"
-                              [style.background-color]="getColor(ruche)"></i><span
-                              class="puce-hive"></span>{{ ruche.name }}</a>
-                  </div>
-            </ng-container>
+        </div>
+      </li>
+      <li><button type="button" class="btn btn-info date-arrow"><i id="next-date"
+            class="fa fa-arrow-circle-right"></i></button></li>
+
+    </ul>
+
+  </nav>
+  <div class="row nopadding">
+    <div id="apiary-group">
+      <div id="main-menu" class="list-group">
+        <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
+          <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher.id)" data-toggle="collapse"
+            data-parent="#main-menu"><span class="puce-apiary"></span>{{ rucher.name }}<span class="caret"></span></a>
+          <div class="collapse list-group-level1" [id]="i">
+            <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()" *ngFor="let ruche of getHiveByApiary(rucher.id); let i = index"
+              (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i class="circle"
+                [style.background-color]="getColor(ruche)"></i><span class="puce-hive"></span>{{ ruche.name }}</a>
           </div>
+        </ng-container>
       </div>
-  
-      <div id="content">
-        <router-outlet (activate)="onActivate($event)"></router-outlet>
-      </div>
-  
     </div>
+
+    <div id="content">
+      <router-outlet (activate)="onActivate($event)"></router-outlet>
+    </div>
+
   </div>
+</div>

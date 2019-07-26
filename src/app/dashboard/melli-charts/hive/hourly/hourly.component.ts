@@ -23,8 +23,9 @@ export class HourlyComponent implements OnInit {
 
   private typeData: Tools[];
   private currentTypeHourly: Tools[];
+  public chartLoading: boolean;
   constructor(
-    public hourlyManager: HourlyManagerService,
+    private hourlyManager: HourlyManagerService,
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
     this.currentTypeHourly = [];
@@ -39,6 +40,7 @@ export class HourlyComponent implements OnInit {
       { name: 'HWEATHER', id: 'HWEATHER', unit: 'P', origin: 'OTHER', class: 'item-type' }
     ];
     this.currentTypeHourly.push(this.typeData[0]);
+    this.chartLoading = false;
 
   }
 
@@ -65,7 +67,9 @@ export class HourlyComponent implements OnInit {
    * @memberof HourlyComponent
    */
   loadHourlyData(newHive: boolean, newType: string, rangeChange: boolean ): void {
+    this.chartLoading = true;
     console.log(rangeChange);
+    this.melliHive.getHourlyChartInstance().showLoading();
     this.hourlyManager.setNbChartSelected((newType !== '' )? 1: this.currentTypeHourly.length);
     this.currentTypeHourly.forEach(_type => {
       switch (_type.name) {
@@ -134,10 +138,9 @@ export class HourlyComponent implements OnInit {
       console.error('COMPLETE');
       console.log(this.hourlyManager.baseOpions);
       console.log(this.melliDate.getRangeForReqest());
-      if (rangeChange) {
-        this.hourlyManager.setNewRange(this.melliDate.getRangeForReqest());
-      }
+      this.melliHive.getHourlyChartInstance().hideLoading();
       this.hourlyManager.resetCountSubject();
+      this.chartLoading = false;
     })
   }
 

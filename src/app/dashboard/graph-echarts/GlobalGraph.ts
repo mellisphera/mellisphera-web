@@ -27,6 +27,12 @@ export class GraphGlobal {
         max: number,
         unitT: string,
     };
+    public rain: {
+        name: string,
+        min: number,
+        max: number,
+        unitT: string,
+    }
 
     public titresFR: Array<any>;
     public titresEN: Array<any>;
@@ -50,6 +56,12 @@ export class GraphGlobal {
             min: null,
             max: 0,
             unitT: '%',
+        };
+        this.rain = {
+            name: '',
+            min: null,
+            max: 0,
+            unitT: '%',
         }
         if (this.userConfig.getUserPref().unitSystem === 'IMPERIAL') { // US
             this.setImperial();
@@ -60,36 +72,36 @@ export class GraphGlobal {
         //Table of titles : 
         //FR
         this.titresFR = [
-            {'graph' : 'reserveMiel', 'titre' : 'Stock de miel'},
-            {'graph' : 'DailyWeightIncomes', 'titre' : 'Poids journaliers'},
-            {'graph' : 'BroodDynamics', 'titre' : 'Dynamique du couvain'},
-            {'graph' : 'InternalRelativeHumidity', 'titre' : 'Humidité interne relative (max)'},
-            {'graph' : 'InternalTemperature', 'titre' : 'Température interne'},
-            {'graph' : 'ExternalTemperature', 'titre' : 'Température externe'},
-            {'graph' : 'WeightTemperature', 'titre' : 'Poids & Température'},
-            {'graph' : 'Humidity', 'titre' : 'Humidité (%)'},
-            {'graph' : 'loss', 'titre' : 'perte'},
-            {'graph' : 'Weight', 'titre' : 'Poids'},
-            {'graph' : 'AlertsHive', 'titre' : 'Calendrier des alertes de la ruche'},
-            {'graph' : 'AlertsApiary', 'titre' : 'Calendrier des alertes du rucher'},
-            {'graph' : 'Blooming', 'titre' : 'Calendrier de floraison du rucher'}
+            { 'graph': 'reserveMiel', 'titre': 'Stock de miel' },
+            { 'graph': 'DailyWeightIncomes', 'titre': 'Poids journaliers' },
+            { 'graph': 'BroodDynamics', 'titre': 'Dynamique du couvain' },
+            { 'graph': 'InternalRelativeHumidity', 'titre': 'Humidité interne relative (max)' },
+            { 'graph': 'InternalTemperature', 'titre': 'Température interne' },
+            { 'graph': 'ExternalTemperature', 'titre': 'Température externe' },
+            { 'graph': 'WeightTemperature', 'titre': 'Poids & Température' },
+            { 'graph': 'Humidity', 'titre': 'Humidité (%)' },
+            { 'graph': 'loss', 'titre': 'perte' },
+            { 'graph': 'Weight', 'titre': 'Poids' },
+            { 'graph': 'AlertsHive', 'titre': 'Calendrier des alertes de la ruche' },
+            { 'graph': 'AlertsApiary', 'titre': 'Calendrier des alertes du rucher' },
+            { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' }
         ];
 
         // EN
         this.titresEN = [
-            {'graph' : 'reserveMiel', 'titre' : 'Honey Stock'},
-            {'graph' : 'DailyWeightIncomes', 'titre' : 'Daily weight incomes'},
-            {'graph' : 'BroodDynamics', 'titre' : 'Brood Dynamics'},
-            {'graph' : 'InternalRelativeHumidity', 'titre' : 'Internal Relative Humidity (max)'},
-            {'graph' : 'InternalTemperature', 'titre' : 'Internal Temperature'},
-            {'graph' : 'ExternalTemperature', 'titre' : 'External Temperature'},
-            {'graph' : 'WeightTemperature', 'titre' : 'Weight & Temperature'},
-            {'graph' : 'Humidity', 'titre' : 'Humidity (%)'},
-            {'graph' : 'loss', 'titre' : 'loss'},
-            {'graph' : 'Weight', 'titre' : 'Weight'},
-            {'graph' : 'AlertsHive', 'titre' : 'Alerts calendar for the hive'},
-            {'graph' : 'AlertsApiary', 'titre' : 'Alerts calendar for the apiary'},
-            {'graph' : 'Blooming', 'titre' : 'Apiary Blooming calendar'}
+            { 'graph': 'reserveMiel', 'titre': 'Honey Stock' },
+            { 'graph': 'DailyWeightIncomes', 'titre': 'Daily weight incomes' },
+            { 'graph': 'BroodDynamics', 'titre': 'Brood Dynamics' },
+            { 'graph': 'InternalRelativeHumidity', 'titre': 'Internal Relative Humidity (max)' },
+            { 'graph': 'InternalTemperature', 'titre': 'Internal Temperature' },
+            { 'graph': 'ExternalTemperature', 'titre': 'External Temperature' },
+            { 'graph': 'WeightTemperature', 'titre': 'Weight & Temperature' },
+            { 'graph': 'Humidity', 'titre': 'Humidity (%)' },
+            { 'graph': 'loss', 'titre': 'loss' },
+            { 'graph': 'Weight', 'titre': 'Weight' },
+            { 'graph': 'AlertsHive', 'titre': 'Alerts calendar for the hive' },
+            { 'graph': 'AlertsApiary', 'titre': 'Alerts calendar for the apiary' },
+            { 'graph': 'Blooming', 'titre': 'Apiary Blooming calendar' }
         ];
     }
 
@@ -99,12 +111,15 @@ export class GraphGlobal {
         if (this.userService.getJwtReponse().country === "FR") {
             this.weight.name = 'Poids lbs';
             this.humidity.name = 'HUmidité %';
+            this.rain.name = 'Pluie';
             // EN
         } else {
             this.weight.name = 'Weight lbs';
             this.humidity.name = 'Humidity %'
+            this.rain.name = 'Rain'
         }
         this.humidity.min = 0;
+        this.rain.unitT = '″';
         this.humidity.max = 100;
         this.weight.min = 40;
         this.weight.max = null;
@@ -129,14 +144,18 @@ export class GraphGlobal {
         if (this.userService.getJwtReponse().country === "FR") {
             this.weight.name = 'Poids Kg';
             this.humidity.name = 'HUmidité %';
+            this.rain.name = 'Pluie';
 
             // EN
         } else {
             this.weight.name = 'Weight Kg';
             this.humidity.name = 'Humidity %'
+            this.rain.name = 'Rain'
+
 
         }
         this.humidity.name = 'Humidity %'
+        this.rain.unitT = 'mm   ';
         this.humidity.min = 0;
         this.humidity.max = 100;
         this.weight.min = 0;
@@ -274,6 +293,34 @@ export class GraphGlobal {
             return this.weight.unitW;
         } else if (/Hum/g.test(serie)) {
             return this.humidity.unitT;
+        }
+    }
+
+
+    /**
+     *
+     *
+     * @param {string} unitType
+     * @returns
+     * @memberof GraphGlobal
+     * @description For MelliCharts
+     */
+    getUnitByType(unitType: string) {
+        switch (unitType) {
+            case 'T':
+                return this.temp.unitT;
+                break;
+            case 'W':
+                return this.weight.unitW;
+                break;
+            case 'P':
+                return this.humidity.unitT;                
+                break
+            case 'MM':
+                return this.rain.unitT;
+                break;
+            default:
+                break;
         }
     }
 }
