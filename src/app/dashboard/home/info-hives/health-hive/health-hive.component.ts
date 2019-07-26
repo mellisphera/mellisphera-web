@@ -14,7 +14,7 @@ export class HealthHiveComponent {
 
   option: any;
 
-  constructor(private unitService: UnitService, private graphGlobal: GraphGlobal, private dailyRecordThService: DailyRecordService) {
+  constructor(private unitService: UnitService, private graphGlobal: GraphGlobal, public dailyRecordThService: DailyRecordService) {
       this.option = {
           backgroundColor: 'white',
           title: {

@@ -87,7 +87,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private userConfig: UserParamsService,
     public dailyStockHoneyService: DailyStockHoneyService,
     private renderer: Renderer2,
-    private alertsService: AlertsService) {
+    public alertsService: AlertsService) {
 
     this.notify = notifyService;
     this.eltOnClickClass = null;

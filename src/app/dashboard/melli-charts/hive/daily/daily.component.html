@@ -25,7 +25,7 @@
     <ul class="nav responsive-nav" id="other-group">
       <li *ngFor="let type of getlabelByType('OTHER')" (click)="setType(type)" [class]="type.class" [id]="type.id">
         {{ type.name }}</li>
-      <li (click)="exportToCsv()" class="item-type">Export to csv</li>
+      <li (click)="exportToCsv('OTHER')" class="item-type">Export to csv</li>
     </ul>
   </div>
 </div>

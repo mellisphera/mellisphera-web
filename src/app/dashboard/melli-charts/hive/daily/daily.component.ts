@@ -31,7 +31,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
   private optionCsv: Object;
   private typeData: Tools[];
   constructor(private renderer: Renderer2,
-    private dailyManager: DailyManagerService,
+    public dailyManager: DailyManagerService,
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
     this.typeData = [

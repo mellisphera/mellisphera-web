@@ -40,7 +40,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     private dailyStockHoneyService: DailyStockHoneyService,
     private recordService: RecordService,
     public observationService: ObservationService,
-    private rucheService: RucheService,
+    public rucheService: RucheService,
     private notifyService: NotifierService,
     public userParamService: UserParamsService,
     private userService: UserloggedService
