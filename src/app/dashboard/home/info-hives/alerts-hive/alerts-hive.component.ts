@@ -34,7 +34,7 @@ export class AlertsHiveComponent implements OnInit {
   private tabPos : number[][][];
   // map repertoriant le nombre d'alerts par jour
   // Sous la forme date => [Les nombres d'alertes correspondants][Le rang de la prochaine alerte a placer dans le tableau]
-  private mapDateNbAlerts : Map<number,number[]>;
+  private mapDateNbAlerts : Map<string,number[]>;
 
   private eltOnClickId: EventTarget;
 
@@ -107,8 +107,8 @@ export class AlertsHiveComponent implements OnInit {
       calendar: [{
         left: '15%',
         height: '45%',
-        width: '70%',
-        range: MyDate.getRangeForCalendarHome(),
+        width: '77%',
+        range: MyDate.getRangeForCalendarAlerts(),
         orient: 'horizontal',
         cellSize: ['20', '20'],
         splitLine: {
@@ -217,14 +217,14 @@ export class AlertsHiveComponent implements OnInit {
     // On regarde combien il y a d'alertes par jour pour pouvoir bien les placer
     this.alertsService.hiveAlerts.forEach(alerts => {
       // Si il y a deja une alerte ce jour, on incrémente
-      let date = new Date(alerts.date);
-      if(this.mapDateNbAlerts.has(date.getTime())){
-        let nbAlerts = this.mapDateNbAlerts.get(date.getTime());
+      let date = MyDate.convertDate(MyDate.getWekitDate(alerts.date.toString()));
+      if(this.mapDateNbAlerts.has(date)){
+        let nbAlerts = this.mapDateNbAlerts.get(date);
         nbAlerts[0] += 1;
-        this.mapDateNbAlerts.set(date.getTime(),nbAlerts);
+        this.mapDateNbAlerts.set(date,nbAlerts);
       // Si il n'y a pas encore d'alertes ce jour
       }else{
-        this.mapDateNbAlerts.set(date.getTime(),[0,-1]);
+        this.mapDateNbAlerts.set(date,[0,-1]);
       }
       
     });
@@ -256,13 +256,14 @@ export class AlertsHiveComponent implements OnInit {
             let cellWidth = params.coordSys.cellWidth;
             let cellHeight = params.coordSys.cellHeight;
             // Iteration of alert rang
-            let nbAlerts = this.mapDateNbAlerts.get(api.value(0));
+            let date = MyDate.convertDate(new Date(api.value(0)));
+            let nbAlerts = this.mapDateNbAlerts.get(date);
             // if(nbAlerts[1] < nbAlerts[0]){
             nbAlerts[1] += 1;
-            this.mapDateNbAlerts.set(api.value(0),nbAlerts);
+            this.mapDateNbAlerts.set(MyDate.convertDate(new Date(api.value(0))),nbAlerts);
             // set constants
-            let nbAlertsOfThisDay = this.mapDateNbAlerts.get(api.value(0))[0];
-            let rangAlertsOfThisDay = this.mapDateNbAlerts.get(api.value(0))[1];
+            let nbAlertsOfThisDay = this.mapDateNbAlerts.get(date)[0];
+            let rangAlertsOfThisDay = this.mapDateNbAlerts.get(date)[1];
             
             // S'il y a moins de 3 alertes
             if(nbAlertsOfThisDay < 2){

@@ -3,7 +3,7 @@
     background-color: #4F4F51;
     margin: 0px;
     padding: 0px;
-    height: 100%;
+    height: 75px;
     border-bottom: 1px solid transparent;
 }
 
@@ -274,12 +274,6 @@ li:first-child img{
   height: 100%;
 }
 
-.photo{
-  max-height: 50vh;
-  max-width: 100%;
-
-}
-
 .alertNoData{
   font-size: medium;
   color : #4F4F51;
@@ -294,13 +288,245 @@ li:first-child img{
 .close{
   font-size: 30px;
 }
-@media (max-width: 900px) {
+
+// FOR THE HIVES
+
+@media (max-width: 2500px) {
+  .ruche{
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 1550px) {
   .ruche{
     width: 30px;
     height: 30px;
   }
-  // .brood{
-  //   font-size: 10px;
-  //   margin-top: 5px;
-  // }
+}
+
+@media (max-width: 990px) {
+  .ruche{
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 700px) {
+  .ruche{
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 500px) {
+  .ruche{
+    width: 30px;
+    height: 30px;
+  }
+}
+
+// NAVBAR
+
+// HERE THE LEFT HAMBURGER
+@media (max-width: 991px) {
+#menuToggleHome
+{
+  display: block;
+  position: relative;
+  top: 15px;
+  left: 10px;
+  
+  z-index: 1;
+  
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggleHome input
+{
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+  
+  cursor: pointer;
+  
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+  
+  -webkit-touch-callout: none;
+}
+
+/*
+ * Just a quick hamburger
+ */
+#menuToggleHome span
+{
+  display: block;
+  width: 5px;
+  height: 3px;
+  margin-bottom: 6px;
+  position: relative;
+  
+  background: #cdcdcd;
+  border-radius: 3px;
+  
+  z-index: 1;
+  
+  transform-origin: 2px 0px;
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+}
+
+#menuToggleHome span:first-child
+{
+  transform-origin: 0% 0%;
+}
+
+#menuToggleHome span:nth-last-child(2)
+{
+  transform-origin: 0% 100%;
+}
+
+// /* 
+//  * Transform all the slices of hamburger
+//  * into a crossmark.
+//  */
+// #menuToggleHome input:checked ~ span
+// {
+//   opacity: 1;
+//   transform: rotate(45deg) translate(-2px, -1px);
+//   background: #cdcdcd;
+// }
+
+// /*
+//  * But let's hide the middle one.
+//  */
+// #menuToggleHome input:checked ~ span:nth-last-child(3)
+// {
+//   // opacity: 0;
+//   // transform: rotate(0deg) scale(0.2, 0.2);
+// }
+
+/*
+ * Ohyeah and the last one should go the other direction
+ */
+#menuToggleHome input:checked ~ span:nth-last-child(2)
+{
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+/*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+#menuHome
+{
+  position: absolute;
+  width: 220px;
+  margin: -52px 0 0 -50px;
+  padding-bottom: 50px;
+  padding-left: 65px;
+  padding-top: 70px;
+  
+  background: #4F4F51;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+  
+  transform-origin: 0% 0%;
+  transform: translate(-100%, 0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menuHome li
+{
+  padding: 10px 0;
+  font-size: medium;
+}
+
+/*
+ * And let's slide it in from the left
+ */
+#menuToggleHome input:checked ~ ul
+{
+  transform: none;
+}
+}
+
+.navbar-right{
+  float: right !important;
+}
+
+#firstUL{
+  list-style-type: none;
+  display: inline-block;
+}
+
+@media (max-width: 991px) {
+  .abs-center-x {
+    position: relative;
+    margin: 0px;
+    transform: none;
+    left: 0%;
+  }
+
+  #firstUL{
+    margin-top: 10px;
+    margin-left: -15px;
+  }
+
+  .button{
+    margin: 0px;
+    width : 120px;
+  }
+
+  .button0{
+    margin-bottom: 1px;
+  }
+
+  #name{
+    margin-top : 50px;
+  }
+
+  #menuHome li{
+    margin : 0px;
+    margin-bottom: -18px
+  }
+}
+
+@media (max-width : 767px){
+
+  #firstUL{
+    margin-top: 10px;
+    margin-left: -30px;
+  }
+}
+
+@media (min-width: 992px) {
+
+  #menuCheckboxHome{
+    display: none;
+  }
+  .icon-bar{
+    display: none;
+  }
+
+  #firstUL{
+    margin-left: -80px;
+  }
+
+  #infoApiaryButton{
+    margin-left: 25px;
+  }
+}
+
+.collapse{
+  z-index: 900;
 }

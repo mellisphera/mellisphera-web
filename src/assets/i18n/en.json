@@ -124,7 +124,7 @@
         "CANCEL" : "Cancel",
         "NODATA" : "No data",
         "NOSENSORS" : "No sensors",
-        "CLICK" : "Click on a hive for more informations !",
+        "CLICK" : "Click on a hive name for more informations !",
         "MANAGE" : "Manage",
         "WARNING" : "Warning! ",
         "NAVBAR" : {
@@ -134,7 +134,8 @@
             "NAME" : "Name",
             "BROOD" : "Brood",
             "WEIGHT" : "Weight",
-            "SENSORS" : "Sensors"
+            "SENSORS" : "Sensors",
+            "APIARY" : "Apiary"
         }
     },
     "HIVES" : {

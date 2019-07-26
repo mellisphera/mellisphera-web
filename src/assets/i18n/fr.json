@@ -124,7 +124,7 @@
         "CANCEL" : "Annuler",
         "NODATA" : "Pas de données",
         "NOSENSORS" : "Pas de capteurs",
-        "CLICK" : "Cliquez sur une ruche pour plus d'informations !",
+        "CLICK" : "Cliquez sur une le nom d'une ruche pour plus d'informations !",
         "MANAGE" : "Gérer",
         "WARNING" : "Attention! ",
         "NAVBAR" : {
@@ -134,7 +134,8 @@
             "NAME" : "Nom",
             "BROOD" : "Couvain",
             "WEIGHT" : "Poids",
-            "SENSORS" : "Capteurs"
+            "SENSORS" : "Capteurs",
+            "APIARY" : "Rucher"
         }
     },
     "HIVES" : {

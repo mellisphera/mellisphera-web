@@ -11,25 +11,18 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">{{ 'HIVES.HIVE' | translate}}
-                        </th>
                         <th class="text-left" scope="col">Description
                         </th>
                         <th scope="col">{{ 'CAPTEUR.REFERENCES' | translate}}
                         </th>
-                        <th scope="col">Type
-                        </th>
-                        <th class="text-right" scope="col">Action</th>
+                        <th class="text-right" scope="col" style="width: 80px;"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <ng-container *ngFor="let capteur of ( capteurService.capteursByHive); let i = index">
                         <tr class="hoverStyle">
-                            <td class=" hive-link">
-                                {{capteur.hiveName}}</td>
                             <td class="text-left">{{capteur.description}}</td>
                             <td>{{capteur.sensorRef}}</td>
-                            <td>{{capteur.type}}</td>
                             <td class="text-right">
                                 <button data-toggle="tooltip" data-html="true"
                                     title="{{ 'CAPTEUR.FORM.EDIT' | translate}}" data-toggle="modal" type="button"

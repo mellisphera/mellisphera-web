@@ -1,19 +1,21 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { RucherService } from '../../service/api/rucher.service';
-import { ObservationService } from '../../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { Component, OnInit, Renderer2, AfterViewChecked,HostListener  } from '@angular/core';
+import { RucherService } from '../../../service/api/rucher.service';
+import { ObservationService } from '../../../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
 import { Subscription } from 'rxjs';
-import { Observation } from '../../../_model/observation';
+import { Observation } from '../../../../_model/observation';
 import { NotifierService } from 'angular-notifier';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RucheInterface } from '../../../_model/ruche';
-import { UserloggedService } from '../../../userlogged.service';
+import { RucheInterface } from '../../../../_model/ruche';
+import { UserloggedService } from '../../../../userlogged.service';
 
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.css']
 })
-export class NotesComponent implements OnInit {
+export class NotesComponent implements OnInit,AfterViewChecked {
+  screenHeight:any;
+  screenWidth:any;
 
   public hiveToMv: RucheInterface;
   private eltOnClickId: EventTarget;
@@ -43,22 +45,32 @@ export class NotesComponent implements OnInit {
       this.typeToMv = 0;
       this.notify = notifyService;
       this.eltOnClickId = null;
+      this.getScreenSize();
   }
 
   ngOnInit() {
     this.initForm();
     this.observationService.setRange({ scale: 1, type: 'YEARS' });
     this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+  }
 
-    // Active the alert button
-    this.eltOnClickId = document.getElementById('notes');
-    this.renderer.addClass(this.eltOnClickId, 'active0');
+  @HostListener('window:resize', ['$event'])
+    getScreenSize(event?) {
+          this.screenHeight = window.innerHeight;
+          this.screenWidth = window.innerWidth;
+    }
 
-    // desactive other buttons
-    this.eltOnClickId = document.getElementById('alert');
-    this.renderer.removeClass(this.eltOnClickId, 'active0');
-    this.eltOnClickId = document.getElementById('summary');
-    this.renderer.removeClass(this.eltOnClickId, 'active0');
+  ngAfterViewChecked(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+    const heightPicture = document.getElementById('cadre').offsetHeight;
+    const heightRight = document.getElementById('graph').offsetHeight;
+    if(this.screenWidth >990){
+      document.getElementById('notesApiary').style.height = ''+(6 + heightRight - heightPicture) + 'px';
+    }else{
+      document.getElementById('notesApiary').style.height = ''+(40) + 'vh';
+    }
+
   }
 
   /**

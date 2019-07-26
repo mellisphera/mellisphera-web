@@ -189,12 +189,8 @@ export class NavbarComponent implements OnInit {
         this.eltOnClickId = document.getElementById('sensors');
         this.renderer.removeClass(this.eltOnClickId, 'active');
 
-        // Desactive alerts, notes, summary buttons
-        this.eltOnClickId = document.getElementById('notes');
-        this.renderer.removeClass(this.eltOnClickId, 'active0');
-        this.eltOnClickId = document.getElementById('summary');
-        this.renderer.removeClass(this.eltOnClickId, 'active0');
-        this.eltOnClickId = document.getElementById('alert');
+        // Desactive alerts buttons
+        this.eltOnClickId = document.getElementById('infoApiaryButton');
         this.renderer.removeClass(this.eltOnClickId, 'active0');
     }
 
@@ -209,12 +205,8 @@ export class NavbarComponent implements OnInit {
         this.eltOnClickId = document.getElementById('sensors');
         this.renderer.removeClass(this.eltOnClickId, 'active');
 
-        // Desactive alerts, notes, summary buttons
-        this.eltOnClickId = document.getElementById('notes');
-        this.renderer.removeClass(this.eltOnClickId, 'active0');
-        this.eltOnClickId = document.getElementById('summary');
-        this.renderer.removeClass(this.eltOnClickId, 'active0');
-        this.eltOnClickId = document.getElementById('alert');
+        // Desactive alerts
+        this.eltOnClickId = document.getElementById('infoApiaryButton');
         this.renderer.removeClass(this.eltOnClickId, 'active0');
     }
 
@@ -263,21 +255,7 @@ export class NavbarComponent implements OnInit {
                 this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
                 this.router.navigate(['dashboard/home']);
                 break;
-            case '/dashboard/home/notes':
-                this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                this.desactiveButtonHomePageActiveName();
-                this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.router.navigate(['dashboard/home']);
-                break;
-            case '/dashboard/home/alerts':
-                this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                this.desactiveButtonHomePageActiveName();
-                this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.router.navigate(['dashboard/home']);
-                break;
-            case '/dashboard/home/states':
+            case '/dashboard/home/info-apiary':
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 this.desactiveButtonHomePageActiveName();
                 this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());

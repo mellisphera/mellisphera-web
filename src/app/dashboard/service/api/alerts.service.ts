@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AlertInterface } from '../../../_model/alert';
 import { CONFIG } from '../../../../constants/config';
 import { Observable, BehaviorSubject} from 'rxjs';
+import { MyDate } from '../../../class/MyDate';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -137,7 +138,7 @@ export class AlertsService {
         this.http.get<AlertInterface[]>(CONFIG.URL + 'alert/apiary/' + idApiary).map(elt => {
             return elt.sort((b, a) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime();
-            });
+            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() > new Date().getMonth() - 2);
         }).subscribe(
             (data) => {
                 // add pictos to alerts
@@ -159,7 +160,7 @@ export class AlertsService {
         return this.http.get<AlertInterface[]>(CONFIG.URL + 'alert/apiary/' + idApiary).map(elt => {
             return elt.sort((b, a) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime();
-            });
+            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() > new Date().getMonth() - 2);
         });
     }
 
@@ -169,7 +170,7 @@ export class AlertsService {
        return this.http.get<AlertInterface[]>(CONFIG.URL + 'alert/hive/' + idHive).map(elt => {
             return elt.sort((b, a) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime();
-            });
+            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() > new Date().getMonth() - 2);
         });
     }
 
@@ -179,7 +180,7 @@ export class AlertsService {
         this.http.get<AlertInterface[]>(CONFIG.URL + 'alert/apiary/hiveAllert/' + idApiary).map(elt => {
             return elt.sort((b, a) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime();
-            });
+            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() > new Date().getMonth() - 2);
         }).subscribe(
             (data) => {
                 // add pictos to alerts

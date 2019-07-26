@@ -59,5 +59,9 @@ export class DashboardComponent implements OnInit {
       let elt : any = document.getElementById("menuCheckbox");
       elt.checked = false;
     }
+    if(event.target.id !== 'menuCheckboxHome'){
+      let elt : any = document.getElementById("menuCheckboxHome");
+      elt.checked = false;
+    }
   }
 }

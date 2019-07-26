@@ -18,54 +18,6 @@
       </div>
       <br>
       <br>
-      <!-- ALERTS -->
-      <div *ngIf="!noAlert" id="graph" echarts (chartInit)="onChartInit($event)" [options]="option" [autoResize]="true"
-        style="width:100%;height:50vh"></div>
-      <div *ngIf="noAlert" class="noData">
-          {{ 'SUMMARY.NOALERTS' | translate}}
-      </div>
-
-      <!-- NOTES -->
-      <div *ngIf="getElementsInDate(observationService.observationsApiary,10000).length > 0" class="panel panel-info">
-        <div *ngIf="this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()) !== undefined"
-          class="panel-heading">
-          <h4 class="panel-title">
-            <a><b>{{ 'APIARY_NOTES.TITLE' | translate}}
-                {{this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()).name}} {{ 'SUMMARY.FOR' | translate}} <input
-                  type="number" class="tentacles" name="tentacles" [(ngModel)]="nbDaysNotesForm" min="1" max="10000">
-                  {{ 'SUMMARY.DAYS' | translate}}</b></a>
-          </h4>
-        </div>
-        <div *ngIf="this.rucherService.getRucherNameById(this.rucherService.getCurrentApiary()) === undefined"
-          class="panel-heading">
-          <h4 class="panel-title">
-            <a><b>{{ 'APIARY_NOTES.TITLE' | translate}}</b></a>
-          </h4>
-        </div>
-        <div class="panel-collapse collapse in">
-          <div class="panel-body">
-            <b class="text-success"></b>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.DATE' | translate}}</th>
-                  <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.SENTENCE' | translate}}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="hoverStyle"
-                  *ngFor="let obs of getElementsInDate(observationService.observationsApiary,nbDaysNotesForm); let i = index;">
-                  <td>{{ obs.date | myDate }}</td>
-                  <td>{{ obs.sentence }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="getElementsInDate(observationService.observationsApiary,10000).length === 0" class="noData">
-          {{ 'SUMMARY.NONOTES' | translate}}
-      </div>
 
       <!-- HIVES -->
       <div *ngIf="rucheService.ruches.length !== 0" class="panel panel-info">
