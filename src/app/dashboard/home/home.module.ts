@@ -50,7 +50,7 @@ import { InfoApiaryComponent } from './info-apiary/info-apiary.component';
     HealthHiveComponent,
     SensorsHiveComponent,
     AlertsHiveComponent,
-    InfoApiaryComponent
+    InfoApiaryComponent,
   ]
 })
 export class HomeModule { }

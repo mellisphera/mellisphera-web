@@ -73,6 +73,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
             this.rucherService.rucheService.ruchesAllApiary = ruches;
             this.hiveSensorSelect = ruches[0];
         })
+        this.capteurService.getUserCapteurs();
     }
 
     @HostListener('window:resize', ['$event'])

@@ -21,8 +21,6 @@ import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.co
 import { CapteurComponent } from './capteur/capteur.component';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { SearchCapteur } from './capteur/capteur.pipe';
-import { PipeCapteur } from './capteur/capteur.pipe';
 import { SearchFleurPipe, searchFleurByDate, searchFleurByType } from './fleurs-floraison/service/search-fleur.pipe';
 import { RapportService } from './rapport/rapport.service';
 import { MeteoService } from './meteo/Service/MeteoService';
@@ -94,9 +92,7 @@ import { DailyRecordService } from './service/api/dailyRecordService';
     RucheRucherComponent,
     FeedbackComponent,
     MeteoComponent,
-    PipeCapteur,
     DemoComponent,
-    SearchCapteur,
     SearchFleurPipe,
     searchFleurByDate,
     searchFleurByType,

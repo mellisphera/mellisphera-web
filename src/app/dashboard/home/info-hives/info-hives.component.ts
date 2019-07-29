@@ -40,7 +40,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive().id).subscribe();
     this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive().id);
     this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive().id)
-    this.capteurService.getUserCapteurs();
+    // this.capteurService.getUserCapteurs();
   }
 
   @HostListener('window:resize', ['$event'])

@@ -8,6 +8,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MyDatePipe } from '../../pipe/my-date.pipe';
+import { SearchCapteur } from '../capteur/capteur.pipe';
+import { PipeCapteur } from '../capteur/capteur.pipe';
 import { ngfModule } from 'angular-file';
 
 
@@ -23,10 +25,14 @@ import { ngfModule } from 'angular-file';
   exports: [
     TranslateModule,
     NgxEchartsModule,
+    PipeCapteur,
     MyDatePipe,
+    SearchCapteur
   ],
   declarations: [
-    MyDatePipe
+    MyDatePipe,
+    PipeCapteur,
+    SearchCapteur
 
   ],
   providers: [
