@@ -2,22 +2,27 @@ import { Injectable } from '@angular/core';
 import { RucheInterface } from '../../../_model/ruche';
 import { HttpClient } from '@angular/common/http';
 import { reject } from 'q';
+import { e } from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MelliChartsHiveService {
   
-  private hiveSelect: RucheInterface;
+  private hiveSelectForHivePage: RucheInterface;
+  private hiveSelectForStackPage: RucheInterface[];
   private dailyDeviceEchartInstances: any;
   private dailyOtherChartIstances: any;
+  private stackChartInstance: any;
   private hourlyEchartInstances: any
   private arrayColor: Array<any>;
   constructor(private httpClient: HttpClient) {
-    this.hiveSelect = null;
+    this.hiveSelectForHivePage = null;
+    this.stackChartInstance = null;
     this.dailyDeviceEchartInstances = null;
     this.hourlyEchartInstances = null;
     this.dailyOtherChartIstances = null;
+    this.hiveSelectForStackPage = new Array();
     this.getColor();
   }
   
@@ -45,14 +50,36 @@ export class MelliChartsHiveService {
         }
       });
     }
+
+
+    /**
+     *
+     *
+     * @param {*} echartInstance
+     * @memberof MelliChartsHiveService
+     */
+    setStackChartInstance(echartInstance: any): void {
+      this.stackChartInstance = echartInstance;
+    }
+
+    /**
+     *
+     *
+     * @returns {*}
+     * @memberof MelliChartsHiveService
+     */
+    getStackChartInstance(): any {
+      return this.stackChartInstance;
+    }
+
     
     
     getHiveSelect(): RucheInterface{
-      return this.hiveSelect;
+      return this.hiveSelectForHivePage;
     }
     
     setHiveSelect(hive: RucheInterface) {
-      this.hiveSelect = hive;
+      this.hiveSelectForHivePage = hive;
     }
     
     /**
@@ -64,7 +91,7 @@ export class MelliChartsHiveService {
     * @memberof MelliChartsHonHourlyChartInitiveService
     */
     getColorByIndex(index: number, hive: RucheInterface) {
-      if (this.hiveSelect === hive) {
+      if (this.hiveSelectForHivePage === hive) {
         return (index < this.arrayColor.length - 1) ? this.arrayColor[index].hexString : null ;
       } else {
         return 'white';
@@ -162,7 +189,7 @@ export class MelliChartsHiveService {
     * @memberof MelliChartsHiveService
     */
     checkHiveisActive(hiveTest: RucheInterface): boolean {
-      return this.hiveSelect.id === hiveTest.id;
+      return this.hiveSelectForHivePage.id === hiveTest.id;
     }
     
     

@@ -7,8 +7,6 @@ import { HomeComponent } from './home/home.component';
 import { RucheRucherComponent } from './apiary/ruche-rucher/ruche.rucher.component';
 import { RapportComponent } from './rapport/rapport.component';
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
-import { MeteoComponent } from './meteo/meteo.component';
-import { AdminComponent } from './admin/admin.component';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 import { CapteurComponent } from './capteur/capteur.component';
 import { MelliChartsComponent } from './melli-charts/melli-charts.component';

@@ -18,6 +18,13 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/first';
 import { NotifierService } from 'angular-notifier';
 
+/**
+ *@author mickael
+ * @export
+ * @class CapteurComponent
+ * @implements {OnInit}
+ * @implements {OnDestroy}
+ */
 @Component({
   selector: 'app-manage-sensors',
   templateUrl: './manage-sensors.component.html',
@@ -145,7 +152,6 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
           this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
           this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
           const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
-          this.rucherService.rucheService.ruches[index].sensor = true;
           this.rucherService.rucheService.emitHiveSubject();
       } else {
           this.capteurService.capteur.idHive = null;
@@ -211,7 +217,6 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
           this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
           this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
           const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
-          this.rucherService.rucheService.ruches[index].sensor = true;
           this.rucherService.rucheService.emitHiveSubject();
       } else {
           this.capteurService.capteur.idHive = null;

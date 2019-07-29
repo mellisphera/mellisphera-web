@@ -92,9 +92,6 @@ export const BASE_OPTIONS = {
             orient: 'horizontal',
             itemSize: 20,
             feature: {
-                dataZoom: {
-                    yAxisIndex: 'none',
-                },
                 dataView: { readOnly: false },
                 saveAsImage: {}
             }

@@ -164,21 +164,19 @@ export class MelliChartsComponent implements OnInit {
 
   selectHive(hive: RucheInterface, event: MouseEvent) {
     console.log(this.hiveComponent.hourlyComponent.chartLoading);
-    if (!this.hiveComponent.hourlyComponent.chartLoading) {
-      this.melliChartHive.setHiveSelect(hive);
-      this.nextByRoute();
-    }
-  }
-
-
-  nextByRoute() {
-    console.log(this.router.url);
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
-        this.hiveComponent.loadDataFromHive();
+        if (!this.hiveComponent.hourlyComponent.chartLoading) {
+          this.melliChartHive.setHiveSelect(hive);
+          this.hiveComponent.loadDataFromHive();
+        }
+        break;
+      case PREFIX_PATH + 'stack':
         break;
     }
   }
+
+
   /**
    *
    *

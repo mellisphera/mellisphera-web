@@ -14,7 +14,6 @@ import { AlertsService } from './service/api/alerts.service';
 import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';
 import { CapteurService } from './capteur/capteur.service';
 import { RucheRucherComponent } from './apiary/ruche-rucher/ruche.rucher.component';
-import { MeteoComponent } from './meteo/meteo.component';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 import { RapportComponent } from './rapport/rapport.component';
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
@@ -25,7 +24,6 @@ import { SearchCapteur } from './capteur/capteur.pipe';
 import { PipeCapteur } from './capteur/capteur.pipe';
 import { SearchFleurPipe, searchFleurByDate, searchFleurByType } from './fleurs-floraison/service/search-fleur.pipe';
 import { RapportService } from './rapport/rapport.service';
-import { MeteoService } from './meteo/Service/MeteoService';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { SidebarService } from './service/sidebar.service';
 import { DemoComponent } from '../demo/demo.component';
@@ -76,7 +74,6 @@ import { DailyRecordService } from './service/api/dailyRecordService';
     RucheService,
     AlertsService,
     RapportService,
-    MeteoService,
     DailyRecordService,
     FleursFloraisonService,
     AdminService,
@@ -93,7 +90,6 @@ import { DailyRecordService } from './service/api/dailyRecordService';
     DashboardComponent,
     RucheRucherComponent,
     FeedbackComponent,
-    MeteoComponent,
     PipeCapteur,
     DemoComponent,
     SearchCapteur,

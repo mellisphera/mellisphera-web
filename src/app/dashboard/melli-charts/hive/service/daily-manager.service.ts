@@ -454,9 +454,10 @@ getLastDayForMeanValue(observable: Observable<any>, mean: boolean, type: Tools):
         if (rangeChange) {
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            serieComplete.symbol = ICONS_WEATHER.rain,
             serieComplete.itemStyle = {
               normal: {
-                color: '#00FE0C'
+                color: '#70A8B2'
               }
             };
             serieComplete.symbolSize = (val: any[]) => {
@@ -476,9 +477,10 @@ getLastDayForMeanValue(observable: Observable<any>, mean: boolean, type: Tools):
           }
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete) => {
             option.legend.data.push(serieComplete.name);
+            serieComplete.symbol = ICONS_WEATHER.rain,
             serieComplete.itemStyle = {
               normal: {
-                color: '#00FE0C'
+                color: '#70A8B2'
               }
             };
             serieComplete.symbolSize = (val: any[]) => {
@@ -488,6 +490,7 @@ getLastDayForMeanValue(observable: Observable<any>, mean: boolean, type: Tools):
                 return val[1] * 25.4;
               }
             };
+            console.log(serieComplete); 
             option.series.push(serieComplete);
           })
     
