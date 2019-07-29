@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { DailyRecordsWService } from '../../../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
+import { DailyRecordsWService } from '../../../service/api/daily-records-w.service';
 import { DailyRecordService } from '../../../service/api/dailyRecordService';
-import { DailyStockHoneyService } from '../../../apiary/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
+import { DailyStockHoneyService } from '../../../service/api/daily-stock-honey.service';
 import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 import { CALENDAR } from '../../charts/CALENDAR';
 import { SERIES } from '../../charts/SERIES';

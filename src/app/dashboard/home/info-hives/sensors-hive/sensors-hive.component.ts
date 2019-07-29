@@ -2,7 +2,7 @@ import { CapteurInterface } from '../../../../_model/capteur';
 import { RucherModel } from '../../../../_model/rucher-model';
 import { RucheInterface } from '../../../../_model/ruche';
 import { Component, OnInit, OnDestroy, AfterViewChecked,HostListener } from '@angular/core';
-import { CapteurService } from '../../../capteur/capteur.service';
+import { CapteurService } from '../../../service/api/capteur.service';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RucherService } from '../../../service/api/rucher.service';

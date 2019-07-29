@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { MyDate } from '../../../../../../class/MyDate';
-import { UnitService } from '../../../../../service/unit.service';
-import { GraphGlobal } from '../../../../../graph-echarts/GlobalGraph';
+import { MyDate } from '../../../class/MyDate';
+import { UnitService } from '../unit.service';
+import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 
 @Injectable({
     providedIn: 'root'

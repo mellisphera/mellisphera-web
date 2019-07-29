@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RecordService } from '../../../apiary/ruche-rucher/ruche-detail/service/Record/record.service';
+import { RecordService } from '../../../service/api/record.service';
 import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 import { SERIES } from '../../charts/SERIES';
 import { isUndefined } from 'util';

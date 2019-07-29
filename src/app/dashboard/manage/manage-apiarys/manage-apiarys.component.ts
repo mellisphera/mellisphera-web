@@ -5,14 +5,12 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef } from '@angular/core';
-import { ProcessReport } from '../../apiary/ruche-rucher/processedReport';
 import { RucherService } from '../../service/api/rucher.service';
 import { UserloggedService } from '../../../userlogged.service';
 import { Observable, Subscription } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";
-import { RapportService } from '../../rapport/rapport.service';
 import { RucheService } from '../../service/api/ruche.service';
-import { ObservationService } from '../../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { ObservationService } from '../../service/api/observation.service';
 import { RucherModel } from '../../../_model/rucher-model';
 import { AuthService } from '../../../auth/Service/auth.service';
 import { RucheInterface } from '../../../_model/ruche';
@@ -61,7 +59,6 @@ export class ManageApiarysComponent implements OnInit, OnDestroy {
     public router: Router,
     public rucherService: RucherService,
     private userService: UserloggedService,
-    private _rapportService: RapportService,
     public observationService: ObservationService,
     public rucheService: RucheService,
     private authService: AuthService,

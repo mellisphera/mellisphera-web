@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RucheInterface } from '../../../../_model/ruche';
 import { DeprecatedDatePipe } from '@angular/common';
-import { DataRange } from '../../ruche-rucher/ruche-detail/service/Record/data-range';
+import { DataRange } from '../../../../_model/data-range';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { FleursFloraisonService } from './service/fleurs.floraison.service';
 import { FleursINRA } from "../../_model/fleursINRA";
 import { FleurITSAP } from "../../_model/fleurITSAP";
-import { Rucher } from '../../dashboard/apiary/ruche-rucher/rucher';
 import { FleursTheorique } from '../../_model/fleurstheorique'
 import { UserloggedService } from '../../userlogged.service';
 import { Observable, Subscription } from 'rxjs';
@@ -28,7 +27,6 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
 
     currentFlo: string;
     //Variable pour les informations du rucher
-    nameApiary= new Rucher();
     message="";
     //variable pour stocker le nom français entré
     selectedFr : string;
@@ -42,7 +40,6 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
     public ErrorMsg;
 
     //Variable pour le rucher selectionné
-    selectedRucher = new Rucher();
     //Variable pour le type selectionné
     //La date d'aujourd'hui
     date = new Date();

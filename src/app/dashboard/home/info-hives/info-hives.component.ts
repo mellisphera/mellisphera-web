@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked,HostListener } from '@angular/core';
-import { ObservationService } from '../../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { ObservationService } from '../../service/api/observation.service';
 import { RucheService } from '../../service/api/ruche.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DailyRecordService } from '../../service/api/dailyRecordService';
-import { DailyRecordsWService } from '../../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
+import { DailyRecordsWService } from '../../service/api/daily-records-w.service';
 import { RucheInterface } from '../../../_model/ruche';
-import { CapteurService } from '../../capteur/capteur.service';
+import { CapteurService } from '../../service/api/capteur.service';
 import { AlertsService } from '../../service/api/alerts.service';
 import { AlertsHiveComponent } from './alerts-hive/alerts-hive.component';
 

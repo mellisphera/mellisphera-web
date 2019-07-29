@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2, AfterViewChecked,HostListener  } from '@angular/core';
 import { RucherService } from '../../../service/api/rucher.service';
-import { ObservationService } from '../../../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { ObservationService } from '../../../service/api/observation.service';
 import { Subscription } from 'rxjs';
 import { Observation } from '../../../../_model/observation';
 import { NotifierService } from 'angular-notifier';

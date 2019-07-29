@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewChecked,HostListener } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
 import { RucherService } from '../../../service/api/rucher.service';
-import { DailyRecordsWService } from '../../../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
+import { DailyRecordsWService } from '../../../service/api/daily-records-w.service';
 import { ActivatedRoute } from '@angular/router';
-import { DailyStockHoneyService } from '../../../apiary/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
-import { RecordService } from '../../../apiary/ruche-rucher/ruche-detail/service/Record/record.service';
-import { ObservationService } from '../../../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { DailyStockHoneyService } from '../../../service/api/daily-stock-honey.service';
+import { RecordService } from '../../../service/api/record.service';
+import { ObservationService } from '../../../service/api/observation.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RucheService } from '../../../service/api/ruche.service';
 import { Observation } from '../../../../_model/observation';

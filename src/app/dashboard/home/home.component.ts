@@ -19,11 +19,11 @@ import {
 } from '@angular/animations';
 import { Position } from 'angular2-draggable';
 import { UnitService } from '../service/unit.service';
-import { ObservationService } from '../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { ObservationService } from '../service/api/observation.service';
 import { UserParamsService } from '../preference-config/service/user-params.service';
-import { DailyRecordsWService } from '../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
-import { DailyStockHoneyService } from '../apiary/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
-import { CapteurService } from '../capteur/capteur.service';
+import { DailyRecordsWService } from '../service/api/daily-records-w.service';
+import { DailyStockHoneyService } from '../service/api/daily-stock-honey.service';
+import { CapteurService } from '../service/api/capteur.service';
 import { AlertsService } from '../service/api/alerts.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';

@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { DailyRecordsWService } from '../../../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
-import { CalendrierPoidsService } from '../../../apiary/ruche-rucher/ruche-detail/stock/service/calendrier-poids.service';
+import { DailyRecordsWService } from '../../../service/api/daily-records-w.service';
+import { CalendrierPoidsService } from '../../../service/api/calendrier-poids.service';
 import { RucheService } from '../../../service/api/ruche.service';
 import { UserParamsService } from '../../../preference-config/service/user-params.service';
-import { DailyStockHoneyService } from '../../../apiary/ruche-rucher/ruche-detail/service/daily-stock-honey.service';
-import { GrapheReserveMielService } from '../../../apiary/ruche-rucher/ruche-detail/stock/service/graphe-reserve-miel.service';
+import { DailyStockHoneyService } from '../../../service/api/daily-stock-honey.service';
 import { MyDate } from '../../../../class/MyDate';
 import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
@@ -20,7 +19,6 @@ export class WeightHivesComponent{
     public calendrierPoids: CalendrierPoidsService,
     public rucheService: RucheService,
     public dailyStockHoneyService: DailyStockHoneyService,
-    public grapheMielService: GrapheReserveMielService,
     private userConfig: UserParamsService,
     private unitService: UnitService,
     private graphGlobal: GraphGlobal) { }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DataRange } from '../../apiary/ruche-rucher/ruche-detail/service/Record/data-range';
+import { DataRange } from '../../../_model/data-range';
 import { MyDate } from '../../../class/MyDate';
 import { ReactiveFormsModule } from '@angular/forms';
 

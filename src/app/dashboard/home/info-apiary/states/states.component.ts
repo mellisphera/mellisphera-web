@@ -9,11 +9,11 @@ import * as html2canvas from 'html2canvas';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { UnitService } from '../../../service/unit.service';
 import { MyDate } from '../../../../class/MyDate';
-import { ObservationService } from '../../../apiary/ruche-rucher/ruche-detail/observation/service/observation.service';
+import { ObservationService } from '../../../service/api/observation.service';
 import { RucheService } from '../../../service/api/ruche.service';
 import { DailyRecordService } from '../../../service/api/dailyRecordService';
-import { DailyRecordsWService } from '../../../apiary/ruche-rucher/ruche-detail/service/daily-records-w.service';
-import { CapteurService } from '../../../capteur/capteur.service';
+import { DailyRecordsWService } from '../../../service/api/daily-records-w.service';
+import { CapteurService } from '../../../service/api/capteur.service';
 
 @Component({
   selector: 'app-states',
