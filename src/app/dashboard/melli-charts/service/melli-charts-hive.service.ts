@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RucheInterface } from '../../../_model/ruche';
 import { HttpClient } from '@angular/common/http';
-import { reject } from 'q';
-import { e } from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +8,6 @@ import { e } from '@angular/core/src/render3';
 export class MelliChartsHiveService {
   
   private hiveSelectForHivePage: RucheInterface;
-  private hiveSelectForStackPage: RucheInterface[];
   private dailyDeviceEchartInstances: any;
   private dailyOtherChartIstances: any;
   private stackChartInstance: any;
@@ -22,7 +19,6 @@ export class MelliChartsHiveService {
     this.dailyDeviceEchartInstances = null;
     this.hourlyEchartInstances = null;
     this.dailyOtherChartIstances = null;
-    this.hiveSelectForStackPage = new Array();
     this.getColor();
   }
   
@@ -49,30 +45,7 @@ export class MelliChartsHiveService {
           reject(false);
         }
       });
-    }
-
-
-    /**
-     *
-     *
-     * @param {*} echartInstance
-     * @memberof MelliChartsHiveService
-     */
-    setStackChartInstance(echartInstance: any): void {
-      this.stackChartInstance = echartInstance;
-    }
-
-    /**
-     *
-     *
-     * @returns {*}
-     * @memberof MelliChartsHiveService
-     */
-    getStackChartInstance(): any {
-      return this.stackChartInstance;
-    }
-
-    
+    }    
     
     getHiveSelect(): RucheInterface{
       return this.hiveSelectForHivePage;

@@ -19,6 +19,7 @@ import { DailyRecordsWService } from '../service/api/daily-records-w.service';
 import { DailyRecordService } from '../service/api/dailyRecordService';
 import { DailyStockHoneyService } from '../service/api/daily-stock-honey.service';
 import { WeatherService } from '../service/api/weather.service';
+import { StackMelliChartsService } from './stack/service/stack-melli-charts.service';
 
 const PREFIX_PATH = '/dashboard/melli-charts/';
 @Component({
@@ -43,6 +44,7 @@ export class MelliChartsComponent implements OnInit {
     private dailyRecordWservice: DailyRecordsWService,
     private dailyStockHoneyService: DailyStockHoneyService,
     public melliChartDate: MelliChartsDateService,
+    private stackService: StackMelliChartsService,
     public melliChartHive: MelliChartsHiveService,
     public recordService: RecordService,
     private adminService: AdminService,
@@ -157,13 +159,25 @@ export class MelliChartsComponent implements OnInit {
   }
 
 
-  navToPage(path: string) {
+  /**
+   *
+   *
+   * @param {string} path
+   * @memberof MelliChartsComponent
+   */
+  navToPage(path: string): void {
     this.router.navigateByUrl(PREFIX_PATH + path);
   }
 
 
-  selectHive(hive: RucheInterface, event: MouseEvent) {
-    console.log(this.hiveComponent.hourlyComponent.chartLoading);
+  /**
+   *
+   *
+   * @param {RucheInterface} hive
+   * @param {MouseEvent} event
+   * @memberof MelliChartsComponent
+   */
+  selectHive(hive: RucheInterface, event: MouseEvent): void {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
         if (!this.hiveComponent.hourlyComponent.chartLoading) {
@@ -172,9 +186,16 @@ export class MelliChartsComponent implements OnInit {
         }
         break;
       case PREFIX_PATH + 'stack':
+        if (this.stackService.ifActiveAlreadySelected(hive)) {
+          this.stackService.removeHive(hive);
+        } else {
+          this.stackService.addHive(hive);
+          console.log(this.stackService.getHiveSelect());
+        }
         break;
     }
   }
+
 
 
   /**
@@ -206,7 +227,14 @@ export class MelliChartsComponent implements OnInit {
    * @memberof MelliChartsComponent
    */
   getColor(hive: RucheInterface): string {
-    return this.melliChartHive.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
+    switch (this.router.url) {
+      case PREFIX_PATH + 'hive':
+        return this.melliChartHive.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
+        break;
+      case PREFIX_PATH + 'stack':
+        return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
+        break;
+    }
   }
   /**
    *
@@ -216,19 +244,31 @@ export class MelliChartsComponent implements OnInit {
    * @memberof MelliChartsComponent
    */
   checkApiaryIfAcive(idApiary: string): string {
-    try {
-      if (this.melliChartHive.getHiveSelect().idApiary === idApiary) {
-        return 'apiary-active';
-      } else {
-        return 'not-active';
-      }
-    } catch (TypeError) {
+    switch (this.router.url) {
+      case PREFIX_PATH + 'hive':
+          try {
+            if (this.melliChartHive.getHiveSelect().idApiary === idApiary) {
+              return 'apiary-active';
+            } else {
+              return 'not-active';
+            }
+          } catch (TypeError) {
+          }
+      case PREFIX_PATH + 'stack':
+        // return this.stackService.
+        break;
     }
   }
 
 
   checkLoadindingIsComplete(): string {
-    return this.hiveComponent.hourlyComponent.chartLoading ? 'loading' : 'complete';
+    switch (this.router.url) {
+      case PREFIX_PATH + 'hive':
+          return this.hiveComponent.hourlyComponent.chartLoading ? 'loading' : 'complete';
+      case PREFIX_PATH + 'stack':
+        //return this.stackService.
+        break;
+    }
   }
 
 }

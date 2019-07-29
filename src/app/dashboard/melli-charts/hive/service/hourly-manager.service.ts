@@ -86,7 +86,7 @@ export class HourlyManagerService {
           });
           console.log(option.series);
           // option.tooltip = this.getTooltipBySerie(chartName);
-          option.yAxis[0].name = type.name;
+          option.yAxis.name = type.name;
           chartInstance.setOption(option, true);
         }
         this.baseOpions = option;
@@ -121,7 +121,7 @@ export class HourlyManagerService {
             console.log(serieComplete);
             option.series.push(serieComplete);
           });
-          option.yAxis[0].name = type.name;
+          option.yAxis.name = type.name;
           chartInstance.setOption(option, true);
         }
         this.baseOpions = option;
@@ -154,7 +154,7 @@ export class HourlyManagerService {
             console.log(serieComplete);
             option.series.push(serieComplete);
           });
-          option.yAxis[0].name = type.unit;
+          option.yAxis.name = type.unit;
 
           chartInstance.setOption(option, true);
         }

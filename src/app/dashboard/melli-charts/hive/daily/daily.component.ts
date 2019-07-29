@@ -67,9 +67,9 @@ export class DailyComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
     this.melliHive.setDailyDeviceChartInstance(echarts.init(<HTMLDivElement>document.getElementById('calendar-device')));
-    // this.melliHive.getDailyDeviceChartInstance().setOption(this.dailyManager.baseOptionsInt);
+    this.melliHive.getDailyDeviceChartInstance().setOption(this.dailyManager.baseOptionsInt);
     this.melliHive.setDailyOtherChartInstance(echarts.init(<HTMLDivElement>document.getElementById('calendar-other')));
-    // this.melliHive.getDailyOtherChartInstance().setOption(this.dailyManager.baseOptionExt);
+    this.melliHive.getDailyOtherChartInstance().setOption(this.dailyManager.baseOptionExt);
 
 
 
@@ -105,6 +105,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
   }
 
   loadDailyDeviceData(rangeChange: boolean): void {
+    console.log('OK');
     switch (this.currentTypeDailyDevice.name) {
       case 'WINCOME':
         this.dailyManager.getChartWeightincome(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id, 

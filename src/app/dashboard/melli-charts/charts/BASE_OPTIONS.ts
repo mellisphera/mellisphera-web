@@ -1,4 +1,5 @@
 import { CALENDAR } from "./CALENDAR";
+import { SERIES } from "./SERIES";
 
 export const BASE_OPTIONS = {
     baseOptionHourly: {
@@ -54,15 +55,15 @@ export const BASE_OPTIONS = {
             left: 'center',
             width: '95%'
         }],
-        
-        yAxis: [{
+
+        yAxis: {
             name: '',
             nameLocation: 'middle',
             type: 'value',
             nameGap: 30,
             scale: true
-            
-        }],
+
+        },
 
         xAxis: [
             {
@@ -76,14 +77,14 @@ export const BASE_OPTIONS = {
                 splitArea: {
                     show: true,
                 },
-                axisLabel:{}
+                axisLabel: {}
             },
         ],
         series: []
-      
+
     },
     baseOptionDaily: {
-       // visualMap: {},
+        // visualMap: {},
         legend: {},
         axisPointer: {
             link: { xAxisIndex: 'all' }
@@ -103,6 +104,10 @@ export const BASE_OPTIONS = {
         name: '',
         nameLocation: 'middle',
         type: 'value',
+        nameGap: 18,
+        interval: 0,
+        min: 0,
+        max: 0
     },
     tooltip: {
         trigger: 'item',
@@ -113,5 +118,77 @@ export const BASE_OPTIONS = {
         data: [],
         selectedMode: 'multiple'
     },
+
+    xAxis: {
+        type: 'time',
+        boundaryGap: false,
+        axisLine: { onZero: true },
+        position: 'bottom',
+        minInterval: 1,
+        gridIndex: 0,
+        max: new Date(),
+        splitLine: {
+            show: true
+        },
+        splitArea: {
+            show: true,
+        },
+        axisLabel: {
+            show: true,
+            formatter: {}
+        }
+    },
+    
+    baseOptionStack: {
+
+        toolbox: {
+            orient: 'horizontal',
+            itemSize: 20,
+            feature: {
+                dataView: { readOnly: false },
+                saveAsImage: {}
+            }
+        },
+        yAxis: [],
+        grid: [
+            { x: '3%', y: '5%', width: '90%', height: '25%', background: 'white' },
+            { x: '3%', y: '35%', width: '90%', height: '25%', background: 'white' },
+            { x: '3%', y: '65%', width: '90%', height: '25%', background: 'white' },
+        ],
+        dataZoom: [
+            {
+                show: true,
+                realtime: true,
+                start: 0,
+                end: 100,
+                // bottom: 50,
+                bottom: 20,
+                xAxisIndex: [0, 1, 2]
+            },
+            {
+                type: 'inside',
+                filterMode: 'empty',
+                realtime: true,
+                xAxisIndex: [0, 1, 2]
+            },
+            {
+                type: 'inside',
+                filterMode: 'empty',
+                realtime: true,
+                yAxisIndex: 0,
+                left: 'left'
+            },
+            {
+                type: 'inside',
+                filterMode: 'empty',
+                realtime: true,
+                yAxisIndex: 1,
+                left: 'left'
+            }
+        ],
+        xAxis: [],
+        series: []
+    }
+
 
 }

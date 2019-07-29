@@ -13,11 +13,13 @@ import { HourlyManagerService } from './hive/service/hourly-manager.service';
 import { MelliChartsComponent } from './melli-charts.component';
 import { DailyComponent } from './hive/daily/daily.component';
 import { HourlyComponent } from './hive/hourly/hourly.component';
+import { StackMelliChartsService } from './stack/service/stack-melli-charts.service';
 
 @NgModule({
   providers:[
     DailyManagerService,
-    HourlyManagerService
+    HourlyManagerService,
+    StackMelliChartsService
   ],
   declarations: [
     MelliChartsComponent,
