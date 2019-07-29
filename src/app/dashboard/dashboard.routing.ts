@@ -5,8 +5,6 @@ import { DashboardComponent } from './dashboard.component';
 import { AuthGuardService } from '../auth/auth-guard.service';
 import { HomeComponent } from './home/home.component';
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
-import { MeteoComponent } from './meteo/meteo.component';
-import { AdminComponent } from './admin/admin.component';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 import { MelliChartsComponent } from './melli-charts/melli-charts.component';
 import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-component.component';

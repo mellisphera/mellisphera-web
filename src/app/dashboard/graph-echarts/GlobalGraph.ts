@@ -243,7 +243,7 @@ export class GraphGlobal {
     getMonth(): String[] {
         // If he is French
         if (this.userService.getJwtReponse().country === "FR") {
-            return (['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']);
+            return (['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Jui', 'Aout', 'Sep', 'Oct', 'Nov', 'Dec']);
             // EN
         } else {
             return (['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']);

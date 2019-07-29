@@ -2,24 +2,40 @@
     height: 300px;
     width: 95%;
 }
-#sidebar-tools-daily{
+#sidebar-tools-daily-device{
     position: absolute;
     height: 30vh;
-    width: 5% !important;
+    width: 3% !important;
     color: white;
-    top: 30%;
+    top: 10%;
     right: 2px;
-    background-color: #333F3D;
+    /*background-color: #333F3D;*/
+}
+#sidebar-tools-daily-other{
+    position: absolute;
+    height: 10vh;
+    width: 3% !important;
+    color: white;
+    top: 60%;
+    right: 2px;
+    /*background-color: #333F3D;*/
+}
+.item-type{
+    text-align: center;
+    width: 40px;
+}
+.item-type img{
+    width: 100%;
 }
 .item-type:hover {
     cursor:pointer;
 }
 .active{
-    background-color: white;
-    color: black;
+    background-color: #16BE25;
+    color: white;
 }
-@media screen and (max-width:1400px) {
-    #sidebar-tools-daily {
+@media screen and (max-width:1300px) {
+    #sidebar-tools-daily-device, #sidebar-tools-daily-other {
         position: relative;
         width: 100% !important;
         height: auto;
@@ -27,7 +43,8 @@
     .calendar {
         width: 100%;
     }
-    #sidebar-tools-daily ul {
+    #sidebar-tools-daily-device ul, #sidebar-tools-daily-other ul {
         display: flex;
+        justify-content: center;
     }
 }

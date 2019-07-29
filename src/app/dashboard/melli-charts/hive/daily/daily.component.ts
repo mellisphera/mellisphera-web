@@ -35,17 +35,17 @@ export class DailyComponent implements OnInit, AfterViewInit {
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
     this.typeData = [
-      { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type active', icons: '' },
-      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: '' },
-      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: '' },
-      { name: 'ASTRO', id: 'ASTRO', origin: 'OTHER', class: 'item-type', icons: ''},
-      { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: ''}
+      { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type active', icons: './assets/picto_mellicharts/Win.png' },
+      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Tim.png' },
+      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Timi.png' },
+      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Tema.png' },
+      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Temi.png' },
+      { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: './assets/picto_mellicharts/weather.png' },
+      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Wma.png' },
+      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/He.png' },
+      { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Br.png' },
+      { name: 'ASTRO', id: 'ASTRO', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png'},
+      { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png'}
     ];
     this.optionCsv = {
       fieldSeparator: ',',

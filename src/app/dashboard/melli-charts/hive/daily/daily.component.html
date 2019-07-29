@@ -6,26 +6,28 @@
       <p>Sur la période: {{ dailyManager.meanPeriodDevice.value }} {{ dailyManager.meanPeriodDevice.unit }}</p>
       <p>Dernier 7 jours: {{ dailyManager.meanDeviceSevenDay.value }} {{ dailyManager.meanDeviceSevenDay.unit }} </p>
     </div>
+    <div id="sidebar-tools-daily-device" class="sidebar-wrapper">
+      <ul class="nav responsive-nav" id="device-group">
+        <li *ngFor="let type of getlabelByType('DEVICE')" (click)="setType(type)" [class]="type.class" [id]="type.id">
+          <img [src]="type.icons" />
+        <li>
+      </ul>
+    </div>
   </div>
   <hr />
   <div id="daily-ext">
     <div id="calendar-other" class="chart calendar"></div>
-       <div>
+      <div>
         <h2>Moyenne :</h2>
         <p>Sur la période: {{ dailyManager.meanPeriodOther.value }} {{ dailyManager.meanPeriodOther.unit }}</p>
         <p>Dernier 7 jours: {{ dailyManager.meanOtherSevenDay.value }} {{ dailyManager.meanOtherSevenDay.unit }}</p>
+      </div>
+      <div id="sidebar-tools-daily-other">
+        <ul class="nav responsive-nav" id="other-group">
+          <li *ngFor="let type of getlabelByType('OTHER')" (click)="setType(type)" [class]="type.class" [id]="type.id">
+            <img [src]="type.icons" /></li>
+          <li (click)="exportToCsv('OTHER')" class="item-type">Export to csv</li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div id="sidebar-tools-daily" class="sidebar-wrapper">
-    <ul class="nav responsive-nav" id="device-group">
-      <li *ngFor="let type of getlabelByType('DEVICE')" (click)="setType(type)" [class]="type.class" [id]="type.id">
-        {{ type.name }}</li>
-    </ul>
-    <hr />
-    <ul class="nav responsive-nav" id="other-group">
-      <li *ngFor="let type of getlabelByType('OTHER')" (click)="setType(type)" [class]="type.class" [id]="type.id">
-        {{ type.name }}</li>
-      <li (click)="exportToCsv('OTHER')" class="item-type">Export to csv</li>
-    </ul>
-  </div>
-</div>

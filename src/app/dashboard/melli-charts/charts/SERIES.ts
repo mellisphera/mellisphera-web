@@ -4,6 +4,7 @@ export const SERIES = {
         type: 'effectScatter',
         coordinateSystem: 'calendar',
         data: [],
+        symbol: '',
         symbolSize: {},
         showEffectOn: 'emphasis',
         rippleEffect: {

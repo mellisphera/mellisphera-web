@@ -13,13 +13,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertsService } from './service/api/alerts.service';
 import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';
 import { CapteurService } from './service/api/capteur.service';
-import { MeteoComponent } from './meteo/meteo.component';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
 import { FeedbackComponent } from '../feedback/feedback.component';
-import { NgxEchartsModule } from 'ngx-echarts';
 import { SearchFleurPipe, searchFleurByDate, searchFleurByType } from './fleurs-floraison/service/search-fleur.pipe';
-import { MeteoService } from './meteo/Service/MeteoService';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { SidebarService } from './service/sidebar.service';
 import { AdminService } from './admin/service/admin.service';
@@ -67,7 +64,6 @@ import { DailyRecordService } from './service/api/dailyRecordService';
     RucherService,
     RucheService,
     AlertsService,
-    MeteoService,
     DailyRecordService,
     FleursFloraisonService,
     AdminService,
@@ -83,7 +79,6 @@ import { DailyRecordService } from './service/api/dailyRecordService';
   declarations: [
     DashboardComponent,
     FeedbackComponent,
-    MeteoComponent,
     SearchFleurPipe,
     searchFleurByDate,
     searchFleurByType,
