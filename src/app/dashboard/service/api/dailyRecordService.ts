@@ -23,6 +23,7 @@ export class DailyRecordService {
     private arrayHint: any[];
     private arrayHealth: any[];
     public dailyRecords: DailyRecordTh[];
+    public dailyRecordsDayD3D7: DailyRecordTh[][];
     public dailyRecordsGraph: DailyRecordTh[];
     public statusLoading: boolean;
     public rangeDailyRecord: Date;
@@ -45,6 +46,10 @@ export class DailyRecordService {
         this.rangeDailyRecord.setHours(23);
         this.rangeDailyRecord.setMinutes(0);
         this.dailyRecords = [];
+        this.dailyRecordsDayD3D7 = [];
+        this.dailyRecordsDayD3D7[0] = [];
+        this.dailyRecordsDayD3D7[1] = [];
+        this.dailyRecordsDayD3D7[2] = [];
         if (this.user.getUser()) {
             this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
                 console.log(sessionStorage.getItem('currentApiary'));
@@ -268,9 +273,64 @@ export class DailyRecordService {
         this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, this.rangeDailyRecord);
         this.dailyRecTabObs.subscribe(
             (data) => {
-                console.log(data);
                 if (data[0] != null) {
                     this.dailyRecords = data;
+
+                }
+            },
+            (err) => {
+                console.log(err);
+            }
+        );
+    }
+
+    /**
+     *
+     * @public
+     * @param {string} idApiary
+     * @memberof DailyRecordService
+     */
+    // Get recordTH by apiary for a date, and get records for date -3 days and date -7 days. Stock it into an array.
+    public getRecThByApiaryByDateD3D7(idApiary: string, date: Date): void {
+        // Get recordTH by apiary for a date
+        date.setDate(date.getDate() - 2);
+        date.setHours(23);
+        date.setMinutes(0);
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, date);
+        this.dailyRecTabObs.subscribe(
+            (data) => {
+                if (data[0] != null) {
+                    this.dailyRecordsDayD3D7[0] = data;
+
+                }
+            },
+            (err) => {
+                console.log(err);
+            }
+        );
+        // Get recordTH by apiary for date -3 days
+        date.setDate(date.getDate() - 3);
+
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, date);
+        this.dailyRecTabObs.subscribe(
+            (data) => {
+                if (data[0] != null) {
+                    this.dailyRecordsDayD3D7[1] = data;
+
+                }
+            },
+            (err) => {
+                console.log(err);
+            }
+        );
+        // Get recordTH by apiary for date -7 days
+        date.setDate(date.getDate() - 4);
+
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, date);
+        this.dailyRecTabObs.subscribe(
+            (data) => {
+                if (data[0] != null) {
+                    this.dailyRecordsDayD3D7[2] = data;
 
                 }
             },
@@ -313,6 +373,12 @@ export class DailyRecordService {
         const selectHive = this.dailyRecords.filter(elt => elt.idHive === idHive)[0];
         return selectHive !== undefined ? selectHive.brood + ' %' : null;
 
+    }
+
+    // get pourcent by hive for the current day, day -3 or day -7.
+    public getPourcentByHiveDayD3D7(idHive: string, index : number): any {
+        const selectHive = this.dailyRecordsDayD3D7[index].filter(elt => elt.idHive === idHive)[0];
+        return selectHive !== undefined ? selectHive.brood + ' %' : null;
     }
 
     /**

@@ -1,5 +1,5 @@
 import { User } from '../../_model/user';
-import { Component, OnInit, OnDestroy, AfterViewInit, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit,HostListener, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../service/api/rucher.service';
 import { Ruche } from './ruche';
@@ -69,6 +69,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   private selectHive: RucheInterface;
   private hiveIndex: number;
   private infoHiveComponent: any;
+  screenHeight:any;
+  screenWidth:any;
 
   constructor(public dailyRecTh: DailyRecordService,
     private graphGlobal: GraphGlobal,
@@ -117,6 +119,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       hivePosY: '',
       sharingUser: []
     };
+
+    this.getScreenSize();
   }
 
   receiveMessage($event) {
@@ -134,6 +138,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     showDate.setDate(this.dailyRecTh.rangeDailyRecord.getDate() + 1);
     return this.unitService.getDailyDate(showDate.toISOString());
   }
+
+  @HostListener('window:resize', ['$event'])
+    getScreenSize(event?) {
+          this.screenHeight = window.innerHeight;
+          this.screenWidth = window.innerWidth;
+    }
+
   ngOnInit() {
     if (!this.rucherService.rucherSubject.closed) {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
@@ -235,15 +246,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // Call info-hives app
     this.router.navigateByUrl('dashboard/home/info-hives');
-    let el = document.getElementById('scroll');
-    el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+    if(this.screenWidth <991){
+      let el = document.getElementById('scroll');
+      el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+    }
 
   }
 
   OnclickInfoApiary() {
     this.router.navigateByUrl('dashboard/home/info-apiary');
-    let el = document.getElementById('scroll');
-    el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+    if(this.screenWidth <991){
+      let el = document.getElementById('scroll');
+      el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+    }
 
   }
 
@@ -541,15 +556,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         stringReturn += stringTemp;
         stringReturn += ' ne sont pas à jour. Veuillez synchroniser vos données.'
       } else {
-        stringReturn += '   Datas for the hive ';
+        stringReturn += '   Data for the hive ';
         stringReturn += stringTemp;
-        stringReturn += ' are not up-to-date. Please synchronize your datas.'
+        stringReturn += ' are not up-to-date. Please synchronize your data.'
       }
     } else if (i === this.rucheService.ruches.length){
       if (this.userService.getJwtReponse().country === "FR") {
         stringReturn += '   Vos données pour les ruches de ce rucher ne sont pas à jour. Veuillez synchroniser vos données.';
       } else {
-        stringReturn += '   Your datas for the hives of this apiary are not up-to-date. Please synchronize your datas.';
+        stringReturn += '   Your data for the hives of this apiary are not up-to-date. Please synchronize your data.';
       }
     }else if (i > 1) {
       if (this.userService.getJwtReponse().country === "FR") {
@@ -557,9 +572,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         stringReturn += stringTemp;
         stringReturn += ' ne sont pas à jour. Veuillez synchroniser vos données.'
       } else {
-        stringReturn += '   Datas for the hives ';
+        stringReturn += '   Data for the hives ';
         stringReturn += stringTemp;
-        stringReturn += ' are not up-to-date. Please synchronize your datas.'
+        stringReturn += ' are not up-to-date. Please synchronize your data.'
       }
     }
 
@@ -581,6 +596,18 @@ export class HomeComponent implements OnInit, OnDestroy {
         reject(false);
       }
     })
+  }
+
+  // Sort a sensors list in increasing sort
+  increasingSort(sensorsList : string[]) : string[]{
+    sensorsList.sort((a, b) => {
+      if(a < b){
+        return -1;
+      }else{
+        return 1;
+      }
+    });
+    return sensorsList;
   }
 
 }

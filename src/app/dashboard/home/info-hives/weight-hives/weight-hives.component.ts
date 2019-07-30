@@ -92,7 +92,7 @@ export class WeightHivesComponent{
               show: true,
               lineStyle: {
                   color: '#000',
-                  width: 4,
+                  width: 2,
                   type: 'solid'
               }
           },

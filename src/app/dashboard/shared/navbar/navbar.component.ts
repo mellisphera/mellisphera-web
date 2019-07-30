@@ -509,10 +509,12 @@ export class NavbarComponent implements OnInit {
                 if ((this.rucherService.ruchers.length > 0) && (this.rucherService.rucherSelectUpdate === this.rucherService.rucher)) {
                     this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
                     this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
+                    this.router.navigate(['dashboard/home']);
                 }
                 if (this.rucherService.ruchers.length < 1) {
                     this.rucherService.initRucher();
                     this.rucherService.rucher = this.rucherService.allApiaryAccount[0];
+                    this.router.navigate(['dashboard/home']);
                 }
                 this.rucheService.loadHiveByApiary(this.rucherService.rucher.id);
             });
@@ -648,6 +650,7 @@ export class NavbarComponent implements OnInit {
             this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
             this.desactiveButtonHomePage();
             this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
+            this.router.navigate(['dashboard/home']);
             if (this.userService.getJwtReponse().country === "FR") {
                 this.notifier.notify('success', 'Rucher créé');
             } else {

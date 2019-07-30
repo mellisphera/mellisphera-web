@@ -40,11 +40,13 @@
         <!-- Choose date-->
         <ul class="nav navbar-nav navbar-date navbar-right">
             <li width="35" class="range-date" (click)="onClickPreviousDay()">
-                <a><img src="./assets/icons/next-button-4.png" width="35" /></a>
+                <button type="button" class="btn btn-info date-arrow"><i class="fa fa-arrow-circle-left"
+                    id="previous-date"></i></button>
             </li>
             <li id="date">{{ getDateDaily() }}</li>
             <li class="range-date" (click)="onClickNextDay()">
-                <a><img src="./assets/icons/next-button-4.png" width="35" /></a>
+                <button type="button" class="btn btn-info date-arrow"><i id="next-date"
+            class="fa fa-arrow-circle-right"></i></button>
             </li>
         </ul>
     </div><!-- /.container-fluid -->
@@ -61,6 +63,10 @@
     <div class="grid-container" #myBounds id="cadre" ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary"
         class="my-drop-zone" [class.valid-drag]="baseDropValid" [(lastBaseUrl)]="rucherService.rucher.photo">
         <img [src]="rucherService.rucher.photo" (click)="hideRightClick($event)" class="photo" />
+        <!-- The button to change hive handle => click -->
+        <!-- <div zIndex="100" class ="lockButton">
+            <button type="button" class="btn btn-info lock"><i class="fa fa-lock"></i></button>
+        </div> -->
         <!-- The dive for each hive -->
         <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true" data-toggle="tooltip"
             (endOffset)="onMoveEnd($event, ruche)" ngDraggable [handle]="HiveHandle" *ngFor="let ruche of rucheService.ruches; let i = index"
@@ -86,8 +92,17 @@
                 </button>
             </div>
             <!-- The circle for an hive -->
+            <!-- Hive Handle -->
             <div #HiveHandle data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
                 (dblclick)="onClick(ruche);" class="ruche"
+                [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)">
+                <!-- notifications -->
+                <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"
+                    class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche.id) }}</span>
+            </div>
+            <!-- Hive click -->
+            <div data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
+                (click)="onClick(ruche);" class="ruche displayNone"
                 [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)">
                 <!-- notifications -->
                 <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"
@@ -113,7 +128,7 @@
                 <span *ngIf="capteurService.getCapteursByHive(ruche.id).length === 0"
                     class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
                 <span *ngIf="capteurService.getCapteursByHive(ruche.id).length !== 0">
-                    <span *ngFor="let capt of capteurService.getCapteursByHive(ruche.id); let i = index">
+                    <span *ngFor="let capt of increasingSort(capteurService.getCapteursByHive(ruche.id)); let i = index">
                         <span class="hive-info">{{ capt }}</span>
                         <br />
                     </span>
@@ -122,6 +137,7 @@
         </div>
     </div>
 
+    <div id="scroll"></div>
     <div id="right">
         <router-outlet (activate)="setRouterPage($event)"></router-outlet>
     </div>
@@ -141,7 +157,6 @@
 </div>
 
 <!-- Under the picture -->
-<div id="scroll"></div>
 <div *ngIf="router.url === '/dashboard/home'" id="clickHive">
     <p class="center-classe">
         {{ 'HOME.CLICK' | translate}}

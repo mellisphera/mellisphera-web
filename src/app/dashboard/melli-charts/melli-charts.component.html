@@ -2,9 +2,9 @@
   <nav class="navbar navbar-default" role="admin-navigation">
     <div class="navbar-header">
     </div>
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav buttonLeft">
       <li *ngFor="let btn of btnNav"><button type="button" [id]="btn" (click)="navToPage(btn.path)"
-          class="btn btn-success">{{ btn.name }}</button></li>
+          class="button button0">{{ btn.name }}</button></li>
     </ul>
     <ul class="nav nav-date navbar-nav navbar-right">
       <li><button type="button" class="btn btn-info date-arrow"><i class="fa fa-arrow-circle-left"

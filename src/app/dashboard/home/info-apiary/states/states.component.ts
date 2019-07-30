@@ -14,6 +14,7 @@ import { RucheService } from '../../../service/api/ruche.service';
 import { DailyRecordService } from '../../../service/api/dailyRecordService';
 import { DailyRecordsWService } from '../../../service/api/daily-records-w.service';
 import { CapteurService } from '../../../service/api/capteur.service';
+import { RucheInterface } from '../../../../_model/ruche';
 
 @Component({
   selector: 'app-states',
@@ -59,6 +60,7 @@ export class StatesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dailyRecTh.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
   }
 
   isValidDate(obsDate : Date, nbDays : number) : boolean{
@@ -67,6 +69,18 @@ export class StatesComponent implements OnInit {
     dateSince.setDate(dateSince.getDate() - nbDays);
     this.elementCounter = 1;
     return (currentObsDate.getTime() > dateSince.getTime());
+  }
+
+  // Sort a hive list in alphabetic sort
+  alphaSort(hiveList : RucheInterface[]) : RucheInterface[]{
+    hiveList.sort((a, b) => {
+      if(a.name < b.name){
+        return -1;
+      }else{
+        return 1;
+      }
+    });
+    return hiveList;
   }
 
   getElementsInDate(listElements : any[], nbDays : number) : any[]{

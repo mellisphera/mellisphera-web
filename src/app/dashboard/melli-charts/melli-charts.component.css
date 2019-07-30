@@ -20,7 +20,7 @@
     padding: 10px;
     color: white !important;
     display: flex;
-    background-color: #333F3D;
+    background-color: #4F4F51;
     justify-content: space-between;
     flex-wrap: wrap;
     width: 100%;
@@ -37,7 +37,7 @@
 }
 nav[role=admin-navigation] {
     color: white;
-    background-color: #333F3D;
+    background-color: #4F4F51;
 }
 .nav li .btn{
     color: white !important;
@@ -70,6 +70,7 @@ nav[role=admin-navigation] {
 }
 #next-date{
     margin-left: 10px;
+    margin-right: 20px;
 }
 .time{
     white-space: nowrap;
@@ -169,4 +170,42 @@ nav[role=admin-navigation] {
         width: 52%;
     }
 }
+
+.button {
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 16px 1px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+
+  .button0 {
+    background-color: #4F4F51; 
+    color: white; 
+    border: 2px solid #70A8B2;
+    border-radius: 4px;
+  }
+  
+  .button0:hover {
+    background-color: white;
+    color: #4F4F51; 
+  }
+  
+  .active0{
+    background-color: white;
+    color: #4F4F51; 
+  }
+  
+  .active0:hover{
+    color: #70A8B2; 
+    border: 2px solid #4F4F51;
+  }
+
+  .buttonLeft{
+      margin-left: 25px;
+  }
 
