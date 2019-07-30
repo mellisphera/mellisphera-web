@@ -28,14 +28,12 @@ li:first-child img{
 .navbar-date li{
   display: inline-block;
   float: none !important;
+  margin-top: 5px;
 }
 
 // center buttons
 
 .button {
-  background-color: #70A8B2;
-  border: none;
-  color: white;
   padding: 8px 16px;
   text-align: center;
   text-decoration: none;
@@ -92,6 +90,7 @@ li:first-child img{
   background-color: #4F4F51; 
   color: white; 
   border: 2px solid #70A8B2;
+  border-radius: 4px;
 }
 
 .button0:hover {
@@ -183,8 +182,6 @@ li:first-child img{
  // position: absolute;
   font-size: 15px;
   margin-bottom: 2px;
-  width: 60px;
-  height: 60px;
   padding: 2px;
   margin: auto;
   margin-bottom: 5%;
@@ -221,18 +218,23 @@ li:first-child img{
 
 .hive-info{
   text-align: center;
-  background-color: rgba($color: white, $alpha: 0.5);
-  font-weight: bold;
-  font-size: 20px;
-  padding: 2px;
+  background-color: #4F4F51;
+  color: white;
+  // font-weight: bold;
+  padding: 2px 2px;
   max-width: 100%;
   overflow-wrap: break-word;
   display: inline;
+  border-radius: 4px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+ transition-duration: 0.4s;
 }
+
 
 .hive-info:hover{
   cursor: pointer;
-  background-color: lightblue;
+  background-color: white;
+  color: #4F4F51; 
 }
 
 .weightIncome{
@@ -291,10 +293,31 @@ li:first-child img{
 
 // FOR THE HIVES
 
-@media (max-width: 2500px) {
+@media (min-width: 1901px) {
   .ruche{
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
+  }
+
+  .hive-info{
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 1900px) {
+  .ruche{
+    width: 35px;
+    height: 35px;
+  }
+
+  .hive-info{
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 1700px) {
+  .hive-info{
+    font-size: 16px;
   }
 }
 
@@ -303,26 +326,65 @@ li:first-child img{
     width: 30px;
     height: 30px;
   }
+
+  .hive-info{
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 1320px) {
+  .ruche{
+    width: 25px;
+    height: 25px;
+  }
+
+  .hive-info{
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 990px) {
   .ruche{
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
+  }
+
+  .hive-info{
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hive-info{
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 800px) {
+  .hive-info{
+    font-size: 16px;
   }
 }
 
 @media (max-width: 700px) {
   .ruche{
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .hive-info{
+    font-size: 14px;
   }
 }
 
 @media (max-width: 500px) {
   .ruche{
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
+  }
+
+  .hive-info{
+    font-size: 12px;
   }
 }
 
@@ -529,4 +591,47 @@ li:first-child img{
 
 .collapse{
   z-index: 900;
+}
+
+#previous-date {
+  margin-right: 20px;
+}
+
+#next-date{
+  margin-left: 10px;
+  margin-right: 40px;
+}
+
+.date-arrow{
+  border: none;
+  color: white;
+  padding: 0px !important;
+}
+
+.date-arrow .fa{
+  font-size: 35px;
+}
+
+.lock{
+  border: none;
+  color: black;
+  padding: 0px !important;
+  text-align: center;
+}
+
+.lock .fa{
+  font-size: 35px;
+}
+
+.lockButton{
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 35px;
+  background-color: white;
+  opacity: 40%;
+}
+
+.displayNone{
+  display : none;
 }

@@ -306,6 +306,8 @@
         "SUMMARYHIVES" : "Hives summary + alerts for",
         "NAME" : "Name",
         "BROOD" : "Brood",
+        "BROODD3" : "Brood D-3",
+        "BROODD7" : "Brood D-7",
         "WEIGHT" : "Weight",
         "SENSORS" : "Sensors",
         "ALERTS" : "Alerts",

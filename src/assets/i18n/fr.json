@@ -306,6 +306,8 @@
         "SUMMARYHIVES" : "Résumé des ruches + alertes depuis",
         "NAME" : "Nom",
         "BROOD" : "Couvain",
+        "BROODD3" : "Couvain J-3",
+        "BROODD7" : "Couvain J-7",
         "WEIGHT" : "Poids",
         "SENSORS" : "Capteurs",
         "ALERTS" : "Alertes",
