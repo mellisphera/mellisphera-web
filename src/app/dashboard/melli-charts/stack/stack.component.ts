@@ -141,19 +141,19 @@ export class StackComponent implements OnInit {
       let obsArray = [];
       obsArray = this.stackService.getHiveSelect().map(_hive => {
       return  { hive: _hive, observable: [
-        {type: 'TempExt', obs: this.recordService.getTempExtByHive(_hive.id, this.melliDate.getRangeForReqest())},
-        {type: 'TempInt', obs: this.recordService.getTempIntByHive(_hive.id, this.melliDate.getRangeForReqest())},
-        {type: 'Weight', obs: this.recordService.getWeightByHive(_hive.id, this.melliDate.getRangeForReqest())},
-        {type: 'Hint', obs: this.recordService.getHintIntByHive(_hive.id, this.melliDate.getRangeForReqest())}
+        {name: _hive.name + 'TempExt', obs: this.recordService.getTempExtByHive(_hive.id, this.melliDate.getRangeForReqest())},
+        {name: _hive.name + 'TempInt', obs: this.recordService.getTempIntByHive(_hive.id, this.melliDate.getRangeForReqest())},
+        {name: _hive.name + 'Weight', obs: this.recordService.getWeightByHive(_hive.id, this.melliDate.getRangeForReqest())},
+        {name: _hive.name + 'Hint', obs: this.recordService.getHintIntByHive(_hive.id, this.melliDate.getRangeForReqest())}
       ]};
     });
     obsArray.forEach((_request) => {
       Observable.forkJoin(_request.observable.map(_elt => _elt.obs)).subscribe(
         _records => {
           _records.forEach((_elt: any[], index) => {
-            this.getSerieByData(_elt, _request.observable[index].type , (serieComplete: any) => {
-              serieComplete.yAxisIndex = this.getIndexGridByIndex(_request.observable[index].type);
-              serieComplete.xAxisIndex = this.getIndexGridByIndex(_request.observable[index].type);
+            this.getSerieByData(_elt, _request.observable[index].name , (serieComplete: any) => {
+              serieComplete.yAxisIndex = this.getIndexGridByIndex(_request.observable[index].name);
+              serieComplete.xAxisIndex = this.getIndexGridByIndex(_request.observable[index].name);
                serieComplete.itemStyle = {
                 color: this.stackService.getColorByIndex(this.getHiveIndex(_request.hive), _request.hive)
               };
@@ -180,17 +180,17 @@ export class StackComponent implements OnInit {
 
   loadDataByHive(hive: RucheInterface) {
     const obsArray: Array<any> = [
-      {type: 'TempExt', obs: this.recordService.getTempExtByHive(hive.id, this.melliDate.getRangeForReqest())},
-      {type: 'TempInt', obs: this.recordService.getTempIntByHive(hive.id, this.melliDate.getRangeForReqest())},
-      {type: 'Weight', obs: this.recordService.getWeightByHive(hive.id, this.melliDate.getRangeForReqest())},
-      {type: 'Hint', obs: this.recordService.getHintIntByHive(hive.id, this.melliDate.getRangeForReqest())}
+      {name: hive.name + 'TempExt', obs: this.recordService.getTempExtByHive(hive.id, this.melliDate.getRangeForReqest())},
+      {name: hive.name + 'TempInt', obs: this.recordService.getTempIntByHive(hive.id, this.melliDate.getRangeForReqest())},
+      {name: hive.name + 'Weight', obs: this.recordService.getWeightByHive(hive.id, this.melliDate.getRangeForReqest())},
+      {name: hive.name + 'Hint', obs: this.recordService.getHintIntByHive(hive.id, this.melliDate.getRangeForReqest())}
     ];
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _record => {
         _record.forEach((_elt, index) => {
-          this.getSerieByData(_elt, obsArray[index].type, (serieComplete) => {
-              serieComplete.yAxisIndex = this.getIndexGridByIndex(obsArray[index].type);
-              serieComplete.xAxisIndex = this.getIndexGridByIndex(obsArray[index].type);
+          this.getSerieByData(_elt, obsArray[index].name, (serieComplete) => {
+              serieComplete.yAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
+              serieComplete.xAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
               serieComplete.itemStyle = {
                 color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive) 
               };
@@ -211,17 +211,14 @@ export class StackComponent implements OnInit {
    * @returns {number}
    * @memberof StackComponent
    */
-  getIndexGridByIndex(type: string): number {
-    switch(type) {
-      case 'TempInt':
-      case 'TempExt':
-        return 1;
-      case 'Weight':
-        return 0;
-      case 'Hint':
-        return 2;
-      default:
-        break;
+  getIndexGridByIndex(name: string): number {
+
+    if (/TempInt/g.test(name) || /TempExt/g.test(name) ) {
+      return 1;
+    } else if (/Weight/g.test(name)) {
+      return 0;
+    } else {
+      return 2;
     }
   }
 
@@ -233,7 +230,7 @@ export class StackComponent implements OnInit {
    */
   removeHiveSerie(hive: RucheInterface): void {
     let option = this.stackService.getEchartInstance().getOption();
-    const series = option.series.filter(_filter => _filter.name.split('|')[0] === hive.name);
+    const series = option.series.filter(_filter => _filter.name.indexOf(hive.name) !== -1);
      if (series.length > 0) {
       series.forEach(element => {
         const indexSerie = option.series.map(_serie => _serie.name).indexOf(element.name);
