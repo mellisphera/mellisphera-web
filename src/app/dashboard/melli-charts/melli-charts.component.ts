@@ -20,6 +20,7 @@ import { DailyRecordService } from '../service/api/dailyRecordService';
 import { DailyStockHoneyService } from '../service/api/daily-stock-honey.service';
 import { WeatherService } from '../service/api/weather.service';
 import { StackMelliChartsService } from './stack/service/stack-melli-charts.service';
+import { StackComponent } from './stack/stack.component';
 
 const PREFIX_PATH = '/dashboard/melli-charts/';
 @Component({
@@ -35,6 +36,7 @@ export class MelliChartsComponent implements OnInit {
   public typeNav: Array<Object>;
 
   hiveComponent: HiveComponent;
+  stackComponent: StackComponent;
 
   constructor(public rucheService: RucheService,
     public rucherService: RucherService,
@@ -124,7 +126,11 @@ export class MelliChartsComponent implements OnInit {
    */
   setRangeSelect(rangeSelect: DataRange): void {
     this.melliChartDate.setRange(rangeSelect);
-    this.hiveComponent.setRangeChart();
+    if (this.router.url === PREFIX_PATH + 'hive') {
+      this.hiveComponent.setRangeChart();
+    } else {
+      this.stackComponent.loadAfterRangeChanged();
+    }
   }
 
   getHiveByApiary(idApiary: string): RucheInterface[] | boolean {
@@ -135,8 +141,13 @@ export class MelliChartsComponent implements OnInit {
     }
   }
 
-  onActivate(componentRef) {
-    this.hiveComponent = componentRef;
+  onActivate(componentRef: Component) {
+    if (componentRef instanceof HiveComponent) {
+      this.hiveComponent = componentRef;
+    } else if(componentRef instanceof StackComponent) {
+      this.stackComponent = componentRef;
+    }
+
   }
 
 
@@ -155,7 +166,11 @@ export class MelliChartsComponent implements OnInit {
     let start = this.melliChartDate.start;
     let end = this.melliChartDate.end;
     this.melliChartDate.setRangeForRequest([start, end]);
-    this.hiveComponent.setRangeChart();
+    if (this.router.url === PREFIX_PATH + 'hive') {
+      this.hiveComponent.setRangeChart();
+    } else {
+      this.stackComponent.loadAfterRangeChanged();
+    }
   }
 
 
@@ -188,8 +203,10 @@ export class MelliChartsComponent implements OnInit {
       case PREFIX_PATH + 'stack':
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
+          this.stackComponent.removeHiveSerie(hive);
         } else {
           this.stackService.addHive(hive);
+          this.stackComponent.loadDataByHive(hive);
           console.log(this.stackService.getHiveSelect());
         }
         break;

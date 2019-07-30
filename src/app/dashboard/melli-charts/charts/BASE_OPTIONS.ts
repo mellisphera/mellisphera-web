@@ -69,6 +69,7 @@ export const BASE_OPTIONS = {
             {
                 type: 'time',
                 boundaryGap: false,
+                gridIndex: 0,
                 axisLine: { onZero: true },
                 position: 'bottom',
                 splitLine: {
@@ -107,7 +108,8 @@ export const BASE_OPTIONS = {
         nameGap: 18,
         interval: 0,
         min: 0,
-        max: 0
+        max: 0,
+        gridIndex: 0
     },
     tooltip: {
         trigger: 'item',
@@ -127,7 +129,7 @@ export const BASE_OPTIONS = {
         minInterval: 1,
         gridIndex: 0,
         max: new Date(),
-        splitLine: {
+         splitLine: {
             show: true
         },
         splitArea: {
@@ -138,7 +140,7 @@ export const BASE_OPTIONS = {
             formatter: {}
         }
     },
-    
+
     baseOptionStack: {
 
         toolbox: {
@@ -149,14 +151,24 @@ export const BASE_OPTIONS = {
                 saveAsImage: {}
             }
         },
+        tooltip: {},
+        axisPointer: {
+            link: { xAxisIndex: 'all' }
+        },
         yAxis: [],
         grid: [
-            { x: '3%', y: '5%', width: '90%', height: '25%', background: 'white' },
-            { x: '3%', y: '35%', width: '90%', height: '25%', background: 'white' },
-            { x: '3%', y: '65%', width: '90%', height: '25%', background: 'white' },
+            { 
+                x: '3%', 
+                y: '2%', 
+                width: '90%', 
+                height: '25%', 
+                background: 'white' 
+            },
+             { x: '3%', y: '32%', width: '90%', height: '25%', background: 'white' },
+             { x: '3%', y: '63%', width: '90%', height: '25%', background: 'white' }
         ],
         dataZoom: [
-            {
+              {
                 show: true,
                 realtime: true,
                 start: 0,

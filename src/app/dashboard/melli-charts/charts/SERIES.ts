@@ -30,6 +30,7 @@ export const SERIES = {
         name: '',
         // id: '',
         type: 'line',
+        xAxisIndex: 0,
         yAxisIndex: 0,
         data: [],
         showSymbol: false,

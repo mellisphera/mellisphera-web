@@ -14,7 +14,8 @@ const routes: Routes = [
             { path: 'hive', component: HiveComponent, canActivate: [AuthGuardService]},
             { path: 'map', component: MapComponent, canActivate: [AuthGuardService]},
             { path: 'vitality', component: VitalityComponent, canActivate: [AuthGuardService]},
-            { path: 'stack', component: StackComponent, canActivate: [AuthGuardService]}
+            { path: 'stack', component: StackComponent, canActivate: [AuthGuardService]},
+            //{ path: '', redirectTo: 'hive', pathMatch: 'full', canActivate: [AuthGuardService]}
         ]
     }
 ];

@@ -89,7 +89,7 @@ export class StackApiaryGraphService {
       grid: [
         { x: '3%', y: '5%', width: '90%', height: '25%', background: 'white' },
         { x: '3%', y: '35%', width: '90%', height: '25%', background: 'white' },
-        { x: '3%', y: '65%', width: '90%', height: '25%', background: 'white' },
+        { x: '3%', y: '65%', width: '90%', height: '25%', background: 'white' }
       ],
       xAxis: [
         {

@@ -3,6 +3,7 @@ import { RucheInterface } from '../../../../_model/ruche';
 import { HttpClient } from '@angular/common/http';
 import { DataRange } from '../../../../_model/data-range';
 import { e } from '@angular/core/src/render3';
+import { resolve } from 'q';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,21 @@ export class StackMelliChartsService {
     this.echartInstance = echartInstance;
   }
 
+/**
+ *
+ *
+ * @returns {Promise<boolean>}
+ * @memberof StackMelliChartsService
+ */
+checkIfInstanceEchartAlerayExist(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      if (this.echartInstance !== null) {
+        resolve(true);
+      } else {
+        reject(false);
+      }
+    })
+  }
   /**
    *
    *
