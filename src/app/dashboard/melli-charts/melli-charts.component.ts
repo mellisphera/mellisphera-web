@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { RucheService } from '../service/api/ruche.service';
 import { RucherService } from '../service/api/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
@@ -28,7 +28,7 @@ const PREFIX_PATH = '/dashboard/melli-charts/';
   templateUrl: './melli-charts.component.html',
   styleUrls: ['./melli-charts.component.css']
 })
-export class MelliChartsComponent implements OnInit {
+export class MelliChartsComponent implements OnInit, AfterViewInit {
 
 
   public btnNav: Array<Object>;
@@ -37,10 +37,11 @@ export class MelliChartsComponent implements OnInit {
 
   hiveComponent: HiveComponent;
   stackComponent: StackComponent;
-
+  private eltOnClick: EventTarget;
   constructor(public rucheService: RucheService,
     public rucherService: RucherService,
     private userService: UserloggedService,
+    private renderer: Renderer2,
     private router: Router,
     private dailyRecordThService: DailyRecordService,
     private dailyRecordWservice: DailyRecordsWService,
@@ -116,7 +117,34 @@ export class MelliChartsComponent implements OnInit {
       }
     }
     this.router.navigateByUrl(PREFIX_PATH + 'hive');
+
   }
+
+  ngAfterViewInit(): void {
+    this.eltOnClick = document.getElementById('hive');
+    this.renderer.addClass(this.eltOnClick, 'nav-active');  
+  }
+
+
+
+  /**
+   *
+   *
+   * @memberof MelliChartsComponent
+   */
+  nextDate(): void {
+    
+  }
+
+  /**
+   *
+   *
+   * @memberof MelliChartsComponent
+   */
+  previousDate(): void {
+
+  }
+
 
   /**
    *
@@ -186,7 +214,16 @@ export class MelliChartsComponent implements OnInit {
    * @param {string} path
    * @memberof MelliChartsComponent
    */
-  navToPage(path: string): void {
+  navToPage(path: string, id: string): void {
+    console.log(id);
+    if (this.eltOnClick === null ) {
+      this.eltOnClick = document.getElementById(id);
+      this.renderer.addClass(this.eltOnClick, 'nav-active');
+    } else {
+      this.renderer.removeClass(this.eltOnClick, 'nav-active');
+      this.eltOnClick = document.getElementById(id);
+      this.renderer.addClass(this.eltOnClick, 'nav-active');
+    }
     this.router.navigateByUrl(PREFIX_PATH + path);
   }
 

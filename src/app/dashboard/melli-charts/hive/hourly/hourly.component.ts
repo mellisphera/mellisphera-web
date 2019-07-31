@@ -46,6 +46,7 @@ export class HourlyComponent implements OnInit {
 
   ngOnInit() {
     this.melliHive.setHourlyChartInstance(echarts.init(<HTMLDivElement>document.getElementById("hourly-chart")));
+    this.hourlyManager.setOriginOption(this.melliHive.getHourlyChartInstance());
     this.melliHive.getHourlyChartInstance().setOption(this.hourlyManager.baseOpions);
   }
 

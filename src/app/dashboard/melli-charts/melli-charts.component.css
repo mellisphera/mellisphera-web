@@ -194,6 +194,11 @@ nav[role=admin-navigation] {
     background-color: white;
     color: #4F4F51; 
   }
+
+  .nav-active {
+    background-color: white;
+    color: #4F4F51; 
+  }
   
   .active0{
     background-color: white;

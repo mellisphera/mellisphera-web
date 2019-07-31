@@ -3,15 +3,15 @@
     <div class="navbar-header">
     </div>
     <ul class="nav navbar-nav buttonLeft">
-      <li *ngFor="let btn of btnNav"><button type="button" [id]="btn" (click)="navToPage(btn.path)"
+      <li *ngFor="let btn of btnNav"><button type="button" [id]="btn.path" (click)="navToPage(btn.path, btn.path)"
           class="button button0">{{ btn.name }}</button></li>
     </ul>
     <ul class="nav nav-date navbar-nav navbar-right">
-      <li><button type="button" class="btn btn-info date-arrow"><i class="fa fa-arrow-circle-left"
+      <li><button type="button" (click)="previousDate()" class="btn btn-info date-arrow"><i class="fa fa-arrow-circle-left"
             id="previous-date"></i></button></li>
       <li id="dropdown">
         <div class="dropdown">
-          <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
+          <button id="btn-date" (click)="nexDate()" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
               class="fa fa-calendar"></i>{{ melliChartDate.start | myDate }} <span id="arrow">&#8680;</span>
             {{ melliChartDate.end | myDate }}
             <span class="caret"></span></button>

@@ -80,11 +80,4 @@ export class MelliChartsDateService {
     this.end = this.rangeDateForRequest[1];
   }
 
-  nextDate() {
-    
-  }
-
-  previousDate() {
-
-  }
 }

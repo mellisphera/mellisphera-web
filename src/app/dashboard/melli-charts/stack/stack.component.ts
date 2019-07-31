@@ -63,6 +63,9 @@ export class StackComponent implements OnInit {
 
     let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxis.gridIndex = 0;
+    xAxis.axisLabel.formatter = (value: number, index: number) => {
+      return this.unitService.getHourlyDate(new Date(value));
+    };
     this.options.xAxis.push(xAxis);
 
 
@@ -75,6 +78,9 @@ export class StackComponent implements OnInit {
 
     let xAxisTemp = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxisTemp.gridIndex = 1;
+    xAxisTemp.axisLabel.formatter = (value: number, index: number) => {
+      return this.unitService.getHourlyDate(new Date(value));
+    };
     this.options.xAxis.push(xAxisTemp);
 
 
@@ -87,6 +93,10 @@ export class StackComponent implements OnInit {
 
     let xAxisHum = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxisHum.gridIndex = 2;
+    xAxisHum.axisLabel.formatter = (value: number, index: number) => {
+      return this.unitService.getHourlyDate(new Date(value));
+    };
+
     this.options.xAxis.push(xAxisHum);
     this.options.tooltip.formatter = (params) => {
        return params.map(_elt => {
@@ -99,6 +109,7 @@ export class StackComponent implements OnInit {
         ));
       }).join('<br/>');
     }
+    console.log(this.options);
     this.stackService.getEchartInstance().setOption(this.options);
   }
 

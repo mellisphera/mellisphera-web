@@ -103,10 +103,11 @@ export const BASE_OPTIONS = {
 
     yAxis: {
         name: '',
+        show: true,
         nameLocation: 'middle',
         type: 'value',
-        nameGap: 18,
-        interval: 0,
+        nameGap: 25,
+        //interval: 0,
         min: 0,
         max: 0,
         gridIndex: 0
@@ -142,12 +143,15 @@ export const BASE_OPTIONS = {
     },
 
     baseOptionStack: {
-
         toolbox: {
-            orient: 'horizontal',
+            orient: 'vertical',
             itemSize: 20,
             feature: {
+                dataZoom: {
+                    yAxisIndex: 'none',
+                },
                 dataView: { readOnly: false },
+                restore: {},
                 saveAsImage: {}
             }
         },
@@ -166,12 +170,12 @@ export const BASE_OPTIONS = {
             { 
                 x: '3%', 
                 y: '2%', 
-                width: '90%', 
+                width: '95%', 
                 height: '25%', 
                 background: 'white' 
             },
-             { x: '3%', y: '32%', width: '90%', height: '25%', background: 'white' },
-             { x: '3%', y: '63%', width: '90%', height: '25%', background: 'white' }
+             { x: '3%', y: '32%', width: '95%', height: '25%', background: 'white' },
+             { x: '3%', y: '63%', width: '95%', height: '25%', background: 'white' }
         ],
         dataZoom: [
               {
