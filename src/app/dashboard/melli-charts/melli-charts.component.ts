@@ -129,7 +129,10 @@ export class MelliChartsComponent implements OnInit {
     if (this.router.url === PREFIX_PATH + 'hive') {
       this.hiveComponent.setRangeChart();
     } else {
-      this.stackComponent.loadAfterRangeChanged();
+      this.stackComponent.loadAfterRangeChanged((options: any) => {
+        this.stackService.getEchartInstance().setOption(options, true);
+        this.stackService.getEchartInstance().hideLoading();
+      });
     }
   }
 
@@ -169,7 +172,10 @@ export class MelliChartsComponent implements OnInit {
     if (this.router.url === PREFIX_PATH + 'hive') {
       this.hiveComponent.setRangeChart();
     } else {
-      this.stackComponent.loadAfterRangeChanged();
+      this.stackComponent.loadAfterRangeChanged((options: any) => {
+        this.stackService.getEchartInstance().setOption(options, true);
+        this.stackService.getEchartInstance().hideLoading();
+      });
     }
   }
 

@@ -20,6 +20,7 @@ export class StackComponent implements OnInit {
 
   public options: any;
   private subjectSeriesComplete: BehaviorSubject<number>;
+  private valueSubjectComplete: number;
   private gridIndex: Array<number>;
   constructor(private unitService: UnitService,
     private stackService: StackMelliChartsService,
@@ -31,16 +32,17 @@ export class StackComponent implements OnInit {
   ngOnInit() {
     this.options = Object.assign({}, BASE_OPTIONS.baseOptionStack);
     this.options.yAxis = [];
+    this.valueSubjectComplete = 0;
     this.options.xAxis = [];
     this.gridIndex = [1, 1, 0, 2];
     this.subjectSeriesComplete = new BehaviorSubject(0);
     //log(this.options);
-/*     if (this.stackService.getEchartInstance() === null) {
-      this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
-      this.setOptionForStackChart();  
-    } */
+    /*     if (this.stackService.getEchartInstance() === null) {
+          this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
+          this.setOptionForStackChart();  
+        } */
     this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
-    this.setOptionForStackChart();  
+    this.setOptionForStackChart();
 
   }
 
@@ -57,7 +59,7 @@ export class StackComponent implements OnInit {
     yAxisWeight.max = this.graphGlobal.weight.max;
     yAxisWeight.gridIndex = 0;
     this.options.yAxis.push(yAxisWeight);
-    
+
     let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxis.gridIndex = 0;
     this.options.xAxis.push(xAxis);
@@ -70,7 +72,7 @@ export class StackComponent implements OnInit {
     yAxisTemp.gridIndex = 1;
     this.options.yAxis.push(yAxisTemp);
 
-     let xAxisTemp = Object.assign({}, BASE_OPTIONS.xAxis);
+    let xAxisTemp = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxisTemp.gridIndex = 1;
     this.options.xAxis.push(xAxisTemp);
 
@@ -91,41 +93,6 @@ export class StackComponent implements OnInit {
 
 
 
-  /**
-   *
-   *
-   * @param {RucheInterface} hive
-   * @memberof StackComponent
-   */
-  nextSerieComplete(): void {
-    this.subjectSeriesComplete.next(+1);
-    this.checkSerieIsComplete();
-  }
-
-  /**
-   *
-   *
-   * @memberof StackComponent
-   */
-  resetSerieSubject(): void {
-    this.subjectSeriesComplete = new BehaviorSubject(0);
-  }
-  /**
-   *
-   *
-   * @memberof StackComponent
-   */
-  checkSerieIsComplete(): void {
-    this.subjectSeriesComplete.subscribe(
-      _val => {
-          console.log(_val);
-        if (_val === this.stackService.getHiveSelect().length) {
-          this.subjectSeriesComplete.complete();
-        }
-      }
-    )
-  }
-
 
   /**
    *
@@ -137,71 +104,77 @@ export class StackComponent implements OnInit {
   getHiveIndex(hive: RucheInterface): number {
     return this.rucheService.ruchesAllApiary.findIndex(elt => elt.id === hive.id);
   }
-  loadAfterRangeChanged() {
-      let obsArray = [];
-      obsArray = this.stackService.getHiveSelect().map(_hive => {
-      return  { hive: _hive, observable: [
-        {name: _hive.name + 'TempExt', obs: this.recordService.getTempExtByHive(_hive.id, this.melliDate.getRangeForReqest())},
-        {name: _hive.name + 'TempInt', obs: this.recordService.getTempIntByHive(_hive.id, this.melliDate.getRangeForReqest())},
-        {name: _hive.name + 'Weight', obs: this.recordService.getWeightByHive(_hive.id, this.melliDate.getRangeForReqest())},
-        {name: _hive.name + 'Hint', obs: this.recordService.getHintIntByHive(_hive.id, this.melliDate.getRangeForReqest())}
-      ]};
-    });
-    obsArray.forEach((_request) => {
-      Observable.forkJoin(_request.observable.map(_elt => _elt.obs)).subscribe(
-        _records => {
-          _records.forEach((_elt: any[], index) => {
-            this.getSerieByData(_elt, _request.observable[index].name , (serieComplete: any) => {
-              serieComplete.yAxisIndex = this.getIndexGridByIndex(_request.observable[index].name);
-              serieComplete.xAxisIndex = this.getIndexGridByIndex(_request.observable[index].name);
-               serieComplete.itemStyle = {
-                color: this.stackService.getColorByIndex(this.getHiveIndex(_request.hive), _request.hive)
-              };
-              const indexSerie = this.options.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-              console.log(this.options.series);
-              console.log(serieComplete);
-              this.options.series[indexSerie] = Object.assign({}, serieComplete);
-            });
-            this.nextSerieComplete();
-          });
-        }
-      );
-      this.stackService.getEchartInstance().setOption(this.options);
 
-    });
-    console.log(this.options.series);
-    this.subjectSeriesComplete.subscribe(() => {}, () => {}, () => {
-      console.error('COMPLETE');
-      this.stackService.getEchartInstance().setOption(this.options);
-      this.resetSerieSubject();
+  loadAfterRangeChanged(next: Function) {
+    this.stackService.getEchartInstance().showLoading()
+    let obsArray = [];
+    obsArray = this.stackService.getHiveSelect().map(_hive => {
+      return [
+        { hive: _hive, name: _hive.name + 'TempExt', obs: this.recordService.getTempExtByHive(_hive.id, this.melliDate.getRangeForReqest()) },
+        { hive: _hive, name: _hive.name + 'TempInt', obs: this.recordService.getTempIntByHive(_hive.id, this.melliDate.getRangeForReqest()) },
+        { hive: _hive, name: _hive.name + 'Weight', obs: this.recordService.getWeightByHive(_hive.id, this.melliDate.getRangeForReqest()) },
+        { hive: _hive, name: _hive.name + 'Hint', obs: this.recordService.getHintIntByHive(_hive.id, this.melliDate.getRangeForReqest()) }
+      ];
+    }).flat();
+    console.log(obsArray)
+    Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+      _records => {
+        console.log(_records);
+        _records.forEach((_elt: any[], index) => {
+          this.getSerieByData(_elt, obsArray[index].name, (serieComplete: any) => {
+            serieComplete.yAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
+            serieComplete.xAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
+            serieComplete.itemStyle = {
+              color: this.stackService.getColorByIndex(this.getHiveIndex(obsArray[index].hive), obsArray[index].hive)
+            };
+            const indexSerie = this.options.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            this.options.series[indexSerie] = Object.assign({}, serieComplete);
+          });
+        });
+      },
+      () => {},
+      () => {
+        next(this.options);
+      }
+    );
+  }
+
+  onResize(event: any) {
+    this.stackService.getEchartInstance().resize({
+      width: 'auto',
+      height: 'auto'
     });
   }
 
-
   loadDataByHive(hive: RucheInterface) {
+    this.stackService.getEchartInstance().showLoading();
     const obsArray: Array<any> = [
-      {name: hive.name + 'TempExt', obs: this.recordService.getTempExtByHive(hive.id, this.melliDate.getRangeForReqest())},
-      {name: hive.name + 'TempInt', obs: this.recordService.getTempIntByHive(hive.id, this.melliDate.getRangeForReqest())},
-      {name: hive.name + 'Weight', obs: this.recordService.getWeightByHive(hive.id, this.melliDate.getRangeForReqest())},
-      {name: hive.name + 'Hint', obs: this.recordService.getHintIntByHive(hive.id, this.melliDate.getRangeForReqest())}
+      { name: hive.name + 'TempExt', obs: this.recordService.getTempExtByHive(hive.id, this.melliDate.getRangeForReqest()) },
+      { name: hive.name + 'TempInt', obs: this.recordService.getTempIntByHive(hive.id, this.melliDate.getRangeForReqest()) },
+      { name: hive.name + 'Weight', obs: this.recordService.getWeightByHive(hive.id, this.melliDate.getRangeForReqest()) },
+      { name: hive.name + 'Hint', obs: this.recordService.getHintIntByHive(hive.id, this.melliDate.getRangeForReqest()) }
     ];
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _record => {
         _record.forEach((_elt, index) => {
           this.getSerieByData(_elt, obsArray[index].name, (serieComplete) => {
-              serieComplete.yAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
-              serieComplete.xAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
-              serieComplete.itemStyle = {
-                color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive) 
-              };
-              console.error(this.stackService.getColorByIndex(this.getHiveIndex(hive), hive));
-              this.options.series.push(serieComplete);
+            serieComplete.yAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
+            serieComplete.xAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
+            serieComplete.itemStyle = {
+              color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
+            };
+            this.options.series.push(serieComplete);
           });
         });
-        this.stackService.getEchartInstance().setOption(this.options);
-        this.resetSerieSubject();
+      },
+      () => { },
+      () => {
+        this.stackService.getEchartInstance().setOption(this.options, true);
+        this.stackService.getEchartInstance().hideLoading();
+        console.log(this.options.series);
       }
     )
+
   }
 
   /**
@@ -212,8 +185,7 @@ export class StackComponent implements OnInit {
    * @memberof StackComponent
    */
   getIndexGridByIndex(name: string): number {
-
-    if (/TempInt/g.test(name) || /TempExt/g.test(name) ) {
+    if (/TempInt/g.test(name) || /TempExt/g.test(name)) {
       return 1;
     } else if (/Weight/g.test(name)) {
       return 0;
@@ -231,7 +203,7 @@ export class StackComponent implements OnInit {
   removeHiveSerie(hive: RucheInterface): void {
     let option = this.stackService.getEchartInstance().getOption();
     const series = option.series.filter(_filter => _filter.name.indexOf(hive.name) !== -1);
-     if (series.length > 0) {
+    if (series.length > 0) {
       series.forEach(element => {
         const indexSerie = option.series.map(_serie => _serie.name).indexOf(element.name);
         this.options.series.splice(indexSerie, 1);
@@ -255,5 +227,26 @@ export class StackComponent implements OnInit {
       }
     });
   }
+
+  /**
+   *
+   *
+   * @param {string} markerSerie
+   * @param {string} date
+   * @param {Array<any>} series
+   * @returns {string}
+   * @memberof StackComponent
+   */
+  getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
+    let templateHeaderTooltip = '{*} {D} </br>';
+    let templateValue = '{n} : {v} {u}';
+    let tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
+    tooltipGlobal += series.map(_serie => {
+      return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
+    }).join('</br>');
+
+    return tooltipGlobal;
+  }
+
 
 }

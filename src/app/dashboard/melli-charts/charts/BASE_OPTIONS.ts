@@ -151,7 +151,13 @@ export const BASE_OPTIONS = {
                 saveAsImage: {}
             }
         },
-        tooltip: {},
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            },
+            formatter: null
+        },
         axisPointer: {
             link: { xAxisIndex: 'all' }
         },
