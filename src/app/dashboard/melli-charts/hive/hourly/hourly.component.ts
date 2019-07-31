@@ -3,6 +3,7 @@ import { HourlyManagerService } from '../service/hourly-manager.service';
 import { MelliChartsHiveService } from '../../service/melli-charts-hive.service';
 import { MelliChartsDateService } from '../../service/melli-charts-date.service';
 import * as echarts from 'echarts';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
 
 interface Tools {
@@ -14,6 +15,9 @@ interface Tools {
   icons?: string;
 }
 
+const DEVICE = 'DEVICE';
+const OTHER = 'OTHER';
+
 @Component({
   selector: 'app-hourly',
   templateUrl: './hourly.component.html',
@@ -24,6 +28,7 @@ export class HourlyComponent implements OnInit {
   private typeData: Tools[];
   private currentTypeHourly: Tools[];
   public chartLoading: boolean;
+  private optionCsv: any;
   constructor(
     private hourlyManager: HourlyManagerService,
     private melliHive: MelliChartsHiveService,
@@ -41,7 +46,18 @@ export class HourlyComponent implements OnInit {
     ];
     this.currentTypeHourly.push(this.typeData[0]);
     this.chartLoading = false;
-
+    this.optionCsv = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'Your title',
+      useBom: true,
+      noDownload: false,
+      headers: ['Date', 'Value'],
+      nullToEmptyString: false,
+    };
   }
 
   ngOnInit() {
@@ -237,6 +253,20 @@ export class HourlyComponent implements OnInit {
    */
   cleanSerie(): void {
     this.hourlyManager.baseOpions.series = new Array();
+  }
+
+  /**
+   *
+   *
+   * @param {string} origin
+   * @memberof HourlyComponent
+   */
+  exportToCsv(origin: string): void {
+    this.optionCsv.title = this.currentTypeHourly.map(_elt => _elt.name).join('/');
+    const data = this.melliHive.getHourlyChartInstance().getOption().series.map(_series => _series.data.map(_value => {
+      return [_value.value[0], _value.value[1]];
+    })).flat();
+    let csv = new Angular5Csv(data, this.currentTypeHourly.map(_elt => _elt.name).join('/'), this.optionCsv);
   }
 
 }

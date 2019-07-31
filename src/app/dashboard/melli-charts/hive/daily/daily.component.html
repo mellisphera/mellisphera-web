@@ -11,6 +11,7 @@
         <li *ngFor="let type of getlabelByType('DEVICE')" (click)="setType(type)" [class]="type.class" [id]="type.id">
           <img [src]="type.icons" />
         <li>
+        <li (click)="exportToCsv('DEVICE')" class="item-type"><img src="./assets/icons/exportToCsv.png">></li>
       </ul>
     </div>
   </div>
@@ -26,7 +27,7 @@
         <ul class="nav responsive-nav" id="other-group">
           <li *ngFor="let type of getlabelByType('OTHER')" (click)="setType(type)" [class]="type.class" [id]="type.id">
             <img [src]="type.icons" /></li>
-          <li (click)="exportToCsv('OTHER')" class="item-type">Export to csv</li>
+          <li (click)="exportToCsv('OTHER')" class="item-type"><img src="./assets/icons/exportToCsv.png">></li>
         </ul>
       </div>
     </div>
