@@ -64,9 +64,10 @@
         class="my-drop-zone" [class.valid-drag]="baseDropValid" [(lastBaseUrl)]="rucherService.rucher.photo">
         <img [src]="rucherService.rucher.photo" (click)="hideRightClick($event)" class="photo" />
         <!-- The button to change hive handle => click -->
-        <!-- <div zIndex="100" class ="lockButton">
-            <button type="button" class="btn btn-info lock"><i class="fa fa-lock"></i></button>
-        </div> -->
+        <div zIndex="100" class ="lockButton">
+            <button title = "{{ 'HOME.PLACEMENTMODE' | translate}}" id = "locked" type="button" class="lock" (click) = "changeHandleHive('handleHive')"><i class="fa fa-lock"></i></button>
+            <button title = "{{ 'HOME.CLICKMODE' | translate}}" id = "unlocked" type="button" class="lock displayNone" (click) = "changeHandleHive('fixHive')"><i class="fa fa-unlock"></i></button>
+        </div>
         <!-- The dive for each hive -->
         <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true" data-toggle="tooltip"
             (endOffset)="onMoveEnd($event, ruche)" ngDraggable [handle]="HiveHandle" *ngFor="let ruche of rucheService.ruches; let i = index"
@@ -94,7 +95,7 @@
             <!-- The circle for an hive -->
             <!-- Hive Handle -->
             <div #HiveHandle data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
-                (dblclick)="onClick(ruche);" class="ruche"
+                (dblclick)="onClick(ruche);" class="ruche handleHive displayNone"
                 [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)">
                 <!-- notifications -->
                 <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"
@@ -102,7 +103,7 @@
             </div>
             <!-- Hive click -->
             <div data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
-                (click)="onClick(ruche);" class="ruche displayNone"
+                (click)="onClick(ruche);" class="ruche fixHive"
                 [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)">
                 <!-- notifications -->
                 <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"
@@ -124,15 +125,14 @@
                 <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche.id) === null"
                     class="hive-info">{{ 'HOME.NODATA' | translate}}</span>
             </div>
-            <div (click)="onClick(ruche);" id="collapse1" class="sensors collapse">
+            <div (click)="onClick(ruche);" id="collapse1" [class]="(capteurService.getCapteursByHive(ruche.id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">
                 <span *ngIf="capteurService.getCapteursByHive(ruche.id).length === 0"
                     class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
-                <span *ngIf="capteurService.getCapteursByHive(ruche.id).length !== 0">
-                    <span *ngFor="let capt of increasingSort(capteurService.getCapteursByHive(ruche.id)); let i = index">
-                        <span class="hive-info">{{ capt }}</span>
-                        <br />
-                    </span>
-                </span>
+                <ng-container *ngIf="capteurService.getCapteursByHive(ruche.id).length !== 0">
+                    <p *ngFor="let capt of increasingSort(capteurService.getCapteursByHive(ruche.id)); let i = index" class ="hive-info">
+                        {{ capt }}
+                    </p>
+                </ng-container>
             </div>
         </div>
     </div>

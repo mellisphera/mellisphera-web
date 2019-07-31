@@ -1,5 +1,5 @@
 import { User } from '../../_model/user';
-import { Component, OnInit, OnDestroy, AfterViewInit,HostListener, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../service/api/rucher.service';
 import { Ruche } from './ruche';
@@ -69,8 +69,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   private selectHive: RucheInterface;
   private hiveIndex: number;
   private infoHiveComponent: any;
-  screenHeight:any;
-  screenWidth:any;
+  screenHeight: any;
+  screenWidth: any;
 
   constructor(public dailyRecTh: DailyRecordService,
     private graphGlobal: GraphGlobal,
@@ -140,10 +140,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:resize', ['$event'])
-    getScreenSize(event?) {
-          this.screenHeight = window.innerHeight;
-          this.screenWidth = window.innerWidth;
-    }
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+  }
 
   ngOnInit() {
     if (!this.rucherService.rucherSubject.closed) {
@@ -156,11 +156,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     if (!this.rucheService.getCurrentHive()) {
-          this.rucheService.saveCurrentHive();
-          this.capteurService.getUserCapteurs();
-        } else {
-          this.capteurService.getUserCapteurs();
-        }
+      this.rucheService.saveCurrentHive();
+      this.capteurService.getUserCapteurs();
+    } else {
+      this.capteurService.getUserCapteurs();
+    }
 
     // Use the user configuration
     this.userConfig.getSubject().subscribe(
@@ -246,7 +246,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // Call info-hives app
     this.router.navigateByUrl('dashboard/home/info-hives');
-    if(this.screenWidth <991){
+    if (this.screenWidth < 991) {
       let el = document.getElementById('scroll');
       el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
     }
@@ -255,7 +255,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   OnclickInfoApiary() {
     this.router.navigateByUrl('dashboard/home/info-apiary');
-    if(this.screenWidth <991){
+    if (this.screenWidth < 991) {
       let el = document.getElementById('scroll');
       el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
     }
@@ -353,7 +353,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.rucheService.ruches[hiveUpdateIndex].hivePosY = hiveUpdate.hivePosY;
     });
   }
-  
+
   collapseAllActiveButton(class1: string, class2: string, class3: string, idButtonActive: string) {
     // Desactive the three collapses div that we don't want
     this.eltOnClickClass = document.getElementsByClassName(class1);
@@ -560,13 +560,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         stringReturn += stringTemp;
         stringReturn += ' are not up-to-date. Please synchronize your data.'
       }
-    } else if (i === this.rucheService.ruches.length){
+    } else if (i === this.rucheService.ruches.length) {
       if (this.userService.getJwtReponse().country === "FR") {
         stringReturn += '   Vos données pour les ruches de ce rucher ne sont pas à jour. Veuillez synchroniser vos données.';
       } else {
         stringReturn += '   Your data for the hives of this apiary are not up-to-date. Please synchronize your data.';
       }
-    }else if (i > 1) {
+    } else if (i > 1) {
       if (this.userService.getJwtReponse().country === "FR") {
         stringReturn += '   Les données pour les ruches ';
         stringReturn += stringTemp;
@@ -583,7 +583,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setRouterPage(event) {
-     if (event instanceof InfoHivesComponent) {
+    if (event instanceof InfoHivesComponent) {
       this.infoHiveComponent = event;
     }
   }
@@ -599,15 +599,52 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   // Sort a sensors list in increasing sort
-  increasingSort(sensorsList : string[]) : string[]{
+  increasingSort(sensorsList: string[]): string[] {
     sensorsList.sort((a, b) => {
-      if(a < b){
+      if (a < b) {
         return -1;
-      }else{
+      } else {
         return 1;
       }
     });
     return sensorsList;
+  }
+
+  // Change the system for each hive. Switch between handle and fix position.
+  changeHandleHive(id: string) {
+    if (id === 'handleHive') {
+      //desactive the wrong system
+      this.eltOnClickClass = document.getElementsByClassName('fixHive');
+      for (let i = 0; i < this.eltOnClickClass.length; i++) {
+        this.eltOnClickClass[i].classList.add('displayNone');
+      }
+      this.eltOnClickId = document.getElementById('locked');
+      this.renderer.addClass(this.eltOnClickId, 'displayNone');
+
+      // Active the right system
+      this.eltOnClickClass = document.getElementsByClassName('handleHive');
+      for (let i = 0; i < this.eltOnClickClass.length; i++) {
+        this.eltOnClickClass[i].classList.remove('displayNone');
+      }
+      this.eltOnClickId = document.getElementById('unlocked');
+      this.renderer.removeClass(this.eltOnClickId, 'displayNone');
+    } else {
+      // desactive the wrong system
+      this.eltOnClickClass = document.getElementsByClassName('handleHive');
+      for (let i = 0; i < this.eltOnClickClass.length; i++) {
+        this.eltOnClickClass[i].classList.add('displayNone');
+      }
+      this.eltOnClickId = document.getElementById('unlocked');
+      this.renderer.addClass(this.eltOnClickId, 'displayNone');
+
+      // Active the right system
+      this.eltOnClickClass = document.getElementsByClassName('fixHive');
+      for (let i = 0; i < this.eltOnClickClass.length; i++) {
+        this.eltOnClickClass[i].classList.remove('displayNone');
+      }
+      this.eltOnClickId = document.getElementById('locked');
+      this.renderer.removeClass(this.eltOnClickId, 'displayNone');
+    }
   }
 
 }
