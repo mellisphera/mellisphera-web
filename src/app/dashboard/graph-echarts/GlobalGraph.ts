@@ -291,7 +291,7 @@ export class GraphGlobal {
             return this.temp.unitT;
         } else if (/Weight/g.test(serie) || /Poids/g.test(serie) || /gain/g.test(serie) || /loss/g.test(serie)) {
             return this.weight.unitW;
-        } else if (/Hum/g.test(serie)) {
+        } else if (/Hum/g.test(serie) || /Hint/g.test(serie)) {
             return this.humidity.unitT;
         }
     }

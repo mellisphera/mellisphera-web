@@ -26,6 +26,7 @@ export class StackComponent implements OnInit {
     private stackService: StackMelliChartsService,
     private graphGlobal: GraphGlobal,
     private recordService: RecordService,
+    private c: UnitService,
     private rucheService: RucheService,
     private melliDate: MelliChartsDateService) { }
 
@@ -87,7 +88,17 @@ export class StackComponent implements OnInit {
     let xAxisHum = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxisHum.gridIndex = 2;
     this.options.xAxis.push(xAxisHum);
-
+    this.options.tooltip.formatter = (params) => {
+       return params.map(_elt => {
+        return this.getTooltipFormater(_elt.marker, this.unitService.getHourlyDate(_elt.data.name),new Array(
+          {
+            name: _elt.seriesName,
+            value: _elt.data.value[1],
+            unit: this.graphGlobal.getUnitBySerieName(_elt.seriesName)
+          }
+        ));
+      }).join('<br/>');
+    }
     this.stackService.getEchartInstance().setOption(this.options);
   }
 
@@ -110,10 +121,10 @@ export class StackComponent implements OnInit {
     let obsArray = [];
     obsArray = this.stackService.getHiveSelect().map(_hive => {
       return [
-        { hive: _hive, name: _hive.name + 'TempExt', obs: this.recordService.getTempExtByHive(_hive.id, this.melliDate.getRangeForReqest()) },
-        { hive: _hive, name: _hive.name + 'TempInt', obs: this.recordService.getTempIntByHive(_hive.id, this.melliDate.getRangeForReqest()) },
-        { hive: _hive, name: _hive.name + 'Weight', obs: this.recordService.getWeightByHive(_hive.id, this.melliDate.getRangeForReqest()) },
-        { hive: _hive, name: _hive.name + 'Hint', obs: this.recordService.getHintIntByHive(_hive.id, this.melliDate.getRangeForReqest()) }
+        { hive: _hive, name: _hive.name + ' / TempExt', obs: this.recordService.getTempExtByHive(_hive.id, this.melliDate.getRangeForReqest()) },
+        { hive: _hive, name: _hive.name + ' / TempInt', obs: this.recordService.getTempIntByHive(_hive.id, this.melliDate.getRangeForReqest()) },
+        { hive: _hive, name: _hive.name + ' / Weight', obs: this.recordService.getWeightByHive(_hive.id, this.melliDate.getRangeForReqest()) },
+        { hive: _hive, name: _hive.name + ' / Hint', obs: this.recordService.getHintIntByHive(_hive.id, this.melliDate.getRangeForReqest()) }
       ];
     }).flat();
     console.log(obsArray)
@@ -149,10 +160,10 @@ export class StackComponent implements OnInit {
   loadDataByHive(hive: RucheInterface) {
     this.stackService.getEchartInstance().showLoading();
     const obsArray: Array<any> = [
-      { name: hive.name + 'TempExt', obs: this.recordService.getTempExtByHive(hive.id, this.melliDate.getRangeForReqest()) },
-      { name: hive.name + 'TempInt', obs: this.recordService.getTempIntByHive(hive.id, this.melliDate.getRangeForReqest()) },
-      { name: hive.name + 'Weight', obs: this.recordService.getWeightByHive(hive.id, this.melliDate.getRangeForReqest()) },
-      { name: hive.name + 'Hint', obs: this.recordService.getHintIntByHive(hive.id, this.melliDate.getRangeForReqest()) }
+      { name: hive.name + ' / TempExt', obs: this.recordService.getTempExtByHive(hive.id, this.melliDate.getRangeForReqest()) },
+      { name: hive.name + ' / TempInt', obs: this.recordService.getTempIntByHive(hive.id, this.melliDate.getRangeForReqest()) },
+      { name: hive.name + ' / Weight', obs: this.recordService.getWeightByHive(hive.id, this.melliDate.getRangeForReqest()) },
+      { name: hive.name + ' / Hint', obs: this.recordService.getHintIntByHive(hive.id, this.melliDate.getRangeForReqest()) }
     ];
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _record => {
