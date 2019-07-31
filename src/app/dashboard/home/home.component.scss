@@ -185,10 +185,27 @@ li:first-child img{
   padding: 2px;
   margin: auto;
   margin-bottom: 5%;
-  border-radius: 50px;
+  border-radius: 5px;
   border: 1px solid black;
   //border-radius: 50px;
   //box-shadow: 3px 2px 2px black;
+}
+
+// .handleHive{
+//   background: linear-gradient(90deg, blue 50%, transparent 50%), linear-gradient(90deg, blue 50%, transparent 50%), linear-gradient(0deg, blue 50%, transparent 50%), linear-gradient(0deg, blue 50%, transparent 50%);
+//   background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+//   background-size: 16px 4px, 16px 4px, 4px 16px, 4px 16px;
+//   background-position: 0px 0px, 212px 116px, 0px 116px, 216px 0px;
+//   padding: 10px;
+//   transition: background-position 2s;
+// }
+
+// .handleHive:hover{
+//   background-position: 212px 0px, 0px 116px, 0px 0px, 216px 116px;
+// }
+
+.handleHive{
+  border: 1px dashed black;
 }
 
 .badge-ruche{
@@ -295,89 +312,106 @@ li:first-child img{
 
 @media (min-width: 1901px) {
   .ruche{
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
   }
 
   .hive-info{
-    font-size: 20px;
+    font-size: 18px;
+  }
+
+  .has-sensors{
+    line-height: 32px !important;
   }
 }
 
 @media (max-width: 1900px) {
   .ruche{
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
   }
 
   .hive-info{
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .has-sensors{
+    line-height: 30px !important;
   }
 }
 
 @media (max-width: 1700px) {
   .hive-info{
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
 @media (max-width: 1550px) {
   .ruche{
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
   }
 
   .hive-info{
-    font-size: 14px;
+    font-size: 12px;
+  }
+
+  .has-sensors{
+    line-height: 24px !important;
   }
 }
 
 @media (max-width: 1320px) {
   .ruche{
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
   }
 
   .hive-info{
-    font-size: 12px;
+    font-size: 10px;
+  }
+
+  .has-sensors{
+    line-height: 21px !important;
   }
 }
 
 @media (max-width: 990px) {
-  .ruche{
-    width: 35px;
-    height: 35px;
-  }
-
-  .hive-info{
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 900px) {
-  .hive-info{
-    font-size: 18px;
-  }
-}
-
-@media (max-width: 800px) {
-  .hive-info{
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 700px) {
   .ruche{
     width: 30px;
     height: 30px;
   }
 
   .hive-info{
-    font-size: 14px;
+    font-size: 18px;
+  }
+
+  .has-sensors{
+    line-height: 32px !important;
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 900px) {
+  .hive-info{
+    font-size: 16px;
+  }
+
+  .has-sensors{
+    line-height: 29px !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .hive-info{
+    font-size: 14px;
+  }
+
+  .has-sensors{
+    line-height: 26px !important;
+  }
+}
+
+@media (max-width: 700px) {
   .ruche{
     width: 25px;
     height: 25px;
@@ -386,7 +420,62 @@ li:first-child img{
   .hive-info{
     font-size: 12px;
   }
+
+  .has-sensors{
+    line-height: 23px !important;
+  }
 }
+
+@media (max-width: 560px) {
+  .ruche{
+    width: 20px;
+    height: 20px;
+  }
+
+  .hive-info{
+    font-size: 10px;
+  }
+
+  .has-sensors{
+    line-height: 20px !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .ruche{
+    width: 17px;
+    height: 17px;
+  }
+
+  .hive-info{
+    font-size: 9px;
+  }
+
+  .has-sensors{
+    line-height: 18px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hive-info{
+    font-size: 8px;
+  }
+
+  .has-sensors{
+    line-height: 17px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .hive-info{
+    font-size: 7px;
+  }
+
+  .has-sensors{
+    line-height: 15px !important;
+  }
+}
+
 
 // NAVBAR
 
@@ -614,22 +703,54 @@ li:first-child img{
 
 .lock{
   border: none;
-  color: black;
+  color: white;
   padding: 0px !important;
   text-align: center;
+  background-color: #4F4F51;
+  // background-color: rgba($color: white, $alpha: 0.5);
+  width: 45px;
+  border-radius: 10px;
+  opacity: 0.8;
+}
+
+.lock:hover{
+  // color: black;
+  opacity: 1;
 }
 
 .lock .fa{
   font-size: 35px;
+  margin-right: 5px;
 }
 
 .lockButton{
   position: absolute;
   top: 5px;
-  left: 5px;
+  right : 20px;
   width: 35px;
-  background-color: white;
-  opacity: 40%;
+}
+
+.lockNav{
+  border: none;
+  color: white;
+  padding: 0px !important;
+  text-align: center;
+  margin-top: 20px;
+  margin-right: 20px;
+  background: none;
+  opacity: 0.8;
+}
+
+.lockNav:hover{
+  opacity: 1;
+}
+
+.lockNav .fa{
+  font-size: 35px;
+}
+
+.lockButtonNav{
+  width: 35px;
 }
 
 .displayNone{

@@ -124,7 +124,9 @@
         "CANCEL" : "Annuler",
         "NODATA" : "Pas de données",
         "NOSENSORS" : "Pas de capteurs",
-        "CLICK" : "Cliquez sur une le nom d'une ruche pour plus d'informations !",
+        "CLICK" : "Cliquez sur une ruche pour plus d'informations !",
+        "PLACEMENTMODE" : "Mettre les ruches en mode 'déplacement'",
+        "CLICKMODE" : "Mettre les ruches en mode 'clic'",
         "MANAGE" : "Gérer",
         "WARNING" : "Attention! ",
         "NAVBAR" : {

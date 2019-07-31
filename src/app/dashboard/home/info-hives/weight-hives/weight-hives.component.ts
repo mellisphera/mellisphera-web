@@ -74,7 +74,7 @@ export class WeightHivesComponent{
           }
       },
       calendar: [{
-          top: 100,
+          top: 70,
           left: '15%',
           right: '2%',
           width: '70%',
