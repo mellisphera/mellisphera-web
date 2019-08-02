@@ -81,9 +81,11 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
             this.melliChartHive.setHiveSelect(allHives[0]);
             console.log(allHives);
             allHives.forEach((elt: RucheInterface) => {
-              this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
-                elt.apiaryName = apiary[0].name;
-              });
+              try{
+                this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
+                  elt.apiaryName = apiary[0].name;
+                });
+              } catch {}
             });
             return allHives;
           }).subscribe(
