@@ -57,7 +57,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private tokenService: AtokenStorageService,
     private userConfig: UserParamsService) {
     this.btnNav = [
-      { name: 'Vitality', path: 'brood' },
+      { name: 'Brood', path: 'brood' },
       { name: 'Map', path: 'map' },
       { name: 'Hives', path: 'hive' },
       { name: 'Stack', path: 'stack' }
