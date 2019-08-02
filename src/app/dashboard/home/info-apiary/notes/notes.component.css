@@ -34,7 +34,7 @@
     padding: 4px;
 }
 #notesApiary{
-    border: 1px dashed gray;
+    /* border: 1px dashed gray; */
     padding: .5em;
     
     white-space: pre-wrap;

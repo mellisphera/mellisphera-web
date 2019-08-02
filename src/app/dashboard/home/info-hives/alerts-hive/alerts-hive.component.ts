@@ -82,7 +82,7 @@ export class AlertsHiveComponent implements OnInit {
     this.option = {
       backgroundColor: 'white',
       title: {
-        text: this.graphGlobal.getTitle("AlertsHive") + ' ' + this.rucheService.getCurrentHive().name,
+        text: this.graphGlobal.getTitle("AlertsHive"),
         left: 'center',
         textStyle: {
           color: 'black'

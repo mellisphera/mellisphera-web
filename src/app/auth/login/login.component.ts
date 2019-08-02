@@ -129,7 +129,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
 
   getMessageTraduction(msg: MessagesList) : string{
     let language : string;
-    if(this.navLanguage === 'fr'){
+    if(/fr/g.test(this.navLanguage)){
       language = 'FR';
     }else{
       language = 'EN';

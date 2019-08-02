@@ -12,9 +12,9 @@
         <table class="table">
             <thead>
                 <tr>
-                  <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.DATE' | translate}}</th>
+                  <th scope="col" style="width: 100px;">{{ 'HIVE_DETAIL.OBSERVATIONS.DATE' | translate}}</th>
                   <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.SENTENCE' | translate}}</th>
-                  <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.TYPES' | translate}}</th>
+                  <!-- <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.TYPES' | translate}}</th> -->
                   <th class="text-right" scope="col" style="width: 80px;"></th>
                 </tr>
               </thead>
@@ -24,7 +24,7 @@
                     <tr class="hoverStyle">
                       <td>{{ hiveObs.date | myDate }}</td>
                       <td>{{hiveObs.sentence}}</td>
-                      <td>{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}</td>
+                      <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}</td> -->
                       <td class="text-right">
                         <button data-toggle="tooltip" data-html="true"
                           title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal"
@@ -49,7 +49,7 @@
                     <tr class="hoverStyle" style="color: blue;">
                       <td>{{hiveObs.date | myDate}}</td>
                       <td>{{hiveObs.sentence}}</td>
-                      <td>{{ 'HIVE_DETAIL.OBSERVATIONS.ACTION' | translate}}</td>
+                      <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.ACTION' | translate}}</td> -->
                       <td class="text-right">
                         <button data-toggle="tooltip" data-html="true"
                           title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal"
