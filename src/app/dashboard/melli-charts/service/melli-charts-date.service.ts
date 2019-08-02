@@ -17,9 +17,9 @@ export class MelliChartsDateService {
   public ranges: DataRange[];
   constructor() {
     this.ranges = [
-      { scale: 1, type: 'HOUR'},
+/*       { scale: 1, type: 'HOUR'},
       { scale: 6, type: 'HOURS'},
-      { scale: 12, type: 'HOURS'},
+      { scale: 12, type: 'HOURS'}, */
       { scale: 1, type: 'DAY'},
       { scale: 3, type: 'DAYS' },
       { scale: 7, type: 'DAYS' },

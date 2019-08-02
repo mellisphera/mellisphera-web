@@ -12,25 +12,48 @@ export class StackMelliChartsService {
 
   private arrayHiveSelect: Array<RucheInterface>;
   private colorByHive: Array<any>;
-  private echartInstance: any;
+  private stackEchartInstance: any;
+  private broodChartInstance: any;
   public range: DataRange;
   private arrayColor: Array<any>;
   constructor(private httpClient: HttpClient) {
     this.arrayHiveSelect = [];
     this.colorByHive = [];
     this.getColor();
-    this.echartInstance = null;
+    this.stackEchartInstance = null;
   }
 
 
   /**
    *
    *
-   * @param {*} echartInstance
+   * @param {*} stackEchartInstance
    * @memberof StackMelliChartsService
    */
-  setEchartInstance(echartInstance: any): void {
-    this.echartInstance = echartInstance;
+  setEchartInstance(stackEchartInstance: any): void {
+    this.stackEchartInstance = stackEchartInstance;
+  }
+
+  /**
+   *
+   *
+   * @param {*} chartInstance
+   * @memberof StackMelliChartsService
+   */
+  setBroodChartInstance(chartInstance: any): void {
+    this.broodChartInstance = chartInstance;
+  }
+
+
+  /**
+   *
+   *
+   * @param {*} chartInstance
+   * @returns {*}
+   * @memberof StackMelliChartsService
+   */
+  getBroodChartInstance(): any {
+    return this.broodChartInstance;
   }
 
 /**
@@ -41,7 +64,7 @@ export class StackMelliChartsService {
  */
 checkIfInstanceEchartAlerayExist(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      if (this.echartInstance !== null) {
+      if (this.stackEchartInstance !== null) {
         resolve(true);
       } else {
         reject(false);
@@ -55,9 +78,18 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
    * @memberof StackMelliChartsService
    */
   getEchartInstance(): any {
-    return this.echartInstance;
+    return this.stackEchartInstance;
   }
 
+
+  /**
+   *
+   *
+   * @memberof StackMelliChartsService
+   */
+  cleanSlectedHives(): void {
+    this.arrayHiveSelect = new Array();
+  }
   getColor() {
     this.httpClient.get<any>('./assets/data/color.json').subscribe(
       data => {

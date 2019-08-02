@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UnitService } from '../../service/unit.service';
 import { BASE_OPTIONS } from '../charts/BASE_OPTIONS';
 import * as echarts from 'echarts';
@@ -16,7 +16,7 @@ import { RucheService } from '../../service/api/ruche.service';
   templateUrl: './stack.component.html',
   styleUrls: ['./stack.component.css']
 })
-export class StackComponent implements OnInit {
+export class StackComponent implements OnInit,OnDestroy {
 
   public options: any;
   private subjectSeriesComplete: BehaviorSubject<number>;
@@ -270,5 +270,8 @@ export class StackComponent implements OnInit {
     return tooltipGlobal;
   }
 
+  ngOnDestroy() {
+    // this.stackService.cleanSlectedHives();
+  }
 
 }

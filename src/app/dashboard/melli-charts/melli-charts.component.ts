@@ -21,6 +21,7 @@ import { DailyStockHoneyService } from '../service/api/daily-stock-honey.service
 import { WeatherService } from '../service/api/weather.service';
 import { StackMelliChartsService } from './stack/service/stack-melli-charts.service';
 import { StackComponent } from './stack/stack.component';
+import { VitalityComponent } from './vitality/vitality.component';
 
 const PREFIX_PATH = '/dashboard/melli-charts/';
 @Component({
@@ -35,8 +36,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   private btnTypeElement: HTMLElement;
   public typeNav: Array<Object>;
 
-  hiveComponent: HiveComponent;
-  stackComponent: StackComponent;
+  private hiveComponent: HiveComponent;
+  private stackComponent: StackComponent;
+  private broodComponent: VitalityComponent;
   private eltOnClick: EventTarget;
   constructor(public rucheService: RucheService,
     public rucherService: RucherService,
@@ -55,7 +57,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private tokenService: AtokenStorageService,
     private userConfig: UserParamsService) {
     this.btnNav = [
-      { name: 'Vitality', path: 'vitality' },
+      { name: 'Vitality', path: 'brood' },
       { name: 'Map', path: 'map' },
       { name: 'Hives', path: 'hive' },
       { name: 'Stack', path: 'stack' }
@@ -81,9 +83,11 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
             this.melliChartHive.setHiveSelect(allHives[0]);
             console.log(allHives);
             allHives.forEach((elt: RucheInterface) => {
-              this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
-                elt.apiaryName = apiary[0].name;
-              });
+              try {
+                this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
+                  elt.apiaryName = apiary[0].name;
+                });
+              }catch{}
             });
             return allHives;
           }).subscribe(
@@ -156,10 +160,15 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     this.melliChartDate.setRange(rangeSelect);
     if (this.router.url === PREFIX_PATH + 'hive') {
       this.hiveComponent.setRangeChart();
-    } else {
+    } else if (this.router.url === PREFIX_PATH + 'stack') {
       this.stackComponent.loadAfterRangeChanged((options: any) => {
         this.stackService.getEchartInstance().setOption(options, true);
         this.stackService.getEchartInstance().hideLoading();
+      });
+    } else if (this.router.url === PREFIX_PATH + 'brood') {
+      this.broodComponent.loadAllHiveAfterRangeChange((options: any) => {
+        this.stackService.getBroodChartInstance().setOption(options, true);
+        this.stackService.getBroodChartInstance().hideLoading();
       });
     }
   }
@@ -177,6 +186,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       this.hiveComponent = componentRef;
     } else if(componentRef instanceof StackComponent) {
       this.stackComponent = componentRef;
+    } else if (componentRef instanceof VitalityComponent) {
+      this.broodComponent = componentRef;
     }
 
   }
@@ -199,10 +210,15 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     this.melliChartDate.setRangeForRequest([start, end]);
     if (this.router.url === PREFIX_PATH + 'hive') {
       this.hiveComponent.setRangeChart();
-    } else {
+    } else if (this.router.url === PREFIX_PATH + 'stack') {
       this.stackComponent.loadAfterRangeChanged((options: any) => {
         this.stackService.getEchartInstance().setOption(options, true);
         this.stackService.getEchartInstance().hideLoading();
+      });
+    } else if (this.router.url === PREFIX_PATH + 'brood') {
+      this.broodComponent.loadAllHiveAfterRangeChange((options: any) => {
+        this.stackService.getBroodChartInstance().setOption(options, true);
+        this.stackService.getBroodChartInstance().hideLoading();
       });
     }
   }
@@ -243,6 +259,16 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           this.hiveComponent.loadDataFromHive();
         }
         break;
+      case PREFIX_PATH + 'brood':
+          if (this.stackService.ifActiveAlreadySelected(hive)) {
+            this.stackService.removeHive(hive);
+            this.broodComponent.removeHiveSerie(hive);
+          } else {
+            this.stackService.addHive(hive);
+            this.broodComponent.loadDataByHive(hive);
+            console.log(this.stackService.getHiveSelect());
+          }
+          break;
       case PREFIX_PATH + 'stack':
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
@@ -291,6 +317,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       case PREFIX_PATH + 'hive':
         return this.melliChartHive.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
         break;
+      case PREFIX_PATH + 'brood':
       case PREFIX_PATH + 'stack':
         return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
         break;
@@ -314,6 +341,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
             }
           } catch (TypeError) {
           }
+      case PREFIX_PATH + 'brood':
       case PREFIX_PATH + 'stack':
         // return this.stackService.
         break;
@@ -324,7 +352,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   checkLoadindingIsComplete(): string {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
-          return this.hiveComponent.hourlyComponent.chartLoading ? 'loading' : 'complete';
+        return 'complete';
+          // return this.hiveComponent.hourlyComponent.chartLoading ? 'loading' : 'complete';
+      case PREFIX_PATH + 'brood':
       case PREFIX_PATH + 'stack':
         //return this.stackService.
         break;

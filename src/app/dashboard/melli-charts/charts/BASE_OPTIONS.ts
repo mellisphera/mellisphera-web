@@ -35,7 +35,6 @@ export const BASE_OPTIONS = {
                 realtime: true,
                 start: 0,
                 end: 100,
-                bottom: 0,
             },
             {
                 type: 'inside',
@@ -56,31 +55,8 @@ export const BASE_OPTIONS = {
             width: '95%'
         }],
 
-        yAxis: {
-            name: '',
-            nameLocation: 'middle',
-            type: 'value',
-            nameGap: 30,
-            scale: true
-
-        },
-
-        xAxis: [
-            {
-                type: 'time',
-                boundaryGap: false,
-                gridIndex: 0,
-                axisLine: { onZero: true },
-                position: 'bottom',
-                splitLine: {
-                    show: true
-                },
-                splitArea: {
-                    show: true,
-                },
-                axisLabel: {}
-            },
-        ],
+        yAxis:[],
+        xAxis: [],
         series: []
 
     },
@@ -91,7 +67,7 @@ export const BASE_OPTIONS = {
             link: { xAxisIndex: 'all' }
         },
         toolbox: {
-            orient: 'horizontal',
+            orient: 'vertical',
             itemSize: 20,
             feature: {
                 dataView: { readOnly: false },

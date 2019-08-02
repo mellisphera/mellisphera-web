@@ -1,11 +1,11 @@
 export const CALENDAR = {
     calendar: {
-       // height: '80%',
+        // height: '80%',
         // width: '80%',
         left: 'center',
-        cellSize: [30 , 'auto'],
+        cellSize: [40 , 40],
         range: [new Date().getFullYear() + '-' +( new Date().getMonth() - 1) + '-' + '01', new Date()],
-        orient: 'horizontal',
+        orient: 'vertical',
         splitLine: {
             show: true,
             lineStyle: {
@@ -42,7 +42,7 @@ export const CALENDAR = {
         type: '',
         min: 0,
         max: 10000,
-        top: 0,
+        top: 5,
         pieces: [],
         calculable: true,
         inRange: {

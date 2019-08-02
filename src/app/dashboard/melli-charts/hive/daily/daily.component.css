@@ -1,23 +1,15 @@
 .calendar{
-    height: 300px;
-    width: 95%;
+    height: 100vh;
+    width: 100%;
 }
 #sidebar-tools-daily-device{
-    position: absolute;
-    height: 30vh;
+/*     display: flex;
     width: 3% !important;
-    color: white;
-    top: 10%;
-    right: 2px;
+    color: white; */
     /*background-color: #333F3D;*/
 }
 #sidebar-tools-daily-other{
-    position: absolute;
-    height: 10vh;
-    width: 3% !important;
     color: white;
-    top: 60%;
-    right: 2px;
     /*background-color: #333F3D;*/
 }
 .item-type{
@@ -33,6 +25,19 @@
 .active{
     background-color: #16BE25;
     color: white;
+}
+#contain-calendar{
+    width: 100%;
+}
+.tools{
+    justify-content: center;
+}
+.flex {
+    display: flex;
+}
+#daily-int, #daily-ext {
+    width: 100%;
+    position: relative;
 }
 @media screen and (max-width:1300px) {
     #sidebar-tools-daily-device, #sidebar-tools-daily-other {
