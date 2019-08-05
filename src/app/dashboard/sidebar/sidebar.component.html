@@ -17,12 +17,12 @@
             <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
             <li (click)="focus('home')">
                 <a routerLink="./home" data-toggle="tooltip" id="home" data-placement="top" title="{{ 'SIDEBAR.APIARY' | translate }}">
-                    <img src="./assets/wizard/apiary.png" style="width:40px;"/>
+                    <img src="./assets/img/melliUx.png" style="width:50px;margin-left:-5px;"/>
                 </a>
             </li>
             <li *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('flower')">
                 <a routerLink="./fleurs-floraison" id="flower" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.FLOWER' | translate }}">
-                    <img src="./assets/img/flower-icon.png" style="width:30px;height: 30px;" />
+                    <img src="./assets/img/flowers.png" style="width:50px;margin-left:-5px;" />
                 </a>
             </li>
             <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('admin')">
@@ -42,7 +42,7 @@
             </li> -->
             <li (click)="focus('melli-charts')">
                 <a id="melli-charts" routerLink="./melli-charts" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.DATA' | translate }}">
-                    <img src="./assets/img/stack.png" style="width:30px;height: 30px; margin-top:-6px;" />
+                    <img src="./assets/img/melliCharts.png" style="width:50px;margin-left:-5px;" />
                 </a>
             </li>
         </ul>

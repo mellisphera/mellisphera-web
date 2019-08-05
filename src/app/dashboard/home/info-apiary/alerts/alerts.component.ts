@@ -84,7 +84,9 @@ export class AlertsComponent implements OnInit {
       tooltip: {
         trigger: 'item',
         formatter: (params) => {
-          return params.marker + (params.data[3] === 'Daily' ?  this.unitService.getDailyDate(params.data[0]) : this.unitService.getHourlyDate(params.data[0])) + '<br/>' + params.data[1].split('|').join('<br/>');
+          if(params.data[3] !== 'OK'){
+            return params.marker + (params.data[3] === 'Daily' ?  this.unitService.getDailyDate(params.data[0]) : this.unitService.getHourlyDate(params.data[0])) + '<br/>' + params.data[1].split('|').join('<br/>');
+          }
         }
       },
       toolbox: {
@@ -102,8 +104,8 @@ export class AlertsComponent implements OnInit {
         left: '15%',
         bottom: '3%',
         height: '45%',
-        width: '70%',
-        range: MyDate.getRangeForCalendarHome(),
+        width: '77%',
+        range: MyDate.getRangeForCalendarAlerts(),
         orient: 'horizontal',
         cellSize: ['20', '20'],
         splitLine: {
@@ -223,6 +225,7 @@ export class AlertsComponent implements OnInit {
             if(nbAlertsOfThisDay < 2){
               return {
                 type: 'path',
+                z2: 1000 ,
                 shape: {
                   pathData: this.alertsService.getPicto(params.seriesName),
                   // tabPos[Nombre d'alertes dans le jour][x ou y][rang de la prochaine alerte a traiter]
@@ -240,6 +243,7 @@ export class AlertsComponent implements OnInit {
             }else{
               return {
                 type: 'path',
+                z2: 1000 ,
                 shape: {
                   pathData: this.alertsService.getPicto('Error'),
                   // tabPos[Nombre d'alertes dans le jour][x ou y][rang de la prochaine alerte a traiter]
@@ -264,7 +268,33 @@ export class AlertsComponent implements OnInit {
       }
     });
 
-;
+    // Mark the current day
+    let newSerie = Object.assign({}, serieTmp);
+        newSerie.name = 'thisDay';
+        newSerie.data = [ [new Date(), 0, 'OK', 'OK']];
+        newSerie.renderItem = (params, api) => {
+          let cellPoint = api.coord(api.value(0));
+          let cellWidth = params.coordSys.cellWidth;
+          let cellHeight = params.coordSys.cellHeight;
+          return {
+            type: 'rect',
+            z2: 0 ,
+            shape: {
+              x: -cellWidth / 2,
+              y: -cellHeight / 2,
+              width: cellWidth,
+              height: cellHeight,
+            },
+            position: [cellPoint[0], cellPoint[1]],
+            style : {
+              fill: 'none',
+              stroke : 'red',
+              lineWidth : 4
+            }
+          }
+        };
+        this.option.series.push(newSerie);
+
     this.checkChartInstance().then(status => {
       this.echartInstance.setOption(this.option,false);
     }).catch(err => {

@@ -2,11 +2,11 @@
     background-color: #70A8B2;
     border: none;
     color: white;
-    padding: 8px 16px;
+    padding: 6px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
     margin: 16px 1px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
@@ -25,44 +25,109 @@
     color: white; 
   }
 
-#divButton{
-    text-align: center;
-}
-
-#title{
-  margin-left: auto;
-  margin-right: auto;
-  width: 600px; /* largeur obligatoire pour être centré */
-  text-align: center;
-  font-weight: bold;
-}
-
-#date{
-  float: left;
-  margin-left: 50px;
-}
-#header{
-  font-size: large;
-}
-
-#page{
-  border: 2px solid black;
-}
-
 .picto{
-  height: 50px;
-}
-
-.noData{
-  text-align: center;
-  font-size: medium;
-  margin-bottom: 10vh;
+  height: 40px;
 }
 
 .tentacles{
   width: 75px;
+  color: #4F4F51;
 }
 
-/* .center-text{
-  text-align: center;
-} */
+
+#user-group-pdf{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.panel{
+  width: 100%;
+  margin-bottom:1px !important;
+  padding: 4px;
+}
+#pdfApiary{
+  /* border: 1px dashed gray; */
+  padding: .5em;
+  
+  white-space: pre-wrap;
+  max-height: 900px;
+  overflow-y: scroll;
+}
+
+th{
+  color: black !important;
+}
+
+@media (max-width:800px) {
+  .panel {
+      width: 100% !important;
+  }
+} 
+
+#buttonPDF{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 40px;
+}
+
+#date{
+  position: absolute;
+  right: 10px;
+  transform: translateX(-50%);
+  top: 65px;
+}
+
+@media (min-width:1200px) {
+  #titlePDF{
+    max-width: 40% !important;
+  }
+}
+
+@media (max-width:1200px) {
+  #titlePDF{
+    max-width: 30% !important;
+  }
+}
+
+@media (max-width:1000px) {
+  #titlePDF{
+    max-width: 40% !important;
+  }
+}
+
+@media (max-width:900px) {
+  #titlePDF{
+    max-width: 35% !important;
+  }
+}
+
+@media (max-width:700px) {
+  #titlePDF{
+    margin-top: 50px;
+    max-width: 80% !important;
+  }
+
+  #date{
+    top: 115px;
+  }
+}
+
+@media (max-width:600px) {
+  #titlePDF{
+    margin: auto;
+    margin-top: 50px;
+    max-width: 100% !important;
+  }
+
+  #date{
+    top: 65px;
+  }
+}
+
+@media (max-width:400px) {
+
+  #buttonPDF{
+    left: 100px;
+  }
+}

@@ -54,6 +54,7 @@ nav[role=admin-navigation] {
      display: flex;
      justify-content: center;
      width: 38%;
+     margin-top: -8px;
 }
 #dropdown{
     width: 100%;
@@ -63,6 +64,7 @@ nav[role=admin-navigation] {
 }
 #btn-date{
     background-color: #204d74;
+    margin-top: 13px;
 }
 #previous-date {
     margin-right: 10px;
@@ -172,12 +174,12 @@ nav[role=admin-navigation] {
 }
 
 .button {
-    padding: 8px 16px;
+    padding: 6px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    margin: 16px 1px;
+    font-size: 14px;
+    margin: 6px 1px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     cursor: pointer;
@@ -214,3 +216,6 @@ nav[role=admin-navigation] {
       margin-left: 25px;
   }
 
+  .navbar{
+      height: 50px;
+  }

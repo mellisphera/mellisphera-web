@@ -91,7 +91,9 @@ export class AlertsHiveComponent implements OnInit {
       tooltip: {
         trigger: 'item',
         formatter: (params) => {
+          if(params.data[3] !== 'OK'){
           return params.marker + (params.data[3] === 'Daily' ?  this.unitService.getDailyDate(params.data[0]) : this.unitService.getHourlyDate(params.data[0])) + '<br/>' + params.data[1].split('|').join('<br/>');
+          }
         }
       },
       toolbox: {
@@ -99,7 +101,7 @@ export class AlertsHiveComponent implements OnInit {
         itemSize: 15,
         top: 'middle',
         feature: {
-          dataView: { show: true, readOnly: false },
+          dataView: { show: false, readOnly: false },
           restore: { show: true },
           saveAsImage: { show: true }
         }
@@ -307,6 +309,33 @@ export class AlertsHiveComponent implements OnInit {
         this.option.series.push(newSerie);
       }
     });
+
+    // Mark the current day
+    let newSerie = Object.assign({}, serieTmp);
+        newSerie.name = 'thisDay';
+        newSerie.data = [ [new Date(), 0, 'OK', 'OK']];
+        newSerie.renderItem = (params, api) => {
+          let cellPoint = api.coord(api.value(0));
+          let cellWidth = params.coordSys.cellWidth;
+          let cellHeight = params.coordSys.cellHeight;
+          return {
+            type: 'rect',
+            z2: 0 ,
+            shape: {
+              x: -cellWidth / 2,
+              y: -cellHeight / 2,
+              width: cellWidth,
+              height: cellHeight,
+            },
+            position: [cellPoint[0], cellPoint[1]],
+            style : {
+              fill: 'none',
+              stroke : 'red',
+              lineWidth : 4
+            }
+          }
+        };
+        this.option.series.push(newSerie);
 
     this.checkChartInstance().then(status => {
       this.echartInstance.setOption(this.option,false);

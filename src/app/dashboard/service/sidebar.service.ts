@@ -9,9 +9,9 @@ export class SidebarService {
   private currentColor: any;
   constructor() {
     this.colorSidebar = [
-      { color: '#D53838', text: 'Red'},
-      { color: '#59B53D', text: 'Green'},
-      { color: '#3F7DE8', text: 'Blue'}
+      { color: '#E5AF2C', text: 'Golden'},
+      { color: '#ACC87B', text: 'Green'},
+      { color: '#70A8B2', text: 'Blue'}
   ];
   this.currentColor = this.colorSidebar[1];
   }

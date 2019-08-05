@@ -1,5 +1,5 @@
 import { User } from '../../_model/user';
-import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, OnDestroy,AfterViewChecked, HostListener, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../service/api/rucher.service';
 import { Ruche } from './ruche';
@@ -40,7 +40,7 @@ import { GraphGlobal } from '../graph-echarts/GlobalGraph';
   styleUrls: ['./home.component.scss'],
 
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   private eltOnClickClass: HTMLCollectionOf<Element>;
   private eltOnClickId: EventTarget;
   infoRuche: any = null;
@@ -71,6 +71,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   private infoHiveComponent: any;
   screenHeight: any;
   screenWidth: any;
+  lastHighlightFix : string;
+  lastHighlightHandle : string;
 
   constructor(public dailyRecTh: DailyRecordService,
     private graphGlobal: GraphGlobal,
@@ -97,6 +99,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.username = this.login.getUser();
     this.photoApiary = null;
     this.message = '';
+    this.lastHighlightFix = 'dontExist';
+    this.lastHighlightHandle = 'dontExist';
     this.hiveUpdateForDestroyPage = [];
     this.style = {
       'background-image': 'url(' + CONFIG.URL_FRONT + 'assets/imageClient/testAccount.png)',
@@ -173,6 +177,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.initForm();
   }
 
+  ngAfterViewChecked(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+    // highlight a hive
+    if(/info-hives/g.test(this.router.url)){
+      this.eltOnClickId = document.getElementById(this.rucheService.getCurrentHive().name);
+      if(this.eltOnClickId !== null){
+        this.renderer.addClass(this.eltOnClickId, 'highlightFix');
+        this.lastHighlightFix = this.rucheService.getCurrentHive().name;
+      }
+
+      this.eltOnClickId = document.getElementById(this.rucheService.getCurrentHive().id);
+      if(this.eltOnClickId !== null){
+        this.renderer.addClass(this.eltOnClickId, 'highlightHandle');
+        this.lastHighlightHandle = this.rucheService.getCurrentHive().id;
+      }
+    };
+  }
+
   numberAlertsActivesByHive(idHive: string): number {
     if (this.alertsService.apiaryAlertsActives != undefined) {
       return (this.alertsService.apiaryAlertsActives.filter(alert => alert.idHive === idHive).length);
@@ -202,12 +225,35 @@ export class HomeComponent implements OnInit, OnDestroy {
   // }
 
 
+  isActiveHive(hive: RucheInterface): boolean {
+    return hive.id === this.rucheService.getCurrentHive().id;
+  }
   onClick(ruche: RucheInterface) {
     // active button name
-    this.clickName();
+    // this.clickName();
     // Desactive alerts buttons
     this.eltOnClickId = document.getElementById('infoApiaryButton');
     this.renderer.removeClass(this.eltOnClickId, 'active0');
+
+    // remove higlight for last highlighted hive
+    if(this.lastHighlightFix !== 'dontExist'){
+      this.eltOnClickId = document.getElementById(this.lastHighlightFix);
+      this.renderer.removeClass(this.eltOnClickId, 'highlightFix');
+    }
+
+    if(this.lastHighlightHandle !== 'dontExist'){
+      this.eltOnClickId = document.getElementById(this.lastHighlightHandle);
+      this.renderer.removeClass(this.eltOnClickId, 'highlightHandle');
+    }
+
+    // higlight the hive
+    this.eltOnClickId = document.getElementById(ruche.name);
+    this.renderer.addClass(this.eltOnClickId, 'highlightFix');
+    this.lastHighlightFix = ruche.name;
+
+    this.eltOnClickId = document.getElementById(ruche.id);
+    this.renderer.addClass(this.eltOnClickId, 'highlightHandle');
+    this.lastHighlightHandle = ruche.id;
 
     // Save the hive on dataBase
     this.rucheService.saveCurrentHive(ruche);

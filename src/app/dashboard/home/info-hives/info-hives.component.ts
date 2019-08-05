@@ -19,7 +19,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private subscription: Subscription;
   screenHeight:any;
-    screenWidth:any;
+  screenWidth:any;
   @ViewChild(AlertsHiveComponent) alertsHiveComponent: AlertsHiveComponent;
 
   constructor(private observationService: ObservationService,
@@ -28,7 +28,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     public dailyRecordThService: DailyRecordService,
     public capteurService: CapteurService,
     public dailyRecordWservice: DailyRecordsWService,
-    private alertsService: AlertsService) {
+    private alertsService: AlertsService,) {
 
       this.getScreenSize();
 

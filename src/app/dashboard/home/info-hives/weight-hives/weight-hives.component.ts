@@ -43,7 +43,7 @@ export class WeightHivesComponent{
           top: 'middle',
           feature: {
               dataView: {
-                  show: true,
+                  show: false,
                   readOnly: true,
                   optionToContent: function (opt) {
                       var series = opt.series;

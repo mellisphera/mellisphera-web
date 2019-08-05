@@ -36,7 +36,7 @@ export class HealthHiveComponent {
               itemSize: 15,
               top: 'middle',
               feature: {
-                  dataView: { show: true, readOnly: false },
+                  dataView: { show: false, readOnly: false },
                   restore: { show: true },
                   saveAsImage: { show: true }
               }

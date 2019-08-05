@@ -48,6 +48,7 @@ export class CapteurService {
 
             ];
         this.initCapteur();
+        this.capteursByUser = [];
     }
 
     initCapteur() {
