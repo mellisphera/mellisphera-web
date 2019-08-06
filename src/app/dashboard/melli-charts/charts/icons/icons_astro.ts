@@ -1,3 +1,14 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 export const ICONS_ASTRO = {
     NEW_MOON: 'M44.1,21.52a10.77,10.77,0,0,1-3.3,7.89,11.25,11.25,0,0,1-15.88.05,10.72,10.72,0,0,1-3.31-7.94A11.2,11.2,0,0,1,32.85,10.27,11.2,11.2,0,0,1,44.1,21.52ZM44.1,21.52a10.77,10.77,0,0,1-3.3,7.89,11.25,11.25,0,0,1-15.88.05,10.72,10.72,0,0,1-3.31-7.94A11.2,11.2,0,0,1,32.85,10.27,11.2,11.2,0,0,1,44.1,21.52Z',
     WAXING_CRESCENT: 'M23.4,10.27a10.9,10.9,0,0,1,7.94,3.26,10.72,10.72,0,0,1,3.31,7.94A11.2,11.2,0,0,1,23.4,32.71a11.18,11.18,0,0,1-1.18,0c-.3,0-.72-.1-1.28-.2a10.89,10.89,0,0,0,6.29-3.92,10.94,10.94,0,0,0,2.49-7.08,10.75,10.75,0,0,0-2.49-7,11,11,0,0,0-6.29-3.87A10.16,10.16,0,0,1,23.4,10.27ZM23.4,10.27a10.9,10.9,0,0,1,7.94,3.26,10.72,10.72,0,0,1,3.31,7.94A11.2,11.2,0,0,1,23.4,32.71a11.18,11.18,0,0,1-1.18,0c-.3,0-.72-.1-1.28-.2a10.89,10.89,0,0,0,6.29-3.92,10.94,10.94,0,0,0,2.49-7.08,10.75,10.75,0,0,0-2.49-7,11,11,0,0,0-6.29-3.87A10.16,10.16,0,0,1,23.4,10.27Z',

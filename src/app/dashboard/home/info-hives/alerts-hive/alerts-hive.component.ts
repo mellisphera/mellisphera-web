@@ -1,3 +1,14 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { AlertsService } from '../../../service/api/alerts.service';
 import { RucherService } from '../../../service/api/rucher.service';
@@ -91,7 +102,9 @@ export class AlertsHiveComponent implements OnInit {
       tooltip: {
         trigger: 'item',
         formatter: (params) => {
+          if(params.data[3] !== 'OK'){
           return params.marker + (params.data[3] === 'Daily' ?  this.unitService.getDailyDate(params.data[0]) : this.unitService.getHourlyDate(params.data[0])) + '<br/>' + params.data[1].split('|').join('<br/>');
+          }
         }
       },
       toolbox: {
@@ -99,7 +112,7 @@ export class AlertsHiveComponent implements OnInit {
         itemSize: 15,
         top: 'middle',
         feature: {
-          dataView: { show: true, readOnly: false },
+          dataView: { show: false, readOnly: false },
           restore: { show: true },
           saveAsImage: { show: true }
         }
@@ -307,6 +320,33 @@ export class AlertsHiveComponent implements OnInit {
         this.option.series.push(newSerie);
       }
     });
+
+    // Mark the current day
+    let newSerie = Object.assign({}, serieTmp);
+        newSerie.name = 'thisDay';
+        newSerie.data = [ [new Date(), 0, 'OK', 'OK']];
+        newSerie.renderItem = (params, api) => {
+          let cellPoint = api.coord(api.value(0));
+          let cellWidth = params.coordSys.cellWidth;
+          let cellHeight = params.coordSys.cellHeight;
+          return {
+            type: 'rect',
+            z2: 0 ,
+            shape: {
+              x: -cellWidth / 2,
+              y: -cellHeight / 2,
+              width: cellWidth,
+              height: cellHeight,
+            },
+            position: [cellPoint[0], cellPoint[1]],
+            style : {
+              fill: 'none',
+              stroke : 'red',
+              lineWidth : 4
+            }
+          }
+        };
+        this.option.series.push(newSerie);
 
     this.checkChartInstance().then(status => {
       this.echartInstance.setOption(this.option,false);

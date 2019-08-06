@@ -1,3 +1,14 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
 <div id="user-group">
     <div class="panel panel-primary">
         <div class="panel-heading">{{ 'HIVE_DETAIL.CLICK.SENSORSTITLE' | translate}}
@@ -11,9 +22,9 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th class="text-left" scope="col">Description
+                        <th scope="col" style="width: 100px;">{{ 'CAPTEUR.REFERENCES' | translate}}
                         </th>
-                        <th scope="col">{{ 'CAPTEUR.REFERENCES' | translate}}
+                        <th class="text-left" scope="col">Description
                         </th>
                         <th class="text-right" scope="col" style="width: 80px;"></th>
                     </tr>
@@ -21,23 +32,14 @@
                 <tbody>
                     <ng-container *ngFor="let capteur of ( capteurService.capteursByHive); let i = index">
                         <tr class="hoverStyle">
-                            <td class="text-left">{{capteur.description}}</td>
                             <td>{{capteur.sensorRef}}</td>
+                            <td>{{capteur.description}}</td>
                             <td class="text-right">
                                 <button data-toggle="tooltip" data-html="true"
                                     title="{{ 'CAPTEUR.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
                                     (click)="selectCapteur(capteur, i)" data-target="#editCapteurModal"
                                     class="btn btn-primary" style="padding: 0;border: none; background: none;">
                                     <i class="fa fa-edit fa-2x"></i>
-                                </button>
-                                <button type="button" class="btn btn-warning"
-                                    title="{{ 'CAPTEUR.FORM.DELETE' | translate}}" mwlConfirmationPopover
-                                    popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
-                                    confirmText="{{ 'CAPTEUR.FORM.CONFIRM' | translate}}"
-                                    cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}" placement="top"
-                                    (confirm)="deleteCapteur(capteur, i)"
-                                    style="padding: 0;border: none; background: none;">
-                                    <i class="fa fa-times fa-2x"></i>
                                 </button>
                             </td>
                         </tr>
@@ -98,9 +100,12 @@
                         <label class="col-form-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.LINK' | translate}}</label>
                         <div class="form-check">
                             <input class="form-check-input" value="stock" type="radio" formControlName="checkbox">
-                            <label class="form-check-label" for="exampleRadios1">Stock </label><br />
+                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.STOCK' | translate}}
+                            </label><br />
                             <input class="form-check-input" value="ruche" type="radio" formControlName="checkbox">
-                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.HIVE' | translate}}
+                            <label class="form-check-label"
+                                for="exampleRadios1">{{ 'CAPTEUR.FORM.HIVEDETAIL' | translate}}
+                                {{this.rucheService.getCurrentHive().name}}
                             </label>
                         </div>
                     </div>
@@ -151,10 +156,11 @@
                         <div class="form-check">
                             <input class="form-check-input" type="radio" formControlName="checkbox" value="stock"
                                 [checked]="!editCapteurCheckbox" (click)="onchange($event)">
-                            <label class="form-check-label" for="exampleRadios1">Stock </label><br />
+                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.STOCK' | translate}}
+                            </label><br />
                             <input class="form-check-input" type="radio" formControlName="checkbox" value="ruche"
                                 [checked]="editCapteurCheckbox" (click)="onchange($event)">
-                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.HIVE' | translate}}
+                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.INHIVE' | translate}}
                             </label>
                         </div>
                     </div>
@@ -191,6 +197,13 @@
                         <button type="button" id="editVal" class="btn btn-primary" data-dismiss="modal"
                             (click)="updateCapteur()" [disabled]="!editCapteurForm.valid">
                             {{ 'CAPTEUR.FORM.SAVE' | translate}}</button>
+                        <button type="button" class="btn btn-warning"
+                            mwlConfirmationPopover popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
+                            confirmText="{{ 'CAPTEUR.FORM.CONFIRM' | translate}}"
+                            cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}" placement="top"
+                            (confirm)="deleteCapteur()">
+                            {{ 'CAPTEUR.FORM.DELETE' | translate}}
+                        </button>
                         <button type="button" class="btn btn-secondary"
                             data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>
                     </div>

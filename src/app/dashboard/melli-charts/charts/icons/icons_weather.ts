@@ -1,3 +1,14 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 export const ICONS_WEATHER = {
     '01d': 'M256,144c-61.75,0-112,50.25-112,112c0,61.75,50.25,112,112,112' +
             's112-50.25,112-112C368,194.25,317.75,144,256,144z M256,336c-44.188,0-80-35.812-80-80s35.812-80,80-80s80,35.812,80,80' +

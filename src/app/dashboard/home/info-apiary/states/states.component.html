@@ -1,16 +1,26 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
 <div id="content" #content>
   <!-- BUTTONS -->
-  <div id="divButton">
-    <!-- <button class="button button0" (click)="downloadPDF()">Export to PDF</button> -->
+  <!-- <div id="divButton">
+    <button class="button button0" (click)="downloadPDF()">Export to PDF</button>
     <input class="button button0" type="button" value="{{ 'SUMMARY.PDF' | translate}}" (click)="captureScreen()" />
-  </div>
+  </div> -->
 
 
   <!-- TO CONVERT -->
-  <div id="page">
-    <div id="contentToConvert">
-      <br>
-      <div id="header">
+  <div id="contentToConvert">
+    <!-- <br> -->
+    <!-- <div id="header">
         <span id="date">{{ this.unitService.getDailyDate(this.date) }}</span>
         <span>
           <h3 id="title">{{ 'SUMMARY.APIARY' | translate}} {{this.rucherService.rucher.name}} :
@@ -18,14 +28,16 @@
         </span>
       </div>
       <br>
-      <br>
+      <br> -->
 
-      <!-- HIVES -->
-      <div *ngIf="rucheService.ruches.length !== 0" class="panel panel-info">
+    <!-- HIVES -->
+    <!-- <div *ngIf="rucheService.ruches.length !== 0" class="panel panel-info">
         <div class="panel-heading">
           <h4 class="panel-title">
             <a><b>{{ 'SUMMARY.SUMMARYHIVES' | translate}} <input type="number" class="tentacles" name="tentacles"
                   [(ngModel)]="nbDaysHivesForm" min="1" max="10000"> {{ 'SUMMARY.DAYS' | translate}}</b></a>
+            <input class="button button0" type="button" value="{{ 'SUMMARY.PDF' | translate}}" (click)="captureScreen()" />
+            <span id="date">{{ this.unitService.getDailyDate(this.date) }}</span>
           </h4>
         </div>
         <div class="panel-collapse collapse in">
@@ -96,6 +108,80 @@
       </div>
       <div *ngIf="rucheService.ruches.length === 0" class="noData">
         {{ 'SUMMARY.NOHIVES' | translate}}
+      </div> -->
+
+    <div id="user-group-pdf">
+      <div class="panel panel-primary">
+        <div class="panel-heading"><div id = "titlePDF"> {{ 'SUMMARY.SUMMARY' | translate}} {{this.rucherService.rucher.name}} ; {{ 'SUMMARY.ALERTSSINCE' | translate}}<input type="number" class="tentacles"
+              name="tentacles" [(ngModel)]="nbDaysHivesForm" min="1" max="10000"> {{ 'SUMMARY.DAYS' | translate}}</div>
+          <input id="buttonPDF" class="button button0" type="button" value="{{ 'SUMMARY.PDF' | translate}}"
+            (click)="captureScreen()" />
+          <span id="date">{{ this.unitService.getDailyDate(this.date) }}</span>
+        </div>
+        <div class="user-sensors panel-body" id="pdfApiary">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">{{ 'SUMMARY.NAME' | translate}}</th>
+                <th scope="col">{{ 'SUMMARY.BROOD' | translate}}</th>
+                <th scope="col">{{ 'SUMMARY.BROODD3' | translate}}</th>
+                <th scope="col">{{ 'SUMMARY.BROODD7' | translate}}</th>
+                <th scope="col">{{ 'SUMMARY.WEIGHT' | translate}}</th>
+                <th scope="col">{{ 'SUMMARY.SENSORS' | translate}}</th>
+                <th scope="col">{{ 'SUMMARY.ALERTS' | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hoverStyle" *ngFor="let hive of alphaSort(rucheService.ruches); let i = index">
+                <td>{{hive.name}}</td>
+                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,0) != null">
+                  {{ this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,0) }}</td>
+                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,0) === null" class="center-text">
+                  - </td>
+                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,1) != null">
+                  {{ this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,1) }}</td>
+                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,1) === null" class="center-text">
+                  - </td>
+                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,2) != null">
+                  {{ this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,2) }}</td>
+                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,2) === null" class="center-text">
+                  - </td>
+                <td *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive.id) !== null">
+                  {{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightIncomeByHive(hive.id)) }}</td>
+                <td *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive.id) === null" class="center-text"> -
+                </td>
+                <td *ngIf="capteurService.getCapteursByHive(hive.id).length === 0" class="center-text"> -
+                </td>
+                <td *ngIf="capteurService.getCapteursByHive(hive.id).length !== 0">
+                  <ng-container *ngFor="let capt of capteurService.getCapteursByHive(hive.id); let j = index">
+                    <ng-container *ngIf="j === 0">
+                      {{ capt }}
+                    </ng-container>
+                    <ng-container *ngIf="j !== 0">
+                      ; {{ capt }}
+                    </ng-container>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container
+                    *ngIf="alertsService.alertsByHiveByApiary.get(hive.id) !== undefined && getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm).length > 0">
+                    <ng-container
+                      *ngFor="let hiveAlert of getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm)">
+                      <img [src]="hiveAlert.picto" class="picto">
+                    </ng-container>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="alertsService.alertsByHiveByApiary.get(hive.id) === undefined || getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm).length === 0"
+                    class="center-text">
+                    -
+                  </ng-container>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>
+
+  </div>

@@ -1,3 +1,14 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import * as jsPDF from 'jspdf';
 import { AlertsService } from '../../../service/api/alerts.service';
@@ -113,16 +124,20 @@ export class StatesComponent implements OnInit {
     var data = document.getElementById('contentToConvert');  
     html2canvas(data).then(canvas => {  
       // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
+      var imgWidth = 297;   
+      var pageHeight = 210;    
       var imgHeight = canvas.height * imgWidth / canvas.width;  
       var heightLeft = imgHeight;  
   
-      const contentDataURL = canvas.toDataURL('image/png')  
-      let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF  
+      const contentDataURL = canvas.toDataURL('image/png');  
+      let pdf = new jsPDF('l', 'mm', '[297, 210]'); // A4 size page of PDF  
       var position = 0;  
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
-      pdf.save('MYPdf.pdf'); // Generated PDF   
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight); 
+      if (this.userService.getJwtReponse().country === "FR") {
+        pdf.save('Résumé_rucher.pdf'); // Generated PDF   
+      } else {
+        pdf.save('Apiary_summary.pdf'); // Generated PDF   
+      } 
     });  
   }  
 

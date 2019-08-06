@@ -1,5 +1,16 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { User } from '../../_model/user';
-import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, OnDestroy,AfterViewChecked, HostListener, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../service/api/rucher.service';
 import { Ruche } from './ruche';
@@ -40,7 +51,7 @@ import { GraphGlobal } from '../graph-echarts/GlobalGraph';
   styleUrls: ['./home.component.scss'],
 
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   private eltOnClickClass: HTMLCollectionOf<Element>;
   private eltOnClickId: EventTarget;
   infoRuche: any = null;
@@ -49,7 +60,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   rucheSelect: RucheInterface;
   positionHive: any;
   baseDropValid: string;
+  boolDraggable : boolean;
   rucherSelectId: string;
+  firstValue : boolean;
+  translateX : number;
+  translateY : number;
   private hiveUpdateForDestroyPage: Array<RucheInterface>;
   message: string;
   style: {
@@ -72,6 +87,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   private infoHiveComponent: any;
   screenHeight: any;
   screenWidth: any;
+  lastHighlightFix : string;
+  lastHighlightHandle : string;
 
   constructor(public dailyRecTh: DailyRecordService,
     private graphGlobal: GraphGlobal,
@@ -98,6 +115,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.username = this.login.getUser();
     this.photoApiary = null;
     this.message = '';
+    this.lastHighlightFix = 'dontExist';
+    this.lastHighlightHandle = 'dontExist';
     this.hiveUpdateForDestroyPage = [];
     this.style = {
       'background-image': 'url(' + CONFIG.URL_FRONT + 'assets/imageClient/testAccount.png)',
@@ -121,6 +140,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       sharingUser: []
     };
 
+    this.boolDraggable = true;
+    this.firstValue = true;
     this.getScreenSize();
   }
 
@@ -136,6 +157,8 @@ export class HomeComponent implements OnInit, OnDestroy {
    */
   getDateDaily(): string {
     let showDate = new Date();
+    showDate.setFullYear(this.dailyRecTh.rangeDailyRecord.getFullYear());
+    showDate.setMonth(this.dailyRecTh.rangeDailyRecord.getMonth());
     showDate.setDate(this.dailyRecTh.rangeDailyRecord.getDate() + 1);
     return this.unitService.getDailyDate(showDate.toISOString());
   }
@@ -174,6 +197,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.initForm();
   }
 
+  ngAfterViewChecked(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+    // highlight a hive
+    if(/info-hives/g.test(this.router.url)){
+      this.eltOnClickId = document.getElementById(this.rucheService.getCurrentHive().name);
+      if(this.eltOnClickId !== null){
+        this.renderer.addClass(this.eltOnClickId, 'highlightFix');
+        this.lastHighlightFix = this.rucheService.getCurrentHive().name;
+      }
+
+      this.eltOnClickId = document.getElementById(this.rucheService.getCurrentHive().id);
+      if(this.eltOnClickId !== null){
+        this.renderer.addClass(this.eltOnClickId, 'highlightHandle');
+        this.lastHighlightHandle = this.rucheService.getCurrentHive().id;
+      }
+    };
+  }
+
   numberAlertsActivesByHive(idHive: string): number {
     if (this.alertsService.apiaryAlertsActives != undefined) {
       return (this.alertsService.apiaryAlertsActives.filter(alert => alert.idHive === idHive).length);
@@ -203,12 +245,35 @@ export class HomeComponent implements OnInit, OnDestroy {
   // }
 
 
+  isActiveHive(hive: RucheInterface): boolean {
+    return hive.id === this.rucheService.getCurrentHive().id;
+  }
   onClick(ruche: RucheInterface) {
     // active button name
-    this.clickName();
+    // this.clickName();
     // Desactive alerts buttons
     this.eltOnClickId = document.getElementById('infoApiaryButton');
     this.renderer.removeClass(this.eltOnClickId, 'active0');
+
+    // remove higlight for last highlighted hive
+    if(this.lastHighlightFix !== 'dontExist'){
+      this.eltOnClickId = document.getElementById(this.lastHighlightFix);
+      this.renderer.removeClass(this.eltOnClickId, 'highlightFix');
+    }
+
+    if(this.lastHighlightHandle !== 'dontExist'){
+      this.eltOnClickId = document.getElementById(this.lastHighlightHandle);
+      this.renderer.removeClass(this.eltOnClickId, 'highlightHandle');
+    }
+
+    // higlight the hive
+    this.eltOnClickId = document.getElementById(ruche.name);
+    this.renderer.addClass(this.eltOnClickId, 'highlightFix');
+    this.lastHighlightFix = ruche.name;
+
+    this.eltOnClickId = document.getElementById(ruche.id);
+    this.renderer.addClass(this.eltOnClickId, 'highlightHandle');
+    this.lastHighlightHandle = ruche.id;
 
     // Save the hive on dataBase
     this.rucheService.saveCurrentHive(ruche);
@@ -271,7 +336,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @param {RucheInterface} ruche
    * @memberof HomeComponent
    */
-  onMoveEnd(event, ruche: RucheInterface, id: string): void {
+  onMoveEnd(event, ruche: RucheInterface, id:number): void {
     if (this.login.checkWriteObject(ruche.idUsername)) {
       const container = document.getElementById("cadre");
       const widthcontainer = container.offsetWidth;
@@ -290,14 +355,46 @@ export class HomeComponent implements OnInit, OnDestroy {
       rucheUpdate.hivePosY = '' + this.position.y;
       this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
         () => { }, () => { }, () => {
+          // ruche.hivePosX = rucheUpdate.hivePosX;
+          // ruche.hivePosY = rucheUpdate.hivePosY;
+          // document.getElementById(id.toString()).style.transform = 'translate(0px, 0px)';
+          // this.firstValue = true;
+          // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[0]);
+          // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2));
           this.position.x = 0;
           this.position.y = 0;
-          document.getElementById(id).style.transform = 'none';
           this.hiveUpdateForDestroyPage.push(rucheUpdate);
         }
-      )
+      );
     }
   }
+
+  // onMove(event, ruche: RucheInterface, id:number): void {
+  //   // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[0]);
+  //   // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2));
+  //   if(this.firstValue){
+  //     let str11 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[0];
+  //     let str21 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2);
+  //     this.translateX = +str11; 
+  //     this.translateY = +str21; 
+  //     this.firstValue = false;
+  //   }
+  //     let str1 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[0];
+  //     let str2 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2);
+  //     let translateX1 : number;
+  //     let translateY1 : number;
+  //     translateX1 = +str1;
+  //     translateY1 = +str2;
+  //     console.log(((translateX1 - this.translateX).toString()));
+  //     console.log(((translateY1 - this.translateY).toString()));
+  //     // let doc = document.getElementsByClassName(id.toString()) as HTMLCollectionOf<HTMLElement>;
+  //     // for (let i = 0; i < doc.length; i++) {
+  //     //   doc[i].style.transform = 'translate(' + ((translateX1 - this.translateX).toString())  + ', ' + ((translateY1 - this.translateY).toString()) + ') !important';
+  //     // }
+  //     document.getElementById(id.toString()).setAttribute('style','transform : translate(' + ((translateX1 - this.translateX).toString())  + 'px, ' + ((translateY1 - this.translateY).toString()) + 'px) !important; z-index:100; top: ' + ruche.hivePosY +'%; left : ' + ruche.hivePosX + '%;');
+  //     // document.getElementById(id.toString()).style.transform = ('translate(' + ((translateX1 - this.translateX).toString())  + 'px, ' + ((translateY1 - this.translateY).toString()) + 'px) !important');
+
+  //   }
 
 
   onMoving(event, id: string){
