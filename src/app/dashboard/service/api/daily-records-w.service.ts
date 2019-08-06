@@ -1,3 +1,14 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -304,8 +315,9 @@ export class DailyRecordsWService {
    */
   public nextDay(idApiary: string): void {
     this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() + 1);
-    this.rangeDailyRecord.setHours(2);
+    this.rangeDailyRecord.setHours(23);
     this.rangeDailyRecord.setMinutes(0);
+    this.rangeDailyRecord.setSeconds(0);
     this.getDailyWeightIncomeByApiary(idApiary);
   }
   /**
@@ -316,8 +328,9 @@ export class DailyRecordsWService {
    */
   public previousDay(idApiary: string): void {
     this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() - 1);
-    this.rangeDailyRecord.setHours(2);
+    this.rangeDailyRecord.setHours(23);
     this.rangeDailyRecord.setMinutes(0);
+    this.rangeDailyRecord.setSeconds(0);
     this.getDailyWeightIncomeByApiary(idApiary);
   }
 
@@ -336,11 +349,12 @@ export class DailyRecordsWService {
     var tabDate: Date[];
     var previousDay: Date;
     previousDay = new Date();
+    previousDay.setFullYear(this.rangeDailyRecord.getFullYear());
+    previousDay.setMonth(this.rangeDailyRecord.getMonth());
     previousDay.setDate(this.rangeDailyRecord.getDate() - 1);
-    previousDay.setHours(2);
+    previousDay.setHours(23);
     previousDay.setMinutes(0);
     tabDate = [previousDay, this.rangeDailyRecord];
-    console.log(tabDate);
     this.http.post<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/apiary/' + idApiary, tabDate).subscribe(
       (data) => {
         if (data[0] != null) {

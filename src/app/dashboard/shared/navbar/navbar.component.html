@@ -1,3 +1,14 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -15,7 +26,10 @@
           <span class="icon-bar"></span>
 
           <ul id="menu">
-            <li>{{ 'NAVBAR.CRUD.APIARY' | translate }}
+            <li id= "titleCRUD">{{ 'NAVBAR.CRUD.TITLE' | translate }}</li>
+            <li><a routerLink="./manage-apiarys" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.APIARY' | translate }}">
+                <img src="./assets/icons/ui/melliUx.png" style="width:50px;margin-left:-5px;"/>
+              </a>
               <!-- NEW APIARY -->
               <button data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.NEW_APIARY' | translate }}"
                 data-toggle="modal" data-target="#newApiaryModal" class="btn btn-success btn-lg crud-apiary">
@@ -34,7 +48,10 @@
                 <i class="fa fa-times fa-2x"></i>
               </button>
             </li>
-            <li>{{ 'NAVBAR.CRUD.HIVES' | translate }}
+            <li><a routerLink="./manage-hives" data-toggle="tooltip" id="hives" data-placement="top"
+                    title="{{ 'SIDEBAR.HIVES' | translate }}">
+                  <img src="./assets/icons/ui/hive.png" style="width:50px;margin-left:-5px;"/>
+                </a>
               <!-- NEW HIVE -->
               <button [disabled]="rucherService.rucher.id == null" (click)="rucherSelectInit()" data-toggle="tooltip"
                 data-html="true" title="{{ 'HIVES.FORM.NEW' | translate}}" data-toggle="modal"
@@ -54,24 +71,52 @@
                 <i class="fa fa-times fa-2x"></i>
               </button>
             </li>
-            <li id="{{ 'NAVBAR.CRUD.MANAGE' | translate }}">{{ 'NAVBAR.CRUD.MANAGE' | translate }}
-              <!-- MANAGE APIARY -->
-              <a routerLink="./manage-apiarys" data-toggle="tooltip" id="home" data-placement="top"
-                title="{{ 'SIDEBAR.APIARY' | translate }}">
-                <img src="./assets/wizard/apiaryGreen.png" style="width:35px; margin-left: 47px;" />
-              </a>
-              <!-- MANAGE HIVE -->
-              <a routerLink="./manage-hives" data-toggle="tooltip" id="hives" data-placement="top"
-                title="{{ 'SIDEBAR.HIVES' | translate }}">
-                <img src="./assets/img/apiary-icon-green.png"
-                  style="width:35px;height: 35px; margin-left: 10px; margin-top:-10px;" />
-              </a>
-              <!-- MANAGE SENSORS -->
-              <a routerLink="./manage-sensors" data-toggle="tooltip" data-placement="top" id="sensor"
+            <li>
+                <a>
+                  <img src="./assets/icons/ui/notes.png" style="width:50px;margin-left:-5px;"/>
+                </a>
+              <!-- NEW HIVE -->
+              <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip"
+                data-html="true" data-toggle="modal"
+                class="btn btn-success btn-lg crud-apiary">
+                <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
+              </button>
+              <!-- EDIT HIVE -->
+              <button data-toggle="tooltip" data-html="true" 
+                data-toggle="modal" type="button"
+                class="btn btn-success btn-lg crud-apiary">
+                <i class="fa fa-edit fa-2x"></i>
+              </button>
+              <!-- DELETE HIVE -->
+              <button type="button" class="btn btn-warning btn-lg crud-apiary"
+                data-toggle="tooltip" data-html="true"
+                data-toggle="modal">
+                <i class="fa fa-times fa-2x"></i>
+              </button>
+            </li>
+            <li id="{{ 'NAVBAR.CRUD.MANAGE' | translate }}">
+                <a routerLink="./manage-sensors" data-toggle="tooltip" data-placement="top" id="sensor"
                 title="{{ 'SIDEBAR.SENSORS' | translate }}">
-                <img src="./assets/img/sensor-icon-green.png"
-                  style="width:25px;height: 25px; margin-top:-6px; margin-left: 13px;" />
-              </a>
+                  <img src="./assets/img/sensor-icon.png" style="width:50px;margin-left:-5px;"/>
+                </a>
+              <!-- NEW HIVE -->
+              <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip"
+                data-html="true" data-toggle="modal"
+                class="btn btn-success btn-lg crud-apiary">
+                <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
+              </button>
+              <!-- EDIT HIVE -->
+              <button data-toggle="tooltip" data-html="true" 
+                data-toggle="modal" type="button"
+                class="btn btn-success btn-lg crud-apiary">
+                <i class="fa fa-edit fa-2x"></i>
+              </button>
+              <!-- DELETE HIVE -->
+              <button type="button" class="btn btn-warning btn-lg crud-apiary"
+                data-toggle="tooltip" data-html="true"
+                data-toggle="modal">
+                <i class="fa fa-times fa-2x"></i>
+              </button>
             </li>
           </ul>
         </li>
