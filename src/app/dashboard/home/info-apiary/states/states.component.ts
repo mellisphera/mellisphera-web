@@ -41,8 +41,8 @@ export class StatesComponent implements OnInit {
 
   private elementCounter : number;
 
-  private nbDaysNotesForm : number;
-  private nbDaysHivesForm : number;
+  public nbDaysNotesForm : number;
+  public nbDaysHivesForm : number;
   private noAlert : boolean;
 
   @ViewChild('content') content : ElementRef;

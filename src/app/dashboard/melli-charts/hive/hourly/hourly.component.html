@@ -22,7 +22,7 @@ limitations under the License. -->
   <ul class="nav responsive-nav" id="other_hourly">
     <li *ngFor="let type of getlabelByType('OTHER'); let i = index" (click)="setType(type)" [class]="type.class"
       [id]="type.id">{{ type.name }}
-    <li (click)="exportToCsv()" class="item-type">
+    <li (click)="exportToCsv('OTHER')" class="item-type">
       <!-- <img src="./assets/icons/exportToCsv.png"> -->to CSV</li>
   </ul>
 </div>
