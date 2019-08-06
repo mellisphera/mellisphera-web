@@ -54,7 +54,7 @@ export class DailyComponent implements OnInit {
   private currentTypeDailyDevice: Tools;
   private currentTypeDailyEnv: Tools;
   private currentTypeDailyOther: Tools;
-  private currentTextPeriodCalendar: string;
+  public currentTextPeriodCalendar: string;
   private optionCsv: Object;
   private typeData: Tools[];
   constructor(private renderer: Renderer2,
