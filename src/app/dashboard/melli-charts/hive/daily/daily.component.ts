@@ -30,16 +30,18 @@ declare interface Tools {
 }
 const DEVICE = 'DEVICE';
 const OTHER = 'OTHER';
+const ENV = 'ENV';
 
 @Component({
   selector: 'app-daily',
   templateUrl: './daily.component.html',
   styleUrls: ['./daily.component.css']
 })
-export class DailyComponent implements OnInit, AfterViewInit {
+export class DailyComponent implements OnInit {
 
   private currentEltTypeDaily: HTMLElement;
   private currentTypeDailyDevice: Tools;
+  private currentTypeDailyEnv: Tools;
   private currentTypeDailyOther: Tools;
   private currentTextPeriodCalendar: string;
   private optionCsv: Object;
@@ -60,7 +62,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/He.png' },
       { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Br.png' },
       { name: 'ASTRO', id: 'ASTRO', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
-      { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' }
+      { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
+      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: ''}
     ];
 
     this.optionCsv = {
@@ -82,6 +85,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     }
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
+    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
   }
 
 
@@ -91,6 +95,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.melliHive.getDailyDeviceChartInstance().setOption(this.dailyManager.baseOptionsInt);
     this.melliHive.setDailyOtherChartInstance(echarts.init(<HTMLDivElement>document.getElementById('calendar-other')));
     this.melliHive.getDailyOtherChartInstance().setOption(this.dailyManager.baseOptionExt);
+    this.melliHive.setDailyEnvChartInstance(echarts.init(<HTMLDivElement>document.getElementById('calendar-env')));
+    this.melliHive.getDailyEnvChartInstance().setOption(this.dailyManager.baseOptionEnv);
 
 
 
@@ -112,7 +118,13 @@ export class DailyComponent implements OnInit, AfterViewInit {
   }
 
 
-  onResize(event: any) {
+  /**
+   *
+   *
+   * @param {*} event
+   * @memberof DailyComponent
+   */
+  onResize(event: any): void {
     this.melliHive.getDailyDeviceChartInstance().resize({
       width: 'auto',
       height: 'auto'
@@ -121,9 +133,10 @@ export class DailyComponent implements OnInit, AfterViewInit {
       width: 'auto',
       height: 'auto'
     });
-  }
-
-  ngAfterViewInit(): void {
+    this.melliHive.getDailyEnvChartInstance().resize({
+      width: 'auto',
+      height: 'auto'
+    });
   }
 
   loadDailyDeviceData(rangeChange: boolean): void {
@@ -189,24 +202,17 @@ export class DailyComponent implements OnInit, AfterViewInit {
   }
 
 
-
-  /*   onDailyDeviceChartInit(event: any): void {
-      this.melliHive.checkifDailyDeviceInstanceChart().then(success => {
-        console.log(this.melliHive.getDailyDeviceChartInstance().getWidth());
-      }).catch(err => {
-        this.melliHive.setDailyDeviceChartInstance(event);
-  
-        console.log(this.melliHive.getDailyDeviceChartInstance().getWidth());
-      });
+  loadDailyEnvData(rangeChange: boolean) {
+    switch (this.currentTypeDailyEnv.name) {
+      case 'ALERT':
+        this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().id,
+          this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
+        break;
+      default:
+        break;
     }
-  
-    onDailyOtherChartInit(event: any): void {
-      this.melliHive.checkifOtherInstanceChart().then(success => {
-        console.log(this.melliHive.getDailyOtherChartInstance().getWidth());
-      }).catch(err => {
-        this.melliHive.setDailyOtherChartInstance(event);
-      });
-    } */
+  }
+
   /**
    *
    *
@@ -233,7 +239,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
         this.currentTypeDailyDevice = type;
         this.loadDailyDeviceData(false);
       }
-    } else {
+    } else if (type.origin === OTHER) {
       if (type.id !== this.currentTypeDailyOther.id) {
         let oldIndex: number = this.typeData.map(_type => _type.id).indexOf(this.currentTypeDailyOther.id);
         if (type.id !== this.currentTypeDailyDevice.id) {
@@ -243,6 +249,15 @@ export class DailyComponent implements OnInit, AfterViewInit {
           this.currentTypeDailyOther = type;
           this.loadDailyOtherData(false);
         }
+      }
+    } else if (type.origin === ENV) {
+      let oldIndex: number = this.typeData.map(_type => _type.id).indexOf(this.currentTypeDailyEnv.id);
+      if (type.id !== this.currentTypeDailyDevice.id) {
+        this.typeData[oldIndex].class = this.typeData[oldIndex].class.replace(/active/g, '');
+        let newIndex: number = this.typeData.map(_type => _type.id).indexOf(type.id);
+        this.typeData[newIndex].class += ' active';
+        this.currentTypeDailyEnv = type;
+        this.loadDailyEnvData(false);
       }
     }
   }

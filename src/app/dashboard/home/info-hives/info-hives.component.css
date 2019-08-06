@@ -52,11 +52,11 @@ hr
     
     #health{
         margin-top : 50px;
-        height: 27vh;
+        height: 25vh;
     }
     #weight{
         position: relative;
-        height: 20vh;
+        height: 16vh;
     }
     
     #alerts{

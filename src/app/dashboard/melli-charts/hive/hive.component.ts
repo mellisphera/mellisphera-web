@@ -33,6 +33,7 @@ export class HiveComponent implements OnInit {
     // this.hourlyComponent.cleanSerie();
     this.dailyComponent.loadDailyDeviceData(false);
     this.dailyComponent.loadDailyOtherData(false);
+    this.dailyComponent.loadDailyEnvData(false);
     // this.hourlyComponent.loadHourlyData(true, '', false);
   }
 
@@ -40,6 +41,7 @@ export class HiveComponent implements OnInit {
    setRangeChart() {
      this.dailyComponent.loadDailyDeviceData(true);
      this.dailyComponent.loadDailyOtherData(true);
+     this.dailyComponent.loadDailyEnvData(true);
      // this.hourlyComponent.loadHourlyData(true, '', true);
    }
 

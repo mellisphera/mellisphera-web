@@ -42,7 +42,7 @@ export class HealthHiveComponent {
               }
           },
           calendar: [{
-              top: 100,
+              top: 80,
               left: '15%',
               bottom: '3%',
               height: '45%',

@@ -90,6 +90,10 @@ export class ObservationService {
     this.rangeObs = MyDate.getRange(date);
   }
 
+  setRangeForMelliCharts(range: Date[]) {
+    this.rangeObs = range;
+  }
+
   /**
    *
    *
@@ -99,7 +103,7 @@ export class ObservationService {
    * @memberof ObservationService
    */
   getObservationByIdHive(idHive: string, hiveName?: string): Observable<any> {
-    return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, this.rangeObs).map(res => {
+    return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, this.rangeObs) .map(res => {
       this.observationsHive = res.sort((a: Observation, b: Observation) => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       });
@@ -145,6 +149,18 @@ export class ObservationService {
         z: 11
       };
     });
+  }
+
+  /**
+   *
+   *
+   * @param {string} idHive
+   * @param {Date[]} range
+   * @returns {Observable<Observation[]>}
+   * @memberof ObservationService
+   */
+  getObservationByHiveForMelliCharts(idHive: string, range: Date[]): Observable<Observation[]> {
+    return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, range);
   }
 
 

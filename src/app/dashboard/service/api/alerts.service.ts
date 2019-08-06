@@ -174,6 +174,18 @@ export class AlertsService {
         });
     }
 
+    /**
+     *
+     *
+     * @param {string} idHive
+     * @param {Date[]} range
+     * @returns {Observable<AlertInterface[]>}
+     * @memberof AlertsService
+     */
+    getAlertByHiveMelliCharts(idHive: string, range: Date[]): Observable<AlertInterface[]> {
+        return this.http.post<AlertInterface[]>(CONFIG.URL + 'alert/between/hive/' + idHive, range);
+    }
+
     // Fonction to get all hives alerts for one apiary
     getAllHiveAlertsByApiary(idApiary : string){
         // the format is AlertInterface[]

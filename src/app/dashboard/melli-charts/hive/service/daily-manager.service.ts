@@ -8,7 +8,7 @@ import { SERIES } from '../../charts/SERIES';
 import { UnitService } from '../../../service/unit.service';
 import 'rxjs/add/observable/forkJoin';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
-import { isUndefined, isArray } from 'util';
+import { isUndefined, isArray, isObject } from 'util';
 import { WeatherService } from '../../../service/api/weather.service';
 import { ICONS_WEATHER } from '../../charts/icons/icons_weather';
 import { Observable } from 'rxjs';
@@ -16,6 +16,11 @@ import { AstroService } from '../../service/astro.service';
 import { ICONS_ASTRO } from '../../charts/icons/icons_astro';
 import { _localeFactory } from '@angular/core/src/application_module';
 import 'rxjs/add/observable/of';
+import { AlertsService } from '../../../service/api/alerts.service';
+import { ObservationService } from '../../../service/api/observation.service';
+import { Observation } from '../../../../_model/observation';
+import { AlertInterface } from '../../../../_model/alert';
+import { GLOBAL_ICONS } from '../../charts/icons/icons';
 
 
 
@@ -38,6 +43,7 @@ const OTHER = 'OTHER';
 export class DailyManagerService {
 
   public baseOptionsInt: any;
+  public baseOptionEnv: any;
   public meanPeriodDevice: {
     value: Number,
     unit: String
@@ -57,18 +63,19 @@ export class DailyManagerService {
   };
   public baseOptionExt: any;
   private optionForCurentChart: any;
-  private currentRange: Date[]; 
+  private currentRange: Date[];
   constructor(
     private dailyWService: DailyRecordsWService,
     private dailyHService: DailyRecordService,
+    private alertService: AlertsService,
     private weatherService: WeatherService,
+    private observationService: ObservationService,
     private graphGlobal: GraphGlobal,
     private astroService: AstroService,
     private dailyStock: DailyStockHoneyService,
     private unitService: UnitService
   ) {
     this.meanPeriodDevice = {
-      
       value: 0,
       unit: ''
     };
@@ -86,6 +93,7 @@ export class DailyManagerService {
     }
 
     this.baseOptionsInt = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
+    this.baseOptionEnv = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
     this.baseOptionExt = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
     const dateNowLastSevenDay = new Date();
     dateNowLastSevenDay.setDate(new Date().getDate() - 8);
@@ -93,7 +101,6 @@ export class DailyManagerService {
       dateNowLastSevenDay,
       new Date()
     ];
-    console.log(this.rangeSevenDay);
   }
 
   /**
@@ -112,7 +119,6 @@ export class DailyManagerService {
       }
     }).subscribe(
       _data => {
-        console.log(_data);
         if (type.name === 'RAIN' || type.name === 'WINCOME') {
           this.setMeanSevenDay(_data, false, type);
         } else {
@@ -125,7 +131,7 @@ export class DailyManagerService {
 
   getValueBySerie(_value: any, name: string): Array<any> {
     let value: any = {};
-    if (isArray(_value)) {
+    if (isArray(_value) && isObject(_value[0])) {
       _value.forEach(elt => {
         value = Object.assign(value, elt);
       })
@@ -135,13 +141,12 @@ export class DailyManagerService {
     switch (name) {
       case 'WEATHER':
         return new Array(value.iconDay, value.maxTempDay, value.minTempDay);
-        break;
       case 'RAIN':
         return new Array('' + value);
-        break;
+      case 'ALERT':
+        return value;
       default:
-        return [value];
-        break;
+        return [value]
     }
   }
 
@@ -447,9 +452,7 @@ export class DailyManagerService {
           option.tooltip = this.getTooltipBySerie(type);
           option.calendar.range = range;
         }
-        console.log(option);
         chartInstance.setOption(option, true);
-        console.log(option);
         this.baseOptionsInt = option;
       }
     )
@@ -463,7 +466,6 @@ export class DailyManagerService {
     this.weatherService.getRainAllWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
       _rain => {
         this.getLastDayForMeanValue(this.weatherService.getRainAllWeather(idApiary, this.rangeSevenDay), false, type);
-        console.log(_rain);
         this.setMeanData(_rain.map(_elt => _elt.value), false, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
@@ -505,7 +507,6 @@ export class DailyManagerService {
                 return val[1] * 25.4;
               }
             };
-            console.log(serieComplete);
             option.series.push(serieComplete);
           })
 
@@ -580,7 +581,6 @@ export class DailyManagerService {
   getChartTextMin(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getTempMinExt(idHive, range).subscribe(
       _tMinExt => {
-        console.log(_tMinExt);
         this.setMeanData(_tMinExt.map(_elt => _elt.value), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
@@ -663,7 +663,6 @@ export class DailyManagerService {
   getChartTminInt(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getTminByHive(idHive, range).subscribe(
       _tMin => {
-        console.log(_tMin);
         this.setMeanData(_tMin.map(_elt => _elt.value), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
@@ -716,6 +715,166 @@ export class DailyManagerService {
     )
   }
 
+  getChartAlert(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    const obs: Array<Observable<any>> = [
+      this.observationService.getObservationByHiveForMelliCharts(idHive, range),
+      this.alertService.getAlertByHiveMelliCharts(idHive, range)
+    ]
+    Observable.forkJoin(obs).subscribe(
+      _data => {
+        console.log(_data);
+        const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
+        const joinData = _data[0].concat(_data[1])
+        console.log(joinData);
+        let option = Object.assign({}, this.baseOptionEnv);
+        if (rangeChange) {  
+          option.calendar.range = range;
+          this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            console.log(serieComplete);
+            serieComplete.renderItem = (params, api) => {
+              let cellPoint = api.coord(api.value(0));
+              let cellWidth = params.coordSys.cellWidth;
+              let cellHeight = params.coordSys.cellHeight;
+              let group = {
+                type: 'group',
+                children: []
+              };
+              group.children.push({
+                type: 'rect',
+                z2: 0,
+                shape: {
+                  x: -cellWidth / 2,
+                  y: -cellHeight / 2,
+                  width: cellWidth,
+                  height: cellHeight,
+                },
+                position: [cellPoint[0], cellPoint[1]],
+                style: {
+                  fill: this.getColorCalendarByValue(api.value(0)),
+                  stroke: 'black'
+                }
+              });
+              const dataByDate: any[] = joinData.filter(_filter => this.getTimeStampFromDate(_filter.date) === this.getTimeStampFromDate(api.value(0)));
+              if (dataByDate.length > 1) {
+                group.children.push({
+                  type: 'path',
+                  z2: 1000,
+                  shape: {
+                    pathData: GLOBAL_ICONS.THREE_DOTS,
+                    x: -11,
+                    y: -10,
+                    width: 25,
+                    height: 25
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                })
+              } else {
+                let icon;
+                if (dataByDate[0].sentence) {
+                  icon = dataByDate[0].type === 'HiveObs' ? GLOBAL_ICONS.HIVE_OBS : GLOBAL_ICONS.HIVE_ACT;
+                } else {
+                  icon = this.alertService.getPicto(dataByDate[0].type);
+                }
+                group.children.push({
+                  type: 'path',
+                  z2: 1000,
+                  shape: {
+                    pathData: icon,
+                    x: -11,
+                    y: -10,
+                    width: 25,
+                    height: 25
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                })
+              }
+              return group;
+
+            }
+            // option.legend.data.push(serieComplete.name)
+            option.series[index] = serieComplete;
+          });
+        } else {
+          if (this.existSeries(option.series, type.name)) {
+            option.series = new Array();
+          }
+          this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
+            console.log(serieComplete);
+            serieComplete.renderItem = (params, api) => {
+              let cellPoint = api.coord(api.value(0));
+              let cellWidth = params.coordSys.cellWidth;
+              let cellHeight = params.coordSys.cellHeight;
+              let group = {
+                type: 'group',
+                children: []
+              };
+              group.children.push({
+                type: 'rect',
+                z2: 0,
+                shape: {
+                  x: -cellWidth / 2,
+                  y: -cellHeight / 2,
+                  width: cellWidth,
+                  height: cellHeight,
+                },
+                position: [cellPoint[0], cellPoint[1]],
+                style: {
+                  fill: this.getColorCalendarByValue(api.value(0)),
+                  stroke: 'black'
+                }
+              });
+              const dataByDate: any[] = joinData.filter(_filter => this.getTimeStampFromDate(_filter.date) === this.getTimeStampFromDate(api.value(0)));
+              console.log(dataByDate);
+              if (dataByDate.length > 1) {
+                group.children.push({
+                  type: 'path',
+                  z2: 1000,
+                  shape: {
+                    pathData: GLOBAL_ICONS.THREE_DOTS,
+                    x: -11,
+                    y: -10,
+                    width: 25,
+                    height: 25
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                })
+              } else {
+                let icon;
+                if (dataByDate[0].sentence) {
+                  icon = dataByDate[0].type === 'HiveObs' ? GLOBAL_ICONS.HIVE_OBS : GLOBAL_ICONS.HIVE_ACT;
+                } else {
+                  icon = this.alertService.getPicto(dataByDate[0].type);
+                }
+                group.children.push({
+                  type: 'path',
+                  z2: 1000,
+                  shape: {
+                    pathData: icon,
+                    x: -11,
+                    y: -10,
+                    width: 25,
+                    height: 25
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                })
+              }
+              return group;
+
+            }
+            // option.legend.data.push(serieComplete.name)
+            option.series.push(serieComplete);
+          });
+        }
+        option.tooltip = this.getTooltipBySerie(type, joinData);
+        chartInstance.setOption(option, true);
+        this.baseOptionEnv = option;
+
+      }
+    )
+
+  }
+
   /**
    *
    *
@@ -725,8 +884,6 @@ export class DailyManagerService {
    * @memberof DailyManagerService
    */
   existSeries(serieArray, name: string): boolean {
-    if (!isUndefined(serieArray)) {
-    }
     if (isUndefined(serieArray) || serieArray.length < 1 || serieArray.length > 0) {
       return true;
     } else {
@@ -746,7 +903,7 @@ export class DailyManagerService {
     switch (serieLabel) {
       case 'WEIGHT_MAX':
         visualMap.type = 'continuous';
-       // visualMap.top = 15;
+        // visualMap.top = 15;
         visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 10 : 25;
         visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 100 : 220;
         visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
@@ -775,7 +932,7 @@ export class DailyManagerService {
         visualMap.min = 0;
         visualMap.max = 100;
         visualMap.inRange.color = ['red', 'yellow', '#129001'];
-       // visualMap.top = 15;
+        // visualMap.top = 15;
         break;
       case 'TEMP_INT_MIN':
         visualMap.type = 'continuous';
@@ -813,7 +970,7 @@ export class DailyManagerService {
    * @returns {*}
    * @memberof DailyManagerService
    */
-  getTooltipBySerie(type: Tools): any {
+  getTooltipBySerie(type: Tools, extraData?: any[]): any {
     const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
     switch (type.name) {
       case 'WEATHER':
@@ -840,6 +997,23 @@ export class DailyManagerService {
               value: this.graphGlobal.getNumberFormat(params.data[1]),
               unit: this.graphGlobal.getUnitByType(type.unit)
             }));
+        }
+        break;
+      case 'ALERT':
+        tooltip.formatter = (params) => {
+          console.log(extraData);
+          const dataByDateTooltip = extraData.filter(_filter => {
+            console.error(this.getTimeStampFromDate(_filter.date) + '===' + this.getTimeStampFromDate(params.data[0]));
+            return this.getTimeStampFromDate(_filter.date) === this.getTimeStampFromDate(params.data[0]);
+          });
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
+            const type = _singleData.sentence ? 'Inspection': 'Notif'
+            return {
+              name: type,
+              value: type === 'Inspection' ? _singleData.sentence: _singleData.message,
+              unit: ''
+            }
+          }));
         }
         break;
       default:
@@ -880,7 +1054,7 @@ export class DailyManagerService {
 
 
 
-  /**
+  /**CROSS
    *
    *
    * @param {Array<any>} _data
@@ -898,7 +1072,6 @@ export class DailyManagerService {
         value: this.unitService.getValRound(mean ? value / _data.length : value),
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
-      console.log(this.meanPeriodDevice);
     } else {
       this.meanPeriodOther = {
         value: this.unitService.getValRound(mean ? value / _data.length : value),
@@ -917,7 +1090,6 @@ export class DailyManagerService {
         value: mean ? value / _data.length : value,
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
-      console.log(this.meanDeviceSevenDay);
     } else {
       this.meanOtherSevenDay = {
         value: mean ? value / _data.length : value,
@@ -943,11 +1115,41 @@ export class DailyManagerService {
     dateToday.setMilliseconds(0);
     if (dateCalendar.getTime() === dateToday.getTime()) {
       return '#FF2E2C';
-    } else if (optionValue === 1) {
+    } else if (optionValue === 1) { // Pour calendrier moon
       return '#ABC0C5';
     } else {
       return '#EBEBEB';
     }
+  }
+
+  /**
+   *
+   *
+   * @param {any[]} _obs
+   * @param {any[]} _alert
+   * @returns {any[]}
+   * @memberof DailyManagerService
+   */
+  joinObservationAlert(_obs: any[], _alert: any[]): any[] {
+    return _obs.concat(_alert).map(_elt => {
+      return { date: _elt.date, value: 0, sensorRef: _elt.sentence ? 'inspect' : 'notif' }
+    });
+  }
+
+  /**
+   *
+   *
+   * @param {(Date | string)} _date
+   * @returns {number}
+   * @memberof DailyManagerService
+   */
+  getTimeStampFromDate(_date: Date | string): number {
+    const date = new Date(_date);
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+    return date.getTime();
   }
 
 }

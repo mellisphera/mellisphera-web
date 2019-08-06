@@ -10,6 +10,7 @@ export class MelliChartsHiveService {
   private hiveSelectForHivePage: RucheInterface;
   private dailyDeviceEchartInstances: any;
   private dailyOtherChartIstances: any;
+  private dailyEnvChartInstance: any;
   private stackChartInstance: any;
   private hourlyEchartInstances: any
   private arrayColor: Array<any>;
@@ -17,6 +18,7 @@ export class MelliChartsHiveService {
     this.hiveSelectForHivePage = null;
     this.stackChartInstance = null;
     this.dailyDeviceEchartInstances = null;
+    this.dailyEnvChartInstance = null;
     this.hourlyEchartInstances = null;
     this.dailyOtherChartIstances = null;
     this.getColor();
@@ -47,8 +49,22 @@ export class MelliChartsHiveService {
       });
     }    
     
+    /**
+     *
+     *
+     * @returns {RucheInterface}
+     * @memberof MelliChartsHiveService
+     */
     getHiveSelect(): RucheInterface{
       return this.hiveSelectForHivePage;
+    }
+
+    setDailyEnvChartInstance(echartsInstance: any) {
+      this.dailyEnvChartInstance = echartsInstance;
+    }
+    
+    getDailyEnvChartInstance(): any {
+      return this.dailyEnvChartInstance;
     }
     
     setHiveSelect(hive: RucheInterface) {

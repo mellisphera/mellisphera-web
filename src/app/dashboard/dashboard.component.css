@@ -4,3 +4,7 @@
     bottom: 100px;
     z-index: 5;
 }
+
+.main-panel{
+    background-color: white;
+}

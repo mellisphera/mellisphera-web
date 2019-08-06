@@ -1,5 +1,5 @@
 .calendar{
-    height: 100vh;
+    height: 200vh;
     width: 100%;
 }
 #sidebar-tools-daily-device{
@@ -35,8 +35,8 @@
 .flex {
     display: flex;
 }
-#daily-int, #daily-ext {
-    width: 100%;
+#daily-int, #daily-other, #daily-env {
+    width: calc(100% / 3);
     position: relative;
 }
 @media screen and (max-width:1300px) {

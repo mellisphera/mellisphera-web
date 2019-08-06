@@ -124,7 +124,9 @@
         "CANCEL" : "Cancel",
         "NODATA" : "No data",
         "NOSENSORS" : "No sensors",
-        "CLICK" : "Click on a hive name for more informations !",
+        "CLICK" : "Click on a hive for more informations !",
+        "PLACEMENTMODE" : "Put the hives in 'displacement' mode",
+        "CLICKMODE" : "Put the hives in 'click' mode",
         "MANAGE" : "Manage",
         "WARNING" : "Warning! ",
         "NAVBAR" : {

@@ -1,3 +1,14 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
 <!-- Nav bar for page melliUX -->
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -64,12 +75,13 @@
         class="my-drop-zone" [class.valid-drag]="baseDropValid" [(lastBaseUrl)]="rucherService.rucher.photo">
         <img [src]="rucherService.rucher.photo" (click)="hideRightClick($event)" class="photo" />
         <!-- The button to change hive handle => click -->
-        <!-- <div zIndex="100" class ="lockButton">
-            <button type="button" class="btn btn-info lock"><i class="fa fa-lock"></i></button>
-        </div> -->
+        <div zIndex="100" class ="lockButton">
+            <button title = "{{ 'HOME.PLACEMENTMODE' | translate}}" id = "locked" type="button" class="lock" (click) = "changeHandleHive('handleHive')"><i class="fa fa-lock"></i></button>
+            <button title = "{{ 'HOME.CLICKMODE' | translate}}" id = "unlocked" type="button" class="lock displayNone" (click) = "changeHandleHive('fixHive')"><i class="fa fa-unlock"></i></button>
+        </div>
         <!-- The dive for each hive -->
         <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true" data-toggle="tooltip"
-            (endOffset)="onMoveEnd($event, ruche)" [ngDraggable]='false' [handle]="HiveHandle" *ngFor="let ruche of rucheService.ruches; let i = index"
+            (endOffset)="onMoveEnd($event, ruche, i)" ngDraggable [handle]="HiveHandle" *ngFor="let ruche of rucheService.ruches; let i = index"
             [id]="i" [style.top.%]="ruche.hivePosY" [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)"
             class="hive-group drag-grid {{i}}">
             <!-- The div is show when you right click on a hive -->
@@ -94,7 +106,7 @@
             <!-- The circle for an hive -->
             <!-- Hive Handle -->
             <div #HiveHandle data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
-                (dblclick)="onClick(ruche);" class="ruche"
+                (dblclick)="onClick(ruche);" [id] = "ruche.id" class="ruche handleHive displayNone"
                 [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)">
                 <!-- notifications -->
                 <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"
@@ -102,7 +114,7 @@
             </div>
             <!-- Hive click -->
             <div data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
-                (click)="onClick(ruche);" class="ruche displayNone"
+                (click)="onClick(ruche);" [id] = "ruche.name" class="ruche fixHive"
                 [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)">
                 <!-- notifications -->
                 <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"
@@ -124,15 +136,14 @@
                 <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche.id) === null"
                     class="hive-info">{{ 'HOME.NODATA' | translate}}</span>
             </div>
-            <div (click)="onClick(ruche);" id="collapse1" class="sensors collapse">
+            <div (click)="onClick(ruche);" id="collapse1" [class]="(capteurService.getCapteursByHive(ruche.id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">
                 <span *ngIf="capteurService.getCapteursByHive(ruche.id).length === 0"
                     class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
-                <span *ngIf="capteurService.getCapteursByHive(ruche.id).length !== 0">
-                    <span *ngFor="let capt of increasingSort(capteurService.getCapteursByHive(ruche.id)); let i = index">
-                        <span class="hive-info">{{ capt }}</span>
-                        <br />
-                    </span>
-                </span>
+                <ng-container *ngIf="capteurService.getCapteursByHive(ruche.id).length !== 0">
+                    <p *ngFor="let capt of increasingSort(capteurService.getCapteursByHive(ruche.id)); let i = index" class ="hive-info">
+                        {{ capt }}
+                    </p>
+                </ng-container>
             </div>
         </div>
     </div>

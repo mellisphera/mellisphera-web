@@ -254,10 +254,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   selectHive(hive: RucheInterface, event: MouseEvent): void {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
-        if (!this.hiveComponent.hourlyComponent.chartLoading) {
-          this.melliChartHive.setHiveSelect(hive);
-          this.hiveComponent.loadDataFromHive();
-        }
+        this.melliChartHive.setHiveSelect(hive);
+        this.hiveComponent.loadDataFromHive();
         break;
       case PREFIX_PATH + 'brood':
           if (this.stackService.ifActiveAlreadySelected(hive)) {
