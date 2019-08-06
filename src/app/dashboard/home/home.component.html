@@ -81,7 +81,7 @@ limitations under the License. -->
         </div>
         <!-- The dive for each hive -->
         <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true" data-toggle="tooltip"
-            (endOffset)="onMoveEnd($event, ruche)" ngDraggable [handle]="HiveHandle" *ngFor="let ruche of rucheService.ruches; let i = index"
+             [ngDraggable] = "boolDraggable" [handle]="HiveHandle" *ngFor="let ruche of rucheService.ruches; let i = index" (endOffset)="onMoveEnd($event, ruche,i)"
             [id]="i" [style.top.%]="ruche.hivePosY" [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)"
             class="hive-group drag-grid {{i}}">
             <!-- The div is show when you right click on a hive -->

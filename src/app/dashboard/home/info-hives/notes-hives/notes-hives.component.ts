@@ -166,8 +166,13 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       }
     })
   }
-  deleteObsR(index: number, hiveObs: Observation) {
-    this.observationService.deleteObservation(hiveObs.id).subscribe(() => { }, () => { }, () => {
+  deleteObsR() {
+    const formValue = this.ObservationForm.value;
+    this.newObs.sentence = formValue.sentence;
+    this.newObs.date = formValue.date;
+    this.newObs.type = formValue.type;
+    const index = this.observationService.observationsHive.indexOf(this.newObs);
+    this.observationService.deleteObservation(this.newObs.id).subscribe(() => { }, () => { }, () => {
       this.observationService.observationsHive.splice(index, 1);
       this.observationService.emitHiveSubject();
       if(this.userService.getJwtReponse().country === "FR"){

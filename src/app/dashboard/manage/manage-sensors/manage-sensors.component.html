@@ -244,7 +244,8 @@ limitations under the License. -->
                         <label class="col-form-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.LINK' | translate}}</label>
                         <div class="form-check">
                             <input class="form-check-input" value="stock" type="radio" formControlName="checkbox">
-                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.STOCK' | translate}} </label><br />
+                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.STOCK' | translate}}
+                            </label><br />
                             <input class="form-check-input" value="ruche" type="radio" formControlName="checkbox">
                             <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.INHIVE' | translate}}
                             </label>
@@ -265,7 +266,10 @@ limitations under the License. -->
                                 class="form-control">
                                 <option *ngFor="let ruche of rucherService.rucheService.ruchesAllApiary"
                                     [ngValue]="ruche">
-                                    {{ruche.name + ' | ' + getApiaryNameById(ruche.idApiary).name }}</option>
+                                    <ng-container *ngIf = "getApiaryNameById(ruche.idApiary) !== undefined">
+                                        {{ruche.name + ' | ' + getApiaryNameById(ruche.idApiary).name }}
+                                    </ng-container>
+                                </option>
                             </select>
                             <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
                         </div>
@@ -307,7 +311,8 @@ limitations under the License. -->
                         <div class="form-check">
                             <input class="form-check-input" type="radio" formControlName="checkbox" value="stock"
                                 [checked]="!editCapteurCheckbox" (click)="onchange($event)">
-                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.STOCK' | translate}} </label><br />
+                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.STOCK' | translate}}
+                            </label><br />
                             <input class="form-check-input" type="radio" formControlName="checkbox" value="ruche"
                                 [checked]="editCapteurCheckbox" (click)="onchange($event)">
                             <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.INHIVE' | translate}}

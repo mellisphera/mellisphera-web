@@ -219,17 +219,35 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
 
     //DELETE CAPTEUR
 
-    deleteCapteur(capteur: CapteurInterface, index: number) {
-        this.capteurService.deleteCapteur(capteur).subscribe(() => { }, () => { }, () => {
-            if (capteur.idHive) {
-                const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(capteur.idHive);
+    deleteCapteur() {
+        const formValue = this.editCapteurForm.value;
+        const idTemp = this.capteurService.capteur.id;
+        if (formValue.checkbox !== 'stock') {
+            this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
+            this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+            this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
+            this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
+            const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
+            this.rucherService.rucheService.ruches[index].sensor = true;
+            this.rucherService.rucheService.emitHiveSubject();
+        } else {
+            this.capteurService.capteur.idHive = null;
+            this.capteurService.capteur.idApiary = null;
+            this.capteurService.capteur.apiaryName = null;
+            this.capteurService.capteur.hiveName = null;
+        }
+        this.capteurService.capteur.description = formValue.description;
+        this.capteurService.capteur.id = idTemp;
+        this.capteurService.deleteCapteur(this.capteurService.capteur).subscribe(() => { }, () => { }, () => {
+            if (this.capteurService.capteur.idHive) {
+                const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.capteurService.capteur.idHive);
                 const tempHive = this.rucherService.rucheService.ruches[index];
                 if (this.capteurService.capteursByHive.filter(sensor => sensor.idHive === tempHive.id).length <= 1) {
                     this.rucherService.rucheService.ruches[index].sensor = false;
                     this.rucherService.rucheService.emitHiveSubject();
                 }
             }
-            this.capteurService.capteursByHive.splice(index, 1);
+            this.capteurService.capteursByHive.splice(this.indexSensorSelect, 1);
             this.capteurService.emitSensorSubject();
             if(this.userService.getJwtReponse().country === "FR"){
                 this.notifier.notify('success', 'Capteur supprimé');

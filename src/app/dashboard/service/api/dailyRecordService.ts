@@ -170,6 +170,7 @@ export class DailyRecordService {
         this.rangeDailyRecord.setMinutes(0);
         this.rangeDailyRecord.setSeconds(0);
         this.getDailyRecThByApiary(idApiary);
+
     }
     /**
      *
@@ -287,6 +288,8 @@ export class DailyRecordService {
                 if (data[0] != null) {
                     this.dailyRecords = data;
 
+                }else{
+                    this.dailyRecords = [];
                 }
             },
             (err) => {

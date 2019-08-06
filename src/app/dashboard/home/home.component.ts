@@ -60,7 +60,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   rucheSelect: RucheInterface;
   positionHive: any;
   baseDropValid: string;
+  boolDraggable : boolean;
   rucherSelectId: string;
+  firstValue : boolean;
+  translateX : number;
+  translateY : number;
   private hiveUpdateForDestroyPage: Array<RucheInterface>;
   message: string;
   style: {
@@ -135,6 +139,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       sharingUser: []
     };
 
+    this.boolDraggable = true;
+    this.firstValue = true;
     this.getScreenSize();
   }
 
@@ -150,6 +156,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
    */
   getDateDaily(): string {
     let showDate = new Date();
+    showDate.setFullYear(this.dailyRecTh.rangeDailyRecord.getFullYear());
+    showDate.setMonth(this.dailyRecTh.rangeDailyRecord.getMonth());
     showDate.setDate(this.dailyRecTh.rangeDailyRecord.getDate() + 1);
     return this.unitService.getDailyDate(showDate.toISOString());
   }
@@ -327,7 +335,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
    * @param {RucheInterface} ruche
    * @memberof HomeComponent
    */
-  onMoveEnd(event, ruche: RucheInterface): void {
+  onMoveEnd(event, ruche: RucheInterface, id:number): void {
     if (this.login.checkWriteObject(ruche.idUsername)) {
       const container = document.getElementById("cadre");
       const widthcontainer = container.offsetWidth;
@@ -346,13 +354,46 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       rucheUpdate.hivePosY = '' + this.position.y;
       this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
         () => { }, () => { }, () => {
+          // ruche.hivePosX = rucheUpdate.hivePosX;
+          // ruche.hivePosY = rucheUpdate.hivePosY;
+          // document.getElementById(id.toString()).style.transform = 'translate(0px, 0px)';
+          // this.firstValue = true;
+          // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[0]);
+          // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2));
           this.position.x = 0;
           this.position.y = 0;
           this.hiveUpdateForDestroyPage.push(rucheUpdate);
         }
-      )
+      );
     }
   }
+
+  // onMove(event, ruche: RucheInterface, id:number): void {
+  //   // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[0]);
+  //   // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2));
+  //   if(this.firstValue){
+  //     let str11 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[0];
+  //     let str21 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2);
+  //     this.translateX = +str11; 
+  //     this.translateY = +str21; 
+  //     this.firstValue = false;
+  //   }
+  //     let str1 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[0];
+  //     let str2 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2);
+  //     let translateX1 : number;
+  //     let translateY1 : number;
+  //     translateX1 = +str1;
+  //     translateY1 = +str2;
+  //     console.log(((translateX1 - this.translateX).toString()));
+  //     console.log(((translateY1 - this.translateY).toString()));
+  //     // let doc = document.getElementsByClassName(id.toString()) as HTMLCollectionOf<HTMLElement>;
+  //     // for (let i = 0; i < doc.length; i++) {
+  //     //   doc[i].style.transform = 'translate(' + ((translateX1 - this.translateX).toString())  + ', ' + ((translateY1 - this.translateY).toString()) + ') !important';
+  //     // }
+  //     document.getElementById(id.toString()).setAttribute('style','transform : translate(' + ((translateX1 - this.translateX).toString())  + 'px, ' + ((translateY1 - this.translateY).toString()) + 'px) !important; z-index:100; top: ' + ruche.hivePosY +'%; left : ' + ruche.hivePosX + '%;');
+  //     // document.getElementById(id.toString()).style.transform = ('translate(' + ((translateX1 - this.translateX).toString())  + 'px, ' + ((translateY1 - this.translateY).toString()) + 'px) !important');
+
+  //   }
 
 
   /**
