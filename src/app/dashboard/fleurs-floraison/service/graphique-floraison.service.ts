@@ -10,6 +10,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 import { Injectable } from '@angular/core';
+import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,12 @@ import { Injectable } from '@angular/core';
 export class GraphiqueFloraisonService {
 
   currentYear = new Date().getFullYear();
-  constructor() { 
+  constructor(private graphGlobal: GraphGlobal) { 
   }
   option = {
           //Défini le titre du graphique
           title: {
-            text: 'Apiary Blooming calendar',
+            text:  this.graphGlobal.getTitle("Blooming"),
             left:'center',
             top : 0
           },

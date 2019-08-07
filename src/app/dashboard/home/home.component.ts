@@ -258,12 +258,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     // remove higlight for last highlighted hive
     if(this.lastHighlightFix !== 'dontExist'){
       this.eltOnClickId = document.getElementById(this.lastHighlightFix);
-      this.renderer.removeClass(this.eltOnClickId, 'highlightFix');
+      if(this.eltOnClickId !== null){
+        this.renderer.removeClass(this.eltOnClickId, 'highlightFix');
+      }
     }
 
     if(this.lastHighlightHandle !== 'dontExist'){
       this.eltOnClickId = document.getElementById(this.lastHighlightHandle);
-      this.renderer.removeClass(this.eltOnClickId, 'highlightHandle');
+      if(this.eltOnClickId !== null){
+        this.renderer.removeClass(this.eltOnClickId, 'highlightHandle');
+      }
     }
 
     // higlight the hive

@@ -54,7 +54,7 @@ limitations under the License. -->
                 <img src="./assets/icons/ui/hive.png" style="width:50px;margin-left:-5px;" />
               </a>
               <!-- NEW HIVE -->
-              <button [disabled]="rucherService.rucher.id == null" (click)="rucherSelectInit()" data-toggle="tooltip"
+              <button [disabled]="rucherService.rucher.id === null" (click)="rucherSelectInit()" data-toggle="tooltip"
                 data-html="true" title="{{ 'HIVES.FORM.NEW' | translate}}" data-toggle="modal"
                 data-target="#newHiveModal" class="btn btn-success btn-lg crud-apiary">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
@@ -66,11 +66,11 @@ limitations under the License. -->
                 <i class="fa fa-edit fa-2x"></i>
               </button>
               <!-- DELETE HIVE -->
-              <button type="button" (click)="deleteHiveClicked()" class="btn btn-warning btn-lg crud-apiary"
+              <!-- <button type="button" (click)="deleteHiveClicked()" class="btn btn-warning btn-lg crud-apiary"
                 data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.CRUD.DELETEAHIVE' | translate }}"
                 data-toggle="modal" data-target="#deleteHiveModal">
                 <i class="fa fa-times fa-2x"></i>
-              </button>
+              </button> -->
             </li>
             <li>
               <a>
@@ -87,10 +87,10 @@ limitations under the License. -->
                 <i class="fa fa-edit fa-2x"></i>
               </button>
               <!-- DELETE HIVE -->
-              <button type="button" class="btn btn-warning btn-lg crud-apiary" data-toggle="tooltip" data-html="true"
+              <!-- <button type="button" class="btn btn-warning btn-lg crud-apiary" data-toggle="tooltip" data-html="true"
                 data-toggle="modal">
                 <i class="fa fa-times fa-2x"></i>
-              </button>
+              </button> -->
             </li>
             <li id="{{ 'NAVBAR.CRUD.MANAGE' | translate }}">
               <a routerLink="./manage-sensors" data-toggle="tooltip" data-placement="top" id="sensor"
@@ -108,10 +108,10 @@ limitations under the License. -->
                 <i class="fa fa-edit fa-2x"></i>
               </button>
               <!-- DELETE HIVE -->
-              <button type="button" class="btn btn-warning btn-lg crud-apiary" data-toggle="tooltip" data-html="true"
+              <!-- <button type="button" class="btn btn-warning btn-lg crud-apiary" data-toggle="tooltip" data-html="true"
                 data-toggle="modal">
                 <i class="fa fa-times fa-2x"></i>
-              </button>
+              </button> -->
             </li>
           </ul>
         </li>
