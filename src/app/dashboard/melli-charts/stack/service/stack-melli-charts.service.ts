@@ -184,7 +184,7 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
   removeHive(hive: RucheInterface) {
     const index = this.arrayHiveSelect.indexOf(hive);
     const indexColor = this.colorByHive.map(elt => elt.idHive).indexOf(hive.id);
-    this.arrayHiveSelect.splice(index, 1, this.getEmptyHive());
+    this.arrayHiveSelect.splice(index, 1);
     this.colorByHive.splice(indexColor, 1);
   }
 

@@ -44,6 +44,14 @@ export class VitalityComponent implements OnInit, OnDestroy {
     this.stackService.setBroodChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-brood')));
     this.option.series = [];
     this.setOptionForStackChart();
+    console.log(this.stackService.getHiveSelect());
+    if (this.stackService.getHiveSelect().length >= 1) {
+      this.loadAllHiveAfterRangeChange((options: any) => {
+        console.log(options);
+        this.stackService.getBroodChartInstance().setOption(options, true);
+        this.stackService.getBroodChartInstance().hideLoading();
+      });
+    }
   }
   setOptionForStackChart(): void {
     if (this.option.yAxis.length > 0) {
@@ -122,7 +130,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     const obs = this.stackService.getHiveSelect().map(_hive => {
       return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodByHive(_hive.id, this.melliDateService.getRangeForReqest())}
     });
-
+    console.log(obs);
     Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
       _broods => {
         _broods.forEach((_elt, index) => {
@@ -131,7 +139,12 @@ export class VitalityComponent implements OnInit, OnDestroy {
               color: this.stackService.getColorByIndex(this.getHiveIndex(obs[index].hive), obs[index].hive)
             };
             const indexSerie = this.option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            this.option.series[indexSerie] = Object.assign({}, serieComplete);
+            console.log('index ->  ' + indexSerie);
+            if (indexSerie !== -1) {
+              this.option.series[indexSerie] = Object.assign({}, serieComplete);
+            } else {
+              this.option.series.push(Object.assign({}, serieComplete));
+            }
           });
         })
       },
@@ -179,8 +192,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('EX');
-   this.stackService.cleanSlectedHives();
-   this.stackService.getBroodChartInstance().dispose();
+   console.log('EX');
+   //this.stackService.cleanSlectedHives();
+   //this.stackService.getBroodChartInstance().dispose();
   }
 }

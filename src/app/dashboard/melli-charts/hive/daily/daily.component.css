@@ -45,6 +45,7 @@ limitations under the License. */
 }
 .flex {
     display: flex;
+    flex-wrap: wrap;
 }
 #daily-int, #daily-other, #daily-env {
     width: calc(100% / 3);
@@ -62,5 +63,8 @@ limitations under the License. */
     #sidebar-tools-daily-device ul, #sidebar-tools-daily-other ul {
         display: flex;
         justify-content: center;
+    }
+    #daily-int, #daily-other, #daily-env {
+        width: 100%;
     }
 }

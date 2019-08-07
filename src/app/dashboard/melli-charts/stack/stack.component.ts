@@ -56,6 +56,14 @@ export class StackComponent implements OnInit {
         } */
     this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
     this.setOptionForStackChart();
+    console.log(this.stackService.getHiveSelect());
+    if (this.stackService.getHiveSelect().length >= 1) {
+      this.loadAfterRangeChanged((options: any) => {
+        console.log(options);
+        this.stackService.getEchartInstance().setOption(options, true);
+        this.stackService.getEchartInstance().hideLoading();
+      });
+    }
 
   }
 
@@ -162,7 +170,11 @@ export class StackComponent implements OnInit {
               color: this.stackService.getColorByIndex(this.getHiveIndex(obsArray[index].hive), obsArray[index].hive)
             };
             const indexSerie = this.options.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            this.options.series[indexSerie] = Object.assign({}, serieComplete);
+            if (indexSerie !== -1) {
+              this.options.series[indexSerie] = Object.assign({}, serieComplete);
+            } else {
+              this.options.series.push(Object.assign({}, serieComplete));
+            }
           });
         });
       },
@@ -283,9 +295,9 @@ export class StackComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.stackService.cleanSlectedHives();
+/*     this.stackService.cleanSlectedHives();
     this.options.series = [];
-    this.stackService.cleanSerieFromEchartInstance(this.stackService.getEchartInstance());
+    this.stackService.cleanSerieFromEchartInstance(this.stackService.getEchartInstance()); */
   }
 
 }
