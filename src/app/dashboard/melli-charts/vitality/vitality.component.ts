@@ -42,6 +42,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.stackService.setBroodChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-brood')));
+    this.option.series = [];
     this.setOptionForStackChart();
   }
   setOptionForStackChart(): void {
@@ -60,11 +61,11 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
     let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxis.axisLabel.formatter = (value: number, index: number) => {
-      return this.unitService.getHourlyDate(new Date(value));
+      return this.unitService.getDailyDate(new Date(value));
     };
     this.option.tooltip.formatter = (params) => {
       return params.map(_elt => {
-       return this.getTooltipFormater(_elt.marker, this.unitService.getHourlyDate(_elt.data.name),new Array(
+       return this.getTooltipFormater(_elt.marker, this.unitService.getDailyDate(_elt.data.name),new Array(
          {
            name: _elt.seriesName,
            value: _elt.data.value[1],
@@ -178,6 +179,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-   // this.stackService.cleanSlectedHives();
+    console.log('EX');
+   this.stackService.cleanSlectedHives();
+   this.stackService.getBroodChartInstance().dispose();
   }
 }

@@ -188,6 +188,7 @@ export class DailyManagerService {
       _weather => {
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
+          option.series = this.removeDataAllseries(option.series);
           this.getSerieByData(_weather, type.name, SERIES.custom, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             serieComplete.renderItem = (params, api) => {
@@ -228,7 +229,7 @@ export class DailyManagerService {
               };
             }
             option.series[index] = serieComplete;
-          })
+          });
           option.calendar.range = range;
           // option.series[0].data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
         } else {
@@ -287,8 +288,9 @@ export class DailyManagerService {
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.visualMap = null;
         }
+
         chartInstance.clear();
-        chartInstance.setOption(option, true);
+        chartInstance.setOption(option);
         this.baseOptionExt = option;
 
       }
@@ -357,8 +359,7 @@ export class DailyManagerService {
           option.visualMap = null;
           option.series.push(serie);
         }
-
-        //chartInstance.clear();
+        chartInstance.clear();
         chartInstance.setOption(option, true);
         this.baseOptionExt = option;
 
@@ -733,16 +734,14 @@ export class DailyManagerService {
     ]
     Observable.forkJoin(obs).subscribe(
       _data => {
-        console.log(_data);
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1])
-        console.log(joinData);
         let option = Object.assign({}, this.baseOptionEnv);
         if (rangeChange) {  
           option.calendar.range = range;
+          option.series = this.removeDataAllseries(option.series);
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            console.log(serieComplete);
             serieComplete.renderItem = (params, api) => {
               let cellPoint = api.coord(api.value(0));
               let cellWidth = params.coordSys.cellWidth;
@@ -811,7 +810,6 @@ export class DailyManagerService {
             option.series = new Array();
           }
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
-            console.log(serieComplete);
             serieComplete.renderItem = (params, api) => {
               let cellPoint = api.coord(api.value(0));
               let cellWidth = params.coordSys.cellWidth;
@@ -836,7 +834,6 @@ export class DailyManagerService {
                 }
               });
               const dataByDate: any[] = joinData.filter(_filter => this.getTimeStampFromDate(_filter.date) === this.getTimeStampFromDate(api.value(0)));
-              console.log(dataByDate);
               if (dataByDate.length > 1) {
                 group.children.push({
                   type: 'path',
@@ -965,7 +962,7 @@ export class DailyManagerService {
         visualMap.type = 'continuous';
         //visualMap.top = 15;
         visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
-        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 30 : 90;
+        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 25 : 90;
         visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
       default:
@@ -1012,15 +1009,22 @@ export class DailyManagerService {
         break;
       case 'ALERT':
         tooltip.formatter = (params) => {
-          console.log(extraData);
           const dataByDateTooltip = extraData.filter(_filter => {
-            console.error(this.getTimeStampFromDate(_filter.date) + '===' + this.getTimeStampFromDate(params.data[0]));
             return this.getTimeStampFromDate(_filter.date) === this.getTimeStampFromDate(params.data[0]);
           });
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
-            const type = _singleData.sentence ? 'Inspection': 'Notif'
+            let type = 'Notif';
+            let img = '';
+            if (_singleData.sentence) {
+              type = 'Inspection';
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/hiveObs.svg' : './assets/picto_mellicharts/hiveAct.svg'))
+            } else {
+              img = '<img style={S} src=./assets/pictos_alerts/' + _singleData.type + '.svg />';
+            }
+            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
             return {
-              name: type,
+              name: img + type,
               value: type === 'Inspection' ? _singleData.sentence: _singleData.message,
               unit: ''
             }
@@ -1060,6 +1064,22 @@ export class DailyManagerService {
     }).join('</br>');
 
     return tooltipGlobal;
+  }
+
+
+  /**
+   *
+   *
+   * @param {*} _series
+   * @returns {any[]}
+   * @memberof DailyManagerService
+   */
+  removeDataAllseries(_series: any): any[] {
+    let series = _series.slice(); 
+    series.forEach(_serie => {
+      _serie.data = new Array();
+    });
+    return series;
   }
 
 

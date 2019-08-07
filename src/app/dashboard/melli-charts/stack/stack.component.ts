@@ -43,6 +43,7 @@ export class StackComponent implements OnInit {
 
   ngOnInit() {
     this.options = Object.assign({}, BASE_OPTIONS.baseOptionStack);
+    this.options.series = [];
     this.options.yAxis = [];
     this.valueSubjectComplete = 0;
     this.options.xAxis = [];
@@ -282,7 +283,9 @@ export class StackComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    // this.stackService.cleanSlectedHives();
+    this.stackService.cleanSlectedHives();
+    this.options.series = [];
+    this.stackService.cleanSerieFromEchartInstance(this.stackService.getEchartInstance());
   }
 
 }

@@ -28,11 +28,12 @@ export const CALENDAR = {
         dayLabel: {
             // margin: 0,
             nameMap: [],
-            position: 'end',
+            // position: 'end',
             firstDay: 1, // start on Monday
         },
         monthLabel: {
-            nameMap: []
+            nameMap: [],
+            position: 'start'
         },
         yearLabel: {
             formatter: '{start}-{end}',

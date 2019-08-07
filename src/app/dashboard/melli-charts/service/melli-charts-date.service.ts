@@ -89,6 +89,7 @@ export class MelliChartsDateService {
     this.rangeDateForRequest = [range[0], range[1]];
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
+    console.log(this.rangeDateForRequest);
   }
 
 }

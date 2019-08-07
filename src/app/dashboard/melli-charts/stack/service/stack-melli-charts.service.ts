@@ -101,6 +101,19 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
   cleanSlectedHives(): void {
     this.arrayHiveSelect = new Array();
   }
+
+  /**
+   *
+   *
+   * @param {*} chartInstance
+   * @memberof StackMelliChartsService
+   */
+  cleanSerieFromEchartInstance(chartInstance: any): void {
+    const option = chartInstance.getOption();
+    option.series = [];
+    chartInstance.clear();
+    chartInstance.setOption(option);
+  }
   getColor() {
     this.httpClient.get<any>('./assets/data/color.json').subscribe(
       data => {
