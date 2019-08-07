@@ -289,6 +289,8 @@ export class NavbarComponent implements OnInit {
     }
 
     onSelectRucherEditForm() {
+        this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
+
         const donnée = {
             name: this.rucherService.rucherSelectUpdate.name,
             description: this.rucherService.rucherSelectUpdate.description,
@@ -345,6 +347,30 @@ export class NavbarComponent implements OnInit {
             // update for manage pages
             let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive.id).indexOf(this.hiveSelectUpdate.id);
             this.rucheService.ruchesAllApiary.splice(hiveIndexUpdateListAllApiary, 1);
+
+            // update for edit hive form
+            let hiveIndexUpdateruchesEditHiveForm = this.ruchesEditHiveForm.map(hive => hive.id).indexOf(this.hiveSelectUpdate.id);
+            this.ruchesEditHiveForm.splice(hiveIndexUpdateruchesEditHiveForm, 1);
+
+            if(this.ruchesEditHiveForm[0] !== undefined){
+                this.hiveSelectUpdate = this.ruchesEditHiveForm[0];
+
+                // Set value
+                const donnée = {
+                    nomRuche: this.hiveSelectUpdate.name,
+                    descriptionRuche: this.hiveSelectUpdate.description,
+                };
+                this.newRucheForm.setValue(donnée);
+            }else{
+                this.hiveSelectUpdate = this.ruchesEditHiveForm[0];
+
+                // Set value
+                const donnée = {
+                    nomRuche: '',
+                    descriptionRuche: '',
+                };
+                this.newRucheForm.setValue(donnée);
+            }
 
             if (this.userService.getJwtReponse().country === "FR") {
                 this.notifier.notify('success', 'Ruche supprimée');
@@ -528,12 +554,37 @@ export class NavbarComponent implements OnInit {
                     this.router.navigate(['dashboard/home']);
                 }
                 this.rucheService.loadHiveByApiary(this.rucherService.rucher.id);
+
+                // For the edit apiary form
+                this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
+                this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
+                const donnée = {
+                    name: this.rucherService.rucherSelectUpdate.name,
+                    description: this.rucherService.rucherSelectUpdate.description,
+                    ville: this.rucherService.rucherSelectUpdate.ville,
+                    codePostal: this.rucherService.rucherSelectUpdate.codePostal,
+                    validate: ''
+                };
+                this.rucherForm.setValue(donnée);  
             });
         } else {
-            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+            this.myNotifer.sendWarningNotif(NotifList.NO_DELETE_RIGHT);
 
         }
     }
+
+    // onSelectRucherEditForm() {
+    //     this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
+
+    //     const donnée = {
+    //         name: this.rucherService.rucherSelectUpdate.name,
+    //         description: this.rucherService.rucherSelectUpdate.description,
+    //         ville: this.rucherService.rucherSelectUpdate.ville,
+    //         codePostal: this.rucherService.rucherSelectUpdate.codePostal,
+    //         validate: ''
+    //     };
+    //     this.rucherForm.setValue(donnée);
+    // }
 
     rucherSelectInit() {
         this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
@@ -575,6 +626,13 @@ export class NavbarComponent implements OnInit {
     }
     editRucherClicked() {
         this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
+
+        // Hive init
+        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+            this.rucherService.rucheService.ruchesAllApiary = ruches;
+            this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
+        })
+
         const donnée = {
             name: this.rucherService.rucher.name,
             description: this.rucherService.rucher.description,

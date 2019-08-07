@@ -72,7 +72,7 @@ export class RucherService {
             name: '',
             description: '',
             createdAt: null,
-            photo: 'void',
+            photo: '',
             username: '',
             codePostal: '',
             ville: ''

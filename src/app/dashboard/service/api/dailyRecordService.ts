@@ -282,7 +282,16 @@ export class DailyRecordService {
      * @memberof DailyRecordService
      */
     public getDailyRecThByApiary(idApiary: string): void {
-        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, this.rangeDailyRecord);
+        var tabDate: Date[];
+        var previousDay: Date;
+        previousDay = new Date();
+        previousDay.setFullYear(this.rangeDailyRecord.getFullYear());
+        previousDay.setMonth(this.rangeDailyRecord.getMonth());
+        previousDay.setDate(this.rangeDailyRecord.getDate() + 1);
+        previousDay.setHours(23);
+        previousDay.setMinutes(0);
+        tabDate = [this.rangeDailyRecord, previousDay];
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, tabDate);
         this.dailyRecTabObs.subscribe(
             (data) => {
                 if (data[0] != null) {
@@ -310,7 +319,18 @@ export class DailyRecordService {
         date.setDate(date.getDate() - 2);
         date.setHours(23);
         date.setMinutes(0);
-        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, date);
+
+        var tabDate: Date[];
+        var previousDay: Date;
+        previousDay = new Date();
+        previousDay.setFullYear(date.getFullYear());
+        previousDay.setMonth(date.getMonth());
+        previousDay.setDate(date.getDate() + 1);
+        previousDay.setHours(23);
+        previousDay.setMinutes(0);
+        tabDate = [date, previousDay];
+
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, tabDate);
         this.dailyRecTabObs.subscribe(
             (data) => {
                 if (data[0] != null) {
@@ -325,7 +345,15 @@ export class DailyRecordService {
         // Get recordTH by apiary for date -3 days
         date.setDate(date.getDate() - 3);
 
-        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, date);
+        previousDay = new Date();
+        previousDay.setFullYear(date.getFullYear());
+        previousDay.setMonth(date.getMonth());
+        previousDay.setDate(date.getDate() + 1);
+        previousDay.setHours(23);
+        previousDay.setMinutes(0);
+        tabDate = [date, previousDay];
+
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, tabDate);
         this.dailyRecTabObs.subscribe(
             (data) => {
                 if (data[0] != null) {
@@ -340,7 +368,15 @@ export class DailyRecordService {
         // Get recordTH by apiary for date -7 days
         date.setDate(date.getDate() - 4);
 
-        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, date);
+        previousDay = new Date();
+        previousDay.setFullYear(date.getFullYear());
+        previousDay.setMonth(date.getMonth());
+        previousDay.setDate(date.getDate() + 1);
+        previousDay.setHours(23);
+        previousDay.setMinutes(0);
+        tabDate = [date, previousDay];
+
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, tabDate);
         this.dailyRecTabObs.subscribe(
             (data) => {
                 if (data[0] != null) {

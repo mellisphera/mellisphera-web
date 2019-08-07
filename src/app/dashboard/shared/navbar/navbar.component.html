@@ -20,15 +20,16 @@ limitations under the License. -->
       </button>
       <ul class="nav navbar-nav navbar-left" id="apiary-group">
         <li id="menuToggle">
-          <input type="checkbox" id = "menuCheckbox" />
+          <input type="checkbox" id="menuCheckbox" />
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
 
           <ul id="menu">
-            <li id= "titleCRUD">{{ 'NAVBAR.CRUD.TITLE' | translate }}</li>
-            <li><a routerLink="./manage-apiarys" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.APIARY' | translate }}">
-                <img src="./assets/icons/ui/melliUx.png" style="width:50px;margin-left:-5px;"/>
+            <li id="titleCRUD">{{ 'NAVBAR.CRUD.TITLE' | translate }}</li>
+            <li><a routerLink="./manage-apiarys" data-toggle="tooltip" data-placement="top"
+                title="{{ 'SIDEBAR.APIARY' | translate }}">
+                <img src="./assets/icons/ui/melliUx.png" style="width:50px;margin-left:-5px;" />
               </a>
               <!-- NEW APIARY -->
               <button data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.NEW_APIARY' | translate }}"
@@ -42,16 +43,16 @@ limitations under the License. -->
                 <i class="fa fa-edit fa-2x"></i>
               </button>
               <!-- DELETE APIARY -->
-              <button type="button" (click)="deleteApiaryClicked()" class="btn btn-warning btn-lg crud-apiary"
+              <!-- <button type="button" (click)="deleteApiaryClicked()" class="btn btn-warning btn-lg crud-apiary"
                 data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.DELETE_APIARY' | translate }}"
                 data-toggle="modal" data-target="#deleteApiary">
                 <i class="fa fa-times fa-2x"></i>
-              </button>
+              </button> -->
             </li>
             <li><a routerLink="./manage-hives" data-toggle="tooltip" id="hives" data-placement="top"
-                    title="{{ 'SIDEBAR.HIVES' | translate }}">
-                  <img src="./assets/icons/ui/hive.png" style="width:50px;margin-left:-5px;"/>
-                </a>
+                title="{{ 'SIDEBAR.HIVES' | translate }}">
+                <img src="./assets/icons/ui/hive.png" style="width:50px;margin-left:-5px;" />
+              </a>
               <!-- NEW HIVE -->
               <button [disabled]="rucherService.rucher.id == null" (click)="rucherSelectInit()" data-toggle="tooltip"
                 data-html="true" title="{{ 'HIVES.FORM.NEW' | translate}}" data-toggle="modal"
@@ -72,48 +73,42 @@ limitations under the License. -->
               </button>
             </li>
             <li>
-                <a>
-                  <img src="./assets/icons/ui/notes.png" style="width:50px;margin-left:-5px;"/>
-                </a>
+              <a>
+                <img src="./assets/icons/ui/notes.png" style="width:50px;margin-left:-5px;" />
+              </a>
               <!-- NEW HIVE -->
-              <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip"
-                data-html="true" data-toggle="modal"
-                class="btn btn-success btn-lg crud-apiary">
+              <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
+                data-toggle="modal" class="btn btn-success btn-lg crud-apiary">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
               </button>
               <!-- EDIT HIVE -->
-              <button data-toggle="tooltip" data-html="true" 
-                data-toggle="modal" type="button"
+              <button data-toggle="tooltip" data-html="true" data-toggle="modal" type="button"
                 class="btn btn-success btn-lg crud-apiary">
                 <i class="fa fa-edit fa-2x"></i>
               </button>
               <!-- DELETE HIVE -->
-              <button type="button" class="btn btn-warning btn-lg crud-apiary"
-                data-toggle="tooltip" data-html="true"
+              <button type="button" class="btn btn-warning btn-lg crud-apiary" data-toggle="tooltip" data-html="true"
                 data-toggle="modal">
                 <i class="fa fa-times fa-2x"></i>
               </button>
             </li>
             <li id="{{ 'NAVBAR.CRUD.MANAGE' | translate }}">
-                <a routerLink="./manage-sensors" data-toggle="tooltip" data-placement="top" id="sensor"
+              <a routerLink="./manage-sensors" data-toggle="tooltip" data-placement="top" id="sensor"
                 title="{{ 'SIDEBAR.SENSORS' | translate }}">
-                  <img src="./assets/img/sensor-icon.png" style="width:50px;margin-left:-5px;"/>
-                </a>
+                <img src="./assets/img/sensor-icon.png" style="width:50px;margin-left:-5px;" />
+              </a>
               <!-- NEW HIVE -->
-              <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip"
-                data-html="true" data-toggle="modal"
-                class="btn btn-success btn-lg crud-apiary">
+              <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
+                data-toggle="modal" class="btn btn-success btn-lg crud-apiary">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
               </button>
               <!-- EDIT HIVE -->
-              <button data-toggle="tooltip" data-html="true" 
-                data-toggle="modal" type="button"
+              <button data-toggle="tooltip" data-html="true" data-toggle="modal" type="button"
                 class="btn btn-success btn-lg crud-apiary">
                 <i class="fa fa-edit fa-2x"></i>
               </button>
               <!-- DELETE HIVE -->
-              <button type="button" class="btn btn-warning btn-lg crud-apiary"
-                data-toggle="tooltip" data-html="true"
+              <button type="button" class="btn btn-warning btn-lg crud-apiary" data-toggle="tooltip" data-html="true"
                 data-toggle="modal">
                 <i class="fa fa-times fa-2x"></i>
               </button>
@@ -236,7 +231,7 @@ limitations under the License. -->
                 </div>
               </div>
               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="img-zone"  [ngfBackground]="photoApiary"
+                <div class="img-zone" [ngfBackground]="photoApiary"
                   style="background-size:cover;background-repeat:no-repeat; background-position:center; width:100%;">
                 </div>
               </div>
@@ -356,6 +351,10 @@ limitations under the License. -->
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" data-dismiss="modal" value="Save Apiary"
               (click)="onEditerRucher()" [disabled]="!rucherForm.valid">{{ 'NAVBAR.CRUD.SAVE' | translate }}</button>
+            <button type="button" class="btn btn-warning btn-primary" data-toggle="tooltip" data-html="true"
+              mwlConfirmationPopover popoverTitle="{{messageOrphanHives}}" placement="bottom"
+              confirmText="{{ 'NAVBAR.CRUD.CONFIRM' | translate }}" cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}"
+              (confirm)="deleteRucher()">{{ 'NAVBAR.DELETE_APIARY2' | translate }}</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal"
               (click)="initForm()">{{ 'NAVBAR.CRUD.CLOSE' | translate }}</button>
           </div>
@@ -381,7 +380,8 @@ limitations under the License. -->
       <div class="modal-body">
         <div class="form-group">
           <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
-          <select [(ngModel)]="rucherService.rucherSelectUpdate" class="form-control" (change)="onSelectRucherDeleteForm();">
+          <select [(ngModel)]="rucherService.rucherSelectUpdate" class="form-control"
+            (change)="onSelectRucherDeleteForm();">
             <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option>
           </select>
         </div>
@@ -475,7 +475,8 @@ limitations under the License. -->
         <h5 *ngIf="(hiveSelectUpdate !== undefined) && (rucherService.rucherSelectUpdate !== undefined)"
           class="modal-title" id="exampleModalLabel">
           <h3 class="text-center">{{ 'NAVBAR.CRUD.EDIT' | translate}}
-            {{hiveSelectUpdate.name}} {{ 'NAVBAR.CRUD.FROMAPIARY' | translate}} {{rucherService.rucherSelectUpdate.name}}</h3>
+            {{hiveSelectUpdate.name}} {{ 'NAVBAR.CRUD.FROMAPIARY' | translate}}
+            {{rucherService.rucherSelectUpdate.name}}</h3>
         </h5>
       </div>
       <div class="modal-body">
@@ -497,6 +498,10 @@ limitations under the License. -->
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditeRuche()"
               [disabled]="!newRucheForm.valid">{{ 'HIVES.FORM.EDIT' | translate}}</button>
+            <button type="button" class="btn btn-warning btn-primary" data-toggle="tooltip" data-html="true"
+              mwlConfirmationPopover popoverTitle="{{ 'NAVBAR.CRUD.DELETEHIVEASK' | translate }}" placement="bottom"
+              confirmText="{{ 'NAVBAR.CRUD.CONFIRM' | translate }}" cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}"
+              (confirm)="deleteHive()">{{ 'NAVBAR.CRUD.DELETEHIVE' | translate }}</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal"
               (click)="initHiveForm()">{{ 'HIVES.FORM.CLOSE' | translate}}</button>
           </div>
