@@ -112,6 +112,10 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
   receiveMessage($event) {
     this.message = $event;
   }
+
+  isFR() : boolean{
+    return(this.data.getJwtReponse().country === "FR");
+  }
   ngOnDestroy() {
 /*     this.fleursFloraisonService.subjectFlower.unsubscribe();
     this.rucherService.rucherSubject.unsubscribe(); */

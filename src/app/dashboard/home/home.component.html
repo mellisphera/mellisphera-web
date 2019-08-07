@@ -8,6 +8,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
+<ng-container *ngIf = "this.rucherService.ruchers.length > 0">
 
 <!-- Nav bar for page melliUX -->
 <nav class="navbar navbar-default">
@@ -64,7 +65,7 @@ limitations under the License. -->
 </nav>
 
 <!-- No data hive -->
-<div *ngIf="hiveNoDataList() != ''" class="alert alert-warning alert-dismissible fade in alertNoData">
+<div *ngIf="(hiveNoDataList() != '') && (rucheService.ruches.length > 0)" class="alert alert-warning alert-dismissible fade in alertNoData">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     <strong>{{ 'HOME.WARNING' | translate}} </strong>{{hiveNoDataList()}}
 </div>
@@ -216,3 +217,5 @@ limitations under the License. -->
     </div>
 </div>
 <!-- End of edit Hive Modal -->
+
+</ng-container>

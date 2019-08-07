@@ -74,7 +74,9 @@ export class DashboardComponent implements OnInit {
     }
     if((event.target.id !== 'menuCheckboxHome') && (/home/g.test(this.router.url))){
       let elt : any = document.getElementById("menuCheckboxHome");
-      elt.checked = false;
+      if(elt !== null){
+        elt.checked = false;
+      }
     }
   }
 }

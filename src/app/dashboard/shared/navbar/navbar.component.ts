@@ -550,7 +550,9 @@ export class NavbarComponent implements OnInit {
                 }
                 if (this.rucherService.ruchers.length < 1) {
                     this.rucherService.initRucher();
-                    this.rucherService.rucher = this.rucherService.allApiaryAccount[0];
+                    if(this.rucherService.allApiaryAccount.length > 0){
+                        this.rucherService.rucher = this.rucherService.allApiaryAccount[0];
+                    }
                     this.router.navigate(['dashboard/home']);
                 }
                 this.rucheService.loadHiveByApiary(this.rucherService.rucher.id);
@@ -717,7 +719,9 @@ export class NavbarComponent implements OnInit {
         }, () => { }, () => {
             this.rucherService.emitApiarySubject();
             this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-            this.desactiveButtonHomePage();
+            if(this.rucherService.ruchers.length !== 1){
+                this.desactiveButtonHomePage();
+            }
             this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
             this.router.navigate(['dashboard/home']);
             if (this.userService.getJwtReponse().country === "FR") {
