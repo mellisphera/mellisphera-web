@@ -870,6 +870,8 @@ export class DailyManagerService {
               return group;
 
             }
+            option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+            option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
             // option.legend.data.push(serieComplete.name)
             option.series.push(serieComplete);
           });
