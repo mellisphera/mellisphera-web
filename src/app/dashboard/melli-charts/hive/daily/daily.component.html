@@ -20,9 +20,9 @@ limitations under the License. -->
       </ul>
     </div>
     <div>
-      <p style="text-align: center;">{{ currentTextPeriodCalendar }}{{ dailyManager.meanPeriodDevice.value }}
+      <p style="text-align: center;">{{ currentDeviceTextPeriodCalendar }}{{ dailyManager.meanPeriodDevice.value }}
         {{ dailyManager.meanPeriodDevice.unit }}</p>
-      <p style="text-align: center;">{{ dailyManager.meanDeviceSevenDay.value }}
+      <p style="text-align: center;">{{ currentDeviceTextSevenDay }}{{ dailyManager.meanDeviceSevenDay.value }}
         {{ dailyManager.meanDeviceSevenDay.unit }}</p>
     </div>
     <div id="calendar-device" class="chart calendar"></div>
@@ -34,6 +34,12 @@ limitations under the License. -->
           <img [src]="type.icons" /></li>
         <li (click)="exportToCsv('OTHER')" class="item-type"><img src="./assets/icons/exportToCsv.png">></li>
       </ul>
+    </div>
+    <div>
+      <p style="text-align: center;">{{ currentOtherTextPeriodCalendar }}{{ dailyManager.meanPeriodOther.value }}
+        {{ dailyManager.meanPeriodOther.unit }}</p>
+      <p style="text-align: center;">{{ currentOtherTextSevenDay }}{{ dailyManager.meanOtherSevenDay.value }}
+        {{ dailyManager.meanOtherSevenDay.unit }}</p>
     </div>
     <div id="calendar-other" class="chart calendar"></div>
   </div>

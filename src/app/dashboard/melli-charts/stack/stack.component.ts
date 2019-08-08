@@ -37,7 +37,6 @@ export class StackComponent implements OnInit {
     private stackService: StackMelliChartsService,
     private graphGlobal: GraphGlobal,
     private recordService: RecordService,
-    private c: UnitService,
     private rucheService: RucheService,
     private melliDate: MelliChartsDateService) { }
 
@@ -54,16 +53,19 @@ export class StackComponent implements OnInit {
           this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
           this.setOptionForStackChart();  
         } */
-    this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
-    this.setOptionForStackChart();
-    console.log(this.stackService.getHiveSelect());
-    if (this.stackService.getHiveSelect().length >= 1) {
-      this.loadAfterRangeChanged((options: any) => {
-        console.log(options);
-        this.stackService.getEchartInstance().setOption(options, true);
-        this.stackService.getEchartInstance().hideLoading();
-      });
-    }
+    
+        this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
+        if (!this.checkIfChartIsUpdate()) {
+          this.setOptionForStackChart();
+          this.loadAfterRangeChanged((options: any) => {
+            console.log(options);
+            this.stackService.getEchartInstance().setOption(options, true);
+            this.stackService.getEchartInstance().hideLoading();
+          });
+        } else {
+          this.setOptionForStackChart();
+        }
+
 
   }
 
@@ -119,8 +121,8 @@ export class StackComponent implements OnInit {
 
     this.options.xAxis.push(xAxisHum);
     this.options.tooltip.formatter = (params) => {
-       return params.map(_elt => {
-        return this.getTooltipFormater(_elt.marker, this.unitService.getHourlyDate(_elt.data.name),new Array(
+      return params.map(_elt => {
+        return this.getTooltipFormater(_elt.marker, this.unitService.getHourlyDate(_elt.data.name), new Array(
           {
             name: _elt.seriesName,
             value: _elt.data.value[1],
@@ -178,7 +180,7 @@ export class StackComponent implements OnInit {
           });
         });
       },
-      () => {},
+      () => { },
       () => {
         next(this.options);
       }
@@ -294,10 +296,35 @@ export class StackComponent implements OnInit {
     return tooltipGlobal;
   }
 
+  /**
+   *
+   *
+   * @returns {boolean}
+   * @memberof StackComponent
+   */
+  checkIfChartIsUpdate(): boolean {
+    let nbSerie = 0;
+    try{
+      this.stackService.getHiveSelect().forEach(_hive => {
+        if (this.stackService.getEchartInstance().getOption().series.findIndex(_serie => _serie.name.indexOf(_hive.name) !== -1)) {
+          nbSerie++;
+          console.log(true);
+        }
+        console.error((this.stackService.getEchartInstance().getOption().series.findIndex(_serie => _serie.name.indexOf(_hive.name) !== -1)));
+      });
+      console.log(this.stackService.getEchartInstance().getOption().series);
+      console.log(nbSerie +  '===' + this.stackService.getHiveSelect().length);
+      return nbSerie === this.stackService.getHiveSelect().length;
+    }catch{
+      return false;
+    }
+  }
+  
+
   ngOnDestroy() {
-/*     this.stackService.cleanSlectedHives();
-    this.options.series = [];
-    this.stackService.cleanSerieFromEchartInstance(this.stackService.getEchartInstance()); */
+    /*     this.stackService.cleanSlectedHives();
+        this.options.series = [];
+        this.stackService.cleanSerieFromEchartInstance(this.stackService.getEchartInstance()); */
   }
 
 }

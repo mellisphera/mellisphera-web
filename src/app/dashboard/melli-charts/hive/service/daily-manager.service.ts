@@ -125,15 +125,18 @@ export class DailyManagerService {
     observable.map(_serie => {
       if (type.name === 'RAIN') {
         return _serie.flat().map(_elt => _elt.value);
-      } else if (type.name = 'WINCOME') {
+      } else if (type.name === 'WINCOME') {
         return _serie.weightIncomeHight.map(_elt => _elt.value).concat(_serie.weightIncomeLow.map(_elt => _elt.value));
+      } else {
+        return _serie;
       }
     }).subscribe(
       _data => {
+        console.log(_data);
         if (type.name === 'RAIN' || type.name === 'WINCOME') {
           this.setMeanSevenDay(_data, false, type);
         } else {
-          this.setMeanSevenDay(_data, true, type);
+          this.setMeanSevenDay(_data.map(_data => _data.value), true, type);
         }
       }
     )
@@ -153,7 +156,7 @@ export class DailyManagerService {
       case 'WEATHER':
         return new Array(value.iconDay, value.maxTempDay, value.minTempDay);
       case 'RAIN':
-        return new Array('' + value);
+        return value;
       case 'ALERT':
         return value;
       default:
@@ -370,7 +373,6 @@ export class DailyManagerService {
     this.getLastDayForMeanValue(this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive, this.rangeSevenDay), false, type);
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive, range).subscribe(
       _daliW => {
-        this.setMeanData(_daliW.weightIncomeHight.map(_elt => _elt.value).concat(_daliW.weightIncomeLow.map(_elt => _elt.value)), false, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete: any) => {
@@ -391,7 +393,6 @@ export class DailyManagerService {
               return 0;
             }
             option.series[index] = serieComplete;
-
           });
           this.getSerieByData(_daliW.weightIncomeLow, 'loss', SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
@@ -411,7 +412,7 @@ export class DailyManagerService {
               return 0;
             };
             option.series[index] = serieComplete;
-          })
+          });
           option.calendar.range = range;
         } else {
           if (this.existSeries(option.series, 'gain')) {
@@ -464,6 +465,7 @@ export class DailyManagerService {
           option.tooltip = this.getTooltipBySerie(type);
           option.calendar.range = range;
         }
+        this.setMeanData(option.series, false, type);
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
       }
@@ -471,14 +473,10 @@ export class DailyManagerService {
   }
 
   getRainByApiary(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    const obs: Array<Observable<any>> = [
-      this.weatherService.getRainCurrentDailyWeather(idApiary, range),
-      this.weatherService.getRainForecastDailyWeather(idApiary, range)
-    ];
     this.weatherService.getRainAllWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
       _rain => {
         this.getLastDayForMeanValue(this.weatherService.getRainAllWeather(idApiary, this.rangeSevenDay), false, type);
-        this.setMeanData(_rain.map(_elt => _elt.value), false, type);
+        console.log(this.meanPeriodOther);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete: any) => {
@@ -528,6 +526,7 @@ export class DailyManagerService {
           option.tooltip = this.getTooltipBySerie(type);
           option.calendar.range = range;
         }
+        this.setMeanData(option.series[0], false, type);
         chartInstance.setOption(option, true);
         this.baseOptionExt = option;
       }
@@ -535,9 +534,11 @@ export class DailyManagerService {
   }
 
   getChartTintMax(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    // this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(idHive, this.rangeSevenDay), false, type);
     this.dailyHService.getTempIntMaxByHive(idHive, range).subscribe(
       _tMax => {
-        this.setMeanData(_tMax.map(_elt => _elt.value), true, type);
+        console.log(type);
+        this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(idHive, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -556,6 +557,7 @@ export class DailyManagerService {
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.series.push(serie);
         }
+        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
 
@@ -566,8 +568,8 @@ export class DailyManagerService {
   getChartTextMax(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getTempMaxExt(idHive, range).subscribe(
       _tmpMaxExt => {
+        this.getLastDayForMeanValue(this.dailyWService.getTempMaxExt(idHive, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
-        this.setMeanData(_tmpMaxExt.map(_elt => _elt.value), true, type);
         if (rangeChange) {
           option.calendar.range = range;
           option.series[0].data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
@@ -585,6 +587,7 @@ export class DailyManagerService {
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.series.push(serie);
         }
+        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
       }
@@ -593,7 +596,7 @@ export class DailyManagerService {
   getChartTextMin(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getTempMinExt(idHive, range).subscribe(
       _tMinExt => {
-        this.setMeanData(_tMinExt.map(_elt => _elt.value), true, type);
+        this.getLastDayForMeanValue(this.dailyWService.getTempMinExt(idHive, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -612,6 +615,7 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series.push(serie);
         }
+        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
       }
@@ -620,7 +624,7 @@ export class DailyManagerService {
   getChartHint(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getHintByHive(idHive, range).subscribe(
       _hInt => {
-        this.setMeanData(_hInt.map(_elt => _elt.value), true, type);
+        this.getLastDayForMeanValue(this.dailyHService.getHintByHive(idHive, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -638,6 +642,7 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series.push(serie);
         }
+        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
 
@@ -647,7 +652,7 @@ export class DailyManagerService {
   getChartBrood(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getBroodByHive(idHive, range).subscribe(
       _brood => {
-        this.setMeanData(_brood.map(_elt => _elt.value), true, type);
+        this.getLastDayForMeanValue(this.dailyHService.getBroodByHive(idHive, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -665,6 +670,7 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series.push(serie);
         }
+        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
 
@@ -675,7 +681,7 @@ export class DailyManagerService {
   getChartTminInt(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getTminByHive(idHive, range).subscribe(
       _tMin => {
-        this.setMeanData(_tMin.map(_elt => _elt.value), true, type);
+        this.getLastDayForMeanValue(this.dailyHService.getTminByHive(idHive, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -694,6 +700,7 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series.push(serie);
         }
+        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
       }
@@ -703,7 +710,7 @@ export class DailyManagerService {
   getChartWeight(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getWeightByHive(idHive, range).subscribe(
       _weightMax => {
-        this.setMeanData(_weightMax.map(_elt => _elt.value), true, type);
+        this.getLastDayForMeanValue(this.dailyWService.getWeightByHive(idHive, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -721,6 +728,7 @@ export class DailyManagerService {
           option.calendar.range = range;
           option.series.push(serie);
         }
+        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
       }
@@ -737,7 +745,7 @@ export class DailyManagerService {
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1])
         let option = Object.assign({}, this.baseOptionEnv);
-        if (rangeChange) {  
+        if (rangeChange) {
           option.calendar.range = range;
           option.series = this.removeDataAllseries(option.series);
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete) => {
@@ -1027,7 +1035,7 @@ export class DailyManagerService {
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
             return {
               name: img + type,
-              value: type === 'Inspection' ? _singleData.sentence: _singleData.message,
+              value: type === 'Inspection' ? _singleData.sentence : _singleData.message,
               unit: ''
             }
           }));
@@ -1077,7 +1085,7 @@ export class DailyManagerService {
    * @memberof DailyManagerService
    */
   removeDataAllseries(_series: any): any[] {
-    let series = _series.slice(); 
+    let series = _series.slice();
     series.forEach(_serie => {
       _serie.data = new Array();
     });
@@ -1095,21 +1103,29 @@ export class DailyManagerService {
    * @param {Tools} type
    * @memberof DailyManagerService
    */
-  setMeanData(_data: Array<any>, mean: boolean, type: Tools): void {
+  setMeanData(series: any, mean: boolean, type: Tools): void {
+    let data: any[] = new Array();
+    if (isArray(series)) {
+      data = series.map(_serie => _serie.data).flat();
+    } else {
+      data = series.data;
+    }
+    console.log(data);
     let value = 0;
-    _data.filter(_elt => _elt !== 'NaN').forEach(_value => {
-      value = value + _value;
-    })
+    data.filter(_elt => _elt !== 'NaN').forEach(_value => {
+      value = value + _value[1];
+    });
     if (type.origin === DEVICE) {
       this.meanPeriodDevice = {
-        value: this.unitService.getValRound(mean ? value / _data.length : value),
+        value: this.unitService.getValRound(mean ? value / data.length : value),
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     } else {
       this.meanPeriodOther = {
-        value: this.unitService.getValRound(mean ? value / _data.length : value),
+        value: this.unitService.getValRound(mean ? value / data.length : value),
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
+      console.log(this.meanPeriodOther);
     }
   }
 
@@ -1120,12 +1136,12 @@ export class DailyManagerService {
     })
     if (type.origin === DEVICE) {
       this.meanDeviceSevenDay = {
-        value: mean ? value / _data.length : value,
+        value: this.unitService.getValRound(mean ? value / _data.length : value),
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     } else {
       this.meanOtherSevenDay = {
-        value: mean ? value / _data.length : value,
+        value: this.unitService.getValRound(mean ? value / _data.length : value),
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     }

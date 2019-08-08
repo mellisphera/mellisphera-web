@@ -166,7 +166,7 @@ export class GraphGlobal {
 
         }
         this.humidity.name = 'Humidity %'
-        this.rain.unitT = 'mm   ';
+        this.rain.unitT = 'mm';
         this.humidity.min = 0;
         this.humidity.max = 100;
         this.weight.min = 0;
@@ -320,16 +320,12 @@ export class GraphGlobal {
         switch (unitType) {
             case 'T':
                 return this.temp.unitT;
-                break;
             case 'W':
                 return this.weight.unitW;
-                break;
             case 'P':
                 return this.humidity.unitT;                
-                break
             case 'MM':
                 return this.rain.unitT;
-                break;
             default:
                 break;
         }

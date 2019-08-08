@@ -80,7 +80,7 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
       } else {
         reject(false);
       }
-    })
+    });
   }
   /**
    *
@@ -91,6 +91,7 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
   getEchartInstance(): any {
     return this.stackEchartInstance;
   }
+
 
 
   /**
