@@ -132,7 +132,6 @@ export class DailyManagerService {
       }
     }).subscribe(
       _data => {
-        console.log(_data);
         if (type.name === 'RAIN' || type.name === 'WINCOME') {
           this.setMeanSevenDay(_data, false, type);
         } else {
@@ -422,6 +421,7 @@ export class DailyManagerService {
           option.legend.selectedMode = 'multiple';
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete) => {
             option.legend.data.push(serieComplete.name);
+            serieComplete.symbol = GLOBAL_ICONS.WINCOME;
             serieComplete.itemStyle = {
               normal: {
                 color: '#00FE0C'
@@ -441,12 +441,14 @@ export class DailyManagerService {
           });
 
           this.getSerieByData(_daliW.weightIncomeLow, 'loss', SERIES.effectScatter, (serieComplete) => {
-            option.legend.data.push(serieComplete.name);
+            serieComplete.symbol = GLOBAL_ICONS.WINCOME;
+            console.log(serieComplete);
             serieComplete.itemStyle = {
               normal: {
                 color: '#FE0000'
               }
             };
+            option.legend.data.push(serieComplete.name);
             serieComplete.symbolSize = (val: Array<any>) => {
               if (val[1] < 0) {
                 if (this.unitService.getUserPref().unitSystem === 'METRIC') {
@@ -465,6 +467,7 @@ export class DailyManagerService {
           option.tooltip = this.getTooltipBySerie(type);
           option.calendar.range = range;
         }
+        console.log(option);
         this.setMeanData(option.series, false, type);
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
@@ -504,7 +507,7 @@ export class DailyManagerService {
           }
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete) => {
             option.legend.data.push(serieComplete.name);
-            serieComplete.symbol = ICONS_WEATHER.rain,
+            serieComplete.symbol = ICONS_WEATHER.rain;
               serieComplete.itemStyle = {
                 normal: {
                   color: '#70A8B2'
@@ -1095,7 +1098,7 @@ export class DailyManagerService {
 
 
 
-  /**CROSS
+  /**
    *
    *
    * @param {Array<any>} _data
@@ -1110,7 +1113,6 @@ export class DailyManagerService {
     } else {
       data = series.data;
     }
-    console.log(data);
     let value = 0;
     data.filter(_elt => _elt !== 'NaN').forEach(_value => {
       value = value + _value[1];

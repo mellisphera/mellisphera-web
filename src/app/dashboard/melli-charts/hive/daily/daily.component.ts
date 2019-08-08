@@ -19,15 +19,15 @@ import { UserParamsService } from '../../../preference-config/service/user-param
 import { WeatherService } from '../../../service/api/weather.service';
 
 const TITLE_PERIODE_CALENDAR = {
-  TEXT_SUM_FR: 'Somme sur la période :',
+  TEXT_SUM_FR: 'Somme sur la période:',
   TEXT_SUM_EN: 'Sum of period: ',
   TEXT_MEAN_FR: 'Moyenne sur la période: ',
   TEXT_MEAN_EN: 'Mean of periode: '
 };
 
 const TITLE_LAST_DAY = {
-  TEXT_SUM_FR: 'Somme sur les 7 derniers jours :',
-  TEXT_SUM_EN: 'Sum last 7 days ',
+  TEXT_SUM_FR: 'Somme sur les 7 derniers jours:',
+  TEXT_SUM_EN: 'Sum last 7 days: ',
   TEXT_MEAN_FR: 'Moyenne sur les 7 dernier jours: ',
   TEXT_MEAN_EN: 'Mean last 7 days: '
 }
