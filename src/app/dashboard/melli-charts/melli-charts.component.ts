@@ -350,8 +350,17 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
             }
           } catch (TypeError) {
           }
-      case PREFIX_PATH + 'brood':
+          break;
       case PREFIX_PATH + 'stack':
+      case PREFIX_PATH + 'brood':
+          try {
+            if (this.stackService.getHiveSelect().findIndex(_hive => _hive.idApiary === idApiary) !== -1) {
+              return 'apiary-active';
+            } else {
+              return 'not-active';
+            }
+          } catch (TypeError) {
+          }
         // return this.stackService.
         break;
     }
