@@ -105,7 +105,7 @@ export class NavbarComponent implements OnInit {
         private fleursFloraisonService: FleursFloraisonService,
         private observationService: ObservationService,
         private myNotifer: MyNotifierService,
-        private capteurService: CapteurService,
+        public capteurService: CapteurService,
         private formBuilder: FormBuilder,
         public tokenService: AtokenStorageService,
         private dailyRecordService: DailyRecordService,

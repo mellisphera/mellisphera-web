@@ -54,7 +54,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
   private currentEltTypeDaily: HTMLElement;
   private currentTypeDailyDevice: Tools;
   private currentTypeDailyEnv: Tools;
-  private currentTypeDailyOther: Tools;
+  public currentTypeDailyOther: Tools;
   public currentDeviceTextPeriodCalendar: string;
   public currentOtherTextPeriodCalendar: string;
   public currentDeviceTextSevenDay: string;
