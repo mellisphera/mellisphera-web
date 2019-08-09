@@ -79,7 +79,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Br.png' },
       { name: 'ASTRO', id: 'ASTRO', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
-      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: ''}
+      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/alert.svg'}
     ];
 
     this.optionCsv = {

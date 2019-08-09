@@ -106,6 +106,7 @@ export const BASE_OPTIONS = {
     legend: {
         orient: 'horizontal',
         data: [],
+        top: 20,
         selectedMode: 'multiple'
     },
 
@@ -116,7 +117,6 @@ export const BASE_OPTIONS = {
         position: 'bottom',
         minInterval: 1,
         gridIndex: 0,
-        max: new Date(),
          splitLine: {
             show: true
         },

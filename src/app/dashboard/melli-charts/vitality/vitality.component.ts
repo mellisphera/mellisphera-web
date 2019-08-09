@@ -72,15 +72,15 @@ export class VitalityComponent implements OnInit, OnDestroy {
       return this.unitService.getDailyDate(new Date(value));
     };
     this.option.tooltip.formatter = (params) => {
-      return params.map(_elt => {
-       return this.getTooltipFormater(_elt.marker, this.unitService.getDailyDate(_elt.data.name),new Array(
-         {
-           name: _elt.seriesName,
-           value: _elt.data.value[1],
-           unit: this.graphGlobal.getUnitBySerieName('Brood')
-         }
-       ));
-     }).join('<br/>');
+      return params.map((_elt, index) => {
+        return this.getTooltipFormater(_elt.marker, (index === 0 ? this.unitService.getHourlyDate(_elt.data.name) : ''), new Array(
+          {
+            name: _elt.seriesName,
+            value: this.unitService.getValRound(_elt.data.value[1]),
+            unit: this.graphGlobal.getUnitBySerieName('Brood')
+          }
+        ));
+      }).join('');
    }
     this.option.xAxis.push(xAxis);
     this.stackService.getBroodChartInstance().setOption(this.option);
@@ -139,7 +139,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
               color: this.stackService.getColorByIndex(this.getHiveIndex(obs[index].hive), obs[index].hive)
             };
             const indexSerie = this.option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            console.log('index ->  ' + indexSerie);
             if (indexSerie !== -1) {
               this.option.series[indexSerie] = Object.assign({}, serieComplete);
             } else {
@@ -181,12 +180,12 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
-    let templateHeaderTooltip = '{*} {D} </br>';
-    let templateValue = '{n} : {v} {u}';
-    let tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
+    let templateHeaderTooltip = '<B>{D}</B> <br/>';
+    let templateValue = '{*} {n}: <B>{v} {u}</B>';
+    let tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
-      return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
-    }).join('</br>');
+      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
+    }).join('');
 
     return tooltipGlobal;
   }

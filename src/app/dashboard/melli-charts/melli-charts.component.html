@@ -22,7 +22,7 @@ limitations under the License. -->
             id="previous-date"></i></button></li>
       <li id="dropdown">
         <div class="dropdown">
-          <button id="btn-date" (click)="nextDate()" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
+          <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
               class="fa fa-calendar"></i>{{ melliChartDate.start | myDate: 'DAILY' }} <span id="arrow">&#8680;</span>
             {{ melliChartDate.end | myDate: 'DAILY' }}
             <span class="caret"></span></button>
@@ -62,7 +62,7 @@ limitations under the License. -->
           </div>
         </div>
       </li>
-      <li><button type="button" class="btn btn-info date-arrow"><i id="next-date"
+      <li><button type="button" (click)="nextDate()" class="btn btn-info date-arrow"><i id="next-date"
             class="fa fa-arrow-circle-right"></i></button></li>
 
     </ul>

@@ -101,7 +101,7 @@ export class StackComponent implements OnInit {
     let xAxisTemp = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxisTemp.gridIndex = 1;
     xAxisTemp.axisLabel.formatter = (value: number, index: number) => {
-      return this.unitService.getHourlyDate(new Date(value));
+      return this.unitService.getDailyDate(new Date(value));
     };
     this.options.xAxis.push(xAxisTemp);
 
@@ -121,15 +121,15 @@ export class StackComponent implements OnInit {
 
     this.options.xAxis.push(xAxisHum);
     this.options.tooltip.formatter = (params) => {
-      return params.map(_elt => {
-        return this.getTooltipFormater(_elt.marker, this.unitService.getHourlyDate(_elt.data.name), new Array(
+      return params.map((_elt, index) => {
+        return this.getTooltipFormater(_elt.marker, (index === 0 ? this.unitService.getHourlyDate(_elt.data.name) : ''), new Array(
           {
             name: _elt.seriesName,
-            value: _elt.data.value[1],
+            value: this.unitService.getValRound(_elt.data.value[1]),
             unit: this.graphGlobal.getUnitBySerieName(_elt.seriesName)
           }
         ));
-      }).join('<br/>');
+      }).join('');
     }
     console.log(this.options);
     this.stackService.getEchartInstance().setOption(this.options);
@@ -217,7 +217,7 @@ export class StackComponent implements OnInit {
       },
       () => { },
       () => {
-        this.stackService.getEchartInstance().setOption(this.options, true);
+        this.stackService.getEchartInstance().setOption(this.options);
         this.stackService.getEchartInstance().hideLoading();
         console.log(this.options.series);
       }
@@ -286,12 +286,12 @@ export class StackComponent implements OnInit {
    * @memberof StackComponent
    */
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
-    let templateHeaderTooltip = '{*} {D} </br>';
-    let templateValue = '{n} : {v} {u}';
-    let tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
+    let templateHeaderTooltip = '<B>{D}</B> <br/>';
+    let templateValue = '{*} {n}: <B>{v} {u}</B>';
+    let tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
-      return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
-    }).join('</br>');
+      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
+    }).join('');
 
     return tooltipGlobal;
   }
@@ -325,6 +325,7 @@ export class StackComponent implements OnInit {
     /*     this.stackService.cleanSlectedHives();
         this.options.series = [];
         this.stackService.cleanSerieFromEchartInstance(this.stackService.getEchartInstance()); */
+        this.subjectSeriesComplete.unsubscribe();
   }
 
 }

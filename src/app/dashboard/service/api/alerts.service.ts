@@ -191,9 +191,12 @@ export class AlertsService {
     getAlertsByHive(idHive : string){
         // the format is AlertInterface[]
        return this.http.get<AlertInterface[]>(CONFIG.URL + 'alert/hive/' + idHive).map(elt => {
+           console.log(elt);
             return elt.sort((b, a) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime();
-            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() > new Date().getMonth() - 2);
+            }).filter(_elt => {
+                return new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() > new Date().getMonth() - 2;
+            });
         });
     }
 

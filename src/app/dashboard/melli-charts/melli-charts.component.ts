@@ -148,7 +148,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    * @memberof MelliChartsComponent
    */
   nextDate(): void {
-    
+    const start: Date = new Date(this.melliChartDate.start);
+    const end: Date = new Date(this.melliChartDate.end);
+
+    this.melliChartDate.start = new Date(end.getTime());
+    this.melliChartDate.end = new Date(end.getTime() + (this.melliChartDate.end.getTime() - start.getTime()));
+    this.setDateFromInput();
+
   }
 
   /**
@@ -157,7 +163,12 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    * @memberof MelliChartsComponent
    */
   previousDate(): void {
-
+    // this.melliChartDate.start.setTime(this.melliChartDate.start.getTime() - this.melliChartDate.end.getTime());
+    const start: Date = new Date(this.melliChartDate.start);
+    const end: Date = new Date(this.melliChartDate.end);
+    this.melliChartDate.start = new Date(start.getTime() - (end.getTime() - start.getTime()));
+    this.melliChartDate.end = new Date(start.getTime());
+    this.setDateFromInput();
   }
 
 

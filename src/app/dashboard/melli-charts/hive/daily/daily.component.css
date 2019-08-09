@@ -10,6 +10,8 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 .calendar{
+    position: absolute;
+    top: 80px;
     height: 200vh;
     width: 100%;
 }
@@ -38,7 +40,7 @@ limitations under the License. */
     cursor:pointer;
 }
 .active{
-    background-color: #16BE25;
+    background-color: #4f4f51;
     color: white;
 }
 #contain-calendar{
@@ -62,6 +64,7 @@ limitations under the License. */
         height: auto;
     }
     .calendar {
+        position: relative;
         width: 100%;
     }
     #sidebar-tools-daily-device ul, #sidebar-tools-daily-other ul {

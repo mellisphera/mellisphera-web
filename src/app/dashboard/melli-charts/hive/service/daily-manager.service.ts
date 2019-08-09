@@ -32,6 +32,7 @@ import { ObservationService } from '../../../service/api/observation.service';
 import { Observation } from '../../../../_model/observation';
 import { AlertInterface } from '../../../../_model/alert';
 import { GLOBAL_ICONS } from '../../charts/icons/icons';
+import { MyDate } from '../../../../class/MyDate';
 
 
 
@@ -376,6 +377,7 @@ export class DailyManagerService {
         if (rangeChange) {
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            serieComplete.symbol = GLOBAL_ICONS.WINCOME;
             serieComplete.itemStyle = {
               normal: {
                 color: '#00FE0C'
@@ -395,6 +397,7 @@ export class DailyManagerService {
           });
           this.getSerieByData(_daliW.weightIncomeLow, 'loss', SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            serieComplete.symbol = GLOBAL_ICONS.WINCOME;
             serieComplete.itemStyle = {
               normal: {
                 color: '#FE0000'
@@ -468,6 +471,7 @@ export class DailyManagerService {
           option.calendar.range = range;
         }
         console.log(option);
+        option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         this.setMeanData(option.series, false, type);
         chartInstance.setOption(option, true);
         this.baseOptionsInt = option;
@@ -540,7 +544,6 @@ export class DailyManagerService {
     // this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(idHive, this.rangeSevenDay), false, type);
     this.dailyHService.getTempIntMaxByHive(idHive, range).subscribe(
       _tMax => {
-        console.log(type);
         this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(idHive, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
@@ -776,7 +779,7 @@ export class DailyManagerService {
                   stroke: 'black'
                 }
               });
-              const dataByDate: any[] = joinData.filter(_filter => this.getTimeStampFromDate(_filter.date) === this.getTimeStampFromDate(api.value(0)));
+              const dataByDate: any[] = joinData.filter(_filter => this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.getTimeStampFromDate(api.value(0)));
               if (dataByDate.length > 1) {
                 group.children.push({
                   type: 'path',
@@ -790,8 +793,9 @@ export class DailyManagerService {
                   },
                   position: [cellPoint[0], cellPoint[1]],
                 })
-              } else {
+              } else if(dataByDate.length === 1) {
                 let icon;
+                console.log(dataByDate);
                 if (dataByDate[0].sentence) {
                   icon = dataByDate[0].type === 'HiveObs' ? GLOBAL_ICONS.HIVE_OBS : GLOBAL_ICONS.HIVE_ACT;
                 } else {
@@ -820,8 +824,10 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
-            serieComplete.renderItem = (params, api) => {
+          option.legend = Object.assign({}, BASE_OPTIONS.legend);
+/*           option.legend.selectedMode = 'single';
+ */          this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
+              serieComplete.renderItem = (params, api) => {
               let cellPoint = api.coord(api.value(0));
               let cellWidth = params.coordSys.cellWidth;
               let cellHeight = params.coordSys.cellHeight;
@@ -844,7 +850,9 @@ export class DailyManagerService {
                   stroke: 'black'
                 }
               });
-              const dataByDate: any[] = joinData.filter(_filter => this.getTimeStampFromDate(_filter.date) === this.getTimeStampFromDate(api.value(0)));
+              const dataByDate: any[] = joinData.filter(_filter => {
+                return this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.getTimeStampFromDate(api.value(0));
+              });
               if (dataByDate.length > 1) {
                 group.children.push({
                   type: 'path',
@@ -858,9 +866,9 @@ export class DailyManagerService {
                   },
                   position: [cellPoint[0], cellPoint[1]],
                 })
-              } else {
+              } else  if(dataByDate.length === 1){
                 let icon;
-                if (dataByDate[0].sentence) {
+                if (dataByDate !== undefined && dataByDate[0].sentence) {
                   icon = dataByDate[0].type === 'HiveObs' ? GLOBAL_ICONS.HIVE_OBS : GLOBAL_ICONS.HIVE_ACT;
                 } else {
                   icon = this.alertService.getPicto(dataByDate[0].type);
@@ -882,8 +890,9 @@ export class DailyManagerService {
 
             }
             option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+            option.calendar.range = range;
             option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-            // option.legend.data.push(serieComplete.name)
+            option.legend.data.push(serieComplete.name)
             option.series.push(serieComplete);
           });
         }
@@ -925,15 +934,15 @@ export class DailyManagerService {
       case 'WEIGHT_MAX':
         visualMap.type = 'continuous';
         // visualMap.top = 15;
-        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 10 : 25;
-        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 100 : 220;
+        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 20 : 40;
+        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 80 : 180;
         visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
         break;
       case 'TEMP_INT_MAX':
         visualMap.type = 'continuous';
         //visualMap.top = 15;
-        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
+        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 30;
         visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
         visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
@@ -958,7 +967,7 @@ export class DailyManagerService {
       case 'TEMP_INT_MIN':
         visualMap.type = 'continuous';
         //visualMap.top = 15;
-        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
+        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 30;
         visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
         visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
@@ -966,15 +975,15 @@ export class DailyManagerService {
       case 'TEMP_EXT_MAX':
         visualMap.type = 'continuous';
         //visualMap.top = 15;
-        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
-        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
+        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
+        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 110;
         visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
         break;
       case 'TEMP_EXT_MIN':
         visualMap.type = 'continuous';
         //visualMap.top = 15;
-        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 50;
+        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
         visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 25 : 90;
         visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
@@ -1015,7 +1024,7 @@ export class DailyManagerService {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
               name: 'Rain',
-              value: this.graphGlobal.getNumberFormat(params.data[1]),
+              value: this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])),
               unit: this.graphGlobal.getUnitByType(type.unit)
             }));
         }
@@ -1023,7 +1032,7 @@ export class DailyManagerService {
       case 'ALERT':
         tooltip.formatter = (params) => {
           const dataByDateTooltip = extraData.filter(_filter => {
-            return this.getTimeStampFromDate(_filter.date) === this.getTimeStampFromDate(params.data[0]);
+            return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.date)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
           });
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
             let type = 'Notif';
@@ -1049,7 +1058,7 @@ export class DailyManagerService {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
               name: type.name,
-              value: this.graphGlobal.getNumberFormat(params.data[1]),
+              value: this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])),
               unit: this.graphGlobal.getUnitByType(type.unit)
             },
           ));
@@ -1068,8 +1077,8 @@ export class DailyManagerService {
    * @memberof DailyManagerService
    */
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
-    let templateHeaderTooltip = '{*} {D} </br>';
-    let templateValue = '{n} : {v} {u}';
+    let templateHeaderTooltip = '{*} <B>{D}</B> </br>';
+    let templateValue = '{n}: <B>{v} {u}</B>';
     let tooltipGlobal;
     tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {

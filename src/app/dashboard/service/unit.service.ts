@@ -84,7 +84,7 @@ UnitService {
 convertTempFromUsePref(temp: number, unit: string, round? : boolean): number {
   let value;
   if (unit === 'IMPERIAL') {
-    value = round ? this.getValRound(temp * 9 / 5 + 32): temp;
+    value = round ? this.getValRound(temp * 9 / 5 + 32): temp * 9 / 5 + 32;
   } else {
     value =  round ? this.getValRound(temp): temp;
   }

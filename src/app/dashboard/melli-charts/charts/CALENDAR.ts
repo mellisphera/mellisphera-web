@@ -28,7 +28,7 @@ export const CALENDAR = {
         dayLabel: {
             margin: 10,
             nameMap: [],
-            // position: 'end',
+            position: 'end',
             firstDay: 1, // start on Monday
         },
         monthLabel: {
