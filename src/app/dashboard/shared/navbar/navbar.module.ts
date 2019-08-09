@@ -31,6 +31,7 @@ import { SharedModule } from '../shared.module';
         FormsModule,
         TranslateModule,
         ngfModule,
+        SharedModule,
         ConfirmationPopoverModule.forRoot({
             confirmButtonType: 'danger' // set defaults here
           })

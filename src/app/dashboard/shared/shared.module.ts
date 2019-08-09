@@ -12,7 +12,6 @@ limitations under the License. */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarModule } from '../sidebar/sidebar.module';
-import { NavbarModule } from './navbar/navbar.module';
 import { RouterModule } from '@angular/router';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -27,7 +26,6 @@ import { ngfModule } from 'angular-file';
   imports: [
     CommonModule,
     SidebarModule,
-    NavbarModule,
     RouterModule,
     // BrowserModule,
     FormsModule,

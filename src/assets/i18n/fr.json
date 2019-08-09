@@ -259,7 +259,12 @@
             "SAVE" : "Sauvegarder",
             "EDIT" : "Modifier le capteur",
             "SENSOR_EDIT" : "Capteur modifié",
-            "SUCCES" : "Avec succès !"
+            "SUCCES" : "Avec succès !",
+            "EDITSELECT" : "Selectionnez le capteur à modifer",
+            "SENSOR" : "Capteur",
+            "EDITSENSOR" : "Modifer",
+            "OF" : "de",
+            "NOSENSOR" : "Vous n'avez pas de capteurs à modifier."
         }
     },
     "FEEDBACK" : {

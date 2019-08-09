@@ -103,7 +103,11 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
       this.signupService.signupUser(() => {
         this.authService.login.email = this.signupService.user.email;
         this.authService.login.password = this.signupService.user.password;
+        if(/fr/g.test(this.navLanguage)){
         this.notif.notify('success', 'Sign up successful !');
+        }else{
+        this.notif.notify('success', 'Inscription réussie !'); 
+        }
         this.success = true;
         this.innitForm();
         setTimeout(() => {
@@ -132,7 +136,11 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
   sendMail() {
     this.authService.resetPassword(this.emailForReset).subscribe(
       () => {}, () => {}, () => {
-        this.notif.notify('success', 'You have received an email with a new password');
+        if(/fr/g.test(this.navLanguage)){
+          this.notif.notify('success', 'Vous avez reçu un mail avec un nouveau mot de passe.');
+          }else{
+          this.notif.notify('success', 'You have received an email with a new password.');
+          }
         this.activeReset();
       }
     );

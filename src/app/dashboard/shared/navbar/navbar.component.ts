@@ -17,7 +17,7 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { UserloggedService } from '../../../userlogged.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/Service/auth.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { RucherService } from '../../service/api/rucher.service';
 import { RucheService } from '../../service/api/ruche.service';
 import { FleursFloraisonService } from '../../fleurs-floraison/service/fleurs.floraison.service';
@@ -38,6 +38,7 @@ import { Observable } from 'rxjs';
 import { AlertsService } from '../../service/api/alerts.service';
 import { MessagesService } from '../../service/messages.service';
 import { MessagesList } from '../../../../constants/messages';
+import { CapteurInterface } from '../../../_model/capteur';
 
 @Component({
     // moduleId: module.id,
@@ -47,6 +48,20 @@ import { MessagesList } from '../../../../constants/messages';
 })
 
 export class NavbarComponent implements OnInit {
+    editCapteurCheckbox: boolean;
+    paternRef: RegExp;
+    editSensorForm: FormGroup;
+    newSensorForm: FormGroup;
+    hiveSensorSelect: RucheInterface;
+    hivesSensorForm: RucheInterface[];
+    hivesEditSensorFormOne: RucheInterface[];
+    sensorsEditSensorForm: CapteurInterface[];
+    sensorSelectUpdate: CapteurInterface;
+    apiaryEditSensorFormOnes: RucherModel[];
+    hideEditSensorForm: boolean;
+    apiarySensorSelect: RucherModel;
+    hivesEditSensorForm: RucheInterface[];
+
     message: string;
     username: string;
     photoApiary: File;
@@ -99,7 +114,7 @@ export class NavbarComponent implements OnInit {
         public translateService: TranslateService,
         private alertsService: AlertsService,
         private renderer: Renderer2,
-        private messagesService : MessagesService) {
+        private messagesService: MessagesService) {
         this.location = location;
         this.notifier = this.notifierService;
         this.sidebarVisible = false;
@@ -138,24 +153,19 @@ export class NavbarComponent implements OnInit {
         this.eltOnClickId = null;
         this.eltOnClickClass = null;
 
+        this.paternRef = /[4][0-3]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9]|[a-z])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
+
 
     }
 
-    initForm() {
-        this.rucherForm = this.formBuilder.group({
-            'name': [null, Validators.compose([Validators.required, Validators.maxLength(20)])],
-            'description': [null, Validators.compose([Validators.maxLength(40)])],
-            'ville': [null, Validators.compose([Validators.required])],
-            'codePostal': [null, Validators.compose([Validators.required])],
-            'validate': ``,
-        });
-    }
-
-    initHiveForm() {
-        this.newRucheForm = this.formBuilder.group({
-            'nomRuche': [null, Validators.compose([Validators.required])],
-            'descriptionRuche': [null],
-        });
+    ngOnInit() {
+        this.listTitles = ROUTES.filter(listTitle => listTitle);
+        const navbar: HTMLElement = this.element.nativeElement;
+        this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+        this.userService.currentMessage.subscribe(message => this.message = message);
+        this.initForm();
+        this.initHiveForm();
+        this.initSensorForm();
     }
 
     logout() {
@@ -167,6 +177,48 @@ export class NavbarComponent implements OnInit {
         this.tokenService.signOut();
         // this.authService.connexionStatus.next(false);
     }
+
+    sidebarOpen() {
+        const toggleButton = this.toggleButton;
+        const body = document.getElementsByTagName('body')[0];
+        setTimeout(function () {
+            toggleButton.classList.add('toggled');
+        }, 500);
+        body.classList.add('nav-open');
+
+        this.sidebarVisible = true;
+    }
+    sidebarClose() {
+        const body = document.getElementsByTagName('body')[0];
+        this.toggleButton.classList.remove('toggled');
+        this.sidebarVisible = false;
+        body.classList.remove('nav-open');
+    }
+    sidebarToggle() {
+        const toggleButton = this.toggleButton;
+        const body = document.getElementsByTagName('body')[0];
+        if (this.sidebarVisible === false) {
+            this.sidebarOpen();
+        } else {
+            this.sidebarClose();
+        }
+    }
+
+    setColor(color: any) {
+        this.sidebarService.setCurrentColor(color);
+    }
+
+    getTitle() {
+        let title = this.location.prepareExternalUrl(this.location.path());
+        title = title.split('/').pop();
+        for (let item = 0; item < this.listTitles.length; item++) {
+            if (this.listTitles[item].path === title) {
+                return this.listTitles[item].title;
+            }
+        }
+        return 'Dashboard';
+    }
+
     onPictureLoad(next) {
         const fileReader = new FileReader();
         fileReader.onload = (e) => {
@@ -176,15 +228,6 @@ export class NavbarComponent implements OnInit {
             next();
         };
         fileReader.readAsDataURL(this.photoApiary);
-    }
-
-    ngOnInit() {
-        this.listTitles = ROUTES.filter(listTitle => listTitle);
-        const navbar: HTMLElement = this.element.nativeElement;
-        this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
-        this.userService.currentMessage.subscribe(message => this.message = message);
-        this.initForm();
-        this.initHiveForm();
     }
 
     // Desactive the 'active' class from buttons in homePage
@@ -288,6 +331,125 @@ export class NavbarComponent implements OnInit {
         }
     }
 
+    // ###############################################################
+    // ###############################################################
+    // ###################      MANAGE APIARY      ###################
+    // ###############################################################
+    // ###############################################################
+
+    initForm() {
+        this.rucherForm = this.formBuilder.group({
+            'name': [null, Validators.compose([Validators.required, Validators.maxLength(20)])],
+            'description': [null, Validators.compose([Validators.maxLength(40)])],
+            'ville': [null, Validators.compose([Validators.required])],
+            'codePostal': [null, Validators.compose([Validators.required])],
+            'validate': ``,
+        });
+    }
+
+    // ###################      CREATE      ###################
+
+    apiarySubmit() {
+        const formValue = this.rucherForm.value;
+        if (this.photoApiary == null) {
+            this.newApiary.photo = './assets/imageClient/testAccount.png';
+        }
+        this.newApiary.id = null;
+        this.newApiary.idUsername = this.userService.getIdUserLoged();
+        this.newApiary.description = formValue.description;
+        this.newApiary.name = formValue.name;
+        this.newApiary.ville = formValue.ville;
+        this.newApiary.codePostal = formValue.codePostal;
+        this.newApiary.createdAt = new Date();
+        this.newApiary.username = this.username;
+        this.initForm();
+        this.rucherService.createRucher(this.newApiary).subscribe((apiary) => {
+            if (this.rucherService.ruchers != null) {
+                this.rucherService.ruchers.push(apiary);
+                this.rucherService.allApiaryAccount.push(apiary);
+            } else {
+                this.rucherService.ruchers = new Array(apiary);
+                this.rucherService.allApiaryAccount.push(apiary);
+            }
+            this.rucherService.saveCurrentApiaryId(apiary.id);
+        }, () => { }, () => {
+            this.rucherService.emitApiarySubject();
+            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+            if ((this.rucherService.ruchers.length !== 1) && (/home/g.test(this.router.url))) {
+                this.desactiveButtonHomePageActiveName();
+            }
+            this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
+            if ((/home/g.test(this.router.url))) {
+                this.router.navigate(['dashboard/home']);
+            }
+            if (this.userService.getJwtReponse().country === "FR") {
+                this.notifier.notify('success', 'Rucher créé');
+            } else {
+                this.notifier.notify('success', 'Created Apaiary');
+            }
+            this.photoApiary = null;
+        });
+    }
+
+    // ###################      EDIT      ###################
+
+    editRucherClicked() {
+        this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
+
+        // Hive init
+        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+            this.rucherService.rucheService.ruchesAllApiary = ruches;
+            this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
+        })
+
+        const donnée = {
+            name: this.rucherService.rucher.name,
+            description: this.rucherService.rucher.description,
+            ville: this.rucherService.rucher.ville,
+            codePostal: this.rucherService.rucher.codePostal,
+            validate: ''
+        };
+        this.rucherForm.setValue(donnée);
+    }
+
+    //Edit apiary
+    onEditerRucher() {
+        if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.idUsername)) {
+            const formValue = this.rucherForm.value;
+            const index = this.rucherService.ruchers.indexOf(this.rucherService.rucherSelectUpdate);
+            const indexAllApiary = this.rucherService.allApiaryAccount.indexOf(this.rucherService.rucherSelectUpdate);
+            this.apiaryUpdate = formValue;
+            this.apiaryUpdate.idUsername = this.rucherService.rucherSelectUpdate.idUsername;
+            this.apiaryUpdate.id = this.rucherService.rucherSelectUpdate.id;
+            if (this.photoApiary === null || this.photoApiary === undefined) {
+                this.apiaryUpdate.photo = this.rucherService.rucherSelectUpdate.photo
+            } else {
+                this.apiaryUpdate.photo = this.editPhotoApiary;
+            }
+            this.apiaryUpdate.username = this.rucherService.rucherSelectUpdate.username;
+            this.rucherService.updateRucher(this.rucherService.rucherSelectUpdate.id, this.apiaryUpdate).subscribe(
+                () => { }, () => { }, () => {
+                    this.rucherService.ruchers[index] = this.apiaryUpdate;
+                    this.rucherService.allApiaryAccount[indexAllApiary] = this.apiaryUpdate;
+                    this.rucherService.emitApiarySubject();
+                    this.photoApiary = null;
+                    this.editPhotoApiary = null;
+                    if (this.rucherService.rucherSelectUpdate === this.rucherService.rucher) {
+                        this.rucherService.rucher = this.apiaryUpdate;
+                    }
+                    if (this.userService.getJwtReponse().country === "FR") {
+                        this.notifier.notify('success', 'Rucher mis à jour');
+                    } else {
+                        this.notifier.notify('success', 'Updated Apiary');
+                    }
+                    this.initForm();
+                }
+            );
+        } else {
+            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+        }
+    }
+
     onSelectRucherEditForm() {
         this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
 
@@ -301,87 +463,133 @@ export class NavbarComponent implements OnInit {
         this.rucherForm.setValue(donnée);
     }
 
+    // onSelectRucherEditForm() {
+    //     this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
+
+    //     const donnée = {
+    //         name: this.rucherService.rucherSelectUpdate.name,
+    //         description: this.rucherService.rucherSelectUpdate.description,
+    //         ville: this.rucherService.rucherSelectUpdate.ville,
+    //         codePostal: this.rucherService.rucherSelectUpdate.codePostal,
+    //         validate: ''
+    //     };
+    //     this.rucherForm.setValue(donnée);
+    // }
+
+    rucherSelectInit() {
+        this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
+    }
+
+    // ###################      DELETE      ###################
+
+    displayOrphanHives(apiary: RucherModel): string {
+        let message: string;
+        let _hives = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === apiary.id);
+        let lengthHives = _hives.length;
+        if (lengthHives === 0) {
+            message = '';
+        } else if (lengthHives === 1) {
+            message = this.messagesService.getMessage(MessagesList.WARNINGHIVE);
+            message += _hives[0].name;
+            message += this.messagesService.getMessage(MessagesList.WILLBEDELETED);
+        } else {
+            message = this.messagesService.getMessage(MessagesList.WARNINGHIVES);
+            _hives.forEach((element, index) => {
+                if (index === 0) {
+                    message += element.name;
+                } else if (index === lengthHives - 1) {
+                    message += this.messagesService.getMessage(MessagesList.AND);
+                    message += element.name;
+                } else {
+                    message += '; ';
+                    message += element.name;
+                }
+            });
+            message += this.messagesService.getMessage(MessagesList.WILLBEDELETEDS);
+        }
+
+        return (message);
+    }
+
     onSelectRucherDeleteForm() {
         this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
     }
 
-    onSelectRucherEditHiveForm() {
-        this.apiaryUpdateHive = this.rucherService.rucherSelectUpdate;
-        // init hive
-        this.ruchesEditHiveForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate.id);
-        if (this.ruchesEditHiveForm.length != 0) {
-            this.hiveSelectUpdate = this.ruchesEditHiveForm[0];
-            // Set value
-            const donnée = {
-                nomRuche: this.hiveSelectUpdate.name,
-                descriptionRuche: this.hiveSelectUpdate.description,
-            };
-            this.newRucheForm.setValue(donnée);
+    deleteRucher() {
+        if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.idUsername)) {
+            this.rucherService.deleteRucher(this.rucherService.rucherSelectUpdate).subscribe(() => { }, () => { }, () => {
+                const indexApiaryUser = this.rucherService.ruchers.indexOf(this.rucherService.rucherSelectUpdate);
+                const indexApiaryAllAccount = this.rucherService.allApiaryAccount.indexOf(this.rucherService.rucherSelectUpdate);
+                this.rucherService.allApiaryAccount.splice(indexApiaryAllAccount, 1);
+                this.rucherService.ruchers.splice(indexApiaryUser, 1);
+                this.rucherService.emitApiarySubject();
+                if (this.userService.getJwtReponse().country === "FR") {
+                    this.notifier.notify('success', 'Rucher supprimé');
+                } else {
+                    this.notifier.notify('success', 'Deleted Apaiary');
+                }
+                if ((this.rucherService.ruchers.length > 0) && (this.rucherService.rucherSelectUpdate === this.rucherService.rucher)) {
+                    this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
+                    this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
+                    if ((/home/g.test(this.router.url))) {
+                        this.router.navigate(['dashboard/home']);
+                        this.desactiveButtonHomePageActiveName();
+                    }
+                }
+                if (this.rucherService.ruchers.length < 1) {
+                    this.rucherService.initRucher();
+                    if (this.rucherService.allApiaryAccount.length > 0) {
+                        this.rucherService.rucher = this.rucherService.allApiaryAccount[0];
+                    }
+                    if ((/home/g.test(this.router.url))) {
+                        this.router.navigate(['dashboard/home']);
+                    }
+                }
+                this.rucheService.loadHiveByApiary(this.rucherService.rucher.id);
+
+                // For the edit apiary form
+                this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
+                this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
+                const donnée = {
+                    name: this.rucherService.rucherSelectUpdate.name,
+                    description: this.rucherService.rucherSelectUpdate.description,
+                    ville: this.rucherService.rucherSelectUpdate.ville,
+                    codePostal: this.rucherService.rucherSelectUpdate.codePostal,
+                    validate: ''
+                };
+                this.rucherForm.setValue(donnée);
+            });
+        } else {
+            this.myNotifer.sendWarningNotif(NotifList.NO_DELETE_RIGHT);
+
         }
     }
 
-    onSelectRucherDeleteHiveForm() {
-        // init hive
-        this.ruchesEditHiveForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate.id);
-        if (this.ruchesEditHiveForm.length != 0) {
-            this.hiveSelectUpdate = this.ruchesEditHiveForm[0];
-        }
+    deleteApiaryClicked() {
+        this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
+        // Hive init
+        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+            this.rucherService.rucheService.ruchesAllApiary = ruches;
+            this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
+        })
     }
 
-    onSelectHiveEditHiveForm() {
-        // Set value
-        const donnée = {
-            nomRuche: this.hiveSelectUpdate.name,
-            descriptionRuche: this.hiveSelectUpdate.description,
-        };
-        this.newRucheForm.setValue(donnée);
-    }
+    // ###############################################################
+    // ###############################################################
+    // ###################      MANAGE HIVES      ###################
+    // ###############################################################
+    // ###############################################################
 
-    //Pour effacer une ruche
-    deleteHive() {
-        this.rucheService.deleteRuche(this.hiveSelectUpdate).subscribe(() => { }, () => { }, () => {
-            if ((this.rucherService.rucherSelectUpdate.id === this.rucherService.getCurrentApiary())) {
-                let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSelectUpdate.id);
-                this.rucheService.ruches.splice(hiveIndexUpdate, 1);
-            }
-            // update for manage pages
-            let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive.id).indexOf(this.hiveSelectUpdate.id);
-            this.rucheService.ruchesAllApiary.splice(hiveIndexUpdateListAllApiary, 1);
-
-            // update for edit hive form
-            let hiveIndexUpdateruchesEditHiveForm = this.ruchesEditHiveForm.map(hive => hive.id).indexOf(this.hiveSelectUpdate.id);
-            this.ruchesEditHiveForm.splice(hiveIndexUpdateruchesEditHiveForm, 1);
-
-            if(this.ruchesEditHiveForm[0] !== undefined){
-                this.hiveSelectUpdate = this.ruchesEditHiveForm[0];
-
-                // Set value
-                const donnée = {
-                    nomRuche: this.hiveSelectUpdate.name,
-                    descriptionRuche: this.hiveSelectUpdate.description,
-                };
-                this.newRucheForm.setValue(donnée);
-            }else{
-                this.hiveSelectUpdate = this.ruchesEditHiveForm[0];
-
-                // Set value
-                const donnée = {
-                    nomRuche: '',
-                    descriptionRuche: '',
-                };
-                this.newRucheForm.setValue(donnée);
-            }
-
-            if (this.userService.getJwtReponse().country === "FR") {
-                this.notifier.notify('success', 'Ruche supprimée');
-            } else {
-                this.notifier.notify('success', 'Deleted Hive');
-            }
+    initHiveForm() {
+        this.newRucheForm = this.formBuilder.group({
+            'nomRuche': [null, Validators.compose([Validators.required])],
+            'descriptionRuche': [null],
         });
     }
 
+    // ###################      CREATE      ###################
 
-    //Pour créer une ruche
+    //For create a hive
     createRuche() {
         const formValue = this.newRucheForm.value;
         this.selectHive.id = null;
@@ -418,7 +626,53 @@ export class NavbarComponent implements OnInit {
         });
     }
 
-    // pour editer une ruche
+    // ###################      EDIT      ###################
+
+    editHiveClicked() {
+        // Apiary init
+        this.apiaryUpdateHive = this.rucherService.rucher;
+        this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
+        // Hive init
+        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+            this.rucherService.rucheService.ruchesAllApiary = ruches;
+            this.ruchesEditHiveForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate.id);
+            if (this.ruchesEditHiveForm.length != 0) {
+                this.hiveSelectUpdate = this.ruchesEditHiveForm[0];
+                // Set value
+                const donnée = {
+                    nomRuche: this.hiveSelectUpdate.name,
+                    descriptionRuche: this.hiveSelectUpdate.description,
+                };
+                this.newRucheForm.setValue(donnée);
+            }
+        })
+    }
+
+    onSelectRucherEditHiveForm() {
+        this.apiaryUpdateHive = this.rucherService.rucherSelectUpdate;
+        // init hive
+        this.ruchesEditHiveForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate.id);
+        if (this.ruchesEditHiveForm.length != 0) {
+            this.hiveSelectUpdate = this.ruchesEditHiveForm[0];
+            // Set value
+            const donnée = {
+                nomRuche: this.hiveSelectUpdate.name,
+                descriptionRuche: this.hiveSelectUpdate.description,
+            };
+            this.newRucheForm.setValue(donnée);
+        }
+    }
+
+    onSelectHiveEditHiveForm() {
+        // Set value
+        const donnée = {
+            nomRuche: this.hiveSelectUpdate.name,
+            descriptionRuche: this.hiveSelectUpdate.description,
+        };
+        this.newRucheForm.setValue(donnée);
+    }
+
+    // for edit a hive
     onEditeRuche() {
         const formValue = this.newRucheForm.value;
         this.hiveIndex = this.ruchesEditHiveForm.map(elt => elt.id).indexOf(this.hiveSelectUpdate.id);
@@ -463,206 +717,57 @@ export class NavbarComponent implements OnInit {
         });
     }
 
-    //Editer Rucher
-    onEditerRucher() {
-        if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.idUsername)) {
-            const formValue = this.rucherForm.value;
-            const index = this.rucherService.ruchers.indexOf(this.rucherService.rucherSelectUpdate);
-            const indexAllApiary = this.rucherService.allApiaryAccount.indexOf(this.rucherService.rucherSelectUpdate);
-            this.apiaryUpdate = formValue;
-            this.apiaryUpdate.idUsername = this.rucherService.rucherSelectUpdate.idUsername;
-            this.apiaryUpdate.id = this.rucherService.rucherSelectUpdate.id;
-            if (this.photoApiary === null || this.photoApiary === undefined) {
-                this.apiaryUpdate.photo = this.rucherService.rucherSelectUpdate.photo
-            } else {
-                this.apiaryUpdate.photo = this.editPhotoApiary;
+    // ###################      DELETE      ###################
+
+    onSelectRucherDeleteHiveForm() {
+        // init hive
+        this.ruchesEditHiveForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate.id);
+        if (this.ruchesEditHiveForm.length != 0) {
+            this.hiveSelectUpdate = this.ruchesEditHiveForm[0];
+        }
+    }
+
+    //for delete a hive
+    deleteHive() {
+        this.rucheService.deleteRuche(this.hiveSelectUpdate).subscribe(() => { }, () => { }, () => {
+            if ((this.rucherService.rucherSelectUpdate.id === this.rucherService.getCurrentApiary())) {
+                let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSelectUpdate.id);
+                this.rucheService.ruches.splice(hiveIndexUpdate, 1);
             }
-            this.apiaryUpdate.username = this.rucherService.rucherSelectUpdate.username;
-            this.rucherService.updateRucher(this.rucherService.rucherSelectUpdate.id, this.apiaryUpdate).subscribe(
-                () => { }, () => { }, () => {
-                    this.rucherService.ruchers[index] = this.apiaryUpdate;
-                    this.rucherService.allApiaryAccount[indexAllApiary] = this.apiaryUpdate;
-                    this.rucherService.emitApiarySubject();
-                    this.photoApiary = null;
-                    this.editPhotoApiary = null;
-                    if (this.rucherService.rucherSelectUpdate === this.rucherService.rucher) {
-                        this.rucherService.rucher = this.apiaryUpdate;
-                    }
-                    if (this.userService.getJwtReponse().country === "FR") {
-                        this.notifier.notify('success', 'Rucher mis à jour');
-                    } else {
-                        this.notifier.notify('success', 'Updated Apiary');
-                    }
-                    this.initForm();
-                }
-            );
-        } else {
-            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
-        }
-    }
+            // update for manage pages
+            let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive.id).indexOf(this.hiveSelectUpdate.id);
+            this.rucheService.ruchesAllApiary.splice(hiveIndexUpdateListAllApiary, 1);
 
-    displayOrphanHives(apiary: RucherModel): string {
-        let message: string;
-        let _hives = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === apiary.id);
-        let lengthHives = _hives.length;
-        if (lengthHives === 0) {
-            message = '';
-        } else if (lengthHives === 1) {
-            message = this.messagesService.getMessage(MessagesList.WARNINGHIVE);
-            message += _hives[0].name;
-            message += this.messagesService.getMessage(MessagesList.WILLBEDELETED);
-        } else {
-            message = this.messagesService.getMessage(MessagesList.WARNINGHIVES);
-            _hives.forEach((element, index) => {
-                if (index === 0) {
-                    message += element.name;
-                } else if (index === lengthHives -1) {
-                    message += this.messagesService.getMessage(MessagesList.AND);
-                    message += element.name;
-                } else {
-                    message += '; ';
-                    message += element.name;
-                }
-            });
-            message += this.messagesService.getMessage(MessagesList.WILLBEDELETEDS);
-        }
+            // update for edit hive form
+            let hiveIndexUpdateruchesEditHiveForm = this.ruchesEditHiveForm.map(hive => hive.id).indexOf(this.hiveSelectUpdate.id);
+            this.ruchesEditHiveForm.splice(hiveIndexUpdateruchesEditHiveForm, 1);
 
-        return (message);
-    }
-
-    deleteRucher() {
-        if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.idUsername)) {
-            this.rucherService.deleteRucher(this.rucherService.rucherSelectUpdate).subscribe(() => { }, () => { }, () => {
-                const indexApiaryUser = this.rucherService.ruchers.indexOf(this.rucherService.rucherSelectUpdate);
-                const indexApiaryAllAccount = this.rucherService.allApiaryAccount.indexOf(this.rucherService.rucherSelectUpdate);
-                this.rucherService.allApiaryAccount.splice(indexApiaryAllAccount, 1);
-                this.rucherService.ruchers.splice(indexApiaryUser, 1);
-                this.rucherService.emitApiarySubject();
-                if (this.userService.getJwtReponse().country === "FR") {
-                    this.notifier.notify('success', 'Rucher supprimé');
-                } else {
-                    this.notifier.notify('success', 'Deleted Apaiary');
-                }
-                if ((this.rucherService.ruchers.length > 0) && (this.rucherService.rucherSelectUpdate === this.rucherService.rucher)) {
-                    this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
-                    this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
-                    this.router.navigate(['dashboard/home']);
-                }
-                if (this.rucherService.ruchers.length < 1) {
-                    this.rucherService.initRucher();
-                    if(this.rucherService.allApiaryAccount.length > 0){
-                        this.rucherService.rucher = this.rucherService.allApiaryAccount[0];
-                    }
-                    this.router.navigate(['dashboard/home']);
-                }
-                this.rucheService.loadHiveByApiary(this.rucherService.rucher.id);
-
-                // For the edit apiary form
-                this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
-                this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
-                const donnée = {
-                    name: this.rucherService.rucherSelectUpdate.name,
-                    description: this.rucherService.rucherSelectUpdate.description,
-                    ville: this.rucherService.rucherSelectUpdate.ville,
-                    codePostal: this.rucherService.rucherSelectUpdate.codePostal,
-                    validate: ''
-                };
-                this.rucherForm.setValue(donnée);  
-            });
-        } else {
-            this.myNotifer.sendWarningNotif(NotifList.NO_DELETE_RIGHT);
-
-        }
-    }
-
-    // onSelectRucherEditForm() {
-    //     this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
-
-    //     const donnée = {
-    //         name: this.rucherService.rucherSelectUpdate.name,
-    //         description: this.rucherService.rucherSelectUpdate.description,
-    //         ville: this.rucherService.rucherSelectUpdate.ville,
-    //         codePostal: this.rucherService.rucherSelectUpdate.codePostal,
-    //         validate: ''
-    //     };
-    //     this.rucherForm.setValue(donnée);
-    // }
-
-    rucherSelectInit() {
-        this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
-    }
-
-    deleteApiaryClicked() {
-        this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
-        // Hive init
-        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
-            this.rucherService.rucheService.ruchesAllApiary = ruches;
-            this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
-        })
-    }
-
-    sidebarOpen() {
-        const toggleButton = this.toggleButton;
-        const body = document.getElementsByTagName('body')[0];
-        setTimeout(function () {
-            toggleButton.classList.add('toggled');
-        }, 500);
-        body.classList.add('nav-open');
-
-        this.sidebarVisible = true;
-    }
-    sidebarClose() {
-        const body = document.getElementsByTagName('body')[0];
-        this.toggleButton.classList.remove('toggled');
-        this.sidebarVisible = false;
-        body.classList.remove('nav-open');
-    }
-    sidebarToggle() {
-        const toggleButton = this.toggleButton;
-        const body = document.getElementsByTagName('body')[0];
-        if (this.sidebarVisible === false) {
-            this.sidebarOpen();
-        } else {
-            this.sidebarClose();
-        }
-    }
-    editRucherClicked() {
-        this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
-
-        // Hive init
-        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
-            this.rucherService.rucheService.ruchesAllApiary = ruches;
-            this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
-        })
-
-        const donnée = {
-            name: this.rucherService.rucher.name,
-            description: this.rucherService.rucher.description,
-            ville: this.rucherService.rucher.ville,
-            codePostal: this.rucherService.rucher.codePostal,
-            validate: ''
-        };
-        this.rucherForm.setValue(donnée);
-    }
-
-    editHiveClicked() {
-        // Apiary init
-        this.apiaryUpdateHive = this.rucherService.rucher;
-        this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
-        // Hive init
-        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
-            this.rucherService.rucheService.ruchesAllApiary = ruches;
-            this.ruchesEditHiveForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate.id);
-            if (this.ruchesEditHiveForm.length != 0) {
+            if (this.ruchesEditHiveForm[0] !== undefined) {
                 this.hiveSelectUpdate = this.ruchesEditHiveForm[0];
+
                 // Set value
                 const donnée = {
                     nomRuche: this.hiveSelectUpdate.name,
                     descriptionRuche: this.hiveSelectUpdate.description,
                 };
                 this.newRucheForm.setValue(donnée);
+            } else {
+                this.hiveSelectUpdate = this.ruchesEditHiveForm[0];
+
+                // Set value
+                const donnée = {
+                    nomRuche: '',
+                    descriptionRuche: '',
+                };
+                this.newRucheForm.setValue(donnée);
             }
-        })
+
+            if (this.userService.getJwtReponse().country === "FR") {
+                this.notifier.notify('success', 'Ruche supprimée');
+            } else {
+                this.notifier.notify('success', 'Deleted Hive');
+            }
+        });
     }
 
     deleteHiveClicked() {
@@ -678,58 +783,311 @@ export class NavbarComponent implements OnInit {
         })
     }
 
-    setColor(color: any) {
-        this.sidebarService.setCurrentColor(color);
+
+    // ###############################################################
+    // ###############################################################
+    // ###################      MANAGE NOTES      ###################
+    // ###############################################################
+    // ###############################################################
+
+    // ###################      CREATE      ###################
+    // ###################      EDIT      ###################
+    // ###################      DELETE      ###################
+
+    // ###############################################################
+    // ###############################################################
+    // ###################      MANAGE SENSOR      ###################
+    // ###############################################################
+    // ###############################################################
+
+    initSensorForm() {
+        this.newSensorForm = this.formBuilder.group({
+            'reference': [null, Validators.compose(
+                [Validators.required, Validators.pattern(this.paternRef)]),
+                this.validateSensorNotTaken.bind(this),
+                /* Validators.pattern(this.paternRef)*/
+            ],
+            'description': [null],
+            'checkbox': ['ruche', Validators.required],
+        });
+
+        this.editSensorForm = this.formBuilder.group({
+            'description': [null],
+            'checkbox': ['ruche', Validators.required]
+        });
     }
 
-    getTitle() {
-        let title = this.location.prepareExternalUrl(this.location.path());
-        title = title.split('/').pop();
-        for (let item = 0; item < this.listTitles.length; item++) {
-            if (this.listTitles[item].path === title) {
-                return this.listTitles[item].title;
-            }
-        }
-        return 'Dashboard';
+    // ###################      CREATE      ###################
+
+    getSensorRef() {
+        return this.newSensorForm.get('reference');
+    }
+    getTypeAffectation() {
+        return this.newSensorForm.get('checkbox');
     }
 
-    apiarySubmit() {
-        const formValue = this.rucherForm.value;
-        if (this.photoApiary == null) {
-            this.newApiary.photo = './assets/imageClient/testAccount.png';
+    getApiaryNameById(idApiary: string) {
+        try {
+            return this.rucherService.ruchers.filter(apiary => apiary.id === idApiary)[0];
+        } catch (e) {
+            return this.rucherService.rucher;
         }
-        this.newApiary.id = null;
-        this.newApiary.idUsername = this.userService.getIdUserLoged();
-        this.newApiary.description = formValue.description;
-        this.newApiary.name = formValue.name;
-        this.newApiary.ville = formValue.ville;
-        this.newApiary.codePostal = formValue.codePostal;
-        this.newApiary.createdAt = new Date();
-        this.newApiary.username = this.username;
-        this.initForm();
-        this.rucherService.createRucher(this.newApiary).subscribe((apiary) => {
-            if (this.rucherService.ruchers != null) {
-                this.rucherService.ruchers.push(apiary);
-                this.rucherService.allApiaryAccount.push(apiary);
-            } else {
-                this.rucherService.ruchers = new Array(apiary);
-                this.rucherService.allApiaryAccount.push(apiary);
+    }
+
+    validateSensorNotTaken(control: AbstractControl): Observable<any> {
+        if (!control.valueChanges) {
+            return Observable.of(null);
+        } else {
+            return control.valueChanges
+                .debounceTime(1000)
+                .distinctUntilChanged()
+                .switchMap(value => this.capteurService.checkSensorExist(value))
+                .map(res => {
+                    return res ? null : { sensorCheck: true };
+                })
+                .first();
+        }
+        /*
+        return this.capteurService.checkSensorExist(control.value).map(res => {
+            return res ? null : { sensorCheck: true };
+        });*/
+
+    }
+
+    newSensorInit() {
+        // Apiary init
+        this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
+
+        // Hive init
+        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+            this.rucherService.rucheService.ruchesAllApiary = ruches;
+            this.hivesSensorForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate.id);
+            if (this.hivesSensorForm.length !== 0) {
+                this.hiveSensorSelect = this.hivesSensorForm[0];
             }
-            this.rucherService.saveCurrentApiaryId(apiary.id);
-        }, () => { }, () => {
-            this.rucherService.emitApiarySubject();
-            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-            if(this.rucherService.ruchers.length !== 1){
-                this.desactiveButtonHomePage();
-            }
-            this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
-            this.router.navigate(['dashboard/home']);
+        })
+    }
+
+    onSelectApiaryNewSensorForm() {
+        // init hive
+        this.hivesSensorForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate.id);
+        if (this.hivesSensorForm.length !== 0) {
+            this.hiveSensorSelect = this.hivesSensorForm[0];
+        }
+    }
+
+    createCapteur() {
+        const formValue = this.newSensorForm.value;
+        /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIBLE */
+        const sensorType = document.querySelector('#typeSensor > option').innerHTML;
+        const tempType = this.capteurService.capteur.type;
+        this.capteurService.initCapteur();
+        if (formValue.checkbox !== 'stock') {
+            this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
+            this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+            this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
+            this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
+            const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
+            this.rucherService.rucheService.emitHiveSubject();
+        } else {
+            this.capteurService.capteur.idHive = null;
+            this.capteurService.capteur.idApiary = null;
+            this.capteurService.capteur.apiaryName = null;
+            this.capteurService.capteur.hiveName = null;
+        }
+        this.capteurService.capteur.description = formValue.description;
+        this.capteurService.capteur.username = this.username;
+        this.capteurService.capteur.sensorRef = formValue.reference;
+        this.capteurService.capteur.type = sensorType.trim();
+        this.initSensorForm();
+        this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
             if (this.userService.getJwtReponse().country === "FR") {
-                this.notifier.notify('success', 'Rucher créé');
+                this.notifier.notify('success', 'Capteur créé');
             } else {
-                this.notifier.notify('success', 'Created Apaiary');
+                this.notifier.notify('success', 'Created sensor');
             }
-            this.photoApiary = null;
+            this.capteurService.getUserCapteurs();
+        });
+    }
+
+    // ###################      EDIT      ###################
+
+    onchange(event) {
+        this.editCapteurCheckbox = (event.target.value === 'ruche');
+    }
+
+    editSensorInit() {
+        // Apiary init
+        this.apiaryEditSensorFormOnes = this.rucherService.ruchers.filter(apiary => (this.capteurService.capteursByUser.filter(sensor => sensor.idApiary === apiary.id)).length !== 0);
+        if (this.apiaryEditSensorFormOnes.length !== 0) {
+            this.hideEditSensorForm = false;
+            this.rucherService.rucherSelectUpdate = this.apiaryEditSensorFormOnes[0];
+
+            // Hive init
+            this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+                this.rucherService.rucheService.ruchesAllApiary = ruches;
+                this.hivesEditSensorFormOne = this.rucheService.ruchesAllApiary.filter(hive => (hive.idApiary === this.rucherService.rucherSelectUpdate.id) && (this.capteurService.capteursByUser.filter(sensor => sensor.idHive === hive.id).length !== 0));
+                if (this.hivesEditSensorFormOne.length != 0) {
+                    this.hiveSelectUpdate = this.hivesEditSensorFormOne[0];
+                    // Sensor init
+                    this.sensorsEditSensorForm = this.capteurService.capteursByUser.filter(sensor => sensor.idHive === this.hiveSelectUpdate.id);
+                    if (this.sensorsEditSensorForm.length !== 0) {
+                        this.sensorSelectUpdate = this.sensorsEditSensorForm[0];
+                        // Set the right infos below
+                        this.capteurService.capteur = this.sensorSelectUpdate;
+                        this.editCapteurCheckbox = !(this.capteurService.capteur.idHive == null || this.capteurService.capteur.idApiary == null);
+                        /* Assigne les données du capteurs au formulaire pour modification*/
+                        const donnee = {
+                            checkbox: this.editCapteurCheckbox ? 'ruche' : 'stock',
+                            description: this.capteurService.capteur.description,
+                        };
+                        this.editSensorForm.setValue(donnee);
+                        if (this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
+                            this.rucherService.findRucherById(this.capteurService.capteur.idApiary, (apiary) => {
+                                this.apiarySensorSelect = apiary[0];
+                                this.hivesEditSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === apiary[0].id);
+                            });
+                            this.hiveSensorSelect = this.hivesEditSensorForm.filter(hive => hive.id === this.capteurService.capteur.idHive)[0];
+                        }
+                    }
+                }
+            })
+        } else {
+            this.hideEditSensorForm = true;
+        }
+
+    }
+
+    onSelectApiaryEditSensorForm() {
+        this.hivesEditSensorFormOne = this.rucheService.ruchesAllApiary.filter(hive => (hive.idApiary === this.rucherService.rucherSelectUpdate.id) && (this.capteurService.capteursByUser.filter(sensor => sensor.idHive === hive.id).length !== 0));
+        if (this.hivesEditSensorFormOne.length != 0) {
+            this.hiveSelectUpdate = this.hivesEditSensorFormOne[0];
+            this.sensorsEditSensorForm = this.capteurService.capteursByUser.filter(sensor => sensor.idHive === this.hiveSelectUpdate.id);
+            if (this.sensorsEditSensorForm.length !== 0) {
+                this.sensorSelectUpdate = this.sensorsEditSensorForm[0];
+                // Set the right infos below
+                this.capteurService.capteur = this.sensorSelectUpdate;
+                this.editCapteurCheckbox = !(this.capteurService.capteur.idHive == null || this.capteurService.capteur.idApiary == null);
+                /* Assigne les données du capteurs au formulaire pour modification*/
+                const donnee = {
+                    checkbox: this.editCapteurCheckbox ? 'ruche' : 'stock',
+                    description: this.capteurService.capteur.description,
+                };
+                this.editSensorForm.setValue(donnee);
+                if (this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
+                    this.rucherService.findRucherById(this.capteurService.capteur.idApiary, (apiary) => {
+                        this.apiarySensorSelect = apiary[0];
+                        this.hivesEditSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === apiary[0].id);
+                    });
+                    this.hiveSensorSelect = this.hivesEditSensorForm.filter(hive => hive.id === this.capteurService.capteur.idHive)[0];
+                }
+            }
+        }
+    }
+
+    onSelectHiveEditSensorForm() {
+        this.sensorsEditSensorForm = this.capteurService.capteursByUser.filter(sensor => sensor.idHive === this.hiveSelectUpdate.id);
+        if (this.sensorsEditSensorForm.length !== 0) {
+            this.sensorSelectUpdate = this.sensorsEditSensorForm[0];
+            // Set the right infos below
+            this.capteurService.capteur = this.sensorSelectUpdate;
+            this.editCapteurCheckbox = !(this.capteurService.capteur.idHive == null || this.capteurService.capteur.idApiary == null);
+            /* Assigne les données du capteurs au formulaire pour modification*/
+            const donnee = {
+                checkbox: this.editCapteurCheckbox ? 'ruche' : 'stock',
+                description: this.capteurService.capteur.description,
+            };
+            this.editSensorForm.setValue(donnee);
+            if (this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
+                this.rucherService.findRucherById(this.capteurService.capteur.idApiary, (apiary) => {
+                    this.apiarySensorSelect = apiary[0];
+                    this.hivesEditSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === apiary[0].id);
+                });
+                this.hiveSensorSelect = this.hivesEditSensorForm.filter(hive => hive.id === this.capteurService.capteur.idHive)[0];
+            }
+        }
+    }
+
+    onSelectSensorEditSensorForm() {
+        // Set the right infos below
+        this.capteurService.capteur = this.sensorSelectUpdate;
+        this.editCapteurCheckbox = !(this.capteurService.capteur.idHive == null || this.capteurService.capteur.idApiary == null);
+        /* Assigne les données du capteurs au formulaire pour modification*/
+        const donnee = {
+            checkbox: this.editCapteurCheckbox ? 'ruche' : 'stock',
+            description: this.capteurService.capteur.description,
+        };
+        this.editSensorForm.setValue(donnee);
+        if (this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
+            this.rucherService.findRucherById(this.capteurService.capteur.idApiary, (apiary) => {
+                this.apiarySensorSelect = apiary[0];
+                this.hivesEditSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === apiary[0].id);
+            });
+            this.hiveSensorSelect = this.hivesEditSensorForm.filter(hive => hive.id === this.capteurService.capteur.idHive)[0];
+        }
+    }
+
+    onSelectApiary() {
+    this.hivesEditSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.apiarySensorSelect.id);
+    if(this.hivesEditSensorForm.length !== 0){
+        this.hiveSensorSelect = this.hivesEditSensorForm[0];
+    }
+  }
+
+    updateSensor() {
+        const formValue = this.editSensorForm.value;
+        const idTemp = this.capteurService.capteur.id;
+        if (formValue.checkbox !== 'stock') {
+            this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
+            this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+            this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
+            this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
+            const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
+            this.rucherService.rucheService.emitHiveSubject();
+        } else {
+            this.capteurService.capteur.idHive = null;
+            this.capteurService.capteur.idApiary = null;
+            this.capteurService.capteur.apiaryName = null;
+            this.capteurService.capteur.hiveName = null;
+        }
+        this.capteurService.capteur.description = formValue.description;
+        this.capteurService.capteur.id = idTemp;
+        this.initSensorForm();
+        this.editSensorInit();
+        this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
+            let indexSensorSelect = this.capteurService.capteursByUser.map(sensor => sensor.id).indexOf(this.capteurService.capteur.id);
+            this.capteurService.capteursByUser[indexSensorSelect] = this.capteurService.capteur;
+            this.capteurService.emitSensorSubject();
+            if(this.userService.getJwtReponse().country === "FR"){
+                this.notifier.notify('success', 'Capteur mis à jour');
+              }else{
+                this.notifier.notify('success', 'Updated sensor');
+              }
+        });
+    }
+
+    // ###################      DELETE      ###################
+
+    deleteSensor() {
+        this.capteurService.deleteCapteur(this.capteurService.capteur).subscribe(() => { }, () => { }, () => {
+            if (this.capteurService.capteur.idHive) {
+                const index = this.rucherService.rucheService.ruchesAllApiary.map(hive => hive.id).indexOf(this.capteurService.capteur.idHive);
+                const tempHive = this.rucherService.rucheService.ruchesAllApiary[index];
+                if (this.capteurService.capteursByUser.filter(sensor => sensor.idHive === tempHive.id).length <= 1) {
+                    this.rucherService.rucheService.ruchesAllApiary[index].sensor = false;
+                    this.rucherService.rucheService.emitHiveSubject();
+                }
+            }
+            let index = this.capteurService.capteursByUser.map(sensor => sensor.id).indexOf(this.capteurService.capteur.id);
+            this.capteurService.capteursByUser.splice(index, 1);
+            this.capteurService.emitSensorSubject();
+            this.initSensorForm();
+            this.editSensorInit();
+            if(this.userService.getJwtReponse().country === "FR"){
+                this.notifier.notify('success', 'Capteur supprimé');
+              }else{
+                this.notifier.notify('success', 'Deleted sensor');
+              }
         });
     }
 }
