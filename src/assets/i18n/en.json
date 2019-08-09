@@ -259,7 +259,12 @@
             "SAVE" : "Save",
             "EDIT" : "Edit sensor",
             "SENSOR_EDIT" : "Sensor edit",
-            "SUCCES" : "successfull !"
+            "SUCCES" : "successfull !",
+            "EDITSELECT" : "Select the sensor to edit",
+            "SENSOR" : "Sensor",
+            "EDITSENSOR" : "Edit",
+            "OF" : "of",
+            "NOSENSOR" : "You don't have sensor to edit."
         }
     },
     "FEEDBACK" : {

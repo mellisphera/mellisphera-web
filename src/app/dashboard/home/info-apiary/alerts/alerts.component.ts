@@ -256,7 +256,7 @@ export class AlertsComponent implements OnInit {
                 type: 'path',
                 z2: 1000 ,
                 shape: {
-                  pathData: this.alertsService.getPicto('Error'),
+                  pathData: this.alertsService.getPicto(params.seriesName),
                   // tabPos[Nombre d'alertes dans le jour][x ou y][rang de la prochaine alerte a traiter]
                   x: -0.35 * cellWidth + this.tabPos[nbAlertsOfThisDay][0][rangAlertsOfThisDay]*cellWidth,
                   y: -0.35 * cellHeight + this.tabPos[nbAlertsOfThisDay][1][rangAlertsOfThisDay]*cellHeight,
@@ -265,7 +265,7 @@ export class AlertsComponent implements OnInit {
                 },
                 position: [cellPoint[0], cellPoint[1]],
                 style : {
-                  fill : 'black'
+                  fill : this.alertsService.getColor(params.seriesName)
                 }
             }
             }

@@ -1042,7 +1042,7 @@ export class DailyManagerService {
               img = '<img style={S} src={I} />';
               img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/hiveObs.svg' : './assets/picto_mellicharts/hiveAct.svg'))
             } else {
-              img = '<img style={S} src=./assets/pictos_alerts/' + _singleData.type + '.svg />';
+              img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
             }
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
             return {
