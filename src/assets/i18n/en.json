@@ -72,7 +72,7 @@
             "FILE" : "Select File",
             "DROP" : "Base drop zone",
             "CLOSE" : "Close",
-            "SAVE" : "Save Apiary",
+            "SAVE" : "Save",
             "CANCEL" : "Cancel",
             "CONFIRM" : "Confirm",
             "CREATE" : "New apiary",
@@ -147,7 +147,8 @@
         "SENSOR" : "Sensor",
         "FORM" : {
             "NEW" : "New hive",
-            "EDIT" : "Edit hive",
+            "EDIT" : "Save",
+            "EDITHIVE" : "Edit hive",
             "DELETE" : "Delete hive",
             "DELETE_ASK" : "Delete hive ?",
             "CANCEL" : "Cancel",
@@ -175,15 +176,17 @@
             "TYPES" : "Types",
             "ACTIONS" : "Edit",
             "OBSERVATION" : "Observation",
+            "NONOTES" : "There is no notes for this hive.",
             "ACTION" : "Action",
             "FORM" : {
                 "NEW" : "New",
-                "NEW_NOTES" : "New note",
+                "NEW_NOTES" : "New note",  
                 "DATE" : "Date Time : ",
                 "CREATE_OBS" : "Create observation",
                 "CREATE_ACT" : "Create action",
                 "CLOSE" : "Close",
-                "EDIT" : "Edit note",
+                "EDIT" : "Save",
+                "EDITNOTE" : "Edit note",
                 "DELETE" : "Delete note",
                 "DELETE_ASK" : "Delete note ?",
                 "CANCEL" : "Cancel",
@@ -191,6 +194,9 @@
                 "NOTES" : "Note : ",
                 "TYPE" : "Type"
             }
+        },
+        "SENSORS" : {
+            "NOSENSORS" : "There is no sensors for this hive."
         },
         "STOCK" : {
             "NO_DATA" : "No data :",
@@ -257,7 +263,8 @@
             "CLOSE" : "Close",
             "APIARY" : "Apiary",
             "SAVE" : "Save",
-            "EDIT" : "Edit sensor",
+            "EDIT" : "Save",
+            "EDITSENSORTITLE" : "Edit sensor",
             "SENSOR_EDIT" : "Sensor edit",
             "SUCCES" : "successfull !",
             "EDITSELECT" : "Select the sensor to edit",

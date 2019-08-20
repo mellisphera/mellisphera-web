@@ -28,6 +28,8 @@ import { RucheInterface } from '../../../_model/ruche';
 import { NotifierService } from 'angular-notifier';
 import { CONFIG } from '../../../../constants/config';
 import { TranslateService } from '@ngx-translate/core';
+import { MyNotifierService } from '../../service/my-notifier.service';
+import { NotifList } from '../../../../constants/notify';
 
 
 @Component({
@@ -74,6 +76,7 @@ export class ManageApiarysComponent implements OnInit, OnDestroy {
     public rucheService: RucheService,
     private authService: AuthService,
     private notifyService: NotifierService,
+    private myNotifer: MyNotifierService,
     private element: ElementRef,
     public translateService: TranslateService) {
 
@@ -171,56 +174,64 @@ editApiaryClicked(apiary : RucherModel) {
 
 //Edit Apiary
 onEditApiary() {
-  const formValue = this.rucherForm.value;
-  const index = this.rucherService.ruchers.indexOf(this.rucherService.rucherSelectUpdate);
-  this.apiaryUpdate = formValue;
-  this.apiaryUpdate.id = this.rucherService.rucherSelectUpdate.id;
-  if (this.photoApiary === null || this.photoApiary === undefined) {
-      this.apiaryUpdate.photo = this.rucherService.rucherSelectUpdate.photo
-  } else {
-      this.apiaryUpdate.photo = this.editPhotoApiary;
-  }
-  this.apiaryUpdate.username = this.rucherService.rucherSelectUpdate.username;
-  this.rucherService.updateRucher(this.rucherService.rucherSelectUpdate.id, this.apiaryUpdate).subscribe(
-      () => { }, () => { }, () => {
-          this.rucherService.ruchers[index] = this.apiaryUpdate;
-          this.rucherService.emitApiarySubject();
-          this.photoApiary = null;
-          this.editPhotoApiary = null;
-          this.rucherService.rucherSelectUpdate = this.apiaryUpdate;
-          if(this.rucherService.rucherSelectUpdate.id === this.rucherService.getCurrentApiary()){
-            this.rucherService.rucher = this.apiaryUpdate;
-        }
-          if(this.userService.getJwtReponse().country === "FR"){
-              this.notify.notify('success', 'Rucher mis à jour');
-          }else{
-              this.notify.notify('success', 'Updated Apiary');
+  if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.idUsername)) {
+    const formValue = this.rucherForm.value;
+    const index = this.rucherService.ruchers.indexOf(this.rucherService.rucherSelectUpdate);
+    this.apiaryUpdate = formValue;
+    this.apiaryUpdate.id = this.rucherService.rucherSelectUpdate.id;
+    if (this.photoApiary === null || this.photoApiary === undefined) {
+        this.apiaryUpdate.photo = this.rucherService.rucherSelectUpdate.photo
+    } else {
+        this.apiaryUpdate.photo = this.editPhotoApiary;
+    }
+    this.apiaryUpdate.username = this.rucherService.rucherSelectUpdate.username;
+    this.rucherService.updateRucher(this.rucherService.rucherSelectUpdate.id, this.apiaryUpdate).subscribe(
+        () => { }, () => { }, () => {
+            this.rucherService.ruchers[index] = this.apiaryUpdate;
+            this.rucherService.emitApiarySubject();
+            this.photoApiary = null;
+            this.editPhotoApiary = null;
+            this.rucherService.rucherSelectUpdate = this.apiaryUpdate;
+            if(this.rucherService.rucherSelectUpdate.id === this.rucherService.getCurrentApiary()){
+              this.rucherService.rucher = this.apiaryUpdate;
           }
-          this.initForm();
-      }
-  );
+            if(this.userService.getJwtReponse().country === "FR"){
+                this.notify.notify('success', 'Rucher mis à jour');
+            }else{
+                this.notify.notify('success', 'Updated Apiary');
+            }
+            this.initForm();
+        }
+    );
+  } else {
+    this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+  }
 }
 
 // delete apiary
 deleteApiary(apiary : RucherModel) {
-  this.rucherService.deleteRucher(apiary).subscribe(() => { }, () => { }, () => {
-      const index = this.rucherService.ruchers.indexOf(apiary);
-      this.rucherService.ruchers.splice(index, 1);
-      this.rucherService.emitApiarySubject();
-      if(this.userService.getJwtReponse().country === "FR"){
-          this.notify.notify('success', 'Rucher supprimé');
-      }else{
-          this.notify.notify('success', 'Deleted Apaiary');
-      }
-      if ((this.rucherService.ruchers.length > 0) && (apiary.id === this.rucherService.getCurrentApiary())) {
-          this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
-          this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
-          this.rucheService.getHivesByApiary(this.rucherService.rucher.id);
-      }
-      if (this.rucherService.ruchers.length < 1) {
-          this.rucherService.initRucher();
-      }
-  });
+  if (this.userService.checkWriteObject(apiary.idUsername)) {
+    this.rucherService.deleteRucher(apiary).subscribe(() => { }, () => { }, () => {
+        const index = this.rucherService.ruchers.indexOf(apiary);
+        this.rucherService.ruchers.splice(index, 1);
+        this.rucherService.emitApiarySubject();
+        if(this.userService.getJwtReponse().country === "FR"){
+            this.notify.notify('success', 'Rucher supprimé');
+        }else{
+            this.notify.notify('success', 'Deleted Apaiary');
+        }
+        if ((this.rucherService.ruchers.length > 0) && (apiary.id === this.rucherService.getCurrentApiary())) {
+            this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
+            this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
+            this.rucheService.getHivesByApiary(this.rucherService.rucher.id);
+        }
+        if (this.rucherService.ruchers.length < 1) {
+            this.rucherService.initRucher();
+        }
+    });
+  } else {
+    this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+  }
 }
 
   receiveMessage($event) {

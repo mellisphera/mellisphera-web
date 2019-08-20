@@ -39,7 +39,7 @@ export class HealthHiveComponent {
           tooltip: {
               trigger: 'item',
               formatter: (params) => {
-                  return params.marker + unitService.getDailyDate(params.data[0]) + '<br/>' + params.data[1] + ' %';
+                  return params.marker + unitService.getDailyDate(params.data[0]) + '<br/>' + this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])) + ' %';
               }
           },
           toolbox: {

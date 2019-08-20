@@ -18,6 +18,8 @@ import { NotifierService } from 'angular-notifier';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RucheInterface } from '../../../../_model/ruche';
 import { UserloggedService } from '../../../../userlogged.service';
+import { MyNotifierService } from '../../../service/my-notifier.service';
+import { NotifList } from '../../../../../constants/notify';
 
 @Component({
   selector: 'app-notes',
@@ -50,7 +52,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     public observationService: ObservationService,
     private formBuilder: FormBuilder,
     private userService: UserloggedService,
-    private renderer: Renderer2) {
+    private renderer: Renderer2,
+    private myNotifer: MyNotifierService) {
       this.type = 'ApiaryObs';
       this.message = '';
       this.typeToMv = 0;
@@ -106,19 +109,23 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @memberof ApiaryNotesComponent
    */
   mvToActions() {
-    this.newObs.type = this.typeToMv === 0 ? 'HiveObs' : 'HiveAct';
-    this.newObs.idApiary = null;
-    this.newObs.idHive = this.hiveToMv.id;
-    this.newObs.idLHive = new Array(this.hiveToMv.id);
-    const index = this.observationService.observationsApiary.indexOf(this.newObs);
-    this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
-      this.observationService.observationsApiary.splice(index, 1);
-      if(this.userService.getJwtReponse().country === "FR"){
-        this.notify.notify('success', 'Note déplacée ' + this.hiveToMv.name);
-      }else{
-        this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
-      }
-    });
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      this.newObs.type = this.typeToMv === 0 ? 'HiveObs' : 'HiveAct';
+      this.newObs.idApiary = null;
+      this.newObs.idHive = this.hiveToMv.id;
+      this.newObs.idLHive = new Array(this.hiveToMv.id);
+      const index = this.observationService.observationsApiary.indexOf(this.newObs);
+      this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
+        this.observationService.observationsApiary.splice(index, 1);
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notify.notify('success', 'Note déplacée ' + this.hiveToMv.name);
+        }else{
+          this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
+        }
+      });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+    }
   }
   /**
    *
@@ -126,24 +133,28 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @memberof ApiaryNotesComponent
    */
   createObservation() {
-    const formValue = this.observationForm.value;
-    this.newObs = formValue;
-    this.newObs.idApiary = this.rucherService.rucher.id;
-    this.newObs.type = 'ApiaryObs';
-    console.log(this.newObs);
-    this.initForm();
-    this.observationService.createObservation(this.newObs).subscribe((obs) => {
-      this.observationService.observationsApiary.push(obs);
-      this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      const formValue = this.observationForm.value;
+      this.newObs = formValue;
+      this.newObs.idApiary = this.rucherService.rucher.id;
+      this.newObs.type = 'ApiaryObs';
+      this.newObs.idUsername = this.userService.getIdUserLoged();
+      this.initForm();
+      this.observationService.createObservation(this.newObs).subscribe((obs) => {
+        this.observationService.observationsApiary.push(obs);
+        this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
+      }, () => { }, () => {
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notify.notify('success', 'Note créée');
+        }else{
+          this.notify.notify('success', 'Created Note');
+        }
       });
-    }, () => { }, () => {
-      if(this.userService.getJwtReponse().country === "FR"){
-        this.notify.notify('success', 'Note créée');
-      }else{
-        this.notify.notify('success', 'Created Note');
-      }
-    });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+    }
   }
   /**
    *
@@ -151,18 +162,22 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @memberof ApiaryNotesComponent
    */
   onEditObservation() {
-    const formValue = this.observationForm.value;
-    this.newObs.sentence = formValue.sentence;
-    this.newObs.date = formValue.date;
-    const index = this.observationService.observationsApiary.indexOf(this.newObs);
-    this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
-      this.observationService.observationsApiary[index] = this.newObs;
-      if(this.userService.getJwtReponse().country === "FR"){
-        this.notify.notify('success', 'Note mis à jour');
-      }else{
-        this.notify.notify('success', 'Updated Note');
-      }
-    });
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      const formValue = this.observationForm.value;
+      this.newObs.sentence = formValue.sentence;
+      this.newObs.date = formValue.date;
+      const index = this.observationService.observationsApiary.indexOf(this.newObs);
+      this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
+        this.observationService.observationsApiary[index] = this.newObs;
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notify.notify('success', 'Note mis à jour');
+        }else{
+          this.notify.notify('success', 'Updated Note');
+        }
+      });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+    }
   }
   /**
    *
@@ -172,14 +187,18 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @memberof ApiaryNotesComponent
    */
   deleteObs(index: number, obsApiary: Observation) {
-    this.observationService.deleteObservation(obsApiary.id).subscribe(() => { }, () => { }, () => {
-      this.observationService.observationsApiary.splice(index, 1);
-      if(this.userService.getJwtReponse().country === "FR"){
-        this.notify.notify('success', 'Note supprimée');
-      }else{
-        this.notify.notify('success', 'Deleted Note');
-      }
-    });
+    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      this.observationService.deleteObservation(obsApiary.id).subscribe(() => { }, () => { }, () => {
+        this.observationService.observationsApiary.splice(index, 1);
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notify.notify('success', 'Note supprimée');
+        }else{
+          this.notify.notify('success', 'Deleted Note');
+        }
+      });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+    }
   }
   /**
    *

@@ -28,6 +28,8 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/first';
 import { NotifierService } from 'angular-notifier';
+import { MyNotifierService } from '../../service/my-notifier.service';
+import { NotifList } from '../../../../constants/notify';
 
 /**
  *@author mickael
@@ -69,7 +71,8 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
       private formBuilder: FormBuilder,
       public rucherService: RucherService,
       public capteurService: CapteurService,
-      public notifierService: NotifierService) {
+      public notifierService: NotifierService,
+      private myNotifer: MyNotifierService) {
       this.paternRef = /[4][0-3]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9]|[a-z])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
       this.username = userService.getUser();
       this.notifier = notifierService;
@@ -166,37 +169,41 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
       this.editCapteurCheckbox = (event.target.value === 'ruche');
   }
   createCapteur() {
-      const formValue = this.newCapteurForm.value;
-      /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIBLE */
-      const sensorType = document.querySelector('#typeSensor > option').innerHTML;
-      const tempType = this.capteurService.capteur.type;
-      this.capteurService.initCapteur();
-      if (formValue.checkbox !== 'stock') {
-          this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
-          this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
-          this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
-          this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
-          const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
-          this.rucherService.rucheService.emitHiveSubject();
-      } else {
-          this.capteurService.capteur.idHive = null;
-          this.capteurService.capteur.idApiary = null;
-          this.capteurService.capteur.apiaryName = null;
-          this.capteurService.capteur.hiveName = null;
-      }
-      this.capteurService.capteur.description = formValue.description;
-      this.capteurService.capteur.username = this.username;
-      this.capteurService.capteur.sensorRef = formValue.reference;
-      this.capteurService.capteur.type = sensorType.trim();
-      this.initForm();
-      this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
-          if(this.userService.getJwtReponse().country === "FR"){
-              this.notifier.notify('success', 'Capteur créé');
-            }else{
-              this.notifier.notify('success', 'Created sensor');
-            }
-          this.capteurService.getUserCapteurs();
-      });
+    if (this.userService.checkWriteObject(this.apiarySensorForm.idUsername)) {
+        const formValue = this.newCapteurForm.value;
+        /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIBLE */
+        const sensorType = document.querySelector('#typeSensor > option').innerHTML;
+        const tempType = this.capteurService.capteur.type;
+        this.capteurService.initCapteur();
+        if (formValue.checkbox !== 'stock') {
+            this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
+            this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+            this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
+            this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
+            const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
+            this.rucherService.rucheService.emitHiveSubject();
+        } else {
+            this.capteurService.capteur.idHive = null;
+            this.capteurService.capteur.idApiary = null;
+            this.capteurService.capteur.apiaryName = null;
+            this.capteurService.capteur.hiveName = null;
+        }
+        this.capteurService.capteur.description = formValue.description;
+        this.capteurService.capteur.username = this.username;
+        this.capteurService.capteur.sensorRef = formValue.reference;
+        this.capteurService.capteur.type = sensorType.trim();
+        this.initForm();
+        this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
+            if(this.userService.getJwtReponse().country === "FR"){
+                this.notifier.notify('success', 'Capteur créé');
+                }else{
+                this.notifier.notify('success', 'Created sensor');
+                }
+            this.capteurService.getUserCapteurs();
+        });
+    } else {
+        this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+    }
   }
   getTypeAffectation() {
       return this.newCapteurForm.get('checkbox');

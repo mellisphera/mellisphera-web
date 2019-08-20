@@ -183,7 +183,7 @@ export class AlertsService {
 
         // Add the right picto for all alerts.
         for(i = 0; i < listAlerts.length; i++){
-            listAlerts[i].picto = "./assets/pictos_alerts/"+listAlerts[i].type+".svg";
+            listAlerts[i].picto = "./assets/pictos_alerts/newIcones/"+listAlerts[i].type+".svg";
         }
         return listAlerts;
     }

@@ -421,14 +421,29 @@ export class DailyRecordService {
 
     public getPourcentByHive(idHive: string): any {
         const selectHive = this.dailyRecords.filter(elt => elt.idHive === idHive)[0];
-        return selectHive !== undefined ? selectHive.brood + ' %' : null;
-
+        if(selectHive !== undefined){
+            return selectHive.brood.toString().split('.')[0] + '%';
+        }else{
+            return null
+        }
     }
 
     // get pourcent by hive for the current day, day -3 or day -7.
     public getPourcentByHiveDayD3D7(idHive: string, index : number): any {
         const selectHive = this.dailyRecordsDayD3D7[index].filter(elt => elt.idHive === idHive)[0];
-        return selectHive !== undefined ? selectHive.brood + ' %' : null;
+        if(selectHive !== undefined){
+            if((selectHive.brood.toString().split('.')[1] !== undefined )&& (selectHive.brood.toString().split('.')[1][0] !== '0')){
+                if (this.user.getJwtReponse().country === "FR"){
+                    return selectHive.brood.toString().split('.')[0] + ',' + selectHive.brood.toString().split('.')[1][0] + '%';
+                }else{
+                    return selectHive.brood.toString().split('.')[0] + '.' + selectHive.brood.toString().split('.')[1][0] + '%';
+                }
+            }else{
+                return selectHive.brood.toString().split('.')[0] + '%';
+            }
+        }else{
+            return null
+        }
     }
 
     /**
