@@ -985,7 +985,7 @@ export class DailyManagerService {
         visualMap.type = 'continuous';
         //visualMap.top = 15;
         visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
-        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 25 : 90;
+        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 110;
         visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
       default:

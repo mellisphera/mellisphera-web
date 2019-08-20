@@ -140,7 +140,7 @@ nav[role=admin-navigation] {
 .loading{
     cursor: wait !important;
 }
-@media screen and (max-width:1400px) {
+@media screen and (max-width:1300px) {
     #apiary-group {
         position: relative;
         width: 100%;
@@ -152,7 +152,7 @@ nav[role=admin-navigation] {
         width: 100% !important;
     }
 }
-@media screen and (max-width:1300px) {
+@media screen and (max-width:1200px) {
     #input-date{
         width: 100%;
     }

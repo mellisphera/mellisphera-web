@@ -39,7 +39,7 @@ export class AdminService {
     private loadingService: LoadingService) {
       if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
         this.rangeStart = new Date();
-        this.rangeStart.setHours(this.rangeStart.getHours() - 3);
+        this.rangeStart.setDate(this.rangeStart.getDate() - 3);
         this.allUsers =  this.allSensors = this.lastConnection = [];
         this.getAllApiary();
         this.getLastConnection(this.rangeStart);
