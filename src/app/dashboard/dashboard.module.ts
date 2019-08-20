@@ -49,6 +49,7 @@ import { ManageSensorsComponent } from './manage/manage-sensors/manage-sensors.c
 import { RucherService } from './service/api/rucher.service';
 import { RucheService } from './service/api/ruche.service';
 import { DailyRecordService } from './service/api/dailyRecordService';
+import { ManageNotesComponent } from './manage/manage-notes/manage-notes.component';
 
 
 @NgModule({
@@ -100,6 +101,7 @@ import { DailyRecordService } from './service/api/dailyRecordService';
     ManageHivesComponent,
     ManageApiarysComponent,
     ManageSensorsComponent,
+    ManageNotesComponent,
   ]
 })
 export class DashboardModule { }

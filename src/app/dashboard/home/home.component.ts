@@ -293,7 +293,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     // For the hive alerts
     this.checkIfInfoHiveComponent().then(status => {
       this.infoHiveComponent.alertsHiveComponent.initCalendar(ruche);
-      this.infoHiveComponent.alertsHiveComponent.readAllHiveAlerts(ruche);
+      if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+        this.infoHiveComponent.alertsHiveComponent.readAllHiveAlerts(ruche);
+      }
     }).catch(err => {
       console.log(err);
     })
@@ -357,19 +359,21 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       let rucheUpdate = Object.assign({}, ruche);
       rucheUpdate.hivePosX = '' + this.position.x;
       rucheUpdate.hivePosY = '' + this.position.y;
-      this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
-        () => { }, () => { }, () => {
-          // ruche.hivePosX = rucheUpdate.hivePosX;
-          // ruche.hivePosY = rucheUpdate.hivePosY;
-          // document.getElementById(id.toString()).style.transform = 'translate(0px, 0px)';
-          // this.firstValue = true;
-          // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[0]);
-          // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2));
-          this.position.x = 0;
-          this.position.y = 0;
-          this.hiveUpdateForDestroyPage.push(rucheUpdate);
-        }
-      );
+      if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+        this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
+          () => { }, () => { }, () => {
+            // ruche.hivePosX = rucheUpdate.hivePosX;
+            // ruche.hivePosY = rucheUpdate.hivePosY;
+            // document.getElementById(id.toString()).style.transform = 'translate(0px, 0px)';
+            // this.firstValue = true;
+            // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[0]);
+            // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2));
+            this.position.x = 0;
+            this.position.y = 0;
+            this.hiveUpdateForDestroyPage.push(rucheUpdate);
+          }
+        );
+      }
     }
   }
 

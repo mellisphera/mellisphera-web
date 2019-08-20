@@ -58,4 +58,9 @@ th{
     margin-top: -3px;
     vertical-align: center;
 }
+
+.delete{
+    position: absolute;
+    left: 15px;
+}
   

@@ -73,7 +73,8 @@ limitations under the License. -->
               </button> -->
             </li>
             <!-- <li>
-              <a>
+              <a routerLink="./manage-notes" data-toggle="tooltip" id="notes" data-placement="top"
+                title="{{ 'SIDEBAR.NOTES' | translate }}">
                 <img src="./assets/icons/ui/notes.png" style="width:50px;margin-left:-5px;" />
               </a> -->
             <!-- NEW NOTES -->
@@ -341,12 +342,12 @@ limitations under the License. -->
                </div>-->
 
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" value="Save Apiary"
-              (click)="onEditerRucher()" [disabled]="!rucherForm.valid">{{ 'NAVBAR.CRUD.SAVE' | translate }}</button>
-            <button type="button" class="btn btn-warning btn-primary" data-toggle="tooltip" data-html="true"
+              <button type="button" class="btn btn-warning btn-primary delete" data-toggle="tooltip" data-html="true"
               mwlConfirmationPopover popoverTitle="{{messageOrphanHives}}" placement="bottom"
               confirmText="{{ 'NAVBAR.CRUD.CONFIRM' | translate }}" cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}"
               (confirm)="deleteRucher()">{{ 'NAVBAR.DELETE_APIARY2' | translate }}</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" value="Save Apiary"
+              (click)="onEditerRucher()" [disabled]="!rucherForm.valid">{{ 'NAVBAR.CRUD.SAVE' | translate }}</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal"
               (click)="initForm()">{{ 'NAVBAR.CRUD.CLOSE' | translate }}</button>
           </div>
@@ -488,12 +489,12 @@ limitations under the License. -->
             <textarea formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditeRuche()"
-              [disabled]="!newRucheForm.valid">{{ 'HIVES.FORM.EDIT' | translate}}</button>
-            <button type="button" class="btn btn-warning btn-primary" data-toggle="tooltip" data-html="true"
+              <button type="button" class="btn btn-warning btn-primary delete" data-toggle="tooltip" data-html="true"
               mwlConfirmationPopover popoverTitle="{{ 'NAVBAR.CRUD.DELETEHIVEASK' | translate }}" placement="bottom"
               confirmText="{{ 'NAVBAR.CRUD.CONFIRM' | translate }}" cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}"
               (confirm)="deleteHive()">{{ 'NAVBAR.CRUD.DELETEHIVE' | translate }}</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditeRuche()"
+              [disabled]="!newRucheForm.valid">{{ 'HIVES.FORM.EDIT' | translate}}</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal"
               (click)="initHiveForm()">{{ 'HIVES.FORM.CLOSE' | translate}}</button>
           </div>
@@ -748,16 +749,16 @@ limitations under the License. -->
           </ng-container>
           <div class="modal-footer">
             <ng-container *ngIf="!hideEditSensorForm">
-              <button type="button" id="editVal" class="btn btn-primary" (click)="updateSensor()"
-                [disabled]="!editSensorForm.valid">
-                {{ 'CAPTEUR.FORM.EDIT' | translate}}</button>
-              <button type="button" class="btn btn-warning"
+                <button type="button" class="btn btn-warning delete"
                 mwlConfirmationPopover popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
                 confirmText="{{ 'CAPTEUR.FORM.CONFIRM' | translate}}"
                 cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}" placement="top"
                 (confirm)="deleteSensor()">
                 {{ 'CAPTEUR.FORM.DELETE' | translate}}
               </button>
+              <button type="button" id="editVal" class="btn btn-primary" (click)="updateSensor()"
+                [disabled]="!editSensorForm.valid">
+                {{ 'CAPTEUR.FORM.EDIT' | translate}}</button>
             </ng-container>
             <button type="button" class="btn btn-secondary"
               data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>

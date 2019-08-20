@@ -104,12 +104,12 @@ limitations under the License. -->
             <div class="panel panel-info ">
                 <div class="panel-heading ">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                             <b>Stock </b>
                         </a>
                     </h4>
                 </div>
-                <div id="collapseOne" class="panel-collapse collapse in">
+                <div id="collapseTwo" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <!--                                         <div class="form-group row">
                                   <div class="col-xs-2">
@@ -313,7 +313,7 @@ limitations under the License. -->
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h5 class="modal-title text-center" id="exampleModalLabel">
-                    <h3>{{ 'CAPTEUR.FORM.EDIT' | translate}}</h3>
+                    <h3>{{ 'CAPTEUR.FORM.EDITSENSORTITLE' | translate}}</h3>
                 </h5>
             </div>
             <div class="modal-body">
@@ -365,7 +365,7 @@ limitations under the License. -->
                     <div class="modal-footer">
                         <button type="button" id="editVal" class="btn btn-primary" data-dismiss="modal"
                             (click)="updateCapteur()" [disabled]="!editCapteurForm.valid">
-                            {{ 'CAPTEUR.FORM.SAVE' | translate}}</button>
+                            {{ 'CAPTEUR.FORM.EDIT' | translate}}</button>
                         <button type="button" class="btn btn-secondary"
                             data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>
                     </div>

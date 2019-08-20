@@ -29,6 +29,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/first';
 import { NotifierService } from 'angular-notifier';
 import { RucheService } from '../../../service/api/ruche.service';
+import { MyNotifierService } from '../../../service/my-notifier.service';
+import { NotifList } from '../../../../../constants/notify';
 
 @Component({
   selector: 'app-sensors-hive',
@@ -63,7 +65,8 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
         public rucherService: RucherService,
         public rucheService: RucheService,
         public capteurService: CapteurService,
-        public notifierService: NotifierService) {
+        public notifierService: NotifierService,
+        private myNotifer: MyNotifierService) {
         this.paternRef = /[4][0-3]\:([a-z]|[A-Z]|[0-9])([A-Z]|[0-9]|[a-z])\:([A-Z]|[a-z]|[0-9])([a-z]|[A-Z]|[0-9])$/;
         this.username = userService.getUser();
         this.notifier = notifierService;
@@ -171,38 +174,42 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
         this.editCapteurCheckbox = (event.target.value === 'ruche');
     }
     createCapteur() {
-        const formValue = this.newCapteurForm.value;
-        /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIBLE */
-        const sensorType = document.querySelector('#typeSensor > option').innerHTML;
-        const tempType = this.capteurService.capteur.type;
-        this.capteurService.initCapteur();
-        if (formValue.checkbox !== 'stock') {
-            this.capteurService.capteur.idHive = this.rucheService.getCurrentHive().id;
-            this.capteurService.capteur.idApiary = this.rucherService.getCurrentApiary();
-            this.capteurService.capteur.apiaryName = this.rucherService.rucher.name;
-            this.capteurService.capteur.hiveName = this.rucheService.getCurrentHive().name;
-            const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.rucheService.getCurrentHive().id);
-            this.rucherService.rucheService.ruches[index].sensor = true;
-            this.rucherService.rucheService.emitHiveSubject();
+        if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+            const formValue = this.newCapteurForm.value;
+            /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIBLE */
+            const sensorType = document.querySelector('#typeSensor > option').innerHTML;
+            const tempType = this.capteurService.capteur.type;
+            this.capteurService.initCapteur();
+            if (formValue.checkbox !== 'stock') {
+                this.capteurService.capteur.idHive = this.rucheService.getCurrentHive().id;
+                this.capteurService.capteur.idApiary = this.rucherService.getCurrentApiary();
+                this.capteurService.capteur.apiaryName = this.rucherService.rucher.name;
+                this.capteurService.capteur.hiveName = this.rucheService.getCurrentHive().name;
+                const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.rucheService.getCurrentHive().id);
+                this.rucherService.rucheService.ruches[index].sensor = true;
+                this.rucherService.rucheService.emitHiveSubject();
+            } else {
+                this.capteurService.capteur.idHive = null;
+                this.capteurService.capteur.idApiary = null;
+                this.capteurService.capteur.apiaryName = null;
+                this.capteurService.capteur.hiveName = null;
+            }
+            this.capteurService.capteur.description = formValue.description;
+            this.capteurService.capteur.username = this.username;
+            this.capteurService.capteur.sensorRef = formValue.reference;
+            this.capteurService.capteur.type = sensorType.trim();
+            this.initForm();
+            this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
+                if(this.userService.getJwtReponse().country === "FR"){
+                    this.notifier.notify('success', 'Capteur créé');
+                }else{
+                    this.notifier.notify('success', 'Created sensor');
+                }
+                this.capteurService.getUserCapteurs();
+            });
         } else {
-            this.capteurService.capteur.idHive = null;
-            this.capteurService.capteur.idApiary = null;
-            this.capteurService.capteur.apiaryName = null;
-            this.capteurService.capteur.hiveName = null;
+            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
         }
-        this.capteurService.capteur.description = formValue.description;
-        this.capteurService.capteur.username = this.username;
-        this.capteurService.capteur.sensorRef = formValue.reference;
-        this.capteurService.capteur.type = sensorType.trim();
-        this.initForm();
-        this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
-            if(this.userService.getJwtReponse().country === "FR"){
-                this.notifier.notify('success', 'Capteur créé');
-              }else{
-                this.notifier.notify('success', 'Created sensor');
-              }
-            this.capteurService.getUserCapteurs();
-        });
     }
     getTypeAffectation() {
         return this.newCapteurForm.get('checkbox');
@@ -220,76 +227,84 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
     //DELETE CAPTEUR
 
     deleteCapteur() {
-        const formValue = this.editCapteurForm.value;
-        const idTemp = this.capteurService.capteur.id;
-        if (formValue.checkbox !== 'stock') {
-            this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
-            this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
-            this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
-            this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
-            const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
-            this.rucherService.rucheService.ruches[index].sensor = true;
-            this.rucherService.rucheService.emitHiveSubject();
-        } else {
-            this.capteurService.capteur.idHive = null;
-            this.capteurService.capteur.idApiary = null;
-            this.capteurService.capteur.apiaryName = null;
-            this.capteurService.capteur.hiveName = null;
-        }
-        this.capteurService.capteur.description = formValue.description;
-        this.capteurService.capteur.id = idTemp;
-        this.capteurService.deleteCapteur(this.capteurService.capteur).subscribe(() => { }, () => { }, () => {
-            if (this.capteurService.capteur.idHive) {
-                const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.capteurService.capteur.idHive);
-                const tempHive = this.rucherService.rucheService.ruches[index];
-                if (this.capteurService.capteursByHive.filter(sensor => sensor.idHive === tempHive.id).length <= 1) {
-                    this.rucherService.rucheService.ruches[index].sensor = false;
-                    this.rucherService.rucheService.emitHiveSubject();
-                }
+        if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+            const formValue = this.editCapteurForm.value;
+            const idTemp = this.capteurService.capteur.id;
+            if (formValue.checkbox !== 'stock') {
+                this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
+                this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+                this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
+                this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
+                const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
+                this.rucherService.rucheService.ruches[index].sensor = true;
+                this.rucherService.rucheService.emitHiveSubject();
+            } else {
+                this.capteurService.capteur.idHive = null;
+                this.capteurService.capteur.idApiary = null;
+                this.capteurService.capteur.apiaryName = null;
+                this.capteurService.capteur.hiveName = null;
             }
-            this.capteurService.capteursByHive.splice(this.indexSensorSelect, 1);
-            this.capteurService.emitSensorSubject();
-            if(this.userService.getJwtReponse().country === "FR"){
-                this.notifier.notify('success', 'Capteur supprimé');
-              }else{
-                this.notifier.notify('success', 'Deleted sensor');
-              }
-        });
+            this.capteurService.capteur.description = formValue.description;
+            this.capteurService.capteur.id = idTemp;
+            this.capteurService.deleteCapteur(this.capteurService.capteur).subscribe(() => { }, () => { }, () => {
+                if (this.capteurService.capteur.idHive) {
+                    const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.capteurService.capteur.idHive);
+                    const tempHive = this.rucherService.rucheService.ruches[index];
+                    if (this.capteurService.capteursByHive.filter(sensor => sensor.idHive === tempHive.id).length <= 1) {
+                        this.rucherService.rucheService.ruches[index].sensor = false;
+                        this.rucherService.rucheService.emitHiveSubject();
+                    }
+                }
+                this.capteurService.capteursByHive.splice(this.indexSensorSelect, 1);
+                this.capteurService.emitSensorSubject();
+                if(this.userService.getJwtReponse().country === "FR"){
+                    this.notifier.notify('success', 'Capteur supprimé');
+                }else{
+                    this.notifier.notify('success', 'Deleted sensor');
+                }
+            });
+        } else {
+            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+        }
     }
 
     updateCapteur() {
-        const formValue = this.editCapteurForm.value;
-        const idTemp = this.capteurService.capteur.id;
-        if (formValue.checkbox !== 'stock') {
-            this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
-            this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
-            this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
-            this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
-            const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
-            this.rucherService.rucheService.ruches[index].sensor = true;
-            this.rucherService.rucheService.emitHiveSubject();
-        } else {
-            this.capteurService.capteur.idHive = null;
-            this.capteurService.capteur.idApiary = null;
-            this.capteurService.capteur.apiaryName = null;
-            this.capteurService.capteur.hiveName = null;
-        }
-        this.capteurService.capteur.description = formValue.description;
-        this.capteurService.capteur.id = idTemp;
-        this.initForm();
-        this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
-            if((this.hiveSensorSelect.id === this.rucheService.getCurrentHive().id) && (this.apiarySensorSelect.id === this.rucherService.getCurrentApiary())){
-                this.capteurService.capteursByHive[this.indexSensorSelect] = this.capteurService.capteur;
-                this.capteurService.emitSensorSubject();
-            }else{
-                this.capteurService.capteursByHive.splice(this.indexSensorSelect,1);
+        if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+            const formValue = this.editCapteurForm.value;
+            const idTemp = this.capteurService.capteur.id;
+            if (formValue.checkbox !== 'stock') {
+                this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
+                this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+                this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
+                this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
+                const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
+                this.rucherService.rucheService.ruches[index].sensor = true;
+                this.rucherService.rucheService.emitHiveSubject();
+            } else {
+                this.capteurService.capteur.idHive = null;
+                this.capteurService.capteur.idApiary = null;
+                this.capteurService.capteur.apiaryName = null;
+                this.capteurService.capteur.hiveName = null;
             }
-            if(this.userService.getJwtReponse().country === "FR"){
-                this.notifier.notify('success', 'Capteur mis à jour');
-              }else{
-                this.notifier.notify('success', 'Updated sensor');
-              }
-        });
+            this.capteurService.capteur.description = formValue.description;
+            this.capteurService.capteur.id = idTemp;
+            this.initForm();
+            this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
+                if((this.hiveSensorSelect.id === this.rucheService.getCurrentHive().id) && (this.apiarySensorSelect.id === this.rucherService.getCurrentApiary())){
+                    this.capteurService.capteursByHive[this.indexSensorSelect] = this.capteurService.capteur;
+                    this.capteurService.emitSensorSubject();
+                }else{
+                    this.capteurService.capteursByHive.splice(this.indexSensorSelect,1);
+                }
+                if(this.userService.getJwtReponse().country === "FR"){
+                    this.notifier.notify('success', 'Capteur mis à jour');
+                }else{
+                    this.notifier.notify('success', 'Updated sensor');
+                }
+            });
+        } else {
+            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+        }
     }
 
     onSelectRucher() {

@@ -23,6 +23,7 @@ import { PreferenceConfigComponent } from './preference-config/preference-config
 import { ManageHivesComponent } from './manage/manage-hives/manage-hives.component';
 import { ManageApiarysComponent } from './manage/manage-apiarys/manage-apiarys.component';
 import { ManageSensorsComponent } from './manage/manage-sensors/manage-sensors.component';
+import { ManageNotesComponent } from './manage/manage-notes/manage-notes.component';
 
 const routes: Routes = [
     {
@@ -35,6 +36,7 @@ const routes: Routes = [
             { path: 'melli-charts', loadChildren: './melli-charts/melli-charts.module#MelliChartsModule', canLoad: [AuthGuardService]},
             { path: 'manage-hives', component: ManageHivesComponent, canActivate: [AuthGuardService]},
             { path: 'manage-apiarys', component: ManageApiarysComponent, canActivate: [AuthGuardService]},
+            { path: 'manage-notes', component: ManageNotesComponent, canActivate: [AuthGuardService]},
             { path: 'manage-sensors', component: ManageSensorsComponent, canActivate: [AuthGuardService]},
             { path: 'preferences', component: PreferenceConfigComponent, canActivate: [AuthGuardService]}
 

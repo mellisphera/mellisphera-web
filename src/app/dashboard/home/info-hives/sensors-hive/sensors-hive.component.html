@@ -15,35 +15,31 @@ limitations under the License. -->
             {{this.rucheService.getCurrentHive().name}} <button data-toggle="tooltip" data-html="true"
                 title="{{ 'CAPTEUR.FORM.NEW' | translate}}" data-toggle="modal"
                 style="float:right;width: 10%; padding: 0;border: none; background: none;"
-                data-target="#newCapteurModal" class="btn btn-success">
+                data-target="#newCapteurModal" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" class="btn btn-success">
                 <i class="fa fa-plus fa-2x"></i>
             </button></div>
         <div class="user-sensors panel-body" id="sensorsHive">
             <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width: 100px;">{{ 'CAPTEUR.REFERENCES' | translate}}
-                        </th>
-                        <th class="text-left" scope="col">Description
-                        </th>
-                        <th class="text-right" scope="col" style="width: 80px;"></th>
-                    </tr>
-                </thead>
                 <tbody>
                     <ng-container *ngFor="let capteur of ( capteurService.capteursByHive); let i = index">
                         <tr class="hoverStyle">
-                            <td>{{capteur.sensorRef}}</td>
+                            <td style="width: 100px;">{{capteur.sensorRef}}</td>
                             <td>{{capteur.description}}</td>
-                            <td class="text-right">
+                            <td class="text-right" style="width: 80px;">
                                 <button data-toggle="tooltip" data-html="true"
                                     title="{{ 'CAPTEUR.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
-                                    (click)="selectCapteur(capteur, i)" data-target="#editCapteurModal"
+                                    (click)="selectCapteur(capteur, i)" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" data-target="#editCapteurModal"
                                     class="btn btn-primary" style="padding: 0;border: none; background: none;">
                                     <i class="fa fa-edit fa-2x"></i>
                                 </button>
                             </td>
                         </tr>
                     </ng-container>
+                    <ng-container *ngIf="capteurService.capteursByHive !== undefined && capteurService.capteursByHive.length === 0">
+                        <tr class="hoverStyle">
+                          <td>{{ 'HIVE_DETAIL.SENSORS.NOSENSORS' | translate}}</td>
+                        </tr>
+                      </ng-container>
                 </tbody>
             </table>
         </div>
@@ -144,7 +140,7 @@ limitations under the License. -->
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h5 class="modal-title text-center" id="exampleModalLabel">
-                    <h3>{{ 'CAPTEUR.FORM.EDIT' | translate}}</h3>
+                    <h3>{{ 'CAPTEUR.FORM.EDITSENSORTITLE' | translate}}</h3>
                 </h5>
             </div>
             <div class="modal-body">
@@ -194,16 +190,16 @@ limitations under the License. -->
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="editVal" class="btn btn-primary" data-dismiss="modal"
-                            (click)="updateCapteur()" [disabled]="!editCapteurForm.valid">
-                            {{ 'CAPTEUR.FORM.SAVE' | translate}}</button>
-                        <button type="button" class="btn btn-warning"
+                        <button type="button" class="btn btn-warning delete"
                             mwlConfirmationPopover popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
                             confirmText="{{ 'CAPTEUR.FORM.CONFIRM' | translate}}"
                             cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}" placement="top"
                             (confirm)="deleteCapteur()">
                             {{ 'CAPTEUR.FORM.DELETE' | translate}}
                         </button>
+                        <button type="button" id="editVal" class="btn btn-primary" data-dismiss="modal"
+                            (click)="updateCapteur()" [disabled]="!editCapteurForm.valid">
+                            {{ 'CAPTEUR.FORM.EDIT' | translate}}</button>
                         <button type="button" class="btn btn-secondary"
                             data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>
                     </div>

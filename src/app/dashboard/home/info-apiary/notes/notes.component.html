@@ -15,7 +15,7 @@ limitations under the License. -->
     {{this.rucherService.rucher.name}}</span>
     <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
     title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}" data-toggle="modal"
-    style="float:right;width: 10%; padding: 0;border: none; background: none;" data-target="#newObservationModal"
+    style="float:right;width: 10%; padding: 0;border: none; background: none;" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" data-target="#newObservationModal"
     class="btn btn-success">
     <i class="fa fa-plus fa-2x"></i>
   </button>
@@ -36,11 +36,11 @@ limitations under the License. -->
           <td class="text-right">
             <button data-toggle="tooltip" data-html="true"
               title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
-              data-target="#editObservationModal" (click)="onSelectObs(obs)" class="btn btn-primary  "
+              data-target="#editObservationModal" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" (click)="onSelectObs(obs)" class="btn btn-primary  "
               style="padding: 0;border: none; background: none;">
               <i class="fa fa-edit fa-2x"></i>
             </button>
-            <button type="button" class="btn btn-warning"
+            <button type="button" class="btn btn-warning" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))"
               title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE' | translate}}"
               style="padding: 0;border: none; background: none;" mwlConfirmationPopover
               popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top"
@@ -109,7 +109,7 @@ limitations under the License. -->
           <span aria-hidden="true">&times;</span>
         </button>
         <h5 class="modal-title" id="exampleModalLabel">
-          <h3 class="text-center">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}</h3>
+          <h3 class="text-center">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDITNOTE' | translate}}</h3>
         </h5>
       </div>
       <div class="modal-body">

@@ -26,6 +26,8 @@ import { RucherModel } from '../../../_model/rucher-model';
 import { AuthService } from '../../../auth/Service/auth.service';
 import { RucheInterface } from '../../../_model/ruche';
 import { NotifierService } from 'angular-notifier';
+import { MyNotifierService } from '../../service/my-notifier.service';
+import { NotifList } from '../../../../constants/notify';
 
 @Component({
   selector: 'app-manage-hives',
@@ -68,7 +70,8 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
     public observationService: ObservationService,
     public rucheService: RucheService,
     private authService: AuthService,
-    private notifyService: NotifierService) {
+    private notifyService: NotifierService,
+    private myNotifer: MyNotifierService) {
 
 
     this.username = userService.getUser();
@@ -109,21 +112,25 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
 
   //Pour effacer une ruche
   deleteRuche(ruche: RucheInterface, apiary : RucherModel) {
-    this.rucheService.deleteRuche(ruche).subscribe(() => { }, () => { }, () => {
-      if ((apiary.id === this.rucherService.getCurrentApiary())){
-        let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(ruche.id);
-        this.rucheService.ruches.splice(hiveIndexUpdate,1);
-      }
-      // update for manage pages
-      let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive.id).indexOf(ruche.id);
-      this.rucheService.ruchesAllApiary.splice(hiveIndexUpdateListAllApiary,1);
-      this.rucheService.emitHiveSubject();
-      if(this.userService.getJwtReponse().country === "FR"){
-        this.notify.notify('success', 'Ruche supprimée');
-      }else{
-        this.notify.notify('success', 'Deleted Hive');
-      }
-    });
+    if (this.userService.checkWriteObject(apiary.idUsername)) {
+      this.rucheService.deleteRuche(ruche).subscribe(() => { }, () => { }, () => {
+        if ((apiary.id === this.rucherService.getCurrentApiary())){
+          let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(ruche.id);
+          this.rucheService.ruches.splice(hiveIndexUpdate,1);
+        }
+        // update for manage pages
+        let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive.id).indexOf(ruche.id);
+        this.rucheService.ruchesAllApiary.splice(hiveIndexUpdateListAllApiary,1);
+        this.rucheService.emitHiveSubject();
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notify.notify('success', 'Ruche supprimée');
+        }else{
+          this.notify.notify('success', 'Deleted Hive');
+        }
+      });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+    }
   }
 
   // Return a list of hives for an apiary
@@ -173,34 +180,38 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
   }
   // pour editer une ruche
   onEditeRuche() {
-    const formValue = this.newRucheForm.value;
-    this.selectHive = this.currentRuche;
-    this.selectHive.idApiary = this.rucherService.rucherSelectUpdate.id;
-    this.selectHive.name = formValue.nomRuche;
-    this.selectHive.description = formValue.descriptionRuche;
-    this.rucheService.updateRuche(this.selectHive).subscribe(() => { }, () => { }, () => {
-      // update for homePage
-      if ((this.selectHive.idApiary === this.rucherService.getCurrentApiary()) && (this.currentApiary.id === this.rucherService.getCurrentApiary())) {
-        let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(this.selectHive.id);
-        this.rucheService.ruches[hiveIndexUpdate] = this.selectHive;
-        this.rucheService.emitHiveSubject();
-      } else if((this.currentApiary.id === this.rucherService.getCurrentApiary())){
-        let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(this.selectHive.id);
-        this.rucheService.ruches.splice(hiveIndexUpdate, 1);
-        this.rucheService.emitHiveSubject();
-      } else if(((this.selectHive.idApiary === this.rucherService.getCurrentApiary()))){
-        this.rucheService.ruches.push(this.selectHive);
-      }
-      // update for manage pages
-      let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive.id).indexOf(this.selectHive.id);
-      this.rucheService.ruchesAllApiary[hiveIndexUpdateListAllApiary] = this.selectHive;
+    if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.idUsername)) {
+      const formValue = this.newRucheForm.value;
+      this.selectHive = this.currentRuche;
+      this.selectHive.idApiary = this.rucherService.rucherSelectUpdate.id;
+      this.selectHive.name = formValue.nomRuche;
+      this.selectHive.description = formValue.descriptionRuche;
+      this.rucheService.updateRuche(this.selectHive).subscribe(() => { }, () => { }, () => {
+        // update for homePage
+        if ((this.selectHive.idApiary === this.rucherService.getCurrentApiary()) && (this.currentApiary.id === this.rucherService.getCurrentApiary())) {
+          let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(this.selectHive.id);
+          this.rucheService.ruches[hiveIndexUpdate] = this.selectHive;
+          this.rucheService.emitHiveSubject();
+        } else if((this.currentApiary.id === this.rucherService.getCurrentApiary())){
+          let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(this.selectHive.id);
+          this.rucheService.ruches.splice(hiveIndexUpdate, 1);
+          this.rucheService.emitHiveSubject();
+        } else if(((this.selectHive.idApiary === this.rucherService.getCurrentApiary()))){
+          this.rucheService.ruches.push(this.selectHive);
+        }
+        // update for manage pages
+        let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive.id).indexOf(this.selectHive.id);
+        this.rucheService.ruchesAllApiary[hiveIndexUpdateListAllApiary] = this.selectHive;
 
-      if(this.userService.getJwtReponse().country === "FR"){
-        this.notify.notify('success', 'Ruche mis à jour');
-      }else{
-        this.notify.notify('success', 'Updated Hive');
-      }
-    });
+        if(this.userService.getJwtReponse().country === "FR"){
+          this.notify.notify('success', 'Ruche mis à jour');
+        }else{
+          this.notify.notify('success', 'Updated Hive');
+        }
+      });
+    } else {
+      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+    }
   }
 
   editRucherClicked() {

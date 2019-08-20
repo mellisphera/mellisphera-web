@@ -9,15 +9,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-export interface Observation {
-    id?: string;
-    date: Date;
-    type: string;
-    sentence: string;
-    idApiary?: string;
-    idHive: string;
-    idUsername: string;
-    idLHive?: Array<string>;
-    Lruche: Array<string>;
-    nluScore?: string;
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-manage-notes',
+  templateUrl: './manage-notes.component.html',
+  styleUrls: ['./manage-notes.component.css']
+})
+export class ManageNotesComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
 }

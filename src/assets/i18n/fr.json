@@ -72,7 +72,7 @@
             "FILE" : "Choisir le fichier",
             "DROP" : "Faites glisser une photos ici",
             "CLOSE" : "Fermer",
-            "SAVE" : "Sauver le rucher",
+            "SAVE" : "Enregistrer",
             "CANCEL" : "Annuler",
             "CONFIRM" : "Confirmer",
             "CREATE" : "Créer le rucher",
@@ -147,7 +147,8 @@
         "SENSOR" : "Capteur",
         "FORM" : {
             "NEW" : "Nouvelle ruche",
-            "EDIT" : "Modifier la ruche",
+            "EDIT" : "Enregistrer",
+            "EDITHIVE" : "Modifier la ruche",
             "DELETE" : "Supprimer la ruche",
             "DELETE_ASK" : "Supprimer la ruche ?",
             "CANCEL" : "Annuler",
@@ -175,6 +176,7 @@
             "TYPES" : "Type",
             "ACTIONS" : "Modifier",
             "OBSERVATION" : "Observation",
+            "NONOTES" : "Vous n'avez pas de notes pour cette ruche.",
             "ACTION" : "Action",
             "FORM" : {
                 "NEW" : "Nouveau",
@@ -183,7 +185,8 @@
                 "CREATE_OBS" : "Créer une observation",
                 "CREATE_ACT" : "Créer une action",
                 "CLOSE" : "Fermer",
-                "EDIT" : "Modifier la note",
+                "EDIT" : "Enregistrer",
+                "EDITNOTE" : "Modifier la note",
                 "DELETE" : "Supprimer la note",
                 "DELETE_ASK" : "Supprimer la note ?",
                 "CANCEL" : "Annuler",
@@ -191,6 +194,9 @@
                 "NOTES" : "Note : ",
                 "TYPE" : "Type"
             }
+        },
+        "SENSORS" : {
+            "NOSENSORS" : "Vous n'avez pas de capteurs pour cette ruche."
         },
         "STOCK" : {
             "NO_DATA" : "Pas de données :",
@@ -257,7 +263,8 @@
             "CLOSE" : "Fermer",
             "APIARY" : "Rucher",
             "SAVE" : "Sauvegarder",
-            "EDIT" : "Modifier le capteur",
+            "EDIT" : "Enregistrer",
+            "EDITSENSORTITLE" : "Modifier le capteur",
             "SENSOR_EDIT" : "Capteur modifié",
             "SUCCES" : "Avec succès !",
             "EDITSELECT" : "Selectionnez le capteur à modifer",
