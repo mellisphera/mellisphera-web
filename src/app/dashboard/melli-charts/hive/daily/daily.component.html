@@ -27,6 +27,25 @@ limitations under the License. -->
     </div>
     <div id="calendar-device" class="chart calendar"></div>
   </div>
+  <div id="daily-env">
+    <div id="sidebar-tools-daily-env">
+      <ul class="nav responsive-nav flex tools" id="env-group">
+        <li *ngFor="let type of getlabelByType('ENV')" (click)="setType(type)" [class]="type.class" [id]="type.id">
+          <img [src]="type.icons" /></li>
+        <li (click)="exportToCsv('ENV')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
+      </ul>
+      <div class="mean-grup">
+        <!--         <ng-container *ngIf="currentTypeDailyOther.name === 'RAIN'">
+          <p style="text-align: center;">{{ currentOtherTextPeriodCalendar }}{{ dailyManager.meanPeriodOther.value }}
+            {{ dailyManager.meanPeriodOther.unit }}</p>
+          <p style="text-align: center;">{{ currentOtherTextSevenDay }}{{ dailyManager.meanOtherSevenDay.value }}
+            {{ dailyManager.meanOtherSevenDay.unit }}</p>
+        </ng-container> -->
+
+      </div>
+    </div>
+    <div id="calendar-env" class="chart calendar"></div>
+  </div>
   <div class="mean-grup" id="daily-other">
     <div id="sidebar-tools-daily-other">
       <ul class="nav responsive-nav flex tools" id="other-group">
@@ -45,24 +64,5 @@ limitations under the License. -->
 
     </div>
     <div id="calendar-other" class="chart calendar"></div>
-  </div>
-  <div id="daily-env">
-    <div id="sidebar-tools-daily-env">
-      <ul class="nav responsive-nav flex tools" id="env-group">
-        <li *ngFor="let type of getlabelByType('ENV')" (click)="setType(type)" [class]="type.class" [id]="type.id">
-          <img [src]="type.icons" /></li>
-        <li (click)="exportToCsv('ENV')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
-      </ul>
-      <div class="mean-grup">
-<!--         <ng-container *ngIf="currentTypeDailyOther.name === 'RAIN'">
-          <p style="text-align: center;">{{ currentOtherTextPeriodCalendar }}{{ dailyManager.meanPeriodOther.value }}
-            {{ dailyManager.meanPeriodOther.unit }}</p>
-          <p style="text-align: center;">{{ currentOtherTextSevenDay }}{{ dailyManager.meanOtherSevenDay.value }}
-            {{ dailyManager.meanOtherSevenDay.unit }}</p>
-        </ng-container> -->
-
-      </div>
-    </div>
-    <div id="calendar-env" class="chart calendar"></div>
   </div>
 </div>
