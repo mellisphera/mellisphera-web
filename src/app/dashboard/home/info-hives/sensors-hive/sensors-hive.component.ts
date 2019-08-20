@@ -59,7 +59,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
     public errorMsg;
     private notifier: NotifierService;
     constructor(
-        private userService: UserloggedService,
+        public userService: UserloggedService,
         private _router: Router,
         private formBuilder: FormBuilder,
         public rucherService: RucherService,

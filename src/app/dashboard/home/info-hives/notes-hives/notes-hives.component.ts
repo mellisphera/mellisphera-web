@@ -56,7 +56,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     public rucheService: RucheService,
     private notifyService: NotifierService,
     public userParamService: UserParamsService,
-    private userService: UserloggedService,
+    public userService: UserloggedService,
     private myNotifer: MyNotifierService
   ) {
     this.typeObs = false;

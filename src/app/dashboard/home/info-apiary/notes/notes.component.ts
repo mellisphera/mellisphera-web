@@ -51,7 +51,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     private notifyService: NotifierService,
     public observationService: ObservationService,
     private formBuilder: FormBuilder,
-    private userService: UserloggedService,
+    public userService: UserloggedService,
     private renderer: Renderer2,
     private myNotifer: MyNotifierService) {
       this.type = 'ApiaryObs';
