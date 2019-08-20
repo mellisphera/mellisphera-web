@@ -125,7 +125,7 @@ export class DailyManagerService {
   getLastDayForMeanValue(observable: Observable<any>, mean: boolean, type: Tools): void {
     observable.map(_serie => {
       if (type.name === 'RAIN') {
-        return _serie.flat().map(_elt => _elt.value);
+        return _serie.flat().filter(_data => _data.sensorRef === 'OpenWeatherMap').map(_elt => _elt.value);
       } else if (type.name === 'WINCOME') {
         return _serie.weightIncomeHight.map(_elt => _elt.value).concat(_serie.weightIncomeLow.map(_elt => _elt.value));
       } else {
@@ -134,6 +134,7 @@ export class DailyManagerService {
     }).subscribe(
       _data => {
         if (type.name === 'RAIN' || type.name === 'WINCOME') {
+          console.log(_data); 
           this.setMeanSevenDay(_data, false, type);
         } else {
           this.setMeanSevenDay(_data.map(_data => _data.value), true, type);

@@ -156,8 +156,11 @@ export class DailyComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.melliHive.getDailyOtherChartInstance().on('legendselectchanged', (params) => {
       if (params.name.indexOf('RAIN') !== -1) {
+        console.log(params);
+        const origin = params.name.split(':')[0].trim();
         const serieSelected = this.dailyManager.baseOptionExt.series.filter(_serie => _serie.name === params.name)[0];
         this.dailyManager.setMeanData(serieSelected, false, this.currentTypeDailyOther);
+        // this.dailyManager.setMeanSevenDay(serieSelected)
         //this.weatherService.getRainAllWeather(this.melliHive.getHiveSelect().idApiary, this.melliDate.getRangeForReqest());
       }
     });
