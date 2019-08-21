@@ -76,6 +76,8 @@ export class StackComponent implements OnInit {
    * @memberof StackComponent
    */
   setOptionForStackChart(): void {
+
+    const serieMark = Object.assign({}, SERIES.serieMark);
     let yAxisWeight = Object.assign({}, BASE_OPTIONS.yAxis);
     yAxisWeight.name = this.graphGlobal.weight.name;
     yAxisWeight.min = this.graphGlobal.weight.min;
@@ -118,7 +120,8 @@ export class StackComponent implements OnInit {
     xAxisHum.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getHourlyDate(new Date(value));
     };
-
+    serieMark.yAxisIndex = 1;
+    this.options.series.push(serieMark);
     this.options.xAxis.push(xAxisHum);
     this.options.tooltip.formatter = (params) => {
       return params.map((_elt, index) => {

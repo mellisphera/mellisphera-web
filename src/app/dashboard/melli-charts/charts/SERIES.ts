@@ -37,6 +37,39 @@ export const SERIES = {
     renderItem: null,
     data: []
   },
+  serieMark: {
+    type: 'line',
+    name: 'MarkZone',
+    data: [],
+    yAxisIndex: 0,
+    markArea: {
+      silent: true,
+      data: [
+        [{
+          yAxis: 50,
+          name: 'This is a mark area',
+          label: {
+            show: true,
+            position: "insideRight",
+            color: "#000000",
+            borderColor: "yellow",
+            borderWidth: 1,
+            padding: 2,
+            verticalAlign: 'middle',
+            shadowBlur: 2,
+            shadowColor: "yellow",
+            opacity: 1
+          },
+          itemStyle: {
+            color: "#68d2e0",
+            opacity: 0.5
+          }
+        }, {
+          yAxis: 200
+        }]
+      ]
+    }
+  },
   line: {
     name: '',
     // id: '',
