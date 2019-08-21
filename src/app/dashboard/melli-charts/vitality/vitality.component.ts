@@ -67,6 +67,13 @@ export class VitalityComponent implements OnInit, OnDestroy {
     yAxis.max = 100;
     this.option.yAxis.push(yAxis);
 
+    let serieMarkBrood = Object.assign({}, SERIES.serieMarkPourcent);
+    serieMarkBrood.markArea.data[0][0].name = this.graphGlobal.getNameZoneByGraph('BROOD');
+    serieMarkBrood.markArea.data[0][0].yAxis = 80;
+    serieMarkBrood.markArea.data[0][1].yAxis = 100;
+    console.log(serieMarkBrood);
+    this.option.series.push(serieMarkBrood);
+
     let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxis.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getDailyDate(new Date(value));

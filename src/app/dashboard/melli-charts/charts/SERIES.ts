@@ -37,22 +37,22 @@ export const SERIES = {
     renderItem: null,
     data: []
   },
-  serieMark: {
+  serieMarkTemp: {
     type: 'line',
     name: 'MarkZone',
-    data: [],
+    data: null,
     yAxisIndex: 0,
+    xAxisIndex: 0,
     markArea: {
       silent: true,
       data: [
         [{
-          yAxis: 50,
+          yAxis: 0,
           name: 'This is a mark area',
           label: {
             show: true,
-            position: "insideRight",
-            color: "#000000",
-            borderColor: "yellow",
+            position: "insideLeft",
+            color: "black",
             borderWidth: 1,
             padding: 2,
             verticalAlign: 'middle',
@@ -61,11 +61,44 @@ export const SERIES = {
             opacity: 1
           },
           itemStyle: {
-            color: "#68d2e0",
+            color: "#3DC244",
             opacity: 0.5
           }
         }, {
-          yAxis: 200
+          yAxis: 0
+        }]
+      ]
+    }
+  },
+  serieMarkPourcent: {
+    type: 'line',
+    name: 'MarkZone',
+    data: null,
+    yAxisIndex: 0,
+    xAxisIndex: 0,
+    markArea: {
+      silent: true,
+      data: [
+        [{
+          yAxis: 0,
+          name: 'This is a mark area',
+          label: {
+            show: true,
+            position: "insideLeft",
+            color: "black",
+            borderWidth: 1,
+            padding: 2,
+            verticalAlign: 'middle',
+            shadowBlur: 2,
+            shadowColor: "yellow",
+            opacity: 1
+          },
+          itemStyle: {
+            color: "#3DC244",
+            opacity: 0.5
+          }
+        }, {
+          yAxis: 0
         }]
       ]
     }
