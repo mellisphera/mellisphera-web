@@ -93,6 +93,7 @@ export const BASE_OPTIONS = {
         show: true,
         nameLocation: 'middle',
         type: 'value',
+        splitArea: {},
         nameGap: 25,
         //interval: 0,
         min: 0,

@@ -21,6 +21,7 @@ import { Observable, Subscriber, BehaviorSubject } from 'rxjs';
 import { MelliChartsDateService } from '../service/melli-charts-date.service';
 import { SERIES } from '../charts/SERIES';
 import { RucheService } from '../../service/api/ruche.service';
+import { UserParamsService } from '../../preference-config/service/user-params.service';
 
 @Component({
   selector: 'app-stack',
@@ -36,6 +37,7 @@ export class StackComponent implements OnInit {
   constructor(private unitService: UnitService,
     private stackService: StackMelliChartsService,
     private graphGlobal: GraphGlobal,
+    private userPrefService: UserParamsService,
     private recordService: RecordService,
     private rucheService: RucheService,
     private melliDate: MelliChartsDateService) { }
@@ -76,6 +78,7 @@ export class StackComponent implements OnInit {
    * @memberof StackComponent
    */
   setOptionForStackChart(): void {
+
     let yAxisWeight = Object.assign({}, BASE_OPTIONS.yAxis);
     yAxisWeight.name = this.graphGlobal.weight.name;
     yAxisWeight.min = this.graphGlobal.weight.min;
@@ -118,8 +121,26 @@ export class StackComponent implements OnInit {
     xAxisHum.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getHourlyDate(new Date(value));
     };
-
     this.options.xAxis.push(xAxisHum);
+
+    let serieMarkTemp = Object.assign({}, SERIES.serieMarkTemp);
+    serieMarkTemp.yAxisIndex = 1;
+    serieMarkTemp.xAxisIndex = 1;
+    serieMarkTemp.markArea.data[0][0].yAxis = this.userPrefService.getUserPref().unitSystem === 'METRIC' ? 32 : 90;
+    serieMarkTemp.markArea.data[0][1].yAxis = this.userPrefService.getUserPref().unitSystem === 'METRIC' ? 37 : 99;
+    serieMarkTemp.markArea.data[0][0].name = this.graphGlobal.getNameZoneByGraph('TEMP');
+    this.options.series.push(serieMarkTemp);
+
+
+    let serieMarkHum = Object.assign({}, SERIES.serieMarkPourcent);
+    serieMarkHum.yAxisIndex = 2;
+    serieMarkHum.xAxisIndex = 2;
+    serieMarkHum.markArea.data[0][0].yAxis = 50;
+    serieMarkHum.markArea.data[0][1].yAxis = 75;
+    serieMarkHum.markArea.data[0][0].name = this.graphGlobal.getNameZoneByGraph('HUM');
+    console.log(serieMarkHum);
+    this.options.series.push(serieMarkHum);
+
     this.options.tooltip.formatter = (params) => {
       return params.map((_elt, index) => {
         return this.getTooltipFormater(_elt.marker, (index === 0 ? this.unitService.getHourlyDate(_elt.data.name) : ''), new Array(
@@ -182,6 +203,7 @@ export class StackComponent implements OnInit {
       },
       () => { },
       () => {
+        console.log(this.options);
         next(this.options);
       }
     );

@@ -104,17 +104,17 @@ nav[role=admin-navigation] {
 
 }
 .puce-hive{
-    background-image: url('../../../assets/img//apiary-icon.png');
+    background-image: url('../../../assets/icons/ui/hive.png');
     display: inline-block;
     background-repeat: no-repeat;
     background-size:25px;
     width: 25px;
     height: 23px;
-    margin-bottom: -4px;
+    margin-bottom: -8px;
 }
 
 .puce-apiary{
-    background-image: url('../../../assets/wizard/apiary.png');
+    background-image: url('../../../assets/icons/ui/melliUx.png');
     display: inline-block;
     background-repeat: no-repeat;
     background-size:25px;

@@ -298,7 +298,6 @@ export class GraphGlobal {
      * @memberof GraphGlobal
      */
     getUnitBySerieName(serie: string): string {
-        console.log(serie);
         if (/Temp/g.test(serie) || /Weather/g.test(serie)) {
             return this.temp.unitT;
         } else if (/Weight/g.test(serie) || /Poids/g.test(serie) || /gain/g.test(serie) || /loss/g.test(serie)) {
@@ -308,6 +307,31 @@ export class GraphGlobal {
         }
     }
 
+    /**
+     * 
+     * @param typeGraph 
+     */
+    getNameZoneByGraph(typeGraph: string): string {
+        if (typeGraph === 'BROOD') {
+            if (this.userService.getCountry() === 'FR') {
+                return 'Optimal area of ​​production';
+            } else {
+                return 'Zone optimale de production';
+            }
+        } else if (typeGraph === 'TEMP') {
+            if (this.userService.getCountry() === 'FR') {
+                return 'Zone optimale du couvains';
+            } else {
+                return 'Brood Zone';
+            }
+        } else if (typeGraph === 'HUM') {
+            if (this.userService.getCountry() === 'FR') {
+                return 'Optimal area of humidity';
+            } else {
+                return 'Zone optimale d\'humidié';
+            }
+        }
+    }
 
     /**
      *
