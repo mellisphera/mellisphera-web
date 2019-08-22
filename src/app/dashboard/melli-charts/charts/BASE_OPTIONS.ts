@@ -73,7 +73,8 @@ export const BASE_OPTIONS = {
     },
     baseOptionDailyMelliUx: {
         title: {
-            top: 5,
+            top: -5,
+            bottom: 0,
             text: '',
             left: 'center',
             textStyle: {
@@ -82,7 +83,9 @@ export const BASE_OPTIONS = {
               fontSize : 16
             }
          },
-        legend: {},
+        legend: {
+            top: 100
+        },
         axisPointer: {
             link: { xAxisIndex: 'all' }
         },
