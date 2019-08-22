@@ -380,7 +380,7 @@ export class AlertsHiveComponent implements OnInit {
     date.setSeconds(0);
     date.setMilliseconds(0);
     return date.getTime();
-  }
+    }
   onClickRead(alert: AlertInterface, i: number) {
     // Update in database
     this.alertsService.updateAlert(alert._id, true).subscribe(() => { }, () => { }, () => {
