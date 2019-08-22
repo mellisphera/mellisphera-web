@@ -11,10 +11,12 @@ limitations under the License. -->
 
 <div id="user-group">
   <div class="panel panel-primary">
-    <div class="panel-heading"><span>{{ 'HIVE_DETAIL.OBSERVATIONS.TITLE' | translate}}
-        {{this.rucheService.getCurrentHive().name}}</span>
+    <div class="panel-heading"><span *ngIf="this.rucheService.getCurrentHive().description !== ''" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
+        {{this.rucheService.getCurrentHive().name}} : {{this.rucheService.getCurrentHive().description}}</span>
+        <span *ngIf="this.rucheService.getCurrentHive().description === ''" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
+          {{this.rucheService.getCurrentHive().name}}</span>
       <button data-toggle="tooltip" data-html="true" title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW' | translate}}"
-        data-toggle="modal" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" style="float:right;width: 10%; padding: 0;border: none; background: none;" (click)="initForm()"
+        data-toggle="modal" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" style="float:right;width: 10%; padding: 0;border: none; background: none;margin-top: 0px;" (click)="initForm()"
         data-target="#newObservationModal" class="btn btn-success">
         <i class="fa fa-plus fa-2x"></i>
       </button>
@@ -32,7 +34,7 @@ limitations under the License. -->
                   <button data-toggle="tooltip" data-html="true"
                     title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
                     (click)="onSelectObsR(hiveObs)" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" data-target="#editObservationModal" class="btn btn-primary "
-                    style="padding: 0;border: none; background: none;">
+                    style="padding: 0;border: none; background: none;margin-right: 10px;">
                     <i class="fa fa-edit fa-2x"></i>
                   </button>
                 </td>
@@ -48,7 +50,7 @@ limitations under the License. -->
                   <button data-toggle="tooltip" data-html="true"
                     title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
                     (click)="onSelectObsR(hiveObs)" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" data-target="#editObservationModal" class="btn btn-primary "
-                    style="padding: 0;border: none; background: none;">
+                    style="padding: 0;border: none; background: none;margin-right: 10px;">
                     <i class="fa fa-edit fa-2x"></i>
                   </button>
                 </td>

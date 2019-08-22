@@ -80,7 +80,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     const heightPicture = document.getElementById('cadre').offsetHeight;
     const heightRight = document.getElementById('graph').offsetHeight;
     if(this.screenWidth >990){
-      document.getElementById('notesApiary').style.height = ''+(6 + heightRight - heightPicture) + 'px';
+      document.getElementById('notesApiary').style.height = ''+(-94 + heightRight - heightPicture) + 'px';
     }else{
       document.getElementById('notesApiary').style.height = ''+(40) + 'vh';
     }

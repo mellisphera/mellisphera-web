@@ -96,7 +96,9 @@ export class AlertsHiveComponent implements OnInit {
         text: this.graphGlobal.getTitle("AlertsHive"),
         left: 'center',
         textStyle: {
-          color: 'black'
+          color: 'black',
+          fontWeight : 'normal',
+          fontSize : 16
         }
       },
       tooltip: {
@@ -118,6 +120,7 @@ export class AlertsHiveComponent implements OnInit {
         }
       },
       calendar: [{
+        top: 50,
         left: '15%',
         height: '45%',
         width: '77%',

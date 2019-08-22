@@ -33,7 +33,9 @@ export class HealthHiveComponent {
               text: this.graphGlobal.getTitle("BroodDynamics"),
               left: 'center',
               textStyle: {
-                  color: 'black'
+                  color: 'black',
+                  fontWeight : 'normal',
+                  fontSize : 16
               }
           },
           tooltip: {

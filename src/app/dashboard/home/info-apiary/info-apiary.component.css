@@ -28,9 +28,9 @@ hr
     font-weight: bold;
 }
 
-#general{
-    margin: 0px;
-}
+/* #apiaryGeneral{
+    margin-top: -30px;
+} */
 
 #apiaryLeft{
     position: absolute;
@@ -38,7 +38,12 @@ hr
     left: 0px;
     width: 50%;
 }
-   
+
+@media (min-width : 990px){
+    #graph{
+        padding-top: 100px;
+    }
+}
 
 #states{
     position: relative;

@@ -89,7 +89,9 @@ export class AlertsComponent implements OnInit {
         text: this.graphGlobal.getTitle("AlertsApiary") + ' ' + this.rucherService.rucher.name,
         left: 'center',
         textStyle: {
-          color: 'black'
+          color: 'black',
+          fontWeight : 'normal',
+          fontSize : 16
         }
       },
       tooltip: {
@@ -111,7 +113,7 @@ export class AlertsComponent implements OnInit {
         }
       },
       calendar: [{
-        top: 100,
+        top: 70,
         left: '15%',
         bottom: '3%',
         height: '45%',

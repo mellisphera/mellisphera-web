@@ -83,7 +83,11 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.apiary = this.apiaryForm.value;
     this.apiary.createdAt = new Date();
     this.apiary.username = this.userService.getUser();
-    this.apiary.photo = './assets/imageClient/testAccount.png';
+    if (this.userService.getJwtReponse().country === "FR") {
+      this.apiary.photo = './assets/imageClient/background_draw_color_FR.png';
+    } else {
+      this.apiary.photo = './assets/imageClient/background_draw_color.png';
+    }
     this.apiary.idUsername = this.userService.getIdUserLoged()
   }
 
