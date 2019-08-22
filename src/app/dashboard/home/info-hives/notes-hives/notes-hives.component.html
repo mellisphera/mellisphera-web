@@ -11,9 +11,9 @@ limitations under the License. -->
 
 <div id="user-group">
   <div class="panel panel-primary">
-    <div class="panel-heading"><span *ngIf="this.rucheService.getCurrentHive().description !== ''" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
+    <div class="panel-heading"><span *ngIf="(this.rucheService.getCurrentHive().description !== null) && (this.rucheService.getCurrentHive().description !== '')" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
         {{this.rucheService.getCurrentHive().name}} : {{this.rucheService.getCurrentHive().description}}</span>
-        <span *ngIf="this.rucheService.getCurrentHive().description === ''" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
+        <span *ngIf="(this.rucheService.getCurrentHive().description === null) || (this.rucheService.getCurrentHive().description === '')" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
           {{this.rucheService.getCurrentHive().name}}</span>
       <button data-toggle="tooltip" data-html="true" title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW' | translate}}"
         data-toggle="modal" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" style="float:right;width: 10%; padding: 0;border: none; background: none;margin-top: 0px;" (click)="initForm()"
