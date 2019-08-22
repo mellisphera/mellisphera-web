@@ -98,7 +98,7 @@ export class AlertsHiveComponent implements OnInit {
     this.option = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliUx);
     this.option.title.text = this.graphGlobal.getTitle('AlertsHive');
     this.option.calendar.orient = 'horizontal';
-    this.option.calendar.top = 70;
+    this.option.calendar.top = 65;
     this.option.calendar.left = '15%';
     this.option.calendar.bottom = '3%';
     this.option.calendar.height = '45%';
