@@ -40,6 +40,11 @@ export class WeightHivesComponent{
           top: 5,
           text: this.graphGlobal.getTitle("DailyWeightIncomes"),
           left: 'center',
+          textStyle: {
+            color: 'black',
+            fontWeight : 'normal',
+            fontSize : 16
+        }
       },
       tooltip: {
           trigger: 'item',

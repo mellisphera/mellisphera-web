@@ -11,8 +11,11 @@ limitations under the License. -->
 
 <div id="user-group">
   <div class="panel panel-primary">
-  <div class="panel-heading"><span>{{ 'APIARY_NOTES.TITLE' | translate}}
-    {{this.rucherService.rucher.name}}</span>
+  <div class="panel-heading">
+    <span *ngIf="this.rucherService.rucher.description !== ''" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
+      {{this.rucherService.rucher.name}} : {{this.rucherService.rucher.description}}</span>
+      <span *ngIf="this.rucherService.rucher.description === ''" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
+        {{this.rucherService.rucher.name}}</span>
     <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
     title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}" data-toggle="modal"
     style="float:right;width: 10%; padding: 0;border: none; background: none;" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" data-target="#newObservationModal"
@@ -22,22 +25,15 @@ limitations under the License. -->
     </div>
   <div class="user-sensors panel-body" id="notesApiary">
     <table class="table">
-      <thead>
-        <tr>
-          <th scope="col" style="width: 100px;">{{ 'HIVE_DETAIL.OBSERVATIONS.DATE' | translate}}</th>
-          <th scope="col">{{ 'HIVE_DETAIL.OBSERVATIONS.SENTENCE' | translate}}</th>
-          <th class="text-right" scope="col" style="width: 80px;"></th>
-        </tr>
-      </thead>
       <tbody>
         <tr class="hoverStyle" *ngFor="let obs of observationService.observationsApiary; let i = index;">
-          <td>{{ obs.date | myDate }}</td>
+          <td style="width: 100px;">{{ obs.date | myDate }}</td>
           <td>{{ obs.sentence }}</td>
-          <td class="text-right">
+          <td class="text-right"  style="width: 80px;">
             <button data-toggle="tooltip" data-html="true"
               title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
               data-target="#editObservationModal" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" (click)="onSelectObs(obs)" class="btn btn-primary  "
-              style="padding: 0;border: none; background: none;">
+              style="padding: 0;border: none; background: none;margin-right: 10px;">
               <i class="fa fa-edit fa-2x"></i>
             </button>
             <button type="button" class="btn btn-warning" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))"
@@ -46,7 +42,7 @@ limitations under the License. -->
               popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top"
               confirmText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}"
               cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObs(i,obs)"
-              style="padding: 0;border: none; background: none;">
+              style="padding: 0;border: none; background: none;margin-right: 10px;">
               <i class="fa fa-times fa-2x"></i>
             </button>
           </td>

@@ -106,7 +106,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
           }else if(this.screenWidth >990){
             document.getElementById('sensorsHive').style.height = ''+((heightRight - heightPicture - 30)/2) + 'px';
           }else{
-            document.getElementById('sensorsHive').style.height = ''+((heightRight - heightPicture - 30)/2) + 'px';
+            document.getElementById('sensorsHive').style.height = ''+(40) + 'vh';
           }
     
       }

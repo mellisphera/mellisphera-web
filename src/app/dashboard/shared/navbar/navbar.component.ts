@@ -352,7 +352,11 @@ export class NavbarComponent implements OnInit {
     apiarySubmit() {
         const formValue = this.rucherForm.value;
         if (this.photoApiary == null) {
-            this.newApiary.photo = './assets/imageClient/testAccount.png';
+            if (this.userService.getJwtReponse().country === "FR") {
+                this.newApiary.photo = './assets/imageClient/background_draw_color_FR.png';
+            } else {
+                this.newApiary.photo = './assets/imageClient/background_draw_color.png';
+            }
         }
         this.newApiary.id = null;
         this.newApiary.idUsername = this.userService.getIdUserLoged();
