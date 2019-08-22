@@ -62,7 +62,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     }
     console.log(this.option);
     let yAxis = Object.assign({}, BASE_OPTIONS.yAxis);
-    yAxis.name = 'Brood';
+    yAxis.name = 'Brood (%)';
     yAxis.min = 0;
     yAxis.max = 100;
     this.option.yAxis.push(yAxis);
@@ -80,7 +80,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     };
     this.option.tooltip.formatter = (params) => {
       return params.map((_elt, index) => {
-        return this.getTooltipFormater(_elt.marker, (index === 0 ? this.unitService.getHourlyDate(_elt.data.name) : ''), new Array(
+        return this.getTooltipFormater(_elt.marker, (index === 0 ? this.unitService.getDailyDate(_elt.data.name) : ''), new Array(
           {
             name: _elt.seriesName,
             value: this.unitService.getValRound(_elt.data.value[1]),
@@ -188,10 +188,10 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';
-    let templateValue = '{*} {n}: <B>{v} {u}</B>';
+    let templateValue = '{*} {n}: <B>{v} {u}</B> {R}';
     let tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
-      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
+      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
     }).join('');
 
     return tooltipGlobal;

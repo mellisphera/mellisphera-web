@@ -120,14 +120,14 @@ export class GraphGlobal {
     setImperial() {
         // If he is French
         if (this.userService.getJwtReponse().country === "FR") {
-            this.weight.name = 'Poids lbs';
-            this.humidity.name = 'HUmidité %';
+            this.weight.name = 'Poids (lbs)';
+            this.humidity.name = 'HUmidité (%)';
             this.rain.name = 'Pluie';
             // EN
         } else {
-            this.weight.name = 'Weight lbs';
+            this.weight.name = 'Weight (lbs)';
             this.humidity.name = 'Humidity %'
-            this.rain.name = 'Rain'
+            this.rain.name = 'Rain';
         }
         this.humidity.min = 0;
         this.rain.unitT = '″';
@@ -153,13 +153,13 @@ export class GraphGlobal {
     setMetric() {
         // If he is French
         if (this.userService.getJwtReponse().country === "FR") {
-            this.weight.name = 'Poids Kg';
+            this.weight.name = 'Poids (Kg)';
             this.humidity.name = 'HUmidité %';
             this.rain.name = 'Pluie';
 
             // EN
         } else {
-            this.weight.name = 'Weight Kg';
+            this.weight.name = 'Weight (Kg)';
             this.humidity.name = 'Humidity %'
             this.rain.name = 'Rain'
 

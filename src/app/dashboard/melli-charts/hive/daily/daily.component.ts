@@ -77,7 +77,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Wma.png' },
       { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/He.png' },
       { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Br.png' },
-      { name: 'ASTRO', id: 'ASTRO', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
+      { name: 'Moon', id: 'Moon', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
       { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/alert.svg'}
     ];
@@ -242,7 +242,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
         this.dailyManager.getChartDailyWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
         break;
-      case 'ASTRO':
+      case 'Moon':
         this.dailyManager.getChartAstro(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
