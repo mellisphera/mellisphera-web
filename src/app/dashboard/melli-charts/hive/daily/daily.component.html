@@ -16,8 +16,8 @@ limitations under the License. -->
         <li *ngFor="let type of getlabelByType('DEVICE')" (click)="setType(type)" [class]="type.class" [id]="type.id">
           <img [src]="type.icons" />
         <li>
-        <li (click)="exportToCsv('DEVICE')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
-      </ul>
+<!--         <li (click)="exportToCsv('DEVICE')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
+ -->      </ul>
     </div>
     <div>
       <p style="text-align: center;">{{ currentDeviceTextPeriodCalendar }}{{ dailyManager.meanPeriodDevice.value }}
@@ -32,8 +32,8 @@ limitations under the License. -->
       <ul class="nav responsive-nav flex tools" id="env-group">
         <li *ngFor="let type of getlabelByType('ENV')" (click)="setType(type)" [class]="type.class" [id]="type.id">
           <img [src]="type.icons" /></li>
-        <li (click)="exportToCsv('ENV')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
-      </ul>
+<!--         <li (click)="exportToCsv('ENV')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
+ -->      </ul>
       <div class="mean-grup">
         <!--         <ng-container *ngIf="currentTypeDailyOther.name === 'RAIN'">
           <p style="text-align: center;">{{ currentOtherTextPeriodCalendar }}{{ dailyManager.meanPeriodOther.value }}
@@ -51,8 +51,8 @@ limitations under the License. -->
       <ul class="nav responsive-nav flex tools" id="other-group">
         <li *ngFor="let type of getlabelByType('OTHER')" (click)="setType(type)" [class]="type.class" [id]="type.id">
           <img [src]="type.icons" /></li>
-        <li (click)="exportToCsv('OTHER')" class="item-type"><img src="./assets/icons/exportToCsv.png">></li>
-      </ul>
+<!--         <li (click)="exportToCsv('OTHER')" class="item-type"><img src="./assets/icons/exportToCsv.png">></li>
+ -->      </ul>
     </div>
     <div class="mean-grup">
       <ng-container *ngIf="currentTypeDailyOther.name === 'RAIN'">

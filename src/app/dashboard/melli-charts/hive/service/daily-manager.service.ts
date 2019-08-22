@@ -155,7 +155,7 @@ export class DailyManagerService {
     }
     switch (name) {
       case 'WEATHER':
-        return new Array(value.iconDay, value.maxTempDay, value.minTempDay);
+        return new Array(value.iconDay, value.maxTempDay, value.minTempDay, value.maxHumidityDay, value.minHumidityDay);
       case 'RAIN':
         return value;
       case 'ALERT':
@@ -1016,6 +1016,16 @@ export class DailyManagerService {
               name: 'TempMin',
               value: this.graphGlobal.getNumberFormat(params.data[3]),
               unit: this.graphGlobal.getUnitByType(type.unit)
+            },
+            {
+              name: 'HumidityMax',
+              value: this.graphGlobal.getNumberFormat(params.data[4]),
+              unit: this.graphGlobal.getUnitByType('P')
+            },
+            {
+              name: 'HumidityMin',
+              value: this.graphGlobal.getNumberFormat(params.data[5]),
+              unit: this.graphGlobal.getUnitByType('P')
             }
           ));
         };
@@ -1059,8 +1069,8 @@ export class DailyManagerService {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
               name: type.name,
-              value: this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])),
-              unit: this.graphGlobal.getUnitByType(type.unit)
+              value: params.data[1],
+              unit: ''
             },
           ));
         }
