@@ -193,7 +193,7 @@ export class HourlyManagerService {
 
   cleanChartsInstance(chartInstance: any, labelSerie: string) {
     if (chartInstance.getOption().series.filter(_filter => _filter.name !== labelSerie).length > 0) {
-      this.baseOpions = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
+      this.baseOpions = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliCharts);
     }
   }
 

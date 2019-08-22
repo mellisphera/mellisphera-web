@@ -39,6 +39,7 @@ export class ObservationService {
   mergeStackObsHIve: any;
   private imgHiveObs: string;
   private imgHiveAct: string;
+  private rangeCalendar: Date[];
   private rangeObs: Date[];
   constructor(private http: HttpClient,
       private stackService: StackService,
@@ -174,12 +175,21 @@ export class ObservationService {
     return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, range);
   }
 
+  /**
+   *
+   *
+   * @param {*} idApiary
+   * @returns {Observable<Observation[]>}
+   * @memberof ObservationService
+   */
+  getObservationByIdApiaryForMelliUx(idApiary): Observable<Observation[]> {
+    return this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt)));
+  }
 
   /**
    *
    *
    * @param {string} idApiary
-   * @returns {Observable<Observation[]>}
    * @memberof ObservationService
    */
   getObservationByIdApiary(idApiary: string){

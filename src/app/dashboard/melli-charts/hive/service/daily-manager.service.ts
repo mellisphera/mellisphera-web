@@ -104,9 +104,9 @@ export class DailyManagerService {
       unit: ''
     }
 
-    this.baseOptionsInt = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
-    this.baseOptionEnv = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
-    this.baseOptionExt = Object.assign({}, BASE_OPTIONS.baseOptionDaily);
+    this.baseOptionsInt = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliCharts);
+    this.baseOptionEnv = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliCharts);
+    this.baseOptionExt = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliCharts);
     const dateNowLastSevenDay = new Date();
     dateNowLastSevenDay.setDate(new Date().getDate() - 8);
     this.rangeSevenDay = [
@@ -902,7 +902,7 @@ export class DailyManagerService {
         this.baseOptionEnv = option;
 
       }
-    )
+    );
 
   }
 

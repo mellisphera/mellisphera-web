@@ -10,7 +10,48 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 export const CALENDAR = {
-    calendar: {
+    calendarMelliUx: {
+        // height: '80%',
+        // width: '80%',
+        left: 'center',
+        cellSize: [40 , 40],
+        range: [new Date().getFullYear() + '-' +( new Date().getMonth() - 1) + '-' + '01', new Date()],
+        orient: 'vertical',
+        splitLine: {
+            show: true,
+            lineStyle: {
+                color: '#000',
+                width: 4,
+                type: 'solid'
+            }
+        },
+        dayLabel: {
+            margin: 10,
+            nameMap: [],
+            position: 'start',
+            firstDay: 1, // start on Monday
+        },
+        monthLabel: {
+            nameMap: [],
+            position: 'start'
+        },
+        yearLabel: {
+            formatter: '{start}-{end}',
+            show: false,
+            margin: 40,
+            textStyle: {
+                color: 'black'
+            }
+        },
+        itemStyle: {
+            normal: {
+                color: '#EBEBEB',
+                borderWidth: 1,
+                borderColor: '#111'
+            }
+        }
+    },
+    calendarMelliChart: {
         // height: '80%',
         // width: '80%',
         left: 'center',

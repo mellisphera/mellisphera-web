@@ -71,7 +71,32 @@ export const BASE_OPTIONS = {
         series: []
 
     },
-    baseOptionDaily: {
+    baseOptionDailyMelliUx: {
+        title: {
+            top: 5,
+            text: '',
+            left: 'center',
+            textStyle: {
+              color: 'black',
+              fontWeight : 'normal',
+              fontSize : 16
+            }
+         },
+        legend: {},
+        axisPointer: {
+            link: { xAxisIndex: 'all' }
+        },
+/*         toolbox: {
+            orient: 'vertical',
+            itemSize: 20,
+            feature: {
+                dataView: { readOnly: false },
+                saveAsImage: {}
+            }
+        }, */
+        calendar: CALENDAR.calendarMelliUx
+    },
+    baseOptionDailyMelliCharts: {
         // visualMap: {},
         legend: {},
         axisPointer: {
@@ -85,7 +110,7 @@ export const BASE_OPTIONS = {
                 saveAsImage: {}
             }
         }, */
-        calendar: CALENDAR.calendar
+        calendar: CALENDAR.calendarMelliChart
     },
 
     yAxis: {

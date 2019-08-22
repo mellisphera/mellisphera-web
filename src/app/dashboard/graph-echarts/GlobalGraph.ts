@@ -224,10 +224,10 @@ export class GraphGlobal {
      *
      *
      * @param {String} nomGraphe
-     * @returns {*}
+     * @returns {string}
      * @memberof GraphGlobal
      */
-    getTitle(nomGraphe: String): any {
+    getTitle(nomGraphe: String): string {
         var titre: any;
 
         //Found the title with the name of the graph with the right language

@@ -29,6 +29,10 @@ import { PassThrough } from 'stream';
 import { Observable } from 'rxjs';
 import { MyNotifierService } from '../../../service/my-notifier.service';
 import { NotifList } from '../../../../../constants/notify';
+import { ObservationService } from '../../../service/api/observation.service';
+import { BASE_OPTIONS } from '../../../melli-charts/charts/BASE_OPTIONS';
+import { SERIES } from '../../../melli-charts/charts/SERIES';
+import { GLOBAL_ICONS } from '../../../melli-charts/charts/icons/icons';
 
 @Component({
   selector: 'app-alerts-hive',
@@ -56,7 +60,8 @@ export class AlertsHiveComponent implements OnInit {
     private userService: UserloggedService,
     public notifierService: NotifierService,
     private renderer: Renderer2,
-    private myNotifer: MyNotifierService) {
+    private myNotifer: MyNotifierService,
+    private observationService: ObservationService) {
     this.img = 'M581.176,290.588C581.176,130.087,451.09,0,290.588,0S0,130.087,0,290.588s130.087,290.588,290.588,290.588' +
               'c67.901,0,130.208-23.465,179.68-62.476L254.265,302.696h326.306C580.716,298.652,581.176,294.681,581.176,290.588z' +
               'M447.99,217.941c-26.758,0-48.431-21.697-48.431-48.431s21.673-48.431,48.431-48.431c26.758,0,48.431,21.697,48.431,48.431' +
@@ -89,82 +94,24 @@ export class AlertsHiveComponent implements OnInit {
     this.getOption();
   }
 
-  getOption(){
-    this.option = {
-      backgroundColor: 'white',
-      title: {
-        text: this.graphGlobal.getTitle("AlertsHive"),
-        left: 'center',
-        textStyle: {
-          color: 'black',
-          fontWeight : 'normal',
-          fontSize : 16
-        }
-      },
-      tooltip: {
-        trigger: 'item',
-        formatter: (params) => {
-          if(params.data[3] !== 'OK'){
-          return params.marker + (params.data[3] === 'Daily' ?  this.unitService.getDailyDate(params.data[0]) : this.unitService.getHourlyDate(params.data[0])) + '<br/>' + params.data[1].split('|').join('<br/>');
-          }
-        }
-      },
-      toolbox: {
-        orient: 'vertical',
-        itemSize: 15,
-        top: 'middle',
-        feature: {
-          dataView: { show: true, readOnly: false },
-          restore: { show: true },
-          saveAsImage: { show: true }
-        }
-      },
-      calendar: [{
-        top: 50,
+  getOption() {
+    this.option = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliUx);
+    this.option.title.text = this.graphGlobal.getTitle('AlertsHive');
+    this.option.calendar.orient = 'horizontal';
+    this.option.calendar.top = 70;
+    this.option.calendar.left = '15%';
+    this.option.calendar.bottom = '3%';
+    this.option.calendar.height = '45%';
+    this.option.calendar.width = '77%';
+    this.option.calendar.cellSize = ['20', '20'];
+    /*        top: 70,
         left: '15%',
+        bottom: '3%',
         height: '45%',
         width: '77%',
         range: MyDate.getRangeForCalendarAlerts(),
         orient: 'horizontal',
-        cellSize: ['20', '20'],
-        splitLine: {
-          show: true,
-          lineStyle: {
-            color: '#000',
-            width: 2,
-            type: 'solid'
-          }
-        },
-        dayLabel: {
-          nameMap: this.graphGlobal.getDays(),
-          firstDay: 1, // start on Monday
-        },
-        monthLabel: {
-          nameMap: this.graphGlobal.getMonth()
-        },
-        yearLabel: {
-          formatter: '{start}-{end}',
-          show: false,
-          margin: 40,
-          orient: 'horizontal',
-          top: 30,
-          itemWidth: 15,
-          itemSymbol: 'diamond',
-          left: 'center',
-          textStyle: {
-            color: 'black'
-          }
-        },
-        itemStyle: {
-          normal: {
-            color: '#EBEBEB',
-            borderWidth: 1,
-            borderColor: '#111'
-          }
-        }
-      }],
-      series: []
-    };
+        cellSize: ['20', '20'], */
   }
 
   ngOnInit() {
@@ -201,6 +148,7 @@ export class AlertsHiveComponent implements OnInit {
     this.option.series = new Array();
     this.echartInstance.clear();
   }
+
   initCalendar(hive?: RucheInterface){
     if (hive) {
       this.alertsService.getAlertsByHive(hive.id).subscribe(
@@ -211,7 +159,7 @@ export class AlertsHiveComponent implements OnInit {
             this.cleanSerie();
             this.getOption();
             this.loadCalendar();
-          }else{
+          } else {
           this.showCalendar();
           this.cleanSerie();
           this.getOption();
@@ -222,143 +170,216 @@ export class AlertsHiveComponent implements OnInit {
     } else {
       this.loadCalendar();
     }
+}
 
+  joinObservationAlert(_obs: any[], _alert: any[]): any[] {
+    return _obs.concat(_alert).map(_elt => {
+      return { date: _elt.date, value: 0, sensorRef: _elt.sentence ? 'inspect' : 'notif' }
+    });
+  }
+
+  getSerieByData(data: Array<any>, nameSerie: string, serieTemplate: any, next: Function): void {
+    let sensorRef: Array<string> = [];
+    data.forEach((_data) => {
+      if (sensorRef.indexOf(_data.sensorRef) === -1) {
+        sensorRef.push(_data.sensorRef);
+        let serieTmp = Object.assign({}, serieTemplate);
+        serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
+        if (data.map(_elt => _elt.date)[0] !== undefined) {
+          serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
+            return [_map.date, _map.value, _map.sensorRef];
+          });
+        } else {
+
+          serieTmp.data = data;
+        }
+        next(serieTmp);
+      }
+    });
   }
 
   loadCalendar() {
-    // date => [Les nombres d'alertes correspondants][Le rang de la prochaine alerte a placer dans le tableau]
-    this.mapDateNbAlerts.clear;
-    this.mapDateNbAlerts = new Map();
-
-    // On regarde combien il y a d'alertes par jour pour pouvoir bien les placer
-    this.alertsService.hiveAlerts.forEach(alerts => {
-      // Si il y a deja une alerte ce jour, on incrémente
-      let date = MyDate.convertDate(MyDate.getWekitDate(alerts.date.toString()));
-      if(this.mapDateNbAlerts.has(date)){
-        let nbAlerts = this.mapDateNbAlerts.get(date);
-        nbAlerts[0] += 1;
-        this.mapDateNbAlerts.set(date,nbAlerts);
-      // Si il n'y a pas encore d'alertes ce jour
-      }else{
-        this.mapDateNbAlerts.set(date,[0,-1]);
-      }
-      
-    });
-
-    // On met les valeurs dans le calendrier
-    let serieTmp = {
-      type: 'custom',
-      itemStyle : {
-        color : ''
-      },
-      name: 'toto',
-      renderItem: null,
-      coordinateSystem: 'calendar',
-      data: []
-    }
-    let type = [];
-    this.alertsService.hiveAlerts.forEach((_alert, index) => {
-      if (type.indexOf(_alert.type) === -1) {  
-        type.push(_alert.type);
-        let newSerie = Object.assign({}, serieTmp);
-        newSerie.name = _alert.type;
-        newSerie.data = this.alertsService.hiveAlerts.filter(_filter => _filter.type === _alert.type).map(_map => [ _map.date, _map.message, _map.picto, _map.time]);
-        newSerie.itemStyle = {
-          color : this.alertsService.getColor(_alert.type)
-        };
-        newSerie.renderItem = (params, api) => {
-          try {
+    const obs: Array<Observable<any>> = [
+      this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive().id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))),
+      this.alertsService.getAlertByHiveMelliCharts(this.rucheService.getCurrentHive().id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt)))
+    ];
+    Observable.forkJoin(obs).subscribe(
+      _data => {
+        const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
+        const joinData = _data[0].concat(_data[1])
+        console.log(dateJoin);
+        let option = Object.assign({}, this.option);
+        option.series = new Array();
+        option.legend = Object.assign({}, BASE_OPTIONS.legend);
+        option.legend.selectedMode = 'single';
+        this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
+          serieComplete.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
             let cellHeight = params.coordSys.cellHeight;
-            // Iteration of alert rang
-            let date = MyDate.convertDate(new Date(api.value(0)));
-            let nbAlerts = this.mapDateNbAlerts.get(date);
-            // if(nbAlerts[1] < nbAlerts[0]){
-            nbAlerts[1] += 1;
-            this.mapDateNbAlerts.set(MyDate.convertDate(new Date(api.value(0))),nbAlerts);
-            // set constants
-            let nbAlertsOfThisDay = this.mapDateNbAlerts.get(date)[0];
-            let rangAlertsOfThisDay = this.mapDateNbAlerts.get(date)[1];
-            
-            // S'il y a moins de 3 alertes
-            if(nbAlertsOfThisDay < 2){
-              return {
+            let group = {
+              type: 'group',
+              children: []
+            };
+            group.children.push({
+              type: 'rect',
+              z2: 0,
+              shape: {
+                x: -cellWidth / 2,
+                y: -cellHeight / 2,
+                width: cellWidth,
+                height: cellHeight,
+              },
+              position: [cellPoint[0], cellPoint[1]],
+              style: {
+                fill: this.getColorCalendarByValue(api.value(0)),
+                stroke: 'black'
+              }
+            });
+            const dataByDate: any[] = joinData.filter(_filter => {
+              return this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.getTimeStampFromDate(api.value(0));
+            });
+            if (dataByDate.length > 1) {
+              group.children.push({
                 type: 'path',
+                z2: 1000,
                 shape: {
-                  pathData: this.alertsService.getPicto(params.seriesName),
-                  // tabPos[Nombre d'alertes dans le jour][x ou y][rang de la prochaine alerte a traiter]
-                  x: -0.35 * cellWidth + this.tabPos[nbAlertsOfThisDay][0][rangAlertsOfThisDay]*cellWidth,
-                  y: -0.35 * cellHeight  + this.tabPos[nbAlertsOfThisDay][1][rangAlertsOfThisDay]*cellHeight,
-                  width: cellWidth / 1.3,
-                  height: cellHeight / 1.3
+                  pathData: GLOBAL_ICONS.THREE_DOTS,
+                  x: -11,
+                  y: -10,
+                  width: 25,
+                  height: 25
                 },
                 position: [cellPoint[0], cellPoint[1]],
-                style : {
-                  fill : this.alertsService.getColor(params.seriesName)
-                }
-            }
-            // S'il y a trop d'alertes
-            }else{
-              return {
+              })
+            } else if (dataByDate.length === 1) {
+              let icon;
+              if (dataByDate !== undefined && dataByDate[0].sentence) {
+                icon = dataByDate[0].type === 'HiveObs' ? GLOBAL_ICONS.HIVE_OBS : GLOBAL_ICONS.HIVE_ACT;
+              } else {
+                icon = this.alertsService.getPicto(dataByDate[0].type);
+              }
+              group.children.push({
                 type: 'path',
+                z2: 1000,
                 shape: {
-                  pathData: this.alertsService.getPicto(params.seriesName),
-                  // tabPos[Nombre d'alertes dans le jour][x ou y][rang de la prochaine alerte a traiter]
-                  x: -0.35 * cellWidth + this.tabPos[nbAlertsOfThisDay][0][rangAlertsOfThisDay]*cellWidth,
-                  y: -0.35 * cellHeight + this.tabPos[nbAlertsOfThisDay][1][rangAlertsOfThisDay]*cellHeight,
-                  width: cellWidth / 2,
-                  height: cellHeight / 2,
+                  pathData: icon,
+                  x: -11,
+                  y: -10,
+                  width: 25,
+                  height: 25
                 },
                 position: [cellPoint[0], cellPoint[1]],
-                style : {
-                  fill : this.alertsService.getColor(params.seriesName)
-                }
+              })
             }
-            }
-          } 
-        // }
-          catch {}
-        },
-        this.option.series.push(newSerie);
-      }
-    });
+            return group;
 
-    // Mark the current day
-    let newSerie = Object.assign({}, serieTmp);
-        newSerie.name = 'thisDay';
-        newSerie.data = [ [new Date(), 0, 'OK', 'OK']];
-        newSerie.renderItem = (params, api) => {
-          let cellPoint = api.coord(api.value(0));
-          let cellWidth = params.coordSys.cellWidth;
-          let cellHeight = params.coordSys.cellHeight;
-          return {
-            type: 'rect',
-            z2: 0 ,
-            shape: {
-              x: -cellWidth / 2,
-              y: -cellHeight / 2,
-              width: cellWidth,
-              height: cellHeight,
-            },
-            position: [cellPoint[0], cellPoint[1]],
-            style : {
-              fill: 'none',
-              stroke : 'red',
-              lineWidth : 4
-            }
           }
-        };
-        this.option.series.push(newSerie);
+          let newSerie = Object.assign({}, SERIES.custom);
+          newSerie.name = 'thisDay';
+          newSerie.data = [ [new Date(), 0, 'OK', 'OK']];
+          newSerie.renderItem = (params, api) => {
+            let cellPoint = api.coord(api.value(0));
+            let cellWidth = params.coordSys.cellWidth;
+            let cellHeight = params.coordSys.cellHeight;
+            return {
+              type: 'rect',
+              z2: 0 ,
+              shape: {
+                x: -cellWidth / 2,
+                y: -cellHeight / 2,
+                width: cellWidth,
+                height: cellHeight,
+              },
+              position: [cellPoint[0], cellPoint[1]],
+              style : {
+                fill: 'none',
+                stroke : 'red',
+                lineWidth : 4
+              }
+            }
+          };
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.range = MyDate.getRangeForCalendarAlerts();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.legend.data.push(serieComplete.name);
+          option.tooltip = this.getTooltipBySerie(joinData);
+          option.series.push(serieComplete);
+          option.series.push(newSerie);
 
-    this.checkChartInstance().then(status => {
-      this.echartInstance.setOption(this.option,false);
-    }).catch(err => {
-      console.log(err);
-    })
+        });
+        this.echartInstance.setOption(option, true);
+        this.option = option;
+      });
   }
   renderItem() {
 
+  }
+
+  getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
+    let templateHeaderTooltip = '{*} <B>{D}</B> </br>';
+    let templateValue = '{n}: <B>{v} {u}</B>';
+    let tooltipGlobal;
+    tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
+    tooltipGlobal += series.map(_serie => {
+      return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
+    }).join('</br>');
+
+    return tooltipGlobal;
+  }
+
+  getColorCalendarByValue(date: Date, optionValue?: any): string {
+    let dateToday = new Date();
+    let dateCalendar = new Date(date);
+    dateToday.setHours(2);
+    dateToday.setMinutes(0);
+    dateToday.setSeconds(0);
+    dateToday.setMilliseconds(0);
+    dateCalendar.setMilliseconds(0);
+    if (dateCalendar.getTime() === dateToday.getTime()) {
+      return '#FF2E2C';
+    } else if (optionValue === 1) { // Pour calendrier moon
+      return '#ABC0C5';
+    } else {
+      return '#EBEBEB';
+    }
+  }
+
+  getTooltipBySerie(extraData?: any[]): any {
+    const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
+    tooltip.formatter = (params) => {
+      if(params.data[3] !== 'OK'){
+      const dataByDateTooltip = extraData.filter(_filter => {
+        return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.date)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
+      });
+      return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
+        let type = 'Notif';
+        let img = '';
+        if (_singleData.sentence) {
+          type = 'Inspection';
+          img = '<img style={S} src={I} />';
+          img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/hiveObs.svg' : './assets/picto_mellicharts/hiveAct.svg'))
+        } else {
+          img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
+        }
+        img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
+        return {
+          name: img + type,
+          value: type === 'Inspection' ? _singleData.sentence : _singleData.message,
+          unit: ''
+        }
+      }));
+    }
+    }
+    return tooltip;
+  }
+  getTimeStampFromDate(_date: Date | string): number {
+    const date = new Date(_date);
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+    return date.getTime();
   }
   onClickRead(alert: AlertInterface, i: number) {
     // Update in database
