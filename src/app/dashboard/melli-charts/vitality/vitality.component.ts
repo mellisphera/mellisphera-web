@@ -62,7 +62,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     }
     console.log(this.option);
     let yAxis = Object.assign({}, BASE_OPTIONS.yAxis);
-    yAxis.name = 'Brood (%)';
+    yAxis.name = this.graphGlobal.brood.name;
     yAxis.min = 0;
     yAxis.max = 100;
     this.option.yAxis.push(yAxis);
@@ -186,6 +186,12 @@ export class VitalityComponent implements OnInit, OnDestroy {
     )
   }
 
+  /**
+   * 
+   * @param markerSerie 
+   * @param date 
+   * @param series 
+   */
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';
     let templateValue = '{*} {n}: <B>{v} {u}</B> {R}';

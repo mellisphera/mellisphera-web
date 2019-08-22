@@ -43,6 +43,12 @@ export class GraphGlobal {
         min: number,
         max: number,
         unitT: string,
+    };
+    public brood: {
+        name: string,
+        min: number,
+        max: number,
+        unitT: string,
     }
 
     public titresFR: Array<any>;
@@ -63,6 +69,12 @@ export class GraphGlobal {
             unitT: '° C',
         };
         this.humidity = {
+            name: '',
+            min: null,
+            max: 0,
+            unitT: '%',
+        };
+        this.brood = {
             name: '',
             min: null,
             max: 0,
@@ -123,11 +135,13 @@ export class GraphGlobal {
             this.weight.name = 'Poids (lbs)';
             this.humidity.name = 'HUmidité (%)';
             this.rain.name = 'Pluie';
+            this.brood.name = 'Couvain (%)';
             // EN
         } else {
             this.weight.name = 'Weight (lbs)';
-            this.humidity.name = 'Humidity %'
+            this.humidity.name = 'Humidity (%)';
             this.rain.name = 'Rain';
+            this.brood.name = 'Brood (%)';
         }
         this.humidity.min = 0;
         this.rain.unitT = '″';
