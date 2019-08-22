@@ -12,9 +12,9 @@ limitations under the License. -->
 <div id="user-group">
   <div class="panel panel-primary">
   <div class="panel-heading">
-    <span *ngIf="this.rucherService.rucher.description !== ''" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
+    <span *ngIf="(this.rucherService.rucher.description !== '') && (this.rucherService.rucher.description !== null)" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
       {{this.rucherService.rucher.name}} : {{this.rucherService.rucher.description}}</span>
-      <span *ngIf="this.rucherService.rucher.description === ''" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
+      <span *ngIf="(this.rucherService.rucher.description === '') || (this.rucherService.rucher.description === null)" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
         {{this.rucherService.rucher.name}}</span>
     <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
     title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}" data-toggle="modal"
