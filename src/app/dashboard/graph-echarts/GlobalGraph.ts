@@ -170,14 +170,14 @@ export class GraphGlobal {
             this.weight.name = 'Poids (Kg)';
             this.humidity.name = 'HUmidité %';
             this.rain.name = 'Pluie';
+            this.brood.name = 'Couvain (%)';
 
             // EN
         } else {
             this.weight.name = 'Weight (Kg)';
             this.humidity.name = 'Humidity %'
             this.rain.name = 'Rain'
-
-
+            this.brood.name = 'Brood (%)';
         }
         this.humidity.name = 'Humidity %'
         this.rain.unitT = 'mm';
