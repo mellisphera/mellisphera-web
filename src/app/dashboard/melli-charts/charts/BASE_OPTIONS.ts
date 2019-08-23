@@ -89,14 +89,14 @@ export const BASE_OPTIONS = {
         axisPointer: {
             link: { xAxisIndex: 'all' }
         },
-/*         toolbox: {
+         toolbox: {
             orient: 'vertical',
             itemSize: 20,
             feature: {
                 dataView: { readOnly: false },
                 saveAsImage: {}
             }
-        }, */
+        },
         calendar: CALENDAR.calendarMelliUx
     },
     baseOptionDailyMelliCharts: {

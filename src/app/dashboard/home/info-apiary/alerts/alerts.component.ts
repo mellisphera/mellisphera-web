@@ -158,6 +158,7 @@ export class AlertsComponent implements OnInit {
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
+        console.log(_data);
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1])
         console.log(dateJoin);

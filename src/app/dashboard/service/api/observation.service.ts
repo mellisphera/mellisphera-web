@@ -183,7 +183,7 @@ export class ObservationService {
    * @memberof ObservationService
    */
   getObservationByIdApiaryForMelliUx(idApiary): Observable<Observation[]> {
-    return this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt)));
+    return this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, MyDate.getRangeForCalendarAlerts());
   }
 
   /**

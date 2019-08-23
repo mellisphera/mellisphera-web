@@ -75,13 +75,19 @@ export class MyDate {
         return rangeCalendar;
       }
 
-      static getRangeForCalendarAlerts(){
+      /**
+       *
+       *
+       * @static
+       * @returns {Date[]}
+       * @memberof MyDate
+       */
+      static getRangeForCalendarAlerts(): Date[]{
         let max = new Date();
-        let min = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
+        let min = new Date();
+        min.setMonth(max.getMonth() - 2);
         max.setDate(max.getDate() + 7);
-        let tmp = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
-        let rangeCalendar = [min, MyDate.convertDate(max)];
-        return rangeCalendar;
+        return [min, max];
       }
     
 /*     static getRangeFromDate(date: Date[]) {
