@@ -64,3 +64,8 @@ th{
     position: absolute;
     left: 15px;
 }
+
+.text-title{
+    display: inline-block;
+    width: 90%;
+}

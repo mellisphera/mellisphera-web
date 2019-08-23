@@ -21,12 +21,12 @@ export const CALENDAR = {
             show: true,
             lineStyle: {
                 color: '#000',
-                width: 4,
+                width: 2,
                 type: 'solid'
             }
         },
         dayLabel: {
-            margin: 10,
+            margin: 20,
             nameMap: [],
             position: 'start',
             firstDay: 1, // start on Monday

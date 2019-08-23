@@ -105,15 +105,15 @@ export class GraphGlobal {
             { 'graph': 'Humidity', 'titre': 'Humidité (%)' },
             { 'graph': 'loss', 'titre': 'perte' },
             { 'graph': 'Weight', 'titre': 'Poids' },
-            { 'graph': 'AlertsHive', 'titre': 'Notifications et alertes' },
-            { 'graph': 'AlertsApiary', 'titre': 'Notifications et alertes du rucher' },
+            { 'graph': 'AlertsHive', 'titre': 'Inspections et notifications' },
+            { 'graph': 'AlertsApiary', 'titre': 'Inspections et notifications du rucher' },
             { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' }
         ];
 
         // EN
         this.titresEN = [
             { 'graph': 'reserveMiel', 'titre': 'Honey Stock' },
-            { 'graph': 'DailyWeightIncomes', 'titre': 'Daily weight incomes' },
+            { 'graph': 'DailyWeightIncomes', 'titre': 'Daily weight income' },
             { 'graph': 'BroodDynamics', 'titre': 'Brood Dynamics' },
             { 'graph': 'InternalRelativeHumidity', 'titre': 'Internal Relative Humidity (max)' },
             { 'graph': 'InternalTemperature', 'titre': 'Internal Temperature' },
@@ -122,8 +122,8 @@ export class GraphGlobal {
             { 'graph': 'Humidity', 'titre': 'Humidity (%)' },
             { 'graph': 'loss', 'titre': 'loss' },
             { 'graph': 'Weight', 'titre': 'Weight' },
-            { 'graph': 'AlertsHive', 'titre': 'Notifications and alerts' },
-            { 'graph': 'AlertsApiary', 'titre': 'Notifications and alerts for the apiary' },
+            { 'graph': 'AlertsHive', 'titre': 'Inspections and notifications' },
+            { 'graph': 'AlertsApiary', 'titre': 'Inspections and notifications for the apiary' },
             { 'graph': 'Blooming', 'titre': 'Apiary Blooming calendar' }
         ];
     }

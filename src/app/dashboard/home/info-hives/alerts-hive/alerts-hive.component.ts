@@ -118,15 +118,18 @@ export class AlertsHiveComponent implements OnInit {
     this.alertsService.getAlertsByHive(this.rucheService.getCurrentHive().id).subscribe(
       _alert => {
         this.alertsService.hiveAlerts = _alert;
-        if(_alert.length === 0){
-          this.hideCalendar();
-          this.initCalendar();
-        }else{
-          this.showCalendar();
-          this.initCalendar();
-        }
-      }
-    );
+        this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive().id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))).subscribe(
+          _notes => {
+            if(_alert.length === 0 && _notes.length === 0){
+              this.hideCalendar();
+              this.initCalendar();
+            }else{
+              this.showCalendar();
+              this.initCalendar();
+            }
+          }
+        );
+      });
   }
 
   hideCalendar(){
@@ -154,7 +157,9 @@ export class AlertsHiveComponent implements OnInit {
       this.alertsService.getAlertsByHive(hive.id).subscribe(
         _alert => {
           this.alertsService.hiveAlerts = _alert;
-          if(_alert.length === 0){
+          this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive().id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))).subscribe(
+            _notes => {
+          if(_alert.length === 0 && _notes.length === 0){
             this.hideCalendar();
             this.cleanSerie();
             this.getOption();
@@ -167,6 +172,7 @@ export class AlertsHiveComponent implements OnInit {
           }
         }
       );
+    });
     } else {
       this.loadCalendar();
     }
@@ -174,7 +180,7 @@ export class AlertsHiveComponent implements OnInit {
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.date, value: 0, sensorRef: _elt.sentence ? 'inspect' : 'notif' }
+      return { date: _elt.date, value: 0, sensorRef: _elt.sentence ? 'Inspections' : 'Notifications' }
     });
   }
 
@@ -184,7 +190,7 @@ export class AlertsHiveComponent implements OnInit {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, serieTemplate);
-        serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
+        serieTmp.name = _data.sensorRef;
         if (data.map(_elt => _elt.date)[0] !== undefined) {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
             return [_map.date, _map.value, _map.sensorRef];
@@ -269,7 +275,7 @@ export class AlertsHiveComponent implements OnInit {
                   width: 25,
                   height: 25
                 },
-                position: [cellPoint[0], cellPoint[1]],
+                position: [cellPoint[0], cellPoint[1]-2],
               })
             }
             return group;

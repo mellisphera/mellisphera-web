@@ -199,9 +199,9 @@
             "NOSENSORS" : "There is no sensors for this hive."
         },
         "STOCK" : {
-            "NO_DATA" : "No data :",
+            "NO_DATA" : "No data",
             "STOCK" : "Honey Stock",
-            "WEIGHT" :  "Weight incomes"
+            "WEIGHT" :  "Daily weight income :"
         },
         "HOURLY" : {
             "RANGE" : "Range :",
@@ -220,7 +220,7 @@
             }
         },
         "ALERT" : {
-            "NOALERTS" : "No alerts for this hive !"
+            "NOALERTS" : "No inspections and notifications for this hive since 2 months ."
         }
     },
     "ALERTS" : {

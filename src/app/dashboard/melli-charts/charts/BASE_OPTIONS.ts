@@ -73,7 +73,7 @@ export const BASE_OPTIONS = {
     },
     baseOptionDailyMelliUx: {
         title: {
-            top: -5,
+            top: 0,
             bottom: 0,
             text: '',
             left: 'center',
@@ -93,8 +93,9 @@ export const BASE_OPTIONS = {
             orient: 'vertical',
             itemSize: 20,
             feature: {
-                dataView: { readOnly: false },
-                saveAsImage: {}
+                dataView: { show: false, readOnly: false },
+                restore: { show: false },
+                saveAsImage: { show: false }
             }
         },
         calendar: CALENDAR.calendarMelliUx
