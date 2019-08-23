@@ -50,8 +50,8 @@ export class HealthHiveComponent {
               top: 'middle',
               feature: {
                   dataView: { show: false, readOnly: false },
-                  restore: { show: true },
-                  saveAsImage: { show: true }
+                  restore: { show: false },
+                  saveAsImage: { show: false }
               }
           },
           calendar: [{

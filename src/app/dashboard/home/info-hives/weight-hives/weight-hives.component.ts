@@ -58,29 +58,10 @@ export class WeightHivesComponent{
           itemSize: 15,
           top: 'middle',
           feature: {
-              dataView: {
-                  show: false,
-                  readOnly: true,
-                  optionToContent: function (opt) {
-                      var series = opt.series;
-                      //var table = '<table style="width:100%;">';
-                      var table = '<textarea style="width:100%; height:500px;" >'
-                      table += series[0].name + '\n';
-                      let data;
-                      series[0].data.forEach(element => {
-                          table += MyDate.getIsoFromDate(MyDate.getWekitDate(element[0])) + ' => ' + element[1] + '\n';
-                      });
-                      table += series[1].name + '\n';
-                      series[1].data.forEach(element => {
-                          table += MyDate.getIsoFromDate(new Date(element[1])) + ' => ' + element[1] + '\n';
-                      });
-                      table += '</textarea>';
-                      return table;
-                  }
-              },
-              restore: { show: true },
-              saveAsImage: { show: true }
-          }
+            dataView: { show: false, readOnly: false },
+            restore: { show: false },
+            saveAsImage: { show: false }
+        }
       },
       legend: {
           top: 30,

@@ -199,9 +199,9 @@
             "NOSENSORS" : "Vous n'avez pas de capteurs pour cette ruche."
         },
         "STOCK" : {
-            "NO_DATA" : "Pas de données :",
+            "NO_DATA" : "Pas de données",
             "STOCK" : "Stock de miel",
-            "WEIGHT" :  "Gain de poids"
+            "WEIGHT" :  "Poids journaliers :"
         },
         "HOURLY" : {
             "RANGE" : "Intervalle :",
@@ -220,7 +220,7 @@
             }
         },
         "ALERT" : {
-            "NOALERTS" : "Pas d'alertes pour cette ruche !"
+            "NOALERTS" : "Pas d'inspections ni de notifications pour cette ruche depuis 2 mois."
         }
     },
     "ALERTS" : {

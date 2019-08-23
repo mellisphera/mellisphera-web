@@ -127,7 +127,7 @@ export class AlertsComponent implements OnInit {
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.date, value: 0, sensorRef: _elt.sentence ? 'inspect' : 'notif' }
+      return { date: _elt.date, value: 0, sensorRef: _elt.sentence ? 'Inspections' : 'Notifications' }
     });
   }
 
@@ -137,7 +137,7 @@ export class AlertsComponent implements OnInit {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, serieTemplate);
-        serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
+        serieTmp.name = _data.sensorRef;
         if (data.map(_elt => _elt.date)[0] !== undefined) {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
             return [_map.date, _map.value, _map.sensorRef];
@@ -158,13 +158,14 @@ export class AlertsComponent implements OnInit {
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
+        console.log(_data);
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1])
         console.log(dateJoin);
         let option = Object.assign({}, this.option);
         option.series = new Array();
         option.legend = Object.assign({}, BASE_OPTIONS.legend);
-        option.legend.selectedMode = 'single';
+        option.legend.selectedMode = 'multiple';
         this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
           serieComplete.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
@@ -222,7 +223,7 @@ export class AlertsComponent implements OnInit {
                   width: 25,
                   height: 25
                 },
-                position: [cellPoint[0], cellPoint[1]],
+                position: [cellPoint[0], cellPoint[1]-2],
               })
             }
             return group;
