@@ -76,3 +76,8 @@ th{
     margin-top: -3px;
     vertical-align: center;
 }
+
+.text-title{
+    display: inline-block;
+    width: 90%;
+}
