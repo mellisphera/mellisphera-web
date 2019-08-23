@@ -164,7 +164,7 @@ export class AlertsComponent implements OnInit {
         let option = Object.assign({}, this.option);
         option.series = new Array();
         option.legend = Object.assign({}, BASE_OPTIONS.legend);
-        option.legend.selectedMode = 'single';
+        option.legend.selectedMode = 'multiple';
         this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
           serieComplete.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
