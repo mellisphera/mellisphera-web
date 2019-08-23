@@ -19,7 +19,7 @@ import { SERIES } from '../../charts/SERIES';
 import { UnitService } from '../../../service/unit.service';
 import 'rxjs/add/observable/forkJoin';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
-import { isUndefined, isArray, isObject } from 'util';
+import { isUndefined, isArray, isObject, isString } from 'util';
 import { WeatherService } from '../../../service/api/weather.service';
 import { ICONS_WEATHER } from '../../charts/icons/icons_weather';
 import { Observable } from 'rxjs';
@@ -298,7 +298,7 @@ export class DailyManagerService {
         this.baseOptionExt = option;
 
       }
-    )
+    );
   }
   getChartAstro(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.astroService.getAstroByApiary(idApiary, range).subscribe(
@@ -326,14 +326,14 @@ export class DailyManagerService {
                   type: 'path',
                   z2: 1000,
                   shape: {
-                    pathData: ICONS_ASTRO[api.value(1)],
+                    pathData: this.getMoonIconByPhaseName(api.value(1)),
                     x: -11,
                     y: -11,
                     width: 25,
                     height: 25
                   },
                   style: {
-                    fill: (value === 'NEW_MOON') ? 'white' : 'black'
+                    fill: (api.value(1) === 'Nouvelle lune' || api.value(1) === 'New moon' ) ? 'white' : 'black'
                   },
                   position: [cellPoint[0], cellPoint[1]],
                 },
@@ -909,6 +909,44 @@ export class DailyManagerService {
   /**
    *
    *
+   * @param {string} phaseName
+   * @returns {string}
+   * @memberof DailyManagerService
+   */
+  getMoonIconByPhaseName(phaseName: string): string {
+    switch(phaseName) {
+      case 'Pleine lune':
+      case 'Full moon':
+        return ICONS_ASTRO.FULL_MOON;
+      case 'Nouvelle lune':
+      case 'New moon':
+        return ICONS_ASTRO.NEW_MOON;
+      case 'Last quarter':
+      case 'Dernier quartier':
+        return ICONS_ASTRO.LAST_QUARTER;
+      case 'First Quarter':
+      case 'Premier quartier':
+        return ICONS_ASTRO.FIRST_QUARTER;
+      case 'Waxing gibbous':
+      case 'Gibbeuse croissante':
+        return ICONS_ASTRO.WAXING_GIBBOUS;
+      case 'Waning gibbous':
+      case 'Gibbeuse décroissante':
+        return ICONS_ASTRO.WANING_GIBBOUS;
+      case 'Waning crescent':
+      case 'Dernier croissant':
+        return ICONS_ASTRO.WANING_CRESCENT;
+      case 'Waxing crescent':
+      case 'Premier croissant':
+        return ICONS_ASTRO.WAXING_CRESCENT;
+      default:
+        return null;
+    }
+  }
+
+  /**
+   *
+   *
    * @param {*} serieArray
    * @param {string} name
    * @returns {boolean}
@@ -1069,8 +1107,8 @@ export class DailyManagerService {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
               name: type.name,
-              value: params.data[1],
-              unit: ''
+              value:isString(params.data[1]) ? params.data[1] : this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])),
+              unit: this.graphGlobal.getUnitByType(type.unit)
             },
           ));
         }

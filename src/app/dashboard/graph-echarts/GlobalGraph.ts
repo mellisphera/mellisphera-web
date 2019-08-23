@@ -366,6 +366,7 @@ export class GraphGlobal {
             case 'MM':
                 return this.rain.unitT;
             default:
+                return '';
                 break;
         }
     }
