@@ -209,14 +209,14 @@ export class StackApiaryComponent implements OnInit {
           .subscribe((data) => {
             console.log(data);
             // this.recordService.mergeOptionStackApiary = data;
-             this.observationService.getObservationByIdHive(selectHive.id, selectHive.name).subscribe(
+/*              this.observationService.getObservationByIdHive(selectHive.id, selectHive.name).subscribe(
               obsData => {
                 data.series.push(obsData);
                 data.legend.data.push(selectHive.name + ' / note');
                 this.recordService.mergeOptionStackApiary = data;
 
               }
-            );
+            ); */
             this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsApiary);
             this.recordService.mergeOptionStackApiary.series.push(this.observationService.mergeStackObsHIve);
           }, () => { }, () => {

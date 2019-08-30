@@ -170,7 +170,6 @@ export class DailyRecordsWService {
 
   setUnitSystem(unit: string): void {
     this.unitSystem = unit;
-    console.log(this.unitSystem);
   }
 
   /* FOR HIVE CLICK */
@@ -188,7 +187,6 @@ export class DailyRecordsWService {
           this.getArray();
           this.updateCalendar();
         } else {
-          console.log('Aucune');
           this.updateCalendar();
         }
       },

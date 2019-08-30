@@ -11,47 +11,46 @@ limitations under the License. -->
 
 <div id="user-group">
   <div class="panel panel-primary">
-  <div class="panel-heading"><div class="text-title">
-    <span *ngIf="(this.rucherService.rucher.description !== '') && (this.rucherService.rucher.description !== null)" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
-      {{this.rucherService.rucher.name}} : {{this.rucherService.rucher.description}}</span>
-      <span *ngIf="(this.rucherService.rucher.description === '') || (this.rucherService.rucher.description === null)" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
-        {{this.rucherService.rucher.name}}</span>
+    <div class="panel-heading">
+      <div class="text-title">
+        <span *ngIf="(this.rucherService.rucher.description !== '') && (this.rucherService.rucher.description !== null)"
+          style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png"
+            style="width:25px;margin-left:-5px;" />
+          {{this.rucherService.rucher.name}} : {{this.rucherService.rucher.description}}</span>
+        <span *ngIf="(this.rucherService.rucher.description === '') || (this.rucherService.rucher.description === null)"
+          style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png"
+            style="width:25px;margin-left:-5px;" />
+          {{this.rucherService.rucher.name}}</span>
       </div>
-    <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
-    title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}" data-toggle="modal"
-    style="float:right;width: 10%; padding: 0;border: none; background: none;" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" data-target="#newObservationModal"
-    class="btn btn-success">
-    <i class="fa fa-plus fa-2x"></i>
-  </button>
+      <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
+        title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}" data-toggle="modal"
+        style="float:right;width: 10%; padding: 0;border: none; background: none;"
+        [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))"
+        data-target="#newObservationModal" class="btn btn-success">
+        <i class="fa fa-plus fa-2x"></i>
+      </button>
     </div>
-  <div class="user-sensors panel-body" id="notesApiary">
-    <table class="table">
-      <tbody>
-        <tr class="hoverStyle" *ngFor="let obs of observationService.observationsApiary; let i = index;">
-          <td style="width: 100px;">{{ obs.date | myDate }}</td>
-          <td>{{ obs.sentence }}</td>
-          <td class="text-right"  style="width: 80px;">
-            <button data-toggle="tooltip" data-html="true"
-              title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
-              data-target="#editObservationModal" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" (click)="onSelectObs(obs)" class="btn btn-primary  "
-              style="padding: 10;border: none; background: none;margin-right: -5px;">
-              <i class="fa fa-edit fa-2x"></i>
-            </button>
-            <button type="button" class="btn btn-warning" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))"
-              title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE' | translate}}"
-              style="padding: 0;border: none; background: none;" mwlConfirmationPopover
-              popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top"
-              confirmText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}"
-              cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObs(i,obs)"
-              style="padding: 10;border: none; background: none;margin-right: -5px;">
-              <i class="fa fa-times fa-2x"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="user-sensors panel-body" id="notesApiary">
+      <table class="table">
+        <tbody>
+          <tr class="hoverStyle" *ngFor="let obs of observationService.observationsApiary; let i = index;">
+            <td style="width: 100px;">{{ obs.date | myDate }}</td>
+            <td>{{ obs.sentence }}</td>
+            <td class="text-right" style="width: 80px;">
+              <button data-toggle="tooltip" data-html="true"
+                title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
+                data-target="#editObservationModal"
+                [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))"
+                (click)="onSelectObs(obs)" class="btn btn-primary  "
+                style="padding: 10;border: none; background: none;margin-right: -5px;">
+                <i class="fa fa-edit fa-2x"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 
 </div>
 
@@ -123,54 +122,18 @@ limitations under the License. -->
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
           </div>
           <div class="modal-footer">
-            <!--fa fa-sign-in-alt"-->
+            <button type="submit" class="btn btn-warning delete" mwlConfirmationPopover
+              popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top"
+              confirmText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}"
+              cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObs()">
+              {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE' | translate}}
+            </button>
             <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditObservation()"
               [disabled]="!observationForm.valid">{{ 'APIARY_NOTES.FORM.SAVE' | translate}}</button>
             <button type="button" class="btn btn-secondary"
               data-dismiss="modal">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
-            <button id="btn-mvToAction" data-toggle="tooltip" data-dismiss="modal" id="btn-mv" data-html="true"
-              title="Move to hive" data-toggle="modal" type="button" data-target="#selectHiveModal"
-              class="btn btn-primary  " style="padding: 0;border: none; background: none;">
-              <i class="fa fa-arrow-circle-right"></i>
-            </button>
           </div>
         </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="selectHiveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h5 class="modal-title" id="exampleModalLabel">
-          <h3 class="text-center">{{ 'APIARY_NOTES.FORM.SELECT' | translate}}</h3>
-        </h5>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <select [(ngModel)]="hiveToMv" class="form-control" id="select-Apiary">
-            <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="ruche">
-              {{ruche.name}}
-            </option>
-          </select>
-          <label>{{ 'APIARY_NOTES.FORM.TYPE' | translate}}</label>
-          <select (change)="typeToMv = $event.target.value" id="input" class="form-control" required="required">
-            <option value="0">{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}</option>
-            <option value="1">{{ 'HIVE_DETAIL.OBSERVATIONS.ACTION' | translate}}</option>
-          </select>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" data-dismiss="modal"
-            (click)="mvToActions()">{{ 'APIARY_NOTES.FORM.MOVE' | translate}}</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal"
-            (click)="initForm()">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
-        </div>
       </div>
     </div>
   </div>

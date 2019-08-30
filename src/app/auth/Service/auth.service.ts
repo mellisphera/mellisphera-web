@@ -79,7 +79,7 @@ export class AuthService {
             this.router.navigateByUrl('dashboard/admin');
 
         } else {
-          this.router.navigateByUrl('dashboard/home');
+          this.router.navigateByUrl('dashboard/home/info-apiary');
 
         }
       },

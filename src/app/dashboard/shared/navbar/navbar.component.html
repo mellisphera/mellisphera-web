@@ -72,22 +72,24 @@ limitations under the License. -->
                 <i class="fa fa-times fa-2x"></i>
               </button> -->
             </li>
-            <!-- <li>
+            <li>
               <a routerLink="./manage-notes" data-toggle="tooltip" id="notes" data-placement="top"
                 title="{{ 'SIDEBAR.NOTES' | translate }}">
                 <img src="./assets/icons/ui/notes.png" style="width:50px;margin-left:-5px;" />
-              </a> -->
+              </a>
             <!-- NEW NOTES -->
-            <!-- <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
-                data-toggle="modal" class="btn btn-success btn-lg crud-apiary">
+            <button [disabled]="rucherService.rucher.id == null"  (click)="newNoteModalInit()" 
+                data-toggle="tooltip" data-html="true" data-toggle="modal" data-target="#newNoteModal" 
+                title="{{ 'NOTES.FORM.NEW' | translate}}" class="btn btn-success btn-lg crud-apiary">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
-              </button> -->
-            <!-- EDIT NOTES -->
-            <!-- <button data-toggle="tooltip" data-html="true" data-toggle="modal" type="button"
-                class="btn btn-primary btn-lg crud-apiary">
-                <i class="fa fa-edit fa-2x"></i>
               </button>
-            </li> -->
+            <!-- EDIT NOTES -->
+            <!-- <button data-toggle="tooltip" data-html="true" (click)="newNoteModalInit()"
+                    data-toggle="modal" type="button" data-target="#EditNoteModal" 
+                    title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDITANOTE' | translate}}" class="btn btn-primary btn-lg crud-apiary">
+                <i class="fa fa-edit fa-2x"></i>
+              </button> -->
+            </li>
             <li id="{{ 'NAVBAR.CRUD.MANAGE' | translate }}">
               <a routerLink="./manage-sensors" data-toggle="tooltip" data-placement="top" id="sensor"
                 title="{{ 'SIDEBAR.SENSORS' | translate }}">
@@ -101,7 +103,7 @@ limitations under the License. -->
               </button>
               <!-- EDIT SENSOR -->
               <button data-toggle="tooltip" data-html="true" data-toggle="modal" type="button"
-                title="{{ 'CAPTEUR.FORM.EDIT' | translate}}" data-target="#editSensorModal" (click)="editSensorInit()"
+                title="{{ 'CAPTEUR.FORM.EDITASENSOR' | translate}}" data-target="#editSensorModal" (click)="editSensorInit()"
                 class="btn btn-primary btn-lg crud-apiary">
                 <i class="fa fa-edit fa-2x"></i>
               </button>
@@ -159,6 +161,12 @@ limitations under the License. -->
     </div>
   </div>
 </nav>
+
+    <!-- ###############################################################
+         ###############################################################
+         ###################      MANAGE APIARY      ###################
+         ###############################################################
+         ############################################################### -->
 
 
 <!-- CREATE APIARY -->
@@ -394,6 +402,11 @@ limitations under the License. -->
   </div>
 </div>
 
+    <!-- ###############################################################
+         ###############################################################
+         ###################      MANAGE HIVE      ###################
+         ###############################################################
+         ############################################################### -->
 
 <!-- NEW HIVE -->
 <div class="modal fade" id="newHiveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -545,6 +558,95 @@ limitations under the License. -->
     </div>
   </div>
 </div>
+
+    <!-- ###############################################################
+         ###############################################################
+         ###################      MANAGE NOTE      ###################
+         ###############################################################
+         ############################################################### -->
+
+<!-- NEW NOTE -->
+<div class="modal fade" id="newNoteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              <h5 class="modal-title" id="exampleModalLabel">
+                  <h3 class="text-center">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}</h3>
+              </h5>
+          </div>
+          <div class="modal-body" id="popupObs">
+              <form [formGroup]="NavbarNoteForm">
+                  <div class="form-group ">
+                      <label class="col-form-label" for="exampleRadios1">
+                          {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.YOUWANTCREATE' | translate}}
+                      </label>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" formControlName="checkbox" value="apiary"
+                              [checked]="!newNoteCheckbox" (click)="onchangeCheckbox($event)">
+                          <label class="form-check-label"
+                              for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.APIARYNOTE' | translate}}
+                          </label><br />
+                          <input class="form-check-input" type="radio" formControlName="checkbox" value="hive"
+                              [checked]="newNoteCheckbox" (click)="onchangeCheckbox($event)">
+                          <label class="form-check-label"
+                              for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.HIVENOTE' | translate}}
+                          </label>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
+                      <select [(ngModel)]="rucherService.rucherSelectUpdate" [ngModelOptions]="{standalone: true}"
+                          class="form-control" (change)="onSelectApiaryNewNavbarNoteForm();">
+                          <option *ngFor="let apiary of rucherService.ruchers" [ngValue]="apiary">{{apiary.name}}
+                          </option>
+                      </select>
+                  </div>
+                  <div *ngIf="newNoteCheckbox" class="form-group">
+                      <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVE' | translate}}</label>
+                      <select [(ngModel)]="hiveNoteSelect" [ngModelOptions]="{standalone: true}" class="form-control">
+                          <option *ngFor="let hive of hivesNavbarNoteForm" [ngValue]="hive">{{hive.name}}</option>
+                      </select>
+                      <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
+                  </div>
+                  <div class="form-group">
+                      <label class="example-input-wrapper">
+                          {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
+                          <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dtNavbar"
+                              [owlDateTime]="dtNavbar">
+                          <owl-date-time #dtNavbar></owl-date-time>
+                      </label><br />
+                      <label class="example-input-wrapper">
+                          {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
+                          <textarea formControlName="sentence" type="text" class="form-control" id="sentence"></textarea>
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+              <button *ngIf="newNoteCheckbox" type="submit" class="btn btn-primary" (click)="createObservation()"
+                  data-dismiss="modal" [disabled]="!NavbarNoteForm.valid">
+                  {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_OBS' | translate}}</button>
+              <button *ngIf="newNoteCheckbox" type="submit" class="btn btn-primary" (click)="createAction()"
+                  data-dismiss="modal" [disabled]="!NavbarNoteForm.valid">
+                  {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_ACT' | translate}}</button>
+              <button *ngIf="!newNoteCheckbox" type="submit" class="btn btn-primary" (click)="createNote()"
+                  data-dismiss="modal" [disabled]="!NavbarNoteForm.valid">
+                  {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATENOTE' | translate}}</button>
+              <button type="button" class="btn btn-secondary" (click)="resetNavbarNoteForm()"
+                  data-dismiss="modal">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- End of new Observation Modal -->
+
+    <!-- ###############################################################
+         ###############################################################
+         ###################      MANAGE SENSOR      ###################
+         ###############################################################
+         ############################################################### -->
 
 <!-- New sensor Modal -->
 <div class="modal fade" id="newSensorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

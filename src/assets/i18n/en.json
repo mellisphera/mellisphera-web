@@ -48,6 +48,7 @@
     "NAVBAR": {
         "NEW_APIARY" : "New apiary",
         "EDIT_APIARY" : "Edit apiary",
+        "EDITAPIARY" : "Edit apiary",
         "DELETE_APIARY" : "Delete apiary",
         "DELETE_APIARY2" : "Delete apiary",
         "DELETE_ASK" : "Delete Apiary ?",
@@ -97,7 +98,7 @@
         "NOTES" : "Apiary notes",
         "FLOWER" : "Flower",
         "SENSORS" : "Sensors",
-        "DATA" : "Stack data"    
+        "DATA" : "Analysis" 
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Change Password",
@@ -125,7 +126,7 @@
         "CANCEL" : "Cancel",
         "NODATA" : "No data",
         "NOSENSORS" : "No sensors",
-        "CLICK" : "Click on a hive for more informations !",
+        "CLICK" : "Click on a hive for more information !",
         "PLACEMENTMODE" : "Put the hives in 'displacement' mode",
         "CLICKMODE" : "Put the hives in 'click' mode",
         "MANAGE" : "Manage",
@@ -192,7 +193,15 @@
                 "CANCEL" : "Cancel",
                 "CONFIRM" : "Confirm",
                 "NOTES" : "Note : ",
-                "TYPE" : "Type"
+                "TYPE" : "Type",
+                "YOUWANTCREATE": "You want create :",
+                "APIARYNOTE" : "An apiary note",
+                "HIVENOTE" : "A hive note",
+                "CREATENOTE" : "Create a note",
+                "LOCATION" : "Location",
+                "APIARYLOCATION" : "Apiary note",
+                "HIVELOCATION" : "Hive note",
+                "EDITANOTE" : "Edit a note"
             }
         },
         "SENSORS" : {
@@ -271,7 +280,9 @@
             "SENSOR" : "Sensor",
             "EDITSENSOR" : "Edit",
             "OF" : "of",
-            "NOSENSOR" : "You don't have sensor to edit."
+            "NOSENSOR" : "You don't have sensor to edit.",
+            "EDITASENSOR" : "Edit a sensor",
+            "EDITTHESENSOR" : "Edit sensor"
         }
     },
     "FEEDBACK" : {
@@ -334,5 +345,20 @@
         "ALERTS" : "Alerts",
         "NOHIVEALERTS" : "No alerts",
         "NOHIVES" : "There are no hives for this apiary!"
+    },
+    "NOTES" : {
+        "TITLEAPIARY" : "Apiary notes",
+        "TITLEHIVE" : "Hive notes",
+        "SEARCH": "Search a note",
+        "FORM" : {
+            "NEW" : "New note",
+            "APIARY" : "Apiary",
+            "HIVE" : "Hive",
+            "EDIT" : "Edit the note",
+            "DELETE" : "Delete the note",
+            "DELETE_ASK" : "Delete the note ?",
+            "CONFIRM" : "Delete",
+            "CANCEL" : "Cancel"
+        }
     }
 }

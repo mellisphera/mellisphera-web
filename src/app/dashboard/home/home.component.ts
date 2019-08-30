@@ -40,6 +40,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
 import { stringify } from '@angular/core/src/render3/util';
 import { InfoHivesComponent } from './info-hives/info-hives.component';
+import { InfoApiaryComponent } from './info-apiary/info-apiary.component';
 import { AlertsHiveComponent } from './info-hives/alerts-hive/alerts-hive.component';
 import { AlertsComponent } from './info-apiary/alerts/alerts.component';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
@@ -85,6 +86,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   private selectHive: RucheInterface;
   private hiveIndex: number;
   private infoHiveComponent: any;
+  private infoApiaryComponent: any;
   screenHeight: any;
   screenWidth: any;
   lastHighlightFix : string;
@@ -301,7 +303,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     })
 
     // For the hive notes
-    this.observationService.getObservationByIdHive(ruche.id).subscribe();
+
+    this.observationService.getObservationByIdHive(ruche.id);
 
     //For the hive-weight
     this.dailyRecordWservice.getDailyRecordsWbyIdHive(ruche.id);
@@ -698,6 +701,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (event instanceof InfoHivesComponent) {
       this.infoHiveComponent = event;
     }
+    if (event instanceof InfoApiaryComponent) {
+      this.infoApiaryComponent = event;
+    }
   }
 
   checkIfInfoHiveComponent(): Promise<Boolean> {
@@ -709,6 +715,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
     })
   }
+
+  checkIfInfoApiaryComponent(): Promise<Boolean> {
+    return new Promise((resolve, reject) => {
+      if (this.infoApiaryComponent instanceof InfoApiaryComponent) {
+        resolve(true);
+      } else {
+        reject(false);
+      }
+    })
+  }
+  
 
   // Sort a sensors list in increasing sort
   increasingSort(sensorsList: string[]): string[] {

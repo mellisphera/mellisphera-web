@@ -113,7 +113,7 @@ export class GraphGlobal {
         // EN
         this.titresEN = [
             { 'graph': 'reserveMiel', 'titre': 'Honey Stock' },
-            { 'graph': 'DailyWeightIncomes', 'titre': 'Daily weight income' },
+            { 'graph': 'DailyWeightIncomes', 'titre': 'Daily weight change' },
             { 'graph': 'BroodDynamics', 'titre': 'Brood Dynamics' },
             { 'graph': 'InternalRelativeHumidity', 'titre': 'Internal Relative Humidity (max)' },
             { 'graph': 'InternalTemperature', 'titre': 'Internal Temperature' },

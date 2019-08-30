@@ -75,6 +75,18 @@ hr
         height: 20vh;
     }
 
+@media (max-height : 815px){
+    #alerts{
+        height: 22vh;
+    }
+}
+
+@media (max-height : 400px){
+    #alerts{
+        height: 24vh;
+    }
+}
+
 /* MEDIA WIDTH */
 @media (min-width : 990px) and (max-width : 1550px){
     #notes,#sensors{

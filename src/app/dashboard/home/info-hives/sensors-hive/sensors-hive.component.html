@@ -27,7 +27,7 @@ limitations under the License. -->
                             <td>{{capteur.description}}</td>
                             <td class="text-right" style="width: 80px;">
                                 <button data-toggle="tooltip" data-html="true"
-                                    title="{{ 'CAPTEUR.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
+                                    title="{{ 'CAPTEUR.FORM.EDITTHESENSOR' | translate}}" data-toggle="modal" type="button"
                                     (click)="selectCapteur(capteur, i)" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" data-target="#editCapteurModal"
                                     class="btn btn-primary" style="padding: 10;border: none; background: none;margin-right: -5px;">
                                     <i class="fa fa-edit fa-2x"></i>

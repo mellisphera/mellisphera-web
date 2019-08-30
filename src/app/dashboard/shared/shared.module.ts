@@ -19,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MyDatePipe } from '../../pipe/my-date.pipe';
 import { SearchCapteur } from '../../pipe/capteur.pipe';
 import { PipeCapteur } from '../../pipe/capteur.pipe';
+import { PipeObservation } from '../../pipe/observation.pipe';
 import { ngfModule } from 'angular-file';
 
 
@@ -34,12 +35,14 @@ import { ngfModule } from 'angular-file';
     TranslateModule,
     NgxEchartsModule,
     PipeCapteur,
+    PipeObservation,
     MyDatePipe,
     SearchCapteur
   ],
   declarations: [
     MyDatePipe,
     PipeCapteur,
+    PipeObservation,
     SearchCapteur
 
   ],

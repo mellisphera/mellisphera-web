@@ -15,7 +15,7 @@ limitations under the License. -->
         {{this.rucheService.getCurrentHive().name}} : {{this.rucheService.getCurrentHive().description}}</span>
         <span *ngIf="(this.rucheService.getCurrentHive().description === null) || (this.rucheService.getCurrentHive().description === '')" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
           {{this.rucheService.getCurrentHive().name}}</span></div>
-      <button data-toggle="tooltip" data-html="true" title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW' | translate}}"
+      <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.NEW' | translate}}"
         data-toggle="modal" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" style="float:right;width: 10%; padding: 0;border: none; background: none;margin-top: 0px;" (click)="initForm()"
         data-target="#newObservationModal" class="btn btn-success">
         <i class="fa fa-plus fa-2x"></i>
@@ -32,7 +32,7 @@ limitations under the License. -->
                 <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}</td> -->
                 <td class="text-right" style="width: 80px;">
                   <button data-toggle="tooltip" data-html="true"
-                    title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
+                    title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
                     (click)="onSelectObsR(hiveObs)" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" data-target="#editObservationModal" class="btn btn-primary "
                     style="padding: 10;border: none; background: none;margin-right: -5px;">
                     <i class="fa fa-edit fa-2x"></i>
@@ -48,7 +48,7 @@ limitations under the License. -->
                 <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.ACTION' | translate}}</td> -->
                 <td class="text-right" style="width: 80px;">
                   <button data-toggle="tooltip" data-html="true"
-                    title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
+                    title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
                     (click)="onSelectObsR(hiveObs)" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" data-target="#editObservationModal" class="btn btn-primary "
                     style="padding: 10;border: none; background: none;margin-right: -5px;">
                     <i class="fa fa-edit fa-2x"></i>

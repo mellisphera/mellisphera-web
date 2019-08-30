@@ -19,6 +19,7 @@ import { MyNotifierService } from './service/my-notifier.service';
 import { MessagesService } from './service/messages.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -35,6 +36,7 @@ export class DashboardComponent implements OnInit {
 
   message: string;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  private homeComponent: any;
   public loading = true;
   public primaryColour = PrimaryWhite;
   public secondaryColour = SecondaryGrey;
@@ -61,6 +63,34 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  apiaryChange(event) {
+    this.checkHomeComponent().then(status => {
+      <HomeComponent>this.homeComponent.checkIfInfoApiaryComponent().then(
+        res => {
+          <HomeComponent>this.homeComponent.infoApiaryComponent.alertsComponent.initCalendar(true);
+        }
+      )
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  setRouterPage(event) {
+    if (event instanceof HomeComponent) {
+      this.homeComponent = event;
+    }
+  }
+
+  checkHomeComponent(): Promise<Boolean> {
+    return new Promise((resolve, reject) => {
+      if (this.homeComponent instanceof HomeComponent) {
+        resolve(true);
+      } else {
+        reject(false);
+      }
+    })
   }
 
   receiveMessage($event) {

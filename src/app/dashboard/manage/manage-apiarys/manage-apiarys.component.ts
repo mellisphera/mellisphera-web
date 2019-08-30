@@ -58,6 +58,7 @@ export class ManageApiarysComponent implements OnInit, OnDestroy {
   private notify: NotifierService;
   newRucheForm: FormGroup;
   updateRucherInput: boolean;
+  apiaryToEdit : RucherModel;
 
   public addNewShareStatus: Boolean;
   public newsUserSharing: String;
@@ -162,6 +163,7 @@ export class ManageApiarysComponent implements OnInit, OnDestroy {
 // Set edit apiary form
 editApiaryClicked(apiary : RucherModel) {
   this.rucherService.rucherSelectUpdate = apiary;
+  this.apiaryToEdit = apiary;
   const donnée = {
       name: apiary.name,
       description: apiary.description,
@@ -174,7 +176,7 @@ editApiaryClicked(apiary : RucherModel) {
 
 //Edit Apiary
 onEditApiary() {
-  if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.idUsername)) {
+  if (this.userService.checkWriteObject(this.apiaryToEdit.idUsername)) {
     const formValue = this.rucherForm.value;
     const index = this.rucherService.ruchers.indexOf(this.rucherService.rucherSelectUpdate);
     this.apiaryUpdate = formValue;

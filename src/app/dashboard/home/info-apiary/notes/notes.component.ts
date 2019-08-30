@@ -169,6 +169,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       const index = this.observationService.observationsApiary.indexOf(this.newObs);
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsApiary[index] = this.newObs;
+        this.initForm();
         if(this.userService.getJwtReponse().country === "FR"){
           this.notify.notify('success', 'Note mis à jour');
         }else{
@@ -186,10 +187,12 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @param {Observation} obsApiary
    * @memberof ApiaryNotesComponent
    */
-  deleteObs(index: number, obsApiary: Observation) {
+  deleteObs() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
-      this.observationService.deleteObservation(obsApiary.id).subscribe(() => { }, () => { }, () => {
+      this.observationService.deleteObservation(this.newObs.id).subscribe(() => { }, () => { }, () => {
+        const index = this.observationService.observationsApiary.indexOf(this.newObs);
         this.observationService.observationsApiary.splice(index, 1);
+        this.initForm();
         if(this.userService.getJwtReponse().country === "FR"){
           this.notify.notify('success', 'Note supprimée');
         }else{

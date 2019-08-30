@@ -9,161 +9,346 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
 
-<!-- <div class="content-page">
-  <div class="bs-example">
-      <div class="panel-group" id="accordion">
-          <div class="panel panel-info ">
-              <div class="panel-heading ">
-                  <h4 class="panel-title">
-                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                          <b>NOTES DE RUCHER (trad) </b>
-                      </a>
-                  </h4>
-              </div>
-              <div id="collapseOne" class="panel-collapse collapse in">
-                  <div class="panel-body">
-                      <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.NEW' | translate}}"
-                          data-toggle="modal" style="margin-left: 98%; padding: 0;border: none; background: none;"
-                          data-target="#newCapteurModal" class="btn btn-success">
-                          <i class="fa fa-plus fa-2x"></i>
-                      </button>
-                      <div class="form-group row">
-                          <div class="col-xs-2">
-                              <input class="form-control" placeholder="{{ 'NOTES.SEARCH' | translate}}"
-                                  type="search" [(ngModel)]="capteurSearch">
-                          </div>
-                      </div> -->
-                      <!-- tables ruche -->
-                      <!-- <table class="table">
-                          <thead>
-                              <tr>
-                                  <th scope="col">Dates
-                                      <button data-toggle="tooltip" data-html="true" (click)="sortSensors('ref');"
-                                          class="btn btn-success btn-xs">
-                                          <i class="fa fa-angle-down fa-2x"></i>
-                                      </button>
-                                  </th>
-                                  <th scope="col">RUCHER/APIARY
-                                    <button data-toggle="tooltip" data-html="true" (click)="sortSensors('hive');"
-                                        class="btn btn-success btn-xs">
-                                        <i class="fa fa-angle-down fa-2x"></i>
-                                    </button>
-                                </th>
-                                  <th scope="col">Note
-                                      <button data-toggle="tooltip" data-html="true" (click)="sortSensors('type');"
-                                          class="btn btn-success btn-xs">
-                                          <i class="fa fa-angle-down fa-2x"></i>
-                                      </button>
-                                  </th>
-                                  <th class="text-right" scope="col">Actions</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <ng-container
-                                  *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch); let i = index">
-                                  <tr *ngIf="capteur.apiaryName != null">
-                                      <td>{{capteur.sensorRef}}</td>
-                                      <td class=" hive-link" *ngIf="capteur.apiaryName != null"
-                                          (click)="navToHive(capteur.idHive, capteur.idApiary)">
-                                          {{capteur.apiaryName}} | {{capteur.hiveName}}</td>
-                                      <td>{{capteur.type}}</td>
-                                      <td class="text-right">
-                                          <button data-toggle="tooltip" data-html="true"
-                                              title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal"
-                                              type="button" (click)="selectCapteur(capteur, i)"
-                                              data-target="#editCapteurModal" class="btn btn-primary"
-                                              style="padding: 0;border: none; background: none;">
-                                              <i class="fa fa-edit fa-2x"></i>
-                                          </button>
-                                          <button type="button" class="btn btn-warning"
-                                              title="{{ 'NOTES.FORM.DELETE' | translate}}" mwlConfirmationPopover
-                                              popoverTitle="{{ 'NOTES.FORM.DELETE_ASK' | translate}}"
-                                              confirmText="{{ 'NOTES.FORM.CONFIRM' | translate}}"
-                                              cancelText="{{ 'NOTES.FORM.CANCEL' | translate}}" placement="top"
-                                              (confirm)="deleteCapteur(capteur, i)"
-                                              style="padding: 0;border: none; background: none;">
-                                              <i class="fa fa-times fa-2x"></i>
-                                          </button>
-                                      </td>
-                                  </tr>
-                              </ng-container>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="panel-group" id="accordion">
-          <div class="panel panel-info ">
-              <div class="panel-heading ">
-                  <h4 class="panel-title">
-                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                          <b>NOTES DE RUCHES </b>
-                      </a>
-                  </h4>
-              </div>
-              <div id="collapseTwo" class="panel-collapse collapse in">
-                  <div class="panel-body"> -->
-                      <!-- tables ruche -->
-                      <!-- <table class="table">
-                          <thead>
-                              <tr>
-                                  <th scope="col">Dates
-                                      <button data-toggle="tooltip" data-html="true" (click)="sortSensors('ref');"
-                                          class="btn btn-success btn-xs">
-                                          <i class="fa fa-angle-down fa-2x"></i>
-                                      </button>
-                                  </th>
-                                  <th scope="col">Associations
-                                    <button data-toggle="tooltip" data-html="true" (click)="sortSensors('hive');"
-                                        class="btn btn-success btn-xs">
-                                        <i class="fa fa-angle-down fa-2x"></i>
-                                    </button>
-                                </th>
-                                  <th scope="col">Note
-                                      <button data-toggle="tooltip" data-html="true" (click)="sortSensors('type');"
-                                          class="btn btn-success btn-xs">
-                                          <i class="fa fa-angle-down fa-2x"></i>
-                                      </button>
-                                  </th>
-                                  <th class="text-right" scope="col">Actions</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <ng-container
-                                  *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch); let i = index">
-                                  <tr *ngIf="capteur.apiaryName != null">
-                                      <td>{{capteur.sensorRef}}</td>
-                                      <td class=" hive-link" *ngIf="capteur.apiaryName != null"
-                                          (click)="navToHive(capteur.idHive, capteur.idApiary)">
-                                          {{capteur.apiaryName}} | {{capteur.hiveName}}</td>
-                                      <td>{{capteur.type}}</td>
-                                      <td class="text-right">
-                                          <button data-toggle="tooltip" data-html="true"
-                                              title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal"
-                                              type="button" (click)="selectCapteur(capteur, i)"
-                                              data-target="#editCapteurModal" class="btn btn-primary"
-                                              style="padding: 0;border: none; background: none;">
-                                              <i class="fa fa-edit fa-2x"></i>
-                                          </button>
-                                          <button type="button" class="btn btn-warning"
-                                              title="{{ 'NOTES.FORM.DELETE' | translate}}" mwlConfirmationPopover
-                                              popoverTitle="{{ 'NOTES.FORM.DELETE_ASK' | translate}}"
-                                              confirmText="{{ 'NOTES.FORM.CONFIRM' | translate}}"
-                                              cancelText="{{ 'NOTES.FORM.CANCEL' | translate}}" placement="top"
-                                              (confirm)="deleteCapteur(capteur, i)"
-                                              style="padding: 0;border: none; background: none;">
-                                              <i class="fa fa-times fa-2x"></i>
-                                          </button>
-                                      </td>
-                                  </tr>
-                              </ng-container>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <br><br>
-</div> -->
+<div class="content-page">
+    <div class="bs-example">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-info ">
+                <div class="panel-heading ">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <b>{{ 'NOTES.TITLEAPIARY' | translate}} </b>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <button data-toggle="tooltip" data-html="true" (click)="newNoteInit()"
+                            title="{{ 'NOTES.FORM.NEW' | translate}}" data-toggle="modal"
+                            style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newNote"
+                            class="btn btn-success">
+                            <i class="fa fa-plus fa-2x"></i>
+                        </button>
+                        <div class="form-group row">
+                            <div class="col-xs-2">
+                                <input class="form-control" placeholder="{{ 'NOTES.SEARCH' | translate}}" type="search"
+                                    [(ngModel)]="observationSearch1">
+                            </div>
+                        </div>
+                        <!-- tables ruche -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date
+                                        <button data-toggle="tooltip" data-html="true"
+                                            (click)="sortObservations('apiary','date');" class="btn btn-success btn-xs">
+                                            <i class="fa fa-angle-down fa-2x"></i>
+                                        </button>
+                                    </th>
+                                    <th scope="col">{{ 'NOTES.FORM.APIARY' | translate}}
+                                        <button data-toggle="tooltip" data-html="true"
+                                            (click)="sortObservations('apiary','apiary');"
+                                            class="btn btn-success btn-xs">
+                                            <i class="fa fa-angle-down fa-2x"></i>
+                                        </button>
+                                    </th>
+                                    <th scope="col">Note
+                                        <button data-toggle="tooltip" data-html="true"
+                                            (click)="sortObservations('apiary','note');" class="btn btn-success btn-xs">
+                                            <i class="fa fa-angle-down fa-2x"></i>
+                                        </button>
+                                    </th>
+                                    <th class="text-right" scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container
+                                    *ngFor="let note of ( observationService.observationsApiaryUser | observationPipe : observationSearch1); let i = index">
+                                    <tr>
+                                        <td>{{note.date | myDate}}</td>
+                                        <td>{{getApiaryNameByID(note.idApiary)}}</td>
+                                        <td>{{note.sentence}}</td>
+                                        <td class="text-right">
+                                            <button data-toggle="tooltip" data-html="true"
+                                                title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal"
+                                                type="button" (click)="editNoteInit(note)" data-target="#editNote"
+                                                class="btn btn-primary"
+                                                style="padding: 1;border: none; background: none;">
+                                                <i class="fa fa-edit fa-2x"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-warning"
+                                                title="{{ 'NOTES.FORM.DELETE' | translate}}" mwlConfirmationPopover
+                                                popoverTitle="{{ 'NOTES.FORM.DELETE_ASK' | translate}}"
+                                                confirmText="{{ 'NOTES.FORM.CONFIRM' | translate}}"
+                                                cancelText="{{ 'NOTES.FORM.CANCEL' | translate}}" placement="top"
+                                                (confirm)="deleteNote(note)"
+                                                style="padding: 1;border: none; background: none;">
+                                                <i class="fa fa-times fa-2x"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="bs-example">
+        <div class="panel-group" id="accordion2">
+            <div class="panel panel-info ">
+                <div class="panel-heading ">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapseOne2">
+                            <b>{{ 'NOTES.TITLEHIVE' | translate}} </b>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne2" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <button data-toggle="tooltip" data-html="true" (click)="newNoteInit()"
+                            title="{{ 'NOTES.FORM.NEW' | translate}}" data-toggle="modal"
+                            style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newNote"
+                            class="btn btn-success">
+                            <i class="fa fa-plus fa-2x"></i>
+                        </button>
+                        <div class="form-group row">
+                            <div class="col-xs-2">
+                                <input class="form-control" placeholder="{{ 'NOTES.SEARCH' | translate}}" type="search"
+                                    [(ngModel)]="observationSearch">
+                            </div>
+                        </div>
+                        <!-- tables ruche -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Dates
+                                        <button data-toggle="tooltip" data-html="true"
+                                            (click)="sortObservations('hive','date');" class="btn btn-success btn-xs">
+                                            <i class="fa fa-angle-down fa-2x"></i>
+                                        </button>
+                                    </th>
+                                    <th scope="col">type
+                                        <button data-toggle="tooltip" data-html="true"
+                                            (click)="sortObservations('hive','type');" class="btn btn-success btn-xs">
+                                            <i class="fa fa-angle-down fa-2x"></i>
+                                        </button>
+                                    </th>
+                                    <th scope="col">{{ 'NOTES.FORM.HIVE' | translate}}
+                                        <button data-toggle="tooltip" data-html="true"
+                                            (click)="sortObservations('hive','hive');" class="btn btn-success btn-xs">
+                                            <i class="fa fa-angle-down fa-2x"></i>
+                                        </button>
+                                    </th>
+                                    <th scope="col">Note
+                                        <button data-toggle="tooltip" data-html="true"
+                                            (click)="sortObservations('hive','note');" class="btn btn-success btn-xs">
+                                            <i class="fa fa-angle-down fa-2x"></i>
+                                        </button>
+                                    </th>
+                                    <th class="text-right" scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container
+                                    *ngFor="let note of ( observationService.observationsHiveUser | observationPipe : observationSearch); let i = index">
+                                    <tr>
+                                        <td>{{note.date | myDate}}</td>
+                                        <td>{{getType(note.type)}}</td>
+                                        <td>{{getHiveNameById(note.idHive)}}</td>
+                                        <td>{{note.sentence}}</td>
+                                        <td class="text-right">
+                                            <button data-toggle="tooltip" data-html="true"
+                                                title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal"
+                                                type="button" (click)="editNoteInit(note)" data-target="#editNote"
+                                                class="btn btn-primary"
+                                                style="padding: 1;border: none; background: none;">
+                                                <i class="fa fa-edit fa-2x"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-warning"
+                                                title="{{ 'NOTES.FORM.DELETE' | translate}}" mwlConfirmationPopover
+                                                popoverTitle="{{ 'NOTES.FORM.DELETE_ASK' | translate}}"
+                                                confirmText="{{ 'NOTES.FORM.CONFIRM' | translate}}"
+                                                cancelText="{{ 'NOTES.FORM.CANCEL' | translate}}" placement="top"
+                                                (confirm)="deleteNote(note)"
+                                                style="padding: 1;border: none; background: none;">
+                                                <i class="fa fa-times fa-2x"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- New Observation Modal -->
+<div class="modal fade" id="newNote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <h3 class="text-center">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}</h3>
+                </h5>
+            </div>
+            <div class="modal-body" id="popupObs">
+                <form [formGroup]="NoteForm">
+                    <div class="form-group ">
+                        <label class="col-form-label" for="exampleRadios1">
+                            {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.YOUWANTCREATE' | translate}}
+                        </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="checkbox" value="apiary"
+                                [checked]="!newNoteCheckbox" (click)="onchangeCheckbox($event)">
+                            <label class="form-check-label"
+                                for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.APIARYNOTE' | translate}}
+                            </label><br />
+                            <input class="form-check-input" type="radio" formControlName="checkbox" value="hive"
+                                [checked]="newNoteCheckbox" (click)="onchangeCheckbox($event)">
+                            <label class="form-check-label"
+                                for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.HIVENOTE' | translate}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
+                        <select [(ngModel)]="rucherService.rucherSelectUpdate" [ngModelOptions]="{standalone: true}"
+                            class="form-control" (change)="onSelectApiaryNewNoteForm();">
+                            <option *ngFor="let apiary of rucherService.ruchers" [ngValue]="apiary">{{apiary.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div *ngIf="newNoteCheckbox" class="form-group">
+                        <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVE' | translate}}</label>
+                        <select [(ngModel)]="hiveNoteSelect" [ngModelOptions]="{standalone: true}" class="form-control">
+                            <option *ngFor="let hive of hivesNoteForm" [ngValue]="hive">{{hive.name}}</option>
+                        </select>
+                        <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="example-input-wrapper">
+                            {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
+                            <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dt"
+                                [owlDateTime]="dt">
+                            <owl-date-time #dt></owl-date-time>
+                        </label><br />
+                        <label class="example-input-wrapper">
+                            {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
+                            <textarea formControlName="sentence" type="text" class="form-control" id="sentence"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="newNoteCheckbox" type="submit" class="btn btn-primary" (click)="createObservation()"
+                    data-dismiss="modal" [disabled]="!NoteForm.valid">
+                    {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_OBS' | translate}}</button>
+                <button *ngIf="newNoteCheckbox" type="submit" class="btn btn-primary" (click)="createAction()"
+                    data-dismiss="modal" [disabled]="!NoteForm.valid">
+                    {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_ACT' | translate}}</button>
+                <button *ngIf="!newNoteCheckbox" type="submit" class="btn btn-primary" (click)="createNote()"
+                    data-dismiss="modal" [disabled]="!NoteForm.valid">
+                    {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATENOTE' | translate}}</button>
+                <button type="button" class="btn btn-secondary" (click)="resetNoteForm()"
+                    data-dismiss="modal">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of new Observation Modal -->
+
+<!-- Edit Observation Modal -->
+<div class="modal fade" id="editNote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <h3 class="text-center">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDITNOTE' | translate}}</h3>
+                </h5>
+            </div>
+            <div class="modal-body" id="popupObs">
+                <form [formGroup]="NoteForm">
+                    <div class="form-group ">
+                        <label class="col-form-label" for="exampleRadios1">
+                            {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.LOCATION' | translate}}
+                        </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="checkbox" value="apiary"
+                                [checked]="!editNoteCheckbox" (click)="onchangeCheckbox1Edit($event)">
+                            <label class="form-check-label"
+                                for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.APIARYLOCATION' | translate}}
+                            </label><br />
+                            <input class="form-check-input" type="radio" formControlName="checkbox" value="hive"
+                                [checked]="editNoteCheckbox" (click)="onchangeCheckbox1Edit($event)">
+                            <label class="form-check-label"
+                                for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.HIVELOCATION' | translate}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
+                        <select [(ngModel)]="rucherService.rucherSelectUpdate" [ngModelOptions]="{standalone: true}"
+                            class="form-control" (change)="onSelectApiaryEditNoteForm();">
+                            <option *ngFor="let apiary of rucherService.ruchers" [ngValue]="apiary">{{apiary.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div *ngIf="editNoteCheckbox" class="form-group">
+                        <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVE' | translate}}</label>
+                        <select [(ngModel)]="hiveNoteSelect" [ngModelOptions]="{standalone: true}" class="form-control">
+                            <option *ngFor="let hive of hivesNoteForm" [ngValue]="hive">{{hive.name}}</option>
+                        </select>
+                        <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
+                    </div>
+                    <div *ngIf="editNoteCheckbox" class="form-group ">
+                        <label class="col-form-label" for="exampleRadios1">
+                            {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.TYPE' | translate}}
+                        </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="type" value="HiveObs"
+                                [checked]="!editNoteCheckbox2" (click)="onchangeCheckbox2Edit($event)">
+                            <label class="form-check-label"
+                                for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}
+                            </label><br />
+                            <input class="form-check-input" type="radio" formControlName="type" value="HiveAct"
+                                [checked]="editNoteCheckbox2" (click)="onchangeCheckbox2Edit($event)">
+                            <label class="form-check-label"
+                                for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.ACTION' | translate}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="example-input-wrapper">
+                            {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
+                            <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dtUpdate"
+                                [owlDateTime]="dtUpdate">
+                            <owl-date-time #dtUpdate></owl-date-time>
+                        </label><br />
+                        <label class="example-input-wrapper">
+                            {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
+                            <textarea formControlName="sentence" type="text" class="form-control" id="sentence"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="editNote()"
+                    data-dismiss="modal" [disabled]="!NoteForm.valid">
+                    {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}</button>
+                <button type="button" class="btn btn-secondary" (click)="resetNoteForm()"
+                    data-dismiss="modal">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Edit Observation Modal -->

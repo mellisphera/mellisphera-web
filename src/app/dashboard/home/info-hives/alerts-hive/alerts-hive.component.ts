@@ -213,7 +213,6 @@ export class AlertsHiveComponent implements OnInit {
       _data => {
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1]);
-        console.log(dateJoin);
         let option = Object.assign({}, this.option);
         option.series = new Array();
         option.legend = Object.assign({}, BASE_OPTIONS.legend);

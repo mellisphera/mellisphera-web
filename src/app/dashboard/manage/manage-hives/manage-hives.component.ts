@@ -49,6 +49,7 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
   private notify: NotifierService;
   newRucheForm: FormGroup;
   updateRucherInput: boolean;
+  apiaryToEdit: RucherModel;
 
   public addNewShareStatus: Boolean;
   public newsUserSharing: String;
@@ -171,6 +172,7 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
     this.currentApiary = apiary;
     this.currentRuche = ruche;
     this.rucherService.rucherSelectUpdate = apiary;
+    this.apiaryToEdit = apiary;
     this.selectHive = ruche;
     const donnée = {
       nomRuche: this.selectHive.name,
@@ -180,7 +182,7 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
   }
   // pour editer une ruche
   onEditeRuche() {
-    if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.idUsername)) {
+    if (this.userService.checkWriteObject(this.apiaryToEdit.idUsername)) {
       const formValue = this.newRucheForm.value;
       this.selectHive = this.currentRuche;
       this.selectHive.idApiary = this.rucherService.rucherSelectUpdate.id;

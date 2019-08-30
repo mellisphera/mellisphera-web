@@ -111,8 +111,7 @@ export class AlertsComponent implements OnInit {
         this.alertsService.apiaryAlerts = _alert;
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
           this.onClickReadAll(_alert);
-          this.getOption();
-          this.loadCalendar();
+          this.initCalendar();
         });
 
       }
@@ -124,6 +123,27 @@ export class AlertsComponent implements OnInit {
     this.option.series = new Array();
     this.echartInstance.clear();
   }
+
+  initCalendar(isReload?: boolean){
+    if (isReload) {
+      this.alertsService.getAlertsByApiaryObs(this.rucherService.getCurrentApiary()).subscribe(
+        _alert => {
+          this.alertsService.apiaryAlerts = _alert;
+          this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
+            if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+              this.onClickReadAll(_alert);
+            }
+            this.cleanSerie();
+            this.getOption();
+            this.loadCalendar();
+          });
+        }
+      );
+    } else {
+      this.getOption();
+      this.loadCalendar();
+    }
+}
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
@@ -158,10 +178,8 @@ export class AlertsComponent implements OnInit {
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
-        console.log(_data);
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1])
-        console.log(dateJoin);
         let option = Object.assign({}, this.option);
         option.series = new Array();
         option.legend = Object.assign({}, BASE_OPTIONS.legend);

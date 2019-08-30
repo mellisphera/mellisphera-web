@@ -220,7 +220,7 @@ export class AlertsService {
 
         // Add the right picto for all alerts.
         for(i = 0; i < listAlerts.length; i++){
-            listAlerts[i].picto = "./assets/pictos_alerts/newIcones/"+listAlerts[i].type+".svg";
+            listAlerts[i].picto = "./assets/pictos_alerts/iconesPNG/"+listAlerts[i].type+".png";
         }
         return listAlerts;
     }
@@ -261,7 +261,6 @@ export class AlertsService {
     getAlertsByHive(idHive : string){
         // the format is AlertInterface[]
        return this.http.get<AlertInterface[]>(CONFIG.URL + 'alert/hive/' + idHive).map(elt => {
-           console.log(elt);
             return elt.sort((b, a) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime();
             }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() >= new Date().getMonth() - 2);

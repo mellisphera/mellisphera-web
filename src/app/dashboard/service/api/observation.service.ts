@@ -19,6 +19,7 @@ import { DataRange } from '../../../_model/data-range';
 import { StackService } from '../../apiary/stack-apiary/service/stack.service';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { UnitService } from '../unit.service';
+import { RucheService } from './ruche.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -33,8 +34,10 @@ export class ObservationService {
   observationObs: Observable<Observation>;
   observationsHive: Observation[];
   observationsApiary: Observation[];
+  observationsApiaryUser: Observation[];
+  observationsHiveUser: Observation[];
   observation: Observation;
-  obsHiveSubject: BehaviorSubject<Observation[]>;
+  public obsHiveSubject: BehaviorSubject<Observation[]>;
   mergeStackObsApiary: any;
   mergeStackObsHIve: any;
   private imgHiveObs: string;
@@ -43,10 +46,14 @@ export class ObservationService {
   private rangeObs: Date[];
   constructor(private http: HttpClient,
       private stackService: StackService,
+      private rucheService: RucheService,
       private unitService: UnitService) {
       //  this.observationsApiary = [];
     this.obsHiveSubject = new BehaviorSubject([]);
     this.observationsApiary = [];
+    this.observationsHive = [];
+    this.observationsApiaryUser = [];
+    this.observationsHiveUser = [];
     this.setRange({scale: 1, type: 'YEAR'});
     
     this.imgHiveObs = 'M256,96C144.341,96,47.559,161.021,0,256c47.559,94.979,144.341,160,256,160c111.656,0,208.439-65.021,256-160' +
@@ -114,53 +121,16 @@ export class ObservationService {
    * @returns {Observable<any>}
    * @memberof ObservationService
    */
-  getObservationByIdHive(idHive: string, hiveName?: string): Observable<any> {
-    return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, this.rangeObs) .map(res => {
-      this.observationsHive = res.sort((a: Observation, b: Observation) => {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      });
-      return {
-        name: (hiveName) ? hiveName + ' / note' : idHive,
-        type: 'custom',
-        xAxisIndex: 1,
-        yAxisIndex: 1,
-        tooltip: {
-          trigger: 'item',
-          formatter: (param) => {
-            return this.unitService.getHourlyDate(param.name) + ': </br>'
-                + param.value[3];
-          }
-        },
-        // data: res.map(elt => [elt.date, 0, elt.sentence, elt.type, elt.idHive]),
-        data: res.map(elt => {
-          return { name: elt.date, value: [elt.date, 5, elt.type, elt.sentence]};
-        }),
-        renderItem: (param, api) => {
-          const point = api.coord([
-            api.value(0),
-            0
-          ]);
-          return {
-            type: 'group',
-            children: [{
-              type: 'path',
-              shape: {
-                pathData: (api.value(2)) === 'HiveAct' ? this.imgHiveAct : this.imgHiveObs,
-                x: -45 / 2,
-                y: -45 / 2,
-                width: 30,
-                height: 30
-              },
-              position: [point[0], 50],
-              style: api.style({
-                fill: this.stackService.getColorByHive(idHive)
-              })
-            }]
-          };
-        },
-        z: 11
-      };
-    });
+  getObservationByIdHive(idHive: string, hiveName?: string) {
+    this.rangeObs[1] = new Date();
+    return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, this.rangeObs).subscribe(
+      _obs => {
+        this.observationsHive = _obs.sort((a: Observation, b: Observation) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
+        this.emitHiveSubject();
+      }
+    );
   }
 
   /**
@@ -229,6 +199,16 @@ export class ObservationService {
    */
   deleteObservation(idObs: string): Observable<Observation> {
     return this.http.delete<Observation>(CONFIG.URL + 'report/' + idObs);
+  }
+
+  /**
+   *
+   *
+   * @param {string} idUsername
+   * @memberof ObservationService
+   */
+  getObservationByIdUsername(idUsername: string): Observable<Observation[]>{
+    return this.http.get<Observation[]>(CONFIG.URL + 'report/user/' + idUsername);
   }
   
 }

@@ -20,6 +20,7 @@ import { ngfModule } from 'angular-file';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../shared.module';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 @NgModule({
@@ -28,6 +29,8 @@ import { SharedModule } from '../shared.module';
        // BrowserModule,
         ReactiveFormsModule,
         CommonModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
         FormsModule,
         TranslateModule,
         ngfModule,

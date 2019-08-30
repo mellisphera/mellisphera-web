@@ -15,9 +15,9 @@ limitations under the License. -->
       <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
   </div>
   <div class="main-panel">
-      <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+      <navbar-cmp (apiaryChange)="apiaryChange($event)" (messageEvent)="receiveMessage($event)"></navbar-cmp>
       <div class="container-fluid" style="background-color: white;">
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="setRouterPage($event)"></router-outlet>
       </div>
   </div>
 </div>

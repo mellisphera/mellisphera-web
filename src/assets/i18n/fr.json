@@ -48,6 +48,7 @@
     "NAVBAR": {
         "NEW_APIARY" : "Nouveau rucher",
         "EDIT_APIARY" : "Modifier un rucher",
+        "EDITAPIARY" : "Modifier le rucher",
         "DELETE_APIARY" : "Supprimer un rucher",
         "DELETE_APIARY2" : "Supprimer le rucher",
         "DELETE_ASK" : "Supprimer le rucher ?",
@@ -97,7 +98,7 @@
         "NOTES" : "Notes du rucher",
         "FLOWER" : "Fleur",
         "SENSORS" : "Capteurs",
-        "DATA" : "Données enregistrées"
+        "DATA" : "Analyse"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Changer de mot de passe",
@@ -192,7 +193,15 @@
                 "CANCEL" : "Annuler",
                 "CONFIRM" : "Confirmer",
                 "NOTES" : "Note : ",
-                "TYPE" : "Type"
+                "TYPE" : "Type",
+                "YOUWANTCREATE": "Vous souhaitez créer :",
+                "APIARYNOTE" : "Une note de rucher",
+                "HIVENOTE" : "Une note de ruche",
+                "CREATENOTE" : "Créer une note",
+                "LOCATION" : "Localisation",
+                "APIARYLOCATION" : "Note de rucher",
+                "HIVELOCATION" : "Note de ruche",
+                "EDITANOTE" : "Modifer une note"
             }
         },
         "SENSORS" : {
@@ -271,7 +280,9 @@
             "SENSOR" : "Capteur",
             "EDITSENSOR" : "Modifer",
             "OF" : "de",
-            "NOSENSOR" : "Vous n'avez pas de capteurs à modifier."
+            "NOSENSOR" : "Vous n'avez pas de capteurs à modifier.",
+            "EDITASENSOR" : "Modifer un capteur",
+            "EDITTHESENSOR" : "Modifer le capteur"
         }
     },
     "FEEDBACK" : {
@@ -334,5 +345,20 @@
         "ALERTS" : "Alertes",
         "NOHIVEALERTS" : "Pas d'alertes",
         "NOHIVES" : "Vous n'avez pas de ruche dans ce rucher !"
+    },
+    "NOTES" : {
+        "TITLEAPIARY" : "Notes de rucher",
+        "TITLEHIVE" : "Notes de ruche",
+        "SEARCH": "Chercher une note",
+        "FORM" : {
+            "NEW" : "Nouvelle note",
+            "APIARY" : "Rucher",
+            "HIVE" : "Ruche",
+            "EDIT" : "Modifier la note",
+            "DELETE" : "Supprimer la note",
+            "DELETE_ASK" : "Supprimer la note ?",
+            "CONFIRM" : "Supprmier",
+            "CANCEL" : "Annuler"
+        }
     }
 }

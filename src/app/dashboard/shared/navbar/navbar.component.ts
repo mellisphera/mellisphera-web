@@ -11,7 +11,7 @@ limitations under the License. */
 
 import { RucherModel } from '../../../_model/rucher-model';
 import { CONFIG } from '../../../../constants/config';
-import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2, Output } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { UserloggedService } from '../../../userlogged.service';
@@ -39,6 +39,9 @@ import { AlertsService } from '../../service/api/alerts.service';
 import { MessagesService } from '../../service/messages.service';
 import { MessagesList } from '../../../../constants/messages';
 import { CapteurInterface } from '../../../_model/capteur';
+import { Observation } from '../../../_model/observation';
+import { InfoApiaryComponent } from '../../home/info-apiary/info-apiary.component';
+import { EventEmitter } from '@angular/core';
 
 @Component({
     // moduleId: module.id,
@@ -48,6 +51,8 @@ import { CapteurInterface } from '../../../_model/capteur';
 })
 
 export class NavbarComponent implements OnInit {
+    @Output() apiaryChange = new EventEmitter<string>();  // <!-- Voici l'output
+
     editCapteurCheckbox: boolean;
     paternRef: RegExp;
     editSensorForm: FormGroup;
@@ -93,6 +98,14 @@ export class NavbarComponent implements OnInit {
     private readonly notifier: NotifierService;
     public rucherForm: FormGroup;
     public messageOrphanHives: string;
+
+    NavbarNoteForm: FormGroup;
+    hivesNavbarNoteForm : RucheInterface[];
+    hiveNoteSelect : RucheInterface;
+    newNoteCheckbox: boolean;
+    newObs: Observation
+
+    private infoApiaryComponent: any;
 
     constructor(location: Location,
         private element: ElementRef,
@@ -163,9 +176,11 @@ export class NavbarComponent implements OnInit {
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         this.userService.currentMessage.subscribe(message => this.message = message);
+        this.capteurService.getUserCapteurs();
         this.initForm();
         this.initHiveForm();
         this.initSensorForm();
+        this.initNavbarNoteForm();
     }
 
     logout() {
@@ -262,6 +277,22 @@ export class NavbarComponent implements OnInit {
         this.renderer.removeClass(this.eltOnClickId, 'active0');
     }
 
+    // Desactive the 'active' class from buttons in homePage, Active the name one
+    desactiveButtonHomePageActiveNameAndAlerts() {
+        this.eltOnClickId = document.getElementById('name');
+        this.renderer.addClass(this.eltOnClickId, 'active');
+        this.eltOnClickId = document.getElementById('brood');
+        this.renderer.removeClass(this.eltOnClickId, 'active');
+        this.eltOnClickId = document.getElementById('weight');
+        this.renderer.removeClass(this.eltOnClickId, 'active');
+        this.eltOnClickId = document.getElementById('sensors');
+        this.renderer.removeClass(this.eltOnClickId, 'active');
+
+        // active alerts
+        this.eltOnClickId = document.getElementById('infoApiaryButton');
+        this.renderer.addClass(this.eltOnClickId, 'active0');
+    }
+
     // Desactive the 'in' class from info under hives in home page
     desactiveCollapsesInfoHivesHomePage() {
         this.eltOnClickClass = document.getElementsByClassName('name');
@@ -286,6 +317,22 @@ export class NavbarComponent implements OnInit {
 
     }
 
+    // setRouterPage(event) {
+    //     if (event instanceof InfoApiaryComponent) {
+    //       this.infoApiaryComponent = event;
+    //     }
+    //   }
+
+    // checkIfInfoApiaryComponent(): Promise<Boolean> {
+    //     return new Promise((resolve, reject) => {
+    //       if (this.infoApiaryComponent instanceof InfoApiaryComponent) {
+    //         resolve(true);
+    //       } else {
+    //         reject(false);
+    //       }
+    //     })
+    //   }
+
     onSelectRucher() {
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
@@ -305,14 +352,23 @@ export class NavbarComponent implements OnInit {
                 this.desactiveButtonHomePageActiveName();
                 this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
                 this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.router.navigate(['dashboard/home']);
+                this.router.navigate(['dashboard/home/info-apiary']);
                 break;
             case '/dashboard/home/info-apiary':
+                this.apiaryChange.emit(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                this.desactiveButtonHomePageActiveName();
                 this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
                 this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.router.navigate(['dashboard/home']);
+                this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+                this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
+                // this.checkIfInfoApiaryComponent().then(status => {
+                //     console.log("OK");
+                //     this.infoApiaryComponent.alertsComponent.initCalendar(true);
+                //   }).catch(err => {
+                //     console.log(err);
+                //   })
+                this.router.navigate(['dashboard/home/info-apiary']);
+                this.desactiveButtonHomePageActiveNameAndAlerts(); 
                 break;
             case '/dashboard/fleurs-floraison':
                 this.fleursFloraisonService.getUserFleur(this.rucherService.getCurrentApiary());
@@ -384,7 +440,14 @@ export class NavbarComponent implements OnInit {
             }
             this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
             if ((/home/g.test(this.router.url))) {
-                this.router.navigate(['dashboard/home']);
+                this.apiaryChange.emit(this.rucherService.getCurrentApiary());
+                this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+                this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
+                this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
+                this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+                this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
+                this.router.navigate(['dashboard/home/info-apiary']);
+                this.desactiveButtonHomePageActiveNameAndAlerts();
             }
             if (this.userService.getJwtReponse().country === "FR") {
                 this.notifier.notify('success', 'Rucher créé');
@@ -536,8 +599,14 @@ export class NavbarComponent implements OnInit {
                     this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
                     this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
                     if ((/home/g.test(this.router.url))) {
-                        this.router.navigate(['dashboard/home']);
-                        this.desactiveButtonHomePageActiveName();
+                        this.apiaryChange.emit(this.rucherService.getCurrentApiary());
+                        this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+                        this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
+                        this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
+                        this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+                        this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
+                        this.router.navigate(['dashboard/home/info-apiary']);
+                        this.desactiveButtonHomePageActiveNameAndAlerts();
                     }
                 }
                 if (this.rucherService.ruchers.length < 1) {
@@ -546,7 +615,14 @@ export class NavbarComponent implements OnInit {
                         this.rucherService.rucher = this.rucherService.allApiaryAccount[0];
                     }
                     if ((/home/g.test(this.router.url))) {
-                        this.router.navigate(['dashboard/home']);
+                        this.apiaryChange.emit(this.rucherService.getCurrentApiary());
+                        this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+                        this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
+                        this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
+                        this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+                        this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
+                        this.router.navigate(['dashboard/home/info-apiary']);
+                        this.desactiveButtonHomePageActiveNameAndAlerts();
                     }
                 }
                 this.rucheService.loadHiveByApiary(this.rucherService.rucher.id);
@@ -806,7 +882,160 @@ export class NavbarComponent implements OnInit {
     // ###############################################################
     // ###############################################################
 
+    initNavbarNoteForm() {
+        const defautDate = new Date();
+        // defautDate.setUTCHours(new Date().getHours());
+        this.NavbarNoteForm = this.formBuilder.group({
+          'sentence': [null, Validators.compose([Validators.required])],
+          'type': ['HiveObs', Validators.required],
+          'date': new Date(),
+          'checkbox': ['apiary', Validators.required],
+        });
+      }
+    
+      resetNavbarNoteForm() {
+        this.NavbarNoteForm.get('sentence').reset();
+      }
+
+      getHiveNameById(idHive: string): string {
+        if (this.rucheService.ruchesAllApiary.filter(hive => hive.id === idHive)[0] !== undefined) {
+          return (this.rucheService.ruchesAllApiary.filter(hive => hive.id === idHive)[0].name);
+        } else {
+          return '';
+        }
+      }
+    
+      getApiaryNameByID(idApiary: string): string {
+        if (this.rucherService.ruchers.filter(apiary => apiary.id === idApiary)[0] !== undefined) {
+          return (this.rucherService.ruchers.filter(apiary => apiary.id === idApiary)[0].name);
+        } else {
+          return '';
+        }
+      }
+
     // ###################      CREATE      ###################
+
+    newNoteModalInit() {
+        // Apiary init
+        this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
+    
+        // Hive init
+        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+          this.rucherService.rucheService.ruchesAllApiary = ruches;
+          this.hivesNavbarNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate.id);
+          if (this.hivesNavbarNoteForm.length !== 0) {
+            this.hiveNoteSelect = this.hivesNavbarNoteForm[0];
+          }
+        })
+      }
+    
+      onSelectApiaryNewNavbarNoteForm() {
+        // init hive
+        this.hivesNavbarNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate.id);
+        if (this.hivesNavbarNoteForm.length !== 0) {
+          this.hiveNoteSelect = this.hivesNavbarNoteForm[0];
+        }
+      }
+    
+      onchangeCheckbox(event) {
+        this.newNoteCheckbox = (event.target.value === 'hive');
+      }
+    
+      createObservation() {
+        if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.idUsername)) {
+          const formValue = this.NavbarNoteForm.value;
+          this.newObs = formValue;
+          this.newObs.type = 'HiveObs';
+          this.newObs.idHive = this.hiveNoteSelect.id;
+          this.newObs.idLHive = [this.hiveNoteSelect.id];
+          this.newObs.idUsername = this.userService.getIdUserLoged();
+          this.NavbarNoteForm.reset();
+          this.observationService.createObservation(this.newObs).subscribe((obs) => {
+            this.observationService.observationsHive.push(obs);
+            this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
+              return new Date(b.date).getTime() - new Date(a.date).getTime();
+            });
+            this.observationService.observationsHiveUser.push(obs);
+            this.observationService.observationsHiveUser.sort((a, b) => {
+              return this.getHiveNameById(a.idHive).localeCompare(this.getHiveNameById(b.idHive));
+            });
+          }, () => { }, () => {
+            this.initNavbarNoteForm();
+            this.newNoteCheckbox = false;
+            if (this.userService.getJwtReponse().country === "FR") {
+              this.notifier.notify('success', 'Observation créée');
+            } else {
+              this.notifier.notify('success', 'Created Observation');
+            }
+          });
+        } else {
+          this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+        }
+      }
+    
+      createAction() {
+        if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.idUsername)) {
+          const formValue = this.NavbarNoteForm.value;
+          this.newObs = formValue;
+          this.newObs.type = 'HiveAct';
+          this.newObs.idHive = this.hiveNoteSelect.id;
+          this.newObs.idLHive = [this.hiveNoteSelect.id];
+          this.newObs.idUsername = this.userService.getIdUserLoged();
+          this.NavbarNoteForm.reset();
+          this.observationService.createObservation(this.newObs).subscribe((obs) => {
+            this.observationService.observationsHive.push(obs);
+            this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
+              return new Date(b.date).getTime() - new Date(a.date).getTime();
+            });
+            this.observationService.observationsHiveUser.push(obs);
+            this.observationService.observationsHiveUser.sort((a, b) => {
+              return this.getHiveNameById(a.idHive).localeCompare(this.getHiveNameById(b.idHive));
+            });
+          }, () => { }, () => {
+            this.initNavbarNoteForm();
+            this.newNoteCheckbox = false;
+            if (this.userService.getJwtReponse().country === "FR") {
+              this.notifier.notify('success', 'Action créée');
+            } else {
+              this.notifier.notify('success', 'Created Action');
+            }
+          });
+        } else {
+          this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+        }
+      }
+    
+      createNote() {
+        if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.idUsername)) {
+          const formValue = this.NavbarNoteForm.value;
+          this.newObs = formValue;
+          this.newObs.type = 'ApiaryObs';
+          this.newObs.idApiary = this.rucherService.rucherSelectUpdate.id;
+          this.newObs.idUsername = this.userService.getIdUserLoged();
+          this.NavbarNoteForm.reset();
+          this.observationService.createObservation(this.newObs).subscribe((obs) => {
+            this.observationService.observationsApiary.push(obs);
+            this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
+              return new Date(b.date).getTime() - new Date(a.date).getTime();
+            });
+            this.observationService.observationsApiaryUser.push(obs);
+            this.observationService.observationsApiaryUser.sort((a, b) => {
+              return this.getApiaryNameByID(a.idApiary).localeCompare(this.getApiaryNameByID(b.idApiary));
+            });
+          }, () => { }, () => {
+            this.initNavbarNoteForm();
+            this.newNoteCheckbox = false;
+            if (this.userService.getJwtReponse().country === "FR") {
+              this.notifier.notify('success', 'Note créée');
+            } else {
+              this.notifier.notify('success', 'Created Note');
+            }
+          });
+        } else {
+          this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+        }
+      }
+
     // ###################      EDIT      ###################
     // ###################      DELETE      ###################
 

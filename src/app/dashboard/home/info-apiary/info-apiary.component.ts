@@ -9,8 +9,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, AfterViewChecked,HostListener, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewChecked,HostListener,ViewChild, Renderer2 } from '@angular/core';
 import { RucherService } from '../../service/api/rucher.service';
+import { AlertsComponent } from './alerts/alerts.component';
 
 @Component({
   selector: 'app-info-apiary',
@@ -22,6 +23,7 @@ export class InfoApiaryComponent implements OnInit, AfterViewChecked {
   screenHeight:any;
   screenWidth:any;
   private eltOnClickId: EventTarget;
+  @ViewChild(AlertsComponent) alertsComponent: AlertsComponent;
 
   constructor(public rucherService: RucherService,
     private renderer: Renderer2) {
