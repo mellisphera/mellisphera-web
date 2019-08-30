@@ -256,30 +256,17 @@ export class AlertsHiveComponent implements OnInit {
                   height: 25
                 },
                 position: [cellPoint[0], cellPoint[1]],
-              })
+              });
             } else if (dataByDate.length === 1) {
-              let icon;
               if (dataByDate !== undefined && dataByDate[0].sentence) {
-                icon = dataByDate[0].type === 'HiveObs' ? GLOBAL_ICONS.HIVE_OBS : GLOBAL_ICONS.HIVE_ACT;
+                group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
+
               } else {
-                icon = this.alertsService.getPicto(dataByDate[0].type, cellPoint);
+                group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].type, cellPoint));
               }
-              group.children.push({
-                type: 'path',
-                z2: 1000,
-                shape: {
-                  pathData: icon,
-                  x: -11,
-                  y: -10,
-                  width: 25,
-                  height: 25
-                },
-                position: [cellPoint[0], cellPoint[1]-2],
-              })
             }
             return group;
-
-          }
+          };
           let newSerie = Object.assign({}, SERIES.custom);
           newSerie.name = 'thisDay';
           newSerie.data = [ [new Date(), 0, 'OK', 'OK']];

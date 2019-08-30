@@ -867,14 +867,12 @@ export class DailyManagerService {
                     height: 25
                   },
                   position: [cellPoint[0], cellPoint[1]],
-                })
+                });
               } else if(dataByDate.length === 1) {
                 if (dataByDate !== undefined && dataByDate[0].sentence) {
                   group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
-
                 } else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].type, cellPoint));
-
                 }
               }
               return group;

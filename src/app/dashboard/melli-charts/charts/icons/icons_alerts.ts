@@ -2297,7 +2297,7 @@ export const ALERTS_ICONS = {
     NewBrood: [
         {
             path: 'm33 23.9c3.2 1 5.5 3.4 5.8 6.3 0.4 4.2-3.6 8.1-8.9 8.6-5.4 0.5-10-2.5-10.4-6.8-0.3-2.8 1.4-5.5 4.2-7.1',
-            scale: [0.6, 0.6],
+            scale: [0.8, 0.8],
             position: [-30, -30],
             style: {
                 fill: null,
