@@ -8,6 +8,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
+import * as echarts from 'echarts';
 
 export const SERIES = {
   effectScatter: {
@@ -61,8 +62,13 @@ export const SERIES = {
             opacity: 1
           },
           itemStyle: {
-            color: "#3DC244",
-            opacity: 0.5
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+              offset: 0,
+              color: '#8ec6ad'
+              }, {
+              offset: 1,
+              color: '#ffff'
+              }])
           }
         }, {
           yAxis: 0
@@ -82,6 +88,7 @@ export const SERIES = {
         [{
           yAxis: 0,
           name: 'This is a mark area',
+          
           label: {
             show: true,
             position: "insideLeft",
@@ -94,9 +101,15 @@ export const SERIES = {
             opacity: 1
           },
           itemStyle: {
-            color: "#3DC244",
-            opacity: 0.5
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+              offset: 0,
+              color: '#8ec6ad'
+              }, {
+              offset: 1,
+              color: '#ffff'
+              }])
           }
+          
         }, {
           yAxis: 0
         }]

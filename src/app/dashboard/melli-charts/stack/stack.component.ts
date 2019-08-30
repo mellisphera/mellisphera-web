@@ -89,7 +89,7 @@ export class StackComponent implements OnInit {
     let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxis.gridIndex = 0;
     xAxis.axisLabel.formatter = (value: number, index: number) => {
-      return this.unitService.getHourlyDate(new Date(value));
+      return this.unitService.getDailyDate(new Date(value));
     };
     this.options.xAxis.push(xAxis);
 
@@ -119,7 +119,7 @@ export class StackComponent implements OnInit {
     let xAxisHum = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxisHum.gridIndex = 2;
     xAxisHum.axisLabel.formatter = (value: number, index: number) => {
-      return this.unitService.getHourlyDate(new Date(value));
+      return this.unitService.getDailyDate(new Date(value));
     };
     this.options.xAxis.push(xAxisHum);
 

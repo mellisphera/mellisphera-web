@@ -40,7 +40,7 @@ export class MelliChartsDateService {
       { scale: 3, type: 'MONTHS' },
       { scale: 6, type: 'MONTHS' },
     ];
-    this.setRange(this.ranges[5]);
+    this.setRange(this.ranges[4]);
   }
 
   

@@ -131,7 +131,7 @@ export const BASE_OPTIONS = {
     },
     tooltip: {
         trigger: 'item',
-        formatter: {}
+        formatter: {},
     },
     legend: {
         orient: 'horizontal',

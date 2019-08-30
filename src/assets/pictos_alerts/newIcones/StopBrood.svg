@@ -16,14 +16,14 @@
    viewBox="0 0 73.7 73.7"
    style="enable-background:new 0 0 73.7 73.7;"
    xml:space="preserve"
-   sodipodi:docname="8_stoplaying.svg"
+   sodipodi:docname="StopBrood.svg"
    inkscape:export-filename="/Users/lorenzo/Documents/Travail/12-PRESTATIONS/Maru/Evols 2/notifs/colony/8_stoplaying.png"
    inkscape:export-xdpi="150"
    inkscape:export-ydpi="150"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"><metadata
      id="metadata8214"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
      id="defs8212" /><sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -38,12 +38,13 @@
      id="namedview8210"
      showgrid="false"
      inkscape:zoom="8.1873265"
-     inkscape:cx="33.657261"
+     inkscape:cx="26.451001"
      inkscape:cy="36.849998"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
-     inkscape:current-layer="Capa_1" /><style
+     inkscape:current-layer="Capa_1"
+     inkscape:pagecheckerboard="true" /><style
      type="text/css"
      id="style8185">
 	.st0{fill:#4F4F51;}
@@ -67,11 +68,11 @@
        id="g8203"><g
          id="g8199"><g
            id="g8197"><polygon
-             style="fill:none;stroke:#4f4f51;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:10"
+             style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
              id="polygon8195"
              points="24.6,46.8 31.3,35.1 44.8,35.1 51.6,46.8 44.8,58.5 31.3,58.5 "
              class="st9" /></g></g><path
-         style="fill:none;stroke:#4f4f51;stroke-width:1.5;stroke-miterlimit:10"
+         style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-miterlimit:10;stroke-opacity:1"
          inkscape:connector-curvature="0"
          id="path8201"
          d="m 42.2,44.9 v 0 c 0.5,0.8 0.2,1.8 -0.6,2.3 l -5.4,3.1 c -0.8,0.5 -1.8,0.2 -2.3,-0.6 v 0 c -0.5,-0.8 -0.2,-1.8 0.6,-2.3 l 5.4,-3.1 c 0.8,-0.4 1.8,-0.1 2.3,0.6 z"

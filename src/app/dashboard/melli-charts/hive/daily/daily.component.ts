@@ -20,9 +20,9 @@ import { WeatherService } from '../../../service/api/weather.service';
 
 const TITLE_PERIODE_CALENDAR = {
   TEXT_SUM_FR: 'Somme sur la période:',
-  TEXT_SUM_EN: 'Sum of period: ',
+  TEXT_SUM_EN: 'sum over the period: ',
   TEXT_MEAN_FR: 'Moyenne sur la période: ',
-  TEXT_MEAN_EN: 'Mean of periode: '
+  TEXT_MEAN_EN: 'period average: '
 };
 
 const TITLE_LAST_DAY = {
@@ -68,18 +68,19 @@ export class DailyComponent implements OnInit, AfterViewInit {
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
     this.typeData = [
-      { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type active', icons: './assets/picto_mellicharts/Win.png' },
+      { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type active', icons: './assets/picto_mellicharts/Br.png' },
+      { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Win.png' },
+      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Wma.png' },
       { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Tim.png' },
       { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Timi.png' },
+      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Hi.png' },
+      { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: './assets/picto_mellicharts/weather.png' },
       { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Tema.png' },
       { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Temi.png' },
-      { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: './assets/picto_mellicharts/weather.png' },
-      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Wma.png' },
-      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/He.png' },
-      { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Br.png' },
-      { name: 'Moon', id: 'Moon', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
-      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/alert.svg'}
+      { name: 'MOON', id: 'MOON', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
+      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/notif.png'},
+      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/tool_jhook.png'}
     ];
 
     this.optionCsv = {
@@ -126,7 +127,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
   setMeanTextHtml(): void {
     if (this.userService.getUserPref().lang === 'FR') {
       if (this.currentTypeDailyOther.name === 'RAIN'){
-        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_FR
+        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_FR;
         this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_FR;
       } else {}
        if (this.currentTypeDailyDevice.name === 'WINCOME'){
@@ -195,6 +196,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
 
   loadDailyDeviceData(rangeChange: boolean): void {
+    this.melliHive.getDailyDeviceChartInstance().showLoading();
     switch (this.currentTypeDailyDevice.name) {
       case 'WINCOME':
         this.dailyManager.getChartWeightincome(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id,
@@ -237,12 +239,13 @@ export class DailyComponent implements OnInit, AfterViewInit {
   }
 
   loadDailyOtherData(rangeChange: boolean) {
+    this.melliHive.getDailyOtherChartInstance().showLoading();
     switch (this.currentTypeDailyOther.name) {
       case 'WEATHER':
         this.dailyManager.getChartDailyWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
         break;
-      case 'Moon':
+      case 'MOON':
         this.dailyManager.getChartAstro(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
@@ -258,6 +261,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
 
   loadDailyEnvData(rangeChange: boolean) {
+    this.melliHive.getDailyEnvChartInstance().showLoading();
     this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().id,
     this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
 /*     switch (this.currentTypeDailyEnv.name) {
