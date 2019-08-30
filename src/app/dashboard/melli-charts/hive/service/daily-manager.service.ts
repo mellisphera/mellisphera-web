@@ -33,6 +33,7 @@ import { Observation } from '../../../../_model/observation';
 import { AlertInterface } from '../../../../_model/alert';
 import { GLOBAL_ICONS } from '../../charts/icons/icons';
 import { MyDate } from '../../../../class/MyDate';
+import { UserParamsService } from '../../../preference-config/service/user-params.service';
 
 
 
@@ -79,6 +80,7 @@ export class DailyManagerService {
   constructor(
     private dailyWService: DailyRecordsWService,
     private dailyHService: DailyRecordService,
+    private userPref: UserParamsService,
     private alertService: AlertsService,
     private weatherService: WeatherService,
     private observationService: ObservationService,
@@ -98,11 +100,11 @@ export class DailyManagerService {
     this.meanDeviceSevenDay = {
       value: 0,
       unit: ''
-    }
+    };
     this.meanOtherSevenDay = {
       value: 0,
       unit: ''
-    }
+    };
 
     this.baseOptionsInt = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliCharts);
     this.baseOptionEnv = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliCharts);
@@ -178,8 +180,7 @@ export class DailyManagerService {
             return [_map.date].concat(this.getValueBySerie(_map.value, nameSerie), _map.sensorRef);
           });
         } else {
-
-          serieTmp.data = data;
+          serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef);
         }
         next(serieTmp);
       }
@@ -750,11 +751,12 @@ export class DailyManagerService {
     Observable.forkJoin(obs).subscribe(
       _data => {
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
-        const joinData = _data[0].concat(_data[1])
+        const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.baseOptionEnv);
         if (rangeChange) {
           option.calendar.range = range;
           option.series = this.removeDataAllseries(option.series);
+          console.log(dateJoin);
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             serieComplete.renderItem = (params, api) => {
@@ -781,8 +783,9 @@ export class DailyManagerService {
                 }
               });
               const dataByDate: any[] = joinData.filter(_filter => this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.getTimeStampFromDate(api.value(0)));
+              console.log(dataByDate);
               if (dataByDate.length > 1) {
-                group.children.push({
+                 group.children.push({
                   type: 'path',
                   z2: 1000,
                   shape: {
@@ -793,41 +796,34 @@ export class DailyManagerService {
                     height: 25
                   },
                   position: [cellPoint[0], cellPoint[1]],
-                })
-              } else if(dataByDate.length === 1) {
+                });
+              } else if (dataByDate.length === 1) {
                 let icon;
-                console.log(dataByDate);
                 if (dataByDate[0].sentence) {
-                  icon = dataByDate[0].type === 'HiveObs' ? GLOBAL_ICONS.HIVE_OBS : GLOBAL_ICONS.HIVE_ACT;
+                  group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
+
                 } else {
-                  icon = this.alertService.getPicto(dataByDate[0].type);
+                  group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].type, cellPoint));
+                  // icon = this.alertService.getPicto(dataByDate[0].type);
                 }
-                group.children.push({
-                  type: 'path',
-                  z2: 1000,
-                  shape: {
-                    pathData: icon,
-                    x: -11,
-                    y: -10,
-                    width: 25,
-                    height: 25
-                  },
-                  position: [cellPoint[0], cellPoint[1]],
-                })
               }
               return group;
 
             }
             // option.legend.data.push(serieComplete.name)
-            option.series[index] = serieComplete;
+            if (index !== -1) {
+              option.series[index] = serieComplete;
+            } else {
+              option.series.push(serieComplete);
+
+            }
           });
         } else {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
           option.legend = Object.assign({}, BASE_OPTIONS.legend);
-/*           option.legend.selectedMode = 'single';
- */          this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
+          this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
               serieComplete.renderItem = (params, api) => {
               let cellPoint = api.coord(api.value(0));
               let cellWidth = params.coordSys.cellWidth;
@@ -867,25 +863,14 @@ export class DailyManagerService {
                   },
                   position: [cellPoint[0], cellPoint[1]],
                 })
-              } else  if(dataByDate.length === 1){
-                let icon;
+              } else if(dataByDate.length === 1) {
                 if (dataByDate !== undefined && dataByDate[0].sentence) {
-                  icon = dataByDate[0].type === 'HiveObs' ? GLOBAL_ICONS.HIVE_OBS : GLOBAL_ICONS.HIVE_ACT;
+                  group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
+
                 } else {
-                  icon = this.alertService.getPicto(dataByDate[0].type);
+                  group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].type, cellPoint));
+
                 }
-                group.children.push({
-                  type: 'path',
-                  z2: 1000,
-                  shape: {
-                    pathData: icon,
-                    x: -11,
-                    y: -10,
-                    width: 25,
-                    height: 25
-                  },
-                  position: [cellPoint[0], cellPoint[1]],
-                })
               }
               return group;
 
@@ -898,6 +883,7 @@ export class DailyManagerService {
           });
         }
         option.tooltip = this.getTooltipBySerie(type, joinData);
+        chartInstance.clear();
         chartInstance.setOption(option, true);
         this.baseOptionEnv = option;
 
@@ -1047,12 +1033,12 @@ export class DailyManagerService {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
               name: 'TempMax',
-              value: this.graphGlobal.getNumberFormat(params.data[2]),
+              value: this.graphGlobal.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[2], this.userPref.getUserPref().unitSystem, true)),
               unit: this.graphGlobal.getUnitByType(type.unit)
             },
             {
               name: 'TempMin',
-              value: this.graphGlobal.getNumberFormat(params.data[3]),
+              value: this.graphGlobal.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[3], this.userPref.getUserPref().unitSystem, true)),
               unit: this.graphGlobal.getUnitByType(type.unit)
             },
             {

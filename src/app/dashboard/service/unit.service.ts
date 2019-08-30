@@ -81,7 +81,7 @@ UnitService {
  * @returns {number}
  * @memberof UserParamsService
  */
-convertTempFromUsePref(temp: number, unit: string, round? : boolean): number {
+convertTempFromUsePref(temp: number, unit: string, round?: boolean): number {
   let value;
   if (unit === 'IMPERIAL') {
     value = round ? this.getValRound(temp * 9 / 5 + 32): temp * 9 / 5 + 32;

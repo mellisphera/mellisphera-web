@@ -263,7 +263,7 @@ export class AlertsHiveComponent implements OnInit {
               if (dataByDate !== undefined && dataByDate[0].sentence) {
                 icon = dataByDate[0].type === 'HiveObs' ? GLOBAL_ICONS.HIVE_OBS : GLOBAL_ICONS.HIVE_ACT;
               } else {
-                icon = this.alertsService.getPicto(dataByDate[0].type);
+                icon = this.alertsService.getPicto(dataByDate[0].type, cellPoint);
               }
               group.children.push({
                 type: 'path',

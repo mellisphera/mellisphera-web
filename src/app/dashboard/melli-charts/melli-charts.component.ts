@@ -94,7 +94,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.dailyStockHoneyService.setUnitSystem(data.unitSystem);
         this.weatherService.setUnitSystem(data.unitSystem);
       }
-    )
+    );
     if (!this.rucherService.rucherSubject.closed) {
       if (!this.tokenService.checkAuthorities('ROLE_ADMIN')) {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {

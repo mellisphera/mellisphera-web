@@ -19,6 +19,7 @@ import { DataRange } from '../../../_model/data-range';
 import { StackService } from '../../apiary/stack-apiary/service/stack.service';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { UnitService } from '../unit.service';
+import { INSPECTIONS } from '../../melli-charts/charts/icons/icon_inspect';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -230,5 +231,18 @@ export class ObservationService {
   deleteObservation(idObs: string): Observable<Observation> {
     return this.http.delete<Observation>(CONFIG.URL + 'report/' + idObs);
   }
-  
+
+  getPictoInspect(typeInspect: string, cellPoint: Array<number>) {
+    return INSPECTIONS.bkpr.map(_path => {
+      return  {
+          type: 'path',
+          scale: _path.scale,
+          shape: {
+              pathData: _path.path,
+          },
+          position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
+          style: _path.style
+      };
+    });
+  }
 }

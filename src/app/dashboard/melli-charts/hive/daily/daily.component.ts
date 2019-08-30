@@ -73,7 +73,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Wma.png' },
       { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Tim.png' },
       { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Timi.png' },
-      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Hi  .png' },
+      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Hi.png' },
       { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: './assets/picto_mellicharts/weather.png' },
       { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Tema.png' },
       { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Temi.png' },
