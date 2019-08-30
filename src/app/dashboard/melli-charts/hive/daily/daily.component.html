@@ -30,7 +30,7 @@ limitations under the License. -->
   <div id="daily-env">
     <div id="sidebar-tools-daily-env">
       <ul class="nav responsive-nav flex tools" id="env-group">
-        <li *ngFor="let type of getlabelByType('ENV')" (click)="setType(type)" [class]="type.class" [id]="type.id">
+        <li *ngFor="let type of getlabelByType('ENV')" [class]="type.class" [id]="type.id">
           <img [src]="type.icons" /></li>
 <!--         <li (click)="exportToCsv('ENV')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
  -->      </ul>

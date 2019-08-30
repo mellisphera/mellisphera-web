@@ -370,4 +370,29 @@ export class GraphGlobal {
                 break;
         }
     }
+
+
+    /**
+     *
+     *
+     * @param {number} status
+     * @returns {string}
+     * @memberof GraphGlobal
+     */
+    getMoonStatus(status: number): string{
+        if (this.userService.getJwtReponse().country === 'FR') {
+            if (status === 1) {
+                return 'Ascendant';
+            } else {
+                return 'Descendant';
+            }
+        } else {
+            if (status === 1) {
+                return 'Ascending';
+            } else {
+                return 'Descending';
+            }
+        }
+
+    }
 }

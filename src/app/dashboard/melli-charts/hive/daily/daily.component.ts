@@ -78,8 +78,9 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Tema.png' },
       { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Temi.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
-      { name: 'Moon', id: 'Moon', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
-      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/alert.svg'}
+      { name: 'MOON', id: 'MOON', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
+      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/notif.png'},
+      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/tool_jhook.png'}
     ];
 
     this.optionCsv = {
@@ -195,6 +196,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
 
   loadDailyDeviceData(rangeChange: boolean): void {
+    this.melliHive.getDailyDeviceChartInstance().showLoading();
     switch (this.currentTypeDailyDevice.name) {
       case 'WINCOME':
         this.dailyManager.getChartWeightincome(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id,
@@ -237,12 +239,13 @@ export class DailyComponent implements OnInit, AfterViewInit {
   }
 
   loadDailyOtherData(rangeChange: boolean) {
+    this.melliHive.getDailyOtherChartInstance().showLoading();
     switch (this.currentTypeDailyOther.name) {
       case 'WEATHER':
         this.dailyManager.getChartDailyWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
         break;
-      case 'Moon':
+      case 'MOON':
         this.dailyManager.getChartAstro(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
@@ -258,6 +261,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
 
   loadDailyEnvData(rangeChange: boolean) {
+    this.melliHive.getDailyEnvChartInstance().showLoading();
     this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().id,
     this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
 /*     switch (this.currentTypeDailyEnv.name) {
