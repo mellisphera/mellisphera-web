@@ -166,6 +166,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     this.stackService.getBroodChartInstance().showLoading();
     this.dailyThService.getBroodByHive(hive.id, this.melliDateService.getRangeForReqest()).subscribe(
       _brood => {
+        console.log(_brood);
         this.getSerieByData(_brood, hive.name, (serieComplete: any) => {
           serieComplete.itemStyle = {
             color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
@@ -176,7 +177,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
       },
       () => {},
       () => {
-        this.stackService.getBroodChartInstance().hideLoading();  
+        console.log(this.option);
+        this.stackService.getBroodChartInstance().hideLoading();
       }
     )
   }

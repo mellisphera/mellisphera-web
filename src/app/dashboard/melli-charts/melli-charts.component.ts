@@ -117,7 +117,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
               console.log(err);
             },
             () => {
-              this.hiveComponent.loadDataFromHive();
+              if (this.router.url === PREFIX_PATH + 'hive') {
+                this.hiveComponent.loadDataFromHive();
+              }
             }
           )
         });
@@ -195,6 +197,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       });
     } else if (this.router.url === PREFIX_PATH + 'brood') {
       this.broodComponent.loadAllHiveAfterRangeChange((options: any) => {
+        options.xAxis[0].min = this.melliChartDate.getRangeForReqest()[0];
+        options.xAxis[0].max = this.melliChartDate.getRangeForReqest()[1];
         this.stackService.getBroodChartInstance().setOption(options, true);
         this.stackService.getBroodChartInstance().hideLoading();
       });
@@ -245,6 +249,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       });
     } else if (this.router.url === PREFIX_PATH + 'brood') {
       this.broodComponent.loadAllHiveAfterRangeChange((options: any) => {
+        options.xAxis[0].min = this.melliChartDate.getRangeForReqest()[0];
         options.xAxis[0].max = this.melliChartDate.getRangeForReqest()[1];
         this.stackService.getBroodChartInstance().setOption(options, true);
         this.stackService.getBroodChartInstance().hideLoading();

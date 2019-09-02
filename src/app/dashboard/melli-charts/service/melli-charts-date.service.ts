@@ -49,7 +49,6 @@ export class MelliChartsDateService {
     switch(scale.type){
       case 'DAYS':
       case 'DAY':
-        console.log(new Date().getDate() - scale.scale);
         date.setDate((new Date().getDate() - scale.scale));
         break;
       case 'MONTHS':
@@ -89,7 +88,6 @@ export class MelliChartsDateService {
   }
 
   setRangeForRequest(_range: Date[] ) {
-    console.log(_range);
     const range: Date[] = [new Date(_range[0]), new Date(_range[1])];
     range[0].setHours(4);
     range[0].setMinutes(0);
@@ -97,11 +95,9 @@ export class MelliChartsDateService {
     range[1].setHours(4);
     range[1].setMinutes(0);
     range[1].setSeconds(0);
-    console.log(range);
     this.rangeDateForRequest = [range[0], range[1]];
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
-    console.log(this.rangeDateForRequest);
   }
 
 }
