@@ -37,7 +37,7 @@ import { UserParamsService } from '../../../preference-config/service/user-param
 
 
 
-interface Tools {
+export interface Tools {
   name: string;
   id: string;
   origin: string;
@@ -225,7 +225,7 @@ export class DailyManagerService {
                     },
                     position: [cellPoint[0], cellPoint[1]],
                     style: {
-                      fill: this.getColorCalendarByValue(api.value(0)),
+                      fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
                       stroke: 'black'
                     }
                   }
@@ -274,7 +274,7 @@ export class DailyManagerService {
                     },
                     position: [cellPoint[0], cellPoint[1]],
                     style: {
-                      fill: this.getColorCalendarByValue(api.value(0)),
+                      fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
                       stroke: 'black'
                     }
                   }
@@ -285,7 +285,7 @@ export class DailyManagerService {
             option.series.push(serieComplete);
           })
 
-          option.tooltip = this.getTooltipBySerie(type);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.dayLabel.align = 'left';
@@ -349,14 +349,14 @@ export class DailyManagerService {
                   },
                   position: [cellPoint[0], cellPoint[1]],
                   style: {
-                    fill: this.getColorCalendarByValue(api.value(0), api.value(2)),
+                    fill: this.graphGlobal.getColorCalendarByValue(api.value(0), api.value(2)),
                     stroke: 'black'
                   }
                 }
               ]
             };
           }
-          option.tooltip = this.getTooltipBySerie(type);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.dayLabel.align = 'left';
@@ -469,7 +469,7 @@ export class DailyManagerService {
           option.visualMap = null;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-          option.tooltip = this.getTooltipBySerie(type);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.range = range;
         }
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
@@ -531,7 +531,7 @@ export class DailyManagerService {
           option.visualMap = null;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-          option.tooltip = this.getTooltipBySerie(type);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.range = range;
         }
         this.setMeanData(option.series[0], false, type);
@@ -558,8 +558,8 @@ export class DailyManagerService {
           let serie = Object.assign({}, SERIES.heatmap);
           serie.name = type.name;
           serie.data = _tMax.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie(type.name);
-          option.tooltip = this.getTooltipBySerie(type);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
@@ -589,8 +589,8 @@ export class DailyManagerService {
           let serie = Object.assign({}, SERIES.heatmap);
           serie.name = type.name;
           serie.data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie(type.name);
-          option.tooltip = this.getTooltipBySerie(type);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
@@ -618,8 +618,8 @@ export class DailyManagerService {
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tMinExt.map(_data => new Array(_data.date, _data.value));
           serie.name = type.name;
-          option.visualMap = this.getVisualMapBySerie(type.name);
-          option.tooltip = this.getTooltipBySerie(type);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -646,8 +646,8 @@ export class DailyManagerService {
           }
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _hInt.map(_data => new Array(_data.date, _data.value));
-          option.tooltip = this.getTooltipBySerie(type);
-          option.visualMap = this.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -675,8 +675,8 @@ export class DailyManagerService {
           }
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _brood.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie(type.name);
-          option.tooltip = this.getTooltipBySerie(type);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -706,8 +706,8 @@ export class DailyManagerService {
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tMin.map(_data => new Array(_data.date, _data.value));
           serie.name = type.name;
-          option.visualMap = this.getVisualMapBySerie(type.name);
-          option.tooltip = this.getTooltipBySerie(type);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -735,8 +735,8 @@ export class DailyManagerService {
           }
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _weightMax.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.getVisualMapBySerie(type.name);
-          option.tooltip = this.getTooltipBySerie(type);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -784,11 +784,11 @@ export class DailyManagerService {
                 },
                 position: [cellPoint[0], cellPoint[1]],
                 style: {
-                  fill: this.getColorCalendarByValue(api.value(0)),
+                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
                   stroke: 'black'
                 }
               });
-              const dataByDate: any[] = joinData.filter(_filter => this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.getTimeStampFromDate(api.value(0)));
+              const dataByDate: any[] = joinData.filter(_filter => this.graphGlobal.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.graphGlobal.getTimeStampFromDate(api.value(0)));
               if (dataByDate.length > 1) {
                  group.children.push({
                   type: 'path',
@@ -848,12 +848,12 @@ export class DailyManagerService {
                 },
                 position: [cellPoint[0], cellPoint[1]],
                 style: {
-                  fill: this.getColorCalendarByValue(api.value(0)),
+                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
                   stroke: 'black'
                 }
               });
               const dataByDate: any[] = joinData.filter(_filter => {
-                return this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.getTimeStampFromDate(api.value(0));
+                return this.graphGlobal.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.graphGlobal.getTimeStampFromDate(api.value(0));
               });
               if (dataByDate.length > 1) {
                 group.children.push({
@@ -886,7 +886,7 @@ export class DailyManagerService {
           });
         }
         option.legend.show = false;
-        option.tooltip = this.getTooltipBySerie(type, joinData);
+        option.tooltip = this.graphGlobal.getTooltipBySerie(type, joinData);
         chartInstance.clear();
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
@@ -951,198 +951,8 @@ export class DailyManagerService {
     }
   }
 
-  /**
-   *
-   *
-   * @param {string} serieLabel
-   * @returns {*}
-   * @memberof DailyManagerService
-   */
-  getVisualMapBySerie(serieLabel: string): any {
-    const visualMap = Object.assign({}, CALENDAR.visualMap);
-    switch (serieLabel) {
-      case 'WEIGHT_MAX':
-        visualMap.type = 'continuous';
-        // visualMap.top = 15;
-        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 20 : 40;
-        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 80 : 180;
-        visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-        break;
-      case 'TEMP_INT_MAX':
-        visualMap.type = 'continuous';
-        //visualMap.top = 15;
-        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 30;
-        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
-        visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-        break;
-      case 'HRIN':
-        visualMap.type = 'piecewise',
-          visualMap.pieces = [
-            { min: 20, max: 50 },
-            { min: 50, max: 75 },
-            { min: 75, max: 87 },
-            { min: 87, max: 100 }];
-        // visualMap.top = 15;
-        visualMap.inRange.color = ['#97A6C5', '#6987C5', '#3C68C5', '#05489B'];
-        break;
-      case 'BROOD':
-        visualMap.type = 'continuous';
-        visualMap.min = 0;
-        visualMap.max = 100;
-        visualMap.inRange.color = ['red', 'yellow', '#129001'];
-        // visualMap.top = 15;
-        break;
-      case 'TEMP_INT_MIN':
-        visualMap.type = 'continuous';
-        //visualMap.top = 15;
-        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 30;
-        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
-        visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-        break;
-      case 'TEMP_EXT_MAX':
-        visualMap.type = 'continuous';
-        //visualMap.top = 15;
-        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
-        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 110;
-        visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-        break;
-      case 'TEMP_EXT_MIN':
-        visualMap.type = 'continuous';
-        //visualMap.top = 15;
-        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
-        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 110;
-        visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-      default:
-        break;
-    }
-    return visualMap;
-  }
-
-  /**
-   *
-   *
-   * @param {string} serieLabel
-   * @returns {*}
-   * @memberof DailyManagerService
-   */
-  getTooltipBySerie(type: Tools, extraData?: any[]): any {
-    const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
-    switch (type.name) {
-      case 'WEATHER':
-        tooltip.formatter = (params) => {
-          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
-            {
-              name: 'TempMax',
-              value: this.graphGlobal.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[2], this.userPref.getUserPref().unitSystem, true)),
-              unit: this.graphGlobal.getUnitByType(type.unit)
-            },
-            {
-              name: 'TempMin',
-              value: this.graphGlobal.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[3], this.userPref.getUserPref().unitSystem, true)),
-              unit: this.graphGlobal.getUnitByType(type.unit)
-            },
-            {
-              name: 'HumidityMax',
-              value: this.graphGlobal.getNumberFormat(params.data[4]),
-              unit: this.graphGlobal.getUnitByType('P')
-            },
-            {
-              name: 'HumidityMin',
-              value: this.graphGlobal.getNumberFormat(params.data[5]),
-              unit: this.graphGlobal.getUnitByType('P')
-            }
-          ));
-        };
-        break;
-      case 'RAIN':
-        tooltip.formatter = (params) => {
-          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
-            {
-              name: 'Rain',
-              value: this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])),
-              unit: this.graphGlobal.getUnitByType(type.unit)
-            }));
-        }
-        break;
-      case 'MOON':
-          tooltip.formatter = (params) => {
-            return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
-              {
-                name: type.name,
-                value:isString(params.data[1]) ? params.data[1] : this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])),
-                unit: this.graphGlobal.getMoonStatus(params.data[2])
-              }
-            ));
-          }
-        break;
-      case 'ALERT':
-        tooltip.formatter = (params) => {
-          const dataByDateTooltip = extraData.filter(_filter => {
-            return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.date)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
-          });
-          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
-            let type = 'Notif';
-            let img = '';
-            if (_singleData.sentence) {
-              type = 'Inspection';
-              img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/hiveObs.svg' : './assets/picto_mellicharts/hiveAct.svg'))
-            } else {
-              img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
-            }
-            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
-            return {
-              name: img,
-              value: type === 'Inspection' ? _singleData.sentence : _singleData.message,
-              unit: ''
-            }
-          }));
-        }
-        break;
-      default:
-        tooltip.formatter = (params) => {
-          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
-            {
-              name: type.name,
-              value:isString(params.data[1]) ? params.data[1] : this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])),
-              unit: this.graphGlobal.getUnitByType(type.unit)
-            },
-          ));
-        }
-    }
-    return tooltip;
-  }
 
 
-  /**
-   *
-   *
-   * @param {string} date
-   * @param {Array<any>} series
-   * @returns {string}
-   * @memberof DailyManagerService
-   */
-  getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
-    let templateHeaderTooltip = '{*} <B>{D}</B> </br>';
-    let templateValue = '{n}: <B>{v} {u}</B>';
-    let tooltipGlobal;
-    tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
-    tooltipGlobal += series.map(_serie => {
-      if (/picto/g.test(_serie.name)) {
-        return templateValue.replace(/:/g, '').replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit)
-      } else {
-        return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
-      }
-    }).join('</br>');
-    
-
-    return tooltipGlobal;
-  }
 
 
   /**
@@ -1215,27 +1025,7 @@ export class DailyManagerService {
 
 
   /**
-   *
-   *
-    * @param {Date} date
-    * @returns {string}
-    * @memberof DailyManagerService
-    */
-  getColorCalendarByValue(date: Date, optionValue?: any): string {
-    let dateToday = new Date();
-    let dateCalendar = new Date(date);
-    dateToday.setHours(2);
-    dateToday.setMinutes(0);
-    dateToday.setSeconds(0);
-    dateToday.setMilliseconds(0);
-    if (dateCalendar.getTime() === dateToday.getTime()) {
-      return '#FF2E2C';
-    } else if (optionValue === 1) { // Pour calendrier moon
-      return '#ABC0C5';
-    } else {
-      return '#EBEBEB';
-    }
-  }
+
 
   /**
    *
@@ -1251,21 +1041,6 @@ export class DailyManagerService {
     });
   }
 
-  /**
-   *
-   *
-   * @param {(Date | string)} _date
-   * @returns {number}
-   * @memberof DailyManagerService
-   */
-  getTimeStampFromDate(_date: Date | string): number {
-    const date = new Date(_date);
-    date.setHours(0);
-    date.setMinutes(0);
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-    return date.getTime();
-  }
 
 }
 

@@ -44,10 +44,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
     this.stackService.setBroodChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-brood')));
     this.option.series = [];
     this.setOptionForStackChart();
-    console.log(this.stackService.getHiveSelect());
     if (this.stackService.getHiveSelect().length >= 1) {
       this.loadAllHiveAfterRangeChange((options: any) => {
-        console.log(options);
         this.stackService.getBroodChartInstance().setOption(options, true);
         this.stackService.getBroodChartInstance().hideLoading();
       });
@@ -60,7 +58,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
     if (this.option.xAxis.length > 0) {
       this.option.xAxis = [];
     }
-    console.log(this.option);
     let yAxis = Object.assign({}, BASE_OPTIONS.yAxis);
     yAxis.name = this.graphGlobal.brood.name;
     yAxis.min = 0;
@@ -71,7 +68,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
     serieMarkBrood.markArea.data[0][0].name = this.graphGlobal.getNameZoneByGraph('BROOD');
     serieMarkBrood.markArea.data[0][0].yAxis = 80;
     serieMarkBrood.markArea.data[0][1].yAxis = 100;
-    console.log(serieMarkBrood);
     this.option.series.push(serieMarkBrood);
 
     let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
@@ -133,11 +129,10 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
 
-  loadAllHiveAfterRangeChange(next: Function): void{
+  loadAllHiveAfterRangeChange(next: Function): void {
     const obs = this.stackService.getHiveSelect().map(_hive => {
       return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodByHive(_hive.id, this.melliDateService.getRangeForReqest())}
     });
-    console.log(obs);
     Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
       _broods => {
         _broods.forEach((_elt, index) => {
@@ -204,7 +199,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-   console.log('EX');
    //this.stackService.cleanSlectedHives();
    //this.stackService.getBroodChartInstance().dispose();
   }

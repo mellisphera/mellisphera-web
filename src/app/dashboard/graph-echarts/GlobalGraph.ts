@@ -13,6 +13,12 @@ import { Injectable } from '@angular/core';
 import { UserParamsService } from '../preference-config/service/user-params.service';
 import { stringify } from 'querystring';
 import { UserloggedService } from '../../userlogged.service';
+import { UnitService } from '../service/unit.service';
+import { isString } from 'util';
+import { MyDate } from '../../class/MyDate';
+import { BASE_OPTIONS } from '../melli-charts/charts/BASE_OPTIONS';
+import { Tools } from '../melli-charts/hive/service/daily-manager.service';
+import { CALENDAR } from '../melli-charts/charts/CALENDAR';
 
 @Injectable({
     providedIn: 'root'
@@ -54,7 +60,10 @@ export class GraphGlobal {
     public titresFR: Array<any>;
     public titresEN: Array<any>;
 
-    constructor(private userConfig: UserParamsService, public userService: UserloggedService) {
+    constructor(private userConfig: UserParamsService, 
+        private unitService: UnitService ,
+        public userService: UserloggedService,
+        private userPref: UserParamsService) {
         this.weight = {
             name: '',
             min: null,
@@ -395,4 +404,222 @@ export class GraphGlobal {
         }
 
     }
+
+    /**
+     * 
+     * @param date 
+     * @param optionValue 
+     */
+    getColorCalendarByValue(date: Date, optionValue?: any): string {
+        let dateToday = new Date();
+        let dateCalendar = new Date(date);
+        dateToday.setHours(2);
+        dateToday.setMinutes(0);
+        dateToday.setSeconds(0);
+        dateToday.setMilliseconds(0);
+        if (dateCalendar.getTime() === dateToday.getTime()) {
+          return '#FF2E2C';
+        } else if (optionValue === 1) { // Pour calendrier moon
+          return '#ABC0C5';
+        } else {
+          return '#EBEBEB';
+        }
+    }
+
+
+    /**
+     * 
+     * @param type 
+     * @param extraData 
+     */
+    getTooltipBySerie(type: Tools, extraData?: any[]): any {
+        const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
+        switch (type.name) {
+          case 'WEATHER':
+            tooltip.formatter = (params) => {
+              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+                {
+                  name: 'TempMax',
+                  value: this.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[2], this.userPref.getUserPref().unitSystem, true)),
+                  unit: this.getUnitByType(type.unit)
+                },
+                {
+                  name: 'TempMin',
+                  value: this.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[3], this.userPref.getUserPref().unitSystem, true)),
+                  unit: this.getUnitByType(type.unit)
+                },
+                {
+                  name: 'HumidityMax',
+                  value: this.getNumberFormat(params.data[4]),
+                  unit: this.getUnitByType('P')
+                },
+                {
+                  name: 'HumidityMin',
+                  value: this.getNumberFormat(params.data[5]),
+                  unit: this.getUnitByType('P')
+                }
+              ));
+            };
+            break;
+          case 'RAIN':
+            tooltip.formatter = (params) => {
+              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+                {
+                  name: 'Rain',
+                  value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+                  unit: this.getUnitByType(type.unit)
+                }));
+            }
+            break;
+          case 'MOON':
+              tooltip.formatter = (params) => {
+                return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+                  {
+                    name: type.name,
+                    value:isString(params.data[1]) ? params.data[1] : this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+                    unit: this.getMoonStatus(params.data[2])
+                  }
+                ));
+              }
+            break;
+          case 'ALERT':
+            tooltip.formatter = (params) => {
+              const dataByDateTooltip = extraData.filter(_filter => {
+                return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.date)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
+              });
+              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
+                let type = 'Notif';
+                let img = '';
+                if (_singleData.sentence) {
+                  type = 'Inspection';
+                  img = '<img style={S} src={I} />';
+                  img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/hiveObs.svg' : './assets/picto_mellicharts/hiveAct.svg'))
+                } else {
+                  img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
+                }
+                img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
+                return {
+                  name: img,
+                  value: type === 'Inspection' ? _singleData.sentence : _singleData.message,
+                  unit: ''
+                }
+              }));
+            }
+            break;
+          default:
+            tooltip.formatter = (params) => {
+              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+                {
+                  name: type.name,
+                  value:isString(params.data[1]) ? params.data[1] : this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+                  unit: this.getUnitByType(type.unit)
+                },
+              ));
+            }
+        }
+        return tooltip;
+      }
+
+      /**
+       *
+       *
+       * @param {string} serieLabel
+       * @returns {*}
+       * @memberof GraphGlobal
+       */
+      getVisualMapBySerie(serieLabel: string): any {
+        const visualMap = Object.assign({}, CALENDAR.visualMap);
+        switch (serieLabel) {
+          case 'WEIGHT_MAX':
+            visualMap.type = 'continuous';
+            // visualMap.top = 15;
+            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 20 : 40;
+            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 80 : 180;
+            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+              '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+            break;
+          case 'TEMP_INT_MAX':
+            visualMap.type = 'continuous';
+            //visualMap.top = 15;
+            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 30;
+            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
+            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+              '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+            break;
+          case 'HRIN':
+            visualMap.type = 'piecewise',
+              visualMap.pieces = [
+                { min: 20, max: 50 },
+                { min: 50, max: 75 },
+                { min: 75, max: 87 },
+                { min: 87, max: 100 }];
+            // visualMap.top = 15;
+            visualMap.inRange.color = ['#97A6C5', '#6987C5', '#3C68C5', '#05489B'];
+            break;
+          case 'BROOD':
+            visualMap.type = 'continuous';
+            visualMap.min = 0;
+            visualMap.max = 100;
+            visualMap.inRange.color = ['red', 'yellow', '#129001'];
+            // visualMap.top = 15;
+            break;
+          case 'TEMP_INT_MIN':
+            visualMap.type = 'continuous';
+            //visualMap.top = 15;
+            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 30;
+            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
+            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+              '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+            break;
+          case 'TEMP_EXT_MAX':
+            visualMap.type = 'continuous';
+            //visualMap.top = 15;
+            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
+            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 110;
+            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+              '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+            break;
+          case 'TEMP_EXT_MIN':
+            visualMap.type = 'continuous';
+            //visualMap.top = 15;
+            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
+            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 110;
+            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+              '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+          default:
+            break;
+        }
+        return visualMap;
+      }
+
+
+      getTimeStampFromDate(_date: Date | string): number {
+        const date = new Date(_date);
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+        return date.getTime();
+      }
+
+
+      getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
+        let templateHeaderTooltip = '{*} <B>{D}</B> </br>';
+        let templateValue = '{n}: <B>{v} {u}</B>';
+        let tooltipGlobal;
+        tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
+        tooltipGlobal += series.map(_serie => {
+          if (/picto/g.test(_serie.name)) {
+            return templateValue.replace(/:/g, '').replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit)
+          } else {
+            return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
+          }
+        }).join('</br>');
+        
+    
+        return tooltipGlobal;
+      }
+    
+
+
 }
