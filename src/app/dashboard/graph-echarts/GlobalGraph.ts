@@ -21,605 +21,626 @@ import { Tools } from '../melli-charts/hive/service/daily-manager.service';
 import { CALENDAR } from '../melli-charts/charts/CALENDAR';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class GraphGlobal {
-    public weight: {
-        name: string,
-        min: number,
-        max: number,
-        interval: number,
-        unitW: string
+  public weight: {
+    name: string,
+    min: number,
+    max: number,
+    interval: number,
+    unitW: string
+  };
+
+  public temp: {
+    name: string,
+    min: number,
+    max: number,
+    unitT: string,
+  };
+  public humidity: {
+    name: string,
+    min: number,
+    max: number,
+    unitT: string,
+  };
+  public rain: {
+    name: string,
+    min: number,
+    max: number,
+    unitT: string,
+  };
+  public brood: {
+    name: string,
+    min: number,
+    max: number,
+    unitT: string,
+  };
+  public wind: {
+    name: string,
+    min: number,
+    max: number,
+    unitT: string,
+  };
+
+  public titresFR: Array<any>;
+  public titresEN: Array<any>;
+
+  constructor(private userConfig: UserParamsService,
+    private unitService: UnitService,
+    public userService: UserloggedService,
+    private userPref: UserParamsService) {
+    this.weight = {
+      name: '',
+      min: null,
+      max: 0,
+      interval: 0,
+      unitW: 'Kg'
     };
-
-    public temp: {
-        name: string,
-        min: number,
-        max: number,
-        unitT: string,
+    this.temp = {
+      name: '',
+      min: null,
+      max: 0,
+      unitT: '° C',
     };
-    public humidity: {
-        name: string,
-        min: number,
-        max: number,
-        unitT: string,
+    this.wind = {
+      name: '',
+      min: null,
+      max: 0,
+      unitT: 'm/s',
     };
-    public rain: {
-        name: string,
-        min: number,
-        max: number,
-        unitT: string,
+    this.humidity = {
+      name: '',
+      min: null,
+      max: 0,
+      unitT: '%',
     };
-    public brood: {
-        name: string,
-        min: number,
-        max: number,
-        unitT: string,
+    this.brood = {
+      name: '',
+      min: null,
+      max: 0,
+      unitT: '%',
+    };
+    this.rain = {
+      name: '',
+      min: null,
+      max: 0,
+      unitT: '%',
+    }
+    if (this.userConfig.getUserPref().unitSystem === 'IMPERIAL') { // US
+      this.setImperial();
+    } else { // FR
+      this.setMetric();
     }
 
-    public titresFR: Array<any>;
-    public titresEN: Array<any>;
+    //Table of titles : 
+    //FR
+    this.titresFR = [
+      { 'graph': 'reserveMiel', 'titre': 'Stock de miel' },
+      { 'graph': 'DailyWeightIncomes', 'titre': 'Poids journaliers' },
+      { 'graph': 'BroodDynamics', 'titre': 'Dynamique du couvain' },
+      { 'graph': 'InternalRelativeHumidity', 'titre': 'Humidité interne relative (max)' },
+      { 'graph': 'InternalTemperature', 'titre': 'Température interne' },
+      { 'graph': 'ExternalTemperature', 'titre': 'Température externe' },
+      { 'graph': 'WeightTemperature', 'titre': 'Poids & Température' },
+      { 'graph': 'Humidity', 'titre': 'Humidité (%)' },
+      { 'graph': 'loss', 'titre': 'perte' },
+      { 'graph': 'Weight', 'titre': 'Poids' },
+      { 'graph': 'AlertsHive', 'titre': 'Inspections et notifications' },
+      { 'graph': 'AlertsApiary', 'titre': 'Inspections et notifications du rucher' },
+      { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' }
+    ];
 
-    constructor(private userConfig: UserParamsService, 
-        private unitService: UnitService ,
-        public userService: UserloggedService,
-        private userPref: UserParamsService) {
-        this.weight = {
-            name: '',
-            min: null,
-            max: 0,
-            interval: 0,
-            unitW: 'Kg'
-        };
-        this.temp = {
-            name: '',
-            min: null,
-            max: 0,
-            unitT: '° C',
-        };
-        this.humidity = {
-            name: '',
-            min: null,
-            max: 0,
-            unitT: '%',
-        };
-        this.brood = {
-            name: '',
-            min: null,
-            max: 0,
-            unitT: '%',
-        };
-        this.rain = {
-            name: '',
-            min: null,
-            max: 0,
-            unitT: '%',
-        }
-        if (this.userConfig.getUserPref().unitSystem === 'IMPERIAL') { // US
-            this.setImperial();
-        } else { // FR
-            this.setMetric();
-        }
+    // EN
+    this.titresEN = [
+      { 'graph': 'reserveMiel', 'titre': 'Honey Stock' },
+      { 'graph': 'DailyWeightIncomes', 'titre': 'Daily weight change' },
+      { 'graph': 'BroodDynamics', 'titre': 'Brood Dynamics' },
+      { 'graph': 'InternalRelativeHumidity', 'titre': 'Internal Relative Humidity (max)' },
+      { 'graph': 'InternalTemperature', 'titre': 'Internal Temperature' },
+      { 'graph': 'ExternalTemperature', 'titre': 'External Temperature' },
+      { 'graph': 'WeightTemperature', 'titre': 'Weight & Temperature' },
+      { 'graph': 'Humidity', 'titre': 'Humidity (%)' },
+      { 'graph': 'loss', 'titre': 'loss' },
+      { 'graph': 'Weight', 'titre': 'Weight' },
+      { 'graph': 'AlertsHive', 'titre': 'Inspections and notifications' },
+      { 'graph': 'AlertsApiary', 'titre': 'Inspections and notifications for the apiary' },
+      { 'graph': 'Blooming', 'titre': 'Apiary Blooming calendar' }
+    ];
+  }
 
-        //Table of titles : 
-        //FR
-        this.titresFR = [
-            { 'graph': 'reserveMiel', 'titre': 'Stock de miel' },
-            { 'graph': 'DailyWeightIncomes', 'titre': 'Poids journaliers' },
-            { 'graph': 'BroodDynamics', 'titre': 'Dynamique du couvain' },
-            { 'graph': 'InternalRelativeHumidity', 'titre': 'Humidité interne relative (max)' },
-            { 'graph': 'InternalTemperature', 'titre': 'Température interne' },
-            { 'graph': 'ExternalTemperature', 'titre': 'Température externe' },
-            { 'graph': 'WeightTemperature', 'titre': 'Poids & Température' },
-            { 'graph': 'Humidity', 'titre': 'Humidité (%)' },
-            { 'graph': 'loss', 'titre': 'perte' },
-            { 'graph': 'Weight', 'titre': 'Poids' },
-            { 'graph': 'AlertsHive', 'titre': 'Inspections et notifications' },
-            { 'graph': 'AlertsApiary', 'titre': 'Inspections et notifications du rucher' },
-            { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' }
-        ];
 
-        // EN
-        this.titresEN = [
-            { 'graph': 'reserveMiel', 'titre': 'Honey Stock' },
-            { 'graph': 'DailyWeightIncomes', 'titre': 'Daily weight change' },
-            { 'graph': 'BroodDynamics', 'titre': 'Brood Dynamics' },
-            { 'graph': 'InternalRelativeHumidity', 'titre': 'Internal Relative Humidity (max)' },
-            { 'graph': 'InternalTemperature', 'titre': 'Internal Temperature' },
-            { 'graph': 'ExternalTemperature', 'titre': 'External Temperature' },
-            { 'graph': 'WeightTemperature', 'titre': 'Weight & Temperature' },
-            { 'graph': 'Humidity', 'titre': 'Humidity (%)' },
-            { 'graph': 'loss', 'titre': 'loss' },
-            { 'graph': 'Weight', 'titre': 'Weight' },
-            { 'graph': 'AlertsHive', 'titre': 'Inspections and notifications' },
-            { 'graph': 'AlertsApiary', 'titre': 'Inspections and notifications for the apiary' },
-            { 'graph': 'Blooming', 'titre': 'Apiary Blooming calendar' }
-        ];
+  setImperial() {
+    // If he is French
+    if (this.userService.getJwtReponse().country === "FR") {
+      this.weight.name = 'Poids (lbs)';
+      this.humidity.name = 'HUmidité (%)';
+      this.rain.name = 'Pluie';
+      this.brood.name = 'Couvain (%)';
+      this.temp.name = 'Température (°F)';
+      this.wind.name = 'Vent';
+      // EN
+    } else {
+      this.weight.name = 'Weight (lbs)';
+      this.humidity.name = 'Humidity (%)';
+      this.rain.name = 'Rain';
+      this.temp.name = 'Temperature (°F)';
+      this.wind.name = 'Wind';
+      this.brood.name = 'Brood (%)';
+    }
+    this.humidity.min = 0;
+    this.rain.unitT = '″';
+    this.humidity.max = 100;
+    this.weight.min = 40;
+    this.weight.max = null;
+    this.humidity.unitT = '%';
+    this.weight.unitW = 'lbs';
+    this.weight.interval = 5;
+    // If he is French
+    this.temp.min = 0;
+    this.temp.unitT = '° F';
+    this.temp.max = null;
+    console.log(this.weight);
+  }
+
+  setMetric() {
+    // If he is French
+    if (this.userService.getJwtReponse().country === "FR") {
+      this.weight.name = 'Poids (Kg)';
+      this.humidity.name = 'HUmidité %';
+      this.rain.name = 'Pluie';
+      this.wind.name = 'Vent';
+      this.brood.name = 'Couvain (%)';
+
+      // EN
+    } else {
+      this.weight.name = 'Weight (Kg)';
+      this.humidity.name = 'Humidity %'
+      this.wind.name = 'Wind';
+      this.rain.name = 'Rain';
+      this.brood.name = 'Brood (%)';
+    }
+    this.humidity.name = 'Humidity %'
+    this.rain.unitT = 'mm';
+    this.humidity.min = 0;
+    this.humidity.max = 100;
+    this.weight.min = 0;
+    this.humidity.unitT = '%';
+    this.weight.unitW = 'Kg';
+    this.weight.interval = 10;
+    this.weight.max = null;
+    // If he is French
+    if (this.userService.getJwtReponse().country === "FR") {
+      this.temp.name = 'Température (°C)';
+      // EN
+    } else {
+      this.temp.name = 'Temperature (°C)';
+    }
+    this.temp.unitT = '° C';
+    this.temp.min = 0;
+    this.temp.max = null;
+  }
+  /**
+   *
+   *
+   * @returns {Object}
+   * @memberof GraphGlobal
+   */
+  getWeight(): Object {
+    return this.weight;
+  }
+
+  /**
+   *
+   *
+   * @returns {Object}
+   * @memberof GraphGlobal
+   */
+  getTemp(): Object {
+    return this.temp;
+  }
+
+  // Here there are all the graph titles
+  /**
+   *
+   *
+   * @param {String} nomGraphe
+   * @returns {string}
+   * @memberof GraphGlobal
+   */
+  getTitle(nomGraphe: String): string {
+    var titre: any;
+
+    //Found the title with the name of the graph with the right language
+
+    // If he is French
+    if (this.userService.getJwtReponse().country === "FR") {
+      titre = this.titresFR[this.titresFR.map(elt => elt.graph).indexOf(nomGraphe)];
+      // EN
+    } else {
+      titre = this.titresEN[this.titresEN.map(elt => elt.graph).indexOf(nomGraphe)];
     }
 
+    return titre.titre;
+  }
 
-    setImperial() {
-        // If he is French
-        if (this.userService.getJwtReponse().country === "FR") {
-            this.weight.name = 'Poids (lbs)';
-            this.humidity.name = 'HUmidité (%)';
-            this.rain.name = 'Pluie';
-            this.brood.name = 'Couvain (%)';
-            // EN
-        } else {
-            this.weight.name = 'Weight (lbs)';
-            this.humidity.name = 'Humidity (%)';
-            this.rain.name = 'Rain';
-            this.brood.name = 'Brood (%)';
-        }
-        this.humidity.min = 0;
-        this.rain.unitT = '″';
-        this.humidity.max = 100;
-        this.weight.min = 40;
-        this.weight.max = null;
-        this.humidity.unitT = '%';
-        this.weight.unitW = 'lbs';
-        this.weight.interval = 5;
-        // If he is French
-        if (this.userService.getJwtReponse().country === "FR") {
-            this.temp.name = 'Température (°F)';
-            // EN
-        } else {
-            this.temp.name = 'Temperature (°F)';
-        }
-        this.temp.min = 0;
-        this.temp.unitT = '° F';
-        this.temp.max = null;
-        console.log(this.weight);
+  /**
+   *
+   *
+   * @returns {String[]}
+   * @memberof GraphGlobal
+   */
+  getDays(): String[] {
+    // If he is French
+    if (this.userService.getJwtReponse().country === "FR") {
+      return ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'];
+      // EN
+    } else {
+      return ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
     }
+  }
 
-    setMetric() {
-        // If he is French
-        if (this.userService.getJwtReponse().country === "FR") {
-            this.weight.name = 'Poids (Kg)';
-            this.humidity.name = 'HUmidité %';
-            this.rain.name = 'Pluie';
-            this.brood.name = 'Couvain (%)';
-
-            // EN
-        } else {
-            this.weight.name = 'Weight (Kg)';
-            this.humidity.name = 'Humidity %'
-            this.rain.name = 'Rain'
-            this.brood.name = 'Brood (%)';
-        }
-        this.humidity.name = 'Humidity %'
-        this.rain.unitT = 'mm';
-        this.humidity.min = 0;
-        this.humidity.max = 100;
-        this.weight.min = 0;
-        this.humidity.unitT = '%';
-        this.weight.unitW = 'Kg';
-        this.weight.interval = 10;
-        this.weight.max = null;
-        // If he is French
-        if (this.userService.getJwtReponse().country === "FR") {
-            this.temp.name = 'Température (°C)';
-            // EN
-        } else {
-            this.temp.name = 'Temperature (°C)';
-        }
-        this.temp.unitT = '° C';
-        this.temp.min = 0;
-        this.temp.max = null;
+  /**
+   *
+   *
+   * @returns {String[]}
+   * @memberof GraphGlobal
+   */
+  getMonth(): String[] {
+    // If he is French
+    if (this.userService.getJwtReponse().country === "FR") {
+      return (['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Jui', 'Aout', 'Sep', 'Oct', 'Nov', 'Dec']);
+      // EN
+    } else {
+      return (['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']);
     }
-    /**
-     *
-     *
-     * @returns {Object}
-     * @memberof GraphGlobal
-     */
-    getWeight(): Object {
-        return this.weight;
+  }
+
+  /**
+   *
+   *
+   * @param {number} value
+   * @returns {(string | number)}
+   * @memberof GraphGlobal
+   */
+  getNumberFormat(value: number): string | number {
+    if (this.userService.getCountry() === 'FR') {
+      return value.toString().replace(/\./g, ',');
+    } else {
+      return value;
     }
+  }
 
-    /**
-     *
-     *
-     * @returns {Object}
-     * @memberof GraphGlobal
-     */
-    getTemp(): Object {
-        return this.temp;
+  /**
+   *
+   *
+   * @param {string} value
+   * @returns {string}
+   * @memberof GraphGlobal
+   */
+  getStringWeightFormat(value: string): string {
+    if (this.userService.getCountry() === 'FR') {
+      return value.replace(/\./g, ',');
+    } else {
+      return value;
     }
-
-    // Here there are all the graph titles
-    /**
-     *
-     *
-     * @param {String} nomGraphe
-     * @returns {string}
-     * @memberof GraphGlobal
-     */
-    getTitle(nomGraphe: String): string {
-        var titre: any;
-
-        //Found the title with the name of the graph with the right language
-
-        // If he is French
-        if (this.userService.getJwtReponse().country === "FR") {
-            titre = this.titresFR[this.titresFR.map(elt => elt.graph).indexOf(nomGraphe)];
-            // EN
-        } else {
-            titre = this.titresEN[this.titresEN.map(elt => elt.graph).indexOf(nomGraphe)];
-        }
-
-        return titre.titre;
+  }
+  /**
+   *
+   *
+   * @param {string} serie
+   * @returns {string}
+   * @memberof GraphGlobal
+   */
+  getUnitBySerieName(serie: string): string {
+    if (/Temp/g.test(serie) || /Weather/g.test(serie)) {
+      return this.temp.unitT;
+    } else if (/Weight/g.test(serie) || /Poids/g.test(serie) || /gain/g.test(serie) || /loss/g.test(serie)) {
+      return this.weight.unitW;
+    } else if (/Hum/g.test(serie) || /Hint/g.test(serie) || /Brood/g.test(serie)) {
+      return this.humidity.unitT;
     }
+  }
 
-    /**
-     *
-     *
-     * @returns {String[]}
-     * @memberof GraphGlobal
-     */
-    getDays(): String[] {
-        // If he is French
-        if (this.userService.getJwtReponse().country === "FR") {
-            return ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'];
-            // EN
-        } else {
-            return ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-        }
-    }
-
-    /**
-     *
-     *
-     * @returns {String[]}
-     * @memberof GraphGlobal
-     */
-    getMonth(): String[] {
-        // If he is French
-        if (this.userService.getJwtReponse().country === "FR") {
-            return (['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Jui', 'Aout', 'Sep', 'Oct', 'Nov', 'Dec']);
-            // EN
-        } else {
-            return (['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']);
-        }
-    }
-
-    /**
-     *
-     *
-     * @param {number} value
-     * @returns {(string | number)}
-     * @memberof GraphGlobal
-     */
-    getNumberFormat(value: number): string | number {
-        if (this.userService.getCountry() === 'FR') {
-            return value.toString().replace(/\./g, ',');
-        } else {
-            return value;
-        }
-    }
-
-    /**
-     *
-     *
-     * @param {string} value
-     * @returns {string}
-     * @memberof GraphGlobal
-     */
-    getStringWeightFormat(value: string): string {
-        if (this.userService.getCountry() === 'FR') {
-            return value.replace(/\./g, ',');
-        } else {
-            return value;
-        }
-    }
-    /**
-     *
-     *
-     * @param {string} serie
-     * @returns {string}
-     * @memberof GraphGlobal
-     */
-    getUnitBySerieName(serie: string): string {
-        if (/Temp/g.test(serie) || /Weather/g.test(serie)) {
-            return this.temp.unitT;
-        } else if (/Weight/g.test(serie) || /Poids/g.test(serie) || /gain/g.test(serie) || /loss/g.test(serie)) {
-            return this.weight.unitW;
-        } else if (/Hum/g.test(serie) || /Hint/g.test(serie) || /Brood/g.test(serie)) {
-            return this.humidity.unitT;
-        }
-    }
-
-    /**
-     * 
-     * @param typeGraph 
-     */
-    getNameZoneByGraph(typeGraph: string): string {
-        if (typeGraph === 'BROOD') {
-            if (this.userService.getCountry() !== 'FR') {
-                return 'Optimal area of ​​production';
-            } else {
-                return 'Zone optimale de production';
-            }
-        } else if (typeGraph === 'TEMP') {
-            if (this.userService.getCountry() === 'FR') {
-                return 'Zone optimale du couvain';
-            } else {
-                return 'Brood Zone';
-            }
-        } else if (typeGraph === 'HUM') {
-            if (this.userService.getCountry() !== 'FR') {
-                return 'Optimal area of humidity';
-            } else {
-                return 'Zone optimale d\'humidié';
-            }
-        }
-    }
-
-    /**
-     *
-     *
-     * @param {string} unitType
-     * @returns
-     * @memberof GraphGlobal
-     * @description For MelliCharts
-     */
-    getUnitByType(unitType: string) {
-        switch (unitType) {
-            case 'T':
-                return this.temp.unitT;
-            case 'W':
-                return this.weight.unitW;
-            case 'P':
-                return this.humidity.unitT;
-            case 'MM':
-                return this.rain.unitT;
-            default:
-                return '';
-                break;
-        }
-    }
-
-
-    /**
-     *
-     *
-     * @param {number} status
-     * @returns {string}
-     * @memberof GraphGlobal
-     */
-    getMoonStatus(status: number): string{
-        if (this.userService.getJwtReponse().country === 'FR') {
-            if (status === 1) {
-                return 'Ascendant';
-            } else {
-                return 'Descendant';
-            }
-        } else {
-            if (status === 1) {
-                return 'Ascending';
-            } else {
-                return 'Descending';
-            }
-        }
-
-    }
-
-    /**
-     * 
-     * @param date 
-     * @param optionValue 
-     */
-    getColorCalendarByValue(date: Date, optionValue?: any): string {
-        let dateToday = new Date();
-        let dateCalendar = new Date(date);
-        dateToday.setHours(2);
-        dateToday.setMinutes(0);
-        dateToday.setSeconds(0);
-        dateToday.setMilliseconds(0);
-        if (dateCalendar.getTime() === dateToday.getTime()) {
-          return '#FF2E2C';
-        } else if (optionValue === 1) { // Pour calendrier moon
-          return '#ABC0C5';
-        } else {
-          return '#EBEBEB';
-        }
-    }
-
-
-    /**
-     * 
-     * @param type 
-     * @param extraData 
-     */
-    getTooltipBySerie(type: Tools, extraData?: any[]): any {
-        const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
-        switch (type.name) {
-          case 'WEATHER':
-            tooltip.formatter = (params) => {
-              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
-                {
-                  name: 'TempMax',
-                  value: this.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[2], this.userPref.getUserPref().unitSystem, true)),
-                  unit: this.getUnitByType(type.unit)
-                },
-                {
-                  name: 'TempMin',
-                  value: this.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[3], this.userPref.getUserPref().unitSystem, true)),
-                  unit: this.getUnitByType(type.unit)
-                },
-                {
-                  name: 'HumidityMax',
-                  value: this.getNumberFormat(params.data[4]),
-                  unit: this.getUnitByType('P')
-                },
-                {
-                  name: 'HumidityMin',
-                  value: this.getNumberFormat(params.data[5]),
-                  unit: this.getUnitByType('P')
-                }
-              ));
-            };
-            break;
-          case 'RAIN':
-            tooltip.formatter = (params) => {
-              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
-                {
-                  name: 'Rain',
-                  value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
-                  unit: this.getUnitByType(type.unit)
-                }));
-            }
-            break;
-          case 'MOON':
-              tooltip.formatter = (params) => {
-                return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
-                  {
-                    name: type.name,
-                    value:isString(params.data[1]) ? params.data[1] : this.getNumberFormat(this.unitService.getValRound(params.data[1])),
-                    unit: this.getMoonStatus(params.data[2])
-                  }
-                ));
-              }
-            break;
-          case 'ALERT':
-            tooltip.formatter = (params) => {
-              const dataByDateTooltip = extraData.filter(_filter => {
-                return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.date)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
-              });
-              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
-                let type = 'Notif';
-                let img = '';
-                if (_singleData.sentence) {
-                  type = 'Inspection';
-                  img = '<img style={S} src={I} />';
-                  img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/hiveObs.svg' : './assets/picto_mellicharts/hiveAct.svg'))
-                } else {
-                  img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
-                }
-                img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
-                return {
-                  name: img,
-                  value: type === 'Inspection' ? _singleData.sentence : _singleData.message,
-                  unit: ''
-                }
-              }));
-            }
-            break;
-          default:
-            tooltip.formatter = (params) => {
-              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
-                {
-                  name: type.name,
-                  value:isString(params.data[1]) ? params.data[1] : this.getNumberFormat(this.unitService.getValRound(params.data[1])),
-                  unit: this.getUnitByType(type.unit)
-                },
-              ));
-            }
-        }
-        return tooltip;
+  /**
+   * 
+   * @param typeGraph 
+   */
+  getNameZoneByGraph(typeGraph: string): string {
+    if (typeGraph === 'BROOD') {
+      if (this.userService.getCountry() !== 'FR') {
+        return 'Optimal area of ​​production';
+      } else {
+        return 'Zone optimale de production';
       }
+    } else if (typeGraph === 'TEMP') {
+      if (this.userService.getCountry() === 'FR') {
+        return 'Zone optimale du couvain';
+      } else {
+        return 'Brood Zone';
+      }
+    } else if (typeGraph === 'HUM') {
+      if (this.userService.getCountry() !== 'FR') {
+        return 'Optimal area of humidity';
+      } else {
+        return 'Zone optimale d\'humidié';
+      }
+    }
+  }
 
-      /**
-       *
-       *
-       * @param {string} serieLabel
-       * @returns {*}
-       * @memberof GraphGlobal
-       */
-      getVisualMapBySerie(serieLabel: string): any {
-        const visualMap = Object.assign({}, CALENDAR.visualMap);
-        switch (serieLabel) {
-          case 'WEIGHT_MAX':
-            visualMap.type = 'continuous';
-            // visualMap.top = 15;
-            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 20 : 40;
-            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 80 : 180;
-            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-              '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-            break;
-          case 'TEMP_INT_MAX':
-            visualMap.type = 'continuous';
-            //visualMap.top = 15;
-            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 30;
-            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
-            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-              '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-            break;
-          case 'HRIN':
-            visualMap.type = 'piecewise',
-              visualMap.pieces = [
-                { min: 20, max: 50 },
-                { min: 50, max: 75 },
-                { min: 75, max: 87 },
-                { min: 87, max: 100 }];
-            // visualMap.top = 15;
-            visualMap.inRange.color = ['#97A6C5', '#6987C5', '#3C68C5', '#05489B'];
-            break;
-          case 'BROOD':
-            visualMap.type = 'continuous';
-            visualMap.min = 0;
-            visualMap.max = 100;
-            visualMap.inRange.color = ['red', 'yellow', '#129001'];
-            // visualMap.top = 15;
-            break;
-          case 'TEMP_INT_MIN':
-            visualMap.type = 'continuous';
-            //visualMap.top = 15;
-            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 30;
-            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
-            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-              '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-            break;
-          case 'TEMP_EXT_MAX':
-            visualMap.type = 'continuous';
-            //visualMap.top = 15;
-            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
-            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 110;
-            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-              '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-            break;
-          case 'TEMP_EXT_MIN':
-            visualMap.type = 'continuous';
-            //visualMap.top = 15;
-            visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
-            visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 110;
-            visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
-              '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-          default:
-            break;
+  /**
+   *
+   *
+   * @param {string} unitType
+   * @returns
+   * @memberof GraphGlobal
+   * @description For MelliCharts
+   */
+  getUnitByType(unitType: string) {
+    switch (unitType) {
+      case 'T':
+        return this.temp.unitT;
+      case 'W':
+        return this.weight.unitW;
+      case 'P':
+        return this.humidity.unitT;
+      case 'MM':
+        return this.rain.unitT;
+      case 'V':
+        return this.wind.unitT;
+      default:
+        return '';    }
+  }
+
+
+  /**
+   *
+   *
+   * @param {number} status
+   * @returns {string}
+   * @memberof GraphGlobal
+   */
+  getMoonStatus(status: number): string {
+    if (this.userService.getJwtReponse().country === 'FR') {
+      if (status === 1) {
+        return 'Ascendant';
+      } else {
+        return 'Descendant';
+      }
+    } else {
+      if (status === 1) {
+        return 'Ascending';
+      } else {
+        return 'Descending';
+      }
+    }
+
+  }
+
+  /**
+   * 
+   * @param date 
+   * @param optionValue 
+   */
+  getColorCalendarByValue(date: Date, optionValue?: any): string {
+    let dateToday = new Date();
+    let dateCalendar = new Date(date);
+    dateToday.setHours(2);
+    dateToday.setMinutes(0);
+    dateToday.setSeconds(0);
+    dateToday.setMilliseconds(0);
+    if (dateCalendar.getTime() === dateToday.getTime()) {
+      return '#FF2E2C';
+    } else if (optionValue === 1) { // Pour calendrier moon
+      return '#ABC0C5';
+    } else {
+      return '#EBEBEB';
+    }
+  }
+
+
+  /**
+   * 
+   * @param type 
+   * @param extraData 
+   */
+  getTooltipBySerie(type: Tools, extraData?: any[]): any {
+    const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
+    switch (type.name) {
+      case 'WEATHER':
+        tooltip.formatter = (params) => {
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+            {
+              name: 'TempMax',
+              value: this.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[2], this.userPref.getUserPref().unitSystem, true)),
+              unit: this.getUnitByType(type.unit)
+            },
+            {
+              name: 'TempMin',
+              value: this.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[3], this.userPref.getUserPref().unitSystem, true)),
+              unit: this.getUnitByType(type.unit)
+            },
+            {
+              name: 'HumidityMax',
+              value: this.getNumberFormat(params.data[4]),
+              unit: this.getUnitByType('P')
+            },
+            {
+              name: 'HumidityMin',
+              value: this.getNumberFormat(params.data[5]),
+              unit: this.getUnitByType('P')
+            }
+          ));
+        };
+        break;
+      case 'RAIN':
+        tooltip.formatter = (params) => {
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+            {
+              name: 'Rain',
+              value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+              unit: this.getUnitByType(type.unit)
+            }));
         }
-        return visualMap;
+        break;
+      case 'MOON':
+        tooltip.formatter = (params) => {
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+            {
+              name: type.name,
+              value: isString(params.data[1]) ? params.data[1] : this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+              unit: this.getMoonStatus(params.data[2])
+            }
+          ));
+        }
+        break;
+      case 'ALERT':
+        tooltip.formatter = (params) => {
+          const dataByDateTooltip = extraData.filter(_filter => {
+            return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.date)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
+          });
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
+            let type = 'Notif';
+            let img = '';
+            if (_singleData.sentence) {
+              type = 'Inspection';
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/hiveObs.svg' : './assets/picto_mellicharts/hiveAct.svg'))
+            } else {
+              img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
+            }
+            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
+            return {
+              name: img,
+              value: type === 'Inspection' ? _singleData.sentence : _singleData.message,
+              unit: ''
+            }
+          }));
+        }
+        break;
+      default:
+        tooltip.formatter = (params) => {
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+            {
+              name: type.name,
+              value: isString(params.data[1]) ? params.data[1] : this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+              unit: this.getUnitByType(type.unit)
+            },
+          ));
+        }
+    }
+    return tooltip;
+  }
+
+  /**
+   *
+   *
+   * @param {string} serieLabel
+   * @returns {*}
+   * @memberof GraphGlobal
+   */
+  getVisualMapBySerie(serieLabel: string): any {
+    const visualMap = Object.assign({}, CALENDAR.visualMap);
+    switch (serieLabel) {
+      case 'WEIGHT_MAX':
+        visualMap.type = 'continuous';
+        // visualMap.top = 15;
+        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 20 : 40;
+        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 80 : 180;
+        visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+        break;
+      case 'TEMP_INT_MAX':
+        visualMap.type = 'continuous';
+        //visualMap.top = 15;
+        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 30;
+        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
+        visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+        break;
+      case 'HRIN':
+        visualMap.type = 'piecewise',
+          visualMap.pieces = [
+            { min: 20, max: 50 },
+            { min: 50, max: 75 },
+            { min: 75, max: 87 },
+            { min: 87, max: 100 }];
+        // visualMap.top = 15;
+        visualMap.inRange.color = ['#97A6C5', '#6987C5', '#3C68C5', '#05489B'];
+        break;
+      case 'BROOD':
+        visualMap.type = 'continuous';
+        visualMap.min = 0;
+        visualMap.max = 100;
+        visualMap.inRange.color = ['red', 'yellow', '#129001'];
+        // visualMap.top = 15;
+        break;
+      case 'TEMP_INT_MIN':
+        visualMap.type = 'continuous';
+        //visualMap.top = 15;
+        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 30;
+        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 100;
+        visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+        break;
+      case 'TEMP_EXT_MAX':
+      case 'TEMP_EXT_WEATHER':
+        visualMap.type = 'continuous';
+        //visualMap.top = 15;
+        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
+        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 110;
+        visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+        break;
+      case 'TEMP_EXT_MIN':
+      case 'TEMP_INT_WEATHER':
+        visualMap.type = 'continuous';
+        //visualMap.top = 15;
+        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
+        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 40 : 110;
+        visualMap.inRange.color = ['#313695', '#4575b4', '#74add1',
+          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+        break;
+      case 'WIND':
+        visualMap.type = 'continuous';
+        //visualMap.top = 15;
+        visualMap.min = 0;
+        visualMap.max = 20;
+        visualMap.inRange.color = ['#129001', 'yellow', 'red'];
+      default:
+        break;
+    }
+    return visualMap;
+  }
+
+
+  getTimeStampFromDate(_date: Date | string): number {
+    const date = new Date(_date);
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+    return date.getTime();
+  }
+
+
+  getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
+    let templateHeaderTooltip = '{*} <B>{D}</B> </br>';
+    let templateValue = '{n}: <B>{v} {u}</B>';
+    let tooltipGlobal;
+    tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
+    tooltipGlobal += series.map(_serie => {
+      if (/picto/g.test(_serie.name)) {
+        return templateValue.replace(/:/g, '').replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit)
+      } else {
+        return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
       }
+    }).join('</br>');
 
 
-      getTimeStampFromDate(_date: Date | string): number {
-        const date = new Date(_date);
-        date.setHours(0);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        date.setMilliseconds(0);
-        return date.getTime();
-      }
+    return tooltipGlobal;
+  }
 
-
-      getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
-        let templateHeaderTooltip = '{*} <B>{D}</B> </br>';
-        let templateValue = '{n}: <B>{v} {u}</B>';
-        let tooltipGlobal;
-        tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
-        tooltipGlobal += series.map(_serie => {
-          if (/picto/g.test(_serie.name)) {
-            return templateValue.replace(/:/g, '').replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit)
-          } else {
-            return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
-          }
-        }).join('</br>');
-        
-    
-        return tooltipGlobal;
-      }
-    
 
 
 }

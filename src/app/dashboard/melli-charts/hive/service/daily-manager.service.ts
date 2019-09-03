@@ -161,8 +161,10 @@ export class DailyManagerService {
         return value;
       case 'ALERT':
         return value;
+      case 'TEMP_EXT_WEATHER':
+        return [value.maxTempDay];
       default:
-        return [value]
+        return [value];
     }
   }
 
@@ -479,6 +481,99 @@ export class DailyManagerService {
         this.baseOptionsInt = option;
       }
     )
+  } 
+  getChartTempMaxWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean)  {
+    this.weatherService.getAllTempWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
+      _temp => {
+        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
+        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
+        let option = Object.assign({}, this.baseOptionExt);
+        if (rangeChange) {
+          option.calendar.range = range;
+          option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.maxTempDay));
+        } else {
+          if (this.existSeries(option.series, type.name)) {
+            option.series = new Array();
+          }
+          let serie = Object.assign({}, SERIES.heatmap);
+          serie.name = type.name;
+          serie.data = _temp.map(_data => new Array(_data.date, _data.value.maxTempDay));
+          option.series.push(serie);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+          option.calendar.range = range;
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+        }
+        this.setMeanData(option.series, true, type);
+        chartInstance.setOption(option, true);
+        chartInstance.hideLoading();
+        this.baseOptionExt = option;
+      }
+    );
+  }
+
+  getChartWindMaxWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean)  {
+    this.weatherService.getWindAllWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
+      _temp => {
+        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
+        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
+        let option = Object.assign({}, this.baseOptionExt);
+        if (rangeChange) {
+          option.calendar.range = range;
+          option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.maxSpeed));
+        } else {
+          if (this.existSeries(option.series, type.name)) {
+            option.series = new Array();
+          }
+          let serie = Object.assign({}, SERIES.heatmap);
+          serie.name = type.name;
+          serie.data = _temp.map(_data => new Array(_data.date, _data.value.maxSpeed));
+          option.series.push(serie);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+          option.calendar.range = range;
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+        }
+        this.setMeanData(option.series, true, type);
+        chartInstance.setOption(option, true);
+        chartInstance.hideLoading();
+        this.baseOptionExt = option;
+      }
+    );
+  }
+
+
+  getChartTempMinWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.weatherService.getAllTempWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
+      _temp => {
+        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
+        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
+        let option = Object.assign({}, this.baseOptionExt);
+        if (rangeChange) {
+          option.calendar.range = range;
+          option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.minTempDay));
+        } else {
+          if (this.existSeries(option.series, type.name)) {
+            option.series = new Array();
+          }
+          let serie = Object.assign({}, SERIES.heatmap);
+          serie.name = type.name;
+          serie.data = _temp.map(_data => new Array(_data.date, _data.value.minTempDay));
+          option.series.push(serie);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+          option.calendar.range = range;
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+        }
+        this.setMeanData(option.series, true, type);
+        chartInstance.setOption(option, true);
+        chartInstance.hideLoading();
+        this.baseOptionExt = option;
+      }
+    );
   }
 
   getRainByApiary(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
@@ -1037,7 +1132,7 @@ export class DailyManagerService {
    */
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.date, value: 0, sensorRef: _elt.sentence ? 'inspect' : 'notif' }
+      return { date: _elt.date, value: 0, sensorRef: _elt.sentence ? 'inspect' : 'notif' };
     });
   }
 

@@ -68,19 +68,22 @@ export class DailyComponent implements OnInit, AfterViewInit {
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
     this.typeData = [
-      { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type active', icons: './assets/picto_mellicharts/Br.png' },
-      { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Win.png' },
-      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Wma.png' },
-      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Tim.png' },
-      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Timi.png' },
-      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Hi.png' },
+      { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type active', icons: './assets/picto_mellicharts/brood.png' },
+      { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/weight_inc.png' },
+      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/weight_max.png' },
+      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/tint_max.png' },
+      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/tint_min.png' },
+      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/hint.png' },
       { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: './assets/picto_mellicharts/weather.png' },
-      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Tema.png' },
-      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/Temi.png' },
+      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/text_max sensor.png' },
+      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/text_min sensor.png' },
+      { name: 'TEMP_EXT_WEATHER', id: 'TEMP_EXT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_max.png' },
+      { name: 'TEMP_INT_WEATHER', id: 'TEMP_INT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_min.png' },
+      { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/wind.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
       { name: 'MOON', id: 'MOON', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
-      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/notif.png'},
-      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/tool_jhook.png'}
+      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/notif.png' },
+      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/tool_jhook.png' }
     ];
 
     this.optionCsv = {
@@ -95,13 +98,13 @@ export class DailyComponent implements OnInit, AfterViewInit {
       headers: ['Date', 'Value'],
       nullToEmptyString: false,
     };
-/*     if (this.userService.getUserPref().lang === 'FR') {
-      this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_FR;
-      this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_FR;
-    } else {
-      this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_EN;
-      this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_EN;
-    } */
+    /*     if (this.userService.getUserPref().lang === 'FR') {
+          this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_FR;
+          this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_FR;
+        } else {
+          this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_EN;
+          this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_EN;
+        } */
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
     this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
@@ -126,11 +129,11 @@ export class DailyComponent implements OnInit, AfterViewInit {
    */
   setMeanTextHtml(): void {
     if (this.userService.getUserPref().lang === 'FR') {
-      if (this.currentTypeDailyOther.name === 'RAIN'){
+      if (this.currentTypeDailyOther.name === 'RAIN') {
         this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_FR;
         this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_FR;
-      } else {}
-       if (this.currentTypeDailyDevice.name === 'WINCOME'){
+      } else { }
+      if (this.currentTypeDailyDevice.name === 'WINCOME') {
         this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_FR;
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_FR;
       } else {
@@ -138,11 +141,11 @@ export class DailyComponent implements OnInit, AfterViewInit {
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_FR;
       }
     } else {
-      if (this.currentTypeDailyOther.name === 'RAIN'){
+      if (this.currentTypeDailyOther.name === 'RAIN') {
         this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_EN
         this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_EN;
-      } 
-      if (this.currentTypeDailyDevice.name === 'WINCOME'){
+      }
+      if (this.currentTypeDailyDevice.name === 'WINCOME') {
         this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_EN;
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_EN;
       } else {
@@ -165,7 +168,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
         //this.weatherService.getRainAllWeather(this.melliHive.getHiveSelect().idApiary, this.melliDate.getRangeForReqest());
       }
     });
-    
+
     this.melliHive.getDailyDeviceChartInstance().on('legendselectchanged', (params) => {
       console.log(params);
     });
@@ -251,7 +254,19 @@ export class DailyComponent implements OnInit, AfterViewInit {
         break;
       case 'RAIN':
         this.dailyManager.getRainByApiary(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
-          this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
+          this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        break;
+      case 'TEMP_EXT_WEATHER':
+        this.dailyManager.getChartTempMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+          this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        break;
+      case 'TEMP_INT_WEATHER':
+        this.dailyManager.getChartTempMinWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+          this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        break;
+      case 'WIND':
+        this.dailyManager.getChartWindMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+          this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       default:
         break;
@@ -263,15 +278,15 @@ export class DailyComponent implements OnInit, AfterViewInit {
   loadDailyEnvData(rangeChange: boolean) {
     this.melliHive.getDailyEnvChartInstance().showLoading();
     this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().id,
-    this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
-/*     switch (this.currentTypeDailyEnv.name) {
-      case 'ALERT':
-        this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().id,
-          this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
-        break;
-      default:
-        break;
-    } */
+      this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
+    /*     switch (this.currentTypeDailyEnv.name) {
+          case 'ALERT':
+            this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().id,
+              this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
+            break;
+          default:
+            break;
+        } */
   }
 
   /**
