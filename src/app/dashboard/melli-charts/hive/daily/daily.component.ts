@@ -79,8 +79,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: './assets/picto_mellicharts/weather.png' },
       { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/text_max sensor.png' },
       { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/text_min sensor.png' },
-      { name: 'TEMP_EXT_WEATHER', id: 'TEMP_EXT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_max.png' },
-      { name: 'TEMP_INT_WEATHER', id: 'TEMP_INT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_min.png' },
+      { name: 'TEMP_EXT_WEATHER_MAX', id: 'TEMP_EXT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_max.png' },
+      { name: 'TEMP_EXT_WEATHER_MIN', id: 'TEMP_INT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_min.png' },
       { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/wind.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
       { name: 'MOON', id: 'MOON', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
@@ -106,6 +106,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.setMeanTextHtml();
 
   }
+
 
 
   ngOnInit() {
@@ -134,6 +135,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_FR;
       } else {
         this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_FR;
+        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_FR;
+        this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_FR;
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_FR;
       }
     } else {
@@ -146,11 +149,11 @@ export class DailyComponent implements OnInit, AfterViewInit {
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_EN;
       } else {
         this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_EN;
+        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_EN;
+        this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_EN;
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_EN;
       }
     }
-
-    console.error(this.currentDeviceTextPeriodCalendar);
   }
 
   ngAfterViewInit(): void {
@@ -252,11 +255,11 @@ export class DailyComponent implements OnInit, AfterViewInit {
         this.dailyManager.getRainByApiary(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
-      case 'TEMP_EXT_WEATHER':
+      case 'TEMP_EXT_WEATHER_MAX':
         this.dailyManager.getChartTempMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
-      case 'TEMP_INT_WEATHER':
+      case 'TEMP_EXT_WEATHER_MIN':
         this.dailyManager.getChartTempMinWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
@@ -268,6 +271,25 @@ export class DailyComponent implements OnInit, AfterViewInit {
         break;
     }
     // this.dailyManager.setOriginChartOption(this.currentTypeDailyOther.origin);
+  }
+
+
+  /**
+   *
+   *
+   * @returns {boolean}
+   * @memberof DailyComponent
+   */
+  displayMeanOtherCalendarIf(): boolean {
+    switch (this.currentTypeDailyOther.name) {
+        case 'RAIN':
+        case 'TEMP_EXT_WEATHER_MAX':
+        case 'TEMP_EXT_WEATHER_MIN':
+        case 'WIND':
+          return true;
+        default:
+          return false;
+    }
   }
 
 

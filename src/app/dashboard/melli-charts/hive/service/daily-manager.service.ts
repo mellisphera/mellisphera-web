@@ -130,6 +130,21 @@ export class DailyManagerService {
         return _serie.flat().filter(_data => _data.sensorRef === 'OpenWeatherMap').map(_elt => _elt.value);
       } else if (type.name === 'WINCOME') {
         return _serie.weightIncomeHight.map(_elt => _elt.value).concat(_serie.weightIncomeLow.map(_elt => _elt.value));
+      } else if (type.name === 'TEMP_EXT_WEATHER_MAX') {
+        return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+          _elt.value = parseInt(_elt.value.maxTempDay, 10);
+          return _elt;
+        });
+      } else if (type.name === 'TEMP_EXT_WEATHER_MIN') {
+        return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+          _elt.value = parseInt(_elt.value.minTempDay, 10);
+          return _elt;
+        });
+      } else if (type.name === 'TEMP_EXT_WEATHER_MIN'){
+        return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+          _elt.value = parseInt(_elt.value.minTempDay, 10);
+          return _elt;
+        });
       } else {
         return _serie;
       }
@@ -485,7 +500,10 @@ export class DailyManagerService {
   getChartTempMaxWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean)  {
     this.weatherService.getAllTempWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
-        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
+        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+          _elt.value.maxTempDay = this.unitService.convertTempFromUsePref(_elt.value.maxTempDay, this.unitService.getUserPref().unitSystem);
+          return _elt;
+        });
         this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
@@ -548,7 +566,10 @@ export class DailyManagerService {
   getChartTempMinWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getAllTempWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
-        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
+        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+          _elt.value.minTempDay = this.unitService.convertTempFromUsePref(_elt.value.minTempDay, this.unitService.getUserPref().unitSystem);
+          return _elt;
+        });
         this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
@@ -606,7 +627,6 @@ export class DailyManagerService {
             option.series = new Array();
           }
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete) => {
-            console.log(serieComplete);
             option.legend.data.push(serieComplete.name);
             serieComplete.symbol = ICONS_WEATHER.rain;
               serieComplete.itemStyle = {
@@ -1085,8 +1105,8 @@ export class DailyManagerService {
       data = series.data;
     }
     let value = 0;
-    data.filter(_elt => _elt !== 'NaN').forEach(_value => {
-      value = value + _value[1];
+    data.forEach(_value => {
+      value = value + parseInt(_value[1], 10);
     });
     let meanValue = this.unitService.getValRound(mean ? value / data.length : value);
 
@@ -1109,16 +1129,20 @@ export class DailyManagerService {
   setMeanSevenDay(_data: Array<any>, mean: boolean, type: Tools) {
     let value = 0;
     _data.filter(_elt => _elt !== 'NaN').forEach(_value => {
-      value = value + _value;
+      value = value + parseInt(_value, 10);
     });
+    let meanValue = this.unitService.getValRound(mean ? value / _data.length : value);
+    if (isNaN(meanValue)) {
+      meanValue = 0;
+    }
     if (type.origin === DEVICE) {
       this.meanDeviceSevenDay = {
-        value: this.unitService.getValRound(mean ? value / _data.length : value),
+        value: meanValue,
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     } else {
       this.meanOtherSevenDay = {
-        value: this.unitService.getValRound(mean ? value / _data.length : value),
+        value: meanValue,
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     }

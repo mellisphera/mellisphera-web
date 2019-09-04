@@ -18,7 +18,8 @@ const HRIN = 'HRIN';
 const WEATHER = 'WEATHER';
 const TEMP_EXT_MAX = 'TEMP_EXT_MAX';
 const TEMP_EXT_MIN = 'TEMP_EXT_MIN';
-const TEMP_EXT_WEATHER = 'TEMP_EXT_WEATHER';
+const TEMP_EXT_WEATHER_MAX = 'TEMP_EXT_WEATHER_MAX';
+const TEMP_EXT_WEATHER_MIN = 'TEMP_EXT_WEATHER_MIN';
 const TEMP_INT_WEATHER = 'TEMP_INT_WEATHER';
 const WIND = 'WIND';
 
@@ -530,8 +531,8 @@ export class GraphGlobal {
       case TEMP_INT_MIN:
       case TEMP_EXT_MIN:
       case TEMP_EXT_MAX:
-      case TEMP_EXT_WEATHER:
-      case TEMP_INT_WEATHER:
+      case TEMP_EXT_WEATHER_MAX:
+      case TEMP_EXT_WEATHER_MIN:
         name = this.temp.name;
         break;
       case WIND:
@@ -590,7 +591,7 @@ export class GraphGlobal {
               unit: this.getUnitByType(type.unit)
             },{
               name: this.snow.name,
-              value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+              value: this.getNumberFormat(this.unitService.getValRound(params.data[2])),
               unit: this.getUnitByType(type.unit)
             }));
         }
@@ -712,7 +713,7 @@ export class GraphGlobal {
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
         break;
       case 'TEMP_EXT_MAX':
-      case 'TEMP_EXT_WEATHER':
+      case 'TEMP_EXT_WEATHER_MAX':
         visualMap.type = 'continuous';
         //visualMap.top = 15;
         visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? -10 : 10;
@@ -721,6 +722,7 @@ export class GraphGlobal {
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
         break;
       case 'TEMP_EXT_MIN':
+      case 'TEMP_EXT_WEATHER_MIN':
       case 'TEMP_INT_WEATHER':
         visualMap.type = 'continuous';
         //visualMap.top = 15;

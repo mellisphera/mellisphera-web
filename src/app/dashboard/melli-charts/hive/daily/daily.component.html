@@ -55,7 +55,7 @@ limitations under the License. -->
  -->      </ul>
     </div>
     <div class="mean-grup">
-      <ng-container *ngIf="currentTypeDailyOther.name === 'RAIN'">
+      <ng-container *ngIf="displayMeanOtherCalendarIf()">
         <p style="text-align: center;">{{ currentOtherTextPeriodCalendar }}{{ dailyManager.meanPeriodOther.value }}
           {{ dailyManager.meanPeriodOther.unit }}</p>
         <p style="text-align: center;">{{ currentOtherTextSevenDay }}{{ dailyManager.meanOtherSevenDay.value }}
