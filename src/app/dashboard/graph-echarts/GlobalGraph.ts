@@ -111,7 +111,7 @@ export class GraphGlobal {
       name: '',
       min: null,
       max: 0,
-      unitT: '° C',
+      unitT: '°C',
     };
     this.moon = {
       phase: '',
@@ -194,7 +194,7 @@ export class GraphGlobal {
     // If he is French
     if (this.userService.getJwtReponse().country === "FR") {
       this.weight.name = 'Poids (lbs)';
-      this.humidity.name = 'HUmidité (%)';
+      this.humidity.name = 'Humidité (%)';
       this.rain.name = 'Pluie';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Perte';
@@ -238,7 +238,7 @@ export class GraphGlobal {
     // If he is French
     if (this.userService.getJwtReponse().country === "FR") {
       this.weight.name = 'Poids (Kg)';
-      this.humidity.name = 'HUmidité %';
+      this.humidity.name = 'Humidité (%)';
       this.rain.name = 'Pluie';
       this.snow.name = 'Neige';
       this.moon.phase = 'Phase';
@@ -251,7 +251,7 @@ export class GraphGlobal {
       // EN
     } else {
       this.weight.name = 'Weight (Kg)';
-      this.humidity.name = 'Humidity %'
+      this.humidity.name = 'Humidity (%)'
       this.wind.name = 'Wind';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Loss';
@@ -632,7 +632,7 @@ export class GraphGlobal {
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
             return {
               name: img,
-              value: type === 'Inspection' ? _singleData.sentence : _singleData.message,
+              value: type === 'Inspection' ? this.sliceTextToolip( _singleData.sentence) : this.sliceTextToolip( _singleData.message),
               unit: ''
             }
           }));
@@ -663,6 +663,14 @@ export class GraphGlobal {
     return tooltip;
   }
 
+
+  sliceTextToolip(text: string): string {
+    if (text.length > 140) {
+      return text.slice(0, 140 / 2) + '-</br>-' + text.slice(140 / 2, text.length);
+    } else {
+      return text;
+    }
+  }
   /**
    *
    *
@@ -690,14 +698,20 @@ export class GraphGlobal {
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
         break;
       case 'HRIN':
-        visualMap.type = 'piecewise',
+/*         visualMap.type = 'piecewise',
           visualMap.pieces = [
             { min: 20, max: 50 },
             { min: 50, max: 75 },
             { min: 75, max: 87 },
             { min: 87, max: 100 }];
         // visualMap.top = 15;
-        visualMap.inRange.color = ['#97A6C5', '#6987C5', '#3C68C5', '#05489B'];
+        visualMap.inRange.color = ['#97A6C5', '#6987C5', '#3C68C5', '#05489B']; */
+
+        visualMap.type = 'continuous';
+        //visualMap.top = 15;
+        visualMap.min = 20;
+        visualMap.max = 100;
+        visualMap.inRange.color = ['#8FACF7', '#6987C5', '#3563DC', '#002994'];
         break;
       case 'BROOD':
         visualMap.type = 'continuous';

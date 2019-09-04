@@ -673,6 +673,7 @@ export class DailyManagerService {
           serie.name = type.name;
           serie.data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.legend.show = false;
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
@@ -701,6 +702,7 @@ export class DailyManagerService {
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tMinExt.map(_data => new Array(_data.date, _data.value));
           serie.name = type.name;
+          option.legend.show = false;
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
@@ -730,6 +732,7 @@ export class DailyManagerService {
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _hInt.map(_data => new Array(_data.date, _data.value));
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+          option.legend.show = false;
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
@@ -760,6 +763,7 @@ export class DailyManagerService {
           serie.data = _brood.map(_data => new Array(_data.date, _data.value));
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+          option.legend.show = false;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
@@ -789,6 +793,7 @@ export class DailyManagerService {
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _tMin.map(_data => new Array(_data.date, _data.value));
           serie.name = type.name;
+          option.legend.show = false;
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
@@ -820,6 +825,7 @@ export class DailyManagerService {
           serie.data = _weightMax.map(_data => new Array(_data.date, _data.value));
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+          option.legend.show = false;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;

@@ -70,15 +70,13 @@ export class HiveComponent implements OnInit {
   }
 
   setHeightCalendar(loadCalendar: Function) {
-    console.log(this.getHeightCalendar());
-    for(let i = 0; i < this.dailyComponent.calendarElements.length; i++ ) {
+/*     for(let i = 0; i < this.dailyComponent.calendarElements.length; i++ ) {
       this.render.setStyle(this.dailyComponent.calendarElements[i], 'height', this.getHeightCalendar() + 'px');
-      console.log(this.dailyComponent.calendarElements[i]);
     }
     this.dailyComponent.melliHive.getDailyDeviceChartInstance().dispose();
     this.dailyComponent.melliHive.getDailyEnvChartInstance().dispose();
     this.dailyComponent.melliHive.getDailyOtherChartInstance().dispose();
-    this.dailyComponent.initCalendar();
+    this.dailyComponent.initCalendar(); */
     loadCalendar();
   }
 

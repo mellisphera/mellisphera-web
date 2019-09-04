@@ -102,7 +102,9 @@ export const BASE_OPTIONS = {
     },
     baseOptionDailyMelliCharts: {
         // visualMap: {},
-        legend: {},
+        legend: {
+            top: 20
+        },
         axisPointer: {
             link: { xAxisIndex: 'all' }
         },
