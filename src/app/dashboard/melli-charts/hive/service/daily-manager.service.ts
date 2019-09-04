@@ -158,7 +158,7 @@ export class DailyManagerService {
       case 'WEATHER':
         return new Array(value.iconDay, value.maxTempDay, value.minTempDay, value.maxHumidityDay, value.minHumidityDay);
       case 'RAIN':
-        return value;
+        return new Array(this.unitService.convertMilimetreToPouce(value.rainDay, this.unitService.getUserPref().unitSystem, true), value.rainSun, value.snowDay, value.snowSun)
       case 'ALERT':
         return value;
       case 'TEMP_EXT_WEATHER':
@@ -175,7 +175,7 @@ export class DailyManagerService {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, serieTemplate);
-        serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
+        serieTmp.name = _data.sensorRef;
         if (data.map(_elt => _elt.date)[0] !== undefined) {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
             return [_map.date].concat(this.getValueBySerie(_map.value, nameSerie), _map.sensorRef);
@@ -606,6 +606,7 @@ export class DailyManagerService {
             option.series = new Array();
           }
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete) => {
+            console.log(serieComplete);
             option.legend.data.push(serieComplete.name);
             serieComplete.symbol = ICONS_WEATHER.rain;
               serieComplete.itemStyle = {
@@ -1087,14 +1088,19 @@ export class DailyManagerService {
     data.filter(_elt => _elt !== 'NaN').forEach(_value => {
       value = value + _value[1];
     });
+    let meanValue = this.unitService.getValRound(mean ? value / data.length : value);
+
+    if (isNaN(meanValue)) {
+      meanValue = 0;
+    }
     if (type.origin === DEVICE) {
       this.meanPeriodDevice = {
-        value: this.unitService.getValRound(mean ? value / data.length : value),
+        value: meanValue,
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     } else {
       this.meanPeriodOther = {
-        value: this.unitService.getValRound(mean ? value / data.length : value),
+        value: meanValue,
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     }
@@ -1104,7 +1110,7 @@ export class DailyManagerService {
     let value = 0;
     _data.filter(_elt => _elt !== 'NaN').forEach(_value => {
       value = value + _value;
-    })
+    });
     if (type.origin === DEVICE) {
       this.meanDeviceSevenDay = {
         value: this.unitService.getValRound(mean ? value / _data.length : value),

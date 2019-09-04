@@ -9,6 +9,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
+const BROOD = 'BROOD';
+const WINCOME = 'WINCOME';
+const WEIGHT_MAX = 'WEIGHT_MAX';
+const TEMP_INT_MAX = 'TEMP_INT_MAX';
+const TEMP_INT_MIN = 'TEMP_INT_MIN';
+const HRIN = 'HRIN';
+const WEATHER = 'WEATHER';
+const TEMP_EXT_MAX = 'TEMP_EXT_MAX';
+const TEMP_EXT_MIN = 'TEMP_EXT_MIN';
+const TEMP_EXT_WEATHER = 'TEMP_EXT_WEATHER';
+const TEMP_INT_WEATHER = 'TEMP_INT_WEATHER';
+const WIND = 'WIND';
+
 import { Injectable } from '@angular/core';
 import { UserParamsService } from '../preference-config/service/user-params.service';
 import { stringify } from 'querystring';
@@ -31,7 +44,16 @@ export class GraphGlobal {
     interval: number,
     unitW: string
   };
-
+  public moon: {
+    phase: string,
+    period: string
+  }
+  public snow: {
+    name: string,
+    min: number,
+    max: number,
+    unitT: string,
+  }
   public temp: {
     name: string,
     min: number,
@@ -62,7 +84,10 @@ export class GraphGlobal {
     max: number,
     unitT: string,
   };
-
+  public weightIncome: {
+    gain: string,
+    loss: string
+  };
   public titresFR: Array<any>;
   public titresEN: Array<any>;
 
@@ -77,12 +102,26 @@ export class GraphGlobal {
       interval: 0,
       unitW: 'Kg'
     };
+    this.weightIncome = {
+      gain: '',
+      loss: ''
+    };
     this.temp = {
       name: '',
       min: null,
       max: 0,
       unitT: '° C',
     };
+    this.moon = {
+      phase: '',
+      period: ''
+    }
+    this.snow = {
+      name: '',
+      min: null,
+      max: 0,
+      unitT: 'mm',
+    }
     this.wind = {
       name: '',
       min: null,
@@ -105,7 +144,7 @@ export class GraphGlobal {
       name: '',
       min: null,
       max: 0,
-      unitT: '%',
+      unitT: '',
     }
     if (this.userConfig.getUserPref().unitSystem === 'IMPERIAL') { // US
       this.setImperial();
@@ -156,18 +195,29 @@ export class GraphGlobal {
       this.weight.name = 'Poids (lbs)';
       this.humidity.name = 'HUmidité (%)';
       this.rain.name = 'Pluie';
+      this.weightIncome.gain = 'Gain';
+      this.weightIncome.loss = 'Perte';
+      this.moon.phase = 'Phase';
+      this.moon.period = 'Période';
       this.brood.name = 'Couvain (%)';
+      this.snow.name = 'Neige';
       this.temp.name = 'Température (°F)';
       this.wind.name = 'Vent';
       // EN
     } else {
       this.weight.name = 'Weight (lbs)';
       this.humidity.name = 'Humidity (%)';
+      this.weightIncome.gain = 'Gain';
+      this.weightIncome.loss = 'Loss';
       this.rain.name = 'Rain';
+      this.moon.phase = 'Phase';
+      this.moon.period = 'Period';
+      this.snow.name = 'Snow';
       this.temp.name = 'Temperature (°F)';
       this.wind.name = 'Wind';
       this.brood.name = 'Brood (%)';
     }
+    this.snow.unitT = '″';
     this.humidity.min = 0;
     this.rain.unitT = '″';
     this.humidity.max = 100;
@@ -189,6 +239,11 @@ export class GraphGlobal {
       this.weight.name = 'Poids (Kg)';
       this.humidity.name = 'HUmidité %';
       this.rain.name = 'Pluie';
+      this.snow.name = 'Neige';
+      this.moon.phase = 'Phase';
+      this.weightIncome.gain = 'Gain';
+      this.weightIncome.loss = 'Perte';
+      this.moon.period = 'Période';
       this.wind.name = 'Vent';
       this.brood.name = 'Couvain (%)';
 
@@ -197,12 +252,18 @@ export class GraphGlobal {
       this.weight.name = 'Weight (Kg)';
       this.humidity.name = 'Humidity %'
       this.wind.name = 'Wind';
+      this.weightIncome.gain = 'Gain';
+      this.weightIncome.loss = 'Loss';
+      this.moon.phase = 'Phase';
+      this.moon.period = 'Period';
       this.rain.name = 'Rain';
+      this.snow.name = 'Snow';
       this.brood.name = 'Brood (%)';
     }
     this.humidity.name = 'Humidity %'
     this.rain.unitT = 'mm';
     this.humidity.min = 0;
+    this.snow.unitT = 'mm';
     this.humidity.max = 100;
     this.weight.min = 0;
     this.humidity.unitT = '%';
@@ -363,7 +424,7 @@ export class GraphGlobal {
       if (this.userService.getCountry() !== 'FR') {
         return 'Optimal area of humidity';
       } else {
-        return 'Zone optimale d\'humidié';
+        return 'Zone optimale d\'humidité';
       }
     }
   }
@@ -389,7 +450,8 @@ export class GraphGlobal {
       case 'V':
         return this.wind.unitT;
       default:
-        return '';    }
+        return '';    
+      }
   }
 
 
@@ -401,6 +463,7 @@ export class GraphGlobal {
    * @memberof GraphGlobal
    */
   getMoonStatus(status: number): string {
+    console.log(this.userService.getJwtReponse().country);
     if (this.userService.getJwtReponse().country === 'FR') {
       if (status === 1) {
         return 'Ascendant';
@@ -440,6 +503,51 @@ export class GraphGlobal {
 
 
   /**
+   *
+   *
+   * @param {string} type
+   * @param {*} [optionalValue]
+   * @returns {string}
+   * @memberof GraphGlobal
+   */
+  getNameCalendarByType(type: string, optionalValue?: any): string{
+    let name: string;
+    switch (type) {
+      case BROOD:
+        name = this.brood.name;
+        break;
+      case WINCOME:
+        if (optionalValue < 0) {
+          name = this.weightIncome.loss;
+        } else {
+          name = this.weightIncome.gain;
+        }
+        break;
+      case WEIGHT_MAX:
+        name = this.weight.name;
+        break;
+      case TEMP_INT_MAX:
+      case TEMP_INT_MIN:
+      case TEMP_EXT_MIN:
+      case TEMP_EXT_MAX:
+      case TEMP_EXT_WEATHER:
+      case TEMP_INT_WEATHER:
+        name = this.temp.name;
+        break;
+      case WIND:
+        name = this.wind.name;
+        break;
+      default:
+      break;
+    }
+    if (/\(/g.test(name)) {
+      name = name.split(' ')[0];
+    }
+    return name;
+
+  }
+
+  /**
    * 
    * @param type 
    * @param extraData 
@@ -477,7 +585,11 @@ export class GraphGlobal {
         tooltip.formatter = (params) => {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
-              name: 'Rain',
+              name: this.rain.name,
+              value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+              unit: this.getUnitByType(type.unit)
+            },{
+              name: this.snow.name,
               value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
               unit: this.getUnitByType(type.unit)
             }));
@@ -487,9 +599,14 @@ export class GraphGlobal {
         tooltip.formatter = (params) => {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
-              name: type.name,
-              value: isString(params.data[1]) ? params.data[1] : this.getNumberFormat(this.unitService.getValRound(params.data[1])),
-              unit: this.getMoonStatus(params.data[2])
+              name: this.moon.phase,
+              value: params.data[1],
+              unit: ''
+            },
+            {
+              name: this.moon.period,
+              value: this.getMoonStatus(params.data[2]),
+              unit: ''
             }
           ));
         }
@@ -518,11 +635,22 @@ export class GraphGlobal {
           }));
         }
         break;
+        case WINCOME:
+            tooltip.formatter = (params) => {
+              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+                {
+                  name: this.getNameCalendarByType(type.name, params.data[1]),
+                  value: this.unitService.getValRound(params.data[1]),
+                  unit: this.getUnitByType(type.unit)
+                },
+              ));
+            }
+          break;
       default:
         tooltip.formatter = (params) => {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
-              name: type.name,
+              name: this.getNameCalendarByType(type.name),
               value: isString(params.data[1]) ? params.data[1] : this.getNumberFormat(this.unitService.getValRound(params.data[1])),
               unit: this.getUnitByType(type.unit)
             },
@@ -636,7 +764,6 @@ export class GraphGlobal {
         return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
       }
     }).join('</br>');
-
 
     return tooltipGlobal;
   }

@@ -33,6 +33,7 @@ import { WeatherService } from '../service/api/weather.service';
 import { StackMelliChartsService } from './stack/service/stack-melli-charts.service';
 import { StackComponent } from './stack/stack.component';
 import { VitalityComponent } from './vitality/vitality.component';
+import { type } from 'os';
 
 const PREFIX_PATH = '/dashboard/melli-charts/';
 @Component({
@@ -234,6 +235,21 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    */
   getRangeByType(type: string): Array<DataRange> {
     return this.melliChartDate.ranges.filter(elt => elt.type === type || elt.type === type + 'S');
+  }
+
+  /**
+   *
+   *
+   * @param {DataRange} range
+   * @returns {DataRange}
+   * @memberof MelliChartsComponent
+   */
+  getRangeBYLang(range: DataRange): string {
+    if (this.userService.getCountry() === 'FR') {
+      return this.melliChartDate.ranges.filter(_range => _range.type === range.type)[0].typeFr;
+    } else {
+      return range.type;
+    }
   }
 
   setDateFromInput(): void {

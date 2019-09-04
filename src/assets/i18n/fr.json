@@ -360,5 +360,12 @@
             "CONFIRM" : "Supprmier",
             "CANCEL" : "Annuler"
         }
+    },
+    "MELLICHARTS": {
+        "DATE": {
+            "START": "Début",
+            "END": "Fin",
+            "BTN_APPLY": "Aplliquer"
+        }
     }
 }

@@ -132,7 +132,7 @@ export class StackComponent implements OnInit {
     this.options.series.push(serieMarkTemp);
 
 
-    let serieMarkHum = Object.assign({}, SERIES.serieMarkPourcent);
+    let serieMarkHum = Object.assign({}, SERIES.serieMarkHint);
     serieMarkHum.yAxisIndex = 2;
     serieMarkHum.xAxisIndex = 2;
     serieMarkHum.markArea.data[0][0].yAxis = 50;

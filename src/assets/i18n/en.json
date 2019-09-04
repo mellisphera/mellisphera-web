@@ -360,5 +360,12 @@
             "CONFIRM" : "Delete",
             "CANCEL" : "Cancel"
         }
+    },
+    "MELLICHARTS": {
+        "DATE": {
+            "START": "Start",
+            "END": "End",
+            "BTN_APPLY": "Aplly"
+        }
     }
 }

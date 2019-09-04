@@ -56,7 +56,7 @@ export const CALENDAR = {
         // width: '80%',
         left: 'center',
         cellSize: [40 , 40],
-        range: [new Date().getFullYear() + '-' +( new Date().getMonth() - 1) + '-' + '01', new Date()],
+        range: ['2019-08-01', '2019-08-31'],
         orient: 'vertical',
         splitLine: {
             show: true,

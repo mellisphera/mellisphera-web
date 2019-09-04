@@ -31,14 +31,14 @@ export class MelliChartsDateService {
 /*       { scale: 1, type: 'HOUR'},
       { scale: 6, type: 'HOURS'},
       { scale: 12, type: 'HOURS'}, */
-      { scale: 1, type: 'DAY'},
-      { scale: 3, type: 'DAYS' },
-      { scale: 7, type: 'DAYS' },
-      { scale: 15, type: 'DAYS' },
-      { scale: 1, type: 'MONTH' },
-      { scale: 2, type: 'MONTHS' },
-      { scale: 3, type: 'MONTHS' },
-      { scale: 6, type: 'MONTHS' },
+      { scale: 1, type: 'DAY', typeFr: 'JOUR'},
+      { scale: 3, type: 'DAYS', typeFr: 'JOURS'},
+      { scale: 7, type: 'DAYS', typeFr: 'JOURS'},
+      { scale: 15, type: 'DAYS', typeFr: 'JOURS'},
+      { scale: 1, type: 'MONTH', typeFr: 'MOIS'},
+      { scale: 2, type: 'MONTHS', typeFr: 'MOIS'},
+      { scale: 3, type: 'MONTHS', typeFr: 'MOIS'},
+      { scale: 6, type: 'MONTHS', typeFr: 'MOIS'},
     ];
     this.setRange(this.ranges[4]);
   }

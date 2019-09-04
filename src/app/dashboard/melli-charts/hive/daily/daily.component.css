@@ -37,7 +37,7 @@ limitations under the License. */
     border: 1px solid black;
 }
 .item-type img{
-    width: 100%;
+    width: 90%;
 }
 .item-type:hover {
     cursor:pointer;

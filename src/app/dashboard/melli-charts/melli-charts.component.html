@@ -29,34 +29,34 @@ limitations under the License. -->
           <div class="dropdown-menu dropdown-menu-right">
             <div id="input-date">
               <div class="form-group">
-                <label>Start : </label>
+                <label>{{ 'MELLICHARTS.DATE.START' | translate }}</label>
                 <input type="date" [ngModel]="getStartDate()" (ngModelChange)="melliChartDate.start = $event"
                   class="form-control" />
               </div>
               <div class="form-group">
-                <label>End : </label>
+                <label>{{ 'MELLICHARTS.DATE.END' | translate }} </label>
                 <input type="date" [ngModel]="getEndDate()" (ngModelChange)="melliChartDate.end = $event"
                   class="form-control" />
               </div>
               <button type="button" (click)="setDateFromInput()"
-                class="btn btn-large btn-block btn-primary">Apply</button>
+                class="btn btn-large btn-block btn-primary">{{ 'MELLICHARTS.DATE.BTN_APPLY' | translate}}</button>
             </div>
             <div id="dt-scale">
               <ul>
                 <li class="time" *ngFor="let dt of getRangeByType('HOUR')" (click)="setRangeSelect(dt)">
-                  {{ dt.scale }} {{ dt.type | lowercase }}</li>
+                  {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
               </ul>
               <ul>
                 <li class="time" *ngFor="let dt of getRangeByType('DAY')" (click)="setRangeSelect(dt)">
-                  {{ dt.scale }} {{ dt.type | lowercase }}</li>
+                  {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
               </ul>
               <ul>
                 <li class="time" *ngFor="let dt of getRangeByType('MONTH')" (click)="setRangeSelect(dt)">
-                  {{ dt.scale }} {{ dt.type | lowercase }}</li>
+                  {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
               </ul>
               <ul>
                 <li class="time" *ngFor="let dt of getRangeByType('YEAR')" (click)="setRangeSelect(dt)">
-                  {{ dt.scale }} {{ dt.type | lowercase }}</li>
+                  {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
               </ul>
             </div>
           </div>

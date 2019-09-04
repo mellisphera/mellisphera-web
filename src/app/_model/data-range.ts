@@ -12,4 +12,5 @@ limitations under the License. */
 export interface DataRange {
     scale: number;
     type: string;
+    typeFr?: string;
 }

@@ -17,12 +17,13 @@ import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 import * as echarts from 'echarts';
 import { UserParamsService } from '../../../preference-config/service/user-params.service';
 import { WeatherService } from '../../../service/api/weather.service';
+import { UserloggedService } from '../../../../userlogged.service';
 
 const TITLE_PERIODE_CALENDAR = {
   TEXT_SUM_FR: 'Somme sur la période:',
-  TEXT_SUM_EN: 'sum over the period: ',
+  TEXT_SUM_EN: 'Sum over the period: ',
   TEXT_MEAN_FR: 'Moyenne sur la période: ',
-  TEXT_MEAN_EN: 'period average: '
+  TEXT_MEAN_EN: 'Period average: '
 };
 
 const TITLE_LAST_DAY = {
@@ -63,7 +64,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
   private typeData: Tools[];
   constructor(private renderer: Renderer2,
     public dailyManager: DailyManagerService,
-    private userService: UserParamsService,
+    private userPref: UserParamsService,
+    private userService: UserloggedService,
     private weatherService: WeatherService,
     private melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
@@ -98,13 +100,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
       headers: ['Date', 'Value'],
       nullToEmptyString: false,
     };
-    /*     if (this.userService.getUserPref().lang === 'FR') {
-          this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_FR;
-          this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_FR;
-        } else {
-          this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_EN;
-          this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_EN;
-        } */
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
     this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
@@ -128,11 +123,12 @@ export class DailyComponent implements OnInit, AfterViewInit {
    * @memberof DailyComponent
    */
   setMeanTextHtml(): void {
-    if (this.userService.getUserPref().lang === 'FR') {
+    console.log(this.userService.getCountry() === 'FR');
+    if (this.userService.getCountry() === 'FR') {
       if (this.currentTypeDailyOther.name === 'RAIN') {
         this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_FR;
         this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_FR;
-      } else { }
+      }
       if (this.currentTypeDailyDevice.name === 'WINCOME') {
         this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_FR;
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_FR;
@@ -142,7 +138,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
       }
     } else {
       if (this.currentTypeDailyOther.name === 'RAIN') {
-        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_EN
+        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_EN;
         this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_EN;
       }
       if (this.currentTypeDailyDevice.name === 'WINCOME') {

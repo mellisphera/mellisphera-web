@@ -99,9 +99,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getRainCurrentDailyWeather(idApiary: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + 'dailyWeather/rain/apiary/' + idApiary, range).map(_elt => _elt.map(_value => {
-      return { date: _value.date, value: this.unitService.convertMilimetreToPouce(_value.value.rainDay, this.unitSystem), sensorRef: _value.sensorRef };
-    }));
+    return this.httpClient.post<any[]>(CONFIG.URL + 'dailyWeather/rain/apiary/' + idApiary, range);
   }
 
 
@@ -114,9 +112,9 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getRainForecastDailyWeather(idApiary: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + 'forecastDailyWeather/rain/apiary/' + idApiary, range).map(_elt => _elt.map(_value => {
+    return this.httpClient.post<any[]>(CONFIG.URL + 'forecastDailyWeather/rain/apiary/' + idApiary, range);/* .map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertMilimetreToPouce(_value.value.rainDay, this.unitSystem), sensorRef: _value.sensorRef };
-    }));
+    })); */
   }
 
 
