@@ -190,7 +190,12 @@ export class DailyManagerService {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, serieTemplate);
-        serieTmp.name = _data.sensorRef;
+        if (nameSerie === 'gain' || nameSerie === 'loss') {
+          serieTmp.name = nameSerie + '|' + _data.sensorRef;
+
+        } else {
+          serieTmp.name = _data.sensorRef;
+        }
         if (data.map(_elt => _elt.date)[0] !== undefined) {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
             return [_map.date].concat(this.getValueBySerie(_map.value, nameSerie), _map.sensorRef);
