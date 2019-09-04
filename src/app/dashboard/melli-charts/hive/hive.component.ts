@@ -27,7 +27,8 @@ export class HiveComponent implements OnInit {
 
   @ViewChild(DailyComponent) dailyComponent: DailyComponent;
   @ViewChild(HourlyComponent) hourlyComponent: HourlyComponent;
-  constructor() {
+  constructor(private melliDate: MelliChartsDateService,
+    private render: Renderer2) {
 
   }
 
@@ -45,15 +46,41 @@ export class HiveComponent implements OnInit {
     this.dailyComponent.loadDailyDeviceData(false);
     this.dailyComponent.loadDailyOtherData(false);
     this.dailyComponent.loadDailyEnvData(false);
+    console.log(this.dailyComponent.melliHive.getDailyDeviceChartInstance().getHeight());
     // this.hourlyComponent.loadHourlyData(true, '', false);
   }
 
   
    setRangeChart() {
-     this.dailyComponent.loadDailyDeviceData(true);
-     this.dailyComponent.loadDailyOtherData(true);
-     this.dailyComponent.loadDailyEnvData(true);
+
+    this.setHeightCalendar(() => {
+      this.dailyComponent.loadDailyDeviceData(true);
+      this.dailyComponent.loadDailyOtherData(true);
+      this.dailyComponent.loadDailyEnvData(true);
+    });
+
+
+    
      // this.hourlyComponent.loadHourlyData(true, '', true);
    }
+
+   getHeightCalendar(): number {
+     console.log(this.melliDate.getRangeForReqest()[1].getMonth() - this.melliDate.getRangeForReqest()[0].getMonth());
+    return 230 * (this.melliDate.getRangeForReqest()[1].getMonth() - this.melliDate.getRangeForReqest()[0].getMonth());
+  }
+
+  setHeightCalendar(loadCalendar: Function) {
+    console.log(this.getHeightCalendar());
+    for(let i = 0; i < this.dailyComponent.calendarElements.length; i++ ) {
+      this.render.setStyle(this.dailyComponent.calendarElements[i], 'height', this.getHeightCalendar() + 'px');
+      console.log(this.dailyComponent.calendarElements[i]);
+    }
+    this.dailyComponent.melliHive.getDailyDeviceChartInstance().dispose();
+    this.dailyComponent.melliHive.getDailyEnvChartInstance().dispose();
+    this.dailyComponent.melliHive.getDailyOtherChartInstance().dispose();
+    this.dailyComponent.initCalendar();
+    loadCalendar();
+  }
+
 
 }

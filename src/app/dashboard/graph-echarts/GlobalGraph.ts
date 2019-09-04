@@ -261,7 +261,7 @@ export class GraphGlobal {
       this.snow.name = 'Snow';
       this.brood.name = 'Brood (%)';
     }
-    this.humidity.name = 'Humidity %'
+    this.humidity.name = 'Humidity %';
     this.rain.unitT = 'mm';
     this.humidity.min = 0;
     this.snow.unitT = 'mm';

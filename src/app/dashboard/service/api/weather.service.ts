@@ -19,6 +19,7 @@ import { ForecastHourlyWeather } from '../../../_model/forecast-hourly-weather';
 import { CurrentHourlyWeather } from '../../../_model/current-hourly-weather';
 import { map } from 'rxjs-compat/operator/map';
 import { UnitService } from '../unit.service';
+import { WEATHER } from '../../melli-charts/charts/icons/icons_weather';
 
 @Injectable({
   providedIn: 'root'
@@ -126,7 +127,7 @@ export class WeatherService {
    * @returns {Observable<any>}
    * @memberof WeatherService
    */
-  public getTempExtForecastDailyWeather(idApiary: string, range: Date[]): Observable<any>{
+  public getTempExtForecastDailyWeather(idApiary: string, range: Date[]): Observable<any> {
     return this.httpClient.post<any>(CONFIG.URL + 'forecastDailyWeather/tExt/apiary/' + idApiary, range);
   }
 
@@ -155,7 +156,7 @@ export class WeatherService {
    * @returns {Observable<any>}
    * @memberof WeatherService
    */
-  public getWindCurrentDailyWeather(idApiary: string, range: Date[]): Observable<any>{
+  public getWindCurrentDailyWeather(idApiary: string, range: Date[]): Observable<any> {
     return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/wind/apiary/' + idApiary, range);
   }
 
@@ -168,7 +169,7 @@ export class WeatherService {
    * @returns {Observable<any>}
    * @memberof WeatherService
    */
-  public getWindForecastDailyWeather(idApiary: string, range: Date[]): Observable<any>{
+  public getWindForecastDailyWeather(idApiary: string, range: Date[]): Observable<any> {
     return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/wind/apiary/' + idApiary, range);
   }
 
@@ -181,7 +182,7 @@ export class WeatherService {
    * @returns {Observable<any>}
    * @memberof WeatherService
    */
-  public getTempExtCurrentDailyWeather(idApiary: string, range: Date[]): Observable<any>{
+  public getTempExtCurrentDailyWeather(idApiary: string, range: Date[]): Observable<any> {
     return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/tExt/apiary/' + idApiary, range);
   }
 
@@ -215,5 +216,26 @@ export class WeatherService {
       this.getRainCurrentDailyWeather(idApiary, range),
       this.getRainForecastDailyWeather(idApiary, range)
     ]);
+  }
+
+
+
+  getPicto(nomPicto: string, cellPoint: Array<number>): Array<any> {
+    try {
+      return WEATHER[nomPicto].map(_path => {
+        return {
+          type: 'path',
+          scale: _path.scale,
+          shape: {
+            pathData: _path.path,
+          },
+          position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
+          style: _path.style
+        };
+      })
+
+    }
+    catch{
+    }
   }
 }

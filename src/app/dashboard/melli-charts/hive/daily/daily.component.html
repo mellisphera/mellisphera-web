@@ -16,24 +16,26 @@ limitations under the License. -->
         <li *ngFor="let type of getlabelByType('DEVICE')" (click)="setType(type)" [class]="type.class" [id]="type.id">
           <img [src]="type.icons" />
         <li>
-<!--         <li (click)="exportToCsv('DEVICE')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
- -->      </ul>
+          <!--         <li (click)="exportToCsv('DEVICE')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
+ -->
+      </ul>
     </div>
+    <div id="calendar-device" class="chart calendar"></div>
     <div>
       <p style="text-align: center;">{{ currentDeviceTextPeriodCalendar }}{{ dailyManager.meanPeriodDevice.value }}
         {{ dailyManager.meanPeriodDevice.unit }}</p>
       <p style="text-align: center;">{{ currentDeviceTextSevenDay }}{{ dailyManager.meanDeviceSevenDay.value }}
         {{ dailyManager.meanDeviceSevenDay.unit }}</p>
     </div>
-    <div id="calendar-device" class="chart calendar"></div>
   </div>
   <div id="daily-env">
     <div id="sidebar-tools-daily-env">
       <ul class="nav responsive-nav flex tools" id="env-group">
         <li *ngFor="let type of getlabelByType('ENV')" [class]="type.class" [id]="type.id">
           <img [src]="type.icons" /></li>
-<!--         <li (click)="exportToCsv('ENV')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
- -->      </ul>
+        <!--         <li (click)="exportToCsv('ENV')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
+ -->
+      </ul>
       <div class="mean-grup">
         <!--         <ng-container *ngIf="currentTypeDailyOther.name === 'RAIN'">
           <p style="text-align: center;">{{ currentOtherTextPeriodCalendar }}{{ dailyManager.meanPeriodOther.value }}
@@ -51,9 +53,11 @@ limitations under the License. -->
       <ul class="nav responsive-nav flex tools" id="other-group">
         <li *ngFor="let type of getlabelByType('OTHER')" (click)="setType(type)" [class]="type.class" [id]="type.id">
           <img [src]="type.icons" /></li>
-<!--         <li (click)="exportToCsv('OTHER')" class="item-type"><img src="./assets/icons/exportToCsv.png">></li>
- -->      </ul>
+        <!--         <li (click)="exportToCsv('OTHER')" class="item-type"><img src="./assets/icons/exportToCsv.png">></li>
+ -->
+      </ul>
     </div>
+    <div id="calendar-other" class="chart calendar"></div>
     <div class="mean-grup">
       <ng-container *ngIf="displayMeanOtherCalendarIf()">
         <p style="text-align: center;">{{ currentOtherTextPeriodCalendar }}{{ dailyManager.meanPeriodOther.value }}
@@ -63,6 +67,5 @@ limitations under the License. -->
       </ng-container>
 
     </div>
-    <div id="calendar-other" class="chart calendar"></div>
   </div>
 </div>

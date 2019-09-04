@@ -187,12 +187,13 @@ export const BASE_OPTIONS = {
             { 
                 x: '3%', 
                 y: '2%', 
-                width: '95%', 
+                width: '90%',
+                left: '6%',
                 height: '25%', 
-                background: 'white' 
+                background: 'white'
             },
-             { x: '3%', y: '32%', width: '95%', height: '25%', background: 'white' },
-             { x: '3%', y: '63%', width: '95%', height: '25%', background: 'white' }
+             { x: '3%', y: '32%', left: '6%', width: '90%', height: '25%', background: 'white' },
+             { x: '3%', y: '63%', left: '6%', width: '90%', height: '25%', background: 'white' }
         ],
         dataZoom: [
               {

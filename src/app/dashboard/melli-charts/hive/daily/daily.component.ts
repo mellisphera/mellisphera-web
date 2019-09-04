@@ -55,6 +55,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
   private currentEltTypeDaily: HTMLElement;
   private currentTypeDailyDevice: Tools;
   private currentTypeDailyEnv: Tools;
+  public calendarElements: HTMLCollection;
   public currentTypeDailyOther: Tools;
   public currentDeviceTextPeriodCalendar: string;
   public currentOtherTextPeriodCalendar: string;
@@ -67,7 +68,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     private userPref: UserParamsService,
     private userService: UserloggedService,
     private weatherService: WeatherService,
-    private melliHive: MelliChartsHiveService,
+    public melliHive: MelliChartsHiveService,
     private melliDate: MelliChartsDateService) {
     this.typeData = [
       { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type active', icons: './assets/picto_mellicharts/brood.png' },
@@ -110,6 +111,11 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
+    this.calendarElements = document.getElementsByClassName('calendar');
+    this.initCalendar();
+  }
+
+  initCalendar() {
     this.melliHive.setDailyDeviceChartInstance(echarts.init(<HTMLDivElement>document.getElementById('calendar-device')));
     this.melliHive.getDailyDeviceChartInstance().setOption(this.dailyManager.baseOptionsInt);
     this.melliHive.setDailyOtherChartInstance(echarts.init(<HTMLDivElement>document.getElementById('calendar-other')));
@@ -296,7 +302,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
   loadDailyEnvData(rangeChange: boolean) {
     this.melliHive.getDailyEnvChartInstance().showLoading();
     this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().id,
-      this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
+      this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
     /*     switch (this.currentTypeDailyEnv.name) {
           case 'ALERT':
             this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().id,
@@ -306,6 +312,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
             break;
         } */
   }
+
 
   /**
    *

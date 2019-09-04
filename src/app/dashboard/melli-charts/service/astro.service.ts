@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '../../../../constants/config';
 import { Astro } from '../../../_model/astro';
 import { Observable } from 'rxjs';
+import { MOON } from '../charts/icons/icons_astro';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,26 @@ export class AstroService {
    */
   public getAstroByApiary(idApiary: string, range: Date[]): Observable<Astro[]> {
     return this.httpClient.post<Astro[]>(CONFIG.URL + 'astro/apiary/' + idApiary, range);
+  }
+
+
+  getPicto(nomPicto: string, cellPoint: Array<number>): Array<any> {
+    console.log(nomPicto);
+    try {
+      return MOON[nomPicto].map(_path => {
+        return {
+          type: 'path',
+          scale: _path.scale,
+          shape: {
+            pathData: _path.path,
+          },
+          position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
+          style: _path.style
+        };
+      })
+
+    }
+    catch{
+    }
   }
 }

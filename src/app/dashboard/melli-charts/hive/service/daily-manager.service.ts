@@ -21,10 +21,9 @@ import 'rxjs/add/observable/forkJoin';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { isUndefined, isArray, isObject, isString } from 'util';
 import { WeatherService } from '../../../service/api/weather.service';
-import { ICONS_WEATHER } from '../../charts/icons/icons_weather';
+import { WEATHER } from '../../charts/icons/icons_weather';
 import { Observable } from 'rxjs';
 import { AstroService } from '../../service/astro.service';
-import { ICONS_ASTRO } from '../../charts/icons/icons_astro';
 import { _localeFactory } from '@angular/core/src/application_module';
 import 'rxjs/add/observable/of';
 import { AlertsService } from '../../../service/api/alerts.service';
@@ -217,44 +216,8 @@ export class DailyManagerService {
           option.series = this.removeDataAllseries(option.series);
           this.getSerieByData(_weather, type.name, SERIES.custom, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            serieComplete.renderItem = (params, api) => {
-              let cellPoint = api.coord(api.value(0));
-              let cellWidth = params.coordSys.cellWidth;
-              let cellHeight = params.coordSys.cellHeight;
-              return {
-                type: 'group',
-                children: [
-                  {
-                    type: 'path',
-                    z2: 1000,
-                    shape: {
-                      pathData: ICONS_WEATHER[api.value(1)],
-                      x: -11,
-                      y: -10,
-                      width: 25,
-                      height: 25
-                    },
-                    position: [cellPoint[0], cellPoint[1]],
-                  },
-                  {
-                    type: 'rect',
-                    z2: 0,
-                    shape: {
-                      x: -cellWidth / 2,
-                      y: -cellHeight / 2,
-                      width: cellWidth,
-                      height: cellHeight,
-                    },
-                    position: [cellPoint[0], cellPoint[1]],
-                    style: {
-                      fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
-                      stroke: 'black'
-                    }
-                  }
-                ]
-              };
-            }
-            option.series[index] = serieComplete;
+            option.series[index].name = serieComplete.name;
+            option.series[index].data = serieComplete.data;
           });
           option.calendar.range = range;
           // option.series[0].data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
@@ -270,40 +233,30 @@ export class DailyManagerService {
               let cellPoint = api.coord(api.value(0));
               let cellWidth = params.coordSys.cellWidth;
               let cellHeight = params.coordSys.cellHeight;
-              return {
+              let group =  {
                 type: 'group',
-                children: [
-                  {
-                    type: 'path',
-                    z2: 1000,
-                    shape: {
-                      pathData: ICONS_WEATHER[api.value(1)],
-                      x: -11,
-                      y: -10,
-                      width: 25,
-                      height: 25
-                    },
-                    position: [cellPoint[0], cellPoint[1]],
-                  },
-                  {
-                    type: 'rect',
-                    z2: 0,
-                    shape: {
-                      x: -cellWidth / 2,
-                      y: -cellHeight / 2,
-                      width: cellWidth,
-                      height: cellHeight,
-                    },
-                    position: [cellPoint[0], cellPoint[1]],
-                    style: {
-                      fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
-                      stroke: 'black'
-                    }
-                  }
-                ]
+                children: []
               };
+            
+              group.children.push({
+                type: 'rect',
+                z2: 0,
+                shape: {
+                  x: -cellWidth / 2,
+                  y: -cellHeight / 2,
+                  width: cellWidth,
+                  height: cellHeight,
+                },
+                position: [cellPoint[0], cellPoint[1]],
+                style: {
+                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                  stroke: 'black'
+                }
+              });
+              group.children = group.children.concat(this.weatherService.getPicto(api.value(1), cellPoint));
+              return group;
             }
-            option.legend.data.push(serieComplete.name)
+            option.legend.data.push(serieComplete.name);
             option.series.push(serieComplete);
           })
 
@@ -342,7 +295,29 @@ export class DailyManagerService {
             let cellWidth = params.coordSys.cellWidth;
             let cellHeight = params.coordSys.cellHeight;
             let value = api.value(1);
-            return {
+
+            let group = {
+              type: 'group',
+              children: []
+            };
+
+            group.children.push({
+              type: 'rect',
+              z2: 0,
+              shape: {
+                x: -cellWidth / 2,
+                y: -cellHeight / 2,
+                width: cellWidth,
+                height: cellHeight,
+              },
+              position: [cellPoint[0], cellPoint[1]],
+              style: {
+                fill: this.graphGlobal.getColorCalendarByValue(api.value(0), api.value(2)),
+                stroke: 'black'
+              }
+            });
+            group.children = group.children.concat(this.astroService.getPicto(this.getMoonIconByPhaseName(api.value(1)), cellPoint));
+            /*             return {
               type: 'group',
               children: [
                 {
@@ -360,23 +335,10 @@ export class DailyManagerService {
                   },
                   position: [cellPoint[0], cellPoint[1]],
                 },
-                {
-                  type: 'rect',
-                  z2: 0,
-                  shape: {
-                    x: -cellWidth / 2,
-                    y: -cellHeight / 2,
-                    width: cellWidth,
-                    height: cellHeight,
-                  },
-                  position: [cellPoint[0], cellPoint[1]],
-                  style: {
-                    fill: this.graphGlobal.getColorCalendarByValue(api.value(0), api.value(2)),
-                    stroke: 'black'
-                  }
-                }
+
               ]
-            };
+            }; */
+            return group;
           }
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.range = range;
@@ -610,7 +572,7 @@ export class DailyManagerService {
         if (rangeChange) {
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            serieComplete.symbol = ICONS_WEATHER.rain,
+            serieComplete.symbol = WEATHER.rain,
               serieComplete.itemStyle = {
                 normal: {
                   color: '#70A8B2'
@@ -633,7 +595,7 @@ export class DailyManagerService {
           }
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete) => {
             option.legend.data.push(serieComplete.name);
-            serieComplete.symbol = ICONS_WEATHER.rain;
+            serieComplete.symbol = WEATHER.rain;
               serieComplete.itemStyle = {
                 normal: {
                   color: '#70A8B2'
@@ -1018,39 +980,33 @@ export class DailyManagerService {
 
   }
 
-  /**
-   *
-   *
-   * @param {string} phaseName
-   * @returns {string}
-   * @memberof DailyManagerService
-   */
+
   getMoonIconByPhaseName(phaseName: string): string {
     switch(phaseName) {
       case 'Pleine lune':
       case 'Full moon':
-        return ICONS_ASTRO.FULL_MOON;
+        return 'full_moon'
       case 'Nouvelle lune':
       case 'New moon':
-        return ICONS_ASTRO.NEW_MOON;
+        return 'new_moon';
       case 'Last quarter':
       case 'Dernier quartier':
-        return ICONS_ASTRO.LAST_QUARTER;
+        return 'last_quarter';
       case 'First Quarter':
       case 'Premier quartier':
-        return ICONS_ASTRO.FIRST_QUARTER;
+        return 'first_quarter';
       case 'Waxing gibbous':
       case 'Gibbeuse croissante':
-        return ICONS_ASTRO.WAXING_GIBBOUS;
+        return 'wawing_gibbous';
       case 'Waning gibbous':
       case 'Gibbeuse décroissante':
-        return ICONS_ASTRO.WANING_GIBBOUS;
+        return 'waning_gibbous';
       case 'Waning crescent':
       case 'Dernier croissant':
-        return ICONS_ASTRO.WANING_CRESCENT;
+        return 'last_crescent';
       case 'Waxing crescent':
       case 'Premier croissant':
-        return ICONS_ASTRO.WAXING_CRESCENT;
+        return 'first_crescent';
       default:
         return null;
     }
