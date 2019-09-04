@@ -464,7 +464,6 @@ export class GraphGlobal {
    * @memberof GraphGlobal
    */
   getMoonStatus(status: number): string {
-    console.log(this.userService.getJwtReponse().country);
     if (this.userService.getJwtReponse().country === 'FR') {
       if (status === 1) {
         return 'Ascendant';
@@ -523,6 +522,9 @@ export class GraphGlobal {
         } else {
           name = this.weightIncome.gain;
         }
+        break;
+      case HRIN:
+        name = this.humidity.name;
         break;
       case WEIGHT_MAX:
         name = this.weight.name;
