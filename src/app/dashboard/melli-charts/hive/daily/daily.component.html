@@ -20,13 +20,13 @@ limitations under the License. -->
  -->
       </ul>
     </div>
+    <div id="calendar-device" class="chart calendar"></div>
     <div>
       <p style="text-align: center;">{{ currentDeviceTextPeriodCalendar }}{{ dailyManager.meanPeriodDevice.value }}
         {{ dailyManager.meanPeriodDevice.unit }}</p>
       <p style="text-align: center;">{{ currentDeviceTextSevenDay }}{{ dailyManager.meanDeviceSevenDay.value }}
         {{ dailyManager.meanDeviceSevenDay.unit }}</p>
     </div>
-    <div id="calendar-device" class="chart calendar"></div>
   </div>
   <div id="daily-env">
     <div id="sidebar-tools-daily-env">
@@ -57,6 +57,7 @@ limitations under the License. -->
  -->
       </ul>
     </div>
+    <div id="calendar-other" class="chart calendar"></div>
     <div class="mean-grup">
       <ng-container *ngIf="displayMeanOtherCalendarIf()">
         <p style="text-align: center;">{{ currentOtherTextPeriodCalendar }}{{ dailyManager.meanPeriodOther.value }}
@@ -64,8 +65,6 @@ limitations under the License. -->
         <p style="text-align: center;">{{ currentOtherTextSevenDay }}{{ dailyManager.meanOtherSevenDay.value }}
           {{ dailyManager.meanOtherSevenDay.unit }}</p>
       </ng-container>
-
     </div>
-    <div id="calendar-other" class="chart calendar"></div>
   </div>
 </div>

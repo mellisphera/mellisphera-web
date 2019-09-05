@@ -52,7 +52,6 @@ export class HiveComponent implements OnInit {
 
   
    setRangeChart() {
-
     this.setHeightCalendar(() => {
       this.dailyComponent.loadDailyDeviceData(true);
       this.dailyComponent.loadDailyOtherData(true);
@@ -70,13 +69,13 @@ export class HiveComponent implements OnInit {
   }
 
   setHeightCalendar(loadCalendar: Function) {
-/*     for(let i = 0; i < this.dailyComponent.calendarElements.length; i++ ) {
+    for(let i = 0; i < this.dailyComponent.calendarElements.length; i++ ) {
       this.render.setStyle(this.dailyComponent.calendarElements[i], 'height', this.getHeightCalendar() + 'px');
     }
     this.dailyComponent.melliHive.getDailyDeviceChartInstance().dispose();
     this.dailyComponent.melliHive.getDailyEnvChartInstance().dispose();
     this.dailyComponent.melliHive.getDailyOtherChartInstance().dispose();
-    this.dailyComponent.initCalendar(); */
+    this.dailyComponent.initCalendar();
     loadCalendar();
   }
 

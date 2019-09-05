@@ -172,7 +172,7 @@ export class DailyManagerService {
       case 'WEATHER':
         return new Array(value.iconDay, value.maxTempDay, value.minTempDay, value.maxHumidityDay, value.minHumidityDay);
       case 'RAIN':
-        return new Array(this.unitService.convertMilimetreToPouce(value.rainDay, this.unitService.getUserPref().unitSystem, true), value.rainSun, value.snowDay, value.snowSun)
+        return new Array(this.unitService.convertMilimetreToPouce(value.rainDay, this.unitService.getUserPref().unitSystem, true), value.snowDay, value.snowSun)
       case 'ALERT':
         return value;
       case 'TEMP_EXT_WEATHER':
