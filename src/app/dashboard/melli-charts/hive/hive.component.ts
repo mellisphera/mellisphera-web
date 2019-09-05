@@ -65,7 +65,7 @@ export class HiveComponent implements OnInit {
 
    getHeightCalendar(): number {
      console.log(this.melliDate.getRangeForReqest()[1].getMonth() - this.melliDate.getRangeForReqest()[0].getMonth());
-    return 230 * (this.melliDate.getRangeForReqest()[1].getMonth() - this.melliDate.getRangeForReqest()[0].getMonth());
+    return 250 * (this.melliDate.getRangeForReqest()[1].getMonth() - this.melliDate.getRangeForReqest()[0].getMonth());
   }
 
   setHeightCalendar(loadCalendar: Function) {

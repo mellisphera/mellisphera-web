@@ -16,7 +16,7 @@ export const CALENDAR = {
         left: 'center',
         cellSize: [40 , 40],
         range: [new Date().getFullYear() + '-' +( new Date().getMonth() - 1) + '-' + '01', new Date()],
-        orient: 'vertical',
+        orient: 'horizontal',
         splitLine: {
             show: true,
             lineStyle: {
@@ -26,9 +26,9 @@ export const CALENDAR = {
             }
         },
         dayLabel: {
-            margin: 20,
+            margin: 10,
             nameMap: [],
-            position: 'start',
+            position: 'end',
             firstDay: 1, // start on Monday
         },
         monthLabel: {
@@ -62,7 +62,7 @@ export const CALENDAR = {
             show: true,
             lineStyle: {
                 color: '#000',
-                width: 4,
+                width: 2,
                 type: 'solid'
             }
         },

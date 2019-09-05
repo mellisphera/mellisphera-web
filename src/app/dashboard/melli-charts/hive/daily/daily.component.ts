@@ -82,6 +82,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/text_min sensor.png' },
       { name: 'TEMP_EXT_WEATHER_MAX', id: 'TEMP_EXT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_max.png' },
       { name: 'TEMP_EXT_WEATHER_MIN', id: 'TEMP_INT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_min.png' },
+      { name: 'HEXT_WEATHER_MAX', id: 'HEXT_WEATHER_MAX', unit: 'P', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/hext_max.png'},
+      { name: 'HEXT_WEATHER_MIN', id: 'HEXT_WEATHER_MIN', unit: 'P', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/hext_min.png'},
       { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/wind.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
       { name: 'MOON', id: 'MOON', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
@@ -271,6 +273,14 @@ export class DailyComponent implements OnInit, AfterViewInit {
         break;
       case 'WIND':
         this.dailyManager.getChartWindMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+          this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        break;
+      case 'HEXT_WEATHER_MAX':
+          this.dailyManager.getHextMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+          this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+          break;
+      case 'HEXT_WEATHER_MIN':
+          this.dailyManager.getHextMinWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       default:

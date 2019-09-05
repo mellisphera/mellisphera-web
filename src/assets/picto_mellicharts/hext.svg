@@ -16,15 +16,38 @@
    viewBox="0 0 73.7 73.7"
    style="enable-background:new 0 0 73.7 73.7;"
    xml:space="preserve"
-   sodipodi:docname="2_hrmax.svg"
+   sodipodi:docname="hext.svg"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   inkscape:export-filename="/Users/lorenzo/Documents/Travail/12-PRESTATIONS/Maru/icons/measurements/hive/2_hrmax.png"
+   inkscape:export-filename="/Users/lorenzo/Desktop/newIcons/hext.png"
    inkscape:export-xdpi="150"
    inkscape:export-ydpi="150"><metadata
      id="metadata993"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
-     id="defs991" /><sodipodi:namedview
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
+     id="defs991"><inkscape:path-effect
+       only_selected="false"
+       apply_with_weight="true"
+       apply_no_weight="true"
+       helper_size="0"
+       steps="2"
+       weight="33.333333"
+       is_visible="true"
+       id="path-effect1805"
+       effect="bspline" /><inkscape:path-effect
+       end_linecap_type="zerowidth"
+       miter_limit="4"
+       linejoin_type="extrp_arc"
+       start_linecap_type="zerowidth"
+       interpolator_beta="0.2"
+       interpolator_type="CubicBezierJohan"
+       sort_points="true"
+       offset_points="0,0.5"
+       is_visible="true"
+       id="path-effect1801"
+       effect="powerstroke" /><inkscape:path-effect
+       is_visible="true"
+       id="path-effect1799"
+       effect="spiro" /></defs><sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1"
@@ -33,12 +56,12 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1288"
-     inkscape:window-height="779"
+     inkscape:window-width="1907"
+     inkscape:window-height="778"
      id="namedview989"
      showgrid="false"
-     inkscape:zoom="3.0421812"
-     inkscape:cx="32.519193"
+     inkscape:zoom="7.3796661"
+     inkscape:cx="4.3789504"
      inkscape:cy="37.13487"
      inkscape:window-x="0"
      inkscape:window-y="0"
@@ -74,23 +97,23 @@
      d="m 67.105513,51.422671 h -6.994872 c -0.476923,0 -0.794871,0.317948 -0.794871,0.794871 0,0.476923 0.317948,0.794872 0.794871,0.794872 h 6.994872 c 0.476923,0 0.794872,-0.317949 0.794872,-0.794872 0,-0.476923 -0.317949,-0.794871 -0.794872,-0.794871 z"
      class="st0" /><text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:13.33333302px;line-height:1.25;font-family:Poppins;-inkscape-font-specification:'Poppins, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#4f4f51;fill-opacity:1;stroke:none"
-     x="54.934811"
-     y="14.508736"
-     id="text967"><tspan
-       sodipodi:role="line"
-       id="tspan965"
-       x="54.934811"
-       y="14.508736">EXT</tspan></text>
-<text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:24.96105385px;line-height:1.25;font-family:Poppins;-inkscape-font-specification:'Poppins, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#4f4f51;fill-opacity:1;stroke:none;stroke-width:1.87207901"
+     style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:24.96105385px;line-height:1.25;font-family:Poppins;-inkscape-font-specification:'Poppins, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.87207901;"
      x="30.189106"
      y="54.578037"
-     id="text978"><tspan
+     id="text978"
+     inkscape:export-xdpi="150"
+     inkscape:export-ydpi="150"><tspan
        sodipodi:role="line"
        id="tspan976"
        x="30.189106"
        y="54.578037"
-       style="stroke-width:1.87207901">%</tspan></text>
-</svg>
+       style="stroke-width:1.87207901;fill:#ffffff;">%</tspan></text>
+<style
+     id="style1747"
+     type="text/css">
+	.st0{fill:#4F4F51;}
+</style><style
+     type="text/css"
+     id="style966-9">
+	.st0{fill:#4F4F51;}
+</style></svg>

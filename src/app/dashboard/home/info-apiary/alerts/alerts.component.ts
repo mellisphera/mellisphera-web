@@ -91,11 +91,11 @@ export class AlertsComponent implements OnInit {
     this.option.title.text = this.graphGlobal.getTitle('AlertsApiary') + ' ' + this.rucherService.rucher.name;
     this.option.calendar.orient = 'horizontal';
     this.option.calendar.top = 70;
-    this.option.calendar.left = '15%';
+    this.option.calendar.left = 'center';
     this.option.calendar.bottom = '3%';
     this.option.calendar.height = '45%';
     this.option.calendar.width = '77%';
-    this.option.calendar.cellSize = ['20', '20'];
+    this.option.calendar.cellSize = [20, 20];
     /*        top: 70,
         left: '15%',
         bottom: '3%',

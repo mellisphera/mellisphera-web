@@ -221,21 +221,68 @@ export class WeatherService {
 
 
   getPicto(nomPicto: string, cellPoint: Array<number>): Array<any> {
-    try {
-      return WEATHER[nomPicto].map(_path => {
-        return {
-          type: 'path',
-          scale: _path.scale,
-          shape: {
-            pathData: _path.path,
-          },
-          position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
-          style: _path.style
-        };
-      })
+    return WEATHER[nomPicto].map(_path => {
+      return {
+        type: 'path',
+        scale: _path.scale,
+        shape: {
+          pathData: _path.path,
+        },
+        position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
+        style: _path.style
+      };
+    });
+  }
 
-    }
-    catch{
+
+  /**
+   *
+   *
+   * @param {string} enLabel
+   * @param {string} lang
+   * @returns {string}
+   * @memberof WeatherService
+   */
+  getTranslateDescriptionMainDay(enLabel: string, lang: string): string {
+    if (lang !== 'FR') {
+      return enLabel;
+    } else {
+      switch (enLabel) {
+        case 'Clear':
+          return 'Ensoleillé';
+        case 'Few clouds':
+          return 'Eclaircies';
+        case 'Scattered clouds':
+          return 'Couvert';
+        case 'Shower rain':
+          return 'Averses';
+        case 'Broken clouds':
+          return 'Très nuageux';
+        case 'Shower':
+          return 'Averses';
+        case 'Rain':
+          return 'Pluie';
+        case 'Thunderstorm':
+          return 'Orages';
+        case 'Snow':
+          return 'Neige';
+        case 'Mist/Gust':
+          return 'Brouillard';
+        case 'Clouds':
+          return 'Nuageux';
+        default:
+          return '';
+      }
     }
   }
+
+  /*Clear sky : Ensoleillé
+Few clouds : Eclaircies
+Scattered clouds : Couvert
+Broken clouds : Très nuageux
+Shower rain : Averses
+Rain : Pluie
+Thunderstorm : Orages
+Snow : Neige
+Mist/Gust : Brouillard*/
 }

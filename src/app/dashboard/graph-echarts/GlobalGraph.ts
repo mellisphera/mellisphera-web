@@ -33,6 +33,7 @@ import { MyDate } from '../../class/MyDate';
 import { BASE_OPTIONS } from '../melli-charts/charts/BASE_OPTIONS';
 import { Tools } from '../melli-charts/hive/service/daily-manager.service';
 import { CALENDAR } from '../melli-charts/charts/CALENDAR';
+import { WeatherService } from '../service/api/weather.service';
 
 @Injectable({
   providedIn: 'root'
@@ -95,6 +96,7 @@ export class GraphGlobal {
   constructor(private userConfig: UserParamsService,
     private unitService: UnitService,
     public userService: UserloggedService,
+    private weatherService: WeatherService,
     private userPref: UserParamsService) {
     this.weight = {
       name: '',
@@ -251,7 +253,7 @@ export class GraphGlobal {
       // EN
     } else {
       this.weight.name = 'Weight (Kg)';
-      this.humidity.name = 'Humidity (%)'
+      this.humidity.name = 'Humidity (%)';
       this.wind.name = 'Wind';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Loss';
@@ -261,7 +263,6 @@ export class GraphGlobal {
       this.snow.name = 'Snow';
       this.brood.name = 'Brood (%)';
     }
-    this.humidity.name = 'Humidity %';
     this.rain.unitT = 'mm';
     this.humidity.min = 0;
     this.snow.unitT = 'mm';
@@ -351,10 +352,10 @@ export class GraphGlobal {
   getMonth(): String[] {
     // If he is French
     if (this.userService.getJwtReponse().country === "FR") {
-      return (['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Jui', 'Aout', 'Sep', 'Oct', 'Nov', 'Dec']);
+      return ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Jui', 'Aout', 'Sep', 'Oct', 'Nov', 'Dec'];
       // EN
     } else {
-      return (['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']);
+      return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     }
   }
 
@@ -530,12 +531,14 @@ export class GraphGlobal {
         name = this.weight.name;
         break;
       case TEMP_INT_MAX:
-      case TEMP_INT_MIN:
-      case TEMP_EXT_MIN:
       case TEMP_EXT_MAX:
       case TEMP_EXT_WEATHER_MAX:
+        name = 'Tmax';
+        break;
+      case TEMP_INT_MIN:
+      case TEMP_EXT_MIN:
       case TEMP_EXT_WEATHER_MIN:
-        name = this.temp.name;
+        name = 'Tmin';
         break;
       case WIND:
         name = this.wind.name;
@@ -562,28 +565,55 @@ export class GraphGlobal {
         tooltip.formatter = (params) => {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
-              name: 'TempMax',
+              name: '',
+              value: this.weatherService.getTranslateDescriptionMainDay(params.data[6], this.userService.getCountry()),
+              unit: ''
+            },
+            {
+              name: 'Tmax',
               value: this.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[2], this.userPref.getUserPref().unitSystem, true)),
               unit: this.getUnitByType(type.unit)
             },
             {
-              name: 'TempMin',
+              name: 'Tmin',
               value: this.getNumberFormat(this.unitService.convertTempFromUsePref(params.data[3], this.userPref.getUserPref().unitSystem, true)),
               unit: this.getUnitByType(type.unit)
             },
             {
-              name: 'HumidityMax',
+              name: 'HRmax',
               value: this.getNumberFormat(params.data[4]),
               unit: this.getUnitByType('P')
             },
             {
-              name: 'HumidityMin',
+              name: 'HRmin',
               value: this.getNumberFormat(params.data[5]),
               unit: this.getUnitByType('P')
-            }
+            },
           ));
         };
         break;
+      case 'HEXT_WEATHER_MAX':
+          tooltip.formatter = (params) => {
+            return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+              {
+                name: 'HRmax',
+                value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+                unit: this.getUnitByType(type.unit)
+              },
+            ));
+          }
+        break;
+        case 'HEXT_WEATHER_MIN':
+            tooltip.formatter = (params) => {
+              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+                {
+                  name: 'HRmin',
+                  value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+                  unit: this.getUnitByType(type.unit)
+                },
+              ));
+            }
+          break;
       case 'RAIN':
         tooltip.formatter = (params) => {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
@@ -698,20 +728,13 @@ export class GraphGlobal {
           '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'];
         break;
       case 'HRIN':
-/*         visualMap.type = 'piecewise',
-          visualMap.pieces = [
-            { min: 20, max: 50 },
-            { min: 50, max: 75 },
-            { min: 75, max: 87 },
-            { min: 87, max: 100 }];
-        // visualMap.top = 15;
-        visualMap.inRange.color = ['#97A6C5', '#6987C5', '#3C68C5', '#05489B']; */
-
+      case 'HEXT_WEATHER_MAX':
+      case 'HEXT_WEATHER_MIN':
         visualMap.type = 'continuous';
         //visualMap.top = 15;
         visualMap.min = 20;
         visualMap.max = 100;
-        visualMap.inRange.color = ['#8FACF7', '#6987C5', '#3563DC', '#002994'];
+        visualMap.inRange.color = ['#DBDEEA', '#6987C5', '#3563DC', '#002994'];
         break;
       case 'BROOD':
         visualMap.type = 'continuous';
@@ -771,12 +794,12 @@ export class GraphGlobal {
 
 
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
-    let templateHeaderTooltip = '{*} <B>{D}</B> </br>';
-    let templateValue = '{n}: <B>{v} {u}</B>';
-    let tooltipGlobal;
+    const templateHeaderTooltip = '{*} <B>{D}</B> </br>';
+    const templateValue = '{n}: <B>{v} {u}</B>';
+    let tooltipGlobal: string;
     tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
-      if (/picto/g.test(_serie.name)) {
+      if (/picto/g.test(_serie.name) || _serie.name === '') {
         return templateValue.replace(/:/g, '').replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit)
       } else {
         return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);

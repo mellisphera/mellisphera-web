@@ -168,9 +168,10 @@ export class DailyManagerService {
     } else {
       value = _value;
     }
+    console.log(name);
     switch (name) {
       case 'WEATHER':
-        return new Array(value.iconDay, value.maxTempDay, value.minTempDay, value.maxHumidityDay, value.minHumidityDay);
+        return new Array(value.iconDay, value.maxTempDay, value.minTempDay, value.maxHumidityDay, value.minHumidityDay, value.mainDay);
       case 'RAIN':
         return new Array(this.unitService.convertMilimetreToPouce(value.rainDay, this.unitService.getUserPref().unitSystem, true), value.snowDay, value.snowSun)
       case 'ALERT':
@@ -483,6 +484,74 @@ export class DailyManagerService {
           let serie = Object.assign({}, SERIES.heatmap);
           serie.name = type.name;
           serie.data = _temp.map(_data => new Array(_data.date, _data.value.maxTempDay));
+          option.series.push(serie);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+          option.calendar.range = range;
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+        }
+        this.setMeanData(option.series, true, type);
+        chartInstance.setOption(option, true);
+        chartInstance.hideLoading();
+        this.baseOptionExt = option;
+      }
+    );
+  }
+
+  getHextMaxWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.weatherService.getAllTempWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
+      _temp => {
+        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+          _elt.value.maxTempDay = this.unitService.convertTempFromUsePref(_elt.value.maxHumidityDay, this.unitService.getUserPref().unitSystem);
+          return _elt;
+        });
+        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
+        let option = Object.assign({}, this.baseOptionExt);
+        if (rangeChange) {
+          option.calendar.range = range;
+          option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.maxHumidityDay));
+        } else {
+          if (this.existSeries(option.series, type.name)) {
+            option.series = new Array();
+          }
+          let serie = Object.assign({}, SERIES.heatmap);
+          serie.name = type.name;
+          serie.data = _temp.map(_data => new Array(_data.date, _data.value.maxHumidityDay));
+          option.series.push(serie);
+          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+          option.calendar.range = range;
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+        }
+        this.setMeanData(option.series, true, type);
+        chartInstance.setOption(option, true);
+        chartInstance.hideLoading();
+        this.baseOptionExt = option;
+      }
+    );
+  }
+
+  getHextMinWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.weatherService.getAllTempWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
+      _temp => {
+        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+          _elt.value.maxTempDay = this.unitService.convertTempFromUsePref(_elt.value.minHumidityDay, this.unitService.getUserPref().unitSystem);
+          return _elt;
+        });
+        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
+        let option = Object.assign({}, this.baseOptionExt);
+        if (rangeChange) {
+          option.calendar.range = range;
+          option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.minHumidityDay));
+        } else {
+          if (this.existSeries(option.series, type.name)) {
+            option.series = new Array();
+          }
+          let serie = Object.assign({}, SERIES.heatmap);
+          serie.name = type.name;
+          serie.data = _temp.map(_data => new Array(_data.date, _data.value.minHumidityDay));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
