@@ -589,6 +589,16 @@ export class GraphGlobal {
               value: this.getNumberFormat(params.data[5]),
               unit: this.getUnitByType('P')
             },
+/*             {
+              name: 'PressMax',
+              value: this.getNumberFormat(params.data[7]),
+              unit: this.getUnitByType('P')
+            },
+            {
+              name: 'PressMin',
+              value: this.getNumberFormat(params.data[8]),  
+              unit: this.getUnitByType('P')
+            }, */
           ));
         };
         break;
@@ -655,7 +665,7 @@ export class GraphGlobal {
             if (_singleData.sentence) {
               type = 'Inspection';
               img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/hiveObs.svg' : './assets/picto_mellicharts/hiveAct.svg'))
+              img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/tool_jhook.png' : './assets/picto_mellicharts/notif.png'))
             } else {
               img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
             }

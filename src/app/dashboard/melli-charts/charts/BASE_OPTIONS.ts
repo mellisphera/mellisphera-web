@@ -103,8 +103,11 @@ export const BASE_OPTIONS = {
     baseOptionDailyMelliCharts: {
         // visualMap: {},
         legend: {
-            top: 20
         },
+/*         title:{
+            text: 'toto',
+            left: 'center'
+        }, */
         axisPointer: {
             link: { xAxisIndex: 'all' }
         },
@@ -116,7 +119,8 @@ export const BASE_OPTIONS = {
                 saveAsImage: {}
             }
         }, */
-        calendar: CALENDAR.calendarMelliChart
+        calendar: CALENDAR.calendarMelliChart,
+        graphic:[]
     },
 
     yAxis: {
@@ -138,10 +142,9 @@ export const BASE_OPTIONS = {
     legend: {
         orient: 'horizontal',
         data: [],
-        top: 20,
+        top: 150,
         selectedMode: 'multiple'
     },
-
     xAxis: {
         type: 'time',
         boundaryGap: false,
@@ -230,7 +233,47 @@ export const BASE_OPTIONS = {
         ],
         xAxis: [],
         series: []
-    }
+    },
 
+    graphic:
+        {
+            type: 'group',
+            left: 'center',
+            top: 30,
+            children: [
+                {
+                    type: 'rect',
+                    z: 100,
+                    left: 'center',
+                    cursor: 'unset',
+                    top: 'middle',
+                    shape: {
+                        width: 300,
+                        height: 90
+                    },
+                    style: {
+                        fill: '#fff',
+                        stroke: '#555',
+                        lineWidth: 2,
+                        shadowBlur: 8,
+                        shadowOffsetX: 3,
+                        shadowOffsetY: 3,
+                        shadowColor: 'rgba(0,0,0,0.3)'
+                    }
+                },
+                {
+                    type: 'text',
+                    z: 100,
+                    cursor: 'unset',
+                    left: 'center',
+                    top: 'middle',
+                    style: {
+                        fill: '#333',
+                        text: '',
+                        font: '14px poppins'
+                    }
+                },
+            ]
+        }
 
 }

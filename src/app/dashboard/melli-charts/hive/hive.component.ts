@@ -46,17 +46,19 @@ export class HiveComponent implements OnInit {
     this.dailyComponent.loadDailyDeviceData(false);
     this.dailyComponent.loadDailyOtherData(false);
     this.dailyComponent.loadDailyEnvData(false);
-    console.log(this.dailyComponent.melliHive.getDailyDeviceChartInstance().getHeight());
     // this.hourlyComponent.loadHourlyData(true, '', false);
   }
 
   
    setRangeChart() {
-    this.setHeightCalendar(() => {
+    this.dailyComponent.loadDailyDeviceData(true);
+    this.dailyComponent.loadDailyOtherData(true);
+    this.dailyComponent.loadDailyEnvData(true);
+/*     this.setHeightCalendar(() => {
       this.dailyComponent.loadDailyDeviceData(true);
       this.dailyComponent.loadDailyOtherData(true);
       this.dailyComponent.loadDailyEnvData(true);
-    });
+    }); */
 
 
     
@@ -64,7 +66,6 @@ export class HiveComponent implements OnInit {
    }
 
    getHeightCalendar(): number {
-     console.log(this.melliDate.getRangeForReqest()[1].getMonth() - this.melliDate.getRangeForReqest()[0].getMonth());
     return 250 * (this.melliDate.getRangeForReqest()[1].getMonth() - this.melliDate.getRangeForReqest()[0].getMonth());
   }
 

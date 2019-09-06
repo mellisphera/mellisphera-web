@@ -18,16 +18,17 @@ import * as echarts from 'echarts';
 import { UserParamsService } from '../../../preference-config/service/user-params.service';
 import { WeatherService } from '../../../service/api/weather.service';
 import { UserloggedService } from '../../../../userlogged.service';
+import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 
 const TITLE_PERIODE_CALENDAR = {
-  TEXT_SUM_FR: 'Somme sur la période:',
+  TEXT_SUM_FR: 'Somme sur la période: ',
   TEXT_SUM_EN: 'Sum over the period: ',
   TEXT_MEAN_FR: 'Moyenne sur la période: ',
   TEXT_MEAN_EN: 'Period average: '
 };
 
 const TITLE_LAST_DAY = {
-  TEXT_SUM_FR: 'Somme sur les 7 derniers jours:',
+  TEXT_SUM_FR: 'Somme sur les 7 derniers jours: ',
   TEXT_SUM_EN: 'Sum last 7 days: ',
   TEXT_MEAN_FR: 'Moyenne sur les 7 dernier jours: ',
   TEXT_MEAN_EN: 'Mean last 7 days: '
@@ -114,6 +115,28 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.calendarElements = document.getElementsByClassName('calendar');
+    this.dailyManager.setMeanAnnotation = (_type: Tools) => {
+      this.setMeanTextHtml();
+      if (_type.origin === DEVICE) {
+        const annotationDevice: string = [
+          this.currentDeviceTextPeriodCalendar + this.dailyManager.meanPeriodDevice.value + ' ' + this.dailyManager.meanPeriodDevice.unit,
+          this.currentDeviceTextSevenDay + this.dailyManager.meanDeviceSevenDay.value + ' ' + this.dailyManager.meanDeviceSevenDay.unit
+        ].join('\n');
+
+        this.dailyManager.baseOptionsInt.graphic[0].children[1].style.text = annotationDevice;
+        this.melliHive.getDailyDeviceChartInstance().setOption(this.dailyManager.baseOptionsInt);
+      } else if (_type.origin === OTHER) {
+        const annotationOther: string = [
+          this.currentOtherTextPeriodCalendar + this.dailyManager.meanPeriodOther.value + ' ' +  this.dailyManager.meanPeriodOther.unit,
+          this.currentOtherTextSevenDay + this.dailyManager.meanOtherSevenDay.value + ' ' + this.dailyManager.meanOtherSevenDay.unit
+        ].join('\n');
+        this.dailyManager.baseOptionExt.graphic[0].children[1].style.text = annotationOther;
+        this.melliHive.getDailyOtherChartInstance().setOption(this.dailyManager.baseOptionExt);
+      }
+    };
+
+
+
     this.initCalendar();
   }
 
@@ -132,33 +155,35 @@ export class DailyComponent implements OnInit, AfterViewInit {
    * @memberof DailyComponent
    */
   setMeanTextHtml(): void {
-    console.log(this.userService.getCountry() === 'FR');
     if (this.userService.getCountry() === 'FR') {
       if (this.currentTypeDailyOther.name === 'RAIN') {
         this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_FR;
         this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_FR;
+      } else {
+        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_FR;
+        this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_FR;
       }
       if (this.currentTypeDailyDevice.name === 'WINCOME') {
         this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_FR;
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_FR;
       } else {
         this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_FR;
-        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_FR;
-        this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_FR;
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_FR;
       }
+
     } else {
       if (this.currentTypeDailyOther.name === 'RAIN') {
         this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_EN;
         this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_EN;
+      } else {
+        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_EN;
+        this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_EN;
       }
       if (this.currentTypeDailyDevice.name === 'WINCOME') {
         this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_EN;
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_EN;
       } else {
         this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_EN;
-        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_EN;
-        this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_EN;
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_EN;
       }
     }
@@ -167,7 +192,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.melliHive.getDailyOtherChartInstance().on('legendselectchanged', (params) => {
       if (params.name.indexOf('RAIN') !== -1) {
-        console.log(params);
         const origin = params.name.split(':')[0].trim();
         const serieSelected = this.dailyManager.baseOptionExt.series.filter(_serie => _serie.name === params.name)[0];
         this.dailyManager.setMeanData(serieSelected, false, this.currentTypeDailyOther);
@@ -244,8 +268,15 @@ export class DailyComponent implements OnInit, AfterViewInit {
         break;
     }
     // this.dailyManager.setOriginChartOption(this.currentTypeDailyDevice.origin);
+  }
 
-
+  cleanMeanAnnotation() {
+    const annotationOther: string = [
+      this.currentOtherTextPeriodCalendar + '',
+      this.currentOtherTextSevenDay + ''
+    ].join('\n');
+    this.dailyManager.baseOptionExt.graphic[0].children[1].style.text = annotationOther;
+    this.melliHive.getDailyOtherChartInstance().setOption(this.dailyManager.baseOptionExt);
   }
 
   loadDailyOtherData(rangeChange: boolean) {
@@ -253,11 +284,13 @@ export class DailyComponent implements OnInit, AfterViewInit {
     switch (this.currentTypeDailyOther.name) {
       case 'WEATHER':
         this.dailyManager.getChartDailyWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
-          this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
+          this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+          this.cleanMeanAnnotation();
         break;
       case 'MOON':
         this.dailyManager.getChartAstro(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+          this.cleanMeanAnnotation();
         break;
       case 'RAIN':
         this.dailyManager.getRainByApiary(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
@@ -274,6 +307,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
       case 'WIND':
         this.dailyManager.getChartWindMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+          this.cleanMeanAnnotation();
         break;
       case 'HEXT_WEATHER_MAX':
           this.dailyManager.getHextMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
@@ -301,6 +335,10 @@ export class DailyComponent implements OnInit, AfterViewInit {
         case 'RAIN':
         case 'TEMP_EXT_WEATHER_MAX':
         case 'TEMP_EXT_WEATHER_MIN':
+        case 'HEXT_WEATHER_MIN':
+        case 'HEXT_WEATHER_MAX':
+        case 'HEXT_WEATHER_MAX':
+        case 'HEXT_WEATHER_MIN':
         case 'WIND':
           return true;
         default:
@@ -371,7 +409,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
         this.loadDailyEnvData(false);
       }
     }
-    this.setMeanTextHtml();
   }
 
 

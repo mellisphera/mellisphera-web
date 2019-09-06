@@ -75,6 +75,8 @@ export class DailyManagerService {
   };
   public baseOptionExt: any;
   private optionForCurentChart: any;
+  public setMeanAnnotation: Function;
+  public setMeanSevenDayAnnotation: Function;
   private currentRange: Date[];
   constructor(
     private dailyWService: DailyRecordsWService,
@@ -105,9 +107,11 @@ export class DailyManagerService {
       unit: ''
     };
 
-    this.baseOptionsInt = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliCharts);
-    this.baseOptionEnv = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliCharts);
-    this.baseOptionExt = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliCharts);
+    this.baseOptionsInt = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliCharts));
+    this.baseOptionsInt.graphic.push(JSON.parse(JSON.stringify(BASE_OPTIONS.graphic)));
+    this.baseOptionEnv = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliCharts));
+    this.baseOptionExt = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliCharts));
+    this.baseOptionExt.graphic.push(JSON.parse(JSON.stringify(BASE_OPTIONS.graphic)));
     const dateNowLastSevenDay = new Date();
     dateNowLastSevenDay.setDate(new Date().getDate() - 8);
     this.rangeSevenDay = [
@@ -115,6 +119,9 @@ export class DailyManagerService {
       new Date()
     ];
   }
+
+
+
 
   /**
    *
@@ -139,9 +146,14 @@ export class DailyManagerService {
           _elt.value = parseInt(_elt.value.minTempDay, 10);
           return _elt;
         });
-      } else if (type.name === 'TEMP_EXT_WEATHER_MIN'){
+      } else if (type.name === 'HEXT_WEATHER_MAX'){
         return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
-          _elt.value = parseInt(_elt.value.minTempDay, 10);
+          _elt.value = parseInt(_elt.value.maxHumidityDay, 10);
+          return _elt;
+        });
+      } else if (type.name === 'HEXT_WEATHER_MIN'){
+        return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+          _elt.value = parseInt(_elt.value.minHumidityDay, 10);
           return _elt;
         });
       } else {
@@ -168,10 +180,9 @@ export class DailyManagerService {
     } else {
       value = _value;
     }
-    console.log(name);
     switch (name) {
       case 'WEATHER':
-        return new Array(value.iconDay, value.maxTempDay, value.minTempDay, value.maxHumidityDay, value.minHumidityDay, value.mainDay);
+        return new Array(value.iconDay, value.maxTempDay, value.minTempDay, value.maxHumidityDay, value.minHumidityDay, value.mainDay, value.maxPressureDay, value.minPressureDay);
       case 'RAIN':
         return new Array(this.unitService.convertMilimetreToPouce(value.rainDay, this.unitService.getUserPref().unitSystem, true), value.snowDay, value.snowSun)
       case 'ALERT':
@@ -318,27 +329,6 @@ export class DailyManagerService {
               }
             });
             group.children = group.children.concat(this.astroService.getPicto(this.getMoonIconByPhaseName(api.value(1)), cellPoint));
-            /*             return {
-              type: 'group',
-              children: [
-                {
-                  type: 'path',
-                  z2: 1000,
-                  shape: {
-                    pathData: this.getMoonIconByPhaseName(api.value(1)),
-                    x: -11,
-                    y: -11,
-                    width: 25,
-                    height: 25
-                  },
-                  style: {
-                    fill: (api.value(1) === 'Nouvelle lune' || api.value(1) === 'New moon' ) ? 'white' : 'black'
-                  },
-                  position: [cellPoint[0], cellPoint[1]],
-                },
-
-              ]
-            }; */
             return group;
           }
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
@@ -365,43 +355,11 @@ export class DailyManagerService {
         if (rangeChange) {
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            serieComplete.symbol = GLOBAL_ICONS.WINCOME;
-            serieComplete.itemStyle = {
-              normal: {
-                color: '#00FE0C'
-              }
-            };
-            serieComplete.symbolSize = (val: Array<any>) => {
-              if (val[1] >= 0) {
-                if (this.unitService.getUserPref().unitSystem === 'METRIC') {
-                  return (0.5 * Math.sqrt((1000 * val[1])));
-                } else {
-                  return (0.5 * Math.sqrt((1000 * val[1] * 0.45)));
-                }
-              }
-              return 0;
-            }
-            option.series[index] = serieComplete;
+            option.series[index].data = serieComplete.data;
           });
           this.getSerieByData(_daliW.weightIncomeLow, 'loss', SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            serieComplete.symbol = GLOBAL_ICONS.WINCOME;
-            serieComplete.itemStyle = {
-              normal: {
-                color: '#FE0000'
-              }
-            };
-            serieComplete.symbolSize = (val: Array<any>) => {
-              if (val[1] < 0) {
-                if (this.unitService.getUserPref().unitSystem === 'METRIC') {
-                  return (0.5 * Math.sqrt(Math.abs(1000 * val[1])));
-                } else {
-                  return (0.5 * Math.sqrt(Math.abs(1000 * val[1] * 0.45)));
-                }
-              }
-              return 0;
-            };
-            option.series[index] = serieComplete;
+            option.series[index].data = serieComplete.data;
           });
           option.calendar.range = range;
         } else {
@@ -412,8 +370,8 @@ export class DailyManagerService {
           option.legend.selectedMode = 'multiple';
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete) => {
             option.legend.data.push(serieComplete.name);
-            serieComplete.symbol = GLOBAL_ICONS.WINCOME;
-            serieComplete.itemStyle = {
+/*             serieComplete.symbol = GLOBAL_ICONS.WINCOME;
+ */            serieComplete.itemStyle = {
               normal: {
                 color: '#00FE0C'
               }
@@ -432,7 +390,6 @@ export class DailyManagerService {
           });
 
           this.getSerieByData(_daliW.weightIncomeLow, 'loss', SERIES.effectScatter, (serieComplete) => {
-            serieComplete.symbol = GLOBAL_ICONS.WINCOME;
             serieComplete.itemStyle = {
               normal: {
                 color: '#FE0000'
@@ -571,7 +528,7 @@ export class DailyManagerService {
     this.weatherService.getWindAllWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
-        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
+        // this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -590,7 +547,7 @@ export class DailyManagerService {
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         }
-        this.setMeanData(option.series, true, type);
+        // this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionExt = option;
@@ -641,20 +598,8 @@ export class DailyManagerService {
         if (rangeChange) {
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            serieComplete.symbol = WEATHER.rain,
-              serieComplete.itemStyle = {
-                normal: {
-                  color: '#70A8B2'
-                }
-              };
-            serieComplete.symbolSize = (val: any[]) => {
-              if (this.unitService.getUserPref().unitSystem === 'METRIC') {
-                return val[1];
-              } else {
-                return val[1] * 25.4;
-              }
-            };
-            option.series[index] = serieComplete;
+
+            option.series[index].data  = serieComplete.data;
           });
           option.calendar.range = range;
         } else {
@@ -1182,6 +1127,7 @@ export class DailyManagerService {
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     }
+    this.setMeanAnnotation(type);
   }
 
 
