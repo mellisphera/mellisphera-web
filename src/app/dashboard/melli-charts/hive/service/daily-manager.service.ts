@@ -228,6 +228,7 @@ export class DailyManagerService {
           option.series = this.removeDataAllseries(option.series);
           this.getSerieByData(_weather, type.name, SERIES.custom, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            console.log(index);
             option.series[index].name = serieComplete.name;
             option.series[index].data = serieComplete.data;
           });

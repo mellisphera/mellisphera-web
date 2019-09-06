@@ -213,7 +213,8 @@ export class ObservationService {
   }
   
   getPictoInspect(typeInspect: string, cellPoint: Array<number>) {
-    return INSPECTIONS.bkpr.map(_path => {
+    console.log(typeInspect);
+    return INSPECTIONS[typeInspect].map(_path => {
       return  {
           type: 'path',
           scale: _path.scale,

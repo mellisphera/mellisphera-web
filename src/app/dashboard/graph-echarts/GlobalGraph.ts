@@ -665,7 +665,8 @@ export class GraphGlobal {
             if (_singleData.sentence) {
               type = 'Inspection';
               img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/tool_jhook.png' : './assets/picto_mellicharts/notif.png'))
+              img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/bkpr.png' : './assets/picto_mellicharts/tool_jhook.png'));
+              console.log(_singleData);
             } else {
               img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
             }
