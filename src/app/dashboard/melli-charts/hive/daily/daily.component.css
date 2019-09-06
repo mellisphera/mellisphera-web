@@ -22,9 +22,8 @@ limitations under the License. */
     /*background-color: #333F3D;*/
 }
 #sidebar-tools-daily-other, #other-group{
-    height: 50px;
-    overflow: hidden;
-}
+/*     height: 50px;
+ */}
 #sidebar-tools-daily-other{
     color: white;
     /*background-color: #333F3D;*/

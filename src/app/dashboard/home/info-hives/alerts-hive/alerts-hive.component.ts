@@ -95,7 +95,7 @@ export class AlertsHiveComponent implements OnInit {
   }
 
   getOption() {
-    this.option = Object.assign({}, BASE_OPTIONS.baseOptionDailyMelliUx);
+    this.option = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
     this.option.title.text = this.graphGlobal.getTitle('AlertsHive');
     this.option.calendar.orient = 'horizontal';
     this.option.calendar.top = 65;
@@ -214,8 +214,8 @@ export class AlertsHiveComponent implements OnInit {
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.option);
-        option.series = new Array();
-        option.legend = Object.assign({}, BASE_OPTIONS.legend);
+        option.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
+        option.legend.top = 30;
         option.legend.selectedMode = 'multiple';
         this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
           serieComplete.renderItem = (params, api) => {

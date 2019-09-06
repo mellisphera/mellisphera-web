@@ -83,9 +83,6 @@ export const BASE_OPTIONS = {
               fontSize : 16
             }
          },
-        legend: {
-            top: 100
-        },
         axisPointer: {
             link: { xAxisIndex: 'all' }
         },
@@ -98,6 +95,7 @@ export const BASE_OPTIONS = {
                 saveAsImage: { show: false }
             }
         },
+        series: [],
         calendar: CALENDAR.calendarMelliUx
     },
     baseOptionDailyMelliCharts: {
