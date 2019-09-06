@@ -27,6 +27,10 @@ limitations under the License. */
     justify-content: space-between;
     flex-wrap: wrap;
 }
+#log-list{
+    overflow-y: scroll;
+    height: 83%;
+}
 img{
     width: 100px;
 }

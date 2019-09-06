@@ -113,10 +113,7 @@ export class GlobalStatusComponent implements OnInit, AfterViewInit {
         this.optionsSensorChart.baseOption.series[0].data.push({name: TH_R.type, value: this.getTHRSensor().length});
         this.optionsSensorChart.baseOption.series[0].data.push({name: WEIGHT.type, value: this.getWeightSensor().length});
         this.optionsUserChart.baseOption.legend.data = [T2.type, TH_R.type, WEIGHT.type];
-        console.log(this.optionsUserChart.baseOption.legend.data);
-        console.log(this.optionsSensorChart);
         this.echartsSensorInstace.setOption(this.optionsSensorChart);
-        console.log(this.echartsSensorInstace.getOption());
       }
     )
   }

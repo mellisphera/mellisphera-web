@@ -39,7 +39,7 @@ export class AdminService {
     private loadingService: LoadingService) {
       if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
         this.rangeStart = new Date();
-        this.rangeStart.setDate(this.rangeStart.getDate() - 3);
+        this.rangeStart.setDate(this.rangeStart.getDate() - 5);
         this.allUsers =  this.allSensors = this.lastConnection = [];
         this.getAllApiary();
         this.getLastConnection(this.rangeStart);
@@ -129,7 +129,9 @@ export class AdminService {
   getLastConnection(startDt: Date):void {
     this.httpClient.post<Connection[]>(CONFIG.URL + 'logs/between', startDt).subscribe(
       connection => {
-        this.lastConnection = connection;
+        this.lastConnection = connection.sort((a: Connection, b: Connection) => {
+          return -new Date(a.connectionDate).getTime() - new Date(b.connectionDate).getTime();
+        });
         console.log(this.lastConnection);
       }
     );
