@@ -233,7 +233,6 @@ export class GraphGlobal {
     this.temp.min = 0;
     this.temp.unitT = '° F';
     this.temp.max = null;
-    console.log(this.weight);
   }
 
   setMetric() {
@@ -666,7 +665,6 @@ export class GraphGlobal {
               type = 'Inspection';
               img = '<img style={S} src={I} />';
               img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/bkpr.png' : './assets/picto_mellicharts/tool_jhook.png'));
-              console.log(_singleData);
             } else {
               img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
             }
