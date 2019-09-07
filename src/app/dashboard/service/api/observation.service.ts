@@ -213,13 +213,8 @@ export class ObservationService {
   }
   
   getPictoInspect(typeInspect: string, cellPoint: Array<number>) {
-    if (typeInspect === 'ApiaryObs') {
-      typeInspect = 'HiveObs';
-    } else if (typeInspect === 'ApiaryAct') {
-      typeInspect = 'HiveAct';
-    }
     console.log(typeInspect);
-    return INSPECTIONS[typeInspect].map(_path => {
+    return INSPECTIONS.HiveAct.map(_path => {
       return  {
           type: 'path',
           scale: _path.scale,
