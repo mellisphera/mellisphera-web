@@ -159,8 +159,8 @@ export class GraphGlobal {
     //FR
     this.titresFR = [
       { 'graph': 'reserveMiel', 'titre': 'Stock de miel' },
-      { 'graph': 'DailyWeightIncomes', 'titre': 'Poids journaliers' },
-      { 'graph': 'BroodDynamics', 'titre': 'Dynamique du couvain' },
+      { 'graph': 'DailyWeightIncomes', 'titre': 'Productivité' },
+      { 'graph': 'BroodDynamics', 'titre': 'Niveau de couvain' },
       { 'graph': 'InternalRelativeHumidity', 'titre': 'Humidité interne relative (max)' },
       { 'graph': 'InternalTemperature', 'titre': 'Température interne' },
       { 'graph': 'ExternalTemperature', 'titre': 'Température externe' },
@@ -168,16 +168,16 @@ export class GraphGlobal {
       { 'graph': 'Humidity', 'titre': 'Humidité (%)' },
       { 'graph': 'loss', 'titre': 'perte' },
       { 'graph': 'Weight', 'titre': 'Poids' },
-      { 'graph': 'AlertsHive', 'titre': 'Inspections et notifications' },
-      { 'graph': 'AlertsApiary', 'titre': 'Inspections et notifications du rucher' },
+      { 'graph': 'AlertsHive', 'titre': 'Evennements' },
+      { 'graph': 'AlertsApiary', 'titre': 'Evennements du rucher' },
       { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' }
     ];
 
     // EN
     this.titresEN = [
       { 'graph': 'reserveMiel', 'titre': 'Honey Stock' },
-      { 'graph': 'DailyWeightIncomes', 'titre': 'Daily weight change' },
-      { 'graph': 'BroodDynamics', 'titre': 'Brood Dynamics' },
+      { 'graph': 'DailyWeightIncomes', 'titre': 'Productivity' },
+      { 'graph': 'BroodDynamics', 'titre': 'Brood level' },
       { 'graph': 'InternalRelativeHumidity', 'titre': 'Internal Relative Humidity (max)' },
       { 'graph': 'InternalTemperature', 'titre': 'Internal Temperature' },
       { 'graph': 'ExternalTemperature', 'titre': 'External Temperature' },
@@ -185,8 +185,8 @@ export class GraphGlobal {
       { 'graph': 'Humidity', 'titre': 'Humidity (%)' },
       { 'graph': 'loss', 'titre': 'loss' },
       { 'graph': 'Weight', 'titre': 'Weight' },
-      { 'graph': 'AlertsHive', 'titre': 'Inspections and notifications' },
-      { 'graph': 'AlertsApiary', 'titre': 'Inspections and notifications for the apiary' },
+      { 'graph': 'AlertsHive', 'titre': 'Events' },
+      { 'graph': 'AlertsApiary', 'titre': 'Events for the apiary' },
       { 'graph': 'Blooming', 'titre': 'Apiary Blooming calendar' }
     ];
   }
@@ -664,7 +664,7 @@ export class GraphGlobal {
             if (_singleData.sentence) {
               type = 'Inspection';
               img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/bkpr.png' : './assets/picto_mellicharts/tool_jhook.png'));
+              img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/hiveObs.svg' : './assets/picto_mellicharts/tool_jhook.png'));
             } else {
               img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
             }

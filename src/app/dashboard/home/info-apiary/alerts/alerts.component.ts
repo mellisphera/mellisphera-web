@@ -316,7 +316,7 @@ export class AlertsComponent implements OnInit {
         if (_singleData.sentence) {
           type = 'Inspection';
           img = '<img style={S} src={I} />';
-          img = img.replace(/{I}/g, (_singleData.type === 'HiveObs' ? './assets/picto_mellicharts/hiveObs.svg' : './assets/picto_mellicharts/hiveAct.svg'))
+          img = img.replace(/{I}/g, (_singleData.type === 'ApiaryObs' ? './assets/picto_mellicharts/hiveObs.svg' : './assets/picto_mellicharts/tool_jhook.png'));
         } else {
           img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
         }
