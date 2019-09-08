@@ -316,7 +316,7 @@ export class AlertsComponent implements OnInit {
         if (_singleData.sentence) {
           type = 'Inspection';
           img = '<img style={S} src={I} />';
-          img.replace(/{I}/g, './assets/picto_mellicharts/inspect.png');
+          img = img.replace(/{I}/g, './assets/picto_mellicharts/inspect.png');
         } else {
           img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
         }
