@@ -140,49 +140,7 @@ nav[role=admin-navigation] {
 .loading{
     cursor: wait !important;
 }
-@media screen and (max-width:1300px) {
-    #apiary-group {
-        position: relative;
-        width: 100%;
-        height: auto;
-    }
-    #content{
-        position: relative;
-        left: auto !important;
-        width: 100% !important;
-    }
-}
-@media screen and (max-width:1200px) {
-    #input-date{
-        width: 100%;
-    }
-    .nav-date{
-        /* justify-content: end; */
-        width: 63%;
-    }
 
-}@media screen and (max-width:1700px){
-    #input-date{
-        width: 100%;
-    }
-}
-@media screen and (max-width:1000px){
-    .navbar-nav {
-        display: flex !important;
-    }
-    .nav-date{
-        /* justify-content: end; */
-        width: 100%;
-    }
-    .navbar-nav{
-        justify-content: center !important;
-    }
-}
-@media screen and (max-width:500px){
-    #dropdown{
-        width: 52%;
-    }
-}
 
 .button {
     padding: 6px 12px;
@@ -230,3 +188,50 @@ nav[role=admin-navigation] {
   .navbar{
       height: 50px;
   }
+
+@media screen and (max-width:1300px) {
+    #apiary-group {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    #content{
+        position: relative;
+        left: auto !important;
+        width: 100% !important;
+    }
+}
+@media screen and (max-width:1200px) {
+    #input-date{
+        width: 100%;
+    }
+    .nav-date{
+        /* justify-content: end; */
+        width: 63%;
+    }
+    .navbar{
+        height: 100px;
+    }
+
+}@media screen and (max-width:1700px){
+    #input-date{
+        width: 100%;
+    }
+}
+@media screen and (max-width:1000px){
+    .navbar-nav {
+        display: flex !important;
+    }
+    .nav-date{
+        /* justify-content: end; */
+        width: 100%;
+    }
+    .navbar-nav{
+        justify-content: center !important;
+    }
+}
+@media screen and (max-width:500px){
+    #dropdown{
+        width: 52%;
+    }
+}
