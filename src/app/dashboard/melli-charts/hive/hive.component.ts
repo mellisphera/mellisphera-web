@@ -51,14 +51,14 @@ export class HiveComponent implements OnInit {
 
   
    setRangeChart() {
-    this.dailyComponent.loadDailyDeviceData(true);
+/*     this.dailyComponent.loadDailyDeviceData(true);
     this.dailyComponent.loadDailyOtherData(true);
-    this.dailyComponent.loadDailyEnvData(true);
-/*     this.setHeightCalendar(() => {
+    this.dailyComponent.loadDailyEnvData(true); */
+    this.setHeightCalendar(() => {
       this.dailyComponent.loadDailyDeviceData(true);
       this.dailyComponent.loadDailyOtherData(true);
       this.dailyComponent.loadDailyEnvData(true);
-    }); */
+    });
 
 
     
@@ -70,8 +70,11 @@ export class HiveComponent implements OnInit {
   }
 
   setHeightCalendar(loadCalendar: Function) {
+    const nbDay: number = (parseInt(this.melliDate.getDayDiffRangeRequest(), 10) / 7) + 3;
+    console.log(nbDay * 40);
+    const height: number = (nbDay * 40) + 150 ;
     for(let i = 0; i < this.dailyComponent.calendarElements.length; i++ ) {
-      this.render.setStyle(this.dailyComponent.calendarElements[i], 'height', this.getHeightCalendar() + 'px');
+      this.render.setStyle(this.dailyComponent.calendarElements[i], 'height', height + 'px');
     }
     this.dailyComponent.melliHive.getDailyDeviceChartInstance().dispose();
     this.dailyComponent.melliHive.getDailyEnvChartInstance().dispose();

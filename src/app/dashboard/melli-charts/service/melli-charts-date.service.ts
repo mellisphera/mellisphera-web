@@ -87,6 +87,14 @@ export class MelliChartsDateService {
     return this.rangeDateForRequest;
   }
 
+
+  getDayDiffRangeRequest() {
+    const d1 = this.rangeDateForRequest[0].getTime() / 86400000;
+    const d2 = this.rangeDateForRequest[1].getTime() / 86400000;
+    return (d2 - d1).toFixed(0);
+  }
+
+
   setRangeForRequest(_range: Date[] ) {
     const range: Date[] = [new Date(_range[0]), new Date(_range[1])];
     range[0].setHours(4);

@@ -54,8 +54,8 @@ export const CALENDAR = {
     calendarMelliChart: {
         // height: '80%',
         // width: '80%',
-        top: 200,
-        left: 'center',
+/*         top: 200,
+ */        left: 'center',
         cellSize: [40 , 40],
         range: ['2019-08-01', '2019-08-31'],
         orient: 'vertical',
@@ -97,7 +97,7 @@ export const CALENDAR = {
         type: '',
         min: 0,
         max: 10000,
-        top: 150,
+        top: 15,
         pieces: [],
         calculable: true,
         inRange: {

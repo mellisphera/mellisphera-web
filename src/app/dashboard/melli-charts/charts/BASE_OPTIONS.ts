@@ -140,7 +140,7 @@ export const BASE_OPTIONS = {
     legend: {
         orient: 'horizontal',
         data: [],
-        top: 150,
+        top: 15,
         selectedMode: 'multiple'
     },
     xAxis: {
@@ -237,7 +237,7 @@ export const BASE_OPTIONS = {
         {
             type: 'group',
             left: 'center',
-            top: 30,
+            bottom: 20,
             children: [
                 {
                     type: 'rect',
