@@ -146,12 +146,12 @@ export class DailyManagerService {
           _elt.value = parseInt(_elt.value.minTempDay, 10);
           return _elt;
         });
-      } else if (type.name === 'HEXT_WEATHER_MAX'){
+      } else if (type.name === 'HEXT_WEATHER_MAX') {
         return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
           _elt.value = parseInt(_elt.value.maxHumidityDay, 10);
           return _elt;
         });
-      } else if (type.name === 'HEXT_WEATHER_MIN'){
+      } else if (type.name === 'HEXT_WEATHER_MIN') {
         return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
           _elt.value = parseInt(_elt.value.minHumidityDay, 10);
           return _elt;
@@ -246,11 +246,11 @@ export class DailyManagerService {
               let cellPoint = api.coord(api.value(0));
               let cellWidth = params.coordSys.cellWidth;
               let cellHeight = params.coordSys.cellHeight;
-              let group =  {
+              let group = {
                 type: 'group',
                 children: []
               };
-            
+
               group.children.push({
                 type: 'rect',
                 z2: 0,
@@ -422,8 +422,8 @@ export class DailyManagerService {
         this.baseOptionsInt = option;
       }
     )
-  } 
-  getChartTempMaxWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean)  {
+  }
+  getChartTempMaxWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getAllTempWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
@@ -525,7 +525,7 @@ export class DailyManagerService {
     );
   }
 
-  getChartWindMaxWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean)  {
+  getChartWindMaxWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getWindAllWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
@@ -600,7 +600,7 @@ export class DailyManagerService {
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
 
-            option.series[index].data  = serieComplete.data;
+            option.series[index].data = serieComplete.data;
           });
           option.calendar.range = range;
         } else {
@@ -611,11 +611,11 @@ export class DailyManagerService {
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete) => {
             option.legend.data.push(serieComplete.name);
             serieComplete.symbol = WEATHER.rain;
-              serieComplete.itemStyle = {
-                normal: {
-                  color: '#70A8B2'
-                }
-              };
+            serieComplete.itemStyle = {
+              normal: {
+                color: '#70A8B2'
+              }
+            };
             serieComplete.symbolSize = (val: any[]) => {
               if (this.unitService.getUserPref().unitSystem === 'METRIC') {
                 return val[1];
@@ -766,7 +766,7 @@ export class DailyManagerService {
     this.dailyHService.getBroodByHive(idHive, range).subscribe(
       _brood => {
         this.getLastDayForMeanValue(this.dailyHService.getBroodByHive(idHive, this.rangeSevenDay), true, type);
-        let option = Object.assign({}, this.baseOptionsInt);
+        let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (rangeChange) {
           option.calendar.range = range;
           option.series[0].data = _brood.map(_data => new Array(_data.date, _data.value));
@@ -828,23 +828,42 @@ export class DailyManagerService {
     this.dailyWService.getWeightByHive(idHive, range).subscribe(
       _weightMax => {
         this.getLastDayForMeanValue(this.dailyWService.getWeightByHive(idHive, this.rangeSevenDay), true, type);
-        let option = Object.assign({}, this.baseOptionsInt);
+        let option = this.baseOptionsInt;
         if (rangeChange) {
           option.calendar.range = range;
-          option.series[0].data = _weightMax.map(_data => new Array(_data.date, _data.value));
+          let serie = JSON.parse(JSON.stringify(SERIES.effectScatter));
+          let legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
+          this.getSerieByData(_weightMax, type.name, serie, (serieComplete) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            legend.data.push(serieComplete.name);
+            option.series[index].data = serieComplete.data;
+          });
+          console.log(option);
         } else {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          let serie = Object.assign({}, SERIES.heatmap);
-          serie.data = _weightMax.map(_data => new Array(_data.date, _data.value));
-          option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+          let serie = JSON.parse(JSON.stringify(SERIES.effectScatter));
+          let legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
+          this.getSerieByData(_weightMax, type.name, serie, (serieComplete) => {
+            legend.data.push(serieComplete.name);
+            serieComplete.itemStyle = {
+              normal: {
+                color: '#00FE0C'
+              }
+            };
+            serieComplete.symbolSize = (val: Array<any>) => {
+             return (0.5 * Math.sqrt(Math.abs(50 * val[1])));
+            }
+            option.series.push(serieComplete);
+          });
+          // serie.data = _weightMax.map(_data => new Array(_data.date, _data.value));
+          option.visualMap = null;
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.legend.show = false;
+          option.legend = legend;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
-          option.series.push(serie);
         }
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
@@ -894,7 +913,7 @@ export class DailyManagerService {
               });
               const dataByDate: any[] = joinData.filter(_filter => this.graphGlobal.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.graphGlobal.getTimeStampFromDate(api.value(0)));
               if (dataByDate.length > 1) {
-                 group.children.push({
+                group.children.push({
                   type: 'path',
                   z2: 1000,
                   shape: {
@@ -933,7 +952,7 @@ export class DailyManagerService {
           }
           option.legend = Object.assign({}, BASE_OPTIONS.legend);
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
-              serieComplete.renderItem = (params, api) => {
+            serieComplete.renderItem = (params, api) => {
               let cellPoint = api.coord(api.value(0));
               let cellWidth = params.coordSys.cellWidth;
               let cellHeight = params.coordSys.cellHeight;
@@ -972,7 +991,7 @@ export class DailyManagerService {
                   },
                   position: [cellPoint[0], cellPoint[1]],
                 });
-              } else if(dataByDate.length === 1) {
+              } else if (dataByDate.length === 1) {
                 if (dataByDate !== undefined && dataByDate[0].sentence) {
                   group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
                 } else {
@@ -1003,7 +1022,7 @@ export class DailyManagerService {
 
 
   getMoonIconByPhaseName(phaseName: string): string {
-    switch(phaseName) {
+    switch (phaseName) {
       case 'Pleine lune':
       case 'Full moon':
         return 'full_moon'

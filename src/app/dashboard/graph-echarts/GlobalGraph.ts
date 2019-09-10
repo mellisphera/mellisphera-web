@@ -170,7 +170,12 @@ export class GraphGlobal {
       { 'graph': 'Weight', 'titre': 'Poids' },
       { 'graph': 'AlertsHive', 'titre': 'Evennements' },
       { 'graph': 'AlertsApiary', 'titre': 'Evennements du rucher' },
-      { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' }
+      { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' },
+      { graph: 'Weather', titre: 'Méteo' },
+      { graph: 'Moon', titre: 'Calendrier lunaire' },
+      { graph: 'Rain', titre: 'Pluie' },
+      { graph: 'Wind', titre: 'Vent' },
+
     ];
 
     // EN
@@ -187,7 +192,11 @@ export class GraphGlobal {
       { 'graph': 'Weight', 'titre': 'Weight' },
       { 'graph': 'AlertsHive', 'titre': 'Events' },
       { 'graph': 'AlertsApiary', 'titre': 'Events for the apiary' },
-      { 'graph': 'Blooming', 'titre': 'Apiary Blooming calendar' }
+      { 'graph': 'Blooming', 'titre': 'Apiary Blooming calendar' },
+      { graph: 'Weather', titre: 'Weather' },
+      { graph: 'Moon', titre: 'Moon calendar' },
+      { graph: 'Rain', titre: 'Rain' },
+      { graph: 'Wind', titre: 'Wind' },
     ];
   }
 
@@ -326,6 +335,116 @@ export class GraphGlobal {
     return titre.titre;
   }
 
+  getTooltipByType(type: Tools): string {
+    switch (type.name) {
+      case 'WINCOME':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[1].titre;
+        } else {
+          return this.titresEN[1].titre;
+        }
+      case 'TEMP_EXT_MAX':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[5].titre + ' max';
+        } else {
+          return this.titresEN[5].titre + ' max';
+        }
+      case 'TEMP_EXT_MIN':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[5].titre + ' min';
+        } else {
+          return this.titresEN[5].titre + ' min';
+        }
+      case 'TEMP_INT_MAX':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[4].titre + ' max';
+        } else {
+          return this.titresEN[4].titre + ' max';
+        }
+      case 'TEMP_INT_MIN':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[4].titre + ' min';
+        } else {
+          return this.titresEN[4].titre + ' min';
+        }
+      case 'HRIN':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[3].titre;
+        } else {
+          return this.titresEN[3].titre;
+        }
+      case 'BROOD':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[2].titre;
+        } else {
+          return this.titresEN[2].titre;
+        }
+      case 'WEIGHT_MAX':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[9].titre + ' max';
+        } else {
+          return this.titresEN[9].titre + ' max';
+        }
+      case 'WEATHER':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[13].titre;
+        } else {
+          return this.titresEN[13].titre;
+        }
+      case 'MOON':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[14].titre;
+        } else {
+          return this.titresEN[14].titre;
+        }
+      case 'RAIN':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[15].titre;
+        } else {
+          return this.titresEN[15].titre;
+        }
+      case 'TEMP_EXT_WEATHER_MAX':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[5].titre + ' max';
+        } else {
+          return this.titresEN[5].titre + ' max';
+        }
+      case 'TEMP_EXT_WEATHER_MIN':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[5].titre + ' min';
+        } else {
+          return this.titresEN[5].titre + ' min';
+        }
+      case 'WIND':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[16].titre;
+        } else {
+          return this.titresEN[16].titre;
+        }
+      case 'HEXT_WEATHER_MAX':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[7].titre + ' max';
+        } else {
+          return this.titresEN[7].titre + ' max';
+        }
+      case 'HEXT_WEATHER_MIN':
+          if (this.userService.getJwtReponse().country === 'FR') {
+            return this.titresFR[7].titre + ' min';
+          } else {
+            return this.titresEN[7].titre + ' min';
+          }
+      case 'ALERT':
+        if (this.userService.getJwtReponse().country === 'FR') {
+          return this.titresFR[10].titre;
+        } else {
+          return this.titresEN[10].titre;
+        }
+      default:
+        return '';
+        break;
+    }
+  }
+
   /**
    *
    *
@@ -451,8 +570,8 @@ export class GraphGlobal {
       case 'V':
         return this.wind.unitT;
       default:
-        return '';    
-      }
+        return '';
+    }
   }
 
 
@@ -510,7 +629,7 @@ export class GraphGlobal {
    * @returns {string}
    * @memberof GraphGlobal
    */
-  getNameCalendarByType(type: string, optionalValue?: any): string{
+  getNameCalendarByType(type: string, optionalValue?: any): string {
     let name: string;
     switch (type) {
       case BROOD:
@@ -543,7 +662,7 @@ export class GraphGlobal {
         name = this.wind.name;
         break;
       default:
-      break;
+        break;
     }
     if (/\(/g.test(name)) {
       name = name.split(' ')[0];
@@ -588,41 +707,41 @@ export class GraphGlobal {
               value: this.getNumberFormat(params.data[5]),
               unit: this.getUnitByType('P')
             },
-/*             {
-              name: 'PressMax',
-              value: this.getNumberFormat(params.data[7]),
-              unit: this.getUnitByType('P')
-            },
-            {
-              name: 'PressMin',
-              value: this.getNumberFormat(params.data[8]),  
-              unit: this.getUnitByType('P')
-            }, */
+            /*             {
+                          name: 'PressMax',
+                          value: this.getNumberFormat(params.data[7]),
+                          unit: this.getUnitByType('P')
+                        },
+                        {
+                          name: 'PressMin',
+                          value: this.getNumberFormat(params.data[8]),  
+                          unit: this.getUnitByType('P')
+                        }, */
           ));
         };
         break;
       case 'HEXT_WEATHER_MAX':
-          tooltip.formatter = (params) => {
-            return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
-              {
-                name: 'HRmax',
-                value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
-                unit: this.getUnitByType(type.unit)
-              },
-            ));
-          }
+        tooltip.formatter = (params) => {
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+            {
+              name: 'HRmax',
+              value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+              unit: this.getUnitByType(type.unit)
+            },
+          ));
+        }
         break;
-        case 'HEXT_WEATHER_MIN':
-            tooltip.formatter = (params) => {
-              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
-                {
-                  name: 'HRmin',
-                  value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
-                  unit: this.getUnitByType(type.unit)
-                },
-              ));
-            }
-          break;
+      case 'HEXT_WEATHER_MIN':
+        tooltip.formatter = (params) => {
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+            {
+              name: 'HRmin',
+              value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
+              unit: this.getUnitByType(type.unit)
+            },
+          ));
+        }
+        break;
       case 'RAIN':
         tooltip.formatter = (params) => {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
@@ -630,7 +749,7 @@ export class GraphGlobal {
               name: this.rain.name,
               value: this.getNumberFormat(this.unitService.getValRound(params.data[1])),
               unit: this.getUnitByType(type.unit)
-            },{
+            }, {
               name: this.snow.name,
               value: this.getNumberFormat(this.unitService.getValRound(params.data[2])),
               unit: this.getUnitByType(type.unit)
@@ -671,23 +790,23 @@ export class GraphGlobal {
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
             return {
               name: img,
-              value: type === 'Inspection' ? this.sliceTextToolip( _singleData.sentence) : this.sliceTextToolip( _singleData.message),
+              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.sentence) : this.sliceTextToolip(_singleData.message),
               unit: ''
             }
           }));
         }
         break;
-        case WINCOME:
-            tooltip.formatter = (params) => {
-              return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
-                {
-                  name: this.getNameCalendarByType(type.name, params.data[1]),
-                  value: this.unitService.getValRound(params.data[1]),
-                  unit: this.getUnitByType(type.unit)
-                },
-              ));
-            }
-          break;
+      case WINCOME:
+        tooltip.formatter = (params) => {
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+            {
+              name: this.getNameCalendarByType(type.name, params.data[1]),
+              value: this.unitService.getValRound(params.data[1]),
+              unit: this.getUnitByType(type.unit)
+            },
+          ));
+        }
+        break;
       default:
         tooltip.formatter = (params) => {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(

@@ -13,7 +13,7 @@ limitations under the License. -->
   <div id="daily-int">
     <div id="sidebar-tools-daily-device">
       <ul class="nav responsive-nav flex tools" id="device-group">
-        <li *ngFor="let type of getlabelByType('DEVICE')" (click)="setType(type)" [class]="type.class" [id]="type.id">
+        <li *ngFor="let type of getlabelByType('DEVICE')" data-toggle="tooltip" data-html="true" [title]="graphGlobal.getTooltipByType(type)" (click)="setType(type)" [class]="type.class" [id]="type.id">
           <img [src]="type.icons" />
         <li>
           <!--         <li (click)="exportToCsv('DEVICE')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
@@ -31,7 +31,7 @@ limitations under the License. -->
   <div id="daily-env">
     <div id="sidebar-tools-daily-env">
       <ul class="nav responsive-nav flex tools" id="env-group">
-        <li *ngFor="let type of getlabelByType('ENV')" [class]="type.class" [id]="type.id">
+        <li *ngFor="let type of getlabelByType('ENV')" data-toggle="tooltip" data-html="true" [title]="graphGlobal.getTooltipByType(type)" [class]="type.class" [id]="type.id">
           <img [src]="type.icons" /></li>
         <!--         <li (click)="exportToCsv('ENV')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
  -->
@@ -51,7 +51,7 @@ limitations under the License. -->
   <div class="mean-grup" id="daily-other">
     <div id="sidebar-tools-daily-other">
       <ul class="nav responsive-nav flex tools" id="other-group">
-        <li *ngFor="let type of getlabelByType('OTHER')" (click)="setType(type)" [class]="type.class" [id]="type.id">
+        <li *ngFor="let type of getlabelByType('OTHER')" data-toggle="tooltip" data-html="true" [title]="graphGlobal.getTooltipByType(type)" (click)="setType(type)" [class]="type.class" [id]="type.id">
           <img [src]="type.icons" /></li>
         <!--         <li (click)="exportToCsv('OTHER')" class="item-type"><img src="./assets/icons/exportToCsv.png">></li>
  -->

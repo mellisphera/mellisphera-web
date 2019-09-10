@@ -77,8 +77,8 @@ limitations under the License. -->
         <img [src]="rucherService.rucher.photo" (click)="hideRightClick($event)" class="photo" />
         <!-- The button to change hive handle => click -->
         <div zIndex="100" class ="lockButton">
-            <button title = "{{ 'HOME.PLACEMENTMODE' | translate}}" id = "locked" type="button" class="lock" (click) = "changeHandleHive('handleHive')"><i class="fa fa-lock"></i></button>
-            <button title = "{{ 'HOME.CLICKMODE' | translate}}" id = "unlocked" type="button" class="lock displayNone" (click) = "changeHandleHive('fixHive')"><i class="fa fa-unlock"></i></button>
+            <button  data-toggle="tooltip" data-html="true"  title = "{{ 'HOME.PLACEMENTMODE' | translate}}" id = "locked" type="button" class="lock" (click) = "changeHandleHive('handleHive')"><i class="fa fa-lock"></i></button>
+            <button  data-toggle="tooltip" data-html="true" title = "{{ 'HOME.CLICKMODE' | translate}}" id = "unlocked" type="button" class="lock displayNone" (click) = "changeHandleHive('fixHive')"><i class="fa fa-unlock"></i></button>
         </div>
         <!-- The dive for each hive -->
         <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true" data-toggle="tooltip"
@@ -90,7 +90,7 @@ limitations under the License. -->
                 <span>{{ 'HOME.MANAGE' | translate}} {{ruche.name.slice(-10)}}</span>
                 <br />
                 <!-- EDIT HIVE -->
-                <button data-toggle="tooltip" data-html="true" title="{{ 'HIVES.FORM.EDIT' | translate}}"
+                <button title="{{ 'HIVES.FORM.EDIT' | translate}}"
                     data-toggle="modal" type="button" (click)="onSelectRuche(ruche, i)" data-target="#editRucheModal"
                     class="btn btn-success " style="padding: 0;border: none; background: none;">
                     <i class="fa fa-edit fa-2x"></i>
