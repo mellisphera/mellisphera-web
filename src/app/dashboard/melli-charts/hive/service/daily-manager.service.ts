@@ -250,7 +250,6 @@ export class DailyManagerService {
                 type: 'group',
                 children: []
               };
-
               group.children.push({
                 type: 'rect',
                 z2: 0,
@@ -268,10 +267,10 @@ export class DailyManagerService {
               });
               group.children = group.children.concat(this.weatherService.getPicto(api.value(1), cellPoint));
               return group;
-            }
+            };
             option.legend.data.push(serieComplete.name);
             option.series.push(serieComplete);
-          })
+          });
 
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.range = range;
@@ -280,7 +279,7 @@ export class DailyManagerService {
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.visualMap = null;
         }
-
+        option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.clear();
         chartInstance.setOption(option);
         chartInstance.hideLoading();
@@ -313,7 +312,6 @@ export class DailyManagerService {
               type: 'group',
               children: []
             };
-
             group.children.push({
               type: 'rect',
               z2: 0,
@@ -340,6 +338,7 @@ export class DailyManagerService {
           option.visualMap = null;
           option.series.push(serie);
         }
+        option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.clear();
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
@@ -1004,11 +1003,12 @@ export class DailyManagerService {
             option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
             option.calendar.range = range;
             option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-            option.legend.data.push(serieComplete.name)
+            option.legend.data.push(serieComplete.name);
             option.series.push(serieComplete);
           });
         }
         option.legend.show = false;
+        option.series.push(this.graphGlobal.getDaySerie());
         option.tooltip = this.graphGlobal.getTooltipBySerie(type, joinData);
         chartInstance.clear();
         chartInstance.setOption(option, true);

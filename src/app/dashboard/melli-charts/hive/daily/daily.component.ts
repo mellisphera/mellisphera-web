@@ -353,14 +353,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.melliHive.getDailyEnvChartInstance().showLoading();
     this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().id,
       this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
-    /*     switch (this.currentTypeDailyEnv.name) {
-          case 'ALERT':
-            this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().id,
-              this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
-            break;
-          default:
-            break;
-        } */
   }
 
 

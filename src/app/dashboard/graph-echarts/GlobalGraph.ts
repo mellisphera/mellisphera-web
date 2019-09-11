@@ -34,6 +34,7 @@ import { BASE_OPTIONS } from '../melli-charts/charts/BASE_OPTIONS';
 import { Tools } from '../melli-charts/hive/service/daily-manager.service';
 import { CALENDAR } from '../melli-charts/charts/CALENDAR';
 import { WeatherService } from '../service/api/weather.service';
+import { SERIES } from '../melli-charts/charts/SERIES';
 
 @Injectable({
   providedIn: 'root'
@@ -611,9 +612,10 @@ export class GraphGlobal {
     dateToday.setMinutes(0);
     dateToday.setSeconds(0);
     dateToday.setMilliseconds(0);
-    if (dateCalendar.getTime() === dateToday.getTime()) {
+/*     if (dateCalendar.getTime() === dateToday.getTime()) {
       return '#FF2E2C';
-    } else if (optionValue === 1) { // Pour calendrier moon
+    }  */
+    if (optionValue === 1) { // Pour calendrier moon
       return '#ABC0C5';
     } else {
       return '#EBEBEB';
@@ -921,6 +923,35 @@ export class GraphGlobal {
   }
 
 
+
+  getDaySerie(): any {
+    let newSerie = Object.assign({}, SERIES.custom);
+    newSerie.name = 'thisDay';
+    newSerie.data = [ [new Date(), 0, 'OK', 'OK']];
+    newSerie.renderItem = (params, api) => {
+      let cellPoint = api.coord(api.value(0));
+      let cellWidth = params.coordSys.cellWidth;
+      let cellHeight = params.coordSys.cellHeight;
+      return {
+        type: 'rect',
+        z2: 0 ,
+        shape: {
+          x: -cellWidth / 2,
+          y: -cellHeight / 2,
+          width: cellWidth,
+          height: cellHeight,
+        },
+        position: [cellPoint[0], cellPoint[1]],
+        style : {
+          fill: 'none',
+          stroke : 'red',
+          lineWidth : 4
+        }
+      };
+    };
+
+    return newSerie;
+  }
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     const templateHeaderTooltip = '{*} <B>{D}</B> </br>';
     const templateValue = '{n}: <B>{v} {u}</B>';
