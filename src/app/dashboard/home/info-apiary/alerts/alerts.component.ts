@@ -280,8 +280,11 @@ export class AlertsComponent implements OnInit {
     let tooltipGlobal;
     tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
-      return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
-    }).join('</br>');
+      if (/picto/g.test(_serie.name) || _serie.name === '') {
+        return templateValue.replace(/:/g, '').replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit)
+      } else {
+        return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
+      }}).join('</br>');
 
     return tooltipGlobal;
   }
@@ -322,8 +325,8 @@ export class AlertsComponent implements OnInit {
         }
         img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
         return {
-          name: img + type,
-          value: type === 'Inspection' ? _singleData.sentence : _singleData.message,
+          name: img,
+          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.sentence) : this.sliceTextToolip(_singleData.message),
           unit: ''
         }
       }));
@@ -339,6 +342,16 @@ export class AlertsComponent implements OnInit {
     date.setMilliseconds(0);
     return date.getTime();
   }
+
+  sliceTextToolip(text: string): string {
+    if (text.length > 140) {
+      return text.slice(0, 140 / 2) + '-</br>-' + text.slice(140 / 2, text.length);
+    } else {
+      return text;
+    }
+  }
+
+  
   onClickRead(alert: AlertInterface, i: number) {
     // Update in database
     this.alertsService.updateAlert(alert._id, true).subscribe(() => { }, () => { }, () => {

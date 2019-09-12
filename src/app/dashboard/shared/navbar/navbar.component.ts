@@ -73,7 +73,7 @@ export class NavbarComponent implements OnInit {
     private listTitles: any[];
     private eltOnClickId: EventTarget;
     private eltOnClickClass: HTMLCollectionOf<Element>;
-
+    public maxSizePicture: number;
     private apiaryUpdate: RucherModel;
     private indexApiaryUpdate: number;
     private selectHive: RucheInterface;
@@ -104,7 +104,7 @@ export class NavbarComponent implements OnInit {
     hiveNoteSelect : RucheInterface;
     newNoteCheckbox: boolean;
     newObs: Observation
-
+    public lastInvalids:any;
     private infoApiaryComponent: any;
 
     constructor(location: Location,
@@ -131,6 +131,7 @@ export class NavbarComponent implements OnInit {
         this.location = location;
         this.notifier = this.notifierService;
         this.sidebarVisible = false;
+        this.maxSizePicture = 10048576;
         this.username = userService.getUser();
         if (this.userService.getJwtReponse().country === "FR") {
             this.translateService.use("fr");

@@ -224,6 +224,8 @@ export class AlertsHiveComponent implements OnInit {
             let cellHeight = params.coordSys.cellHeight;
             let group = {
               type: 'group',
+              width: cellWidth,
+              height: cellHeight,
               children: []
             };
             group.children.push({
@@ -308,14 +310,21 @@ export class AlertsHiveComponent implements OnInit {
 
   }
 
+  onResize(event) {
+
+  }
+
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '{*} <B>{D}</B> </br>';
     let templateValue = '{n}: <B>{v} {u}</B>';
     let tooltipGlobal;
     tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
-      return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
-    }).join('</br>');
+      if (/picto/g.test(_serie.name) || _serie.name === '') {
+        return templateValue.replace(/:/g, '').replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit)
+      } else {
+        return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
+      }}).join('</br>');
 
     return tooltipGlobal;
   }
@@ -356,8 +365,8 @@ export class AlertsHiveComponent implements OnInit {
         }
         img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
         return {
-          name: img + type,
-          value: type === 'Inspection' ? _singleData.sentence : _singleData.message,
+          name: img,
+          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.sentence) : this.sliceTextToolip(_singleData.message),
           unit: ''
         }
       }));
@@ -365,6 +374,15 @@ export class AlertsHiveComponent implements OnInit {
     }
     return tooltip;
   }
+  sliceTextToolip(text: string): string {
+    if (text.length > 140) {
+      return text.slice(0, 140 / 2) + '-</br>-' + text.slice(140 / 2, text.length);
+    } else {
+      return text;
+    }
+  }
+
+  
   getTimeStampFromDate(_date: Date | string): number {
     const date = new Date(_date);
     date.setHours(0);

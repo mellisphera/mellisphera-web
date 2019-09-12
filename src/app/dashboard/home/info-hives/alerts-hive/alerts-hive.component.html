@@ -21,9 +21,9 @@ limitations under the License. -->
   </button> -->
   </div>
 
-<div id="graph" echarts (chartInit)="onChartInit($event)" [options]="option" [autoResize]="true"
+<div id="graph" echarts (chartInit)="onChartInit($event)" (window:resize)="onResize($event)" [options]="option" [autoResize]="true"
   style="width:100%;height:40vh"></div>
 
 <div id="message">
-    {{ 'HIVE_DETAIL.ALERT.NOALERTS' | translate}}
+    {{ 'HIVE_DETAIL.ALERT.NOALERTS' | translate}}onResize
 </div>

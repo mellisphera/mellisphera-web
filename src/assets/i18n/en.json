@@ -70,6 +70,7 @@
             "ZIP_CODE_APIARY" : "Apiary zip code",
             "ZIP_ERROR" : "select zip code",
             "PICTURE" : "Select picture from Apiary :",
+            "WARNING_PICTURE": "File size too large",
             "FILE" : "Select File",
             "DROP" : "Base drop zone",
             "CLOSE" : "Close",

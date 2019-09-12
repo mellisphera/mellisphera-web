@@ -219,21 +219,25 @@ limitations under the License. -->
           </div>
 
           <label>{{ 'NAVBAR.CRUD.PICTURE' | translate }}</label>
-          <input style="display: none" type="file" ngf [(file)]="photoApiary" [(lastBaseUrl)]="newApiary.photo"
+          <input style="display: none" type="file" ngf [(file)]="photoApiary" [maxSize]="maxSizePicture" [(lastInvalids)] = "lastInvalids" [(lastBaseUrl)]="newApiary.photo"
             #fileInput>
           <button (click)="fileInput.click()"
             class="btn btn-large btn-block btn-info">{{ 'NAVBAR.CRUD.FILE' | translate }}</button>
           <div id="upload-group">
             <div class="row">
               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary" class="well my-drop-zone"
+                <div ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary" [maxSize]="maxSizePicture"  [(lastInvalids)]="lastInvalids" class="well my-drop-zone"
                   [(lastBaseUrl)]="newApiary.photo" [class.valid-drag]="baseDropValid">
                   {{ 'NAVBAR.CRUD.DROP' | translate }}
                 </div>
+                
               </div>
               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="img-zone" [ngfBackground]="photoApiary"
+                <div class="img-zone" *ngIf="!lastInvalids?.length" [ngfBackground]="photoApiary"
                   style="background-size:cover;background-repeat:no-repeat; background-position:center; width:100%;">
+                </div>
+                <div class="bg-warning" *ngIf="lastInvalids?.length" style="margin-bottom: 40px">
+                  <p style="color:red;">{{ 'NAVBAR.CRUD.WARNING_PICTURE' | translate }}</p>
                 </div>
               </div>
             </div>
@@ -311,14 +315,17 @@ limitations under the License. -->
           <div id="edit-img-group">
 
             <label>{{ 'NAVBAR.CRUD.PICTURE' | translate }}</label>
-            <input style="display: none" type="file" ngf [(file)]="photoApiary" [(lastBaseUrl)]="editPhotoApiary"
+            <input style="display: none" type="file" ngf [(file)]="photoApiary" [maxSize]="maxSizePicture"  [(lastInvalids)]="lastInvalids" [maxSize]="maxSizePicture" [(lastBaseUrl)]="editPhotoApiary"
               #fileEdit>
             <button (click)="fileEdit.click()"
               class="btn btn-large btn-block btn-info">{{ 'NAVBAR.CRUD.FILE' | translate }}</button>
             <div class="img-zone">
-              <div [ngfBackground]="photoApiary"
+              <div [ngfBackground]="photoApiary" *ngIf="!lastInvalids?.length"
                 style="background-size:cover;background-repeat:no-repeat; background-position:center; height:100%; width:100%;">
               </div>
+                <div class="bg-warning" *ngIf="lastInvalids?.length" style="margin-bottom: 40px">
+                  <p style="color:red;">{{ 'NAVBAR.CRUD.WARNING_PICTURE' | translate }}</p>
+                </div>
             </div>
           </div>
           <!--

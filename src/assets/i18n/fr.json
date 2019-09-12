@@ -70,6 +70,7 @@
             "ZIP_CODE_APIARY" : "Code postal du rucher",
             "ZIP_ERROR" : "Entrez un code postal",
             "PICTURE" : "Ajouter une image du rucher :",
+            "WARNING_PICTURE": "Taille du fichier trop grande",
             "FILE" : "Choisir le fichier",
             "DROP" : "Faites glisser une photos ici",
             "CLOSE" : "Fermer",
