@@ -42,6 +42,8 @@ import { CapteurInterface } from '../../../_model/capteur';
 import { Observation } from '../../../_model/observation';
 import { InfoApiaryComponent } from '../../home/info-apiary/info-apiary.component';
 import { EventEmitter } from '@angular/core';
+import { Binary } from '@angular/compiler';
+import { GeonamesService } from '../../service/geonames.service';
 
 @Component({
     // moduleId: module.id,
@@ -101,6 +103,7 @@ export class NavbarComponent implements OnInit {
 
     NavbarNoteForm: FormGroup;
     hivesNavbarNoteForm : RucheInterface[];
+    public cityByZipCode: string[];
     hiveNoteSelect : RucheInterface;
     newNoteCheckbox: boolean;
     newObs: Observation
@@ -123,6 +126,7 @@ export class NavbarComponent implements OnInit {
         public tokenService: AtokenStorageService,
         private dailyRecordService: DailyRecordService,
         public sidebarService: SidebarService,
+        public geonamesService: GeonamesService,
         public notifierService: NotifierService,
         public translateService: TranslateService,
         private alertsService: AlertsService,
@@ -132,6 +136,7 @@ export class NavbarComponent implements OnInit {
         this.notifier = this.notifierService;
         this.sidebarVisible = false;
         this.maxSizePicture = 10048576;
+        this.cityByZipCode = [];
         this.username = userService.getUser();
         if (this.userService.getJwtReponse().country === "FR") {
             this.translateService.use("fr");
@@ -404,6 +409,24 @@ export class NavbarComponent implements OnInit {
         });
     }
 
+    /**
+     *
+     *
+     * @returns {number}
+     * @memberof NavbarComponent
+     */
+    getZipCodeFormValue(): number {
+        return this.rucherForm.get('codePostal').value;
+    }
+
+    onLoadCity() {
+        this.geonamesService.getCityByCountryAndZipCode(this.userService.getCountry(), this.getZipCodeFormValue()).subscribe(
+            _city => {
+                console.log(_city);
+                this.cityByZipCode = _city.map(_res => _res.placeName);
+            }
+        )
+    }
     // ###################      CREATE      ###################
 
     apiarySubmit() {
