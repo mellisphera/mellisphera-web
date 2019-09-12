@@ -213,10 +213,10 @@ limitations under the License. -->
             <label for="ville" class="col-form-label">{{ 'NAVBAR.CRUD.CITY' | translate }}</label>
             <!--             <input formControlName="ville" type="text" class="form-control" id="ville">
  -->
-            <input list="city" formControlName="ville" class="form-control" (focus)="onLoadCity()" type="text">
-            <datalist id="city">
+            <input list="city" formControlName="ville" class="form-control" type="text">
+ <!--            <datalist id="city">
               <option *ngFor="let city of cityByZipCode" [value]="city">
-            </datalist>
+            </datalist> -->
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
               {{ 'NAVBAR.CRUD.CITY_ERROR' | translate }}
