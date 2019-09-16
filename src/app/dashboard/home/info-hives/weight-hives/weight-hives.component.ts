@@ -96,6 +96,7 @@ export class WeightHivesComponent{
           dayLabel: {
               nameMap: this.graphGlobal.getDays(),
               firstDay: 1, // start on Monday
+              show: false,
           },
           monthLabel: {
               nameMap: this.graphGlobal.getMonth()

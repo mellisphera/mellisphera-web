@@ -72,15 +72,15 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.btnNav = [
           {name: 'Ruches', path: 'hive' },
           { name: 'Couvain', path: 'brood' },
-          // { name: 'Essaimages', path: 'map' },
-          { name: 'Stack', path: 'stack' }
+/*           { name: 'Essaimages', path: 'map' },
+ */          { name: 'Stack', path: 'stack' }
         ];
       } else {
         this.btnNav = [
           {name: 'Hives', path: 'hive' },
           { name: 'Brood chart', path: 'brood' },
-          // { name: 'Swarm Map', path: 'map' },
-          { name: 'Stack', path: 'stack' }
+/*           { name: 'Swarm Map', path: 'map' },
+ */          { name: 'Stack', path: 'stack' }
         ];
       }
   }

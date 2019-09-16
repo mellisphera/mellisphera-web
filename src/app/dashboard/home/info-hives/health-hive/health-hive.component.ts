@@ -87,6 +87,7 @@ export class HealthHiveComponent {
               }, */
               dayLabel: {
                   nameMap: this.graphGlobal.getDays(),
+                  show: false,
                   firstDay: 1, // start on Monday
               },
               monthLabel: {
