@@ -251,12 +251,7 @@ export const BASE_OPTIONS = {
                     },
                     style: {
                         fill: '#fff',
-                        stroke: '#555',
-                        lineWidth: 2,
-                        shadowBlur: 8,
-                        shadowOffsetX: 3,
-                        shadowOffsetY: 3,
-                        shadowColor: 'rgba(0,0,0,0.3)'
+                        lineWidth: 0,
                     }
                 },
                 {
@@ -268,7 +263,7 @@ export const BASE_OPTIONS = {
                     style: {
                         fill: '#333',
                         text: '',
-                        font: '14px poppins'
+                        font: '18px poppins'
                     }
                 },
             ]

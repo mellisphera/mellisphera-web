@@ -18,6 +18,7 @@ import { NotifierService } from 'angular-notifier';
 import { UserloggedService } from '../../userlogged.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-preference-config',
@@ -37,6 +38,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     private notifier: NotifierService,
     private graphGlobalService: GraphGlobal,
     private userService: UserloggedService,
+    public translateService: TranslateService,
     private formBuilder: FormBuilder) {
     this.notifyService = notifier;
   }
@@ -54,6 +56,19 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     });
   }
 
+  changeLangToggle()  {
+    console.log(this.translateService.currentLang);
+    if (this.translateService.currentLang === 'fr') {
+      this.translateService.use('en');
+      this.userService.setCountry('en');
+    } else {
+      this.translateService.use('fr');
+      this.userService.setCountry('fr');
+    }
+    this.userConfig.emitPrefSubject();
+    // translateService.use('en')
+    // translateService.use('fr')
+  }
   saveFormat(): void {
     this.userConfig.setFormatDt(this.formatDt);
     this.saveUserPref();

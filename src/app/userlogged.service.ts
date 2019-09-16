@@ -57,6 +57,18 @@ export class UserloggedService {
   /**
    *
    *
+   * @param {string} country
+   * @memberof UserloggedService
+   */
+  setCountry(country: string): void {
+    let jwtResponse: JwtResponse = this.getJwtReponse();
+    jwtResponse.country = country.toLocaleLowerCase();
+    this.setJwtReponse(jwtResponse);
+  }
+
+  /**
+   *
+   *
    * @returns {RucherModelodel[]}
    * @memberof UserloggedService
    */

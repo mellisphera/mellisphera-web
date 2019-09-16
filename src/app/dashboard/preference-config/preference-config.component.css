@@ -15,3 +15,7 @@ limitations under the License. */
 .checkOk{
     border: 1px solid green;
 }
+#lang-group svg {
+    cursor: pointer;
+    width: 50px;
+}

@@ -69,6 +69,10 @@ export class UserParamsService {
     this.userPref.unitSystem = unit;
   }
 
+  setLang(lang: string): void  {
+    this.userPref.lang = lang.toUpperCase() + ', ' + lang;
+  }
+
   /**
    *
    *

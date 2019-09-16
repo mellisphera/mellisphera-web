@@ -42,10 +42,10 @@ limitations under the License. -->
                 class="btn btn-large btn-block btn-primary">{{ 'MELLICHARTS.DATE.BTN_APPLY' | translate}}</button>
             </div>
             <div id="dt-scale">
-              <ul>
+<!--               <ul>
                 <li class="time" *ngFor="let dt of getRangeByType('HOUR')" (click)="setRangeSelect(dt)">
                   {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
-              </ul>
+              </ul> -->
               <ul>
                 <li class="time" *ngFor="let dt of getRangeByType('DAY')" (click)="setRangeSelect(dt)">
                   {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
