@@ -27,6 +27,7 @@
               "src/assets/sass/light-bootstrap-dashboard.scss"
             ],
             "scripts": [
+              "src/assets/world.js"
             ]
           },
           "configurations": {

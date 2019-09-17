@@ -335,9 +335,9 @@ export class DailyRecordsWService {
   public getWeightIncomeByHive(idHive: string): any {
     const selectHive = this.dailyWeightRecords.filter(elt => elt.idHive === idHive)[0];
     if (this.unitSystem === 'METRIC') {
-      return selectHive !== undefined ? selectHive.weight_income_gain + ' kg' : null;
+      return selectHive !== undefined ? selectHive.weight_max + ' kg' : null;
     } else {
-      return selectHive !== undefined ? selectHive.weight_income_gain + ' lbs' : null;
+      return selectHive !== undefined ? selectHive.weight_max + ' lbs' : null;
     }
 
   }

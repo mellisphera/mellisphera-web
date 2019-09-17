@@ -213,9 +213,7 @@ nav[role=admin-navigation] {
         /* justify-content: end; */
         width: 63%;
     }
-    .navbar{
-       height: 100px;
-    }
+
 
 }/* @media screen and (max-width:1700px){
     #input-date{
@@ -238,6 +236,9 @@ nav[role=admin-navigation] {
         /* justify-content: end; */
         width: 100%;
     }
+    .navbar{
+        height: 100px;
+     }
     .navbar-nav{
         justify-content: center !important;
     }
