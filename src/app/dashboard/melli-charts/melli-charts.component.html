@@ -18,8 +18,8 @@ limitations under the License. -->
           class="button button0">{{ btn.name }}</button></li>
     </ul>
     <ul class="nav nav-date navbar-nav navbar-right">
-      <li><button type="button" (click)="previousDate()" class="btn btn-info date-arrow"><i class="fa fa-arrow-circle-left"
-            id="previous-date"></i></button></li>
+      <li><button type="button" (click)="previousDate()" class="btn btn-info date-arrow"><i
+            class="fa fa-arrow-circle-left" id="previous-date"></i></button></li>
       <li id="dropdown">
         <div class="dropdown">
           <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
@@ -30,19 +30,24 @@ limitations under the License. -->
             <div id="input-date">
               <div class="form-group">
                 <label>{{ 'MELLICHARTS.DATE.START' | translate }}</label>
-                <input type="date" [ngModel]="getStartDate()" (ngModelChange)="melliChartDate.start = $event"
-                  class="form-control" />
+<!--                 <input type="date" [ngModel]="getStartDate()" (ngModelChange)="melliChartDate.start = $event"
+                  class="form-control" /> -->
+
+                <input class="form-control" [owlDateTimeTrigger]="dt1" [(ngModel)]="melliChartDate.start" [owlDateTime]="dt1" >
+                <owl-date-time [pickerType]="'calendar'" firstDayOfWeek="1" #dt1></owl-date-time>
               </div>
               <div class="form-group">
                 <label>{{ 'MELLICHARTS.DATE.END' | translate }} </label>
-                <input type="date" [ngModel]="getEndDate()" (ngModelChange)="melliChartDate.end = $event"
-                  class="form-control" />
+<!--                 <input type="date" [ngModel]="getEndDate()" (ngModelChange)="melliChartDate.end = $event"
+                  class="form-control" /> -->
+                  <input class="form-control" [owlDateTimeTrigger]="dt2" [(ngModel)]="melliChartDate.end" [owlDateTime]="dt2" >
+                  <owl-date-time [pickerType]="'calendar'" firstDayOfWeek="1" #dt2></owl-date-time>
               </div>
               <button type="button" (click)="setDateFromInput()"
                 class="btn btn-large btn-block btn-primary">{{ 'MELLICHARTS.DATE.BTN_APPLY' | translate}}</button>
             </div>
             <div id="dt-scale">
-<!--               <ul>
+              <!--               <ul>
                 <li class="time" *ngFor="let dt of getRangeByType('HOUR')" (click)="setRangeSelect(dt)">
                   {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
               </ul> -->
@@ -75,9 +80,10 @@ limitations under the License. -->
           <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher.id)" data-toggle="collapse"
             data-parent="#main-menu"><span class="puce-apiary"></span>{{ rucher.name }}<span class="caret"></span></a>
           <div class="collapse list-group-level1" [id]="i">
-            <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()" *ngFor="let ruche of getHiveByApiary(rucher.id); let i = index"
-              (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i class="circle"
-                [style.background-color]="getColor(ruche)"></i><span class="puce-hive"></span>{{ ruche.name }}</a>
+            <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
+              *ngFor="let ruche of getHiveByApiary(rucher.id); let i = index" (click)="selectHive(ruche, $event)"
+              data-parent="#sub-menu"><i class="circle" [style.background-color]="getColor(ruche)"></i><span
+                class="puce-hive"></span>{{ ruche.name }}</a>
           </div>
         </ng-container>
       </div>

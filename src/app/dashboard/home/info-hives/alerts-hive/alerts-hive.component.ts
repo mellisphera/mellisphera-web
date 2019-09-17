@@ -375,11 +375,13 @@ export class AlertsHiveComponent implements OnInit {
     return tooltip;
   }
   sliceTextToolip(text: string): string {
-    if (text.length > 140) {
-      return text.slice(0, 140 / 2) + '-</br>-' + text.slice(140 / 2, text.length);
-    } else {
-      return text;
+    let originString: string = text;
+    let newString: string;
+    while(originString.length >= 100) {
+      newString += originString.slice(0, 100) + '<br/>';
+      originString = originString.replace(originString.slice(0, 100), '');
     }
+    return (newString + originString).replace(/undefined/g, '');
   }
 
   

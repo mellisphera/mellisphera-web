@@ -66,6 +66,9 @@ th{
     color: black;
     font-weight: bold;
 }
+.dt-picker{
+    width: 100px;
+}
 @media (max-width:800px) {
     .panel {
         width: 100% !important;

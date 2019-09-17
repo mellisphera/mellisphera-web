@@ -11,12 +11,20 @@ limitations under the License. -->
 
 <div id="user-group">
   <div class="panel panel-primary">
-    <div class="panel-heading"><div class="text-title"><span *ngIf="(this.rucheService.getCurrentHive().description !== null) && (this.rucheService.getCurrentHive().description !== '')" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
-        {{this.rucheService.getCurrentHive().name}} : {{this.rucheService.getCurrentHive().description}}</span>
-        <span *ngIf="(this.rucheService.getCurrentHive().description === null) || (this.rucheService.getCurrentHive().description === '')" style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png" style="width:25px;margin-left:-5px;" />
+    <div class="panel-heading">
+      <div class="text-title"><span
+          *ngIf="(this.rucheService.getCurrentHive().description !== null) && (this.rucheService.getCurrentHive().description !== '')"
+          style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png"
+            style="width:25px;margin-left:-5px;" />
+          {{this.rucheService.getCurrentHive().name}} : {{this.rucheService.getCurrentHive().description}}</span>
+        <span
+          *ngIf="(this.rucheService.getCurrentHive().description === null) || (this.rucheService.getCurrentHive().description === '')"
+          style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png"
+            style="width:25px;margin-left:-5px;" />
           {{this.rucheService.getCurrentHive().name}}</span></div>
-      <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.NEW' | translate}}"
-        data-toggle="modal" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" style="float:right;width: 10%; padding: 0;border: none; background: none;margin-top: 0px;" (click)="initForm()"
+      <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.NEW' | translate}}" data-toggle="modal"
+        [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))"
+        style="float:right;width: 10%; padding: 0;border: none; background: none;margin-top: 0px;" (click)="initForm()"
         data-target="#newObservationModal" class="btn btn-success">
         <i class="fa fa-plus fa-2x"></i>
       </button>
@@ -31,9 +39,10 @@ limitations under the License. -->
                 <td>{{hiveObs.sentence}}</td>
                 <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}</td> -->
                 <td class="text-right" style="width: 80px;">
-                  <button data-toggle="tooltip" data-html="true"
-                    title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
-                    (click)="onSelectObsR(hiveObs)" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" data-target="#editObservationModal" class="btn btn-primary "
+                  <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.EDIT' | translate}}"
+                    data-toggle="modal" type="button" (click)="onSelectObsR(hiveObs)"
+                    [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))"
+                    data-target="#editObservationModal" class="btn btn-primary "
                     style="padding: 10;border: none; background: none;margin-right: -5px;">
                     <i class="fa fa-edit fa-2x"></i>
                   </button>
@@ -47,9 +56,10 @@ limitations under the License. -->
                 <td>{{hiveObs.sentence}}</td>
                 <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.ACTION' | translate}}</td> -->
                 <td class="text-right" style="width: 80px;">
-                  <button data-toggle="tooltip" data-html="true"
-                    title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
-                    (click)="onSelectObsR(hiveObs)" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))" data-target="#editObservationModal" class="btn btn-primary "
+                  <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.EDIT' | translate}}"
+                    data-toggle="modal" type="button" (click)="onSelectObsR(hiveObs)"
+                    [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))"
+                    data-target="#editObservationModal" class="btn btn-primary "
                     style="padding: 10;border: none; background: none;margin-right: -5px;">
                     <i class="fa fa-edit fa-2x"></i>
                   </button>
@@ -59,7 +69,8 @@ limitations under the License. -->
             </ng-container>
 
           </ng-container>
-          <ng-container *ngIf="observationService.observationsHive !== undefined && observationService.observationsHive.length === 0">
+          <ng-container
+            *ngIf="observationService.observationsHive !== undefined && observationService.observationsHive.length === 0">
             <tr class="hoverStyle">
               <td>{{ 'HIVE_DETAIL.OBSERVATIONS.NONOTES' | translate}}</td>
             </tr>
@@ -94,8 +105,13 @@ limitations under the License. -->
             <!-- <input type="date" formControlName="date"> -->
             <label class="example-input-wrapper">
               {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
-              <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                            <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
               <owl-date-time #dt></owl-date-time>
+<!--               <input formControlName="date" class="dt-picker" [owlDateTimeTrigger]="newDt" [owlDateTime]="newDt">
+              <owl-date-time [pickerType]="'calendar'" #newDt></owl-date-time>
+
+              <input formControlName="hours" class="dt-picker" [owlDateTimeTrigger]="newHours" [owlDateTime]="newHours">
+              <owl-date-time [pickerType]="'timer'" #newHours></owl-date-time> -->
             </label><br />
             <label class="example-input-wrapper">
               {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}
@@ -157,6 +173,11 @@ limitations under the License. -->
               <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dtUpdate"
                 [owlDateTime]="dtUpdate">
               <owl-date-time #dtUpdate></owl-date-time>
+<!--               <input class="dt-picker" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1">
+              <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+
+              <input class="dt-picker" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2">
+              <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>  -->
             </label><br />
             <label for="recipient-editobs"
               class="col-form-label">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
@@ -165,7 +186,7 @@ limitations under the License. -->
         </form>
       </div>
       <div class="modal-footer">
-          <button type="submit" class="btn btn-warning delete" mwlConfirmationPopover
+        <button type="submit" class="btn btn-warning delete" mwlConfirmationPopover
           popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top"
           confirmText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}"
           cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObsR()">

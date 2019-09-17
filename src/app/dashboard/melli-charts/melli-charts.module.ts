@@ -25,6 +25,7 @@ import { MelliChartsComponent } from './melli-charts.component';
 import { DailyComponent } from './hive/daily/daily.component';
 import { HourlyComponent } from './hive/hourly/hourly.component';
 import { StackMelliChartsService } from './stack/service/stack-melli-charts.service';
+import { OwlNativeDateTimeModule, OwlDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   providers:[
@@ -45,6 +46,8 @@ import { StackMelliChartsService } from './stack/service/stack-melli-charts.serv
     MelliChartsRouting,
     SharedModule,
     RouterModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

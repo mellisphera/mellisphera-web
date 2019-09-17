@@ -95,8 +95,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     this.ObservationForm = this.formBuilder.group({
       'sentence': [null, Validators.compose([Validators.required])],
       'type': 'HiveObs',
-      'date': new Date()
-    });
+      'date': [ new Date(), Validators.required],
+/*       'hours':null
+ */    });
   }
 
   createObservation() {
