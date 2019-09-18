@@ -36,6 +36,8 @@ import { VitalityComponent } from './vitality/vitality.component';
 import { type } from 'os';
 
 const PREFIX_PATH = '/dashboard/melli-charts/';
+
+
 @Component({
   selector: 'app-melli-charts',
   templateUrl: './melli-charts.component.html',
@@ -47,9 +49,10 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   public btnNav: Array<Object>;
   private btnTypeElement: HTMLElement;
   public typeNav: Array<Object>;
-
+  public datePickerConfig: any;
   private hiveComponent: HiveComponent;
   private stackComponent: StackComponent;
+  private dateDropdown: HTMLElement;
   private broodComponent: VitalityComponent;
   private eltOnClick: EventTarget;
   constructor(public rucheService: RucheService,
@@ -82,6 +85,10 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 /*           { name: 'Swarm Map', path: 'map' },
  */          { name: 'Stack', path: 'stack' }
         ];
+      }
+
+      this.datePickerConfig = {
+
       }
   }
 
@@ -146,11 +153,15 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.eltOnClick = document.getElementById('hive');
+    this.dateDropdown = document.getElementById('date-dropdown');
     this.renderer.addClass(this.eltOnClick, 'nav-active');
   }
 
 
 
+  onCloseDatePicker(): void {
+    this.dateDropdown.classList.add('open');
+  }
   /**
    *
    *

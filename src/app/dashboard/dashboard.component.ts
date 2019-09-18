@@ -20,6 +20,7 @@ import { MessagesService } from './service/messages.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { RoutingHistoryService } from './service/routing-history.service';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -48,17 +49,19 @@ export class DashboardComponent implements OnInit {
     public loadingService: LoadingService,
     private renderer: Renderer2,
     private myNotifierService: MyNotifierService,
+    private routingHistory: RoutingHistoryService,
     private messagesService : MessagesService,
     public rucherService: RucherService,
     private router: Router) {
     this.message = '';
-    this.myNotifierService.setLang(this.login.getCountry() ? this.login.getCountry(): 'EN');
-    this.messagesService.setLang(this.login.getCountry() ? this.login.getCountry(): 'EN');
+    this.myNotifierService.setLang(this.login.getCountry() ? this.login.getCountry() : 'EN');
+    this.messagesService.setLang(this.login.getCountry() ? this.login.getCountry() : 'EN');
     this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
       if (this.rucherService.checkIfApiary()) {
         this.login.setWizardActive(false);
       }
     });
+    this.routingHistory.loadRouting();
   }
 
   ngOnInit() {
@@ -74,7 +77,7 @@ export class DashboardComponent implements OnInit {
       )
     }).catch(err => {
       console.log(err);
-    })
+    });
   }
 
   setRouterPage(event) {

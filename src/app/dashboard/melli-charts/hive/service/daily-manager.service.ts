@@ -228,7 +228,6 @@ export class DailyManagerService {
           option.series = this.removeDataAllseries(option.series);
           this.getSerieByData(_weather, type.name, SERIES.custom, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            console.log(index);
             option.series[index].name = serieComplete.name;
             option.series[index].data = serieComplete.data;
           });
@@ -776,13 +775,13 @@ export class DailyManagerService {
           let serie = Object.assign({}, SERIES.heatmap);
           serie.data = _brood.map(_data => new Array(_data.date, _data.value));
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
-          option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.legend.show = false;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.calendar.range = range;
           option.series.push(serie);
         }
+        option.tooltip = this.graphGlobal.getTooltipBySerie(type);
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
@@ -837,7 +836,6 @@ export class DailyManagerService {
             legend.data.push(serieComplete.name);
             option.series[index].data = serieComplete.data;
           });
-          console.log(option);
         } else {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();

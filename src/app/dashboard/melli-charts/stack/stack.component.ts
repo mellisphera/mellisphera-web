@@ -283,7 +283,7 @@ export class StackComponent implements OnInit {
     this.stackService.getEchartInstance().setOption(option, true);
   }
 
-  getSerieByData(data: Array<any>, nameSerie: string, next: Function): void {
+  getSerieByData(data: any, nameSerie: string, next: Function): void {
     let sensorRef: Array<string> = [];
     data.forEach(_data => {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {

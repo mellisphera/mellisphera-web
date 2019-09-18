@@ -954,7 +954,7 @@ export class GraphGlobal {
         style : {
           fill: 'none',
           stroke : 'red',
-          lineWidth : 4
+          lineWidth : 3
         }
       };
     };

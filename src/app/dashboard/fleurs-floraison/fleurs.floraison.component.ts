@@ -21,7 +21,6 @@ import { UserloggedService } from '../../userlogged.service';
 import { Observable, Subscription } from 'rxjs';
 import { AnonymousSubscription } from "rxjs/Subscription";
 import { RucherService } from '../service/api/rucher.service';
-import * as echarts from '../../../assets/echarts';
 import { GraphiqueFloraisonService } from './service/graphique-floraison.service';
 
 

@@ -16,7 +16,15 @@ import { DailyManagerService } from './service/daily-manager.service';
 import { HourlyManagerService } from './service/hourly-manager.service';
 import { DailyComponent } from './daily/daily.component';
 import { HourlyComponent } from './hourly/hourly.component';
+import { Router } from '@angular/router';
+import { RoutingHistoryService } from '../../service/routing-history.service';
 
+
+export const PATH = {
+  BROOD: /brood/g,
+  HIVE: /hive/g,
+  STACK: /stack/g
+};
 
 @Component({
   selector: 'app-hive',
@@ -28,12 +36,22 @@ export class HiveComponent implements OnInit {
   @ViewChild(DailyComponent) dailyComponent: DailyComponent;
   @ViewChild(HourlyComponent) hourlyComponent: HourlyComponent;
   constructor(private melliDate: MelliChartsDateService,
+    private routingHistory: RoutingHistoryService,
+    private router: Router,
     private render: Renderer2) {
 
   }
 
   ngOnInit() {
+
   }
+ngAfterViewInit(): void {
+  if (PATH.BROOD.test(this.routingHistory.getPreviousUrl()) || PATH.STACK.test(this.routingHistory.getPreviousUrl())) {
+    console.log(this.routingHistory.getPreviousUrl());
+    console.log(this.dailyComponent.calendarElements);
+    this.setRangeChart();
+  }
+}
 
   /**
    *

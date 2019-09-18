@@ -21,7 +21,7 @@ limitations under the License. -->
       <li><button type="button" (click)="previousDate()" class="btn btn-info date-arrow"><i
             class="fa fa-arrow-circle-left" id="previous-date"></i></button></li>
       <li id="dropdown">
-        <div class="dropdown">
+        <div class="dropdown" id="date-dropdown">
           <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
               class="fa fa-calendar"></i>{{ melliChartDate.start | myDate: 'DAILY' }} <span id="arrow">&#8680;</span>
             {{ melliChartDate.end | myDate: 'DAILY' }}
@@ -31,17 +31,17 @@ limitations under the License. -->
               <div class="form-group">
                 <label>{{ 'MELLICHARTS.DATE.START' | translate }}</label>
 <!--                 <input type="date" [ngModel]="getStartDate()" (ngModelChange)="melliChartDate.start = $event"
-                  class="form-control" /> -->
+                  class="form-control" /> --> 
 
                 <input class="form-control" [owlDateTimeTrigger]="dt1" [(ngModel)]="melliChartDate.start" [owlDateTime]="dt1" >
-                <owl-date-time [pickerType]="'calendar'" firstDayOfWeek="1" #dt1></owl-date-time>
+                <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1" #dt1></owl-date-time>
               </div>
               <div class="form-group">
                 <label>{{ 'MELLICHARTS.DATE.END' | translate }} </label>
 <!--                 <input type="date" [ngModel]="getEndDate()" (ngModelChange)="melliChartDate.end = $event"
                   class="form-control" /> -->
                   <input class="form-control" [owlDateTimeTrigger]="dt2" [(ngModel)]="melliChartDate.end" [owlDateTime]="dt2" >
-                  <owl-date-time [pickerType]="'calendar'" firstDayOfWeek="1" #dt2></owl-date-time>
+                  <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1" #dt2></owl-date-time>
               </div>
               <button type="button" (click)="setDateFromInput()"
                 class="btn btn-large btn-block btn-primary">{{ 'MELLICHARTS.DATE.BTN_APPLY' | translate}}</button>

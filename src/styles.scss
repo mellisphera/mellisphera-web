@@ -36,6 +36,11 @@
 .wizard-z-index{
     z-index: -1 !important;
 }
+
+.owl-dt-popup-container {
+    width: 300px !important;
+    font-size: 15px !important;
+}
 @media (max-width: 991px){
     .main-panel{
         width: 100% !important;

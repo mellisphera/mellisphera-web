@@ -15,7 +15,7 @@ limitations under the License. */
     white-space: pre-wrap;
     overflow-y: scroll;
     position: fixed;
-    width: 12%;
+    width: 10%;
     justify-content: space-between;
     height: 90vh;
 }
@@ -189,7 +189,11 @@ nav[role=admin-navigation] {
   .navbar{
       height: 50px;
   }
-
+  @media screen and (max-width:1400px) {
+      #apiary-group {
+          width: 10px;
+      }
+  }
 @media screen and (max-width:1300px) {
     #apiary-group {
         position: relative;
@@ -215,16 +219,14 @@ nav[role=admin-navigation] {
     }
 
 
-}/* @media screen and (max-width:1700px){
-    #input-date{
-        width: 100%;
-    }
-} */
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
-    #apiary-group {
-        position: fixed;
-        width: 17%;
-        height: auto;
+}
+@media only screen 
+  and (min-width: 1024px) 
+  and (max-height: 1366px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 1.5) {
+    #apiary-group{
+        width: 12%;
     }
 }
 
