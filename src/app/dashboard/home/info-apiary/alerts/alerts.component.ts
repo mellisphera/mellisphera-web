@@ -151,6 +151,10 @@ export class AlertsComponent implements OnInit {
     });
   }
 
+  onResize(event: any): void {
+    this.echartInstance.clear();
+    this.echartInstance.setOption(this.option);
+  }
   getSerieByData(data: Array<any>, nameSerie: string, serieTemplate: any, next: Function): void {
     let sensorRef: Array<string> = [];
     data.forEach((_data) => {

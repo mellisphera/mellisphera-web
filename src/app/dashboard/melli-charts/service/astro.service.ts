@@ -37,7 +37,6 @@ export class AstroService {
 
 
   getPicto(nomPicto: string, cellPoint: Array<number>): Array<any> {
-    console.log(nomPicto);
     try {
       return MOON[nomPicto].map(_path => {
         return {
@@ -49,7 +48,7 @@ export class AstroService {
           position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
           style: _path.style
         };
-      })
+      });
 
     }
     catch{
