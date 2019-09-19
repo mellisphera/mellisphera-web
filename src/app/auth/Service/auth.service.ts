@@ -53,6 +53,7 @@ export class AuthService {
               }
 
   signIn() {
+    this.login.email = this.login.email.toLowerCase();
     this.loginObs = this.http.post<JwtResponse>(CONFIG.URL + 'api/auth/signin', this.login, httpOptions);
     this.loginObs.subscribe(
       (data) => {
