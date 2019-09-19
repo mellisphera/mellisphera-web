@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
     if (this.signupForm.valid) {
       const data = this.signupForm.value;
       this.signupService.user = data;
-      this.signupService.user.username = this.signupService.user.email.split('@')[0];
+      this.signupService.user.username = this.signupService.user.email.split('@')[0].toLowerCase();
       this.signupService.user.role = new Array<string>('ROLE_STANDARD');
       this.signupService.user.createdAt = new Date();
       this.signupService.signupUser(() => {
