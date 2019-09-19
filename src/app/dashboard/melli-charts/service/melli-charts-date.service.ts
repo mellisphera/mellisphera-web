@@ -20,7 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class MelliChartsDateService {
 
 
-  private rangeDateForRequest: Date[]; // for request
+  public rangeDateForRequest: Date[]; // for request
   /* Display */
   public start: Date;
   public end: Date;
@@ -73,8 +73,35 @@ export class MelliChartsDateService {
     this.rangeDateForRequest[1].setSeconds(0);
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
+  }
 
-
+  getRangeForDatePicker(scale: DataRange): Array<string> {
+    let date = new Date();
+    switch(scale.type){
+      case 'DAYS':
+      case 'DAY':
+        date.setDate((new Date().getDate() - scale.scale));
+        break;
+      case 'MONTHS':
+      case 'MONTH':
+        date.setMonth((new Date().getMonth() - scale.scale));
+        break;
+      case 'YEAR':
+        date.setFullYear(new Date().getFullYear() - 1);
+        break;
+      case 'HOURS':
+      case 'HOUR':
+        date.setHours(new Date().getHours() - scale.scale);
+        break;
+      default:
+        date.setDate(date.getDate() - 15);
+    }
+    let rangeDateForRequest: Date[] = MyDate.getRange(date);
+    rangeDateForRequest[0].setHours(4);
+    rangeDateForRequest[0].setSeconds(0);
+    rangeDateForRequest[1].setHours(4);
+    rangeDateForRequest[1].setSeconds(0);
+    return rangeDateForRequest.map(_date => _date.toDateString());
   }
 
   /**

@@ -41,12 +41,24 @@
     width: 300px !important;
     font-size: 15px !important;
 }
-/* MelliCharts */
-.ng-daterangepicker{
+/* MelliCharts Date range picker*/
+.melliCharts .ng-daterangepicker{
     width: 100% !important;
     height: 45px !important;
     margin-top: 11px !important;
 }
+.melliCharts .e-input{
+    color: white !important;
+    font-weight: 800 !important;
+    font-size: 17px !important;
+}
+.melliCharts .e-range-icon{
+    color: white !important;
+}
+.melliCharts .e-input-group{
+    border-color:white !important;
+}
+
 
 
 @media (max-width: 991px){
