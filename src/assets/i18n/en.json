@@ -43,6 +43,7 @@
         },
         "NEXT": "Next",
         "BACK": "Back",
+        "SKIP": "Dismiss",
         "FINISH": "Finish"
     },
     "NAVBAR": {

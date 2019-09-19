@@ -138,7 +138,9 @@ export class RucherService {
 
     getApiaryByUser(username: string) {
         this.loadingService.loading = true;
-        const ObservableApiaryQuery = [this.getSharingApiaryByUser(this.user.getIdUserLoged()), this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username)];
+        const ObservableApiaryQuery = [
+            this.getSharingApiaryByUser(this.user.getIdUserLoged()), 
+            this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username)];
         Observable.forkJoin(ObservableApiaryQuery).map(elt => {
             return elt.filter(_filter => _filter != null);
         }).subscribe(
@@ -146,7 +148,7 @@ export class RucherService {
                 this.ruchers = apiary.flat().filter(apiary => apiary !== null && apiary.idUsername === this.user.getIdUserLoged());
                 this.sharingApiary = apiary.flat().filter(apiary => apiary.idUsername !== this.user.getIdUserLoged());
                 this.allApiaryAccount = apiary.flat().sort((a, b) => {
-                    return a.name.toLowerCase() < b.name.toLowerCase()? 1: -1;
+                    return a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1;
                 });
                 this.saveSharingApiary();
                 this.rucherSubject.next(this.ruchers);
@@ -156,7 +158,6 @@ export class RucherService {
             }, () => {
                 this.afterRequestApiary();
                 this.currentBackground = this.rucher.photo;
-                this.rucheService.loadHiveByApiary(this.getCurrentApiary());
                 this.rucherSubject.complete();
                 this.loadingService.loading = false;
             }
@@ -251,6 +252,7 @@ export class RucherService {
 
             }
         }
+        this.rucheService.loadHiveByApiary(this.getCurrentApiary());
     }
 
     getRucherNameById(idApiary: string) : RucherModel{

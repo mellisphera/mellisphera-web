@@ -19,6 +19,7 @@ limitations under the License. -->
             </div>
 
             <div class="btn-group">
+                <button type="button" class="btn btn-danger" (click)="cancel()">{{ 'WIZARD.SKIP' | translate }}</button>
                 <button type="button" class="btn btn-secondary" awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>
         </div>
@@ -40,12 +41,14 @@ limitations under the License. -->
                                     class="form-control" id="zipCode">
                             </div>
                         </div>
+                        
                     </div>
                 </form>
 
             </div>
             <div class="btn-group group-btn">
                 <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK' | translate }}</button>
+                <button type="button" class="btn btn-danger" (click)="cancel()">{{ 'WIZARD.SKIP' | translate }}</button>
                 <button type="button" class="btn btn-secondary" [disabled]="apiaryForm.invalid" (click)="subApiary()"
                     awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>
@@ -71,6 +74,7 @@ limitations under the License. -->
             </div>
             <div class="btn-group group-btn">
                 <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK' | translate }}</button>
+                <button type="button" class="btn btn-danger" (click)="cancel()">{{ 'WIZARD.SKIP' | translate }}</button>
                 <button type="button" class="btn btn-secondary" [disabled]="hiveForm.invalid" (click)="subHive()"
                     awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>
@@ -95,6 +99,7 @@ limitations under the License. -->
 
             <div class="btn-group group-btn">
                 <button type="button" class="btn btn-secondary" awPreviousStep>{{ 'WIZARD.BACK' | translate }}</button>
+                <button type="button" class="btn btn-danger" (click)="cancel()">{{ 'WIZARD.SKIP' | translate }}</button>
                 <button type="button" class="btn btn-secondary" [disabled]="sensorForm.invalid" (click)="subSensor()"
                     awNextStep>{{ 'WIZARD.NEXT' | translate }}</button>
             </div>

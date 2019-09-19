@@ -452,13 +452,13 @@ export class GraphGlobal {
    * @returns {String[]}
    * @memberof GraphGlobal
    */
-  getDays(): String[] {
+  getDays(datePicker?: boolean): String[] {
     // If he is French
     if (this.userService.getJwtReponse().country === "FR") {
-      return ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'];
+      return datePicker ? ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa','Di'] : ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'];
       // EN
     } else {
-      return ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+      return datePicker ? ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'] : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
     }
   }
 

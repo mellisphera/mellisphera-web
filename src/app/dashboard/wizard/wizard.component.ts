@@ -126,6 +126,10 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.newFlower.photo = fleur.photo; */
   }
 
+  cancel() {
+    this.userService.setWizardActive(false);
+  }
+
   finishWizard() {
     this.rucherService.createRucher(this.apiary).subscribe((apiary) => {
       if (this.rucherService.ruchers != null) {
@@ -162,9 +166,8 @@ export class WizardComponent implements OnInit, OnDestroy {
    * @memberof WizardComponent
    */
   getTypeFromRef(sensorRef: string): string {
-    console.log(sensorRef);
     const ref = sensorRef.split(':')[0];
-    if (parseInt(ref, 10) === 41){
+    if (parseInt(ref, 10) === 41) {
       return 'T2';
     } else if (parseInt(ref, 10) === 42) {
       return 'T_HR';

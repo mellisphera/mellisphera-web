@@ -23,6 +23,8 @@ import { PipeObservation } from '../../pipe/observation.pipe';
 import { ngfModule } from 'angular-file';
 
 
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -37,7 +39,7 @@ import { ngfModule } from 'angular-file';
     PipeCapteur,
     PipeObservation,
     MyDatePipe,
-    SearchCapteur
+    SearchCapteur,
   ],
   declarations: [
     MyDatePipe,
