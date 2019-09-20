@@ -34,7 +34,6 @@ import { StackMelliChartsService } from './stack/service/stack-melli-charts.serv
 import { StackComponent } from './stack/stack.component';
 import { VitalityComponent } from './vitality/vitality.component';
 import { type } from 'os';
-import { DateRangePickerComponent } from '@syncfusion/ej2-angular-calendars';
 
 const PREFIX_PATH = '/dashboard/melli-charts/';
 
@@ -46,7 +45,6 @@ const PREFIX_PATH = '/dashboard/melli-charts/';
 })
 export class MelliChartsComponent implements OnInit, AfterViewInit {
 
-  @ViewChild("rangeObj") rangeObj: DateRangePickerComponent;
 
   public btnNav: Array<Object>;
   private btnTypeElement: HTMLElement;
@@ -56,8 +54,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   private stackComponent: StackComponent;
   private dateDropdown: HTMLElement;
   private broodComponent: VitalityComponent;
-  public start: Date = new Date ("10/07/2018");
-  public end: Date = new Date ();
   private eltOnClick: EventTarget;
   constructor(public rucheService: RucheService,
     public rucherService: RucherService,
@@ -155,10 +151,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   }
 
-  public onFocus(args:any) {
-    this.rangeObj.show();
-}
-
   ngAfterViewInit(): void {
     this.eltOnClick = document.getElementById('hive');
     this.dateDropdown = document.getElementById('date-dropdown');
@@ -176,12 +168,12 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    * @memberof MelliChartsComponent
    */
   nextDate(): void {
-    const start: Date = new Date(this.melliChartDate.rangeDateForRequest[0]);
-    const end: Date = new Date(this.melliChartDate.rangeDateForRequest[1]);
+    const start: Date = new Date(this.melliChartDate.start);
+    const end: Date = new Date(this.melliChartDate.end);
 
-    this.melliChartDate.rangeDateForRequest[0] = new Date(end.getTime());
-    this.melliChartDate.rangeDateForRequest[1] = new Date(end.getTime() + (this.melliChartDate.end.getTime() - start.getTime()));
-    this.loadDataAfterRangeChange();
+    this.melliChartDate.start = new Date(end.getTime());
+    this.melliChartDate.end = new Date(end.getTime() + (this.melliChartDate.end.getTime() - start.getTime()));
+    this.setDateFromInput();
 
   }
 
@@ -192,17 +184,37 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    */
   previousDate(): void {
     // this.melliChartDate.start.setTime(this.melliChartDate.start.getTime() - this.melliChartDate.end.getTime());
-    const start: Date = new Date(this.melliChartDate.rangeDateForRequest[0]);
-    const end: Date = new Date(this.melliChartDate.rangeDateForRequest[1]);
-    this.melliChartDate.rangeDateForRequest[0]  = new Date(start.getTime() - (end.getTime() - start.getTime()));
-    this.melliChartDate.rangeDateForRequest[1]= new Date(start.getTime());
-    this.loadDataAfterRangeChange();
+    const start: Date = new Date(this.melliChartDate.start);
+    const end: Date = new Date(this.melliChartDate.end);
+    this.melliChartDate.start = new Date(start.getTime() - (end.getTime() - start.getTime()));
+    this.melliChartDate.end = new Date(start.getTime());
+    this.setDateFromInput();
   }
 
 
-
-  setRangeSelect(): void {
-    this.loadDataAfterRangeChange();
+  /**
+   *
+   *
+   * @param {DataRange} rangeSelect
+   * @memberof MelliChartsComponent
+   */
+  setRangeSelect(rangeSelect: DataRange): void {
+    this.melliChartDate.setRange(rangeSelect);
+    if (this.router.url === PREFIX_PATH + 'hive') {
+      this.hiveComponent.setRangeChart();
+    } else if (this.router.url === PREFIX_PATH + 'stack') {
+      this.stackComponent.loadAfterRangeChanged((options: any) => {
+        this.stackService.getEchartInstance().setOption(options, true);
+        this.stackService.getEchartInstance().hideLoading();
+      });
+    } else if (this.router.url === PREFIX_PATH + 'brood') {
+      this.broodComponent.loadAllHiveAfterRangeChange((options: any) => {
+        options.xAxis[0].min = this.melliChartDate.getRangeForReqest()[0];
+        options.xAxis[0].max = this.melliChartDate.getRangeForReqest()[1];
+        this.stackService.getBroodChartInstance().setOption(options, true);
+        this.stackService.getBroodChartInstance().hideLoading();
+      });
+    }
   }
 
   getHiveByApiary(idApiary: string): RucheInterface[] | boolean {
@@ -216,7 +228,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   onActivate(componentRef: Component) {
     if (componentRef instanceof HiveComponent) {
       this.hiveComponent = componentRef;
-      
     } else if(componentRef instanceof StackComponent) {
       this.stackComponent = componentRef;
     } else if (componentRef instanceof VitalityComponent) {
@@ -252,7 +263,10 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  loadDataAfterRangeChange(): void {
+  setDateFromInput(): void {
+    let start = this.melliChartDate.start;
+    let end = this.melliChartDate.end;
+    this.melliChartDate.setRangeForRequest([start, end]);
     if (this.router.url === PREFIX_PATH + 'hive') {
       this.hiveComponent.setRangeChart();
     } else if (this.router.url === PREFIX_PATH + 'stack') {

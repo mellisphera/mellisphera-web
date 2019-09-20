@@ -20,27 +20,8 @@ limitations under the License. -->
     <ul class="nav nav-date navbar-nav navbar-right">
       <li><button type="button" (click)="previousDate()" class="btn btn-info date-arrow"><i
             class="fa fa-arrow-circle-left" id="previous-date"></i></button></li>
-      <li id="dropdown" class="melliCharts">
-          <ejs-daterangepicker 
-              (change)="setRangeSelect()"
-              #rangeObj 
-              (click)="onFocus($event)"
-              [enablePersistence]="false"
-              [firstDayOfWeek]='1'
-              [(value)]="melliChartDate.rangeDateForRequest"
-              id='daterangepicker' 
-              placeholder='Select a range'>
-              <e-presets>
-                  <e-preset *ngFor="let range of melliChartDate.ranges" 
-                  [label]=" range.scale + ' ' + getRangeBYLang(range) | lowercase" 
-                  [start]="melliChartDate.getRangeForDatePicker(range)[0]" 
-                  [end]="melliChartDate.getRangeForDatePicker(range)[1]">
-                </e-preset>
-              </e-presets>
-
-          </ejs-daterangepicker>
-
-<!--         <div class="dropdown" id="date-dropdown">
+      <li id="dropdown">
+        <div class="dropdown" id="date-dropdown">
           <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
               class="fa fa-calendar"></i>{{ melliChartDate.start | myDate: 'DAILY' }} <span id="arrow">&#8680;</span>
             {{ melliChartDate.end | myDate: 'DAILY' }}
@@ -77,7 +58,7 @@ limitations under the License. -->
               </ul>
             </div>
           </div>
-        </div> -->
+        </div>
       </li>
       <li><button type="button" (click)="nextDate()" class="btn btn-info date-arrow"><i id="next-date"
             class="fa fa-arrow-circle-right"></i></button></li>

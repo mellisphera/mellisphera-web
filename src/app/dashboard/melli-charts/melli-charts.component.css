@@ -38,7 +38,6 @@ limitations under the License. */
 }
 .date-arrow{
     border: none;
-    margin-top: 8px !important;
     padding: 0px !important;
 }
 .date-arrow .fa{
@@ -65,15 +64,12 @@ nav[role=admin-navigation] {
      margin-right: 10px;
      display: flex;
      justify-content: center;
-     height: 100%;
-     margin-bottom: 6px;
      width: 38%;
+     margin-top: -8px;
 }
 #dropdown{
     width: 100%;
-    padding-top: 8px;
-/*     background-color: white;
- */}
+}
 .nav-date .btn-primary {
     width: 100% !important;
 }
