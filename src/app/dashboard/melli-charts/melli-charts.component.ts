@@ -34,6 +34,7 @@ import { StackMelliChartsService } from './stack/service/stack-melli-charts.serv
 import { StackComponent } from './stack/stack.component';
 import { VitalityComponent } from './vitality/vitality.component';
 import { type } from 'os';
+import { DateRangePickerComponent } from '@syncfusion/ej2-angular-calendars';
 
 const PREFIX_PATH = '/dashboard/melli-charts/';
 
@@ -45,6 +46,7 @@ const PREFIX_PATH = '/dashboard/melli-charts/';
 })
 export class MelliChartsComponent implements OnInit, AfterViewInit {
 
+  @ViewChild("rangeObj") rangeObj: DateRangePickerComponent;
 
   public btnNav: Array<Object>;
   private btnTypeElement: HTMLElement;
@@ -152,6 +154,10 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     }
 
   }
+
+  public onFocus(args:any) {
+    this.rangeObj.show();
+}
 
   ngAfterViewInit(): void {
     this.eltOnClick = document.getElementById('hive');

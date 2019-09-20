@@ -73,14 +73,9 @@ limitations under the License. -->
 
             <label class="example-input-wrapper">
               {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
-              <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
-              <owl-date-time #dt></owl-date-time>
-              <!--               <input class="dt-picker" [owlDateTimeTrigger]="newDate" [owlDateTime]="newDate">
-              <owl-date-time [pickerType]="'calendar'" #newDate></owl-date-time>
-
-              <input class="dt-picker" [owlDateTimeTrigger]="newHours" [owlDateTime]="newHours">
-              <owl-date-time [pickerType]="'timer'" #newHours></owl-date-time> -->
             </label><br />
+            <ejs-datetimepicker formControlName="date"></ejs-datetimepicker>
+
             <!--             <input type="date" formControlName="date"><br />
    --> <label for="recipient-obs" class="col-form-label">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
@@ -117,15 +112,9 @@ limitations under the License. -->
           <div class="form-group">
             <label class="example-input-wrapper">
               {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
-              <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dtUpdate"
-                [owlDateTime]="dtUpdate">
-              <owl-date-time #dtUpdate></owl-date-time>
-              <!--               <input class="dt-picker" [owlDateTimeTrigger]="dUpdatet1" [owlDateTime]="dUpdatet1">
-              <owl-date-time [pickerType]="'calendar'" #dUpdatet1></owl-date-time>
-
-              <input class="dt-picker" [owlDateTimeTrigger]="HdtUpdate" [owlDateTime]="HdtUpdate">
-              <owl-date-time [pickerType]="'timer'" #HdtUpdate></owl-date-time> -->
             </label><br />
+            <ejs-datetimepicker formControlName="date"></ejs-datetimepicker>
+
             <label for="recipient-editobs"
               class="col-form-label">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>

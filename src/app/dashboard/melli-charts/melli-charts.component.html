@@ -23,7 +23,9 @@ limitations under the License. -->
       <li id="dropdown" class="melliCharts">
           <ejs-daterangepicker 
               (change)="setRangeSelect()"
-              #ejDateRangePickers
+              #rangeObj 
+              (click)="onFocus($event)"
+              [enablePersistence]="false"
               [firstDayOfWeek]='1'
               [(value)]="melliChartDate.rangeDateForRequest"
               id='daterangepicker' 

@@ -21,7 +21,7 @@ import { SearchCapteur } from '../../pipe/capteur.pipe';
 import { PipeCapteur } from '../../pipe/capteur.pipe';
 import { PipeObservation } from '../../pipe/observation.pipe';
 import { ngfModule } from 'angular-file';
-import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { DateRangePickerModule, DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
 
 
 
@@ -40,6 +40,7 @@ import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
     PipeCapteur,
     PipeObservation,
     DateRangePickerModule,
+    DateTimePickerModule,
     MyDatePipe,
     SearchCapteur,
   ],

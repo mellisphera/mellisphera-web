@@ -103,20 +103,20 @@ limitations under the License. -->
           <div class="form-group">
             <!-- <label for="sentence" class="col-form-label">Observations/Actions</label><br /> -->
             <!-- <input type="date" formControlName="date"> -->
-            <label class="example-input-wrapper">
+<!--             <label class="example-input-wrapper">
               {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
-                            <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
-              <owl-date-time #dt></owl-date-time>
-<!--               <input formControlName="date" class="dt-picker" [owlDateTimeTrigger]="newDt" [owlDateTime]="newDt">
-              <owl-date-time [pickerType]="'calendar'" #newDt></owl-date-time>
 
-              <input formControlName="hours" class="dt-picker" [owlDateTimeTrigger]="newHours" [owlDateTime]="newHours">
-              <owl-date-time [pickerType]="'timer'" #newHours></owl-date-time> -->
-            </label><br />
+            </label><br /> -->
+            <!--                             <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+              <owl-date-time #dt></owl-date-time> -->
+            <ejs-datetimepicker formControlName="date"></ejs-datetimepicker>
+
             <label class="example-input-wrapper">
               {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}
-              <input formControlName="sentence" type="text" class="form-control" id="sentence">
             </label>
+<!--             <input formControlName="sentence" type="text" class="form-control" id="sentence"> -->
+            <textarea formControlName="sentence" type="text" class="form-control"></textarea>
+
           </div>
 
 
@@ -168,20 +168,17 @@ limitations under the License. -->
             </div>
           </div>
           <div class="form-group">
-            <label class="example-input-wrapper">
+<!--             <label class="example-input-wrapper">
               {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
               <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dtUpdate"
                 [owlDateTime]="dtUpdate">
               <owl-date-time #dtUpdate></owl-date-time>
-<!--               <input class="dt-picker" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1">
-              <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+            </label><br /> -->
+            <ejs-datetimepicker formControlName="date"></ejs-datetimepicker>
 
-              <input class="dt-picker" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2">
-              <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>  -->
-            </label><br />
             <label for="recipient-editobs"
               class="col-form-label">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
-            <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
+              <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
           </div>
         </form>
       </div>
