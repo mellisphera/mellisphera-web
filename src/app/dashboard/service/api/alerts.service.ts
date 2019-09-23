@@ -319,6 +319,9 @@ export class AlertsService {
 
     // Here there are all the alerts pictos
     getPicto(nomPicto: string, cellPoint: Array<number>): Array<Object> {
+/*         if (nomPicto === 'Tmin') {
+            console.log(this.mapPictoSvg.get(nomPicto));
+        } */
         try {
             return this.mapPictoSvg.get(nomPicto).map(_alert => {
                 return {

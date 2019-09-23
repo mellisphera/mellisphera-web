@@ -788,11 +788,13 @@ export class GraphGlobal {
               img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
             } else {
               img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
+              console.log(type);
             }
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
+            console.log(_singleData.message);
             return {
               name: img,
-              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.sentence) : this.sliceTextToolip(_singleData.message),
+              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.sentence) : _singleData.message,
               unit: ''
             }
           }));

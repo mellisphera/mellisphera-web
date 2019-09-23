@@ -877,6 +877,7 @@ export class DailyManagerService {
     ]
     Observable.forkJoin(obs).subscribe(
       _data => {
+        console.log(_data[1].map(_elt => [_elt.date,_elt.type,   _elt.message]));
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.baseOptionEnv);
