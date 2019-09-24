@@ -58,6 +58,10 @@ limitations under the License. */
     display: flex;
     flex-wrap: wrap;
 }
+.titleCalendar{
+    text-align: center;
+    font-family: 'Poppins';
+}
 #daily-int, #daily-other, #daily-env {
     width: calc(100% / 3);
     position: relative;

@@ -55,8 +55,8 @@ const ENV = 'ENV';
 export class DailyComponent implements OnInit, AfterViewInit {
 
   private currentEltTypeDaily: HTMLElement;
-  private currentTypeDailyDevice: Tools;
-  private currentTypeDailyEnv: Tools;
+  public currentTypeDailyDevice: Tools;
+  public currentTypeDailyEnv: Tools;
   public calendarElements: HTMLCollection;
   public currentTypeDailyOther: Tools;
   public currentDeviceTextPeriodCalendar: string;

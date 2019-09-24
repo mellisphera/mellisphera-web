@@ -20,6 +20,7 @@ limitations under the License. -->
  -->
       </ul>
     </div>
+    <h3 class="titleCalendar">{{ graphGlobal.getTooltipByType(currentTypeDailyDevice)}}</h3>
     <div id="calendar-device" class="chart calendar"></div>
 <!--     <div>
       <p style="text-align: center;">{{ currentDeviceTextPeriodCalendar }}{{ dailyManager.meanPeriodDevice.value }}
@@ -46,6 +47,7 @@ limitations under the License. -->
 
       </div>
     </div>
+    <h3 class="titleCalendar">{{ graphGlobal.getTooltipByType(currentTypeDailyEnv)}}</h3>
     <div id="calendar-env" class="chart calendar"></div>
   </div>
   <div class="mean-grup" id="daily-other">
@@ -57,6 +59,7 @@ limitations under the License. -->
  -->
       </ul>
     </div>
+    <h3 class="titleCalendar" >{{ graphGlobal.getTooltipByType(currentTypeDailyOther)}}</h3>
     <div id="calendar-other" class="chart calendar"></div>
 <!--     <div class="mean-grup">
       <ng-container *ngIf="displayMeanOtherCalendarIf()">
