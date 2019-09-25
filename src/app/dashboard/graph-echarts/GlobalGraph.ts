@@ -833,12 +833,16 @@ export class GraphGlobal {
    */
   sliceTextToolip(text: string): string {
     let originString: string = text;
-    let newString: string;
-    while(originString.length >= 100) {
-      newString += originString.slice(0, 100) + '<br/>';
-      originString = originString.replace(originString.slice(0, 100), '');
-    }
-    return (newString + originString).replace(/undefined/g, '');
+    if (/\n/g.test(text)) {
+      return originString.replace(/\n/g, '<br/>');
+    } else {
+      let newString: string;
+      while(originString.length >= 100) {
+        newString += originString.slice(0, 100) + '<br/>';
+        originString = originString.replace(originString.slice(0, 100), '');
+      }
+      return (newString + originString).replace(/undefined/g, '');
+     }
   }
   /**
    *
