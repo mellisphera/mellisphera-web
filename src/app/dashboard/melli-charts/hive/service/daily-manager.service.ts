@@ -223,16 +223,17 @@ export class DailyManagerService {
     const weatherObs: Array<Observable<any>> = [this.weatherService.getCurrentDailyWeather(idApiary, range), this.weatherService.getForecastDailyWeather(idApiary, range)];
     Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
       _weather => {
+        let weather = _weather.filter(_elt => _elt.value[0].mainDay !== 'Undefined');
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.series = this.removeDataAllseries(option.series);
-          this.getSerieByData(_weather, type.name, SERIES.custom, (serieComplete: any) => {
+          this.getSerieByData(weather, type.name, SERIES.custom, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             option.series[index].name = serieComplete.name;
             option.series[index].data = serieComplete.data;
           });
           option.calendar.range = range;
-          // option.series[0].data = _weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
+          // option.series[0].data = weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
         } else {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
@@ -240,7 +241,7 @@ export class DailyManagerService {
           option.legend = Object.assign({}, BASE_OPTIONS.legend);
           option.legend.selectedMode = 'single';
           // option.legend.selectedMode = 'single';
-          this.getSerieByData(_weather, type.name, SERIES.custom, (serieComplete) => {
+          this.getSerieByData(weather, type.name, SERIES.custom, (serieComplete) => {
             serieComplete.renderItem = (params, api) => {
               let cellPoint = api.coord(api.value(0));
               let cellWidth = params.coordSys.cellWidth;
