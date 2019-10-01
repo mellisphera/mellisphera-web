@@ -76,7 +76,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
 
     getApiaryNameById(idApiary: string) {
         try {
-            return this.rucherService.ruchers.filter(apiary => apiary.id === idApiary)[0];
+            return this.rucherService.ruchers.filter(apiary => apiary._id === idApiary)[0];
         } catch (e) {
             return this.rucherService.rucher;
         }
@@ -174,7 +174,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
         this.editCapteurCheckbox = (event.target.value === 'ruche');
     }
     createCapteur() {
-        if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+        if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
             const formValue = this.newCapteurForm.value;
             /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIBLE */
             const sensorType = document.querySelector('#typeSensor > option').innerHTML;
@@ -227,12 +227,12 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
     //DELETE CAPTEUR
 
     deleteCapteur() {
-        if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+        if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
             const formValue = this.editCapteurForm.value;
             const idTemp = this.capteurService.capteur.id;
             if (formValue.checkbox !== 'stock') {
                 this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
-                this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+                this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary)._id;
                 this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
                 this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
                 const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
@@ -269,12 +269,12 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
     }
 
     updateCapteur() {
-        if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+        if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
             const formValue = this.editCapteurForm.value;
             const idTemp = this.capteurService.capteur.id;
             if (formValue.checkbox !== 'stock') {
                 this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
-                this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+                this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary)._id;
                 this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
                 this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
                 const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
@@ -290,7 +290,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
             this.capteurService.capteur.id = idTemp;
             this.initForm();
             this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
-                if((this.hiveSensorSelect.id === this.rucheService.getCurrentHive().id) && (this.apiarySensorSelect.id === this.rucherService.getCurrentApiary())){
+                if((this.hiveSensorSelect.id === this.rucheService.getCurrentHive().id) && (this.apiarySensorSelect._id === this.rucherService.getCurrentApiary())){
                     this.capteurService.capteursByHive[this.indexSensorSelect] = this.capteurService.capteur;
                     this.capteurService.emitSensorSubject();
                 }else{
@@ -308,7 +308,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
     }
 
     onSelectRucher() {
-        this.rucherService.rucheService.getHivesByApiary(this.apiarySensorSelect.id);
+        this.rucherService.rucheService.getHivesByApiary(this.apiarySensorSelect._id);
     }
 
     initForm() {

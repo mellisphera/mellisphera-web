@@ -90,17 +90,18 @@ export class ManageApiarysComponent implements OnInit, OnDestroy {
     this.notify = notifyService;
 
     this.apiaryUpdate = this.newApiary = {
-      id: null,
-      latitude: '',
-      longitude: '',
-      idUsername : '',
+      _id: null,
+      userId : '',
       name: '',
       description: '',
-      createdAt: null,
+      createDate: null,
       photo: 'void',
       username: '',
-      codePostal: '',
-      ville: ''
+      zipCode: '',
+      city: '',
+      privateApiary: false,
+      countryCode: '',
+      dataLastReceived: null
     };
 
     this.editPhotoApiary = null;
@@ -131,13 +132,13 @@ export class ManageApiarysComponent implements OnInit, OnDestroy {
     if (this.photoApiary == null) {
         this.newApiary.photo = './assets/imageClient/testAccount.png';
     }
-    this.newApiary.id = null;
+    this.newApiary._id = null;
     this.newApiary.description = formValue.description;
     this.newApiary.name = formValue.name;
-    this.newApiary.ville = formValue.ville;
-    this.newApiary.codePostal = formValue.codePostal;
-    this.newApiary.idUsername = this.userService.getIdUserLoged();
-    this.newApiary.createdAt = new Date();
+    this.newApiary.city = formValue.ville;
+    this.newApiary.zipCode = formValue.codePostal;
+    this.newApiary.userId = this.userService.getIdUserLoged();
+    this.newApiary.createDate = new Date();
     this.newApiary.username = this.username;
     this.initForm();
     this.rucherService.createRucher(this.newApiary).subscribe((apiary) => {
@@ -146,7 +147,7 @@ export class ManageApiarysComponent implements OnInit, OnDestroy {
         } else {
             this.rucherService.ruchers = new Array(apiary);
         }
-        this.rucherService.saveCurrentApiaryId(apiary.id);
+        this.rucherService.saveCurrentApiaryId(apiary._id);
     }, () => { }, () => {
         this.rucherService.emitApiarySubject();
         this.rucheService.getHivesByApiary(this.rucherService.getCurrentApiary());
@@ -167,8 +168,8 @@ editApiaryClicked(apiary : RucherModel) {
   const donnée = {
       name: apiary.name,
       description: apiary.description,
-      ville: apiary.ville,
-      codePostal: apiary.codePostal,
+      ville: apiary.city,
+      codePostal: apiary.zipCode,
       validate: ''
   };
   this.rucherForm.setValue(donnée);
@@ -176,25 +177,25 @@ editApiaryClicked(apiary : RucherModel) {
 
 //Edit Apiary
 onEditApiary() {
-  if (this.userService.checkWriteObject(this.apiaryToEdit.idUsername)) {
+  if (this.userService.checkWriteObject(this.apiaryToEdit.userId)) {
     const formValue = this.rucherForm.value;
     const index = this.rucherService.ruchers.indexOf(this.rucherService.rucherSelectUpdate);
     this.apiaryUpdate = formValue;
-    this.apiaryUpdate.id = this.rucherService.rucherSelectUpdate.id;
+    this.apiaryUpdate._id = this.rucherService.rucherSelectUpdate._id;
     if (this.photoApiary === null || this.photoApiary === undefined) {
         this.apiaryUpdate.photo = this.rucherService.rucherSelectUpdate.photo
     } else {
         this.apiaryUpdate.photo = this.editPhotoApiary;
     }
     this.apiaryUpdate.username = this.rucherService.rucherSelectUpdate.username;
-    this.rucherService.updateRucher(this.rucherService.rucherSelectUpdate.id, this.apiaryUpdate).subscribe(
+    this.rucherService.updateRucher(this.rucherService.rucherSelectUpdate._id, this.apiaryUpdate).subscribe(
         () => { }, () => { }, () => {
             this.rucherService.ruchers[index] = this.apiaryUpdate;
             this.rucherService.emitApiarySubject();
             this.photoApiary = null;
             this.editPhotoApiary = null;
             this.rucherService.rucherSelectUpdate = this.apiaryUpdate;
-            if(this.rucherService.rucherSelectUpdate.id === this.rucherService.getCurrentApiary()){
+            if(this.rucherService.rucherSelectUpdate._id === this.rucherService.getCurrentApiary()){
               this.rucherService.rucher = this.apiaryUpdate;
           }
             if(this.userService.getJwtReponse().country === "FR"){
@@ -212,7 +213,7 @@ onEditApiary() {
 
 // delete apiary
 deleteApiary(apiary : RucherModel) {
-  if (this.userService.checkWriteObject(apiary.idUsername)) {
+  if (this.userService.checkWriteObject(apiary.userId)) {
     this.rucherService.deleteRucher(apiary).subscribe(() => { }, () => { }, () => {
         const index = this.rucherService.ruchers.indexOf(apiary);
         this.rucherService.ruchers.splice(index, 1);
@@ -222,10 +223,10 @@ deleteApiary(apiary : RucherModel) {
         }else{
             this.notify.notify('success', 'Deleted Apaiary');
         }
-        if ((this.rucherService.ruchers.length > 0) && (apiary.id === this.rucherService.getCurrentApiary())) {
+        if ((this.rucherService.ruchers.length > 0) && (apiary._id === this.rucherService.getCurrentApiary())) {
             this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
-            this.rucherService.saveCurrentApiaryId(this.rucherService.rucher.id);
-            this.rucheService.getHivesByApiary(this.rucherService.rucher.id);
+            this.rucherService.saveCurrentApiaryId(this.rucherService.rucher._id);
+            this.rucheService.getHivesByApiary(this.rucherService.rucher._id);
         }
         if (this.rucherService.ruchers.length < 1) {
             this.rucherService.initRucher();

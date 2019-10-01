@@ -200,7 +200,7 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
       id : '',
       name : '',
       description : '',
-      idUsername : '',
+      userId : '',
       username : '',
       idApiary: '',
       apiaryName: '',

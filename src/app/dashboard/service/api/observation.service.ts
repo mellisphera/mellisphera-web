@@ -205,11 +205,11 @@ export class ObservationService {
   /**
    *
    *
-   * @param {string} idUsername
+   * @param {string} userId
    * @memberof ObservationService
    */
-  getObservationByIdUsername(idUsername: string): Observable<Observation[]>{
-    return this.http.get<Observation[]>(CONFIG.URL + 'report/user/' + idUsername);
+  getObservationByuserId(userId: string): Observable<Observation[]>{
+    return this.http.get<Observation[]>(CONFIG.URL + 'report/user/' + userId);
   }
   
   getPictoInspect(typeInspect: string, cellPoint: Array<number>) {

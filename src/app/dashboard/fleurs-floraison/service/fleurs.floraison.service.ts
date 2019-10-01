@@ -212,13 +212,13 @@ export class    FleursFloraisonService {
         this.newFlower.presence = "";
         this.newFlower.username = this.userService.getUser();
         this.newFlower.photo = fleur.photo;
-        this.http.put(CONFIG.URL+'flowersOb/add/'+this.rucherService.rucher.id,this.newFlower).subscribe(
+        this.http.put(CONFIG.URL+'flowersOb/add/'+this.rucherService.rucher._id,this.newFlower).subscribe(
             ()=>{},
             (err)=>{
                 console.log(err);
             },
             ()=>{
-                this.getUserFleur(this.rucherService.rucherSelectUpdate.id);
+                this.getUserFleur(this.rucherService.rucherSelectUpdate._id);
             }
         );
     }
@@ -272,7 +272,7 @@ export class    FleursFloraisonService {
                 console.log(err);
             },
             ()=>{
-                this.getUserFleur(this.rucherService.rucher.id);
+                this.getUserFleur(this.rucherService.rucher._id);
             }
         );
     }

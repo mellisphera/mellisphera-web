@@ -134,7 +134,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       id: null,
       name: '',
       description: '',
-      idUsername: '',
+      userId: '',
       username: '',
       idApiary: '',
       hivePosX: '',
@@ -295,7 +295,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     // For the hive alerts
     this.checkIfInfoHiveComponent().then(status => {
       this.infoHiveComponent.alertsHiveComponent.initCalendar(ruche);
-      if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
         this.infoHiveComponent.alertsHiveComponent.readAllHiveAlerts(ruche);
       }
     }).catch(err => {
@@ -346,7 +346,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
    * @memberof HomeComponent
    */
   onMoveEnd(event, ruche: RucheInterface, id:number): void {
-    if (this.login.checkWriteObject(ruche.idUsername)) {
+    if (this.login.checkWriteObject(ruche.userId)) {
       const container = document.getElementById("cadre");
       const widthcontainer = container.offsetWidth;
       const heightcontainer = container.offsetHeight;
@@ -362,7 +362,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       let rucheUpdate = Object.assign({}, ruche);
       rucheUpdate.hivePosX = '' + this.position.x;
       rucheUpdate.hivePosY = '' + this.position.y;
-      if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+      if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
         this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
           () => { }, () => { }, () => {
             // ruche.hivePosX = rucheUpdate.hivePosX;
@@ -443,7 +443,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
    * @memberof HomeComponent
    */
   saveBackground(): void {
-    this.rucherService.updateBackgroundApiary(this.rucherService.rucher.id);
+    this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
     this.photoApiary = null;
   }
 
@@ -599,7 +599,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   // pour editer une ruche
   onEditeRuche() {
     const formValue = this.newRucheForm.value;
-    this.selectHive.idApiary = this.rucherService.rucherSelectUpdate.id;
+    this.selectHive.idApiary = this.rucherService.rucherSelectUpdate._id;
     this.selectHive.name = formValue.nomRuche;
     this.selectHive.description = formValue.descriptionRuche;
     this.rucheService.updateRuche(this.selectHive).subscribe(() => { }, () => { }, () => {

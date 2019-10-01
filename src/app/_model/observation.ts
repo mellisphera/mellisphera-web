@@ -16,7 +16,7 @@ export interface Observation {
     sentence: string;
     idApiary?: string;
     idHive: string;
-    idUsername: string;
+    userId: string;
     idLHive?: Array<string>;
     Lruche: Array<string>;
     nluScore?: string;

@@ -101,13 +101,13 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   }
 
   createObservation() {
-    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+    if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.ObservationForm.value;
       this.newObs = formValue;
       this.newObs.type = 'HiveObs';
       this.newObs.idHive = this.rucheService.getCurrentHive().id;
       this.newObs.idLHive = [this.rucheService.getCurrentHive().id];
-      this.newObs.idUsername = this.userService.getIdUserLoged();
+      this.newObs.userId = this.userService.getIdUserLoged();
       this.ObservationForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsHive.push(obs);
@@ -128,13 +128,13 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     }
   }
   createAction() {
-    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+    if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.ObservationForm.value;
       this.newObs = formValue;
       this.newObs.type = 'HiveAct';
       this.newObs.idHive = this.rucheService.getCurrentHive().id;
       this.newObs.idLHive = [this.rucheService.getCurrentHive().id];
-      this.newObs.idUsername = this.userService.getIdUserLoged();
+      this.newObs.userId = this.userService.getIdUserLoged();
       this.ObservationForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsHive.push(obs);
@@ -165,7 +165,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   }
 
   onEditObservation() {
-    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+    if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.ObservationForm.value;
       this.newObs.sentence = formValue.sentence;
       this.newObs.date = formValue.date;
@@ -187,7 +187,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   }
 
   deleteObsR() {
-    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+    if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.ObservationForm.value;
       this.newObs.sentence = formValue.sentence;
       this.newObs.date = formValue.date;

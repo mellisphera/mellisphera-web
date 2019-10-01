@@ -109,7 +109,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @memberof ApiaryNotesComponent
    */
   mvToActions() {
-    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+    if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       this.newObs.type = this.typeToMv === 0 ? 'HiveObs' : 'HiveAct';
       this.newObs.idApiary = null;
       this.newObs.idHive = this.hiveToMv.id;
@@ -133,12 +133,12 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @memberof ApiaryNotesComponent
    */
   createObservation() {
-    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+    if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.observationForm.value;
       this.newObs = formValue;
-      this.newObs.idApiary = this.rucherService.rucher.id;
+      this.newObs.idApiary = this.rucherService.rucher._id;
       this.newObs.type = 'ApiaryObs';
-      this.newObs.idUsername = this.userService.getIdUserLoged();
+      this.newObs.userId = this.userService.getIdUserLoged();
       this.initForm();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsApiary.push(obs);
@@ -162,7 +162,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @memberof ApiaryNotesComponent
    */
   onEditObservation() {
-    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+    if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.observationForm.value;
       this.newObs.sentence = formValue.sentence;
       this.newObs.date = formValue.date;
@@ -188,7 +188,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @memberof ApiaryNotesComponent
    */
   deleteObs() {
-    if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+    if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       this.observationService.deleteObservation(this.newObs.id).subscribe(() => { }, () => { }, () => {
         const index = this.observationService.observationsApiary.indexOf(this.newObs);
         this.observationService.observationsApiary.splice(index, 1);

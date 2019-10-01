@@ -57,7 +57,7 @@ export class RucheService {
       id : null,
       name : '',
       description : '',
-      idUsername : '',
+      userId : '',
       username : '',
       idApiary: '',
       apiaryName: '',
@@ -156,7 +156,7 @@ export class RucheService {
     * @description without hives shared 
     */
    getUserHive(): RucheInterface[] {
-    return this.ruches.filter(hive => hive.idUsername === this.user.getIdUserLoged());
+    return this.ruches.filter(hive => hive.userId === this.user.getIdUserLoged());
    }
 
 

@@ -102,7 +102,7 @@ export class StackService {
       id : '',
       name : '',
       description : '',
-      idUsername : '',
+      userId : '',
       username : '',
       idApiary: '',
       apiaryName: '',

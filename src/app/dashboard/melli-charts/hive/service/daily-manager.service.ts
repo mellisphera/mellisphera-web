@@ -643,6 +643,7 @@ export class DailyManagerService {
     // this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(idHive, this.rangeSevenDay), false, type);
     this.dailyHService.getTempIntMaxByHive(idHive, range).subscribe(
       _tMax => {
+        console.log(_tMax);
         this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(idHive, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
@@ -764,6 +765,7 @@ export class DailyManagerService {
   getChartBrood(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getBroodByHive(idHive, range).subscribe(
       _brood => {
+        console.log(_brood);
         this.getLastDayForMeanValue(this.dailyHService.getBroodByHive(idHive, this.rangeSevenDay), true, type);
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (rangeChange) {

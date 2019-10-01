@@ -85,7 +85,7 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
       id: null,
       name: '',
       description: '',
-      idUsername : '',
+      userId : '',
       username: '',
       idApiary: '',
       hivePosX: '',
@@ -113,9 +113,9 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
 
   //Pour effacer une ruche
   deleteRuche(ruche: RucheInterface, apiary : RucherModel) {
-    if (this.userService.checkWriteObject(apiary.idUsername)) {
+    if (this.userService.checkWriteObject(apiary.userId)) {
       this.rucheService.deleteRuche(ruche).subscribe(() => { }, () => { }, () => {
-        if ((apiary.id === this.rucherService.getCurrentApiary())){
+        if ((apiary._id === this.rucherService.getCurrentApiary())){
           let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(ruche.id);
           this.rucheService.ruches.splice(hiveIndexUpdate,1);
         }
@@ -147,10 +147,10 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
   createRuche() {
     const formValue = this.newRucheForm.value;
     this.selectHive.id = null;
-    this.selectHive.idApiary = this.currentApiary.id;
+    this.selectHive.idApiary = this.currentApiary._id;
     this.selectHive.description = formValue.descriptionRuche;
     this.selectHive.name = formValue.nomRuche;
-    this.selectHive.idUsername = this.userService.getIdUserLoged();
+    this.selectHive.userId = this.userService.getIdUserLoged();
     this.selectHive.apiaryName = this.currentApiary.name;
     this.selectHive.username = this.username.toLowerCase();
     this.initForm();
@@ -182,19 +182,19 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
   }
   // pour editer une ruche
   onEditeRuche() {
-    if (this.userService.checkWriteObject(this.apiaryToEdit.idUsername)) {
+    if (this.userService.checkWriteObject(this.apiaryToEdit.userId)) {
       const formValue = this.newRucheForm.value;
       this.selectHive = this.currentRuche;
-      this.selectHive.idApiary = this.rucherService.rucherSelectUpdate.id;
+      this.selectHive.idApiary = this.rucherService.rucherSelectUpdate._id;
       this.selectHive.name = formValue.nomRuche;
       this.selectHive.description = formValue.descriptionRuche;
       this.rucheService.updateRuche(this.selectHive).subscribe(() => { }, () => { }, () => {
         // update for homePage
-        if ((this.selectHive.idApiary === this.rucherService.getCurrentApiary()) && (this.currentApiary.id === this.rucherService.getCurrentApiary())) {
+        if ((this.selectHive.idApiary === this.rucherService.getCurrentApiary()) && (this.currentApiary._id === this.rucherService.getCurrentApiary())) {
           let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(this.selectHive.id);
           this.rucheService.ruches[hiveIndexUpdate] = this.selectHive;
           this.rucheService.emitHiveSubject();
-        } else if((this.currentApiary.id === this.rucherService.getCurrentApiary())){
+        } else if((this.currentApiary._id === this.rucherService.getCurrentApiary())){
           let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(this.selectHive.id);
           this.rucheService.ruches.splice(hiveIndexUpdate, 1);
           this.rucheService.emitHiveSubject();
@@ -221,8 +221,8 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
     const donnée = {
       nom: this.rucherService.rucher.name,
       description: this.rucherService.rucher.description,
-      ville: this.rucherService.rucher.ville,
-      codePostal: this.rucherService.rucher.codePostal,
+      ville: this.rucherService.rucher.city,
+      codePostal: this.rucherService.rucher.zipCode,
       validate: ''
     };
     this.rucherForm.setValue(donnée);

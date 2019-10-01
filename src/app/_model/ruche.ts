@@ -15,7 +15,7 @@ export interface RucheInterface {
     id?: string;
     name: string;
     description: string;
-    idUsername : string;
+    userId : string;
     username: string;
     apiaryName?: string;
     idApiary: string;

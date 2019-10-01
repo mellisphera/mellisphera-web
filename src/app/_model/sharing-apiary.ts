@@ -13,7 +13,7 @@ import { RucherModel } from "./rucher-model";
 
 export interface SharingApiary {
     id: string;
-    idUsername: string;
+    userId: string;
     sharingApiary: Map<string, RucherModel>;
 
 }

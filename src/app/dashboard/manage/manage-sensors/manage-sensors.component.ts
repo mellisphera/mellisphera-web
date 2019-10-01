@@ -81,7 +81,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
 
   getApiaryNameById(idApiary: string) {
       try {
-          return this.rucherService.ruchers.filter(apiary => apiary.id === idApiary)[0];
+          return this.rucherService.ruchers.filter(apiary => apiary._id === idApiary)[0];
       } catch (e) {
           return this.rucherService.rucher;
       }
@@ -95,7 +95,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
       // Hive init
       this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
           this.rucherService.rucheService.ruchesAllApiary = ruches;
-          this.hivesSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.apiarySensorForm.id);
+          this.hivesSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.apiarySensorForm._id);
           if(this.hivesSensorForm.length !== 0){
               this.hiveSensorSelect = this.hivesSensorForm[0];
           }
@@ -169,7 +169,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
       this.editCapteurCheckbox = (event.target.value === 'ruche');
   }
   createCapteur() {
-    if (this.userService.checkWriteObject(this.apiarySensorForm.idUsername)) {
+    if (this.userService.checkWriteObject(this.apiarySensorForm.userId)) {
         const formValue = this.newCapteurForm.value;
         /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIBLE */
         const sensorType = document.querySelector('#typeSensor > option').innerHTML;
@@ -177,7 +177,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
         this.capteurService.initCapteur();
         if (formValue.checkbox !== 'stock') {
             this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
-            this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+            this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary)._id;
             this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
             this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
             const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
@@ -245,7 +245,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
       const idTemp = this.capteurService.capteur.id;
       if (formValue.checkbox !== 'stock') {
           this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
-          this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary).id;
+          this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary)._id;
           this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
           this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
           const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
@@ -271,7 +271,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
   }
 
   onSelectRucher() {
-    this.hivesEditSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.apiarySensorSelect.id);
+    this.hivesEditSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.apiarySensorSelect._id);
     if(this.hivesEditSensorForm.length !== 0){
         this.hiveSensorSelect = this.hivesEditSensorForm[0];
     }
@@ -322,7 +322,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
 
   onSelectApiaryNewSensorForm() {
     // init hive
-    this.hivesSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.apiarySensorForm.id);
+    this.hivesSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.apiarySensorForm._id);
     if(this.hivesSensorForm.length !== 0){
         this.hiveSensorSelect = this.hivesSensorForm[0];
     }

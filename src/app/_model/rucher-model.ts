@@ -10,8 +10,8 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 export interface RucherModel {
-    id?: string;
-    idUsername : string;
+/*     id?: string;
+    userId : string;
     latitude: string;
     longitude: string;
     name: string;
@@ -20,6 +20,19 @@ export interface RucherModel {
     photo: string;
     username: string;
     codePostal: string;
-    ville: string;
+    ville: string; */
     
+
+    _id: string;
+	name: string;
+	description: string;
+	zipCode: string;
+	privateApiary: boolean;
+	city: string;
+	userId: string;
+	createDate: Date;
+	countryCode: string;
+	photo: string;
+	dataLastReceived: Date;
+	username: string; 
 }

@@ -42,8 +42,8 @@ export class UserloggedService {
    * @returns {boolean}
    * @memberof UserloggedService
    */
-  checkWriteObject(idUsername: string): boolean {
-    return idUsername === this.getIdUserLoged() || this.tokenService.checkAuthorities('ROLE_ADMIN');
+  checkWriteObject(userId: string): boolean {
+    return userId === this.getIdUserLoged() || this.tokenService.checkAuthorities('ROLE_ADMIN');
   }
   setJwtReponse(auth: JwtResponse) {
     window.sessionStorage.removeItem('jwtReponse');

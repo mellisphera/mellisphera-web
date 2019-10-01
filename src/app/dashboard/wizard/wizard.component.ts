@@ -81,20 +81,20 @@ export class WizardComponent implements OnInit, OnDestroy {
 
   subApiary() {
     this.apiary = this.apiaryForm.value;
-    this.apiary.createdAt = new Date();
+    this.apiary.createDate = new Date();
     this.apiary.username = this.userService.getUser();
     if (this.userService.getJwtReponse().country === "FR") {
       this.apiary.photo = './assets/imageClient/background_draw_color_FR.png';
     } else {
       this.apiary.photo = './assets/imageClient/background_draw_color.png';
     }
-    this.apiary.idUsername = this.userService.getIdUserLoged()
+    this.apiary.userId = this.userService.getIdUserLoged()
   }
 
   subHive() {
     this.hive = this.hiveForm.value;
     this.hive.id = null;
-    this.hive.idUsername = this.userService.getIdUserLoged();
+    this.hive.userId = this.userService.getIdUserLoged();
     this.hive.sensor = true;
     this.hive.username = this.userService.getUser();
 
@@ -139,7 +139,7 @@ export class WizardComponent implements OnInit, OnDestroy {
         this.rucherService.ruchers = new Array(apiary);
         this.rucherService.allApiaryAccount.push(apiary)
       }
-      this.rucherService.saveCurrentApiaryId(apiary.id);
+      this.rucherService.saveCurrentApiaryId(apiary._id);
     }, () => { }, () => {
       this.rucherService.emitApiarySubject();
       this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];

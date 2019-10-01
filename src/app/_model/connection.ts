@@ -14,7 +14,7 @@ import { Location } from './location';
 export interface Connection {
     id: string;
     connectionDate: string;
-    idUsername: string;
+    userId: string;
     username: string;
     location: Location;
 }

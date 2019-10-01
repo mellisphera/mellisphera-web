@@ -25,7 +25,7 @@ limitations under the License. -->
       <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
         title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}" data-toggle="modal"
         style="float:right;width: 10%; padding: 0;border: none; background: none;"
-        [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))"
+        [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
         data-target="#newObservationModal" class="btn btn-success">
         <i class="fa fa-plus fa-2x"></i>
       </button>
@@ -39,7 +39,7 @@ limitations under the License. -->
             <td class="text-right" style="width: 80px;">
               <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.EDIT' | translate}}"
                 data-toggle="modal" type="button" data-target="#editObservationModal"
-                [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.idUsername))"
+                [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
                 (click)="onSelectObs(obs)" class="btn btn-primary  "
                 style="padding: 10;border: none; background: none;margin-right: -5px;">
                 <i class="fa fa-edit fa-2x"></i>

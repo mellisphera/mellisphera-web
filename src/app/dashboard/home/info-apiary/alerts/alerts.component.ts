@@ -130,7 +130,7 @@ export class AlertsComponent implements OnInit {
         _alert => {
           this.alertsService.apiaryAlerts = _alert;
           this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-            if (this.userService.checkWriteObject(this.rucherService.rucher.idUsername)) {
+            if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
               this.onClickReadAll(_alert);
             }
             this.cleanSerie();

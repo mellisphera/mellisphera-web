@@ -76,7 +76,7 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
     if (!this.fleursFloraisonService.subjectFlower.closed) {
         this.rucherService.rucherSubject.subscribe(() => {}, () => {},
           () => {
-              this.fleursFloraisonService.getUserFleur(this.rucherService.rucher.id);
+              this.fleursFloraisonService.getUserFleur(this.rucherService.rucher._id);
           }
         );
     }
@@ -94,7 +94,7 @@ export class FleursFloraisonComponent implements OnInit, OnDestroy {
   onSelectRucher(){
     this.fleursFloraisonService.fleursByRucher = null;
     this.fleursFloraisonService.mergeOption = null;
-    this.fleursFloraisonService.getUserFleur(this.fleursFloraisonService.rucherService.rucher.id);
+    this.fleursFloraisonService.getUserFleur(this.fleursFloraisonService.rucherService.rucher._id);
     //this.fleursFloraisonService.rucherService.getRucherDetails();
   }
 
