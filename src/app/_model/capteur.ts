@@ -10,16 +10,19 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 export interface CapteurInterface {
-	id?: string;
+	_id?: string;
 	sensorRef: string;
 	name?: string;
+	model: string;
 	type: string ;
-	description: string;
-	username: string;
-    idHive: string;
-	idApiary: string;
+    hiveId: string;
+	apiaryId: string;
 	hiveName?: string;
-	apiaryName?:string;
+	userId: string;
+	dataLastReceived: Date;
+	hivePositionId: string;
+	start: Date;
+	createDate: Date;
 	sensorTime?: Date;
 	sensorBat: number;
 }

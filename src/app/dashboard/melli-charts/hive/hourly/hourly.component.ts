@@ -105,56 +105,56 @@ export class HourlyComponent implements OnInit {
           if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || ( !rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartWeight(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+              this.melliHive.getHiveSelect()._id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         case 'TEMP_INT':
           if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartTempInt(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+              this.melliHive.getHiveSelect()._id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         case 'TEMP_EXT':
           if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartTempExt(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+              this.melliHive.getHiveSelect()._id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         case 'HRIN':
           if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartHint(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+              this.melliHive.getHiveSelect()._id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         case 'BAT_INT':
           if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartBatInt(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+              this.melliHive.getHiveSelect()._id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         case 'BAT_EXT':
           if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
             console.error(_type.name);
             this.hourlyManager.getChartBatExt(_type,
-              this.melliHive.getHiveSelect().id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+              this.melliHive.getHiveSelect()._id, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
           }
           break;
         case 'TEMP_WEATHER':
             if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
               console.error(_type.name);
               this.hourlyManager.getTempHourlyWeather(_type,
-                this.melliHive.getHiveSelect().idApiary, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+                this.melliHive.getHiveSelect().apiaryId, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
             }
             break;
         case 'HWEATHER':
             if ((rangeChange || newHive) && this.ifTypeHourlyContains(_type.name) || (!rangeChange && !newHive && newType === _type.name)) {
               console.error(_type.name);
               this.hourlyManager.getHextHourlyWeather(_type,
-                this.melliHive.getHiveSelect().idApiary, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+                this.melliHive.getHiveSelect().apiaryId, this.melliHive.getHourlyChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
             }
           break;
         default:

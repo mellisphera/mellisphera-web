@@ -86,8 +86,8 @@ export class ManageNotesComponent implements OnInit {
   // }
 
   getHiveNameById(idHive: string): string {
-    if (this.rucheService.ruchesAllApiary.filter(hive => hive.id === idHive)[0] !== undefined) {
-      return (this.rucheService.ruchesAllApiary.filter(hive => hive.id === idHive)[0].name);
+    if (this.rucheService.ruchesAllApiary.filter(hive => hive._id === idHive)[0] !== undefined) {
+      return (this.rucheService.ruchesAllApiary.filter(hive => hive._id === idHive)[0].name);
     } else {
       return '';
     }
@@ -180,7 +180,7 @@ export class ManageNotesComponent implements OnInit {
     // Hive init
     this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
       this.rucherService.rucheService.ruchesAllApiary = ruches;
-      this.hivesNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate._id);
+      this.hivesNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
       if (this.hivesNoteForm.length !== 0) {
         this.hiveNoteSelect = this.hivesNoteForm[0];
       }
@@ -189,7 +189,7 @@ export class ManageNotesComponent implements OnInit {
 
   onSelectApiaryNewNoteForm() {
     // init hive
-    this.hivesNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate._id);
+    this.hivesNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
     if (this.hivesNoteForm.length !== 0) {
       this.hiveNoteSelect = this.hivesNoteForm[0];
     }
@@ -204,8 +204,8 @@ export class ManageNotesComponent implements OnInit {
       const formValue = this.NoteForm.value;
       this.newObs = formValue;
       this.newObs.type = 'HiveObs';
-      this.newObs.idHive = this.hiveNoteSelect.id;
-      this.newObs.idLHive = [this.hiveNoteSelect.id];
+      this.newObs.idHive = this.hiveNoteSelect._id;
+      this.newObs.idLHive = [this.hiveNoteSelect._id];
       this.newObs.userId = this.userService.getIdUserLoged();
       this.NoteForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
@@ -236,8 +236,8 @@ export class ManageNotesComponent implements OnInit {
       const formValue = this.NoteForm.value;
       this.newObs = formValue;
       this.newObs.type = 'HiveAct';
-      this.newObs.idHive = this.hiveNoteSelect.id;
-      this.newObs.idLHive = [this.hiveNoteSelect.id];
+      this.newObs.idHive = this.hiveNoteSelect._id;
+      this.newObs.idLHive = [this.hiveNoteSelect._id];
       this.newObs.userId = this.userService.getIdUserLoged();
       this.NoteForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
@@ -335,25 +335,25 @@ export class ManageNotesComponent implements OnInit {
       if (this.noteToEdit.type === 'ApiaryObs') {
         this.rucherService.rucherSelectUpdate = this.rucherService.ruchers.filter(apiary => apiary._id === this.noteToEdit.idApiary)[0];
       } else {
-        let idApiary = this.rucheService.ruchesAllApiary.filter(hive => hive.id === this.noteToEdit.idHive)[0].idApiary;
-        this.rucherService.rucherSelectUpdate = this.rucherService.ruchers.filter(apiary => apiary._id === idApiary)[0];
+        let idApiary = this.rucheService.ruchesAllApiary.filter(hive => hive._id === this.noteToEdit.idHive)[0].apiaryId;
+        this.rucherService.rucherSelectUpdate = this.rucherService.ruchers.filter((apiary: RucherModel) => apiary._id === idApiary)[0];
       }
       this.apiaryToEdit = this.rucherService.rucherSelectUpdate;
       // Hive init
-      this.hivesNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate._id);
+      this.hivesNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
       if (this.noteToEdit.type === 'ApiaryObs') {
         if (this.hivesNoteForm.length !== 0) {
           this.hiveNoteSelect = this.hivesNoteForm[0];
         }
       } else {
-        this.hiveNoteSelect = this.rucheService.ruchesAllApiary.filter(hive => hive.id === this.noteToEdit.idHive)[0];
+        this.hiveNoteSelect = this.rucheService.ruchesAllApiary.filter(hive => hive._id === this.noteToEdit.idHive)[0];
       }
     })
   }
 
   onSelectApiaryEditNoteForm() {
     // init hive
-    this.hivesNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === this.rucherService.rucherSelectUpdate._id);
+    this.hivesNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
     if (this.hivesNoteForm.length !== 0) {
       this.hiveNoteSelect = this.hivesNoteForm[0];
     }
@@ -373,8 +373,8 @@ export class ManageNotesComponent implements OnInit {
         this.noteToEdit.idLHive = [];
       } else {
         this.noteToEdit.idApiary = '';
-        this.noteToEdit.idHive = this.hiveNoteSelect.id;
-        this.noteToEdit.idLHive = [this.hiveNoteSelect.id];
+        this.noteToEdit.idHive = this.hiveNoteSelect._id;
+        this.noteToEdit.idLHive = [this.hiveNoteSelect._id];
       }
       this.noteToEdit.userId = this.userService.getIdUserLoged();
       this.NoteForm.reset();

@@ -48,7 +48,7 @@ export class StackService {
   }
 
   addColorForObs(hive: RucheInterface, color: string){
-    this.colorByHive.push({idHive: hive.id, color: color});
+    this.colorByHive.push({idHive: hive._id, color: color});
   }
 
   /**
@@ -70,7 +70,7 @@ export class StackService {
    * @memberof StackService
    */
   getColorByIndex(index: number, hive: RucheInterface) {
-    if (this.arrayHiveSelect.filter(elt => elt.id === hive.id).length > 0) {
+    if (this.arrayHiveSelect.filter(elt => elt._id === hive._id).length > 0) {
       return (index < this.arrayColor.length - 1) ? this.arrayColor[index].hexString : null ;
     } else {
       return 'white';
@@ -86,7 +86,7 @@ export class StackService {
    */
   removeHive(hive: RucheInterface) {
     const index = this.arrayHiveSelect.indexOf(hive);
-    const indexColor = this.colorByHive.map(elt => elt.idHive).indexOf(hive.id);
+    const indexColor = this.colorByHive.map(elt => elt.idHive).indexOf(hive._id);
     this.arrayHiveSelect.splice(index, 1, this.getEmptyHive());
     this.colorByHive.splice(indexColor, 1);
   }
@@ -99,12 +99,15 @@ export class StackService {
    */
   getEmptyHive(): RucheInterface {
     return {
-      id : '',
+      _id : '',
       name : '',
       description : '',
       userId : '',
       username : '',
-      idApiary: '',
+      apiaryId: '',
+      dataLastReceived: null,
+      hidden: false,
+      createDate: null,
       apiaryName: '',
       hivePosX : '',
       hivePosY : '',
@@ -123,6 +126,6 @@ export class StackService {
   }
 
   checkHiveisActive(idHive: string) {
-    return this.arrayHiveSelect.filter(hive => hive.id === idHive).length > 0 ? 'active' : '';
+    return this.arrayHiveSelect.filter(hive => hive._id === idHive).length > 0 ? 'active' : '';
   }
 }

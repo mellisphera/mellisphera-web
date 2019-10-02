@@ -235,35 +235,35 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.melliHive.getDailyDeviceChartInstance().showLoading();
     switch (this.currentTypeDailyDevice.name) {
       case 'WINCOME':
-        this.dailyManager.getChartWeightincome(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id,
+        this.dailyManager.getChartWeightincome(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
           this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'TEMP_EXT_MAX':
-        this.dailyManager.getChartTextMax(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id,
+        this.dailyManager.getChartTextMax(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
           this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'TEMP_EXT_MIN':
-        this.dailyManager.getChartTextMin(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id,
+        this.dailyManager.getChartTextMin(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
           this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'TEMP_INT_MAX':
-        this.dailyManager.getChartTintMax(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id,
+        this.dailyManager.getChartTintMax(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
           this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'TEMP_INT_MIN':
-        this.dailyManager.getChartTminInt(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id,
+        this.dailyManager.getChartTminInt(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
           this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'HRIN':
-        this.dailyManager.getChartHint(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id,
+        this.dailyManager.getChartHint(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
           this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'BROOD':
-        this.dailyManager.getChartBrood(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id,
+        this.dailyManager.getChartBrood(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
           this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'WEIGHT_MAX':
-        this.dailyManager.getChartWeight(this.currentTypeDailyDevice, this.melliHive.getHiveSelect().id,
+        this.dailyManager.getChartWeight(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
           this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       default:
@@ -285,38 +285,38 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.melliHive.getDailyOtherChartInstance().showLoading();
     switch (this.currentTypeDailyOther.name) {
       case 'WEATHER':
-        this.dailyManager.getChartDailyWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+        this.dailyManager.getChartDailyWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         this.cleanMeanAnnotation();
         break;
       case 'MOON':
-        this.dailyManager.getChartAstro(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+        this.dailyManager.getChartAstro(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         this.cleanMeanAnnotation();
         break;
       case 'RAIN':
-        this.dailyManager.getRainByApiary(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+        this.dailyManager.getRainByApiary(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'TEMP_EXT_WEATHER_MAX':
-        this.dailyManager.getChartTempMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+        this.dailyManager.getChartTempMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'TEMP_EXT_WEATHER_MIN':
-        this.dailyManager.getChartTempMinWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+        this.dailyManager.getChartTempMinWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'WIND':
-        this.dailyManager.getChartWindMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+        this.dailyManager.getChartWindMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         this.cleanMeanAnnotation();
         break;
       case 'HEXT_WEATHER_MAX':
-        this.dailyManager.getHextMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+        this.dailyManager.getHextMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'HEXT_WEATHER_MIN':
-        this.dailyManager.getHextMinWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().idApiary,
+        this.dailyManager.getHextMinWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       default:
@@ -351,7 +351,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
   loadDailyEnvData(rangeChange: boolean) {
     this.melliHive.getDailyEnvChartInstance().showLoading();
-    this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().id,
+    this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
       this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
   }
 

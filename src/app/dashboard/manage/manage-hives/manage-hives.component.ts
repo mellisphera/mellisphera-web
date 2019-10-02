@@ -82,15 +82,19 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
     this.notify = notifyService;
     this.rucherService.rucheService.ruchesAllApiary = [];
     this.selectHive = {
-      id: null,
-      name: '',
-      description: '',
+      _id : '',
+      name : '',
+      description : '',
       userId : '',
-      username: '',
-      idApiary: '',
-      hivePosX: '',
-      hivePosY: '',
-      sharingUser: []
+      username : '',
+      apiaryId: '',
+      dataLastReceived: null,
+      hidden: false,
+      createDate: null,
+      apiaryName: '',
+      hivePosX : '',
+      hivePosY : '',
+      sharingUser : []
     };
 
     this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
@@ -116,11 +120,11 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
     if (this.userService.checkWriteObject(apiary.userId)) {
       this.rucheService.deleteRuche(ruche).subscribe(() => { }, () => { }, () => {
         if ((apiary._id === this.rucherService.getCurrentApiary())){
-          let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(ruche.id);
+          let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive._id).indexOf(ruche._id);
           this.rucheService.ruches.splice(hiveIndexUpdate,1);
         }
         // update for manage pages
-        let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive.id).indexOf(ruche.id);
+        let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive._id).indexOf(ruche._id);
         this.rucheService.ruchesAllApiary.splice(hiveIndexUpdateListAllApiary,1);
         this.rucheService.emitHiveSubject();
         if(this.userService.getJwtReponse().country === "FR"){
@@ -136,7 +140,7 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
 
   // Return a list of hives for an apiary
   getHiveByApiary(idApiary: string):RucheInterface[]{
-    return(this.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === idApiary));
+    return(this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === idApiary));
   }
 
   createHiveFormClicked(apiary : RucherModel){
@@ -146,8 +150,8 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
   //Pour créer une ruche
   createRuche() {
     const formValue = this.newRucheForm.value;
-    this.selectHive.id = null;
-    this.selectHive.idApiary = this.currentApiary._id;
+    this.selectHive._id = null;
+    this.selectHive.apiaryId = this.currentApiary._id;
     this.selectHive.description = formValue.descriptionRuche;
     this.selectHive.name = formValue.nomRuche;
     this.selectHive.userId = this.userService.getIdUserLoged();
@@ -185,24 +189,24 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
     if (this.userService.checkWriteObject(this.apiaryToEdit.userId)) {
       const formValue = this.newRucheForm.value;
       this.selectHive = this.currentRuche;
-      this.selectHive.idApiary = this.rucherService.rucherSelectUpdate._id;
+      this.selectHive.apiaryId = this.rucherService.rucherSelectUpdate._id;
       this.selectHive.name = formValue.nomRuche;
       this.selectHive.description = formValue.descriptionRuche;
       this.rucheService.updateRuche(this.selectHive).subscribe(() => { }, () => { }, () => {
         // update for homePage
-        if ((this.selectHive.idApiary === this.rucherService.getCurrentApiary()) && (this.currentApiary._id === this.rucherService.getCurrentApiary())) {
-          let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(this.selectHive.id);
+        if ((this.selectHive.apiaryId === this.rucherService.getCurrentApiary()) && (this.currentApiary._id === this.rucherService.getCurrentApiary())) {
+          let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive._id).indexOf(this.selectHive._id);
           this.rucheService.ruches[hiveIndexUpdate] = this.selectHive;
           this.rucheService.emitHiveSubject();
         } else if((this.currentApiary._id === this.rucherService.getCurrentApiary())){
-          let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive.id).indexOf(this.selectHive.id);
+          let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive._id).indexOf(this.selectHive._id);
           this.rucheService.ruches.splice(hiveIndexUpdate, 1);
           this.rucheService.emitHiveSubject();
-        } else if(((this.selectHive.idApiary === this.rucherService.getCurrentApiary()))){
+        } else if(((this.selectHive.apiaryId === this.rucherService.getCurrentApiary()))){
           this.rucheService.ruches.push(this.selectHive);
         }
         // update for manage pages
-        let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive.id).indexOf(this.selectHive.id);
+        let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive._id).indexOf(this.selectHive._id);
         this.rucheService.ruchesAllApiary[hiveIndexUpdateListAllApiary] = this.selectHive;
 
         if(this.userService.getJwtReponse().country === "FR"){

@@ -118,20 +118,19 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
     selectCapteur(capteur: CapteurInterface, index: number) {
         this.indexSensorSelect = index;
         this.capteurService.capteur = capteur;
-        this.editCapteurCheckbox = !(this.capteurService.capteur.idHive == null || this.capteurService.capteur.idApiary == null);
+        this.editCapteurCheckbox = !(this.capteurService.capteur.hiveId == null || this.capteurService.capteur.apiaryId == null);
         /* Assigne les données du capteurs au formulaire pour modification*/
         const donnee = {
             checkbox: this.editCapteurCheckbox ? 'ruche' : 'stock',
-            description: this.capteurService.capteur.description,
         }; 
         this.editCapteurForm.setValue(donnee);
         if (this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
-            this.rucherService.findRucherById(this.capteurService.capteur.idApiary, (apiary) => {
+            this.rucherService.findRucherById(this.capteurService.capteur.apiaryId, (apiary) => {
                 this.apiarySensorSelect = apiary[0];
             });
-            this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive, (hive) => {
+            this.rucherService.rucheService.findRucheById(this.capteurService.capteur.hiveId, (hive) => {
                 this.hiveSensorSelect = hive[0];
-                const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
+                const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
                 this.rucherService.rucheService.ruches[index].sensor = false;
                 this.rucherService.rucheService.emitHiveSubject();
             }, (err: string) => {
@@ -162,11 +161,6 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
                     return (a.sensorRef > b.sensorRef) ? 1 : -1;
                 });
                 break;
-            case 'description':
-                this.capteurService.capteursByHive.sort((a, b) => {
-                    return (a.description > b.description) ? 1 : -1;
-                });
-                break;
         }
     }
 
@@ -181,21 +175,17 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
             const tempType = this.capteurService.capteur.type;
             this.capteurService.initCapteur();
             if (formValue.checkbox !== 'stock') {
-                this.capteurService.capteur.idHive = this.rucheService.getCurrentHive().id;
-                this.capteurService.capteur.idApiary = this.rucherService.getCurrentApiary();
-                this.capteurService.capteur.apiaryName = this.rucherService.rucher.name;
+                this.capteurService.capteur.hiveId = this.rucheService.getCurrentHive()._id;
+                this.capteurService.capteur.apiaryId = this.rucherService.getCurrentApiary();
                 this.capteurService.capteur.hiveName = this.rucheService.getCurrentHive().name;
-                const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.rucheService.getCurrentHive().id);
+                const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.rucheService.getCurrentHive()._id);
                 this.rucherService.rucheService.ruches[index].sensor = true;
                 this.rucherService.rucheService.emitHiveSubject();
             } else {
-                this.capteurService.capteur.idHive = null;
-                this.capteurService.capteur.idApiary = null;
-                this.capteurService.capteur.apiaryName = null;
+                this.capteurService.capteur.hiveId = null;
+                this.capteurService.capteur.apiaryId = null;
                 this.capteurService.capteur.hiveName = null;
             }
-            this.capteurService.capteur.description = formValue.description;
-            this.capteurService.capteur.username = this.username;
             this.capteurService.capteur.sensorRef = formValue.reference;
             this.capteurService.capteur.type = sensorType.trim();
             this.initForm();
@@ -229,28 +219,25 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
     deleteCapteur() {
         if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
             const formValue = this.editCapteurForm.value;
-            const idTemp = this.capteurService.capteur.id;
+            const idTemp = this.capteurService.capteur._id;
             if (formValue.checkbox !== 'stock') {
-                this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
-                this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary)._id;
-                this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
+                this.capteurService.capteur.hiveId = this.hiveSensorSelect._id;
+                this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
                 this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
-                const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
+                const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
                 this.rucherService.rucheService.ruches[index].sensor = true;
                 this.rucherService.rucheService.emitHiveSubject();
             } else {
-                this.capteurService.capteur.idHive = null;
-                this.capteurService.capteur.idApiary = null;
-                this.capteurService.capteur.apiaryName = null;
+                this.capteurService.capteur.hiveId = null;
+                this.capteurService.capteur.apiaryId = null;
                 this.capteurService.capteur.hiveName = null;
             }
-            this.capteurService.capteur.description = formValue.description;
-            this.capteurService.capteur.id = idTemp;
+            this.capteurService.capteur._id = idTemp;
             this.capteurService.deleteCapteur(this.capteurService.capteur).subscribe(() => { }, () => { }, () => {
-                if (this.capteurService.capteur.idHive) {
-                    const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.capteurService.capteur.idHive);
+                if (this.capteurService.capteur.hiveId) {
+                    const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.capteurService.capteur.hiveId);
                     const tempHive = this.rucherService.rucheService.ruches[index];
-                    if (this.capteurService.capteursByHive.filter(sensor => sensor.idHive === tempHive.id).length <= 1) {
+                    if (this.capteurService.capteursByHive.filter(sensor => sensor.hiveId === tempHive._id).length <= 1) {
                         this.rucherService.rucheService.ruches[index].sensor = false;
                         this.rucherService.rucheService.emitHiveSubject();
                     }
@@ -271,26 +258,23 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
     updateCapteur() {
         if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
             const formValue = this.editCapteurForm.value;
-            const idTemp = this.capteurService.capteur.id;
+            const idTemp = this.capteurService.capteur._id;
             if (formValue.checkbox !== 'stock') {
-                this.capteurService.capteur.idHive = this.hiveSensorSelect.id;
-                this.capteurService.capteur.idApiary = this.getApiaryNameById(this.hiveSensorSelect.idApiary)._id;
-                this.capteurService.capteur.apiaryName = this.getApiaryNameById(this.hiveSensorSelect.idApiary).name;
+                this.capteurService.capteur.hiveId = this.hiveSensorSelect._id;
+                this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
                 this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
-                const index = this.rucherService.rucheService.ruches.map(hive => hive.id).indexOf(this.hiveSensorSelect.id);
+                const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
                 this.rucherService.rucheService.ruches[index].sensor = true;
                 this.rucherService.rucheService.emitHiveSubject();
             } else {
-                this.capteurService.capteur.idHive = null;
-                this.capteurService.capteur.idApiary = null;
-                this.capteurService.capteur.apiaryName = null;
+                this.capteurService.capteur.hiveId = null;
+                this.capteurService.capteur.apiaryId = null;
                 this.capteurService.capteur.hiveName = null;
             }
-            this.capteurService.capteur.description = formValue.description;
-            this.capteurService.capteur.id = idTemp;
+            this.capteurService.capteur._id = idTemp;
             this.initForm();
             this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
-                if((this.hiveSensorSelect.id === this.rucheService.getCurrentHive().id) && (this.apiarySensorSelect._id === this.rucherService.getCurrentApiary())){
+                if((this.hiveSensorSelect._id === this.rucheService.getCurrentHive()._id) && (this.apiarySensorSelect._id === this.rucherService.getCurrentApiary())){
                     this.capteurService.capteursByHive[this.indexSensorSelect] = this.capteurService.capteur;
                     this.capteurService.emitSensorSubject();
                 }else{

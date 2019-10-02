@@ -64,16 +64,20 @@ export class CapteurService {
 
     initCapteur() {
         this.capteur = {
-            id : null,
+            _id: null,
             sensorRef: '',
-            name : '',
-            type : '' ,
-            description : '',
-            username: '',
-            idHive: '',
-            idApiary: '',
+            name: '',
+            model: '',
+            type: '' ,
+            hiveId: '',
+            apiaryId: '',
             hiveName: '',
-            apiaryName: '',
+            userId: '',
+            dataLastReceived: null,
+            hivePositionId: '',
+            start: null,
+            createDate: null,
+            sensorTime: null,
             sensorBat: 0
         };
     }
@@ -105,7 +109,7 @@ export class CapteurService {
     }
 
     getSoldDevicesByUser() {
-        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL + 'sold_devices/username/' + this.user.getUser());
+        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL + 'sold_devices/username/' + this.user.getJwtReponse().idUser);
         this.capteursObs.subscribe(
             (data) => {
                 this.capteurAcheter = data;
@@ -117,12 +121,12 @@ export class CapteurService {
     }
 
     getUserCapteurs() {
-        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL + 'sensors/' + this.user.getUser());
+        this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL + 'sensors/' + this.user.getJwtReponse().idUser);
         this.capteursObs.subscribe(
             (data) => {
                 this.capteursByUser = data;
                 this.sensorSubject.next(data);
-                this.capteursByHive = this.capteursByUser.filter(sensor => sensor.idHive === this.rucheService.getCurrentHive().id);
+                this.capteursByHive = this.capteursByUser.filter(sensor => sensor.hiveId === this.rucheService.getCurrentHive()._id);
                 this.sensorSubject.next(this.capteursByHive);
             },
             (err) => {
@@ -134,7 +138,7 @@ export class CapteurService {
 
     getCapteursByHive(idHive : string) :  string[]{
         let capteursHive : CapteurInterface[];
-        capteursHive = this.capteursByUser.filter(sensor => sensor.idHive === idHive);
+        capteursHive = this.capteursByUser.filter(sensor => sensor.hiveId === idHive);
         let returnString : string[];
         returnString = [];
         capteursHive.forEach(element => {
@@ -154,7 +158,7 @@ export class CapteurService {
      * @memberof CapteurService
      */
     deleteCapteur(capteur: CapteurInterface): Observable<CapteurInterface> {
-        return this.http.delete<CapteurInterface>(CONFIG.URL + 'sensors/' + capteur.id);
+        return this.http.delete<CapteurInterface>(CONFIG.URL + 'sensors/' + capteur._id);
     }
     /**
      *

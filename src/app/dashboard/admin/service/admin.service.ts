@@ -76,7 +76,7 @@ export class AdminService {
    *
    * @param {string} name
    * @returns {Observable<RucherModel>}
-   * @memberof AdminService
+   * @memberof AdminServiceusername
    */
   updateDemoApiaryName(name: string): Observable<RucherModel>  {
     return this.httpClient.put<RucherModel>(CONFIG.URL + 'sharing/name', name);
@@ -117,8 +117,8 @@ export class AdminService {
    * @returns {Array<CapteurInterface>}
    * @memberof AdminService
    */
-  getSensorByUser(username: string): Array<CapteurInterface> {
-    let sensorByUser = this.allSensors.filter(_filter => _filter.username === username.toLocaleLowerCase());
+  getSensorByUser(userId: string): Array<CapteurInterface> {
+    let sensorByUser = this.allSensors.filter(_filter => _filter.userId === userId.toLocaleLowerCase());
     if (sensorByUser.length > 0) {
       return sensorByUser;
     } else {

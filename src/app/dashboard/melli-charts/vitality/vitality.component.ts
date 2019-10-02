@@ -97,7 +97,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   getHiveIndex(hive: RucheInterface): number {
-    return this.rucheService.ruchesAllApiary.findIndex(elt => elt.id === hive.id);
+    return this.rucheService.ruchesAllApiary.findIndex(elt => elt._id === hive._id);
   }
 
   getSerieByData(data: Array<any>, nameSerie: string, next: Function): void {
@@ -131,7 +131,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
   loadAllHiveAfterRangeChange(next: Function): void {
     const obs = this.stackService.getHiveSelect().map(_hive => {
-      return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodByHive(_hive.id, this.melliDateService.getRangeForReqest())}
+      return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodByHive(_hive._id, this.melliDateService.getRangeForReqest())}
     });
     Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
       _broods => {
@@ -164,7 +164,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
    */
   loadDataByHive(hive: RucheInterface): void {
     this.stackService.getBroodChartInstance().showLoading();
-    this.dailyThService.getBroodByHive(hive.id, this.melliDateService.getRangeForReqest()).subscribe(
+    this.dailyThService.getBroodByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
       _brood => {
         console.log(_brood);
         this.getSerieByData(_brood, hive.name, (serieComplete: any) => {

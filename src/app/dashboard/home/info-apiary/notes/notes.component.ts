@@ -112,8 +112,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       this.newObs.type = this.typeToMv === 0 ? 'HiveObs' : 'HiveAct';
       this.newObs.idApiary = null;
-      this.newObs.idHive = this.hiveToMv.id;
-      this.newObs.idLHive = new Array(this.hiveToMv.id);
+      this.newObs.idHive = this.hiveToMv._id;
+      this.newObs.idLHive = new Array(this.hiveToMv._id);
       const index = this.observationService.observationsApiary.indexOf(this.newObs);
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsApiary.splice(index, 1);

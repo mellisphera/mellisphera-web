@@ -83,7 +83,7 @@ export class StackApiaryComponent implements OnInit {
     this.echartInstance = e;
   }
 
-  selectAllHive(idApiary: string) {
+  selectAllHive(apiaryId: string) {
   }
 
   ngOnInit() {
@@ -99,7 +99,7 @@ export class StackApiaryComponent implements OnInit {
             let allHives = hives.flat();
             console.log(allHives);
             allHives.forEach((elt: RucheInterface) => {
-              this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
+              this.rucherService.findRucherById(elt.apiaryId, (apiary: RucherModel[]) => {
                 elt.apiaryName = apiary[0].name;
               });
             });
@@ -118,7 +118,7 @@ export class StackApiaryComponent implements OnInit {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
           this.adminService.getAllHive().map((hives) => {
             hives.forEach(elt => {
-              this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
+              this.rucherService.findRucherById(elt.apiaryId, (apiary: RucherModel[]) => {
                 try {
                   elt.apiaryName = apiary[0].name;
                 } catch (e) { }
@@ -132,12 +132,12 @@ export class StackApiaryComponent implements OnInit {
       }
     }
 /*     if (!this.observationService.obsApiarySubject.closed) {
-      this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+      this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
     } */
   }
-  getHiveByApiary(idApiary: string) {
+  getHiveByApiary(apiaryId: string) {
     try {
-      return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === idApiary);
+      return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === apiaryId);
     } catch (e) {
       return false;
     }
@@ -150,8 +150,8 @@ export class StackApiaryComponent implements OnInit {
     this.recordService.updateMergeStack();
     this.recordService.setRange(this.stackService.range);
     this.observationService.setRange(this.stackService.range);
-    const observableRecord = this.stackService.getHiveSelect().filter(hive => hive.id !== '')
-    .map(hive => this.recordService.getRecordByIdHive(hive.id, hive.name, this.merge, this.getColor(hive)));
+    const observableRecord = this.stackService.getHiveSelect().filter(hive => hive._id !== '')
+    .map(hive => this.recordService.getRecordByIdHive(hive._id, hive.name, this.merge, this.getColor(hive)));
     Observable.forkJoin(observableRecord).subscribe(data => {
        data.map(elt => elt.series).forEach(elt => {
         elt.forEach(element => {
@@ -168,8 +168,8 @@ export class StackApiaryComponent implements OnInit {
     },
     (err) => {},
     () => {
-      const observableObs = this.stackService.getHiveSelect().filter(hive => hive.id !== '')
-      .map(hive => this.observationService.getObservationByIdHive(hive.id, hive.name));
+      const observableObs = this.stackService.getHiveSelect().filter(hive => hive._id !== '')
+      .map(hive => this.observationService.getObservationByIdHive(hive._id, hive.name));
       Observable.forkJoin(observableObs).subscribe(data => {
         this.recordService.mergeOptionStackApiary.series = this.recordService.mergeOptionStackApiary.series.concat(data);
       },
@@ -189,7 +189,7 @@ export class StackApiaryComponent implements OnInit {
   selectHive(selectHive: RucheInterface, event: MouseEvent) {
     if (!this.loadingStack) {
       this.loadingStack = true;
-      const arrayFilter = this.stackService.getHiveSelect().filter(hive => hive.id === selectHive.id);
+      const arrayFilter = this.stackService.getHiveSelect().filter(hive => hive._id === selectHive._id);
       if (arrayFilter.length > 0) {
         this.stackService.removeHive(arrayFilter[0]);
         let option = this.echartInstance.getOption();
@@ -204,12 +204,12 @@ export class StackApiaryComponent implements OnInit {
         this.stackService.addHive(selectHive);
         this.stackService.addColorForObs(selectHive, this.getColor(selectHive));
         this.recordService.setRange(this.stackService.range);
-        this.recordService.getRecordByIdHive(selectHive.id, selectHive.name,
+        this.recordService.getRecordByIdHive(selectHive._id, selectHive.name,
           this.recordService.mergeOptionStackApiary, this.getColor(selectHive))
           .subscribe((data) => {
             console.log(data);
             // this.recordService.mergeOptionStackApiary = data;
-/*              this.observationService.getObservationByIdHive(selectHive.id, selectHive.name).subscribe(
+/*              this.observationService.getObservationByIdHive(selectHive._id, selectHive.name).subscribe(
               obsData => {
                 data.series.push(obsData);
                 data.legend.data.push(selectHive.name + ' / note');
@@ -245,7 +245,7 @@ export class StackApiaryComponent implements OnInit {
   }
 
   getColor(hive: RucheInterface): string {
-    return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
+    return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
   }
 
 

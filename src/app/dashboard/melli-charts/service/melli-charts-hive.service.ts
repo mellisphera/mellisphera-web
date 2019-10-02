@@ -189,7 +189,7 @@ export class MelliChartsHiveService {
     * @memberof MelliChartsHiveService
     */
     checkHiveisActive(hiveTest: RucheInterface): boolean {
-      return this.hiveSelectForHivePage.id === hiveTest.id;
+      return this.hiveSelectForHivePage._id === hiveTest._id;
     }
     
     

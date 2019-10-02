@@ -131,15 +131,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     };
 
     this.selectHive = {
-      id: null,
-      name: '',
-      description: '',
-      userId: '',
-      username: '',
-      idApiary: '',
-      hivePosX: '',
-      hivePosY: '',
-      sharingUser: []
+      _id : '',
+      name : '',
+      description : '',
+      userId : '',
+      username : '',
+      apiaryId: '',
+      dataLastReceived: null,
+      hidden: false,
+      createDate: null,
+      apiaryName: '',
+      hivePosX : '',
+      hivePosY : '',
+      sharingUser : []
     };
 
     this.boolDraggable = true;
@@ -210,10 +214,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.lastHighlightFix = this.rucheService.getCurrentHive().name;
       }
 
-      this.eltOnClickId = document.getElementById(this.rucheService.getCurrentHive().id);
+      this.eltOnClickId = document.getElementById(this.rucheService.getCurrentHive()._id);
       if(this.eltOnClickId !== null){
         this.renderer.addClass(this.eltOnClickId, 'highlightHandle');
-        this.lastHighlightHandle = this.rucheService.getCurrentHive().id;
+        this.lastHighlightHandle = this.rucheService.getCurrentHive()._id;
       }
     };
   }
@@ -248,7 +252,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
 
   isActiveHive(hive: RucheInterface): boolean {
-    return hive.id === this.rucheService.getCurrentHive().id;
+    return hive._id === this.rucheService.getCurrentHive()._id;
   }
   onClick(ruche: RucheInterface) {
     // active button name
@@ -277,9 +281,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.renderer.addClass(this.eltOnClickId, 'highlightFix');
     this.lastHighlightFix = ruche.name;
 
-    this.eltOnClickId = document.getElementById(ruche.id);
+    this.eltOnClickId = document.getElementById(ruche._id);
     this.renderer.addClass(this.eltOnClickId, 'highlightHandle');
-    this.lastHighlightHandle = ruche.id;
+    this.lastHighlightHandle = ruche._id;
 
     // Save the hive on dataBase
     this.rucheService.saveCurrentHive(ruche);
@@ -304,13 +308,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     // For the hive notes
 
-    this.observationService.getObservationByIdHive(ruche.id);
+    this.observationService.getObservationByIdHive(ruche._id);
 
     //For the hive-weight
-    this.dailyRecordWservice.getDailyRecordsWbyIdHive(ruche.id);
+    this.dailyRecordWservice.getDailyRecordsWbyIdHive(ruche._id);
 
     //For the hive-health
-    this.dailyRecTh.getByIdHive(ruche.id);
+    this.dailyRecTh.getByIdHive(ruche._id);
 
     //For hive sensors
     this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
@@ -463,7 +467,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnDestroy(): void {
     this.hiveUpdateForDestroyPage.forEach((hiveUpdate: RucheInterface) => {
-      let hiveUpdateIndex = this.rucheService.ruches.map(hive => hive.id).indexOf(hiveUpdate.id);
+      let hiveUpdateIndex = this.rucheService.ruches.map(hive => hive._id).indexOf(hiveUpdate._id);
       this.rucheService.ruches[hiveUpdateIndex].hivePosX = hiveUpdate.hivePosX;
       this.rucheService.ruches[hiveUpdateIndex].hivePosY = hiveUpdate.hivePosY;
     });
@@ -599,11 +603,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   // pour editer une ruche
   onEditeRuche() {
     const formValue = this.newRucheForm.value;
-    this.selectHive.idApiary = this.rucherService.rucherSelectUpdate._id;
+    this.selectHive.apiaryId = this.rucherService.rucherSelectUpdate._id;
     this.selectHive.name = formValue.nomRuche;
     this.selectHive.description = formValue.descriptionRuche;
     this.rucheService.updateRuche(this.selectHive).subscribe(() => { }, () => { }, () => {
-      if (this.selectHive.idApiary === this.rucherService.getCurrentApiary()) {
+      if (this.selectHive.apiaryId === this.rucherService.getCurrentApiary()) {
         this.rucheService.ruches[this.hiveIndex] = this.selectHive;
         this.rucheService.emitHiveSubject();
       } else {
@@ -637,7 +641,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     // The first time we found the length of the list (for a good presentation, no important)
     this.rucheService.ruches.forEach(hive => {
       // If the hive haven't daily records data
-      if (this.dailyRecTh.dailyRecords.filter(elt => elt.idHive === hive.id).length === 0) {
+      if (this.dailyRecTh.dailyRecords.filter(elt => elt.idHive === hive._id).length === 0) {
         i += 1;
       }
     });
@@ -645,7 +649,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     // second time, we build the hive list
     this.rucheService.ruches.forEach(hive => {
       // If the hive haven't daily records data
-      if (this.dailyRecTh.dailyRecords.filter(elt => elt.idHive === hive.id).length === 0) {
+      if (this.dailyRecTh.dailyRecords.filter(elt => elt.idHive === hive._id).length === 0) {
         j += 1;
         if (j === i - 1) {
           stringTemp += hive.name;

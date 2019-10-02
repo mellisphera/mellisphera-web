@@ -12,14 +12,17 @@ limitations under the License. */
 import { User } from '../_model/user';
 
 export interface RucheInterface {
-    id?: string;
+    _id: string;
     name: string;
     description: string;
     userId : string;
     username: string;
     apiaryName?: string;
-    idApiary: string;
+    apiaryId: string;
     hivePosX: string;
+    createDate: Date;
+    hidden: boolean;
+    dataLastReceived: Date;
     hivePosY: string;
     sharingUser: User[];
     sensor?: Boolean;

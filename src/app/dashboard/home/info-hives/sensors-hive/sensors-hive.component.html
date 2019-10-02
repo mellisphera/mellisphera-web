@@ -24,7 +24,6 @@ limitations under the License. -->
                     <ng-container *ngFor="let capteur of ( capteurService.capteursByHive); let i = index">
                         <tr class="hoverStyle">
                             <td style="width: 100px;">{{capteur.sensorRef}}</td>
-                            <td>{{capteur.description}}</td>
                             <td class="text-right" style="width: 80px;">
                                 <button data-toggle="tooltip" data-html="true"
                                     title="{{ 'CAPTEUR.FORM.EDITTHESENSOR' | translate}}" data-toggle="modal" type="button"
@@ -87,10 +86,6 @@ limitations under the License. -->
                             </div>
                         </div>
 
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Description :</label>
-                        <input formControlName="description" class="form-control" id="message-text">
                     </div>
                     <div class="form-group ">
                         <label class="col-form-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.LINK' | translate}}</label>
@@ -178,10 +173,6 @@ limitations under the License. -->
                             </select>
                             <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Description</label>
-                        <input formControlName="description" class="form-control" id="message-text">
                     </div>
                     <div class="form-group ">
                         <div class="alert alert-success" *ngIf="editedSensorMsgE">

@@ -93,7 +93,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 
   subHive() {
     this.hive = this.hiveForm.value;
-    this.hive.id = null;
+    this.hive._id = null;
     this.hive.userId = this.userService.getIdUserLoged();
     this.hive.sensor = true;
     this.hive.username = this.userService.getUser();
@@ -101,11 +101,8 @@ export class WizardComponent implements OnInit, OnDestroy {
   }
   subSensor() {
     this.sensor = this.sensorForm.value;
-    this.sensor.apiaryName = this.apiary.name;
     this.sensor.type = this.getTypeFromRef(this.sensor.sensorRef);
-    this.sensor.apiaryName = this.apiary.name;
     this.sensor.hiveName = this.hive.name;
-    this.sensor.username = this.userService.getUser();
     this.capteurService.capteur = this.sensor;
 /*     this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
       this.capteurService.getUserCapteurs();
@@ -144,14 +141,14 @@ export class WizardComponent implements OnInit, OnDestroy {
       this.rucherService.emitApiarySubject();
       this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
       this.initForm();
-      this.hive.idApiary = this.rucherService.getCurrentApiary();
+      this.hive.apiaryId = this.rucherService.getCurrentApiary();
       this.rucherService.rucheService.createRuche(this.hive).subscribe((hive) => {
         this.rucherService.rucheService.ruches = new Array(hive);
         this.rucherService.rucheService.saveCurrentHive(hive);
       }, () => { }, () => {
         this.rucherService.rucheService.emitHiveSubject();
-        this.sensor.idHive = this.rucherService.rucheService.getCurrentHive().id;
-        this.sensor.idApiary = this.rucherService.getCurrentApiary();
+        this.sensor.hiveId = this.rucherService.rucheService.getCurrentHive()._id;
+        this.sensor.apiaryId = this.rucherService.getCurrentApiary();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
           this.capteurService.getUserCapteurs();
           this.userService.setWizardActive(false);

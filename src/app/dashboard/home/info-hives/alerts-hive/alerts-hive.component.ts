@@ -115,10 +115,10 @@ export class AlertsHiveComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.alertsService.getAlertsByHive(this.rucheService.getCurrentHive().id).subscribe(
+    this.alertsService.getAlertsByHive(this.rucheService.getCurrentHive()._id).subscribe(
       _alert => {
         this.alertsService.hiveAlerts = _alert;
-        this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive().id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))).subscribe(
+        this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))).subscribe(
           _notes => {
             if(_alert.length === 0 && _notes.length === 0){
               this.hideCalendar();
@@ -154,10 +154,10 @@ export class AlertsHiveComponent implements OnInit {
 
   initCalendar(hive?: RucheInterface){
     if (hive) {
-      this.alertsService.getAlertsByHive(hive.id).subscribe(
+      this.alertsService.getAlertsByHive(hive._id).subscribe(
         _alert => {
           this.alertsService.hiveAlerts = _alert;
-          this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive().id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))).subscribe(
+          this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))).subscribe(
             _notes => {
           if(_alert.length === 0 && _notes.length === 0){
             this.hideCalendar();
@@ -206,8 +206,8 @@ export class AlertsHiveComponent implements OnInit {
 
   loadCalendar() {
     const obs: Array<Observable<any>> = [
-      this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive().id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))),
-      this.alertsService.getAlertByHiveMelliCharts(this.rucheService.getCurrentHive().id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt)))
+      this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))),
+      this.alertsService.getAlertByHiveMelliCharts(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt)))
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
@@ -455,7 +455,7 @@ export class AlertsHiveComponent implements OnInit {
   }
 
   readAllHiveAlerts(hive : RucheInterface){
-      this.alertsService.getAlertsByHive(hive.id).subscribe(
+      this.alertsService.getAlertsByHive(hive._id).subscribe(
         _alert => {
           this.alertsService.hiveAlerts = _alert;
           this.onClickReadAll(this.alertsService.hiveAlerts);

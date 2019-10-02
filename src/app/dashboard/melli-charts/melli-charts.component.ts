@@ -111,7 +111,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
             this.melliChartHive.setHiveSelect(allHives[0]);
             allHives.forEach((elt: RucheInterface) => {
               try {
-                this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
+                this.rucherService.findRucherById(elt.apiaryId, (apiary: RucherModel[]) => {
                   elt.apiaryName = apiary[0].name;
                 });
               }catch{}
@@ -135,7 +135,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
           this.adminService.getAllHive().map((hives) => {
             hives.forEach(elt => {
-              this.rucherService.findRucherById(elt.idApiary, (apiary: RucherModel[]) => {
+              this.rucherService.findRucherById(elt.apiaryId, (apiary: RucherModel[]) => {
                 try {
                   elt.apiaryName = apiary[0].name;
                 } catch (e) { }
@@ -217,9 +217,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getHiveByApiary(idApiary: string): RucheInterface[] | boolean {
+  getHiveByApiary(apiaryId: string): RucheInterface[] | boolean {
     try {
-      return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.idApiary === idApiary);
+      return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === apiaryId);
     } catch (e) {
       return false;
     }
@@ -291,13 +291,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    * @param {string} path
    * @memberof MelliChartsComponent
    */
-  navToPage(path: string, id: string): void {
+  navToPage(path: string, _id: string): void {
     if (this.eltOnClick === null ) {
-      this.eltOnClick = document.getElementById(id);
+      this.eltOnClick = document.getElementById(_id);
       this.renderer.addClass(this.eltOnClick, 'nav-active');
     } else {
       this.renderer.removeClass(this.eltOnClick, 'nav-active');
-      this.eltOnClick = document.getElementById(id);
+      this.eltOnClick = document.getElementById(_id);
       this.renderer.addClass(this.eltOnClick, 'nav-active');
     }
     this.router.navigateByUrl(PREFIX_PATH + path);
@@ -371,26 +371,26 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   getColor(hive: RucheInterface): string {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
-        return this.melliChartHive.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
+        return this.melliChartHive.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
         break;
       case PREFIX_PATH + 'brood':
       case PREFIX_PATH + 'stack':
-        return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt.id).indexOf(hive.id), hive);
+        return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
         break;
     }
   }
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @returns {string}
    * @memberof MelliChartsComponent
    */
-  checkApiaryIfAcive(idApiary: string): string {
+  checkApiaryIfAcive(apiaryId: string): string {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
           try {
-            if (this.melliChartHive.getHiveSelect().idApiary === idApiary) {
+            if (this.melliChartHive.getHiveSelect().apiaryId === apiaryId) {
               return 'apiary-active';
             } else {
               return 'not-active';
@@ -401,7 +401,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       case PREFIX_PATH + 'stack':
       case PREFIX_PATH + 'brood':
           try {
-            if (this.stackService.getHiveSelect().findIndex(_hive => _hive.idApiary === idApiary) !== -1) {
+            if (this.stackService.getHiveSelect().findIndex(_hive => _hive.apiaryId === apiaryId) !== -1) {
               return 'apiary-active';
             } else {
               return 'not-active';

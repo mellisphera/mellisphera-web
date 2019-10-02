@@ -105,8 +105,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       const formValue = this.ObservationForm.value;
       this.newObs = formValue;
       this.newObs.type = 'HiveObs';
-      this.newObs.idHive = this.rucheService.getCurrentHive().id;
-      this.newObs.idLHive = [this.rucheService.getCurrentHive().id];
+      this.newObs.idHive = this.rucheService.getCurrentHive()._id;
+      this.newObs.idLHive = [this.rucheService.getCurrentHive()._id];
       this.newObs.userId = this.userService.getIdUserLoged();
       this.ObservationForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
@@ -132,8 +132,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       const formValue = this.ObservationForm.value;
       this.newObs = formValue;
       this.newObs.type = 'HiveAct';
-      this.newObs.idHive = this.rucheService.getCurrentHive().id;
-      this.newObs.idLHive = [this.rucheService.getCurrentHive().id];
+      this.newObs.idHive = this.rucheService.getCurrentHive()._id;
+      this.newObs.idLHive = [this.rucheService.getCurrentHive()._id];
       this.newObs.userId = this.userService.getIdUserLoged();
       this.ObservationForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
