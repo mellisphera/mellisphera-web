@@ -977,19 +977,18 @@ export class NavbarComponent implements OnInit {
         if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.userId)) {
           const formValue = this.NavbarNoteForm.value;
           this.newObs = formValue;
-          this.newObs.type = 'HiveObs';
-          this.newObs.idHive = this.hiveNoteSelect._id;
-          this.newObs.idLHive = [this.hiveNoteSelect._id];
+          this.newObs.typeInspect = 'HiveObs';
+          this.newObs.hiveId = this.hiveNoteSelect._id;
           this.newObs.userId = this.userService.getIdUserLoged();
           this.NavbarNoteForm.reset();
           this.observationService.createObservation(this.newObs).subscribe((obs) => {
             this.observationService.observationsHive.push(obs);
             this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-              return new Date(b.date).getTime() - new Date(a.date).getTime();
+              return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
             });
             this.observationService.observationsHiveUser.push(obs);
             this.observationService.observationsHiveUser.sort((a, b) => {
-              return this.getHiveNameById(a.idHive).localeCompare(this.getHiveNameById(b.idHive));
+              return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
             });
           }, () => { }, () => {
             this.initNavbarNoteForm();
@@ -1009,19 +1008,18 @@ export class NavbarComponent implements OnInit {
         if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.userId)) {
           const formValue = this.NavbarNoteForm.value;
           this.newObs = formValue;
-          this.newObs.type = 'HiveAct';
-          this.newObs.idHive = this.hiveNoteSelect._id;
-          this.newObs.idLHive = [this.hiveNoteSelect._id];
+          this.newObs.typeInspect = 'HiveAct';
+          this.newObs.hiveId = this.hiveNoteSelect._id;
           this.newObs.userId = this.userService.getIdUserLoged();
           this.NavbarNoteForm.reset();
           this.observationService.createObservation(this.newObs).subscribe((obs) => {
             this.observationService.observationsHive.push(obs);
             this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-              return new Date(b.date).getTime() - new Date(a.date).getTime();
+              return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
             });
             this.observationService.observationsHiveUser.push(obs);
             this.observationService.observationsHiveUser.sort((a, b) => {
-              return this.getHiveNameById(a.idHive).localeCompare(this.getHiveNameById(b.idHive));
+              return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
             });
           }, () => { }, () => {
             this.initNavbarNoteForm();
@@ -1041,18 +1039,18 @@ export class NavbarComponent implements OnInit {
         if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.userId)) {
           const formValue = this.NavbarNoteForm.value;
           this.newObs = formValue;
-          this.newObs.type = 'ApiaryObs';
-          this.newObs.idApiary = this.rucherService.rucherSelectUpdate._id;
+          this.newObs.typeInspect = 'ApiaryObs';
+          this.newObs.apiaryId = this.rucherService.rucherSelectUpdate._id;
           this.newObs.userId = this.userService.getIdUserLoged();
           this.NavbarNoteForm.reset();
           this.observationService.createObservation(this.newObs).subscribe((obs) => {
             this.observationService.observationsApiary.push(obs);
             this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
-              return new Date(b.date).getTime() - new Date(a.date).getTime();
+              return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
             });
             this.observationService.observationsApiaryUser.push(obs);
             this.observationService.observationsApiaryUser.sort((a, b) => {
-              return this.getApiaryNameByID(a.idApiary).localeCompare(this.getApiaryNameByID(b.idApiary));
+              return this.getApiaryNameByID(a.apiaryId).localeCompare(this.getApiaryNameByID(b.apiaryId));
             });
           }, () => { }, () => {
             this.initNavbarNoteForm();

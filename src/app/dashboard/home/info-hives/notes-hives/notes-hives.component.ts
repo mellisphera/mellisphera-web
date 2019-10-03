@@ -104,15 +104,14 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.ObservationForm.value;
       this.newObs = formValue;
-      this.newObs.type = 'HiveObs';
-      this.newObs.idHive = this.rucheService.getCurrentHive()._id;
-      this.newObs.idLHive = [this.rucheService.getCurrentHive()._id];
+      this.newObs.typeInspect = 'HiveObs';
+      this.newObs.hiveId = this.rucheService.getCurrentHive()._id;
       this.newObs.userId = this.userService.getIdUserLoged();
       this.ObservationForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsHive.push(obs);
         this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
         });
       }, () => { }, () => {
         this.observationService.emitHiveSubject();
@@ -131,15 +130,14 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.ObservationForm.value;
       this.newObs = formValue;
-      this.newObs.type = 'HiveAct';
-      this.newObs.idHive = this.rucheService.getCurrentHive()._id;
-      this.newObs.idLHive = [this.rucheService.getCurrentHive()._id];
+      this.newObs.typeInspect = 'HiveAct';
+      this.newObs.hiveId = this.rucheService.getCurrentHive()._id;
       this.newObs.userId = this.userService.getIdUserLoged();
       this.ObservationForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsHive.push(obs);
         this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
         });
       }, () => { }, () => {
         this.observationService.emitHiveSubject();
@@ -157,9 +155,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   onSelectObsR(hiveOBS) {
     this.newObs = hiveOBS;
     const donnée = {
-      sentence: this.newObs.sentence,
-      type: this.newObs.type,
-      date: new Date(this.newObs.date)
+      sentence: this.newObs.description,
+      type: this.newObs.typeInspect,
+      date: new Date(this.newObs.createDate)
     };;
     this.ObservationForm.setValue(donnée);
   }
@@ -167,9 +165,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   onEditObservation() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.ObservationForm.value;
-      this.newObs.sentence = formValue.sentence;
-      this.newObs.date = formValue.date;
-      this.newObs.type = formValue.type;
+      this.newObs.description = formValue.sentence;
+      this.newObs.createDate = formValue.date;
+      this.newObs.typeInspect = formValue.type;
       const index = this.observationService.observationsHive.indexOf(this.newObs);
       // this.initForm();
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
@@ -189,12 +187,12 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   deleteObsR() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.ObservationForm.value;
-      this.newObs.sentence = formValue.sentence;
-      this.newObs.date = formValue.date;
-      this.newObs.type = formValue.type;
+      this.newObs.description = formValue.sentence;
+      this.newObs.createDate = formValue.date;
+      this.newObs.typeInspect = formValue.type;
       const index = this.observationService.observationsHive.indexOf(this.newObs);
       document.getElementById('editObservationModal').style.display = 'none';
-      this.observationService.deleteObservation(this.newObs.id).subscribe(() => { }, () => { }, () => {
+      this.observationService.deleteObservation(this.newObs._id).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsHive.splice(index, 1);
         this.observationService.emitHiveSubject();
         if(this.userService.getJwtReponse().country === "FR"){

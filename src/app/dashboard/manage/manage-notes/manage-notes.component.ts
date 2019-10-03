@@ -58,16 +58,16 @@ export class ManageNotesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.observationService.getObservationByuserId(this.userService.getIdUserLoged()).subscribe(_notes => {
+    this.observationService.getObservationByUserId(this.userService.getIdUserLoged()).subscribe(_notes => {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-        this.observationService.observationsApiaryUser = (_notes.filter(note => note.type === 'ApiaryObs')).sort((a, b) => {
-          return this.getApiaryNameByID(a.idApiary).localeCompare(this.getApiaryNameByID(b.idApiary));
+        this.observationService.observationsApiaryUser = (_notes.filter(note => note.typeInspect === 'ApiaryObs')).sort((a, b) => {
+          return this.getApiaryNameByID(a.apiaryId).localeCompare(this.getApiaryNameByID(b.apiaryId));
         });
       });
       this.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
         this.rucheService.ruchesAllApiary = ruches;
-        this.observationService.observationsHiveUser = (_notes.filter(note => (note.type === 'HiveObs') || (note.type === 'HiveAct'))).sort((a, b) => {
-          return this.getHiveNameById(a.idHive).localeCompare(this.getHiveNameById(b.idHive));
+        this.observationService.observationsHiveUser = (_notes.filter(note => (note.typeInspect === 'HiveObs') || (note.typeInspect === 'HiveAct'))).sort((a, b) => {
+          return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
         });
       });
     });
@@ -110,17 +110,17 @@ export class ManageNotesComponent implements OnInit {
       switch (colonne) {
         case 'date':
           this.observationService.observationsApiaryUser.sort((b, a) => {
-            return new Date(a.date).getTime() - new Date(b.date).getTime();
+            return new Date(a.createDate).getTime() - new Date(b.createDate).getTime();
           });
           break;
         case 'apiary':
           this.observationService.observationsApiaryUser.sort((a, b) => {
-            return this.getApiaryNameByID(a.idApiary).localeCompare(this.getApiaryNameByID(b.idApiary));
+            return this.getApiaryNameByID(a.apiaryId).localeCompare(this.getApiaryNameByID(b.apiaryId));
           });
           break;
         case 'note':
           this.observationService.observationsApiaryUser.sort((a, b) => {
-            return a.sentence.localeCompare(b.sentence);
+            return a.description.localeCompare(b.description);
           });
           break;
       }
@@ -128,22 +128,22 @@ export class ManageNotesComponent implements OnInit {
       switch (colonne) {
         case 'date':
           this.observationService.observationsHiveUser.sort((b, a) => {
-            return new Date(a.date).getTime() - new Date(b.date).getTime();
+            return new Date(a.createDate).getTime() - new Date(b.createDate).getTime();
           });
           break;
         case 'type':
           this.observationService.observationsHiveUser.sort((a, b) => {
-            return a.type.localeCompare(b.type);
+            return a.typeInspect.localeCompare(b.typeInspect);
           });
           break;
         case 'hive':
           this.observationService.observationsHiveUser.sort((a, b) => {
-            return this.getHiveNameById(a.idHive).localeCompare(this.getHiveNameById(b.idHive));
+            return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
           });
           break;
         case 'note':
           this.observationService.observationsHiveUser.sort((a, b) => {
-            return a.sentence.localeCompare(b.sentence);
+            return a.description.localeCompare(b.description);
           });
           break;
       }
@@ -203,19 +203,18 @@ export class ManageNotesComponent implements OnInit {
     if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.userId)) {
       const formValue = this.NoteForm.value;
       this.newObs = formValue;
-      this.newObs.type = 'HiveObs';
-      this.newObs.idHive = this.hiveNoteSelect._id;
-      this.newObs.idLHive = [this.hiveNoteSelect._id];
+      this.newObs.typeInspect = 'HiveObs';
+      this.newObs.hiveId = this.hiveNoteSelect._id;
       this.newObs.userId = this.userService.getIdUserLoged();
       this.NoteForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsHive.push(obs);
         this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
         });
         this.observationService.observationsHiveUser.push(obs);
         this.observationService.observationsHiveUser.sort((a, b) => {
-          return this.getHiveNameById(a.idHive).localeCompare(this.getHiveNameById(b.idHive));
+          return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
         });
       }, () => { }, () => {
         this.initForm();
@@ -235,19 +234,18 @@ export class ManageNotesComponent implements OnInit {
     if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.userId)) {
       const formValue = this.NoteForm.value;
       this.newObs = formValue;
-      this.newObs.type = 'HiveAct';
-      this.newObs.idHive = this.hiveNoteSelect._id;
-      this.newObs.idLHive = [this.hiveNoteSelect._id];
+      this.newObs.typeInspect = 'HiveAct';
+      this.newObs.hiveId = this.hiveNoteSelect._id;
       this.newObs.userId = this.userService.getIdUserLoged();
       this.NoteForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsHive.push(obs);
         this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
         });
         this.observationService.observationsHiveUser.push(obs);
         this.observationService.observationsHiveUser.sort((a, b) => {
-          return this.getHiveNameById(a.idHive).localeCompare(this.getHiveNameById(b.idHive));
+          return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
         });
       }, () => { }, () => {
         this.initForm();
@@ -267,18 +265,18 @@ export class ManageNotesComponent implements OnInit {
     if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.userId)) {
       const formValue = this.NoteForm.value;
       this.newObs = formValue;
-      this.newObs.type = 'ApiaryObs';
-      this.newObs.idApiary = this.rucherService.rucherSelectUpdate._id;
+      this.newObs.typeInspect = 'ApiaryObs';
+      this.newObs.apiaryId = this.rucherService.rucherSelectUpdate._id;
       this.newObs.userId = this.userService.getIdUserLoged();
       this.NoteForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsApiary.push(obs);
         this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
         });
         this.observationService.observationsApiaryUser.push(obs);
         this.observationService.observationsApiaryUser.sort((a, b) => {
-          return this.getApiaryNameByID(a.idApiary).localeCompare(this.getApiaryNameByID(b.idApiary));
+          return this.getApiaryNameByID(a.apiaryId).localeCompare(this.getApiaryNameByID(b.apiaryId));
         });
       }, () => { }, () => {
         this.initForm();
@@ -307,11 +305,11 @@ export class ManageNotesComponent implements OnInit {
   editNoteInit(note: Observation) {
     this.noteToEdit = note;
 
-    if (this.noteToEdit.type === 'ApiaryObs') {
+    if (this.noteToEdit.typeInspect === 'ApiaryObs') {
       const donnée = {
-        sentence: this.noteToEdit.sentence,
+        sentence: this.noteToEdit.description,
         type: 'HiveObs',
-        date: new Date(this.noteToEdit.date),
+        date: new Date(this.noteToEdit.createDate),
         checkbox: 'apiary'
       };
       this.NoteForm.setValue(donnée);
@@ -319,9 +317,9 @@ export class ManageNotesComponent implements OnInit {
       this.noteInitialList = 'apiary';
     } else {
       const donnée = {
-        sentence: this.noteToEdit.sentence,
-        type: this.noteToEdit.type,
-        date: new Date(this.noteToEdit.date),
+        sentence: this.noteToEdit.description,
+        type: this.noteToEdit.typeInspect,
+        date: new Date(this.noteToEdit.createDate),
         checkbox: 'hive'
       };
       this.NoteForm.setValue(donnée);
@@ -332,21 +330,21 @@ export class ManageNotesComponent implements OnInit {
     this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
       this.rucherService.rucheService.ruchesAllApiary = ruches;
       // Apiary init
-      if (this.noteToEdit.type === 'ApiaryObs') {
-        this.rucherService.rucherSelectUpdate = this.rucherService.ruchers.filter(apiary => apiary._id === this.noteToEdit.idApiary)[0];
+      if (this.noteToEdit.typeInspect === 'ApiaryObs') {
+        this.rucherService.rucherSelectUpdate = this.rucherService.ruchers.filter(apiary => apiary._id === this.noteToEdit.apiaryId)[0];
       } else {
-        let idApiary = this.rucheService.ruchesAllApiary.filter(hive => hive._id === this.noteToEdit.idHive)[0].apiaryId;
+        let idApiary = this.rucheService.ruchesAllApiary.filter(hive => hive._id === this.noteToEdit.hiveId)[0].apiaryId;
         this.rucherService.rucherSelectUpdate = this.rucherService.ruchers.filter((apiary: RucherModel) => apiary._id === idApiary)[0];
       }
       this.apiaryToEdit = this.rucherService.rucherSelectUpdate;
       // Hive init
       this.hivesNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
-      if (this.noteToEdit.type === 'ApiaryObs') {
+      if (this.noteToEdit.typeInspect === 'ApiaryObs') {
         if (this.hivesNoteForm.length !== 0) {
           this.hiveNoteSelect = this.hivesNoteForm[0];
         }
       } else {
-        this.hiveNoteSelect = this.rucheService.ruchesAllApiary.filter(hive => hive._id === this.noteToEdit.idHive)[0];
+        this.hiveNoteSelect = this.rucheService.ruchesAllApiary.filter(hive => hive._id === this.noteToEdit.hiveId)[0];
       }
     })
   }
@@ -362,19 +360,17 @@ export class ManageNotesComponent implements OnInit {
   editNote() {
     if (this.userService.checkWriteObject(this.apiaryToEdit.userId)) {
       const formValue = this.NoteForm.value;
-      this.noteToEdit.sentence = formValue.sentence;
-      this.noteToEdit.date = formValue.date;
-      this.noteToEdit.type = formValue.type;
+      this.noteToEdit.description = formValue.sentence;
+      this.noteToEdit.createDate = formValue.date;
+      this.noteToEdit.typeInspect = formValue.type;
       this.noteNewList = this.NoteForm.value.checkbox;
       if (this.NoteForm.value.checkbox === 'apiary') {
-        this.noteToEdit.type = 'ApiaryObs';
-        this.noteToEdit.idApiary = this.rucherService.rucherSelectUpdate._id;
-        this.noteToEdit.idHive = '';
-        this.noteToEdit.idLHive = [];
+        this.noteToEdit.typeInspect = 'ApiaryObs';
+        this.noteToEdit.apiaryId = this.rucherService.rucherSelectUpdate._id;
+        this.noteToEdit.hiveId = '';
       } else {
-        this.noteToEdit.idApiary = '';
-        this.noteToEdit.idHive = this.hiveNoteSelect._id;
-        this.noteToEdit.idLHive = [this.hiveNoteSelect._id];
+        this.noteToEdit.apiaryId = '';
+        this.noteToEdit.hiveId = this.hiveNoteSelect._id;
       }
       this.noteToEdit.userId = this.userService.getIdUserLoged();
       this.NoteForm.reset();
@@ -389,22 +385,22 @@ export class ManageNotesComponent implements OnInit {
           // Create the note on hive note lists
           this.observationService.observationsHive.push(this.noteToEdit);
           this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-            return new Date(b.date).getTime() - new Date(a.date).getTime();
+            return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
           });
           this.observationService.observationsHiveUser.push(this.noteToEdit);
           this.observationService.observationsHiveUser.sort((a, b) => {
-            return this.getHiveNameById(a.idHive).localeCompare(this.getHiveNameById(b.idHive));
+            return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
           });
           // If the note switch from hive to apiary note
         } else if (this.noteInitialList === 'hive' && this.noteNewList === 'apiary') {
           // Create the note on apiary note lists
           this.observationService.observationsApiary.push(this.noteToEdit);
           this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
-            return new Date(b.date).getTime() - new Date(a.date).getTime();
+            return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
           });
           this.observationService.observationsApiaryUser.push(this.noteToEdit);
           this.observationService.observationsApiaryUser.sort((a, b) => {
-            return this.getApiaryNameByID(a.idApiary).localeCompare(this.getApiaryNameByID(b.idApiary));
+            return this.getApiaryNameByID(a.apiaryId).localeCompare(this.getApiaryNameByID(b.apiaryId));
           });
           // delete note from hive note lists
           let index = this.observationService.observationsHive.indexOf(this.noteToEdit);
@@ -418,23 +414,23 @@ export class ManageNotesComponent implements OnInit {
             let index = this.observationService.observationsApiary.indexOf(this.noteToEdit);
             this.observationService.observationsApiary[index] = this.noteToEdit;
             this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
-              return new Date(b.date).getTime() - new Date(a.date).getTime();
+              return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
             });
             index = this.observationService.observationsApiaryUser.indexOf(this.noteToEdit);
             this.observationService.observationsApiaryUser[index] = this.noteToEdit;
             this.observationService.observationsApiaryUser.sort((a, b) => {
-              return this.getApiaryNameByID(a.idApiary).localeCompare(this.getApiaryNameByID(b.idApiary));
+              return this.getApiaryNameByID(a.apiaryId).localeCompare(this.getApiaryNameByID(b.apiaryId));
             });
           } else {
             let index = this.observationService.observationsHive.indexOf(this.noteToEdit);
             this.observationService.observationsHive[index] = this.noteToEdit;
             this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-              return new Date(b.date).getTime() - new Date(a.date).getTime();
+              return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
             });
             index = this.observationService.observationsHiveUser.indexOf(this.noteToEdit);
             this.observationService.observationsHiveUser[index] = this.noteToEdit;
             this.observationService.observationsHiveUser.sort((a, b) => {
-              return this.getHiveNameById(a.idHive).localeCompare(this.getHiveNameById(b.idHive));
+              return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
             });
           }
         }
@@ -455,9 +451,9 @@ export class ManageNotesComponent implements OnInit {
 
   deleteNote(note: Observation) {
     if (this.userService.checkWriteObject(note.userId)) {
-      this.observationService.deleteObservation(note.id).subscribe(() => { }, () => { }, () => {
+      this.observationService.deleteObservation(note._id).subscribe(() => { }, () => { }, () => {
         // Delete an apiary note
-        if(note.type === 'ApiaryObs'){
+        if(note.typeInspect === 'ApiaryObs'){
           let index = this.observationService.observationsApiary.indexOf(note);
           this.observationService.observationsApiary.splice(index, 1);
           index = this.observationService.observationsApiaryUser.indexOf(note);

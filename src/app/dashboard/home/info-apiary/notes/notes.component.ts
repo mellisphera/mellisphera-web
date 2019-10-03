@@ -64,7 +64,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
 
   ngOnInit() {
     this.initForm();
-    this.observationService.setRange({ scale: 1, type: 'YEARS' });
+    this.observationService.setRange({ scale: 100, type: 'YEARS' });
     this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
   }
 
@@ -97,8 +97,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     this.hiveToMv = this.rucherService.rucheService.ruches[0];
     this.newObs = obs;
     const donnée = {
-      sentence: this.newObs.sentence,
-      date: new Date(obs.date)
+      sentence: this.newObs.description,
+      date: new Date(obs.createDate)
     };
     this.observationForm.setValue(donnée);
   }
@@ -110,10 +110,9 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    */
   mvToActions() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-      this.newObs.type = this.typeToMv === 0 ? 'HiveObs' : 'HiveAct';
-      this.newObs.idApiary = null;
-      this.newObs.idHive = this.hiveToMv._id;
-      this.newObs.idLHive = new Array(this.hiveToMv._id);
+      this.newObs.typeInspect = this.typeToMv === 0 ? 'HiveObs' : 'HiveAct';
+      this.newObs.apiaryId = null;
+      this.newObs.hiveId = this.hiveToMv._id;
       const index = this.observationService.observationsApiary.indexOf(this.newObs);
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsApiary.splice(index, 1);
@@ -136,14 +135,14 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.observationForm.value;
       this.newObs = formValue;
-      this.newObs.idApiary = this.rucherService.rucher._id;
-      this.newObs.type = 'ApiaryObs';
+      this.newObs.apiaryId = this.rucherService.rucher._id;
+      this.newObs.typeInspect = 'ApiaryObs';
       this.newObs.userId = this.userService.getIdUserLoged();
       this.initForm();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsApiary.push(obs);
         this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
         });
       }, () => { }, () => {
         if(this.userService.getJwtReponse().country === "FR"){
@@ -164,8 +163,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   onEditObservation() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.observationForm.value;
-      this.newObs.sentence = formValue.sentence;
-      this.newObs.date = formValue.date;
+      this.newObs.description = formValue.sentence;
+      this.newObs.createDate = formValue.date;
       const index = this.observationService.observationsApiary.indexOf(this.newObs);
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsApiary[index] = this.newObs;
@@ -189,7 +188,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    */
   deleteObs() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-      this.observationService.deleteObservation(this.newObs.id).subscribe(() => { }, () => { }, () => {
+      this.observationService.deleteObservation(this.newObs._id).subscribe(() => { }, () => { }, () => {
         const index = this.observationService.observationsApiary.indexOf(this.newObs);
         this.observationService.observationsApiary.splice(index, 1);
         this.initForm();

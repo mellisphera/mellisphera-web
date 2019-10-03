@@ -39,7 +39,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     public dailyRecordThService: DailyRecordService,
     public capteurService: CapteurService,
     public dailyRecordWservice: DailyRecordsWService,
-    private alertsService: AlertsService,) {
+    private alertsService: AlertsService) {
 
       this.getScreenSize();
 

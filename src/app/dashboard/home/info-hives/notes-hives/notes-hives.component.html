@@ -33,10 +33,10 @@ limitations under the License. -->
       <table class="table">
         <tbody>
           <ng-container *ngFor="let hiveObs of observationService.observationsHive; index as i">
-            <ng-container *ngIf="hiveObs.type =='HiveObs'">
+            <ng-container *ngIf="hiveObs.typeInspect =='HiveObs'">
               <tr class="hoverStyle">
-                <td style="width: 100px;">{{ hiveObs.date | myDate }}</td>
-                <td>{{hiveObs.sentence}}</td>
+                <td style="width: 100px;">{{ hiveObs.createDate | myDate }}</td>
+                <td>{{hiveObs.description}}</td>
                 <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}</td> -->
                 <td class="text-right" style="width: 80px;">
                   <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.EDIT' | translate}}"
@@ -50,10 +50,10 @@ limitations under the License. -->
 
               </tr>
             </ng-container>
-            <ng-container *ngIf="hiveObs.type =='HiveAct'">
+            <ng-container *ngIf="hiveObs.typeInspect =='HiveAct'">
               <tr class="hoverStyle" style="color: blue;">
-                <td style="width: 100px;">{{hiveObs.date | myDate}}</td>
-                <td>{{hiveObs.sentence}}</td>
+                <td style="width: 100px;">{{hiveObs.createDate | myDate}}</td>
+                <td>{{hiveObs.description}}</td>
                 <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.ACTION' | translate}}</td> -->
                 <td class="text-right" style="width: 80px;">
                   <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.EDIT' | translate}}"

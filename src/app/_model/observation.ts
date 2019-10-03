@@ -10,14 +10,27 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 export interface Observation {
-    id?: string;
-    date: Date;
-    type: string;
-    sentence: string;
-    idApiary?: string;
-    idHive: string;
+    _id?: string;
+    createDate: Date;
+    typeS: string;
+    description: string;
+    apiaryId?: string;
+    hiveId: string;
     userId: string;
-    idLHive?: Array<string>;
-    Lruche: Array<string>;
-    nluScore?: string;
+    typeInspect: string;
+    tags: string[];
 }
+
+
+/**{
+    "_id" : "cJIoXm05XanU1dPHkUVQ",
+    "createDate" : ISODate("1970-01-01T00:00:00.000Z"),
+    "type" : "hive",
+    "description" : "No stressors ? ",
+    "hiveId" : "HpfcjKqPG36v52DyikSwoaWUbzMTFVxE",
+    "apiaryId" : "p3IOv7syGNte82qUkcR0ohKF6bgVwjXL",
+    "opsDate" : ISODate("1970-01-18T14:18:06.480Z"),
+    "userId" : "G8zsCAgnehvF2ajfL3pQ5HXKmZNklEyB",
+    "typeInspect" : "HiveObs",
+    "_class" : "com.mellisphera.entities.Note"
+} */

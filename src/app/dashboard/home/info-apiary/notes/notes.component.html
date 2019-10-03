@@ -34,8 +34,8 @@ limitations under the License. -->
       <table class="table">
         <tbody>
           <tr class="hoverStyle" *ngFor="let obs of observationService.observationsApiary; let i = index;">
-            <td style="width: 100px;">{{ obs.date | myDate }}</td>
-            <td>{{ obs.sentence }}</td>
+            <td style="width: 100px;">{{ obs.createDate | myDate }}</td>
+            <td>{{ obs.description }}</td>
             <td class="text-right" style="width: 80px;">
               <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.EDIT' | translate}}"
                 data-toggle="modal" type="button" data-target="#editObservationModal"

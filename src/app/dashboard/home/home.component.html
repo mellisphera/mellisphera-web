@@ -107,7 +107,7 @@ limitations under the License. -->
             <!-- The circle for an hive -->
             <!-- Hive Handle -->
             <div #HiveHandle data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
-                (dblclick)="onClick(ruche);" [id] = "ruche.id" class="ruche handleHive displayNone"
+                (dblclick)="onClick(ruche);" [id] = "ruche._id" class="ruche handleHive displayNone"
                 [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)">
                 <!-- notifications -->
                 <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"
@@ -116,9 +116,9 @@ limitations under the License. -->
             <!-- Hive click -->
             <div data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
                 (click)="onClick(ruche);" [id] = "ruche.name" class="ruche fixHive"
-                [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)">
+                [style.background-color]="dailyRecTh.getColorByPourcent(ruche._id)">
                 <!-- notifications -->
-                <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"
+                <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
                     class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche.id) }}</span>
             </div>
             <!-- The hidden div when you click on name/Brood/Weight/Sensors -->
@@ -126,22 +126,22 @@ limitations under the License. -->
                 <span class="hive-info">{{ruche.name.slice(-10)}}</span>
             </div>
             <div (click)="onClick(ruche);" class="brood collapse ">
-                <span *ngIf="dailyRecTh.getPourcentByHive(ruche.id) !== null"
+                <span *ngIf="dailyRecTh.getPourcentByHive(ruche._id) !== null"
                     class="hive-info">{{ dailyRecTh.getPourcentByHive(ruche.id) }}</span>
-                <span *ngIf="dailyRecTh.getPourcentByHive(ruche.id) === null"
+                <span *ngIf="dailyRecTh.getPourcentByHive(ruche._id) === null"
                     class="hive-info">{{ 'HOME.NODATA' | translate}}</span>
             </div>
             <div (click)="onClick(ruche);" class="weight collapse ">
-                <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche.id) !== null"
+                <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche._id) !== null"
                     class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightIncomeByHive(ruche.id)) }}</span>
-                <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche.id) === null"
+                <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche._id) === null"
                     class="hive-info">{{ 'HOME.NODATA' | translate}}</span>
             </div>
-            <div (click)="onClick(ruche);" id="collapse1" [class]="(capteurService.getCapteursByHive(ruche.id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">
-                <span *ngIf="capteurService.getCapteursByHive(ruche.id).length === 0"
+            <div (click)="onClick(ruche);" id="collapse1" [class]="(capteurService.getCapteursByHive(ruche._id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">
+                <span *ngIf="capteurService.getCapteursByHive(ruche._id).length === 0"
                     class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
-                <ng-container *ngIf="capteurService.getCapteursByHive(ruche.id).length !== 0">
-                    <p *ngFor="let capt of increasingSort(capteurService.getCapteursByHive(ruche.id)); let i = index" class ="hive-info">
+                <ng-container *ngIf="capteurService.getCapteursByHive(ruche._id).length !== 0">
+                    <p *ngFor="let capt of increasingSort(capteurService.getCapteursByHive(ruche._id)); let i = index" class ="hive-info">
                         {{ capt }}
                     </p>
                 </ng-container>

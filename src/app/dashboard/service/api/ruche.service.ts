@@ -119,7 +119,7 @@ export class RucheService {
     * @memberof RucheService
     */
    getHivesByApiary(idApiary: string): Observable<RucheInterface[]> {
-     return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/username/' + idApiary);;
+     return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/username/' + idApiary);
    }
 
    /**

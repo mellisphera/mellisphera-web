@@ -55,7 +55,7 @@ export class ObservationService {
     this.observationsHive = [];
     this.observationsApiaryUser = [];
     this.observationsHiveUser = [];
-    this.setRange({scale: 1, type: 'YEAR'});
+    this.setRange({scale: 100, type: 'YEAR'});
     
     this.imgHiveObs = 'M256,96C144.341,96,47.559,161.021,0,256c47.559,94.979,144.341,160,256,160c111.656,0,208.439-65.021,256-160' +
 		'C464.441,161.021,367.656,96,256,96z M382.225,180.852c30.082,19.187,55.572,44.887,74.719,75.148' +
@@ -105,7 +105,7 @@ export class ObservationService {
       date.setMonth((new Date().getMonth() - scale.scale));
     } else {
       date = new Date();
-      date.setFullYear(new Date().getFullYear() - 1);
+      date.setFullYear(new Date().getFullYear() - scale.scale);
     }
     this.rangeObs = MyDate.getRange(date);
   }
@@ -127,7 +127,7 @@ export class ObservationService {
     return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, this.rangeObs).subscribe(
       _obs => {
         this.observationsHive = _obs.sort((a: Observation, b: Observation) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
         });
         this.emitHiveSubject();
       }
@@ -188,7 +188,7 @@ export class ObservationService {
    * @memberof ObservationService
    */
   updateObservation(obs: Observation): Observable<Observation> {
-    return this.http.put<Observation>(CONFIG.URL + 'report/update/' + obs.id, obs);
+    return this.http.put<Observation>(CONFIG.URL + 'report/update/' + obs._id, obs);
   }
 
   /**
@@ -208,7 +208,7 @@ export class ObservationService {
    * @param {string} userId
    * @memberof ObservationService
    */
-  getObservationByuserId(userId: string): Observable<Observation[]>{
+  getObservationByUserId(userId: string): Observable<Observation[]>{
     return this.http.get<Observation[]>(CONFIG.URL + 'report/user/' + userId);
   }
   
