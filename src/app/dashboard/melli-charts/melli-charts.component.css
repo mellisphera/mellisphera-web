@@ -64,18 +64,21 @@ nav[role=admin-navigation] {
      margin-right: 10px;
      display: flex;
      justify-content: center;
-     width: 38%;
+     width: 31%;
      margin-top: -8px;
 }
 #dropdown{
-    width: 100%;
+    width: 50%;
+    text-align: center;
 }
 .nav-date .btn-primary {
     width: 100% !important;
 }
 #btn-date{
-    background-color: #204d74;
     margin-top: 13px;
+    height: 36px;
+    padding-right: 0px;
+    border: none !important;
 }
 #previous-date {
     margin-right: 10px;

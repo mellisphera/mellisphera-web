@@ -31,7 +31,7 @@ limitations under the License. -->
                     </ul>
 
                     <!-- Name/Rank/Weigth/Sensors -->
-                    <ul class="nav navbar-nav abs-center-x">
+                    <ul class="nav navbar-nav abs-left-x">
                         <li (click)="collapseAllActiveButton('sensors','weight','brood','name')"><button id="name"
                                 type="button" class="button button1 active" data-toggle="collapse"
                                 data-target=".name">{{ 'HOME.NAVBAR.NAME' | translate}}</button></li>
@@ -111,7 +111,7 @@ limitations under the License. -->
                 [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)">
                 <!-- notifications -->
                 <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"
-                    class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche.id) }}</span>
+                    class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span>
             </div>
             <!-- Hive click -->
             <div data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
@@ -119,7 +119,7 @@ limitations under the License. -->
                 [style.background-color]="dailyRecTh.getColorByPourcent(ruche._id)">
                 <!-- notifications -->
                 <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
-                    class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche.id) }}</span>
+                    class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span>
             </div>
             <!-- The hidden div when you click on name/Brood/Weight/Sensors -->
             <div (click)="onClick(ruche);" class="name collapse in">
@@ -127,13 +127,13 @@ limitations under the License. -->
             </div>
             <div (click)="onClick(ruche);" class="brood collapse ">
                 <span *ngIf="dailyRecTh.getPourcentByHive(ruche._id) !== null"
-                    class="hive-info">{{ dailyRecTh.getPourcentByHive(ruche.id) }}</span>
+                    class="hive-info">{{ dailyRecTh.getPourcentByHive(ruche._id) }}</span>
                 <span *ngIf="dailyRecTh.getPourcentByHive(ruche._id) === null"
                     class="hive-info">{{ 'HOME.NODATA' | translate}}</span>
             </div>
             <div (click)="onClick(ruche);" class="weight collapse ">
                 <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche._id) !== null"
-                    class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightIncomeByHive(ruche.id)) }}</span>
+                    class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightIncomeByHive(ruche._id)) }}</span>
                 <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche._id) === null"
                     class="hive-info">{{ 'HOME.NODATA' | translate}}</span>
             </div>

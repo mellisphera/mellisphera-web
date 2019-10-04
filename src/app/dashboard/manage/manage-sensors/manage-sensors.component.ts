@@ -93,7 +93,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
       this.apiarySensorForm = this.rucherService.rucher;
         });
       // Hive init
-      this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
+      this.rucherService.rucheService.getHiveByUserId(this.userService.getJwtReponse().idUser).subscribe(ruches => {
           this.rucherService.rucheService.ruchesAllApiary = ruches;
           this.hivesSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.apiarySensorForm._id);
           if(this.hivesSensorForm.length !== 0){
@@ -115,7 +115,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
     /* Assigne les données du capteurs au formulaire pour modification*/
     const donnee = {
         checkbox: this.editCapteurCheckbox ? 'ruche' : 'stock',
-    }; 
+    };
     this.editCapteurForm.setValue(donnee);
     if (this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
         this.rucherService.findRucherById(this.capteurService.capteur.apiaryId, (apiary) => {
@@ -131,6 +131,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
         //     console.error(err);
         // });
         this.hiveSensorSelect = this.hivesEditSensorForm.filter(hive => hive._id === this.capteurService.capteur.hiveId)[0];
+        console.log(this.hiveSensorSelect);
     }
 
 }
@@ -271,12 +272,10 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
               this.validateSensorNotTaken.bind(this),
               /* Validators.pattern(this.paternRef)*/
           ],
-          'description': [null],
           'checkbox': ['ruche', Validators.required],
       });
 
       this.editCapteurForm = this.formBuilder.group({
-          'description': [null],
           'checkbox': ['ruche', Validators.required]
       });
   }

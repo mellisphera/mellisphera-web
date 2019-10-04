@@ -13,6 +13,7 @@ export interface Observation {
     _id?: string;
     createDate: Date;
     typeS: string;
+    opsDate: Date;
     description: string;
     apiaryId?: string;
     hiveId: string;

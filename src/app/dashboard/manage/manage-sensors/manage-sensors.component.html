@@ -67,10 +67,10 @@ limitations under the License. -->
                             <tbody>
                                 <ng-container
                                     *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch); let i = index">
-                                    <tr *ngIf="capteur.apiaryName != null">
-                                        <td class=" hive-link" *ngIf="capteur.apiaryName != null"
-                                            (click)="navToHive(capteur.idHive, capteur.idApiary)">
-                                            {{capteur.apiaryName}} | {{capteur.hiveName}}</td>
+                                    <tr *ngIf="capteur.hiveId != null">
+                                        <td class=" hive-link" *ngIf="capteur.hiveId != null"
+                                            (click)="navToHive(capteur.hiveId, capteur.apiaryId)">
+                                            {{capteur.hiveName}}</td>
                                         <td class="text-left">{{capteur.description}}</td>
                                         <td>{{capteur.sensorRef}}</td>
                                         <td>{{capteur.type}}</td>
@@ -156,8 +156,8 @@ limitations under the License. -->
                             <tbody>
                                 <ng-container
                                     *ngFor="let capteur of ( capteurService.capteursByUser | capteurPipe : capteurSearch); let i = index">
-                                    <tr *ngIf="capteur.apiaryName == null">
-                                        <td *ngIf="capteur.apiaryName == null">Stock</td>
+                                    <tr *ngIf="capteur.hiveId == null">
+                                        <td *ngIf="capteur.hiveId == null">Stock</td>
                                         <td class="text-left">{{capteur.description}}</td>
                                         <td>{{capteur.sensorRef}}</td>
                                         <td>{{capteur.type}}</td>
@@ -236,10 +236,10 @@ limitations under the License. -->
                         </div>
 
                     </div>
-                    <div class="form-group">
+<!--                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Description :</label>
                         <input formControlName="description" class="form-control" id="message-text">
-                    </div>
+                    </div> -->
                     <div class="form-group ">
                         <label class="col-form-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.LINK' | translate}}</label>
                         <div class="form-check">
@@ -352,10 +352,10 @@ limitations under the License. -->
                             <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
                         </div>
                     </div>
-                    <div class="form-group">
+<!--                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Description</label>
                         <input formControlName="description" class="form-control" id="message-text">
-                    </div>
+                    </div> -->
                     <div class="form-group ">
                         <div class="alert alert-success" *ngIf="editedSensorMsgE">
                             {{ 'CAPTEUR.FORM.SENSOR_EDIT' | translate}}

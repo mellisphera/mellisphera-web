@@ -65,7 +65,7 @@ export class StatesComponent implements OnInit {
       this.eltOnClickId = null;
       this.username = this.login.getUser();
       this.elementCounter = 0;
-      this.nbDaysHivesForm = 30;
+      this.nbDaysHivesForm = 15;
 
       this.date = new Date();
   }
