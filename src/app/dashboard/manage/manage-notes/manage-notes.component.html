@@ -64,9 +64,9 @@ limitations under the License. -->
                                 <ng-container
                                     *ngFor="let note of ( observationService.observationsApiaryUser | observationPipe : observationSearch1); let i = index">
                                     <tr>
-                                        <td>{{note.date | myDate}}</td>
-                                        <td>{{getApiaryNameByID(note.idApiary)}}</td>
-                                        <td>{{note.sentence}}</td>
+                                        <td>{{note.opsDate | myDate}}</td>
+                                        <td>{{getApiaryNameByID(note.apiaryId)}}</td>
+                                        <td>{{note.description}}</td>
                                         <td class="text-right">
                                             <button data-toggle="tooltip" data-html="true"
                                                 title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal"
@@ -154,10 +154,10 @@ limitations under the License. -->
                                 <ng-container
                                     *ngFor="let note of ( observationService.observationsHiveUser | observationPipe : observationSearch); let i = index">
                                     <tr>
-                                        <td>{{note.date | myDate}}</td>
-                                        <td>{{getType(note.type)}}</td>
-                                        <td>{{getHiveNameById(note.idHive)}}</td>
-                                        <td>{{note.sentence}}</td>
+                                        <td>{{note.opsDate | myDate}}</td>
+                                        <td>{{getType(note.typeInspect)}}</td>
+                                        <td>{{getHiveNameById(note.hiveId)}}</td>
+                                        <td>{{note.description}}</td>
                                         <td class="text-right">
                                             <button data-toggle="tooltip" data-html="true"
                                                 title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal"

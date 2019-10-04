@@ -63,6 +63,7 @@ export class ManageNotesComponent implements OnInit {
         this.observationService.observationsApiaryUser = (_notes.filter(note => note.typeInspect === 'ApiaryObs')).sort((a, b) => {
           return this.getApiaryNameByID(a.apiaryId).localeCompare(this.getApiaryNameByID(b.apiaryId));
         });
+        console.log(this.observationService.observationsApiaryUser);
       });
       this.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
         this.rucheService.ruchesAllApiary = ruches;

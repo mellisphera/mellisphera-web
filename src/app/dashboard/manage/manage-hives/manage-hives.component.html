@@ -39,7 +39,7 @@ limitations under the License. -->
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let ruche of getHiveByApiary(apiary.id); let i = index;">
+                  <tr *ngFor="let ruche of getHiveByApiary(apiary._id); let i = index;">
                     <td class="hive-select">{{ruche.name}}</td>
                     <td class="hive-select">{{ruche.description}}</td>
                     <td class="text-right">

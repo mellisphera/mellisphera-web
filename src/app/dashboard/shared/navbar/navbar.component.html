@@ -111,7 +111,7 @@ limitations under the License. -->
           </ul>
         </li>
         <li>
-          <select [(ngModel)]="rucherService.rucher" style="width: 100%" class="form-control"
+          <select [(ngModel)]="rucherService.rucher" class="form-control"
             (change)="onSelectRucher()" id="select-Apiary">
             <option *ngFor="let rucher of rucherService.allApiaryAccount" [ngValue]="rucher">
               {{rucher.name}} <span class="admin_userApiary" *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
