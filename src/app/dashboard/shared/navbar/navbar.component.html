@@ -54,7 +54,7 @@ limitations under the License. -->
                 <img src="./assets/icons/ui/hive.png" style="width:50px;margin-left:-5px;" />
               </a>
               <!-- NEW HIVE -->
-              <button [disabled]="rucherService.rucher.id === null" (click)="rucherSelectInit()" data-toggle="tooltip"
+              <button [disabled]="rucherService.rucher._id === null" (click)="rucherSelectInit()" data-toggle="tooltip"
                 data-html="true" title="{{ 'HIVES.FORM.NEW' | translate}}" data-toggle="modal"
                 data-target="#newHiveModal" class="btn btn-success btn-lg crud-apiary">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
@@ -78,7 +78,7 @@ limitations under the License. -->
                 <img src="./assets/icons/ui/notes.png" style="width:50px;margin-left:-5px;" />
               </a>
               <!-- NEW NOTES -->
-              <button [disabled]="rucherService.rucher.id == null" (click)="newNoteModalInit()" data-toggle="tooltip"
+              <button [disabled]="rucherService.rucher._id == null" (click)="newNoteModalInit()" data-toggle="tooltip"
                 data-html="true" data-toggle="modal" data-target="#newNoteModal"
                 title="{{ 'NOTES.FORM.NEW' | translate}}" class="btn btn-success btn-lg crud-apiary">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
@@ -96,7 +96,7 @@ limitations under the License. -->
                 <img src="./assets/img/sensor-icon.png" style="width:50px;margin-left:-5px;" />
               </a>
               <!-- NEW SENSOR -->
-              <button [disabled]="rucherService.rucher.id == null" (click)="newSensorInit()" data-toggle="tooltip"
+              <button [disabled]="rucherService.rucher._id == null" (click)="newSensorInit()" data-toggle="tooltip"
                 data-html="true" data-toggle="modal" title="{{ 'CAPTEUR.FORM.NEW' | translate}}"
                 data-target="#newSensorModal" class="btn btn-success btn-lg crud-apiary">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>

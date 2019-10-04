@@ -22,7 +22,7 @@ limitations under the License. -->
             style="width:25px;margin-left:-5px;" />
           {{this.rucherService.rucher.name}}</span>
       </div>
-      <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
+      <button [disabled]="rucherService.rucher._id == null" data-toggle="tooltip" data-html="true"
         title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}" data-toggle="modal"
         style="float:right;width: 10%; padding: 0;border: none; background: none;"
         [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
