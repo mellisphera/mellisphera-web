@@ -93,7 +93,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
       this.apiarySensorForm = this.rucherService.rucher;
         });
       // Hive init
-      this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+      this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
           this.rucherService.rucheService.ruchesAllApiary = ruches;
           this.hivesSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.apiarySensorForm._id);
           if(this.hivesSensorForm.length !== 0){

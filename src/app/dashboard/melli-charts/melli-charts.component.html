@@ -70,11 +70,11 @@ limitations under the License. -->
     <div id="apiary-group">
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
-          <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher.id)" data-toggle="collapse"
+          <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)" data-toggle="collapse"
             data-parent="#main-menu"><span class="puce-apiary"></span>{{ rucher.name }}<span class="caret"></span></a>
           <div class="collapse list-group-level1" [id]="i">
             <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
-              *ngFor="let ruche of getHiveByApiary(rucher.id); let i = index" (click)="selectHive(ruche, $event)"
+              *ngFor="let ruche of getHiveByApiary(rucher._id); let i = index" (click)="selectHive(ruche, $event)"
               data-parent="#sub-menu"><i class="circle" [style.background-color]="getColor(ruche)"></i><span
                 class="puce-hive"></span>{{ ruche.name }}</a>
           </div>

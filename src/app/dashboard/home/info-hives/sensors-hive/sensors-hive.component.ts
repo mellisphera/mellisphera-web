@@ -83,7 +83,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
     }
 
     ngOnInit() {
-        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+        this.rucherService.rucheService.getHiveByUserId(this.userService.getJwtReponse().idUser).subscribe(ruches => {
             this.rucherService.rucheService.ruchesAllApiary = ruches;
             this.hiveSensorSelect = ruches[0];
         })

@@ -493,7 +493,7 @@ export class NavbarComponent implements OnInit {
         this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
 
         // Hive init
-        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+        this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
             this.rucherService.rucheService.ruchesAllApiary = ruches;
             this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
         })
@@ -680,7 +680,7 @@ export class NavbarComponent implements OnInit {
     deleteApiaryClicked() {
         this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
         // Hive init
-        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+        this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
             this.rucherService.rucheService.ruchesAllApiary = ruches;
             this.messageOrphanHives = this.displayOrphanHives(this.rucherService.rucherSelectUpdate);
         })
@@ -749,7 +749,7 @@ export class NavbarComponent implements OnInit {
         this.apiaryUpdateHive = this.rucherService.rucher;
         this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
         // Hive init
-        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+        this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
             this.rucherService.rucheService.ruchesAllApiary = ruches;
             this.ruchesEditHiveForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
             if (this.ruchesEditHiveForm.length != 0) {
@@ -898,7 +898,7 @@ export class NavbarComponent implements OnInit {
         // Apiary init
         this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
         // Hive init
-        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+        this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
             this.rucherService.rucheService.ruchesAllApiary = ruches;
             this.ruchesEditHiveForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
             if (this.ruchesEditHiveForm.length != 0) {
@@ -952,7 +952,7 @@ export class NavbarComponent implements OnInit {
         this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
     
         // Hive init
-        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+        this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
           this.rucherService.rucheService.ruchesAllApiary = ruches;
           this.hivesNavbarNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
           if (this.hivesNavbarNoteForm.length !== 0) {
@@ -1134,7 +1134,7 @@ export class NavbarComponent implements OnInit {
         this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
 
         // Hive init
-        this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+        this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
             this.rucherService.rucheService.ruchesAllApiary = ruches;
             this.hivesSensorForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
             if (this.hivesSensorForm.length !== 0) {
@@ -1199,7 +1199,7 @@ export class NavbarComponent implements OnInit {
             this.rucherService.rucherSelectUpdate = this.apiaryEditSensorFormOnes[0];
 
             // Hive init
-            this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+            this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
                 this.rucherService.rucheService.ruchesAllApiary = ruches;
                 this.hivesEditSensorFormOne = this.rucheService.ruchesAllApiary.filter(hive => (hive.apiaryId === this.rucherService.rucherSelectUpdate._id) && (this.capteurService.capteursByUser.filter(sensor => sensor.hiveId === hive._id).length !== 0));
                 if (this.hivesEditSensorFormOne.length != 0) {

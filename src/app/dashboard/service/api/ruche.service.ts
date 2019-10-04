@@ -48,7 +48,7 @@ export class RucheService {
     this.initRuche();
     this.hiveSubject = new BehaviorSubject<RucheInterface[]>([]);
     if (this.user.getUser()) {
-      // this.getHiveByUsername(this.user.getUser());
+      // this.getHiveByUserId(this.user.getUser());
 
     }
    }
@@ -168,13 +168,13 @@ export class RucheService {
     * @returns {Observable<RucheInterface[]>}
     * @memberof RucheService
     */
-   getHiveByUsername(username: string): Observable<RucheInterface[]> {
-     return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + username);
+   getHiveByUserId(userId: string): Observable<RucheInterface[]> {
+     return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + userId);
    }
 
 
-   getAllHiveByAccount(username: string): Observable<RucheInterface[][]> {
-     const obsAllHive: Observable<RucheInterface[]>[] = [this.getHiveByUsername(this.user.getUser())].concat(this.user.getSharingApiaryId().map(apiaryId => {
+   getAllHiveByAccount(userId: string): Observable<RucheInterface[][]> {
+     const obsAllHive: Observable<RucheInterface[]>[] = [this.getHiveByUserId(this.user.getJwtReponse().idUser)].concat(this.user.getSharingApiaryId().map(apiaryId => {
       return this.getHivesByApiary(apiaryId);
      }));
      return Observable.forkJoin(obsAllHive);

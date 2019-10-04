@@ -97,7 +97,7 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
       sharingUser : []
     };
 
-    this.rucherService.rucheService.getHiveByUsername(this.userService.getJwtReponse().idUser).subscribe(ruches => {
+    this.rucherService.rucheService.getHiveByUserId(this.userService.getJwtReponse().idUser).subscribe(ruches => {
       console.log(ruches);
       this.rucherService.rucheService.ruchesAllApiary = ruches;
     });

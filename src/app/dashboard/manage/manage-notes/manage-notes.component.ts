@@ -65,7 +65,7 @@ export class ManageNotesComponent implements OnInit {
         });
         console.log(this.observationService.observationsApiaryUser);
       });
-      this.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+      this.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
         this.rucheService.ruchesAllApiary = ruches;
         this.observationService.observationsHiveUser = (_notes.filter(note => (note.typeInspect === 'HiveObs') || (note.typeInspect === 'HiveAct'))).sort((a, b) => {
           return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
@@ -179,7 +179,7 @@ export class ManageNotesComponent implements OnInit {
     this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
 
     // Hive init
-    this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+    this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
       this.rucherService.rucheService.ruchesAllApiary = ruches;
       this.hivesNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
       if (this.hivesNoteForm.length !== 0) {
@@ -328,7 +328,7 @@ export class ManageNotesComponent implements OnInit {
       this.noteInitialList = 'hive';
     }
 
-    this.rucherService.rucheService.getHiveByUsername(this.userService.getUser()).subscribe(ruches => {
+    this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
       this.rucherService.rucheService.ruchesAllApiary = ruches;
       // Apiary init
       if (this.noteToEdit.typeInspect === 'ApiaryObs') {
