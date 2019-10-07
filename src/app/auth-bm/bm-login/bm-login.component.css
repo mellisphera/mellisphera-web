@@ -1,0 +1,13 @@
+legend{
+    color: white !important;
+}
+#loginBm-form{
+    width: 500px;
+    margin: auto;
+    color: white !important;
+}
+#btnSubmit{
+    background-color: #87CB16 !important;
+    color: white !important;
+    font-weight: bold;
+}

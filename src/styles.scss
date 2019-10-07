@@ -29,6 +29,9 @@
     background: url('./assets/background/rucher_login.jpg') no-repeat center;
     background-size: cover;
 }
+.login-bm{
+    background: linear-gradient(#0B68DA,#74ABF1);
+}
 .wizard-active{
      background-color: rgba($color: #000000, $alpha: 0.4);
     // filter: blur(10px);
