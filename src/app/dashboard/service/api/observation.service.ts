@@ -177,7 +177,7 @@ export class ObservationService {
    * @memberof ObservationService
    */
   createObservation(observation: Observation): Observable<Observation> {
-    return this.http.put<Observation>(CONFIG.URL + 'report/insert', observation);
+    return this.http.post<Observation>(CONFIG.URL + 'report/insert', observation);
   }
 
   /**

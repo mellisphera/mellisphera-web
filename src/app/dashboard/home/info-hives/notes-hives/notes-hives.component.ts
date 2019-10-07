@@ -105,6 +105,10 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       const formValue = this.ObservationForm.value;
       this.newObs = formValue;
       this.newObs.typeInspect = 'HiveObs';
+      this.newObs.type = 'hive';
+      this.newObs.opsDate = formValue.date;
+      this.newObs.createDate = new Date();
+      this.newObs.description = formValue.sentence;
       this.newObs.hiveId = this.rucheService.getCurrentHive()._id;
       this.newObs.userId = this.userService.getIdUserLoged();
       this.ObservationForm.reset();

@@ -12,7 +12,7 @@ limitations under the License. */
 export interface Observation {
     _id?: string;
     createDate: Date;
-    typeS: string;
+    type: string;
     opsDate: Date;
     description: string;
     apiaryId?: string;
