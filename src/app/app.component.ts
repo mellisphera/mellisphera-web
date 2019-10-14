@@ -1,4 +1,4 @@
-/* Copyright 2018-present Mellisphera
+/** Copyright 2018-present Mellisphera
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -13,7 +13,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { AtokenStorageService } from './auth/Service/atoken-storage.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core'; 
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { LoadingService } from './dashboard/service/loading.service';
 

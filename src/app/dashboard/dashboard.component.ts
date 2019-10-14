@@ -21,6 +21,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { RoutingHistoryService } from './service/routing-history.service';
+import { SocketService } from './service/socket.service';
+import { AuthService } from '../auth/Service/auth.service';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -48,6 +50,8 @@ export class DashboardComponent implements OnInit {
     private translateService: TranslateService,
     public loadingService: LoadingService,
     private renderer: Renderer2,
+    private socketService: SocketService,
+    private authService: AuthService,
     private myNotifierService: MyNotifierService,
     private routingHistory: RoutingHistoryService,
     private messagesService : MessagesService,
@@ -62,6 +66,7 @@ export class DashboardComponent implements OnInit {
       }
     });
     this.routingHistory.loadRouting();
+    this.socketService.loadDataRequest(this.authService.jwtReponse);
   }
 
   ngOnInit() {

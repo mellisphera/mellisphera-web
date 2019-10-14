@@ -52,15 +52,23 @@ import { DailyRecordService } from './service/api/dailyRecordService';
 import { ManageNotesComponent } from './manage/manage-notes/manage-notes.component';
 
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { SocketService } from './service/socket.service';
+
+const config: SocketIoConfig = { url: 'http://51.68.71.91:3000', options: {} };
+
+
+
 @NgModule({
   imports: [
-  CommonModule,
+    CommonModule,
     DasboardRoutingModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NavbarModule,
     SidebarModule,
     RouterModule,
+    SocketIoModule.forRoot(config),
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
@@ -81,6 +89,7 @@ import { ManageNotesComponent } from './manage/manage-notes/manage-notes.compone
     AdminService,
     UnitService,
     GraphGlobal,
+    SocketService,
     CapteurService,
     SidebarService,
     ObservationService,

@@ -40,6 +40,7 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MyDatePipe } from './pipe/my-date.pipe';
 
+
 export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
    return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
 }
