@@ -55,7 +55,7 @@ import { ManageNotesComponent } from './manage/manage-notes/manage-notes.compone
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketService } from './service/socket.service';
 
-const config: SocketIoConfig = { url: 'http://51.68.71.91:3000', options: {} };
+const config: SocketIoConfig = { url: 'https://51.68.71.91:3000', options: {} };
 
 
 
