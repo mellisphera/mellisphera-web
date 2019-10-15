@@ -89,7 +89,7 @@ const config: SocketIoConfig = { url: 'https://51.68.71.91:3000', options: {} };
     AdminService,
     UnitService,
     GraphGlobal,
-    SocketService,
+    //SocketService,
     CapteurService,
     SidebarService,
     ObservationService,

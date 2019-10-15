@@ -55,7 +55,7 @@ export class RucherService {
         this.allApiaryAccount = [];
         this.initRucher();
         if (this.user.getUser() && !this.tokenService.checkAuthorities('ROLE_ADMIN')) {
-            this.getApiaryByUser(this.user.getUser());
+            this.getApiaryByUser(this.user.getJwtReponse().idUser);
         }
 
     }
@@ -137,11 +137,11 @@ export class RucherService {
         }
     }
 
-    getApiaryByUser(username: string) {
+    getApiaryByUser(userId: string) {
         this.loadingService.loading = true;
         const ObservableApiaryQuery = [
-            this.getSharingApiaryByUser(this.user.getIdUserLoged()), 
-            this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + username)];
+            this.getSharingApiaryByUser(this.user.getIdUserLoged()),
+            this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + userId)];
         Observable.forkJoin(ObservableApiaryQuery).map(elt => {
             return elt.filter(_filter => _filter != null);
         }).subscribe(
