@@ -31,6 +31,12 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   public formatDt: number;
   public unitSys: string;
   public suscribPref: Subscription;
+  public notifConfig: {
+    name: string,
+    icon: string,
+    enable: boolean,
+    value: number[]
+  }[];
   private notifyService: NotifierService;
   private userPref: UserPref;
   public passwordForm: FormGroup;
@@ -40,6 +46,14 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     private userService: UserloggedService,
     public translateService: TranslateService,
     private formBuilder: FormBuilder) {
+    this.notifConfig = [
+      { name: 'Rain', icon: './assets/pictos_alerts/newIcones/Rain_1.svg', enable: true, value: [0, 10]},
+      { name: 'Snow', icon: './assets/pictos_alerts/newIcones/Snow_1.svg', enable: true, value: [0, 10]},
+      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10]},
+      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10]},
+      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10]}
+
+    ];
     this.notifyService = notifier;
   }
   ngOnInit() {
@@ -56,8 +70,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     });
   }
 
-  changeLangToggle()  {
-    console.log(this.translateService.currentLang);
+  changeLangToggle() {
     if (this.translateService.currentLang === 'fr') {
       this.translateService.use('en');
       this.userService.setCountry('en');
@@ -98,10 +111,10 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
 
   setNewPassword() {
     this.userConfig.updatePassword(this.passwordForm.get('confirmPassword').value).subscribe(
-      () => {}, () => {}, () => {
-        if(this.userService.getJwtReponse().country === "FR"){
+      () => { }, () => { }, () => {
+        if (this.userService.getJwtReponse().country === "FR") {
           this.notifier.notify('success', 'Mot de passe sauvegardé');
-        }else{
+        } else {
           this.notifier.notify('success', 'Password saved');
         }
       }
@@ -113,15 +126,15 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   }
   saveUserPref(): void {
     this.userConfig.setUserPref().subscribe(
-      () => {}, () => {}, () => {
+      () => { }, () => { }, () => {
         if (this.authService.jwtReponse === undefined) {
           this.authService.jwtReponse = JSON.parse(window.sessionStorage.getItem('jwtReponse'));
         }
         this.authService.jwtReponse.userPref = this.userPref;
         this.userConfig.emitPrefSubject();
-        if(this.userService.getJwtReponse().country === "FR"){
+        if (this.userService.getJwtReponse().country === "FR") {
           this.notifier.notify('success', 'Paramètres sauvegardés');
-        }else{
+        } else {
           this.notifier.notify('success', 'Settings saved');
         }
         window.sessionStorage.removeItem('jwtReponse');

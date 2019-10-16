@@ -180,7 +180,7 @@ export class AlertsHiveComponent implements OnInit {
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.date, value: 0, sensorRef: _elt.sentence ? 'Inspections' : 'Notifications' }
+      return { date: _elt.date, value: 0, sensorRef: _elt.description ? 'Inspections' : 'Notifications' }
     });
   }
 
@@ -260,7 +260,7 @@ export class AlertsHiveComponent implements OnInit {
                 position: [cellPoint[0], cellPoint[1]],
               });
             } else if (dataByDate.length === 1) {
-              if (dataByDate !== undefined && dataByDate[0].sentence) {
+              if (dataByDate !== undefined && dataByDate[0].description) {
                 group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
 
               } else {
@@ -356,7 +356,7 @@ export class AlertsHiveComponent implements OnInit {
       return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
         let type = 'Notif';
         let img = '';
-        if (_singleData.sentence) {
+        if (_singleData.description) {
           type = 'Inspection';
           img = '<img style={S} src={I} />';
           img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
@@ -366,7 +366,7 @@ export class AlertsHiveComponent implements OnInit {
         img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
         return {
           name: img,
-          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.sentence) : this.sliceTextToolip(_singleData.message),
+          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.sliceTextToolip(_singleData.message),
           unit: ''
         }
       }));

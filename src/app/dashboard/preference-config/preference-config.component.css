@@ -19,3 +19,19 @@ limitations under the License. */
     cursor: pointer;
     width: 50px;
 }
+.icon_notif{
+    width: 50px;
+}
+.switch-group{
+    vertical-align: middle  !important;
+    margin-top: 0px !important;
+}
+.list-notif{
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+}
+.flex{
+    display: flex;
+    justify-content: space-between;
+}

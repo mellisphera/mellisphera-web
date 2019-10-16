@@ -55,7 +55,7 @@ import { ManageNotesComponent } from './manage/manage-notes/manage-notes.compone
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketService } from './service/socket.service';
 
-const config: SocketIoConfig = { url: 'https://t1.mellisphera.com', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 
 

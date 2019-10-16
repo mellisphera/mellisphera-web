@@ -782,7 +782,7 @@ export class GraphGlobal {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
             let type = 'Notif';
             let img = '';
-            if (_singleData.sentence) {
+            if (_singleData.description) {
               type = 'Inspection';
               img = '<img style={S} src={I} />';
               img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
@@ -792,7 +792,7 @@ export class GraphGlobal {
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
             return {
               name: img,
-              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.sentence) : _singleData.message,
+              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : _singleData.message,
               unit: ''
             }
           }));

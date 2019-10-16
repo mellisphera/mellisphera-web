@@ -927,7 +927,7 @@ export class DailyManagerService {
                 });
               } else if (dataByDate.length === 1) {
                 let icon;
-                if (dataByDate[0].sentence) {
+                if (dataByDate[0].description) {
                   group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
 
                 } else {
@@ -992,7 +992,7 @@ export class DailyManagerService {
                   position: [cellPoint[0], cellPoint[1]],
                 });
               } else if (dataByDate.length === 1) {
-                if (dataByDate !== undefined && dataByDate[0].sentence) {
+                if (dataByDate !== undefined && dataByDate[0].description) {
                   group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
                 } else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].type, cellPoint));
@@ -1165,7 +1165,7 @@ export class DailyManagerService {
    */
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.date, value: 0, sensorRef: _elt.sentence ? 'inspect' : 'notif' };
+      return { date: _elt.date, value: 0, sensorRef: _elt.description ? 'inspect' : 'notif' };
     });
   }
 
