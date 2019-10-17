@@ -23,8 +23,8 @@ limitations under the License. -->
             <b class="text-success"></b>
             <button [disabled]="rucherService.rucher.id == null" data-toggle="tooltip" data-html="true"
               title="{{ 'HIVES.FORM.NEW' | translate}}" data-toggle="modal"
-              style="margin-left: 96.5%; padding: 1;border: none; background: none;" data-target="#newRucheModal"
-              class="btn btn-success" (click)="createHiveFormClicked(apiary)">
+              style="margin-left: 96.5%; padding: 1;border: none;" data-target="#newRucheModal"
+              class="btn btn-success btn_create" (click)="createHiveFormClicked(apiary)">
               <i class="fa fa-plus fa-2x"></i>
             </button>
 
@@ -45,15 +45,15 @@ limitations under the License. -->
                     <td class="text-right">
                       <button data-toggle="tooltip" data-html="true" title="{{ 'HIVES.FORM.EDITHIVE' | translate}}"
                         data-toggle="modal" type="button" (click)="onSelectRuche(ruche, apiary)"
-                        data-target="#editRucheModal" class="btn btn-primary "
-                        style="padding: 1;border: none; background: none;">
+                        data-target="#editRucheModal" class="btn btn-primary btn_edit"
+                        style="padding: 1;border: none;">
                         <i class="fa fa-edit fa-2x"></i>
                       </button>
-                      <button type="button" class="btn btn-warning" mwlConfirmationPopover
+                      <button type="button" class="btn btn-warning btn_delete" mwlConfirmationPopover
                         popoverTitle="{{ 'HIVES.FORM.DELETE_ASK' | translate}}" placement="top"
                         confirmText="{{ 'HIVES.FORM.CONFIRM' | translate}}"
                         cancelText="{{ 'HIVES.FORM.CANCEL' | translate}}" (confirm)="deleteRuche(ruche, apiary)"
-                        title="{{ 'HIVES.FORM.DELETE' | translate}}" style="padding: 1;border: none; background: none;">
+                        title="{{ 'HIVES.FORM.DELETE' | translate}}" style="padding: 1;border: none;">
                         <i class="fa fa-times fa-2x"></i>
                       </button>
                     </td>

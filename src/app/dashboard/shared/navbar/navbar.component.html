@@ -33,11 +33,11 @@ limitations under the License. -->
               </a>
               <!-- NEW APIARY -->
               <button data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.NEW_APIARY' | translate }}"
-                data-toggle="modal" data-target="#newApiaryModal" class="btn btn-success btn-lg crud-apiary">
+                data-toggle="modal" data-target="#newApiaryModal" class="btn btn-success btn-lg crud-apiary btn_create">
                 <i class="{{ 'NAVBAR.CRUD.APIARY' | translate }} fa fa-plus fa-2x"></i>
               </button>
               <!-- EDIT APIARY -->
-              <button type="button" (click)="editRucherClicked()" class="crud btn btn-primary btn-lg crud-apiary"
+              <button type="button" (click)="editRucherClicked()" class="crud btn btn-primary btn-lg crud-apiary btn_edit"
                 data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.EDIT_APIARY' | translate }}"
                 data-toggle="modal" data-target="#editApiary">
                 <i class="fa fa-edit fa-2x"></i>
@@ -56,13 +56,13 @@ limitations under the License. -->
               <!-- NEW HIVE -->
               <button [disabled]="rucherService.rucher._id === null" (click)="rucherSelectInit()" data-toggle="tooltip"
                 data-html="true" title="{{ 'HIVES.FORM.NEW' | translate}}" data-toggle="modal"
-                data-target="#newHiveModal" class="btn btn-success btn-lg crud-apiary">
+                data-target="#newHiveModal" class="btn btn-success btn-lg crud-apiary btn_create">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
               </button>
               <!-- EDIT HIVE -->
               <button data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.CRUD.EDITAHIVE' | translate}}"
                 data-toggle="modal" type="button" (click)="editHiveClicked()" data-target="#editHiveModal"
-                class="btn btn-primary btn-lg crud-apiary">
+                class="btn btn-primary btn-lg crud-apiary btn_edit">
                 <i class="fa fa-edit fa-2x"></i>
               </button>
               <!-- DELETE HIVE -->
@@ -80,7 +80,7 @@ limitations under the License. -->
               <!-- NEW NOTES -->
               <button [disabled]="rucherService.rucher._id == null" (click)="newNoteModalInit()" data-toggle="tooltip"
                 data-html="true" data-toggle="modal" data-target="#newNoteModal"
-                title="{{ 'NOTES.FORM.NEW' | translate}}" class="btn btn-success btn-lg crud-apiary">
+                title="{{ 'NOTES.FORM.NEW' | translate}}" class="btn btn-success btn-lg crud-apiary btn_create">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
               </button>
               <!-- EDIT NOTES -->
@@ -98,13 +98,13 @@ limitations under the License. -->
               <!-- NEW SENSOR -->
               <button [disabled]="rucherService.rucher._id == null" (click)="newSensorInit()" data-toggle="tooltip"
                 data-html="true" data-toggle="modal" title="{{ 'CAPTEUR.FORM.NEW' | translate}}"
-                data-target="#newSensorModal" class="btn btn-success btn-lg crud-apiary">
+                data-target="#newSensorModal" class="btn btn-success btn-lg crud-apiary btn_create">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
               </button>
               <!-- EDIT SENSOR -->
               <button data-toggle="tooltip" data-html="true" data-toggle="modal" type="button"
                 title="{{ 'CAPTEUR.FORM.EDITASENSOR' | translate}}" data-target="#editSensorModal"
-                (click)="editSensorInit()" class="btn btn-primary btn-lg crud-apiary">
+                (click)="editSensorInit()" class="btn btn-primary btn-lg crud-apiary btn_edit">
                 <i class="fa fa-edit fa-2x"></i>
               </button>
             </li>

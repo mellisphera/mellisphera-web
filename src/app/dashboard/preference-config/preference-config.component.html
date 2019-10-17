@@ -70,6 +70,7 @@ limitations under the License. -->
                             <input [(ngModel)]="unitSys" value="IMPERIAL"
                                 type="radio" /><label>{{ 'PREFERENCE_CONFIG.FORM_UNIT.IMPERIAL' | translate}}</label>
                         </div>
+                        
                         <button type="button" (click)="saveUnit()"
                             class="btn btn-primary">{{ 'PREFERENCE_CONFIG.FORM_UNIT.SAVE' | translate}}</button>
                     </div>
@@ -165,6 +166,7 @@ limitations under the License. -->
                                             <button class="btn btn-md btn-success">ON</button>
                                             <button class="btn btn-md btn-danger active">OFF</button>
                                         </div>
+                                        
                                     </td>
                                 </tr>
                             </ng-container>

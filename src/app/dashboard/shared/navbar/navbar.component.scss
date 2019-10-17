@@ -16,7 +16,7 @@ nav{
     background-color: currentColor;
 }
 .navbar-header{
-    width: 45% !important;
+    width: 80% !important;
     padding-left: 15px;
 }
 #apiary-group{
@@ -90,12 +90,15 @@ label{
     height: 60px;
 }
 @media (max-width: 991px){
+    #apiary-group li:last-child{
+        margin-left: 20px;
+    }
     .navbar-nav > li {
         float: left !important;
     }
 
     .navbar-header{
-        width: initial !important;
+      width: 100% !important;
     }
     #apiary-group{
         width: 70% !important;

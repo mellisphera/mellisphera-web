@@ -23,8 +23,8 @@ limitations under the License. -->
             <b class="text-success"></b>
             <button [disabled]="rucherService.rucher._id == null" data-toggle="tooltip" data-html="true"
               title="{{ 'NAVBAR.NEW_APIARY' | translate }}" data-toggle="modal"
-              style="margin-left: 96.5%; padding: 1;border: none; background: none;" data-target="#newApiaryFormModal"
-              class="btn btn-success">
+              style="margin-left: 96.5%; padding: 1;border: none;" data-target="#newApiaryFormModal"
+              class="btn btn-success btn_create">
               <i class="fa fa-plus fa-2x"></i>
             </button>
 
@@ -44,20 +44,20 @@ limitations under the License. -->
                   <tr *ngFor="let apiary of rucherService.ruchers; let apiaryIndex = index;">
                     <td class="hive-select">{{apiary.name}}</td>
                     <td class="hive-select">{{apiary.description}}</td>
-                    <td class="text-center">{{apiary.ville}}</td>
-                    <td class="text-center">{{apiary.codePostal}}</td>
+                    <td class="text-center">{{apiary.city}}</td>
+                    <td class="text-center">{{apiary.zipCode}}</td>
                     <td class="text-right">
                       <button data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.EDITAPIARY' | translate }}"
                         data-toggle="modal" type="button" (click)="editApiaryClicked(apiary)"
-                        data-target="#editApiaryFormModal" class="btn btn-primary "
-                        style="padding: 1;border: none; background: none;">
+                        data-target="#editApiaryFormModal" class="btn btn-primary btn_edit"
+                        style="padding: 1;border: none;">
                         <i class="fa fa-edit fa-2x"></i>
                       </button>
-                      <button type="button" class="btn btn-warning" mwlConfirmationPopover
+                      <button type="button" class="btn btn-warning btn_delete" mwlConfirmationPopover
                         popoverTitle="{{ 'NAVBAR.DELETE_ASK' | translate }}" placement="top"
                         confirmText="{{ 'NAVBAR.CRUD.CONFIRM' | translate }}"
                         cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}" (confirm)="deleteApiary(apiary)"
-                        title="{{ 'HIVES.FORM.DELETE' | translate}}" style="padding: 1;border: none; background: none;">
+                        title="{{ 'HIVES.FORM.DELETE' | translate}}" style="padding: 1;border: none;">
                         <i class="fa fa-times fa-2x"></i>
                       </button>
                     </td>
