@@ -24,6 +24,7 @@ import { ManageHivesComponent } from './manage/manage-hives/manage-hives.compone
 import { ManageApiarysComponent } from './manage/manage-apiarys/manage-apiarys.component';
 import { ManageSensorsComponent } from './manage/manage-sensors/manage-sensors.component';
 import { ManageNotesComponent } from './manage/manage-notes/manage-notes.component';
+import { AlertConfigurationComponent } from './alert-configuration/alert-configuration.component';
 
 const routes: Routes = [
     {
@@ -38,6 +39,7 @@ const routes: Routes = [
             { path: 'manage-apiarys', component: ManageApiarysComponent, canActivate: [AuthGuardService]},
             { path: 'manage-notes', component: ManageNotesComponent, canActivate: [AuthGuardService]},
             { path: 'manage-sensors', component: ManageSensorsComponent, canActivate: [AuthGuardService]},
+            { path: 'alert-configuration', component: AlertConfigurationComponent, canActivate: [AuthGuardService]},
             { path: 'preferences', component: PreferenceConfigComponent, canActivate: [AuthGuardService]}
 
 

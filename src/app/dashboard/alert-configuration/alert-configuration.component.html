@@ -1,0 +1,22 @@
+<div class="content-page">
+<!--   <div class="text-right">
+    <button type="button" (click)="sortByStatus(true)" class="btn btn-primary">Enable</button>
+    <button type="button" (click)="sorByStatus(false)" class="btn btn-primary">Disable</button>
+  </div> -->
+  <section id="notif-list">
+      <ul class="list-group">
+          <li [class]="'list-group-item ' + (isEnable(alert._id) ? 'enable' : 'disable')" *ngFor="let alert of alertType">
+            <p>
+                <img width="30px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.type + '.png'">
+                {{ alert.type }}
+            </p>
+            <div class="btn-group" id="status" data-toggle="buttons">
+                <label [class]="'btn btn-default btn-on ' + (isEnable(alert._id) ? 'active': '')" (click)="onEnable(alert._id)">
+                <input type="radio" value="1" name="multifeatured_module[module_id][status]">ON</label>
+                <label [class]="'btn btn-default btn-off ' + (isEnable(alert._id) ? 'not-active': 'active')" (click)="onDisable(alert._id)">
+                <input type="radio" value="0" name="multifeatured_module[module_id][status]">OFF</label>
+              </div>
+          </li>
+        </ul>
+  </section>
+</div>
