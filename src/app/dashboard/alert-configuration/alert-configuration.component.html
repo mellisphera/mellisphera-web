@@ -10,11 +10,18 @@
                 <img width="30px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.type + '.png'">
                 {{ alert.type }}
             </p>
+            <div class="text-center" *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
+              <label> Min : </label>
+              <input type="number" [value]="alertUser.alertConf[alert._id].value[0]"/>
+              <label> Max : </label>
+              <input type="number" [value]="alertUser.alertConf[alert._id].value[1]"/>
+
+            </div>
             <div class="btn-group" id="status" data-toggle="buttons">
                 <label [class]="'btn btn-default btn-on ' + (isEnable(alert._id) ? 'active': '')" (click)="onEnable(alert._id)">
-                <input type="radio" value="1" name="multifeatured_module[module_id][status]">ON</label>
+                <input type="radio" [disabled]="!isAlterable(alert._id)" value="1" name="multifeatured_module[module_id][status]">ON</label>
                 <label [class]="'btn btn-default btn-off ' + (isEnable(alert._id) ? 'not-active': 'active')" (click)="onDisable(alert._id)">
-                <input type="radio" value="0" name="multifeatured_module[module_id][status]">OFF</label>
+                <input type="radio" [disabled]="!isAlterable(alert._id)" value="0" name="multifeatured_module[module_id][status]">OFF</label>
               </div>
           </li>
         </ul>

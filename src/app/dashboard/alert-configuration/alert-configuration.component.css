@@ -3,14 +3,14 @@
 .disable {
     background-color: rgba(73, 73, 72, 0.3)
 }
-.disable:hover{
-    box-shadow: none;
-    cursor: pointer;
-}
 .list-group-item{
     display: flex;
     justify-content: space-between;
     margin: 5px;
+}
+
+.list-group p{
+    width: 10%;
 }
 /* Switch button */
 .btn-default.btn-on.active{background-color: #5BB75B;color: white;}

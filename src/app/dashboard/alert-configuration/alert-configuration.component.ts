@@ -38,24 +38,26 @@ export class AlertConfigurationComponent implements OnInit {
     } catch {}
   }
 
+  isAlterable(alertId: string): boolean {
+    try {
+      return this.alertUser.alertConf[alertId].alterable;
+    } catch {}
+  }
+
 /*   sorByStatus(status: boolean) {
     this.alertType.sort((a, b) => {
 
     })
   } */
   onEnable(alertId: string): void {
-    console.log(alertId);
     if (!this.alertUser.alertConf[alertId].enable) {
       this.alertUser.alertConf[alertId].enable = true;
     }
-    console.log(this.alertUser.alertConf[alertId]);
   }
 
   onDisable(alertId: string): void {
-    console.log(alertId);
     if (this.alertUser.alertConf[alertId].enable) {
       this.alertUser.alertConf[alertId].enable = false;
     }
-    console.log(this.alertUser.alertConf[alertId]);
   }
 }
