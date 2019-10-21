@@ -45,7 +45,7 @@ export class DailyStockHoneyService {
   loading: boolean;
   timeLine: any[];
   private unitSystem: string;
-  currentIdHive: string;
+  currenthiveId: string;
   loadingOpts  = {
     text: 'Loading',
     color: '#00bdfc',
@@ -62,7 +62,7 @@ export class DailyStockHoneyService {
     this.dailyStock = [];
     this.dailyStockByFlower = [];
     this.typeFlower = [];
-    this.currentIdHive = null;
+    this.currenthiveId = null;
     //this.getDailyStockHoneyByHive(this.rucheService.getCurrentHive().id);
   }
 
@@ -70,9 +70,9 @@ export class DailyStockHoneyService {
     this.unitSystem = unit;
   }
 
-  getDailyStockHoneyByHIve(idHive: string) {
+  getDailyStockHoneyByHIve(hiveId: string) {
     this.typeFlower = [];
-    return this.http.get<DailyStockHoney[]>(CONFIG.URL + 'dailyStockHoney' + '/hive/' + idHive).map(dailyStock => {
+    return this.http.get<DailyStockHoney[]>(CONFIG.URL + 'dailyStockHoney' + '/hive/' + hiveId).map(dailyStock => {
       const series = [];
       dailyStock.forEach(element => {
         if (this.typeFlower.indexOf(element.nom) === -1) {

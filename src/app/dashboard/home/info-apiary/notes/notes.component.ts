@@ -65,7 +65,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   ngOnInit() {
     this.initForm();
     this.observationService.setRange({ scale: 100, type: 'YEARS' });
-    this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+    this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
   }
 
   @HostListener('window:resize', ['$event'])

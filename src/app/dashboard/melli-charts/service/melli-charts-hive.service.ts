@@ -184,7 +184,7 @@ export class MelliChartsHiveService {
     /**
     *
     *
-    * @param {string} idHive
+    * @param {string} hiveId
     * @returns
     * @memberof MelliChartsHiveService
     */

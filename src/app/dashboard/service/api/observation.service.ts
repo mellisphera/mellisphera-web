@@ -117,14 +117,14 @@ export class ObservationService {
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @param {string} [hiveName]
    * @returns {Observable<any>}
    * @memberof ObservationService
    */
-  getObservationByIdHive(idHive: string, hiveName?: string) {
+  getObservationByhiveId(hiveId: string, hiveName?: string) {
     this.rangeObs[1] = new Date();
-    return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, this.rangeObs).subscribe(
+    return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + hiveId, this.rangeObs).subscribe(
       _obs => {
         this.observationsHive = _obs.sort((a: Observation, b: Observation) => {
           return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
@@ -137,34 +137,34 @@ export class ObservationService {
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @param {Date[]} range
    * @returns {Observable<Observation[]>}
    * @memberof ObservationService
    */
-  getObservationByHiveForMelliCharts(idHive: string, range: Date[]): Observable<Observation[]> {
-    return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + idHive, range);
+  getObservationByHiveForMelliCharts(hiveId: string, range: Date[]): Observable<Observation[]> {
+    return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + hiveId, range);
   }
 
   /**
    *
    *
-   * @param {*} idApiary
+   * @param {*} apiaryId
    * @returns {Observable<Observation[]>}
    * @memberof ObservationService
    */
-  getObservationByIdApiaryForMelliUx(idApiary): Observable<Observation[]> {
-    return this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, MyDate.getRangeForCalendarAlerts());
+  getObservationByapiaryIdForMelliUx(apiaryId): Observable<Observation[]> {
+    return this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + apiaryId, MyDate.getRangeForCalendarAlerts());
   }
 
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @memberof ObservationService
    */
-  getObservationByIdApiary(idApiary: string){
-    this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + idApiary, this.rangeObs).subscribe(
+  getObservationByapiaryId(apiaryId: string){
+    this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + apiaryId, this.rangeObs).subscribe(
       obs => {
           this.observationsApiary = obs;
       });

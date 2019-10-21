@@ -18,6 +18,7 @@ limitations under the License. */
 #lang-group svg {
     cursor: pointer;
     width: 50px;
+    margin-right: 8px;
 }
 .icon_notif{
     width: 50px;

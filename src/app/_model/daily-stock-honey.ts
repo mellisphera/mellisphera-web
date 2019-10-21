@@ -18,8 +18,8 @@ export interface DailyStockHoney {
 	stockJ: number;
 	apportJ: number;
 	date: Date;
-	idApiary: String;
-	idHive: String;
+	apiaryId: String;
+	hiveId: String;
 	username: String;
 	timestamp: String;
 }

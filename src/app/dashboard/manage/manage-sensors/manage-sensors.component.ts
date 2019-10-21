@@ -122,7 +122,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
             this.apiarySensorSelect = apiary[0];
             this.hivesEditSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === apiary[0]._id);
         });
-        // this.rucherService.rucheService.findRucheById(this.capteurService.capteur.idHive, (hive) => {
+        // this.rucherService.rucheService.findRucheById(this.capteurService.capteur.hiveId, (hive) => {
         //     this.hiveSensorSelect = hive[0];
         //     // const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
         //     // this.rucherService.rucheService.ruches[index].sensor = false;

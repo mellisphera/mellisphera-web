@@ -74,9 +74,9 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
         this.getScreenSize();
     }
 
-    getApiaryNameById(idApiary: string) {
+    getApiaryNameById(apiaryId: string) {
         try {
-            return this.rucherService.ruchers.filter(apiary => apiary._id === idApiary)[0];
+            return this.rucherService.ruchers.filter(apiary => apiary._id === apiaryId)[0];
         } catch (e) {
             return this.rucherService.rucher;
         }

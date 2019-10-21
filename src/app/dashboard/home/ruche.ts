@@ -15,16 +15,16 @@ export class Ruche{
     public name : string;
     public description : string;
     public username : string;
-    public idApiary: string;
+    public apiaryId: string;
     public hivePosX : string;
     public hivePosY : string;
 
-    constructor(id: string, name : string, description : string, username : string, idApiary : string, hivePosX : string, hivePosY : string){
+    constructor(id: string, name : string, description : string, username : string, apiaryId : string, hivePosX : string, hivePosY : string){
         this.id = id;
         this.name = name;
         this.description = description;
         this.username = username;
-        this.idApiary  = idApiary;
+        this.apiaryId  = apiaryId;
         this.hivePosX = hivePosX;
         this.hivePosY = hivePosY;
     }

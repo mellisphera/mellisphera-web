@@ -133,7 +133,7 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
   }
 
   addColorForObs(hive: RucheInterface, color: string){
-    this.colorByHive.push({idHive: hive._id, color: color});
+    this.colorByHive.push({hiveId: hive._id, color: color});
   }
 
   /**
@@ -150,12 +150,12 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @returns {string}
    * @memberof StackMelliChartsService
    */
-  getColorByHive(idHive: string): string {
-    return this.colorByHive.filter(elt => elt.idHive === idHive)[0].color;
+  getColorByHive(hiveId: string): string {
+    return this.colorByHive.filter(elt => elt.hiveId === hiveId)[0].color;
   }
 
 
@@ -184,7 +184,7 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
    */
   removeHive(hive: RucheInterface) {
     const index = this.arrayHiveSelect.indexOf(hive);
-    const indexColor = this.colorByHive.map(elt => elt.idHive).indexOf(hive._id);
+    const indexColor = this.colorByHive.map(elt => elt.hiveId).indexOf(hive._id);
     this.arrayHiveSelect.splice(index, 1);
     this.colorByHive.splice(indexColor, 1);
   }
@@ -223,7 +223,7 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
     return this.arrayHiveSelect;
   }
 
-  checkHiveisActive(idHive: string) {
-    return this.arrayHiveSelect.filter(hive => hive._id === idHive).length > 0 ? 'active' : '';
+  checkHiveisActive(hiveId: string) {
+    return this.arrayHiveSelect.filter(hive => hive._id === hiveId).length > 0 ? 'active' : '';
   }
 }

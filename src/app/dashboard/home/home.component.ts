@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   rucheOnClick: Ruche;
   public loadingStockHoney: boolean;
-  public lockHive: boolean
+  public lockHive: boolean;
   newRucheForm: FormGroup;
   private notify: NotifierService;
   private selectHive: RucheInterface;
@@ -113,6 +113,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.notify = notifyService;
     this.eltOnClickClass = null;
+    this.lockHive = false;
     this.eltOnClickId = null;
     this.username = this.login.getUser();
     this.photoApiary = null;
@@ -222,9 +223,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     };
   }
 
-  numberAlertsActivesByHive(idHive: string): number {
+  numberAlertsActivesByHive(hiveId: string): number {
     if (this.alertsService.apiaryAlertsActives != undefined) {
-      return (this.alertsService.apiaryAlertsActives.filter(alert => alert.idHive === idHive).length);
+      return (this.alertsService.apiaryAlertsActives.filter(alert => alert.hiveId === hiveId).length);
     } else {
       return (-1)
     }
@@ -242,7 +243,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   //   checkHiveActive(): Promise<Boolean> {
   //     return new Promise((resolve, reject) => {
-  //         if (this.dailyStockHoneyService.currentIdHive !== this.rucheService.getCurrentHive().id) {
+  //         if (this.dailyStockHoneyService.currenthiveId !== this.rucheService.getCurrentHive().id) {
   //             resolve(true);
   //         } else {
   //             reject(false);
@@ -308,13 +309,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     // For the hive notes
 
-    this.observationService.getObservationByIdHive(ruche._id);
+    this.observationService.getObservationByhiveId(ruche._id);
 
     //For the hive-weight
-    this.dailyRecordWservice.getDailyRecordsWbyIdHive(ruche._id);
+    this.dailyRecordWservice.getDailyRecordsWbyhiveId(ruche._id);
 
     //For the hive-health
-    this.dailyRecTh.getByIdHive(ruche._id);
+    this.dailyRecTh.getByhiveId(ruche._id);
 
     //For hive sensors
     this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
@@ -641,7 +642,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     // The first time we found the length of the list (for a good presentation, no important)
     this.rucheService.ruches.forEach(hive => {
       // If the hive haven't daily records data
-      if (this.dailyRecTh.dailyRecords.filter(elt => elt.idHive === hive._id).length === 0) {
+      if (this.dailyRecTh.dailyRecords.filter(elt => elt.hiveId === hive._id).length === 0) {
         i += 1;
       }
     });
@@ -649,7 +650,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     // second time, we build the hive list
     this.rucheService.ruches.forEach(hive => {
       // If the hive haven't daily records data
-      if (this.dailyRecTh.dailyRecords.filter(elt => elt.idHive === hive._id).length === 0) {
+      if (this.dailyRecTh.dailyRecords.filter(elt => elt.hiveId === hive._id).length === 0) {
         j += 1;
         if (j === i - 1) {
           stringTemp += hive.name;

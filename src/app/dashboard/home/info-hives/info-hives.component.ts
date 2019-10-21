@@ -47,10 +47,10 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
 
 
   ngOnInit() {
-    this.observationService.getObservationByIdHive(this.rucheService.getCurrentHive()._id);
+    this.observationService.getObservationByhiveId(this.rucheService.getCurrentHive()._id);
     // this.observationService.obsHiveSubject.subscribe();
-    this.dailyRecordThService.getByIdHive(this.rucheService.getCurrentHive()._id);
-    this.dailyRecordWservice.getDailyRecordsWbyIdHive(this.rucheService.getCurrentHive()._id)
+    this.dailyRecordThService.getByhiveId(this.rucheService.getCurrentHive()._id);
+    this.dailyRecordWservice.getDailyRecordsWbyhiveId(this.rucheService.getCurrentHive()._id)
     // this.capteurService.getUserCapteurs();
   }
 

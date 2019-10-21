@@ -136,9 +136,9 @@ export class CapteurService {
         );
     }
 
-    getCapteursByHive(idHive : string) :  string[]{
+    getCapteursByHive(hiveId : string) :  string[]{
         let capteursHive : CapteurInterface[];
-        capteursHive = this.capteursByUser.filter(sensor => sensor.hiveId === idHive);
+        capteursHive = this.capteursByUser.filter(sensor => sensor.hiveId === hiveId);
         let returnString : string[];
         returnString = [];
         capteursHive.forEach(element => {

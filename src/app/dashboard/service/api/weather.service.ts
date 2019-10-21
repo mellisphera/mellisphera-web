@@ -41,37 +41,37 @@ export class WeatherService {
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<CurrentDailyWeather[]>}
    * @memberof WeatherService
    */
-  public getCurrentDailyWeather(idApiary: string, range: Date[]): Observable<CurrentDailyWeather[]> {
-    return this.httpClient.post<CurrentDailyWeather[]>(CONFIG.URL + 'dailyWeather/apiary/' + idApiary, range);
+  public getCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<CurrentDailyWeather[]> {
+    return this.httpClient.post<CurrentDailyWeather[]>(CONFIG.URL + 'dailyWeather/apiary/' + apiaryId, range);
   }
 
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<ForecastDailyWeather[]>}
    * @memberof WeatherService
    */
-  public getForecastDailyWeather(idApiary: string, range: Date[]): Observable<ForecastDailyWeather[]> {
-    return this.httpClient.post<ForecastDailyWeather[]>(CONFIG.URL + 'forecastDailyWeather/apiary/' + idApiary, range);
+  public getForecastDailyWeather(apiaryId: string, range: Date[]): Observable<ForecastDailyWeather[]> {
+    return this.httpClient.post<ForecastDailyWeather[]>(CONFIG.URL + 'forecastDailyWeather/apiary/' + apiaryId, range);
   }
 
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<ForecastHourlyWeather[]>}
    * @memberof WeatherService
    */
-  public getTempForecastHourlyWeather(idApiary: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + 'forecastHourlyWeather/temp/apiary/' + idApiary, range).map(_elt => _elt.map(_value => {
+  public getTempForecastHourlyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
+    return this.httpClient.post<any[]>(CONFIG.URL + 'forecastHourlyWeather/temp/apiary/' + apiaryId, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
     }));
   }
@@ -79,13 +79,13 @@ export class WeatherService {
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<CurrentHourlyWeather[]>}
    * @memberof WeatherService
    */
-  public getTempCurrentHourlyWeather(idApiary: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + 'hourlyWeather/temp/apiary/' + idApiary, range).map(_elt => _elt.map(_value => {
+  public getTempCurrentHourlyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
+    return this.httpClient.post<any[]>(CONFIG.URL + 'hourlyWeather/temp/apiary/' + apiaryId, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
     }));
   }
@@ -94,26 +94,26 @@ export class WeatherService {
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<CurrentHourlyWeather[]>}
    * @memberof WeatherService
    */
-  public getRainCurrentDailyWeather(idApiary: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + 'dailyWeather/rain/apiary/' + idApiary, range);
+  public getRainCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
+    return this.httpClient.post<any[]>(CONFIG.URL + 'dailyWeather/rain/apiary/' + apiaryId, range);
   }
 
 
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<ForecastHourlyWeather[]>}
    * @memberof WeatherService
    */
-  public getRainForecastDailyWeather(idApiary: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + 'forecastDailyWeather/rain/apiary/' + idApiary, range);/* .map(_elt => _elt.map(_value => {
+  public getRainForecastDailyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
+    return this.httpClient.post<any[]>(CONFIG.URL + 'forecastDailyWeather/rain/apiary/' + apiaryId, range);/* .map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertMilimetreToPouce(_value.value.rainDay, this.unitSystem), sensorRef: _value.sensorRef };
     })); */
   }
@@ -122,28 +122,28 @@ export class WeatherService {
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<any>}
    * @memberof WeatherService
    */
-  public getTempExtForecastDailyWeather(idApiary: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + 'forecastDailyWeather/tExt/apiary/' + idApiary, range);
+  public getTempExtForecastDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
+    return this.httpClient.post<any>(CONFIG.URL + 'forecastDailyWeather/tExt/apiary/' + apiaryId, range);
   }
 
 
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<any[][]>}
    * @memberof WeatherService
    */
-  public getAllTempWeather(idApiary: string, range: Date[]): Observable<any[][]> {
+  public getAllTempWeather(apiaryId: string, range: Date[]): Observable<any[][]> {
     return Observable.forkJoin([
-      this.getTempExtCurrentDailyWeather(idApiary, range),
-      this.getTempExtForecastDailyWeather(idApiary, range)
+      this.getTempExtCurrentDailyWeather(apiaryId, range),
+      this.getTempExtForecastDailyWeather(apiaryId, range)
     ]);
   }
 
@@ -151,54 +151,54 @@ export class WeatherService {
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<any>}
    * @memberof WeatherService
    */
-  public getWindCurrentDailyWeather(idApiary: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/wind/apiary/' + idApiary, range);
+  public getWindCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
+    return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/wind/apiary/' + apiaryId, range);
   }
 
 
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<any>}
    * @memberof WeatherService
    */
-  public getWindForecastDailyWeather(idApiary: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/wind/apiary/' + idApiary, range);
+  public getWindForecastDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
+    return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/wind/apiary/' + apiaryId, range);
   }
 
 
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<any>}
    * @memberof WeatherService
    */
-  public getTempExtCurrentDailyWeather(idApiary: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/tExt/apiary/' + idApiary, range);
+  public getTempExtCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
+    return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/tExt/apiary/' + apiaryId, range);
   }
 
 
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<any[][]>}
    * @memberof WeatherService
    */
-  public getWindAllWeather(idApiary: string, range: Date[]): Observable<any[][]> {
+  public getWindAllWeather(apiaryId: string, range: Date[]): Observable<any[][]> {
     return Observable.forkJoin([
-      this.getWindCurrentDailyWeather(idApiary, range),
-      this.getWindForecastDailyWeather(idApiary, range)
+      this.getWindCurrentDailyWeather(apiaryId, range),
+      this.getWindForecastDailyWeather(apiaryId, range)
     ]);
   }
 
@@ -206,15 +206,15 @@ export class WeatherService {
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @param {Date[]} range
    * @returns {Observable<any[][]>}
    * @memberof WeatherService
    */
-  public getRainAllWeather(idApiary: string, range: Date[]): Observable<any[][]> {
+  public getRainAllWeather(apiaryId: string, range: Date[]): Observable<any[][]> {
     return Observable.forkJoin([
-      this.getRainCurrentDailyWeather(idApiary, range),
-      this.getRainForecastDailyWeather(idApiary, range)
+      this.getRainCurrentDailyWeather(apiaryId, range),
+      this.getRainForecastDailyWeather(apiaryId, range)
     ]);
   }
 

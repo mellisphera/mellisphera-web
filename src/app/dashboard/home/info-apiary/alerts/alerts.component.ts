@@ -177,7 +177,7 @@ export class AlertsComponent implements OnInit {
 
   loadCalendar() {
     const obs: Array<Observable<any>> = [
-      this.observationService.getObservationByIdApiaryForMelliUx(this.rucherService.getCurrentApiary()),
+      this.observationService.getObservationByapiaryIdForMelliUx(this.rucherService.getCurrentApiary()),
       this.alertsService.getAlertsByApiaryObs(this.rucherService.getCurrentApiary())
     ];
     Observable.forkJoin(obs).subscribe(

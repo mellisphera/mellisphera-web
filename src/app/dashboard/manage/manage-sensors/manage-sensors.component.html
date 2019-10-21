@@ -266,8 +266,8 @@ limitations under the License. -->
                                 class="form-control">
                                 <option *ngFor="let ruche of rucherService.rucheService.ruchesAllApiary"
                                     [ngValue]="ruche">
-                                    <ng-container *ngIf = "getApiaryNameById(ruche.idApiary) !== undefined">
-                                        {{ruche.name + ' | ' + getApiaryNameById(ruche.idApiary).name }}
+                                    <ng-container *ngIf = "getApiaryNameById(ruche.apiaryId) !== undefined">
+                                        {{ruche.name + ' | ' + getApiaryNameById(ruche.apiaryId).name }}
                                     </ng-container>
                                 </option>
                             </select>

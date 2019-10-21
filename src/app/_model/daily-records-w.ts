@@ -14,7 +14,7 @@ import { DeprecatedDatePipe } from "@angular/common";
 export interface DailyRecordsW {
 
     recordDate : Date;
-    idHive : string;
+    hiveId : string;
     temp_ext_min : number;
     temp_ext_max : number;
     weight_min : number;

@@ -19,7 +19,7 @@ export interface CurrentDailyWeather {
 	snow: Map<String, Number>;
 	user: String ;
 	apiary: String;
-	idApiary: String;
+	apiaryId: String;
 	city: String;
 	_origin: String;
 	

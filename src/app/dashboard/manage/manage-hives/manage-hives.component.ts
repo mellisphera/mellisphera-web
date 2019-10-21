@@ -140,8 +140,8 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
   }
 
   // Return a list of hives for an apiary
-  getHiveByApiary(idApiary: string):RucheInterface[]{
-    return(this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === idApiary));
+  getHiveByApiary(apiaryId: string):RucheInterface[]{
+    return(this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === apiaryId));
   }
 
   createHiveFormClicked(apiary : RucherModel){

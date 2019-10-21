@@ -79,8 +79,8 @@ export class HourlyManagerService {
       }
     });
   }
-  getChartWeight(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.recordService.getWeightByHive(idHive, range).subscribe(
+  getChartWeight(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.recordService.getWeightByHive(hiveId, range).subscribe(
       (_weight: any) => {
         let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
@@ -92,7 +92,7 @@ export class HourlyManagerService {
           })
           chartInstance.setOption(option, true);
         } else {
-          if (this.existSeries(option.series, type.unit, idHive)) {
+          if (this.existSeries(option.series, type.unit, hiveId)) {
             option.series = new Array();
           }
           //this.cleanChartsInstance(chartInstance, type.name);
@@ -109,7 +109,7 @@ export class HourlyManagerService {
         }
         this.baseOpions = option;
         this.setCurrentUnite(type.unit);
-        this.setCurrentHive(idHive);
+        this.setCurrentHive(hiveId);
         this.incrementeCharComplete();
       }
 
@@ -117,8 +117,8 @@ export class HourlyManagerService {
   }
 
 
-  getChartTempInt(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.recordService.getTempIntByHive(idHive, range).subscribe(
+  getChartTempInt(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.recordService.getTempIntByHive(hiveId, range).subscribe(
       _temp => {
         let option = Object.assign({}, this.baseOpions);
         console.log(rangeChange);
@@ -131,7 +131,7 @@ export class HourlyManagerService {
           })
           chartInstance.setOption(option, true);
         } else {
-          if (this.existSeries(option.series, type.unit, idHive)) {
+          if (this.existSeries(option.series, type.unit, hiveId)) {
             option.series = new Array();
             console.error('clean');
           }
@@ -146,15 +146,15 @@ export class HourlyManagerService {
         }
         this.baseOpions = option;
         this.setCurrentUnite(type.unit);
-        this.setCurrentHive(idHive);
+        this.setCurrentHive(hiveId);
         this.incrementeCharComplete();
 
       }
     );
   }
 
-  getChartTempExt(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.recordService.getTempExtByHive(idHive, range).subscribe(
+  getChartTempExt(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.recordService.getTempExtByHive(hiveId, range).subscribe(
       _temp_ext => {
         let option = Object.assign({}, this.baseOpions);
         console.log(rangeChange);
@@ -167,7 +167,7 @@ export class HourlyManagerService {
           })
           chartInstance.setOption(option, true);
         } else {
-          if (this.existSeries(option.series, type.unit, idHive)) {
+          if (this.existSeries(option.series, type.unit, hiveId)) {
             option.series = new Array();
           }
           // this.cleanChartsInstance(chartInstance, type.name);
@@ -182,7 +182,7 @@ export class HourlyManagerService {
         }
         this.baseOpions = option;
         this.setCurrentUnite(type.unit);
-        this.setCurrentHive(idHive);
+        this.setCurrentHive(hiveId);
         this.incrementeCharComplete();
 
       }
@@ -216,8 +216,8 @@ export class HourlyManagerService {
     }
   }
 
-  getChartHint(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.recordService.getHintIntByHive(idHive, range).subscribe(
+  getChartHint(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.recordService.getHintIntByHive(hiveId, range).subscribe(
       (_hint) => {
         let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
@@ -229,7 +229,7 @@ export class HourlyManagerService {
           })
           chartInstance.setOption(option, true);
         } else {
-          if (this.existSeries(option.series, type.unit, idHive)) {
+          if (this.existSeries(option.series, type.unit, hiveId)) {
             option.series = new Array();
           }
           this.getSerieByData(_hint, type.name, (serieComplete: any, legend: Array<string>) => {
@@ -241,7 +241,7 @@ export class HourlyManagerService {
         }
         this.baseOpions = option;
         this.setCurrentUnite(type.unit);
-        this.setCurrentHive(idHive);
+        this.setCurrentHive(hiveId);
         this.incrementeCharComplete();
 
       }
@@ -250,8 +250,8 @@ export class HourlyManagerService {
 
 
 
-  getChartBatInt(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.recordService.getBatIntByHive(idHive, range).subscribe(
+  getChartBatInt(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.recordService.getBatIntByHive(hiveId, range).subscribe(
       _batInt => {
         let option = Object.assign({}, this.baseOpions);
         console.log(rangeChange);
@@ -264,7 +264,7 @@ export class HourlyManagerService {
           })
           chartInstance.setOption(option, true);
         } else {
-          if (this.existSeries(option.series, type.unit, idHive)) {
+          if (this.existSeries(option.series, type.unit, hiveId)) {
             option.series = new Array();
           }
           this.getSerieByData(_batInt, type.name, (serieComplete: any, legend: Array<string>) => {
@@ -276,15 +276,15 @@ export class HourlyManagerService {
         }
         this.baseOpions = option;
         this.setCurrentUnite(type.unit);
-        this.setCurrentHive(idHive);
+        this.setCurrentHive(hiveId);
         this.incrementeCharComplete();
 
       }
     )
   }
 
-  getChartBatExt(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.recordService.getBatExtByHive(idHive, range).subscribe(
+  getChartBatExt(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.recordService.getBatExtByHive(hiveId, range).subscribe(
       _batExt => {
         let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
@@ -297,7 +297,7 @@ export class HourlyManagerService {
           chartInstance.setOption(option, true);
 
         } else {
-          if (this.existSeries(option.series, type.unit, idHive)) {
+          if (this.existSeries(option.series, type.unit, hiveId)) {
             option.series = new Array();
           }
           // this.cleanChartsInstance(chartInstance, type.name);
@@ -311,17 +311,17 @@ export class HourlyManagerService {
         }
         this.baseOpions = option;
         this.setCurrentUnite(type.unit);
-        this.setCurrentHive(idHive);
+        this.setCurrentHive(hiveId);
         this.incrementeCharComplete();
 
       }
     )
   }
 
-  getTempHourlyWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+  getTempHourlyWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     const arrayObs : Array<Observable<any>> = [
-      this.weatherService.getTempCurrentHourlyWeather(idApiary, range),
-      this.weatherService.getTempForecastHourlyWeather(idApiary, range)
+      this.weatherService.getTempCurrentHourlyWeather(apiaryId, range),
+      this.weatherService.getTempForecastHourlyWeather(apiaryId, range)
     ];
     Observable.forkJoin(arrayObs).map(_elt => _elt.flat()).subscribe(
       _tExt => {
@@ -340,7 +340,7 @@ export class HourlyManagerService {
           chartInstance.setOption(option, true);
 
         } else {
-          if (this.existSeries(option.series, type.unit, idApiary)) {
+          if (this.existSeries(option.series, type.unit, apiaryId)) {
             option.series = new Array();
           }
           // this.cleanChartsInstance(chartInstance, type.name);
@@ -360,10 +360,10 @@ export class HourlyManagerService {
     );
   }
 
-  getHextHourlyWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+  getHextHourlyWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     const arrayObs : Array<Observable<any>> = [
-      this.weatherService.getTempCurrentHourlyWeather(idApiary, range),
-      this.weatherService.getTempForecastHourlyWeather(idApiary, range)
+      this.weatherService.getTempCurrentHourlyWeather(apiaryId, range),
+      this.weatherService.getTempForecastHourlyWeather(apiaryId, range)
     ];
     Observable.forkJoin(arrayObs).map(_elt => _elt.flat()).subscribe(
       _hExt => {
@@ -382,7 +382,7 @@ export class HourlyManagerService {
           chartInstance.setOption(option, true);
 
         } else {
-          if (this.existSeries(option.series, type.unit, idApiary)) {
+          if (this.existSeries(option.series, type.unit, apiaryId)) {
             option.series = new Array();
           }
           // this.cleanChartsInstance(chartInstance, type.name);
@@ -469,11 +469,11 @@ export class HourlyManagerService {
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @memberof HourlyManagerService
    */
-  public setCurrentHive(idHive: string): void {
-    this.currentHive = idHive;
+  public setCurrentHive(hiveId: string): void {
+    this.currentHive = hiveId;
   }
 
 

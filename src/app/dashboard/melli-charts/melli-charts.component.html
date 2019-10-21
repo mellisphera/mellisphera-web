@@ -18,7 +18,7 @@ limitations under the License. -->
           class="button button0">{{ btn.name }}</button></li>
     </ul>
     <ul class="nav nav-date navbar-nav navbar-right">
-      <li><button type="button" (click)="previousDate()" class="btn btn-info date-arrow"><i
+      <li><button type="button" (click)="previousDate()" class="btn date-arrow btn-transparent"><i
             class="fa fa-arrow-circle-left" id="previous-date"></i></button></li>
       <li id="dropdown">
         <div class="dropdown" id="date-dropdown">
@@ -29,7 +29,7 @@ limitations under the License. -->
           <div class="dropdown-menu dropdown-menu-right">
             <div id="input-date">
               <div class="form-group">
-
+                <label>{{ 'MELLICHARTS.DATE.START' | translate }} </label>
                 <input class="form-control" [owlDateTimeTrigger]="dt1" [(ngModel)]="melliChartDate.start" [owlDateTime]="dt1" >
                 <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1" #dt1></owl-date-time>
                 
@@ -60,7 +60,7 @@ limitations under the License. -->
           </div>
         </div>
       </li>
-      <li><button type="button" (click)="nextDate()" class="btn btn-info date-arrow"><i id="next-date"
+      <li><button type="button" (click)="nextDate()" class="btn date-arrow btn-transparent"><i id="next-date"
             class="fa fa-arrow-circle-right"></i></button></li>
 
     </ul>

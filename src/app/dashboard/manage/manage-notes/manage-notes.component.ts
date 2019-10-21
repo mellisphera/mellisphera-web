@@ -74,29 +74,29 @@ export class ManageNotesComponent implements OnInit {
     });
   }
 
-  // getObservationsByApiary(idApiary : string) : any[]{
-  //   return ((this.observationService.observationsUser.filter(_note => (_note.idApiary === idApiary) || (this.getIdApiaryByHive(_note.idHive) === idApiary))));
+  // getObservationsByApiary(apiaryId : string) : any[]{
+  //   return ((this.observationService.observationsUser.filter(_note => (_note.apiaryId === apiaryId) || (this.getapiaryIdByHive(_note.hiveId) === apiaryId))));
   // }
 
-  // getIdApiaryByHive(idHive: string): string {
-  //   if (this.rucheService.ruchesAllApiary.filter(hive => hive.id === idHive)[0] !== undefined) {
-  //     return (this.rucheService.ruchesAllApiary.filter(hive => hive.id === idHive)[0].idApiary);
+  // getapiaryIdByHive(hiveId: string): string {
+  //   if (this.rucheService.ruchesAllApiary.filter(hive => hive.id === hiveId)[0] !== undefined) {
+  //     return (this.rucheService.ruchesAllApiary.filter(hive => hive.id === hiveId)[0].apiaryId);
   //   } else {
   //     return ('');
   //   }
   // }
 
-  getHiveNameById(idHive: string): string {
-    if (this.rucheService.ruchesAllApiary.filter(hive => hive._id === idHive)[0] !== undefined) {
-      return (this.rucheService.ruchesAllApiary.filter(hive => hive._id === idHive)[0].name);
+  getHiveNameById(hiveId: string): string {
+    if (this.rucheService.ruchesAllApiary.filter(hive => hive._id === hiveId)[0] !== undefined) {
+      return (this.rucheService.ruchesAllApiary.filter(hive => hive._id === hiveId)[0].name);
     } else {
       return '';
     }
   }
 
-  getApiaryNameByID(idApiary: string): string {
-    if (this.rucherService.ruchers.filter(apiary => apiary._id === idApiary)[0] !== undefined) {
-      return (this.rucherService.ruchers.filter(apiary => apiary._id === idApiary)[0].name);
+  getApiaryNameByID(apiaryId: string): string {
+    if (this.rucherService.ruchers.filter(apiary => apiary._id === apiaryId)[0] !== undefined) {
+      return (this.rucherService.ruchers.filter(apiary => apiary._id === apiaryId)[0].name);
     } else {
       return '';
     }
@@ -334,8 +334,8 @@ export class ManageNotesComponent implements OnInit {
       if (this.noteToEdit.typeInspect === 'ApiaryObs') {
         this.rucherService.rucherSelectUpdate = this.rucherService.ruchers.filter(apiary => apiary._id === this.noteToEdit.apiaryId)[0];
       } else {
-        let idApiary = this.rucheService.ruchesAllApiary.filter(hive => hive._id === this.noteToEdit.hiveId)[0].apiaryId;
-        this.rucherService.rucherSelectUpdate = this.rucherService.ruchers.filter((apiary: RucherModel) => apiary._id === idApiary)[0];
+        let apiaryId = this.rucheService.ruchesAllApiary.filter(hive => hive._id === this.noteToEdit.hiveId)[0].apiaryId;
+        this.rucherService.rucherSelectUpdate = this.rucherService.ruchers.filter((apiary: RucherModel) => apiary._id === apiaryId)[0];
       }
       this.apiaryToEdit = this.rucherService.rucherSelectUpdate;
       // Hive init

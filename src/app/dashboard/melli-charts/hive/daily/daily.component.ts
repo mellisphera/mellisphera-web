@@ -198,7 +198,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
         const serieSelected = this.dailyManager.baseOptionExt.series.filter(_serie => _serie.name === params.name)[0];
         this.dailyManager.setMeanData(serieSelected, false, this.currentTypeDailyOther);
         // this.dailyManager.setMeanSevenDay(serieSelected)
-        //this.weatherService.getRainAllWeather(this.melliHive.getHiveSelect().idApiary, this.melliDate.getRangeForReqest());
+        //this.weatherService.getRainAllWeather(this.melliHive.getHiveSelect().apiaryId, this.melliDate.getRangeForReqest());
       }
     });
 

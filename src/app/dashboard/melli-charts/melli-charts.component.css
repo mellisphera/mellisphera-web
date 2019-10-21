@@ -144,7 +144,9 @@ nav[role=admin-navigation] {
 .loading{
     cursor: wait !important;
 }
-
+.btn-transparent{
+    background-color: transparent !important;
+}
 
 .button {
     padding: 6px 12px;

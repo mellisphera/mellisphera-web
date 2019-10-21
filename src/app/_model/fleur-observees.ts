@@ -22,7 +22,7 @@ export interface FleurObservees {
 	dateThFindate: string ;
 	presence : string;
     username : string; 
-	idApiary : string;
+	apiaryId : string;
 	photo : string;
 
 }

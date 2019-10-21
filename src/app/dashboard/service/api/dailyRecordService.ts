@@ -68,8 +68,8 @@ export class DailyRecordService {
         }
     }
 
-    getByHive(idHive: string) {
-        return this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/hive/' + idHive).map(res => {
+    getByHive(hiveId: string) {
+        return this.http.get<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/hive/' + hiveId).map(res => {
             this.arrayTempInt = res.filter(elt => elt.temp_int_max !== null).
                 map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem, false)]);
             this.arrayHint = res.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
@@ -135,12 +135,12 @@ export class DailyRecordService {
     /**
      *
      * @public
-     * @param {string} idHive
+     * @param {string} hiveId
      * @memberof DailyRecordService
      */
-    public getByIdHive(idHive: string): void {
+    public getByhiveId(hiveId: string): void {
         this.dailyRecordsGraph = [];
-        this.http.get<DailyRecordTh[]>(CONFIG.URL + '/dailyRecordsTH/hive/' + idHive).map(daily => {
+        this.http.get<DailyRecordTh[]>(CONFIG.URL + '/dailyRecordsTH/hive/' + hiveId).map(daily => {
             this.arrayTempInt = daily.filter(elt => elt.temp_int_max !== null).
                 map(eltMap => [eltMap.recordDate, this.unitService.convertTempFromUsePref(eltMap.temp_int_max, this.unitSystem, false)]);
             this.arrayHint = daily.filter(elt => elt.humidity_int_max !== null).map(eltMap => [eltMap.recordDate, eltMap.humidity_int_max]);
@@ -160,28 +160,28 @@ export class DailyRecordService {
     /**
      *
      * @public
-     * @param {string} idApiary
+     * @param {string} apiaryId
      * @memberof DailyRecordService
      */
-    public nextDay(idApiary: string): void {
+    public nextDay(apiaryId: string): void {
         this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() + 1);
         this.rangeDailyRecord.setHours(23);
         this.rangeDailyRecord.setMinutes(0);
         this.rangeDailyRecord.setSeconds(0);
-        this.getDailyRecThByApiary(idApiary);
+        this.getDailyRecThByApiary(apiaryId);
 
     }
     /**
      *
      * @public
-     * @param {string} idApiary
+     * @param {string} apiaryId
      * @memberof DailyRecordService
      */
-    public previousDay(idApiary: string): void {
+    public previousDay(apiaryId: string): void {
         this.rangeDailyRecord.setDate(this.rangeDailyRecord.getDate() - 1);
         this.rangeDailyRecord.setHours(23);
         this.rangeDailyRecord.setMinutes(0);
-        this.getDailyRecThByApiary(idApiary);
+        this.getDailyRecThByApiary(apiaryId);
     }
     setUnitSystem(unit: string): void {
         this.unitSystem = unit;
@@ -277,10 +277,10 @@ export class DailyRecordService {
     /**
      *
      * @public
-     * @param {string} idApiary
+     * @param {string} apiaryId
      * @memberof DailyRecordService
      */
-    public getDailyRecThByApiary(idApiary: string): void {
+    public getDailyRecThByApiary(apiaryId: string): void {
         var tabDate: Date[];
         var previousDay: Date;
         previousDay = new Date();
@@ -290,7 +290,7 @@ export class DailyRecordService {
         previousDay.setHours(23);
         previousDay.setMinutes(0);
         tabDate = [this.rangeDailyRecord, previousDay];
-        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, tabDate);
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + apiaryId, tabDate);
         this.dailyRecTabObs.subscribe(
             (data) => {
                 if (data[0] != null) {
@@ -309,11 +309,11 @@ export class DailyRecordService {
     /**
      *
      * @public
-     * @param {string} idApiary
+     * @param {string} apiaryId
      * @memberof DailyRecordService
      */
     // Get recordTH by apiary for a date, and get records for date -3 days and date -7 days. Stock it into an array.
-    public getRecThByApiaryByDateD3D7(idApiary: string, date: Date): void {
+    public getRecThByApiaryByDateD3D7(apiaryId: string, date: Date): void {
         // Get recordTH by apiary for a date
         date.setDate(date.getDate() - 2);
         date.setHours(23);
@@ -329,7 +329,7 @@ export class DailyRecordService {
         previousDay.setMinutes(0);
         tabDate = [date, previousDay];
 
-        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, tabDate);
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + apiaryId, tabDate);
         this.dailyRecTabObs.subscribe(
             (data) => {
                 if (data[0] != null) {
@@ -352,7 +352,7 @@ export class DailyRecordService {
         previousDay.setMinutes(0);
         tabDate = [date, previousDay];
 
-        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, tabDate);
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + apiaryId, tabDate);
         this.dailyRecTabObs.subscribe(
             (data) => {
                 if (data[0] != null) {
@@ -375,7 +375,7 @@ export class DailyRecordService {
         previousDay.setMinutes(0);
         tabDate = [date, previousDay];
 
-        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + idApiary, tabDate);
+        this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + apiaryId, tabDate);
         this.dailyRecTabObs.subscribe(
             (data) => {
                 if (data[0] != null) {
@@ -392,12 +392,12 @@ export class DailyRecordService {
     /**
      *
      * @public
-     * @param {string} idHive
+     * @param {string} hiveId
      * @returns {string}
      * @memberof DailyRecordService
      */
-    public getColorByPourcent(idHive?: string): any {
-        const selectHive = this.dailyRecords.filter(elt => elt.idHive === idHive);
+    public getColorByPourcent(hiveId?: string): any {
+        const selectHive = this.dailyRecords.filter(elt => elt.hiveId === hiveId);
         //return (selectHive.length > 0) ? 'ruche ' + selectHive[0].health_status + selectHive[0].health_trend : 'ruche Inconnu';
         if (selectHive.length > 0 || selectHive[0] !== undefined && selectHive) {
             if (selectHive[0].brood > 85 && selectHive[0].brood <= 100) {
@@ -418,8 +418,8 @@ export class DailyRecordService {
         }
     }
 
-    public getPourcentByHive(idHive: string): any {
-        const selectHive = this.dailyRecords.filter(elt => elt.idHive === idHive)[0];
+    public getPourcentByHive(hiveId: string): any {
+        const selectHive = this.dailyRecords.filter(elt => elt.hiveId === hiveId)[0];
         if(selectHive !== undefined){
             return selectHive.brood.toString().split('.')[0] + '%';
         }else{
@@ -428,8 +428,8 @@ export class DailyRecordService {
     }
 
     // get pourcent by hive for the current day, day -3 or day -7.
-    public getPourcentByHiveDayD3D7(idHive: string, index : number): any {
-        const selectHive = this.dailyRecordsDayD3D7[index].filter(elt => elt.idHive === idHive)[0];
+    public getPourcentByHiveDayD3D7(hiveId: string, index : number): any {
+        const selectHive = this.dailyRecordsDayD3D7[index].filter(elt => elt.hiveId === hiveId)[0];
         if(selectHive !== undefined){
             if((selectHive.brood.toString().split('.')[1] !== undefined )&& (selectHive.brood.toString().split('.')[1][0] !== '0')){
                 if (this.user.getJwtReponse().country === "FR"){
@@ -447,39 +447,39 @@ export class DailyRecordService {
 
     /**
      * 
-     * @param idHIve 
+     * @param hiveId 
      * @param range 
      */
-    public getTempIntMaxByHive(idHIve: string, range: Date[]): Observable<any[]> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMax/' + idHIve, range).map(_elt => _elt.map(_value => {
+    public getTempIntMaxByHive(hiveId: string, range: Date[]): Observable<any[]> {
+        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMax/' + hiveId, range).map(_elt => _elt.map(_value => {
             return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef};
         }));
     }
     /**
      * 
-     * @param idHIve 
+     * @param hiveId 
      * @param range 
      */
-    public getHintByHive(idHIve: string, range: Date[]): Observable<any> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/hInt/' + idHIve, range);
+    public getHintByHive(hiveId: string, range: Date[]): Observable<any> {
+        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/hInt/' + hiveId, range);
     }
 
     /**
      * 
-     * @param idHive 
+     * @param hiveId 
      * @param range 
      */
-    public getBroodByHive(idHive: string, range: Date[]): Observable<any[]> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/brood/' + idHive, range);
+    public getBroodByHive(hiveId: string, range: Date[]): Observable<any[]> {
+        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/brood/' + hiveId, range);
     }
 
     /**
      * 
-     * @param idHive 
+     * @param hiveId 
      * @param range 
      */
-    public getTminByHive(idHive: string, range: Date[]): Observable<any[]> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMin/' + idHive, range).map(_elt => _elt.map(_value => {
+    public getTminByHive(hiveId: string, range: Date[]): Observable<any[]> {
+        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMin/' + hiveId, range).map(_elt => _elt.map(_value => {
             return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef};
         }));
     }

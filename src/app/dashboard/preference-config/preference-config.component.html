@@ -91,7 +91,7 @@ limitations under the License. -->
                         </g>
                     </svg>
 
-
+                    
                     <svg xmlns="http://www.w3.org/2000/svg" (click)="changeLangToggle()" id="flag-icon-css-gb"
                         viewBox="0 0 640 480">
                         <defs>
@@ -111,71 +111,6 @@ limitations under the License. -->
                         </g>
                     </svg>
                 </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">Alert</div>
-            <div class="panel-body">
-                <div class="flex">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Type</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Min</th>
-                                <th scope="col">Max</th>
-                                <th class="text-right" scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container *ngFor="let notif of notifConfig; let i = index">
-                                <tr *ngIf="i % 2 == 0">
-                                    <td> <img [src]="notif.icon" class="icon_notif" /></td>
-                                    <td>{{ notif.name }}</td>
-                                    <td><input [value]="notif.value[0]" type="number"></td>
-                                    <td><input [value]="notif.value[1]" type="number"></td>
-                                    <td class="text-right">
-                                        <div class="btn-group btn-toggle switch-group">
-                                            <button class="btn btn-md btn-success">ON</button>
-                                            <button class="btn btn-md btn-danger active">OFF</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </ng-container>
-                        </tbody>
-                    </table>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Type</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Min</th>
-                                <th scope="col">Max</th>
-                                <th class="text-right" scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container *ngFor="let notif of notifConfig; let i = index">
-                                <tr *ngIf="i % 2 !== 0">
-                                    <td> <img [src]="notif.icon" class="icon_notif" /></td>
-                                    <td>{{ notif.name }}</td>
-                                    <td><input [value]="notif.value[0]" type="number"></td>
-                                    <td><input [value]="notif.value[1]" type="number"></td>
-                                    <td class="text-right">
-                                        <div class="btn-group btn-toggle switch-group">
-                                            <button class="btn btn-md btn-success">ON</button>
-                                            <button class="btn btn-md btn-danger active">OFF</button>
-                                        </div>
-                                        
-                                    </td>
-                                </tr>
-                            </ng-container>
-                        </tbody>
-                    </table>
-                </div>
-
-
-
             </div>
         </div>
     </div>

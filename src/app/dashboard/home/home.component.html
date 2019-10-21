@@ -50,7 +50,7 @@ limitations under the License. -->
         </ul>
 
         <!-- Choose date-->
-        <ul class="nav navbar-nav navbar-date navbar-right">
+<!--         <ul class="nav navbar-nav navbar-date navbar-right">
             <li width="35" class="range-date" (click)="onClickPreviousDay()">
                 <button type="button" class="btn btn-info date-arrow"><i class="fa fa-arrow-circle-left"
                     id="previous-date"></i></button>
@@ -60,7 +60,7 @@ limitations under the License. -->
                 <button type="button" class="btn btn-info date-arrow"><i id="next-date"
             class="fa fa-arrow-circle-right"></i></button>
             </li>
-        </ul>
+        </ul> -->
     </div><!-- /.container-fluid -->
 </nav>
 
@@ -82,7 +82,7 @@ limitations under the License. -->
         </div>
         <!-- The dive for each hive -->
         <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true" data-toggle="tooltip"
-             [ngDraggable] = "boolDraggable" [handle]="HiveHandle" *ngFor="let ruche of rucheService.ruches; let i = index" (endOffset)="onMoveEnd($event, ruche,i)"
+             ngDraggable="false" [handle]="HiveHandle" *ngFor="let ruche of rucheService.ruches; let i = index" (endOffset)="onMoveEnd($event, ruche,i)"
             [id]="i" [style.top.%]="ruche.hivePosY" [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)"
             class="hive-group drag-grid {{i}}">
             <!-- The div is show when you right click on a hive -->

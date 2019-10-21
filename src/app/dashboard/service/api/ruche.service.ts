@@ -80,12 +80,12 @@ export class RucheService {
   /**
    *
    *
-   * @param {string} idApiary
+   * @param {string} apiaryId
    * @memberof RucheService
    * @description Ne renvoie pas d'observable attribut les données au objets
    */
-  loadHiveByApiary(idApiary: string): void {
-      this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/username/' + idApiary);
+  loadHiveByApiary(apiaryId: string): void {
+      this.ruchesObs = this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/username/' + apiaryId);
       this.ruchesObs.subscribe(
         (data) => {
           this.ruches = data;
@@ -114,18 +114,18 @@ export class RucheService {
    /**
     *
     *
-    * @param {string} idApiary
+    * @param {string} apiaryId
     * @returns {Observable<RucheInterface[]>}
     * @memberof RucheService
     */
-   getHivesByApiary(idApiary: string): Observable<RucheInterface[]> {
-     return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/username/' + idApiary);
+   getHivesByApiary(apiaryId: string): Observable<RucheInterface[]> {
+     return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/username/' + apiaryId);
    }
 
    /**
     *
     *
-    * @param {string} [idHive]
+    * @param {string} [hiveId]
     * @memberof RucheService
     */
    saveCurrentHive(hive?: RucheInterface) {
@@ -225,14 +225,14 @@ export class RucheService {
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @param {Function} next
    * @param {Function} error
    * @memberof RucheService
    */
-  findRucheById(idHive: string, next: Function, error: Function) {
-    if (this.ruches.filter(hive => hive._id === idHive).length > 0) {
-      next(this.ruches.filter(hive => hive._id === idHive));
+  findRucheById(hiveId: string, next: Function, error: Function) {
+    if (this.ruches.filter(hive => hive._id === hiveId).length > 0) {
+      next(this.ruches.filter(hive => hive._id === hiveId));
 
     } else {
       error('Not hive');

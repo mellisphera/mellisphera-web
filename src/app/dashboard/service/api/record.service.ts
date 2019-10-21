@@ -50,7 +50,7 @@ export class RecordService {
   private recArrayBatteryInt: any[];
   private recArrayBatteryExt: any[];
   public mergeOptionHourly: any = null;
-  public currentIdHive: string;
+  public currenthiveId: string;
   private templateSerie: any;
   private rangeHourly: Date[];
   private unitSystem: string;
@@ -60,7 +60,7 @@ export class RecordService {
   private mergeTemp: any;
   private legendOption: Array<string>;
   constructor(private http: HttpClient, private unitService: UnitService, private graphGlobal: GraphGlobal) {
-    this.currentIdHive = null;
+    this.currenthiveId = null;
     // this.stackSubject = new BehaviorSubject({});
     this.mergeTemp = {
       legend: {
@@ -80,15 +80,15 @@ export class RecordService {
 
   /**
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @param {string} hiveName
    * @param {*} lastMerge
    * @param {boolean} [hive]
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getRecordByIdHive(idHive: string, hiveName: string, lastMerge: any, color?: string): Observable<any> {
-    return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
+  getRecordByhiveId(hiveId: string, hiveName: string, lastMerge: any, color?: string): Observable<any> {
+    return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + hiveId, this.rangeHourly, httpOptions).map((records) => {
       let sensor = [];
       let series = [];
       records.map(res => {
@@ -289,12 +289,12 @@ export class RecordService {
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getHourlyByHive(idHive: string): Observable<any> {
-    return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + idHive, this.rangeHourly, httpOptions).map((records) => {
+  getHourlyByHive(hiveId: string): Observable<any> {
+    return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + hiveId, this.rangeHourly, httpOptions).map((records) => {
       var sensor = [];
       var series = [];
       records.map(res => {
@@ -520,13 +520,13 @@ export class RecordService {
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @param {Date[]} range
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getWeightByHive(idHive: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/weight/' + idHive, range).map(_elt => _elt.map(_value => {
+  getWeightByHive(hiveId: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'records/weight/' + hiveId, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
     }));
   }
@@ -534,13 +534,13 @@ export class RecordService {
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @param {Date[]} range
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getTempIntByHive(idHive: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/temp_int/' + idHive, range).map(_elt => _elt.map(_value => {
+  getTempIntByHive(hiveId: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'records/temp_int/' + hiveId, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
     }));
   }
@@ -548,25 +548,25 @@ export class RecordService {
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @param {Date[]} range
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getHintIntByHive(idHive: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/hint/' + idHive, range);
+  getHintIntByHive(hiveId: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'records/hint/' + hiveId, range);
   }
 
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @param {Date[]} range
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getTempExtByHive(idHive: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/temp_ext/' + idHive, range).map(_elt => _elt.map(_value => {
+  getTempExtByHive(hiveId: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'records/temp_ext/' + hiveId, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
     }));
   }
@@ -574,25 +574,25 @@ export class RecordService {
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @param {Date[]} range
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getBatExtByHive(idHive: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/batExt/' + idHive, range );
+  getBatExtByHive(hiveId: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'records/batExt/' + hiveId, range );
   }
 
   
   /**
    *
    *
-   * @param {string} idHive
+   * @param {string} hiveId
    * @param {Date[]} range
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getBatIntByHive(idHive: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/batInt/' + idHive, range);
+  getBatIntByHive(hiveId: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'records/batInt/' + hiveId, range);
   }
 }

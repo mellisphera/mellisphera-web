@@ -13,7 +13,7 @@ export interface Rapport {
     id : string,
     Lruche: string[],
     date: string,
-    idApiary: string,
+    apiaryId: string,
     idLHive: string[],
     nluScore: number
     sentence: string,

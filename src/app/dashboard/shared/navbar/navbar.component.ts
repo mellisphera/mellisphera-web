@@ -347,7 +347,7 @@ export class NavbarComponent implements OnInit {
     onSelectRucher() {
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher._id);
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
-        this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+        this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
         this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
         switch (location) {
             case '/dashboard/ruche-et-rucher':
@@ -370,7 +370,7 @@ export class NavbarComponent implements OnInit {
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
                 this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+                this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
                 // this.checkIfInfoApiaryComponent().then(status => {
                 //     console.log("OK");
@@ -473,7 +473,7 @@ export class NavbarComponent implements OnInit {
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
                 this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+                this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
                 this.router.navigate(['dashboard/home/info-apiary']);
                 this.desactiveButtonHomePageActiveNameAndAlerts();
@@ -635,7 +635,7 @@ export class NavbarComponent implements OnInit {
                         this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                         this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
                         this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                        this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+                        this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
                         this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
                         this.router.navigate(['dashboard/home/info-apiary']);
                         this.desactiveButtonHomePageActiveNameAndAlerts();
@@ -651,7 +651,7 @@ export class NavbarComponent implements OnInit {
                         this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                         this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
                         this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                        this.observationService.getObservationByIdApiary(this.rucherService.getCurrentApiary());
+                        this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
                         this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
                         this.router.navigate(['dashboard/home/info-apiary']);
                         this.desactiveButtonHomePageActiveNameAndAlerts();
@@ -929,17 +929,17 @@ export class NavbarComponent implements OnInit {
         this.NavbarNoteForm.get('sentence').reset();
       }
 
-      getHiveNameById(idHive: string): string {
-        if (this.rucheService.ruchesAllApiary.filter(hive => hive._id === idHive)[0] !== undefined) {
-          return (this.rucheService.ruchesAllApiary.filter(hive => hive._id === idHive)[0].name);
+      getHiveNameById(hiveId: string): string {
+        if (this.rucheService.ruchesAllApiary.filter(hive => hive._id === hiveId)[0] !== undefined) {
+          return (this.rucheService.ruchesAllApiary.filter(hive => hive._id === hiveId)[0].name);
         } else {
           return '';
         }
       }
     
-      getApiaryNameByID(idApiary: string): string {
-        if (this.rucherService.ruchers.filter(apiary => apiary._id === idApiary)[0] !== undefined) {
-          return (this.rucherService.ruchers.filter(apiary => apiary._id === idApiary)[0].name);
+      getApiaryNameByID(apiaryId: string): string {
+        if (this.rucherService.ruchers.filter(apiary => apiary._id === apiaryId)[0] !== undefined) {
+          return (this.rucherService.ruchers.filter(apiary => apiary._id === apiaryId)[0].name);
         } else {
           return '';
         }
@@ -1101,9 +1101,9 @@ export class NavbarComponent implements OnInit {
         return this.newSensorForm.get('checkbox');
     }
 
-    getApiaryNameById(idApiary: string) {
+    getApiaryNameById(apiaryId: string) {
         try {
-            return this.rucherService.ruchers.filter(apiary => apiary._id === idApiary)[0];
+            return this.rucherService.ruchers.filter(apiary => apiary._id === apiaryId)[0];
         } catch (e) {
             return this.rucherService.rucher;
         }

@@ -146,9 +146,9 @@ export class AlertsService {
     }
 
     // Fonction to get all alerts for one apiary
-    getAlertsByApiary(idApiary : string){
+    getAlertsByApiary(apiaryId : string){
         // the format is AlertInterface[]
-        this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/apiary/' + idApiary).map(elt => {
+        this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/apiary/' + apiaryId).map(elt => {
             return elt.sort((b, a) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime();
             }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() >= new Date().getMonth() - 2);
@@ -168,9 +168,9 @@ export class AlertsService {
     }
 
     // Fonction to get all alerts for one apiary
-    getAlertsByApiaryObs(idApiary : string){
+    getAlertsByApiaryObs(apiaryId : string){
         // the format is AlertInterface[]
-        return this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/apiary/' + idApiary).map(elt => {
+        return this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/apiary/' + apiaryId).map(elt => {
             return elt.sort((b, a) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime();
             }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() >= new Date().getMonth() - 2);
@@ -178,9 +178,9 @@ export class AlertsService {
     }
 
     // Fonction to get all alerts for one hive
-    getAlertsByHive(idHive : string){
+    getAlertsByHive(hiveId : string){
         // the format is AlertInterface[]
-       return this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/hive/' + idHive).map(elt => {
+       return this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/hive/' + hiveId).map(elt => {
             return elt.sort((b, a) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime();
             }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() >= new Date().getMonth() - 2);
@@ -191,13 +191,13 @@ export class AlertsService {
     /**
      *
      *
-     * @param {string} idHive
+     * @param {string} hiveId
      * @param {Date[]} range
      * @returns {Observable<AlertInterface[]>}
      * @memberof AlertsService
      */
-    getAlertByHiveMelliCharts(idHive: string, range: Date[]): Observable<AlertInterface[]> {
-        return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/between/hive/' + idHive, range);
+    getAlertByHiveMelliCharts(hiveId: string, range: Date[]): Observable<AlertInterface[]> {
+        return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/between/hive/' + hiveId, range);
     }
 
     /**
@@ -215,9 +215,9 @@ export class AlertsService {
     }
 
     // Fonction to get all hives alerts for one apiary
-    getAllHiveAlertsByApiary(idApiary : string){
+    getAllHiveAlertsByApiary(apiaryId : string){
         // the format is AlertInterface[]
-        this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/apiary/hiveAllert/' + idApiary).map(elt => {
+        this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/apiary/hiveAllert/' + apiaryId).map(elt => {
             return elt.sort((b, a) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime();
             }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() >= new Date().getMonth() - 2);
@@ -233,10 +233,10 @@ export class AlertsService {
                 this.hiveAlertsByApiary = data;
                 // save the actives alerts
                 this.apiaryAlertsActives = data.filter(alert => alert.check === false);
-                // the format is Alerts by id hive for one apiary Map<idHive,AlertInterface[]>;
+                // the format is Alerts by id hive for one apiary Map<hiveId,AlertInterface[]>;
                 data.forEach(_alert => {
-                    if (!this.alertsByHiveByApiary.has(_alert.idHive)) {
-                        this.alertsByHiveByApiary.set(_alert.idHive, data.filter(_filter => _filter.idHive === _alert.idHive));
+                    if (!this.alertsByHiveByApiary.has(_alert.hiveId)) {
+                        this.alertsByHiveByApiary.set(_alert.hiveId, data.filter(_filter => _filter.hiveId === _alert.hiveId));
                     };
                 });
               },

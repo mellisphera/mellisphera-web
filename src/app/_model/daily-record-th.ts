@@ -13,7 +13,7 @@ export interface DailyRecordTh {
 
     id : string;
 	recordDate : Date;
-	idHive : string;
+	hiveId : string;
 	humidity_int_min : number;
 	humidity_int_max : number;
 	temp_int_min : number;

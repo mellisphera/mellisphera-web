@@ -22,6 +22,6 @@ export interface Record {
     temp_ext: number;
     temp_int: number;
     weight: number;
-    idHive: string ;
+    hiveId: string ;
     timestamp: number;
 }

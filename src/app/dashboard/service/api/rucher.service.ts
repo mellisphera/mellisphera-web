@@ -91,9 +91,9 @@ export class RucherService {
         return this.http.post<RucherModel>(CONFIG.URL + 'apiaries', newApiary).map(apiary => apiary._id != null ? apiary : null);
     }
 
-    saveCurrentApiaryId(idApiary: string) {
+    saveCurrentApiaryId(apiaryId: string) {
         window.sessionStorage.removeItem('currentApiary');
-        window.sessionStorage.setItem('currentApiary', idApiary);
+        window.sessionStorage.setItem('currentApiary', apiaryId);
         this.sharingApiary = this.ruchers.filter(hive => hive.userId !== this.user.getIdUserLoged());
     }
 
@@ -103,7 +103,7 @@ export class RucherService {
 
     /**
      *
-     * @returns {string} idApiary
+     * @returns {string} apiaryId
      * @memberof RucherService
      */
     getCurrentApiary(): string {
@@ -168,13 +168,13 @@ export class RucherService {
     /**
      *
      *
-     * @param {String} idApiary
+     * @param {String} apiaryId
      * @param {RucherModel} apiaryUpdate
      * @returns {Observable<RucherModel>}
      * @memberof RucherService
      */
-    updateRucher(idApiary: String, apiaryUpdate: RucherModel): Observable<RucherModel> {
-        return this.http.put<RucherModel>(CONFIG.URL + 'apiaries/update/' + idApiary, apiaryUpdate, httpOptions);
+    updateRucher(apiaryId: String, apiaryUpdate: RucherModel): Observable<RucherModel> {
+        return this.http.put<RucherModel>(CONFIG.URL + 'apiaries/update/' + apiaryId, apiaryUpdate, httpOptions);
     }
     /**
      *
@@ -185,8 +185,8 @@ export class RucherService {
     deleteRucher(apiary: RucherModel): Observable<RucherModel> {
         return this.http.delete<RucherModel>(CONFIG.URL + 'apiaries/' + apiary._id);
     }
-    updateBackgroundApiary(idApiary: string) {
-        this.http.put(CONFIG.URL + 'apiaries/update/background/' + idApiary, this.rucher.photo).subscribe(
+    updateBackgroundApiary(apiaryId: string) {
+        this.http.put(CONFIG.URL + 'apiaries/update/background/' + apiaryId, this.rucher.photo).subscribe(
             () => { },
             (err) => {
                 console.log(err);
@@ -199,12 +199,12 @@ export class RucherService {
     /**
      *
      *
-     * @param {string} idApiary
+     * @param {string} apiaryId
      * @param {*} [next]
      * @memberof RucherService
      */
-    findRucherById(idApiary: string, next?) {
-        next(this.allApiaryAccount.filter(apiary => apiary._id === idApiary));
+    findRucherById(apiaryId: string, next?) {
+        next(this.allApiaryAccount.filter(apiary => apiary._id === apiaryId));
     }
 
     /**
@@ -256,8 +256,8 @@ export class RucherService {
         this.rucheService.loadHiveByApiary(this.getCurrentApiary());
     }
 
-    getRucherNameById(idApiary: string) : RucherModel{
-        return (this.ruchers.filter(apiary => apiary._id === idApiary)[0]);
+    getRucherNameById(apiaryId: string) : RucherModel{
+        return (this.ruchers.filter(apiary => apiary._id === apiaryId)[0]);
     }
 
 

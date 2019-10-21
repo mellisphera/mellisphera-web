@@ -16,5 +16,5 @@ export interface Astro {
 	moon: Map<String, any>;
 	sys: Map<String, Object>;
 	apiary: String;
-	_idApiary: String;
+	_apiaryId: String;
 }

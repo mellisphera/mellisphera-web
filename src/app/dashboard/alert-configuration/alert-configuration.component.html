@@ -24,11 +24,7 @@ limitations under the License. -->
                 {{ alert.type }}
             </p>
             <div class="text-center" *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
-              <label> Min : </label>
-              <input type="number" [value]="alertUser.alertConf[alert._id].value[0]"/>
-              <label> Max : </label>
-              <input type="number" [value]="alertUser.alertConf[alert._id].value[1]"/>
-
+                <input type="range" min="5" max="10" step="1"/>
             </div>
             <div class="btn-group" id="status" data-toggle="buttons">
                 <label [class]="'btn btn-default btn-on ' + (isEnable(alert._id) ? 'active': '')" (click)="onEnable(alert._id)">

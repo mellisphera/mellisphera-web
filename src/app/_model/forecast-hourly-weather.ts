@@ -19,7 +19,7 @@ export interface ForecastHourlyWeather {
 	date: String;
 	city: String;
 	rain: Map<String, Number>;
-	idApiary: String;
+	apiaryId: String;
 	show: Map<String, Number>;
 	apiary: String;
 }

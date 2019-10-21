@@ -151,7 +151,7 @@ export class StackApiaryComponent implements OnInit {
     this.recordService.setRange(this.stackService.range);
     this.observationService.setRange(this.stackService.range);
     const observableRecord = this.stackService.getHiveSelect().filter(hive => hive._id !== '')
-    .map(hive => this.recordService.getRecordByIdHive(hive._id, hive.name, this.merge, this.getColor(hive)));
+    .map(hive => this.recordService.getRecordByhiveId(hive._id, hive.name, this.merge, this.getColor(hive)));
     Observable.forkJoin(observableRecord).subscribe(data => {
        data.map(elt => elt.series).forEach(elt => {
         elt.forEach(element => {
@@ -169,7 +169,7 @@ export class StackApiaryComponent implements OnInit {
     (err) => {},
     () => {
       const observableObs = this.stackService.getHiveSelect().filter(hive => hive._id !== '')
-      .map(hive => this.observationService.getObservationByIdHive(hive._id, hive.name));
+      .map(hive => this.observationService.getObservationByhiveId(hive._id, hive.name));
       Observable.forkJoin(observableObs).subscribe(data => {
         this.recordService.mergeOptionStackApiary.series = this.recordService.mergeOptionStackApiary.series.concat(data);
       },
@@ -204,12 +204,12 @@ export class StackApiaryComponent implements OnInit {
         this.stackService.addHive(selectHive);
         this.stackService.addColorForObs(selectHive, this.getColor(selectHive));
         this.recordService.setRange(this.stackService.range);
-        this.recordService.getRecordByIdHive(selectHive._id, selectHive.name,
+        this.recordService.getRecordByhiveId(selectHive._id, selectHive.name,
           this.recordService.mergeOptionStackApiary, this.getColor(selectHive))
           .subscribe((data) => {
             console.log(data);
             // this.recordService.mergeOptionStackApiary = data;
-/*              this.observationService.getObservationByIdHive(selectHive._id, selectHive.name).subscribe(
+/*              this.observationService.getObservationByhiveId(selectHive._id, selectHive.name).subscribe(
               obsData => {
                 data.series.push(obsData);
                 data.legend.data.push(selectHive.name + ' / note');

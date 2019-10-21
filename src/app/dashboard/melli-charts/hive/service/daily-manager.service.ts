@@ -219,8 +219,8 @@ export class DailyManagerService {
     });
   }
 
-  getChartDailyWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    const weatherObs: Array<Observable<any>> = [this.weatherService.getCurrentDailyWeather(idApiary, range), this.weatherService.getForecastDailyWeather(idApiary, range)];
+  getChartDailyWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    const weatherObs: Array<Observable<any>> = [this.weatherService.getCurrentDailyWeather(apiaryId, range), this.weatherService.getForecastDailyWeather(apiaryId, range)];
     Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
       _weather => {
         let weather = _weather.filter(_elt => _elt.value[0].mainDay !== 'Undefined');
@@ -288,8 +288,8 @@ export class DailyManagerService {
       }
     );
   }
-  getChartAstro(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.astroService.getAstroByApiary(idApiary, range).subscribe(
+  getChartAstro(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.astroService.getAstroByApiary(apiaryId, range).subscribe(
       _astro => {
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
@@ -347,9 +347,9 @@ export class DailyManagerService {
       }
     )
   }
-  getChartWeightincome(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.getLastDayForMeanValue(this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive, this.rangeSevenDay), false, type);
-    this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(idHive, range).subscribe(
+  getChartWeightincome(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.getLastDayForMeanValue(this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(hiveId, this.rangeSevenDay), false, type);
+    this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(hiveId, range).subscribe(
       _daliW => {
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
@@ -422,14 +422,14 @@ export class DailyManagerService {
       }
     )
   }
-  getChartTempMaxWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.weatherService.getAllTempWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
+  getChartTempMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
           _elt.value.maxTempDay = this.unitService.convertTempFromUsePref(_elt.value.maxTempDay, this.unitService.getUserPref().unitSystem);
           return _elt;
         });
-        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
+        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -456,14 +456,14 @@ export class DailyManagerService {
     );
   }
 
-  getHextMaxWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.weatherService.getAllTempWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
+  getHextMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
           _elt.value.maxTempDay = this.unitService.convertTempFromUsePref(_elt.value.maxHumidityDay, this.unitService.getUserPref().unitSystem);
           return _elt;
         });
-        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
+        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -490,14 +490,14 @@ export class DailyManagerService {
     );
   }
 
-  getHextMinWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.weatherService.getAllTempWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
+  getHextMinWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
           _elt.value.maxTempDay = this.unitService.convertTempFromUsePref(_elt.value.minHumidityDay, this.unitService.getUserPref().unitSystem);
           return _elt;
         });
-        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
+        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -524,11 +524,11 @@ export class DailyManagerService {
     );
   }
 
-  getChartWindMaxWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.weatherService.getWindAllWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
+  getChartWindMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.weatherService.getWindAllWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
-        // this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
+        // this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -556,14 +556,14 @@ export class DailyManagerService {
   }
 
 
-  getChartTempMinWeather(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.weatherService.getAllTempWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
+  getChartTempMinWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
           _elt.value.minTempDay = this.unitService.convertTempFromUsePref(_elt.value.minTempDay, this.unitService.getUserPref().unitSystem);
           return _elt;
         });
-        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(idApiary, this.rangeSevenDay), true, type);
+        this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -590,10 +590,10 @@ export class DailyManagerService {
     );
   }
 
-  getRainByApiary(type: Tools, idApiary: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.weatherService.getRainAllWeather(idApiary, range).map(_elt => _elt.flat()).subscribe(
+  getRainByApiary(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.weatherService.getRainAllWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _rain => {
-        this.getLastDayForMeanValue(this.weatherService.getRainAllWeather(idApiary, this.rangeSevenDay), false, type);
+        this.getLastDayForMeanValue(this.weatherService.getRainAllWeather(apiaryId, this.rangeSevenDay), false, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete: any) => {
@@ -639,12 +639,12 @@ export class DailyManagerService {
     )
   }
 
-  getChartTintMax(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    // this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(idHive, this.rangeSevenDay), false, type);
-    this.dailyHService.getTempIntMaxByHive(idHive, range).subscribe(
+  getChartTintMax(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    // this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(hiveId, this.rangeSevenDay), false, type);
+    this.dailyHService.getTempIntMaxByHive(hiveId, range).subscribe(
       _tMax => {
         console.log(_tMax);
-        this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(idHive, this.rangeSevenDay), true, type);
+        this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(hiveId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -672,10 +672,10 @@ export class DailyManagerService {
     )
   }
 
-  getChartTextMax(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.dailyWService.getTempMaxExt(idHive, range).subscribe(
+  getChartTextMax(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.dailyWService.getTempMaxExt(hiveId, range).subscribe(
       _tmpMaxExt => {
-        this.getLastDayForMeanValue(this.dailyWService.getTempMaxExt(idHive, this.rangeSevenDay), true, type);
+        this.getLastDayForMeanValue(this.dailyWService.getTempMaxExt(hiveId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -702,10 +702,10 @@ export class DailyManagerService {
       }
     )
   }
-  getChartTextMin(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.dailyWService.getTempMinExt(idHive, range).subscribe(
+  getChartTextMin(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.dailyWService.getTempMinExt(hiveId, range).subscribe(
       _tMinExt => {
-        this.getLastDayForMeanValue(this.dailyWService.getTempMinExt(idHive, this.rangeSevenDay), true, type);
+        this.getLastDayForMeanValue(this.dailyWService.getTempMinExt(hiveId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -732,10 +732,10 @@ export class DailyManagerService {
       }
     )
   }
-  getChartHint(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.dailyHService.getHintByHive(idHive, range).subscribe(
+  getChartHint(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.dailyHService.getHintByHive(hiveId, range).subscribe(
       _hInt => {
-        this.getLastDayForMeanValue(this.dailyHService.getHintByHive(idHive, this.rangeSevenDay), true, type);
+        this.getLastDayForMeanValue(this.dailyHService.getHintByHive(hiveId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -762,11 +762,11 @@ export class DailyManagerService {
       }
     )
   }
-  getChartBrood(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.dailyHService.getBroodByHive(idHive, range).subscribe(
+  getChartBrood(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.dailyHService.getBroodByHive(hiveId, range).subscribe(
       _brood => {
         console.log(_brood);
-        this.getLastDayForMeanValue(this.dailyHService.getBroodByHive(idHive, this.rangeSevenDay), true, type);
+        this.getLastDayForMeanValue(this.dailyHService.getBroodByHive(hiveId, this.rangeSevenDay), true, type);
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (rangeChange) {
           option.calendar.range = range;
@@ -794,10 +794,10 @@ export class DailyManagerService {
     )
   }
 
-  getChartTminInt(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.dailyHService.getTminByHive(idHive, range).subscribe(
+  getChartTminInt(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.dailyHService.getTminByHive(hiveId, range).subscribe(
       _tMin => {
-        this.getLastDayForMeanValue(this.dailyHService.getTminByHive(idHive, this.rangeSevenDay), true, type);
+        this.getLastDayForMeanValue(this.dailyHService.getTminByHive(hiveId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           option.calendar.range = range;
@@ -825,10 +825,10 @@ export class DailyManagerService {
     )
   }
 
-  getChartWeight(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.dailyWService.getWeightByHive(idHive, range).subscribe(
+  getChartWeight(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    this.dailyWService.getWeightByHive(hiveId, range).subscribe(
       _weightMax => {
-        this.getLastDayForMeanValue(this.dailyWService.getWeightByHive(idHive, this.rangeSevenDay), true, type);
+        this.getLastDayForMeanValue(this.dailyWService.getWeightByHive(hiveId, this.rangeSevenDay), true, type);
         let option = this.baseOptionsInt;
         if (rangeChange) {
           option.calendar.range = range;
@@ -873,10 +873,10 @@ export class DailyManagerService {
     )
   }
 
-  getChartAlert(type: Tools, idHive: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+  getChartAlert(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     const obs: Array<Observable<any>> = [
-      this.observationService.getObservationByHiveForMelliCharts(idHive, range),
-      this.alertService.getAlertByHiveMelliCharts(idHive, range)
+      this.observationService.getObservationByHiveForMelliCharts(hiveId, range),
+      this.alertService.getAlertByHiveMelliCharts(hiveId, range)
     ]
     Observable.forkJoin(obs).subscribe(
       _data => {

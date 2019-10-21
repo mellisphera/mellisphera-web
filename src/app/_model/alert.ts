@@ -14,8 +14,8 @@ export interface AlertInterface {
     idUser : string;
     user: string;
     apiary: string;
-    idApiary:string;
-    idHive:string;
+    apiaryId:string;
+    hiveId:string;
     hive:string;
     type:string;
     alert:string;
