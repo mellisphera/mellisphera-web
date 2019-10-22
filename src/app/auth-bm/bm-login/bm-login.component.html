@@ -23,9 +23,9 @@ limitations under the License. -->
     </div>
     <div class="form-group">
       <label for="">Password :</label>
-      <input type="text" [(ngModel)]="password" class="form-control" placeholder="Input field">
+      <input type="password" [(ngModel)]="password" class="form-control" placeholder="Input field">
     </div>
-    <button id="btnSubmit" type="button" class="btn btn-success">Login</button>
+    <button id="btnSubmit" type="button" (click)="login()" class="btn btn-success">Login</button>
   </div>
 
 </section>

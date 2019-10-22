@@ -39,16 +39,18 @@ export class MyDate {
      * @memberof MyDate
      */
     static getWekitDate(dt: string): Date {
-        const tmp = dt.split('-');
-        const date = new Date();
-        date.setFullYear(parseInt(tmp[0]));
-        date.setMonth(parseInt(tmp[1])-1);
-        date.setDate(parseInt(parseInt(tmp[2][0]) + '' + parseInt(tmp[2][1])));
-        const hourly = tmp[2].split('T')[1].split(':');
-        date.setHours(parseInt(hourly[0]));
-        date.setMinutes(parseInt(hourly[1]));
-        // date.setHours()
-        return date;
+        try{
+            const tmp = dt.split('-');
+            const date = new Date();
+            date.setFullYear(parseInt(tmp[0]));
+            date.setMonth(parseInt(tmp[1])-1);
+            date.setDate(parseInt(parseInt(tmp[2][0]) + '' + parseInt(tmp[2][1])));
+            const hourly = tmp[2].split('T')[1].split(':');
+            date.setHours(parseInt(hourly[0]));
+            date.setMinutes(parseInt(hourly[1]));
+            // date.setHours()
+            return date;
+        } catch{}
     }
    static convertDate(date: Date){
         let jour = '' + date.getDate();

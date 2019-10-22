@@ -28,7 +28,6 @@ export class AdminComponent implements OnInit {
   constructor(private router: Router, 
     private adminService: AdminService,
     private renderer: Renderer2) {
-    this.router.navigateByUrl('dashboard/admin/status');
   }
 
   ngOnInit() {

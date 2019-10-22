@@ -13,6 +13,8 @@ limitations under the License. */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../auth/Service/auth.service';
+import { Login } from '../../_model/login';
 
 @Component({
   selector: 'app-bm-login',
@@ -23,7 +25,8 @@ export class BmLoginComponent implements OnInit, OnDestroy {
 
   public email: string;
   public password: string;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+    private authService: AuthService) { }
 
   ngOnInit() {
     document.querySelector('body').classList.add('login-bm');
@@ -32,6 +35,14 @@ export class BmLoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     document.querySelector('body').classList.remove('login-bm');
+  }
+
+  login(): void {
+    this.authService.login = {
+      email: this.email,
+      password: this.password
+    };
+    this.authService.signIn();
   }
 
 }
