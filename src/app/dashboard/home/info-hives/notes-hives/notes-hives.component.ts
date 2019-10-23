@@ -110,6 +110,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.newObs.createDate = new Date();
       this.newObs.description = formValue.sentence;
       this.newObs.hiveId = this.rucheService.getCurrentHive()._id;
+      this.newObs.apiaryId = this.rucherService.rucher._id;
       this.newObs.userId = this.userService.getIdUserLoged();
       this.ObservationForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
@@ -135,6 +136,10 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       const formValue = this.ObservationForm.value;
       this.newObs = formValue;
       this.newObs.typeInspect = 'HiveAct';
+      this.newObs.type = 'hive';
+      this.newObs.opsDate = formValue.date;
+      this.newObs.apiaryId = this.rucherService.rucher._id;
+      this.newObs.createDate = new Date();
       this.newObs.hiveId = this.rucheService.getCurrentHive()._id;
       this.newObs.userId = this.userService.getIdUserLoged();
       this.ObservationForm.reset();
@@ -161,7 +166,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     const donnée = {
       sentence: this.newObs.description,
       type: this.newObs.typeInspect,
-      date: new Date(this.newObs.createDate)
+      date: new Date(this.newObs.opsDate)
     };;
     this.ObservationForm.setValue(donnée);
   }
@@ -170,8 +175,13 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.ObservationForm.value;
       this.newObs.description = formValue.sentence;
-      this.newObs.createDate = formValue.date;
+      this.newObs.createDate = new Date();
+      this.newObs.type = 'hive';
+      this.newObs.opsDate = formValue.date;
+      this.newObs.apiaryId = this.rucherService.rucher._id;
+      this.newObs.hiveId = this.rucheService.getCurrentHive()._id;
       this.newObs.typeInspect = formValue.type;
+      console.log(this.newObs);
       const index = this.observationService.observationsHive.indexOf(this.newObs);
       // this.initForm();
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {

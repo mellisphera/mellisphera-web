@@ -50,7 +50,8 @@ export class DashboardComponent implements OnInit {
     private translateService: TranslateService,
     public loadingService: LoadingService,
     private renderer: Renderer2,
-    //private socketService: SocketService,
+    private socketService: SocketService,
+    private userService: UserloggedService,
     private authService: AuthService,
     private myNotifierService: MyNotifierService,
     private routingHistory: RoutingHistoryService,
@@ -66,7 +67,7 @@ export class DashboardComponent implements OnInit {
       }
     });
     this.routingHistory.loadRouting();
-   // this.socketService.loadDataRequest(this.authService.jwtReponse);
+    this.socketService.loadDataRequest(this.userService.getJwtReponse());
   }
 
   ngOnInit() {

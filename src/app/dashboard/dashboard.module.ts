@@ -56,7 +56,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketService } from './service/socket.service';
 import { AlertConfigurationComponent } from './alert-configuration/alert-configuration.component';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options: {} };
 
 
 
@@ -90,7 +90,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     AdminService,
     UnitService,
     GraphGlobal,
-    // SocketService,
+    SocketService,
     CapteurService,
     SidebarService,
     ObservationService,

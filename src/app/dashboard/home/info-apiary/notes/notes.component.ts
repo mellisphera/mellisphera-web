@@ -136,7 +136,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       const formValue = this.observationForm.value;
       this.newObs = formValue;
       this.newObs.apiaryId = this.rucherService.rucher._id;
-      this.newObs.opsDate = formValue.date;
+      this.newObs.opsDate = formValue.date.getTime();
       this.newObs.createDate = new Date();
       this.newObs.description = formValue.sentence;
       this.newObs.type = 'apiary';
@@ -170,7 +170,10 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.observationForm.value;
       this.newObs.description = formValue.sentence;
-      this.newObs.createDate = formValue.date;
+      this.newObs.opsDate = formValue.date;
+      this.newObs.apiaryId = this.rucherService.getCurrentApiary();
+      this.newObs.type = 'apiary';
+      console.log(this.newObs);
       const index = this.observationService.observationsApiary.indexOf(this.newObs);
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsApiary[index] = this.newObs;

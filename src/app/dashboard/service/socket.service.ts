@@ -33,6 +33,6 @@ export class SocketService {
   }
 
   loadDataRequest(authResponse: JwtResponse) {
-    this.socket.emit('loaData', authResponse);
+    this.socket.emit('loaData', authResponse.idUser);
   }
 }

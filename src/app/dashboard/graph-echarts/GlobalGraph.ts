@@ -570,6 +570,8 @@ export class GraphGlobal {
         return this.rain.unitT;
       case 'V':
         return this.wind.unitT;
+      case 'HPA':
+          return 'hPa';
       default:
         return '';
     }
@@ -709,16 +711,16 @@ export class GraphGlobal {
               value: this.getNumberFormat(params.data[5]),
               unit: this.getUnitByType('P')
             },
-            /*             {
-                          name: 'PressMax',
-                          value: this.getNumberFormat(params.data[7]),
-                          unit: this.getUnitByType('P')
-                        },
-                        {
-                          name: 'PressMin',
-                          value: this.getNumberFormat(params.data[8]),  
-                          unit: this.getUnitByType('P')
-                        }, */
+            {
+               name: 'PressMax',
+               value: this.getNumberFormat(params.data[7]),
+               unit: this.getUnitByType('HPA')
+             },
+             {
+               name: 'PressMin',
+               value: this.getNumberFormat(params.data[8]),
+               unit: this.getUnitByType('HPA')
+             },
           ));
         };
         break;
