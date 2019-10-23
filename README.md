@@ -46,3 +46,8 @@ if something goes wrong, contact us at info@mellisphera.com we'll be glad to hel
 
 ## Wish to contribute?
 Please review [CONTRIBUTING](https://github.com/mellisphera/mellihealth-web/blob/master/CONTRIBUTING.md) 
+
+## License
+All source code in this project is licensed under the Apache license 2.0. 
+Mellisphera ™ brand and logo are registered trademarks of lema-bkr sarl. 
+All the icons and graphic designs are licensed under Creative Commons CC-BY-NC as described in [license_cc](https://github.com/mellisphera/mellihealth-web/blob/master/LICENSE_CC)
