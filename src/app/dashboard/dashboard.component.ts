@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit {
       }
     });
     this.routingHistory.loadRouting();
-    this.socketService.loadDataRequest(this.userService.getJwtReponse());
+    this.socketService.loadDataRequest(this.userService.getJwtReponse(  ));
   }
 
   ngOnInit() {

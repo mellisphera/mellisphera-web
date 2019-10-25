@@ -15,6 +15,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertsService } from '../service/api/alerts.service';
 import { UserloggedService } from '../../userlogged.service';
 import { AlertUser } from '../../_model/alertUser';
+import { AlertCat } from '../../_model/alertCat';
 
 @Component({
   selector: 'app-alert-configuration',
@@ -25,10 +26,7 @@ export class AlertConfigurationComponent implements OnInit {
 
   constructor(private alertService: AlertsService, private userServuce: UserloggedService) { }
 
-  public alertType: {
-    _id: string,
-    type: string
-  }[];
+  public alertType: AlertCat[];
 
   public alertUser: AlertUser;
   ngOnInit() {
@@ -53,7 +51,13 @@ export class AlertConfigurationComponent implements OnInit {
 
   isAlterable(alertId: string): boolean {
     try {
-      return this.alertUser.alertConf[alertId].alterable;
+      return this.alertType.filter(_alert => _alert._id === alertId)[0].alterable;
+    } catch {}
+  }
+
+  getUserValue(alertId: string): number {
+    try {
+      return this.alertUser.alertConf[alertId].value;
     } catch {}
   }
 
@@ -72,5 +76,10 @@ export class AlertConfigurationComponent implements OnInit {
     if (this.alertUser.alertConf[alertId].enable) {
       this.alertUser.alertConf[alertId].enable = false;
     }
+  }
+
+  onChageValue(value: number, alertId: string) {
+    this.alertUser.alertConf[alertId].value = value;
+    console.log(this.alertUser.alertConf[alertId]);
   }
 }

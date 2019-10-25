@@ -17,6 +17,7 @@ import { Observable, BehaviorSubject} from 'rxjs';
 import { MyDate } from '../../../class/MyDate';
 import { ALERTS_ICONS } from '../../melli-charts/charts/icons/icons_alerts';
 import { AlertUser } from '../../../_model/alertUser';
+import { AlertCat } from '../../../_model/alertCat';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -203,11 +204,11 @@ export class AlertsService {
     /**
      *
      *
-     * @returns {Observable<{_id: string, type: string}[]>}
+     * @returns {Observable<AlertCat[]>}
      * @memberof AlertsService
      */
-    getAllTypeAlerts(): Observable<{_id: string, type: string}[]> {
-        return this.http.get<{_id: string, type: string}[]>(CONFIG.URL + 'alerts/all');
+    getAllTypeAlerts(): Observable<AlertCat[]> {
+        return this.http.get<AlertCat[]>(CONFIG.URL + 'alerts/all');
     }
 
     getAlertConfByUser(userId: string): Observable<AlertUser> {

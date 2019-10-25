@@ -29,7 +29,7 @@ export class SocketService {
       _res => {
         console.log(_res);
       }
-    )
+    );
   }
 
   loadDataRequest(authResponse: JwtResponse) {

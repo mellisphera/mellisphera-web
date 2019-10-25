@@ -12,6 +12,11 @@
 .list-group p{
     width: 10%;
 }
+.rangeInput{
+    width: 50%;
+    margin-right: 10px;
+    float: left;
+}
 /* Switch button */
 .btn-default.btn-on.active{background-color: #5BB75B;color: white;}
 .btn-default.btn-off.active{background-color: #DA4F49;color: white;}
