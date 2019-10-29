@@ -174,7 +174,7 @@ export class ManageNotesComponent implements OnInit {
 
   // ###################      CREATE      ###################
 
-  newNoteInit(type: string) {
+  newNoteInit() {
     // Apiary init
     this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
 
