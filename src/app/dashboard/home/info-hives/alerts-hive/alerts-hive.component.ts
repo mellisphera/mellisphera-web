@@ -228,21 +228,6 @@ export class AlertsHiveComponent implements OnInit {
               height: cellHeight,
               children: []
             };
-            group.children.push({
-              type: 'rect',
-              z2: 0,
-              shape: {
-                x: -cellWidth / 2,
-                y: -cellHeight / 2,
-                width: cellWidth,
-                height: cellHeight,
-              },
-              position: [cellPoint[0], cellPoint[1]],
-              style: {
-                fill: this.getColorCalendarByValue(api.value(0)),
-                stroke: 'black'
-              }
-            });
             const dataByDate: any[] = joinData.filter(_filter => {
               return this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.getTimeStampFromDate(api.value(0));
             });
