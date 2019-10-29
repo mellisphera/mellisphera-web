@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
     public router: Router,
     private data: UserloggedService,
+    private userService: UserloggedService,
     public authService: AuthService,
     public signupService: SignupService,
     private notifier: NotifierService) {
@@ -109,6 +110,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
         this.notif.notify('success', 'Inscription réussie !');
         }
         this.success = true;
+        this.userService.setWizardActive(true);
         this.innitForm();
         setTimeout(() => {
           this.success = false;
