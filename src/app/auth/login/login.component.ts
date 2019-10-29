@@ -105,8 +105,8 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
         this.authService.login.password = this.signupService.user.password;
         if(/fr/g.test(this.navLanguage)){
         this.notif.notify('success', 'Sign up successful !');
-        }else{
-        this.notif.notify('success', 'Inscription réussie !'); 
+        } else {
+        this.notif.notify('success', 'Inscription réussie !');
         }
         this.success = true;
         this.innitForm();

@@ -126,7 +126,7 @@
         "BACK" : "Save background?",
         "CHANGE" : "Save changes",
         "CANCEL" : "Cancel",
-        "NODATA" : "_",
+        "NODATA" : "-",
         "NOSENSORS" : "No sensors",
         "CLICK" : "Click on a hive for more information !",
         "PLACEMENTMODE" : "Put the hives in 'displacement' mode",

@@ -62,6 +62,8 @@ export class DashboardComponent implements OnInit {
     this.myNotifierService.setLang(this.login.getCountry() ? this.login.getCountry() : 'EN');
     this.messagesService.setLang(this.login.getCountry() ? this.login.getCountry() : 'EN');
     this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
+      console.log(this.login.getWizardActive());
+      console.log(this.rucherService.ruchers);
       if (this.rucherService.checkIfApiary()) {
         this.login.setWizardActive(false);
       }

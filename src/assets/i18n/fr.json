@@ -126,7 +126,7 @@
         "BACK" : "Sauvegarder l'image ?",
         "CHANGE" : "Sauvegarder",
         "CANCEL" : "Annuler",
-        "NODATA" : "",
+        "NODATA" : "-",
         "NOSENSORS" : "Pas de capteurs",
         "CLICK" : "Cliquez sur une ruche pour plus d'informations !",
         "PLACEMENTMODE" : "Mettre les ruches en mode 'déplacement'",
