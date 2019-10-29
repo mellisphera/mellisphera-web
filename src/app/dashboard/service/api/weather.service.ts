@@ -264,6 +264,8 @@ export class WeatherService {
           return 'Pluie';
         case 'Thunderstorm':
           return 'Orages';
+        case 'Shower snow':
+          return 'Averses de neige';
         case 'Snow':
           return 'Neige';
         case 'Mist/Gust':
