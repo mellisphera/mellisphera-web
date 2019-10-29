@@ -11,7 +11,7 @@ limitations under the License. */
 
 export interface AlertInterface {
     _id: string;
-    idUser : string;
+    userId : string;
     user: string;
     apiary: string;
     apiaryId:string;
