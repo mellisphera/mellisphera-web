@@ -779,7 +779,7 @@ export class GraphGlobal {
       case 'ALERT':
         tooltip.formatter = (params) => {
           const dataByDateTooltip = extraData.filter(_filter => {
-            return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.date)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
+            return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.opsDate)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
           });
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
             let type = 'Notif';
@@ -789,7 +789,7 @@ export class GraphGlobal {
               img = '<img style={S} src={I} />';
               img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
             } else {
-              img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
+              img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.icon + '.svg />';
             }
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
             return {

@@ -238,7 +238,7 @@ export class AlertsComponent implements OnInit {
               if (dataByDate !== undefined && dataByDate[0].description) {
                 group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].typeInspect, cellPoint));
               } else {
-                group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].type, cellPoint));
+                group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].icon, cellPoint));
               }
             }
             return group;

@@ -197,13 +197,13 @@ export class DailyManagerService {
 
   getSerieByData(data: Array<any>, nameSerie: string, serieTemplate: any, next: Function): void {
     let sensorRef: Array<string> = [];
+    console.log(data);
     data.forEach((_data) => {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, serieTemplate);
         if (nameSerie === 'gain' || nameSerie === 'loss') {
           serieTmp.name = nameSerie + '|' + _data.sensorRef;
-
         } else {
           serieTmp.name = _data.sensorRef;
         }
@@ -883,6 +883,7 @@ export class DailyManagerService {
       _data => {
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1]);
+        console.log(joinData);
         let option = Object.assign({}, this.baseOptionEnv);
         if (rangeChange) {
           option.calendar.range = range;
@@ -897,7 +898,7 @@ export class DailyManagerService {
                 type: 'group',
                 children: []
               };
-              const dataByDate: any[] = joinData.filter(_filter => this.graphGlobal.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.graphGlobal.getTimeStampFromDate(api.value(0)));
+              const dataByDate: any[] = joinData.filter(_filter => this.graphGlobal.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.opsDate)) === this.graphGlobal.getTimeStampFromDate(api.value(0)));
               if (dataByDate.length > 1) {
                 group.children.push({
                   type: 'rect',
@@ -929,10 +930,10 @@ export class DailyManagerService {
               } else if (dataByDate.length === 1) {
                 let icon;
                 if (dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
+                  group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].icon, cellPoint));
 
                 } else {
-                  group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].type, cellPoint));
+                  group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                   // icon = this.alertService.getPicto(dataByDate[0].type);
                 }
               }
@@ -953,6 +954,7 @@ export class DailyManagerService {
           }
           option.legend = Object.assign({}, BASE_OPTIONS.legend);
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
+            console.log(serieComplete);
             serieComplete.renderItem = (params, api) => {
               let cellPoint = api.coord(api.value(0));
               let cellWidth = params.coordSys.cellWidth;
@@ -962,7 +964,7 @@ export class DailyManagerService {
                 children: []
               };
               const dataByDate: any[] = joinData.filter(_filter => {
-                return this.graphGlobal.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.graphGlobal.getTimeStampFromDate(api.value(0));
+                return this.graphGlobal.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.opsDate)) === this.graphGlobal.getTimeStampFromDate(api.value(0));
               });
               if (dataByDate.length > 1) {
                 group.children.push({
@@ -994,9 +996,9 @@ export class DailyManagerService {
                 });
               } else if (dataByDate.length === 1) {
                 if (dataByDate !== undefined && dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
+                  group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].icon, cellPoint));
                 } else {
-                  group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].type, cellPoint));
+                  group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                 }
               }
               return group;
@@ -1166,7 +1168,7 @@ export class DailyManagerService {
    */
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.date, value: 0, sensorRef: _elt.description ? 'inspect' : 'notif' };
+      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'inspect' : 'notif' };
     });
   }
 

@@ -17,8 +17,8 @@ export interface AlertInterface {
     apiaryId:string;
     hiveId:string;
     hive:string;
-    type:string;
-    alert:string;
+    icon:string;
+    notif:string;
     message:string;
     date: Date;
     check:boolean;
