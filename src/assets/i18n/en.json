@@ -126,7 +126,7 @@
         "BACK" : "Save background?",
         "CHANGE" : "Save changes",
         "CANCEL" : "Cancel",
-        "NODATA" : "No data",
+        "NODATA" : "_",
         "NOSENSORS" : "No sensors",
         "CLICK" : "Click on a hive for more information !",
         "PLACEMENTMODE" : "Put the hives in 'displacement' mode",
@@ -210,7 +210,7 @@
             "NOSENSORS" : "There is no sensors for this hive."
         },
         "STOCK" : {
-            "NO_DATA" : "No data",
+            "NO_DATA" : "_",
             "STOCK" : "Honey Stock",
             "WEIGHT" :  "Daily weight income :"
         },

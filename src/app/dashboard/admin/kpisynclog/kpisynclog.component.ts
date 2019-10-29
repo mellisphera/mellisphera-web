@@ -44,6 +44,7 @@ export class KpisynclogComponent implements OnInit {
           autoPlay: true,
           width: '95%',
           left: 'center',
+          loop: false,
           inverse: false,
           playInterval: 1000,
           label: {

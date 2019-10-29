@@ -126,7 +126,7 @@
         "BACK" : "Sauvegarder l'image ?",
         "CHANGE" : "Sauvegarder",
         "CANCEL" : "Annuler",
-        "NODATA" : "Pas de données",
+        "NODATA" : "",
         "NOSENSORS" : "Pas de capteurs",
         "CLICK" : "Cliquez sur une ruche pour plus d'informations !",
         "PLACEMENTMODE" : "Mettre les ruches en mode 'déplacement'",
@@ -210,7 +210,7 @@
             "NOSENSORS" : "Vous n'avez pas de capteurs pour cette ruche."
         },
         "STOCK" : {
-            "NO_DATA" : "Pas de données",
+            "NO_DATA" : "_",
             "STOCK" : "Stock de miel",
             "WEIGHT" :  "Poids journaliers :"
         },

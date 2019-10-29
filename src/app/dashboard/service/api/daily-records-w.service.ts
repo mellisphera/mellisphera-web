@@ -335,9 +335,9 @@ export class DailyRecordsWService {
   public getWeightIncomeByHive(hiveId: string): any {
     const selectHive = this.dailyWeightRecords.filter(elt => elt.hiveId === hiveId)[0];
     if (this.unitSystem === 'METRIC') {
-      return selectHive !== undefined ? selectHive.weight_max + ' kg' : null;
+      return selectHive !== undefined ? this.unitService.getValRound(selectHive.weight_max) + ' kg' : null;
     } else {
-      return selectHive !== undefined ? selectHive.weight_max + ' lbs' : null;
+      return selectHive !== undefined ? this.unitService.getValRound(selectHive.weight_max) + ' lbs' : null;
     }
 
   }
@@ -352,7 +352,7 @@ export class DailyRecordsWService {
     previousDay.setDate(this.rangeDailyRecord.getDate() - 1);
     previousDay.setHours(23);
     previousDay.setMinutes(0);
-    tabDate = [previousDay, this.rangeDailyRecord];
+    tabDate = [previousDay, this.rangeDailyRecord]; 
     this.http.post<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/apiary/' + apiaryId, tabDate).subscribe(
       (data) => {
         if (data[0] != null) {

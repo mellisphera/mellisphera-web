@@ -154,6 +154,7 @@ export const SERIES = {
     xAxisIndex: 0,
     yAxisIndex: 0,
     data: [],
+    lineStyle: {},
     showSymbol: false,
     hoverAnimation: true,
     splitArea: {

@@ -80,6 +80,5 @@ export class AlertConfigurationComponent implements OnInit {
 
   onChageValue(value: number, alertId: string) {
     this.alertUser.alertConf[alertId].value = value;
-    console.log(this.alertUser.alertConf[alertId]);
   }
 }
