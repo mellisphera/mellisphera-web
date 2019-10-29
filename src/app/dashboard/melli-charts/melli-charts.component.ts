@@ -114,7 +114,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
                 this.rucherService.findRucherById(elt.apiaryId, (apiary: RucherModel[]) => {
                   elt.apiaryName = apiary[0].name;
                 });
-              }catch{}
+              } catch{}
             });
             return allHives;
           }).subscribe(

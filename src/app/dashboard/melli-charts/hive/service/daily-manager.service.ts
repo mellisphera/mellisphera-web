@@ -874,6 +874,7 @@ export class DailyManagerService {
   }
 
   getChartAlert(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    console.log(range);
     const obs: Array<Observable<any>> = [
       this.observationService.getObservationByHiveForMelliCharts(hiveId, range),
       this.alertService.getAlertByHiveMelliCharts(hiveId, range)

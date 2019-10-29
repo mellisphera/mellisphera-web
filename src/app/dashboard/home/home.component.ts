@@ -367,7 +367,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       let rucheUpdate = Object.assign({}, ruche);
       rucheUpdate.hivePosX = '' + this.position.x;
       rucheUpdate.hivePosY = '' + this.position.y;
+      console.log(event);
       if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
+        console.log(event);
         this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
           () => { }, () => { }, () => {
             // ruche.hivePosX = rucheUpdate.hivePosX;
@@ -746,6 +748,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   // Change the system for each hive. Switch between handle and fix position.
   changeHandleHive(id: string) {
+    console.log(id);
     if (id === 'handleHive') {
       //desactive the wrong system
       this.eltOnClickClass = document.getElementsByClassName('fixHive');
