@@ -33,8 +33,8 @@ limitations under the License. -->
               <tr>
                 <th scope="col">{{ 'SUMMARY.NAME' | translate}}</th>
                 <th scope="col">{{ 'SUMMARY.BROOD' | translate}}</th>
-                <th scope="col">{{ 'SUMMARY.BROODD3' | translate}}</th>
-                <th scope="col">{{ 'SUMMARY.BROODD7' | translate}}</th>
+  <!--               <th scope="col">{{ 'SUMMARY.BROODD3' | translate}}</th>
+                <th scope="col">{{ 'SUMMARY.BROODD7' | translate}}</th> -->
                 <th scope="col">{{ 'SUMMARY.WEIGHT' | translate}}</th>
                 <th scope="col">{{ 'SUMMARY.SENSORS' | translate}}</th>
                 <th scope="col">{{ 'SUMMARY.ALERTS' | translate}}</th>
@@ -43,26 +43,26 @@ limitations under the License. -->
             <tbody>
               <tr class="hoverStyle" *ngFor="let hive of alphaSort(rucheService.ruches); let i = index">
                 <td>{{hive.name}}</td>
-                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,0) != null">
-                  {{ this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,0) }}</td>
-                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,0) === null" class="center-text">
+                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive._id,0) != null">
+                  {{ this.dailyRecTh.getPourcentByHiveDayD3D7(hive._id,0) }}</td>
+<!--                 <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive._id,0) === null" class="center-text">
+                  - </td> -->
+<!--                 <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive._id,1) != null">
+                  {{ this.dailyRecTh.getPourcentByHiveDayD3D7(hive._id,1) }}</td>
+                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive._id,1) === null" class="center-text">
                   - </td>
-                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,1) != null">
-                  {{ this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,1) }}</td>
-                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,1) === null" class="center-text">
-                  - </td>
-                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,2) != null">
-                  {{ this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,2) }}</td>
-                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive.id,2) === null" class="center-text">
-                  - </td>
-                <td *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive.id) !== null">
-                  {{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightIncomeByHive(hive.id)) }}</td>
-                <td *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive.id) === null" class="center-text"> -
+                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive._id,2) != null">
+                  {{ this.dailyRecTh.getPourcentByHiveDayD3D7(hive._id,2) }}</td>
+                <td *ngIf="this.dailyRecTh.getPourcentByHiveDayD3D7(hive._id,2) === null" class="center-text">
+                  - </td> -->
+                <td *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive._id) !== null">
+                  {{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightIncomeByHive(hive._id)) }}</td>
+                <td *ngIf="dailyRecordWservice.getWeightIncomeByHive(hive._id) === null" class="center-text"> -
                 </td>
-                <td *ngIf="capteurService.getCapteursByHive(hive.id).length === 0" class="center-text"> -
+                <td *ngIf="capteurService.getCapteursByHive(hive._id).length === 0" class="center-text"> -
                 </td>
-                <td *ngIf="capteurService.getCapteursByHive(hive.id).length !== 0">
-                  <ng-container *ngFor="let capt of capteurService.getCapteursByHive(hive.id); let j = index">
+                <td *ngIf="capteurService.getCapteursByHive(hive._id).length !== 0">
+                  <ng-container *ngFor="let capt of capteurService.getCapteursByHive(hive._id); let j = index">
                     <ng-container *ngIf="j === 0">
                       {{ capt }}
                     </ng-container>
@@ -73,14 +73,14 @@ limitations under the License. -->
                 </td>
                 <td>
                   <ng-container
-                    *ngIf="alertsService.alertsByHiveByApiary.get(hive.id) !== undefined && getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm).length > 0">
+                    *ngIf="alertsService.alertsByHiveByApiary.get(hive._id) !== undefined && getElementsInDate(alertsService.alertsByHiveByApiary.get(hive._id),nbDaysHivesForm).length > 0">
                     <ng-container
-                      *ngFor="let hiveAlert of getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm)">
+                      *ngFor="let hiveAlert of getElementsInDate(alertsService.alertsByHiveByApiary.get(hive._id),nbDaysHivesForm)">
                       <img [src]="hiveAlert.picto" class="picto">
                     </ng-container>
                   </ng-container>
                   <ng-container
-                    *ngIf="alertsService.alertsByHiveByApiary.get(hive.id) === undefined || getElementsInDate(alertsService.alertsByHiveByApiary.get(hive.id),nbDaysHivesForm).length === 0"
+                    *ngIf="alertsService.alertsByHiveByApiary.get(hive._id) === undefined || getElementsInDate(alertsService.alertsByHiveByApiary.get(hive._id),nbDaysHivesForm).length === 0"
                     class="center-text">
                     -
                   </ng-container>

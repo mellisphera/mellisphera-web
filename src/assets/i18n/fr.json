@@ -127,7 +127,7 @@
         "CHANGE" : "Sauvegarder",
         "CANCEL" : "Annuler",
         "NODATA" : "-",
-        "NOSENSORS" : "Pas de capteurs",
+        "NOSENSORS" : "-    ",
         "CLICK" : "Cliquez sur une ruche pour plus d'informations !",
         "PLACEMENTMODE" : "Mettre les ruches en mode 'déplacement'",
         "CLICKMODE" : "Mettre les ruches en mode 'clic'",

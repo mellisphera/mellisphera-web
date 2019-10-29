@@ -127,7 +127,7 @@
         "CHANGE" : "Save changes",
         "CANCEL" : "Cancel",
         "NODATA" : "-",
-        "NOSENSORS" : "No sensors",
+        "NOSENSORS" : "-",
         "CLICK" : "Click on a hive for more information !",
         "PLACEMENTMODE" : "Put the hives in 'displacement' mode",
         "CLICKMODE" : "Put the hives in 'click' mode",
