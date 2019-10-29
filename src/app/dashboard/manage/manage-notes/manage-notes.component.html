@@ -24,8 +24,8 @@ limitations under the License. -->
                     <div class="panel-body">
                         <button data-toggle="tooltip" data-html="true" (click)="newNoteInit()"
                             title="{{ 'NOTES.FORM.NEW' | translate}}" data-toggle="modal"
-                            style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newNote"
-                            class="btn btn-success">
+                            style="margin-left: 98%; padding: 0;border: none;" data-target="#newNote"
+                            class="btn btn-success btn_create">
                             <i class="fa fa-plus fa-2x"></i>
                         </button>
                         <div class="form-group row">
@@ -71,17 +71,17 @@ limitations under the License. -->
                                             <button data-toggle="tooltip" data-html="true"
                                                 title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal"
                                                 type="button" (click)="editNoteInit(note)" data-target="#editNote"
-                                                class="btn btn-primary"
-                                                style="padding: 1;border: none; background: none;">
+                                                class="btn btn-primary btn_edit"
+                                                style="padding: 1;border: none;">
                                                 <i class="fa fa-edit fa-2x"></i>
                                             </button>
-                                            <button type="button" class="btn btn-warning"
+                                            <button type="button" class="btn btn-warning btn_delete"
                                                 title="{{ 'NOTES.FORM.DELETE' | translate}}" mwlConfirmationPopover
                                                 popoverTitle="{{ 'NOTES.FORM.DELETE_ASK' | translate}}"
                                                 confirmText="{{ 'NOTES.FORM.CONFIRM' | translate}}"
                                                 cancelText="{{ 'NOTES.FORM.CANCEL' | translate}}" placement="top"
                                                 (confirm)="deleteNote(note)"
-                                                style="padding: 1;border: none; background: none;">
+                                                style="padding: 1;border: none;">
                                                 <i class="fa fa-times fa-2x"></i>
                                             </button>
                                         </td>
@@ -109,8 +109,8 @@ limitations under the License. -->
                     <div class="panel-body">
                         <button data-toggle="tooltip" data-html="true" (click)="newNoteInit()"
                             title="{{ 'NOTES.FORM.NEW' | translate}}" data-toggle="modal"
-                            style="margin-left: 98%; padding: 0;border: none; background: none;" data-target="#newNote"
-                            class="btn btn-success">
+                            style="margin-left: 98%; padding: 0;border: none;" data-target="#newNote"
+                            class="btn btn-success btn_create">
                             <i class="fa fa-plus fa-2x"></i>
                         </button>
                         <div class="form-group row">
@@ -162,17 +162,17 @@ limitations under the License. -->
                                             <button data-toggle="tooltip" data-html="true"
                                                 title="{{ 'NOTES.FORM.EDIT' | translate}}" data-toggle="modal"
                                                 type="button" (click)="editNoteInit(note)" data-target="#editNote"
-                                                class="btn btn-primary"
-                                                style="padding: 1;border: none; background: none;">
+                                                class="btn btn-primary btn_create"
+                                                style="padding: 1;border: none">
                                                 <i class="fa fa-edit fa-2x"></i>
                                             </button>
-                                            <button type="button" class="btn btn-warning"
+                                            <button type="button" class="btn btn-warning btn_delete"
                                                 title="{{ 'NOTES.FORM.DELETE' | translate}}" mwlConfirmationPopover
                                                 popoverTitle="{{ 'NOTES.FORM.DELETE_ASK' | translate}}"
                                                 confirmText="{{ 'NOTES.FORM.CONFIRM' | translate}}"
                                                 cancelText="{{ 'NOTES.FORM.CANCEL' | translate}}" placement="top"
                                                 (confirm)="deleteNote(note)"
-                                                style="padding: 1;border: none; background: none;">
+                                                style="padding: 1;border: none;">
                                                 <i class="fa fa-times fa-2x"></i>
                                             </button>
                                         </td>

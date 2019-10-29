@@ -44,6 +44,7 @@ export class ManageNotesComponent implements OnInit {
   noteInitialList: string;
   noteNewList: string;
 
+  newNoteType: string;
   constructor(
     public observationService: ObservationService,
     private userService: UserloggedService,
@@ -60,14 +61,13 @@ export class ManageNotesComponent implements OnInit {
   ngOnInit() {
     this.observationService.getObservationByUserId(this.userService.getIdUserLoged()).subscribe(_notes => {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-        this.observationService.observationsApiaryUser = (_notes.filter(note => note.typeInspect === 'ApiaryObs')).sort((a, b) => {
+        this.observationService.observationsApiaryUser = (_notes.filter(note => note.type === 'apiary')).sort((a, b) => {
           return this.getApiaryNameByID(a.apiaryId).localeCompare(this.getApiaryNameByID(b.apiaryId));
         });
-        console.log(this.observationService.observationsApiaryUser);
       });
       this.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
         this.rucheService.ruchesAllApiary = ruches;
-        this.observationService.observationsHiveUser = (_notes.filter(note => (note.typeInspect === 'HiveObs') || (note.typeInspect === 'HiveAct'))).sort((a, b) => {
+        this.observationService.observationsHiveUser = (_notes.filter(note => (note.type === 'hive') || (note.typeInspect === 'HiveAct'))).sort((a, b) => {
           return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
         });
       });
@@ -174,7 +174,7 @@ export class ManageNotesComponent implements OnInit {
 
   // ###################      CREATE      ###################
 
-  newNoteInit() {
+  newNoteInit(type: string) {
     // Apiary init
     this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
 
@@ -205,6 +205,10 @@ export class ManageNotesComponent implements OnInit {
       const formValue = this.NoteForm.value;
       this.newObs = formValue;
       this.newObs.typeInspect = 'HiveObs';
+      this.newObs.type = 'hive';
+      this.newObs.opsDate = formValue.date;
+      this.newObs.createDate = new Date();
+      this.newObs.description = formValue.sentence;
       this.newObs.hiveId = this.hiveNoteSelect._id;
       this.newObs.userId = this.userService.getIdUserLoged();
       this.NoteForm.reset();
@@ -237,6 +241,10 @@ export class ManageNotesComponent implements OnInit {
       this.newObs = formValue;
       this.newObs.typeInspect = 'HiveAct';
       this.newObs.hiveId = this.hiveNoteSelect._id;
+      this.newObs.description = formValue.sentence;
+      this.newObs.type = 'hive';
+      this.newObs.opsDate = formValue.date;
+      this.newObs.createDate = new Date();
       this.newObs.userId = this.userService.getIdUserLoged();
       this.NoteForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
@@ -267,6 +275,10 @@ export class ManageNotesComponent implements OnInit {
       const formValue = this.NoteForm.value;
       this.newObs = formValue;
       this.newObs.typeInspect = 'ApiaryObs';
+      this.newObs.type = 'hive';
+      this.newObs.opsDate = formValue.date;
+      this.newObs.description = formValue.sentence;
+      this.newObs.createDate = new Date();
       this.newObs.apiaryId = this.rucherService.rucherSelectUpdate._id;
       this.newObs.userId = this.userService.getIdUserLoged();
       this.NoteForm.reset();

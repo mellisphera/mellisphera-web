@@ -34,17 +34,19 @@ limitations under the License. -->
       <table class="table">
         <tbody>
           <tr class="hoverStyle" *ngFor="let obs of observationService.observationsApiary; let i = index;">
-            <td style="width: 100px;">{{ obs.createDate | myDate }}</td>
-            <td>{{ obs.description }}</td>
-            <td class="text-right" style="width: 80px;">
-              <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.EDIT' | translate}}"
-                data-toggle="modal" type="button" data-target="#editObservationModal"
-                [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
-                (click)="onSelectObs(obs)" class="btn btn-primary btn_edit"
-                style="padding: 10;border: none;margin-right: -5px;">
-                <i class="fa fa-edit fa-2x"></i>
-              </button>
-            </td>
+            <ng-container *ngIf="obs.type === 'apiary'">
+                <td style="width: 100px;">{{ obs.createDate | myDate }}</td>
+                <td>{{ obs.description }}</td>
+                <td class="text-right" style="width: 80px;">
+                  <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.EDIT' | translate}}"
+                    data-toggle="modal" type="button" data-target="#editObservationModal"
+                    [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
+                    (click)="onSelectObs(obs)" class="btn btn-primary btn_edit"
+                    style="padding: 10;border: none;margin-right: -5px;">
+                    <i class="fa fa-edit fa-2x"></i>
+                  </button>
+                </td>
+            </ng-container>
           </tr>
         </tbody>
       </table>

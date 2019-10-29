@@ -213,6 +213,7 @@ export class ObservationService {
   }
   
   getPictoInspect(typeInspect: string, cellPoint: Array<number>) {
+    console.log(typeInspect);
     return INSPECTIONS.HiveAct.map(_path => {
       return  {
           type: 'path',

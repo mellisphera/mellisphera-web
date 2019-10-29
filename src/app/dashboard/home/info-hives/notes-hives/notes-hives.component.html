@@ -33,9 +33,9 @@ limitations under the License. -->
       <table class="table">
         <tbody>
           <ng-container *ngFor="let hiveObs of observationService.observationsHive; index as i">
-            <ng-container *ngIf="hiveObs.typeInspect =='HiveObs'">
+            <ng-container *ngIf="hiveObs.typeInspect =='HiveObs' && hiveObs.type === 'hive'">
               <tr class="hoverStyle">
-                <td style="width: 100px;">{{ hiveObs.createDate | myDate }}</td>
+                <td style="width: 100px;">{{ hObs.createDate | myDate }}</td>
                 <td>{{hiveObs.description}}</td>
                 <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}</td> -->
                 <td class="text-right" style="width: 80px;">
@@ -50,7 +50,7 @@ limitations under the License. -->
 
               </tr>
             </ng-container>
-            <ng-container *ngIf="hiveObs.typeInspect =='HiveAct'">
+            <ng-container *ngIf="hiveObs.typeInspect =='HiveAct' && hiveObs.type === 'hive'">
               <tr class="hoverStyle" style="color: blue;">
                 <td style="width: 100px;">{{hiveObs.createDate | myDate}}</td>
                 <td>{{hiveObs.description}}</td>

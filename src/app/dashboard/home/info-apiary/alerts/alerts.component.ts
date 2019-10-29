@@ -147,7 +147,7 @@ export class AlertsComponent implements OnInit {
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.date, value: 0, sensorRef: _elt.sentence ? 'Inspections' : 'Notifications' }
+      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description !== null ? 'Inspections' : 'Notifications' }
     });
   }
 
@@ -166,8 +166,8 @@ export class AlertsComponent implements OnInit {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
             return [_map.date, _map.value, _map.sensorRef];
           });
+          console.log(serieTmp);
         } else {
-
           serieTmp.data = data;
         }
         next(serieTmp);
@@ -182,14 +182,16 @@ export class AlertsComponent implements OnInit {
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
+        console.log(_data);
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
-        const joinData = _data[0].concat(_data[1])
+        const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.option);
         option.series = new Array();
         option.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
         option.legend.top = 30;
         option.legend.selectedMode = 'multiple';
         this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
+          console.log(serieComplete);
           serieComplete.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
@@ -199,8 +201,9 @@ export class AlertsComponent implements OnInit {
               children: []
             };
             const dataByDate: any[] = joinData.filter(_filter => {
-              return this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.getTimeStampFromDate(api.value(0));
+              return this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.opsDate)) === this.getTimeStampFromDate(api.value(0));
             });
+            console.log(dataByDate);
             if (dataByDate.length >= 1) {
               group.children.push({
                 type: 'rect',
@@ -232,8 +235,8 @@ export class AlertsComponent implements OnInit {
                 position: [cellPoint[0], cellPoint[1]],
               });
             } else if (dataByDate.length === 1) {
-              if (dataByDate !== undefined && dataByDate[0].sentence) {
-                group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
+              if (dataByDate !== undefined && dataByDate[0].description) {
+                group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].typeInspect, cellPoint));
               } else {
                 group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].type, cellPoint));
               }
@@ -317,22 +320,22 @@ export class AlertsComponent implements OnInit {
     tooltip.formatter = (params) => {
       if(params.data[3] !== 'OK'){
       const dataByDateTooltip = extraData.filter(_filter => {
-        return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.date)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
+        return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.opsDate)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
       });
       return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
         let type = 'Notif';
         let img = '';
-        if (_singleData.sentence) {
+        if (_singleData.description) {
           type = 'Inspection';
           img = '<img style={S} src={I} />';
           img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
         } else {
-          img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
+          img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.typeInspect + '.svg />';
         }
         img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
         return {
           name: img,
-          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.sentence) : this.sliceTextToolip(_singleData.message),
+          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.sliceTextToolip(_singleData.message),
           unit: ''
         }
       }));
