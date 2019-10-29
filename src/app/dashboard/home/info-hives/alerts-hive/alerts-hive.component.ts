@@ -180,7 +180,7 @@ export class AlertsHiveComponent implements OnInit {
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.date, value: 0, sensorRef: _elt.description ? 'Inspections' : 'Notifications' }
+      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'Inspections' : 'Notifications' }
     });
   }
 
@@ -211,7 +211,7 @@ export class AlertsHiveComponent implements OnInit {
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
-        const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
+        const dateJoin = this.joinObservationAlert(_data[0], _data[1].filter(_elt => _elt.type === 'hive'));
         const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.option);
         option.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
@@ -229,7 +229,7 @@ export class AlertsHiveComponent implements OnInit {
               children: []
             };
             const dataByDate: any[] = joinData.filter(_filter => {
-              return this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.getTimeStampFromDate(api.value(0));
+              return this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.opsDate)) === this.getTimeStampFromDate(api.value(0));
             });
             if (dataByDate.length >= 1) {
               group.children.push({
@@ -263,7 +263,7 @@ export class AlertsHiveComponent implements OnInit {
               });
             } else if (dataByDate.length === 1) {
               if (dataByDate !== undefined && dataByDate[0].description) {
-                group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].type, cellPoint));
+                group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].typeInspect, cellPoint));
 
               } else {
                 group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].type, cellPoint));
@@ -353,7 +353,7 @@ export class AlertsHiveComponent implements OnInit {
     tooltip.formatter = (params) => {
       if(params.data[3] !== 'OK'){
       const dataByDateTooltip = extraData.filter(_filter => {
-        return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.date)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
+        return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.opsDate)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
       });
       return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
         let type = 'Notif';

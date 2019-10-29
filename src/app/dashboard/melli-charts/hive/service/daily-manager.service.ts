@@ -897,23 +897,23 @@ export class DailyManagerService {
                 type: 'group',
                 children: []
               };
-              group.children.push({
-                type: 'rect',
-                z2: 0,
-                shape: {
-                  x: -cellWidth / 2,
-                  y: -cellHeight / 2,
-                  width: cellWidth,
-                  height: cellHeight,
-                },
-                position: [cellPoint[0], cellPoint[1]],
-                style: {
-                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
-                  stroke: 'black'
-                }
-              });
               const dataByDate: any[] = joinData.filter(_filter => this.graphGlobal.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.graphGlobal.getTimeStampFromDate(api.value(0)));
               if (dataByDate.length > 1) {
+                group.children.push({
+                  type: 'rect',
+                  z2: 0,
+                  shape: {
+                    x: -cellWidth / 2,
+                    y: -cellHeight / 2,
+                    width: cellWidth,
+                    height: cellHeight,
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                  style: {
+                    fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                    stroke: 'black'
+                  }
+                });
                 group.children.push({
                   type: 'path',
                   z2: 1000,
@@ -961,25 +961,25 @@ export class DailyManagerService {
                 type: 'group',
                 children: []
               };
-              group.children.push({
-                type: 'rect',
-                z2: 0,
-                shape: {
-                  x: -cellWidth / 2,
-                  y: -cellHeight / 2,
-                  width: cellWidth,
-                  height: cellHeight,
-                },
-                position: [cellPoint[0], cellPoint[1]],
-                style: {
-                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
-                  stroke: 'black'
-                }
-              });
               const dataByDate: any[] = joinData.filter(_filter => {
                 return this.graphGlobal.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.date)) === this.graphGlobal.getTimeStampFromDate(api.value(0));
               });
               if (dataByDate.length > 1) {
+                group.children.push({
+                  type: 'rect',
+                  z2: 0,
+                  shape: {
+                    x: -cellWidth / 2,
+                    y: -cellHeight / 2,
+                    width: cellWidth,
+                    height: cellHeight,
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                  style: {
+                    fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                    stroke: 'black'
+                  }
+                });
                 group.children.push({
                   type: 'path',
                   z2: 1000,

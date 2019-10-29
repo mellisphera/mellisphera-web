@@ -183,7 +183,7 @@ export class AlertsComponent implements OnInit {
     Observable.forkJoin(obs).subscribe(
       _data => {
         console.log(_data);
-        const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
+        const dateJoin = this.joinObservationAlert(_data[0].filter(_elt => _elt.type === 'apiary'), _data[1]);
         const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.option);
         option.series = new Array();
@@ -353,6 +353,9 @@ export class AlertsComponent implements OnInit {
   }
 
   sliceTextToolip(text: string): string {
+    if (text === undefined) {
+      text = '';
+    }
     let originString: string = text;
     let newString: string;
     while(originString.length >= 100) {

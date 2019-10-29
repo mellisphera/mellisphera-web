@@ -942,7 +942,11 @@ export class GraphGlobal {
   getDaySerie(): any {
     let newSerie = Object.assign({}, SERIES.custom);
     newSerie.name = 'thisDay';
-    newSerie.data = [ [new Date(), 0, 'OK', 'OK']];
+    const dayDate = new Date();
+    dayDate.setHours(0);
+    dayDate.setMinutes(0);
+    dayDate.setSeconds(0);
+    newSerie.data = [ [dayDate, 0, 'OK', 'OK']];
     newSerie.renderItem = (params, api) => {
       let cellPoint = api.coord(api.value(0));
       let cellWidth = params.coordSys.cellWidth;
