@@ -83,7 +83,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           {name: 'Hives', path: 'hive' },
           { name: 'Brood chart', path: 'brood' },
 /*           { name: 'Swarm Map', path: 'map' },
- */          { name: 'measurements', path: 'stack' }
+ */          { name: 'Measurements', path: 'stack' }
         ];
       }
 

@@ -127,8 +127,9 @@ export class ObservationService {
     return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + hiveId, this.rangeObs).subscribe(
       _obs => {
         this.observationsHive = _obs.sort((a: Observation, b: Observation) => {
-          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+          return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
         });
+        console.log(this.observationsHive);
         this.emitHiveSubject();
       }
     );
