@@ -255,6 +255,17 @@ export class AlertsService {
         return this.http.put<AlertInterface>(CONFIG.URL + 'alertSend/update/' + idAlert , boolean, httpOptions);
     }
 
+    /**
+     *
+     *
+     * @param {AlertUser} alertConf
+     * @returns {Observable<AlertUser>}
+     * @memberof AlertsService
+     */
+    updateAlertConf(alertConf: AlertUser): Observable<AlertUser> {
+        return this.http.put<AlertUser>(CONFIG.URL + 'alertsConf/update', alertConf);
+    }
+
     // Here there are all the alerts pictos
     getPicto(nomPicto: string, cellPoint: Array<number>): Array<Object> {
         try {

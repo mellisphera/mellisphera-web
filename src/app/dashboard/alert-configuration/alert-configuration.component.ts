@@ -16,6 +16,9 @@ import { AlertsService } from '../service/api/alerts.service';
 import { UserloggedService } from '../../userlogged.service';
 import { AlertUser } from '../../_model/alertUser';
 import { AlertCat } from '../../_model/alertCat';
+import { UserParamsService } from '../preference-config/service/user-params.service';
+import { MyNotifierService } from '../service/my-notifier.service';
+import { NotifList } from '../../../constants/notify';
 
 @Component({
   selector: 'app-alert-configuration',
@@ -24,7 +27,11 @@ import { AlertCat } from '../../_model/alertCat';
 })
 export class AlertConfigurationComponent implements OnInit {
 
-  constructor(private alertService: AlertsService, private userServuce: UserloggedService) { }
+  constructor(
+    private alertService: AlertsService,
+    private userServuce: UserloggedService,
+    private notifService: MyNotifierService,
+    private userPrefService: UserParamsService) { }
 
   public alertType: AlertCat[];
 
@@ -33,6 +40,7 @@ export class AlertConfigurationComponent implements OnInit {
     this.alertService.getAllTypeAlerts().subscribe(
       _alerts => {
         this.alertType = _alerts;
+        console.log(this.alertType);
       }
     );
     this.alertService.getAlertConfByUser(this.userServuce.getIdUserLoged()).subscribe(
@@ -49,6 +57,39 @@ export class AlertConfigurationComponent implements OnInit {
     } catch {}
   }
 
+  /**
+   *
+   *
+   * @param {string} alertId
+   * @returns {number[]}
+   * @memberof AlertConfigurationComponent
+   */
+  getRangeValue(alertId: string): number[] {
+    try {
+      if (this.isMetric()) {
+        return this.alertType.filter(_alert => _alert._id === alertId)[0].rangeValueMet;
+      } else {
+        return this.alertType.filter(_alert => _alert._id === alertId)[0].rangeValueImp;
+      }
+    } catch {}
+  }
+
+  /**
+   *
+   *
+   * @param {string} alertId
+   * @returns {number}
+   * @memberof AlertConfigurationComponent
+   */
+  getStep(alertId: string): number {
+    try {
+      if (this.isMetric()) {
+        return this.alertType.filter(_alert => _alert._id === alertId)[0].stepMet;
+      } else {
+        return this.alertType.filter(_alert => _alert._id === alertId)[0].stepImp;
+      }
+    } catch {}
+  }
   isAlterable(alertId: string): boolean {
     try {
       return this.alertType.filter(_alert => _alert._id === alertId)[0].alterable;
@@ -57,7 +98,11 @@ export class AlertConfigurationComponent implements OnInit {
 
   getUserValue(alertId: string): number {
     try {
-      return this.alertUser.alertConf[alertId].value;
+      if (this.isMetric()) {
+      return  this.alertUser.alertConf[alertId].valueMet;
+      } else {
+      return  this.alertUser.alertConf[alertId].valueImp;
+      }
     } catch {}
   }
 
@@ -66,6 +111,7 @@ export class AlertConfigurationComponent implements OnInit {
 
     })
   } */
+  
   onEnable(alertId: string): void {
     if (!this.alertUser.alertConf[alertId].enable) {
       this.alertUser.alertConf[alertId].enable = true;
@@ -79,6 +125,29 @@ export class AlertConfigurationComponent implements OnInit {
   }
 
   onChageValue(value: number, alertId: string) {
-    this.alertUser.alertConf[alertId].value = value;
+    if (this.isMetric()) {
+      this.alertUser.alertConf[alertId].valueMet = value;
+    } else {
+      this.alertUser.alertConf[alertId].valueImp = value;
+    }
+  }
+
+  onSave() {
+    this.alertService.updateAlertConf(this.alertUser).subscribe(
+      _res => {
+        this.notifService.sendSuccessNotif(NotifList.SAVE_ALERT_CONF);
+      }
+    )
+  }
+
+/**
+ *
+ *
+ * @returns {boolean}
+ * @memberof AlertConfigurationComponent
+ */
+isMetric(): boolean {
+    return this.userPrefService.getUserPref().unitSystem === 'METRIC';
   }
 }
+

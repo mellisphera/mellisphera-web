@@ -29,12 +29,12 @@ limitations under the License. -->
       <tbody>
         <tr [class]="(isEnable(alert._id) ? 'enable' : 'disable')" *ngFor="let alert of alertType">
           <th scope="row">
-            <img width="30px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.type + '.png'">
+            <img width="30px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
             {{ alert.type }}
           </th>
           <td>
             <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)" >
-                <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range" [min]="alert.rangeValue[0]" [max]="alert.rangeValue[1]" step="1" [value]="getUserValue(alert._id)" />
+                <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range" [min]="getRangeValue(alert._id)[0]" [max]="getRangeValue(alert._id)[1]" [step]="getStep(alert._id)" [value]="getUserValue(alert._id)" />
                 <p>{{ getUserValue(alert._id) }}</p>
             </div>
           </td>
@@ -56,7 +56,7 @@ limitations under the License. -->
 
     
     <div class="text-center">
-      <button type="button" class="btn btn-primary">Save modification</button>
+      <button type="button" (click)="onSave()" class="btn btn-primary">Save modification</button>
     </div>
     
 

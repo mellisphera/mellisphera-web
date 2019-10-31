@@ -57,7 +57,6 @@ export class MyNotifierService {
    * @memberof MyNotifierService
    */
   sendWarningNotif(msg: NotifList): void {
-    console.log(msg);
     this.notif.notify(WARNING, NOTIF_MSG.FAIL[this.currentLang][msg]);
   }
 

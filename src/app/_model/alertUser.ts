@@ -16,7 +16,7 @@ export interface AlertUser {
     userId: string;
     alertConf: Map<string, {
         enable: boolean,
-        value: number,
-        alterable: boolean
+        valueMet: number,
+        valueImp: number
     }>
 }

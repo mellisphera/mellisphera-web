@@ -1,10 +1,15 @@
 export interface AlertCat {
-    _id: string;
-    type: string;
+    _id: string
+    icon: string
     alterable: boolean;
     disable: boolean;
-    basicValue: number;
+    basicValueMet: number;
+    basicValueImp: number;
     priority: number;
-    rangeValue: number[];
-    unite: string;
+    rangeValueMet: number[];
+    rangeValueImp: number[];
+    stepMet: number;
+    stepImp: number;
+    unitMet: string;
+    unitImp: string;
 }

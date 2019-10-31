@@ -20,6 +20,8 @@ export interface AlertInterface {
     icon:string;
     notif:string;
     message:string;
+    code: string;
+    sensorRef: string;
     date: Date;
     check:boolean;
     picto:string;
