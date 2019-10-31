@@ -21,6 +21,7 @@ import { SearchCapteur } from '../../pipe/capteur.pipe';
 import { PipeCapteur } from '../../pipe/capteur.pipe';
 import { PipeObservation } from '../../pipe/observation.pipe';
 import { ngfModule } from 'angular-file';
+import {PopoverModule} from "ngx-smart-popover";
 
 
 
@@ -38,6 +39,7 @@ import { ngfModule } from 'angular-file';
     NgxEchartsModule,
     PipeCapteur,
     PipeObservation,
+    PopoverModule,
     MyDatePipe,
     SearchCapteur,
   ],

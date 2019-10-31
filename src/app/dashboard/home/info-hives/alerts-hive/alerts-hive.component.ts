@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { AlertsService } from '../../../service/api/alerts.service';
 import { RucherService } from '../../../service/api/rucher.service';
 import { AlertInterface } from '../../../../_model/alert';
@@ -20,12 +20,7 @@ import { DailyRecordService } from '../../../service/api/dailyRecordService' //A
 import { MyDate } from '../../../../class/MyDate';
 import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
-import { isUndefined } from 'util';
-import { type } from 'os';
-import { position } from 'html2canvas/dist/types/css/property-descriptors/position';
-import { reduce } from 'rxjs-compat/operator/reduce';
 import { RucheInterface } from '../../../../_model/ruche';
-import { PassThrough } from 'stream';
 import { Observable } from 'rxjs';
 import { MyNotifierService } from '../../../service/my-notifier.service';
 import { NotifList } from '../../../../../constants/notify';
@@ -33,13 +28,15 @@ import { ObservationService } from '../../../service/api/observation.service';
 import { BASE_OPTIONS } from '../../../melli-charts/charts/BASE_OPTIONS';
 import { SERIES } from '../../../melli-charts/charts/SERIES';
 import { GLOBAL_ICONS } from '../../../melli-charts/charts/icons/icons';
+import * as echarts from 'echarts';
+
 
 @Component({
   selector: 'app-alerts-hive',
   templateUrl: './alerts-hive.component.html',
   styleUrls: ['./alerts-hive.component.css']
 })
-export class AlertsHiveComponent implements OnInit {
+export class AlertsHiveComponent implements OnInit, OnDestroy {
 
   option: any;
   private img: string;
@@ -62,6 +59,7 @@ export class AlertsHiveComponent implements OnInit {
     private renderer: Renderer2,
     private myNotifer: MyNotifierService,
     private observationService: ObservationService) {
+      this.echartInstance = null;
     this.img = 'M581.176,290.588C581.176,130.087,451.09,0,290.588,0S0,130.087,0,290.588s130.087,290.588,290.588,290.588' +
               'c67.901,0,130.208-23.465,179.68-62.476L254.265,302.696h326.306C580.716,298.652,581.176,294.681,581.176,290.588z' +
               'M447.99,217.941c-26.758,0-48.431-21.697-48.431-48.431s21.673-48.431,48.431-48.431c26.758,0,48.431,21.697,48.431,48.431' +
@@ -91,10 +89,10 @@ export class AlertsHiveComponent implements OnInit {
         [0.25,-0.05,-0.2,0.1,0.4],
         [0.3,0.3,-0.15,-0.15,-0.15]      ]
     ];
-    this.getOption();
+    this.cleanOption();
   }
 
-  getOption() {
+  cleanOption() {
     this.option = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
     this.option.title.text = this.graphGlobal.getTitle('AlertsHive');
     this.option.calendar.orient = 'horizontal';
@@ -104,6 +102,7 @@ export class AlertsHiveComponent implements OnInit {
     this.option.calendar.height = '45%';
     this.option.calendar.width = '77%';
     this.option.calendar.cellSize = ['20', '20'];
+    this.option.series = new Array();
     /*        top: 70,
         left: '15%',
         bottom: '3%',
@@ -115,21 +114,10 @@ export class AlertsHiveComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.alertsService.getAlertsByHive(this.rucheService.getCurrentHive()._id).subscribe(
-      _alert => {
-        this.alertsService.hiveAlerts = _alert;
-        this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))).subscribe(
-          _notes => {
-            if(_alert.length === 0 && _notes.length === 0){
-              this.hideCalendar();
-              this.initCalendar();
-            }else{
-              this.showCalendar();
-              this.initCalendar();
-            }
-          }
-        );
-      });
+    if (this.echartInstance == null) {
+      this.echartInstance = echarts.init(<HTMLDivElement>document.getElementById('graph'));
+      this.loadCalendar();
+    }
   }
 
   hideCalendar(){
@@ -153,29 +141,10 @@ export class AlertsHiveComponent implements OnInit {
   }
 
   initCalendar(hive?: RucheInterface){
-    if (hive) {
-      this.alertsService.getAlertsByHive(hive._id).subscribe(
-        _alert => {
-          this.alertsService.hiveAlerts = _alert;
-          this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))).subscribe(
-            _notes => {
-          if(_alert.length === 0 && _notes.length === 0){
-            this.hideCalendar();
-            this.cleanSerie();
-            this.getOption();
-            this.loadCalendar();
-          } else {
-          this.showCalendar();
-          this.cleanSerie();
-          this.getOption();
-          this.loadCalendar();
-          }
-        }
-      );
-    });
-    } else {
-      this.loadCalendar();
-    }
+    console.log('init');
+    this.echartInstance.clear();
+    this.cleanOption();
+    this.loadCalendar();
 }
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
@@ -185,11 +154,12 @@ export class AlertsHiveComponent implements OnInit {
   }
 
   getSerieByData(data: Array<any>, nameSerie: string, serieTemplate: any, next: Function): void {
-    let sensorRef: Array<string> = [];
+    console.log(data);
+    const sensorRef: Array<string> = [];
     data.forEach((_data) => {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
-        let serieTmp = Object.assign({}, serieTemplate);
+        const serieTmp = Object.assign({}, serieTemplate);
         serieTmp.name = _data.sensorRef;
         if (data.map(_elt => _elt.date)[0] !== undefined) {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
@@ -207,29 +177,32 @@ export class AlertsHiveComponent implements OnInit {
   loadCalendar() {
     const obs: Array<Observable<any>> = [
       this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))),
-      this.alertsService.getAlertByHiveMelliCharts(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt)))
+      this.alertsService.getAlertByHive(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts())
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
-        const dateJoin = this.joinObservationAlert(_data[0], _data[1].filter(_elt => _elt.type === 'hive'));
+        console.log(_data);
+        const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1]);
-        let option = Object.assign({}, this.option);
+        const option = Object.assign({}, this.option);
+        console.log(option);
         option.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
         option.legend.top = 30;
         option.legend.selectedMode = 'multiple';
         this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
+          console.log(serieComplete);
           serieComplete.renderItem = (params, api) => {
-            let cellPoint = api.coord(api.value(0));
-            let cellWidth = params.coordSys.cellWidth;
-            let cellHeight = params.coordSys.cellHeight;
-            let group = {
+            const cellPoint = api.coord(api.value(0));
+            const cellWidth = params.coordSys.cellWidth;
+            const cellHeight = params.coordSys.cellHeight;
+            const group = {
               type: 'group',
               width: cellWidth,
               height: cellHeight,
               children: []
             };
-            const dataByDate: any[] = joinData.filter(_filter => {
-              return this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.opsDate)) === this.getTimeStampFromDate(api.value(0));
+            const dataByDate: any[] = joinData.filter((_filter: AlertInterface) => {
+              return MyDate.compareToDailyDate(_filter.opsDate, new Date(api.value(0)));
             });
             if (dataByDate.length >= 1) {
               group.children.push({
@@ -266,18 +239,18 @@ export class AlertsHiveComponent implements OnInit {
                 group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].typeInspect, cellPoint));
 
               } else {
-                group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].type, cellPoint));
+                group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].icon, cellPoint));
               }
             }
             return group;
           };
-          let newSerie = Object.assign({}, SERIES.custom);
+          const newSerie = Object.assign({}, SERIES.custom);
           newSerie.name = 'thisDay';
           newSerie.data = [ [new Date(), 0, 'OK', 'OK']];
           newSerie.renderItem = (params, api) => {
-            let cellPoint = api.coord(api.value(0));
-            let cellWidth = params.coordSys.cellWidth;
-            let cellHeight = params.coordSys.cellHeight;
+            const cellPoint = api.coord(api.value(0));
+            const cellWidth = params.coordSys.cellWidth;
+            const cellHeight = params.coordSys.cellHeight;
             return {
               type: 'rect',
               z2: 0 ,
@@ -316,6 +289,7 @@ export class AlertsHiveComponent implements OnInit {
 
   }
 
+
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '{*} <B>{D}</B> </br>';
     let templateValue = '{n}: <B>{v} {u}</B>';
@@ -349,12 +323,14 @@ export class AlertsHiveComponent implements OnInit {
   }
 
   getTooltipBySerie(extraData?: any[]): any {
+    console.log(extraData);
     const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
     tooltip.formatter = (params) => {
       if(params.data[3] !== 'OK'){
       const dataByDateTooltip = extraData.filter(_filter => {
-        return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.opsDate)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
+        return MyDate.compareToDailyDate(_filter.opsDate, new Date(params.data[0]));
       });
+      console.log(dataByDateTooltip);
       return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
         let type = 'Notif';
         let img = '';
@@ -363,12 +339,12 @@ export class AlertsHiveComponent implements OnInit {
           img = '<img style={S} src={I} />';
           img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
         } else {
-          img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.type + '.svg />';
+          img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.icon + '.svg />';
         }
         img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
         return {
           name: img,
-          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.sliceTextToolip(_singleData.message),
+          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertsService.getMessageAlertByCode(_singleData.code),
           unit: ''
         }
       }));
@@ -377,13 +353,16 @@ export class AlertsHiveComponent implements OnInit {
     return tooltip;
   }
   sliceTextToolip(text: string): string {
-    let originString: string = text;
-    let newString: string;
-    while(originString.length >= 100) {
-      newString += originString.slice(0, 100) + '<br/>';
-      originString = originString.replace(originString.slice(0, 100), '');
-    }
-    return (newString + originString).replace(/undefined/g, '');
+    try{
+      let originString = '';
+      originString = text;
+      let newString: string;
+      while(originString.length >= 100) {
+        newString += originString.slice(0, 100) + '<br/>';
+        originString = originString.replace(originString.slice(0, 100), '');
+      }
+      return (newString + originString).replace(/undefined/g, '');
+    } catch{}
   }
 
   
@@ -395,6 +374,7 @@ export class AlertsHiveComponent implements OnInit {
     date.setMilliseconds(0);
     return date.getTime();
     }
+
   onClickRead(alert: AlertInterface, i: number) {
     // Update in database
     this.alertsService.updateAlert(alert._id, true).subscribe(() => { }, () => { }, () => {
@@ -457,12 +437,12 @@ export class AlertsHiveComponent implements OnInit {
   }
 
   readAllHiveAlerts(hive : RucheInterface){
-      this.alertsService.getAlertsByHive(hive._id).subscribe(
+/*       this.alertsService.getAlertsByHive(hive._id).subscribe(
         _alert => {
           this.alertsService.hiveAlerts = _alert;
           this.onClickReadAll(this.alertsService.hiveAlerts);
         }
-      );
+      ); */
   }
 
   onClickNotReadAll(alertList: AlertInterface[]) {
@@ -489,8 +469,10 @@ export class AlertsHiveComponent implements OnInit {
     });
   }
 
-  onChartInit(event: any) {
-    this.echartInstance = event;
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    console.log('DESTROY');
   }
 
   checkChartInstance(): Promise<Boolean> {

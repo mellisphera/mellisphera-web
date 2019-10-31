@@ -74,9 +74,11 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     if (this.translateService.currentLang === 'fr') {
       this.translateService.use('en');
       this.userService.setCountry('en');
+      this.userPref.lang = 'FR-fr';
     } else {
       this.translateService.use('fr');
       this.userService.setCountry('fr');
+      this.userPref.lang = 'FR-fr';
     }
     this.userConfig.emitPrefSubject();
     // translateService.use('en')

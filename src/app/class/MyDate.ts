@@ -52,6 +52,18 @@ export class MyDate {
             return date;
         } catch{}
     }
+
+
+    static compareToDailyDate(dt1: Date, dt2: Date) {
+        const date1: Date = new Date(dt1);
+        const date2: Date = new Date(dt2);
+        const day1 = date1.getDate();
+        const day2 = date2.getDate();
+        return (day1 === day2) &&
+                (date1.getMonth() === date2.getMonth()) &&
+                (date1.getFullYear() === date2.getFullYear());
+    }
+
    static convertDate(date: Date){
         let jour = '' + date.getDate();
         let mois = '' + (date.getMonth() + 1);

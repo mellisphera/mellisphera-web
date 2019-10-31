@@ -21,25 +21,34 @@ limitations under the License. -->
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">Type</th>
-          <th scope="col">Value</th>
-          <th scope="col" class="text-right">Status</th>
+          <th scope="col">{{ 'ALERT_CONF_PAGE.TYPE' | translate}}</th>
+          <th scope="col"></th>
+          <th scope="col">{{ 'ALERT_CONF_PAGE.VALUE' | translate}}</th>
+          <th scope="col" class="text-right">{{ 'ALERT_CONF_PAGE.STATUS' | translate}}</th>
         </tr>
       </thead>
       <tbody>
-        <tr [class]="(isEnable(alert._id) ? 'enable' : 'disable')" *ngFor="let alert of alertType">
-          <th scope="row">
-            <img width="30px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
-            {{ alert.type }}
-          </th>
+        <tr [class]="(isEnable(alert._id) ? 'enable' : 'disable') + ' tr-items'" *ngFor="let alert of alertType">
+          <td scope="row">
+            <img width="50px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
+          </td>
           <td>
-            <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)" >
-                <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range" [min]="getRangeValue(alert._id)[0]" [max]="getRangeValue(alert._id)[1]" [step]="getStep(alert._id)" [value]="getUserValue(alert._id)" />
-                <p>{{ getUserValue(alert._id) }}</p>
+              <popover-content #myPopover title="{{ alert.icon }}" placement="right" [animation]="true"
+              [closeOnClickOutside]="false">
+              <span style="color: #C21F39">{{ getNotifDescriptionFromLangage(alert.icon) }}</span>
+            </popover-content>
+            <a [popover]="myPopover" style="font-size: 20px !important;" class="info-link"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+          </td>
+          <td>
+            <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
+              <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range"
+                [min]="getRangeValue(alert._id)[0]" [max]="getRangeValue(alert._id)[1]" [step]="getStep(alert._id)"
+                [value]="getUserValue(alert._id)" />
+              <p>{{ getUserValue(alert._id) }}</p>
             </div>
           </td>
           <td class="text-right">
-            <div class="btn-group" id="status" data-toggle="buttons">
+            <div class="btn-group" id="status" data-toggle="buttons" *ngIf="alert.disable">
               <label [class]="'btn btn-default btn-on ' + (isEnable(alert._id) ? 'active': '')"
                 (click)="onEnable(alert._id)">
                 <input type="radio" [disabled]="!isAlterable(alert._id)" value="1"
@@ -54,11 +63,11 @@ limitations under the License. -->
       </tbody>
     </table>
 
-    
+
     <div class="text-center">
-      <button type="button" (click)="onSave()" class="btn btn-primary">Save modification</button>
+      <button type="button" (click)="onSave()" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ 'ALERT_CONF_PAGE.SAVE' | translate }}</button>
     </div>
-    
+
 
 
     <!--       <ul class="list-group">

@@ -36,3 +36,6 @@ limitations under the License. */
     display: flex;
     justify-content: space-between;
 }
+.info-link{
+    font-size: 20px !important;
+}

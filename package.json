@@ -47,6 +47,7 @@
     "ng-pick-datetime": "^7.0.0",
     "ngx-echarts": "^4.2.1",
     "ngx-loading": "^3.0.1",
+    "ngx-smart-popover": "^1.1.0",
     "ngx-socket-io": "^3.0.1",
     "overlay": "^1.2.5",
     "rxjs": "^6.5.3",

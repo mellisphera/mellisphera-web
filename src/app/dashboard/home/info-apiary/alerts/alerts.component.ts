@@ -25,6 +25,7 @@ import { ObservationService } from '../../../service/api/observation.service';
 import { BASE_OPTIONS } from '../../../melli-charts/charts/BASE_OPTIONS';
 import { SERIES } from '../../../melli-charts/charts/SERIES';
 import { GLOBAL_ICONS } from '../../../melli-charts/charts/icons/icons';
+import * as echarts from 'echarts';
 
 @Component({
   selector: 'app-alerts',
@@ -86,7 +87,7 @@ export class AlertsComponent implements OnInit {
     ];
   }
 
-  getOption() {
+  clearOption() {
     this.option = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
     this.option.title.text = this.graphGlobal.getTitle('AlertsApiary') + ' ' + this.rucherService.rucher.name;
     this.option.calendar.orient = 'horizontal';
@@ -96,26 +97,15 @@ export class AlertsComponent implements OnInit {
     this.option.calendar.height = '45%';
     this.option.calendar.width = '77%';
     this.option.calendar.cellSize = [20, 20];
-    /*        top: 70,
-        left: '15%',
-        bottom: '3%',
-        height: '45%',
-        width: '77%',
-        range: MyDate.getRangeForCalendarAlerts(),
-        orient: 'horizontal',
-        cellSize: ['20', '20'], */
+    this.option.series = new Array();
   }
   ngOnInit() {
-    this.alertsService.getAlertsByApiaryObs(this.rucherService.getCurrentApiary()).subscribe(
-      _alert => {
-        this.alertsService.apiaryAlerts = _alert;
-        this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-          this.onClickReadAll(_alert);
-          this.initCalendar();
-        });
-
-      }
-    );
+    if (this.echartInstance == null) {
+      this.echartInstance = echarts.init(<HTMLDivElement>document.getElementById('notif-celendar'));
+      this.clearOption();
+      this.loadCalendar();
+      console.log('INIT ALERT APIAY');
+    }
   }
 
   cleanSerie(): void {
@@ -125,24 +115,8 @@ export class AlertsComponent implements OnInit {
   }
 
   initCalendar(isReload?: boolean){
-    if (isReload) {
-      this.alertsService.getAlertsByApiaryObs(this.rucherService.getCurrentApiary()).subscribe(
-        _alert => {
-          this.alertsService.apiaryAlerts = _alert;
-          this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-            if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-              this.onClickReadAll(_alert);
-            }
-            this.cleanSerie();
-            this.getOption();
-            this.loadCalendar();
-          });
-        }
-      );
-    } else {
-      this.getOption();
-      this.loadCalendar();
-    }
+     this.clearOption();
+    this.loadCalendar();
 }
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
@@ -156,7 +130,7 @@ export class AlertsComponent implements OnInit {
     this.echartInstance.setOption(this.option);
   }
   getSerieByData(data: Array<any>, nameSerie: string, serieTemplate: any, next: Function): void {
-    let sensorRef: Array<string> = [];
+    const sensorRef: Array<string> = [];
     data.forEach((_data) => {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
@@ -178,7 +152,7 @@ export class AlertsComponent implements OnInit {
   loadCalendar() {
     const obs: Array<Observable<any>> = [
       this.observationService.getObservationByapiaryIdForMelliUx(this.rucherService.getCurrentApiary()),
-      this.alertsService.getAlertsByApiaryObs(this.rucherService.getCurrentApiary())
+      this.alertsService.getAlertsByApiaryObs(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts())
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
@@ -191,7 +165,6 @@ export class AlertsComponent implements OnInit {
         option.legend.top = 30;
         option.legend.selectedMode = 'multiple';
         this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
-          console.log(serieComplete);
           serieComplete.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
@@ -201,7 +174,7 @@ export class AlertsComponent implements OnInit {
               children: []
             };
             const dataByDate: any[] = joinData.filter(_filter => {
-              return this.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.opsDate)) === this.getTimeStampFromDate(api.value(0));
+              return MyDate.compareToDailyDate(_filter.opsDate, api.value(0));
             });
             console.log(dataByDate);
             if (dataByDate.length >= 1) {
@@ -244,13 +217,13 @@ export class AlertsComponent implements OnInit {
             return group;
 
           }
-          let newSerie = Object.assign({}, SERIES.custom);
+          const newSerie = Object.assign({}, SERIES.custom);
           newSerie.name = 'thisDay';
           newSerie.data = [ [new Date(), 0, 'OK', 'OK']];
           newSerie.renderItem = (params, api) => {
-            let cellPoint = api.coord(api.value(0));
-            let cellWidth = params.coordSys.cellWidth;
-            let cellHeight = params.coordSys.cellHeight;
+            const cellPoint = api.coord(api.value(0));
+            const cellWidth = params.coordSys.cellWidth;
+            const cellHeight = params.coordSys.cellHeight;
             return {
               type: 'rect',
               z2: 0 ,
@@ -277,7 +250,6 @@ export class AlertsComponent implements OnInit {
           option.series.push(newSerie);
 
         });
-        this.echartInstance.clear();
         this.echartInstance.setOption(option, true);
         this.option = option;
       });
@@ -330,12 +302,12 @@ export class AlertsComponent implements OnInit {
           img = '<img style={S} src={I} />';
           img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
         } else {
-          img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.typeInspect + '.svg />';
+          img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.icon + '.svg />';
         }
         img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
         return {
           name: img,
-          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.sliceTextToolip(_singleData.message),
+          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertsService.getMessageAlertByCode(_singleData.code),
           unit: ''
         }
       }));
@@ -353,16 +325,18 @@ export class AlertsComponent implements OnInit {
   }
 
   sliceTextToolip(text: string): string {
-    if (text === undefined) {
-      text = '';
-    }
-    let originString: string = text;
-    let newString: string;
-    while(originString.length >= 100) {
-      newString += originString.slice(0, 100) + '<br/>';
-      originString = originString.replace(originString.slice(0, 100), '');
-    }
-    return (newString + originString).replace(/undefined/g, '');
+    try{
+      if (text === undefined) {
+        text = '';
+      }
+      let originString: string = text;
+      let newString: string;
+      while(originString.length >= 100) {
+        newString += originString.slice(0, 100) + '<br/>';
+        originString = originString.replace(originString.slice(0, 100), '');
+      }
+      return (newString + originString).replace(/undefined/g, '');
+    } catch{}
   }
 
   

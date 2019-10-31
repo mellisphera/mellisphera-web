@@ -19,6 +19,7 @@ import { AlertCat } from '../../_model/alertCat';
 import { UserParamsService } from '../preference-config/service/user-params.service';
 import { MyNotifierService } from '../service/my-notifier.service';
 import { NotifList } from '../../../constants/notify';
+import { NOTIF_DESCRIPTION5 } from '../../../constants/notif_description';
 
 @Component({
   selector: 'app-alert-configuration',
@@ -112,6 +113,21 @@ export class AlertConfigurationComponent implements OnInit {
     })
   } */
   
+  /**
+   *
+   *
+   * @param {string} _alertName
+   * @returns {string}
+   * @memberof AlertConfigurationComponent
+   */
+  getNotifDescriptionFromLangage(_alertName: string): string {
+    if (this.userPrefService.getUserPref().lang.toUpperCase().indexOf('FR') !== -1) {
+      return NOTIF_DESCRIPTION5.FR[_alertName];
+    } else {
+      return NOTIF_DESCRIPTION5.EN[_alertName];
+    }
+  }
+
   onEnable(alertId: string): void {
     if (!this.alertUser.alertConf[alertId].enable) {
       this.alertUser.alertConf[alertId].enable = true;

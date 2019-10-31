@@ -22,7 +22,7 @@ export interface AlertInterface {
     message:string;
     code: string;
     sensorRef: string;
-    date: Date;
+    opsDate: Date;
     check:boolean;
     picto:string;
     loc:string;

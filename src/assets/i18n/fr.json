@@ -100,7 +100,8 @@
         "NOTES" : "Notes du rucher",
         "FLOWER" : "Fleur",
         "SENSORS" : "Capteurs",
-        "DATA" : "Analyse"
+        "DATA" : "Analyse",
+        "ALERT_CONF": "Configuration alerts"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Changer de mot de passe",
@@ -369,5 +370,12 @@
             "END": "Fin",
             "BTN_APPLY": "Aplliquer"
         }
+    },
+
+    "ALERT_CONF_PAGE": {
+        "TYPE": "Type",
+        "VALUE": "Valeur",
+        "STATUS": "Status",
+        "SAVE": "Save modification"
     }
 }

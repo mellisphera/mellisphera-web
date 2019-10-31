@@ -100,7 +100,8 @@
         "NOTES" : "Apiary notes",
         "FLOWER" : "Flower",
         "SENSORS" : "Sensors",
-        "DATA" : "Analysis" 
+        "DATA" : "Analysis",
+        "ALERT_CONF": "Notif configuration"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Change Password",
@@ -369,5 +370,11 @@
             "END": "End",
             "BTN_APPLY": "Aplly"
         }
+    },
+    "ALERT_CONF_PAGE": {
+        "TYPE": "Type",
+        "VALUE": "Value",
+        "STATUS": "Status",
+        "SAVE": "Save changes"
     }
 }

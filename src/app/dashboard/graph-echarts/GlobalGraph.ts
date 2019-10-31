@@ -35,6 +35,7 @@ import { Tools } from '../melli-charts/hive/service/daily-manager.service';
 import { CALENDAR } from '../melli-charts/charts/CALENDAR';
 import { WeatherService } from '../service/api/weather.service';
 import { SERIES } from '../melli-charts/charts/SERIES';
+import { NOTIF_CODE } from '../../../constants/notif_code';
 
 @Injectable({
   providedIn: 'root'
@@ -675,6 +676,15 @@ export class GraphGlobal {
 
   }
 
+  getMessageAlertByCode(code: string): string {
+    if (this.userService.getJwtReponse().country === "FR") {
+        return NOTIF_CODE[code].FR.Message;
+    } else {
+        return NOTIF_CODE[code].EN.Message;
+    }
+
+}
+
   /**
    * 
    * @param type 
@@ -794,7 +804,7 @@ export class GraphGlobal {
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
             return {
               name: img,
-              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : _singleData.message,
+              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.getMessageAlertByCode(_singleData.code),
               unit: ''
             }
           }));

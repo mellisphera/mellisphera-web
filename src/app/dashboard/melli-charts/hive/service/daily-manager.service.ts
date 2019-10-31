@@ -877,7 +877,7 @@ export class DailyManagerService {
     console.log(range);
     const obs: Array<Observable<any>> = [
       this.observationService.getObservationByHiveForMelliCharts(hiveId, range),
-      this.alertService.getAlertByHiveMelliCharts(hiveId, range)
+      this.alertService.getAlertByHive(hiveId, range)
     ]
     Observable.forkJoin(obs).subscribe(
       _data => {
@@ -898,23 +898,23 @@ export class DailyManagerService {
                 type: 'group',
                 children: []
               };
-              const dataByDate: any[] = joinData.filter(_filter => this.graphGlobal.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.opsDate)) === this.graphGlobal.getTimeStampFromDate(api.value(0)));
+              const dataByDate: any[] = joinData.filter(_filter => MyDate.compareToDailyDate(_filter.opsDate, new Date(api.value(0))));
+              group.children.push({
+                type: 'rect',
+                z2: 0,
+                shape: {
+                  x: -cellWidth / 2,
+                  y: -cellHeight / 2,
+                  width: cellWidth,
+                  height: cellHeight,
+                },
+                position: [cellPoint[0], cellPoint[1]],
+                style: {
+                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                  stroke: 'black'
+                }
+              });
               if (dataByDate.length > 1) {
-                group.children.push({
-                  type: 'rect',
-                  z2: 0,
-                  shape: {
-                    x: -cellWidth / 2,
-                    y: -cellHeight / 2,
-                    width: cellWidth,
-                    height: cellHeight,
-                  },
-                  position: [cellPoint[0], cellPoint[1]],
-                  style: {
-                    fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
-                    stroke: 'black'
-                  }
-                });
                 group.children.push({
                   type: 'path',
                   z2: 1000,
@@ -930,7 +930,7 @@ export class DailyManagerService {
               } else if (dataByDate.length === 1) {
                 let icon;
                 if (dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].icon, cellPoint));
+                  group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].typeInspect, cellPoint));
 
                 } else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
@@ -964,8 +964,25 @@ export class DailyManagerService {
                 children: []
               };
               const dataByDate: any[] = joinData.filter(_filter => {
-                return this.graphGlobal.getTimeStampFromDate(MyDate.getWekitDate(<string>_filter.opsDate)) === this.graphGlobal.getTimeStampFromDate(api.value(0));
+                return  MyDate.compareToDailyDate(_filter.opsDate, new Date(api.value(0)));
               });
+              if (dataByDate.length >= 1) {
+                group.children.push({
+                  type: 'rect',
+                  z2: 0,
+                  shape: {
+                    x: -cellWidth / 2,
+                    y: -cellHeight / 2,
+                    width: cellWidth,
+                    height: cellHeight,
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                  style: {
+                    fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                    stroke: 'black'
+                  }
+                });
+              }
               if (dataByDate.length > 1) {
                 group.children.push({
                   type: 'rect',
@@ -996,7 +1013,7 @@ export class DailyManagerService {
                 });
               } else if (dataByDate.length === 1) {
                 if (dataByDate !== undefined && dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].icon, cellPoint));
+                  group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].typeInspect, cellPoint));
                 } else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                 }

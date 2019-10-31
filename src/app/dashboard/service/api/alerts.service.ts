@@ -18,6 +18,8 @@ import { MyDate } from '../../../class/MyDate';
 import { ALERTS_ICONS } from '../../melli-charts/charts/icons/icons_alerts';
 import { AlertUser } from '../../../_model/alertUser';
 import { AlertCat } from '../../../_model/alertCat';
+import { UserloggedService } from '../../../userlogged.service';
+import { NOTIF_CODE } from '../../../../constants/notif_code';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -49,7 +51,7 @@ export class AlertsService {
     // Alerts by id hive for one apiary
     public alertsByHiveByApiary : Map<string,AlertInterface[]>;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private userService: UserloggedService) {
         this.alertSubject = new BehaviorSubject([]);
         this.hiveAlerts = [];
         this.apiaryAlerts = [];
@@ -151,8 +153,8 @@ export class AlertsService {
         // the format is AlertInterface[]
         this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/apiary/' + apiaryId).map(elt => {
             return elt.sort((b, a) => {
-                return new Date(a.date).getTime() - new Date(b.date).getTime();
-            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() >= new Date().getMonth() - 2);
+                return new Date(a.opsDate).getTime() - new Date(b.opsDate).getTime();
+            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.opsDate.toString())).getMonth() >= new Date().getMonth() - 2);
         }).subscribe(
             (data) => {
                 // add pictos to alerts
@@ -169,24 +171,9 @@ export class AlertsService {
     }
 
     // Fonction to get all alerts for one apiary
-    getAlertsByApiaryObs(apiaryId : string){
+    getAlertsByApiaryObs(apiaryId : string, range){
         // the format is AlertInterface[]
-        return this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/apiary/' + apiaryId).map(elt => {
-            return elt.sort((b, a) => {
-                return new Date(a.date).getTime() - new Date(b.date).getTime();
-            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() >= new Date().getMonth() - 2);
-        });
-    }
-
-    // Fonction to get all alerts for one hive
-    getAlertsByHive(hiveId : string){
-        // the format is AlertInterface[]
-       return this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/hive/' + hiveId).map(elt => {
-            return elt.sort((b, a) => {
-                return new Date(a.date).getTime() - new Date(b.date).getTime();
-            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() >= new Date().getMonth() - 2);
-        });
-
+        return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/between/apiary/' + apiaryId, range);
     }
 
     /**
@@ -197,8 +184,25 @@ export class AlertsService {
      * @returns {Observable<AlertInterface[]>}
      * @memberof AlertsService
      */
-    getAlertByHiveMelliCharts(hiveId: string, range: Date[]): Observable<AlertInterface[]> {
+    getAlertByHive(hiveId: string, range: Date[]): Observable<AlertInterface[]> {
         return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/between/hive/' + hiveId, range);
+    }
+
+
+    /**
+     *
+     *
+     * @param {string} code
+     * @returns {string}
+     * @memberof AlertsService
+     */
+    getMessageAlertByCode(code: string): string {
+        if (this.userService.getJwtReponse().country === "FR") {
+            return NOTIF_CODE[code].FR.Message;
+        } else {
+            return NOTIF_CODE[code].EN.Message;
+        }
+
     }
 
     /**
@@ -220,8 +224,8 @@ export class AlertsService {
         // the format is AlertInterface[]
         this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/apiary/hiveAllert/' + apiaryId).map(elt => {
             return elt.sort((b, a) => {
-                return new Date(a.date).getTime() - new Date(b.date).getTime();
-            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.date.toString())).getMonth() >= new Date().getMonth() - 2);
+                return new Date(a.opsDate).getTime() - new Date(b.opsDate).getTime();
+            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.opsDate.toString())).getMonth() >= new Date().getMonth() - 2);
         }).subscribe(
             (data) => {
                 // add pictos to alerts
