@@ -29,7 +29,7 @@ import { NOTIF_DESCRIPTION5 } from '../../../constants/notif_description';
 export class AlertConfigurationComponent implements OnInit {
 
   constructor(
-    private alertService: AlertsService,
+    public alertService: AlertsService,
     private userServuce: UserloggedService,
     private notifService: MyNotifierService,
     private userPrefService: UserParamsService) { }
