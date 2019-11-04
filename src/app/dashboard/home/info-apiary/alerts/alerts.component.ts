@@ -174,7 +174,8 @@ export class AlertsComponent implements OnInit {
               children: []
             };
             const dataByDate: any[] = joinData.filter(_filter => {
-              return MyDate.compareToDailyDate(_filter.opsDate, api.value(0));
+              //console.log(MyDate.compareToDailyDate(_filter.opsDate, api.value(0)));
+              return MyDate.compareToDailyDate(_filter.opsDate, new Date(api.value(0)));
             });
             console.log(dataByDate);
             if (dataByDate.length >= 1) {

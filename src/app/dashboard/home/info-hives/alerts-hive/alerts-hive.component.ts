@@ -44,6 +44,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
   private readonly notifier: NotifierService;
   // tabPos[Nombre d'alertes dans le jour][x ou y][rang de la prochaine alerte a traiter]
   private tabPos : number[][][];
+  public noData: boolean;
   // map repertoriant le nombre d'alerts par jour
   // Sous la forme date => [Les nombres d'alertes correspondants][Le rang de la prochaine alerte a placer dans le tableau]
   private mapDateNbAlerts : Map<string,number[]>;
@@ -60,6 +61,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
     private myNotifer: MyNotifierService,
     private observationService: ObservationService) {
       this.echartInstance = null;
+      this.noData = true;
     this.img = 'M581.176,290.588C581.176,130.087,451.09,0,290.588,0S0,130.087,0,290.588s130.087,290.588,290.588,290.588' +
               'c67.901,0,130.208-23.465,179.68-62.476L254.265,302.696h326.306C580.716,298.652,581.176,294.681,581.176,290.588z' +
               'M447.99,217.941c-26.758,0-48.431-21.697-48.431-48.431s21.673-48.431,48.431-48.431c26.758,0,48.431,21.697,48.431,48.431' +
@@ -184,6 +186,8 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
         console.log(_data);
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1]);
+        this.noData = !(joinData.length >= 0);
+        console.log(this.noData);
         const option = Object.assign({}, this.option);
         console.log(option);
         option.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
