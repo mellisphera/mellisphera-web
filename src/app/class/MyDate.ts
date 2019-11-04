@@ -54,11 +54,9 @@ export class MyDate {
     }
 
 
-    static compareToDailyDate(dt1: any, dt2: any) {
-        const date1: Date = new Date(MyDate.getWekitDate(<string>dt1));
-        const date2: Date = new Date(MyDate.getWekitDate(<string>dt2));
-        console.log(date1);
-        console.log(date2);
+    static compareToDailyDate(dt1: Date, dt2: Date) {
+        const date1: Date = new Date(dt1);
+        const date2: Date = new Date(dt2);
         const day1 = date1.getDate();
         const day2 = date2.getDate();
         return (day1 === day2) &&

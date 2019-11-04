@@ -34,27 +34,13 @@ export class AlertConfigurationComponent implements OnInit {
     private notifService: MyNotifierService,
     private userPrefService: UserParamsService) { }
 
-  public alertType: AlertCat[];
 
-  public alertUser: AlertUser;
   ngOnInit() {
-    this.alertService.getAllTypeAlerts().subscribe(
-      _alerts => {
-        this.alertType = _alerts;
-        console.log(this.alertType);
-      }
-    );
-    this.alertService.getAlertConfByUser(this.userServuce.getIdUserLoged()).subscribe(
-      _alertConf => {
-        this.alertUser = _alertConf;
-        console.log(this.alertUser);
-      }
-    );
   }
 
   isEnable(alertId: string): boolean {
     try {
-      return this.alertUser.alertConf[alertId].enable;
+      return this.alertService.alertUser.alertConf[alertId].enable;
     } catch {}
   }
 
@@ -68,9 +54,9 @@ export class AlertConfigurationComponent implements OnInit {
   getRangeValue(alertId: string): number[] {
     try {
       if (this.isMetric()) {
-        return this.alertType.filter(_alert => _alert._id === alertId)[0].rangeValueMet;
+        return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].rangeValueMet;
       } else {
-        return this.alertType.filter(_alert => _alert._id === alertId)[0].rangeValueImp;
+        return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].rangeValueImp;
       }
     } catch {}
   }
@@ -85,24 +71,25 @@ export class AlertConfigurationComponent implements OnInit {
   getStep(alertId: string): number {
     try {
       if (this.isMetric()) {
-        return this.alertType.filter(_alert => _alert._id === alertId)[0].stepMet;
+        return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].stepMet;
       } else {
-        return this.alertType.filter(_alert => _alert._id === alertId)[0].stepImp;
+        return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].stepImp;
       }
     } catch {}
   }
   isAlterable(alertId: string): boolean {
     try {
-      return this.alertType.filter(_alert => _alert._id === alertId)[0].alterable;
+      return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].alterable;
     } catch {}
   }
 
-  getUserValue(alertId: string): number {
+  getUserValue(alertId: string): string {
+    let currentAlaert =  this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0];
     try {
       if (this.isMetric()) {
-      return  this.alertUser.alertConf[alertId].valueMet;
+      return  this.alertService.alertUser.alertConf[alertId].valueMet + ' ' +  currentAlaert.unitMet;
       } else {
-      return  this.alertUser.alertConf[alertId].valueImp;
+      return  this.alertService.alertUser.alertConf[alertId].valueImp + ' ' +  currentAlaert.unitImp;
       }
     } catch {}
   }
@@ -129,27 +116,27 @@ export class AlertConfigurationComponent implements OnInit {
   }
 
   onEnable(alertId: string): void {
-    if (!this.alertUser.alertConf[alertId].enable) {
-      this.alertUser.alertConf[alertId].enable = true;
+    if (!this.alertService.alertUser.alertConf[alertId].enable) {
+      this.alertService.alertUser.alertConf[alertId].enable = true;
     }
   }
 
   onDisable(alertId: string): void {
-    if (this.alertUser.alertConf[alertId].enable) {
-      this.alertUser.alertConf[alertId].enable = false;
+    if (this.alertService.alertUser.alertConf[alertId].enable) {
+      this.alertService.alertUser.alertConf[alertId].enable = false;
     }
   }
 
   onChageValue(value: number, alertId: string) {
     if (this.isMetric()) {
-      this.alertUser.alertConf[alertId].valueMet = value;
+      this.alertService.alertUser.alertConf[alertId].valueMet = value;
     } else {
-      this.alertUser.alertConf[alertId].valueImp = value;
+      this.alertService.alertUser.alertConf[alertId].valueImp = value;
     }
   }
 
   onSave() {
-    this.alertService.updateAlertConf(this.alertUser).subscribe(
+    this.alertService.updateAlertConf(this.alertService.alertUser).subscribe(
       _res => {
         this.notifService.sendSuccessNotif(NotifList.SAVE_ALERT_CONF);
       }

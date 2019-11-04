@@ -20,12 +20,15 @@ import { AlertUser } from '../../../_model/alertUser';
 import { AlertCat } from '../../../_model/alertCat';
 import { UserloggedService } from '../../../userlogged.service';
 import { NOTIF_CODE } from '../../../../constants/notif_code';
+import { UserParamsService } from '../../preference-config/service/user-params.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'  // <- ADD THIS
+})
 export class AlertsService {
 
     // alerts by apiary
@@ -33,6 +36,8 @@ export class AlertsService {
     public apiaryAlertsFirstHalf: AlertInterface[];
     public apiaryAlertsSecondHalf: AlertInterface[];
     public alertSubject: BehaviorSubject<AlertInterface[]>;
+    public alertTypes: AlertCat[];
+    public alertUser: AlertUser;
     // alerts by hive
     public hiveAlerts: AlertInterface[];
     // alerts actives by apiary
@@ -51,11 +56,21 @@ export class AlertsService {
     // Alerts by id hive for one apiary
     public alertsByHiveByApiary : Map<string,AlertInterface[]>;
 
-    constructor(private http: HttpClient, private userService: UserloggedService) {
+    constructor(private http: HttpClient, private userService: UserloggedService, private userPrefService: UserParamsService) {
         this.alertSubject = new BehaviorSubject([]);
         this.hiveAlerts = [];
         this.apiaryAlerts = [];
-
+        this.getAllTypeAlerts().subscribe(
+            _alerts => {
+                this.alertTypes = _alerts;
+            }
+        );
+        this.getAlertConfByUser(this.userService.getIdUserLoged()).subscribe(
+            _alertConf => {
+              this.alertUser = _alertConf;
+              console.log(this.alertUser);
+            }
+          );
         this.mapPictoSvg = new Map();
         this.mapTypeColor = new Map();
         this.alertsByHiveByApiary = new Map();
@@ -197,10 +212,11 @@ export class AlertsService {
      * @memberof AlertsService
      */
     getMessageAlertByCode(code: string): string {
+        const alertId = this.alertTypes.filter(_alert => _alert.icon == NOTIF_CODE[code].icon)[0]._id;
         if (this.userService.getJwtReponse().country === "FR") {
-            return NOTIF_CODE[code].FR.Message;
+            return NOTIF_CODE[code].FR.Message + ' ' + this.getUserValue(alertId);
         } else {
-            return NOTIF_CODE[code].EN.Message;
+            return NOTIF_CODE[code].EN.Message + ' ' + this.getUserValue(alertId);
         }
 
     }
@@ -214,6 +230,18 @@ export class AlertsService {
     getAllTypeAlerts(): Observable<AlertCat[]> {
         return this.http.get<AlertCat[]>(CONFIG.URL + 'alerts/all');
     }
+
+    getUserValue(alertId: string): string {
+        let currentAlaert =  this.alertTypes.filter(_alert => _alert._id === alertId)[0];
+        try {
+          if (this.isMetric()) {
+          return  this.alertUser.alertConf[alertId].valueMet + ' ' +  currentAlaert.unitMet;
+          } else {
+          return  this.alertUser.alertConf[alertId].valueImp + ' ' +  currentAlaert.unitImp;
+          }
+        } catch {}
+      }
+
 
     getAlertConfByUser(userId: string): Observable<AlertUser> {
         return this.http.get<AlertUser>(CONFIG.URL + 'alertsConf/' + userId);
@@ -269,6 +297,11 @@ export class AlertsService {
     updateAlertConf(alertConf: AlertUser): Observable<AlertUser> {
         return this.http.put<AlertUser>(CONFIG.URL + 'alertsConf/update', alertConf);
     }
+
+    isMetric(): boolean {
+        return this.userPrefService.getUserPref().unitSystem === 'METRIC';
+      }
+      
 
     // Here there are all the alerts pictos
     getPicto(nomPicto: string, cellPoint: Array<number>): Array<Object> {

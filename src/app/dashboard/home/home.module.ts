@@ -30,6 +30,8 @@ import { HealthHiveComponent } from './info-hives/health-hive/health-hive.compon
 import { SensorsHiveComponent } from './info-hives/sensors-hive/sensors-hive.component';
 import { AlertsHiveComponent } from './info-hives/alerts-hive/alerts-hive.component';
 import { InfoApiaryComponent } from './info-apiary/info-apiary.component';
+import { AlertsService } from '../service/api/alerts.service';
+import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 
 
 @NgModule({
@@ -49,6 +51,7 @@ import { InfoApiaryComponent } from './info-apiary/info-apiary.component';
     AngularDraggableModule
   ],
   providers: [
+    GraphGlobal
   ],
   declarations: [
     HomeComponent,

@@ -21,6 +21,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../shared.module';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { AlertsService } from '../../service/api/alerts.service';
 
 
 @NgModule({
@@ -39,7 +40,9 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
             confirmButtonType: 'danger' // set defaults here
           })
     ],
-    providers: [],
+    providers: [
+        AlertsService
+    ],
     declarations: [ NavbarComponent ],
     exports: [ NavbarComponent ]
 })

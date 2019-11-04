@@ -36,6 +36,7 @@ import { CALENDAR } from '../melli-charts/charts/CALENDAR';
 import { WeatherService } from '../service/api/weather.service';
 import { SERIES } from '../melli-charts/charts/SERIES';
 import { NOTIF_CODE } from '../../../constants/notif_code';
+import { AlertsService } from '../service/api/alerts.service';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +99,7 @@ export class GraphGlobal {
   constructor(private userConfig: UserParamsService,
     private unitService: UnitService,
     public userService: UserloggedService,
+    private alertService: AlertsService,
     private weatherService: WeatherService,
     private userPref: UserParamsService) {
     this.weight = {
@@ -804,7 +806,7 @@ export class GraphGlobal {
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
             return {
               name: img,
-              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.getMessageAlertByCode(_singleData.code),
+              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertService.getMessageAlertByCode(_singleData.code),
               unit: ''
             }
           }));

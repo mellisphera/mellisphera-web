@@ -1,64 +1,76 @@
 export const NOTIF_DESCRIPTION5 = {
     FR: {
-        Honeydew: "Déclenche lorsque l'apport de poids dans la ruche dpasse le seuil choisi lors de la dernire semaine.",
+        Honeydew: "Déclenchée lorsque l'apport de poids dans la ruche dépasse le seuil choisi lors de la dernière semaine.",
 
-        Rain : "Déclenche lorsque les prcipitations pluvieuses dpassent le seuil choisi dans les jours à venir.",
+        Rain : "Déclenchée lorsque les précipitations pluvieuses dépassent le seuil choisi le prochain jour. ",
 
-        Swarm: "Déclenche lorsque un potentiel essaimage est survenu (Ncessite un hub pour plus d'efficacit).",
+        Swarm: "Déclenchée lorsque un potentiel essaimage est survenu (un Hub offre plus d'efficacité).",
 
-        DConnect :"Déclenche lorsqu'un de vos capteurs ne transmets plus de donnes ou ponctuellement à chaque priode choisie. Ne fonctionne qu'avec un hub. ",
+        DConnect :"Déclenchée lorsqu'un de vos capteurs ne transmet plus de données (ou ponctuellement) pendant chaque période choisie. Ne fonctionne qu'avec un Hub. ",
 
-        Tmax: "Déclenche lorsque la temprature interne dpasse le seuil indiqu.",
+        Tmax: "Déclenchée lorsque la température interne dépasse le seuil choisi.",
 
-        Tmin: "Déclenche lorsque la temprature interne est en dessous du seuil indiqu. ",
+        Tmin: "Déclenchée lorsque la température interne est en dessous du seuil choisi. ",
 
-        LowBrood: "Déclenché lorsque le pourcentage de couvain est inférieur au seuil défini un jour donné.",
+        LowBrood: "Déclenchée quand le pourcentage de couvain est en dessous du seuil défini.",
 
-        LowBattery: "Déclenche lorsque le pourcentage de batterie est en dessous du seuil dfini un jour donn.",
+        LowBattery: "Déclenchée lorsque le pourcentage de batterie est en dessous du seuil défini.",
 
-        StopWeather: "Déclenche lorsque votre station mto s'arrte d'mettre des donnes. Ncessite sa propre station mto.",
+        StopWeather: "Déclenchée lorsque votre station météo s'arrête d'émettre des données. Nécessite sa propre station météo.",
 
-        Rswarm: "Déclenche lorsqu'un risque d'essaimage est important lors des prochains jours.",
+        Rswarm: "Déclenchée lorsque le risque d'essaimage est fort sur une de vos ruches le prochain jour. ",
 
-        WIpos: "Déclenche lorsque le poids entrants de la journe dans la ruche dpasse le seuil choisi. ",
+        WIpos: "Déclenchée lorsque le poids entrants de la journée dans la ruche dépasse le seuil choisi. ",
 
-        WIneg: "Déclenche lorsque les abeilles consomment beaucoup plus de ressources qu'elles n'en ramnent dans la ruche. Le seuil de perte est rglable.",
+        WIneg: "Déclenchée lorsque les abeilles consomment beaucoup plus de ressources qu'elles n'en ramènent dans la ruche. Le seuil de perte est réglable.",
 
-        Snow: "Déclenche lorsque les prcipitations neigeuses (en cm) dpassent le seuil choisi dans les jours à venir. ",
+        Snow: "Déclenchée lorsque les précipitations neigeuses dépassent le seuil choisi le prochain jour.",
 
         Wind: "Déclenche lorsque le vent dpassent le seuil choisi dans les jours à venir. ",
 
-        ColdPeriod: "Déclenche lorsqu'une priode froide à venir est dtecte, c'est-à-dire quelques jours ou les tempratures seront bien en dessous des tempratures des derniers jours."
+        ColdPeriod: "Déclenchée lorsqu'une période froide à venir est détectée, c'est-à-dire quelques jours où les températures seront bien en dessous des normales de saison. ",
+        
+        Hmin: "Déclenchée lorsque l'humidité interne est en dessous du seuil choisi.",
+
+        Hmax: "Déclenchée lorsque l'humidité interne dépasse le seuil choisi."
     },
     EN: {
         Honeydew: "Triggered when the weight contribution to the hive exceeds the chosen threshold during the last week.",
 
-        Rain : "Triggered when rainfall exceeds the chosen threshold in the coming days.",
+        Rain : "Triggered when rainfall exceeds the chosen threshold on the next day.",
 
-        Swarm: "Triggered when a swarm potential has occurred (Requires a hub for more efficiency).",
+        Swarm: "Triggered when a potential swarm has occurred (Hub offers more efficiency).",
 
-        DConnect :" Triggered when one of your sensors no longer transmits data or punctually at each selected period. Only works with a hub",
+        DConnect :"T Triggered when one of your sensors no longer transmits data (or punctually) during each chosen period. Only works with a Hub.",
 
-        Tmax: "Triggered when the internal temperature exceeds the specified threshold. ",
+        Tmax: "Triggered when the internal temperature exceeds the chosen threshold.",
 
-        Tmin: "Triggered when the internal temperature is below the specified threshold. ",
+        Tmin: "Triggered when the internal temperature is below the chosen threshold.",
 
-        LowBrood: "Dclenche lorsque le pourcentage de couvain est en dessous du seuil dfini un jour donn.",
+        LowBrood: "Triggered when the percentage of brood is below the chosen threshold.",
 
-        LowBattery: "Triggered when the percentage of battery is below the threshold set on a given day.",
+        LowBattery: "Triggered when the percentage of battery is below the chosen threshold.",
 
         StopWeather: "Triggered when your weather station stops transmitting data. Requires its own weather station.",
 
-        Rswarm: "Triggered when there is a significant risk of swarming in the next few days.",
+        Rswarm: "Triggered when the risk of swarm is high on one of your hives on the next day. ",
 
-        WIpos: "Triggered when the incoming weight of the day in the hive exceeds the chosen threshold.",
+        WIpos: "Triggered when the incoming weight of the day in the hive exceeds the chosen threshold. ",
 
         WIneg: "Triggered when bees consume many more resources than they bring back to the hive. The loss threshold is adjustable.",
 
-        Snow: "Triggered when snowfall exceeds the chosen threshold in the coming days.",
+        Snow: "Triggered when snowfall exceeds the chosen threshold on the next day. ",
 
-        Wind: "Triggered when the wind exceeds the chosen threshold in the coming days. ",
+        Wind: "Triggered when the wind exceeds the chosen threshold on the next day. ",
 
-        ColdPeriod: "Triggered when a future cold period is detected, i.e. a few days when temperatures will be well below the temperatures of the last few days."
+        ColdPeriod: "Triggered when a future cold period is detected, i.e. a few days when temperatures will be well below normal.",
+
+        Hmin: "Triggered when the internal humidity is below the chosen threshold.",
+
+        Hmax: "Triggered when the internal humidity exceeds the chosen threshold.",
+
+        Stolen: "Triggered when the weight of your hive becomes abnormally low. ",
+
+        
     }
 }

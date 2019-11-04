@@ -361,9 +361,9 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
       let originString = '';
       originString = text;
       let newString: string;
-      while(originString.length >= 100) {
-        newString += originString.slice(0, 100) + '<br/>';
-        originString = originString.replace(originString.slice(0, 100), '');
+      while(originString.length >= 70) {
+        newString += originString.slice(0, 70) + '<br/>';
+        originString = originString.replace(originString.slice(0, 70), '');
       }
       return (newString + originString).replace(/undefined/g, '');
     } catch{}

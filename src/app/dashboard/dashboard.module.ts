@@ -21,7 +21,6 @@ import { WizardComponent } from './wizard/wizard.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AlertsService } from './service/api/alerts.service';
 import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';
 import { CapteurService } from './service/api/capteur.service';
 import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
@@ -55,6 +54,7 @@ import { ManageNotesComponent } from './manage/manage-notes/manage-notes.compone
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketService } from './service/socket.service';
 import { AlertConfigurationComponent } from './alert-configuration/alert-configuration.component';
+import { AlertsService } from './service/api/alerts.service';
 
 const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options: {} };
 
@@ -83,13 +83,14 @@ const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options
   ],
   providers: [
     RucherService,
-    RucheService,
     AlertsService,
+    RucheService,
     DailyRecordService,
     FleursFloraisonService,
     AdminService,
     UnitService,
     GraphGlobal,
+    AlertsService,
     SocketService,
     CapteurService,
     SidebarService,

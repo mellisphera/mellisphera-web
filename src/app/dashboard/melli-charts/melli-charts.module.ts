@@ -26,10 +26,13 @@ import { DailyComponent } from './hive/daily/daily.component';
 import { HourlyComponent } from './hive/hourly/hourly.component';
 import { StackMelliChartsService } from './stack/service/stack-melli-charts.service';
 import { OwlNativeDateTimeModule, OwlDateTimeModule } from 'ng-pick-datetime';
+import { AlertsService } from '../service/api/alerts.service';
+import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 
 @NgModule({
   providers:[
     DailyManagerService,
+    GraphGlobal,
     HourlyManagerService,
     StackMelliChartsService
   ],

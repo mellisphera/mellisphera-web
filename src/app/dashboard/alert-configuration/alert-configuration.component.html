@@ -28,7 +28,7 @@ limitations under the License. -->
         </tr>
       </thead>
       <tbody>
-        <tr [class]="(isEnable(alert._id) ? 'enable' : 'disable') + ' tr-items'" *ngFor="let alert of alertType">
+        <tr [class]="(isEnable(alert._id) ? 'enable' : 'disable') + ' tr-items'" *ngFor="let alert of alertService.alertTypes">
           <td scope="row">
             <img width="50px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
           </td>

@@ -76,6 +76,8 @@ export class UserloggedService {
     return JSON.parse(window.sessionStorage.getItem('sharingApiary')) || [];
   }
 
+  
+
   /**
    *
    *

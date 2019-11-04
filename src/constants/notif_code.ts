@@ -91,7 +91,7 @@ export const NOTIF_CODE = {
         },
         "EN": {
             "Subject": "Resource depletion",
-            "Message": "Your bees' stock has decreased by " 
+            "Message": "Your bees' stock has decreased by "
         }
     },
 
@@ -103,7 +103,31 @@ export const NOTIF_CODE = {
         },
         "EN": {
             "Subject": "Weak brood",
-            "Message": "Brood below " 
+            "Message": "Brood below "
+        }
+    },
+
+    "306": {
+        "icon": "Hmax",
+        "FR": {
+            "Subject": "Forte humidité interne",
+            "Message": "Humidité interne dépassant "
+        },
+        "EN": {
+            "Subject": "High internal humidity",
+            "Message": "Internal humidity over "
+        }
+    }, 
+
+    "307": {
+        "icon": "Hmin",
+        "FR": {
+            "Subject": "Faible humidité interne",
+            "Message": "Humidité interne en dessous de "
+        },
+        "EN": {
+            "Subject": "Low internal humidity",
+            "Message": "Internal humidity below "
         }
     }, 
 
@@ -115,7 +139,7 @@ export const NOTIF_CODE = {
         },
         "EN": {
             "Subject": "Honeydew",
-            "Message": "Incoming weights during the last week exceeding " 
+            "Message": "Incoming weights during the last week exceeding "
         }
     },
 
@@ -127,7 +151,7 @@ export const NOTIF_CODE = {
         },
         "EN": {
             "Subject": "Swarm",
-            "Message": "Potentiel swarm detected" 
+            "Message": "Potentiel swarm detected"
         }
     },
 
@@ -139,7 +163,7 @@ export const NOTIF_CODE = {
         },
         "EN": {
             "Subject": "Swarm risk",
-            "Message": "The risk of swarm will be high" 
+            "Message": "The risk of swarm will be high"
         }
     },
 
@@ -187,11 +211,24 @@ export const NOTIF_CODE = {
         "icon": "StopWeather",
         "FR": {
             "Subject": "Station météo arrêtée",
-            "Message": "Erreur de transmission de données de votre station météo depuis le"
+            "Message": "Erreur de transmission de données de votre station météo depuis le "
         },
         "EN": {
             "Subject": "Weather station stopped",
-            "Message": "Data transmission error from your weather station since " 
+            "Message": "Data transmission error from your weather station since "
+        }
+    },
+
+    "405": {
+        "icon": "Stolen",
+        "FR": {
+            "Subject": "Ruche volée",
+            "Message": "Suspicion de vol, le poids de votre ruche est anormalement faible"
+        },
+        "EN": {
+            "Subject": "Stolen hive",
+            "Message": "Suspected of theft, the weight of your hive is abnormally low"
         }
     }
+
 }
