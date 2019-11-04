@@ -214,6 +214,8 @@ export class AlertsService {
     getMessageAlertByCode(code: string): string {
         console.log(code);
         const alertId = this.alertTypes.filter(_alert => _alert.icon == NOTIF_CODE[code].icon)[0]._id;
+        console.log(NOTIF_CODE[code]);
+        console.log(alertId);
         if (this.userService.getJwtReponse().country === "FR") {
             return NOTIF_CODE[code].FR.Message + ' ' + this.getUserValue(alertId);
         } else {
