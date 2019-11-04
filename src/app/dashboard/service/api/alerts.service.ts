@@ -99,7 +99,7 @@ export class AlertsService {
         this.mapPictoSvg.set('Storm', ALERTS_ICONS.Storm);
         this.mapPictoSvg.set('Wind3', ALERTS_ICONS.Wind3);
         this.mapPictoSvg.set('ColdPeriod2', ALERTS_ICONS.ColdPeriod2);
-        this.mapPictoSvg.set('ColdPeriod1', ALERTS_ICONS.ColdPeriod1);
+        this.mapPictoSvg.set('ColdPeriod1', ALERTS_ICONS.ColdPeriod);
         this.mapPictoSvg.set('WIneg', ALERTS_ICONS.WIneg);
         this.mapPictoSvg.set('WIpos', ALERTS_ICONS.WIpos);
         this.mapPictoSvg.set('Rswarm', ALERTS_ICONS.Rswarm);
@@ -212,6 +212,7 @@ export class AlertsService {
      * @memberof AlertsService
      */
     getMessageAlertByCode(code: string): string {
+        console.log(code);
         const alertId = this.alertTypes.filter(_alert => _alert.icon == NOTIF_CODE[code].icon)[0]._id;
         if (this.userService.getJwtReponse().country === "FR") {
             return NOTIF_CODE[code].FR.Message + ' ' + this.getUserValue(alertId);
