@@ -20,6 +20,7 @@ import { RucheInterface } from '../../../_model/ruche';
 import { CapteurService } from '../../service/api/capteur.service';
 import { AlertsService } from '../../service/api/alerts.service';
 import { AlertsHiveComponent } from './alerts-hive/alerts-hive.component';
+import { UserloggedService } from '../../../userlogged.service';
 
 @Component({
   selector: 'app-info-hives',
@@ -35,6 +36,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   constructor(private observationService: ObservationService,
     public rucheService: RucheService,
+    private userService: UserloggedService,
     private route: ActivatedRoute,
     public dailyRecordThService: DailyRecordService,
     public capteurService: CapteurService,
@@ -47,7 +49,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
 
 
   ngOnInit() {
-    this.observationService.getObservationByhiveId(this.rucheService.getCurrentHive()._id);
+    this.observationService.getObservationByhiveId(this.userService.getIdUserLoged());
     // this.observationService.obsHiveSubject.subscribe();
     this.dailyRecordThService.getByhiveId(this.rucheService.getCurrentHive()._id);
     this.dailyRecordWservice.getDailyRecordsWbyhiveId(this.rucheService.getCurrentHive()._id)

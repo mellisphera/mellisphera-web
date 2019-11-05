@@ -21,6 +21,7 @@ import { UserParamsService } from '../../preference-config/service/user-params.s
 import { UnitService } from '../unit.service';
 import { RucheService } from './ruche.service';
 import { INSPECTIONS } from '../../melli-charts/charts/icons/icon_inspect';
+import { filter } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -131,6 +132,15 @@ export class ObservationService {
         });
         console.log(this.observationsHive);
         this.emitHiveSubject();
+      }
+    );
+  }
+
+  getNoteByUserId(userId: string): void{
+    this.http.get<Observation[]>(CONFIG.URL + 'report/user/' + userId).subscribe(
+      _note => {
+        this.observationsHive = _note.filter(_note => _note.type === 'hive');
+        this.observationsApiary = _note.filter(_note => _note.type === 'apiary');
       }
     );
   }

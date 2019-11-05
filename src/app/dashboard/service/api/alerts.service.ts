@@ -21,6 +21,7 @@ import { AlertCat } from '../../../_model/alertCat';
 import { UserloggedService } from '../../../userlogged.service';
 import { NOTIF_CODE } from '../../../../constants/notif_code';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
+import { UnitService } from '../unit.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -43,9 +44,7 @@ export class AlertsService {
     // alerts actives by apiary
     public numberApiaryAlertsActives : number;
     // alerts actives for one apiary
-    public apiaryAlertsActives : AlertInterface[];
-    // Hive alerts by apiay
-    public hiveAlertsByApiary : AlertInterface[];
+
 
     // Map pictos in SVG Path
     public mapPictoSvg : Map<string,Array<any>>;
@@ -56,7 +55,8 @@ export class AlertsService {
     // Alerts by id hive for one apiary
     public alertsByHiveByApiary : Map<string,AlertInterface[]>;
 
-    constructor(private http: HttpClient, private userService: UserloggedService, private userPrefService: UserParamsService) {
+    constructor(private http: HttpClient, private userService: UserloggedService,private unitService: UnitService,
+        private userPrefService: UserParamsService) {
         this.alertSubject = new BehaviorSubject([]);
         this.hiveAlerts = [];
         this.apiaryAlerts = [];
@@ -101,6 +101,7 @@ export class AlertsService {
         this.mapPictoSvg.set('ColdPeriod2', ALERTS_ICONS.ColdPeriod2);
         this.mapPictoSvg.set('ColdPeriod1', ALERTS_ICONS.ColdPeriod);
         this.mapPictoSvg.set('WIneg', ALERTS_ICONS.WIneg);
+        this.mapPictoSvg.set("StopWeather", ALERTS_ICONS.StopWeather);
         this.mapPictoSvg.set('WIpos', ALERTS_ICONS.WIpos);
         this.mapPictoSvg.set('Rswarm', ALERTS_ICONS.Rswarm);
         this.mapPictoSvg.set('DConnect', ALERTS_ICONS.DConnect);
@@ -164,28 +165,9 @@ export class AlertsService {
     }
 
     // Fonction to get all alerts for one apiary
-    getAlertsByApiary(apiaryId : string){
-        // the format is AlertInterface[]
-        this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/apiary/' + apiaryId).map(elt => {
-            return elt.sort((b, a) => {
-                return new Date(a.opsDate).getTime() - new Date(b.opsDate).getTime();
-            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.opsDate.toString())).getMonth() >= new Date().getMonth() - 2);
-        }).subscribe(
-            (data) => {
-                // add pictos to alerts
-                data = this.addPictoAlerts(data);
-                // save the number of actives alerts
-                this.numberApiaryAlertsActives = data.filter(alert => alert.check === false).length;
-              },
-              (err) => {
-              },
-              () => {
-              }
-        );
-    }
 
     // Fonction to get all alerts for one apiary
-    getAlertsByApiaryObs(apiaryId : string, range){
+    getAlertsByApiary(apiaryId : string, range){
         // the format is AlertInterface[]
         return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/between/apiary/' + apiaryId, range);
     }
@@ -210,12 +192,14 @@ export class AlertsService {
      * @returns {string}
      * @memberof AlertsService
      */
-    getMessageAlertByCode(code: string): string {
-        const alertId = this.alertTypes.filter(_alert => _alert.icon == NOTIF_CODE[code].icon)[0]._id;
-        if (this.userService.getJwtReponse().country === "FR") {
-            return NOTIF_CODE[code].FR.Message + ' ' + this.getUserValue(alertId);
+    getMessageAlertByCode(args: AlertInterface): string {
+        const alertId = this.alertTypes.filter(_alert => _alert.icon == NOTIF_CODE[args.code].icon)[0]._id;
+        if (this.userService.getJwtReponse().country === 'FR') {
+            let msgFR: string = NOTIF_CODE[args.code].FR.Message;
+            return msgFR.replace(/{VAL}/g, this.getUserValue(alertId)).replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef);
         } else {
-            return NOTIF_CODE[code].EN.Message + ' ' + this.getUserValue(alertId);
+            let msgEN: string = NOTIF_CODE[args.code].EN.Message;
+            return msgEN.replace(/{VAL}/g, this.getUserValue(alertId)).replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef);
         }
 
     }
@@ -231,12 +215,13 @@ export class AlertsService {
     }
 
     getUserValue(alertId: string): string {
-        let currentAlaert =  this.alertTypes.filter(_alert => _alert._id === alertId)[0];
+        const currentAlert =  this.alertTypes.filter(_alert => _alert._id === alertId)[0];
         try {
           if (this.isMetric()) {
-          return  this.alertUser.alertConf[alertId].valueMet + ' ' +  currentAlaert.unitMet;
+              console.log(this.alertUser.alertConf[alertId].basicValueMet + ' ' +  currentAlert.unitMet);
+              return  this.alertUser.alertConf[alertId].basicValueMet + ' ' +  currentAlert.unitMet;
           } else {
-          return  this.alertUser.alertConf[alertId].valueImp + ' ' +  currentAlaert.unitImp;
+                return  this.alertUser.alertConf[alertId].basicValueImp + ' ' +  currentAlert.unitImp;
           }
         } catch {}
       }
@@ -244,41 +229,6 @@ export class AlertsService {
 
     getAlertConfByUser(userId: string): Observable<AlertUser> {
         return this.http.get<AlertUser>(CONFIG.URL + 'alertsConf/' + userId);
-    }
-
-    // Fonction to get all hives alerts for one apiary
-    getAllHiveAlertsByApiary(apiaryId : string){
-        // the format is AlertInterface[]
-        this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/apiary/hiveAllert/' + apiaryId).map(elt => {
-            return elt.sort((b, a) => {
-                return new Date(a.opsDate).getTime() - new Date(b.opsDate).getTime();
-            }).filter(_elt => new Date(MyDate.getWekitDate(_elt.opsDate.toString())).getMonth() >= new Date().getMonth() - 2);
-        }).subscribe(
-            (data) => {
-                // add pictos to alerts
-                data = this.addPictoAlerts(data);
-                // save the alerts since one week
-                // let oldDate = new Date();
-                // oldDate.setDate(oldDate.getDate() - 7);
-                // this.hiveAlertsByApiary = data.filter(alert => new Date(alert.date).getTime() > oldDate.getTime());
-                // save the alerts
-                this.hiveAlertsByApiary = data;
-                // save the actives alerts
-                this.apiaryAlertsActives = data.filter(alert => alert.check === false);
-                // the format is Alerts by id hive for one apiary Map<hiveId,AlertInterface[]>;
-                data.forEach(_alert => {
-                    if (!this.alertsByHiveByApiary.has(_alert.hiveId)) {
-                        this.alertsByHiveByApiary.set(_alert.hiveId, data.filter(_filter => _filter.hiveId === _alert.hiveId));
-                    };
-                });
-              },
-              (err) => {
-                console.log(err);
-              },
-              () => {
-              }
-        );
-
     }
 
     // Fonction to check/uncheck an alert

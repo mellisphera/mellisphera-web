@@ -639,7 +639,7 @@ limitations under the License. -->
         </form>
       </div>
       <div class="modal-footer">
-        <button *ngIf="newNoteCheckbox" type="  " class="btn btn-primary" (click)="createObservation()"
+        <button *ngIf="newNoteCheckbox" type="submit" class="btn btn-primary" (click)="createObservation()"
           data-dismiss="modal" [disabled]="!NavbarNoteForm.valid">
           {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_OBS' | translate}}</button>
         <button *ngIf="newNoteCheckbox" type="submit" class="btn btn-primary" (click)="createAction()"

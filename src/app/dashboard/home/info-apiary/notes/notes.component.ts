@@ -148,7 +148,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
         console.log(obs);
         this.observationService.observationsApiary.push(obs);
         this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
-          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+          return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
         });
       }, () => { }, () => {
         if(this.userService.getJwtReponse().country === "FR"){

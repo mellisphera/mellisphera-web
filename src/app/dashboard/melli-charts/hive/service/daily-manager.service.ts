@@ -891,10 +891,10 @@ export class DailyManagerService {
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             serieComplete.renderItem = (params, api) => {
-              let cellPoint = api.coord(api.value(0));
-              let cellWidth = params.coordSys.cellWidth;
-              let cellHeight = params.coordSys.cellHeight;
-              let group = {
+              const cellPoint = api.coord(api.value(0));
+              const cellWidth = params.coordSys.cellWidth;
+              const cellHeight = params.coordSys.cellHeight;
+              const group = {
                 type: 'group',
                 children: []
               };
@@ -1185,7 +1185,7 @@ export class DailyManagerService {
    */
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'inspect' : 'notif' };
+      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'inspect' : 'notif'};
     });
   }
 

@@ -44,6 +44,8 @@ import { InfoApiaryComponent } from './info-apiary/info-apiary.component';
 import { AlertsHiveComponent } from './info-hives/alerts-hive/alerts-hive.component';
 import { AlertsComponent } from './info-apiary/alerts/alerts.component';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
+import { MyDate } from '../../class/MyDate';
+import { AlertInterface } from '../../_model/alert';
 
 
 @Component({
@@ -88,6 +90,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   private infoHiveComponent: any;
   private infoApiaryComponent: any;
   screenHeight: any;
+  public apiaryAlertsActives : AlertInterface[];
+  // Hive alerts by apiay
+  public hiveAlertsByApiary : AlertInterface[];
   screenWidth: any;
   lastHighlightFix : string;
   lastHighlightHandle : string;
@@ -181,8 +186,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
         this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
         this.dailyRecordWservice.getDailyWeightIncomeByApiary(this.rucherService.getCurrentApiary());
-        this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-        this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
+        this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts()).subscribe(
+          _alerts => {
+            this.apiaryAlertsActives = _alerts.filter(_alert => !_alert.check);
+            console.log(this.apiaryAlertsActives);
+          }
+        );
+        //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
       });
     }
 
@@ -223,11 +233,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     };
   }
 
-  numberAlertsActivesByHive(hiveId: string): number {
-    if (this.alertsService.apiaryAlertsActives != undefined) {
-      return (this.alertsService.apiaryAlertsActives.filter(alert => alert.hiveId === hiveId).length);
+  numberAlertsActivesByHive(hiveId: string): number| any {
+    if (this.apiaryAlertsActives !== undefined) {
+      return this.apiaryAlertsActives.filter(alert => alert.hiveId === hiveId).length;
     } else {
-      return (-1)
+      return null;
     }
   }
 
@@ -309,7 +319,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     // For the hive notes
 
-    this.observationService.getObservationByhiveId(ruche._id);
+    this.observationService.getNoteByUserId(this.userService.getIdUserLoged());
 
     //For the hive-weight
     this.dailyRecordWservice.getDailyRecordsWbyhiveId(ruche._id);

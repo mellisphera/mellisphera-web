@@ -791,7 +791,8 @@ export class GraphGlobal {
       case 'ALERT':
         tooltip.formatter = (params) => {
           const dataByDateTooltip = extraData.filter(_filter => {
-            return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.opsDate)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
+            return MyDate.compareToDailyDate(_filter.opsDate, params.data[0])
+            // return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.opsDate)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
           });
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
             let type = 'Notif';
@@ -806,7 +807,7 @@ export class GraphGlobal {
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
             return {
               name: img,
-              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertService.getMessageAlertByCode(_singleData.code),
+              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertService.getMessageAlertByCode(_singleData),
               unit: ''
             }
           }));
@@ -952,7 +953,7 @@ export class GraphGlobal {
 
 
   getDaySerie(): any {
-    let newSerie = Object.assign({}, SERIES.custom);
+    const newSerie = Object.assign({}, SERIES.custom);
     newSerie.name = 'thisDay';
     const dayDate = new Date();
     dayDate.setHours(0);
@@ -960,9 +961,9 @@ export class GraphGlobal {
     dayDate.setSeconds(0);
     newSerie.data = [ [dayDate, 0, 'OK', 'OK']];
     newSerie.renderItem = (params, api) => {
-      let cellPoint = api.coord(api.value(0));
-      let cellWidth = params.coordSys.cellWidth;
-      let cellHeight = params.coordSys.cellHeight;
+      const cellPoint = api.coord(api.value(0));
+      const cellWidth = params.coordSys.cellWidth;
+      const cellHeight = params.coordSys.cellHeight;
       return {
         type: 'rect',
         z2: 0 ,

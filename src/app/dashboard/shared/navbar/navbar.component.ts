@@ -102,12 +102,12 @@ export class NavbarComponent implements OnInit {
     public messageOrphanHives: string;
 
     NavbarNoteForm: FormGroup;
-    hivesNavbarNoteForm : RucheInterface[];
+    hivesNavbarNoteForm: RucheInterface[];
     public cityByZipCode: string[];
-    hiveNoteSelect : RucheInterface;
+    hiveNoteSelect: RucheInterface;
     newNoteCheckbox: boolean;
     newObs: Observation
-    public lastInvalids:any;
+    public lastInvalids: any;
     private infoApiaryComponent: any;
 
     constructor(location: Location,
@@ -159,19 +159,19 @@ export class NavbarComponent implements OnInit {
             dataLastReceived: null
         };
         this.selectHive = {
-            _id : '',
-            name : '',
-            description : '',
-            userId : '',
-            username : '',
+            _id: '',
+            name: '',
+            description: '',
+            userId: '',
+            username: '',
             apiaryId: '',
             dataLastReceived: null,
             hidden: false,
             createDate: null,
             apiaryName: '',
-            hivePosX : '',
-            hivePosY : '',
-            sharingUser : []
+            hivePosX: '',
+            hivePosY: '',
+            sharingUser: []
         };
 
         this.eltOnClickId = null;
@@ -355,23 +355,23 @@ export class NavbarComponent implements OnInit {
             case '/dashboard/home':
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 this.desactiveButtonHomePageActiveName();
-                this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
+                //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
+                //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/dashboard/home/info-hives':
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 this.desactiveButtonHomePageActiveName();
-                this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
+                //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
+                //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
                 this.router.navigate(['dashboard/home/info-apiary']);
                 break;
             case '/dashboard/home/info-apiary':
                 this.apiaryChange.emit(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
+                //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
+                //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
                 this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
-                this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
+                this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
                 // this.checkIfInfoApiaryComponent().then(status => {
                 //     console.log("OK");
                 //     this.infoApiaryComponent.alertsComponent.initCalendar(true);
@@ -379,7 +379,7 @@ export class NavbarComponent implements OnInit {
                 //     console.log(err);
                 //   })
                 this.router.navigate(['dashboard/home/info-apiary']);
-                this.desactiveButtonHomePageActiveNameAndAlerts(); 
+                this.desactiveButtonHomePageActiveNameAndAlerts();
                 break;
             case '/dashboard/fleurs-floraison':
                 this.fleursFloraisonService.getUserFleur(this.rucherService.getCurrentApiary());
@@ -471,10 +471,10 @@ export class NavbarComponent implements OnInit {
             if ((/home/g.test(this.router.url))) {
                 this.apiaryChange.emit(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
+                //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
+                //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
                 this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
-                this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
+                this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
                 this.router.navigate(['dashboard/home/info-apiary']);
                 this.desactiveButtonHomePageActiveNameAndAlerts();
             }
@@ -633,10 +633,10 @@ export class NavbarComponent implements OnInit {
                     if ((/home/g.test(this.router.url))) {
                         this.apiaryChange.emit(this.rucherService.getCurrentApiary());
                         this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                        this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-                        this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
+                        //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
+                        //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
                         this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
-                        this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
+                        this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
                         this.router.navigate(['dashboard/home/info-apiary']);
                         this.desactiveButtonHomePageActiveNameAndAlerts();
                     }
@@ -649,10 +649,10 @@ export class NavbarComponent implements OnInit {
                     if ((/home/g.test(this.router.url))) {
                         this.apiaryChange.emit(this.rucherService.getCurrentApiary());
                         this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                        this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-                        this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
+                        //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
+                        //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
                         this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
-                        this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(),(new Date()));
+                        this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
                         this.router.navigate(['dashboard/home/info-apiary']);
                         this.desactiveButtonHomePageActiveNameAndAlerts();
                     }
@@ -918,153 +918,185 @@ export class NavbarComponent implements OnInit {
         const defautDate = new Date();
         // defautDate.setUTCHours(new Date().getHours());
         this.NavbarNoteForm = this.formBuilder.group({
-          'sentence': [null, Validators.compose([Validators.required])],
-          'type': ['HiveObs', Validators.required],
-          'date': new Date(),
-          'checkbox': ['apiary', Validators.required],
+            'sentence': [null, Validators.compose([Validators.required])],
+            'type': ['HiveObs', Validators.required],
+            'date': new Date(),
+            'checkbox': ['apiary', Validators.required],
         });
-      }
-    
-      resetNavbarNoteForm() {
-        this.NavbarNoteForm.get('sentence').reset();
-      }
+    }
 
-      getHiveNameById(hiveId: string): string {
+    resetNavbarNoteForm() {
+        this.NavbarNoteForm.get('sentence').reset();
+    }
+
+    getHiveNameById(hiveId: string): string {
         if (this.rucheService.ruchesAllApiary.filter(hive => hive._id === hiveId)[0] !== undefined) {
-          return (this.rucheService.ruchesAllApiary.filter(hive => hive._id === hiveId)[0].name);
+            return (this.rucheService.ruchesAllApiary.filter(hive => hive._id === hiveId)[0].name);
         } else {
-          return '';
+            return '';
         }
-      }
-    
-      getApiaryNameByID(apiaryId: string): string {
+    }
+
+    getApiaryNameByID(apiaryId: string): string {
         if (this.rucherService.ruchers.filter(apiary => apiary._id === apiaryId)[0] !== undefined) {
-          return (this.rucherService.ruchers.filter(apiary => apiary._id === apiaryId)[0].name);
+            return (this.rucherService.ruchers.filter(apiary => apiary._id === apiaryId)[0].name);
         } else {
-          return '';
+            return '';
         }
-      }
+    }
 
     // ###################      CREATE      ###################
 
     newNoteModalInit() {
         // Apiary init
         this.rucherService.rucherSelectUpdate = this.rucherService.rucher;
-    
+
         // Hive init
-        this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
-          this.rucherService.rucheService.ruchesAllApiary = ruches;
-          this.hivesNavbarNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
-          if (this.hivesNavbarNoteForm.length !== 0) {
-            this.hiveNoteSelect = this.hivesNavbarNoteForm[0];
-          }
+        this.rucherService.rucheService.getHiveByUserId(this.userService.getIdUserLoged()).subscribe(ruches => {
+            console.log(ruches);
+            this.rucherService.rucheService.ruchesAllApiary = ruches;
+            this.hivesNavbarNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
+            if (this.hivesNavbarNoteForm.length !== 0) {
+                this.hiveNoteSelect = this.hivesNavbarNoteForm[0];
+            }
         })
-      }
-    
-      onSelectApiaryNewNavbarNoteForm() {
+    }
+
+    onSelectApiaryNewNavbarNoteForm() {
         // init hive
         this.hivesNavbarNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
         if (this.hivesNavbarNoteForm.length !== 0) {
-          this.hiveNoteSelect = this.hivesNavbarNoteForm[0];
+            this.hiveNoteSelect = this.hivesNavbarNoteForm[0];
         }
-      }
-    
-      onchangeCheckbox(event) {
+    }
+
+    onchangeCheckbox(event) {
         this.newNoteCheckbox = (event.target.value === 'hive');
-      }
-    
-      createObservation() {
+    }
+
+    createObservation() {
+        console.log('dddd');
         if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.userId)) {
-          const formValue = this.NavbarNoteForm.value;
-          this.newObs = formValue;
-          this.newObs.typeInspect = 'HiveObs';
-          this.newObs.hiveId = this.hiveNoteSelect._id;
-          this.newObs.userId = this.userService.getIdUserLoged();
-          this.NavbarNoteForm.reset();
-          this.observationService.createObservation(this.newObs).subscribe((obs) => {
-            this.observationService.observationsHive.push(obs);
-            this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-              return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+            const formValue = this.NavbarNoteForm.value;
+            this.newObs = formValue;
+            this.newObs.typeInspect = 'HiveObs';
+            this.newObs.type = this.newNoteCheckbox ? 'hive' : 'apiary';
+            this.newObs.opsDate = formValue.date;
+            this.newObs.createDate = new Date();
+            this.newObs.description = formValue.sentence;
+            this.newObs.hiveId = this.hiveNoteSelect._id;
+            this.newObs.userId = this.userService.getIdUserLoged();
+            this.NavbarNoteForm.reset();
+            this.observationService.createObservation(this.newObs).subscribe((obs) => {
+                if (this.newObs.type === 'hive') {
+                    this.observationService.observationsHive.push(obs);
+                    this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
+                        return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
+                    });
+                } else {
+                    this.observationService.observationsApiary.push(obs);
+                    this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
+                        return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
+                    });
+                }
+                //this.observationService.observationsHiveUser.push(obs);
+                /*             this.observationService.observationsHiveUser.sort((a, b) => {
+                              return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
+                            }); */
+            }, () => { }, () => {
+                this.initNavbarNoteForm();
+                this.newNoteCheckbox = false;
+                if (this.userService.getJwtReponse().country === "FR") {
+                    this.notifier.notify('success', 'Observation créée');
+                } else {
+                    this.notifier.notify('success', 'Created Observation');
+                }
             });
-            this.observationService.observationsHiveUser.push(obs);
-            this.observationService.observationsHiveUser.sort((a, b) => {
-              return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
-            });
-          }, () => { }, () => {
-            this.initNavbarNoteForm();
-            this.newNoteCheckbox = false;
-            if (this.userService.getJwtReponse().country === "FR") {
-              this.notifier.notify('success', 'Observation créée');
-            } else {
-              this.notifier.notify('success', 'Created Observation');
-            }
-          });
         } else {
-          this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
         }
-      }
-    
-      createAction() {
+    }
+
+    createAction() {
         if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.userId)) {
-          const formValue = this.NavbarNoteForm.value;
-          this.newObs = formValue;
-          this.newObs.typeInspect = 'HiveAct';
-          this.newObs.hiveId = this.hiveNoteSelect._id;
-          this.newObs.userId = this.userService.getIdUserLoged();
-          this.NavbarNoteForm.reset();
-          this.observationService.createObservation(this.newObs).subscribe((obs) => {
-            this.observationService.observationsHive.push(obs);
-            this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-              return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+            const formValue = this.NavbarNoteForm.value;
+            this.newObs = formValue;
+            this.newObs.typeInspect = 'HiveAct';
+            this.newObs.type = this.newNoteCheckbox ? 'hive' : 'apiary';
+            this.newObs.opsDate = formValue.date;
+            this.newObs.description = formValue.sentence;
+            this.newObs.createDate = new Date();
+            this.newObs.hiveId = this.hiveNoteSelect._id;
+            this.newObs.userId = this.userService.getIdUserLoged();
+            this.NavbarNoteForm.reset();
+            this.observationService.createObservation(this.newObs).subscribe((obs) => {
+                if (this.newObs.type === 'hive') {
+                    this.observationService.observationsHive.push(obs);
+                    this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
+                        return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+                    });
+                } else {
+                    this.observationService.observationsApiary.push(obs);
+                    this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
+                        return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
+                    });
+                }
+
+                //this.observationService.observationsHiveUser.push(obs);
+                /*             this.observationService.observationsHiveUser.sort((a, b) => {
+                              return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
+                            }); */
+            }, () => { }, () => {
+                this.initNavbarNoteForm();
+                this.newNoteCheckbox = false;
+                if (this.userService.getJwtReponse().country === "FR") {
+                    this.notifier.notify('success', 'Action créée');
+                } else {
+                    this.notifier.notify('success', 'Created Action');
+                }
             });
-            this.observationService.observationsHiveUser.push(obs);
-            this.observationService.observationsHiveUser.sort((a, b) => {
-              return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
-            });
-          }, () => { }, () => {
-            this.initNavbarNoteForm();
-            this.newNoteCheckbox = false;
-            if (this.userService.getJwtReponse().country === "FR") {
-              this.notifier.notify('success', 'Action créée');
-            } else {
-              this.notifier.notify('success', 'Created Action');
-            }
-          });
         } else {
-          this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
         }
-      }
-    
-      createNote() {
+    }
+
+    createNote() {
         if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.userId)) {
-          const formValue = this.NavbarNoteForm.value;
-          this.newObs = formValue;
-          this.newObs.typeInspect = 'ApiaryObs';
-          this.newObs.apiaryId = this.rucherService.rucherSelectUpdate._id;
-          this.newObs.userId = this.userService.getIdUserLoged();
-          this.NavbarNoteForm.reset();
-          this.observationService.createObservation(this.newObs).subscribe((obs) => {
-            this.observationService.observationsApiary.push(obs);
-            this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
-              return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+            const formValue = this.NavbarNoteForm.value;
+            this.newObs = formValue;
+            this.newObs.typeInspect = 'ApiaryObs';
+            this.newObs.type = this.newNoteCheckbox ? 'hive' : 'apiary';
+            this.newObs.opsDate = formValue.date;
+            this.newObs.createDate = new Date();
+            this.newObs.description = formValue.sentence;
+            this.newObs.apiaryId = this.rucherService.rucherSelectUpdate._id;
+            this.newObs.userId = this.userService.getIdUserLoged();
+            this.NavbarNoteForm.reset();
+            this.observationService.createObservation(this.newObs).subscribe((obs) => {
+                if (this.newObs.type === 'hive') {
+                    this.observationService.observationsHive.push(obs);
+                    this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
+                        return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+                    });
+                } else {
+                    this.observationService.observationsApiary.push(obs);
+                    this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
+                        return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+                    });
+                }
+            }, () => { }, () => {
+                this.initNavbarNoteForm();
+                this.newNoteCheckbox = false;
+                if (this.userService.getJwtReponse().country === "FR") {
+                    this.notifier.notify('success', 'Note créée');
+                } else {
+                    this.notifier.notify('success', 'Created Note');
+                }
             });
-            this.observationService.observationsApiaryUser.push(obs);
-            this.observationService.observationsApiaryUser.sort((a, b) => {
-              return this.getApiaryNameByID(a.apiaryId).localeCompare(this.getApiaryNameByID(b.apiaryId));
-            });
-          }, () => { }, () => {
-            this.initNavbarNoteForm();
-            this.newNoteCheckbox = false;
-            if (this.userService.getJwtReponse().country === "FR") {
-              this.notifier.notify('success', 'Note créée');
-            } else {
-              this.notifier.notify('success', 'Created Note');
-            }
-          });
         } else {
-          this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+            this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
         }
-      }
+    }
 
     // ###################      EDIT      ###################
     // ###################      DELETE      ###################
@@ -1298,11 +1330,11 @@ export class NavbarComponent implements OnInit {
     }
 
     onSelectApiary() {
-    this.hivesEditSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.apiarySensorSelect._id);
-    if(this.hivesEditSensorForm.length !== 0){
-        this.hiveSensorSelect = this.hivesEditSensorForm[0];
+        this.hivesEditSensorForm = this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.apiarySensorSelect._id);
+        if (this.hivesEditSensorForm.length !== 0) {
+            this.hiveSensorSelect = this.hivesEditSensorForm[0];
+        }
     }
-  }
 
     updateSensor() {
         if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.userId)) {
@@ -1326,9 +1358,9 @@ export class NavbarComponent implements OnInit {
                 let indexSensorSelect = this.capteurService.capteursByUser.map(sensor => sensor._id).indexOf(this.capteurService.capteur._id);
                 this.capteurService.capteursByUser[indexSensorSelect] = this.capteurService.capteur;
                 this.capteurService.emitSensorSubject();
-                if(this.userService.getJwtReponse().country === "FR"){
+                if (this.userService.getJwtReponse().country === "FR") {
                     this.notifier.notify('success', 'Capteur mis à jour');
-                }else{
+                } else {
                     this.notifier.notify('success', 'Updated sensor');
                 }
             });
@@ -1355,9 +1387,9 @@ export class NavbarComponent implements OnInit {
                 this.capteurService.emitSensorSubject();
                 this.initSensorForm();
                 this.editSensorInit();
-                if(this.userService.getJwtReponse().country === "FR"){
+                if (this.userService.getJwtReponse().country === "FR") {
                     this.notifier.notify('success', 'Capteur supprimé');
-                }else{
+                } else {
                     this.notifier.notify('success', 'Deleted sensor');
                 }
             });

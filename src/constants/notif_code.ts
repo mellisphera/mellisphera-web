@@ -3,11 +3,11 @@ export const NOTIF_CODE = {
         "icon": "Rain",
         "FR": {
             "Subject": "Fortes précipitations",
-            "Message": "Les précipitations de pluie dépasseront "
+            "Message": "Les précipitations de pluie dépasseront {VAL}"
         },
         "EN": {
             "Subject": "Heavy rainfall",
-            "Message": "Rainfall will exceed " 
+            "Message": "Rainfall will exceed {VAL}" 
         }
     },
 
@@ -15,11 +15,11 @@ export const NOTIF_CODE = {
         "icon": "Snow",
         "FR": {
             "Subject": "Neige abdondante",
-            "Message": "Les précipitations de neige dépasseront  "
+            "Message": "Les précipitations de neige dépasseront {VAL} "
         },
         "EN": {
             "Subject": "Heavy snowfall",
-            "Message": "Snowfall will exceed " 
+            "Message": "Snowfall will exceed {VAL} " 
         }
     },
 
@@ -27,11 +27,11 @@ export const NOTIF_CODE = {
         "icon": "Wind",
         "FR": {
             "Subject": "Fort vent",
-            "Message": "Le vent dépassera "
+            "Message": "Le vent dépassera {VAL}"
         },
         "EN": {
             "Subject": "Strong wind",
-            "Message": "The wind will exceed " 
+            "Message": "The wind will exceed {VAL}" 
         }
     },
 
@@ -51,11 +51,11 @@ export const NOTIF_CODE = {
         "icon": "Tmax",
         "FR": {
             "Subject": "Forte température interne",
-            "Message": "Température interne dépassant "
+            "Message": "Température interne dépassant {VAL}"
         },
         "EN": {
             "Subject": "High internal temperature",
-            "Message": "Internal temperature over " 
+            "Message": "Internal temperature over {VAL}" 
         }
     },
 
@@ -63,11 +63,11 @@ export const NOTIF_CODE = {
         "icon": "Tmin",
         "FR": {
             "Subject": "Faible température interne ",
-            "Message": "Température interne en dessous de "
+            "Message": "Température interne en dessous de {VAL}"
         },
         "EN": {
             "Subject": "Low internal temperature ",
-            "Message": "Internal temperature below " 
+            "Message": "Internal temperature below {VAL}" 
         }
     },
 
@@ -75,11 +75,11 @@ export const NOTIF_CODE = {
         "icon": "WIpos",
         "FR": {
             "Subject": "Apport important de ressources",
-            "Message": "La réserve de vos abeilles a augmenté de "
+            "Message": "La réserve de vos abeilles a augmenté de {VAL}"
         },
         "EN": {
             "Subject": "Significant provision of resources",
-            "Message": "Your bees' stock has increased by " 
+            "Message": "Your bees' stock has increased by {VAL}" 
         }
     },
 
@@ -87,11 +87,11 @@ export const NOTIF_CODE = {
         "icon": "WIneg",
         "FR": {
             "Subject": "Epuisement des ressources",
-            "Message": "La réserve de vos abeilles a diminué de "
+            "Message": "La réserve de vos abeilles a diminué de {VAL}"
         },
         "EN": {
             "Subject": "Resource depletion",
-            "Message": "Your bees' stock has decreased by "
+            "Message": "Your bees' stock has decreased by {VAL}"
         }
     },
 
@@ -99,11 +99,11 @@ export const NOTIF_CODE = {
         "icon": "LowBrood",
         "FR": {
             "Subject": "Couvain faible",
-            "Message": "Couvain en dessous de "
+            "Message": "Couvain en dessous de {VAL}"
         },
         "EN": {
             "Subject": "Weak brood",
-            "Message": "Brood below "
+            "Message": "Brood below {VAL}"
         }
     },
 
@@ -111,11 +111,11 @@ export const NOTIF_CODE = {
         "icon": "Hmax",
         "FR": {
             "Subject": "Forte humidité interne",
-            "Message": "Humidité interne dépassant "
+            "Message": "Humidité interne dépassant {VAL}"
         },
         "EN": {
             "Subject": "High internal humidity",
-            "Message": "Internal humidity over "
+            "Message": "Internal humidity over {VAL}"
         }
     }, 
 
@@ -123,11 +123,11 @@ export const NOTIF_CODE = {
         "icon": "Hmin",
         "FR": {
             "Subject": "Faible humidité interne",
-            "Message": "Humidité interne en dessous de "
+            "Message": "Humidité interne en dessous de {VAL}"
         },
         "EN": {
             "Subject": "Low internal humidity",
-            "Message": "Internal humidity below "
+            "Message": "Internal humidity below {VAL}"
         }
     }, 
 
@@ -135,11 +135,11 @@ export const NOTIF_CODE = {
         "icon": "Honeydew",
         "FR": {
             "Subject": "Miellée",
-            "Message": "Poids entrants lors de la dernière semaine excédant "
+            "Message": "Poids entrants lors de la dernière semaine excédant {VAL}"
         },
         "EN": {
             "Subject": "Honeydew",
-            "Message": "Incoming weights during the last week exceeding "
+            "Message": "Incoming weights during the last week exceeding {VAL}"
         }
     },
 
@@ -171,11 +171,11 @@ export const NOTIF_CODE = {
         "icon": "LowBattery",
         "FR": {
             "Subject": "Batterie faible",
-            "Message": "Remplacer la batterie de "
+            "Message": "Remplacer la batterie de {VAL}"
         },
         "EN": {
             "Subject": "Low battery",
-            "Message": "Replace the battery of " 
+            "Message": "Replace the battery of {VAL}" 
         }
     },
 
@@ -183,12 +183,12 @@ export const NOTIF_CODE = {
         "icon": "DConnect",
         "FR": {
             "Subject": "Déconnexion",
-            "Message": " déconnecté depuis ",
+            "Message": "{REF} déconnecté depuis {DATE}",
             "Unit": " jours"
         },
         "EN": {
             "Subject": "Disconnection",
-            "Message": " disconnected since ",
+            "Message": "{REF} disconnected since {DATE}",
             "Unit": " days"
         }
     },
@@ -197,12 +197,12 @@ export const NOTIF_CODE = {
         "icon": "DConnect",
         "FR": {
             "Subject": "Mauvais signal",
-            "Message": " mauvais signal depuis ",
+            "Message": "{REF} mauvais signal depuis {DATE}",
             "Unit": " jours"
         },
         "EN": {
             "Subject": "Poor signal",
-            "Message": " poor signal since ",
+            "Message": "{REF} poor signal since {DATE}",
             "Unit": " days"
         }
     },
@@ -211,11 +211,11 @@ export const NOTIF_CODE = {
         "icon": "StopWeather",
         "FR": {
             "Subject": "Station météo arrêtée",
-            "Message": "Erreur de transmission de données de votre station météo depuis le "
+            "Message": "Erreur de transmission de données de votre station météo depuis le {DATE}"
         },
         "EN": {
             "Subject": "Weather station stopped",
-            "Message": "Data transmission error from your weather station since "
+            "Message": "Data transmission error from your weather station since {DATE}"
         }
     },
 

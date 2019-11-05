@@ -116,7 +116,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsHive.push(obs);
         this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+          return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
         });
       }, () => { }, () => {
         this.observationService.emitHiveSubject();
@@ -146,7 +146,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsHive.push(obs);
         this.observationService.observationsHive.sort((a: Observation, b: Observation) => {
-          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+          return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
         });
       }, () => { }, () => {
         this.observationService.emitHiveSubject();

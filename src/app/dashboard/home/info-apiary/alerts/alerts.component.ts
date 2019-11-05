@@ -152,7 +152,7 @@ export class AlertsComponent implements OnInit {
   loadCalendar() {
     const obs: Array<Observable<any>> = [
       this.observationService.getObservationByapiaryIdForMelliUx(this.rucherService.getCurrentApiary()),
-      this.alertsService.getAlertsByApiaryObs(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts())
+      this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts())
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
@@ -308,7 +308,7 @@ export class AlertsComponent implements OnInit {
         img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
         return {
           name: img,
-          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertsService.getMessageAlertByCode(_singleData.code),
+          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertsService.getMessageAlertByCode(_singleData),
           unit: ''
         }
       }));

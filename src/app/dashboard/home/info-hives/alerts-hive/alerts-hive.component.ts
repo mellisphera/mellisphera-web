@@ -178,13 +178,13 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
 
   loadCalendar() {
     const obs: Array<Observable<any>> = [
-      this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts().map(_elt => new Date(_elt))),
+      this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts()),
       this.alertsService.getAlertByHive(this.rucheService.getCurrentHive()._id,MyDate.getRangeForCalendarAlerts())
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
         console.log(_data);
-        const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
+        const dateJoin = this.joinObservationAlert(_data[0].filter(_note => _note.type === 'hive'), _data[1]);
         const joinData = _data[0].concat(_data[1]);
         this.noData = !(joinData.length >= 0);
         console.log(this.noData);
@@ -334,7 +334,6 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
       const dataByDateTooltip = extraData.filter(_filter => {
         return MyDate.compareToDailyDate(_filter.opsDate, new Date(params.data[0]));
       });
-      console.log(dataByDateTooltip);
       return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
         let type = 'Notif';
         let img = '';
@@ -348,7 +347,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
         img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
         return {
           name: img,
-          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertsService.getMessageAlertByCode(_singleData.code),
+          value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertsService.getMessageAlertByCode(_singleData),
           unit: ''
         }
       }));
@@ -380,12 +379,9 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
     }
 
   onClickRead(alert: AlertInterface, i: number) {
-    // Update in database
-    this.alertsService.updateAlert(alert._id, true).subscribe(() => { }, () => { }, () => {
-      // Update in hiveAlerts table
+/*     this.alertsService.updateAlert(alert._id, true).subscribe(() => { }, () => { }, () => {
       this.alertsService.hiveAlerts[i].check = true;
 
-      //  Update the list of active hives
       let alertIndexUpdate = this.alertsService.apiaryAlertsActives.map(alertMap => alertMap._id).indexOf(alert._id);
       this.alertsService.apiaryAlertsActives.splice(alertIndexUpdate, 1);
 
@@ -394,29 +390,26 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
       } else {
         this.notifier.notify('success', 'Alert read');
       }
-    });
+    }); */
   }
 
   onClickNotRead(alert: AlertInterface, i: number) {
-    // Update in database
-    this.alertsService.updateAlert(alert._id, false).subscribe(() => { }, () => { }, () => {
-      // Update in hiveAlerts table
+/*     this.alertsService.updateAlert(alert._id, false).subscribe(() => { }, () => { }, () => {
       this.alertsService.hiveAlerts[i].check = false;
 
-      //  Update the list of active hives
       this.alertsService.apiaryAlertsActives.push(alert);
       if (this.userService.getJwtReponse().country === "FR") {
         this.notifier.notify('success', 'Alerte non lue');
       } else {
         this.notifier.notify('success', 'Alert unread');
       }
-    });
+    }); */
   }
 
   onClickReadAll(alertList: AlertInterface[]) {
     // Update in database
     
-    let obs = alertList.map((_alert) => {
+/*     let obs = alertList.map((_alert) => {
       if (_alert.check === false) {
         // Update in hiveAlerts table
         let alertIndexUpdateCheck = this.alertsService.hiveAlerts.map(alertMap => alertMap._id).indexOf(_alert._id);
@@ -437,7 +430,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
         this.myNotifer.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
       });
     }
-
+ */
   }
 
   readAllHiveAlerts(hive : RucheInterface){
@@ -450,7 +443,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
   }
 
   onClickNotReadAll(alertList: AlertInterface[]) {
-    // Update in database
+/*     // Update in database
     alertList.forEach(alert => {
 
       this.alertsService.updateAlert(alert._id, false).subscribe(() => { }, () => { }, () => {
@@ -470,7 +463,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
           }
         }
       });
-    });
+    }); */
   }
 
   ngOnDestroy(): void {
