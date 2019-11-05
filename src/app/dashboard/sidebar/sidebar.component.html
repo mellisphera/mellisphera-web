@@ -31,11 +31,11 @@ limitations under the License. -->
                     <img src="./assets/icons/ui/melliUx.svg" style="width:50px;margin-left:-5px;"/>
                 </a>
             </li>
-            <li *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('flower')">
+<!--             <li *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('flower')">
                 <a routerLink="./fleurs-floraison" id="flower" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.FLOWER' | translate }}">
                     <img src="./assets/icons/ui/flowers.svg" style="width:50px;margin-left:-5px;" />
                 </a>
-            </li>
+            </li> -->
             <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('admin')">
                 <a routerLink="./admin" data-toggle="tooltip" id="admin" data-placement="top" title="admin">
                     <img src="./assets/img/admin.svg" style="width:30px;height: 30px; margin-top:-6px;" />
