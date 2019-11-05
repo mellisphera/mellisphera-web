@@ -149,7 +149,7 @@ export class RucherService {
                 this.ruchers = apiary.flat().filter(apiary => apiary !== null && apiary.userId === this.user.getIdUserLoged());
                 this.sharingApiary = apiary.flat().filter(apiary => apiary.userId !== this.user.getIdUserLoged());
                 this.allApiaryAccount = apiary.flat().sort((a, b) => {
-                    return a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1;
+                    return a.name.localeCompare(b.name);
                 });
                 this.saveSharingApiary();
                 this.rucherSubject.next(this.ruchers);
