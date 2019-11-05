@@ -22,7 +22,7 @@ limitations under the License. -->
       <thead>
         <tr>
           <th scope="col">{{ 'ALERT_CONF_PAGE.TYPE' | translate}}</th>
-          <th scope="col"></th>
+          <th scope="col">{{ 'ALERT_CONF_PAGE.DESCRIPTION' | translate}}</th>
           <th scope="col">{{ 'ALERT_CONF_PAGE.VALUE' | translate}}</th>
           <th scope="col" class="text-right">{{ 'ALERT_CONF_PAGE.STATUS' | translate}}</th>
         </tr>
@@ -30,7 +30,7 @@ limitations under the License. -->
       <tbody>
         <tr [class]="(isEnable(alert._id) ? 'enable' : 'disable') + ' tr-items'" *ngFor="let alert of alertService.alertTypes">
           <td scope="row">
-            <img width="50px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
+            <img width="40px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
           </td>
           <td>
               <popover-content #myPopover title="{{ alert.icon }}" placement="right" [animation]="true"

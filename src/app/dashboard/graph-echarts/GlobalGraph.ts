@@ -236,6 +236,7 @@ export class GraphGlobal {
     this.snow.unitT = '″';
     this.humidity.min = 0;
     this.rain.unitT = '″';
+    this.wind.unitT = 'mph';
     this.humidity.max = 100;
     this.weight.min = 40;
     this.weight.max = null;
@@ -280,6 +281,7 @@ export class GraphGlobal {
     this.snow.unitT = 'mm';
     this.humidity.max = 100;
     this.weight.min = 0;
+    this.wind.unitT = 'km/h';
     this.humidity.unitT = '%';
     this.weight.unitW = 'Kg';
     this.weight.interval = 10;
@@ -931,8 +933,8 @@ export class GraphGlobal {
       case 'WIND':
         visualMap.type = 'continuous';
         //visualMap.top = 15;
-        visualMap.min = 0;
-        visualMap.max = 20;
+        visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 0;
+        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 125 : 100;
         visualMap.inRange.color = ['#129001', 'yellow', 'red'];
       default:
         break;

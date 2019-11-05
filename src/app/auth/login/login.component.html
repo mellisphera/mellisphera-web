@@ -25,8 +25,8 @@ limitations under the License. -->
                 </div>
                 <button type="submit" name="go" class="btn btn-lg btn-block btn-info">{{getMessageTraduction(messageList.LOGIN)}}</button>
                 <div>
-                    <a (click)="formLogin = !formLogin" href="#">{{getMessageTraduction(messageList.CREATEACCOUNT)}}</a> {{getMessageTraduction(messageList.OR)}} <a href="#"
-                        (click)="activeReset()">{{getMessageTraduction(messageList.RESETPSW)}}</a>
+                    <a (click)="formLogin = !formLogin" href="#">{{getMessageTraduction(messageList.CREATEACCOUNT)}}</a> <!-- {{getMessageTraduction(messageList.OR)}} <a href="#"
+                        (click)="activeReset()">{{getMessageTraduction(messageList.RESETPSW)}}</a> -->
                 </div>
             </form>
             <form *ngIf="!formLogin && !resetPassword" role="login" [formGroup]="signupForm" (ngSubmit)="signup();"
@@ -64,7 +64,7 @@ limitations under the License. -->
                     <a (click)="formLogin = !formLogin" href="#">{{getMessageTraduction(messageList.BACK)}}</a>
                 </div>
             </form>
-            <form *ngIf="resetPassword" role="login" id="resetForm">
+<!--             <form *ngIf="resetPassword" role="login" id="resetForm">
                 <div>
                     <img src="./assets/logo.png" style="width:80px;" alt="" />
                 </div>
@@ -76,7 +76,7 @@ limitations under the License. -->
                         class="btn btn-lg btn-block btn-info">{{getMessageTraduction(messageList.RESET)}}</button>
                     <a (click)="activeReset()" href="#">{{getMessageTraduction(messageList.BACK)}}</a>
                 </div>
-            </form>
+            </form> -->
         </section>
     </section>
 </div>

@@ -112,6 +112,7 @@ export class DailyManagerService {
     this.baseOptionEnv = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliCharts));
     this.baseOptionExt = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliCharts));
     this.baseOptionExt.graphic.push(JSON.parse(JSON.stringify(BASE_OPTIONS.graphic)));
+    console.log(BASE_OPTIONS.baseOptionDailyMelliCharts);
     const dateNowLastSevenDay = new Date();
     dateNowLastSevenDay.setDate(new Date().getDate() - 8);
     this.rangeSevenDay = [
@@ -527,19 +528,20 @@ export class DailyManagerService {
   getChartWindMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getWindAllWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
+        console.log(_temp);
         _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
         // this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.calendar.range = range;
-          option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.maxSpeed));
+          option.series[0].data = _temp.map(_data => new Array(_data.date, this.unitService.convertWindFromUserPref(_data.value.maxSpeed, this.unitService.getUserPref().unitSystem)));
         } else {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.heatmap);
           serie.name = type.name;
-          serie.data = _temp.map(_data => new Array(_data.date, _data.value.maxSpeed));
+          serie.data = _temp.map(_data => new Array(_data.date, _data.value.maxSpeed * 3.6));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
@@ -1022,6 +1024,10 @@ export class DailyManagerService {
 
             }
             option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+/*             if (joinData.length > 0) {
+            } else {
+              option.calendar.range = new Date().getFullYear() + '-' + new Date().getMonth();
+            } */
             option.calendar.range = range;
             option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
             option.legend.data.push(serieComplete.name);

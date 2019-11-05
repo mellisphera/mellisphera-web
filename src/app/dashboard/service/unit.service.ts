@@ -91,6 +91,16 @@ convertTempFromUsePref(temp: number, unit: string, round?: boolean): number {
   return value;
 }
 
+convertWindFromUserPref(wind: number, unit: string, round?: boolean): number {
+  let value;
+  if (unit === 'IMPERIAL') {
+    value = round ? this.getValRound(wind * 2.276) : wind * 2,276;
+  } else {
+    value =  round ? this.getValRound(wind * 3.6) : wind * 3.6;
+  }
+  return value;
+}
+
   /**
    *
    *

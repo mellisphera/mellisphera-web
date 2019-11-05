@@ -28,17 +28,17 @@ limitations under the License. -->
             <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
             <li (click)="focus('home')">
                 <a routerLink="./home/info-apiary" data-toggle="tooltip" id="home" data-placement="top" title="{{ 'SIDEBAR.APIARY' | translate }}">
-                    <img src="./assets/icons/ui/melliUx.png" style="width:50px;margin-left:-5px;"/>
+                    <img src="./assets/icons/ui/melliUx.svg" style="width:50px;margin-left:-5px;"/>
                 </a>
             </li>
             <li *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('flower')">
                 <a routerLink="./fleurs-floraison" id="flower" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.FLOWER' | translate }}">
-                    <img src="./assets/icons/ui/flowers.png" style="width:50px;margin-left:-5px;" />
+                    <img src="./assets/icons/ui/flowers.svg" style="width:50px;margin-left:-5px;" />
                 </a>
             </li>
             <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('admin')">
                 <a routerLink="./admin" data-toggle="tooltip" id="admin" data-placement="top" title="admin">
-                    <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;" />
+                    <img src="./assets/img/admin.svg" style="width:30px;height: 30px; margin-top:-6px;" />
                 </a>
             </li>
             <li *ngIf="this.userService.getUser() == 'fstl'">
@@ -53,7 +53,7 @@ limitations under the License. -->
             </li> -->
             <li (click)="focus('melli-charts')">
                 <a id="melli-charts" routerLink="./melli-charts" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.DATA' | translate }}">
-                    <img src="./assets/icons/ui/melliCharts.png" style="width:50px;margin-left:-5px;" />
+                    <img src="./assets/icons/ui/melliCharts.svg" style="width:50px;margin-left:-5px;" />
                 </a>
             </li>
             <li (click)="focus('alertConf')">

@@ -146,6 +146,8 @@ export const BASE_OPTIONS = {
     xAxis: {
         type: 'time',
         boundaryGap: false,
+       // min: 'dataMin',
+        max: new Date(),
         axisLine: { onZero: true },
         position: 'bottom',
         minInterval: 1,

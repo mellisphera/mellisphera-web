@@ -31,7 +31,7 @@ export const PATH = {
   templateUrl: './hive.component.html',
   styleUrls: ['./hive.component.css']
 })
-export class HiveComponent implements OnInit {
+export class HiveComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DailyComponent) dailyComponent: DailyComponent;
   @ViewChild(HourlyComponent) hourlyComponent: HourlyComponent;
@@ -45,13 +45,14 @@ export class HiveComponent implements OnInit {
   ngOnInit() {
 
   }
-ngAfterViewInit(): void {
-  if (PATH.BROOD.test(this.routingHistory.getPreviousUrl()) || PATH.STACK.test(this.routingHistory.getPreviousUrl())) {
-    console.log(this.routingHistory.getPreviousUrl());
-    console.log(this.dailyComponent.calendarElements);
-    this.setRangeChart();
+
+  ngAfterViewInit(): void {
+    if (PATH.BROOD.test(this.routingHistory.getPreviousUrl()) || PATH.STACK.test(this.routingHistory.getPreviousUrl())) {
+      console.log(this.routingHistory.getPreviousUrl());
+      console.log(this.dailyComponent.calendarElements);
+      this.setRangeChart();
+    }
   }
-}
 
   /**
    *
@@ -67,11 +68,11 @@ ngAfterViewInit(): void {
     // this.hourlyComponent.loadHourlyData(true, '', false);
   }
 
-  
-   setRangeChart() {
-/*     this.dailyComponent.loadDailyDeviceData(true);
-    this.dailyComponent.loadDailyOtherData(true);
-    this.dailyComponent.loadDailyEnvData(true); */
+
+  setRangeChart() {
+    /*     this.dailyComponent.loadDailyDeviceData(true);
+        this.dailyComponent.loadDailyOtherData(true);
+        this.dailyComponent.loadDailyEnvData(true); */
     this.setHeightCalendar(() => {
       this.dailyComponent.loadDailyDeviceData(true);
       this.dailyComponent.loadDailyOtherData(true);
@@ -79,19 +80,19 @@ ngAfterViewInit(): void {
     });
 
 
-    
-     // this.hourlyComponent.loadHourlyData(true, '', true);
-   }
 
-   getHeightCalendar(): number {
+    // this.hourlyComponent.loadHourlyData(true, '', true);
+  }
+
+  getHeightCalendar(): number {
     return 250 * (this.melliDate.getRangeForReqest()[1].getMonth() - this.melliDate.getRangeForReqest()[0].getMonth());
   }
 
   setHeightCalendar(loadCalendar: Function) {
     const nbDay: number = (parseInt(this.melliDate.getDayDiffRangeRequest(), 10) / 7) + 3;
     console.log(nbDay * 40);
-    const height: number = (nbDay * 40) + 150 ;
-    for(let i = 0; i < this.dailyComponent.calendarElements.length; i++ ) {
+    const height: number = (nbDay * 40) + 150;
+    for (let i = 0; i < this.dailyComponent.calendarElements.length; i++) {
       this.render.setStyle(this.dailyComponent.calendarElements[i], 'height', height + 'px');
     }
     this.dailyComponent.melliHive.getDailyDeviceChartInstance().dispose();

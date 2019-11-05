@@ -373,9 +373,10 @@
     },
 
     "ALERT_CONF_PAGE": {
-        "TYPE": "Type",
+        "TYPE": "Icône",
         "VALUE": "Valeur",
+        "DESCRIPTION": "Description",
         "STATUS": "Status",
-        "SAVE": "Save modification"
+        "SAVE": "Sauvegarder les modifications"
     }
 }

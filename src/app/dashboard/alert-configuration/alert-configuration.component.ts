@@ -70,10 +70,11 @@ export class AlertConfigurationComponent implements OnInit {
    */
   getStep(alertId: string): number {
     try {
+      const alert = this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0];
       if (this.isMetric()) {
-        return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].stepMet;
+        return alert.stepMet;
       } else {
-        return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].stepImp;
+        return alert.stepImp;
       }
     } catch {}
   }
@@ -87,9 +88,11 @@ export class AlertConfigurationComponent implements OnInit {
     let currentAlaert =  this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0];
     try {
       if (this.isMetric()) {
-      return  this.alertService.alertUser.alertConf[alertId].valueMet + ' ' +  currentAlaert.unitMet;
+      return  this.alertService.alertUser.alertConf[alertId].valueMet + ' ' +
+      (currentAlaert.unitMet === 'day' ? this.getLabelDay() : currentAlaert.unitMet);
       } else {
-      return  this.alertService.alertUser.alertConf[alertId].valueImp + ' ' +  currentAlaert.unitImp;
+      return  this.alertService.alertUser.alertConf[alertId].valueImp + ' ' +
+      (currentAlaert.unitImp === 'day' ? this.getLabelDay() : currentAlaert.unitImp);
       }
     } catch {}
   }
@@ -120,6 +123,15 @@ export class AlertConfigurationComponent implements OnInit {
       this.alertService.alertUser.alertConf[alertId].enable = true;
     }
   }
+
+  getLabelDay(): string {
+    if (this.userPrefService.getUserPref().lang.toUpperCase().indexOf('FR') !== -1) {
+      return 'jours';
+    } else {
+      return 'days';
+    }
+  }
+
 
   onDisable(alertId: string): void {
     if (this.alertService.alertUser.alertConf[alertId].enable) {

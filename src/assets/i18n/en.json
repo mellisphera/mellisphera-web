@@ -372,7 +372,8 @@
         }
     },
     "ALERT_CONF_PAGE": {
-        "TYPE": "Type",
+        "TYPE": "Icon",
+        "DESCRIPTION": "Description",
         "VALUE": "Value",
         "STATUS": "Status",
         "SAVE": "Save changes"

@@ -63,6 +63,7 @@ export class AlertsService {
         this.getAllTypeAlerts().subscribe(
             _alerts => {
                 this.alertTypes = _alerts;
+                console.log(this.alertTypes);
             }
         );
         this.getAlertConfByUser(this.userService.getIdUserLoged()).subscribe(
@@ -99,9 +100,9 @@ export class AlertsService {
         this.mapPictoSvg.set('Storm', ALERTS_ICONS.Storm);
         this.mapPictoSvg.set('Wind3', ALERTS_ICONS.Wind3);
         this.mapPictoSvg.set('ColdPeriod2', ALERTS_ICONS.ColdPeriod2);
-        this.mapPictoSvg.set('ColdPeriod1', ALERTS_ICONS.ColdPeriod);
+        this.mapPictoSvg.set('ColdPeriod', ALERTS_ICONS.ColdPeriod);
         this.mapPictoSvg.set('WIneg', ALERTS_ICONS.WIneg);
-        this.mapPictoSvg.set("StopWeather", ALERTS_ICONS.StopWeather);
+        this.mapPictoSvg.set('StopWeather', ALERTS_ICONS.StopWeather);
         this.mapPictoSvg.set('WIpos', ALERTS_ICONS.WIpos);
         this.mapPictoSvg.set('Rswarm', ALERTS_ICONS.Rswarm);
         this.mapPictoSvg.set('DConnect', ALERTS_ICONS.DConnect);
@@ -199,6 +200,7 @@ export class AlertsService {
             return msgFR.replace(/{VAL}/g, this.getUserValue(alertId)).replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef);
         } else {
             let msgEN: string = NOTIF_CODE[args.code].EN.Message;
+            console.log(args);
             return msgEN.replace(/{VAL}/g, this.getUserValue(alertId)).replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef);
         }
 
@@ -218,10 +220,12 @@ export class AlertsService {
         const currentAlert =  this.alertTypes.filter(_alert => _alert._id === alertId)[0];
         try {
           if (this.isMetric()) {
-              console.log(this.alertUser.alertConf[alertId].basicValueMet + ' ' +  currentAlert.unitMet);
-              return  this.alertUser.alertConf[alertId].basicValueMet + ' ' +  currentAlert.unitMet;
+              console.log(this.alertUser.alertConf);
+              console.log(alertId);
+              console.log(this.alertUser.alertConf[alertId].valueMet + ' ' +  currentAlert.unitMet);
+              return  this.alertUser.alertConf[alertId].valueMet + ' ' +  currentAlert.unitMet;
           } else {
-                return  this.alertUser.alertConf[alertId].basicValueImp + ' ' +  currentAlert.unitImp;
+                return  this.alertUser.alertConf[alertId].valueImp + ' ' +  currentAlert.unitImp;
           }
         } catch {}
       }

@@ -171,11 +171,11 @@ export const NOTIF_CODE = {
         "icon": "LowBattery",
         "FR": {
             "Subject": "Batterie faible",
-            "Message": "Remplacer la batterie de {VAL}"
+            "Message": "Remplacer la batterie de {REF}"
         },
         "EN": {
             "Subject": "Low battery",
-            "Message": "Replace the battery of {VAL}" 
+            "Message": "Replace the battery of {REF}" 
         }
     },
 
@@ -183,7 +183,7 @@ export const NOTIF_CODE = {
         "icon": "DConnect",
         "FR": {
             "Subject": "Déconnexion",
-            "Message": "{REF} déconnecté depuis {DATE}",
+            "Message": "{REF} déconnecté depuis le {DATE}",
             "Unit": " jours"
         },
         "EN": {
@@ -197,7 +197,7 @@ export const NOTIF_CODE = {
         "icon": "DConnect",
         "FR": {
             "Subject": "Mauvais signal",
-            "Message": "{REF} mauvais signal depuis {DATE}",
+            "Message": "{REF} mauvais signal depuis le {DATE}",
             "Unit": " jours"
         },
         "EN": {

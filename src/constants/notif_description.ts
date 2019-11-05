@@ -26,13 +26,15 @@ export const NOTIF_DESCRIPTION5 = {
 
         Snow: "Déclenchée lorsque les précipitations neigeuses dépassent le seuil choisi le prochain jour.",
 
-        Wind: "Déclenche lorsque le vent dpassent le seuil choisi dans les jours à venir. ",
+        Wind: "Déclenchée lorsque le vent dépassent le seuil choisi le prochain jour.",
 
         ColdPeriod: "Déclenchée lorsqu'une période froide à venir est détectée, c'est-à-dire quelques jours où les températures seront bien en dessous des normales de saison. ",
         
         Hmin: "Déclenchée lorsque l'humidité interne est en dessous du seuil choisi.",
 
-        Hmax: "Déclenchée lorsque l'humidité interne dépasse le seuil choisi."
+        Hmax: "Déclenchée lorsque l'humidité interne dépasse le seuil choisi.",
+
+        Stolen: "Déclenchée lorsque le poids de votre ruche devient anormalement faible."
     },
     EN: {
         Honeydew: "Triggered when the weight contribution to the hive exceeds the chosen threshold during the last week.",

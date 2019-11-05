@@ -88,6 +88,7 @@ export class StackComponent implements OnInit {
 
     let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxis.gridIndex = 0;
+    xAxis.max = this.melliDate.getRangeForReqest()[1];
     xAxis.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getDailyDate(new Date(value));
     };
@@ -103,6 +104,7 @@ export class StackComponent implements OnInit {
 
     let xAxisTemp = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxisTemp.gridIndex = 1;
+    xAxis.max = this.melliDate.getRangeForReqest()[1];
     xAxisTemp.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getDailyDate(new Date(value));
     };
@@ -118,6 +120,7 @@ export class StackComponent implements OnInit {
 
     let xAxisHum = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxisHum.gridIndex = 2;
+    xAxis.max = this.melliDate.getRangeForReqest()[1];
     xAxisHum.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getDailyDate(new Date(value));
     };
@@ -175,16 +178,23 @@ export class StackComponent implements OnInit {
     let obsArray = [];
     obsArray = this.stackService.getHiveSelect().map(_hive => {
       return [
-        { hive: _hive, name: _hive.name + ' / TempExt', obs: this.recordService.getTempExtByHive(_hive._id, this.melliDate.getRangeForReqest()) },
-        { hive: _hive, name: _hive.name + ' / TempInt', obs: this.recordService.getTempIntByHive(_hive._id, this.melliDate.getRangeForReqest()) },
-        { hive: _hive, name: _hive.name + ' / Weight', obs: this.recordService.getWeightByHive(_hive._id, this.melliDate.getRangeForReqest()) },
-        { hive: _hive, name: _hive.name + ' / Hint', obs: this.recordService.getHintIntByHive(_hive._id, this.melliDate.getRangeForReqest()) }
+        { hive: _hive, 
+          name: _hive.name + ' / TempExt',
+          obs: this.recordService.getTempExtByHive(_hive._id, this.melliDate.getRangeForReqest()) },
+        { hive: _hive, 
+          name: _hive.name + ' / TempInt',
+          obs: this.recordService.getTempIntByHive(_hive._id, this.melliDate.getRangeForReqest()) },
+        { hive: _hive, 
+          name: _hive.name + ' / Weight',
+          obs: this.recordService.getWeightByHive(_hive._id, this.melliDate.getRangeForReqest()) },
+        { hive: _hive, 
+          name: _hive.name + ' / Hint',
+          obs: this.recordService.getHintIntByHive(_hive._id, this.melliDate.getRangeForReqest()) }
       ];
     }).flat();
     console.log(obsArray)
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _records => {
-        console.log(_records);
         _records.forEach((_elt: any[], index) => {
           this.getSerieByData(_elt, obsArray[index].name, (serieComplete: any) => {
             serieComplete.yAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
@@ -192,6 +202,9 @@ export class StackComponent implements OnInit {
             serieComplete.itemStyle = {
               color: this.stackService.getColorByIndex(this.getHiveIndex(obsArray[index].hive), obsArray[index].hive)
             };
+            this.options.xAxis.forEach(_xAxe => {
+              _xAxe.max = this.melliDate.getRangeForReqest()[1];
+            });
             const indexSerie = this.options.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             if (indexSerie !== -1) {
               this.options.series[indexSerie] = Object.assign({}, serieComplete);
@@ -203,7 +216,6 @@ export class StackComponent implements OnInit {
       },
       () => { },
       () => {
-        console.log(this.options);
         next(this.options);
       }
     );
@@ -219,10 +231,14 @@ export class StackComponent implements OnInit {
   loadDataByHive(hive: RucheInterface) {
     this.stackService.getEchartInstance().showLoading();
     const obsArray: Array<any> = [
-      { name: hive.name + ' / TempExt', obs: this.recordService.getTempExtByHive(hive._id, this.melliDate.getRangeForReqest()) },
-      { name: hive.name + ' / TempInt', obs: this.recordService.getTempIntByHive(hive._id, this.melliDate.getRangeForReqest()) },
-      { name: hive.name + ' / Weight', obs: this.recordService.getWeightByHive(hive._id, this.melliDate.getRangeForReqest()) },
-      { name: hive.name + ' / Hint', obs: this.recordService.getHintIntByHive(hive._id, this.melliDate.getRangeForReqest()) }
+      { name: hive.name + ' / TempExt',
+      obs: this.recordService.getTempExtByHive(hive._id, this.melliDate.getRangeForReqest()) },
+      { name: hive.name + ' / TempInt',
+      obs: this.recordService.getTempIntByHive(hive._id, this.melliDate.getRangeForReqest()) },
+      { name: hive.name + ' / Weight',
+      obs: this.recordService.getWeightByHive(hive._id, this.melliDate.getRangeForReqest()) },
+      { name: hive.name + ' / Hint',
+      obs: this.recordService.getHintIntByHive(hive._id, this.melliDate.getRangeForReqest()) }
     ];
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _record => {
@@ -239,6 +255,9 @@ export class StackComponent implements OnInit {
       },
       () => { },
       () => {
+        this.options.xAxis.forEach(_x => {
+          _x.max = this.melliDate.getRangeForReqest()[1];
+        });
         this.stackService.getEchartInstance().setOption(this.options);
         this.stackService.getEchartInstance().hideLoading();
         console.log(this.options.series);
