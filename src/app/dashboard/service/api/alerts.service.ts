@@ -68,7 +68,6 @@ export class AlertsService {
         this.getAlertConfByUser(this.userService.getIdUserLoged()).subscribe(
             _alertConf => {
               this.alertUser = _alertConf;
-              console.log(this.alertUser);
             }
           );
         this.mapPictoSvg = new Map();
@@ -84,6 +83,7 @@ export class AlertsService {
         this.mapPictoSvg.set('Swarm', ALERTS_ICONS.Swarm);
         this.mapPictoSvg.set('Honeydew', ALERTS_ICONS.Honeydew);
         this.mapPictoSvg.set('Hmin', ALERTS_ICONS.Hmin);
+        this.mapPictoSvg.set("Stolen", ALERTS_ICONS.Stolen);
         this.mapPictoSvg.set('Tmin', ALERTS_ICONS.Tmin);
         this.mapPictoSvg.set('Tmax', ALERTS_ICONS.Tmax);
         this.mapPictoSvg.set('LowBrood', ALERTS_ICONS.LowBrood);
@@ -178,7 +178,6 @@ export class AlertsService {
                 this.numberApiaryAlertsActives = data.filter(alert => alert.check === false).length;
               },
               (err) => {
-                console.log(err);
               },
               () => {
               }
@@ -212,10 +211,7 @@ export class AlertsService {
      * @memberof AlertsService
      */
     getMessageAlertByCode(code: string): string {
-        console.log(code);
         const alertId = this.alertTypes.filter(_alert => _alert.icon == NOTIF_CODE[code].icon)[0]._id;
-        console.log(NOTIF_CODE[code]);
-        console.log(alertId);
         if (this.userService.getJwtReponse().country === "FR") {
             return NOTIF_CODE[code].FR.Message + ' ' + this.getUserValue(alertId);
         } else {
