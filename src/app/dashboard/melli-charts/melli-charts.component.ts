@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, Renderer2, ViewChild, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, AfterViewChecked, AfterViewInit, AfterContentChecked } from '@angular/core';
 import { RucheService } from '../service/api/ruche.service';
 import { RucherService } from '../service/api/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
@@ -144,6 +144,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
             return hives;
           }).subscribe((hives) => {
             this.rucherService.rucheService.ruchesAllApiary = hives;
+            console.log(document.getElementById(this.melliChartHive.getHiveSelect().name));
+
           });
         });
       }
@@ -158,6 +160,19 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
 
+  ngAfterContentChecked(): void {
+    //Called after every check of the component's or directive's content.
+    //Add 'implements AfterContentChecked' to the class.
+ /*    const apiaryName = this.rucherService.ruchers.filter(_apiary => _apiary._id === this.melliChartHive.getHiveSelect().apiaryId)[0];
+    console.log(apiaryName.name); */
+  }
+
+
+  ifCurrentApiary(apiaryId: string): string {
+    try {
+      return apiaryId === this.melliChartHive.getHiveSelect().apiaryId ? 'in' : '';
+    } catch{}
+  }
 
   onCloseDatePicker(): void {
     this.dateDropdown.classList.add('open');
