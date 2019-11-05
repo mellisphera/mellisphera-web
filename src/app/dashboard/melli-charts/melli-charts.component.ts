@@ -160,14 +160,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
 
-  ngAfterContentChecked(): void {
-    //Called after every check of the component's or directive's content.
-    //Add 'implements AfterContentChecked' to the class.
- /*    const apiaryName = this.rucherService.ruchers.filter(_apiary => _apiary._id === this.melliChartHive.getHiveSelect().apiaryId)[0];
-    console.log(apiaryName.name); */
-  }
-
-
   ifCurrentApiary(apiaryId: string): string {
     try {
       return apiaryId === this.melliChartHive.getHiveSelect().apiaryId ? 'in' : '';
