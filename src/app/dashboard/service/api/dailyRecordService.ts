@@ -23,6 +23,7 @@ import { UserloggedService } from '../../../userlogged.service';
 import { UnitService } from '../unit.service';
 import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 import { RucherService } from './rucher.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class DailyRecordService {
@@ -46,6 +47,7 @@ export class DailyRecordService {
     constructor(private http: HttpClient,
         private user: UserloggedService,
         private unitService: UnitService,
+        private translateService: TranslateService,
         private rucherService: RucherService,
         private graphGlobal: GraphGlobal) {
         this.statusLoading = false;
@@ -432,9 +434,9 @@ export class DailyRecordService {
         const selectHive = this.dailyRecordsDayD3D7[index].filter(elt => elt.hiveId === hiveId)[0];
         if(selectHive !== undefined){
             if((selectHive.brood.toString().split('.')[1] !== undefined )&& (selectHive.brood.toString().split('.')[1][0] !== '0')){
-                if (this.user.getJwtReponse().country === "FR"){
+                if (this.translateService.currentLang === 'fr'){
                     return selectHive.brood.toString().split('.')[0] + ',' + selectHive.brood.toString().split('.')[1][0] + '%';
-                }else{
+                } else {
                     return selectHive.brood.toString().split('.')[0] + '.' + selectHive.brood.toString().split('.')[1][0] + '%';
                 }
             }else{

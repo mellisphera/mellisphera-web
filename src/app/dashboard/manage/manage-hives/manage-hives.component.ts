@@ -28,6 +28,7 @@ import { RucheInterface } from '../../../_model/ruche';
 import { NotifierService } from 'angular-notifier';
 import { MyNotifierService } from '../../service/my-notifier.service';
 import { NotifList } from '../../../../constants/notify';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-manage-hives',
@@ -70,7 +71,7 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
     private userService: UserloggedService,
     public observationService: ObservationService,
     public rucheService: RucheService,
-    private authService: AuthService,
+    private translateService: TranslateService,
     private notifyService: NotifierService,
     private myNotifer: MyNotifierService) {
 
@@ -128,9 +129,9 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
         let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive._id).indexOf(ruche._id);
         this.rucheService.ruchesAllApiary.splice(hiveIndexUpdateListAllApiary,1);
         this.rucheService.emitHiveSubject();
-        if(this.userService.getJwtReponse().country === "FR"){
+        if (this.translateService.currentLang === 'fr') {
           this.notify.notify('success', 'Ruche supprimée');
-        }else{
+        } else {
           this.notify.notify('success', 'Deleted Hive');
         }
       });
@@ -165,9 +166,9 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
       this.rucheService.ruches.push(hive);
     }, () => { }, () => {
       this.rucheService.emitHiveSubject();
-      if(this.userService.getJwtReponse().country === "FR"){
+      if (this.translateService.currentLang === 'fr'){
         this.notify.notify('success', 'Ruche créée');
-      }else{
+      } else {
         this.notify.notify('success', 'Crated Hive');
       }
     });
@@ -210,9 +211,9 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
         let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive._id).indexOf(this.selectHive._id);
         this.rucheService.ruchesAllApiary[hiveIndexUpdateListAllApiary] = this.selectHive;
 
-        if(this.userService.getJwtReponse().country === "FR"){
+        if (this.translateService.currentLang === 'fr') {
           this.notify.notify('success', 'Ruche mis à jour');
-        }else{
+        } else {
           this.notify.notify('success', 'Updated Hive');
         }
       });

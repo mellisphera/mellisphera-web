@@ -375,7 +375,7 @@
     "ALERT_CONF_PAGE": {
         "TYPE": "Icône",
         "VALUE": "Valeur",
-        "NAME": "Name",
+        "NAME": "Nom",
         "DESCRIPTION": "Description",
         "STATUS": "Status",
         "SAVE": "Sauvegarder les modifications"

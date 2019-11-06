@@ -66,11 +66,13 @@ export class AuthService {
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
         this.translateService.addLangs(['en', 'fr']);
-         if (this.jwtReponse.country === null || this.jwtReponse.country === 'US') {
+        console.log(this.jwtReponse.lang);
+         if (this.jwtReponse.lang === null || this.jwtReponse.lang.toLowerCase().indexOf('en') !== -1) {
            this.translateService.use('en');
-        } else if (this.jwtReponse.country === 'FR') {
+        } else if (this.jwtReponse.lang.toLowerCase().indexOf('fr') === -1) {
           this.translateService.use('fr');
         }
+        console.log(this.translateService.currentLang);
         console.log(this.jwtReponse);
         if (this.jwtReponse.connexions === 1) {
           this.userService.setWizardActive(true);

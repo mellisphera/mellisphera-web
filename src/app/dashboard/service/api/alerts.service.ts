@@ -22,6 +22,7 @@ import { UserloggedService } from '../../../userlogged.service';
 import { NOTIF_CODE } from '../../../../constants/notif_code';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { UnitService } from '../unit.service';
+import { TranslateService } from '@ngx-translate/core';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -55,7 +56,10 @@ export class AlertsService {
     // Alerts by id hive for one apiary
     public alertsByHiveByApiary : Map<string,AlertInterface[]>;
 
-    constructor(private http: HttpClient, private userService: UserloggedService,private unitService: UnitService,
+    constructor(private http: HttpClient, 
+        private userService: UserloggedService,
+        private unitService: UnitService,
+        private translateService: TranslateService,
         private userPrefService: UserParamsService) {
         this.alertSubject = new BehaviorSubject([]);
         this.hiveAlerts = [];
@@ -195,7 +199,7 @@ export class AlertsService {
      */
     getMessageAlertByCode(args: AlertInterface): string {
         const alertId = this.alertTypes.filter(_alert => _alert.icon == NOTIF_CODE[args.code].icon)[0]._id;
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
             let msgFR: string = NOTIF_CODE[args.code].FR.Message;
             return msgFR.replace(/{VAL}/g, this.getUserValue(alertId)).replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef);
         } else {

@@ -152,9 +152,9 @@ export class ManageApiarysComponent implements OnInit, OnDestroy {
         this.rucherService.emitApiarySubject();
         this.rucheService.getHivesByApiary(this.rucherService.getCurrentApiary());
         this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
-        if(this.userService.getJwtReponse().country === "FR"){
+        if (this.translateService.currentLang === 'fr') {
             this.notify.notify('success', 'Rucher créé');
-        }else{
+        } else {
             this.notify.notify('success', 'Created Apaiary');
         }
         this.photoApiary = null;
@@ -195,12 +195,12 @@ onEditApiary() {
             this.photoApiary = null;
             this.editPhotoApiary = null;
             this.rucherService.rucherSelectUpdate = this.apiaryUpdate;
-            if(this.rucherService.rucherSelectUpdate._id === this.rucherService.getCurrentApiary()){
+            if (this.rucherService.rucherSelectUpdate._id === this.rucherService.getCurrentApiary()) {
               this.rucherService.rucher = this.apiaryUpdate;
           }
-            if(this.userService.getJwtReponse().country === "FR"){
+            if (this.translateService.currentLang === 'fr') {
                 this.notify.notify('success', 'Rucher mis à jour');
-            }else{
+            } else {
                 this.notify.notify('success', 'Updated Apiary');
             }
             this.initForm();
@@ -218,7 +218,7 @@ deleteApiary(apiary : RucherModel) {
         const index = this.rucherService.ruchers.indexOf(apiary);
         this.rucherService.ruchers.splice(index, 1);
         this.rucherService.emitApiarySubject();
-        if(this.userService.getJwtReponse().country === "FR"){
+        if(this.translateService.currentLang === 'fr'){
             this.notify.notify('success', 'Rucher supprimé');
         }else{
             this.notify.notify('success', 'Deleted Apaiary');

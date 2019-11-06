@@ -47,11 +47,11 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     public translateService: TranslateService,
     private formBuilder: FormBuilder) {
     this.notifConfig = [
-      { name: 'Rain', icon: './assets/pictos_alerts/newIcones/Rain_1.svg', enable: true, value: [0, 10]},
-      { name: 'Snow', icon: './assets/pictos_alerts/newIcones/Snow_1.svg', enable: true, value: [0, 10]},
-      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10]},
-      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10]},
-      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10]}
+      { name: 'Rain', icon: './assets/pictos_alerts/newIcones/Rain_1.svg', enable: true, value: [0, 10] },
+      { name: 'Snow', icon: './assets/pictos_alerts/newIcones/Snow_1.svg', enable: true, value: [0, 10] },
+      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10] },
+      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10] },
+      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10] }
 
     ];
     this.notifyService = notifier;
@@ -74,12 +74,16 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     if (this.translateService.currentLang === 'fr') {
       this.translateService.use('en');
       this.userService.setCountry('en');
-      this.userPref.lang = 'FR-fr';
+      this.userPref.lang = 'EN-en';
+      this.userConfig.setLang('en');
     } else {
       this.translateService.use('fr');
       this.userService.setCountry('fr');
       this.userPref.lang = 'FR-fr';
+      this.userConfig.setLang('fr');
     }
+    this.saveUserPref();
+
     this.userConfig.emitPrefSubject();
     // translateService.use('en')
     // translateService.use('fr')
@@ -114,7 +118,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   setNewPassword() {
     this.userConfig.updatePassword(this.passwordForm.get('confirmPassword').value).subscribe(
       () => { }, () => { }, () => {
-        if (this.userService.getJwtReponse().country === "FR") {
+        if (this.translateService.currentLang === 'fr') {
           this.notifier.notify('success', 'Mot de passe sauvegardé');
         } else {
           this.notifier.notify('success', 'Password saved');
@@ -132,9 +136,10 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
         if (this.authService.jwtReponse === undefined) {
           this.authService.jwtReponse = JSON.parse(window.sessionStorage.getItem('jwtReponse'));
         }
+        this.authService.jwtReponse.lang = this.userPref.lang;
         this.authService.jwtReponse.userPref = this.userPref;
         this.userConfig.emitPrefSubject();
-        if (this.userService.getJwtReponse().country === "FR") {
+        if (this.translateService.currentLang === 'fr') {
           this.notifier.notify('success', 'Paramètres sauvegardés');
         } else {
           this.notifier.notify('success', 'Settings saved');

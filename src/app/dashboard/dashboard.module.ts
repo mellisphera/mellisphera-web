@@ -23,7 +23,6 @@ import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';
 import { CapteurService } from './service/api/capteur.service';
-import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { SearchFleurPipe, searchFleurByDate, searchFleurByType } from './fleurs-floraison/service/search-fleur.pipe';
@@ -105,7 +104,6 @@ const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options
     SearchFleurPipe,
     searchFleurByDate,
     searchFleurByType,
-    StackApiaryComponent,
     FleursFloraisonComponent,
     WizardComponent,
     PreferenceConfigComponent,

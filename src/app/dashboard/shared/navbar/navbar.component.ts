@@ -138,10 +138,10 @@ export class NavbarComponent implements OnInit {
         this.maxSizePicture = 10048576;
         this.cityByZipCode = [];
         this.username = userService.getUser();
-        if (this.userService.getJwtReponse().country === "FR") {
-            this.translateService.use("fr");
+        if (this.userService.getJwtReponse().lang.indexOf('fr') !== -1) {
+            this.translateService.use('fr');
         } else {
-            this.translateService.use("en");
+            this.translateService.use('en');
         }
         this.editPhotoApiary = null;
         this.apiaryUpdate = this.newApiary = {
@@ -437,7 +437,7 @@ export class NavbarComponent implements OnInit {
     apiarySubmit() {
         const formValue = this.rucherForm.value;
         if (this.photoApiary == null) {
-            if (this.userService.getJwtReponse().country === "FR") {
+            if (this.translateService.currentLang === 'fr') {
                 this.newApiary.photo = './assets/imageClient/background_draw_color_FR.png';
             } else {
                 this.newApiary.photo = './assets/imageClient/background_draw_color.png';
@@ -478,7 +478,7 @@ export class NavbarComponent implements OnInit {
                 this.router.navigate(['dashboard/home/info-apiary']);
                 this.desactiveButtonHomePageActiveNameAndAlerts();
             }
-            if (this.userService.getJwtReponse().country === "FR") {
+            if (this.translateService.currentLang === 'fr') {
                 this.notifier.notify('success', 'Rucher créé');
             } else {
                 this.notifier.notify('success', 'Created Apaiary');
@@ -536,7 +536,7 @@ export class NavbarComponent implements OnInit {
                     if (this.rucherService.rucherSelectUpdate === this.rucherService.rucher) {
                         this.rucherService.rucher = this.apiaryUpdate;
                     }
-                    if (this.userService.getJwtReponse().country === "FR") {
+                    if (this.translateService.currentLang === 'fr') {
                         this.notifier.notify('success', 'Rucher mis à jour');
                     } else {
                         this.notifier.notify('success', 'Updated Apiary');
@@ -622,7 +622,7 @@ export class NavbarComponent implements OnInit {
                 this.rucherService.allApiaryAccount.splice(indexApiaryAllAccount, 1);
                 this.rucherService.ruchers.splice(indexApiaryUser, 1);
                 this.rucherService.emitApiarySubject();
-                if (this.userService.getJwtReponse().country === "FR") {
+                if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Rucher supprimé');
                 } else {
                     this.notifier.notify('success', 'Deleted Apaiary');
@@ -731,7 +731,7 @@ export class NavbarComponent implements OnInit {
 
             }, () => { }, () => {
                 this.rucheService.emitHiveSubject();
-                if (this.userService.getJwtReponse().country === "FR") {
+                if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Ruche créée');
                 } else {
                     this.notifier.notify('success', 'Crated Hive');
@@ -826,7 +826,7 @@ export class NavbarComponent implements OnInit {
                 let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive._id).indexOf(this.selectHive._id);
                 this.rucheService.ruchesAllApiary[hiveIndexUpdateListAllApiary] = this.selectHive;
 
-                if (this.userService.getJwtReponse().country === "FR") {
+                if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Ruche mis à jour');
                 } else {
                     this.notifier.notify('success', 'Updated Hive');
@@ -883,7 +883,7 @@ export class NavbarComponent implements OnInit {
                     this.newRucheForm.setValue(donnée);
                 }
 
-                if (this.userService.getJwtReponse().country === "FR") {
+                if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Ruche supprimée');
                 } else {
                     this.notifier.notify('success', 'Deleted Hive');
@@ -1006,7 +1006,7 @@ export class NavbarComponent implements OnInit {
             }, () => { }, () => {
                 this.initNavbarNoteForm();
                 this.newNoteCheckbox = false;
-                if (this.userService.getJwtReponse().country === "FR") {
+                if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Observation créée');
                 } else {
                     this.notifier.notify('success', 'Created Observation');
@@ -1049,7 +1049,7 @@ export class NavbarComponent implements OnInit {
             }, () => { }, () => {
                 this.initNavbarNoteForm();
                 this.newNoteCheckbox = false;
-                if (this.userService.getJwtReponse().country === "FR") {
+                if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Action créée');
                 } else {
                     this.notifier.notify('success', 'Created Action');
@@ -1087,7 +1087,7 @@ export class NavbarComponent implements OnInit {
             }, () => { }, () => {
                 this.initNavbarNoteForm();
                 this.newNoteCheckbox = false;
-                if (this.userService.getJwtReponse().country === "FR") {
+                if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Note créée');
                 } else {
                     this.notifier.notify('success', 'Created Note');
@@ -1205,7 +1205,7 @@ export class NavbarComponent implements OnInit {
             this.capteurService.capteur.type = sensorType.trim();
             this.initSensorForm();
             this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
-                if (this.userService.getJwtReponse().country === "FR") {
+                if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Capteur créé');
                 } else {
                     this.notifier.notify('success', 'Created sensor');
@@ -1358,7 +1358,7 @@ export class NavbarComponent implements OnInit {
                 let indexSensorSelect = this.capteurService.capteursByUser.map(sensor => sensor._id).indexOf(this.capteurService.capteur._id);
                 this.capteurService.capteursByUser[indexSensorSelect] = this.capteurService.capteur;
                 this.capteurService.emitSensorSubject();
-                if (this.userService.getJwtReponse().country === "FR") {
+                if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Capteur mis à jour');
                 } else {
                     this.notifier.notify('success', 'Updated sensor');
@@ -1387,7 +1387,7 @@ export class NavbarComponent implements OnInit {
                 this.capteurService.emitSensorSubject();
                 this.initSensorForm();
                 this.editSensorInit();
-                if (this.userService.getJwtReponse().country === "FR") {
+                if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Capteur supprimé');
                 } else {
                     this.notifier.notify('success', 'Deleted sensor');

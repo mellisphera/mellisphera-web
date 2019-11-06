@@ -24,6 +24,7 @@ import { UserParamsService } from '../../../preference-config/service/user-param
 import { UserloggedService } from '../../../../userlogged.service';
 import { MyNotifierService } from '../../../service/my-notifier.service';
 import { NotifList } from '../../../../../constants/notify';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -48,10 +49,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   //observationsHive : ProcessReport[] = [];
   constructor(public rucherService: RucherService,
     private formBuilder: FormBuilder,
-    private dailyRecWService: DailyRecordsWService,
     private activatedRoute: ActivatedRoute,
-    private dailyStockHoneyService: DailyStockHoneyService,
-    private recordService: RecordService,
+    private translateService: TranslateService,
     public observationService: ObservationService,
     public rucheService: RucheService,
     private notifyService: NotifierService,
@@ -121,9 +120,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       }, () => { }, () => {
         this.observationService.emitHiveSubject();
         this.initForm();
-        if(this.userService.getJwtReponse().country === "FR"){
+        if (this.translateService.currentLang === 'fr'){
           this.notifier.notify('success', 'Observation créée');
-        }else{
+        } else {
           this.notifier.notify('success', 'Created Observation');
         }
       });
@@ -150,9 +149,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         });
       }, () => { }, () => {
         this.observationService.emitHiveSubject();
-        if(this.userService.getJwtReponse().country === "FR"){
+        if (this.translateService.currentLang === 'fr') {
           this.notifier.notify('success', 'Action créée');
-        }else{
+        } else {
           this.notifier.notify('success', 'Created Action');
         }
       });
@@ -187,9 +186,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsHive[index] = this.newObs;
         this.observationService.emitHiveSubject();
-        if(this.userService.getJwtReponse().country === "FR"){
+        if (this.translateService.currentLang === 'fr') {
           this.notifier.notify('success', 'Note mis à jour');
-        }else{
+        } else {
           this.notifier.notify('success', 'Updated Note');
         }
       })
@@ -209,9 +208,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.observationService.deleteObservation(this.newObs._id).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsHive.splice(index, 1);
         this.observationService.emitHiveSubject();
-        if(this.userService.getJwtReponse().country === "FR"){
+        if (this.translateService.currentLang === 'fr') {
           this.notifier.notify('success', 'Note supprimée');
-        }else{
+        } else {
           this.notifier.notify('success', 'Deleted Note');
         }
       });

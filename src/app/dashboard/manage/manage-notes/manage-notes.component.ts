@@ -21,6 +21,7 @@ import { NotifierService } from 'angular-notifier';
 import { NotifList } from '../../../../constants/notify';
 import { RucheInterface } from '../../../_model/ruche';
 import { RucherModel } from '../../../_model/rucher-model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-manage-notes',
@@ -49,6 +50,7 @@ export class ManageNotesComponent implements OnInit {
     public observationService: ObservationService,
     private userService: UserloggedService,
     public rucherService: RucherService,
+    private translateService: TranslateService,
     public rucheService: RucheService,
     private formBuilder: FormBuilder,
     private myNotifer: MyNotifierService,
@@ -224,7 +226,7 @@ export class ManageNotesComponent implements OnInit {
       }, () => { }, () => {
         this.initForm();
         this.newNoteCheckbox = false;
-        if (this.userService.getJwtReponse().country === "FR") {
+        if (this.translateService.currentLang === 'fr') {
           this.notifier.notify('success', 'Observation créée');
         } else {
           this.notifier.notify('success', 'Created Observation');
@@ -259,7 +261,7 @@ export class ManageNotesComponent implements OnInit {
       }, () => { }, () => {
         this.initForm();
         this.newNoteCheckbox = false;
-        if (this.userService.getJwtReponse().country === "FR") {
+        if (this.translateService.currentLang === 'fr') {
           this.notifier.notify('success', 'Action créée');
         } else {
           this.notifier.notify('success', 'Created Action');
@@ -294,7 +296,7 @@ export class ManageNotesComponent implements OnInit {
       }, () => { }, () => {
         this.initForm();
         this.newNoteCheckbox = false;
-        if (this.userService.getJwtReponse().country === "FR") {
+        if (this.translateService.currentLang === 'fr') {
           this.notifier.notify('success', 'Note créée');
         } else {
           this.notifier.notify('success', 'Created Note');
@@ -449,7 +451,7 @@ export class ManageNotesComponent implements OnInit {
         }
         this.initForm();
         this.editNoteCheckbox = false;
-        if (this.userService.getJwtReponse().country === "FR") {
+        if (this.translateService.currentLang === 'fr') {
           this.notifier.notify('success', 'Note modifiée');
         } else {
           this.notifier.notify('success', 'Edited Note');
@@ -478,7 +480,7 @@ export class ManageNotesComponent implements OnInit {
           index = this.observationService.observationsHiveUser.indexOf(note);
           this.observationService.observationsHiveUser.splice(index, 1);
         }
-        if (this.userService.getJwtReponse().country === "FR") {
+        if (this.translateService.currentLang === 'fr') {
           this.notifier.notify('success', 'Note supprimée');
         } else {
           this.notifier.notify('success', 'Deleted Note');

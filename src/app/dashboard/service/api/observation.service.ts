@@ -16,7 +16,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { Observation } from '../../../_model/observation';
 import { MyDate } from '../../../class/MyDate';
 import { DataRange } from '../../../_model/data-range';
-import { StackService } from '../../apiary/stack-apiary/service/stack.service';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { UnitService } from '../unit.service';
 import { RucheService } from './ruche.service';
@@ -47,7 +46,6 @@ export class ObservationService {
   private rangeCalendar: Date[];
   private rangeObs: Date[];
   constructor(private http: HttpClient,
-      private stackService: StackService,
       private rucheService: RucheService,
       private unitService: UnitService) {
       //  this.observationsApiary = [];

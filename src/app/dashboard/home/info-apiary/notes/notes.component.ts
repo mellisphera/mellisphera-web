@@ -20,6 +20,7 @@ import { RucheInterface } from '../../../../_model/ruche';
 import { UserloggedService } from '../../../../userlogged.service';
 import { MyNotifierService } from '../../../service/my-notifier.service';
 import { NotifList } from '../../../../../constants/notify';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-notes',
@@ -52,7 +53,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     public observationService: ObservationService,
     private formBuilder: FormBuilder,
     public userService: UserloggedService,
-    private renderer: Renderer2,
+    private translateService: TranslateService,
     private myNotifer: MyNotifierService) {
       this.type = 'ApiaryObs';
       this.message = '';
@@ -116,9 +117,9 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       const index = this.observationService.observationsApiary.indexOf(this.newObs);
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsApiary.splice(index, 1);
-        if(this.userService.getJwtReponse().country === "FR"){
+        if (this.translateService.currentLang === 'fr'){
           this.notify.notify('success', 'Note déplacée ' + this.hiveToMv.name);
-        }else{
+        } else {
           this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
         }
       });
@@ -151,7 +152,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
           return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
         });
       }, () => { }, () => {
-        if(this.userService.getJwtReponse().country === "FR"){
+        if(this.translateService.currentLang === 'fr'){
           this.notify.notify('success', 'Note créée');
         }else{
           this.notify.notify('success', 'Created Note');
@@ -178,7 +179,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsApiary[index] = this.newObs;
         this.initForm();
-        if(this.userService.getJwtReponse().country === "FR"){
+        if(this.translateService.currentLang === 'fr'){
           this.notify.notify('success', 'Note mis à jour');
         }else{
           this.notify.notify('success', 'Updated Note');
@@ -201,7 +202,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
         const index = this.observationService.observationsApiary.indexOf(this.newObs);
         this.observationService.observationsApiary.splice(index, 1);
         this.initForm();
-        if(this.userService.getJwtReponse().country === "FR"){
+        if(this.translateService.currentLang === 'fr'){
           this.notify.notify('success', 'Note supprimée');
         }else{
           this.notify.notify('success', 'Deleted Note');

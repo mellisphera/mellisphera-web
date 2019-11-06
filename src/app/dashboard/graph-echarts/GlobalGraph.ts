@@ -37,6 +37,7 @@ import { WeatherService } from '../service/api/weather.service';
 import { SERIES } from '../melli-charts/charts/SERIES';
 import { NOTIF_CODE } from '../../../constants/notif_code';
 import { AlertsService } from '../service/api/alerts.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -100,6 +101,7 @@ export class GraphGlobal {
     private unitService: UnitService,
     public userService: UserloggedService,
     private alertService: AlertsService,
+    private translateService: TranslateService,
     private weatherService: WeatherService,
     private userPref: UserParamsService) {
     this.weight = {
@@ -207,7 +209,7 @@ export class GraphGlobal {
 
   setImperial() {
     // If he is French
-    if (this.userService.getJwtReponse().country === "FR") {
+    if (this.translateService.currentLang === 'fr') {
       this.weight.name = 'Poids (lbs)';
       this.humidity.name = 'Humidité (%)';
       this.rain.name = 'Pluie';
@@ -251,7 +253,7 @@ export class GraphGlobal {
 
   setMetric() {
     // If he is French
-    if (this.userService.getJwtReponse().country === "FR") {
+    if (this.translateService.currentLang === 'fr') {
       this.weight.name = 'Poids (Kg)';
       this.humidity.name = 'Humidité (%)';
       this.rain.name = 'Pluie';
@@ -287,7 +289,7 @@ export class GraphGlobal {
     this.weight.interval = 10;
     this.weight.max = null;
     // If he is French
-    if (this.userService.getJwtReponse().country === "FR") {
+    if (this.translateService.currentLang === 'fr') {
       this.temp.name = 'Température (°C)';
       // EN
     } else {
@@ -331,7 +333,7 @@ export class GraphGlobal {
     //Found the title with the name of the graph with the right language
 
     // If he is French
-    if (this.userService.getJwtReponse().country === "FR") {
+    if (this.translateService.currentLang === 'fr') {
       titre = this.titresFR[this.titresFR.map(elt => elt.graph).indexOf(nomGraphe)];
       // EN
     } else {
@@ -344,103 +346,103 @@ export class GraphGlobal {
   getTooltipByType(type: Tools): string {
     switch (type.name) {
       case 'WINCOME':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[1].titre;
         } else {
           return this.titresEN[1].titre;
         }
       case 'TEMP_EXT_MAX':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[5].titre + ' max';
         } else {
           return this.titresEN[5].titre + ' max';
         }
       case 'TEMP_EXT_MIN':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[5].titre + ' min';
         } else {
           return this.titresEN[5].titre + ' min';
         }
       case 'TEMP_INT_MAX':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[4].titre + ' max';
         } else {
           return this.titresEN[4].titre + ' max';
         }
       case 'TEMP_INT_MIN':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[4].titre + ' min';
         } else {
           return this.titresEN[4].titre + ' min';
         }
       case 'HRIN':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[3].titre;
         } else {
           return this.titresEN[3].titre;
         }
       case 'BROOD':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[2].titre;
         } else {
           return this.titresEN[2].titre;
         }
       case 'WEIGHT_MAX':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[9].titre + ' max';
         } else {
           return this.titresEN[9].titre + ' max';
         }
       case 'WEATHER':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[13].titre;
         } else {
           return this.titresEN[13].titre;
         }
       case 'MOON':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[14].titre;
         } else {
           return this.titresEN[14].titre;
         }
       case 'RAIN':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[15].titre;
         } else {
           return this.titresEN[15].titre;
         }
       case 'TEMP_EXT_WEATHER_MAX':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[5].titre + ' max';
         } else {
           return this.titresEN[5].titre + ' max';
         }
       case 'TEMP_EXT_WEATHER_MIN':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[5].titre + ' min';
         } else {
           return this.titresEN[5].titre + ' min';
         }
       case 'WIND':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[16].titre;
         } else {
           return this.titresEN[16].titre;
         }
       case 'HEXT_WEATHER_MAX':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[7].titre + ' max';
         } else {
           return this.titresEN[7].titre + ' max';
         }
       case 'HEXT_WEATHER_MIN':
-          if (this.userService.getJwtReponse().country === 'FR') {
+          if (this.translateService.currentLang === 'fr') {
             return this.titresFR[7].titre + ' min';
           } else {
             return this.titresEN[7].titre + ' min';
           }
       case 'ALERT':
-        if (this.userService.getJwtReponse().country === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[10].titre;
         } else {
           return this.titresEN[10].titre;
@@ -459,7 +461,7 @@ export class GraphGlobal {
    */
   getDays(datePicker?: boolean): String[] {
     // If he is French
-    if (this.userService.getJwtReponse().country === "FR") {
+    if (this.translateService.currentLang === 'fr') {
       return datePicker ? ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa','Di'] : ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'];
       // EN
     } else {
@@ -475,7 +477,7 @@ export class GraphGlobal {
    */
   getMonth(): String[] {
     // If he is French
-    if (this.userService.getJwtReponse().country === "FR") {
+    if (this.translateService.currentLang === 'fr') {
       return ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Jui', 'Aout', 'Sep', 'Oct', 'Nov', 'Dec'];
       // EN
     } else {
@@ -591,7 +593,7 @@ export class GraphGlobal {
    * @memberof GraphGlobal
    */
   getMoonStatus(status: number): string {
-    if (this.userService.getJwtReponse().country === 'FR') {
+    if (this.translateService.currentLang === 'fr') {
       if (status === 1) {
         return 'Ascendant';
       } else {
@@ -681,7 +683,7 @@ export class GraphGlobal {
   }
 
   getMessageAlertByCode(code: string): string {
-    if (this.userService.getJwtReponse().country === "FR") {
+    if (this.translateService.currentLang === 'fr') {
         return NOTIF_CODE[code].FR.Message;
     } else {
         return NOTIF_CODE[code].EN.Message;

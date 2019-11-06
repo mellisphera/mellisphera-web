@@ -20,6 +20,7 @@ import { WeatherService } from '../../../service/api/weather.service';
 import { UserloggedService } from '../../../../userlogged.service';
 import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
+import { TranslateService } from '@ngx-translate/core';
 
 const TITLE_PERIODE_CALENDAR = {
   TEXT_SUM_FR: 'Somme sur la période: ',
@@ -69,6 +70,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     public dailyManager: DailyManagerService,
     private userPref: UserParamsService,
     private userService: UserloggedService,
+    private translateService: TranslateService,
     private weatherService: WeatherService,
     public melliHive: MelliChartsHiveService,
     public graphGlobal: GraphGlobal,
@@ -157,7 +159,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
    * @memberof DailyComponent
    */
   setMeanTextHtml(): void {
-    if (this.userService.getCountry() === 'FR') {
+    console.log(this.translateService.currentLang);
+    if (this.translateService.currentLang === 'fr') {
       if (this.currentTypeDailyOther.name === 'RAIN') {
         this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_FR;
         this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_FR;

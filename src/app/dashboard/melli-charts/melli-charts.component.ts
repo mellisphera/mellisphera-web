@@ -13,8 +13,6 @@ import { Component, OnInit, Renderer2, ViewChild, AfterViewChecked, AfterViewIni
 import { RucheService } from '../service/api/ruche.service';
 import { RucherService } from '../service/api/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
-import { StackApiaryGraphService } from '../apiary/stack-apiary/service/stack-apiary-graph.service';
-import { StackService } from '../apiary/stack-apiary/service/stack.service';
 import { RecordService } from '../service/api/record.service';
 import { AdminService } from '../admin/service/admin.service';
 import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
@@ -34,6 +32,7 @@ import { StackMelliChartsService } from './stack/service/stack-melli-charts.serv
 import { StackComponent } from './stack/stack.component';
 import { VitalityComponent } from './vitality/vitality.component';
 import { type } from 'os';
+import { TranslateService } from '@ngx-translate/core';
 
 const PREFIX_PATH = '/dashboard/melli-charts/';
 
@@ -68,10 +67,11 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     public melliChartHive: MelliChartsHiveService,
     public recordService: RecordService,
     private adminService: AdminService,
+    private translateService: TranslateService,
     private weatherService: WeatherService,
     private tokenService: AtokenStorageService,
     private userConfig: UserParamsService) {
-      if (this.userService.getCountry() === 'FR') {
+      if (this.translateService.currentLang === 'fr') {
         this.btnNav = [
           {name: 'Ruches', path: 'hive' },
           { name: 'Couvain', path: 'brood' },
@@ -263,7 +263,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    * @memberof MelliChartsComponent
    */
   getRangeBYLang(range: DataRange): string {
-    if (this.userService.getCountry() === 'FR') {
+    if (this.translateService.currentLang === 'fr') {
       return this.melliChartDate.ranges.filter(_range => _range.type === range.type)[0].typeFr;
     } else {
       return range.type;

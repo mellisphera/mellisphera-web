@@ -26,6 +26,7 @@ import { BASE_OPTIONS } from '../../../melli-charts/charts/BASE_OPTIONS';
 import { SERIES } from '../../../melli-charts/charts/SERIES';
 import { GLOBAL_ICONS } from '../../../melli-charts/charts/icons/icons';
 import * as echarts from 'echarts';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-alerts',
@@ -50,6 +51,7 @@ export class AlertsComponent implements OnInit {
     public rucherService: RucherService,
     private userService: UserloggedService,
     private observationService: ObservationService,
+    private translateService: TranslateService,
     public notifierService: NotifierService,
     private renderer: Renderer2,
     public login: UserloggedService,
@@ -348,7 +350,7 @@ export class AlertsComponent implements OnInit {
       this.alertsService.apiaryAlerts[i].check = true;
       // update the number of actives alerts
       this.alertsService.numberApiaryAlertsActives = this.alertsService.numberApiaryAlertsActives - 1;
-      if (this.userService.getJwtReponse().country === "FR") {
+      if (this.translateService.currentLang === 'fr') {
         this.notifier.notify('success', 'Alerte marquée comme lue');
       } else {
         this.notifier.notify('success', 'Alert marked as read');
@@ -388,7 +390,7 @@ export class AlertsComponent implements OnInit {
       this.alertsService.apiaryAlerts[i].check = false;
       // update the number of actives alerts
       this.alertsService.numberApiaryAlertsActives = this.alertsService.numberApiaryAlertsActives + 1;
-      if (this.userService.getJwtReponse().country === "FR") {
+      if (this.translateService.currentLang === 'fr') {
         this.notifier.notify('success', 'Alerte marquée comme non lue');
       } else {
         this.notifier.notify('success', 'Alert marked as unread');
@@ -404,11 +406,10 @@ export class AlertsComponent implements OnInit {
     return new Promise((resolve, reject) => {
       if (this.echartInstance === null) {
         reject(false);
-      }
-      else {
+      } else {
         resolve(true);
       }
-    })
+    });
   }
 
 }

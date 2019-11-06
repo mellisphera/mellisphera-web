@@ -46,6 +46,7 @@ import { AlertsComponent } from './info-apiary/alerts/alerts.component';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 import { MyDate } from '../../class/MyDate';
 import { AlertInterface } from '../../_model/alert';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -98,8 +99,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   lastHighlightHandle : string;
 
   constructor(public dailyRecTh: DailyRecordService,
-    private graphGlobal: GraphGlobal,
     private userService: UserloggedService,
+    private translateService: TranslateService,
     private notifyService: NotifierService,
     private formBuilder: FormBuilder,
     public login: UserloggedService,
@@ -595,7 +596,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.rucheService.deleteRuche(ruche).subscribe(() => { }, () => { }, () => {
       this.rucheService.ruches.splice(index, 1);
       this.rucheService.emitHiveSubject();
-      if (this.userService.getJwtReponse().country === "FR") {
+      if (this.translateService.currentLang === 'fr') {
         this.notify.notify('success', 'Ruche supprimée');
       } else {
         this.notify.notify('success', 'Deleted Hive');
@@ -627,7 +628,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.rucheService.ruches.splice(this.hiveIndex, 1);
         this.rucheService.emitHiveSubject();
       }
-      if (this.userService.getJwtReponse().country === "FR") {
+      if (this.translateService.currentLang === 'fr') {
         this.notify.notify('success', 'Ruche mis à jour');
       } else {
         this.notify.notify('success', 'Updated Hive');
@@ -666,7 +667,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
         j += 1;
         if (j === i - 1) {
           stringTemp += hive.name;
-          if (this.userService.getJwtReponse().country === "FR") {
+          if (this.translateService.currentLang === 'fr') {
             stringTemp += '" et "';
           } else {
             stringTemp += '" and "';
@@ -683,7 +684,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     // Finally we build the message
     if (i === 1) {
-      if (this.userService.getJwtReponse().country === "FR") {
+      if (this.translateService.currentLang === 'fr') {
         stringReturn += '   Les données pour la ruche ';
         stringReturn += stringTemp;
         stringReturn += ' ne sont pas à jour. Veuillez synchroniser vos données.'
@@ -693,13 +694,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
         stringReturn += ' are not up-to-date. Please synchronize your data.'
       }
     } else if (i === this.rucheService.ruches.length) {
-      if (this.userService.getJwtReponse().country === "FR") {
+      if (this.translateService.currentLang === 'fr') {
         stringReturn += '   Vos données pour les ruches de ce rucher ne sont pas à jour. Veuillez synchroniser vos données.';
       } else {
         stringReturn += '   Your data for the hives of this apiary are not up-to-date. Please synchronize your data.';
       }
     } else if (i > 1) {
-      if (this.userService.getJwtReponse().country === "FR") {
+      if (this.translateService.currentLang === 'fr') {
         stringReturn += '   Les données pour les ruches ';
         stringReturn += stringTemp;
         stringReturn += ' ne sont pas à jour. Veuillez synchroniser vos données.'
@@ -758,7 +759,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   // Change the system for each hive. Switch between handle and fix position.
   changeHandleHive(id: string) {
-    console.log(id);
     if (id === 'handleHive') {
       //desactive the wrong system
       this.eltOnClickClass = document.getElementsByClassName('fixHive');

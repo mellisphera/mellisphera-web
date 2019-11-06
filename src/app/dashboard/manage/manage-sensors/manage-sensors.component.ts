@@ -30,6 +30,7 @@ import 'rxjs/add/operator/first';
 import { NotifierService } from 'angular-notifier';
 import { MyNotifierService } from '../../service/my-notifier.service';
 import { NotifList } from '../../../../constants/notify';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  *@author mickael
@@ -70,6 +71,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
       private _router: Router,
       private formBuilder: FormBuilder,
       public rucherService: RucherService,
+      private translateService: TranslateService,
       public capteurService: CapteurService,
       public notifierService: NotifierService,
       private myNotifer: MyNotifierService) {
@@ -185,7 +187,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
         this.capteurService.capteur.type = sensorType.trim();
         this.initForm();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
-            if(this.userService.getJwtReponse().country === "FR"){
+            if(this.translateService.currentLang === 'fr'){
                 this.notifier.notify('success', 'Capteur créé');
                 }else{
                 this.notifier.notify('success', 'Created sensor');
@@ -223,7 +225,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
           }
           this.capteurService.capteursByUser.splice(index, 1);
           this.capteurService.emitSensorSubject();
-          if(this.userService.getJwtReponse().country === "FR"){
+          if(this.translateService.currentLang === 'fr'){
               this.notifier.notify('success', 'Capteur supprimé');
             }else{
               this.notifier.notify('success', 'Deleted sensor');
@@ -250,7 +252,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
       this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
           this.capteurService.capteursByUser[this.indexSensorSelect] = this.capteurService.capteur;
           this.capteurService.emitSensorSubject();
-          if(this.userService.getJwtReponse().country === "FR"){
+          if(this.translateService.currentLang === 'fr'){
               this.notifier.notify('success', 'Capteur mis à jour');
             }else{
               this.notifier.notify('success', 'Updated sensor');

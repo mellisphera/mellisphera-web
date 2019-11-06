@@ -26,6 +26,7 @@ import { DailyRecordService } from '../../../service/api/dailyRecordService';
 import { DailyRecordsWService } from '../../../service/api/daily-records-w.service';
 import { CapteurService } from '../../../service/api/capteur.service';
 import { RucheInterface } from '../../../../_model/ruche';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-states',
@@ -52,6 +53,7 @@ export class StatesComponent implements OnInit {
     private userService: UserloggedService,
     public notifierService: NotifierService,
     private renderer: Renderer2,
+    private translateService: TranslateService,
     public login: UserloggedService,
     public graphGlobal : GraphGlobal,
     public unitService : UnitService,
@@ -133,12 +135,12 @@ export class StatesComponent implements OnInit {
       let pdf = new jsPDF('l', 'mm', '[297, 210]'); // A4 size page of PDF  
       var position = 0;  
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight); 
-      if (this.userService.getJwtReponse().country === "FR") {
+      if (this.translateService.currentLang === 'fr') {
         pdf.save('Résumé_rucher.pdf'); // Generated PDF   
       } else {
         pdf.save('Apiary_summary.pdf'); // Generated PDF   
-      } 
-    });  
-  }  
+      }
+    });
+  }
 
 }

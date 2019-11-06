@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
   private readonly notif: NotifierService;
   constructor(private formBuilder: FormBuilder,
     public router: Router,
-    private data: UserloggedService,
     private userService: UserloggedService,
     public authService: AuthService,
     public signupService: SignupService,
@@ -104,7 +103,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
       this.signupService.signupUser(() => {
         this.authService.login.email = this.signupService.user.email.toLowerCase();
         this.authService.login.password = this.signupService.user.password;
-        if(/fr/g.test(this.navLanguage)){
+        if (/fr/g.test(this.navLanguage)) {
         this.notif.notify('success', 'Sign up successful !');
         } else {
         this.notif.notify('success', 'Inscription réussie !');

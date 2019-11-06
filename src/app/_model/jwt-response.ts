@@ -14,6 +14,7 @@ import { UserPref } from './user-pref';
 export interface JwtResponse {
     accessToken: string;
     type?: string;
+    lang: string;
     username: string;
     idUser: string;
     email: string;

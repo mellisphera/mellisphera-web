@@ -31,6 +31,7 @@ import { NotifierService } from 'angular-notifier';
 import { RucheService } from '../../../service/api/ruche.service';
 import { MyNotifierService } from '../../../service/my-notifier.service';
 import { NotifList } from '../../../../../constants/notify';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sensors-hive',
@@ -62,6 +63,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
         public userService: UserloggedService,
         private _router: Router,
         private formBuilder: FormBuilder,
+        private translateService: TranslateService,
         public rucherService: RucherService,
         public rucheService: RucheService,
         public capteurService: CapteurService,
@@ -190,7 +192,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
             this.capteurService.capteur.type = sensorType.trim();
             this.initForm();
             this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
-                if(this.userService.getJwtReponse().country === "FR"){
+                if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Capteur créé');
                 }else{
                     this.notifier.notify('success', 'Created sensor');
@@ -244,7 +246,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
                 }
                 this.capteurService.capteursByHive.splice(this.indexSensorSelect, 1);
                 this.capteurService.emitSensorSubject();
-                if(this.userService.getJwtReponse().country === "FR"){
+                if(this.translateService.currentLang === 'fr'){
                     this.notifier.notify('success', 'Capteur supprimé');
                 }else{
                     this.notifier.notify('success', 'Deleted sensor');
@@ -280,7 +282,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
                 }else{
                     this.capteurService.capteursByHive.splice(this.indexSensorSelect,1);
                 }
-                if(this.userService.getJwtReponse().country === "FR"){
+                if(this.translateService.currentLang === 'fr'){
                     this.notifier.notify('success', 'Capteur mis à jour');
                 }else{
                     this.notifier.notify('success', 'Updated sensor');

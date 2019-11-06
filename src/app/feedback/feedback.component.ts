@@ -15,6 +15,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserloggedService } from '../userlogged.service';
 import { NotifierService } from 'angular-notifier';
 import { CONFIG } from '../../constants/config';
+import { TranslateService } from '@ngx-translate/core';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -31,10 +32,11 @@ export class FeedbackComponent implements OnInit {
   private notify: NotifierService;
   constructor(private httpClient: HttpClient,
     private formBuilder: FormBuilder,
+    private translateService: TranslateService,
     private userService: UserloggedService,
     private notifyService: NotifierService) {
       if (this.userService.getCountry()) {
-        if (this.userService.getCountry().toUpperCase() === 'FR') {
+        if (this.translateService.currentLang === 'fr') {
           this.urlSlack = CONFIG.SLACK_FR;
         } else {
           this.urlSlack = CONFIG.SLACk_EN;
@@ -52,9 +54,9 @@ export class FeedbackComponent implements OnInit {
   send() {
     const body = { 'text': this.userService.getUser() + ' : ' + this.feedbackForm.value.comment};
     this.httpClient.post(this.urlSlack, JSON.stringify(body)).subscribe();
-    if(this.userService.getJwtReponse().country === "FR"){
+    if(this.translateService.currentLang === 'fr'){
       this.notify.notify('success', 'Commentaire envoyé');
-    }else{
+    } else {
       this.notify.notify('success', 'Feedback sent');
     }
     this.resForm();
