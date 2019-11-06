@@ -373,6 +373,7 @@
     },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icon",
+        "NAME": "Nom",
         "DESCRIPTION": "Description",
         "VALUE": "Value",
         "STATUS": "Status",

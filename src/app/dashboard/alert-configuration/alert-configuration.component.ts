@@ -84,6 +84,14 @@
       } catch { }
     }
 
+    getNameByLang(alertId: string) {
+      if (this.userPrefService.getUserPref().lang.toUpperCase().indexOf('FR') !== -1) {
+        return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].nameFr;
+      } else {
+        return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].nameEn;
+      }
+    }
+
     getUserValue(alertId: string): string {
       let currentAlaert = this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0];
       try {

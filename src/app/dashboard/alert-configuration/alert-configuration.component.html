@@ -22,6 +22,7 @@ limitations under the License. -->
       <thead>
         <tr>
           <th scope="col">{{ 'ALERT_CONF_PAGE.TYPE' | translate}}</th>
+          <th scope="col">{{ 'ALERT_CONF_PAGE.NAME' | translate}}</th>
           <th scope="col">{{ 'ALERT_CONF_PAGE.DESCRIPTION' | translate}}</th>
           <th scope="col">{{ 'ALERT_CONF_PAGE.VALUE' | translate}}</th>
           <th scope="col" class="text-right">{{ 'ALERT_CONF_PAGE.STATUS' | translate}}</th>
@@ -33,7 +34,10 @@ limitations under the License. -->
             <img width="40px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
           </td>
           <td>
-              <popover-content #myPopover title="{{ alert.icon }}" placement="right" [animation]="true"
+            {{ getNameByLang(alert._id) }}
+          </td>
+          <td>
+              <popover-content #myPopover title="{{ getNameByLang(alert._id) }}" placement="right" [animation]="true"
               [closeOnClickOutside]="false">
               <span style="color: #C21F39">{{ getNotifDescriptionFromLangage(alert.icon) }}</span>
             </popover-content>
