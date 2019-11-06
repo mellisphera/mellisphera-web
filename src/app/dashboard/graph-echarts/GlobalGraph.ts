@@ -795,8 +795,7 @@ export class GraphGlobal {
       case 'ALERT':
         tooltip.formatter = (params) => {
           const dataByDateTooltip = extraData.filter(_filter => {
-            return MyDate.compareToDailyDate(_filter.opsDate, params.data[0])
-            // return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.opsDate)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
+            return MyDate.compareToDailyDate(_filter.opsDate, params.data[0]);
           });
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
             let type = 'Notif';

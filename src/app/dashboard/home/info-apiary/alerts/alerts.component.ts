@@ -106,7 +106,6 @@ export class AlertsComponent implements OnInit {
       this.echartInstance = echarts.init(<HTMLDivElement>document.getElementById('notif-celendar'));
       this.clearOption();
       this.loadCalendar();
-      console.log('INIT ALERT APIAY');
     }
   }
 
@@ -142,7 +141,6 @@ export class AlertsComponent implements OnInit {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
             return [_map.date, _map.value, _map.sensorRef];
           });
-          console.log(serieTmp);
         } else {
           serieTmp.data = data;
         }
@@ -158,7 +156,6 @@ export class AlertsComponent implements OnInit {
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
-        console.log(_data);
         const dateJoin = this.joinObservationAlert(_data[0].filter(_elt => _elt.type === 'apiary'), _data[1]);
         const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.option);
@@ -176,10 +173,8 @@ export class AlertsComponent implements OnInit {
               children: []
             };
             const dataByDate: any[] = joinData.filter(_filter => {
-              //console.log(MyDate.compareToDailyDate(_filter.opsDate, api.value(0)));
               return MyDate.compareToDailyDate(_filter.opsDate, new Date(api.value(0)));
             });
-            console.log(dataByDate);
             if (dataByDate.length >= 1) {
               group.children.push({
                 type: 'rect',
@@ -295,12 +290,12 @@ export class AlertsComponent implements OnInit {
     tooltip.formatter = (params) => {
       if(params.data[3] !== 'OK'){
       const dataByDateTooltip = extraData.filter(_filter => {
-        return this.getTimeStampFromDate(MyDate.getWekitDate(_filter.opsDate)) === this.getTimeStampFromDate(MyDate.getWekitDate(<string>params.data[0]));
+        return MyDate.compareToDailyDate(_filter.opsDate, params.data[0]);
       });
       return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
         let type = 'Notif';
         let img = '';
-        if (_singleData.description) {
+        if (_singleData.description || _singleData.description === '') {
           type = 'Inspection';
           img = '<img style={S} src={I} />';
           img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');

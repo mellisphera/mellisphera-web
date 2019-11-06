@@ -198,13 +198,12 @@ export class AlertsService {
      * @memberof AlertsService
      */
     getMessageAlertByCode(args: AlertInterface): string {
-        const alertId = this.alertTypes.filter(_alert => _alert.icon == NOTIF_CODE[args.code].icon)[0]._id;
+        const alertId = this.alertTypes.filter(_alert => _alert.icon === NOTIF_CODE[args.code].icon)[0]._id;
         if (this.translateService.currentLang === 'fr') {
             let msgFR: string = NOTIF_CODE[args.code].FR.Message;
             return msgFR.replace(/{VAL}/g, this.getUserValue(alertId)).replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef);
         } else {
             let msgEN: string = NOTIF_CODE[args.code].EN.Message;
-            console.log(args);
             return msgEN.replace(/{VAL}/g, this.getUserValue(alertId)).replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef);
         }
 
@@ -224,9 +223,6 @@ export class AlertsService {
         const currentAlert =  this.alertTypes.filter(_alert => _alert._id === alertId)[0];
         try {
           if (this.isMetric()) {
-              console.log(this.alertUser.alertConf);
-              console.log(alertId);
-              console.log(this.alertUser.alertConf[alertId].valueMet + ' ' +  currentAlert.unitMet);
               return  this.alertUser.alertConf[alertId].valueMet + ' ' +  currentAlert.unitMet;
           } else {
                 return  this.alertUser.alertConf[alertId].valueImp + ' ' +  currentAlert.unitImp;

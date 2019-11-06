@@ -330,10 +330,11 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
     console.log(extraData);
     const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
     tooltip.formatter = (params) => {
-      if(params.data[3] !== 'OK'){
+      if (params.data[3] !== 'OK'){
       const dataByDateTooltip = extraData.filter(_filter => {
-        return MyDate.compareToDailyDate(_filter.opsDate, new Date(params.data[0]));
+        return MyDate.compareToDailyDate(_filter.opsDate, params.data[0]);
       });
+      console.log(dataByDateTooltip)
       return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
         let type = 'Notif';
         let img = '';

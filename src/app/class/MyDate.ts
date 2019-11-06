@@ -54,9 +54,19 @@ export class MyDate {
     }
 
 
-    static compareToDailyDate(dt1: Date, dt2: Date) {
-        const date1: Date = new Date(dt1);
-        const date2: Date = new Date(dt2);
+    static compareToDailyDate(dt1: any, dt2: any) {
+        let date1: Date;
+        let date2: Date;
+        if (/-/g.test(dt1)) {
+            date1 = new Date(dt1.replace(/-/g, '/').split('T')[0]);
+        } else {
+            date1 = new Date(dt1);
+        }
+        if (/-/g.test(dt2)) {
+            date2 = new Date(dt2.replace(/-/g, '/').split('T')[0]);
+        } else {
+            date2 = new Date(dt2);
+        }
         const day1 = date1.getDate();
         const day2 = date2.getDate();
         return (day1 === day2) &&
