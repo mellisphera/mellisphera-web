@@ -43,7 +43,7 @@ export const NOTIF_DESCRIPTION5 = {
 
         Swarm: "Triggered when a potential swarm has occurred (Hub offers more efficiency).",
 
-        DConnect :"T Triggered when one of your sensors no longer transmits data (or punctually) during each chosen period. Only works with a Hub.",
+        DConnect :"Triggered when one of your sensors no longer transmits data (or punctually) during each chosen period. Only works with a Hub.",
 
         Tmax: "Triggered when the internal temperature exceeds the chosen threshold.",
 

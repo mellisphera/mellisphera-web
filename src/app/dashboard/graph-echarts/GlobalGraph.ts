@@ -537,19 +537,19 @@ export class GraphGlobal {
    */
   getNameZoneByGraph(typeGraph: string): string {
     if (typeGraph === 'BROOD') {
-      if (this.userService.getCountry() !== 'FR') {
+      if (this.translateService.currentLang === 'en') {
         return 'Optimal area of ​​production';
       } else {
         return 'Zone optimale de production';
       }
     } else if (typeGraph === 'TEMP') {
-      if (this.userService.getCountry() === 'FR') {
+      if (this.translateService.currentLang === 'fr') {
         return 'Zone optimale du couvain';
       } else {
         return 'Brood Zone';
       }
     } else if (typeGraph === 'HUM') {
-      if (this.userService.getCountry() !== 'FR') {
+      if (this.translateService.currentLang === 'en') {
         return 'Optimal area of humidity';
       } else {
         return 'Zone optimale d\'humidité';
