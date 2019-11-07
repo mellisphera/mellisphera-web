@@ -79,6 +79,7 @@ export class SidebarComponent implements OnInit {
 /*     this.menuItems = ROUTES.filter(menuItem => menuItem);
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('nav-open'); */
+    this.focus('home');
   }
   isMobileMenu() {
     if (window.innerWidth > 991) {

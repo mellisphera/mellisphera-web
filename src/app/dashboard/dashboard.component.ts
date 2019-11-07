@@ -82,6 +82,7 @@ export class DashboardComponent implements OnInit {
         res => {
           <HomeComponent>this.homeComponent.infoApiaryComponent.alertsComponent.initCalendar(true);
           <HomeComponent>this.homeComponent.changeHandleHive('fixHive');
+          <HomeComponent>this.homeComponent.loadAlert();
         }
       )
     }).catch(err => {

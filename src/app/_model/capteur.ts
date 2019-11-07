@@ -17,7 +17,6 @@ export interface CapteurInterface {
 	type: string ;
     hiveId: string;
 	apiaryId: string;
-	hiveName?: string;
 	userId: string;
 	dataLastReceived: Date;
 	hivePositionId: string;

@@ -158,23 +158,16 @@ export class AlertsService {
         }
 
 
-    // Fonction to add pictos to alerts
-    addPictoAlerts(listAlerts : AlertInterface[]) : AlertInterface[]{
-        var i:number;
-
-        // Add the right picto for all alerts.
-        for(i = 0; i < listAlerts.length; i++){
-            listAlerts[i].picto = "./assets/pictos_alerts/iconesPNG/"+listAlerts[i].icon+".png";
-        }
-        return listAlerts;
-    }
-
     // Fonction to get all alerts for one apiary
 
     // Fonction to get all alerts for one apiary
-    getAlertsByApiary(apiaryId : string, range){
+    getAlertsByApiary(apiaryId: string, range){
         // the format is AlertInterface[]
         return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/between/apiary/' + apiaryId, range);
+    }
+
+    getHiveAlertByApiaryId(apiaryId: string, start: number, end: number) {
+        return this.http.get<AlertInterface[]>(CONFIG.URL + `alertSend/apiary/hiveAllert/${apiaryId}/${start}/${end}`);
     }
 
     /**
@@ -236,8 +229,19 @@ export class AlertsService {
     }
 
     // Fonction to check/uncheck an alert
-    updateAlert(idAlert : string , boolean : boolean): Observable<AlertInterface>{
+    updateAlert(idAlert : string , boolean : boolean): Observable<AlertInterface> {
         return this.http.put<AlertInterface>(CONFIG.URL + 'alertSend/update/' + idAlert , boolean, httpOptions);
+    }
+
+    /**
+     *
+     *
+     * @param {AlertInterface[]} notifList
+     * @returns {Observable<AlertInterface[]>}
+     * @memberof AlertsService
+     */
+    checkAlert(notifList: AlertInterface[]): Observable<AlertInterface[]> {
+        return this.http.put<AlertInterface[]>(CONFIG.URL + 'alertSend/check', notifList);
     }
 
     /**
@@ -270,9 +274,7 @@ export class AlertsService {
                     style: _alert.style
                 };
             });
-        }
-        catch{
-        }
+        } catch {}
     }
 
     getColor(typeAlert : string) : string {

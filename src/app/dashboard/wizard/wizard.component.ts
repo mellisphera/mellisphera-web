@@ -102,7 +102,6 @@ export class WizardComponent implements OnInit, OnDestroy {
   subSensor() {
     this.sensor = this.sensorForm.value;
     this.sensor.type = this.getTypeFromRef(this.sensor.sensorRef);
-    this.sensor.hiveName = this.hive.name;
     this.capteurService.capteur = this.sensor;
 /*     this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
       this.capteurService.getUserCapteurs();

@@ -71,7 +71,6 @@ export class CapteurService {
             type: '' ,
             hiveId: '',
             apiaryId: '',
-            hiveName: '',
             userId: '',
             dataLastReceived: null,
             hivePositionId: '',

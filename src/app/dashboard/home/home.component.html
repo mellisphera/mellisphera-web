@@ -27,7 +27,7 @@ limitations under the License. -->
                         <li><button (click)="OnclickInfoApiary()" id="infoApiaryButton" type="button"
                                 class="button button0">{{ 'HOME.NAVBAR.APIARY' | translate}}</button><span
                                 *ngIf="alertsService.numberApiaryAlertsActives !== 0"
-                                class="badge badge-button">{{ alertsService.numberApiaryAlertsActives }}</span></li>
+                                class="badge badge-button">{{ numberActiveNotifByApiary() }}</span></li>
                     </ul>
 
                     <!-- Name/Rank/Weigth/Sensors -->

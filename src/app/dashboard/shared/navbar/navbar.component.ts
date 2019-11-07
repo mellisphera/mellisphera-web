@@ -1193,13 +1193,11 @@ export class NavbarComponent implements OnInit {
             if (formValue.checkbox !== 'stock') {
                 this.capteurService.capteur.hiveId = this.hiveSensorSelect._id;
                 this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
-                this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
                 const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
                 this.rucherService.rucheService.emitHiveSubject();
             } else {
                 this.capteurService.capteur.hiveId = null;
                 this.capteurService.capteur.apiaryId = null;
-                this.capteurService.capteur.hiveName = null;
             }
             this.capteurService.capteur.sensorRef = formValue.reference;
             this.capteurService.capteur.type = sensorType.trim();
@@ -1343,13 +1341,11 @@ export class NavbarComponent implements OnInit {
             if (formValue.checkbox !== 'stock') {
                 this.capteurService.capteur.hiveId = this.hiveSensorSelect._id;
                 this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
-                this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
                 const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
                 this.rucherService.rucheService.emitHiveSubject();
             } else {
                 this.capteurService.capteur.hiveId = null;
                 this.capteurService.capteur.apiaryId = null;
-                this.capteurService.capteur.hiveName = null;
             }
             this.capteurService.capteur._id = idTemp;
             this.initSensorForm();

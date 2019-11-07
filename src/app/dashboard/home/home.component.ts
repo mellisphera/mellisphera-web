@@ -47,6 +47,8 @@ import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 import { MyDate } from '../../class/MyDate';
 import { AlertInterface } from '../../_model/alert';
 import { TranslateService } from '@ngx-translate/core';
+import { MyNotifierService } from '../service/my-notifier.service';
+import { NotifList } from '../../../constants/notify';
 
 
 @Component({
@@ -91,9 +93,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   private infoHiveComponent: any;
   private infoApiaryComponent: any;
   screenHeight: any;
-  public apiaryAlertsActives : AlertInterface[];
+  public apiaryAlertsActives: AlertInterface[];
   // Hive alerts by apiay
-  public hiveAlertsByApiary : AlertInterface[];
+  public hiveAlertsByApiary: AlertInterface[];
   screenWidth: any;
   lastHighlightFix : string;
   lastHighlightHandle : string;
@@ -113,6 +115,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     public authService: AuthService,
     public capteurService: CapteurService,
     private userConfig: UserParamsService,
+    private myNotifier: MyNotifierService,
     public dailyStockHoneyService: DailyStockHoneyService,
     private renderer: Renderer2,
     public alertsService: AlertsService) {
@@ -187,12 +190,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
         this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
         this.dailyRecordWservice.getDailyWeightIncomeByApiary(this.rucherService.getCurrentApiary());
-        this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts()).subscribe(
-          _alerts => {
-            this.apiaryAlertsActives = _alerts.filter(_alert => !_alert.check);
-            console.log(this.apiaryAlertsActives);
-          }
-        );
+        this.loadAlert();
         //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
       });
     }
@@ -234,9 +232,31 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     };
   }
 
+  loadAlert() {
+    this.alertsService.getHiveAlertByApiaryId(this.rucherService.getCurrentApiary(),
+    MyDate.getRangeForCalendarAlerts()[0].getTime(), MyDate.getRangeForCalendarAlerts()[1].getTime() ).subscribe(
+      _alerts => {
+        this.hiveAlertsByApiary = _alerts.filter(_alert => !_alert.check);
+      }
+    );
+    this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts()).subscribe(
+      _notif => {
+        this.apiaryAlertsActives = _notif.filter(_notif => !_notif.check);
+      }
+    )
+  }
+
   numberAlertsActivesByHive(hiveId: string): number| any {
+    if (this.hiveAlertsByApiary !== undefined) {
+      return this.hiveAlertsByApiary.filter(alert => alert.hiveId === hiveId).length;
+    } else {
+      return null;
+    }
+  }
+
+  numberActiveNotifByApiary(): number {
     if (this.apiaryAlertsActives !== undefined) {
-      return this.apiaryAlertsActives.filter(alert => alert.hiveId === hiveId).length;
+      return this.apiaryAlertsActives.length;
     } else {
       return null;
     }
@@ -274,16 +294,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.renderer.removeClass(this.eltOnClickId, 'active0');
 
     // remove higlight for last highlighted hive
-    if(this.lastHighlightFix !== 'dontExist'){
+    if (this.lastHighlightFix !== 'dontExist'){
       this.eltOnClickId = document.getElementById(this.lastHighlightFix);
-      if(this.eltOnClickId !== null){
+      if (this.eltOnClickId !== null){
         this.renderer.removeClass(this.eltOnClickId, 'highlightFix');
       }
     }
 
-    if(this.lastHighlightHandle !== 'dontExist'){
+    if (this.lastHighlightHandle !== 'dontExist'){
       this.eltOnClickId = document.getElementById(this.lastHighlightHandle);
-      if(this.eltOnClickId !== null){
+      if (this.eltOnClickId !== null){
         this.renderer.removeClass(this.eltOnClickId, 'highlightHandle');
       }
     }
@@ -300,6 +320,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     // Save the hive on dataBase
     this.rucheService.saveCurrentHive(ruche);
 
+    this.alertsService.checkAlert(this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id)).subscribe(
+      _res => {
+        this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
+        this.hiveAlertsByApiary = this.hiveAlertsByApiary.filter(_notif => _notif.hiveId !== ruche._id).slice();
+      }
+    );
     // Use the user configuration
     this.userConfig.getSubject().subscribe(
       data => {
@@ -316,7 +342,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
     }).catch(err => {
       console.log(err);
-    })
+    });
 
     // For the hive notes
 
@@ -345,6 +371,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   OnclickInfoApiary() {
+    this.alertsService.checkAlert(this.apiaryAlertsActives.filter(_notif => _notif.apiaryId === this.rucherService.getCurrentApiary())).subscribe(
+      _res => {
+        this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
+        this.apiaryAlertsActives = this.apiaryAlertsActives.filter(_notif => _notif.apiaryId !==  this.rucherService.getCurrentApiary()).slice();
+      }
+    );
     this.router.navigateByUrl('dashboard/home/info-apiary');
     if (this.screenWidth < 991) {
       let el = document.getElementById('scroll');

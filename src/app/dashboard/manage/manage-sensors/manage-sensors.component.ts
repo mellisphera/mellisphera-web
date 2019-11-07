@@ -144,11 +144,6 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
 
   sortSensors(colonne: string) {
       switch (colonne) {
-          case 'hive':
-              this.capteurService.capteursByUser.sort((a, b) => {
-                  return (a.hiveName > b.hiveName) ? 1 : -1;
-              });
-              break;
           case 'type':
               this.capteurService.capteursByUser.sort((a, b) => {
                   return (a.type > b.type) ? 1 : -1;
@@ -175,13 +170,11 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
         if (formValue.checkbox !== 'stock') {
             this.capteurService.capteur.hiveId = this.hiveSensorSelect._id;
             this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
-            this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
             const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
             this.rucherService.rucheService.emitHiveSubject();
         } else {
             this.capteurService.capteur.hiveId = null;
             this.capteurService.capteur.apiaryId = null;
-            this.capteurService.capteur.hiveName = null;
         }
         this.capteurService.capteur.sensorRef = formValue.reference;
         this.capteurService.capteur.type = sensorType.trim();
@@ -239,13 +232,11 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
       if (formValue.checkbox !== 'stock') {
           this.capteurService.capteur.hiveId = this.hiveSensorSelect._id;
           this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
-          this.capteurService.capteur.hiveName = this.hiveSensorSelect.name;
           const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
           this.rucherService.rucheService.emitHiveSubject();
       } else {
           this.capteurService.capteur.hiveId = null;
           this.capteurService.capteur.apiaryId = null;
-          this.capteurService.capteur.hiveName = null;
       }
       this.capteurService.capteur._id = idTemp;
       this.initForm();
