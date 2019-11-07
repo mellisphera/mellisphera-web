@@ -50,12 +50,11 @@ import { DailyRecordService } from './service/api/dailyRecordService';
 import { ManageNotesComponent } from './manage/manage-notes/manage-notes.component';
 
 
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketService } from './service/socket.service';
 import { AlertConfigurationComponent } from './alert-configuration/alert-configuration.component';
 import { AlertsService } from './service/api/alerts.service';
 
-const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options: {} };
+
 
 
 
@@ -68,7 +67,6 @@ const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options
     NavbarModule,
     SidebarModule,
     RouterModule,
-    SocketIoModule.forRoot(config),
     FormsModule,
     ReactiveFormsModule,
     SharedModule,

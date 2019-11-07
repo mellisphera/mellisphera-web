@@ -10,7 +10,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 import { User } from '../../_model/user';
-import { Component, OnInit, OnDestroy,AfterViewChecked, HostListener, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked, HostListener, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../service/api/rucher.service';
 import { Ruche } from './ruche';
@@ -66,11 +66,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   rucheSelect: RucheInterface;
   positionHive: any;
   baseDropValid: string;
-  boolDraggable : boolean;
+  boolDraggable: boolean;
   rucherSelectId: string;
-  firstValue : boolean;
-  translateX : number;
-  translateY : number;
+  firstValue: boolean;
+  translateX: number;
+  translateY: number;
   private hiveUpdateForDestroyPage: Array<RucheInterface>;
   message: string;
   style: {
@@ -97,8 +97,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   // Hive alerts by apiay
   public hiveAlertsByApiary: AlertInterface[];
   screenWidth: any;
-  lastHighlightFix : string;
-  lastHighlightHandle : string;
+  lastHighlightFix: string;
+  lastHighlightHandle: string;
 
   constructor(public dailyRecTh: DailyRecordService,
     private userService: UserloggedService,
@@ -106,6 +106,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     private notifyService: NotifierService,
     private formBuilder: FormBuilder,
     public login: UserloggedService,
+    public graphGlobal: GraphGlobal,
     public rucheService: RucheService,
     private observationService: ObservationService,
     public rucherService: RucherService,
@@ -122,7 +123,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.notify = notifyService;
     this.eltOnClickClass = null;
-    this.lockHive = false;
+    this.lockHive = true;
     this.eltOnClickId = null;
     this.username = this.login.getUser();
     this.photoApiary = null;
@@ -141,19 +142,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     };
 
     this.selectHive = {
-      _id : '',
-      name : '',
-      description : '',
-      userId : '',
-      username : '',
+      _id: '',
+      name: '',
+      description: '',
+      userId: '',
+      username: '',
       apiaryId: '',
       dataLastReceived: null,
       hidden: false,
       createDate: null,
       apiaryName: '',
-      hivePosX : '',
-      hivePosY : '',
-      sharingUser : []
+      hivePosX: '',
+      hivePosY: '',
+      sharingUser: []
     };
 
     this.boolDraggable = true;
@@ -217,15 +218,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     //Called after every check of the component's view. Applies to components only.
     //Add 'implements AfterViewChecked' to the class.
     // highlight a hive
-    if(/info-hives/g.test(this.router.url)){
+    if (/info-hives/g.test(this.router.url)) {
       this.eltOnClickId = document.getElementById(this.rucheService.getCurrentHive().name);
-      if(this.eltOnClickId !== null){
+      if (this.eltOnClickId !== null) {
         this.renderer.addClass(this.eltOnClickId, 'highlightFix');
         this.lastHighlightFix = this.rucheService.getCurrentHive().name;
       }
 
       this.eltOnClickId = document.getElementById(this.rucheService.getCurrentHive()._id);
-      if(this.eltOnClickId !== null){
+      if (this.eltOnClickId !== null) {
         this.renderer.addClass(this.eltOnClickId, 'highlightHandle');
         this.lastHighlightHandle = this.rucheService.getCurrentHive()._id;
       }
@@ -234,11 +235,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   loadAlert() {
     this.alertsService.getHiveAlertByApiaryId(this.rucherService.getCurrentApiary(),
-    MyDate.getRangeForCalendarAlerts()[0].getTime(), MyDate.getRangeForCalendarAlerts()[1].getTime() ).subscribe(
-      _alerts => {
-        this.hiveAlertsByApiary = _alerts.filter(_alert => !_alert.check);
-      }
-    );
+      MyDate.getRangeForCalendarAlerts()[0].getTime(), MyDate.getRangeForCalendarAlerts()[1].getTime()).subscribe(
+        _alerts => {
+          this.hiveAlertsByApiary = _alerts.filter(_alert => !_alert.check);
+        }
+      );
     this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts()).subscribe(
       _notif => {
         this.apiaryAlertsActives = _notif.filter(_notif => !_notif.check);
@@ -246,7 +247,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     )
   }
 
-  numberAlertsActivesByHive(hiveId: string): number| any {
+  numberAlertsActivesByHive(hiveId: string): number | any {
     if (this.hiveAlertsByApiary !== undefined) {
       return this.hiveAlertsByApiary.filter(alert => alert.hiveId === hiveId).length;
     } else {
@@ -294,16 +295,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.renderer.removeClass(this.eltOnClickId, 'active0');
 
     // remove higlight for last highlighted hive
-    if (this.lastHighlightFix !== 'dontExist'){
+    if (this.lastHighlightFix !== 'dontExist') {
       this.eltOnClickId = document.getElementById(this.lastHighlightFix);
-      if (this.eltOnClickId !== null){
+      if (this.eltOnClickId !== null) {
         this.renderer.removeClass(this.eltOnClickId, 'highlightFix');
       }
     }
 
-    if (this.lastHighlightHandle !== 'dontExist'){
+    if (this.lastHighlightHandle !== 'dontExist') {
       this.eltOnClickId = document.getElementById(this.lastHighlightHandle);
-      if (this.eltOnClickId !== null){
+      if (this.eltOnClickId !== null) {
         this.renderer.removeClass(this.eltOnClickId, 'highlightHandle');
       }
     }
@@ -377,7 +378,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.alertsService.checkAlert(this.apiaryAlertsActives.filter(_notif => _notif.apiaryId === this.rucherService.getCurrentApiary())).subscribe(
         _res => {
           this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
-          this.apiaryAlertsActives = this.apiaryAlertsActives.filter(_notif => _notif.apiaryId !==  this.rucherService.getCurrentApiary()).slice();
+          this.apiaryAlertsActives = this.apiaryAlertsActives.filter(_notif => _notif.apiaryId !== this.rucherService.getCurrentApiary()).slice();
         }
       );
     }
@@ -397,13 +398,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
    * @param {RucheInterface} ruche
    * @memberof HomeComponent
    */
-  onMoveEnd(event, ruche: RucheInterface, id:number): void {
+  onMoveEnd(event, ruche: RucheInterface, id: number): void {
     if (this.login.checkWriteObject(ruche.userId)) {
       const container = document.getElementById("cadre");
       const widthcontainer = container.offsetWidth;
       const heightcontainer = container.offsetHeight;
-      let xHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosX, 10), widthcontainer);
-      let yHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosY, 10), heightcontainer);
+      const xHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosX, 10), widthcontainer);
+      const yHivePx = this.getPositionPxToPourcent(parseInt(ruche.hivePosY, 10), heightcontainer);
       this.position.x = this.getPourcentToPx(xHivePx + event.x, widthcontainer);
       this.position.y = this.getPourcentToPx(yHivePx + event.y, heightcontainer);
       if (this.position.y < 0) {
@@ -411,27 +412,37 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       } else if (this.position.x < 0) {
         this.position.x = 0;
       }
-      let rucheUpdate = Object.assign({}, ruche);
-      rucheUpdate.hivePosX = '' + this.position.x;
-      rucheUpdate.hivePosY = '' + this.position.y;
+/*       const index = this.rucheService.ruches.findIndex(_hive => _hive._id === ruche._id);
+      this.rucheService.ruches[index].hivePosX = '' + this.position.x;
+      this.rucheService.ruches[index].hivePosY = '' + this.position.y; */
+      let rucheUpdate = JSON.parse(JSON.stringify(ruche));
       console.log(event);
       if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
         console.log(event);
         this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
           () => { }, () => { }, () => {
-            // ruche.hivePosX = rucheUpdate.hivePosX;
-            // ruche.hivePosY = rucheUpdate.hivePosY;
-            // document.getElementById(id.toString()).style.transform = 'translate(0px, 0px)';
-            // this.firstValue = true;
-            // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[0]);
-            // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2));
             this.position.x = 0;
             this.position.y = 0;
-            this.hiveUpdateForDestroyPage.push(rucheUpdate);
+            const index = this.hiveUpdateForDestroyPage.findIndex(_hive => _hive._id === rucheUpdate._id);
+            if (index !== -1) {
+              this.hiveUpdateForDestroyPage[index] = rucheUpdate;
+            } else {
+              this.hiveUpdateForDestroyPage.push(rucheUpdate);
+            }
+            console.log(this.hiveUpdateForDestroyPage);
           }
         );
       }
     }
+  }
+  
+  ngOnDestroy(): void {
+        this.hiveUpdateForDestroyPage.forEach((hiveUpdate: RucheInterface) => {
+          let hiveUpdateIndex = this.rucheService.ruches.map(hive => hive._id).indexOf(hiveUpdate._id);
+          this.rucheService.ruches[hiveUpdateIndex].hivePosX = hiveUpdate.hivePosX;
+          this.rucheService.ruches[hiveUpdateIndex].hivePosY = hiveUpdate.hivePosY;
+          console.log(this.rucheService.ruches[hiveUpdateIndex]);
+        });
   }
 
   // onMove(event, ruche: RucheInterface, id:number): void {
@@ -462,7 +473,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   //   }
 
 
-  onMoving(event, id: string){
+  onMoving(event, id: string) {
     console.log(id);
     // document.getElementById(id).style.transform = 'translate(0,0)' ;
   }
@@ -515,13 +526,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.infoRuche = ruche.name + ' : ' + ruche.description;
   }
 
-  ngOnDestroy(): void {
-    this.hiveUpdateForDestroyPage.forEach((hiveUpdate: RucheInterface) => {
-      let hiveUpdateIndex = this.rucheService.ruches.map(hive => hive._id).indexOf(hiveUpdate._id);
-      this.rucheService.ruches[hiveUpdateIndex].hivePosX = hiveUpdate.hivePosX;
-      this.rucheService.ruches[hiveUpdateIndex].hivePosY = hiveUpdate.hivePosY;
-    });
-  }
 
   collapseAllActiveButton(class1: string, class2: string, class3: string, idButtonActive: string) {
     // Desactive the three collapses div that we don't want
@@ -777,9 +781,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       } else {
         reject(false);
       }
-    })
+    });
   }
-  
+
 
   // Sort a sensors list in increasing sort
   increasingSort(sensorsList: string[]): string[] {
@@ -793,41 +797,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     return sensorsList;
   }
 
-  // Change the system for each hive. Switch between handle and fix position.
-  changeHandleHive(id: string) {
-    if (id === 'handleHive') {
-      //desactive the wrong system
-      this.eltOnClickClass = document.getElementsByClassName('fixHive');
-      for (let i = 0; i < this.eltOnClickClass.length; i++) {
-        this.eltOnClickClass[i].classList.add('displayNone');
-      }
-      this.eltOnClickId = document.getElementById('locked');
-      this.renderer.addClass(this.eltOnClickId, 'displayNone');
-
-      // Active the right system
-      this.eltOnClickClass = document.getElementsByClassName('handleHive');
-      for (let i = 0; i < this.eltOnClickClass.length; i++) {
-        this.eltOnClickClass[i].classList.remove('displayNone');
-      }
-      this.eltOnClickId = document.getElementById('unlocked');
-      this.renderer.removeClass(this.eltOnClickId, 'displayNone');
-    } else {
-      // desactive the wrong system
-      this.eltOnClickClass = document.getElementsByClassName('handleHive');
-      for (let i = 0; i < this.eltOnClickClass.length; i++) {
-        this.eltOnClickClass[i].classList.add('displayNone');
-      }
-      this.eltOnClickId = document.getElementById('unlocked');
-      this.renderer.addClass(this.eltOnClickId, 'displayNone');
-
-      // Active the right system
-      this.eltOnClickClass = document.getElementsByClassName('fixHive');
-      for (let i = 0; i < this.eltOnClickClass.length; i++) {
-        this.eltOnClickClass[i].classList.remove('displayNone');
-      }
-      this.eltOnClickId = document.getElementById('locked');
-      this.renderer.removeClass(this.eltOnClickId, 'displayNone');
-    }
+  onLockHive() {
+    this.lockHive = true;
   }
+
 
 }

@@ -77,12 +77,12 @@ limitations under the License. -->
         <img [src]="rucherService.rucher.photo" (click)="hideRightClick($event)" class="photo" />
         <!-- The button to change hive handle => click -->
         <div zIndex="100" class ="lockButton">
-            <button  data-toggle="tooltip" data-html="true"  title = "{{ 'HOME.PLACEMENTMODE' | translate}}" id = "locked" type="button" class="lock" (click) = "changeHandleHive('handleHive')"><i class="fa fa-lock"></i></button>
-            <button  data-toggle="tooltip" data-html="true" title = "{{ 'HOME.CLICKMODE' | translate}}" id = "unlocked" type="button" class="lock displayNone" (click) = "changeHandleHive('fixHive')"><i class="fa fa-unlock"></i></button>
+            <button  *ngIf="lockHive" data-toggle="tooltip" data-html="true"  title = "{{ 'HOME.PLACEMENTMODE' | translate}}" id = "locked" type="button" class="lock" (click) = "this.lockHive = !this.lockHive;"><i class="fa fa-lock"></i></button>
+            <button  *ngIf="!lockHive" data-toggle="tooltip" data-html="true" title = "{{ 'HOME.CLICKMODE' | translate}}" id = "unlocked" type="button" class="lock" (click) = "this.lockHive = !this.lockHive;"><i class="fa fa-unlock"></i></button>
         </div>
         <!-- The dive for each hive -->
         <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true" data-toggle="tooltip"
-             ngDraggable="false" [handle]="HiveHandle" *ngFor="let ruche of rucheService.ruches; let i = index" (endOffset)="onMoveEnd($event, ruche,i)"
+             [ngDraggable]="!lockHive" [handle]="HiveHandle" *ngFor="let ruche of rucheService.ruches; let i = index" (endOffset)="onMoveEnd($event, ruche,i)"
             [id]="i" [style.top.%]="ruche.hivePosY" [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)"
             class="hive-group drag-grid {{i}}">
             <!-- The div is show when you right click on a hive -->
@@ -107,23 +107,16 @@ limitations under the License. -->
             <!-- The circle for an hive -->
             <!-- Hive Handle -->
             <div #HiveHandle data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
-                (dblclick)="onClick(ruche);" [id] = "ruche._id" class="ruche handleHive displayNone"
+                (dblclick)="onClick(ruche);" [id] = "ruche._id" [class]="'ruche '  + (!lockHive ? 'handleHive': '')"
                 [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)">
                 <!-- notifications -->
                 <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"
                     class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span>
             </div>
             <!-- Hive click -->
-            <div data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
-                (click)="onClick(ruche);" [id] = "ruche.name" class="ruche fixHive"
-                [style.background-color]="dailyRecTh.getColorByPourcent(ruche._id)">
-                <!-- notifications -->
-                <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
-                    class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span>
-            </div>
             <!-- The hidden div when you click on name/Brood/Weight/Sensors -->
             <div (click)="onClick(ruche);" class="name collapse in">
-                <span class="hive-info">{{ruche.name.slice(-10)}}</span>
+                <span class="hive-info">{{ruche.name}}</span>
             </div>
             <div (click)="onClick(ruche);" class="brood collapse ">
                 <span *ngIf="dailyRecTh.getPourcentByHive(ruche._id) !== null"

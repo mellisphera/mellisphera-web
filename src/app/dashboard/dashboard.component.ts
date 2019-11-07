@@ -69,7 +69,6 @@ export class DashboardComponent implements OnInit {
       }
     });
     this.routingHistory.loadRouting();
-    this.socketService.loadDataRequest(this.userService.getJwtReponse(  ));
   }
 
   ngOnInit() {
@@ -81,7 +80,7 @@ export class DashboardComponent implements OnInit {
       <HomeComponent>this.homeComponent.checkIfInfoApiaryComponent().then(
         res => {
           <HomeComponent>this.homeComponent.infoApiaryComponent.alertsComponent.initCalendar(true);
-          <HomeComponent>this.homeComponent.changeHandleHive('fixHive');
+          <HomeComponent>this.homeComponent.onLockHive();
           <HomeComponent>this.homeComponent.loadAlert();
         }
       )

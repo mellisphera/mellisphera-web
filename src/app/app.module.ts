@@ -39,8 +39,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxLoadingModule } from 'ngx-loading';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MyDatePipe } from './pipe/my-date.pipe';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { SocketService } from './dashboard/service/socket.service';
 
-
+const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options: {} };
 export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
    return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
 }
@@ -59,6 +61,7 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     RouterModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    SocketIoModule.forRoot(config),
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -89,6 +92,7 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     UserloggedService,
     AuthService,
     AuthGuardService,
+    SocketService,
     JwtHelperService,
     SignupService,
     // MeteoService,

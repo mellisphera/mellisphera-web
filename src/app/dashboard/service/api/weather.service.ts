@@ -170,7 +170,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getWindForecastDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/wind/apiary/' + apiaryId, range);
+    return this.httpClient.post<any>(CONFIG.URL + 'forecastDailyWeather/wind/apiary/' + apiaryId, range);
   }
 
 

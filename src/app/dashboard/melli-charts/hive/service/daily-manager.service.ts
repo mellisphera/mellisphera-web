@@ -177,7 +177,7 @@ export class DailyManagerService {
     if (isArray(_value) && isObject(_value[0])) {
       _value.forEach(elt => {
         value = Object.assign(value, elt);
-      })
+      });
     } else {
       value = _value;
     }
@@ -528,6 +528,7 @@ export class DailyManagerService {
   getChartWindMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getWindAllWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
+        console.log(_temp);
         console.log(_temp);
         _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
         // this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);

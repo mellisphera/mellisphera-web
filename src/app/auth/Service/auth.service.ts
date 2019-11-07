@@ -22,6 +22,7 @@ import { CONFIG } from '../../../constants/config';
 import { AtokenStorageService } from './atoken-storage.service';
 import { JwtResponse } from '../../_model/jwt-response';
 import { TranslateService } from '@ngx-translate/core';
+import { SocketService } from '../../dashboard/service/socket.service';
 
 
 
@@ -43,6 +44,7 @@ export class AuthService {
   constructor(private router: Router,
               private http: HttpClient,
               private tokenService: AtokenStorageService,
+              private socketService: SocketService,
               private userService: UserloggedService,
               private translateService: TranslateService) {
                 this.login = { email : '', password : ''};
@@ -68,6 +70,8 @@ export class AuthService {
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
         this.translateService.addLangs(['en', 'fr']);
+        this.socketService.loadDataRequest(this.userService.getJwtReponse());
+
         console.log(this.jwtReponse.lang);
          if (this.jwtReponse.lang === null || this.jwtReponse.lang.toLowerCase().indexOf('en') !== -1) {
            this.translateService.use('en');
