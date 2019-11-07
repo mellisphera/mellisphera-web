@@ -320,12 +320,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     // Save the hive on dataBase
     this.rucheService.saveCurrentHive(ruche);
 
-    this.alertsService.checkAlert(this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id)).subscribe(
-      _res => {
-        this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
-        this.hiveAlertsByApiary = this.hiveAlertsByApiary.filter(_notif => _notif.hiveId !== ruche._id).slice();
-      }
-    );
+    if (this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id).length > 0) {
+      this.alertsService.checkAlert(this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id)).subscribe(
+        _res => {
+          this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
+          this.hiveAlertsByApiary = this.hiveAlertsByApiary.filter(_notif => _notif.hiveId !== ruche._id).slice();
+        }
+      );
+    }
     // Use the user configuration
     this.userConfig.getSubject().subscribe(
       data => {
@@ -370,13 +372,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   }
 
-  OnclickInfoApiary() {
-    this.alertsService.checkAlert(this.apiaryAlertsActives.filter(_notif => _notif.apiaryId === this.rucherService.getCurrentApiary())).subscribe(
-      _res => {
-        this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
-        this.apiaryAlertsActives = this.apiaryAlertsActives.filter(_notif => _notif.apiaryId !==  this.rucherService.getCurrentApiary()).slice();
-      }
-    );
+  onclickInfoApiary() {
+    if (this.apiaryAlertsActives.filter(_notif => _notif.apiaryId === this.rucherService.getCurrentApiary()).length > 0) {
+      this.alertsService.checkAlert(this.apiaryAlertsActives.filter(_notif => _notif.apiaryId === this.rucherService.getCurrentApiary())).subscribe(
+        _res => {
+          this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
+          this.apiaryAlertsActives = this.apiaryAlertsActives.filter(_notif => _notif.apiaryId !==  this.rucherService.getCurrentApiary()).slice();
+        }
+      );
+    }
     this.router.navigateByUrl('dashboard/home/info-apiary');
     if (this.screenWidth < 991) {
       let el = document.getElementById('scroll');

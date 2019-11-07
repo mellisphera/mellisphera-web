@@ -23,9 +23,7 @@ import { AtokenStorageService } from './atoken-storage.service';
 import { JwtResponse } from '../../_model/jwt-response';
 import { TranslateService } from '@ngx-translate/core';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+
 
 @Injectable()
 export class AuthService {
@@ -52,7 +50,11 @@ export class AuthService {
                 this.isAuthenticated = false;
               }
 
-  signIn() {
+  signIn(origin: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'originURL': origin});
+    const httpOptions = { headers: headers };
     this.login.email = this.login.email.toLowerCase();
     this.loginObs = this.http.post<JwtResponse>(CONFIG.URL + 'api/auth/signin', this.login, httpOptions);
     this.loginObs.subscribe(
@@ -94,8 +96,8 @@ export class AuthService {
     );
   }
 
-  resetPassword(email: string): Observable<any> {
+/*   resetPassword(email: string): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'api/auth/reset', email, httpOptions);
-  }
+  } */
 
 }

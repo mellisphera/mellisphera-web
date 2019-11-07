@@ -24,9 +24,9 @@ limitations under the License. -->
                 <ul id="menuHome">
                     <!-- Alert/Notes/States -->
                     <ul class="nav navbar-nav">
-                        <li><button (click)="OnclickInfoApiary()" id="infoApiaryButton" type="button"
+                        <li><button (click)="onclickInfoApiary()" id="infoApiaryButton" type="button"
                                 class="button button0">{{ 'HOME.NAVBAR.APIARY' | translate}}</button><span
-                                *ngIf="alertsService.numberApiaryAlertsActives !== 0"
+                                *ngIf="numberActiveNotifByApiary() !== 0"
                                 class="badge badge-button">{{ numberActiveNotifByApiary() }}</span></li>
                     </ul>
 

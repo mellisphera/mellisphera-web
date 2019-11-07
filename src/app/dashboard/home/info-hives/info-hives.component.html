@@ -10,33 +10,34 @@ See the License for the specific language governing permissions and
 limitations under the License. -->
 
 <div id="general">
-<div id="graphs">
-<!-- <div class="title">
+    <div id="graphs">
+        <!-- <div class="title">
     <img src="../../assets/img/apiary-icon.png" style="width:45px;height: 45px; margin-left: -7px; margin-top:-10px;" />
     {{this.rucheService.getCurrentHive().name}}
     <span
         *ngIf="this.rucheService.getCurrentHive().description!=''">{{': ' + this.rucheService.getCurrentHive().description}}</span>
 </div>
 <hr /> -->
-<div id="alerts">
-<app-alerts-hive></app-alerts-hive>
-</div>
-    <div id="health">
-        <app-health-hive></app-health-hive>
+        <div id="alerts">
+            <app-alerts-hive></app-alerts-hive>
+        </div>
+        <div id="health">
+            <app-health-hive></app-health-hive>
+        </div>
+        <div id="weight">
+            <app-weight-hives></app-weight-hives>
+            <!-- <hr/> -->
+        </div>
+        <br clear="both" />
     </div>
-    <div id="weight">
-        <app-weight-hives></app-weight-hives>
+    <div id="left">
+        <div id="notes">
+            <app-notes-hives></app-notes-hives>
+        </div>
         <!-- <hr/> -->
+        <div id="sensors">
+            <!-- <app-sensors-hive></app-sensors-hive>
+ -->
+        </div>
     </div>
-    <br clear="both" />
-</div>
-<div id = "left">
-<div id="notes">
-<app-notes-hives></app-notes-hives>
-</div>
-<!-- <hr/> -->
-<div id = "sensors">
-<!-- <app-sensors-hive></app-sensors-hive>
- --></div>
-</div>
 </div>

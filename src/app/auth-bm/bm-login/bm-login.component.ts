@@ -42,7 +42,7 @@ export class BmLoginComponent implements OnInit, OnDestroy {
       email: this.email,
       password: this.password
     };
-    this.authService.signIn();
+    this.authService.signIn('LOGIN_BM');
   }
 
 }

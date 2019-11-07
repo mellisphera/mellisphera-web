@@ -113,13 +113,13 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
         this.innitForm();
         setTimeout(() => {
           this.success = false;
-          this.authService.signIn();
+          this.authService.signIn('LOGIN_MS');
         }, 250);
       });
     }
   }
   verifLogin() {
-    this.authService.signIn();
+    this.authService.signIn('LOGIN_MS');
   }
 
   activeReset() {
@@ -135,7 +135,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   sendMail() {
-    this.authService.resetPassword(this.emailForReset).subscribe(
+/*     this.authService.resetPassword(this.emailForReset).subscribe(
       () => {}, () => {}, () => {
         if(/fr/g.test(this.navLanguage)){
           this.notif.notify('success', 'Vous avez reçu un mail avec un nouveau mot de passe.');
@@ -144,7 +144,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
           }
         this.activeReset();
       }
-    );
+    ); */
   }
 
   getMessageTraduction(msg: MessagesList) : string{
