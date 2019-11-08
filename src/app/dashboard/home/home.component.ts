@@ -10,7 +10,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 import { User } from '../../_model/user';
-import { Component, OnInit, OnDestroy, AfterViewChecked, HostListener, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked, HostListener, Renderer2, ViewChild, ViewChildren, AfterViewInit } from '@angular/core';
 import { UserloggedService } from '../../userlogged.service';
 import { RucherService } from '../service/api/rucher.service';
 import { Ruche } from './ruche';
@@ -57,7 +57,7 @@ import { NotifList } from '../../../constants/notify';
   styleUrls: ['./home.component.scss'],
 
 })
-export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
   private eltOnClickClass: HTMLCollectionOf<Element>;
   private eltOnClickId: EventTarget;
   infoRuche: any = null;
@@ -156,6 +156,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       hivePosY: '',
       sharingUser: []
     };
+    console.log('note');
+
+    this.observationService.getNoteByUserId(this.userService.getIdUserLoged());
 
     this.boolDraggable = true;
     this.firstValue = true;
@@ -212,6 +215,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     );
 
     this.initForm();
+  }
+
+  ngAfterViewInit(): void {
+    this.rucheService.ruches.forEach(_hive => {
+      document.getElementById(_hive._id).style.transform = 'translate(0px, 0px)';
+    });
   }
 
   ngAfterViewChecked(): void {
@@ -287,6 +296,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   isActiveHive(hive: RucheInterface): boolean {
     return hive._id === this.rucheService.getCurrentHive()._id;
   }
+
+  checkHiveIsActive(hiveId: string): string {
+    return this.rucheService.getCurrentHive()._id === hiveId ? 'highlightFix' : '';
+  }
+  
+
   onClick(ruche: RucheInterface) {
     // active button name
     // this.clickName();
@@ -295,28 +310,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.renderer.removeClass(this.eltOnClickId, 'active0');
 
     // remove higlight for last highlighted hive
-    if (this.lastHighlightFix !== 'dontExist') {
-      this.eltOnClickId = document.getElementById(this.lastHighlightFix);
-      if (this.eltOnClickId !== null) {
-        this.renderer.removeClass(this.eltOnClickId, 'highlightFix');
-      }
-    }
 
-    if (this.lastHighlightHandle !== 'dontExist') {
-      this.eltOnClickId = document.getElementById(this.lastHighlightHandle);
-      if (this.eltOnClickId !== null) {
-        this.renderer.removeClass(this.eltOnClickId, 'highlightHandle');
-      }
-    }
-
-    // higlight the hive
-    this.eltOnClickId = document.getElementById(ruche.name);
-    this.renderer.addClass(this.eltOnClickId, 'highlightFix');
-    this.lastHighlightFix = ruche.name;
-
-    this.eltOnClickId = document.getElementById(ruche._id);
-    this.renderer.addClass(this.eltOnClickId, 'highlightHandle');
-    this.lastHighlightHandle = ruche._id;
 
     // Save the hive on dataBase
     this.rucheService.saveCurrentHive(ruche);
@@ -349,7 +343,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     // For the hive notes
 
-    this.observationService.getNoteByUserId(this.userService.getIdUserLoged());
+    //this.observationService.getNoteByUserId(this.userService.getIdUserLoged());
 
     //For the hive-weight
     this.dailyRecordWservice.getDailyRecordsWbyhiveId(ruche._id);
@@ -374,6 +368,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   onclickInfoApiary() {
+    this.rucheService.saveCurrentHive({});
     if (this.apiaryAlertsActives.filter(_notif => _notif.apiaryId === this.rucherService.getCurrentApiary()).length > 0) {
       this.alertsService.checkAlert(this.apiaryAlertsActives.filter(_notif => _notif.apiaryId === this.rucherService.getCurrentApiary())).subscribe(
         _res => {
@@ -412,11 +407,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       } else if (this.position.x < 0) {
         this.position.x = 0;
       }
-/*       const index = this.rucheService.ruches.findIndex(_hive => _hive._id === ruche._id);
-      this.rucheService.ruches[index].hivePosX = '' + this.position.x;
-      this.rucheService.ruches[index].hivePosY = '' + this.position.y; */
-      let rucheUpdate = JSON.parse(JSON.stringify(ruche));
-      console.log(event);
+      const rucheUpdate = JSON.parse(JSON.stringify(ruche));
+      rucheUpdate.hivePosX = '' + this.position.x;
+      rucheUpdate.hivePosY = '' + this.position.y;
       if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
         console.log(event);
         this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
@@ -438,7 +431,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   
   ngOnDestroy(): void {
         this.hiveUpdateForDestroyPage.forEach((hiveUpdate: RucheInterface) => {
-          let hiveUpdateIndex = this.rucheService.ruches.map(hive => hive._id).indexOf(hiveUpdate._id);
+          const hiveUpdateIndex = this.rucheService.ruches.map(hive => hive._id).indexOf(hiveUpdate._id);
           this.rucheService.ruches[hiveUpdateIndex].hivePosX = hiveUpdate.hivePosX;
           this.rucheService.ruches[hiveUpdateIndex].hivePosY = hiveUpdate.hivePosY;
           console.log(this.rucheService.ruches[hiveUpdateIndex]);

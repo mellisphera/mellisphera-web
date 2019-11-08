@@ -143,7 +143,6 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
   }
 
   initCalendar(hive?: RucheInterface){
-    console.log('init');
     this.echartInstance.clear();
     this.cleanOption();
     this.loadCalendar();
@@ -156,7 +155,6 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
   }
 
   getSerieByData(data: Array<any>, nameSerie: string, serieTemplate: any, next: Function): void {
-    console.log(data);
     const sensorRef: Array<string> = [];
     data.forEach((_data) => {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
@@ -183,18 +181,14 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
-        console.log(_data);
         const dateJoin = this.joinObservationAlert(_data[0].filter(_note => _note.type === 'hive'), _data[1]);
         const joinData = _data[0].concat(_data[1]);
-        this.noData = !(joinData.length >= 0);
-        console.log(this.noData);
+        this.noData = !(joinData.length > 0);
         const option = Object.assign({}, this.option);
-        console.log(option);
         option.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
         option.legend.top = 30;
         option.legend.selectedMode = 'multiple';
         this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
-          console.log(serieComplete);
           serieComplete.renderItem = (params, api) => {
             const cellPoint = api.coord(api.value(0));
             const cellWidth = params.coordSys.cellWidth;
@@ -327,14 +321,12 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
   }
 
   getTooltipBySerie(extraData?: any[]): any {
-    console.log(extraData);
     const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
     tooltip.formatter = (params) => {
       if (params.data[3] !== 'OK'){
       const dataByDateTooltip = extraData.filter(_filter => {
         return MyDate.compareToDailyDate(_filter.opsDate, params.data[0]);
       });
-      console.log(dataByDateTooltip)
       return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
         let type = 'Notif';
         let img = '';

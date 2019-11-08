@@ -12,10 +12,8 @@ limitations under the License. */
 import { Login } from '../_model/login';
 
 export interface User {
-    id: string;
+    _id: string;
     createdAt: Date;
-	login: Login;
-	phone: string;
 	email: string;
 	username: string;
 	password: string;
@@ -23,8 +21,4 @@ export interface User {
 	connexions: number;
 	lastConnection: Date;
 	fullName: String;
-	position: String;
-	country: String;
-	city: String;
-	levelUser: number;
 }

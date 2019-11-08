@@ -183,12 +183,12 @@ export const NOTIF_CODE = {
         "icon": "DConnect",
         "FR": {
             "Subject": "Déconnexion",
-            "Message": "{REF} déconnecté depuis le {DATE}",
+            "Message": "{REF} déconnecté depuis {PERIOD}",
             "Unit": " jours"
         },
         "EN": {
             "Subject": "Disconnection",
-            "Message": "{REF} disconnected since {DATE}",
+            "Message": "{REF} disconnected since {PERIOD}",
             "Unit": " days"
         }
     },
@@ -197,12 +197,12 @@ export const NOTIF_CODE = {
         "icon": "DConnect",
         "FR": {
             "Subject": "Mauvais signal",
-            "Message": "{REF} mauvais signal depuis le {DATE}",
+            "Message": "{REF} mauvais signal depuis {PERIOD}",
             "Unit": " jours"
         },
         "EN": {
             "Subject": "Poor signal",
-            "Message": "{REF} poor signal since {DATE}",
+            "Message": "{REF} poor signal since {PERIOD}",
             "Unit": " days"
         }
     },

@@ -61,7 +61,7 @@ export class ManageNotesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.observationService.getObservationByUserId(this.userService.getIdUserLoged()).subscribe(_notes => {
+/*     this.observationService.getObservationByUserId(this.userService.getIdUserLoged()).subscribe(_notes => {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
         this.observationService.observationsApiaryUser = (_notes.filter(note => note.type === 'apiary')).sort((a, b) => {
           return this.getApiaryNameByID(a.apiaryId).localeCompare(this.getApiaryNameByID(b.apiaryId));
@@ -73,7 +73,7 @@ export class ManageNotesComponent implements OnInit {
           return this.getHiveNameById(a.hiveId).localeCompare(this.getHiveNameById(b.hiveId));
         });
       });
-    });
+    }); */
   }
 
   // getObservationsByApiary(apiaryId : string) : any[]{

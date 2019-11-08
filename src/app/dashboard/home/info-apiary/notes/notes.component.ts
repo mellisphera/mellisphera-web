@@ -66,7 +66,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   ngOnInit() {
     this.initForm();
     this.observationService.setRange({ scale: 100, type: 'YEARS' });
-    this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
+    // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
   }
 
   @HostListener('window:resize', ['$event'])
@@ -86,6 +86,17 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       document.getElementById('notesApiary').style.height = ''+(40) + 'vh';
     }
 
+  }
+
+  /**
+   *
+   *
+   * @param {string} apiaryId
+   * @returns {Observation[]}
+   * @memberof NotesComponent
+   */
+  getNoteByApiaryId(apiaryId: string): Observation[]{
+    return this.observationService.observationsApiary.filter(_note => _note.apiaryId === apiaryId);
   }
 
   /**

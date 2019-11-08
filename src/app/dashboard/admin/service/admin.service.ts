@@ -74,6 +74,17 @@ export class AdminService {
   /**
    *
    *
+   * @param {string} userId
+   * @returns {Observable<>}
+   * @memberof AdminService
+   */
+  exeChangeLog(userId: string) {
+    return this.httpClient.get(CONFIG.URL + `user/update/${userId}`);
+  }
+
+  /**
+   *
+   *
    * @param {string} name
    * @returns {Observable<RucherModel>}
    * @memberof AdminServiceusername

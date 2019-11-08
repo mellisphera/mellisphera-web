@@ -194,10 +194,14 @@ export class AlertsService {
         const alertId = this.alertTypes.filter(_alert => _alert.icon === NOTIF_CODE[args.code].icon)[0]._id;
         if (this.translateService.currentLang === 'fr') {
             let msgFR: string = NOTIF_CODE[args.code].FR.Message;
-            return msgFR.replace(/{VAL}/g, this.getUserValue(alertId)).replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef);
+            return msgFR.replace(/{VAL}/g, this.getUserValue(alertId))
+            .replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef)
+            .replace(/{PERIOD}/g, this.getUserValue(alertId)).replace(/day/g, 'jour(s)');
         } else {
             let msgEN: string = NOTIF_CODE[args.code].EN.Message;
-            return msgEN.replace(/{VAL}/g, this.getUserValue(alertId)).replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef);
+            return msgEN.replace(/{VAL}/g, this.getUserValue(alertId))
+            .replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef)
+            .replace(/{PERIOD}/g, this.getUserValue(alertId)).replace(/day/g, 'days');
         }
 
     }

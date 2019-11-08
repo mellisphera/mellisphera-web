@@ -95,6 +95,7 @@ export class GlobalStatusComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.adminService.getAllUsers().subscribe(
       users => {
+        console.log(users);
         this.adminService.allUsers = users;
         this.optionsUserChart.baseOption.series[0].data = this.adminService.allUsers.filter(_filter => USER_EXCLU.indexOf(_filter.username) === -1).map((res: User) => {
           return { name: res.username, value: res.connexions };

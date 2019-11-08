@@ -19,6 +19,7 @@ import { KpisynclogComponent } from './kpisynclog/kpisynclog.component';
 import { GlobalStatusComponent } from './global-status/global-status.component';
 import { SensorsManagerComponent } from './sensors-manager/sensors-manager.component';
 import { DemoApiaryComponent } from './demo-apiary/demo-apiary.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
     {
@@ -27,6 +28,7 @@ const routes: Routes = [
         { path: 'kpisynclog', component: KpisynclogComponent, canActivate: [AuthGuardService]},
         { path: 'status', component: GlobalStatusComponent, canActivate: [AuthGuardService]},
         { path: 'sensor-manager', component: SensorsManagerComponent, canActivate: [AuthGuardService]},
+        { path: 'user', component: UserComponent, canActivate: [AuthGuardService]},
         { path: 'demo-apiary', component: DemoApiaryComponent, canActivate: [AuthGuardService]}
       ]
     }

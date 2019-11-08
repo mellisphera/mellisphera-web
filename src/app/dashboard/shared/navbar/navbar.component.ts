@@ -347,7 +347,7 @@ export class NavbarComponent implements OnInit {
     onSelectRucher() {
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher._id);
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
-        this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
+        // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
         this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
         switch (location) {
             case '/dashboard/ruche-et-rucher':
@@ -370,7 +370,7 @@ export class NavbarComponent implements OnInit {
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
                 //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
+                // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
                 // this.checkIfInfoApiaryComponent().then(status => {
                 //     console.log("OK");
@@ -473,7 +473,7 @@ export class NavbarComponent implements OnInit {
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
                 //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
+                // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
                 this.router.navigate(['dashboard/home/info-apiary']);
                 this.desactiveButtonHomePageActiveNameAndAlerts();
@@ -635,7 +635,7 @@ export class NavbarComponent implements OnInit {
                         this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                         //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
                         //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                        this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
+                        // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
                         this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
                         this.router.navigate(['dashboard/home/info-apiary']);
                         this.desactiveButtonHomePageActiveNameAndAlerts();
@@ -651,7 +651,7 @@ export class NavbarComponent implements OnInit {
                         this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                         //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
                         //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                        this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
+                        // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
                         this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
                         this.router.navigate(['dashboard/home/info-apiary']);
                         this.desactiveButtonHomePageActiveNameAndAlerts();

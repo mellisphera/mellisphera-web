@@ -128,7 +128,7 @@ export class RucheService {
     * @param {string} [hiveId]
     * @memberof RucheService
     */
-   saveCurrentHive(hive?: RucheInterface) {
+   saveCurrentHive(hive?: RucheInterface | Object) {
      if (hive) {
       // window.sessionStorage.removeItem('currentHive');
       window.sessionStorage.setItem('currentHive', JSON.stringify(hive));

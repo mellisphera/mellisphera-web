@@ -121,7 +121,7 @@ export class ObservationService {
    * @returns {Observable<any>}
    * @memberof ObservationService
    */
-  getObservationByhiveId(hiveId: string, hiveName?: string) {
+/*   getObservationByhiveId(hiveId: string, hiveName?: string) {
     this.rangeObs[1] = new Date();
     return this.http.post<Observation[]>(CONFIG.URL + 'report/hive/' + hiveId, this.rangeObs).subscribe(
       _obs => {
@@ -132,11 +132,12 @@ export class ObservationService {
         this.emitHiveSubject();
       }
     );
-  }
+  } */
 
   getNoteByUserId(userId: string): void{
     this.http.get<Observation[]>(CONFIG.URL + 'report/user/' + userId).subscribe(
       _note => {
+        console.log('note');
         this.observationsHive = _note.filter(_note => _note.type === 'hive');
         this.observationsApiary = _note.filter(_note => _note.type === 'apiary');
       }
@@ -166,18 +167,13 @@ export class ObservationService {
     return this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + apiaryId, MyDate.getRangeForCalendarAlerts());
   }
 
-  /**
-   *
-   *
-   * @param {string} apiaryId
-   * @memberof ObservationService
-   */
-  getObservationByapiaryId(apiaryId: string){
+
+/*   getObservationByapiaryId(apiaryId: string){
     this.http.post<Observation[]>(CONFIG.URL + 'report/apiary/' + apiaryId, this.rangeObs).subscribe(
       obs => {
           this.observationsApiary = obs;
       });
-  }
+  } */
   /**
    *
    *
@@ -211,15 +207,6 @@ export class ObservationService {
     return this.http.delete<Observation>(CONFIG.URL + 'report/' + idObs);
   }
 
-  /**
-   *
-   *
-   * @param {string} userId
-   * @memberof ObservationService
-   */
-  getObservationByUserId(userId: string): Observable<Observation[]>{
-    return this.http.get<Observation[]>(CONFIG.URL + 'report/user/' + userId);
-  }
   
   getPictoInspect(typeInspect: string, cellPoint: Array<number>) {
     console.log(typeInspect);

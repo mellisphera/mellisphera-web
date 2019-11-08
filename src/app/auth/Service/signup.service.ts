@@ -31,10 +31,8 @@ export class SignupService {
   constructor(private http: HttpClient) {
     this.errSignup = false;
     this.user = {
-      id : null,
+      _id : null,
       createdAt : new Date(),
-      login : { email: null, password: null},
-      phone : null,
       email : null,
       username : null,
       password : null,
@@ -42,10 +40,6 @@ export class SignupService {
       role : null,
       lastConnection : null,
       fullName : null,
-      position : null,
-      country : null,
-      city : null,
-      levelUser : null,
     }
   }
 

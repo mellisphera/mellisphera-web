@@ -88,6 +88,18 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
 
   }
 
+
+  /**
+   *
+   *
+   * @param {string} hiveId
+   * @returns {Observation[]}
+   * @memberof NotesHivesComponent
+   */
+  getNoteByHiveId(hiveId: string): Observation[] {
+   // console.log(this.observationService.observationsHive);
+    return this.observationService.observationsHive.filter(_note => _note.hiveId === hiveId);
+  }
   initForm() {
     const defautDate = new Date();
     // defautDate.setUTCHours(new Date().getHours());

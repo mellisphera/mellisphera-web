@@ -10,11 +10,11 @@ See the License for the specific language governing permissions and
 limitations under the License. -->
 
 <div id="stock">
-  <div id="no-data"
+<!--   <div id="no-data"
     *ngIf="dailyRecordWservice.mergeOptionWeight.series[0].data.length < 1 && !dailyRecordWservice.loading">
     {{ 'HIVE_DETAIL.STOCK.WEIGHT' | translate}} {{ 'HIVE_DETAIL.STOCK.NO_DATA' | translate}}
-  </div>
-  <div *ngIf="dailyRecordWservice.mergeOptionWeight.series[0].data.length > 0" echarts [options]="option"
+  </div> -->
+  <div echarts [options]="option"
     [autoResize]="true" [merge]="dailyRecordWservice.mergeOptionWeight" [loading]="dailyRecordWservice.loading"
     style="width:100%;height:40vh;" id="calendrierPoids">
   </div>

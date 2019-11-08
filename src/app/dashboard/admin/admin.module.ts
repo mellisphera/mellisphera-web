@@ -23,6 +23,8 @@ import { KpisynclogService } from './service/kpisynclog.service';
 import { GlobalStatusComponent } from './global-status/global-status.component';
 import { SensorsManagerComponent } from './sensors-manager/sensors-manager.component';
 import { DemoApiaryComponent } from './demo-apiary/demo-apiary.component';
+import { UserComponent } from './user/user.component';
+import { AdminService } from './service/admin.service';
 
 @NgModule({
   imports: [
@@ -36,14 +38,17 @@ import { DemoApiaryComponent } from './demo-apiary/demo-apiary.component';
   ],
   providers: [
     ConnectionService,
+    AdminService,
     KpisynclogService
   ],
   declarations: [
     AdminComponent,
     KpisynclogComponent,
+    UserComponent,
     GlobalStatusComponent,
     SensorsManagerComponent,
-    DemoApiaryComponent
+    DemoApiaryComponent,
+    UserComponent
   ]
 })
 export class AdminModule { }

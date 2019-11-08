@@ -211,7 +211,7 @@
             "NOSENSORS" : "There is no sensors for this hive."
         },
         "STOCK" : {
-            "NO_DATA" : "_",
+            "NO_DATA" : "",
             "STOCK" : "Honey Stock",
             "WEIGHT" :  "Daily weight income :"
         },
