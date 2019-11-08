@@ -108,7 +108,7 @@ limitations under the License. -->
             <!-- Hive Handle -->
             <div #HiveHandle data-placement="top" [title]="infoRuche" (contextmenu)="onRightClick($event,i)"
                 (dblclick)="onClick(ruche);" [id] = "ruche._id" [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
-                [style.background-color]="dailyRecTh.getColorByPourcent(ruche.id)">
+                [style.background-color]="dailyRecTh.getColorByPourcent(ruche._id)">
                 <!-- notifications -->
                 <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"
                     class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span>
