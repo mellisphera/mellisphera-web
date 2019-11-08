@@ -148,6 +148,7 @@ export const BASE_OPTIONS = {
         boundaryGap: false,
        // min: 'dataMin',
         max: new Date(),
+        min: null,
         axisLine: { onZero: true },
         position: 'bottom',
         minInterval: 1,
@@ -156,7 +157,7 @@ export const BASE_OPTIONS = {
             show: true
         },
         splitArea: {
-            show: true,
+            show: false
         },
         axisLabel: {
             show: true,

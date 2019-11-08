@@ -89,6 +89,7 @@ export class StackComponent implements OnInit {
     let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxis.gridIndex = 0;
     xAxis.max = this.melliDate.getRangeForReqest()[1];
+    xAxis.min = this.melliDate.getRangeForReqest()[0];
     xAxis.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getDailyDate(new Date(value));
     };
@@ -105,6 +106,8 @@ export class StackComponent implements OnInit {
     let xAxisTemp = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxisTemp.gridIndex = 1;
     xAxis.max = this.melliDate.getRangeForReqest()[1];
+    xAxis.min = this.melliDate.getRangeForReqest()[0];
+
     xAxisTemp.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getDailyDate(new Date(value));
     };
@@ -121,6 +124,8 @@ export class StackComponent implements OnInit {
     let xAxisHum = Object.assign({}, BASE_OPTIONS.xAxis);
     xAxisHum.gridIndex = 2;
     xAxis.max = this.melliDate.getRangeForReqest()[1];
+    xAxis.min = this.melliDate.getRangeForReqest()[0];
+
     xAxisHum.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getDailyDate(new Date(value));
     };
@@ -175,6 +180,10 @@ export class StackComponent implements OnInit {
 
   loadAfterRangeChanged(next: Function) {
     this.stackService.getEchartInstance().showLoading()
+    this.options.xAxis.forEach(_x => {
+      _x.max = this.melliDate.getRangeForReqest()[1];
+      _x.min = this.melliDate.getRangeForReqest()[0];
+    });
     let obsArray = [];
     obsArray = this.stackService.getHiveSelect().map(_hive => {
       return [
@@ -257,6 +266,7 @@ export class StackComponent implements OnInit {
       () => {
         this.options.xAxis.forEach(_x => {
           _x.max = this.melliDate.getRangeForReqest()[1];
+          _x.min = this.melliDate.getRangeForReqest()[0];
         });
         this.stackService.getEchartInstance().setOption(this.options);
         this.stackService.getEchartInstance().hideLoading();
