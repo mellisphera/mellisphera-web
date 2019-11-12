@@ -126,7 +126,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
           this.currentDeviceTextPeriodCalendar + this.dailyManager.meanPeriodDevice.value + ' ' + this.dailyManager.meanPeriodDevice.unit,
           this.currentDeviceTextSevenDay + this.dailyManager.meanDeviceSevenDay.value + ' ' + this.dailyManager.meanDeviceSevenDay.unit
         ].join('\n');
-
         this.dailyManager.baseOptionsInt.graphic[0].children[1].style.text = annotationDevice;
         this.melliHive.getDailyDeviceChartInstance().setOption(this.dailyManager.baseOptionsInt);
       } else if (_type.origin === OTHER) {
@@ -159,7 +158,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
    * @memberof DailyComponent
    */
   setMeanTextHtml(): void {
-    console.log(this.translateService.currentLang);
     if (this.translateService.currentLang === 'fr') {
       if (this.currentTypeDailyOther.name === 'RAIN') {
         this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_FR;

@@ -112,7 +112,6 @@ export class DailyManagerService {
     this.baseOptionEnv = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliCharts));
     this.baseOptionExt = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliCharts));
     this.baseOptionExt.graphic.push(JSON.parse(JSON.stringify(BASE_OPTIONS.graphic)));
-    console.log(BASE_OPTIONS.baseOptionDailyMelliCharts);
     const dateNowLastSevenDay = new Date();
     dateNowLastSevenDay.setDate(new Date().getDate() - 8);
     this.rangeSevenDay = [
@@ -134,17 +133,23 @@ export class DailyManagerService {
   getLastDayForMeanValue(observable: Observable<any>, mean: boolean, type: Tools): void {
     observable.map(_serie => {
       if (type.name === 'RAIN') {
-        return _serie.flat().filter(_data => _data.sensorRef === 'OpenWeatherMap').map(_elt => _elt.value);
+        return _serie.flat().filter(_data => _data.sensorRef === 'OpenWeatherMap').map(_elt => {
+          return this.unitService.convertMilimetreToPouce(_elt.value, this.unitService.getUserPref().unitSystem, false);
+        });
       } else if (type.name === 'WINCOME') {
-        return _serie.weightIncomeHight.map(_elt => _elt.value).concat(_serie.weightIncomeLow.map(_elt => _elt.value));
+        return _serie.weightIncomeHight.map(_elt => _elt.value).concat(_serie.weightIncomeLow.map(_elt => {
+          return this.unitService.convertWeightFromuserPref(_elt.value, this.unitService.getUserPref().unitSystem, false);
+        }));
       } else if (type.name === 'TEMP_EXT_WEATHER_MAX') {
         return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
           _elt.value = parseInt(_elt.value.maxTempDay, 10);
+          _elt.value = this.unitService.convertTempFromUsePref(_elt.value, this.unitService.getUserPref().unitSystem, false);
           return _elt;
         });
       } else if (type.name === 'TEMP_EXT_WEATHER_MIN') {
         return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
           _elt.value = parseInt(_elt.value.minTempDay, 10);
+          _elt.value = this.unitService.convertTempFromUsePref(_elt.value, this.unitService.getUserPref().unitSystem, false);
           return _elt;
         });
       } else if (type.name === 'HEXT_WEATHER_MAX') {
@@ -155,6 +160,13 @@ export class DailyManagerService {
       } else if (type.name === 'HEXT_WEATHER_MIN') {
         return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
           _elt.value = parseInt(_elt.value.minHumidityDay, 10);
+          return _elt;
+        });
+      } else if (type.name === 'WIND') {
+        return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+          _elt.value = parseInt(_elt.value.maxSpeed, 10);
+          _elt.value = this.unitService.convertWindFromUserPref(_elt.value, this.unitService.getUserPref().unitSystem, false);
+
           return _elt;
         });
       } else {
@@ -198,7 +210,6 @@ export class DailyManagerService {
 
   getSerieByData(data: Array<any>, nameSerie: string, serieTemplate: any, next: Function): void {
     let sensorRef: Array<string> = [];
-    console.log(data);
     data.forEach((_data) => {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
@@ -528,11 +539,10 @@ export class DailyManagerService {
   getChartWindMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getWindAllWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
-        console.log(_temp);
-        console.log(_temp);
         _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
         // this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
+        this.getLastDayForMeanValue(this.weatherService.getWindAllWeather(apiaryId, this.rangeSevenDay), true, type);
         if (rangeChange) {
           option.calendar.range = range;
           option.series[0].data = _temp.map(_data => new Array(_data.date, this.unitService.convertWindFromUserPref(_data.value.maxSpeed, this.unitService.getUserPref().unitSystem)));
@@ -550,7 +560,7 @@ export class DailyManagerService {
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         }
-        // this.setMeanData(option.series, true, type);
+        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionExt = option;
@@ -646,7 +656,6 @@ export class DailyManagerService {
     // this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(hiveId, this.rangeSevenDay), false, type);
     this.dailyHService.getTempIntMaxByHive(hiveId, range).subscribe(
       _tMax => {
-        console.log(_tMax);
         this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(hiveId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
@@ -768,7 +777,6 @@ export class DailyManagerService {
   getChartBrood(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getBroodByHive(hiveId, range).subscribe(
       _brood => {
-        console.log(_brood);
         this.getLastDayForMeanValue(this.dailyHService.getBroodByHive(hiveId, this.rangeSevenDay), true, type);
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (rangeChange) {
@@ -877,7 +885,6 @@ export class DailyManagerService {
   }
 
   getChartAlert(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    console.log(range);
     const obs: Array<Observable<any>> = [
       this.observationService.getObservationByHiveForMelliCharts(hiveId, range),
       this.alertService.getAlertByHive(hiveId, range)
@@ -886,7 +893,6 @@ export class DailyManagerService {
       _data => {
         const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
         const joinData = _data[0].concat(_data[1]);
-        console.log(joinData);
         let option = Object.assign({}, this.baseOptionEnv);
         if (rangeChange) {
           option.calendar.range = range;
@@ -957,7 +963,6 @@ export class DailyManagerService {
           }
           option.legend = Object.assign({}, BASE_OPTIONS.legend);
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
-            console.log(serieComplete);
             serieComplete.renderItem = (params, api) => {
               let cellPoint = api.coord(api.value(0));
               let cellWidth = params.coordSys.cellWidth;
@@ -1138,7 +1143,22 @@ export class DailyManagerService {
       value = value + parseInt(_value[1], 10);
     });
     let meanValue = this.unitService.getValRound(mean ? value / data.length : value);
-
+    switch(type.name) {
+      case 'RAIN':
+        meanValue = this.unitService.convertMilimetreToPouce(meanValue, this.unitService.getUserPref().unitSystem, false);
+        break;
+      case 'WINCOME':
+        meanValue = this.unitService.convertWeightFromuserPref(meanValue, this.unitService.getUserPref().unitSystem, false);
+        break;
+      case 'TEMP_EXT_WEATHER_MAX':
+      case 'TEMP_EXT_WEATHER_MIN':
+        meanValue = this.unitService.convertTempFromUsePref(meanValue, this.unitService.getUserPref().unitSystem, false);
+        break;
+      case 'WIND':
+        meanValue = this.unitService.convertWindFromUserPref(meanValue, this.unitService.getUserPref().unitSystem, false);
+        break;
+      default:
+    }
     if (isNaN(meanValue)) {
       meanValue = 0;
     }

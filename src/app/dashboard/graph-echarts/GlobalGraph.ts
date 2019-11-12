@@ -570,6 +570,7 @@ export class GraphGlobal {
       case 'T':
         return this.temp.unitT;
       case 'W':
+        console.log(this.weight.unitW);
         return this.weight.unitW;
       case 'P':
         return this.humidity.unitT;
