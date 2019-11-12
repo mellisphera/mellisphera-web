@@ -119,22 +119,30 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.calendarElements = document.getElementsByClassName('calendar');
-    this.dailyManager.setMeanAnnotation = (_type: Tools) => {
-      this.setMeanTextHtml();
-      if (_type.origin === DEVICE) {
-        const annotationDevice: string = [
-          this.currentDeviceTextPeriodCalendar + this.dailyManager.meanPeriodDevice.value + ' ' + this.dailyManager.meanPeriodDevice.unit,
-          this.currentDeviceTextSevenDay + this.dailyManager.meanDeviceSevenDay.value + ' ' + this.dailyManager.meanDeviceSevenDay.unit
-        ].join('\n');
-        this.dailyManager.baseOptionsInt.graphic[0].children[1].style.text = annotationDevice;
-        this.melliHive.getDailyDeviceChartInstance().setOption(this.dailyManager.baseOptionsInt);
-      } else if (_type.origin === OTHER) {
-        const annotationOther: string = [
-          this.currentOtherTextPeriodCalendar + this.dailyManager.meanPeriodOther.value + ' ' + this.dailyManager.meanPeriodOther.unit,
-          this.currentOtherTextSevenDay + this.dailyManager.meanOtherSevenDay.value + ' ' + this.dailyManager.meanOtherSevenDay.unit
-        ].join('\n');
-        this.dailyManager.baseOptionExt.graphic[0].children[1].style.text = annotationOther;
-        this.melliHive.getDailyOtherChartInstance().setOption(this.dailyManager.baseOptionExt);
+    this.dailyManager.setMeanAnnotation = (_type: Tools, clear?: boolean) => {
+      if (!clear) {
+        this.setMeanTextHtml();
+        if (_type.origin === DEVICE) {
+          const annotationDevice: string = [
+            this.currentDeviceTextPeriodCalendar + this.dailyManager.meanPeriodDevice.value + ' ' + this.dailyManager.meanPeriodDevice.unit,
+            this.currentDeviceTextSevenDay + this.dailyManager.meanDeviceSevenDay.value + ' ' + this.dailyManager.meanDeviceSevenDay.unit
+          ].join('\n');
+          this.dailyManager.baseOptionsInt.graphic[0].children[1].style.text = annotationDevice;
+          this.melliHive.getDailyDeviceChartInstance().setOption(this.dailyManager.baseOptionsInt);
+        } else if (_type.origin === OTHER) {
+          const annotationOther: string = [
+            this.currentOtherTextPeriodCalendar + this.dailyManager.meanPeriodOther.value + ' ' + this.dailyManager.meanPeriodOther.unit,
+            this.currentOtherTextSevenDay + this.dailyManager.meanOtherSevenDay.value + ' ' + this.dailyManager.meanOtherSevenDay.unit
+          ].join('\n');
+          this.dailyManager.baseOptionExt.graphic[0].children[1].style.text = annotationOther;
+          this.melliHive.getDailyOtherChartInstance().setOption(this.dailyManager.baseOptionExt);
+        }
+      } else {
+        if (_type.origin === DEVICE) {
+          this.dailyManager.baseOptionsInt.graphic[0].children[1].style.text = '';
+        } else if (_type.origin === OTHER) {
+          this.dailyManager.baseOptionExt.graphic[0].children[1].style.text = '';
+        }
       }
     };
 

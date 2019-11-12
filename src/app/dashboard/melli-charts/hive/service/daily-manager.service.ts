@@ -351,6 +351,7 @@ export class DailyManagerService {
           option.visualMap = null;
           option.series.push(serie);
         }
+        this.setMeanAnnotation(type, true);
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.clear();
         chartInstance.setOption(option, true);
