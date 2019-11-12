@@ -134,7 +134,8 @@ export class DailyManagerService {
     observable.map(_serie => {
       if (type.name === 'RAIN') {
         return _serie.flat().filter(_data => _data.sensorRef === 'OpenWeatherMap').map(_elt => {
-          return this.unitService.convertMilimetreToPouce(_elt.value, this.unitService.getUserPref().unitSystem, false);
+          let value = _elt.value.map(_elt => _elt.rainDay).filter(_elt => _elt !== undefined);
+          return this.unitService.convertMilimetreToPouce(value, this.unitService.getUserPref().unitSystem, false);
         });
       } else if (type.name === 'WINCOME') {
         return _serie.weightIncomeHight.map(_elt => _elt.value).concat(_serie.weightIncomeLow.map(_elt => {
