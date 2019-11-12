@@ -19,7 +19,7 @@ limitations under the License. -->
         <span class="icon-bar"></span>
       </button>
       <ul class="nav navbar-nav navbar-left" id="apiary-group">
-        <li id="menuToggle">
+<!--         <li id="menuToggle">
           <input type="checkbox" id="menuCheckbox" />
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -31,77 +31,52 @@ limitations under the License. -->
                 title="{{ 'SIDEBAR.APIARY' | translate }}">
                 <img src="./assets/icons/ui/melliUx.png" style="width:50px;margin-left:-5px;" />
               </a>
-              <!-- NEW APIARY -->
               <button data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.NEW_APIARY' | translate }}"
                 data-toggle="modal" data-target="#newApiaryModal" class="btn btn-success btn-lg crud-apiary btn_create">
                 <i class="{{ 'NAVBAR.CRUD.APIARY' | translate }} fa fa-plus fa-2x"></i>
               </button>
-              <!-- EDIT APIARY -->
               <button type="button" (click)="editRucherClicked()" class="crud btn btn-primary btn-lg crud-apiary btn_edit"
                 data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.EDIT_APIARY' | translate }}"
                 data-toggle="modal" data-target="#editApiary">
                 <i class="fa fa-edit fa-2x"></i>
               </button>
-              <!-- DELETE APIARY -->
-              <!-- <button type="button" (click)="deleteApiaryClicked()" class="btn btn-warning btn-lg crud-apiary"
-                data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.DELETE_APIARY' | translate }}"
-                data-toggle="modal" data-target="#deleteApiary">
-                <i class="fa fa-times fa-2x"></i>
-              </button> -->
             </li>
             <li><a routerLink="./manage-hives" data-toggle="tooltip" id="hives" data-placement="top"
                 title="{{ 'SIDEBAR.HIVES' | translate }}">
                 <img src="./assets/icons/ui/hive.png" style="width:50px;margin-left:-5px;" />
               </a>
-              <!-- NEW HIVE -->
               <button [disabled]="rucherService.rucher._id === null" (click)="rucherSelectInit()" data-toggle="tooltip"
                 data-html="true" title="{{ 'HIVES.FORM.NEW' | translate}}" data-toggle="modal"
                 data-target="#newHiveModal" class="btn btn-success btn-lg crud-apiary btn_create">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
               </button>
-              <!-- EDIT HIVE -->
               <button data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.CRUD.EDITAHIVE' | translate}}"
                 data-toggle="modal" type="button" (click)="editHiveClicked()" data-target="#editHiveModal"
                 class="btn btn-primary btn-lg crud-apiary btn_edit">
                 <i class="fa fa-edit fa-2x"></i>
               </button>
-              <!-- DELETE HIVE -->
-              <!-- <button type="button" (click)="deleteHiveClicked()" class="btn btn-warning btn-lg crud-apiary"
-                data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.CRUD.DELETEAHIVE' | translate }}"
-                data-toggle="modal" data-target="#deleteHiveModal">
-                <i class="fa fa-times fa-2x"></i>
-              </button> -->
             </li>
             <li>
               <a data-toggle="tooltip" id="notes" data-placement="top"
                 title="{{ 'SIDEBAR.NOTES' | translate }}">
                 <img src="./assets/icons/ui/notes.png" style="width:50px;margin-left:-5px;" />
               </a>
-              <!-- NEW NOTES -->
               <button [disabled]="rucherService.rucher._id == null" (click)="newNoteModalInit()" data-toggle="tooltip"
                 data-html="true" data-toggle="modal" data-target="#newNoteModal"
                 title="{{ 'NOTES.FORM.NEW' | translate}}" class="btn btn-success btn-lg crud-apiary btn_create">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
               </button>
-              <!-- EDIT NOTES -->
-              <!-- <button data-toggle="tooltip" data-html="true" (click)="newNoteModalInit()"
-                    data-toggle="modal" type="button" data-target="#EditNoteModal" 
-                    title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDITANOTE' | translate}}" class="btn btn-primary btn-lg crud-apiary">
-                <i class="fa fa-edit fa-2x"></i>
-              </button> -->
             </li>
             <li id="{{ 'NAVBAR.CRUD.MANAGE' | translate }}">
               <a routerLink="./manage-sensors" data-toggle="tooltip" data-placement="top" id="sensor"
                 title="{{ 'SIDEBAR.SENSORS' | translate }}">
                 <img src="./assets/img/sensor-icon.png" style="width:50px;margin-left:-5px;" />
               </a>
-              <!-- NEW SENSOR -->
               <button [disabled]="rucherService.rucher._id == null" (click)="newSensorInit()" data-toggle="tooltip"
                 data-html="true" data-toggle="modal" title="{{ 'CAPTEUR.FORM.NEW' | translate}}"
                 data-target="#newSensorModal" class="btn btn-success btn-lg crud-apiary btn_create">
                 <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
               </button>
-              <!-- EDIT SENSOR -->
               <button data-toggle="tooltip" data-html="true" data-toggle="modal" type="button"
                 title="{{ 'CAPTEUR.FORM.EDITASENSOR' | translate}}" data-target="#editSensorModal"
                 (click)="editSensorInit()" class="btn btn-primary btn-lg crud-apiary btn_edit">
@@ -109,7 +84,7 @@ limitations under the License. -->
               </button>
             </li>
           </ul>
-        </li>
+        </li> -->
         <li>
           <select [(ngModel)]="rucherService.rucher" class="form-control"
             (change)="onSelectRucher()" id="select-Apiary">

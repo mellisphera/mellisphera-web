@@ -226,7 +226,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   getHiveByApiary(apiaryId: string): RucheInterface[] | boolean {
     try {
-      return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === apiaryId);
+      return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === apiaryId).sort((a, b) => {
+        return a.name.localeCompare(b.name);
+    });;
     } catch (e) {
       return false;
     }
