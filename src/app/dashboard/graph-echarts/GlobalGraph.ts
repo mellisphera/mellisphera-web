@@ -704,7 +704,7 @@ export class GraphGlobal {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
               name: '',
-              value: this.weatherService.getTranslateDescriptionMainDay(params.data[6], this.userService.getCountry()),
+              value: this.weatherService.getTranslateDescriptionMainDay(params.data[6], this.translateService.currentLang),
               unit: ''
             },
             {
@@ -971,10 +971,10 @@ export class GraphGlobal {
         type: 'rect',
         z2: 0 ,
         shape: {
-          x: -cellWidth / 2,
-          y: -cellHeight / 2,
-          width: cellWidth,
-          height: cellHeight,
+          x: -cellWidth / 2 + 2,
+          y: -cellHeight / 2 + 2,
+          width: cellWidth - 4,
+          height: cellHeight - 4,
         },
         position: [cellPoint[0], cellPoint[1]],
         style : {

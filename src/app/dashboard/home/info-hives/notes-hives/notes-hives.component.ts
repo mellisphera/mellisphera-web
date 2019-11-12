@@ -151,6 +151,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.newObs.opsDate = formValue.date;
       this.newObs.apiaryId = this.rucherService.rucher._id;
       this.newObs.createDate = new Date();
+      this.newObs.description = formValue.sentence;
       this.newObs.hiveId = this.rucheService.getCurrentHive()._id;
       this.newObs.userId = this.userService.getIdUserLoged();
       this.ObservationForm.reset();
@@ -168,7 +169,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         }
       });
     } else {
-      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
+      this.myNotifer.sendWarningNotif(NotifList.  AUTH_WRITE_NOTES_HIVE);
     }
   }
 

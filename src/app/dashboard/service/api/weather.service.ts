@@ -244,7 +244,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   getTranslateDescriptionMainDay(enLabel: string, lang: string): string {
-    if (lang !== 'FR') {
+    if (lang !== 'fr') {
       return enLabel;
     } else {
       switch (enLabel) {
