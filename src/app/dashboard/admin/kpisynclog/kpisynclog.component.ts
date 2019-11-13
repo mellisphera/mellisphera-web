@@ -183,7 +183,12 @@ export class KpisynclogComponent implements OnInit {
               borderWidth: 1,
               formatter: (params) => {
                 return '<strong>' + params.marker + params.data[3] + '</strong/><br/>' + 
-                'sync : <strong>' + params.data[1] + '</strong><br/>log : <strong/>' + params.data[0] + '</strong>';
+                'inscription: <strong>' + params.data[9] + '</strong><br/>' +  
+                'sync : <strong>' + params.data[1] + '</strong><br/>log : <strong/>' + params.data[0] + '</strong><br/>' + 
+                'nbLogMS: <strong>' + params.data[5] + '</strong><br/>' + 
+                'nbLogBM: <strong>' + params.data[6] + '</strong><br/>' +
+                'nbLogUnknown: <strong>' + params.data[8] + '</strong><br/>'+
+                'nbLogTot: <strong>' + params.data[7] + '</strong>';
               }
             },
             title: {
@@ -194,7 +199,7 @@ export class KpisynclogComponent implements OnInit {
               name: elt[0].date,
               type: 'scatter',
               data: elt.map(res => {
-                return [res.lastLog, res.lastSync,10,res.user, res.date];
+                return [res.lastLog, res.lastSync,10,res.user, res.date, res.nbLogBM,res.nbLogMS, res.nbLogTot, res.nbLogUnknown, res.inscription];
               }),
               symbolSize: 30,
             

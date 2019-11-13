@@ -19,7 +19,12 @@ export interface Kpisynclog {
     _id: String;
     user: String;
     date: String;
+    inscription: string;
     lastSync: number;
     lastLog: number;
+    nbLogBM: number;
+    nbLogMS: number;
+    nbLogTot: number;
+    nbLogUnknown: number;
     
 }
