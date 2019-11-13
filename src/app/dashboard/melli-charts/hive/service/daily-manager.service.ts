@@ -241,10 +241,43 @@ export class DailyManagerService {
         if (rangeChange) {
           option.series = this.removeDataAllseries(option.series);
           this.getSerieByData(weather, type.name, SERIES.custom, (serieComplete: any) => {
+            console.log(serieComplete);
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            option.series[index].name = serieComplete.name;
-            option.series[index].data = serieComplete.data;
+            if (index !== -1) {
+              option.series[index].name = serieComplete.name;
+              option.series[index].data = serieComplete.data;
+            } else {
+              option.legend.data.push(serieComplete.name);
+              serieComplete.renderItem = (params, api) => {
+                let cellPoint = api.coord(api.value(0));
+                let cellWidth = params.coordSys.cellWidth;
+                let cellHeight = params.coordSys.cellHeight;
+                let group = {
+                  type: 'group',
+                  children: []
+                };
+                group.children.push({
+                  type: 'rect',
+                  z2: 0,
+                  shape: {
+                    x: -cellWidth / 2,
+                    y: -cellHeight / 2,
+                    width: cellWidth,
+                    height: cellHeight,
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                  style: {
+                    fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                    stroke: 'black'
+                  }
+                });
+                group.children = group.children.concat(this.weatherService.getPicto(api.value(1), cellPoint));
+                return group;
+              };
+              option.series.push(serieComplete);
+            }
           });
+          console.log(option.series);
           option.calendar.range = range;
           // option.series[0].data = weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
         } else {
@@ -286,13 +319,13 @@ export class DailyManagerService {
           });
 
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+          option.series.push(this.graphGlobal.getDaySerie());
           option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.dayLabel.align = 'left';
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.visualMap = null;
         }
-        option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.clear();
         chartInstance.setOption(option);
         chartInstance.hideLoading();

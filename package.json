@@ -49,6 +49,7 @@
     "ngx-loading": "^3.0.1",
     "ngx-smart-popover": "^1.1.0",
     "ngx-socket-io": "^3.0.1",
+    "node-sass": "^4.12.0",
     "overlay": "^1.2.5",
     "rxjs": "^6.5.3",
     "rxjs-compat": "^6.5.3",
