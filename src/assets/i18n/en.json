@@ -95,13 +95,13 @@
         }
     },
     "SIDEBAR" : {
-        "APIARY" : "Apiary",
+        "APIARY" : "My Apiaries",
         "HIVES" : "Hives",
         "NOTES" : "Apiary notes",
         "FLOWER" : "Flower",
         "SENSORS" : "Sensors",
-        "DATA" : "Analysis",
-        "ALERT_CONF": "Notif configuration"
+        "DATA" : "Expert",
+        "ALERT_CONF": "Notifs Settings"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Change Password",

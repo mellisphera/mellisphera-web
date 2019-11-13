@@ -29,6 +29,7 @@ limitations under the License. -->
             <li (click)="focus('home')">
                 <a routerLink="./home/info-apiary" data-toggle="tooltip" id="home" data-placement="top" title="{{ 'SIDEBAR.APIARY' | translate }}">
                     <img src="./assets/icons/ui/melliUx.svg" style="width:50px;margin-left:-5px;"/>
+                    {{ 'SIDEBAR.APIARY' | translate }}
                 </a>
             </li>
 <!--             <li *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('flower')">

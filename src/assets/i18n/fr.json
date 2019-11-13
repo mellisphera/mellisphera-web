@@ -95,13 +95,13 @@
         }
     },
     "SIDEBAR" : {
-        "APIARY" : "Rucher",
+        "APIARY" : "Mes Ruchers",
         "HIVES" : "Ruches",
         "NOTES" : "Notes du rucher",
         "FLOWER" : "Fleur",
         "SENSORS" : "Capteurs",
         "DATA" : "Analyse",
-        "ALERT_CONF": "Configuration alerts"
+        "ALERT_CONF": "Configuration Notifs"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Changer de mot de passe",
