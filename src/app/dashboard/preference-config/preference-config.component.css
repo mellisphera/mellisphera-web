@@ -15,10 +15,17 @@ limitations under the License. */
 .checkOk{
     border: 1px solid green;
 }
-#lang-group svg {
+#lang-group div{
+    display: inline-block;
+    padding: 2px;
+}
+.lang_active{
+    border: 2px solid orange;
+}
+#lang-group img {
+    border-radius: 50px;
     cursor: pointer;
-    width: 50px;
-    margin-right: 8px;
+
 }
 .icon_notif{
     width: 50px;

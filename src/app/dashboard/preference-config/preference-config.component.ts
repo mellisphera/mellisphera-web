@@ -70,8 +70,8 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     });
   }
 
-  changeLangToggle() {
-    if (this.translateService.currentLang === 'fr') {
+  changeLangToggle(lang: string) {
+    if (lang === 'en') {
       this.translateService.use('en');
       this.userService.setCountry('en');
       this.userPref.lang = 'EN-en';
@@ -148,5 +148,20 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
         window.sessionStorage.setItem('jwtReponse', JSON.stringify(this.authService.jwtReponse));
       }
     );
+  }
+
+  /**
+   *
+   *
+   * @param {string} lang
+   * @returns {string}
+   * @memberof PreferenceConfigComponent
+   */
+  getLangActive(lang: string): string {
+    if (this.translateService.currentLang === lang) {
+      return 'lang_active';
+    } else {
+      return '';
+    }
   }
 }

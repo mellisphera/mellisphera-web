@@ -122,8 +122,8 @@ limitations under the License. -->
             <li><a [routerLink]="[ './preferences']">{{ 'NAVBAR.ACCOUNT.PREFERENCES' | translate }}</a></li>
             <li class="divider"></li>
             <li><a href="#" (click)="logout()">{{ 'NAVBAR.ACCOUNT.LOG_OUT' | translate }}</a></li>
-            <li id="color-items"><span class="color-items" *ngFor="let color of sidebarService.getColors()"
-                (click)="setColor(color)"><i class="fa fa-circle" [style.color]="color.color"></i></span></li>
+<!--             <li id="color-items"><span class="color-items" *ngFor="let color of sidebarService.getColors()"
+                (click)="setColor(color)"><i class="fa fa-circle" [style.color]="color.color"></i></span></li> -->
           </ul>
         </li>
         <!--         <li>
