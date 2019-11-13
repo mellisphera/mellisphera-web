@@ -15,6 +15,17 @@ limitations under the License. */
 a{
     margin: 0px !important;
 }
+li{
+    text-align: center;
+    font-size: 10px;
+}
+li p{
+    color: black !important;
+    margin-left: 0px;
+    //padding: 2px;
+    text-align: center;
+    font-size: 10px;
+}
 .side-active, .side-active:focus{
     background-color: white;
 }
