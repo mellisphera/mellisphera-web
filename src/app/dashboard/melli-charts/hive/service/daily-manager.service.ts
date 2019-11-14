@@ -1191,6 +1191,7 @@ export class DailyManagerService {
         break;
       case 'WIND':
         meanValue = this.unitService.convertWindFromUserPref(meanValue, this.unitService.getUserPref().unitSystem, false);
+        meanValue = this.unitService.getValRound(meanValue);
         break;
       default:
     }

@@ -186,7 +186,7 @@
                 "NEW" : "New",
                 "NEW_NOTES" : "New note",  
                 "DATE" : "Date Time : ",
-                "CREATE_OBS" : "Create observation",
+                "CREATE_OBS" : "Create note",
                 "CREATE_ACT" : "Create action",
                 "CLOSE" : "Close",
                 "EDIT" : "Save",

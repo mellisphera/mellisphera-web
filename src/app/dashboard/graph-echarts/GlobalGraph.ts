@@ -871,7 +871,7 @@ export class GraphGlobal {
    * @memberof GraphGlobal
    */
   getVisualMapBySerie(serieLabel: string): any {
-    const visualMap = Object.assign({}, CALENDAR.visualMap);
+    const visualMap = JSON.parse(JSON.stringify(CALENDAR.visualMap));
     switch (serieLabel) {
       case 'WEIGHT_MAX':
         visualMap.type = 'continuous';
@@ -938,6 +938,7 @@ export class GraphGlobal {
         visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 0;
         visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 125 : 100;
         visualMap.inRange.color = ['#129001', 'yellow', 'red'];
+        break;
       default:
         break;
     }

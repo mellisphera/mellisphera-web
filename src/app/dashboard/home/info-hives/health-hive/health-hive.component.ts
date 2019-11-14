@@ -114,11 +114,13 @@ export class HealthHiveComponent {
                   }
               }
           }],
-          series: {
+          series: [{
               type: 'heatmap',
               coordinateSystem: 'calendar',
-          }
+          }]
       };
+      this.option.series.push(this.graphGlobal.getDaySerie());
+
 
   }
 

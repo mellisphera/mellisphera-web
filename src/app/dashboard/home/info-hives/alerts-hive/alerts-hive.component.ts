@@ -103,7 +103,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
     this.option.calendar.bottom = '3%';
     this.option.calendar.height = '45%';
     this.option.calendar.width = '77%';
-    this.option.calendar.cellSize = ['20', '20'];
+    //this.option.calendar.cellSize = ['20', '20'];
     this.option.series = new Array();
     /*        top: 70,
         left: '15%',
@@ -284,7 +284,10 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
   }
 
   onResize(event) {
-
+    this.echartInstance.resize({
+      width: 'auto',
+      height: 'auto'
+    });
   }
 
 
