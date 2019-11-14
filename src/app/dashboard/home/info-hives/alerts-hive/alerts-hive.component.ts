@@ -242,37 +242,13 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
             }
             return group;
           };
-          const newSerie = Object.assign({}, SERIES.custom);
-          newSerie.name = 'thisDay';
-          newSerie.data = [ [new Date(), 0, 'OK', 'OK']];
-          newSerie.renderItem = (params, api) => {
-            const cellPoint = api.coord(api.value(0));
-            const cellWidth = params.coordSys.cellWidth;
-            const cellHeight = params.coordSys.cellHeight;
-            return {
-              type: 'rect',
-              z2: 0 ,
-              shape: {
-                x: -cellWidth / 2,
-                y: -cellHeight / 2,
-                width: cellWidth,
-                height: cellHeight,
-              },
-              position: [cellPoint[0], cellPoint[1]],
-              style : {
-                fill: 'none',
-                stroke : 'red',
-                lineWidth : 4
-              }
-            }
-          };
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.range = MyDate.getRangeForCalendarAlerts();
+          option.series.push(this.graphGlobal.getDaySerie());
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.legend.data.push(serieComplete.name);
           option.tooltip = this.getTooltipBySerie(joinData);
           option.series.push(serieComplete);
-          option.series.push(newSerie);
 
         });
         this.echartInstance.setOption(option, true);
