@@ -176,6 +176,7 @@
     ngOnDestroy(): void {
       this.alertService.updateAlertConf(this.alertService.alertUser).subscribe(
         _res => {
+          console.log(NotifList);
           this.notifService.sendSuccessNotif(NotifList.SAVE_ALERT_CONF);
         }
       );
