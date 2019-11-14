@@ -401,6 +401,7 @@ export class DailyRecordService {
      */
     public getColorByPourcent(hiveId?: string): any {
         const selectHive = this.dailyRecords.filter(elt => elt.hiveId === hiveId);
+        console.log('select hive' +  selectHive);
         //return (selectHive.length > 0) ? 'ruche ' + selectHive[0].health_status + selectHive[0].health_trend : 'ruche Inconnu';
         if (selectHive.length > 0 || selectHive[0] !== undefined && selectHive) {
             if (selectHive[0].brood > 85 && selectHive[0].brood <= 100) {

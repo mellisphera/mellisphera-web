@@ -178,6 +178,7 @@ export class DailyManagerService {
         if (type.name === 'RAIN' || type.name === 'WINCOME') {
           this.setMeanSevenDay(_data, false, type);
         } else {
+          console.log(_data);
           this.setMeanSevenDay(_data.map(_data => _data.value), true, type);
         }
       }
@@ -401,6 +402,7 @@ export class DailyManagerService {
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             option.series[index].data = serieComplete.data;
+            this.setMeanData(serieComplete, false, type);
           });
           this.getSerieByData(_daliW.weightIncomeLow, 'loss', SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
@@ -415,6 +417,7 @@ export class DailyManagerService {
           option.legend.selectedMode = 'multiple';
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete) => {
             option.legend.data.push(serieComplete.name);
+            this.setMeanData(serieComplete, false, type);
 /*             serieComplete.symbol = GLOBAL_ICONS.WINCOME;
  */            serieComplete.itemStyle = {
               normal: {
@@ -461,7 +464,6 @@ export class DailyManagerService {
         }
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.series.push(this.graphGlobal.getDaySerie());
-        this.setMeanData(option.series, false, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionsInt = option;
@@ -589,7 +591,7 @@ export class DailyManagerService {
           }
           let serie = Object.assign({}, SERIES.heatmap);
           serie.name = type.name;
-          serie.data = _temp.map(_data => new Array(_data.date, _data.value.maxSpeed * 3.6));
+          serie.data = _temp.map(_data => new Array(_data.date,this.unitService.convertWindFromUserPref(_data.value.maxSpeed, this.unitService.getUserPref().unitSystem)));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
@@ -1185,12 +1187,13 @@ export class DailyManagerService {
     } else {
       data = series.data;
     }
+    console.log(data);
     let value = 0;
     data.forEach(_value => {
       value = value + parseInt(_value[1], 10);
     });
     let meanValue = this.unitService.getValRound(mean ? value / data.length : value);
-    switch(type.name) {
+/*     switch(type.name) {
       case 'RAIN':
         meanValue = this.unitService.convertMilimetreToPouce(meanValue, this.unitService.getUserPref().unitSystem, false);
         break;
@@ -1201,12 +1204,8 @@ export class DailyManagerService {
       case 'TEMP_EXT_WEATHER_MIN':
         meanValue = this.unitService.convertTempFromUsePref(meanValue, this.unitService.getUserPref().unitSystem, false);
         break;
-      case 'WIND':
-        meanValue = this.unitService.convertWindFromUserPref(meanValue, this.unitService.getUserPref().unitSystem, false);
-        meanValue = this.unitService.getValRound(meanValue);
-        break;
       default:
-    }
+    } */
     if (isNaN(meanValue)) {
       meanValue = 0;
     }

@@ -984,7 +984,7 @@ export class GraphGlobal {
         position: [cellPoint[0], cellPoint[1]],
         style : {
           fill: 'none',
-          stroke : 'red',
+          stroke : 'purple',
           lineWidth : 3
         }
       };
