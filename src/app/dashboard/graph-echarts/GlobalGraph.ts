@@ -570,7 +570,6 @@ export class GraphGlobal {
       case 'T':
         return this.temp.unitT;
       case 'W':
-        console.log(this.weight.unitW);
         return this.weight.unitW;
       case 'P':
         return this.humidity.unitT;
@@ -961,14 +960,18 @@ export class GraphGlobal {
     const newSerie = Object.assign({}, SERIES.custom);
     newSerie.name = 'thisDay';
     const dayDate = new Date();
-    dayDate.setHours(0);
+    dayDate.setHours(12);
     dayDate.setMinutes(0);
     dayDate.setSeconds(0);
+    dayDate.setMilliseconds(0);
     newSerie.data = [ [dayDate, 0, 'OK', 'OK']];
     newSerie.renderItem = (params, api) => {
       const cellPoint = api.coord(api.value(0));
       const cellWidth = params.coordSys.cellWidth;
       const cellHeight = params.coordSys.cellHeight;
+      if (isNaN(cellPoint[0]) || isNaN(cellPoint[1])) {
+        return;
+    }
       return {
         type: 'rect',
         z2: 0 ,
