@@ -196,7 +196,7 @@ nav[role=admin-navigation] {
   }
   @media screen and (max-width:1400px) {
       #apiary-group {
-          width: 10px;
+          width: 10%;
       }
   }
 @media screen and (max-width:1300px) {
@@ -230,9 +230,9 @@ nav[role=admin-navigation] {
   and (max-height: 1366px) 
   and (orientation: landscape) 
   and (-webkit-min-device-pixel-ratio: 1.5) {
-    #apiary-group{
+/*     #apiary-group{
         width: 12%;
-    }
+    } */
 }
 
 @media screen and (max-width:1000px){
