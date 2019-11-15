@@ -33,7 +33,7 @@ limitations under the License. -->
       <table class="table">
         <tbody>
           <ng-container *ngFor="let hiveObs of getNoteByHiveId(rucheService.getCurrentHive()._id); index as i">
-              <tr class="hoverStyle"  *ngIf="hiveObs.typeInspect =='HiveObs' && hiveObs.type === 'hive'">
+              <tr class="hoverStyle" *ngIf="hiveObs.type === 'hive'">
                 <td style="width: 100px;">{{ hiveObs.opsDate | myDate }}</td>
                 <td>{{hiveObs.description}}</td>
                 <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}</td> -->
@@ -48,23 +48,6 @@ limitations under the License. -->
                 </td>
 
               </tr>
-            <ng-container *ngIf="hiveObs.typeInspect =='HiveAct' && hiveObs.type === 'hive'">
-              <tr class="hoverStyle" style="color: blue;">
-                <td style="width: 100px;">{{hiveObs.opsDate | myDate}}</td>
-                <td>{{hiveObs.description}}</td>
-                <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.ACTION' | translate}}</td> -->
-                <td class="text-right" style="width: 80px;">
-                  <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.EDIT' | translate}}"
-                    data-toggle="modal" type="button" (click)="onSelectObsR(hiveObs)"
-                    [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
-                    data-target="#editObservationModal" class="btn btn-primary btn_edit"
-                    style="padding: 10;border: none; background: none;margin-right: -5px;">
-                    <i class="fa fa-edit fa-2x"></i>
-                  </button>
-                </td>
-
-              </tr>
-            </ng-container>
 
           </ng-container>
           <ng-container

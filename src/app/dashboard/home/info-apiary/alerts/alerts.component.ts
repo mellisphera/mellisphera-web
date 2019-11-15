@@ -122,7 +122,8 @@ export class AlertsComponent implements OnInit {
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.opsDate, value: 0, sensorRef: (_elt.description !== null || _elt.description !== undefined) ? 'Inspections' : 'Notifications' }
+      console.log(_elt.description);
+      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'Inspections' : 'Notifications' }
     });
   }
 
@@ -158,6 +159,7 @@ export class AlertsComponent implements OnInit {
       _data => {
         const dateJoin = this.joinObservationAlert(_data[0].filter(_elt => _elt.type === 'apiary'), _data[1]);
         const joinData = _data[0].concat(_data[1]);
+        console.log(dateJoin);
         let option = Object.assign({}, this.option);
         option.series = new Array();
         option.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
@@ -173,7 +175,7 @@ export class AlertsComponent implements OnInit {
               children: []
             };
             const dataByDate: any[] = joinData.filter(_filter => {
-              return MyDate.compareToDailyDate(_filter.opsDate, new Date(api.value(0)));
+              return this.graphGlobal.compareToDate(_filter.opsDate, api.value(0));
             });
             if (dataByDate.length >= 1) {
               group.children.push({
@@ -266,7 +268,7 @@ export class AlertsComponent implements OnInit {
     tooltip.formatter = (params) => {
       if(params.data[3] !== 'OK'){
       const dataByDateTooltip = extraData.filter(_filter => {
-        return MyDate.compareToDailyDate(_filter.opsDate, params.data[0]);
+        return this.graphGlobal.compareToDate(_filter.opsDate, params.data[0]);
       });
       return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
         let type = 'Notif';
