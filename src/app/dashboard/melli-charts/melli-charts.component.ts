@@ -144,7 +144,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
             return hives;
           }).subscribe((hives) => {
             this.rucherService.rucheService.ruchesAllApiary = hives;
-            console.log(document.getElementById(this.melliChartHive.getHiveSelect().name));
 
           });
         });

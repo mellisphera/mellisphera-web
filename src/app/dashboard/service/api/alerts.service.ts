@@ -265,15 +265,25 @@ export class AlertsService {
       
 
     // Here there are all the alerts pictos
-    getPicto(nomPicto: string, cellPoint: Array<number>): Array<Object> {
+    getPicto(nomPicto: string, cellPoint: Array<number>, params? :any): Array<Object> {
         try {
             return this.mapPictoSvg.get(nomPicto).map(_alert => {
+                let shape = {};
+                if (params) {
+                    console.log(params);
+                    shape = {
+                        pathData: _alert.path,
+                        layout: 'center'
+                    }
+                } else {
+                    shape = {
+                        pathData: _alert.path,
+                    }
+                }
                 return {
                     type: 'path',
                     scale: _alert.scale,
-                    shape: {
-                        pathData: _alert.path,
-                    },
+                    shape: shape,
                     position: [cellPoint[0] + _alert.position[0], cellPoint[1] + _alert.position[1]],
                     style: _alert.style
                 };

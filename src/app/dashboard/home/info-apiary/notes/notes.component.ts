@@ -154,10 +154,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       this.newObs.type = 'apiary';
       this.newObs.typeInspect = 'ApiaryObs';
       this.newObs.userId = this.userService.getIdUserLoged();
-      console.log(this.newObs);
       this.initForm();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
-        console.log(obs);
         this.observationService.observationsApiary.push(obs);
         this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
           return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
@@ -185,7 +183,6 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       this.newObs.opsDate = formValue.date;
       this.newObs.apiaryId = this.rucherService.getCurrentApiary();
       this.newObs.type = 'apiary';
-      console.log(this.newObs);
       const index = this.observationService.observationsApiary.indexOf(this.newObs);
       this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
         this.observationService.observationsApiary[index] = this.newObs;

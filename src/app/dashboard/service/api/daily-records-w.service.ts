@@ -203,7 +203,6 @@ export class DailyRecordsWService {
   /* FOR MELLI_CHARTS */
   getDailyRecordsWbyHiveForMelliCharts(hiveId: string, range: Date[]): Observable<any> {
     return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsW/hive/between/' + hiveId, range).map(dailyW => {
-      console.log(dailyW);
       return {
         weightIncomeHight: dailyW.filter(_filter => _filter.value >= 0).map(_elt => {
           return { date: _elt.date, value: this.unitService.convertWeightFromuserPref(_elt.value, this.unitSystem), sensorRef: _elt.sensorRef };

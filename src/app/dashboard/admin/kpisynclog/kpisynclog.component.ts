@@ -139,7 +139,6 @@ export class KpisynclogComponent implements OnInit {
   }
   onChartInit(event) {
     this.echartsInstance = event;
-    console.log(this.echartsInstance);
   }
   ngOnInit() {
     var oldDate = [];
@@ -169,7 +168,6 @@ export class KpisynclogComponent implements OnInit {
     }).subscribe(
       data => {
         this.dataKpisynclog = data;
-        console.log(this.dataKpisynclog.series.filter(filt => filt !== undefined));
         this.option.baseOption.visualMap[0].categories = this.dataKpisynclog.user;
         this.option.baseOption.timeline.data = this.dataKpisynclog.timeline.sort((a, b) => {
           return new Date(a).getTime() - new Date(b).getTime();

@@ -45,7 +45,6 @@ export class UserParamsService {
 
     ];
     this.userPref = this.getUserPref() ? this.getUserPref() : null;
-    console.log(this.userPref);
     this.prefSubject.next(this.userPref);
     this.formatDate = this.getUserPref() ?  this.getUserPref().timeFormat : this.dtFormat[0];
   }

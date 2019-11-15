@@ -156,7 +156,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       hivePosY: '',
       sharingUser: []
     };
-    console.log('note');
 
     this.observationService.getNoteByUserId(this.userService.getIdUserLoged());
 
@@ -411,7 +410,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       rucheUpdate.hivePosX = '' + this.position.x;
       rucheUpdate.hivePosY = '' + this.position.y;
       if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-        console.log(event);
         this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
           () => { }, () => { }, () => {
             this.position.x = 0;
@@ -422,7 +420,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
             } else {
               this.hiveUpdateForDestroyPage.push(rucheUpdate);
             }
-            console.log(this.hiveUpdateForDestroyPage);
           }
         );
       }
@@ -434,7 +431,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
           const hiveUpdateIndex = this.rucheService.ruches.map(hive => hive._id).indexOf(hiveUpdate._id);
           this.rucheService.ruches[hiveUpdateIndex].hivePosX = hiveUpdate.hivePosX;
           this.rucheService.ruches[hiveUpdateIndex].hivePosY = hiveUpdate.hivePosY;
-          console.log(this.rucheService.ruches[hiveUpdateIndex]);
         });
   }
 

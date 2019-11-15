@@ -95,14 +95,12 @@ export class GlobalStatusComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.adminService.getAllUsers().subscribe(
       users => {
-        console.log(users);
         this.adminService.allUsers = users;
         this.optionsUserChart.baseOption.series[0].data = this.adminService.allUsers.filter(_filter => USER_EXCLU.indexOf(_filter.username) === -1).map((res: User) => {
           return { name: res.username, value: res.connexions };
         })
         this.optionsUserChart.baseOption.legend.data = this.adminService.allUsers.filter(_filter => USER_EXCLU.indexOf(_filter.username) === -1)  .map((res: User) => res.username);
         this.echartsInstace.setOption(this.optionsUserChart);
-        console.log(this.echartsInstace.getOption());
       }
     )
     this.adminService.getAllSensor().subscribe(
@@ -132,7 +130,6 @@ export class GlobalStatusComponent implements OnInit, AfterViewInit {
     return this.adminService.allSensors.filter(sensor => sensor.sensorRef.startsWith(String(WEIGHT.ref)));
   }
   onChartInit(e: any) {
-    console.log(e);
     this.echartsInstace = e;
   }
   onChartInitSensor(e: any) {

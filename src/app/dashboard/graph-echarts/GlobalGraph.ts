@@ -38,6 +38,7 @@ import { SERIES } from '../melli-charts/charts/SERIES';
 import { NOTIF_CODE } from '../../../constants/notif_code';
 import { AlertsService } from '../service/api/alerts.service';
 import { TranslateService } from '@ngx-translate/core';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -582,6 +583,12 @@ export class GraphGlobal {
       default:
         return '';
     }
+  }
+
+  public compareToDate(dt1: any, dt2: any): Boolean {
+    const date1 = moment(dt1).format(this.unitService.getUserPref().timeFormat.split(' ')[0]);
+    const date2 = moment(dt2).format(this.unitService.getUserPref().timeFormat.split(' ')[0]);
+    return date1 == date2;
   }
 
 

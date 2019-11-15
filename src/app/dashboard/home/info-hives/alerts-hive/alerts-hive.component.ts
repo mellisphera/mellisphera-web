@@ -51,7 +51,10 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
 
   private eltOnClickId: EventTarget;
 
-  constructor(private unitService: UnitService, private graphGlobal: GraphGlobal, private dailyRecordThService: DailyRecordService,
+  constructor(
+    private unitService: UnitService, 
+    private graphGlobal: GraphGlobal, 
+    private dailyRecordThService: DailyRecordService,
     private alertsService: AlertsService,
     public rucherService: RucherService,
     public rucheService: RucheService,
@@ -200,7 +203,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
               children: []
             };
             const dataByDate: any[] = joinData.filter((_filter: AlertInterface) => {
-              return MyDate.compareToDailyDate(_filter.opsDate, new Date(api.value(0)));
+              return this.graphGlobal.compareToDate(_filter.opsDate, api.value(0));
             });
             if (dataByDate.length >= 1) {
               group.children.push({
@@ -237,7 +240,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
                 group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].typeInspect, cellPoint));
 
               } else {
-                group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].icon, cellPoint));
+                group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].icon, cellPoint, params.coordSys));
               }
             }
             return group;

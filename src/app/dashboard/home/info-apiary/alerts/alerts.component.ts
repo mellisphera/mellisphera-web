@@ -122,7 +122,6 @@ export class AlertsComponent implements OnInit {
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      console.log(_elt);
       return { date: _elt.opsDate, value: 0, sensorRef: (_elt.description !== null || _elt.description !== undefined) ? 'Inspections' : 'Notifications' }
     });
   }
@@ -158,7 +157,6 @@ export class AlertsComponent implements OnInit {
     Observable.forkJoin(obs).subscribe(
       _data => {
         const dateJoin = this.joinObservationAlert(_data[0].filter(_elt => _elt.type === 'apiary'), _data[1]);
-        console.log(dateJoin);
         const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.option);
         option.series = new Array();

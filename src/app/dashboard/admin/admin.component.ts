@@ -39,7 +39,6 @@ export class AdminComponent implements OnInit {
       this.message = $event;
   }
   focus(id: string) {
-    console.log(id);
     if (this.eltOnClick === null ) {
       this.eltOnClick = document.getElementById(id);
       this.renderer.addClass(this.eltOnClick, 'active');

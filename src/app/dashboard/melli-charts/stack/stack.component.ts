@@ -60,7 +60,6 @@ export class StackComponent implements OnInit {
         if (!this.checkIfChartIsUpdate()) {
           this.setOptionForStackChart();
           this.loadAfterRangeChanged((options: any) => {
-            console.log(options);
             this.stackService.getEchartInstance().setOption(options, true);
             this.stackService.getEchartInstance().hideLoading();
           });
@@ -146,7 +145,6 @@ export class StackComponent implements OnInit {
     serieMarkHum.markArea.data[0][0].yAxis = 50;
     serieMarkHum.markArea.data[0][1].yAxis = 75;
     serieMarkHum.markArea.data[0][0].name = this.graphGlobal.getNameZoneByGraph('HUM');
-    console.log(serieMarkHum);
     this.options.series.push(serieMarkHum);
 
     this.options.tooltip.formatter = (params) => {
@@ -160,7 +158,6 @@ export class StackComponent implements OnInit {
         ));
       }).join('');
     }
-    console.log(this.options);
     this.stackService.getEchartInstance().setOption(this.options);
   }
 
@@ -201,7 +198,6 @@ export class StackComponent implements OnInit {
           obs: this.recordService.getHintIntByHive(_hive._id, this.melliDate.getRangeForReqest()) }
       ];
     }).flat();
-    console.log(obsArray)
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _records => {
         _records.forEach((_elt: any[], index) => {
@@ -270,7 +266,6 @@ export class StackComponent implements OnInit {
         });
         this.stackService.getEchartInstance().setOption(this.options);
         this.stackService.getEchartInstance().hideLoading();
-        console.log(this.options.series);
       }
     )
 
@@ -366,12 +361,8 @@ export class StackComponent implements OnInit {
       this.stackService.getHiveSelect().forEach(_hive => {
         if (this.stackService.getEchartInstance().getOption().series.findIndex(_serie => _serie.name.indexOf(_hive.name) !== -1)) {
           nbSerie++;
-          console.log(true);
         }
-        console.error((this.stackService.getEchartInstance().getOption().series.findIndex(_serie => _serie.name.indexOf(_hive.name) !== -1)));
       });
-      console.log(this.stackService.getEchartInstance().getOption().series);
-      console.log(nbSerie +  '===' + this.stackService.getHiveSelect().length);
       return nbSerie === this.stackService.getHiveSelect().length;
     }catch{
       return false;

@@ -427,7 +427,6 @@ export class NavbarComponent implements OnInit {
     onLoadCity() {
         this.geonamesService.getCityByCountryAndZipCode(this.userService.getCountry(), this.getZipCodeFormValue()).subscribe(
             _city => {
-                console.log(_city);
                 this.cityByZipCode = _city.map(_res => _res.placeName);
             }
         )
@@ -505,7 +504,6 @@ export class NavbarComponent implements OnInit {
             codePostal: this.rucherService.rucher.zipCode,
             validate: ''
         };
-        console.log(this.rucherService.rucherSelectUpdate);
         this.rucherForm.setValue(donnée);
     }
 
@@ -953,7 +951,6 @@ export class NavbarComponent implements OnInit {
 
         // Hive init
         this.rucherService.rucheService.getHiveByUserId(this.userService.getIdUserLoged()).subscribe(ruches => {
-            console.log(ruches);
             this.rucherService.rucheService.ruchesAllApiary = ruches;
             this.hivesNavbarNoteForm = this.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === this.rucherService.rucherSelectUpdate._id);
             if (this.hivesNavbarNoteForm.length !== 0) {
@@ -975,7 +972,6 @@ export class NavbarComponent implements OnInit {
     }
 
     createObservation() {
-        console.log('dddd');
         if (this.userService.checkWriteObject(this.rucherService.rucherSelectUpdate.userId)) {
             const formValue = this.NavbarNoteForm.value;
             this.newObs = formValue;

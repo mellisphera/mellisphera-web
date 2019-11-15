@@ -822,7 +822,6 @@ export class DailyManagerService {
   getChartBrood(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getBroodByHive(hiveId, range).subscribe(
       _brood => {
-        console.log(_brood);
         this.getLastDayForMeanValue(this.dailyHService.getBroodByHive(hiveId, this.rangeSevenDay), true, type);
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (rangeChange) {
@@ -956,7 +955,7 @@ export class DailyManagerService {
                 type: 'group',
                 children: []
               };
-              const dataByDate: any[] = joinData.filter(_filter => MyDate.compareToDailyDate(_filter.opsDate, new Date(api.value(0))));
+              const dataByDate: any[] = joinData.filter(_filter =>this.graphGlobal.compareToDate(_filter.opsDate, api.value(0)));
               group.children.push({
                 type: 'rect',
                 z2: 0,
@@ -1021,7 +1020,7 @@ export class DailyManagerService {
                 children: []
               };
               const dataByDate: any[] = joinData.filter(_filter => {
-                return  MyDate.compareToDailyDate(_filter.opsDate, new Date(api.value(0)));
+                return this.graphGlobal.compareToDate(_filter.opsDate, api.value(0));
               });
               if (dataByDate.length >= 1) {
                 group.children.push({
@@ -1230,10 +1229,6 @@ export class DailyManagerService {
     if (isNaN(meanValue)) {
       meanValue = 0;
     }
-/*     if (type.name === 'BROOD') {
-      console.log(_data);
-      console.log(meanValue);
-    } */
     if (type.origin === DEVICE) {
       this.meanDeviceSevenDay = {
         value: meanValue,

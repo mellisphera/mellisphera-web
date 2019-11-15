@@ -72,18 +72,14 @@ export class AuthService {
         this.translateService.addLangs(['en', 'fr']);
         this.socketService.loadDataRequest(this.userService.getJwtReponse());
 
-        console.log(this.jwtReponse.lang);
          if (this.jwtReponse.lang === null || this.jwtReponse.lang.toLowerCase().indexOf('en') !== -1) {
            this.translateService.use('en');
         } else if (this.jwtReponse.lang.toLowerCase().indexOf('fr') === -1) {
           this.translateService.use('fr');
         }
-        console.log(this.translateService.currentLang);
-        console.log(this.jwtReponse);
         if (this.jwtReponse.connexions === 1) {
           this.userService.setWizardActive(true);
         }
-        console.log(this.tokenService.getAuthorities());
         if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
             this.router.navigateByUrl('dashboard/admin');
 

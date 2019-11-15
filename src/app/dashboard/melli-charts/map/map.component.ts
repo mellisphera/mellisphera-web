@@ -123,7 +123,6 @@ export class MapComponent implements OnInit {
 			this.baseOption.options.push(oneOption);
 		});
     this.chartInstance.setOption(this.baseOption);
-    console.log(this.baseOption);
   }
 
 }

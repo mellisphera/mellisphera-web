@@ -143,7 +143,6 @@ export class AdminService {
         this.lastConnection = connection.sort((a: Connection, b: Connection) => {
           return -new Date(a.connectionDate).getTime() - new Date(b.connectionDate).getTime();
         });
-        console.log(this.lastConnection);
       }
     );
   }
