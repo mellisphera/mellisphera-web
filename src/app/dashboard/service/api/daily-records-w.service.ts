@@ -331,8 +331,9 @@ export class DailyRecordsWService {
     this.getDailyWeightIncomeByApiary(apiaryId);
   }
 
-  public getWeightIncomeByHive(hiveId: string): any {
+  public getWeightMaxByHive(hiveId: string): any {
     const selectHive = this.dailyWeightRecords.filter(elt => elt.hiveId === hiveId)[0];
+    console.log(selectHive);
     if (this.unitSystem === 'METRIC') {
       return selectHive !== undefined ? this.unitService.getValRound(selectHive.weight_max) + ' kg' : null;
     } else {

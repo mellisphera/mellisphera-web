@@ -127,9 +127,9 @@ limitations under the License. -->
                     class="hive-info">{{ 'HOME.NODATA' | translate}}</span>
             </div>
             <div (click)="onClick(ruche);" class="weight collapse ">
-                <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche._id) !== null"
-                    class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightIncomeByHive(ruche._id)) }}</span>
-                <span *ngIf="dailyRecordWservice.getWeightIncomeByHive(ruche._id) === null"
+                <span *ngIf="dailyRecordWservice.getWeightMaxByHive(ruche._id) !== null"
+                    class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightMaxByHive(ruche._id)) }}</span>
+                <span *ngIf="dailyRecordWservice.getWeightMaxByHive(ruche._id) === null"
                     class="hive-info">{{ 'HOME.NODATA' | translate}}</span>
             </div>
             <div (click)="onClick(ruche);" id="collapse1" [class]="(capteurService.getCapteursByHive(ruche._id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">
