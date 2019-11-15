@@ -219,11 +219,11 @@ export class AlertsComponent implements OnInit {
           option.calendar.range = MyDate.getRangeForCalendarAlerts();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.legend.data.push(serieComplete.name);
-          option.series.push(this.graphGlobal.getDaySerie());
           option.tooltip = this.getTooltipBySerie(joinData);
           option.series.push(serieComplete);
 
         });
+        option.series.push(this.graphGlobal.getDaySerie());
         this.echartInstance.setOption(option, true);
         this.option = option;
       });

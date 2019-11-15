@@ -247,13 +247,13 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
           };
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.range = MyDate.getRangeForCalendarAlerts();
-          option.series.push(this.graphGlobal.getDaySerie());
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.legend.data.push(serieComplete.name);
           option.tooltip = this.getTooltipBySerie(joinData);
           option.series.push(serieComplete);
 
         });
+        option.series.push(this.graphGlobal.getDaySerie());
         this.echartInstance.setOption(option, true);
         this.option = option;
       });

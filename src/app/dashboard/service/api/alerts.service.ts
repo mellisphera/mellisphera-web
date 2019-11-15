@@ -270,10 +270,9 @@ export class AlertsService {
             return this.mapPictoSvg.get(nomPicto).map(_alert => {
                 let shape = {};
                 if (params) {
-                    console.log(params);
                     shape = {
                         pathData: _alert.path,
-                        layout: 'center'
+                        layout: 'center',
                     }
                 } else {
                     shape = {
