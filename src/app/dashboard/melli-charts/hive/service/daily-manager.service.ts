@@ -178,7 +178,6 @@ export class DailyManagerService {
         if (type.name === 'RAIN' || type.name === 'WINCOME') {
           this.setMeanSevenDay(_data, false, type);
         } else {
-          console.log(_data);
           this.setMeanSevenDay(_data.map(_data => _data.value), true, type);
         }
       }
@@ -823,6 +822,7 @@ export class DailyManagerService {
   getChartBrood(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getBroodByHive(hiveId, range).subscribe(
       _brood => {
+        console.log(_brood);
         this.getLastDayForMeanValue(this.dailyHService.getBroodByHive(hiveId, this.rangeSevenDay), true, type);
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (rangeChange) {
@@ -1187,7 +1187,6 @@ export class DailyManagerService {
     } else {
       data = series.data;
     }
-    console.log(data);
     let value = 0;
     data.forEach(_value => {
       value = value + parseInt(_value[1], 10);
@@ -1231,6 +1230,10 @@ export class DailyManagerService {
     if (isNaN(meanValue)) {
       meanValue = 0;
     }
+/*     if (type.name === 'BROOD') {
+      console.log(_data);
+      console.log(meanValue);
+    } */
     if (type.origin === DEVICE) {
       this.meanDeviceSevenDay = {
         value: meanValue,

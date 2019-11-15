@@ -48,7 +48,7 @@ export class WeightHivesComponent{
             tooltip: {
                 trigger: 'item',
                 formatter: (params: any) => {
-                    return params.marker + this.unitService.getDailyDate(params.data[0].split('T')[0]) + 
+                    return params.marker + this.unitService.getDailyDate(params.data[0]) + 
                     '<br/>' + params.seriesName + ' : ' + this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])) + ' ' + this.graphGlobal.weight.unitW;
                 }
             },

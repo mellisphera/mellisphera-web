@@ -39,9 +39,9 @@ export class UserParamsService {
       unitSystem: ''
     });
     this.dtFormat = [
-      'Y-M-D h:m',
-      'D-M-Y h:m',
-      'D/M/Y h:m'
+      'YYYY-MM-DD HH:mm',
+      'DD-MM-YYYY HH:mm',
+      'DD/MM/YYYY HH:mm'
 
     ];
     this.userPref = this.getUserPref() ? this.getUserPref() : null;

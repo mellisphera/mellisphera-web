@@ -58,12 +58,12 @@ export class MyDate {
         let date1: Date;
         let date2: Date;
         if (/-/g.test(dt1)) {
-            date1 = new Date(<string>dt1.replace(/-/g, '/').split('T')[0]);
+            date1 = new Date(dt1.replace(/-/g, '/').split('T')[0]);
         } else {
             date1 = new Date(dt1);
         }
-        if (/-/g.test(dt2)) {
-            date2 = new Date(<string>dt2.replace(/-/g, '/').split('T')[0]);
+        if (/-/g.test(dt2) && !/GMT/g.test(dt2)) {
+            date2 = new Date(dt2.replace(/-/g, '/').split('T')[0]);
         } else {
             date2 = new Date(dt2);
         }
