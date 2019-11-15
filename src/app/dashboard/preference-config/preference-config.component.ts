@@ -128,7 +128,6 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   }
 
   test(event: any) {
-    console.log(event);
   }
   saveUserPref(): void {
     this.userConfig.setUserPref().subscribe(

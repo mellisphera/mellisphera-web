@@ -101,6 +101,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
     this.option = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
     this.option.title.text = this.graphGlobal.getTitle('AlertsHive');
     this.option.calendar.orient = 'horizontal';
+    this.option.calendar.range = MyDate.getRangeForCalendarAlerts();
     this.option.calendar.top = 65;
     this.option.calendar.left = '15%';
     this.option.calendar.bottom = '3%';
@@ -246,7 +247,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
             return group;
           };
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
-          option.calendar.range = MyDate.getRangeForCalendarAlerts();
+          //option.calendar.range = MyDate.getRangeForCalendarAlerts();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.legend.data.push(serieComplete.name);
           option.tooltip = this.getTooltipBySerie(joinData);

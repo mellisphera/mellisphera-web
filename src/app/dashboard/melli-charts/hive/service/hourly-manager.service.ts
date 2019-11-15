@@ -63,7 +63,6 @@ export class HourlyManagerService {
    * @memberof HourlyManagerService
    */
   getSerieByData(data: Array<any>, nameSerie: string, next: Function): void {
-    console.log(data);
     let sensorRef: Array<string> = [];
     let legend: Array<string> = [];
     data.forEach(_data => {
@@ -84,7 +83,6 @@ export class HourlyManagerService {
       (_weight: any) => {
         let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
-          console.error('RANGE CHANGED');
           this.getSerieByData(_weight, type.name, (serieComplete: any, legend: Array<string>) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             option.series[index] = Object.assign({}, serieComplete);
@@ -97,12 +95,10 @@ export class HourlyManagerService {
           }
           //this.cleanChartsInstance(chartInstance, type.name);
           this.getSerieByData(_weight, type.name, (serieComplete: any, legend: Array<string>) => {
-            console.log(serieComplete);
             option.legend.data = option.legend.data.concat(legend) 
 
             option.series.push(serieComplete);
           });
-          console.log(option.series);
           // option.tooltip = this.getTooltipBySerie(chartName);
           option.yAxis.name = type.name;
           chartInstance.setOption(option, true);
@@ -121,9 +117,7 @@ export class HourlyManagerService {
     this.recordService.getTempIntByHive(hiveId, range).subscribe(
       _temp => {
         let option = Object.assign({}, this.baseOpions);
-        console.log(rangeChange);
         if (rangeChange) {
-          console.error('RANGE CHANGED');
           this.getSerieByData(_temp, type.name, (serieComplete: any, legend: Array<string>) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             option.legend.data = option.legend.data.concat(legend) 
@@ -133,12 +127,10 @@ export class HourlyManagerService {
         } else {
           if (this.existSeries(option.series, type.unit, hiveId)) {
             option.series = new Array();
-            console.error('clean');
           }
           // this.cleanChartsInstance(chartInstance, type.unit);
           this.getSerieByData(_temp, type.name, (serieComplete: any, legend: Array<string>) => {
             option.legend.data = option.legend.data.concat(legend) 
-            console.log(serieComplete);
             option.series.push(serieComplete);
           });
           option.yAxis.name = type.name;
@@ -157,9 +149,7 @@ export class HourlyManagerService {
     this.recordService.getTempExtByHive(hiveId, range).subscribe(
       _temp_ext => {
         let option = Object.assign({}, this.baseOpions);
-        console.log(rangeChange);
         if (rangeChange) {
-          console.error('RANGE CHANGED');
           this.getSerieByData(_temp_ext, type.name, (serieComplete: any, legend: Array<string>) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             option.legend.data = option.legend.data.concat(legend) 
@@ -172,7 +162,6 @@ export class HourlyManagerService {
           }
           // this.cleanChartsInstance(chartInstance, type.name);
           this.getSerieByData(_temp_ext, type.name, (serieComplete: any, legend: Array<string>) => {
-            console.log(serieComplete);
             option.legend.data = option.legend.data.concat(legend) 
             option.series.push(serieComplete);
           });
@@ -205,10 +194,8 @@ export class HourlyManagerService {
       return true;
     } else if (serieArray.length > 0) {
       if (unite === this.currentUnit) {
-        console.log('IDENTIQUE');
         return false;
       } else {
-        console.log('NOT IDENTIQUE');
         return true;
       }
     } else {
@@ -221,7 +208,6 @@ export class HourlyManagerService {
       (_hint) => {
         let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
-          console.error('RANGE CHANGED');
           this.getSerieByData(_hint, type.name, (serieComplete: any, legend: Array<string>) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             option.series[index] = Object.assign({}, serieComplete);
@@ -233,7 +219,6 @@ export class HourlyManagerService {
             option.series = new Array();
           }
           this.getSerieByData(_hint, type.name, (serieComplete: any, legend: Array<string>) => {
-            console.log(serieComplete);
             option.legend.data = option.legend.data.concat(legend) 
             option.series.push(serieComplete);
           });
@@ -254,9 +239,7 @@ export class HourlyManagerService {
     this.recordService.getBatIntByHive(hiveId, range).subscribe(
       _batInt => {
         let option = Object.assign({}, this.baseOpions);
-        console.log(rangeChange);
         if (rangeChange) {
-          console.error('RANGE CHANGED');
           this.getSerieByData(_batInt, type.name, (serieComplete: any, legend: Array<string>) => {
             option.legend.data = option.legend.data.concat(legend) 
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
@@ -269,7 +252,6 @@ export class HourlyManagerService {
           }
           this.getSerieByData(_batInt, type.name, (serieComplete: any, legend: Array<string>) => {
             option.legend.data = option.legend.data.concat(legend) 
-            console.log(serieComplete);
             option.series.push(serieComplete);
           });
           chartInstance.setOption(option, true);
@@ -288,7 +270,6 @@ export class HourlyManagerService {
       _batExt => {
         let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
-          console.error('RANGE CHANGED');
           this.getSerieByData(_batExt, type.name, (serieComplete: any, legend: Array<string>) => {
             option.legend.data = option.legend.data.concat(legend) 
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
@@ -303,7 +284,6 @@ export class HourlyManagerService {
           // this.cleanChartsInstance(chartInstance, type.name);
           this.getSerieByData(_batExt, type.name, (serieComplete: any, legend: Array<string>) => {
             option.legend.data = option.legend.data.concat(legend) 
-            console.log(serieComplete);
             option.series.push(serieComplete);
           });
           chartInstance.setOption(option, true);
@@ -328,10 +308,8 @@ export class HourlyManagerService {
         _tExt = _tExt.map(_elt => {
           return {date: _elt.date, value: _elt.value.temp, sensorRef: _elt.sensorRef};
         });
-        console.log(_tExt);
          let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
-          console.error('RANGE CHANGED');
           this.getSerieByData(_tExt, type.name, (serieComplete: any, legend: Array<string>) => {
             option.legend.data = option.legend.data.concat(legend) 
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
@@ -346,7 +324,6 @@ export class HourlyManagerService {
           // this.cleanChartsInstance(chartInstance, type.name);
           this.getSerieByData(_tExt, type.name, (serieComplete: any, legend: Array<string>) => {
             option.legend.data = option.legend.data.concat(legend) 
-            console.log(serieComplete);
             option.series.push(serieComplete);
           });
           chartInstance.setOption(option, true);
@@ -370,10 +347,8 @@ export class HourlyManagerService {
         _hExt = _hExt.map(_elt => {
           return {date: _elt.date, value: _elt.value.humidity, sensorRef: _elt.sensorRef};
         });
-        console.log(_hExt);
          let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
-          console.error('RANGE CHANGED');
           this.getSerieByData(_hExt, type.name, (serieComplete: any, legend: Array<string>) => {
             option.legend.data = option.legend.data.concat(legend) 
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
@@ -388,7 +363,6 @@ export class HourlyManagerService {
           // this.cleanChartsInstance(chartInstance, type.name);
           this.getSerieByData(_hExt, type.name, (serieComplete: any, legend: Array<string>) => {
             option.legend.data = option.legend.data.concat(legend) 
-            console.log(serieComplete);
             option.series.push(serieComplete);
           });
           chartInstance.setOption(option, true);
@@ -416,9 +390,6 @@ export class HourlyManagerService {
 
       const startCurrentRange = this.currentRange[0].getTime();
       const endCurrentRange = this.currentRange[1].getTime();
-      console.log(range);
-      console.log(this.currentRange);
-      console.log(startRangeSelect !== startCurrentRange || endRangeSelect !== endCurrentRange);
       if (startRangeSelect !== startCurrentRange || endRangeSelect !== endCurrentRange) {
         return true;
       }
@@ -440,7 +411,6 @@ export class HourlyManagerService {
   removeSeriesFromChartInstance(echartInstance: any, seriesName: string): void {
     let option = echartInstance.getOption();
     const series = option.series.filter(_filter => _filter.name.split('|')[0] === seriesName);
-    console.log(series);
      if (series.length > 0) {
       series.forEach(element => {
         const indexSerie = option.series.map(_serie => _serie.name).indexOf(element.name);
@@ -450,7 +420,6 @@ export class HourlyManagerService {
     }
 
     // echartInstance.clear();   
-    console.log(this.baseOpions);
     echartInstance.setOption(option, true);
 
   }

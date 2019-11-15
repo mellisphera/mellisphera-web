@@ -67,7 +67,7 @@ export class AlertsService {
         this.getAllTypeAlerts().subscribe(
             _alerts => {
                 this.alertTypes = _alerts;
-                console.log(this.alertTypes);
+                //console.log(this.alertTypes);
             }
         );
         this.getAlertConfByUser(this.userService.getIdUserLoged()).subscribe(

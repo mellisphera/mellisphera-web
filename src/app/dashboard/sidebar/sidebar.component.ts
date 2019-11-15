@@ -92,7 +92,6 @@ export class SidebarComponent implements OnInit {
   }
 
   focus(id: string) {
-    console.log(id);
     if (this.eltOnClick === null ) {
       this.eltOnClick = document.getElementById(id);
       this.renderer.addClass(this.eltOnClick, 'side-active');

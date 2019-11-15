@@ -95,6 +95,7 @@ export class AlertsComponent implements OnInit {
     this.option.calendar.orient = 'horizontal';
     this.option.calendar.top = 70;
     this.option.calendar.left = 'center';
+    this.option.calendar.range = MyDate.getRangeForCalendarAlerts();
     this.option.calendar.bottom = '3%';
     this.option.calendar.height = '45%';
     this.option.calendar.width = '77%';
@@ -122,7 +123,6 @@ export class AlertsComponent implements OnInit {
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      console.log(_elt.description);
       return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'Inspections' : 'Notifications' }
     });
   }
@@ -159,7 +159,6 @@ export class AlertsComponent implements OnInit {
       _data => {
         const dateJoin = this.joinObservationAlert(_data[0].filter(_elt => _elt.type === 'apiary'), _data[1]);
         const joinData = _data[0].concat(_data[1]);
-        console.log(dateJoin);
         let option = Object.assign({}, this.option);
         option.series = new Array();
         option.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
@@ -218,7 +217,6 @@ export class AlertsComponent implements OnInit {
 
           }
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
-          option.calendar.range = MyDate.getRangeForCalendarAlerts();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.legend.data.push(serieComplete.name);
           option.tooltip = this.getTooltipBySerie(joinData);
