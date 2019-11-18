@@ -192,7 +192,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     if (!this.rucherService.rucherSubject.closed) {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
         this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-        this.dailyRecordWservice.getDailyWeightIncomeByApiary(this.rucherService.getCurrentApiary());
+        this.dailyRecordWservice.getDailyWeightMaxByApiary(this.rucherService.getCurrentApiary());
         this.loadAlert();
         //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
       });

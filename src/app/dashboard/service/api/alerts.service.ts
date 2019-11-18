@@ -272,7 +272,6 @@ export class AlertsService {
                 if (params) {
                     shape = {
                         pathData: _alert.path,
-                        layout: 'center',
                     }
                 } else {
                     shape = {

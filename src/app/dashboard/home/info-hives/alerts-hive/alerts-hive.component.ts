@@ -224,21 +224,31 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
               });
             }
             if (dataByDate.length > 1) {
-              group.children.push({
-                type: 'path',
-                z2: 1000,
-                shape: {
-                  pathData: GLOBAL_ICONS.THREE_DOTS,
-                  x: -11,
-                  y: -10,
-                  width: 25,
-                  height: 25
-                },
-                position: [cellPoint[0], cellPoint[1]],
-              });
+              let path: any;
+              const nbNote = dataByDate.filter(_elt => _elt.description).length;
+              //console.log(nbNote + '===' + dataByDate.length)
+              console.log(nbNote);
+              if (nbNote === dataByDate.length) {
+                path = this.observationService.getPictoInspect(cellPoint);
+                group.children = group.children.concat(path);
+              } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
+                path = {
+                  type: 'path',
+                  z2: 1000,
+                  shape: {
+                    pathData: GLOBAL_ICONS.THREE_DOTS,
+                    x: -11,
+                    y: -10,
+                    width: 25,
+                    height: 25
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                };
+                group.children.push(path);
+              }
             } else if (dataByDate.length === 1) {
               if (dataByDate !== undefined && dataByDate[0].description) {
-                group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].typeInspect, cellPoint));
+                group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
 
               } else {
                 group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].icon, cellPoint, params.coordSys));

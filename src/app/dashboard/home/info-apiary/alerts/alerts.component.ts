@@ -127,9 +127,11 @@ export class AlertsComponent implements OnInit {
     });
   }
 
-  onResize(event: any): void {
-    this.echartInstance.clear();
-    this.echartInstance.setOption(this.option);
+  onResize(event) {
+    this.echartInstance.resize({
+      width: 'auto',
+      height: 'auto'
+    });
   }
   getSerieByData(data: Array<any>, nameSerie: string, serieTemplate: any, next: Function): void {
     const sensorRef: Array<string> = [];
@@ -194,21 +196,30 @@ export class AlertsComponent implements OnInit {
               });
             }
             if (dataByDate.length > 1) {
-              group.children.push({
-                type: 'path',
-                z2: 1000,
-                shape: {
-                  pathData: GLOBAL_ICONS.THREE_DOTS,
-                  x: -11,
-                  y: -10,
-                  width: 25,
-                  height: 25
-                },
-                position: [cellPoint[0], cellPoint[1]],
-              });
+              let path: any;
+              const nbNote = dataByDate.filter(_elt => _elt.description).length;
+              //console.log(nbNote + '===' + dataByDate.length)
+              if (nbNote === dataByDate.length) {
+                path = this.observationService.getPictoInspect(cellPoint);
+                group.children = group.children.concat(path);
+              } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
+                path = {
+                  type: 'path',
+                  z2: 1000,
+                  shape: {
+                    pathData: GLOBAL_ICONS.THREE_DOTS,
+                    x: -11,
+                    y: -10,
+                    width: 25,
+                    height: 25
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                };
+                group.children.push(path);
+              }
             } else if (dataByDate.length === 1) {
               if (dataByDate !== undefined && dataByDate[0].description) {
-                group.children = group.children.concat(this.observationService.getPictoInspect(dataByDate[0].typeInspect, cellPoint));
+                group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
               } else {
                 group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].icon, cellPoint));
               }
@@ -289,14 +300,6 @@ export class AlertsComponent implements OnInit {
     }
     return tooltip;
   }
-  getTimeStampFromDate(_date: Date | string): number {
-    const date = new Date(_date);
-    date.setHours(0);
-    date.setMinutes(0);
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-    return date.getTime();
-  }
 
   sliceTextToolip(text: string): string {
     try{
@@ -305,9 +308,9 @@ export class AlertsComponent implements OnInit {
       }
       let originString: string = text;
       let newString: string;
-      while(originString.length >= 70) {
-        newString += originString.slice(0, 70) + '<br/>';
-        originString = originString.replace(originString.slice(0, 70), '');
+      while(originString.length >= 80) {
+        newString += originString.slice(0, 80) + '<br/>';
+        originString = originString.replace(originString.slice(0, 80), '');
       }
       return (newString + originString).replace(/undefined/g, '');
     } catch{}

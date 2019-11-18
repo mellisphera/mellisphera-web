@@ -135,6 +135,10 @@ export const BASE_OPTIONS = {
     },
     tooltip: {
         trigger: 'item',
+        position: 'top',
+        textStyle: {
+            fontSize: 12
+        },
         formatter: {},
     },
     legend: {
@@ -181,8 +185,10 @@ export const BASE_OPTIONS = {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                animation: false
+                animation: false,
+                type: 'cross'
             },
+            
             formatter: null
         },
         axisPointer: {

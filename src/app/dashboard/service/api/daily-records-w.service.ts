@@ -57,8 +57,8 @@ export class DailyRecordsWService {
     this.arrayTempExt = [];
     this.weightIncome = [];
     this.rangeDailyRecord = new Date();
-    this.rangeDailyRecord.setDate(new Date().getDate() - 1);
-    this.rangeDailyRecord.setHours(2);
+    this.rangeDailyRecord.setDate(new Date().getDate() -1);
+    this.rangeDailyRecord.setHours(23);
     this.rangeDailyRecord.setMinutes(0);
     this.updateCalendar();
   }
@@ -315,7 +315,7 @@ export class DailyRecordsWService {
     this.rangeDailyRecord.setHours(23);
     this.rangeDailyRecord.setMinutes(0);
     this.rangeDailyRecord.setSeconds(0);
-    this.getDailyWeightIncomeByApiary(apiaryId);
+    this.getDailyWeightMaxByApiary(apiaryId);
   }
   /**
    *
@@ -328,12 +328,12 @@ export class DailyRecordsWService {
     this.rangeDailyRecord.setHours(23);
     this.rangeDailyRecord.setMinutes(0);
     this.rangeDailyRecord.setSeconds(0);
-    this.getDailyWeightIncomeByApiary(apiaryId);
+    this.getDailyWeightMaxByApiary(apiaryId);
   }
 
   public getWeightMaxByHive(hiveId: string): any {
+    // console.log(this.dailyWeightRecords);
     const selectHive = this.dailyWeightRecords.filter(elt => elt.hiveId === hiveId)[0];
-    console.log(selectHive);
     if (this.unitSystem === 'METRIC') {
       return selectHive !== undefined ? this.unitService.getValRound(selectHive.weight_max) + ' kg' : null;
     } else {
@@ -342,7 +342,7 @@ export class DailyRecordsWService {
 
   }
 
-  public getDailyWeightIncomeByApiary(apiaryId: string): void {
+  public getDailyWeightMaxByApiary(apiaryId: string): void {
     this.dailyWeightRecords = [];
     var tabDate: Date[];
     var previousDay: Date;
@@ -356,6 +356,7 @@ export class DailyRecordsWService {
     this.http.post<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/apiary/' + apiaryId, tabDate).subscribe(
       (data) => {
         if (data[0] != null) {
+          console.log(data);
           this.dailyWeightRecords = data.flat();
         }
       },

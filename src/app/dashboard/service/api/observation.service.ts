@@ -207,7 +207,7 @@ export class ObservationService {
   }
 
   
-  getPictoInspect(typeInspect: string, cellPoint: Array<number>) {
+  getPictoInspect(cellPoint: Array<number>) {
     return INSPECTIONS.HiveAct.map(_path => {
       return  {
           type: 'path',
