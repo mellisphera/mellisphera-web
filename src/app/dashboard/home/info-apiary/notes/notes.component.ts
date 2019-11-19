@@ -96,7 +96,9 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @memberof NotesComponent
    */
   getNoteByApiaryId(apiaryId: string): Observation[]{
-    return this.observationService.observationsApiary.filter(_note => _note.apiaryId === apiaryId);
+    return this.observationService.observationsApiary.filter(_note => _note.apiaryId === apiaryId).sort((noteA, noteB) => {
+      return -(new Date(noteA.opsDate).getTime() - new Date(noteB.opsDate).getTime());
+    });
   }
 
   /**

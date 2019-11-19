@@ -98,7 +98,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
    */
   getNoteByHiveId(hiveId: string): Observation[] {
    // console.log(this.observationService.observationsHive);
-    return this.observationService.observationsHive.filter(_note => _note.hiveId === hiveId);
+    return this.observationService.observationsHive.filter(_note => _note.hiveId === hiveId).sort((noteA, noteB) => {
+      return -(new Date(noteA.opsDate).getTime() - new Date(noteB.opsDate).getTime());
+    });
   }
   initForm() {
     const defautDate = new Date();

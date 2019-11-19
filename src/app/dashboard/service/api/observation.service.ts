@@ -137,8 +137,12 @@ export class ObservationService {
   getNoteByUserId(userId: string): void{
     this.http.get<Observation[]>(CONFIG.URL + 'report/user/' + userId).subscribe(
       _note => {
-        this.observationsHive = _note.filter(_note => _note.type === 'hive');
-        this.observationsApiary = _note.filter(_note => _note.type === 'apiary');
+        this.observationsHive = _note.filter(_note => _note.type === 'hive').sort((noteA, noteB) => {
+          return new Date(noteA.opsDate).getTime() - new Date(noteB.opsDate).getTime();
+        });
+        this.observationsApiary = _note.filter(_note => _note.type === 'apiary').sort((noteA, noteB) => {
+          return new Date(noteA.opsDate).getTime() - new Date(noteB.opsDate).getTime();
+        });
       }
     );
   }

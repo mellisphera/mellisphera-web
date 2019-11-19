@@ -167,6 +167,7 @@ export class AlertsComponent implements OnInit {
         option.legend.top = 30;
         option.legend.selectedMode = 'multiple';
         this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
+          //serieComplete.tooltip = this.getTooltipBySerie();
           serieComplete.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
@@ -181,7 +182,7 @@ export class AlertsComponent implements OnInit {
             if (dataByDate.length >= 1) {
               group.children.push({
                 type: 'rect',
-                z2: 0,
+                //z2: 0,
                 shape: {
                   x: -cellWidth / 2,
                   y: -cellHeight / 2,
@@ -205,7 +206,7 @@ export class AlertsComponent implements OnInit {
               } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                 path = {
                   type: 'path',
-                  z2: 1000,
+                  //z2: 1000,
                   shape: {
                     pathData: GLOBAL_ICONS.THREE_DOTS,
                     x: -11,

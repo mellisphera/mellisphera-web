@@ -34,6 +34,8 @@ export const SERIES = {
   custom: {
     type: 'custom',
     name: '',
+    // tooltip: {},
+    //z: -15,
     coordinateSystem: 'calendar',
     renderItem: null,
     data: []
