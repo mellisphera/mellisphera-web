@@ -300,6 +300,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     return this.rucheService.getCurrentHive()._id === hiveId ? 'highlightFix' : '';
   }
   
+  onPastilleClick(hive: RucheInterface) {
+    if (this.lockHive) {
+      this.onClick(hive);
+    }
+  }
 
   onClick(ruche: RucheInterface) {
     // active button name

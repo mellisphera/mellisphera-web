@@ -78,14 +78,14 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   ngAfterViewChecked(): void {
     //Called after every check of the component's view. Applies to components only.
     //Add 'implements AfterViewChecked' to the class.
-    const heightPicture = document.getElementById('cadre').offsetHeight;
+/*     const heightPicture = document.getElementById('cadre').offsetHeight;
     const heightRight = document.getElementById('graph').offsetHeight;
     if(this.screenWidth >990){
       document.getElementById('notesApiary').style.height = ''+(-94 + heightRight - heightPicture) + 'px';
     }else{
       document.getElementById('notesApiary').style.height = ''+(40) + 'vh';
     }
-
+ */
   }
 
   /**

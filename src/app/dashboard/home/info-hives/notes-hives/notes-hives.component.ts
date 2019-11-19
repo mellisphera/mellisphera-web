@@ -76,7 +76,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   ngAfterViewChecked(): void {
     //Called after every check of the component's view. Applies to components only.
     //Add 'implements AfterViewChecked' to the class.
-    const heightPicture = document.getElementById('cadre').offsetHeight;
+/*     const heightPicture = document.getElementById('cadre').offsetHeight;
     const heightRight = document.getElementById('graphs').offsetHeight;
     if(this.screenWidth >1550){
       document.getElementById('notesHives').style.height = ''+(6 + heightRight - heightPicture) + 'px';
@@ -84,7 +84,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       document.getElementById('notesHives').style.height = ''+((heightRight - heightPicture -30)/2) + 'px';
     }else{
       document.getElementById('notesHives').style.height = ''+(40) + 'vh';
-    }
+    } */
 
   }
 
@@ -109,8 +109,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       'sentence': [null, Validators.compose([Validators.required])],
       'type': 'HiveObs',
       'date': [ new Date(), Validators.required],
-/*       'hours':null
- */    });
+    });
   }
 
   createObservation() {

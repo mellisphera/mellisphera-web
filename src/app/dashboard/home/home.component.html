@@ -109,7 +109,7 @@ limitations under the License. -->
             
             <!-- (contextmenu)="onRightClick($event,i)"-->
             <div #HiveHandle data-placement="top" [title]="infoRuche"
-                (dblclick)="onClick(ruche);" [id] = "ruche._id" [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
+                (dblclick)="onClick(ruche);" (click)="onPastilleClick(ruche)" [id] = "ruche._id" [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
                 [style.background-color]="dailyRecTh.getColorByPourcent(ruche._id)">
                 <!-- notifications -->
                 <span *ngIf="numberAlertsActivesByHive(ruche.id) !== 0"

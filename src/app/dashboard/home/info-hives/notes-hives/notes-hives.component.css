@@ -30,7 +30,7 @@ limitations under the License. */
 #notesHives{
     /* border: 1px dashed gray; */
     padding: .5em;
-    
+    height: 500px;
     white-space: pre-wrap;
     overflow-y: scroll;
 }
