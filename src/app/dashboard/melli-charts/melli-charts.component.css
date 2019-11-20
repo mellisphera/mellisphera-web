@@ -117,7 +117,7 @@ nav[role=admin-navigation] {
 }
 
 .puce-apiary{
-    background-image: url('../../../assets/icons/ui/melliUx.png');
+    background-image: url('../../../assets/icons/ui/melliUx.svg');
     display: inline-block;
     background-repeat: no-repeat;
     background-size:25px;

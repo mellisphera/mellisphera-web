@@ -31,12 +31,6 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   public formatDt: number;
   public unitSys: string;
   public suscribPref: Subscription;
-  public notifConfig: {
-    name: string,
-    icon: string,
-    enable: boolean,
-    value: number[]
-  }[];
   private notifyService: NotifierService;
   private userPref: UserPref;
   public passwordForm: FormGroup;
@@ -46,14 +40,6 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     private userService: UserloggedService,
     public translateService: TranslateService,
     private formBuilder: FormBuilder) {
-    this.notifConfig = [
-      { name: 'Rain', icon: './assets/pictos_alerts/newIcones/Rain_1.svg', enable: true, value: [0, 10] },
-      { name: 'Snow', icon: './assets/pictos_alerts/newIcones/Snow_1.svg', enable: true, value: [0, 10] },
-      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10] },
-      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10] },
-      { name: 'Hmin', icon: './assets/pictos_alerts/newIcones/Hmin_1.svg', enable: true, value: [0, 10] }
-
-    ];
     this.notifyService = notifier;
   }
   ngOnInit() {
@@ -88,7 +74,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     // translateService.use('en')
     // translateService.use('fr')
   }
-  saveFormat(): void {
+  onChangeDate(): void {
     this.userConfig.setFormatDt(this.formatDt);
     this.saveUserPref();
   }
@@ -97,7 +83,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     return this.passwordForm.get('confirmPassword');
   }
 
-  saveUnit(): void {
+  onChangeUnit() {
     this.userPref.unitSystem = this.unitSys;
     if (this.unitSys === 'IMPERIAL') {
       this.graphGlobalService.setImperial();
@@ -107,6 +93,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     this.userConfig.setUnit(this.unitSys);
     this.saveUserPref();
   }
+
   ngOnDestroy(): void {
     this.suscribPref.unsubscribe();
   }
@@ -127,8 +114,6 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     )
   }
 
-  test(event: any) {
-  }
   saveUserPref(): void {
     this.userConfig.setUserPref().subscribe(
       () => { }, () => { }, () => {

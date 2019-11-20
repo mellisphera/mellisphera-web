@@ -216,7 +216,7 @@ export class DailyManagerService {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, serieTemplate);
         if (nameSerie === 'gain' || nameSerie === 'loss') {
-          serieTmp.name = nameSerie + '|' + _data.sensorRef;
+          serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
         } else {
           serieTmp.name = _data.sensorRef;
         }
@@ -396,6 +396,9 @@ export class DailyManagerService {
     this.getLastDayForMeanValue(this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(hiveId, this.rangeSevenDay), false, type);
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(hiveId, range).subscribe(
       _daliW => {
+        if (_daliW.length < 1) {
+          
+        }
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete: any) => {
@@ -1028,6 +1031,21 @@ export class DailyManagerService {
                 type: 'group',
                 children: []
               };
+              group.children.push({
+                type: 'rect',
+                z2: 0,
+                shape: {
+                  x: -cellWidth / 2,
+                  y: -cellHeight / 2,
+                  width: cellWidth,
+                  height: cellHeight,
+                },
+                position: [cellPoint[0], cellPoint[1]],
+                style: {
+                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                  stroke: 'black'
+                }
+              });
               const dataByDate: any[] = joinData.filter(_filter => {
                 return this.graphGlobal.compareToDate(_filter.opsDate, api.value(0));
               });
@@ -1055,21 +1073,6 @@ export class DailyManagerService {
                 }
               }
               if (dataByDate.length > 1) {
-                group.children.push({
-                  type: 'rect',
-                  z2: 0,
-                  shape: {
-                    x: -cellWidth / 2,
-                    y: -cellHeight / 2,
-                    width: cellWidth,
-                    height: cellHeight,
-                  },
-                  position: [cellPoint[0], cellPoint[1]],
-                  style: {
-                    fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
-                    stroke: 'black'
-                  }
-                });
                 group.children.push({
                   type: 'path',
                   z2: 1000,
@@ -1233,6 +1236,9 @@ export class DailyManagerService {
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     }
+    console.log(this.meanPeriodDevice);
+   // this.setMeanAnnotation(type);
+
   }
 
   setMeanSevenDay(_data: Array<any>, mean: boolean, type: Tools) {

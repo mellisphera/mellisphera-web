@@ -217,8 +217,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   ngAfterViewInit(): void {
-    this.rucheService.ruches.forEach(_hive => {
-      document.getElementById(_hive._id).style.transform = 'translate(0px, 0px)';
+   this.rucheService.ruches.forEach(_hive => {
+      document.getElementById(_hive.name).style.transform = 'translate(0px, 0px)';
+      console.log( document.getElementById(_hive.name));
     });
   }
 

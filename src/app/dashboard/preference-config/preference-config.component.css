@@ -27,6 +27,9 @@ limitations under the License. */
     cursor: pointer;
 
 }
+.form-group label{
+    margin-left: 6px;
+}
 .icon_notif{
     width: 50px;
 }

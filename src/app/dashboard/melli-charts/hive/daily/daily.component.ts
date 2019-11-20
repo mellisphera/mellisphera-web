@@ -111,13 +111,13 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
     this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
-    this.setMeanTextHtml();
 
   }
 
 
 
   ngOnInit() {
+    this.setMeanTextHtml();
     this.calendarElements = document.getElementsByClassName('calendar');
     this.dailyManager.setMeanAnnotation = (_type: Tools, clear?: boolean) => {
       if (!clear) {
@@ -127,6 +127,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
             this.currentDeviceTextPeriodCalendar + this.dailyManager.meanPeriodDevice.value + ' ' + this.dailyManager.meanPeriodDevice.unit,
             this.currentDeviceTextSevenDay + this.dailyManager.meanDeviceSevenDay.value + ' ' + this.dailyManager.meanDeviceSevenDay.unit
           ].join('\n');
+          console.log(annotationDevice);
           this.dailyManager.baseOptionsInt.graphic[0].children[1].style.text = annotationDevice;
           this.melliHive.getDailyDeviceChartInstance().setOption(this.dailyManager.baseOptionsInt);
         } else if (_type.origin === OTHER) {
@@ -145,9 +146,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
         }
       }
     };
-
-
-
     this.initCalendar();
   }
 
