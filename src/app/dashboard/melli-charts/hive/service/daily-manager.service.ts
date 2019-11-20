@@ -325,6 +325,7 @@ export class DailyManagerService {
         }
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.clear();
+        this.setMeanAnnotation(type, true);
         chartInstance.setOption(option);
         chartInstance.hideLoading();
         this.baseOptionExt = option;

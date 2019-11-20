@@ -14,4 +14,6 @@ export interface UserPref {
     timeFormat: string;
     lang: string;
     unitSystem: string;
+    availableSource: string[];
+    weatherSource: string;
 }

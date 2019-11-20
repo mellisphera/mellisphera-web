@@ -69,13 +69,16 @@ export class AuthService {
         this.connexionStatus.next(data);
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
-        this.translateService.addLangs(['en', 'fr']);
+        this.translateService.addLangs(['en', 'fr', 'es']);
         this.socketService.loadDataRequest(this.userService.getJwtReponse());
 
          if (this.jwtReponse.lang === null || this.jwtReponse.lang.toLowerCase().indexOf('en') !== -1) {
            this.translateService.use('en');
         } else if (this.jwtReponse.lang.toLowerCase().indexOf('fr') === -1) {
           this.translateService.use('fr');
+        }  else if (this.jwtReponse.lang.toLowerCase().indexOf('fr') === -1) {
+          this.translateService.use('es');
+
         }
         if (this.jwtReponse.connexions === 1) {
           this.userService.setWizardActive(true);

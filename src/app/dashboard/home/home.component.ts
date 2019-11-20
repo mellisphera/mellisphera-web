@@ -219,15 +219,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   ngAfterViewInit(): void {
    this.rucheService.ruches.forEach(_hive => {
       document.getElementById(_hive.name).style.transform = 'translate(0px, 0px)';
-      console.log( document.getElementById(_hive.name));
     });
+  }
+  onDragEnd(event) {
+    console.log(event);
   }
 
   ngAfterViewChecked(): void {
     //Called after every check of the component's view. Applies to components only.
     //Add 'implements AfterViewChecked' to the class.
     // highlight a hive
-    if (/info-hives/g.test(this.router.url)) {
+/*     if (/info-hives/g.test(this.router.url)) {
       this.eltOnClickId = document.getElementById(this.rucheService.getCurrentHive().name);
       if (this.eltOnClickId !== null) {
         this.renderer.addClass(this.eltOnClickId, 'highlightFix');
@@ -239,7 +241,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
         this.renderer.addClass(this.eltOnClickId, 'highlightHandle');
         this.lastHighlightHandle = this.rucheService.getCurrentHive()._id;
       }
-    };
+    }; */
   }
 
   loadAlert() {
@@ -415,23 +417,20 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       const rucheUpdate = JSON.parse(JSON.stringify(ruche));
       rucheUpdate.hivePosX = '' + this.position.x;
       rucheUpdate.hivePosY = '' + this.position.y;
-      if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-        this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
-          () => { }, () => { }, () => {
-            this.position.x = 0;
-            this.position.y = 0;
-            const index = this.hiveUpdateForDestroyPage.findIndex(_hive => _hive._id === rucheUpdate._id);
-            if (index !== -1) {
-              this.hiveUpdateForDestroyPage[index] = rucheUpdate;
-            } else {
-              this.hiveUpdateForDestroyPage.push(rucheUpdate);
-            }
+      this.rucheService.updateCoordonneesRuche(rucheUpdate).subscribe(
+        () => { }, () => { }, () => {
+          this.position.x = 0;
+          this.position.y = 0;
+          const index = this.hiveUpdateForDestroyPage.findIndex(_hive => _hive._id === rucheUpdate._id);
+          if (index !== -1) {
+            this.hiveUpdateForDestroyPage[index] = rucheUpdate;
+          } else {
+            this.hiveUpdateForDestroyPage.push(rucheUpdate);
           }
-        );
-      }
+        }
+      );
     }
   }
-  
   ngOnDestroy(): void {
         this.hiveUpdateForDestroyPage.forEach((hiveUpdate: RucheInterface) => {
           const hiveUpdateIndex = this.rucheService.ruches.map(hive => hive._id).indexOf(hiveUpdate._id);

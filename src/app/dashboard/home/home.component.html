@@ -73,8 +73,8 @@ limitations under the License. -->
 <div id="global">
     <!-- Apiary picture -->
     <div class="grid-container" #myBounds id="cadre" ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary"
-        class="my-drop-zone" [class.valid-drag]="baseDropValid" [(lastBaseUrl)]="rucherService.rucher.photo">
-        <img [src]="rucherService.rucher.photo" (click)="hideRightClick($event)" class="photo" />
+        class="my-drop-zone" [class.valid-drag]="baseDropValid" (stopped)="onDragEnd($event)" [(lastBaseUrl)]="rucherService.rucher.photo">
+        <img [src]="rucherService.rucher.photo" (click)="hideRightClick($event)" style="position: static;" class="photo" />
         <!-- The button to change hive handle => click -->
         <div zIndex="100" class ="lockButton">
             <button  *ngIf="lockHive" data-toggle="tooltip" data-html="true"  title = "{{ 'HOME.PLACEMENTMODE' | translate}}" id = "locked" type="button" class="lock" (click) = "this.lockHive = !this.lockHive;"><i class="fa fa-lock"></i></button>
@@ -83,7 +83,7 @@ limitations under the License. -->
         <!-- The dive for each hive -->
         <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true" data-toggle="tooltip"
              [ngDraggable]="!lockHive" [handle]="HiveHandle" *ngFor="let ruche of rucheService.ruches; let i = index" (endOffset)="onMoveEnd($event, ruche,i)"
-            [id]="ruche.name" [style.top.%]="ruche.hivePosY" style="transform: translate(0px, 0px);" [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)"
+            [id]="ruche.name" [style.top.%]="ruche.hivePosY" style="transform: none" [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)"
             class="hive-group drag-grid {{i}}">
             <!-- The div is show when you right click on a hive -->
             <div class="divCliqueDroitCache {{i}}">

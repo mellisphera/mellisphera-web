@@ -57,16 +57,21 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   }
 
   changeLangToggle(lang: string) {
-    if (lang === 'en') {
-      this.translateService.use('en');
-      this.userService.setCountry('en');
-      this.userPref.lang = 'EN-en';
-      this.userConfig.setLang('en');
-    } else {
+    if (lang === 'fr') {
       this.translateService.use('fr');
       this.userService.setCountry('fr');
       this.userPref.lang = 'FR-fr';
       this.userConfig.setLang('fr');
+    } else if (lang === 'es') {
+      this.translateService.use('es');
+      this.userService.setCountry('es');
+      this.userPref.lang = 'ES-es';
+      this.userConfig.setLang('es');
+    } else {
+      this.translateService.use('en');
+      this.userService.setCountry('en');
+      this.userPref.lang = 'EN-en';
+      this.userConfig.setLang('en');
     }
     this.saveUserPref();
 

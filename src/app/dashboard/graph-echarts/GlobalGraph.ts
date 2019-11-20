@@ -97,6 +97,7 @@ export class GraphGlobal {
   };
   public titresFR: Array<any>;
   public titresEN: Array<any>;
+  public titresES: Array<any>;
 
   constructor(private userConfig: UserParamsService,
     private unitService: UnitService,
@@ -180,10 +181,11 @@ export class GraphGlobal {
       { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' },
       { graph: 'Weather', titre: 'Méteo' },
       { graph: 'Moon', titre: 'Calendrier lunaire' },
-      { graph: 'Rain', titre: 'Pluie' },
+      { graph: 'Rain', titre: 'Précipitations' },
       { graph: 'Wind', titre: 'Vent' },
 
     ];
+    this.titresES = []
 
     // EN
     this.titresEN = [
@@ -202,7 +204,7 @@ export class GraphGlobal {
       { 'graph': 'Blooming', 'titre': 'Apiary Blooming calendar' },
       { graph: 'Weather', titre: 'Weather' },
       { graph: 'Moon', titre: 'Moon calendar' },
-      { graph: 'Rain', titre: 'Rain' },
+      { graph: 'Rain', titre: 'Precipitation' },
       { graph: 'Wind', titre: 'Wind' },
     ];
   }

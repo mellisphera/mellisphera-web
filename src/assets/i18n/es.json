@@ -126,7 +126,24 @@
   "HOME" : {
       "BACK" : "Guardar la imagen?",
       "CHANGE" : "Guardar",
-      "CANCEL" : "Anular"
+      "CANCEL" : "Anular",
+      "NODATA" : "-",
+      "NOSENSORS" : "-",
+      "CLICK" : "Click on a hive for more information !",
+      "PLACEMENTMODE" : "Put the hives in 'displacement' mode",
+      "CLICKMODE" : "Put the hives in 'click' mode",
+      "MANAGE" : "Manage",
+      "WARNING" : "Warning! ",
+      "NAVBAR" : {
+          "ALERTS" : "Alerts",
+          "NOTES" : "Notes",
+          "SUMMARY": "Summary",
+          "NAME" : "Name",
+          "BROOD" : "Brood",
+          "WEIGHT" : "Weight",
+          "SENSORS" : "Sensors",
+          "APIARY" : "Apiary"
+      }
   },
   "HIVES" : {
       "HIVES" : "Colmenas",

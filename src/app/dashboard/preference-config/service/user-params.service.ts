@@ -36,7 +36,9 @@ export class UserParamsService {
       timeZone: '',
       timeFormat: '',
       lang: '',
-      unitSystem: ''
+      unitSystem: '',
+      availableSource: [],
+      weatherSource: ''
     });
     this.dtFormat = [
       'YYYY-MM-DD HH:mm',
