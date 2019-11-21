@@ -33,7 +33,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   public suscribPref: Subscription;
   private notifyService: NotifierService;
   public weatherSrc: string;
-  private userPref: UserPref;
+  public userPref: UserPref;
   public passwordForm: FormGroup;
   constructor(public userConfig: UserParamsService, private authService: AuthService,
     private notifier: NotifierService,
