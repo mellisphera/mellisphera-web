@@ -1,399 +1,396 @@
 {
-  "LOGIN": {
-      "SIGN_IN": {
-          "DENIED": "Acceso denegado ",
-          "SUBMIT": "conexion",
-          "SIGN_UP_LINK": "crear cuenta"
-      },
-      "SIGN_UP": {
-
-      }
-  },
-  "WIZARD" :{
-      "STEP_TITLE": "Bienvenido",
-      "WELCOME": "Bienvenido",
-      "DESCRIPTION": "Queremos guiar tus primeros pasos creando un colmenar y algunas colmenas.",
-      "DESCRIPTION_2": "Cuando termines podras lanzarte por tu cuenta.",
-      "APIARY":{
-          "STEP_TITLE": "Colmenar",
-          "TITLE": "Crear un colmenar"
-      },
-      "HIVE": {
-          "STEP_TITLE": "Colmena",
-          "TITLE": "Crear colmena",
-          "DESCRIPTION": "Después podras crear todas las colmenas que quieras."
-      },
-      "FLOWER": {
-          "TITLE": "Anadir flores",
-          "DESCRIPTION": "Mas tarde podras completar esta lista"
-      },
-      "SENSOR": {
-          "STEP_TITLE": "Sensor",
-          "TITLE": "Anadir sensor"
-      },
-      "DONE": {
-          "STEP_TITLE": "Fin",
-          "TITLE": "Has terminado !",
-          "DESCRIPTION": "A medida que navegues por las diferentes páginas, encontrarás los siguientes símbolos",
-          "ICONS": {
-              "ADD": "Añadir un elemento (colmenar, colmena, sensor, flor)",
-              "EDIT": "Modificar un elemento",
-              "DELETE": "Supprimir un elemento"
-          }
-      },
-      "NEXT": "Siguiente",
-      "BACK": "Volver",
-      "SKIP": "Plud tard",
-      "FINISH": "Terminar"
-  },
-  "NAVBAR": {
-      "NEW_APIARY" : "Nuevo colmenar",
-      "EDIT_APIARY" : "Editar colmenar",
-      "EDITAPIARY" : "Modifier le rucher",
-      "DELETE_APIARY" : "Suprimir colmenar",
-      "DELETE_APIARY2" : "Suprimir colmenar",
-      "DELETE_ASK" : "Suprimir el colmenar?",
-      "ACCOUNT": {
-          "PREFERENCES" : "preferencias",
-          "LOG_OUT": "Desconexion"
-      },
-      "CRUD" : {
-        "APIARY_NAME" : "Nombre del colmenar",
-        "TITLE" : "Menu de gestion",
-        "APIARY_DESCRIPTION" : "Descripcion del colmenar",
-        "NAME" : "Nombre",
-        "NAME_ERROR" : "Introduce un nombre entre 1 et 20 caracteres",
-        "DESCRIPTION_ERROR" : "La descripcion debe ser inferior a 40 caracteres.",
-        "CITY" : "Ciudad",
-        "CITY_APIARY" : "Ciudad del colmenar",
-        "CITY_ERROR" : "Nombre de la ciudad",
-        "ZIP_CODE" : "Codigo postal",
-        "ZIP_CODE_APIARY" : "Codigo postal del colmenar",
-        "ZIP_ERROR" : "Entra un codigo postal",
-        "PICTURE" : "Añadir una imagen del colmenar:",
-        "WARNING_PICTURE": "la imagen es demasiado voluminosa",
-        "FILE" : "Selecciona archivo",
-        "DROP" : "Arrastra una foto aquí",
-        "CLOSE" : "Cerrar",
-        "SAVE" : "Guardar",
-        "CANCEL" : "Anular",
-        "CONFIRM" : "Confirmar",
-        "CREATE" : "Crear colmenar",
-        "APIARY_UPDATE" : "Colmenar a editar",
-        "APIARY" : "Colmenar",
-        "HIVES" : "Colmenas",
-        "MANAGE": "General",
-        "SELECTHIVE" : "Selecciona la colmena",
-        "EDITAHIVE" : "Edirtar colmena",
-        "DELETEAHIVE" : "Suprimir colmena",
-        "DELETEHIVE" : "Suprimir la colmena",
-        "DELETEHIVEASK" : "Suprimir la colmena?",
-        "HIVENAME" : "Nombre de la colmena",
-        "HIVEDESC" : "Descripcion",
-        "EDIT" : "Editar",
-        "FROMAPIARY" : "del colmenar"
-      }
-  },
-  "SIDEBAR" : {
-      "APIARY" : "Colmenar",
-      "HIVES" : "Colmenas",
-      "NOTES" : "Notas del colmenar",
-      "FLOWER" : "Flor",
-      "SENSORS" : "Sensor",
-      "DATA" : "Analisis",
-      "ALERT_CONF": "Configuracion de las notificaciones"
-  },
-  "PREFERENCE_CONFIG" : {
-      "TITLE_PASSWORD" : "Modificar la contasena",
-      "FORM_PASSWORD" : {
-          "NEW" : "Nueva contrasena",
-          "PASSWORD" : "contrasena",
-          "CHARACTER" : "6 caracteres minimo",
-          "CONFIRM" : "Confirmar contrasena",
-          "ERROR" : "Error !",
-          "NOT_MATCH" : "Las contraseñas no coinciden",
-          "SUBMIT" : "Cambiar"
-      },
-      "TITLE_DATE" : "Formato de la fecha",
-      "SAVE_DATE" : "Guardar",
-      "TITLE_UNIT" : "Systema de unidades",
-      "FORM_UNIT" : {
-          "METRIC" : "Métrico (kg, °C)",
-          "IMPERIAL" : "Imperial (lb, F)",
-          "SAVE" : "Guardar"
-      }
-  },
-  "HOME" : {
-      "BACK" : "Guardar la imagen?",
-      "CHANGE" : "Guardar",
-      "CANCEL" : "Anular",
-      "NODATA" : "-",
-      "NOSENSORS" : "-",
-      "CLICK" : "Click on a hive for more information !",
-      "PLACEMENTMODE" : "Put the hives in 'displacement' mode",
-      "CLICKMODE" : "Put the hives in 'click' mode",
-      "MANAGE" : "Manage",
-      "WARNING" : "Warning! ",
-      "NAVBAR" : {
-          "ALERTS" : "Alerts",
-          "NOTES" : "Notes",
-          "SUMMARY": "Summary",
-          "NAME" : "Name",
-          "BROOD" : "Brood",
-          "WEIGHT" : "Weight",
-          "SENSORS" : "Sensors",
-          "APIARY" : "Apiary"
-      }
-  },
-  "HIVES" : {
-      "HIVES" : "Colmenas",
-      "HIVE" : "Colmena",
-      "SENSOR" : "Sensor",
-      "FORM" : {
-          "NEW" : "Nueva colmena",
-          "EDIT" : "Editar colmena",
-          "DELETE" : "Suprimir colmena",
-          "DELETE_ASK" : "Supprimir la colmena?",
-          "CANCEL" : "Anular",
-          "CONFIRM" : "Confirmar",
-          "NAME" : "Nombre",
-          "CREATE" : "Crear colmena",
-          "CLOSE" : "Cerrar",
-          "APIARY" : "Colmenar"
-      }
-  },
-  "HIVES" : {
-      "HIVES" : "Colmenas",
-      "HIVE" : "Ruche",
-      "SENSOR" : "Capteur",
-      "FORM" : {
-          "NEW" : "Nouvelle ruche",
-          "EDIT" : "Enregistrer",
-          "EDITHIVE" : "Modifier la ruche",
-          "DELETE" : "Supprimer la ruche",
-          "DELETE_ASK" : "Supprimer la ruche ?",
-          "CANCEL" : "Annuler",
-          "CONFIRM" : "Confirmer",
-          "NAME" : "Nom de la ruche",
-          "DESCRIPTION" : "Description de la ruche",
-          "CREATE" : "Créer la ruche",
-          "CLOSE" : "Fermer",
-          "APIARY" : "Colmenar"
-      }
-  },
-  "HIVE_DETAIL" : {
-      "NAV" : {
-          "NOTES" : "Notas",
-          "STOCK" : "Stock",
-          "HEALTH" : "Salud",
-          "DAILY" : "Diario",
-          "CONDENSED" : "Condensado"
-      },        
-    "OBSERVATIONS" : {
-        "AO" : "Acciones u observaciones",
-        "TITLE" : "Notas de la colmena",
-        "DATE" : "Fecha",
-        "SENTENCE" : "Nota",
-        "TYPES" : "Typo",
-        "ACTIONS" : "Modificar",
-        "OBSERVATION" : "Observation",
-        "NONOTES" : "No hay notas para esta colmena..",
-        "ACTION" : "Accion",
-        "FORM" : {
-            "NEW" : "Nuevo",
-            "NEW_NOTES" : "Nueva nota",
-            "DATE" : "Fecha Hora: ",
-            "CREATE_OBS" : "Nueva observacion",
-            "CREATE_ACT" : "Nueva accion",
-            "CLOSE" : "Cerrar",
-            "EDIT" : "Guardar",
-            "EDITNOTE" : "Editar la nota",
-            "DELETE" : "Suprimir la nota",
-            "DELETE_ASK" : "Supprimir la nota ?",
-            "CANCEL" : "Anular",
-            "CONFIRM" : "Confirmar",
-            "NOTES" : "Nota : ",
-            "TYPE" : "Typo",
-            "YOUWANTCREATE": "Deseas crear:",
-            "APIARYNOTE" : "Una nota en tu colmenar",
-            "HIVENOTE" : "Une nota de colmena",
-            "CREATENOTE" : "Nueva nota",
-            "LOCATION" : "Localizacion",
-            "APIARYLOCATION" : "Nota de colmenar",
-            "HIVELOCATION" : "Note de colmena",
-            "EDITANOTE" : "Editar nota"
+    "LOGIN": {
+        "SIGN_IN": {
+            "DENIED": "Acceso denegado ",
+            "SUBMIT": "conexion",
+            "SIGN_UP_LINK": "crear cuenta"
+        },
+        "SIGN_UP": {}
+    },
+    "WIZARD": {
+        "STEP_TITLE": "Bienvenido",
+        "WELCOME": "Bienvenido",
+        "DESCRIPTION": "Queremos guiar tus primeros pasos creando un colmenar y algunas colmenas.",
+        "DESCRIPTION_2": "Cuando termines podras lanzarte por tu cuenta.",
+        "APIARY": {
+            "STEP_TITLE": "Colmenar",
+            "TITLE": "Crear un colmenar"
+        },
+        "HIVE": {
+            "STEP_TITLE": "Colmena",
+            "TITLE": "Crear colmena",
+            "DESCRIPTION": "Después podras crear todas las colmenas que quieras."
+        },
+        "FLOWER": {
+            "TITLE": "Anadir flores",
+            "DESCRIPTION": "Mas tarde podras completar esta lista"
+        },
+        "SENSOR": {
+            "STEP_TITLE": "Sensor",
+            "TITLE": "Anadir sensor"
+        },
+        "DONE": {
+            "STEP_TITLE": "Fin",
+            "TITLE": "Has terminado !",
+            "DESCRIPTION": "A medida que navegues por las diferentes páginas, encontrarás los siguientes símbolos",
+            "ICONS": {
+                "ADD": "Añadir un elemento (colmenar, colmena, sensor, flor)",
+                "EDIT": "Modificar un elemento",
+                "DELETE": "Supprimir un elemento"
+            }
+        },
+        "NEXT": "Siguiente",
+        "BACK": "Volver",
+        "SKIP": "Plud tard",
+        "FINISH": "Terminar"
+    },
+    "NAVBAR": {
+        "NEW_APIARY": "Nuevo colmenar",
+        "EDIT_APIARY": "Editar colmenar",
+        "EDITAPIARY": "Modifier le rucher",
+        "DELETE_APIARY": "Suprimir colmenar",
+        "DELETE_APIARY2": "Suprimir colmenar",
+        "DELETE_ASK": "Suprimir el colmenar?",
+        "ACCOUNT": {
+            "PREFERENCES": "preferencias",
+            "LOG_OUT": "Desconexion"
+        },
+        "CRUD": {
+            "APIARY_NAME": "Nombre del colmenar",
+            "TITLE": "Menu de gestion",
+            "APIARY_DESCRIPTION": "Descripcion del colmenar",
+            "NAME": "Nombre",
+            "NAME_ERROR": "Introduce un nombre entre 1 et 20 caracteres",
+            "DESCRIPTION_ERROR": "La descripcion debe ser inferior a 40 caracteres.",
+            "CITY": "Ciudad",
+            "CITY_APIARY": "Ciudad del colmenar",
+            "CITY_ERROR": "Nombre de la ciudad",
+            "ZIP_CODE": "Codigo postal",
+            "ZIP_CODE_APIARY": "Codigo postal del colmenar",
+            "ZIP_ERROR": "Entra un codigo postal",
+            "PICTURE": "Añadir una imagen del colmenar:",
+            "WARNING_PICTURE": "la imagen es demasiado voluminosa",
+            "FILE": "Selecciona archivo",
+            "DROP": "Arrastra una foto aquí",
+            "CLOSE": "Cerrar",
+            "SAVE": "Guardar",
+            "CANCEL": "Anular",
+            "CONFIRM": "Confirmar",
+            "CREATE": "Crear colmenar",
+            "APIARY_UPDATE": "Colmenar a editar",
+            "APIARY": "Colmenar",
+            "HIVES": "Colmenas",
+            "MANAGE": "General",
+            "SELECTHIVE": "Selecciona la colmena",
+            "EDITAHIVE": "Edirtar colmena",
+            "DELETEAHIVE": "Suprimir colmena",
+            "DELETEHIVE": "Suprimir la colmena",
+            "DELETEHIVEASK": "Suprimir la colmena?",
+            "HIVENAME": "Nombre de la colmena",
+            "HIVEDESC": "Descripcion",
+            "EDIT": "Editar",
+            "FROMAPIARY": "del colmenar"
         }
     },
-    "SENSORS" : {
-        "NOSENSORS" : "No hay sensores en esta colmena."
+    "SIDEBAR": {
+        "APIARY": "Colmenar",
+        "HIVES": "Colmenas",
+        "NOTES": "Notas del colmenar",
+        "FLOWER": "Flor",
+        "SENSORS": "Sensor",
+        "DATA": "Analisis",
+        "ALERT_CONF": "Configuracion de las notificaciones"
     },
-      "STOCK" : {
-          "NO_DATA" : "No hay datos:",
-          "STOCK" : "Stock de miel",
-          "WEIGHT" :  "Aumento de peso"
-      },
-      "HOURLY" : {
-          "RANGE" : "Intervalo :",
-          "LAST" : "Desde"
-  },
-    "CLICK" : {
-      "SENSORSTITLE" : "Sensores de la colmena",
-        "BROOD" : "Cria",
-        "BROODINFO": "La cría se calcula a partir de la temperatura de la colmena. Cuanto más estable sea la temperatura alrededor del área de cría, mayor será el porcentaje",        "UNKNOWN" : "inconnu",
-        "ALERTS" : {
-            "TITLE" : "Alertas de la colmena",
-            "TYPE" : "TIPO",
-            "READ" : "VISTA",
-            "NOALERTS" : "No hay alertas esta semana para "
+    "PREFERENCE_CONFIG": {
+        "TITLE_PASSWORD": "Modificar la contasena",
+        "FORM_PASSWORD": {
+            "NEW": "Nueva contrasena",
+            "PASSWORD": "contrasena",
+            "CHARACTER": "6 caracteres minimo",
+            "CONFIRM": "Confirmar contrasena",
+            "ERROR": "Error !",
+            "NOT_MATCH": "Las contraseñas no coinciden",
+            "SUBMIT": "Cambiar"
+        },
+        "TITLE_DATE": "Formato de la fecha",
+        "SAVE_DATE": "Guardar",
+        "TITLE_UNIT": "Systema de unidades",
+        "FORM_UNIT": {
+            "METRIC": "Métrico (kg, °C)",
+            "IMPERIAL": "Imperial (lb, F)",
+            "SAVE": "Guardar"
         }
     },
-    "ALERT" : {
-    "NOALERTS" : "No hay inspecciones o notificaciones para esta colmena desde hace dos meses."
+    "HOME": {
+        "BACK": "Guardar la imagen?",
+        "CHANGE": "Guardar",
+        "CANCEL": "Anular",
+        "NODATA": "-",
+        "NOSENSORS": "-",
+        "CLICK": "Click on a hive for more information !",
+        "PLACEMENTMODE": "Put the hives in 'displacement' mode",
+        "CLICKMODE": "Put the hives in 'click' mode",
+        "MANAGE": "Manage",
+        "WARNING": "Warning! ",
+        "NAVBAR": {
+            "ALERTS": "Alertas",
+            "NOTES": "Notas",
+            "SUMMARY": "Resumen",
+            "NAME": "Nombre",
+            "BROOD": "Cría",
+            "WEIGHT": "Peso",
+            "SENSORS": "Sensores",
+            "APIARY": "Colmenar"
         }
     },
-    "ALERTS" : {
-    "TITLE" : "Alertas del colmenar",
-    "NOALERTS" : "No hay alertas esta semana!"
-    },
-    "APIARY_NOTES" : {
-      "TITLE" : "Notas del colmenar",
-      "FORM" : {
-          "NEW" : "Nueva nota de colmenar",
-          "CREATE" : "Crear una nota",
-          "SAVE" : "Guardar",
-          "SELECT" : "Selecciona tu colmena",
-          "TYPE" : "Typo: ",
-          "MOVE" : "Dsplazar"
-      }
-  },
-  "CAPTEUR" : {
-      "SENSORS" : "Sensores",
-      "REFERENCES" : "Referencia",
-      "SEARCH" : "Buscar sensor",
-      "FORM" : {
-          "NEW" : "Nuevo sensor",
-          "DELETE" : "Supprimir sensor",
-          "DELETE_ASK" : "Supprimi sensor?",
-          "CONFIRM" : "Confirmar",
-          "CANCEL" : "Anular",
-          "REFERENCE" : "Referencia (*): ",
-          "REF_ERROR" : "Debes seleccionar una referencia valida.",
-          "SENS_ERROR" : "Este sensor ya existe!",
-          "SELECT_ERROR" : "Sélecciona la referencia del sensor",
-          "LINK" : "Tu sensor se encuentra : ",
-          "STOCK" : "En stock",
-          "HIVEDETAIL" : "En la colmena ",
-          "INHIVE" : "En una colmena",
-          "HIVE" : "Colmena",
-          "HIVEAPIARY" : "Colmena | Colmenar",
-          "SELECT_HIVE" : "Sélecciona una colmena",
-          "ADD" : "Anadir sensor",
-          "CLOSE" : "Cerrar",
-          "APIARY" : "Colmenar",
-          "SAVE" : "Guardar",
-          "EDIT" : "Guardar",
-          "EDITSENSORTITLE" : "Editar sensor",
-          "SENSOR_EDIT" : "Sensor actualizado",
-          "SUCCES" : "con exito!",
-          "EDITSELECT" : "Selecciona el sensor que deseas editar",
-          "SENSOR" : "Sensor",
-          "EDITSENSOR" : "Editar",
-          "OF" : "de",
-          "NOSENSOR" : "No hay sensores para edicion.",
-          "EDITASENSOR" : "Editar sensor",
-          "EDITTHESENSOR" : "Editar sensor"
+    "HIVES": {
+        "HIVES": "Colmenas",
+        "HIVE": "Colmena",
+        "SENSOR": "Sensor",
+        "FORM": {
+            "NEW": "Nueva colmena",
+            "EDIT": "Editar colmena",
+            "DELETE": "Suprimir colmena",
+            "DELETE_ASK": "Supprimir la colmena?",
+            "CANCEL": "Anular",
+            "CONFIRM": "Confirmar",
+            "NAME": "Nombre",
+            "CREATE": "Crear colmena",
+            "CLOSE": "Cerrar",
+            "APIARY": "Colmenar"
         }
     },
-    "FEEDBACK" : {
-      "TITLE" : "Escribenos!",
-      "MESSAGE" : "Escribenos!",
-      "COMMENT" : "Cuéntanos lo que podemos mejorar",
-      "SLACK" : "Tambien puedes conectar con nosotros en nuestro canal slack",
-      "SIGNUP" : "crear cuenta",
-      "OR" : "o",
-      "LOGIN" : "conectarme",
-      "SEND" : "Enviar",
-      "CLOSE" : "Cerrar"
-  },    
-  "FLOWER" : {
-    "APIARYPLANTS" : "Plantas del colmenar",
-    "PLANTDIR" : "Lista de plantas",
-    "MELLIPLANTS" : "Plantas meliferas",
-    "NAME" : "Nombre",
-    "STARTS" : "Débuts",
-    "ENDS" : "Fins",
-    "RELATIVE" : "Relative",
-    "BLOOMING" : "de floraison",
-    "THEORICAL" : "théorique",
-    "OBSERVED" : "observée",
-    "ABUNDANCE" : "abondance",
-    "INAPIARY" : "dans le rucher",
-    "HIGH" : "Haut",
-    "MEDIUM" : "Moyen",
-    "LOW" : "Bas",
-    "DELETEFLOWER" : "Supprimer plante",
-    "EDIT" : "Modifier",
-    "MELLIDIR" : "Liste des plantes mellifères",
-    "MYPLANTS" : "Mes plantes",
-    "SEARCHNAME" : "Rechercher par nom",
-    "SEARCHMONTH" : "Rechercher par mois",
-    "ALLTYPES" : "Tous les types",
-    "BLOOMONTH" : "Mois de floraison",
-    "COMMON" : "commun",
-    "BLOOMINGPERIOD" : "Periode de floraison",
-    "CONFIDENCELEVEL" : "Niveau de confiance",
-    "ADDTOAPIARY" : "Ajouter au rucher",
-    "CLOSE" : "Fermer"
-},
-"SUMMARY" : {
-    "PDF" : "Descargar pdf",
-    "APIARY" : "Colmenar",
-    "SUMMARY" : "Resumen del colmenar",
-    "ALERTSSINCE" : "alertas desde ",
-    "NOALERTS" : "No hay alertas !",
-    "FOR" : "desde",
-    "DAYS" : "dias",
-    "NONOTES":  "No hay notas en este colmenar !",
-    "SUMMARYHIVES" : "Resumen de las colmenas + alertas desde",
-    "NAME" : "Nombre",
-    "BROOD" : "Cria",
-    "BROODD3" : "Cria J-3",
-    "BROODD7" : "Cria J-7",
-    "WEIGHT" : "Peso",
-    "SENSORS" : "Sensores",
-    "ALERTS" : "Alertas",
-    "NOHIVEALERTS" : "No hay alertas",
-    "NOHIVES" : "Vous n'avez pas de ruche dans ce rucher !"
-},
-"NOTES" : {
-    "TITLEAPIARY" : "Notes de rucher",
-    "TITLEHIVE" : "Notes de ruche",
-    "SEARCH": "Chercher une note",
-    "FORM" : {
-        "NEW" : "Nouvelle note",
-        "APIARY" : "Colmenar",
-        "HIVE" : "Ruche",
-        "EDIT" : "Modifier la note",
-        "DELETE" : "Supprimer la note",
-        "DELETE_ASK" : "Supprimer la note ?",
-        "CONFIRM" : "Supprmier",
-        "CANCEL" : "Annuler"
-    }
-},
-"MELLICHARTS": {
-    "DATE": {
-        "START": "Début",
-        "END": "Fin",
-        "BTN_APPLY": "Aplliquer"
-    }
-},
-
-"ALERT_CONF_PAGE": {
-    "TYPE": "Icône",
-    "VALUE": "Valeur",
-    "NAME": "Nom",
-    "DESCRIPTION": "Description",
-    "STATUS": "Status",
-    "SAVE": "Sauvegarder les modifications"
+    "HIVES": {
+        "HIVES": "Colmenas",
+        "HIVE": "Ruche",
+        "SENSOR": "Capteur",
+        "FORM": {
+            "NEW": "Nouvelle ruche",
+            "EDIT": "Enregistrer",
+            "EDITHIVE": "Modifier la ruche",
+            "DELETE": "Supprimer la ruche",
+            "DELETE_ASK": "Supprimer la ruche ?",
+            "CANCEL": "Annuler",
+            "CONFIRM": "Confirmer",
+            "NAME": "Nom de la ruche",
+            "DESCRIPTION": "Description de la ruche",
+            "CREATE": "Créer la ruche",
+            "CLOSE": "Fermer",
+            "APIARY": "Colmenar"
+        }
+    },
+    "HIVE_DETAIL": {
+        "NAV": {
+            "NOTES": "Notas",
+            "STOCK": "Stock",
+            "HEALTH": "Salud",
+            "DAILY": "Diario",
+            "CONDENSED": "Condensado"
+        },
+        "OBSERVATIONS": {
+            "AO": "Acciones u observaciones",
+            "TITLE": "Notas de la colmena",
+            "DATE": "Fecha",
+            "SENTENCE": "Nota",
+            "TYPES": "Typo",
+            "ACTIONS": "Modificar",
+            "OBSERVATION": "Observation",
+            "NONOTES": "No hay notas para esta colmena..",
+            "ACTION": "Accion",
+            "FORM": {
+                "NEW": "Nuevo",
+                "NEW_NOTES": "Nueva nota",
+                "DATE": "Fecha Hora: ",
+                "CREATE_OBS": "Nueva observacion",
+                "CREATE_ACT": "Nueva accion",
+                "CLOSE": "Cerrar",
+                "EDIT": "Guardar",
+                "EDITNOTE": "Editar la nota",
+                "DELETE": "Suprimir la nota",
+                "DELETE_ASK": "Supprimir la nota ?",
+                "CANCEL": "Anular",
+                "CONFIRM": "Confirmar",
+                "NOTES": "Nota : ",
+                "TYPE": "Typo",
+                "YOUWANTCREATE": "Deseas crear:",
+                "APIARYNOTE": "Una nota en tu colmenar",
+                "HIVENOTE": "Une nota de colmena",
+                "CREATENOTE": "Nueva nota",
+                "LOCATION": "Localizacion",
+                "APIARYLOCATION": "Nota de colmenar",
+                "HIVELOCATION": "Note de colmena",
+                "EDITANOTE": "Editar nota"
+            }
+        },
+        "SENSORS": {
+            "NOSENSORS": "No hay sensores en esta colmena."
+        },
+        "STOCK": {
+            "NO_DATA": "No hay datos:",
+            "STOCK": "Stock de miel",
+            "WEIGHT": "Aumento de peso"
+        },
+        "HOURLY": {
+            "RANGE": "Intervalo :",
+            "LAST": "Desde"
+        },
+        "CLICK": {
+            "SENSORSTITLE": "Sensores de la colmena",
+            "BROOD": "Cria",
+            "BROODINFO": "La cría se calcula a partir de la temperatura de la colmena. Cuanto más estable sea la temperatura alrededor del área de cría, mayor será el porcentaje",
+            "UNKNOWN": "inconnu",
+            "ALERTS": {
+                "TITLE": "Alertas de la colmena",
+                "TYPE": "TIPO",
+                "READ": "VISTA",
+                "NOALERTS": "No hay alertas esta semana para "
+            }
+        },
+        "ALERT": {
+            "NOALERTS": "No hay inspecciones o notificaciones para esta colmena desde hace dos meses."
+        }
+    },
+    "ALERTS": {
+        "TITLE": "Alertas del colmenar",
+        "NOALERTS": "No hay alertas esta semana!"
+    },
+    "APIARY_NOTES": {
+        "TITLE": "Notas del colmenar",
+        "FORM": {
+            "NEW": "Nueva nota de colmenar",
+            "CREATE": "Crear una nota",
+            "SAVE": "Guardar",
+            "SELECT": "Selecciona tu colmena",
+            "TYPE": "Typo: ",
+            "MOVE": "Dsplazar"
+        }
+    },
+    "CAPTEUR": {
+        "SENSORS": "Sensores",
+        "REFERENCES": "Referencia",
+        "SEARCH": "Buscar sensor",
+        "FORM": {
+            "NEW": "Nuevo sensor",
+            "DELETE": "Supprimir sensor",
+            "DELETE_ASK": "Supprimi sensor?",
+            "CONFIRM": "Confirmar",
+            "CANCEL": "Anular",
+            "REFERENCE": "Referencia (*): ",
+            "REF_ERROR": "Debes seleccionar una referencia valida.",
+            "SENS_ERROR": "Este sensor ya existe!",
+            "SELECT_ERROR": "Sélecciona la referencia del sensor",
+            "LINK": "Tu sensor se encuentra : ",
+            "STOCK": "En stock",
+            "HIVEDETAIL": "En la colmena ",
+            "INHIVE": "En una colmena",
+            "HIVE": "Colmena",
+            "HIVEAPIARY": "Colmena | Colmenar",
+            "SELECT_HIVE": "Sélecciona una colmena",
+            "ADD": "Anadir sensor",
+            "CLOSE": "Cerrar",
+            "APIARY": "Colmenar",
+            "SAVE": "Guardar",
+            "EDIT": "Guardar",
+            "EDITSENSORTITLE": "Editar sensor",
+            "SENSOR_EDIT": "Sensor actualizado",
+            "SUCCES": "con exito!",
+            "EDITSELECT": "Selecciona el sensor que deseas editar",
+            "SENSOR": "Sensor",
+            "EDITSENSOR": "Editar",
+            "OF": "de",
+            "NOSENSOR": "No hay sensores para edicion.",
+            "EDITASENSOR": "Editar sensor",
+            "EDITTHESENSOR": "Editar sensor"
+        }
+    },
+    "FEEDBACK": {
+        "TITLE": "Escribenos!",
+        "MESSAGE": "Escribenos!",
+        "COMMENT": "Cuéntanos lo que podemos mejorar",
+        "SLACK": "Tambien puedes conectar con nosotros en nuestro canal slack",
+        "SIGNUP": "crear cuenta",
+        "OR": "o",
+        "LOGIN": "conectarme",
+        "SEND": "Enviar",
+        "CLOSE": "Cerrar"
+    },
+    "FLOWER": {
+        "APIARYPLANTS": "Plantas del colmenar",
+        "PLANTDIR": "Lista de plantas",
+        "MELLIPLANTS": "Plantas meliferas",
+        "NAME": "Nombre",
+        "STARTS": "Débuts",
+        "ENDS": "Fins",
+        "RELATIVE": "Relative",
+        "BLOOMING": "de floraison",
+        "THEORICAL": "théorique",
+        "OBSERVED": "observée",
+        "ABUNDANCE": "abondance",
+        "INAPIARY": "dans le rucher",
+        "HIGH": "Haut",
+        "MEDIUM": "Moyen",
+        "LOW": "Bas",
+        "DELETEFLOWER": "Supprimer plante",
+        "EDIT": "Modifier",
+        "MELLIDIR": "Liste des plantes mellifères",
+        "MYPLANTS": "Mes plantes",
+        "SEARCHNAME": "Rechercher par nom",
+        "SEARCHMONTH": "Rechercher par mois",
+        "ALLTYPES": "Tous les types",
+        "BLOOMONTH": "Mois de floraison",
+        "COMMON": "commun",
+        "BLOOMINGPERIOD": "Periode de floraison",
+        "CONFIDENCELEVEL": "Niveau de confiance",
+        "ADDTOAPIARY": "Ajouter au rucher",
+        "CLOSE": "Fermer"
+    },
+    "SUMMARY": {
+        "PDF": "Descargar pdf",
+        "APIARY": "Colmenar",
+        "SUMMARY": "Resumen del colmenar",
+        "ALERTSSINCE": "alertas desde ",
+        "NOALERTS": "No hay alertas !",
+        "FOR": "desde",
+        "DAYS": "dias",
+        "NONOTES": "No hay notas en este colmenar !",
+        "SUMMARYHIVES": "Resumen de las colmenas + alertas desde",
+        "NAME": "Nombre",
+        "BROOD": "Cria",
+        "BROODD3": "Cria J-3",
+        "BROODD7": "Cria J-7",
+        "WEIGHT": "Peso",
+        "SENSORS": "Sensores",
+        "ALERTS": "Alertas",
+        "NOHIVEALERTS": "No hay alertas",
+        "NOHIVES": "Vous n'avez pas de ruche dans ce rucher !"
+    },
+    "NOTES": {
+        "TITLEAPIARY": "Notes de rucher",
+        "TITLEHIVE": "Notes de ruche",
+        "SEARCH": "Chercher une note",
+        "FORM": {
+            "NEW": "Nueva nota",
+            "APIARY": "Colmenar",
+            "HIVE": "Ruche",
+            "EDIT": "Modifier la note",
+            "DELETE": "Supprimer la note",
+            "DELETE_ASK": "Supprimer la note ?",
+            "CONFIRM": "Supprmier",
+            "CANCEL": "Annuler"
+        }
+    },
+    "MELLICHARTS": {
+        "DATE": {
+            "START": "Début",
+            "END": "Fin",
+            "BTN_APPLY": "Aplliquer"
+        }
+    },
+    "ALERT_CONF_PAGE": {
+        "TYPE": "Icono",
+        "VALUE": "Valor",
+        "NAME": "Apellido",
+        "DESCRIPTION": "Descripción",
+        "STATUS": "Estatus"
     }
 }

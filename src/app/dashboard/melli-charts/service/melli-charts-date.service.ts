@@ -39,6 +39,8 @@ export class MelliChartsDateService {
       { scale: 2, type: 'MONTHS', typeFr: 'MOIS'},
       { scale: 3, type: 'MONTHS', typeFr: 'MOIS'},
       { scale: 6, type: 'MONTHS', typeFr: 'MOIS'},
+      { scale: 9, type: 'MONTHS', typeFr: 'MOIS'},
+      { scale: 1, type: 'YEAR', typeFr: 'ANNEES'}
     ];
     this.setRange(this.ranges[4]);
   }

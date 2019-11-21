@@ -376,7 +376,6 @@
         "NAME": "Name",
         "DESCRIPTION": "Description",
         "VALUE": "Value",
-        "STATUS": "Status",
-        "SAVE": "Save changes"
+        "STATUS": "Status"
     }
 }

@@ -185,7 +185,25 @@ export class GraphGlobal {
       { graph: 'Wind', titre: 'Vent' },
 
     ];
-    this.titresES = []
+    this.titresES = [
+      { 'graph': 'reserveMiel', 'titre': 'Caldo de miel' },
+      { 'graph': 'DailyWeightIncomes', 'titre': 'Productividad' },
+      { 'graph': 'BroodDynamics', 'titre': 'Cantidad de cria' },
+      { 'graph': 'InternalRelativeHumidity', 'titre': 'Humedad int. relativa (max)' },
+      { 'graph': 'InternalTemperature', 'titre': 'Temperatura interna' },
+      { 'graph': 'ExternalTemperature', 'titre': 'Temperatura externa' },
+      { 'graph': 'WeightTemperature', 'titre': 'Peso & Temperatura' },
+      { 'graph': 'Humidity', 'titre': 'Humedad (%)' },
+      { 'graph': 'loss', 'titre': 'Disminucion' },
+      { 'graph': 'Weight', 'titre': 'Peso' },
+      { 'graph': 'AlertsHive', 'titre': 'Eventos' },
+      { 'graph': 'AlertsApiary', 'titre': 'Eventos del colmenar' },
+      { 'graph': 'Blooming', 'titre': 'Calendario de floracion del colmenar' },
+      { graph: 'Weather', titre: 'Meteorologia' },
+      { graph: 'Moon', titre: 'Calendario lunar' },
+      { graph: 'Rain', titre: 'Precipitaciones' },
+      { graph: 'Wind', titre: 'Viento' }
+    ];
 
     // EN
     this.titresEN = [
@@ -225,6 +243,17 @@ export class GraphGlobal {
       this.temp.name = 'Température (°F)';
       this.wind.name = 'Vent';
       // EN
+    } else if (this.translateService.currentLang === 'es') {
+      this.weight.name = 'Peso (lbs)';
+      this.humidity.name = 'Humedad (%)';
+      this.rain.name = 'Lluvia';
+      this.snow.name = 'Nieve';
+      this.moon.phase = 'Fase';
+      this.weightIncome.gain = 'Ganancia';
+      this.weightIncome.loss = 'Perdida';
+      this.moon.period = 'Periodo';
+      this.wind.name = 'Viento';
+      this.brood.name = 'Cria (%)';
     } else {
       this.weight.name = 'Weight (lbs)';
       this.humidity.name = 'Humidity (%)';
@@ -267,8 +296,18 @@ export class GraphGlobal {
       this.moon.period = 'Période';
       this.wind.name = 'Vent';
       this.brood.name = 'Couvain (%)';
-
       // EN
+    }  else if (this.translateService.currentLang === 'es') {
+      this.weight.name = 'Peso (Kg)';
+      this.humidity.name = 'Humedad (%)';
+      this.rain.name = 'Lluvia';
+      this.snow.name = 'Nieve';
+      this.moon.phase = 'Fase';
+      this.weightIncome.gain = 'Ganancia';
+      this.weightIncome.loss = 'Perdida';
+      this.moon.period = 'Periodo';
+      this.wind.name = 'Viento';
+      this.brood.name = 'Cria (%)';
     } else {
       this.weight.name = 'Weight (Kg)';
       this.humidity.name = 'Humidity (%)';
@@ -332,13 +371,10 @@ export class GraphGlobal {
    */
   getTitle(nomGraphe: String): string {
     var titre: any;
-
-    //Found the title with the name of the graph with the right language
-
-    // If he is French
     if (this.translateService.currentLang === 'fr') {
       titre = this.titresFR[this.titresFR.map(elt => elt.graph).indexOf(nomGraphe)];
-      // EN
+    }  else if (this.translateService.currentLang === 'es') {
+      titre = this.titresES[this.titresES.map(elt => elt.graph).indexOf(nomGraphe)];
     } else {
       titre = this.titresEN[this.titresEN.map(elt => elt.graph).indexOf(nomGraphe)];
     }
@@ -351,108 +387,142 @@ export class GraphGlobal {
       case 'WINCOME':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[1].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[1].titre;
         } else {
           return this.titresEN[1].titre;
         }
       case 'TEMP_EXT_MAX':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[5].titre + ' max';
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[5].titre + ' max';
         } else {
           return this.titresEN[5].titre + ' max';
         }
       case 'TEMP_EXT_MIN':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[5].titre + ' min';
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[5].titre + ' min';
         } else {
           return this.titresEN[5].titre + ' min';
         }
       case 'TEMP_INT_MAX':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[4].titre + ' max';
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[4].titre + ' max';
         } else {
           return this.titresEN[4].titre + ' max';
         }
       case 'TEMP_INT_MIN':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[4].titre + ' min';
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[1].titre + ' min';
         } else {
           return this.titresEN[4].titre + ' min';
         }
       case 'HRIN':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[3].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[3].titre;
         } else {
           return this.titresEN[3].titre;
         }
       case 'BROOD':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[2].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[2].titre;
         } else {
           return this.titresEN[2].titre;
         }
       case 'WEIGHT_MAX':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[9].titre + ' max';
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[9].titre + ' max';
         } else {
           return this.titresEN[9].titre + ' max';
         }
       case 'WEATHER':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[13].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[13].titre;
         } else {
           return this.titresEN[13].titre;
         }
       case 'MOON':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[14].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[14].titre;
         } else {
           return this.titresEN[14].titre;
         }
       case 'RAIN':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[15].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[15].titre;
         } else {
           return this.titresEN[15].titre;
         }
       case 'TEMP_EXT_WEATHER_MAX':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[5].titre + ' max';
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[5].titre + ' max';
         } else {
           return this.titresEN[5].titre + ' max';
         }
       case 'TEMP_EXT_WEATHER_MIN':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[5].titre + ' min';
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[5].titre + ' min';
         } else {
           return this.titresEN[5].titre + ' min';
         }
       case 'WIND':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[16].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[16].titre;
         } else {
           return this.titresEN[16].titre;
         }
       case 'HEXT_WEATHER_MAX':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[7].titre + ' max';
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[7].titre + ' max';
         } else {
           return this.titresEN[7].titre + ' max';
         }
       case 'HEXT_WEATHER_MIN':
           if (this.translateService.currentLang === 'fr') {
             return this.titresFR[7].titre + ' min';
+          } else if (this.translateService.currentLang === 'es') {
+            return this.titresES[7].titre + ' min';
           } else {
             return this.titresEN[7].titre + ' min';
           }
       case 'ALERT':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[10].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[1].titre;
         } else {
           return this.titresEN[10].titre;
         }
+        break;
       default:
         return '';
-        break;
     }
   }
 
@@ -540,22 +610,28 @@ export class GraphGlobal {
    */
   getNameZoneByGraph(typeGraph: string): string {
     if (typeGraph === 'BROOD') {
-      if (this.translateService.currentLang === 'en') {
-        return 'Optimal area of ​​production';
-      } else {
+      if (this.translateService.currentLang === 'fr') {
         return 'Zone optimale de production';
+      } else if (this.translateService.currentLang === 'es') {
+        return 'Zona optima de produccion';
+      } else {
+        return 'Optimal area of ​​production';
       }
     } else if (typeGraph === 'TEMP') {
       if (this.translateService.currentLang === 'fr') {
         return 'Zone optimale du couvain';
+      } else if (this.translateService.currentLang === 'es') {
+        return 'Zona optima de cria';
       } else {
         return 'Brood Zone';
       }
     } else if (typeGraph === 'HUM') {
-      if (this.translateService.currentLang === 'en') {
-        return 'Optimal area of humidity';
-      } else {
+      if (this.translateService.currentLang === 'fr') {
         return 'Zone optimale d\'humidité';
+      } else if (this.translateService.currentLang === 'es') {
+        return 'Zona optima de humedad';
+      }else {
+        return 'Optimal area of humidity';
       }
     }
   }
