@@ -48,6 +48,12 @@
     background: none;
     color: #337ab7;
 }
+.btn_info:hover, .btn_info:focus{
+    background: none !important;
+}
+.btn_info{
+    background: none;
+}
 .btn_delete {
     background: none;
     color: #f0ad4e;
