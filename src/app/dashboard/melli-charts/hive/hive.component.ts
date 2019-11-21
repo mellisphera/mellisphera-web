@@ -43,7 +43,7 @@ export class HiveComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
+    this.setHeightCalendar(() => {});
   }
 
   ngAfterViewInit(): void {
@@ -58,19 +58,16 @@ export class HiveComponent implements OnInit, AfterViewInit {
    * @memberof HiveComponent
    */
   loadDataFromHive(): void {
-    // this.hourlyComponent.cleanSerie();
-    // this.hourlyComponent.cleanSerie();
-    this.dailyComponent.loadDailyDeviceData(false);
-    this.dailyComponent.loadDailyOtherData(false);
-    this.dailyComponent.loadDailyEnvData(false);
+    this.setHeightCalendar(() => {
+      this.dailyComponent.loadDailyDeviceData(false);
+      this.dailyComponent.loadDailyOtherData(false);
+      this.dailyComponent.loadDailyEnvData(false);
+    });
     // this.hourlyComponent.loadHourlyData(true, '', false);
   }
 
 
   setRangeChart() {
-    /*     this.dailyComponent.loadDailyDeviceData(true);
-        this.dailyComponent.loadDailyOtherData(true);
-        this.dailyComponent.loadDailyEnvData(true); */
     this.setHeightCalendar(() => {
       this.dailyComponent.loadDailyDeviceData(true);
       this.dailyComponent.loadDailyOtherData(true);
