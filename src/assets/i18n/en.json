@@ -121,7 +121,10 @@
             "METRIC" : "Metric",
             "IMPERIAL" : "Imperial",
             "SAVE" : "Save"
-        }
+        },
+        "LANG": "Language",
+        "WEATHER_SOURCE":"Weather source"
+
     },
     "HOME" : {
         "BACK" : "Save background?",

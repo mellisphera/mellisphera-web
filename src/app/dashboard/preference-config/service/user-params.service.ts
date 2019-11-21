@@ -74,6 +74,9 @@ export class UserParamsService {
     this.userPref.lang = lang.toLowerCase();
   }
 
+  setWeatherSource(weatherSrc: string): void {
+    this.userPref.weatherSource = weatherSrc;
+  }
   /**
    *
    *

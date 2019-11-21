@@ -121,7 +121,9 @@
             "METRIC" : "Métrique",
             "IMPERIAL" : "Impérial",
             "SAVE" : "Sauvegarder"
-        }
+        },
+        "LANG": "Langage",
+        "WEATHER_SOURCE":"Source météo"
     },
     "HOME" : {
         "BACK" : "Sauvegarder l'image ?",

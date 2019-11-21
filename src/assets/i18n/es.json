@@ -119,7 +119,9 @@
             "METRIC": "Métrico (kg, °C)",
             "IMPERIAL": "Imperial (lb, F)",
             "SAVE": "Guardar"
-        }
+        },
+        "LANG": "Idioma",
+        "WEATHER_SOURCE":"Fuente del clima"
     },
     "HOME": {
         "BACK": "Guardar la imagen?",

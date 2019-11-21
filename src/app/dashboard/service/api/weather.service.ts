@@ -20,13 +20,14 @@ import { CurrentHourlyWeather } from '../../../_model/current-hourly-weather';
 import { map } from 'rxjs-compat/operator/map';
 import { UnitService } from '../unit.service';
 import { WEATHER } from '../../melli-charts/charts/icons/icons_weather';
+import { UserParamsService } from '../../preference-config/service/user-params.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService {
   private unitSystem: string;
-  constructor(private httpClient: HttpClient, private unitService: UnitService) { }
+  constructor(private httpClient: HttpClient, private unitService: UnitService, private userPrefService: UserParamsService) { }
 
 
   /**
@@ -47,7 +48,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<CurrentDailyWeather[]> {
-    return this.httpClient.post<CurrentDailyWeather[]>(CONFIG.URL + 'dailyWeather/apiary/' + apiaryId, range);
+    return this.httpClient.post<CurrentDailyWeather[]>(CONFIG.URL + `dailyWeather/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
   }
 
   /**
@@ -59,7 +60,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getForecastDailyWeather(apiaryId: string, range: Date[]): Observable<ForecastDailyWeather[]> {
-    return this.httpClient.post<ForecastDailyWeather[]>(CONFIG.URL + 'forecastDailyWeather/apiary/' + apiaryId, range);
+    return this.httpClient.post<ForecastDailyWeather[]>(CONFIG.URL + `forecastDailyWeather/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
   }
 
   /**
@@ -71,7 +72,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getTempForecastHourlyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + 'forecastHourlyWeather/temp/apiary/' + apiaryId, range).map(_elt => _elt.map(_value => {
+    return this.httpClient.post<any[]>(CONFIG.URL + `forecastHourlyWeather/temp/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
     }));
   }
@@ -85,7 +86,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getTempCurrentHourlyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + 'hourlyWeather/temp/apiary/' + apiaryId, range).map(_elt => _elt.map(_value => {
+    return this.httpClient.post<any[]>(CONFIG.URL + `hourlyWeather/temp/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
     }));
   }
@@ -100,7 +101,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getRainCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + 'dailyWeather/rain/apiary/' + apiaryId, range);
+    return this.httpClient.post<any[]>(CONFIG.URL + `dailyWeather/rain/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
   }
 
 
@@ -113,7 +114,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getRainForecastDailyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + 'forecastDailyWeather/rain/apiary/' + apiaryId, range);/* .map(_elt => _elt.map(_value => {
+    return this.httpClient.post<any[]>(CONFIG.URL + `forecastDailyWeather/rain/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);/* .map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertMilimetreToPouce(_value.value.rainDay, this.unitSystem), sensorRef: _value.sensorRef };
     })); */
   }
@@ -128,7 +129,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getTempExtForecastDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + 'forecastDailyWeather/tExt/apiary/' + apiaryId, range);
+    return this.httpClient.post<any>(CONFIG.URL + `forecastDailyWeather/tExt/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
   }
 
 
@@ -157,7 +158,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getWindCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/wind/apiary/' + apiaryId, range);
+    return this.httpClient.post<any>(CONFIG.URL + `dailyWeather/wind/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
   }
 
 
@@ -170,7 +171,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getWindForecastDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + 'forecastDailyWeather/wind/apiary/' + apiaryId, range);
+    return this.httpClient.post<any>(CONFIG.URL + `forecastDailyWeather/wind/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`,range);
   }
 
 
@@ -183,7 +184,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getTempExtCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + 'dailyWeather/tExt/apiary/' + apiaryId, range);
+    return this.httpClient.post<any>(CONFIG.URL + `dailyWeather/tExt/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
   }
 
 

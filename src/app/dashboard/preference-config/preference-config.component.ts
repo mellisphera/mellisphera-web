@@ -32,6 +32,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   public unitSys: string;
   public suscribPref: Subscription;
   private notifyService: NotifierService;
+  public weatherSrc: string;
   private userPref: UserPref;
   public passwordForm: FormGroup;
   constructor(public userConfig: UserParamsService, private authService: AuthService,
@@ -48,6 +49,8 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
         this.userPref = data;
         this.formatDt = this.userConfig.dtFormat.indexOf(this.userPref.timeFormat);
         this.unitSys = this.userPref.unitSystem;
+        this.weatherSrc = this.userPref.weatherSource;
+        console.log(this.userPref);
       }
     );
     this.passwordForm = this.formBuilder.group({
@@ -57,11 +60,15 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   }
 
   changeLangToggle(lang: string) {
-    if (lang === 'fr') {
-      this.translateService.use('fr');
-      this.userService.setCountry('fr');
-      this.userPref.lang = 'FR-fr';
-      this.userConfig.setLang('fr');
+    this.translateService.use(lang);
+    this.userService.setCountry(lang);
+    this.userPref.lang = lang;
+    this.userConfig.setLang(lang);
+/*     if (lang === 'fr') {
+      this.translateService.use(lang);
+      this.userService.setCountry(lang);
+      this.userPref.lang = lang;
+      this.userConfig.setLang(lang);
     } else if (lang === 'es') {
       this.translateService.use('es');
       this.userService.setCountry('es');
@@ -72,7 +79,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
       this.userService.setCountry('en');
       this.userPref.lang = 'EN-en';
       this.userConfig.setLang('en');
-    }
+    } */
     this.saveUserPref();
 
     this.userConfig.emitPrefSubject();
@@ -105,6 +112,12 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
 
   checkPassword(): string {
     return this.passwordForm.get('confirmPassword').value === this.passwordForm.get('password').value ? 'checkOk' : 'checkError';
+  }
+
+  onChangeWeatherSrc() {
+    this.userPref.weatherSource = this.weatherSrc;
+    this.userConfig.setWeatherSource(this.weatherSrc);
+    this.saveUserPref();
   }
 
   setNewPassword() {

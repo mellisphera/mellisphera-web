@@ -64,11 +64,11 @@ limitations under the License. -->
                     <div id="unité">
                         <div class="form-group">
                             <input [(ngModel)]="unitSys" (ngModelChange)="onChangeUnit()" value="METRIC" name="unit"
-                                type="radio" /><label>  {{ 'PREFERENCE_CONFIG.FORM_UNIT.METRIC' | translate}} (°C, kg, m)</label>
+                                type="radio" /><label>  {{ 'PREFERENCE_CONFIG.FORM_UNIT.METRIC' | translate}}</label>
                         </div>
                         <div class="form-group">
                             <input [(ngModel)]="unitSys" (ngModelChange)="onChangeUnit()" value="IMPERIAL" name="unit"
-                                type="radio" /><label>  {{ 'PREFERENCE_CONFIG.FORM_UNIT.IMPERIAL' | translate}} (F, lb, f)</label>
+                                type="radio" /><label>  {{ 'PREFERENCE_CONFIG.FORM_UNIT.IMPERIAL' | translate}}</label>
                         </div>
 
 <!--                         <button type="button" (click)="saveUnit()"
@@ -78,7 +78,7 @@ limitations under the License. -->
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">Langue</div>
+            <div class="panel-heading">{{ 'PREFERENCE_CONFIG.LANG' | translate }}</div>
             <div class="panel-body">
                 <div id="lang-group">
                     <div>
@@ -92,6 +92,16 @@ limitations under the License. -->
                     </div>
                 </div>
 
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ 'PREFERENCE_CONFIG.WEATHER_SOURCE' | translate }}</div>
+            <div class="panel-body">
+                <!--userPref.availableSource-->
+                <div *ngFor="let source of userPref.availableSource" class="form-group">
+                    <input [(ngModel)]="weatherSrc" (ngModelChange)="onChangeWeatherSrc()" [value]="source" name="weatherSource"
+                        type="radio" /><label>{{ source }}</label>
+                </div>
             </div>
         </div>
     </div>

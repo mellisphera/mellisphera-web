@@ -133,7 +133,7 @@ export class DailyManagerService {
   getLastDayForMeanValue(observable: Observable<any>, mean: boolean, type: Tools): void {
     observable.map(_serie => {
       if (type.name === 'RAIN') {
-        return _serie.flat().filter(_data => _data.sensorRef === 'OpenWeatherMap').map(_elt => {
+        return _serie.flat().map(_elt => {
           let value = _elt.value.map(_elt => _elt.rainDay).filter(_elt => _elt !== undefined);
           return this.unitService.convertMilimetreToPouce(value, this.unitService.getUserPref().unitSystem, false);
         });
@@ -142,29 +142,29 @@ export class DailyManagerService {
           return this.unitService.convertWeightFromuserPref(_elt.value, this.unitService.getUserPref().unitSystem, false);
         }));
       } else if (type.name === 'TEMP_EXT_WEATHER_MAX') {
-        return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+        return _serie.flat().map(_elt => {
           _elt.value = parseInt(_elt.value.maxTempDay, 10);
           _elt.value = this.unitService.convertTempFromUsePref(_elt.value, this.unitService.getUserPref().unitSystem, false);
           return _elt;
         });
       } else if (type.name === 'TEMP_EXT_WEATHER_MIN') {
-        return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+        return _serie.flat().map(_elt => {
           _elt.value = parseInt(_elt.value.minTempDay, 10);
           _elt.value = this.unitService.convertTempFromUsePref(_elt.value, this.unitService.getUserPref().unitSystem, false);
           return _elt;
         });
       } else if (type.name === 'HEXT_WEATHER_MAX') {
-        return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+        return _serie.flat().map(_elt => {
           _elt.value = parseInt(_elt.value.maxHumidityDay, 10);
           return _elt;
         });
       } else if (type.name === 'HEXT_WEATHER_MIN') {
-        return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+        return _serie.flat().map(_elt => {
           _elt.value = parseInt(_elt.value.minHumidityDay, 10);
           return _elt;
         });
       } else if (type.name === 'WIND') {
-        return _serie.flat().filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+        return _serie.flat().map(_elt => {
           _elt.value = parseInt(_elt.value.maxSpeed, 10);
           _elt.value = this.unitService.convertWindFromUserPref(_elt.value, this.unitService.getUserPref().unitSystem, false);
 
@@ -476,7 +476,7 @@ export class DailyManagerService {
   getChartTempMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
-        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+        _temp = _temp.map(_elt => {
           _elt.value.maxTempDay = this.unitService.convertTempFromUsePref(_elt.value.maxTempDay, this.unitService.getUserPref().unitSystem);
           return _elt;
         });
@@ -511,7 +511,7 @@ export class DailyManagerService {
   getHextMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
-        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+        _temp = _temp.map(_elt => {
           _elt.value.maxTempDay = this.unitService.convertTempFromUsePref(_elt.value.maxHumidityDay, this.unitService.getUserPref().unitSystem);
           return _elt;
         });
@@ -546,7 +546,7 @@ export class DailyManagerService {
   getHextMinWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
-        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+        _temp = _temp.map(_elt => {
           _elt.value.maxTempDay = this.unitService.convertTempFromUsePref(_elt.value.minHumidityDay, this.unitService.getUserPref().unitSystem);
           return _elt;
         });
@@ -581,7 +581,6 @@ export class DailyManagerService {
   getChartWindMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getWindAllWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
-        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap');
         // this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         this.getLastDayForMeanValue(this.weatherService.getWindAllWeather(apiaryId, this.rangeSevenDay), true, type);
@@ -615,7 +614,7 @@ export class DailyManagerService {
   getChartTempMinWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
-        _temp = _temp.filter(_t => _t.sensorRef === 'OpenWeatherMap').map(_elt => {
+        _temp = _temp.map(_elt => {
           _elt.value.minTempDay = this.unitService.convertTempFromUsePref(_elt.value.minTempDay, this.unitService.getUserPref().unitSystem);
           return _elt;
         });
