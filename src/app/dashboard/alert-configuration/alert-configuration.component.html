@@ -48,7 +48,7 @@ limitations under the License. -->
               <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range"
                 [min]="getRangeValue(alert._id)[0]" [max]="getRangeValue(alert._id)[1]" [step]="getStep(alert._id)"
                 [value]="getUserValue(alert._id)" />
-              <p>{{ getUserValue(alert._id) }}</p>
+              <p>{{ getUserValue(alert._id) }} {{ getPeriod(alert._id) }}</p>
             </div>
           </td>
           <td class="text-center">

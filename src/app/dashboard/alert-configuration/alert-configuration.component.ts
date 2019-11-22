@@ -20,6 +20,7 @@
   import { MyNotifierService } from '../service/my-notifier.service';
   import { NotifList } from '../../../constants/notify';
   import { NOTIF_DESCRIPTION5 } from '../../../constants/notif_description';
+import { TranslateService } from '@ngx-translate/core';
 
   @Component({
     selector: 'app-alert-configuration',
@@ -31,6 +32,7 @@
     constructor(
       public alertService: AlertsService,
       private userServuce: UserloggedService,
+      private translateService: TranslateService,
       private notifService: MyNotifierService,
       private userPrefService: UserParamsService) { }
 
@@ -96,21 +98,34 @@
       let currentAlaert = this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0];
       try {
         if (this.isMetric()) {
-          return this.alertService.alertUser.alertConf[alertId].valueMet + ' ' +
-            (currentAlaert.unitMet === 'day' ? this.getLabelDay() : currentAlaert.unitMet);
+          return this.alertService.alertUser.alertConf[alertId].valueMet + ' ' + currentAlaert.unitMet;
         } else {
-          return this.alertService.alertUser.alertConf[alertId].valueImp + ' ' +
-            (currentAlaert.unitImp === 'day' ? this.getLabelDay() : currentAlaert.unitImp);
+          return this.alertService.alertUser.alertConf[alertId].valueImp + ' ' + currentAlaert.unitImp;
         }
       } catch { }
     }
 
-    /*   sorByStatus(status: boolean) {
-        this.alertType.sort((a, b) => {
-    
-        })
-      } */
+      getPeriod(alertId: string) {
+        const alert = this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0];
+        if (alert.period !== '') {
+          return ' / ' + this.getPeriodByLang(alert.period, this.translateService.currentLang);
+        } else {
+          return '';
+        }
+      }
 
+
+      getPeriodByLang(period: string, lang: string) {
+        if (lang === 'fr') {
+          if (period === 'week') {
+            return 'Mois;'
+          } else if (period === 'day') {
+            return 'Jour(s)'
+          }
+        } else {
+          return period;
+        }
+      }
     /**
      *
      *
@@ -119,7 +134,7 @@
      * @memberof AlertConfigurationComponent
      */
     getNotifDescriptionFromLangage(_alertName: string): string {
-      if (this.userPrefService.getUserPref().lang.toUpperCase().indexOf('FR') !== -1) {
+      if (this.translateService.currentLang === 'fr') {
         return NOTIF_DESCRIPTION5.FR[_alertName];
       } else {
         return NOTIF_DESCRIPTION5.EN[_alertName];
@@ -133,7 +148,7 @@
     }
 
     getLabelDay(): string {
-      if (this.userPrefService.getUserPref().lang.toUpperCase().indexOf('FR') !== -1) {
+      if (this.translateService.currentLang === 'fr') {
         return 'jours';
       } else {
         return 'days';

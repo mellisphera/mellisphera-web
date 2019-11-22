@@ -14,4 +14,5 @@ export interface AlertCat {
     stepImp: number;
     unitMet: string;
     unitImp: string;
+    period: string;
 }
