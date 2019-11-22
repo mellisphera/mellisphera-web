@@ -90,7 +90,7 @@ limitations under the License. -->
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" [disabled]="!observationForm.valid">
               {{ 'APIARY_NOTES.FORM.CREATE' | translate}}</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+            <button type="button" class="btn btn-secondary btn_close" data-dismiss="modal"
               (click)="initForm()">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
           </div>
         </form>
@@ -133,7 +133,7 @@ limitations under the License. -->
             <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-warning delete" mwlConfirmationPopover
+            <button type="submit" class="btn delete btn_delete_modal" mwlConfirmationPopover
               popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top"
               confirmText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}"
               cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObs()">
@@ -141,7 +141,7 @@ limitations under the License. -->
             </button>
             <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditObservation()"
               [disabled]="!observationForm.valid">{{ 'APIARY_NOTES.FORM.SAVE' | translate}}</button>
-            <button type="button" class="btn btn-secondary"
+            <button type="button" class="btn btn-secondary btn_close"
               data-dismiss="modal">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
           </div>
         </form>

@@ -101,7 +101,7 @@
         "FLOWER" : "Flower",
         "SENSORS" : "Sensors",
         "DATA" : "Expert",
-        "ALERT_CONF": "Notifs Settings"
+        "ALERT_CONF": "Alarm Settings"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Change Password",

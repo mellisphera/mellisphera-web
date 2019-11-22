@@ -111,7 +111,7 @@ limitations under the License. -->
           [disabled]="!ObservationForm.valid"> {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_OBS' | translate}}</button>
 <!--         <button type="submit" class="btn btn-primary" (click)="createAction()" data-dismiss="modal"
           [disabled]="!ObservationForm.valid"> {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_ACT' | translate}}</button> -->
-        <button type="button" class="btn btn-secondary" (click)="resetObservationForm()"
+        <button type="button" class="btn btn-secondary btn_close" (click)="resetObservationForm()"
           data-dismiss="modal">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
 
       </div>
@@ -169,7 +169,7 @@ limitations under the License. -->
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-warning delete" mwlConfirmationPopover
+        <button type="submit" class="btn btn_delete_modal delete" mwlConfirmationPopover
           popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top"
           confirmText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}"
           cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObsR()">
@@ -177,7 +177,7 @@ limitations under the License. -->
         </button>
         <button type="submit" class="btn btn-primary" (click)="onEditObservation()" [disabled]="!ObservationForm.valid">
           {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+        <button type="button" class="btn btn-secondary btn_close" data-dismiss="modal"
           (click)="resetObservationForm()">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
       </div>
     </div>
