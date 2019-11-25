@@ -136,7 +136,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     this.userConfig.setUserPref().subscribe(
       () => { }, () => { }, () => {
         if (this.authService.jwtReponse === undefined) {
-          this.authService.jwtReponse = JSON.parse(window.sessionStorage.getItem('jwtReponse'));
+          this.authService.jwtReponse = JSON.parse(window.localStorage.getItem('jwtReponse'));
         }
         this.authService.jwtReponse.lang = this.userPref.lang;
         this.authService.jwtReponse.userPref = this.userPref;
@@ -146,8 +146,8 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
         } else {
           this.notifier.notify('success', 'Settings saved');
         }
-        window.sessionStorage.removeItem('jwtReponse');
-        window.sessionStorage.setItem('jwtReponse', JSON.stringify(this.authService.jwtReponse));
+        window.localStorage.removeItem('jwtReponse');
+        window.localStorage.setItem('jwtReponse', JSON.stringify(this.authService.jwtReponse));
       }
     );
   }

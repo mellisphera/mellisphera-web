@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
     this.resetPassword = !this.resetPassword
   }
   currentUser() {
-    return JSON.parse(sessionStorage.getItem('currentUser'));
+    return JSON.parse(window.localStorage.getItem('currentUser'));
   }
 
   ngOnDestroy(): void {

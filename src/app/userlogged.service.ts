@@ -33,7 +33,7 @@ export class UserloggedService {
     this.messageSource.next(message);
   }
   currentUser(): JwtResponse {
-    return JSON.parse(localStorage.getItem('currentUser'));
+    return JSON.parse(window.localStorage.getItem('currentUser'));
   }
 
   /**
