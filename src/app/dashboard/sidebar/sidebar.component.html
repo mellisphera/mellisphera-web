@@ -29,8 +29,9 @@ limitations under the License. -->
             <li (click)="focus('home')">
                 <a routerLink="./home/info-apiary" data-toggle="tooltip" id="home" data-placement="top" title="{{ 'SIDEBAR.APIARY' | translate }}">
                     <img src="./assets/icons/ui/melliUx.svg" style="width:50px;margin-left:-5px;"/>
+                    <p>{{ 'SIDEBAR.APIARY' | translate }}</p>
+
                 </a>
-                <p>{{ 'SIDEBAR.APIARY' | translate }}</p>
             </li>
 <!--             <li *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('flower')">
                 <a routerLink="./fleurs-floraison" id="flower" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.FLOWER' | translate }}">
@@ -50,20 +51,20 @@ limitations under the License. -->
             <li (click)="focus('melli-charts')">
                 <a id="melli-charts" routerLink="./melli-charts" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.DATA' | translate }}">
                     <img src="./assets/icons/ui/melliCharts.svg" style="width:50px;margin-left:-5px;" />
+                    <p>{{ 'SIDEBAR.DATA' | translate }}</p>
                 </a>
-                <p>{{ 'SIDEBAR.DATA' | translate }}</p>
             </li>
             <li (click)="focus('alertConf')">
                 <a id="alertConf" routerLink="./alert-configuration" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.ALERT_CONF' | translate }}">
                     <img src="./assets/icons/ui/settings.svg" style="width:50px;margin-left:-5px;" />
+                    <p>{{ 'SIDEBAR.ALERT_CONF' | translate }}</p>
                 </a>
-                <p>{{ 'SIDEBAR.ALERT_CONF' | translate }}</p>
             </li>
             <li (click)="focus('bm')">
                 <a id="bm" href="https://mybroodminder.com/login" target="blank" data-toggle="tooltip" data-placement="top" title="mybroodminder">
-                    <img src="./assets/icons/ui/bm.png" style="width:50px;margin-left:-5px;" />
+                    <img src="./assets/icons/ui/BroodMinder.svg" style="width:50px;margin-left:-5px;" />
+                    <p>Mybroodminder</p>
                 </a>
-                <p>Mybroodminder</p>
             </li>
         </ul>
     
