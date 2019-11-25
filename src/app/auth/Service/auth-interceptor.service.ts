@@ -16,6 +16,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AtokenStorageService } from './atoken-storage.service';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { LoadingService } from '../../dashboard/service/loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,19 +25,28 @@ import { map, catchError } from 'rxjs/operators';
 export class AuthInterceptorService implements HttpInterceptor {
 
   TOKEN_HEADER_KEY = 'Authorization';
-  constructor(private tokenService : AtokenStorageService,private userService : UserloggedService) { }
+  constructor(private tokenService: AtokenStorageService, 
+    private router: Router,
+    private loadingService: LoadingService) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authReq = req.clone({
-      setHeaders : {
-        Authorization : `Bearer ${this.tokenService.getToken()}`
+      setHeaders: {
+        Authorization: `Bearer ${this.tokenService.getToken()}`
       }
     });
-    if (req.url.indexOf('openweathermap') !== -1) {
+
+    if (req.url.indexOf('slack') !== -1) {
       return next.handle(req);
-    } else if(req.url.indexOf('slack') !== -1) {
-      return next.handle(req);
-    } else{
+    } else {
+      next.handle(authReq).toPromise().catch(
+        _err => {
+          if (_err.status === 401) {
+            this.loadingService.loading = false;
+            this.router.navigateByUrl('login');
+          }
+        }
+      );
       return next.handle(authReq);
     }
   }

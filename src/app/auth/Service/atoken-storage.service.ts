@@ -31,7 +31,7 @@ export class AtokenStorageService {
    * @memberof AtokenStorageService
    */
   getToken(): string {
-    return window.sessionStorage.getItem('TOKEN_KEY');
+    return window.localStorage.getItem('TOKEN_KEY');
   }
 
   /**
@@ -41,8 +41,8 @@ export class AtokenStorageService {
    * @memberof AtokenStorageService
    */
   saveToken(token: string): void {
-    window.sessionStorage.removeItem('TOKEN_KEY');
-    window.sessionStorage.setItem('TOKEN_KEY', token);
+    window.localStorage.removeItem('TOKEN_KEY');
+    window.localStorage.setItem('TOKEN_KEY', token);
   }
 
   /**
@@ -52,8 +52,8 @@ export class AtokenStorageService {
    * @memberof AtokenStorageService
    */
   public saveAuthorities(authorities: string[]) {
-    window.sessionStorage.removeItem('AUTHORITIES_KEY');
-    window.sessionStorage.setItem('AUTHORITIES_KEY', JSON.stringify(authorities));
+    window.localStorage.removeItem('AUTHORITIES_KEY');
+    window.localStorage.setItem('AUTHORITIES_KEY', JSON.stringify(authorities));
     this.getAuthorities();
   }
 
@@ -65,8 +65,8 @@ export class AtokenStorageService {
    */
   public getAuthorities(): string[] {
     this.roles = [];
-    if (sessionStorage.getItem('TOKEN_KEY')) {
-      JSON.parse(sessionStorage.getItem('AUTHORITIES_KEY')).forEach(auth => {
+    if (localStorage.getItem('TOKEN_KEY')) {
+      JSON.parse(localStorage.getItem('AUTHORITIES_KEY')).forEach(auth => {
         this.roles.push(auth.authority);
       });
     }
@@ -80,7 +80,7 @@ export class AtokenStorageService {
    * @memberof AtokenStorageService
    */
   signOut(): void {
-    window.sessionStorage.clear();
+    window.localStorage.clear();
   }
 
   /**

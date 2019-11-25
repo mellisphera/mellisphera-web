@@ -118,7 +118,7 @@ import { TranslateService } from '@ngx-translate/core';
       getPeriodByLang(period: string, lang: string) {
         if (lang === 'fr') {
           if (period === 'week') {
-            return 'Mois;'
+            return 'Semaine;'
           } else if (period === 'day') {
             return 'Jour(s)'
           }

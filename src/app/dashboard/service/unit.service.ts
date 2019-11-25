@@ -82,7 +82,7 @@ convertWindFromUserPref(wind: number, unit: string, round?: boolean): number {
    * @memberof UnitService
    */
   getUserPref(): UserPref {
-    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).userPref;
+    return JSON.parse(window.localStorage.getItem('jwtReponse')).userPref;
   }
 
   /**

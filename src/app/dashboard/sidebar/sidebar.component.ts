@@ -110,8 +110,8 @@ export class SidebarComponent implements OnInit {
   logout() {
     this.tokenService.signOut();
     this.authService.isAuthenticated = false;
-    this.authService.connexionStatus.next(false);
-    this.router.navigate(["/login"]);
+    this.authService.authState.next(false);
+    //this.router.navigate(["/login"]);
   }
 
 

@@ -53,6 +53,9 @@ import { ManageNotesComponent } from './manage/manage-notes/manage-notes.compone
 import { SocketService } from './service/socket.service';
 import { AlertConfigurationComponent } from './alert-configuration/alert-configuration.component';
 import { AlertsService } from './service/api/alerts.service';
+import { AuthGuardService } from '../auth/auth-guard.service';
+import { AuthInterceptorService } from '../auth/Service/auth-interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 
@@ -93,8 +96,11 @@ import { AlertsService } from './service/api/alerts.service';
     SidebarService,
     ObservationService,
     MyNotifierService,
+    AuthGuardService,
     MessagesService,
-    UserParamsService
+    UserParamsService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+
   ],
   declarations: [
     DashboardComponent,

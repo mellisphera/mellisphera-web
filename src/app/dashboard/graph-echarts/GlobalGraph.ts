@@ -179,7 +179,7 @@ export class GraphGlobal {
       { 'graph': 'AlertsHive', 'titre': 'Evénements' },
       { 'graph': 'AlertsApiary', 'titre': 'Evénements du rucher' },
       { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' },
-      { graph: 'Weather', titre: 'Méteo' },
+      { graph: 'Weather', titre: 'Météo' },
       { graph: 'Moon', titre: 'Calendrier lunaire' },
       { graph: 'Rain', titre: 'Précipitations' },
       { graph: 'Wind', titre: 'Vent' },

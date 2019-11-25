@@ -33,7 +33,7 @@ export class UserloggedService {
     this.messageSource.next(message);
   }
   currentUser(): JwtResponse {
-    return JSON.parse(sessionStorage.getItem('currentUser'));
+    return JSON.parse(localStorage.getItem('currentUser'));
   }
 
   /**
@@ -46,12 +46,12 @@ export class UserloggedService {
     return userId === this.getIdUserLoged() || this.tokenService.checkAuthorities('ROLE_ADMIN');
   }
   setJwtReponse(auth: JwtResponse) {
-    window.sessionStorage.removeItem('jwtReponse');
-    window.sessionStorage.setItem('jwtReponse', JSON.stringify(auth));
+    window.localStorage.removeItem('jwtReponse');
+    window.localStorage.setItem('jwtReponse', JSON.stringify(auth));
   }
 
   getJwtReponse(): JwtResponse {
-    return JSON.parse(window.sessionStorage.getItem('jwtReponse'));
+    return JSON.parse(window.localStorage.getItem('jwtReponse'));
   }
 
   /**
@@ -73,7 +73,7 @@ export class UserloggedService {
    * @memberof UserloggedService
    */
   getSharingApiaryId(): Array<string> {
-    return JSON.parse(window.sessionStorage.getItem('sharingApiary')) || [];
+    return JSON.parse(window.localStorage.getItem('sharingApiary')) || [];
   }
 
   
@@ -98,7 +98,7 @@ export class UserloggedService {
    */
   getUser(): string {
     try {
-      return JSON.parse(window.sessionStorage.getItem('jwtReponse')).username.toLowerCase();
+      return JSON.parse(window.localStorage.getItem('jwtReponse')).username.toLowerCase();
     } catch (e) {
       return '';
     }
@@ -111,7 +111,7 @@ export class UserloggedService {
    */
   getCountry(): string {
     try {
-      return JSON.parse(window.sessionStorage.getItem('jwtReponse')).country;
+      return JSON.parse(window.localStorage.getItem('jwtReponse')).country;
     } catch (e) {
       return '';
     }
@@ -124,7 +124,7 @@ export class UserloggedService {
    * @memberof UserloggedService
    */
   getIdUserLoged(): string {
-    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).idUser;
+    return JSON.parse(window.localStorage.getItem('jwtReponse')).idUser;
   }
   /**
    *
@@ -134,13 +134,13 @@ export class UserloggedService {
    */
   getConnexion(): number {
     try {
-      return JSON.parse(window.sessionStorage.getItem('jwtReponse')).connexions;
+      return JSON.parse(window.localStorage.getItem('jwtReponse')).connexions;
     } catch (e) {
       return NaN;
     }
   }
 
   signOut(): void {
-    window.sessionStorage.clear();
+    window.localStorage.clear();
   }
 }

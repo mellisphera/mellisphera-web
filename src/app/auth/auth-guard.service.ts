@@ -20,28 +20,15 @@ import { AuthService } from './Service/auth.service';
 export class AuthGuardService implements CanActivate, CanLoad {
 
   constructor(
-    private router: Router,
     private authService: AuthService,
     public tokenService: AtokenStorageService) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,): Observable<boolean> | boolean {
-
-    if(this.tokenService.getToken()) {
-      return true;
-    } else {
-      this.router.navigate(['/login']);
-      return false;
-
-    }
+      return this.authService.isAuth();
   }
   canLoad(route: Route): boolean {
-    if (this.tokenService.getToken()) {
-      return true;
-    }else {
-      this.router.navigate(['/login']);
-      return false;
-    }
+    return this.authService.isAuth();
   }
 }

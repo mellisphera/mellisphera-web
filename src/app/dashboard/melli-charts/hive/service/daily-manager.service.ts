@@ -646,7 +646,7 @@ export class DailyManagerService {
     );
   }
 
-  getRainByApiary(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+  gatPrecipitationByApiary(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.weatherService.getRainAllWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _rain => {
         this.getLastDayForMeanValue(this.weatherService.getRainAllWeather(apiaryId, this.rangeSevenDay), false, type);

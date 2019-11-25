@@ -302,7 +302,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
         this.cleanMeanAnnotation();
         break;
       case 'RAIN':
-        this.dailyManager.getRainByApiary(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
+        this.dailyManager.gatPrecipitationByApiary(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'TEMP_EXT_WEATHER_MAX':

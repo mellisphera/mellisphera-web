@@ -16,6 +16,7 @@ import { AtokenStorageService } from './auth/Service/atoken-storage.service';
 import { TranslateService } from '@ngx-translate/core'; 
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { LoadingService } from './dashboard/service/loading.service';
+import { AuthService } from './auth/Service/auth.service';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -29,7 +30,6 @@ const SecondaryBlue = '#006ddd';
 })
 export class AppComponent implements OnInit {
 
-  showLogin: boolean;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = PrimaryWhite;
   public secondaryColour = SecondaryGrey;
@@ -40,16 +40,29 @@ export class AppComponent implements OnInit {
      constructor(public location: Location,
       public router: Router,
       public tokenService: AtokenStorageService,
+      private authService: AuthService,
       private translateService: TranslateService,
       public loadingService: LoadingService) {
-       this.showLogin = true;
        translateService.addLangs(['en', 'fr']);
        translateService.setDefaultLang('en');
        this.primaryColour = PrimaryRed;
        this.secondaryColour = SecondaryBlue;
+       this.checkLogin();
      }
 
     ngOnInit(){
+    }
+
+    checkLogin() {
+      this.authService.authState.subscribe(
+        (_status: boolean) => {
+          if (_status) {
+            this.router.navigateByUrl('dashboard/home/info-apiary');
+          } else {
+            this.router.navigateByUrl('login');
+          }
+        }
+      )
     }
 
     isMap(path){

@@ -32,6 +32,7 @@ export class AuthService {
 
   login: Login;
   user: User;
+  public authState: BehaviorSubject<boolean>;
   public jwtReponse: JwtResponse;
   loginObs: Observable<any>;
   lastConnection: Date;
@@ -47,6 +48,7 @@ export class AuthService {
               private socketService: SocketService,
               private userService: UserloggedService,
               private translateService: TranslateService) {
+                this.authState = new BehaviorSubject(this.tokenService.getToken() !== null);
                 this.login = { email : '', password : ''};
                 this.errLogin = false;
                 this.isAuthenticated = false;
@@ -65,6 +67,7 @@ export class AuthService {
         this.tokenService.saveToken(this.jwtReponse.accessToken);
         this.tokenService.saveAuthorities(this.jwtReponse.authorities);
         this.userService.setJwtReponse(this.jwtReponse);
+        this.ifLoggedIn();
         this.login.email = this.jwtReponse.email;
         this.connexionStatus.next(data);
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
@@ -98,6 +101,17 @@ export class AuthService {
       }
     );
   }
+
+  ifLoggedIn(): void {
+    if (this.tokenService.getToken() !== null) {
+      this.authState.next(true);
+    }
+  }
+
+  isAuth(): boolean {
+    return this.authState.value;
+  }
+
 
 /*   resetPassword(email: string): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'api/auth/reset', email, httpOptions);
