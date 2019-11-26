@@ -113,7 +113,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     );
     let hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive._id === this.rucheService.getCurrentHive()._id)[0];
     if (hiveSelect === undefined) {
-      hiveSelect = this.rucheService.ruchesAllApiary[0];
+      hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive.apiaryId === this.rucherService.getCurrentApiary())[0];
     }
     console.log(hiveSelect);
     this.melliChartHive.setHiveSelect(hiveSelect);
