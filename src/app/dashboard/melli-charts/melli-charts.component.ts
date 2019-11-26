@@ -66,10 +66,10 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private stackService: StackMelliChartsService,
     public melliChartHive: MelliChartsHiveService,
     public recordService: RecordService,
-    private adminService: AdminService,
+    public adminService: AdminService,
     private translateService: TranslateService,
     private weatherService: WeatherService,
-    private tokenService: AtokenStorageService,
+    public tokenService: AtokenStorageService,
     private userConfig: UserParamsService) {
       if (this.translateService.currentLang === 'fr') {
         this.btnNav = [
@@ -111,56 +111,19 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.weatherService.setUnitSystem(data.unitSystem);
       }
     );
-    if (!this.rucherService.rucherSubject.closed) {
-      if (!this.tokenService.checkAuthorities('ROLE_ADMIN')) {
-        this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-          this.rucherService.rucheService.getAllHiveByAccount(this.userService.getUser()).map((hives: RucheInterface[][]) => {
-            let allHives = hives.flat();
-            this.melliChartHive.setHiveSelect(allHives[0]);
-            allHives.forEach((elt: RucheInterface) => {
-              try {
-                this.rucherService.findRucherById(elt.apiaryId, (apiary: RucherModel[]) => {
-                  elt.apiaryName = apiary[0].name;
-                });
-              } catch{}
-            });
-            return allHives;
-          }).subscribe(
-            hives => {
-              this.rucherService.rucheService.ruchesAllApiary = hives;
-            },
-            err => {
-              console.log(err);
-            },
-            () => {
-              if (this.router.url === PREFIX_PATH + 'hive') {
-                this.hiveComponent.loadDataFromHive();
-              }
-            }
-          )
-        });
-      } else {
-        this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-          this.adminService.getAllHive().map((hives) => {
-            hives.forEach(elt => {
-              this.rucherService.findRucherById(elt.apiaryId, (apiary: RucherModel[]) => {
-                try {
-                  elt.apiaryName = apiary[0].name;
-                } catch (e) { }
-              });
-            });
-            return hives;
-          }).subscribe((hives) => {
-            this.rucherService.rucheService.ruchesAllApiary = hives;
-
-          });
-        });
-      }
+    let hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive._id === this.rucheService.getCurrentHive()._id)[0];
+    if (hiveSelect === undefined) {
+      hiveSelect = this.rucheService.ruchesAllApiary[0];
     }
+    console.log(hiveSelect);
+    this.melliChartHive.setHiveSelect(hiveSelect);
+
 
   }
 
   ngAfterViewInit(): void {
+    this.hiveComponent.loadDataFromHive();
+
     this.eltOnClick = document.getElementById('hive');
     this.dateDropdown = document.getElementById('date-dropdown');
     this.renderer.addClass(this.eltOnClick, 'nav-active');

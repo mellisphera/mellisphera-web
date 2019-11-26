@@ -58,7 +58,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
   private currentEltTypeDaily: HTMLElement;
   public currentTypeDailyDevice: Tools;
   public currentTypeDailyEnv: Tools;
-  public calendarElements: HTMLCollection;
+  public calendarElements: HTMLCollection = null;
   public currentTypeDailyOther: Tools;
   public currentDeviceTextPeriodCalendar: string;
   public currentOtherTextPeriodCalendar: string;
@@ -156,6 +156,16 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.melliHive.getDailyOtherChartInstance().setOption(this.dailyManager.baseOptionExt);
     this.melliHive.setDailyEnvChartInstance(echarts.init(<HTMLDivElement>document.getElementById('calendar-env')));
     this.melliHive.getDailyEnvChartInstance().setOption(this.dailyManager.baseOptionEnv);
+  }
+
+  checkIfCalendarLoad(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      if (this.calendarElements !== null) {
+        resolve(true);
+      } else {
+        reject(false)
+      }
+    });
   }
 
   /**

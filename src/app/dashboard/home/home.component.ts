@@ -359,10 +359,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.dailyRecTh.getByhiveId(ruche._id);
 
     //For hive sensors
-    this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
+/*     this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
       this.rucherService.rucheService.ruchesAllApiary = ruches;
-      // this.hiveSensorSelect = ruches[0];
-    })
+    }); */
     this.capteurService.getUserCapteurs();
 
     // Call info-hives app
@@ -433,9 +432,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
   ngOnDestroy(): void {
         this.hiveUpdateForDestroyPage.forEach((hiveUpdate: RucheInterface) => {
-          const hiveUpdateIndex = this.rucheService.ruches.map(hive => hive._id).indexOf(hiveUpdate._id);
-          this.rucheService.ruches[hiveUpdateIndex].hivePosX = hiveUpdate.hivePosX;
-          this.rucheService.ruches[hiveUpdateIndex].hivePosY = hiveUpdate.hivePosY;
+          const hiveUpdateIndex = this.rucheService.ruchesAllApiary.map(hive => hive._id).indexOf(hiveUpdate._id);
+          this.rucheService.ruchesAllApiary[hiveUpdateIndex].hivePosX = hiveUpdate.hivePosX;
+          this.rucheService.ruchesAllApiary[hiveUpdateIndex].hivePosY = hiveUpdate.hivePosY;
         });
   }
 

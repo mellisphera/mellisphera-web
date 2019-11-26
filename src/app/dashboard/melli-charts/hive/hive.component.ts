@@ -84,16 +84,19 @@ export class HiveComponent implements OnInit, AfterViewInit {
   }
 
   setHeightCalendar(loadCalendar: Function) {
-    const nbDay: number = (parseInt(this.melliDate.getDayDiffRangeRequest(), 10) / 7) + 3;
-    const height: number = (nbDay * 40) + 150;
-    for (let i = 0; i < this.dailyComponent.calendarElements.length; i++) {
-      this.render.setStyle(this.dailyComponent.calendarElements[i], 'height', height + 'px');
+    try{
+      const nbDay: number = (parseInt(this.melliDate.getDayDiffRangeRequest(), 10) / 7) + 3;
+      const height: number = (nbDay * 40) + 150;
+      for (let i = 0; i < this.dailyComponent.calendarElements.length; i++) {
+        this.render.setStyle(this.dailyComponent.calendarElements[i], 'height', height + 'px');
+      }
+      this.dailyComponent.melliHive.getDailyDeviceChartInstance().dispose();
+      this.dailyComponent.melliHive.getDailyEnvChartInstance().dispose();
+      this.dailyComponent.melliHive.getDailyOtherChartInstance().dispose();
+      this.dailyComponent.initCalendar();
+      loadCalendar();
     }
-    this.dailyComponent.melliHive.getDailyDeviceChartInstance().dispose();
-    this.dailyComponent.melliHive.getDailyEnvChartInstance().dispose();
-    this.dailyComponent.melliHive.getDailyOtherChartInstance().dispose();
-    this.dailyComponent.initCalendar();
-    loadCalendar();
+    catch{}
   }
 
 

@@ -249,6 +249,8 @@ export class StackComponent implements OnInit {
       _record => {
         _record.forEach((_elt, index) => {
           this.getSerieByData(_elt, obsArray[index].name, (serieComplete) => {
+            console.timeEnd('someFunction');
+
             serieComplete.yAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
             serieComplete.xAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
             serieComplete.itemStyle = {
@@ -308,6 +310,7 @@ export class StackComponent implements OnInit {
   }
 
   getSerieByData(data: any, nameSerie: string, next: Function): void {
+    console.time('someFunction');
     let sensorRef: Array<string> = [];
     data.forEach(_data => {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {

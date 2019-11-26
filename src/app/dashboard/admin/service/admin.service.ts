@@ -21,6 +21,7 @@ import { Observable } from 'rxjs';
 import { CapteurInterface } from '../../../_model/capteur';
 import { User } from '../../../_model/user';
 import { Connection } from '../../../_model/connection';
+import { RucheService } from '../../service/api/ruche.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,7 @@ export class AdminService {
 
   public allSensors: CapteurInterface[]
   public allUsers: User[];
+  public allHives: RucheInterface[];
   public lastConnection: Connection[];
   private rangeStart: Date;
 
@@ -42,6 +44,11 @@ export class AdminService {
         this.rangeStart.setMonth(new Date().getMonth() - 4);
         this.allUsers =  this.allSensors = this.lastConnection = [];
         this.getAllApiary();
+        this.getAllHive().subscribe(
+          _hives => {
+            this.allHives = _hives;
+          }
+        )
         this.getLastConnection(this.rangeStart);
       }
     }
@@ -59,6 +66,10 @@ export class AdminService {
         this.loadingService.loading = false;
       }
     );
+  }
+
+  getHivesByApiaryId(apiaryId: string): RucheInterface[] {
+    return this.allHives.filter(_hives => _hives.apiaryId === apiaryId);
   }
 
   /**

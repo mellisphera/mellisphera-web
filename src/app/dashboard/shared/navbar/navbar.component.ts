@@ -200,7 +200,7 @@ export class NavbarComponent implements OnInit {
         this.rucherService.rucherSubject.unsubscribe();
         this.rucheService.hiveSubject.unsubscribe();
         this.observationService.obsHiveSubject.unsubscribe();
-        this.authService.isAuthenticated = false;
+        this.authService.authState.next(false);
         this.capteurService.sensorSubject.unsubscribe();
         this.tokenService.signOut();
         // this.authService.connexionStatus.next(false);
@@ -350,7 +350,7 @@ export class NavbarComponent implements OnInit {
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher._id);
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
         // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
-        this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+        //this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
         switch (location) {
             case '/dashboard/ruche-et-rucher':
                 break;
