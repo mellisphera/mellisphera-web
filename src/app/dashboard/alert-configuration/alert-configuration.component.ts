@@ -94,7 +94,7 @@ import { TranslateService } from '@ngx-translate/core';
       }
     }
 
-    getUserValue(alertId: string): string {
+    getUserValue(alertId: string): number {
       let currentAlaert = this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0];
       try {
         if (this.isMetric()) {
