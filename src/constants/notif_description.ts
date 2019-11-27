@@ -72,7 +72,25 @@ export const NOTIF_DESCRIPTION5 = {
         Hmax: "Triggered when the internal humidity exceeds the chosen threshold.",
 
         Stolen: "Triggered when the weight of your hive becomes abnormally low. ",
-
-        
+    },
+    ES: {
+        Honeydew: 'Ganancia de peso sobre 7 dias superior al umbral',
+        Rain: 'Precipitaciones en las proximas 24h superiores al umbral',
+        Swarm: 'Posible enjambrazon à partir de sensores W y T2 (un Hub ofrece mayor precision)',
+        DConnect: 'Uno de los sensores no transmite datos o lo hace de manera esporadica, durante el período seleccionado (necesita un Hub) ',
+        Tmax: 'Temperatura interna superior al umbral',
+        Tmin: 'Temperatura interna inferior al umbral',
+        LowBrood: 'Nivel de cría por debajo del umbral',
+        LowBattery: 'Nivel de batería por debajo del umbral',
+        StopWeather: 'Estación meteorológica interrumpe la transmision de datos. Requiere su propia estación meteorológica',
+        Rswarm: 'Alto riesgo de enjambrazón en las proximas 24h',
+        WIpos: 'Aporte de recursos diario superior al umbral',
+        WIneg: 'Consumo de recursos excesivo o pillaje superior al umbral ',
+        Snow: 'Nevada superior al umbral en las proximas 24h',
+        Wind: 'Viento superior al umbral en las proximas 24h',
+        ColdPeriod: 'Deteccion de un periodo de frío. Unos días en los que las temperaturas estarán muy por debajo de la normal',
+        Hmin: 'Humedad interna por debajo del umbral seleccionado',
+        Hmax: 'Humedad interna por encima del umbral seleccionado',
+        Stolen: 'Evolución anormal del peso de la colmena, por debajo del umbral'
     }
 }

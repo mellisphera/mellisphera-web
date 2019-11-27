@@ -145,11 +145,13 @@ import { TranslateService } from '@ngx-translate/core';
      * @memberof AlertConfigurationComponent
      */
     getNotifDescriptionFromLangage(_alertName: string): string {
-      if (this.translateService.currentLang === 'fr') {
+/*       if (this.translateService.currentLang === 'fr') {
         return NOTIF_DESCRIPTION5.FR[_alertName];
       } else {
         return NOTIF_DESCRIPTION5.EN[_alertName];
-      }
+      }*/
+      const lang = this.translateService.currentLang.toUpperCase();
+      return NOTIF_DESCRIPTION5[lang][_alertName];
     }
 
     onEnable(alertId: string): void {
