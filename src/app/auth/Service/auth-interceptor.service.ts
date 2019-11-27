@@ -39,15 +39,25 @@ export class AuthInterceptorService implements HttpInterceptor {
     if (req.url.indexOf('slack') !== -1) {
       return next.handle(req);
     } else {
-      next.handle(authReq).toPromise().catch(
-        _err => {
-          if (_err.status === 401) {
-            this.loadingService.loading = false;
-            this.router.navigateByUrl('login');
-          }
-        }
-      );
-      return next.handle(authReq);
+      return next.handle(authReq)
+      .pipe(
+        catchError( (error: HttpErrorResponse) => {
+           let errMsg = '';
+           // Client Side Error
+           if (error.error instanceof ErrorEvent) {        
+             errMsg = `Error: ${error.error.message}`;
+           } 
+           else {  // Server Side Error
+             errMsg = `Error Code: ${error.status},  Message: ${error.message}`;
+           }
+           if (error.status === 401) {
+             this.loadingService.loading = false;
+             this.router.navigateByUrl('login');
+           }
+           return throwError(errMsg);
+         })
+      )
+
     }
   }
 
