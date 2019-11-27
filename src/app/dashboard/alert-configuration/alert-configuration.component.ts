@@ -98,9 +98,20 @@ import { TranslateService } from '@ngx-translate/core';
       let currentAlaert = this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0];
       try {
         if (this.isMetric()) {
-          return this.alertService.alertUser.alertConf[alertId].valueMet + ' ' + currentAlaert.unitMet;
+          return this.alertService.alertUser.alertConf[alertId].valueMet;
         } else {
-          return this.alertService.alertUser.alertConf[alertId].valueImp + ' ' + currentAlaert.unitImp;
+          return this.alertService.alertUser.alertConf[alertId].valueImp;
+        }
+      } catch { }
+    }
+
+    getUnit(alertId: string) {
+      let currentAlaert = this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0];
+      try {
+        if (this.isMetric()) {
+          return currentAlaert.unitMet;
+        } else {
+          return currentAlaert.unitImp;
         }
       } catch { }
     }
@@ -120,7 +131,7 @@ import { TranslateService } from '@ngx-translate/core';
           if (period === 'week') {
             return 'semaine'
           } else if (period === 'day') {
-            return 'jour(s)'
+            return 'jour'
           }
         } else {
           return period;

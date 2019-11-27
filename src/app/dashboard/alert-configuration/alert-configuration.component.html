@@ -22,8 +22,8 @@ limitations under the License. -->
       <thead>
         <tr>
           <th scope="col" class="text-center">{{ 'ALERT_CONF_PAGE.TYPE' | translate}}</th>
-          <th scope="col" class="text-center">{{ 'ALERT_CONF_PAGE.NAME' | translate}}</th>
-          <th scope="col" class="text-center">{{ 'ALERT_CONF_PAGE.DESCRIPTION' | translate}}</th>
+          <th scope="col" id="col_name" class="text-left">{{ 'ALERT_CONF_PAGE.NAME' | translate}}</th>
+          <th scope="col" class="text-left">{{ 'ALERT_CONF_PAGE.DESCRIPTION' | translate}}</th>
           <th scope="col" class="text-center">{{ 'ALERT_CONF_PAGE.VALUE' | translate}}</th>
           <th scope="col" class="text-center">{{ 'ALERT_CONF_PAGE.STATUS' | translate}}</th>
         </tr>
@@ -33,10 +33,10 @@ limitations under the License. -->
           <td scope="row" class="text-center">
             <img width="40px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
           </td>
-          <td class="text-center">
+          <td class="text-left">
             {{ getNameByLang(alert._id) }}
           </td>
-          <td class="text-center">
+          <td class="text-left">
               <popover-content #myPopover title="{{ getNameByLang(alert._id) }}" placement="right" [animation]="true"
               [closeOnClickOutside]="false">
               <span style="color: #C21F39">{{ getNotifDescriptionFromLangage(alert.icon) }}</span>
@@ -48,7 +48,7 @@ limitations under the License. -->
               <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range"
                 [min]="getRangeValue(alert._id)[0]" [max]="getRangeValue(alert._id)[1]" [step]="getStep(alert._id)"
                 [value]="getUserValue(alert._id)" />
-              <p>{{ getUserValue(alert._id) }} {{ getPeriod(alert._id) }}</p>
+              <p>{{ getUserValue(alert._id) }} {{ getUnit(alert._id) }} {{ getPeriod(alert._id) }}</p>
             </div>
           </td>
           <td class="text-center">

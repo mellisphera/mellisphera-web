@@ -21,6 +21,7 @@ import { UserloggedService } from '../../../../userlogged.service';
 import { MyNotifierService } from '../../../service/my-notifier.service';
 import { NotifList } from '../../../../../constants/notify';
 import { TranslateService } from '@ngx-translate/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-notes',
@@ -97,7 +98,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    */
   getNoteByApiaryId(apiaryId: string): Observation[]{
     return this.observationService.observationsApiary.filter(_note => _note.apiaryId === apiaryId).sort((noteA, noteB) => {
-      return -(new Date(noteA.opsDate).getTime() - new Date(noteB.opsDate).getTime());
+      return -(moment(noteA.opsDate).unix() - moment(noteB.opsDate).unix());
     });
   }
 

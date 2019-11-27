@@ -25,7 +25,7 @@ import { UserloggedService } from '../../../../userlogged.service';
 import { MyNotifierService } from '../../../service/my-notifier.service';
 import { NotifList } from '../../../../../constants/notify';
 import { TranslateService } from '@ngx-translate/core';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-notes-hives',
@@ -99,7 +99,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   getNoteByHiveId(hiveId: string): Observation[] {
    // console.log(this.observationService.observationsHive);
     return this.observationService.observationsHive.filter(_note => _note.hiveId === hiveId).sort((noteA, noteB) => {
-      return -(new Date(noteA.opsDate).getTime() - new Date(noteB.opsDate).getTime());
+      return -(moment(noteA.opsDate).unix() - moment(noteB.opsDate).unix());
     });
   }
   initForm() {
