@@ -25,7 +25,7 @@ const routes: Routes = [
     path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule',
     canActivate: [AuthGuardService], canLoad: [AuthGuardService]
   },
-  {path: 'login-bm/:email', loadChildren: './auth-bm/auth-bm.module#AuthBmModule'},
+  { path: 'login-bm/:email', loadChildren: './auth-bm/auth-bm.module#AuthBmModule'},
   { path: '', redirectTo: '/', pathMatch: 'full' },
 
   { path: 'home', redirectTo: '', pathMatch: 'full',  },

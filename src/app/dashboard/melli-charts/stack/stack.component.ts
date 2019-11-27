@@ -250,7 +250,6 @@ export class StackComponent implements OnInit {
         _record.forEach((_elt, index) => {
           this.getSerieByData(_elt, obsArray[index].name, (serieComplete) => {
             console.timeEnd('someFunction');
-
             serieComplete.yAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
             serieComplete.xAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
             serieComplete.itemStyle = {

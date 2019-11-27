@@ -111,19 +111,25 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.weatherService.setUnitSystem(data.unitSystem);
       }
     );
-    let hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive._id === this.rucheService.getCurrentHive()._id)[0];
-    if (hiveSelect === undefined) {
-      hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive.apiaryId === this.rucherService.getCurrentApiary())[0];
-    }
-    console.log(hiveSelect);
-    this.melliChartHive.setHiveSelect(hiveSelect);
+    this.rucheService.hiveSubject.subscribe(
+      () => {}, () => {}, () => {
+        let hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive._id === this.rucheService.getCurrentHive()._id)[0];
+        if (hiveSelect === undefined) {
+          hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive.apiaryId === this.rucherService.getCurrentApiary())[0];
+        }
+        console.log(hiveSelect);
+        this.melliChartHive.setHiveSelect(hiveSelect);
+
+      }
+    )
 
 
   }
 
   ngAfterViewInit(): void {
-    this.hiveComponent.loadDataFromHive();
-
+    this.rucheService.hiveSubject.subscribe(() => {}, () => {}, () => {
+      this.hiveComponent.loadDataFromHive();
+    });
     this.eltOnClick = document.getElementById('hive');
     this.dateDropdown = document.getElementById('date-dropdown');
     this.renderer.addClass(this.eltOnClick, 'nav-active');

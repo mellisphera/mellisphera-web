@@ -54,12 +54,15 @@ export class AppComponent implements OnInit {
     }
 
     checkLogin() {
+      console.log(this.location.path());
       this.authService.authState.subscribe(
         (_status: boolean) => {
-          if (_status) {
-            this.router.navigateByUrl('dashboard/home/info-apiary');
-          } else {
+          if (!_status) {
             this.router.navigateByUrl('login');
+          } else {
+            if (this.location.path() === '') {
+              this.router.navigateByUrl('dashboard/home/info-apiary');
+            }
           }
         }
       )
