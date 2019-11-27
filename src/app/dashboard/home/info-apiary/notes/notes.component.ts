@@ -148,10 +148,11 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    */
   createObservation() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
+      console.log('REQUEST');
       const formValue = this.observationForm.value;
       this.newObs = formValue;
       this.newObs.apiaryId = this.rucherService.rucher._id;
-      this.newObs.opsDate = formValue.date.getTime();
+      this.newObs.opsDate = formValue.date;
       this.newObs.createDate = new Date();
       this.newObs.description = formValue.sentence;
       this.newObs.type = 'apiary';
@@ -159,10 +160,11 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       this.newObs.userId = this.userService.getIdUserLoged();
       this.initForm();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
+        console.log(obs);
         this.observationService.observationsApiary.push(obs);
-        this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
-          return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
-        });
+/*         this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
+          return -(moment(a.opsDate).unix() - moment(b.opsDate).unix())
+        }); */
       }, () => { }, () => {
         if(this.translateService.currentLang === 'fr'){
           this.notify.notify('success', 'Note créée');

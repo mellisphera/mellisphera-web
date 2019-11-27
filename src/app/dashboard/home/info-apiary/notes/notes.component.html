@@ -72,7 +72,6 @@ limitations under the License. -->
       <div class="modal-body">
         <form [formGroup]="observationForm" (ngSubmit)="createObservation()">
           <div class="form-group">
-
             <label class="example-input-wrapper">
               {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
               <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">

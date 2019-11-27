@@ -981,7 +981,7 @@ export class DailyManagerService {
                 if (nbNote === dataByDate.length) {
                   path = this.observationService.getPictoInspect(cellPoint);
                   group.children = group.children.concat(path);
-                } else if (nbNote < dataByDate.length) {
+                } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                   path = {
                     type: 'path',
                     z2: 1000,
@@ -1000,7 +1000,6 @@ export class DailyManagerService {
                 let icon;
                 if (dataByDate[0].description) {
                   group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
-
                 } else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                   // icon = this.alertService.getPicto(dataByDate[0].type);
@@ -1049,7 +1048,7 @@ export class DailyManagerService {
               const dataByDate: any[] = joinData.filter(_filter => {
                 return this.graphGlobal.compareToDate(_filter.opsDate, api.value(0));
               });
-              if (dataByDate.length >= 1) {
+              if (dataByDate.length > 1) {
                 let path: any;
                 const nbNote = dataByDate.filter(_elt => _elt.description).length;
                 //console.log(nbNote + '===' + dataByDate.length)
@@ -1071,20 +1070,6 @@ export class DailyManagerService {
                   };
                   group.children.push(path);
                 }
-              }
-              if (dataByDate.length > 1) {
-                group.children.push({
-                  type: 'path',
-                  z2: 1000,
-                  shape: {
-                    pathData: GLOBAL_ICONS.THREE_DOTS,
-                    x: -11,
-                    y: -10,
-                    width: 25,
-                    height: 25
-                  },
-                  position: [cellPoint[0], cellPoint[1]],
-                });
               } else if (dataByDate.length === 1) {
                 if (dataByDate !== undefined && dataByDate[0].description) {
                   group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
@@ -1236,7 +1221,6 @@ export class DailyManagerService {
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     }
-    console.log(this.meanPeriodDevice);
    // this.setMeanAnnotation(type);
 
   }

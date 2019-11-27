@@ -249,7 +249,6 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
             } else if (dataByDate.length === 1) {
               if (dataByDate !== undefined && dataByDate[0].description) {
                 group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
-
               } else {
                 group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].icon, cellPoint, params.coordSys));
               }

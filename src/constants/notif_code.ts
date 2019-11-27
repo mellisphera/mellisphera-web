@@ -8,6 +8,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Heavy rainfall",
             "Message": "Rainfall will exceed {VAL}" 
+        },
+        "ES": {
+            "Subject": "Fuertes precipitaciones",
+            "Message": "La lluvia excederá {VAL}" 
         }
     },
 
@@ -20,6 +24,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Heavy snowfall",
             "Message": "Snowfall will exceed {VAL} " 
+        },
+        "ES": {
+            "Subject": "Fuerte nevada",
+            "Message": "La nieve excederá {VAL}" 
         }
     },
 
@@ -32,6 +40,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Strong wind",
             "Message": "The wind will exceed {VAL}" 
+        },
+        "ES": {
+            "Subject": "Viento fuerte ",
+            "Message": "El viento excederá {VAL}" 
         }
     },
 
@@ -44,6 +56,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Cold days ahead",
             "Message": "Temperatures will be unusually cold" 
+        },
+        "ES": {
+            "Subject": "Días fríos por venir",
+            "Message": "Las temperaturas serán inusualmente frías" 
         }
     },
 
@@ -56,6 +72,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "High internal temperature",
             "Message": "Internal temperature over {VAL}" 
+        },
+        "ES": {
+            "Subject": "Alta temperatura interna",
+            "Message": "La temperatura interna excede {VAL}" 
         }
     },
 
@@ -68,6 +88,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Low internal temperature ",
             "Message": "Internal temperature below {VAL}" 
+        },
+        "ES": {
+            "Subject": "Baja temperatura interna",
+            "Message": "La temperatura interna está por debajo de {VAL}" 
         }
     },
 
@@ -80,6 +104,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Significant provision of resources",
             "Message": "Your bees' stock has increased by {VAL}" 
+        },
+        "ES": {
+            "Subject": "Aporte importante de recursos",
+            "Message": "Las reservas han augmentado de {VAL}" 
         }
     },
 
@@ -92,6 +120,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Resource depletion",
             "Message": "Your bees' stock has decreased by {VAL}"
+        },
+        "ES": {
+            "Subject": "Consumo de reservas",
+            "Message": "Las reservas han disminuido de {VAL}"
         }
     },
 
@@ -104,6 +136,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Weak brood",
             "Message": "Brood below {VAL}"
+        },
+        "ES": {
+            "Subject": "Bajo nivel de cria",
+            "Message": "La cria esta por debajo del {VAL}"
         }
     },
 
@@ -116,6 +152,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "High internal humidity",
             "Message": "Internal humidity over {VAL}"
+        },
+        "ES": {
+            "Subject": "Fuerte humedad interna",
+            "Message": "La humedad interna supera el {VAL}"
         }
     }, 
 
@@ -128,6 +168,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Low internal humidity",
             "Message": "Internal humidity below {VAL}"
+        },
+        "ES": {
+            "Subject": "Baja humedad interna",
+            "Message": "La humedad interna está por debajo de {VAL}"
         }
     }, 
 
@@ -140,6 +184,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Honeydew",
             "Message": "Incoming weights during the last week exceeding {VAL}"
+        },
+        "ES": {
+            "Subject": "Producción de nectar",
+            "Message": "El ingreso de recursos durante la última semana supera {VAL}"
         }
     },
 
@@ -152,6 +200,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Swarm",
             "Message": "Potentiel swarm detected"
+        },
+        "ES": {
+            "Subject": "Enjambre",
+            "Message": "Posible enjambre detectado"
         }
     },
 
@@ -164,6 +216,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Swarm risk",
             "Message": "The risk of swarm will be high"
+        },
+        "ES": {
+            "Subject": "Riesgo de enjambrazón",
+            "Message": "El riesgo de enjambrazón será alto"
         }
     },
 
@@ -176,6 +232,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Low battery",
             "Message": "Replace the battery of {REF}" 
+        },
+        "ES": {
+            "Subject": "Bateria baja",
+            "Message": "Cambiar la bateria de {REF}" 
         }
     },
 
@@ -190,6 +250,11 @@ export const NOTIF_CODE = {
             "Subject": "Disconnection",
             "Message": "{REF} disconnected since {PERIOD}",
             "Unit": " days"
+        },
+        "ES": {
+            "Subject": "Desconexión",
+            "Message": "{REF} desconectado desde {PERIOD}",
+            "Unit": " días"
         }
     },
 
@@ -204,6 +269,11 @@ export const NOTIF_CODE = {
             "Subject": "Poor signal",
             "Message": "{REF} poor signal since {PERIOD}",
             "Unit": " days"
+        },
+        "ES": {
+            "Subject": "Señal deficiente",
+            "Message": "{REF} señal deficiente desde {PERIOD}",
+            "Unit": " días"
         }
     },
 
@@ -216,6 +286,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Weather station stopped",
             "Message": "Data transmission error from your weather station since {DATE}"
+        },
+        "ES": {
+            "Subject": "Sin señal de la estación meteorológica",
+            "Message": "Error de transmision de datos desde  {DATE}"
         }
     },
 
@@ -228,6 +302,10 @@ export const NOTIF_CODE = {
         "EN": {
             "Subject": "Stolen hive",
             "Message": "Suspected of theft, the weight of your hive is abnormally low"
+        },
+        "ES": {
+            "Subject": "Colmena robada",
+            "Message": "Sospecha de robo, el peso de tu colmena es anormalmente bajo."
         }
     }
 
