@@ -99,7 +99,7 @@
         "FLOWER": "Flor",
         "SENSORS": "Sensor",
         "DATA": "Analisis",
-        "ALERT_CONF": "Configuracion de las notificaciones"
+        "ALERT_CONF": "Notificaciones "
     },
     "PREFERENCE_CONFIG": {
         "TITLE_PASSWORD": "Modificar la contasena",

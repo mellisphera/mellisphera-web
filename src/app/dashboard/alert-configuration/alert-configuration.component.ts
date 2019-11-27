@@ -87,8 +87,10 @@ import { TranslateService } from '@ngx-translate/core';
     }
 
     getNameByLang(alertId: string) {
-      if (this.userPrefService.getUserPref().lang.toUpperCase().indexOf('FR') !== -1) {
+      if (this.translateService.currentLang === 'fr') {
         return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].nameFr;
+      } else if (this.translateService.currentLang === 'es') {
+        return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].nameEs;
       } else {
         return this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0].nameEn;
       }
@@ -119,7 +121,7 @@ import { TranslateService } from '@ngx-translate/core';
       getPeriod(alertId: string) {
         const alert = this.alertService.alertTypes.filter(_alert => _alert._id === alertId)[0];
         if (alert.period !== '') {
-          return ' / ' + this.getPeriodByLang(alert.period, this.translateService.currentLang);
+          return '/' + this.getPeriodByLang(alert.period, this.translateService.currentLang);
         } else {
           return '';
         }
@@ -129,9 +131,15 @@ import { TranslateService } from '@ngx-translate/core';
       getPeriodByLang(period: string, lang: string) {
         if (lang === 'fr') {
           if (period === 'week') {
-            return 'semaine'
+            return 'semaine';
           } else if (period === 'day') {
-            return 'jour'
+            return 'jour';
+          }
+        } else if (lang === 'es') {
+          if (period === 'week') {
+            return 'semana';
+          } else if (period === 'day') {
+            return 'día';
           }
         } else {
           return period;

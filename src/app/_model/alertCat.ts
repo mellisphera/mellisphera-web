@@ -3,6 +3,7 @@ export interface AlertCat {
     icon: string;
     nameEn: string;
     nameFr: string;
+    nameEs: string
     alterable: boolean;
     disable: boolean;
     basicValueMet: number;
