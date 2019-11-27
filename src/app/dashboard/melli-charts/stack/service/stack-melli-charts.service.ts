@@ -119,6 +119,7 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
     this.httpClient.get<any>('./assets/data/color.json').subscribe(
       data => {
         this.arrayColor = data;
+        console.log(this.arrayColor);
       }
     );
   }
@@ -168,10 +169,14 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
    * @memberof StackMelliChartsService
    */
   getColorByIndex(index: number, hive: RucheInterface) {
-    if (this.arrayHiveSelect.filter(elt => elt._id === hive._id).length > 0) {
-      return (index < this.arrayColor.length - 1) ? this.arrayColor[index].hexString : null ;
-    } else {
-      return 'white';
+    try {
+      if (this.arrayHiveSelect.filter(elt => elt._id === hive._id).length > 0) {
+        return (index < this.arrayColor.length - 1) ? this.arrayColor[index].hexString : null ;
+      } else {
+        return 'white';
+      }
+    } catch {
+      console.log(index);
     }
   }
 

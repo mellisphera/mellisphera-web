@@ -360,7 +360,11 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         break;
       case PREFIX_PATH + 'brood':
       case PREFIX_PATH + 'stack':
-        return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
+        if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
+          return this.stackService.getColorByIndex(this.adminService.allHives.map(elt => elt._id).indexOf(hive._id), hive);
+        } else {
+          return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
+        }
         break;
     }
   }
