@@ -21,6 +21,8 @@ import { DailyRecordService } from '../../service/api/dailyRecordService';
 import { MelliChartsDateService } from '../service/melli-charts-date.service';
 import { SERIES } from '../charts/SERIES';
 import { RucheService } from '../../service/api/ruche.service';
+import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
+import { AdminService } from '../../admin/service/admin.service';
 
 @Component({
   selector: 'app-vitality',
@@ -34,6 +36,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
   constructor(private stackService: StackMelliChartsService,
     private graphGlobal: GraphGlobal,
     private dailyThService: DailyRecordService,
+    private tokenService: AtokenStorageService,
+    private adminService: AdminService,
     private melliDateService: MelliChartsDateService,
     private rucheService: RucheService,
     private unitService: UnitService) {
@@ -97,7 +101,11 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   getHiveIndex(hive: RucheInterface): number {
-    return this.rucheService.ruchesAllApiary.findIndex(elt => elt._id === hive._id);
+    if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
+      return this.adminService.allHives.findIndex(elt => elt._id === hive._id);
+    } else {
+      return this.rucheService.ruchesAllApiary.findIndex(elt => elt._id === hive._id);
+    }
   }
 
   getSerieByData(data: Array<any>, nameSerie: string, next: Function): void {

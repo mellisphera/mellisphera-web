@@ -139,16 +139,11 @@ export class RucherService {
 
     getApiaryByUser(userId: string) {
         this.loadingService.loading = true;
-        const ObservableApiaryQuery = [
-            this.getSharingApiaryByUser(this.user.getIdUserLoged()),
-            this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + userId)];
-        Observable.forkJoin(ObservableApiaryQuery).map(elt => {
-            return elt.filter(_filter => _filter != null);
-        }).subscribe(
+        this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + userId).subscribe(
             (apiary) => {
-                this.ruchers = apiary.flat().filter(apiary => apiary !== null && apiary.userId === this.user.getIdUserLoged());
-                this.sharingApiary = apiary.flat().filter(apiary => apiary.userId !== this.user.getIdUserLoged());
-                this.allApiaryAccount = apiary.flat().sort((a, b) => {
+                this.ruchers = apiary.filter(apiary => apiary !== null && apiary.userId === this.user.getIdUserLoged());
+                this.sharingApiary = apiary.filter(apiary => apiary.userId !== this.user.getIdUserLoged());
+                this.allApiaryAccount = apiary.sort((a, b) => {
                     return a.name.localeCompare(b.name);
                 });
                 this.saveSharingApiary();

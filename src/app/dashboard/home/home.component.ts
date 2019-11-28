@@ -322,14 +322,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     // Save the hive on dataBase
     this.rucheService.saveCurrentHive(ruche);
 
-    if (this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id).length > 0) {
-      this.alertsService.checkAlert(this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id)).subscribe(
-        _res => {
-          this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
-          this.hiveAlertsByApiary = this.hiveAlertsByApiary.filter(_notif => _notif.hiveId !== ruche._id).slice();
-        }
-      );
+    if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
+      if (this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id).length > 0) {
+        this.alertsService.checkAlert(this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id)).subscribe(
+          _res => {
+            this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
+            this.hiveAlertsByApiary = this.hiveAlertsByApiary.filter(_notif => _notif.hiveId !== ruche._id).slice();
+          }
+        );
+      }
     }
+
     // Use the user configuration
     this.userConfig.getSubject().subscribe(
       data => {
