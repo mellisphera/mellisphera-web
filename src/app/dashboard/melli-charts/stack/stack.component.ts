@@ -22,6 +22,8 @@ import { MelliChartsDateService } from '../service/melli-charts-date.service';
 import { SERIES } from '../charts/SERIES';
 import { RucheService } from '../../service/api/ruche.service';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
+import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
+import { AdminService } from '../../admin/service/admin.service';
 
 @Component({
   selector: 'app-stack',
@@ -37,8 +39,10 @@ export class StackComponent implements OnInit {
   constructor(private unitService: UnitService,
     private stackService: StackMelliChartsService,
     private graphGlobal: GraphGlobal,
+    private tokenService: AtokenStorageService,
     private userPrefService: UserParamsService,
     private recordService: RecordService,
+    private adminService: AdminService,
     private rucheService: RucheService,
     private melliDate: MelliChartsDateService) { }
 
@@ -172,7 +176,11 @@ export class StackComponent implements OnInit {
    * @memberof StackComponent
    */
   getHiveIndex(hive: RucheInterface): number {
-    return this.rucheService.ruchesAllApiary.findIndex(elt => elt._id === hive._id);
+    if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
+      return this.adminService.allHives.findIndex(elt => elt._id === hive._id);
+    } else {
+      return this.rucheService.ruchesAllApiary.findIndex(elt => elt._id === hive._id);
+    }
   }
 
   loadAfterRangeChanged(next: Function) {

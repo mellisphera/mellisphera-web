@@ -186,6 +186,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       const formValue = this.observationForm.value;
       this.newObs.description = formValue.sentence;
       this.newObs.opsDate = formValue.date;
+      this.newObs.userId = this.userService.getIdUserLoged();
       this.newObs.apiaryId = this.rucherService.getCurrentApiary();
       this.newObs.type = 'apiary';
       const index = this.observationService.observationsApiary.indexOf(this.newObs);

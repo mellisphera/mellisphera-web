@@ -317,6 +317,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           this.stackComponent.removeHiveSerie(hive);
         } else {
           this.stackService.addHive(hive);
+          console.log(this.stackService.getHiveSelect());
           this.stackComponent.loadDataByHive(hive);
         }
         break;
@@ -356,7 +357,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   getColor(hive: RucheInterface): string {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
-        return this.melliChartHive.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
+        if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
+          console.log(this.adminService.allHives);
+          console.log(hive);
+          return this.melliChartHive.getColorByIndex(this.adminService.allHives.map(elt => elt._id).indexOf(hive._id), hive);
+        } else {
+          return this.melliChartHive.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
+        }
         break;
       case PREFIX_PATH + 'brood':
       case PREFIX_PATH + 'stack':

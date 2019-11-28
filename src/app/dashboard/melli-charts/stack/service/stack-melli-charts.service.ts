@@ -169,14 +169,10 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
    * @memberof StackMelliChartsService
    */
   getColorByIndex(index: number, hive: RucheInterface) {
-    try {
-      if (this.arrayHiveSelect.filter(elt => elt._id === hive._id).length > 0) {
-        return (index < this.arrayColor.length - 1) ? this.arrayColor[index].hexString : null ;
-      } else {
-        return 'white';
-      }
-    } catch {
-      console.log(index);
+    if (this.arrayHiveSelect.filter(elt => elt._id === hive._id).length > 0) {
+      return (index < this.arrayColor.length - 1) ? this.arrayColor[index].hexString : null ;
+    } else {
+      return 'white';
     }
   }
 

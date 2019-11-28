@@ -69,7 +69,9 @@ export class AdminService {
   }
 
   getHivesByApiaryId(apiaryId: string): RucheInterface[] {
-    return this.allHives.filter(_hives => _hives.apiaryId === apiaryId);
+    try{
+      return this.allHives.filter(_hives => _hives.apiaryId === apiaryId);
+    } catch {}
   }
 
   /**
