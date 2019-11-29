@@ -29,7 +29,7 @@ export class HealthHiveComponent {
       this.option = {
           backgroundColor: 'white',
           title: {
-              top: 0,
+              top: 5,
               text: this.graphGlobal.getTitle("BroodDynamics"),
               left: 'center',
               textStyle: {

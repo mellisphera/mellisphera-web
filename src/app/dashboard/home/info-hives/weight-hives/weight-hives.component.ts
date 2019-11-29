@@ -36,7 +36,7 @@ export class WeightHivesComponent{
         this.option = {
             //backgroundColor: 'white',
             title: {
-                top: 0,
+                top: 5,
                 text: this.graphGlobal.getTitle("DailyWeightIncomes"),
                 left: 'center',
                 textStyle: {
@@ -70,7 +70,7 @@ export class WeightHivesComponent{
                 }
             },
             calendar: [{
-                top: 50,
+                top: 60,
                 left: 'center',
                 //height:'auto',
                 cellSize: [40, 40],

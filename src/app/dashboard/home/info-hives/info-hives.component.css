@@ -63,16 +63,15 @@ hr
     
     #health{
         /* margin-top : 50px; */
-        height: 40vh;
+        height: 37vh;
     }
     #weight{
         position: relative;
-        height: 40vh;
+        height: 37vh;
     }
     
     #alerts{
-        position: relative;
-        height: 40vh;
+        height: 37vh;
     }
 
 /* @media (max-height : 815px){
