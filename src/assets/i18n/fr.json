@@ -371,6 +371,9 @@
             "START": "Début",
             "END": "Fin",
             "BTN_APPLY": "Aplliquer"
+        },
+        "BROOD": {
+            "TITLE": "Evolution journalière du couvain"
         }
     },
 

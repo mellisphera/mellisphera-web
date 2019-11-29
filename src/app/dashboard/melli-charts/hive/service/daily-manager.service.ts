@@ -672,10 +672,21 @@ export class DailyManagerService {
               }
             };
             serieComplete.symbolSize = (val: any[]) => {
+              let value: number;
               if (this.unitService.getUserPref().unitSystem === 'METRIC') {
-                return val[1];
+                if (val[1] > 100){
+                  value = 100;
+                } else {
+                  value = val[1];
+                }
+                return 4*Math.sqrt(value);
               } else {
-                return val[1] * 25.4;
+                if (val[1] * 25.4 > 100){
+                  value = 100;
+                } else {
+                  value = val[1];
+                }
+                return (4*Math.sqrt(value * 25.4));
               }
             };
             option.series.push(serieComplete);

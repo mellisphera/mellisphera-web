@@ -386,6 +386,9 @@
             "START": "Début",
             "END": "Fin",
             "BTN_APPLY": "Aplliquer"
+        },
+        "BROOD": {
+            "TITLE": "Evolucion diaria de la cria"
         }
     },
     "ALERT_CONF_PAGE": {

@@ -18,171 +18,175 @@ import { DailyStockHoneyService } from '../../../service/api/daily-stock-honey.s
 import { MyDate } from '../../../../class/MyDate';
 import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
+import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
 
 @Component({
-  selector: 'app-weight-hives',
-  templateUrl: './weight-hives.component.html',
-  styleUrls: ['./weight-hives.component.css']
+    selector: 'app-weight-hives',
+    templateUrl: './weight-hives.component.html',
+    styleUrls: ['./weight-hives.component.css']
 })
-export class WeightHivesComponent{
+export class WeightHivesComponent {
     option: any;
-  constructor(public dailyRecordWservice: DailyRecordsWService,
-    public calendrierPoids: CalendrierPoidsService,
-    public rucheService: RucheService,
-    public dailyStockHoneyService: DailyStockHoneyService,
-    private userConfig: UserParamsService,
-    private unitService: UnitService,
-    private graphGlobal: GraphGlobal) {
+    constructor(public dailyRecordWservice: DailyRecordsWService,
+        public calendrierPoids: CalendrierPoidsService,
+        public rucheService: RucheService,
+        public dailyStockHoneyService: DailyStockHoneyService,
+        private userConfig: UserParamsService,
+        private unitService: UnitService,
+        private graphGlobal: GraphGlobal) {
         this.option = {
-            //backgroundColor: 'white',
-            title: {
-                top: 5,
-                text: this.graphGlobal.getTitle("DailyWeightIncomes"),
-                left: 'center',
-                textStyle: {
-                  color: 'black',
-                  fontWeight : 'normal',
-                  fontSize : 16
-              }
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: (params: any) => {
-                    return params.marker + this.unitService.getDailyDate(params.data[0]) + 
-                    '<br/>' + params.seriesName + ' : ' + this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])) + ' ' + this.graphGlobal.weight.unitW;
-                }
-            },
-            toolbox: {
-                orient: 'vertical',
-                itemSize: 0,
-                top: 'middle',
-                feature: {
-                  dataView: { show: false, readOnly: false },
-                  restore: { show: false },
-                  saveAsImage: { show: false }
-              }
-            },
-            legend: {
-                top: 20,
-                data: ['gain', this.graphGlobal.getTitle("loss")],
-                textStyle: {
-                    color: 'black'
-                }
-            },
-            calendar: [{
-                top: 60,
-                left: 'center',
-                //height:'auto',
-                cellSize: [40, 40],
-                range: MyDate.getRangeForCalendarAlerts(),
-                orient: 'vertical',
-                /*cellSize: 'auto',
-                height:'200',*/
-                //  width:'95%',
-                // top:70,
-                splitLine: {
-                    show: true,
-                    lineStyle: {
-                        color: '#000',
-                        width: 2,
-                        type: 'solid'
+            baseOption: {
+                //backgroundColor: 'white',
+                title: {
+                    top: 0,
+                    text: this.graphGlobal.getTitle("DailyWeightIncomes"),
+                    left: 'center',
+                    textStyle: {
+                        color: 'black',
+                        fontWeight: 'normal',
+                        fontSize: 16
                     }
                 },
-                dayLabel: {
-                    nameMap: this.graphGlobal.getDays(),
-                    firstDay: 1, // start on Monday,
-                    margin: 10,
-                    position: 'end',
-                    show: true,
-                   
+                tooltip: {
+                    trigger: 'item',
+                    formatter: (params: any) => {
+                        return params.marker + this.unitService.getDailyDate(params.data[0]) +
+                            '<br/>' + params.seriesName + ' : ' + this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])) + ' ' + this.graphGlobal.weight.unitW;
+                    }
                 },
-                monthLabel: {
-                    nameMap: this.graphGlobal.getMonth()
+                toolbox: {
+                    orient: 'vertical',
+                    itemSize: 0,
+                    top: 'middle',
+                    feature: {
+                        dataView: { show: false, readOnly: false },
+                        restore: { show: false },
+                        saveAsImage: { show: false }
+                    }
                 },
-                yearLabel: {
-                    formatter: '{start}-{end}',
-                    show: false,
-                    margin: 40,
+                legend: {
+                    top: 30,
+                    data: ['gain', this.graphGlobal.getTitle("loss")],
                     textStyle: {
                         color: 'black'
                     }
                 },
-                itemStyle: {
-                    normal: {
-                        color: '#EBEBEB',
-                        borderWidth: 1,
-                        borderColor: '#111'
-                    }
-                }
-            }],
-            series: [
-                {
-                    name: 'gain',
-                    type: 'effectScatter',
-                    coordinateSystem: 'calendar',
-                    data: '',
-                    symbolSize: (val: Array<any>) => {
-                        if (val[1] >= 0) {
-                            if (this.unitService.getUserPref().unitSystem === 'METRIC') {
-                                return (0.5 * Math.sqrt((1000 * val[1])));
-                            } else {
-                                return (0.5 * Math.sqrt((1000 * val[1] * 0.45)));
-                            }  
+                calendar: [{
+                    top: 60,
+                    left: 'center',
+                    //height:'auto',
+                    cellSize: [40, 40],
+                    range: MyDate.getRangeForCalendarAlerts(),
+                    orient: 'vertical',
+                    /*cellSize: 'auto',
+                    height:'200',*/
+                    //  width:'95%',
+                    // top:70,
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#000',
+                            width: 2,
+                            type: 'solid'
                         }
-                        else { return 0; }
                     },
-                    showEffectOn: 'emphasis',
-                    rippleEffect: {
-                        brushType: 'stroke'
+                    dayLabel: {
+                        nameMap: this.graphGlobal.getDays(),
+                        firstDay: 1, // start on Monday,
+                        margin: 10,
+                        position: 'end',
+                        show: true,
+
                     },
-                    hoverAnimation: true,
+                    monthLabel: {
+                        nameMap: this.graphGlobal.getMonth()
+                    },
+                    yearLabel: {
+                        formatter: '{start}-{end}',
+                        show: false,
+                        margin: 40,
+                        textStyle: {
+                            color: 'black'
+                        }
+                    },
                     itemStyle: {
                         normal: {
-                            color: '#00FE0C'
+                            color: '#EBEBEB',
+                            borderWidth: 1,
+                            borderColor: '#111'
                         }
                     }
-                },
-                {
-                    name: this.graphGlobal.getTitle("loss"),
-                    type: 'effectScatter',
-                    coordinateSystem: 'calendar',
-                    data: '',
-                    symbolSize: (val: Array<any>) => {
-                        if (val[1] < 0) {
-                            if (this.unitService.getUserPref().unitSystem === 'METRIC') {
-                                return (0.5 * Math.sqrt(Math.abs(1000 * val[1])));
-                            } else {
-                                return (0.5 * Math.sqrt(Math.abs(1000 * val[1] * 0.45)));
-                            }  
+                }],
+                series: [
+                    {
+                        name: 'gain',
+                        type: 'effectScatter',
+                        coordinateSystem: 'calendar',
+                        data: '',
+                        symbolSize: (val: Array<any>) => {
+                            if (val[1] >= 0) {
+                                if (this.unitService.getUserPref().unitSystem === 'METRIC') {
+                                    return (0.5 * Math.sqrt((1000 * val[1])));
+                                } else {
+                                    return (0.5 * Math.sqrt((1000 * val[1] * 0.45)));
+                                }
+                            }
+                            else { return 0; }
+                        },
+                        showEffectOn: 'emphasis',
+                        rippleEffect: {
+                            brushType: 'stroke'
+                        },
+                        hoverAnimation: true,
+                        itemStyle: {
+                            normal: {
+                                color: '#00FE0C'
+                            }
                         }
-                        else { return 0; }
                     },
-                    showEffectOn: 'emphasis',
-                    rippleEffect: {
-                        brushType: 'stroke'
-                    },
-                    hoverAnimation: true,
-      
-                    itemStyle: {
-                        normal: {
-                            color: '#FE0000'
-      
+                    {
+                        name: this.graphGlobal.getTitle("loss"),
+                        type: 'effectScatter',
+                        coordinateSystem: 'calendar',
+                        data: '',
+                        symbolSize: (val: Array<any>) => {
+                            if (val[1] < 0) {
+                                if (this.unitService.getUserPref().unitSystem === 'METRIC') {
+                                    return (0.5 * Math.sqrt(Math.abs(1000 * val[1])));
+                                } else {
+                                    return (0.5 * Math.sqrt(Math.abs(1000 * val[1] * 0.45)));
+                                }
+                            }
+                            else { return 0; }
+                        },
+                        showEffectOn: 'emphasis',
+                        rippleEffect: {
+                            brushType: 'stroke'
+                        },
+                        hoverAnimation: true,
+
+                        itemStyle: {
+                            normal: {
+                                color: '#FE0000'
+
+                            }
                         }
-                    }
-                },
-      
-            ]
+                    },
+
+                ]
+            },
+            media: MEDIA_QUERY_MELLIUX
         };
-        this.option.series.push(this.graphGlobal.getDaySerie());
+        this.option.baseOption.series.push(this.graphGlobal.getDaySerie());
     }
 
-  convertDate(date: Date) {
-      var jour = '' + date.getDate();
-      var mois = '' + (date.getMonth() + 1);
-      var anee = date.getFullYear();
-      if (parseInt(jour) < 10) { jour = '0' + jour; }
-      if (parseInt(mois) < 10) { mois = '0' + mois; }
+    convertDate(date: Date) {
+        var jour = '' + date.getDate();
+        var mois = '' + (date.getMonth() + 1);
+        var anee = date.getFullYear();
+        if (parseInt(jour) < 10) { jour = '0' + jour; }
+        if (parseInt(mois) < 10) { mois = '0' + mois; }
 
-      return anee + '-' + mois + '-' + jour;
-  }
+        return anee + '-' + mois + '-' + jour;
+    }
 }

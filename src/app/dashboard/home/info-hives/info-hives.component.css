@@ -60,18 +60,8 @@ hr
     #sensors{
         width: 50%;
     }
-    
-    #health{
-        /* margin-top : 50px; */
-        height: 37vh;
-    }
-    #weight{
-        position: relative;
-        height: 37vh;
-    }
-    
-    #alerts{
-        height: 37vh;
+    .calendar{
+        height: 23vh;
     }
 
 /* @media (max-height : 815px){
@@ -109,16 +99,13 @@ hr
         width: 200%;
     }
 }
-
-/* MEDIA HEIGHT */
-@media (max-height : 1015px){
-/*     #weight{
-        margin-top: 30px;
-    } */
-}
-
-/* @media (max-height : 700px){
-    #weight{
-        margin-top: 60px;
+@media (max-height: 1210px) {
+    .calendar{
+        height: 30vh;
     }
-} */
+}
+@media (max-height: 950px) {
+    .calendar{
+        height: 28vh;
+    }
+}

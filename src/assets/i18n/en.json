@@ -372,6 +372,9 @@
             "START": "Start",
             "END": "End",
             "BTN_APPLY": "Applly"
+        },
+        "BROOD": {
+            "TITLE": "Daily brood progression"
         }
     },
     "ALERT_CONF_PAGE": {
