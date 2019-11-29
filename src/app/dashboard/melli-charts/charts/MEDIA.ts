@@ -12,7 +12,24 @@ export const MEDIA_QUERY_MELLIUX = [
         },
         option: {// 这里写此规则满足下的option
           calendar: {
-            cellSize: [30, 30]
+            cellSize: [35, 35]
+          },
+        }
+      },
+      {
+        query: {// 这里写规则
+          maxWidth: 430,
+        },
+        option: {
+          calendar: {
+            //cellSize: [25, 25],
+            left: 'center'
+          },
+          title: {
+              left: 'center'
+          },
+          legend: {
+              left: 'center'
           },
         }
       },

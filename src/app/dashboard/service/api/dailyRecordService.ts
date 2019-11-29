@@ -204,7 +204,7 @@ export class DailyRecordService {
                 min: 0,
                 max: 100,
                 orient: 'horizontal',
-                left: 'center',
+                left: '22%',
                 top: 30,
                 itemWidth: 15,
                 itemSymbol: 'diamond',

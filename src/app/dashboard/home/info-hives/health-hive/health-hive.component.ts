@@ -16,6 +16,7 @@ import { MyDate } from '../../../../class/MyDate';
 import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
+import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
 
 @Component({
   selector: 'app-health-hive',
@@ -31,8 +32,8 @@ export class HealthHiveComponent {
             backgroundColor: 'white',
             title: {
                 top: 5,
+                left: '26%',
                 text: this.graphGlobal.getTitle("BroodDynamics"),
-                left: 'center',
                 textStyle: {
                     color: 'black',
                     fontWeight : 'normal',
@@ -55,9 +56,12 @@ export class HealthHiveComponent {
                     saveAsImage: { show: false }
                 }
             },
+            legend: {
+                show: false,
+            },
             calendar: [{
                 top: 70,
-                left: 'center',
+                left: '15%',
                 //width: '70%',
                 range: MyDate.getRangeForCalendarAlerts(),
                 orient: 'vertical',
@@ -106,8 +110,20 @@ export class HealthHiveComponent {
                 coordinateSystem: 'calendar',
             }]
         },
-        media: MEDIA_QUERY_MELLIUX
+        media: JSON.parse(JSON.stringify(MEDIA_QUERY_MELLIUX))
     };
+    this.option.media.push(
+        {
+            query: {// 这里写规则
+              maxWidth: 450,
+            },
+            option: {// 这里写此规则满足下的option
+                visualMap: {
+                    left: 'center'
+                }
+            }
+          }
+    );
       this.option.baseOption.series.push(this.graphGlobal.getDaySerie());
 
 

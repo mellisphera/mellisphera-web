@@ -61,7 +61,7 @@ hr
         width: 50%;
     }
     .calendar{
-        height: 23vh;
+        height: 25vh;
     }
 
 /* @media (max-height : 815px){
@@ -99,13 +99,28 @@ hr
         width: 200%;
     }
 }
-@media (max-height: 1210px) {
+@media (max-width: 1650px) and (max-height: 1210px){
     .calendar{
-        height: 30vh;
+        height: 25vh;
     }
 }
 @media (max-height: 950px) {
     .calendar{
-        height: 28vh;
+        height: 35vh;
+    }
+}
+@media (max-height: 850px) and (max-width: 1350px) {
+    .calendar{
+        height: 45vh;
+    }
+}
+@media (max-width: 450px) {
+    .calendar{
+        height: 35vh;
+    }
+}
+@media (max-width: 380px) {
+    .calendar{
+        height: 42vh;
     }
 }

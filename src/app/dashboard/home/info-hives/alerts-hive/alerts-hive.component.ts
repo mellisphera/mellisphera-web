@@ -104,14 +104,15 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
   cleanOption() {
     this.option = {
       baseOption: {},
-      media: MEDIA_QUERY_MELLIUX
+      media: JSON.parse(JSON.stringify(MEDIA_QUERY_MELLIUX))
     };
     this.option.baseOption = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
     this.option.baseOption.title.text = this.graphGlobal.getTitle('AlertsHive');
+    this.option.baseOption.title.left = '25%'
     this.option.baseOption.calendar.orient = 'vertical';
     this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();
     this.option.baseOption.calendar.top = 60;
-    this.option.baseOption.calendar.left = 'center';
+    this.option.baseOption.calendar.left = '15%';
     //this.option.calendar.bottom = '3%';
     //this.option.calendar.height = '80%';
     //this.option.calendar.width = '77%';
@@ -199,6 +200,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
         const option = Object.assign({}, this.option);
         option.baseOption.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
         option.baseOption.legend.top = 30;
+        option.baseOption.legend.left = '22%';
         option.baseOption.legend.selectedMode = 'multiple';
         this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
           serieComplete.renderItem = (params, api) => {
