@@ -62,24 +62,24 @@ hr
     }
     
     #health{
-        margin-top : 50px;
-        height: 27vh;
+        /* margin-top : 50px; */
+        height: 40vh;
     }
     #weight{
         position: relative;
-        height: 27vh;
+        height: 40vh;
     }
     
     #alerts{
         position: relative;
-        height: 27vh;
+        height: 40vh;
     }
 
-@media (max-height : 815px){
+/* @media (max-height : 815px){
     #alerts{
         height: 22vh;
     }
-}
+} */
 
 @media (max-height : 400px){
     #alerts{
@@ -102,7 +102,7 @@ hr
     }
 
     #notes{
-        margin-top: 100px;
+        /* margin-top: 100px; */
         width: 200%;
     }
     
@@ -113,13 +113,13 @@ hr
 
 /* MEDIA HEIGHT */
 @media (max-height : 1015px){
-    #weight{
+/*     #weight{
         margin-top: 30px;
-    }
+    } */
 }
 
-@media (max-height : 700px){
+/* @media (max-height : 700px){
     #weight{
         margin-top: 60px;
     }
-}
+} */

@@ -102,7 +102,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
     this.option.title.text = this.graphGlobal.getTitle('AlertsHive');
     this.option.calendar.orient = 'vertical';
     this.option.calendar.range = MyDate.getRangeForCalendarAlerts();
-    this.option.calendar.top = 65;
+    this.option.calendar.top = 60;
     this.option.calendar.left = 'center';
     //this.option.calendar.bottom = '3%';
     //this.option.calendar.height = '80%';

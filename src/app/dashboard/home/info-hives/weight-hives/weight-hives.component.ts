@@ -36,7 +36,7 @@ export class WeightHivesComponent{
         this.option = {
             //backgroundColor: 'white',
             title: {
-                top: 35,
+                top: 0,
                 text: this.graphGlobal.getTitle("DailyWeightIncomes"),
                 left: 'center',
                 textStyle: {
@@ -54,7 +54,7 @@ export class WeightHivesComponent{
             },
             toolbox: {
                 orient: 'vertical',
-                itemSize: 15,
+                itemSize: 0,
                 top: 'middle',
                 feature: {
                   dataView: { show: false, readOnly: false },
@@ -63,14 +63,14 @@ export class WeightHivesComponent{
               }
             },
             legend: {
-                top: 60,
+                top: 20,
                 data: ['gain', this.graphGlobal.getTitle("loss")],
                 textStyle: {
                     color: 'black'
                 }
             },
             calendar: [{
-                top: 90,
+                top: 50,
                 left: 'center',
                 //height:'auto',
                 cellSize: [40, 40],

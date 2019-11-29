@@ -29,7 +29,7 @@ export class HealthHiveComponent {
       this.option = {
           backgroundColor: 'white',
           title: {
-              top: 5,
+              top: 0,
               text: this.graphGlobal.getTitle("BroodDynamics"),
               left: 'center',
               textStyle: {
@@ -55,7 +55,7 @@ export class HealthHiveComponent {
               }
           },
           calendar: [{
-              top: 80,
+              top: 70,
               left: 'center',
               //width: '70%',
               range: MyDate.getRangeForCalendarAlerts(),

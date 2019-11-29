@@ -204,10 +204,10 @@ export class DailyRecordService {
                 min: 0,
                 max: 100,
                 orient: 'horizontal',
+                left: 'center',
                 top: 30,
                 itemWidth: 15,
                 itemSymbol: 'diamond',
-                left: 'center',
                 inRange: {
                     color: ['red', 'yellow', '#129001'],
                 },
