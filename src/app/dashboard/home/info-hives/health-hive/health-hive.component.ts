@@ -56,13 +56,11 @@ export class HealthHiveComponent {
           },
           calendar: [{
               top: 80,
-              left: '15%',
-              bottom: '3%',
-              height: '45%',
-              width: '70%',
-              range: MyDate.getRangeForCalendarHome(),
-              orient: 'horizontal',
-              cellSize: ['20', '20'],
+              left: 'center',
+              //width: '70%',
+              range: MyDate.getRangeForCalendarAlerts(),
+              orient: 'vertical',
+              cellSize: [40, 40],
               splitLine: {
                   show: true,
                   lineStyle: {
@@ -87,7 +85,9 @@ export class HealthHiveComponent {
               }, */
               dayLabel: {
                   nameMap: this.graphGlobal.getDays(),
-                  show: false,
+                  show: true,
+                  margin: 10,
+                  position: 'end',
                   firstDay: 1, // start on Monday
               },
               monthLabel: {

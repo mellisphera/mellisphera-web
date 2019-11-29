@@ -67,12 +67,12 @@ hr
     }
     #weight{
         position: relative;
-        height: 16vh;
+        height: 25vh;
     }
     
     #alerts{
         position: relative;
-        height: 20vh;
+        height: 22vh;
     }
 
 @media (max-height : 815px){

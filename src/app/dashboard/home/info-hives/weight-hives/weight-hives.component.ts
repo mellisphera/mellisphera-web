@@ -36,7 +36,7 @@ export class WeightHivesComponent{
         this.option = {
             //backgroundColor: 'white',
             title: {
-                top: 5,
+                top: 35,
                 text: this.graphGlobal.getTitle("DailyWeightIncomes"),
                 left: 'center',
                 textStyle: {
@@ -63,23 +63,19 @@ export class WeightHivesComponent{
               }
             },
             legend: {
-                top: 30,
+                top: 60,
                 data: ['gain', this.graphGlobal.getTitle("loss")],
                 textStyle: {
                     color: 'black'
                 }
             },
             calendar: [{
-                top: 70,
-                left: '15%',
-                right: '2%',
-                width: '70%',
-                //right: '4%',
-                height: '45%',
+                top: 90,
+                left: 'center',
                 //height:'auto',
-                cellSize: ['20', '20'],
-                range: MyDate.getRangeForCalendarHome(),
-                orient: 'horizontal',
+                cellSize: [40, 40],
+                range: MyDate.getRangeForCalendarAlerts(),
+                orient: 'vertical',
                 /*cellSize: 'auto',
                 height:'200',*/
                 //  width:'95%',
@@ -94,8 +90,11 @@ export class WeightHivesComponent{
                 },
                 dayLabel: {
                     nameMap: this.graphGlobal.getDays(),
-                    firstDay: 1, // start on Monday
-                    show: false,
+                    firstDay: 1, // start on Monday,
+                    margin: 10,
+                    position: 'end',
+                    show: true,
+                   
                 },
                 monthLabel: {
                     nameMap: this.graphGlobal.getMonth()

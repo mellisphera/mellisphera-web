@@ -92,14 +92,11 @@ export class AlertsComponent implements OnInit {
   clearOption() {
     this.option = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
     this.option.title.text = this.graphGlobal.getTitle('AlertsApiary') + ' ' + this.rucherService.rucher.name;
-    this.option.calendar.orient = 'horizontal';
-    this.option.calendar.top = 70;
+    this.option.calendar.orient = 'vertical';
+    //this.option.calendar.top = 70;
     this.option.calendar.left = 'center';
     this.option.calendar.range = MyDate.getRangeForCalendarAlerts();
-    this.option.calendar.bottom = '3%';
-    this.option.calendar.height = '45%';
-    this.option.calendar.width = '77%';
-    this.option.calendar.cellSize = [20, 20];
+    this.option.calendar.cellSize = [60, 60];
     this.option.series = new Array();
   }
   ngOnInit() {

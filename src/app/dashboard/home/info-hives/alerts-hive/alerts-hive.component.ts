@@ -100,14 +100,14 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
   cleanOption() {
     this.option = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
     this.option.title.text = this.graphGlobal.getTitle('AlertsHive');
-    this.option.calendar.orient = 'horizontal';
+    this.option.calendar.orient = 'vertical';
     this.option.calendar.range = MyDate.getRangeForCalendarAlerts();
     this.option.calendar.top = 65;
-    this.option.calendar.left = '15%';
-    this.option.calendar.bottom = '3%';
-    this.option.calendar.height = '45%';
-    this.option.calendar.width = '77%';
-    //this.option.calendar.cellSize = ['20', '20'];
+    this.option.calendar.left = 'center';
+    //this.option.calendar.bottom = '3%';
+    //this.option.calendar.height = '80%';
+    //this.option.calendar.width = '77%';
+    this.option.calendar.cellSize = [40, 40];
     this.option.series = new Array();
     /*        top: 70,
         left: '15%',
