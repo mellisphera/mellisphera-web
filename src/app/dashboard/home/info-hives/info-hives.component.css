@@ -63,16 +63,16 @@ hr
     
     #health{
         margin-top : 50px;
-        height: 25vh;
+        height: 27vh;
     }
     #weight{
         position: relative;
-        height: 25vh;
+        height: 27vh;
     }
     
     #alerts{
         position: relative;
-        height: 22vh;
+        height: 27vh;
     }
 
 @media (max-height : 815px){
