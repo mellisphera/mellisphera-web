@@ -110,9 +110,15 @@ export class MyDate {
       static getRangeForCalendarAlerts(): Date[]{
         let max = new Date();
         let min = new Date();
-        min.setMonth(max.getMonth() - 1); 
-        min.setDate(max.getDate() + 7);
-        max.setDate(max.getDate() + 7);
+        min.setMonth(max.getMonth() - 1);
+        //min.setDate(max.getDate() + 7);
+        let dateTest = new Date(min);
+        dateTest.setDate(dateTest.getDate() - dateTest.getDay());
+        //if ((max.getMonth() - dateTest.getMonth()) > 1) 
+        if (min.getDay() !== 1 && (max.getMonth() - dateTest.getMonth()) < 2) {
+            min.setDate(min.getDate() - min.getDay());
+        }
+        max.setDate(max.getDate());
         return [min, max];
       }
     

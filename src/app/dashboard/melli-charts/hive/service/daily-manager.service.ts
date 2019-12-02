@@ -198,7 +198,8 @@ export class DailyManagerService {
       case 'WEATHER':
         return new Array(value.iconDay, value.maxTempDay, value.minTempDay, value.maxHumidityDay, value.minHumidityDay, value.mainDay, value.maxPressureDay, value.minPressureDay);
       case 'RAIN':
-        return new Array(this.unitService.convertMilimetreToPouce(value.rainDay, this.unitService.getUserPref().unitSystem, true), value.snowDay, value.snowSun)
+        return new Array(this.unitService.convertMilimetreToPouce(value.rainDay, this.unitService.getUserPref().unitSystem, true), 
+        this.unitService.convertMilimetreToPouce(value.snowDay, this.unitService.getUserPref().unitSystem, true), value.snowSun)
       case 'ALERT':
         return value;
       case 'TEMP_EXT_WEATHER':
@@ -674,17 +675,17 @@ export class DailyManagerService {
             serieComplete.symbolSize = (val: any[]) => {
               let value: number;
               if (this.unitService.getUserPref().unitSystem === 'METRIC') {
-                if (val[1] > 100){
+                if ((val[1] + val[2]) > 100){
                   value = 100;
                 } else {
-                  value = val[1];
+                  value = val[1] + val[2];
                 }
                 return 4*Math.sqrt(value);
               } else {
-                if (val[1] * 25.4 > 100){
+                if ((val[1] + val[2]) * 25.4 > 100){
                   value = 100;
                 } else {
-                  value = val[1];
+                  value = val[1] + val[2];
                 }
                 return (4*Math.sqrt(value * 25.4));
               }

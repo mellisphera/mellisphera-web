@@ -31,9 +31,9 @@ const TITLE_PERIODE_CALENDAR = {
 
 const TITLE_LAST_DAY = {
   TEXT_SUM_FR: 'Somme sur les 7 derniers jours: ',
-  TEXT_SUM_EN: 'Sum last 7 days: ',
-  TEXT_MEAN_FR: 'Moyenne sur les 7 dernier jours: ',
-  TEXT_MEAN_EN: 'Mean last 7 days: '
+  TEXT_SUM_EN: '\nSum last 7 days: ',
+  TEXT_MEAN_FR: '\nMoyenne sur les 7 dernier jours: ',
+  TEXT_MEAN_EN: '\nMean last 7 days: '
 }
 declare interface Tools {
   name: string;
