@@ -39,7 +39,10 @@ export class AlertsComponent implements OnInit {
   private eltOnClickId: EventTarget;
   username: string;
 
-  option: any;
+  private option: {
+    baseOption: any,
+    media: Array<any>
+  };
   private echartInstance: any;
   // tabPos[Nombre d'alertes dans le jour][x ou y][rang de la prochaine alerte a traiter]
   private tabPos: number[][][];
@@ -90,14 +93,37 @@ export class AlertsComponent implements OnInit {
   }
 
   clearOption() {
-    this.option = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
-    this.option.title.text = this.graphGlobal.getTitle('AlertsApiary') + ' ' + this.rucherService.rucher.name;
-    this.option.calendar.orient = 'vertical';
+    this.option = {
+      baseOption: {},
+      media: [
+        {
+          option: {
+            calendar: {
+              left: 'center',
+              cellSize: [50, 50]
+            }
+          }
+        },
+        {
+          query: {// 这里写规则
+            maxWidth: 450,
+          },
+          option: {// 这里写此规则满足下的option
+            calendar: {
+              cellSize: [35, 35]
+            },
+          }
+        },
+      ]
+    };
+    this.option.baseOption = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
+    this.option.baseOption.title.text = this.graphGlobal.getTitle('AlertsApiary') + ' ' + this.rucherService.rucher.name;
+    this.option.baseOption.calendar.orient = 'vertical';
     //this.option.calendar.top = 70;
-    this.option.calendar.left = 'center';
-    this.option.calendar.range = MyDate.getRangeForCalendarAlerts();
-    this.option.calendar.cellSize = [50, 50];
-    this.option.series = new Array();
+    this.option.baseOption.calendar.left = 'center';
+    this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();
+    this.option.baseOption.calendar.cellSize = [50, 50];
+    this.option.baseOption.series = new Array();
   }
   ngOnInit() {
     if (this.echartInstance == null) {
@@ -108,8 +134,7 @@ export class AlertsComponent implements OnInit {
   }
 
   cleanSerie(): void {
-    this.option.series.clear;
-    this.option.series = new Array();
+    this.option.baseOption.series = new Array();
     this.echartInstance.clear();
   }
 
@@ -159,10 +184,10 @@ export class AlertsComponent implements OnInit {
         const dateJoin = this.joinObservationAlert(_data[0].filter(_elt => _elt.type === 'apiary'), _data[1]);
         const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.option);
-        option.series = new Array();
-        option.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
-        option.legend.top = 30;
-        option.legend.selectedMode = 'multiple';
+        option.baseOption.series = new Array();
+        option.baseOption.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
+        option.baseOption.legend.top = 30;
+        option.baseOption.legend.selectedMode = 'multiple';
         this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
           //serieComplete.tooltip = this.getTooltipBySerie();
           serieComplete.renderItem = (params, api) => {
@@ -226,13 +251,13 @@ export class AlertsComponent implements OnInit {
 
           }
           //option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
-          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-          option.legend.data.push(serieComplete.name);
-          option.tooltip = this.getTooltipBySerie(joinData);
-          option.series.push(serieComplete);
+          option.baseOption.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.baseOption.legend.data.push(serieComplete.name);
+          option.baseOption.tooltip = this.getTooltipBySerie(joinData);
+          option.baseOption.series.push(serieComplete);
 
         });
-        option.series.push(this.graphGlobal.getDaySerie());
+        option.baseOption.series.push(this.graphGlobal.getDaySerie());
         this.echartInstance.setOption(option, true);
         this.option = option;
       });

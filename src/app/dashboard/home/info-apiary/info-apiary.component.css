@@ -32,11 +32,17 @@ hr
     margin-top: -30px;
 } */
 
+#apiaryGeneral{
+    width: 500px;
+}
 #apiaryLeft{
     position: absolute;
     top: 0px;
     left: 0px;
     width: 50%;
+}
+#apiaryAlerts{
+    height: 400px;
 }
 
 @media (min-width : 990px){
@@ -60,6 +66,12 @@ hr
        display: block;
        width: 100%;
    }
+   #apiaryGeneral{
+    width: 100%;
+    }
+    #apiaryAlerts{
+        height: 300px;
+    }
 
    #states{
     position: relative;
