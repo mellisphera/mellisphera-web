@@ -32,7 +32,7 @@ export class HealthHiveComponent {
             backgroundColor: 'white',
             title: {
                 top: 5,
-                left: '20%',
+                left: 'center',
                 text: this.graphGlobal.getTitle("BroodDynamics"),
                 textStyle: {
                     color: 'black',
@@ -61,7 +61,7 @@ export class HealthHiveComponent {
             },
             calendar: [{
                 top: 70,
-                left: '15%',
+                left: 'center',
                 //width: '70%',
                 range: MyDate.getRangeForCalendarAlerts(),
                 orient: 'vertical',
@@ -76,7 +76,7 @@ export class HealthHiveComponent {
                 },
                 dayLabel: {
                     nameMap: this.graphGlobal.getDays(),
-                    show: true,
+                    show: false,
                     margin: 10,
                     position: 'end',
                     firstDay: 1, // start on Monday

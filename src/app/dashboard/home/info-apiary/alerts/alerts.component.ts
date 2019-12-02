@@ -225,7 +225,7 @@ export class AlertsComponent implements OnInit {
             return group;
 
           }
-          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          //option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.legend.data.push(serieComplete.name);
           option.tooltip = this.getTooltipBySerie(joinData);

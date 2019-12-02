@@ -2,6 +2,7 @@ export const MEDIA_QUERY_MELLIUX = [
     {
         option: {
           calendar: {
+            left: 'center',
             cellSize: [40, 40]
           }
         }
@@ -33,4 +34,26 @@ export const MEDIA_QUERY_MELLIUX = [
           },
         }
       },
+      {
+        query: {// 这里写规则
+          maxWidth: 300,
+        },
+        option: {
+          calendar: {
+            //cellSize: [25, 25],
+            left: '15%'
+          },
+        }
+      },
+      {
+        query: {// 这里写规则
+          maxWidth: 260,
+        },
+        option: {
+          calendar: {
+            //cellSize: [25, 25],
+            left: 'center'
+          },
+        }
+      }
 ]

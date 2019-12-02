@@ -42,6 +42,7 @@ hr
 
  #general{
      margin: 0px;
+     width: 500px;
  }
 
  #left{
@@ -97,6 +98,9 @@ and (orientation : landscape) {
     .calendar{
         height: 330px;
     }
+    #general{
+        width: 300px;
+    }
 }
 
 /* iPads (portrait) ----------- */
@@ -115,6 +119,9 @@ and (orientation : portrait) {
 and (min-width : 1224px) {
     .calendar{
         height: 320px;
+    }
+    #general{
+        width: 300px;
     }
 /* Styles */
 }
@@ -149,7 +156,9 @@ only screen and (min-device-pixel-ratio : 1.5) {
     #notes{
         width: 200%;
     }
-    
+    #general{
+        width: 100%;
+    }
     #sensors{
         width: 200%;
     }
