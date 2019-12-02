@@ -44,44 +44,123 @@ hr
      margin: 0px;
  }
 
-    #left{
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 50%;
-        display: flex;
-        flex-wrap: wrap;
-    }
-    
-    #notes{
-        width: 100%;
-    }
-    
-    #sensors{
-        width: 50%;
-    }
+ #left{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#notes{
+    width: 100%;
+}
+
+#sensors{
+    width: 50%;
+}
+.calendar{
+    height: 350px;
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+/* Styles */
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 321px) {
+/* Styles */
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen
+and (max-width : 320px) {
+/* Styles */
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+/* Styles */
+}
+
+/* iPads (landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
     .calendar{
-        height: 25vh;
-    }
-
-/* @media (max-height : 815px){
-    #alerts{
-        height: 22vh;
-    }
-} */
-
-@media (max-height : 400px){
-    #alerts{
-        height: 24vh;
+        height: 330px;
     }
 }
 
-/* MEDIA WIDTH */
-@media (min-width : 990px) and (max-width : 1550px){
+/* iPads (portrait) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+    .calendar{
+        height: 330px;
+    }
+    
+}
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (min-width : 1224px) {
+    .calendar{
+        height: 320px;
+    }
+/* Styles */
+}
+
+/* Large screens ----------- */
+@media only screen
+and (min-width : 1824px) {
+    .calendar{
+        height: 330px;
+    }
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
+}
+
+/* @media (min-width : 990px) and (max-width : 1550px){
     #notes,#sensors{
         min-width: 100%;
     }
+} */
+@media (max-width : 990px){
+    #left{
+        position: relative;
+        top: 0px !important;
+        display: block;
+    }
+
+    #notes{
+        width: 200%;
+    }
+    
+    #sensors{
+        width: 200%;
+    }
 }
+/* @media (max-height : 400px){
+#alerts{
+    height: 24vh;
+    }
+}
+
+
 
 @media (max-width : 990px){
     #left{
@@ -91,36 +170,10 @@ hr
     }
 
     #notes{
-        /* margin-top: 100px; */
         width: 200%;
     }
     
     #sensors{
         width: 200%;
     }
-}
-@media (max-width: 1650px) and (max-height: 1210px){
-    .calendar{
-        height: 25vh;
-    }
-}
-@media (max-height: 950px) {
-    .calendar{
-        height: 35vh;
-    }
-}
-@media (max-height: 850px) and (max-width: 1350px) {
-    .calendar{
-        height: 45vh;
-    }
-}
-@media (max-width: 450px) {
-    .calendar{
-        height: 35vh;
-    }
-}
-@media (max-width: 380px) {
-    .calendar{
-        height: 42vh;
-    }
-}
+} */

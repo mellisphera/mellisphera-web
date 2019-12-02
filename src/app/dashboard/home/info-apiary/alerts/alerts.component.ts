@@ -96,7 +96,7 @@ export class AlertsComponent implements OnInit {
     //this.option.calendar.top = 70;
     this.option.calendar.left = 'center';
     this.option.calendar.range = MyDate.getRangeForCalendarAlerts();
-    this.option.calendar.cellSize = [60, 60];
+    this.option.calendar.cellSize = [50, 50];
     this.option.series = new Array();
   }
   ngOnInit() {
