@@ -169,11 +169,11 @@ export class GraphGlobal {
       { 'graph': 'reserveMiel', 'titre': 'Stock de miel' },
       { 'graph': 'DailyWeightIncomes', 'titre': 'Productivité' },
       { 'graph': 'BroodDynamics', 'titre': 'Niveau de couvain' },
-      { 'graph': 'InternalRelativeHumidity', 'titre': 'Humidité interne relative (max)' },
+      { 'graph': 'InternalRelativeHumidity', 'titre': 'Humidité interne max' },
       { 'graph': 'InternalTemperature', 'titre': 'Température interne' },
       { 'graph': 'ExternalTemperature', 'titre': 'Température externe' },
       { 'graph': 'WeightTemperature', 'titre': 'Poids & Température' },
-      { 'graph': 'Humidity', 'titre': 'Humidité (%)' },
+      { 'graph': 'Humidity', 'titre': 'Humidité externe' },
       { 'graph': 'loss', 'titre': 'perte' },
       { 'graph': 'Weight', 'titre': 'Poids' },
       { 'graph': 'AlertsHive', 'titre': 'Evénements' },
@@ -189,11 +189,11 @@ export class GraphGlobal {
       { 'graph': 'reserveMiel', 'titre': 'Caldo de miel' },
       { 'graph': 'DailyWeightIncomes', 'titre': 'Productividad' },
       { 'graph': 'BroodDynamics', 'titre': 'Cantidad de cria' },
-      { 'graph': 'InternalRelativeHumidity', 'titre': 'Humedad int. relativa (max)' },
+      { 'graph': 'InternalRelativeHumidity', 'titre': 'Humedad int. relativa max' },
       { 'graph': 'InternalTemperature', 'titre': 'Temperatura interna' },
       { 'graph': 'ExternalTemperature', 'titre': 'Temperatura externa' },
       { 'graph': 'WeightTemperature', 'titre': 'Peso & Temperatura' },
-      { 'graph': 'Humidity', 'titre': 'Humedad (%)' },
+      { 'graph': 'Humidity', 'titre': 'Humedad' },
       { 'graph': 'loss', 'titre': 'Disminucion' },
       { 'graph': 'Weight', 'titre': 'Peso' },
       { 'graph': 'AlertsHive', 'titre': 'Eventos' },
@@ -210,11 +210,11 @@ export class GraphGlobal {
       { 'graph': 'reserveMiel', 'titre': 'Honey Stock' },
       { 'graph': 'DailyWeightIncomes', 'titre': 'Productivity' },
       { 'graph': 'BroodDynamics', 'titre': 'Brood level' },
-      { 'graph': 'InternalRelativeHumidity', 'titre': 'Internal Relative Humidity (max)' },
+      { 'graph': 'InternalRelativeHumidity', 'titre': 'Internal Humidity max' },
       { 'graph': 'InternalTemperature', 'titre': 'Internal Temperature' },
       { 'graph': 'ExternalTemperature', 'titre': 'External Temperature' },
       { 'graph': 'WeightTemperature', 'titre': 'Weight & Temperature' },
-      { 'graph': 'Humidity', 'titre': 'Humidity (%)' },
+      { 'graph': 'Humidity', 'titre': 'External Humidity' },
       { 'graph': 'loss', 'titre': 'loss' },
       { 'graph': 'Weight', 'titre': 'Weight' },
       { 'graph': 'AlertsHive', 'titre': 'Events' },
@@ -232,7 +232,7 @@ export class GraphGlobal {
     // If he is French
     if (this.translateService.currentLang === 'fr') {
       this.weight.name = 'Poids (lbs)';
-      this.humidity.name = 'Humidité (%)';
+      this.humidity.name = 'Humidité';
       this.rain.name = 'Pluie';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Perte';
@@ -245,7 +245,7 @@ export class GraphGlobal {
       // EN
     } else if (this.translateService.currentLang === 'es') {
       this.weight.name = 'Peso (lbs)';
-      this.humidity.name = 'Humedad (%)';
+      this.humidity.name = 'Humedad ';
       this.rain.name = 'Lluvia';
       this.snow.name = 'Nieve';
       this.moon.phase = 'Fase';
@@ -256,7 +256,7 @@ export class GraphGlobal {
       this.brood.name = 'Cria (%)';
     } else {
       this.weight.name = 'Weight (lbs)';
-      this.humidity.name = 'Humidity (%)';
+      this.humidity.name = 'Humidity ';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Loss';
       this.rain.name = 'Rain';

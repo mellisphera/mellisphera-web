@@ -78,6 +78,8 @@ nav[role=admin-navigation] {
     margin-top: 13px;
     height: 36px;
     padding-right: 0px;
+    background-color: #4F4F51;
+    color: white !important;
     border: none !important;
 }
 #previous-date {

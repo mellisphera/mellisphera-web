@@ -131,7 +131,10 @@ export class RucheService {
    }
 
    getHivesByApiaryId(apiaryId: string): RucheInterface[] {
-     return this.ruchesAllApiary.filter(_hives => _hives.apiaryId === apiaryId);
+     return this.ruchesAllApiary.filter(_hives => _hives.apiaryId === apiaryId)
+     .sort((hiveA: RucheInterface, hiveB: RucheInterface) => {
+       return hiveA.name.localeCompare(hiveB.name);
+     });
    }
 
    /**
