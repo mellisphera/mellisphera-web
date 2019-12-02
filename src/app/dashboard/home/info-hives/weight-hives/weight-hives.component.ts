@@ -40,7 +40,7 @@ export class WeightHivesComponent {
                 title: {
                     top: 0,
                     text: this.graphGlobal.getTitle("DailyWeightIncomes"),
-                    left: '27%',
+                    left: '22%',
                     textStyle: {
                         color: 'black',
                         fontWeight: 'normal',
@@ -66,7 +66,7 @@ export class WeightHivesComponent {
                 },
                 legend: {
                     top: 30,
-                    left: '25%',
+                    left: '21%',
                     data: ['gain', this.graphGlobal.getTitle("loss")],
                     textStyle: {
                         color: 'black'
