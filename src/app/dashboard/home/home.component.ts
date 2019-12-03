@@ -226,22 +226,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   ngAfterViewChecked(): void {
-    //Called after every check of the component's view. Applies to components only.
-    //Add 'implements AfterViewChecked' to the class.
-    // highlight a hive
-/*     if (/info-hives/g.test(this.router.url)) {
-      this.eltOnClickId = document.getElementById(this.rucheService.getCurrentHive().name);
-      if (this.eltOnClickId !== null) {
-        this.renderer.addClass(this.eltOnClickId, 'highlightFix');
-        this.lastHighlightFix = this.rucheService.getCurrentHive().name;
-      }
-
-      this.eltOnClickId = document.getElementById(this.rucheService.getCurrentHive()._id);
-      if (this.eltOnClickId !== null) {
-        this.renderer.addClass(this.eltOnClickId, 'highlightHandle');
-        this.lastHighlightHandle = this.rucheService.getCurrentHive()._id;
-      }
-    }; */
+/*     const elt = document.getElementById('cadre');
+    const img = document.getElementById('apiary-photos');
+    let height = img.clientHeight;
+    let width = img.clientHeight;
+    elt.style.height = height * 3/4 + 'px'; */
   }
 
   loadAlert() {

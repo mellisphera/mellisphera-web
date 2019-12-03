@@ -676,14 +676,14 @@ export class DailyManagerService {
               let value: number;
               if (this.unitService.getUserPref().unitSystem === 'METRIC') {
                 if ((val[1] + val[2]) > 100){
-                  value = 100;
+                  return 35;
                 } else {
                   value = val[1] + val[2];
                 }
                 return 4*Math.sqrt(value);
               } else {
                 if ((val[1] + val[2]) * 25.4 > 100){
-                  value = 100;
+                  return 35;
                 } else {
                   value = val[1] + val[2];
                 }
