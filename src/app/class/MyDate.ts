@@ -108,16 +108,13 @@ export class MyDate {
        * @memberof MyDate
        */
       static getRangeForCalendarAlerts(): Date[]{
+        const day = [43, 28, 29, 30, 40, 41, 42];
         let max = new Date();
         let min = new Date();
-        min.setMonth(max.getMonth() - 1);
+        let nbDay = day[min.getDay()];
+        min.setDate(min.getDate() - nbDay);
         //min.setDate(max.getDate() + 7);
-        let dateTest = new Date(min);
-        dateTest.setDate(dateTest.getDate() - dateTest.getDay());
-        //if ((max.getMonth() - dateTest.getMonth()) > 1) 
-        if (min.getDay() !== 1 && (max.getMonth() - dateTest.getMonth()) < 2) {
-            min.setDate(min.getDate() - min.getDay());
-        }
+
         max.setDate(max.getDate());
         return [min, max];
       }

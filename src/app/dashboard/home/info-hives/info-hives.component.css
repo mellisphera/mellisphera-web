@@ -62,7 +62,7 @@ hr
     width: 50%;
 }
 .calendar{
-    height: 350px;
+    height: 270px;
 }
 
 @media only screen
@@ -87,7 +87,9 @@ and (max-width : 320px) {
 @media only screen
 and (min-device-width : 768px)
 and (max-device-width : 1024px) {
-/* Styles */
+    .calendar{
+        height: 310px;
+    }
 }
 
 /* iPads (landscape) ----------- */
@@ -96,7 +98,7 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : landscape) {
     .calendar{
-        height: 330px;
+        height: 230px;
     }
     #general{
         width: 300px;
@@ -109,7 +111,7 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : portrait) {
     .calendar{
-        height: 330px;
+        height: 310px;
     }
     
 }
@@ -118,7 +120,7 @@ and (orientation : portrait) {
 @media only screen
 and (min-width : 1224px) {
     .calendar{
-        height: 320px;
+        height: 220px;
     }
     #general{
         width: 300px;
@@ -130,7 +132,7 @@ and (min-width : 1224px) {
 @media only screen
 and (min-width : 1824px) {
     .calendar{
-        height: 330px;
+        height: 270px;
     }
 }
 

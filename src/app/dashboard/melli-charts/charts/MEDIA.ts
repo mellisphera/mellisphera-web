@@ -40,8 +40,33 @@ export const MEDIA_QUERY_MELLIUX = [
         },
         option: {
           calendar: {
-            //cellSize: [25, 25],
-            left: '15%'
+            cellSize: [25, 25],
+            left: 'center'
+          },
+          legend: {
+            left: 'center'
+          }
+        }
+      },
+      {
+        query: {// 这里写规则
+          maxWidth: 860,
+        },
+        option: {
+          calendar: {
+            cellSize: [25, 25],
+            left: 'center'
+          },
+        }
+      },
+      {
+        query: {// 这里写规则
+          maxWidth: 960,
+        },
+        option: {
+          calendar: {
+            cellSize: [30, 30],
+            left: 'center'
           },
         }
       },

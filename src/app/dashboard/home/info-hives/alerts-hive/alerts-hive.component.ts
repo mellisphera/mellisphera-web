@@ -200,7 +200,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
         const option = Object.assign({}, this.option);
         option.baseOption.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
         option.baseOption.legend.top = 30;
-        option.baseOption.legend.left = '22%';
+        option.baseOption.legend.left = 'center';
         option.baseOption.legend.selectedMode = 'multiple';
         this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
           serieComplete.renderItem = (params, api) => {
