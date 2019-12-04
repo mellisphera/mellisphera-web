@@ -16,4 +16,5 @@ export interface AlertCat {
     unitMet: string;
     unitImp: string;
     period: string;
+    category: string;
 }

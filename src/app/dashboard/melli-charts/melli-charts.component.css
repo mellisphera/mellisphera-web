@@ -113,6 +113,7 @@ nav[role=admin-navigation] {
     display: inline-block;
     background-repeat: no-repeat;
     background-size:25px;
+    margin: 2px;
     width: 25px;
     height: 23px;
     margin-bottom: -8px;

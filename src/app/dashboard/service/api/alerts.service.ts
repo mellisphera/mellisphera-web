@@ -66,7 +66,9 @@ export class AlertsService {
         this.apiaryAlerts = [];
         this.getAllTypeAlerts().subscribe(
             _alerts => {
-                this.alertTypes = _alerts;
+                this.alertTypes = _alerts.sort((alertA, alertB) => {
+                    return alertA.category.localeCompare(alertB.category);
+                });
                 //console.log(this.alertTypes);
             }
         );
@@ -248,6 +250,10 @@ export class AlertsService {
 
     getAlertConfByUser(userId: string): Observable<AlertUser> {
         return this.http.get<AlertUser>(CONFIG.URL + 'alertsConf/' + userId);
+    }
+
+    getAlertByCategory(category: string): Array<AlertCat> {
+        return this.alertTypes.filter(_alt => _alt.category === category);
     }
 
     // Fonction to check/uncheck an alert
