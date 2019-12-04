@@ -106,6 +106,16 @@ export class AlertsComponent implements OnInit {
         },
         {
           query: {// 这里写规则
+            maxWidth: 980,
+          },
+          option: {// 这里写此规则满足下的option
+            calendar: {
+              cellSize: [35, 35]
+            },
+          }
+        },
+/*         {
+          query: {// 这里写规则
             maxWidth: 450,
           },
           option: {// 这里写此规则满足下的option
@@ -123,7 +133,7 @@ export class AlertsComponent implements OnInit {
               cellSize: [38, 38]
             },
           }
-        },
+        }, */
       ]
     };
     this.option.baseOption = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
