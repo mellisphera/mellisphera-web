@@ -25,14 +25,18 @@ import { TranslateService } from '@ngx-translate/core';
 const TITLE_PERIODE_CALENDAR = {
   TEXT_SUM_FR: 'Somme sur la période: ',
   TEXT_SUM_EN: 'Sum over the period: ',
+  TEXT_SUM_ES: 'Suma durante el período: ',
   TEXT_MEAN_FR: 'Moyenne sur la période: ',
+  TEXT_MEAN_ES: 'Promedio durante el período: ',
   TEXT_MEAN_EN: 'Period average: '
 };
 
 const TITLE_LAST_DAY = {
   TEXT_SUM_FR: 'Somme sur les 7 derniers jours: ',
   TEXT_SUM_EN: '\nSum last 7 days: ',
+  TEXT_SUM_ES: '\nSomme en los últimos 7 días: ',
   TEXT_MEAN_FR: '\nMoyenne sur les 7 dernier jours: ',
+  TEXT_MEAN_ES: '\nPromedio de los últimos 7 días.: ',
   TEXT_MEAN_EN: '\nMean last 7 days: '
 }
 declare interface Tools {
@@ -178,7 +182,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
       if (this.currentTypeDailyOther.name === 'RAIN') {
         this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_FR;
         this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_FR;
-      } else {
+      }  else {
         this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_FR;
         this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_FR;
       }
@@ -190,6 +194,21 @@ export class DailyComponent implements OnInit, AfterViewInit {
         this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_FR;
       }
 
+    }  else if (this.translateService.currentLang === 'es') {
+      if (this.currentTypeDailyOther.name === 'RAIN') {
+        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_ES;
+        this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_ES;
+      } else {
+        this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_ES;
+        this.currentOtherTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_ES;
+      }
+      if (this.currentTypeDailyDevice.name === 'WINCOME') {
+        this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_ES;
+        this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_SUM_ES;
+      } else {
+        this.currentDeviceTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_MEAN_ES;
+        this.currentDeviceTextSevenDay = TITLE_LAST_DAY.TEXT_MEAN_ES;
+      }
     } else {
       if (this.currentTypeDailyOther.name === 'RAIN') {
         this.currentOtherTextPeriodCalendar = TITLE_PERIODE_CALENDAR.TEXT_SUM_EN;

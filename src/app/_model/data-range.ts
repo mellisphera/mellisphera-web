@@ -13,4 +13,5 @@ export interface DataRange {
     scale: number;
     type: string;
     typeFr?: string;
+    typeEs?: string;
 }

@@ -383,9 +383,9 @@
     },
     "MELLICHARTS": {
         "DATE": {
-            "START": "Début",
-            "END": "Fin",
-            "BTN_APPLY": "Aplliquer"
+            "START": "Inicio",
+            "END": "Final",
+            "BTN_APPLY": "Aplicar"
         },
         "BROOD": {
             "TITLE": "Evolucion diaria de la cria"

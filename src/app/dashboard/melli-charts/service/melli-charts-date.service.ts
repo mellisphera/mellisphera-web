@@ -31,16 +31,16 @@ export class MelliChartsDateService {
 /*       { scale: 1, type: 'HOUR'},
       { scale: 6, type: 'HOURS'},
       { scale: 12, type: 'HOURS'}, */
-      { scale: 1, type: 'DAY', typeFr: 'JOUR'},
-      { scale: 3, type: 'DAYS', typeFr: 'JOURS'},
-      { scale: 7, type: 'DAYS', typeFr: 'JOURS'},
-      { scale: 15, type: 'DAYS', typeFr: 'JOURS'},
-      { scale: 1, type: 'MONTH', typeFr: 'MOIS'},
-      { scale: 2, type: 'MONTHS', typeFr: 'MOIS'},
-      { scale: 3, type: 'MONTHS', typeFr: 'MOIS'},
-      { scale: 6, type: 'MONTHS', typeFr: 'MOIS'},
-      { scale: 9, type: 'MONTHS', typeFr: 'MOIS'},
-      { scale: 1, type: 'YEAR', typeFr: 'ANS'}
+      { scale: 1, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
+      { scale: 3, type: 'DAYS', typeFr: 'JOURS', typeEs: 'Día'},
+      { scale: 7, type: 'DAYS', typeFr: 'JOURS', typeEs: 'Día'},
+      { scale: 15, type: 'DAYS', typeFr: 'JOURS', typeEs: 'Día'},
+      { scale: 1, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
+      { scale: 2, type: 'MONTHS', typeFr: 'MOIS', typeEs: 'Mes'},
+      { scale: 3, type: 'MONTHS', typeFr: 'MOIS', typeEs: 'Mes'},
+      { scale: 6, type: 'MONTHS', typeFr: 'MOIS', typeEs: 'Mes'},
+      { scale: 9, type: 'MONTHS', typeFr: 'MOIS', typeEs: 'Mes'},
+      { scale: 1, type: 'YEAR', typeFr: 'AN', typeEs: 'Año'}
     ];
     this.setRange(this.ranges[4]);
   }

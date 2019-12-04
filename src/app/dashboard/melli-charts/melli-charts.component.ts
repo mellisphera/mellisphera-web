@@ -242,7 +242,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   getRangeBYLang(range: DataRange): string {
     if (this.translateService.currentLang === 'fr') {
       return this.melliChartDate.ranges.filter(_range => _range.type === range.type)[0].typeFr;
-    } else {
+    } else if(this.translateService.currentLang === 'es') {
+      return this.melliChartDate.ranges.filter(_range => _range.type === range.type)[0].typeEs;
+    }  else {
       return range.type;
     }
   }
