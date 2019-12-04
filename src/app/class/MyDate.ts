@@ -21,6 +21,7 @@ export class MyDate {
      * @memberof MyDate
      */
     static getRange(min?: Date, max?: Date): Date[] {
+        
         let start = new Date();
         if (!min) {
             start.setDate((start.getDate() - 15));
@@ -108,7 +109,7 @@ export class MyDate {
        * @memberof MyDate
        */
       static getRangeForCalendarAlerts(): Date[]{
-        const day = [43, 28, 29, 30, 40, 41, 42];
+        const day: number[] = [43, 28, 29, 30, 40, 41, 42];
         let max = new Date();
         let min = new Date();
         let nbDay = day[min.getDay()];

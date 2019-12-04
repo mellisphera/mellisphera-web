@@ -48,6 +48,7 @@ export class MelliChartsDateService {
   
   setRange(scale: DataRange): void {
     let date = new Date();
+    const day: number[] = [43, 28, 29, 30, 40, 41, 42];
     switch(scale.type){
       case 'DAYS':
       case 'DAY':
@@ -69,6 +70,8 @@ export class MelliChartsDateService {
     }
     
     this.rangeDateForRequest = MyDate.getRange(date);
+    let nbDay: number = day[this.rangeDateForRequest[0].getDay()];
+    this.rangeDateForRequest[0].setDate(this.rangeDateForRequest[0].getDate() - nbDay);
     this.rangeDateForRequest[0].setHours(4);
     this.rangeDateForRequest[0].setSeconds(0);
     this.rangeDateForRequest[1].setHours(4);
