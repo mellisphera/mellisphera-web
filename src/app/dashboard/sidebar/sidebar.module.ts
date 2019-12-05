@@ -14,9 +14,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SidebarComponent } from './sidebar.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FeedbackComponent } from '../../feedback/feedback.component';
 
 @NgModule({
-    imports: [ RouterModule, CommonModule, TranslateModule],
+    imports: [ RouterModule, CommonModule, FormsModule, ReactiveFormsModule, TranslateModule],
     declarations: [ SidebarComponent ],
     exports: [ SidebarComponent ]
 })

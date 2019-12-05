@@ -23,20 +23,20 @@ import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { TranslateService } from '@ngx-translate/core';
 
 const TITLE_PERIODE_CALENDAR = {
-  TEXT_SUM_FR: 'Somme sur la période: ',
-  TEXT_SUM_EN: 'Sum over the period: ',
-  TEXT_SUM_ES: 'Suma durante el período: ',
-  TEXT_MEAN_FR: 'Moyenne sur la période: ',
-  TEXT_MEAN_ES: 'Promedio durante el período: ',
-  TEXT_MEAN_EN: 'Period average: '
+  TEXT_SUM_FR: '\nSomme sur la période: ',
+  TEXT_SUM_EN: '\nSum over the period: ',
+  TEXT_SUM_ES: '\nSuma durante el período: ',
+  TEXT_MEAN_FR: '\nMoyenne sur la période: ',
+  TEXT_MEAN_ES: '\nPromedio durante el período: ',
+  TEXT_MEAN_EN: '\nPeriod average: '
 };
 
 const TITLE_LAST_DAY = {
-  TEXT_SUM_FR: 'Somme sur les 7 derniers jours: ',
+  TEXT_SUM_FR: '\nSomme sur les 7 derniers jours: ',
   TEXT_SUM_EN: '\nSum last 7 days: ',
   TEXT_SUM_ES: '\nSomme en los últimos 7 días: ',
   TEXT_MEAN_FR: '\nMoyenne sur les 7 dernier jours: ',
-  TEXT_MEAN_ES: '\nPromedio de los últimos 7 días.: ',
+  TEXT_MEAN_ES: '\nPromedio de los últimos 7 días: ',
   TEXT_MEAN_EN: '\nMean last 7 days: '
 }
 declare interface Tools {

@@ -9,10 +9,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
 
-<button id="btn-feedback" type="button" data-toggle="tooltip" data-html="true" title="{{ 'FEEDBACK.TITLE' | translate}}"
-  class="btn btn-default" data-toggle="modal" href="#feedback">
-  <img src="./assets/icons/ui/chat.svg" />
-</button>
+<a id="feedbackElt" href="#" data-toggle="modal" data-target="#feedback">
+  <img src="./assets/icons/ui/contact.png" style="width:50px;margin-left:-5px;" />
+  <p>{{ 'FEEDBACK.TITLE' | translate}}</p>
+</a>
 
 <div class="modal fade" id="feedback">
   <div class="modal-dialog">
@@ -29,17 +29,16 @@ limitations under the License. -->
         </form>
       </div>
       <div class="modal-footer">
-          <div id="description-slack">
-              <p style="text-align:center;">{{ 'FEEDBACK.SLACK' | translate}}<br/>
-                <a href="https://mellisphera.slack.com/shared_invite/enQtNjQzNDIwMTU2MDU1LTE0ODIxZjcwMzExMmY0OTBlMDc0ZjIyOGQwMjY0NmNmYTU3M2FkNWQ5YmNlOWZiMTFjMGVjOWVkOTQyNDk4YzY"
-                  target="_blank">{{ 'FEEDBACK.SIGNUP' | translate}}</a> {{ 'FEEDBACK.OR' | translate}}
-                <a target="_blank"
-                  [href]="getUrlLoginByLang()">{{ 'FEEDBACK.LOGIN' | translate}}</a>
-              </p>
-            </div>
-          <div id="boutons">
+        <div id="description-slack">
+          <p style="text-align:center;">{{ 'FEEDBACK.SLACK' | translate}}<br />
+            <a href="https://mellisphera.slack.com/shared_invite/enQtNjQzNDIwMTU2MDU1LTE0ODIxZjcwMzExMmY0OTBlMDc0ZjIyOGQwMjY0NmNmYTU3M2FkNWQ5YmNlOWZiMTFjMGVjOWVkOTQyNDk4YzY"
+              target="_blank">{{ 'FEEDBACK.SIGNUP' | translate}}</a> {{ 'FEEDBACK.OR' | translate}}
+            <a target="_blank" [href]="getUrlLoginByLang()">{{ 'FEEDBACK.LOGIN' | translate}}</a>
+          </p>
+        </div>
+        <div id="boutons">
           <button type="submit" class="btn btn-default" (click)="resForm();" data-dismiss="modal">
-              {{ 'FEEDBACK.CLOSE' | translate}}
+            {{ 'FEEDBACK.CLOSE' | translate}}
           </button>
           <button type="button" (click)="send()" class="btn btn-primary" data-dismiss="modal"
             [disabled]="feedbackForm.invalid">

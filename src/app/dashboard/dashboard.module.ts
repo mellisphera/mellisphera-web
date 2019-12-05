@@ -24,7 +24,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';
 import { CapteurService } from './service/api/capteur.service';
 import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
-import { FeedbackComponent } from '../feedback/feedback.component';
 import { SearchFleurPipe, searchFleurByDate, searchFleurByType } from './fleurs-floraison/service/search-fleur.pipe';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { SidebarService } from './service/sidebar.service';
@@ -56,6 +55,7 @@ import { AlertsService } from './service/api/alerts.service';
 import { AuthGuardService } from '../auth/auth-guard.service';
 import { AuthInterceptorService } from '../auth/Service/auth-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FeedbackComponent } from '../feedback/feedback.component';
 
 
 
@@ -104,7 +104,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   ],
   declarations: [
     DashboardComponent,
-    FeedbackComponent,
     SearchFleurPipe,
     searchFleurByDate,
     searchFleurByType,
@@ -113,6 +112,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     PreferenceConfigComponent,
     ManageHivesComponent,
     ManageApiarysComponent,
+    FeedbackComponent,
     ManageSensorsComponent,
     ManageNotesComponent,
     AlertConfigurationComponent,

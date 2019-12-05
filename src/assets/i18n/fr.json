@@ -291,7 +291,7 @@
         }
     },
     "FEEDBACK" : {
-        "TITLE" : "Ecrivez-nous !",
+        "TITLE" : "Ecrivez-nous",
         "MESSAGE" : "Ecrivez-nous !",
         "COMMENT" : "Votre commentaire",
         "SLACK" : "Vous pouvez aussi rejoindre notre conversation sur Slack en",
