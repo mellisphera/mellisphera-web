@@ -14,6 +14,12 @@ td, p, label{
 .cols_description{
     width: 7%;
 }
+.cols_value {
+    width: 23%;
+}
+.cols_val{
+    width: 10%;
+}
 .enable {
 }
 .disable {

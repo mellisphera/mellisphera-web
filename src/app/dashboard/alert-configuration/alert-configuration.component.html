@@ -24,8 +24,9 @@ limitations under the License. -->
           <th scope="col" class="text-left cols_icon">{{ 'ALERT_CONF_PAGE.TYPE' | translate}}</th>
           <th scope="col" class="text-left cols_custom">{{ 'ALERT_CONF_PAGE.NAME' | translate}}</th>
           <th scope="col" class="text-left cols_description">{{ 'ALERT_CONF_PAGE.DESCRIPTION' | translate}}</th>
-          <th scope="col" class="text-center">{{ 'ALERT_CONF_PAGE.VALUE' | translate}}</th>
-          <th scope="col" class="text-center">{{ 'ALERT_CONF_PAGE.STATUS' | translate}}</th>
+          <th scope="col" class="text-left cols_value">{{ 'ALERT_CONF_PAGE.VALUE' | translate}}</th>
+          <th scope="col" class="text-left cols_val"></th>
+          <th scope="col" class="text-left">{{ 'ALERT_CONF_PAGE.STATUS' | translate}}</th>
         </tr>
       </thead>
       <tbody>
@@ -43,15 +44,19 @@ limitations under the License. -->
             </popover-content>
             <a [popover]="myPopover" style="font-size: 20px !important;" class="info-link"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
           </td>
-          <td class="text-center">
+          <td class="text-left">
             <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
               <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range"
                 [min]="getRangeValue(alert._id)[0]" [max]="getRangeValue(alert._id)[1]" [step]="getStep(alert._id)"
                 [value]="getUserValue(alert._id)" />
-              <p>{{ getUserValue(alert._id) }} {{ getUnit(alert._id) }} {{ getPeriod(alert._id) }}</p>
             </div>
           </td>
-          <td class="text-center">
+          <td>
+            <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
+                <p>{{ getUserValue(alert._id) }} {{ getUnit(alert._id) }}{{ getPeriod(alert._id) }}</p>
+            </div>
+          </td>
+          <td class="text-left">
             <div class="btn-group" id="status" data-toggle="buttons" *ngIf="alert.disable">
               <label [class]="'btn btn-default btn-on ' + (isEnable(alert._id) ? 'active': '')"
                 (click)="onEnable(alert._id)">

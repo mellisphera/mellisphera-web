@@ -20,12 +20,12 @@ limitations under the License. -->
                 fdff
             </li> -->
     
-            <li *ngIf="isMobileMenu()">
+<!--             <li *ngIf="isMobileMenu()">
                 <a href="#">
                     <img (click)="logout();" src="./assets/img/logout.png" style="width:30px;height: 30px;" />
                 </a>
-            </li>
-            <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
+            </li> -->
+           <!--  <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li> -->
             <li (click)="focus('home')">
                 <a routerLink="./home/info-apiary" data-toggle="tooltip" id="home" data-placement="top" title="{{ 'SIDEBAR.APIARY' | translate }}">
                     <img src="./assets/icons/ui/melliUx.svg" style="width:50px;margin-left:-5px;"/>
