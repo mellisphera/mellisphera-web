@@ -251,7 +251,9 @@ nav[role=admin-navigation] {
      }
     .navbar-nav{
         justify-content: center !important;
+        margin: 0px !important;
     }
+
     .dropdown-menu{
         background-color: #4F4F51 !important;
         position: absolute !important;
@@ -260,7 +262,7 @@ nav[role=admin-navigation] {
 }
 @media screen and (max-width:500px){
     #dropdown{
-        width: 52%;
+        width: 75%;
     }
 /*     #dt-scale ul {
         padding: 0px;

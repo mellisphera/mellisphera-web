@@ -2,6 +2,9 @@ table{
     width: 80%;
     margin-right: auto;
 }
+td, p, label{
+    font-size: 14px;
+}
 .cols_custom{
     width: 22%;
 }
@@ -49,5 +52,10 @@ table{
 @media screen and (max-width:1060px) {
     table{
         width: 100%;
+    }
+}
+@media (max-width: 991px){
+    thead{
+        display: none;
     }
 }
