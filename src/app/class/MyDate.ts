@@ -109,7 +109,7 @@ export class MyDate {
        * @memberof MyDate
        */
       static getRangeForCalendarAlerts(): Date[]{
-        const day: number[] = [43, 28, 29, 30, 40, 41, 42];
+        const day: number[] = [34, 28, 29, 30, 31, 32, 33];
         let max = new Date();
         let min = new Date();
         let nbDay = day[min.getDay()];

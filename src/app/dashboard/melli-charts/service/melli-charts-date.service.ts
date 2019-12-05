@@ -48,7 +48,7 @@ export class MelliChartsDateService {
   
   setRange(scale: DataRange): void {
     let date = new Date();
-    const day: number[] = [43, 28, 29, 30, 40, 41, 42];
+    const day: number[] = [34, 28, 29, 30, 31, 32, 33];
     switch(scale.type){
       case 'DAYS':
       case 'DAY':
