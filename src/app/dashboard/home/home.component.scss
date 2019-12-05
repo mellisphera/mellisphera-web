@@ -506,18 +506,21 @@ li:first-child img{
 
 // HERE THE LEFT HAMBURGER
 @media (max-width: 991px) {
-#menuToggleHome
-{
-  display: block;
-  position: relative;
-  top: 5px;
-  left: 10px;
-  
-  z-index: 1;
-  
-  -webkit-user-select: none;
-  user-select: none;
-}
+  #menuToggleHome
+  {
+    display: block;
+    position: relative;
+    top: 5px;
+    left: 10px;
+    
+    z-index: 1;
+    
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .hive-group{
+    z-index: 0 !important;
+  }
 
 #menuToggleHome input
 {
