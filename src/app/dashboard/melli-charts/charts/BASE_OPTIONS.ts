@@ -255,7 +255,7 @@ export const BASE_OPTIONS = {
                     cursor: 'unset',
                     top: 'middle',
                     shape: {
-                        width: 300,
+                        width: 500,
                         height: 90
                     },
                     style: {
@@ -272,7 +272,7 @@ export const BASE_OPTIONS = {
                     style: {
                         fill: '#333',
                         text: '',
-                        font: '18px poppins'
+                        font: '14px poppins'
                     }
                 },
             ]

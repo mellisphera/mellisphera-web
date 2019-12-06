@@ -101,7 +101,7 @@
         "FLOWER" : "Fleur",
         "SENSORS" : "Capteurs",
         "DATA" : "Analyse",
-        "ALERT_CONF": "Configuration Notifs"
+        "ALERT_CONF": "Alerts"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Changer de mot de passe",
@@ -143,7 +143,7 @@
             "NAME" : "Nom",
             "BROOD" : "Couvain",
             "WEIGHT" : "Poids",
-            "SENSORS" : "Capteurs",
+            "SENSORS" : "Capteur",
             "APIARY" : "Rucher"
         }
     },

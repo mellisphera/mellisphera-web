@@ -113,19 +113,8 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
     this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();
     this.option.baseOption.calendar.top = 60;
     this.option.baseOption.calendar.left = 'center';
-    //this.option.calendar.bottom = '3%';
-    //this.option.calendar.height = '80%';
-    //this.option.calendar.width = '77%';
-    this.option.baseOption.calendar.cellSize = [40, 40];
+    //this.option.baseOption.calendar.cellSize = [40, 40];
     this.option.baseOption.series = new Array();
-    /*        top: 70,
-        left: '15%',
-        bottom: '3%',
-        height: '45%',
-        width: '77%',
-        range: MyDate.getRangeForCalendarAlerts(),
-        orient: 'horizontal',
-        cellSize: ['20', '20'], */
   }
 
   ngOnInit() {

@@ -56,12 +56,12 @@ li:first-child img{
   cursor: pointer;
 }
 
-.button1 {
-  background-color: #70A8B2; 
+.button1, .button0 {
+  background-color: #4F4F51;  
   color: white; 
   border: 2px solid #70A8B2;
   border-radius: 4px;
-}
+} 
 
 .button1:hover {
   background-color: white;
@@ -153,7 +153,7 @@ li:first-child img{
     // background-color: #4F4F51;
     width: 50%;
     margin: 0px;
-    margin-top: -19px;
+    margin-top: -8px;
     overflow: hidden;
     position: relative;
     border-bottom: 5px solid transparent;
@@ -494,7 +494,7 @@ li:first-child img{
   }
 
   .hive-info{
-    font-size: 9px;
+    font-size: 22px;
   }
 
   .has-sensors{
@@ -504,7 +504,7 @@ li:first-child img{
 
 @media (max-width: 430px) {
   .hive-info{
-    font-size: 8px;
+    font-size: 15px;
   }
 
   .has-sensors{
@@ -514,9 +514,11 @@ li:first-child img{
 
 @media (max-width: 380px) {
   .hive-info{
-    font-size: 7px;
+    font-size: 10px;
   }
-
+  .button0{
+    padding-left: 6px !important;
+  }
   .has-sensors{
     line-height: 15px !important;
   }

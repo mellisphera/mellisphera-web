@@ -67,7 +67,7 @@ export class WeightHivesComponent {
                 legend: {
                     top: 30,
                     left: 'center',
-                    data: ['gain', this.graphGlobal.getTitle("loss")],
+                    data: [this.graphGlobal.getTitle('gain'), this.graphGlobal.getTitle("loss")],
                     textStyle: {
                         color: 'black'
                     }
@@ -120,7 +120,7 @@ export class WeightHivesComponent {
                 }],
                 series: [
                     {
-                        name: 'gain',
+                        name: this.graphGlobal.getTitle('gain'),
                         type: 'effectScatter',
                         coordinateSystem: 'calendar',
                         data: '',

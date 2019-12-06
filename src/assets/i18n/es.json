@@ -99,7 +99,7 @@
         "FLOWER": "Flor",
         "SENSORS": "Sensor",
         "DATA": "Analisis",
-        "ALERT_CONF": "Notificaciones "
+        "ALERT_CONF": "Alertas "
     },
     "PREFERENCE_CONFIG": {
         "TITLE_PASSWORD": "Modificar la contasena",
@@ -141,7 +141,7 @@
             "NAME": "Nombre",
             "BROOD": "Cría",
             "WEIGHT": "Peso",
-            "SENSORS": "Sensores",
+            "SENSORS": "Sensor",
             "APIARY": "Colmenar"
         }
     },
@@ -203,7 +203,7 @@
                 "NEW": "Nuevo",
                 "NEW_NOTES": "Nueva nota",
                 "DATE": "Fecha Hora: ",
-                "CREATE_OBS": "Nueva observacion",
+                "CREATE_OBS": "Nueva nota",
                 "CREATE_ACT": "Nueva accion",
                 "CLOSE": "Cerrar",
                 "EDIT": "Guardar",
@@ -260,7 +260,7 @@
         "TITLE": "Notas del colmenar",
         "FORM": {
             "NEW": "Nueva nota de colmenar",
-            "CREATE": "Crear una nota",
+            "CREATE": "Nueva nota",
             "SAVE": "Guardar",
             "SELECT": "Selecciona tu colmena",
             "TYPE": "Typo: ",

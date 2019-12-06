@@ -175,6 +175,7 @@ export class GraphGlobal {
       { 'graph': 'WeightTemperature', 'titre': 'Poids & Température' },
       { 'graph': 'Humidity', 'titre': 'Humidité externe' },
       { 'graph': 'loss', 'titre': 'perte' },
+      { 'graph': 'gain', 'titre': 'gain' },
       { 'graph': 'Weight', 'titre': 'Poids' },
       { 'graph': 'AlertsHive', 'titre': 'Evénements' },
       { 'graph': 'AlertsApiary', 'titre': 'Evénements du rucher' },
@@ -195,6 +196,7 @@ export class GraphGlobal {
       { 'graph': 'WeightTemperature', 'titre': 'Peso & Temperatura' },
       { 'graph': 'Humidity', 'titre': 'Humedad' },
       { 'graph': 'loss', 'titre': 'Disminucion' },
+      { 'graph': 'gain', 'titre': 'Aumento' },
       { 'graph': 'Weight', 'titre': 'Peso' },
       { 'graph': 'AlertsHive', 'titre': 'Eventos' },
       { 'graph': 'AlertsApiary', 'titre': 'Eventos del colmenar' },
@@ -216,6 +218,7 @@ export class GraphGlobal {
       { 'graph': 'WeightTemperature', 'titre': 'Weight & Temperature' },
       { 'graph': 'Humidity', 'titre': 'External Humidity' },
       { 'graph': 'loss', 'titre': 'loss' },
+      { 'graph': 'gain', 'titre': 'gain' },
       { 'graph': 'Weight', 'titre': 'Weight' },
       { 'graph': 'AlertsHive', 'titre': 'Events' },
       { 'graph': 'AlertsApiary', 'titre': 'Events for the apiary' },
@@ -450,27 +453,27 @@ export class GraphGlobal {
         }
       case 'WEATHER':
         if (this.translateService.currentLang === 'fr') {
-          return this.titresFR[13].titre;
-        } else if (this.translateService.currentLang === 'es') {
-          return this.titresES[13].titre;
-        } else {
-          return this.titresEN[13].titre;
-        }
-      case 'MOON':
-        if (this.translateService.currentLang === 'fr') {
           return this.titresFR[14].titre;
         } else if (this.translateService.currentLang === 'es') {
           return this.titresES[14].titre;
         } else {
           return this.titresEN[14].titre;
         }
-      case 'RAIN':
+      case 'MOON':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[15].titre;
         } else if (this.translateService.currentLang === 'es') {
           return this.titresES[15].titre;
         } else {
           return this.titresEN[15].titre;
+        }
+      case 'RAIN':
+        if (this.translateService.currentLang === 'fr') {
+          return this.titresFR[16].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[16].titre;
+        } else {
+          return this.titresEN[16].titre;
         }
       case 'TEMP_EXT_WEATHER_MAX':
         if (this.translateService.currentLang === 'fr') {
@@ -490,11 +493,11 @@ export class GraphGlobal {
         }
       case 'WIND':
         if (this.translateService.currentLang === 'fr') {
-          return this.titresFR[16].titre;
+          return this.titresFR[17].titre;
         } else if (this.translateService.currentLang === 'es') {
-          return this.titresES[16].titre;
+          return this.titresES[17].titre;
         } else {
-          return this.titresEN[16].titre;
+          return this.titresEN[17].titre;
         }
       case 'HEXT_WEATHER_MAX':
         if (this.translateService.currentLang === 'fr') {

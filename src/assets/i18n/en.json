@@ -101,7 +101,7 @@
         "FLOWER" : "Flower",
         "SENSORS" : "Sensors",
         "DATA" : "Expert",
-        "ALERT_CONF": "Alarm Settings"
+        "ALERT_CONF": "Alarms"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Change Password",
@@ -144,7 +144,7 @@
             "NAME" : "Name",
             "BROOD" : "Brood",
             "WEIGHT" : "Weight",
-            "SENSORS" : "Sensors",
+            "SENSORS" : "Sensor",
             "APIARY" : "Apiary"
         }
     },

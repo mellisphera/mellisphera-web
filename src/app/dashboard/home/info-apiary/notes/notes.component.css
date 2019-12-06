@@ -71,6 +71,11 @@ th{
 .dt-picker{
     width: 100px;
 }
+
+.user-sensors::before{
+    content: "";
+}
+
 @media (max-width:800px) {
     .panel {
         width: 100% !important;
@@ -98,5 +103,6 @@ th{
    } 
    .btn_delete_modal_mobile{
        display: block;
+       padding-top: 0px !important;
    }
 }

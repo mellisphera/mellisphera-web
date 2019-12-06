@@ -24,7 +24,7 @@ nav{
 }
 #apiary-group li:last-child{
     width: 75%;
-    margin-left: 40px;
+    margin-left: 17px;
 }
 
 #Manage{
@@ -90,9 +90,9 @@ label{
     height: 60px;
 }
 @media (max-width: 991px){
-    #apiary-group li:last-child{
+/*     #apiary-group li:last-child{
         margin-left: 20px;
-    }
+    } */
     .navbar-nav > li {
         float: left !important;
     }
@@ -135,6 +135,7 @@ label{
 
     #apiary-group li:last-child{
         width: 55%;
+        margin-left: 25px;
     }
 
     #Manage{
@@ -324,4 +325,9 @@ label{
   .delete{
     position: absolute;
     left: 15px;
+}
+@media (max-width: 500px) {
+    #apiary-group li:last-child{
+        margin-left: 31%;
+    }
 }
