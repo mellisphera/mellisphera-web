@@ -70,6 +70,7 @@ export class MelliChartsDateService {
     }
     
     this.rangeDateForRequest = MyDate.getRange(date);
+    console.log(this.rangeDateForRequest);
     let nbDay: number = day[this.rangeDateForRequest[0].getDay()];
     this.rangeDateForRequest[0].setDate(this.rangeDateForRequest[0].getDate() - nbDay);
     this.rangeDateForRequest[0].setHours(4);

@@ -229,7 +229,16 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    * @memberof MelliChartsComponent
    */
   getRangeByType(type: string): Array<DataRange> {
-    return this.melliChartDate.ranges.filter(elt => elt.type === type || elt.type === type + 'S');
+    let arg: DataRange;
+    let ranges: Array<DataRange> = this.melliChartDate.ranges.filter(elt => elt.type === type || elt.type === type + 'S');
+    if (type === 'YEAR') {
+      arg = this.melliChartDate.ranges[8];
+      ranges = ranges.concat(arg);
+    } else if (type === 'MONTH') {
+      const index = ranges.findIndex(_range => _range.type === 'MONTHS' && _range.scale === 9);
+      ranges.splice(index, 1);
+    }
+    return ranges;
   }
 
   /**
