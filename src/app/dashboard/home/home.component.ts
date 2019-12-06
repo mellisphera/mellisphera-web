@@ -237,12 +237,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.alertsService.getHiveAlertByApiaryId(this.rucherService.getCurrentApiary(),
       MyDate.getRangeForCalendarAlerts()[0].getTime(), MyDate.getRangeForCalendarAlerts()[1].getTime()).subscribe(
         _alerts => {
-          this.hiveAlertsByApiary = _alerts.filter(_alert => !_alert.check);
+          this.hiveAlertsByApiary = _alerts.filter(_alert => _alert.check === false);
+          console.log(_alerts);
+          console.log(this.hiveAlertsByApiary);
         }
       );
     this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts()).subscribe(
       _notif => {
         this.apiaryAlertsActives = _notif.filter(_notif => !_notif.check);
+        console.log(this.apiaryAlertsActives);  
       }
     )
   }

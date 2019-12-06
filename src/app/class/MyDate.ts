@@ -20,15 +20,8 @@ export class MyDate {
      * @returns {Date[]}
      * @memberof MyDate
      */
-    static getRange(min?: Date, max?: Date): Date[] {
-        
-        let start = new Date();
-        if (!min) {
-            start.setDate((start.getDate() - 15));
-        } else {
-            start = min;
-        }
-        const end = max ? max : new Date();
+    static getRange(start: Date): Date[] {
+        const end = new Date();
         return new Array(start, end);
     }
 

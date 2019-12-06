@@ -175,6 +175,11 @@ li:first-child img{
   }
 }
 
+@media (max-width: 990px) {
+  #cadre{
+    width: 100%;
+  }
+}
 #clickHive{
   margin-top: 20px;
 }
@@ -316,6 +321,12 @@ li:first-child img{
   height: 100%;
 }
 
+/* .buttonLeft{
+  padding: 6px;
+} */
+.buttonLeft li{
+  padding-left: 2px;
+}
 .alertNoData{
   font-size: medium;
   color : #4F4F51;
@@ -353,6 +364,7 @@ li:first-child img{
     width: 30px;
     height: 30px;
   }
+
 
   .hive-info{
     font-size: 16px;
@@ -408,7 +420,12 @@ li:first-child img{
   .hive-info{
     font-size: 18px;
   }
-
+  #global{
+    margin-left: 0px;
+  }
+  .buttonLeft{
+    padding: 6px;
+  }
   .has-sensors{
     line-height: 32px !important;
   }
@@ -453,6 +470,9 @@ li:first-child img{
   .ruche{
     width: 20px;
     height: 20px;
+  }
+  .button1{
+    width: 85px !important;
   }
   #global{
     margin-left: 0px;
@@ -671,7 +691,7 @@ li:first-child img{
   }
 
   #name{
-    margin-top : 50px;
+    //margin-top : 50px;
   }
 
   #menuHome li{
@@ -787,66 +807,16 @@ li:first-child img{
 .navbar-nav {
   margin: 0px !important;
 }
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 480px) {
-/* Styles */
-}
-
-/* Smartphones (landscape) ----------- */
-@media only screen
-and (min-width : 321px) {
-/* Styles */
-}
-
-/* Smartphones (portrait) ----------- */
-@media only screen
-and (max-width : 500px) {
-  #cadre{
-    width: 100%;
+@media (max-width: 770px) {
+  .navbar{
+    height: 100px;
   }
-
-/* Styles */
-}
-
-/* iPads (portrait and landscape) ----------- */
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px) {
-/* Styles */
-}
-
-/* iPads (landscape) ----------- */
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px)
-and (orientation : landscape) {
-/* Styles */
-}
-
-/* iPads (portrait) ----------- */
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px)
-and (orientation : portrait) {
-/* Styles */
-}
-
-/* Desktops and laptops ----------- */
-@media only screen
-and (min-width : 1224px) {
-/* Styles */
-}
-
-/* Large screens ----------- */
-@media only screen
-and (min-width : 1824px) {
-/* Styles */
-}
-
-/* iPhone 4 ----------- */
-@media
-only screen and (-webkit-min-device-pixel-ratio : 1.5),
-only screen and (min-device-pixel-ratio : 1.5) {
-/* Styles */
+  .navbar-date{
+    width: 100%;
+    text-align: center;
+  }
+  .buttonLeft{
+    display: flex;
+    justify-content: center;
+  }
 }

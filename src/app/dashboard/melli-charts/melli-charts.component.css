@@ -250,7 +250,7 @@ nav[role=admin-navigation] {
         height: 100px;
      }
     .navbar-nav{
-        justify-content: center !important;
+        /*justify-content: center !important;*/
         margin: 0px !important;
     }
 
@@ -263,6 +263,9 @@ nav[role=admin-navigation] {
 @media screen and (max-width:500px){
     #dropdown{
         width: 75%;
+    }
+    .navbar-nav{
+        justify-content: space-around;
     }
 /*     #dt-scale ul {
         padding: 0px;

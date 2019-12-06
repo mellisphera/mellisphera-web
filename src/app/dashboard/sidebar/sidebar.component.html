@@ -10,69 +10,80 @@ See the License for the specific language governing permissions and
 limitations under the License. -->
 
 <div class="sidebar-wrapper" [style.background-color]="sidebarService.getCurrentColor().color">
-        <div class="logo">
-            <a routerLink="./home">
-                <img src="./assets/logo.png" style="width:30px;height: 30px;" />
-            </a>
-        </div>
-        <ul class="nav responsive-nav">
-    <!--         <li class="dropdown" *ngIf="isMobileMenu()">
+    <div class="logo">
+        <a routerLink="./home">
+            <img src="./assets/logo.png" style="width:30px;height: 30px;" />
+        </a>
+    </div>
+    <ul class="nav responsive-nav">
+        <!--         <li class="dropdown" *ngIf="isMobileMenu()">
                 fdff
             </li> -->
-    
-<!--             <li *ngIf="isMobileMenu()">
+
+        <!--             <li *ngIf="isMobileMenu()">
                 <a href="#">
                     <img (click)="logout();" src="./assets/img/logout.png" style="width:30px;height: 30px;" />
                 </a>
             </li> -->
-           <!--  <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li> -->
-            <li (click)="focus('home')">
-                <a routerLink="./home/info-apiary" data-toggle="tooltip" id="home" data-placement="top" title="{{ 'SIDEBAR.APIARY' | translate }}">
-                    <img src="./assets/icons/ui/melliUx.svg" style="width:50px;margin-left:-5px;"/>
-                    <p>{{ 'SIDEBAR.APIARY' | translate }}</p>
+        <!--  <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li> -->
+        <li (click)="focus('home')">
+            <a routerLink="./home/info-apiary" data-toggle="tooltip" id="home" data-placement="top"
+                title="{{ 'SIDEBAR.APIARY' | translate }}">
+                <img src="./assets/icons/ui/melliUx.svg" style="width:50px;margin-left:-5px;" />
+                <p>{{ 'SIDEBAR.APIARY' | translate }}</p>
 
-                </a>
-            </li>
-<!--             <li *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('flower')">
+            </a>
+        </li>
+        <!--             <li *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('flower')">
                 <a routerLink="./fleurs-floraison" id="flower" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.FLOWER' | translate }}">
                     <img src="./assets/icons/ui/flowers.svg" style="width:50px;margin-left:-5px;" />
                 </a>
             </li> -->
-            <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('admin')">
-                <a routerLink="./admin" data-toggle="tooltip" id="admin" data-placement="top" title="admin">
-                    <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;" />
-                </a>
-            </li>
-<!--              <li (click)="focus('stack')">
+        <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('admin')">
+            <a routerLink="./admin" data-toggle="tooltip" id="admin" data-placement="top" title="admin">
+                <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;" />
+            </a>
+        </li>
+        <!--              <li (click)="focus('stack')">
                 <a id="stack" routerLink="./stack-apiary" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.DATA' | translate }}">
                     <img src="./assets/img/stack.png" style="width:30px;height: 30px; margin-top:-6px;" />
                 </a>
             </li> -->
-            <li (click)="focus('melli-charts')">
-                <a id="melli-charts" routerLink="./melli-charts" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.DATA' | translate }}">
-                    <img src="./assets/icons/ui/melliCharts.svg" style="width:50px;margin-left:-5px;" />
-                    <p>{{ 'SIDEBAR.DATA' | translate }}</p>
-                </a>
-            </li>
-            <li (click)="focus('alertConf')">
-                <a id="alertConf" routerLink="./alert-configuration" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.ALERT_CONF' | translate }}">
-                    <img src="./assets/icons/ui/settings.svg" style="width:50px;margin-left:-5px;" />
-                    <p>{{ 'SIDEBAR.ALERT_CONF' | translate }}</p>
-                </a>
-            </li>
-            <li (click)="focus('bm')">
-                <a id="bm" href="https://mybroodminder.com/login" target="blank" data-toggle="tooltip" data-placement="top" title="mybroodminder">
-                    <img src="./assets/icons/ui/BroodMinder.svg" style="width:50px;margin-left:-5px;" />
-                    <p>Mybroodminder</p>
-                </a>
-            </li>
-            <li style="margin-top: 10px;">
-                <a id="feedbackElt" href="#" data-toggle="modal" data-target="#feedback">
-                    <img src="./assets/icons/ui/contact.png" style="width:50px;margin-left:-5px;" />
-                    <p>{{ 'FEEDBACK.TITLE' | translate}}</p>
-                  </a>
-            </li>
-        </ul>
-    
+        <li (click)="focus('melli-charts')">
+            <a id="melli-charts" routerLink="./melli-charts" data-toggle="tooltip" data-placement="top"
+                title="{{ 'SIDEBAR.DATA' | translate }}">
+                <img src="./assets/icons/ui/melliCharts.svg" style="width:50px;margin-left:-5px;" />
+                <p>{{ 'SIDEBAR.DATA' | translate }}</p>
+            </a>
+        </li>
+        <li (click)="focus('alertConf')">
+            <a id="alertConf" routerLink="./alert-configuration" data-toggle="tooltip" data-placement="top"
+                title="{{ 'SIDEBAR.ALERT_CONF' | translate }}">
+                <img src="./assets/icons/ui/settings.svg" style="width:50px;margin-left:-5px;" />
+                <p>{{ 'SIDEBAR.ALERT_CONF' | translate }}</p>
+            </a>
+        </li>
+        <li (click)="focus('bm')">
+            <a id="bm" href="https://mybroodminder.com/login" target="blank" data-toggle="tooltip" data-placement="top"
+                title="mybroodminder">
+                <img src="./assets/icons/ui/BroodMinder.svg" style="width:50px;margin-left:-5px;" />
+                <p>Mybroodminder</p>
+            </a>
+        </li>
+        <li style="margin-top: 10px;">
+            <a id="feedbackElt" href="#" data-toggle="modal" data-target="#feedback">
+                <img src="./assets/icons/ui/contact.png" style="width:50px;margin-left:-5px;" />
+                <p>{{ 'FEEDBACK.TITLE' | translate}}</p>
+            </a>
+        </li>
+        <li (click)="focus('userPref')" *ngIf="isMobileMenu()">
+            <a id="userPref" routerLink="./preferences" data-toggle="tooltip" data-placement="top"
+                title="{{ 'SIDEBAR.ALERT_CONF' | translate }}">
+                <img src="./assets/icons/ui/userPref.png" style="width:50px;margin-left:-5px;" />
+                <p>{{ 'NAVBAR.ACCOUNT.PREFERENCES' | translate }}</p>
+            </a>
+        </li>
+    </ul>
+
     <!--      <button id="hideSideBar" (click)="navComponent.sidebarToggle()" style="background:none; border: none;"><i class="fa fa-arrow-circle-left fa-3x"></i></button>
      -->
