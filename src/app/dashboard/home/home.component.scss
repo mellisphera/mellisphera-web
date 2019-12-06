@@ -471,8 +471,9 @@ li:first-child img{
     width: 20px;
     height: 20px;
   }
-  .button1{
-    width: 85px !important;
+  .button1, .button0{
+    width: 76px !important;
+    font-size: 13px;
   }
   #global{
     margin-left: 0px;
