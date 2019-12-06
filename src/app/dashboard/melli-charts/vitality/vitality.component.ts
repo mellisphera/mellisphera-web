@@ -48,6 +48,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     this.stackService.setBroodChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-brood')));
     this.option.series = [];
     this.setOptionForStackChart();
+    console.log(this.stackService.getHiveSelect());
     if (this.stackService.getHiveSelect().length >= 1) {
       this.loadAllHiveAfterRangeChange((options: any) => {
         this.stackService.getBroodChartInstance().setOption(options, true);

@@ -118,6 +118,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive.apiaryId === this.rucherService.getCurrentApiary())[0];
         }
         this.melliChartHive.setHiveSelect(hiveSelect);
+        this.stackService.addHive(hiveSelect);
 
       }
     )
@@ -310,9 +311,14 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
         this.melliChartHive.setHiveSelect(hive);
+        if (this.stackService.getHiveSelect().length > 0) {
+          this.stackService.cleanSlectedHives();
+        }
+        this.stackService.addHive(hive);
         this.hiveComponent.loadDataFromHive();
         break;
       case PREFIX_PATH + 'brood':
+          this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
           if (this.stackService.ifActiveAlreadySelected(hive)) {
             this.stackService.removeHive(hive);
             this.broodComponent.removeHiveSerie(hive);
@@ -322,6 +328,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           }
           break;
       case PREFIX_PATH + 'stack':
+          this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
           this.stackComponent.removeHiveSerie(hive);
