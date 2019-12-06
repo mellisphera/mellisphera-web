@@ -178,7 +178,7 @@ limitations under the License. -->
         <button type="submit" class="btn delete btn_delete btn_delete_modal_mobile" mwlConfirmationPopover
         popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top"
         confirmText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}"
-        cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObs()">
+        cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObsR()">
         <i class="fa fa-trash fa-2x"></i>
       </button>
         <button type="submit" class="btn btn-primary" (click)="onEditObservation()" [disabled]="!ObservationForm.valid">
