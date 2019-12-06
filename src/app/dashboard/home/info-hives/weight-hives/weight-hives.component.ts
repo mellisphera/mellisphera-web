@@ -176,7 +176,7 @@ export class WeightHivesComponent {
 
                 ]
             },
-            media: MEDIA_QUERY_MELLIUX
+            media: JSON.parse(JSON.stringify(MEDIA_QUERY_MELLIUX))
         };
         this.option.baseOption.series.push(this.graphGlobal.getDaySerie());
     }

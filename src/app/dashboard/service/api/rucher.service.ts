@@ -92,8 +92,8 @@ export class RucherService {
     }
 
     saveCurrentApiaryId(apiaryId: string) {
-        window.sessionStorage.removeItem('currentApiary');
-        window.sessionStorage.setItem('currentApiary', apiaryId);
+        window.localStorage.removeItem('currentApiary');
+        window.localStorage.setItem('currentApiary', apiaryId);
         this.sharingApiary = this.ruchers.filter(hive => hive.userId !== this.user.getIdUserLoged());
     }
 
@@ -107,7 +107,7 @@ export class RucherService {
      * @memberof RucherService
      */
     getCurrentApiary(): string {
-        return window.sessionStorage.getItem('currentApiary');
+        return window.localStorage.getItem('currentApiary');
     }
 
     getUserApiary(): RucherModel[] {
@@ -133,7 +133,7 @@ export class RucherService {
      */
     saveSharingApiary(): void {
         if (this.sharingApiary.length > 0) {
-            window.sessionStorage.setItem('sharingApiary', JSON.stringify(this.sharingApiary.map(elt => elt._id)));
+            window.localStorage.setItem('sharingApiary', JSON.stringify(this.sharingApiary.map(elt => elt._id)));
         }
     }
 

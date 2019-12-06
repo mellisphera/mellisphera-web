@@ -52,6 +52,9 @@ th{
 .dt-picker{
     width: 100px;
 }
+.btn_delete_modal_mobile{
+    display: none;
+}
 @media (max-width:800px) {
     .panel {
         width: 100% !important;
@@ -72,3 +75,11 @@ th{
     display: inline-block;
     width: 90%;
 }
+@media (max-width: 500px) {
+    .btn_delete_modal{
+        display: none;
+    } 
+    .btn_delete_modal_mobile{
+        display: block;
+    }
+ }

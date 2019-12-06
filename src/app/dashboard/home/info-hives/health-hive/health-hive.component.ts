@@ -114,15 +114,12 @@ export class HealthHiveComponent {
     };
     this.option.media.push(
         {
-            query: {// 这里写规则
-              maxWidth: 450,
-            },
-            option: {// 这里写此规则满足下的option
+            option: {
                 visualMap: {
-                    left: 'center'
+                    orient: 'horizontal',
                 }
             }
-          }
+        },
     );
       this.option.baseOption.series.push(this.graphGlobal.getDaySerie());
 

@@ -112,16 +112,13 @@ limitations under the License. -->
                     <span class="hive-info">{{ruche.name}}</span>
                 </div>
                 <div (click)="onClick(ruche);" class="brood collapse ">
-                    <span *ngIf="dailyRecTh.getPourcentByHive(ruche._id) !== null"
+                    <span
                         class="hive-info">{{ dailyRecTh.getPourcentByHive(ruche._id) }}</span>
-                    <span *ngIf="dailyRecTh.getPourcentByHive(ruche._id) === null"
-                        class="hive-info">{{ 'HOME.NODATA' | translate}}</span>
+
                 </div>
                 <div (click)="onClick(ruche);" class="weight collapse ">
-                    <span *ngIf="dailyRecordWservice.getWeightMaxByHive(ruche._id) !== null"
+                    <span
                         class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightMaxByHive(ruche._id)) }}</span>
-                    <span *ngIf="dailyRecordWservice.getWeightMaxByHive(ruche._id) === null"
-                        class="hive-info">{{ 'HOME.NODATA' | translate}}</span>
                 </div>
                 <div (click)="onClick(ruche);" id="collapse1"
                     [class]="(capteurService.getCapteursByHive(ruche._id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">

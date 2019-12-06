@@ -421,12 +421,12 @@ export class DailyRecordService {
         }
     }
 
-    public getPourcentByHive(hiveId: string): any {
+    public getPourcentByHive(hiveId: string): string {
         const selectHive = this.dailyRecords.filter(elt => elt.hiveId === hiveId)[0];
         if(selectHive !== undefined){
             return selectHive.brood.toString().split('.')[0] + '%';
         }else{
-            return null
+            return '-';
         }
     }
 

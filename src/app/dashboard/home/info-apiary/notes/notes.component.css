@@ -33,7 +33,9 @@ limitations under the License. */
 .fa-times{
     margin-left: 15px;
 }
-
+.btn_delete_modal_mobile{
+    display: none;
+}
 #user-group{
     display: flex;
     justify-content: space-between;
@@ -88,4 +90,13 @@ th{
 .text-title{
     display: inline-block;
     width: 90%;
+}
+
+@media (max-width: 500px) {
+   .btn_delete_modal{
+       display: none;
+   } 
+   .btn_delete_modal_mobile{
+       display: block;
+   }
 }

@@ -127,6 +127,9 @@ import { TranslateService } from '@ngx-translate/core';
         }
       }
 
+      userHaveWeatherStation(): boolean {
+        return this.userPrefService.getUserPref().weatherStation;
+      }
 
       getPeriodByLang(period: string, lang: string) {
         if (lang === 'fr') {

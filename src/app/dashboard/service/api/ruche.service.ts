@@ -156,11 +156,11 @@ export class RucheService {
     */
    saveCurrentHive(hive?: RucheInterface | Object) {
      if (hive) {
-      // window.sessionStorage.removeItem('currentHive');
-      window.sessionStorage.setItem('currentHive', JSON.stringify(hive));
+      // window.localStorage.removeItem('currentHive');
+      window.localStorage.setItem('currentHive', JSON.stringify(hive));
      } else {
-      window.sessionStorage.removeItem('currentHive');
-      window.sessionStorage.setItem('currentHive', JSON.stringify(this.ruche));
+      window.localStorage.removeItem('currentHive');
+      window.localStorage.setItem('currentHive', JSON.stringify(this.ruche));
      }
    }
 
@@ -171,7 +171,7 @@ export class RucheService {
     * @memberof RucheService
     */
    getCurrentHive(): RucheInterface {
-     return JSON.parse(window.sessionStorage.getItem('currentHive'));
+     return JSON.parse(window.localStorage.getItem('currentHive'));
    }
 
    

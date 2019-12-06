@@ -45,7 +45,7 @@ export class DailyRecordsWService {
   mergeOptionWeight: any = null;
   private rangeCalendar: Array<string>;
   currenthiveId: string;
-
+  dailywHive: Promise<string>;
   arrayTempExt: any[];
   mergeOptionWeightTempExt: any;
 
@@ -331,13 +331,13 @@ export class DailyRecordsWService {
     this.getDailyWeightMaxByApiary(apiaryId);
   }
 
-  public getWeightMaxByHive(hiveId: string): any {
+  public getWeightMaxByHive(hiveId: string): string {
     // console.log(this.dailyWeightRecords);
     const selectHive = this.dailyWeightRecords.filter(elt => elt.hiveId === hiveId)[0];
     if (this.unitSystem === 'METRIC') {
-      return selectHive !== undefined ? this.unitService.getValRound(selectHive.weight_max) + ' kg' : null;
+      return selectHive ? this.unitService.getValRound(selectHive.weight_max) + ' kg' : '-';
     } else {
-      return selectHive !== undefined ? this.unitService.getValRound(selectHive.weight_max) + ' lbs' : null;
+      return selectHive ? this.unitService.getValRound(selectHive.weight_max) + ' lbs' : '-';
     }
 
   }

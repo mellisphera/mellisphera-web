@@ -30,50 +30,55 @@ limitations under the License. -->
         </tr>
       </thead>
       <tbody>
-        <tr [class]="(isEnable(alert._id) ? 'enable' : 'disable') + ' tr-items'" *ngFor="let alert of alertService.alertTypes">
-          <td scope="row" class="text-left">
-            <img width="40px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
-          </td>
-          <td class="text-left">
-            {{ getNameByLang(alert._id) }}
-          </td>
-          <td class="text-left">
+        <ng-container *ngFor="let alert of alertService.alertTypes">
+          <tr [class]="(isEnable(alert._id) ? 'enable' : 'disable') + ' tr-items'"
+            *ngIf="!(alert.icon === 'StopWeather' && !userHaveWeatherStation())">
+            <td scope="row" class="text-left">
+              <img width="40px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
+            </td>
+            <td class="text-left">
+              {{ getNameByLang(alert._id) }}
+            </td>
+            <td class="text-left">
               <popover-content #myPopover title="{{ getNameByLang(alert._id) }}" placement="right" [animation]="true"
-              [closeOnClickOutside]="false">
-              <span style="color: #C21F39">{{ getNotifDescriptionFromLangage(alert.icon) }}</span>
-            </popover-content>
-            <a [popover]="myPopover" style="font-size: 20px !important;" class="info-link"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-          </td>
-          <td class="text-left">
-            <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
-              <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range"
-                [min]="getRangeValue(alert._id)[0]" [max]="getRangeValue(alert._id)[1]" [step]="getStep(alert._id)"
-                [value]="getUserValue(alert._id)" />
-            </div>
-          </td>
-          <td>
-            <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
+                [closeOnClickOutside]="false">
+                <span style="color: #C21F39">{{ getNotifDescriptionFromLangage(alert.icon) }}</span>
+              </popover-content>
+              <a [popover]="myPopover" style="font-size: 20px !important;" class="info-link"><i
+                  class="fa fa-info-circle" aria-hidden="true"></i></a>
+            </td>
+            <td class="text-left">
+              <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
+                <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range"
+                  [min]="getRangeValue(alert._id)[0]" [max]="getRangeValue(alert._id)[1]" [step]="getStep(alert._id)"
+                  [value]="getUserValue(alert._id)" />
+              </div>
+            </td>
+            <td>
+              <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
                 <p>{{ getUserValue(alert._id) }} {{ getUnit(alert._id) }}{{ getPeriod(alert._id) }}</p>
-            </div>
-          </td>
-          <td class="text-left">
-            <div class="btn-group" id="status" data-toggle="buttons" *ngIf="alert.disable">
-              <label [class]="'btn btn-default btn-on ' + (isEnable(alert._id) ? 'active': '')"
-                (click)="onEnable(alert._id)">
-                <input type="radio" [disabled]="!isAlterable(alert._id)" value="1"
-                  name="multifeatured_module[module_id][status]">ON</label>
-              <label [class]="'btn btn-default btn-off ' + (isEnable(alert._id) ? 'not-active': 'active')"
-                (click)="onDisable(alert._id)">
-                <input type="radio" [disabled]="!isAlterable(alert._id)" value="0"
-                  name="multifeatured_module[module_id][status]">OFF</label>
-            </div>
-          </td>
-        </tr>
+              </div>
+            </td>
+            <td class="text-left">
+              <div class="btn-group" id="status" data-toggle="buttons" *ngIf="alert.disable">
+                <label [class]="'btn btn-default btn-on ' + (isEnable(alert._id) ? 'active': '')"
+                  (click)="onEnable(alert._id)">
+                  <input type="radio" [disabled]="!isAlterable(alert._id)" value="1"
+                    name="multifeatured_module[module_id][status]">ON</label>
+                <label [class]="'btn btn-default btn-off ' + (isEnable(alert._id) ? 'not-active': 'active')"
+                  (click)="onDisable(alert._id)">
+                  <input type="radio" [disabled]="!isAlterable(alert._id)" value="0"
+                    name="multifeatured_module[module_id][status]">OFF</label>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+
       </tbody>
     </table>
 
 
-<!--     <div class="text-center">
+    <!--     <div class="text-center">
       <button type="button" (click)="onSave()" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ 'ALERT_CONF_PAGE.SAVE' | translate }}</button>
     </div> -->
 

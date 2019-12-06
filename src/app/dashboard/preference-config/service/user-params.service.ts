@@ -38,7 +38,8 @@ export class UserParamsService {
       lang: '',
       unitSystem: '',
       availableSource: [],
-      weatherSource: ''
+      weatherSource: '',
+      weatherStation : false
     });
     this.dtFormat = [
       'YYYY-MM-DD HH:mm',
