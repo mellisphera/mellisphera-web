@@ -174,7 +174,9 @@ export class RucheService {
    * @memberof RucheService
    */
   getCurrentHive(): RucheInterface {
-    return JSON.parse(window.localStorage.getItem('currentHive'));
+    try{
+      return JSON.parse(window.localStorage.getItem('currentHive'));
+    } catch {}
   }
 
 

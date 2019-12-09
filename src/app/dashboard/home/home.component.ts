@@ -293,7 +293,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   checkHiveIsActive(hiveId: string): string {
-    return this.rucheService.getCurrentHive()._id === hiveId ? 'highlightFix' : '';
+    try{
+      return this.rucheService.getCurrentHive()._id === hiveId ? 'highlightFix' : '';
+    }
+    catch {}
   }
   
   onPastilleClick(hive: RucheInterface) {
