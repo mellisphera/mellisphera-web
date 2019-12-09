@@ -44,6 +44,7 @@ import { InfoApiaryComponent } from '../../home/info-apiary/info-apiary.componen
 import { EventEmitter } from '@angular/core';
 import { Binary } from '@angular/compiler';
 import { GeonamesService } from '../../service/geonames.service';
+import { DailyRecordsWService } from '../../service/api/daily-records-w.service';
 
 @Component({
     // moduleId: module.id,
@@ -122,6 +123,7 @@ export class NavbarComponent implements OnInit {
         private observationService: ObservationService,
         private myNotifer: MyNotifierService,
         public capteurService: CapteurService,
+        private dailyWService: DailyRecordsWService,
         private formBuilder: FormBuilder,
         public tokenService: AtokenStorageService,
         private dailyRecordService: DailyRecordService,
@@ -349,6 +351,7 @@ export class NavbarComponent implements OnInit {
     onSelectRucher() {
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher._id);
         const location = this.location['_platformStrategy']._platformLocation.location.pathname;
+        this.dailyWService.getDailyWeightMaxByApiary(this.rucherService.rucher._id);
         // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
         //this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
         switch (location) {
@@ -357,29 +360,16 @@ export class NavbarComponent implements OnInit {
             case '/dashboard/home':
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 this.desactiveButtonHomePageActiveName();
-                //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-                //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
                 break;
             case '/dashboard/home/info-hives':
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 this.desactiveButtonHomePageActiveName();
-                //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-                //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
                 this.router.navigate(['dashboard/home/info-apiary']);
                 break;
             case '/dashboard/home/info-apiary':
                 this.apiaryChange.emit(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                //this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary());
-                //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
-                // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
-                // this.checkIfInfoApiaryComponent().then(status => {
-                //     console.log("OK");
-                //     this.infoApiaryComponent.alertsComponent.initCalendar(true);
-                //   }).catch(err => {
-                //     console.log(err);
-                //   })
                 this.router.navigate(['dashboard/home/info-apiary']);
                 this.desactiveButtonHomePageActiveNameAndAlerts();
                 break;
