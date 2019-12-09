@@ -141,6 +141,7 @@ export class RucherService {
         this.loadingService.loading = true;
         this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + userId).subscribe(
             (apiary) => {
+                console.log(apiary);
                 this.ruchers = apiary.filter(apiary => apiary !== null && apiary.userId === this.user.getIdUserLoged());
                 this.sharingApiary = apiary.filter(apiary => apiary.userId !== this.user.getIdUserLoged());
                 this.allApiaryAccount = apiary.sort((a, b) => {
