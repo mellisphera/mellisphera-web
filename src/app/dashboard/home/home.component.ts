@@ -49,6 +49,8 @@ import { AlertInterface } from '../../_model/alert';
 import { TranslateService } from '@ngx-translate/core';
 import { MyNotifierService } from '../service/my-notifier.service';
 import { NotifList } from '../../../constants/notify';
+import { AdminService } from '../admin/service/admin.service';
+import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
 
 
 @Component({
@@ -114,7 +116,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     public router: Router,
     private unitService: UnitService,
     public authService: AuthService,
+    public tokenService: AtokenStorageService,
     public capteurService: CapteurService,
+    public adminService: AdminService,
     private userConfig: UserParamsService,
     private myNotifier: MyNotifierService,
     public dailyStockHoneyService: DailyStockHoneyService,
@@ -238,14 +242,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       MyDate.getRangeForCalendarAlerts()[0].getTime(), MyDate.getRangeForCalendarAlerts()[1].getTime()).subscribe(
         _alerts => {
           this.hiveAlertsByApiary = _alerts.filter(_alert => _alert.check === false);
-          console.log(_alerts);
-          console.log(this.hiveAlertsByApiary);
         }
       );
     this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts()).subscribe(
       _notif => {
         this.apiaryAlertsActives = _notif.filter(_notif => !_notif.check);
-        console.log(this.apiaryAlertsActives);  
       }
     )
   }
@@ -671,77 +672,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     });
   }
 
-  // List the hives who haven't daily records data
-  hiveNoDataList(): string {
-    let stringReturn: string;
-    let stringTemp: string;
-    stringReturn = '';
-    stringTemp = '"';
-    let i = 0;
-    let j = 0;
-
-    // The first time we found the length of the list (for a good presentation, no important)
-    this.rucheService.ruches.forEach(hive => {
-      // If the hive haven't daily records data
-      if (this.dailyRecTh.dailyRecords.filter(elt => elt.hiveId === hive._id).length === 0) {
-        i += 1;
-      }
-    });
-
-    // second time, we build the hive list
-    this.rucheService.ruches.forEach(hive => {
-      // If the hive haven't daily records data
-      if (this.dailyRecTh.dailyRecords.filter(elt => elt.hiveId === hive._id).length === 0) {
-        j += 1;
-        if (j === i - 1) {
-          stringTemp += hive.name;
-          if (this.translateService.currentLang === 'fr') {
-            stringTemp += '" et "';
-          } else {
-            stringTemp += '" and "';
-          }
-        } else if (j === i) {
-          stringTemp += hive.name;
-          stringTemp += '"';
-        } else {
-          stringTemp += hive.name;
-          stringTemp += '" , "';
-        }
-      }
-    });
-
-    // Finally we build the message
-    if (i === 1) {
-      if (this.translateService.currentLang === 'fr') {
-        stringReturn += '   Les données pour la ruche ';
-        stringReturn += stringTemp;
-        stringReturn += ' ne sont pas à jour. Veuillez synchroniser vos données.'
-      } else {
-        stringReturn += '   Data for the hive ';
-        stringReturn += stringTemp;
-        stringReturn += ' are not up-to-date. Please synchronize your data.'
-      }
-    } else if (i === this.rucheService.ruches.length) {
-      if (this.translateService.currentLang === 'fr') {
-        stringReturn += '   Vos données pour les ruches de ce rucher ne sont pas à jour. Veuillez synchroniser vos données.';
-      } else {
-        stringReturn += '   Your data for the hives of this apiary are not up-to-date. Please synchronize your data.';
-      }
-    } else if (i > 1) {
-      if (this.translateService.currentLang === 'fr') {
-        stringReturn += '   Les données pour les ruches ';
-        stringReturn += stringTemp;
-        stringReturn += ' ne sont pas à jour. Veuillez synchroniser vos données.'
-      } else {
-        stringReturn += '   Data for the hives ';
-        stringReturn += stringTemp;
-        stringReturn += ' are not up-to-date. Please synchronize your data.'
-      }
-    }
-
-    // and return it
-    return stringReturn;
-  }
 
   setRouterPage(event) {
     if (event instanceof InfoHivesComponent) {
