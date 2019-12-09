@@ -269,7 +269,16 @@ export class WeatherService {
           return 'Averses de neige';
         case 'Snow':
           return 'Neige';
-        case 'Mist/Gust':
+        case 'Mist':
+        case 'Smoke':
+        case 'Haze':
+        case 'Dust':
+        case 'Fog':
+        case 'Sand':
+        case 'Dust':
+        case 'Ash':
+        case 'Squall':
+        case 'Tornado':
           return 'Brouillard';
         case 'Clouds':
           return 'Nuageux';
