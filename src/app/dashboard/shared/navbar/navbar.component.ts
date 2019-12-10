@@ -205,6 +205,7 @@ export class NavbarComponent implements OnInit {
         this.authService.authState.next(false);
         this.capteurService.sensorSubject.unsubscribe();
         this.tokenService.signOut();
+        this.rucherService.saveCurrentApiaryId(this.rucherService.rucher._id);
         // this.authService.connexionStatus.next(false);
     }
 
