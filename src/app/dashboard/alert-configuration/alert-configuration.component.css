@@ -5,6 +5,9 @@ table{
 td, p, label{
     font-size: 14px;
 }
+.name_notif{
+    display: block;
+}
 .cols_custom{
     width: 22%;
 }
@@ -63,5 +66,13 @@ td, p, label{
 @media (max-width: 991px){
     thead{
         display: none;
+    }
+}
+@media (max-width: 500px) {
+    .name_notif{
+        display: none;
+    }
+    .rangeInput{
+        width: 100%;
     }
 }
