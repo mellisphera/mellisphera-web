@@ -190,7 +190,7 @@ export class GraphGlobal {
       { 'graph': 'reserveMiel', 'titre': 'Caldo de miel' },
       { 'graph': 'DailyWeightIncomes', 'titre': 'Productividad' },
       { 'graph': 'BroodDynamics', 'titre': 'Cantidad de cria' },
-      { 'graph': 'InternalRelativeHumidity', 'titre': 'Humedad int relativa max' },
+      { 'graph': 'InternalRelativeHumidity', 'titre': 'Humedad int max' },
       { 'graph': 'InternalTemperature', 'titre': 'Temperatura interna' },
       { 'graph': 'ExternalTemperature', 'titre': 'Temperatura externa' },
       { 'graph': 'WeightTemperature', 'titre': 'Peso & Temperatura' },

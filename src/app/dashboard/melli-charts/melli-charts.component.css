@@ -199,10 +199,10 @@ nav[role=admin-navigation] {
   }
   @media screen and (max-width:1400px) {
       #apiary-group {
-          width: 10%;
+          width: 15 %;
       }
   }
-@media screen and (max-width:1200px) {
+@media screen and (max-width:1000px) {
     #apiary-group {
         position: relative;
         width: 100%;
