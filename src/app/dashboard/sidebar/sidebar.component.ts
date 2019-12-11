@@ -62,6 +62,7 @@ export class SidebarComponent implements OnInit {
   username;
   private eltOnClick: EventTarget;
   url_sideImg: string;
+  private toggleButton: any;
   /* @ViewChild(NavbarComponent) public navComponent: NavbarComponent; */
   constructor(
     public userService: UserloggedService,
@@ -79,6 +80,7 @@ export class SidebarComponent implements OnInit {
 /*     this.menuItems = ROUTES.filter(menuItem => menuItem);
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('nav-open'); */
+    this.toggleButton = document.getElementsByClassName('navbar-toggle')[0];
     this.focus('home');
   }
   isMobileMenu() {
@@ -100,10 +102,14 @@ export class SidebarComponent implements OnInit {
       this.eltOnClick = document.getElementById(id);
       this.renderer.addClass(this.eltOnClick, 'side-active');
     }
+    if (this.isMobileMenu()) {
+      this.hideSidebar();
+    }
   }
 
   hideSidebar() {
     const body = document.getElementsByTagName('body')[0];
+    this.toggleButton.classList.remove('toggled');
     body.classList.remove('nav-open');
   }
 

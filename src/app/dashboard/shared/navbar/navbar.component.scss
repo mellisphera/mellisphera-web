@@ -12,6 +12,9 @@ limitations under the License. */
 .navbar .navbar-nav > li > a{
     margin: 5px 3px !important;
 }
+.navbar-default .navbar-toggle{
+    border: none !important;
+}
 nav{
     background-color: currentColor;
 }
