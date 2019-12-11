@@ -97,7 +97,6 @@ export class AuthService {
       (err) => {
         this.errLogin = true;
         console.log(err);
-        // this.bmService.checkBmUser(this.login.email, this.login.password);
       }
     );
   }

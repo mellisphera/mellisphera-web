@@ -49,7 +49,7 @@ export class SignupService {
       (err) => {
         this.errSignup = true;
         console.log(err);
-        this.errSignupLabel = err.error.message.split('->')[1];
+        this.errSignupLabel = err.message.split('>')[1];
       },
       () => {
         if (!this.errSignup) {

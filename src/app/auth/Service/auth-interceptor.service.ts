@@ -42,11 +42,15 @@ export class AuthInterceptorService implements HttpInterceptor {
       return next.handle(authReq)
       .pipe(
         catchError( (error: HttpErrorResponse) => {
-           let errMsg = '';
+          console.log(error);
+           let errMsg: any;
            // Client Side Error
            if (error.error instanceof ErrorEvent) {        
              errMsg = `Error: ${error.error.message}`;
-           } 
+           }
+           else if (error.error.message) {
+             errMsg = {'Error Code': error.status,  'message' : error.error.message};
+           }
            else {  // Server Side Error
              errMsg = `Error Code: ${error.status},  Message: ${error.message}`;
            }
