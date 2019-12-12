@@ -7,14 +7,17 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License. */ 
+limitations under the License. */
 
 
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../auth/Service/auth.service';
 import { Login } from '../../_model/login';
+import { EULA } from '../../EULA';
+import * as $ from 'jquery';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-bm-login',
@@ -25,12 +28,20 @@ export class BmLoginComponent implements OnInit, OnDestroy {
 
   public email: string;
   public password: string;
+  public eulaRead: boolean;
+  public eula = EULA;
   constructor(private route: ActivatedRoute,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private translateService: TranslateService,
+    private router: Router) {
+      this.eulaRead = false;
+      this.translateService.use(this.translateService.getBrowserLang());
+    }
 
   ngOnInit() {
     document.querySelector('body').classList.add('login-bm');
     this.email = this.route.snapshot.params.email;
+
   }
 
   ngOnDestroy(): void {

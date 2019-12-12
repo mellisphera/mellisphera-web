@@ -397,5 +397,11 @@
         "NAME": "Apellido",
         "DESCRIPTION": "Descripción",
         "STATUS": "Estatus"
+    },
+    "LOGIN_BM": {
+        "TITLE": "Mellisphera",
+        "BTN": "Conexion",
+        "EULA": "Acuerdo de licencia de usuario final",
+        "BTN_EUA": "Estoy de acuerdo"
     }
 }

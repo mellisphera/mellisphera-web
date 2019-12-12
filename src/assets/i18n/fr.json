@@ -384,5 +384,11 @@
         "DESCRIPTION": "Description",
         "STATUS": "Status",
         "SAVE": "Sauvegarder les modifications"
+    },
+    "LOGIN_BM": {
+        "TITLE": "Mellisphera",
+        "BTN": "Login",
+        "EULA": "Contrat de Licence Utilisateur Final",
+        "BTN_EUA": "J'accepte"
     }
 }

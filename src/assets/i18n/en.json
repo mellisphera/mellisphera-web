@@ -383,5 +383,12 @@
         "DESCRIPTION": "Description",
         "VALUE": "Value",
         "STATUS": "Status"
+    },
+
+    "LOGIN_BM": {
+        "TITLE": "Mellisphera",
+        "BTN": "Login",
+        "EULA": "End User License Agreement",
+        "BTN_EUA": "I agree"
     }
 }

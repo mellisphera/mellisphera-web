@@ -15,7 +15,7 @@ limitations under the License. */
     white-space: pre-wrap;
     overflow-y: scroll;
     position: fixed;
-    width: 10%;
+    width: 215px;
     justify-content: space-between;
     height: 90vh;
 }
@@ -197,9 +197,9 @@ nav[role=admin-navigation] {
   .navbar{
       height: 50px;
   }
-  @media screen and (max-width:1400px) {
+  @media screen and (max-width:1500px) {
       #apiary-group {
-          width: 10%;
+          width: 15%;
       }
   }
 
@@ -222,7 +222,7 @@ nav[role=admin-navigation] {
         margin: 0px !important;
     }
     #apiary-group{
-        width: 10%;
+        width: 15%;
     }
     .dropdown-menu{
         background-color: #4F4F51 !important;
@@ -249,11 +249,11 @@ nav[role=admin-navigation] {
         width: 100%;
     }
 }
-@media (max-width: 1300px) {
+/* @media (max-width: 1300px) {
     #apiary-group{
-        width: 25%;
+        width: 18%;
     }
-}
+} */
 @media screen and (max-width:1200px) {
     #input-date{
         width: 100%;

@@ -23,8 +23,6 @@ td, p, label{
 .cols_val{
     width: 10%;
 }
-.enable {
-}
 .disable {
     background-color: rgba(73, 73, 72, 0.3)
 }

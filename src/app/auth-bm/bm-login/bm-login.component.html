@@ -1,10 +1,35 @@
-<div class="login">
-  
-  <h2 class="login-header">Log in</h2>
+<section id="eltpos">
+  <div *ngIf="eulaRead" class="login_bm">
 
-  <form class="login-container">
-    <p><input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email"></p>
-    <p><input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password"></p>
-    <p><input type="submit" (click)="login()" value="Log in"></p>
-  </form>
-</div>
+    <h2 class="login-header">
+        <img src="./assets/logo.png" style="width:30px;" alt="" />
+      {{ 'LOGIN_BM.TITLE' | translate }}</h2>
+
+    <form class="login-container">
+      <p><input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email"></p>
+      <p><input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password"></p>
+      <p><input type="submit" (click)="login()" value="Log in"></p>
+      <p id="eula-center"><a (click)="eulaRead = !eulaRead">{{ 'LOGIN_BM.EULA' | translate }}</a></p>
+    </form>
+  </div>
+
+  <section *ngIf="!eulaRead" id="eula">
+    <h3 class="modal-title" id="exampleModalLabel">{{ eula.TITLE }} <br /> {{ eula.SUBTITLE }}</h3>
+    <div id="content">
+      <ol>
+        <li class="li-items" *ngFor="let pt of eula.POINTS; let i = index;">{{ pt }}</li>
+      </ol>
+      <div id="footer">
+        <button type="button" (click)="eulaRead = !eulaRead" class="btn btn-primary">{{ 'LOGIN_BM.BTN_EUA' | translate }}</button>
+      </div>
+    </div>
+  </section>
+  <!--   <section id="eula">
+    <h3>{{ eula.TITLE }}</h3>
+    <div id="content">
+      <ol>
+        <li class="li-items" *ngFor="let pt of eula.POINTS; let i = index;">{{ pt }}</li>
+      </ol>
+    </div>
+  </section> -->
+</section>
