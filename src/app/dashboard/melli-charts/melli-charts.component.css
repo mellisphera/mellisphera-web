@@ -276,6 +276,9 @@ nav[role=admin-navigation] {
     #dropdown{
         width: 75%;
     }
+    .nav-date{
+        width: 100%;
+    }
     .navbar-nav{
         justify-content: space-around;
     }
