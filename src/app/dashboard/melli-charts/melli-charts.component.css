@@ -15,9 +15,18 @@ limitations under the License. */
     white-space: pre-wrap;
     overflow-y: scroll;
     position: fixed;
-    width: 215px;
     justify-content: space-between;
     height: 90vh;
+}
+.apiary-group-hive{
+    width: 13%;
+}
+.apiary-group-brood{
+    width: 13%;
+}
+.apiary-group-stack{
+    width: 13%;
+
 }
 #apiary-group, .list-group-item {
 /*     background-color: #204d74;
@@ -197,49 +206,29 @@ nav[role=admin-navigation] {
   .navbar{
       height: 50px;
   }
-  @media screen and (max-width:1500px) {
-      #apiary-group {
-          width: 15%;
-      }
-  }
 
-  @media screen and (max-width:1000px){
-    .navbar-nav {
-        display: flex !important;
-    }
-    #btn-date{
-        margin-top: 8px;
-    }
-    .date-arrow{
-        margin-top: 8px;
-    }
-    .nav-date{
-        /* justify-content: end; */
-        width: 100%;
-    }
-    .navbar-nav{
-        /*justify-content: center !important;*/
-        margin: 0px !important;
-    }
-    #apiary-group{
-        width: 15%;
-    }
-    .dropdown-menu{
-        background-color: #4F4F51 !important;
-        position: absolute !important;
-        width: 100% !important;
+@media screen and (max-width:1500px) {
+    .apiary-group-hive{
+        width: 10%;
     }
 }
+@media screen and (max-width:1400px) {
 
-@media screen and (max-width:800px) {
-    #apiary-group {
-        position: relative;
-        width: 100%;
-        height: auto;
+}
+@media screen and (max-width:1300px) {
+    .apiary-group-hive{
+        width: 20%;
     }
-    .navbar{
-        height: 100px;
-     }
+    .apiary-group-brood{
+        position: relative !important;
+        height: auto;
+        width: 100%;
+    }
+    .apiary-group-stack{
+        position: relative !important;
+        height: auto;
+        width: 100%;
+    }
     #content{
         position: relative;
         left: auto !important;
@@ -249,11 +238,6 @@ nav[role=admin-navigation] {
         width: 100%;
     }
 }
-/* @media (max-width: 1300px) {
-    #apiary-group{
-        width: 18%;
-    }
-} */
 @media screen and (max-width:1200px) {
     #input-date{
         width: 100%;
@@ -262,6 +246,8 @@ nav[role=admin-navigation] {
         /* justify-content: end; */
         width: 63%;
     }
+
+
 }
 @media only screen 
   and (min-width: 1024px) 
@@ -272,12 +258,43 @@ nav[role=admin-navigation] {
         width: 12%;
     } */
 }
+
+@media screen and (max-width:1000px){
+    .navbar-nav {
+        display: flex !important;
+    }
+    .nav-date{
+        /* justify-content: end; */
+        width: 100%;
+    }
+    .navbar{
+        height: 100px;
+     }
+     .buttonLeft{
+        justify-content: space-around;
+        width: 100%;
+    }
+     .apiary-group-hive{
+        position: relative !important;
+        height: auto;
+        width: 100%;
+    }
+    .navbar-nav{
+        /*justify-content: center !important;*/
+        margin: 0px !important;
+    }
+
+    .dropdown-menu{
+        background-color: #4F4F51 !important;
+        position: absolute !important;
+        width: 100% !important;
+    }
+}
+@media screen and (max-width:800px) {
+}
 @media screen and (max-width:500px){
     #dropdown{
         width: 75%;
-    }
-    .nav-date{
-        width: 100%;
     }
     .navbar-nav{
         justify-content: space-around;
@@ -286,5 +303,4 @@ nav[role=admin-navigation] {
         padding: 0px;
     } */
 }
-
 

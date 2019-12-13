@@ -67,7 +67,7 @@ limitations under the License. -->
 
   </nav>
   <div class="row nopadding">
-    <div id="apiary-group">
+    <div id="apiary-group" class="apiaryGroup">
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
           <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)" data-toggle="collapse"

@@ -47,6 +47,14 @@ export class StackComponent implements OnInit {
     private melliDate: MelliChartsDateService) { }
 
   ngOnInit() {
+
+    const elt = document.getElementsByClassName('apiaryGroup')[0];
+    if (elt.classList.contains('apiary-group-brood')) {
+      elt.classList.remove('apiary-group-brood');
+    } else if (elt.classList.contains('apiary-group-hive')) {
+      elt.classList.remove('apiary-group-hive');
+    }
+    elt.classList.add('apiary-group-stack');
     this.options = Object.assign({}, BASE_OPTIONS.baseOptionStack);
     this.options.series = [];
     this.options.yAxis = [];
