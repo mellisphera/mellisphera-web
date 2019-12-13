@@ -49,7 +49,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     if (elt.classList.contains('apiary-group-hive')) {
       elt.classList.remove('apiary-group-hive');
     } else if (elt.classList.contains('apiary-group-stack')) {
-      elt.classList.remove('apiary-group-stack');
+      elt.classList.remove('apiary-group-stack'); 
     }
     elt.classList.add('apiary-group-brood');
     this.stackService.setBroodChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-brood')));

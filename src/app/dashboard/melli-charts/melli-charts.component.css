@@ -293,6 +293,9 @@ nav[role=admin-navigation] {
 @media screen and (max-width:800px) {
 }
 @media screen and (max-width:500px){
+    #dt-scale ul:first-child{
+        padding-left: 6px;
+    }
     #dropdown{
         width: 75%;
     }
