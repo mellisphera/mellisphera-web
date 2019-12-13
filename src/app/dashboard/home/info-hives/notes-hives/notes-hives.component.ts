@@ -108,7 +108,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     this.ObservationForm = this.formBuilder.group({
       'sentence': [null, Validators.compose([Validators.required])],
       'type': 'HiveObs',
-      'date': [ new Date(), Validators.required],
+      'date': [ moment().toDate(), Validators.required],
     });
   }
 
@@ -176,7 +176,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     const donnée = {
       sentence: this.newObs.description,
       type: this.newObs.typeInspect,
-      date: new Date(this.newObs.opsDate)
+      date: moment(this.newObs.opsDate).toDate()
     };;
     this.ObservationForm.setValue(donnée);
   }

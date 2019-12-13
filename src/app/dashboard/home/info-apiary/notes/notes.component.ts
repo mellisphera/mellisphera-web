@@ -113,7 +113,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     this.newObs = obs;
     const donnée = {
       sentence: this.newObs.description,
-      date: new Date(obs.createDate)
+      date: moment(obs.createDate).toDate()
     };
     this.observationForm.setValue(donnée);
   }
@@ -234,7 +234,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   initForm() {
     this.observationForm = this.formBuilder.group({
       'sentence': [null, Validators.compose([Validators.required])],
-      'date': new Date(),
+      'date': moment().toDate(),
     });
   }
   /**
