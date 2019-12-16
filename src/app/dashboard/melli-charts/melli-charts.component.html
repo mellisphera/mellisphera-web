@@ -71,7 +71,7 @@ limitations under the License. -->
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
           <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)" data-toggle="collapse"
-            data-parent="#main-menu"><span></span>{{ rucher.name }}<span class="caret"></span></a>
+            data-parent="#main-menu"><span></span>{{ rucher.name }}<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span></a>
           <div *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
             <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
               *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index" (click)="selectHive(ruche, $event)"

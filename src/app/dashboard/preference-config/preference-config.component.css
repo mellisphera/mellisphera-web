@@ -20,10 +20,10 @@ limitations under the License. */
     padding: 2px;
 }
 .lang_active{
-    border: 2px solid orange;
+    border: 5px solid orange;
 }
 #lang-group img {
-    border-radius: 50px;
+    /*border-radius: 50px;*/
     cursor: pointer;
 
 }

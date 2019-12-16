@@ -16,7 +16,7 @@ limitations under the License. */
     overflow-y: scroll;
     position: fixed;
     justify-content: space-between;
-    height: 90vh;
+    height: auto;
 }
 .apiary-group-hive{
     width: 13%;
@@ -138,6 +138,10 @@ nav[role=admin-navigation] {
     vertical-align: text-top;
     margin-right: 5px;
 }
+.caret.caret-up {
+    border-top-width: 0;
+    border-bottom: 4px solid black;
+}
 .apiary-active{
     background-color: #eafffd;
 }
@@ -244,7 +248,7 @@ nav[role=admin-navigation] {
     }
     .nav-date{
         /* justify-content: end; */
-        width: 63%;
+        width: 45%;
     }
 
 
@@ -276,7 +280,7 @@ nav[role=admin-navigation] {
     }
      .apiary-group-hive{
         position: relative !important;
-        height: auto;
+        height: auto !important;
         width: 100%;
     }
     .navbar-nav{

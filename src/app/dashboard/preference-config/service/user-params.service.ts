@@ -44,8 +44,8 @@ export class UserParamsService {
     this.dtFormat = [
       'YYYY-MM-DD HH:mm',
       'DD-MM-YYYY HH:mm',
-      'DD/MM/YYYY HH:mm'
-
+      'DD/MM/YYYY HH:mm',
+      'MM/DD/YYYY HH:mm'
     ];
     this.userPref = this.getUserPref() ? this.getUserPref() : null;
     this.prefSubject.next(this.userPref);

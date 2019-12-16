@@ -118,8 +118,8 @@
         "SAVE_DATE" : "Save",
         "TITLE_UNIT" : "Unit Systems",
         "FORM_UNIT" : {
-            "METRIC" : "Metric",
-            "IMPERIAL" : "Imperial",
+            "METRIC" : "Metric (kg, °C)",
+            "IMPERIAL" : "Imperial (lb, F)",
             "SAVE" : "Save"
         },
         "LANG": "Language",

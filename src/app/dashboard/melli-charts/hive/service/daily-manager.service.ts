@@ -277,7 +277,6 @@ export class DailyManagerService {
               option.series.push(serieComplete);
             }
           });
-          option.calendar.range = range;
           // option.series[0].data = weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -318,12 +317,12 @@ export class DailyManagerService {
           });
 
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.dayLabel.align = 'left';
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.visualMap = null;
         }
+        option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.clear();
         this.setMeanAnnotation(type, true);
@@ -339,7 +338,6 @@ export class DailyManagerService {
       _astro => {
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name'], _data.moon['ascendant']));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -377,13 +375,13 @@ export class DailyManagerService {
             return group;
           }
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.dayLabel.align = 'left';
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.visualMap = null;
           option.series.push(serie);
         }
+        option.calendar.range = range;
         this.setMeanAnnotation(type, true);
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.clear();
@@ -412,7 +410,6 @@ export class DailyManagerService {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             option.series[index].data = serieComplete.data;
           });
-          option.calendar.range = range;
         } else {
           if (this.existSeries(option.series, 'gain')) {
             option.series = new Array();
@@ -464,8 +461,8 @@ export class DailyManagerService {
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.calendar.range = range;
         }
+        option.calendar.range = range;
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.setOption(option, true);
@@ -484,7 +481,6 @@ export class DailyManagerService {
         this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.maxTempDay));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -496,10 +492,10 @@ export class DailyManagerService {
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         }
+        option.calendar.range = range;
         this.setMeanData(option.series, true, type);
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.setOption(option, true);
@@ -519,7 +515,6 @@ export class DailyManagerService {
         this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.maxHumidityDay));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -531,10 +526,10 @@ export class DailyManagerService {
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         }
+        option.calendar.range = range;
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         option.series.push(this.graphGlobal.getDaySerie());
@@ -554,7 +549,6 @@ export class DailyManagerService {
         this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.minHumidityDay));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -566,10 +560,10 @@ export class DailyManagerService {
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         }
+        option.calendar.range = range;
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         option.series.push(this.graphGlobal.getDaySerie());
@@ -586,7 +580,6 @@ export class DailyManagerService {
         let option = Object.assign({}, this.baseOptionExt);
         this.getLastDayForMeanValue(this.weatherService.getWindAllWeather(apiaryId, this.rangeSevenDay), true, type);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _temp.map(_data => new Array(_data.date, this.unitService.convertWindFromUserPref(_data.value.maxSpeed, this.unitService.getUserPref().unitSystem)));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -598,10 +591,10 @@ export class DailyManagerService {
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         }
+        option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
@@ -622,7 +615,6 @@ export class DailyManagerService {
         this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.minTempDay));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -634,10 +626,10 @@ export class DailyManagerService {
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         }
+        option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
@@ -658,7 +650,6 @@ export class DailyManagerService {
 
             option.series[index].data = serieComplete.data;
           });
-          option.calendar.range = range;
         } else {
           option.lengend = Object.assign({}, BASE_OPTIONS.legend);
           if (this.existSeries(option.series, type.name)) {
@@ -697,8 +688,8 @@ export class DailyManagerService {
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.calendar.range = range;
         }
+        option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         this.setMeanData(option.series[0], false, type);
         chartInstance.setOption(option, true);
@@ -715,7 +706,6 @@ export class DailyManagerService {
         this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(hiveId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _tMax.map(_data => new Array(_data.date, _data.value));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -726,11 +716,11 @@ export class DailyManagerService {
           serie.data = _tMax.map(_data => new Array(_data.date, _data.value));
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.series.push(serie);
         }
+        option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
@@ -747,7 +737,6 @@ export class DailyManagerService {
         this.getLastDayForMeanValue(this.dailyWService.getTempMaxExt(hiveId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _tmpMaxExt.map(_data => new Array(_data.date, _data.value));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -759,11 +748,11 @@ export class DailyManagerService {
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.legend.show = false;
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.calendar.range = range;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.series.push(serie);
         }
+        option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
@@ -778,7 +767,6 @@ export class DailyManagerService {
         this.getLastDayForMeanValue(this.dailyWService.getTempMinExt(hiveId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _tMinExt.map(_data => new Array(_data.date, _data.value));
         } else {
           if (this.existSeries(option.series, '52')) {
@@ -792,9 +780,9 @@ export class DailyManagerService {
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-          option.calendar.range = range;
           option.series.push(serie);
         }
+        option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
@@ -809,7 +797,6 @@ export class DailyManagerService {
         this.getLastDayForMeanValue(this.dailyHService.getHintByHive(hiveId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _hInt.map(_data => new Array(_data.date, _data.value));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -822,9 +809,9 @@ export class DailyManagerService {
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-          option.calendar.range = range;
           option.series.push(serie);
         }
+        option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
@@ -840,7 +827,6 @@ export class DailyManagerService {
         this.getLastDayForMeanValue(this.dailyHService.getBroodByHive(hiveId, this.rangeSevenDay), true, type);
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _brood.map(_data => new Array(_data.date, _data.value));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -852,9 +838,9 @@ export class DailyManagerService {
           option.legend.show = false;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-          option.calendar.range = range;
           option.series.push(serie);
         }
+        option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
         this.setMeanData(option.series, true, type);
@@ -872,7 +858,6 @@ export class DailyManagerService {
         this.getLastDayForMeanValue(this.dailyHService.getTminByHive(hiveId, this.rangeSevenDay), true, type);
         let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series[0].data = _tMin.map(_data => new Array(_data.date, _data.value));
         } else {
           if (this.existSeries(option.series, type.name)) {
@@ -886,9 +871,9 @@ export class DailyManagerService {
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-          option.calendar.range = range;
           option.series.push(serie);
         }
+        option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
@@ -904,7 +889,6 @@ export class DailyManagerService {
         this.getLastDayForMeanValue(this.dailyWService.getWeightByHive(hiveId, this.rangeSevenDay), true, type);
         let option = this.baseOptionsInt;
         if (rangeChange) {
-          option.calendar.range = range;
           let serie = JSON.parse(JSON.stringify(SERIES.effectScatter));
           let legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
           this.getSerieByData(_weightMax, type.name, serie, (serieComplete) => {
@@ -936,8 +920,8 @@ export class DailyManagerService {
           option.legend = legend;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-          option.calendar.range = range;
         }
+        option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
@@ -958,7 +942,6 @@ export class DailyManagerService {
         const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.baseOptionEnv);
         if (rangeChange) {
-          option.calendar.range = range;
           option.series = this.removeDataAllseries(option.series);
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
@@ -1093,16 +1076,13 @@ export class DailyManagerService {
 
             }
             option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
-/*             if (joinData.length > 0) {
-            } else {
-              option.calendar.range = new Date().getFullYear() + '-' + new Date().getMonth();
-            } */
-            option.calendar.range = range;
+
             option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
             option.legend.data.push(serieComplete.name);
             option.series.push(serieComplete);
           });
         }
+        option.calendar.range = range;
         option.legend.show = false;
         option.series.push(this.graphGlobal.getDaySerie());
         option.tooltip = this.graphGlobal.getTooltipBySerie(type, joinData);

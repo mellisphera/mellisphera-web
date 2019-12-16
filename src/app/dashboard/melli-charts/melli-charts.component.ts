@@ -44,7 +44,6 @@ const PREFIX_PATH = '/dashboard/melli-charts/';
 })
 export class MelliChartsComponent implements OnInit, AfterViewInit {
 
-
   public btnNav: Array<Object>;
   private btnTypeElement: HTMLElement;
   public typeNav: Array<Object>;
@@ -71,33 +70,33 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private weatherService: WeatherService,
     public tokenService: AtokenStorageService,
     private userConfig: UserParamsService) {
-      if (this.translateService.currentLang === 'fr') {
-        this.btnNav = [
-          {name: 'Ruches', path: 'hive' },
-          { name: 'Couvain', path: 'brood' },
+    if (this.translateService.currentLang === 'fr') {
+      this.btnNav = [
+        { name: 'Ruches', path: 'hive' },
+        { name: 'Couvain', path: 'brood' },
 /*           { name: 'Essaimages', path: 'map' },
  */          { name: 'Mesures', path: 'stack' }
-        ];
-      } else if (this.translateService.currentLang === 'es'){
-        this.btnNav = [
-          {name: 'Colmenas', path: 'hive' },
-          { name: 'Tabla de cría', path: 'brood' },
+      ];
+    } else if (this.translateService.currentLang === 'es') {
+      this.btnNav = [
+        { name: 'Colmenas', path: 'hive' },
+        { name: 'Tabla de cría', path: 'brood' },
 /*           { name: 'Swarm Map', path: 'map' },
  */          { name: 'Mediciones', path: 'stack' }
-        ];
-      } 
-      else {
-        this.btnNav = [
-          {name: 'Hives', path: 'hive' },
-          { name: 'Brood chart', path: 'brood' },
+      ];
+    }
+    else {
+      this.btnNav = [
+        { name: 'Hives', path: 'hive' },
+        { name: 'Brood chart', path: 'brood' },
 /*           { name: 'Swarm Map', path: 'map' },
  */          { name: 'Measurements', path: 'stack' }
-        ];
-      }
+      ];
+    }
 
-      this.datePickerConfig = {
+    this.datePickerConfig = {
 
-      }
+    }
   }
 
   ngOnInit() {
@@ -112,13 +111,14 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       }
     );
     this.rucheService.hiveSubject.subscribe(
-      () => {}, () => {}, () => {
+      () => { }, () => { }, () => {
         let hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive._id === this.rucheService.getCurrentHive()._id)[0];
         if (hiveSelect === undefined) {
           hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive.apiaryId === this.rucherService.getCurrentApiary())[0];
         }
         this.melliChartHive.setHiveSelect(hiveSelect);
         this.stackService.addHive(hiveSelect);
+
 
       }
     )
@@ -127,21 +127,30 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.rucheService.hiveSubject.subscribe(() => {}, () => {}, () => {
+    this.rucheService.hiveSubject.subscribe(() => { }, () => { }, () => {
       this.hiveComponent.loadDataFromHive();
     });
     this.eltOnClick = document.getElementById('hive');
     this.dateDropdown = document.getElementById('date-dropdown');
     this.renderer.addClass(this.eltOnClick, 'nav-active');
+
   }
 
+
+  ifActiveApiary(apiaryId: string): string {
+    const index = this.rucherService.allApiaryAccount.findIndex(_apiary => _apiary._id === apiaryId);
+    if (document.getElementById('' + index).classList.contains('in')) {
+      return 'caret-up';
+    } else {
+      return '';
+    }
+  }
 
   ifCurrentApiary(apiaryId: string): string {
     try {
       return apiaryId === this.melliChartHive.getHiveSelect().apiaryId ? 'in' : '';
-    } catch{}
+    } catch{ }
   }
-
   onCloseDatePicker(): void {
     this.dateDropdown.classList.add('open');
   }
@@ -204,7 +213,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     try {
       return this.rucherService.rucheService.ruchesAllApiary.filter(hive => hive.apiaryId === apiaryId).sort((a, b) => {
         return a.name.localeCompare(b.name);
-    });;
+      });
     } catch (e) {
       return false;
     }
@@ -213,7 +222,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   onActivate(componentRef: Component) {
     if (componentRef instanceof HiveComponent) {
       this.hiveComponent = componentRef;
-    } else if(componentRef instanceof StackComponent) {
+    } else if (componentRef instanceof StackComponent) {
       this.stackComponent = componentRef;
     } else if (componentRef instanceof VitalityComponent) {
       this.broodComponent = componentRef;
@@ -252,9 +261,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   getRangeBYLang(range: DataRange): string {
     if (this.translateService.currentLang === 'fr') {
       return this.melliChartDate.ranges.filter(_range => _range.type === range.type)[0].typeFr;
-    } else if(this.translateService.currentLang === 'es') {
+    } else if (this.translateService.currentLang === 'es') {
       return this.melliChartDate.ranges.filter(_range => _range.type === range.type)[0].typeEs;
-    }  else {
+    } else {
       return range.type;
     }
   }
@@ -288,7 +297,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    * @memberof MelliChartsComponent
    */
   navToPage(path: string, _id: string): void {
-    if (this.eltOnClick === null ) {
+    if (this.eltOnClick === null) {
       this.eltOnClick = document.getElementById(_id);
       this.renderer.addClass(this.eltOnClick, 'nav-active');
     } else {
@@ -318,17 +327,17 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.hiveComponent.loadDataFromHive();
         break;
       case PREFIX_PATH + 'brood':
-          this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
-          if (this.stackService.ifActiveAlreadySelected(hive)) {
-            this.stackService.removeHive(hive);
-            this.broodComponent.removeHiveSerie(hive);
-          } else {
-            this.stackService.addHive(hive);
-            this.broodComponent.loadDataByHive(hive);
-          }
-          break;
+        this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
+        if (this.stackService.ifActiveAlreadySelected(hive)) {
+          this.stackService.removeHive(hive);
+          this.broodComponent.removeHiveSerie(hive);
+        } else {
+          this.stackService.addHive(hive);
+          this.broodComponent.loadDataByHive(hive);
+        }
+        break;
       case PREFIX_PATH + 'stack':
-          this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
+        this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
           this.stackComponent.removeHiveSerie(hive);
@@ -399,25 +408,25 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   checkApiaryIfAcive(apiaryId: string): string {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
-          try {
-            if (this.melliChartHive.getHiveSelect().apiaryId === apiaryId) {
-              return 'apiary-active';
-            } else {
-              return 'not-active';
-            }
-          } catch (TypeError) {
+        try {
+          if (this.melliChartHive.getHiveSelect().apiaryId === apiaryId) {
+            return 'apiary-active';
+          } else {
+            return 'not-active';
           }
-          break;
+        } catch (TypeError) {
+        }
+        break;
       case PREFIX_PATH + 'stack':
       case PREFIX_PATH + 'brood':
-          try {
-            if (this.stackService.getHiveSelect().findIndex(_hive => _hive.apiaryId === apiaryId) !== -1) {
-              return 'apiary-active';
-            } else {
-              return 'not-active';
-            }
-          } catch (TypeError) {
+        try {
+          if (this.stackService.getHiveSelect().findIndex(_hive => _hive.apiaryId === apiaryId) !== -1 /* ||
+          this.apiryActive.findIndex(_apiary => _apiary === apiaryId) !== -1 */) {
+            return 'apiary-active';
+          } else {
+            return 'not-active';
           }
+        } catch (TypeError) {}
         // return this.stackService.
         break;
     }
@@ -428,7 +437,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
         return 'complete';
-          // return this.hiveComponent.hourlyComponent.chartLoading ? 'loading' : 'complete';
+      // return this.hiveComponent.hourlyComponent.chartLoading ? 'loading' : 'complete';
       case PREFIX_PATH + 'brood':
       case PREFIX_PATH + 'stack':
         //return this.stackService.

@@ -14,9 +14,9 @@ limitations under the License. -->
     <nav class="navbar navbar-default">
         <ul class="nav navbar-nav buttonLeft">
             <li><button (click)="onclickInfoApiary()" id="infoApiaryButton" type="button"
-                    class="button button0">{{ 'HOME.NAVBAR.APIARY' | translate}}</button><span
+                    class="button button0">{{ 'HOME.NAVBAR.APIARY' | translate}}</button><!-- <span
                     *ngIf="numberActiveNotifByApiary() !== 0"
-                    class="badge badge-button">{{ numberActiveNotifByApiary() }}</span></li>
+                    class="badge badge-button">{{ numberActiveNotifByApiary() }}</span> --></li>
             <li *ngFor="let btn of btnNav"><button type="button" [id]="btn.path" (click)="navToPage(btn.path, btn.path)"
                     class="button button0">{{ btn.name }}</button></li>
             <li (click)="collapseAllActiveButton('sensors','weight','brood','name')"><button id="name" type="button"
@@ -105,8 +105,8 @@ limitations under the License. -->
                         [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
                         [style.background-color]="dailyRecTh.getColorByPourcent(ruche._id)">
                         <!-- notifications -->
-                        <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
-                            class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span>
+ <!--                        <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
+                            class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span> -->
                     </div>
                     <!-- Hive click -->
                     <!-- The hidden div when you click on name/Brood/Weight/Sensors -->
