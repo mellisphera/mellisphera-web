@@ -367,6 +367,14 @@
         }
     },
     "MELLICHARTS": {
+        "NAV": {
+            "HIVE": "Ruche",
+            "HIVE_TOOLTIP": "Ruche",
+            "BROOD": "Couvain",
+            "BROOD_TOOLTIP": "Ruche",
+            "DONNEE": "Données",
+            "DONNEE_TOOLTIP": "Données brute"
+        },
         "DATE": {
             "START": "Début",
             "END": "Fin",

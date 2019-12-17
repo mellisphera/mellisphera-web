@@ -368,6 +368,14 @@
         }
     },
     "MELLICHARTS": {
+        "NAV": {
+            "HIVE": "Hive",
+            "HIVE_TOOLTIP": "Hive",
+            "BROOD": "Brood",
+            "BROOD_TOOLTIP": "Brood",
+            "DONNEE": "Raw data",
+            "DONNEE_TOOLTIP": "Raw data"
+        },
         "DATE": {
             "START": "Start",
             "END": "End",

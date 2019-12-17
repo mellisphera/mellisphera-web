@@ -72,25 +72,22 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private userConfig: UserParamsService) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
-        { name: 'Ruches', path: 'hive' },
+        { name: 'Ruche', path: 'hive' },
         { name: 'Couvain', path: 'brood' },
-/*           { name: 'Essaimages', path: 'map' },
- */          { name: 'Mesures', path: 'stack' }
+        { name: 'Données', path: 'stack' }
       ];
     } else if (this.translateService.currentLang === 'es') {
       this.btnNav = [
-        { name: 'Colmenas', path: 'hive' },
-        { name: 'Tabla de cría', path: 'brood' },
-/*           { name: 'Swarm Map', path: 'map' },
- */          { name: 'Mediciones', path: 'stack' }
+        { name: 'Colmena', path: 'hive' },
+        { name: 'Cría', path: 'brood' },
+        { name: 'Datos', path: 'stack' }
       ];
     }
     else {
       this.btnNav = [
-        { name: 'Hives', path: 'hive' },
-        { name: 'Brood chart', path: 'brood' },
-/*           { name: 'Swarm Map', path: 'map' },
- */          { name: 'Measurements', path: 'stack' }
+        { name: 'Hive', path: 'hive' },
+        { name: 'Brood', path: 'brood' },
+        { name: 'Raw data', path: 'stack' }
       ];
     }
 

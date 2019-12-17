@@ -382,6 +382,14 @@
         }
     },
     "MELLICHARTS": {
+        "NAV": {
+            "HIVE": "Colmena",
+            "HIVE_TOOLTIP": "Colmena",
+            "BROOD": "Cría",
+            "BROOD_TOOLTIP": "Cría",
+            "DONNEE": "Datos",
+            "DONNEE_TOOLTIP": "Datos"
+        },
         "DATE": {
             "START": "Inicio",
             "END": "Final",

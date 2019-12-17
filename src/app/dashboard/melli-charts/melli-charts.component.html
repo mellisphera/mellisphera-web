@@ -14,8 +14,21 @@ limitations under the License. -->
     <div class="navbar-header">
     </div>
     <ul class="nav navbar-nav buttonLeft">
-      <li *ngFor="let btn of btnNav"><button type="button" [id]="btn.path" (click)="navToPage(btn.path, btn.path)"
-          class="button button0">{{ btn.name }}</button></li>
+      <li>
+        <button type="button" [id]="btnNav[0].path" (click)="navToPage(btnNav[0].path, btnNav[0].path)"
+          class="button button0" data-toggle="tooltip" data-placement="top"
+          title="{{ 'MELLICHARTS.NAV.HIVE_TOOLTIP' | translate }}">{{ 'MELLICHARTS.NAV.HIVE' | translate }}</button>
+      </li>
+      <li>
+        <button type="button" [id]="btnNav[1].path" (click)="navToPage(btnNav[1].path, btnNav[1].path)"
+          class="button button0"data-toggle="tooltip" data-placement="top"
+          title="{{ 'MELLICHARTS.NAV.BROOD_TOOLTIP' | translate }}">{{ 'MELLICHARTS.NAV.BROOD' | translate }}</button>
+      </li>
+      <li>
+        <button type="button" [id]="btnNav[2].path" (click)="navToPage(btnNav[2].path, btnNav[2].path)"
+          class="button button0"data-toggle="tooltip" data-placement="top"
+          title="{{ 'MELLICHARTS.NAV.DONNEE_TOOLTIP' | translate }}">{{ 'MELLICHARTS.NAV.DONNEE' | translate }}</button>
+      </li>
     </ul>
     <ul class="nav nav-date navbar-nav navbar-right">
       <li><button type="button" (click)="previousDate()" class="btn date-arrow btn-transparent"><i
@@ -30,14 +43,18 @@ limitations under the License. -->
             <div id="input-date">
               <div class="form-group">
                 <label>{{ 'MELLICHARTS.DATE.START' | translate }} </label>
-                <input class="form-control" [owlDateTimeTrigger]="dt1" [(ngModel)]="melliChartDate.start" [owlDateTime]="dt1" >
-                <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1" #dt1></owl-date-time>
-                
+                <input class="form-control" [owlDateTimeTrigger]="dt1" [(ngModel)]="melliChartDate.start"
+                  [owlDateTime]="dt1">
+                <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1"
+                  #dt1></owl-date-time>
+
               </div>
               <div class="form-group">
                 <label>{{ 'MELLICHARTS.DATE.END' | translate }} </label>
-                  <input class="form-control" [owlDateTimeTrigger]="dt2" [(ngModel)]="melliChartDate.end" [owlDateTime]="dt2" >
-                  <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1" #dt2></owl-date-time>
+                <input class="form-control" [owlDateTimeTrigger]="dt2" [(ngModel)]="melliChartDate.end"
+                  [owlDateTime]="dt2">
+                <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1"
+                  #dt2></owl-date-time>
               </div>
               <button type="button" (click)="setDateFromInput()"
                 class="btn btn-large btn-block btn-primary">{{ 'MELLICHARTS.DATE.BTN_APPLY' | translate}}</button>
@@ -70,19 +87,22 @@ limitations under the License. -->
     <div id="apiary-group" class="apiaryGroup">
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
-          <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)" data-toggle="collapse"
-            data-parent="#main-menu"><span></span>{{ rucher.name }}<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span></a>
-          <div *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')" [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
+          <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)"
+            data-toggle="collapse" data-parent="#main-menu"><span></span>{{ rucher.name }}<span [id]="rucher._id"
+              [class]="'caret ' + ifActiveApiary(rucher._id)"></span></a>
+          <div *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')"
+            [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
             <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
-              *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index" (click)="selectHive(ruche, $event)"
-              data-parent="#sub-menu"><i class="circle" [style.background-color]="getColor(ruche)"></i><span
-                class="puce-hive"></span>{{ ruche.name }}</a>
+              *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index"
+              (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i class="circle"
+                [style.background-color]="getColor(ruche)"></i><span class="puce-hive"></span>{{ ruche.name }}</a>
           </div>
-          <div *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
+          <div *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
+            [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
             <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
-              *ngFor="let ruche of adminService.getHivesByApiaryId(rucher._id); let i = index" (click)="selectHive(ruche, $event)"
-              data-parent="#sub-menu"><i class="circle" [style.background-color]="getColor(ruche)"></i><span
-                class="puce-hive"></span>{{ ruche.name }}</a>
+              *ngFor="let ruche of adminService.getHivesByApiaryId(rucher._id); let i = index"
+              (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i class="circle"
+                [style.background-color]="getColor(ruche)"></i><span class="puce-hive"></span>{{ ruche.name }}</a>
           </div>
         </ng-container>
       </div>
