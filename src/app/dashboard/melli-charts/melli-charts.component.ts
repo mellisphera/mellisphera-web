@@ -44,7 +44,7 @@ const PREFIX_PATH = '/dashboard/melli-charts/';
 })
 export class MelliChartsComponent implements OnInit, AfterViewInit {
 
-  public btnNav: Array<Object>;
+  public btnNav: any[];
   private btnTypeElement: HTMLElement;
   public typeNav: Array<Object>;
   public datePickerConfig: any;
