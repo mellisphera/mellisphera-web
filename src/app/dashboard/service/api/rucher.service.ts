@@ -55,9 +55,9 @@ export class RucherService {
         this.allApiaryAccount = [];
         this.initRucher();
         console.log("init rucher");
-        if (this.user.getUser() && !this.tokenService.checkAuthorities('ROLE_ADMIN')) {
+/*         if (this.user.getUser() && !this.tokenService.checkAuthorities('ROLE_ADMIN')) {
             this.getApiaryByUser(this.user.getJwtReponse().idUser);
-        }
+        } */
 
     }
 

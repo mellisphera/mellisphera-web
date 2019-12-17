@@ -99,7 +99,7 @@ import { FeedbackComponent } from '../feedback/feedback.component';
     AuthGuardService,
     MessagesService,
     UserParamsService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+    //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
 
   ],
   declarations: [

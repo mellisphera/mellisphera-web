@@ -23,6 +23,7 @@ import { HomeComponent } from './home/home.component';
 import { RoutingHistoryService } from './service/routing-history.service';
 import { SocketService } from './service/socket.service';
 import { AuthService } from '../auth/Service/auth.service';
+import { RucheService } from './service/api/ruche.service';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -53,6 +54,7 @@ export class DashboardComponent implements OnInit {
     private socketService: SocketService,
     private userService: UserloggedService,
     private authService: AuthService,
+    private rucheService: RucheService,
     private myNotifierService: MyNotifierService,
     private routingHistory: RoutingHistoryService,
     private messagesService : MessagesService,
@@ -61,11 +63,13 @@ export class DashboardComponent implements OnInit {
     this.message = '';
     this.myNotifierService.setLang(this.login.getCountry() ? this.login.getCountry() : 'EN');
     this.messagesService.setLang(this.login.getCountry() ? this.login.getCountry() : 'EN');
-    this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
+/*     this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
       if (this.rucherService.checkIfApiary()) {
         this.login.setWizardActive(false);
       }
-    });
+    }); */
+    this.rucherService.getApiaryByUser(this.userService.getJwtReponse().idUser);
+    this.rucheService.callHiveRequest();
     this.routingHistory.loadRouting();
   }
 

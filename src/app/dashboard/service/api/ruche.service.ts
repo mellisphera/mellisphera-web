@@ -48,28 +48,31 @@ export class RucheService {
     this.initRuche();
     this.hiveSubject = new BehaviorSubject<RucheInterface[]>([]);
     if (this.user.getUser()) {
-      this.getAllHiveByAccount(this.user.getIdUserLoged()).subscribe(
-        _hives => {
-          this.ruchesAllApiary = _hives.flat();
-          console.log(this.ruchesAllApiary);
-          this.hiveSubject.next(this.ruchesAllApiary);
-        },
-        () => { },
-        () => {
-          if (!this.getCurrentHive()) {
-            this.ruche = this.ruchesAllApiary[0];
-          } else {
-            this.ruche = this.ruchesAllApiary.filter(hive => hive._id === this.getCurrentHive()._id)[0];
-            if (this.ruche === undefined) {
-              this.ruche = this.ruchesAllApiary[0];
-            }
-          }
-          this.hiveSubject.complete();
-        }
-      )
+      //this.callHiveRequest();
       // this.getHiveByUserId(this.user.getUser());
 
     }
+  }
+  callHiveRequest() {
+    this.getAllHiveByAccount(this.user.getIdUserLoged()).subscribe(
+      _hives => {
+        this.ruchesAllApiary = _hives.flat();
+        console.log(this.ruchesAllApiary);
+        this.hiveSubject.next(this.ruchesAllApiary);
+      },
+      () => { },
+      () => {
+        if (!this.getCurrentHive()) {
+          this.ruche = this.ruchesAllApiary[0];
+        } else {
+          this.ruche = this.ruchesAllApiary.filter(hive => hive._id === this.getCurrentHive()._id)[0];
+          if (this.ruche === undefined) {
+            this.ruche = this.ruchesAllApiary[0];
+          }
+        }
+        this.hiveSubject.complete();
+      }
+    )
   }
   initRuche() {
     this.ruche = {

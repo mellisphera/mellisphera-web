@@ -26,6 +26,7 @@ import { SocketService } from '../../dashboard/service/socket.service';
 
 
 
+
 @Injectable()
 export class AuthService {
 
@@ -97,6 +98,9 @@ export class AuthService {
       (err) => {
         this.errLogin = true;
         console.log(err);
+      },
+      () => {
+
       }
     );
   }
