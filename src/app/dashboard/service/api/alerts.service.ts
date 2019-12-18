@@ -64,19 +64,6 @@ export class AlertsService {
         this.alertSubject = new BehaviorSubject([]);
         this.hiveAlerts = [];
         this.apiaryAlerts = [];
-        this.getAllTypeAlerts().subscribe(
-            _alerts => {
-                this.alertTypes = _alerts.sort((alertA, alertB) => {
-                    return alertA.category.localeCompare(alertB.category);
-                });
-                //console.log(this.alertTypes);
-            }
-        );
-        this.getAlertConfByUser(this.userService.getIdUserLoged()).subscribe(
-            _alertConf => {
-              this.alertUser = _alertConf;
-            }
-          );
         this.mapPictoSvg = new Map();
         this.mapTypeColor = new Map();
         this.alertsByHiveByApiary = new Map();
@@ -159,13 +146,29 @@ export class AlertsService {
 
         }
 
-
+        
     // Fonction to get all alerts for one apiary
 
     // Fonction to get all alerts for one apiary
     getAlertsByApiary(apiaryId: string, range){
         // the format is AlertInterface[]
         return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/between/apiary/' + apiaryId, range);
+    }
+
+    callInitRequest(): void {
+        this.getAllTypeAlerts().subscribe(
+            _alerts => {
+                this.alertTypes = _alerts.sort((alertA, alertB) => {
+                    return alertA.category.localeCompare(alertB.category);
+                });
+                //console.log(this.alertTypes);
+            }
+        );
+        this.getAlertConfByUser(this.userService.getIdUserLoged()).subscribe(
+            _alertConf => {
+              this.alertUser = _alertConf;
+            }
+          );
     }
 
     getHiveAlertByApiaryId(apiaryId: string, start: number, end: number) {

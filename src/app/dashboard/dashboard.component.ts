@@ -24,6 +24,7 @@ import { RoutingHistoryService } from './service/routing-history.service';
 import { SocketService } from './service/socket.service';
 import { AuthService } from '../auth/Service/auth.service';
 import { RucheService } from './service/api/ruche.service';
+import { AlertsService } from './service/api/alerts.service';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -55,6 +56,7 @@ export class DashboardComponent implements OnInit {
     private userService: UserloggedService,
     private authService: AuthService,
     private rucheService: RucheService,
+    private alertService: AlertsService,
     private myNotifierService: MyNotifierService,
     private routingHistory: RoutingHistoryService,
     private messagesService : MessagesService,
@@ -69,6 +71,7 @@ export class DashboardComponent implements OnInit {
       }
     }); */
     this.rucherService.getApiaryByUser(this.userService.getJwtReponse().idUser);
+    this.alertService.callInitRequest();
     this.rucheService.callHiveRequest();
     this.routingHistory.loadRouting();
   }
