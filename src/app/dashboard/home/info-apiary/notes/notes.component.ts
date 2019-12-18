@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, Renderer2, AfterViewChecked,HostListener  } from '@angular/core';
+import { Component, OnInit, Renderer2, AfterViewChecked,HostListener, Output, EventEmitter  } from '@angular/core';
 import { RucherService } from '../../../service/api/rucher.service';
 import { ObservationService } from '../../../service/api/observation.service';
 import { Subscription } from 'rxjs';
@@ -31,6 +31,8 @@ import * as moment from 'moment';
 export class NotesComponent implements OnInit,AfterViewChecked {
   screenHeight:any;
   screenWidth:any;
+
+  @Output() noteChange = new EventEmitter<any>();
 
   public hiveToMv: RucheInterface;
   private eltOnClickId: EventTarget;
@@ -113,7 +115,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     this.newObs = obs;
     const donnée = {
       sentence: this.newObs.description,
-      date: moment(obs.createDate).toDate()
+      date: moment(obs.opsDate).toDate()
     };
     this.observationForm.setValue(donnée);
   }
@@ -148,7 +150,6 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    */
   createObservation() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-      console.log('REQUEST');
       const formValue = this.observationForm.value;
       this.newObs = formValue;
       this.newObs.apiaryId = this.rucherService.rucher._id;
@@ -160,14 +161,15 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       this.newObs.userId = this.userService.getIdUserLoged();
       this.initForm();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
-        console.log(obs);
         this.observationService.observationsApiary.push(obs);
 /*         this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
           return -(moment(a.opsDate).unix() - moment(b.opsDate).unix())
         }); */
       }, () => { }, () => {
+        this.noteChange.emit(this.newObs);
         if(this.translateService.currentLang === 'fr'){
           this.notify.notify('success', 'Note créée');
+          
         }else{
           this.notify.notify('success', 'Created Note');
         }
@@ -198,6 +200,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
         }else{
           this.notify.notify('success', 'Updated Note');
         }
+        this.noteChange.emit(this.newObs);
       });
     } else {
       this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
@@ -221,6 +224,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
         }else{
           this.notify.notify('success', 'Deleted Note');
         }
+        this.noteChange.emit(false);
       });
     } else {
       this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);

@@ -71,6 +71,10 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
+  onChangeNote(event: any): void {
+    this.alertsHiveComponent.initCalendar();
+  }
+
 
   ngOnDestroy() {
     // this.observationService.obsHiveSubject.unsubscribe();

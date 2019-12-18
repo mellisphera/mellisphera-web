@@ -161,16 +161,16 @@ limitations under the License. -->
       <div class="modal-body">
         <form [formGroup]="rucherForm">
           <div class="form-group">
-            <label for="nom" class="col-form-label">{{ 'NAVBAR.CRUD.NAME' | translate }}</label>
-            <input formControlName="name" type="text" class="form-control" id="nom">
+            <label for="name" class="col-form-label">{{ 'NAVBAR.CRUD.NAME' | translate }}</label>
+            <input formControlName="name" type="text" class="form-control" id="name">
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['name'].valid && rucherForm.controls['name'].dirty">
               {{ 'NAVBAR.CRUD.NAME_ERROR' | translate }}
             </div>
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Description</label>
-            <textarea formControlName="description" class="form-control" id="message-text"></textarea>
+            <label for="message-text1" class="col-form-label">Description</label>
+            <textarea formControlName="description" class="form-control" id="message-text1"></textarea>
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['description'].valid && rucherForm.controls['description'].dirty">
               {{ 'NAVBAR.CRUD.DESCRIPTION_ERROR' | translate }}
@@ -178,7 +178,7 @@ limitations under the License. -->
           </div>
           <div class="form-group">
             <label for="codePostal" class="col-form-label">{{ 'NAVBAR.CRUD.ZIP_CODE' | translate }}</label>
-            <input formControlName="codePostal" type="text" class="form-control" id="codePostal">
+            <input formControlName="codePostal" type="text" class="form-control" id="codePostal1">
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
               {{ 'NAVBAR.CRUD.ZIP_ERROR' | translate }}
@@ -422,8 +422,8 @@ limitations under the License. -->
             <input formControlName="nomRuche" type="text" class="form-control">
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">{{ 'NAVBAR.CRUD.HIVEDESC' | translate}}</label>
-            <textarea formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
+            <label for="message-text2" class="col-form-label">{{ 'NAVBAR.CRUD.HIVEDESC' | translate}}</label>
+            <textarea formControlName="descriptionRuche" class="form-control" id="message-text2"></textarea>
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="createRuche();"
@@ -486,8 +486,8 @@ limitations under the License. -->
             <input formControlName="nomRuche" type="text" class="form-control">
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">{{ 'NAVBAR.CRUD.HIVEDESC' | translate}}</label>
-            <textarea formControlName="descriptionRuche" class="form-control" id="message-text"></textarea>
+            <label for="3" class="col-form-label">{{ 'NAVBAR.CRUD.HIVEDESC' | translate}}</label>
+            <textarea formControlName="descriptionRuche" class="form-control" id="message-text3"></textarea>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-warning btn-primary delete" data-toggle="tooltip" data-html="true"
@@ -678,8 +678,8 @@ limitations under the License. -->
 
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Description :</label>
-            <input formControlName="description" class="form-control" id="message-text">
+            <label for="message-text4" class="col-form-label">Description :</label>
+            <input formControlName="description" class="form-control" id="message-text4">
           </div>
           <div class="form-group ">
             <label class="col-form-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.LINK' | translate}}</label>
@@ -823,8 +823,8 @@ limitations under the License. -->
               </div>
             </div>
             <div class="form-group">
-              <label for="message-text" class="col-form-label">Description</label>
-              <input formControlName="description" class="form-control" id="message-text">
+              <label for="message-text5" class="col-form-label">Description</label>
+              <input formControlName="description" class="form-control" id="message-text5">
             </div>
             <div class="form-group ">
               <div class="alert alert-success" *ngIf="editedSensorMsgE">

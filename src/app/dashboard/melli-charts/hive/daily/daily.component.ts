@@ -131,7 +131,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
             this.currentDeviceTextPeriodCalendar + this.dailyManager.meanPeriodDevice.value + ' ' + this.dailyManager.meanPeriodDevice.unit,
             this.currentDeviceTextSevenDay + this.dailyManager.meanDeviceSevenDay.value + ' ' + this.dailyManager.meanDeviceSevenDay.unit
           ].join('\n');
-          console.log(annotationDevice);
           this.dailyManager.baseOptionsInt.graphic[0].children[1].style.text = annotationDevice;
           this.melliHive.getDailyDeviceChartInstance().setOption(this.dailyManager.baseOptionsInt);
         } else if (_type.origin === OTHER) {
@@ -239,7 +238,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     });
 
     this.melliHive.getDailyDeviceChartInstance().on('legendselectchanged', (params) => {
-      console.log(params);
+      //console.log(params);
     });
   }
 

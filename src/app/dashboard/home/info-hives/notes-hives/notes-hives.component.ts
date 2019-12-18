@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, OnDestroy, AfterViewChecked,HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked,HostListener, EventEmitter, Output } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
 import { RucherService } from '../../../service/api/rucher.service';
 import { DailyRecordsWService } from '../../../service/api/daily-records-w.service';
@@ -33,7 +33,7 @@ import * as moment from 'moment';
   styleUrls: ['./notes-hives.component.css']
 })
 export class NotesHivesComponent implements OnInit,AfterViewChecked {
-
+  @Output() noteChange = new EventEmitter<any>();
   ObservationForm: FormGroup;
   screenHeight:any;
     screenWidth:any;
@@ -135,6 +135,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         } else {
           this.notifier.notify('success', 'Created Observation');
         }
+        this.noteChange.emit(this.newObs);
       });
     } else {
       this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
@@ -202,6 +203,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         } else {
           this.notifier.notify('success', 'Updated Note');
         }
+        this.noteChange.emit(this.newObs);
       })
     } else {
       this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
@@ -224,6 +226,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         } else {
           this.notifier.notify('success', 'Deleted Note');
         }
+        this.noteChange.emit(false);
       });
     } else {
       this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);

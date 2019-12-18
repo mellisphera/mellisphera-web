@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, Input } from '@angular/core';
 import { AlertsService } from '../../../service/api/alerts.service';
 import { RucherService } from '../../../service/api/rucher.service';
 import { AlertInterface } from '../../../../_model/alert';
@@ -138,7 +138,7 @@ export class AlertsComponent implements OnInit {
   }
 
   initCalendar(isReload?: boolean){
-     this.clearOption();
+    this.clearOption();
     this.loadCalendar();
 }
 

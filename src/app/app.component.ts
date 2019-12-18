@@ -54,7 +54,6 @@ export class AppComponent implements OnInit {
     }
 
     checkLogin() {
-      console.log(this.location.path());
       this.authService.authState.subscribe(
         (_status: boolean) => {
           if (!_status) {

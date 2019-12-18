@@ -119,7 +119,6 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
     this.httpClient.get<any>('./assets/data/color.json').subscribe(
       data => {
         this.arrayColor = data;
-        console.log(this.arrayColor);
       }
     );
   }

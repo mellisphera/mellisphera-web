@@ -12,6 +12,7 @@ limitations under the License. */
 import { Component, OnInit, AfterViewChecked,HostListener,ViewChild, Renderer2 } from '@angular/core';
 import { RucherService } from '../../service/api/rucher.service';
 import { AlertsComponent } from './alerts/alerts.component';
+import { Observation } from '../../../_model/observation';
 
 @Component({
   selector: 'app-info-apiary',
@@ -56,6 +57,10 @@ export class InfoApiaryComponent implements OnInit, AfterViewChecked {
       const heightNotes = document.getElementById('apiarynotes').offsetHeight;
       document.getElementById('states').style.marginTop = '' + (0 + heightNotes + height - heightGraph)+ 'px';
     }
+  }
+
+  onChangeNote(event: any): void {
+    this.alertsComponent.initCalendar();
   }
 
 }

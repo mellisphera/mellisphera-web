@@ -226,7 +226,6 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
               let path: any;
               const nbNote = dataByDate.filter(_elt => _elt.description).length;
               //console.log(nbNote + '===' + dataByDate.length)
-              console.log(nbNote);
               if (nbNote === dataByDate.length) {
                 path = this.observationService.getPictoInspect(cellPoint);
                 group.children = group.children.concat(path);
@@ -454,7 +453,6 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    console.log('DESTROY');
   }
 
   checkChartInstance(): Promise<Boolean> {
