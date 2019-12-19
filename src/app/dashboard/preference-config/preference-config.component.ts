@@ -34,6 +34,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   private notifyService: NotifierService;
   public weatherSrc: string;
   public userPref: UserPref;
+  public lang: string;
   public passwordForm: FormGroup;
   constructor(public userConfig: UserParamsService, private authService: AuthService,
     private notifier: NotifierService,
@@ -49,6 +50,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
         this.userPref = data;
         this.formatDt = this.userConfig.dtFormat.indexOf(this.userPref.timeFormat);
         this.unitSys = this.userPref.unitSystem;
+        this.lang = this.userPref.lang;
         this.weatherSrc = this.userPref.weatherSource;
         console.log(this.userPref);
       }
@@ -64,28 +66,14 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     this.userService.setCountry(lang);
     this.userPref.lang = lang;
     this.userConfig.setLang(lang);
-/*     if (lang === 'fr') {
-      this.translateService.use(lang);
-      this.userService.setCountry(lang);
-      this.userPref.lang = lang;
-      this.userConfig.setLang(lang);
-    } else if (lang === 'es') {
-      this.translateService.use('es');
-      this.userService.setCountry('es');
-      this.userPref.lang = 'ES-es';
-      this.userConfig.setLang('es');
-    } else {
-      this.translateService.use('en');
-      this.userService.setCountry('en');
-      this.userPref.lang = 'EN-en';
-      this.userConfig.setLang('en');
-    } */
     this.saveUserPref();
-
     this.userConfig.emitPrefSubject();
-    // translateService.use('en')
-    // translateService.use('fr')
   }
+  onChangeLang() {
+    this.changeLangToggle(this.lang);
+  }
+
+
   onChangeDate(): void {
     this.userConfig.setFormatDt(this.formatDt);
     this.saveUserPref();

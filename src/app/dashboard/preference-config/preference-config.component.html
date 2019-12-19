@@ -51,10 +51,10 @@ limitations under the License. -->
             <div class="panel-heading">{{ 'PREFERENCE_CONFIG.TITLE_DATE' | translate}}</div>
             <div class="panel-body">
                 <div class="form-group" *ngFor="let format of userConfig.dtFormat; let i = index;">
-                    <input type="radio" [(ngModel)]="formatDt"  (ngModelChange)="onChangeDate()" [value]="i" name="date_format"
-                        placeholder="Input field"><label>{{ format }}</label>
+                    <input type="radio" [(ngModel)]="formatDt" (ngModelChange)="onChangeDate()" [value]="i"
+                        name="date_format" placeholder="Input field"><label>{{ format }}</label>
                 </div>
-<!--                 <button type="button" (click)="saveFormat()"
+                <!--                 <button type="button" (click)="saveFormat()"
                     class="btn btn-primary">{{ 'PREFERENCE_CONFIG.SAVE_DATE' | translate}}</button> -->
             </div>
             <div class="panel panel-default">
@@ -64,14 +64,14 @@ limitations under the License. -->
                     <div id="unité">
                         <div class="form-group">
                             <input [(ngModel)]="unitSys" (ngModelChange)="onChangeUnit()" value="METRIC" name="unit"
-                                type="radio" /><label>  {{ 'PREFERENCE_CONFIG.FORM_UNIT.METRIC' | translate}}</label>
+                                type="radio" /><label> {{ 'PREFERENCE_CONFIG.FORM_UNIT.METRIC' | translate}}</label>
                         </div>
                         <div class="form-group">
                             <input [(ngModel)]="unitSys" (ngModelChange)="onChangeUnit()" value="IMPERIAL" name="unit"
-                                type="radio" /><label>  {{ 'PREFERENCE_CONFIG.FORM_UNIT.IMPERIAL' | translate}}</label>
+                                type="radio" /><label> {{ 'PREFERENCE_CONFIG.FORM_UNIT.IMPERIAL' | translate}}</label>
                         </div>
 
-<!--                         <button type="button" (click)="saveUnit()"
+                        <!--                         <button type="button" (click)="saveUnit()"
                             class="btn btn-primary">{{ 'PREFERENCE_CONFIG.FORM_UNIT.SAVE' | translate}}</button> -->
                     </div>
                 </div>
@@ -82,13 +82,19 @@ limitations under the License. -->
             <div class="panel-body">
                 <div id="lang-group">
                     <div>
-                        <img width="50px" (click)="changeLangToggle('fr')" [class]="getLangActive('fr')" src="./assets/img/fr.png" alt="FR" />
+                        <input [(ngModel)]="lang" (ngModelChange)="onChangeLang()" value="fr" name="unit"
+                            type="radio" />
+                        <img width="50px" src="./assets/img/fr.png" alt="FR" />
                     </div>
                     <div>
-                        <img width="50px" (click)="changeLangToggle('en')" [class]="getLangActive('en')" src="./assets/img/en.png" alt="EN" />
+                        <input [(ngModel)]="lang" (ngModelChange)="onChangeLang()" value="en" name="unit"
+                            type="radio" />
+                        <img width="50px" src="./assets/img/en.png" alt="EN" />
                     </div>
                     <div>
-                        <img width="50px" (click)="changeLangToggle('es')" [class]="getLangActive('es')" src="./assets/img/es.png" alt="EN" />
+                        <input [(ngModel)]="lang" (ngModelChange)="onChangeLang()" value="es" name="unit"
+                            type="radio" />
+                        <img width="50px" src="./assets/img/es.svg" alt="EN" />
                     </div>
                 </div>
 
@@ -99,8 +105,8 @@ limitations under the License. -->
             <div class="panel-body">
                 <!--userPref.availableSource-->
                 <div *ngFor="let source of userPref.availableSource" class="form-group">
-                    <input [(ngModel)]="weatherSrc" (ngModelChange)="onChangeWeatherSrc()" [value]="source" name="weatherSource"
-                        type="radio" /><label>{{ source }}</label>
+                    <input [(ngModel)]="weatherSrc" (ngModelChange)="onChangeWeatherSrc()" [value]="source"
+                        name="weatherSource" type="radio" /><label>{{ source }}</label>
                 </div>
             </div>
         </div>

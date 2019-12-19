@@ -16,7 +16,6 @@ limitations under the License. */
     border: 1px solid green;
 }
 #lang-group div{
-    display: inline-block;
     padding: 2px;
 }
 .lang_active{
@@ -25,9 +24,8 @@ limitations under the License. */
 #lang-group img {
     /*border-radius: 50px;*/
     cursor: pointer;
-
 }
-.form-group label{
+.form-group label, #lang-group img  {
     margin-left: 6px;
 }
 .icon_notif{
