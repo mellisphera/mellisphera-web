@@ -11,7 +11,6 @@ limitations under the License. -->
 
 <div id="contain-calendar" class="flex" (window:resize)="onResize($event)">
   <div id="daily-int">
-    <div class="infoToolip"><i class="fa fa-question-circle-o fa-1g" aria-hidden="true"></i></div>
     <div id="sidebar-tools-daily-device">
       <ul class="nav responsive-nav flex tools" id="device-group">
         <li *ngFor="let type of getlabelByType('DEVICE')" data-toggle="tooltip" data-html="true"
@@ -32,7 +31,6 @@ limitations under the License. -->
     </div> -->
   </div>
   <div id="daily-env">
-    <div class="infoToolip"><i class="fa fa-question-circle-o fa-1g" aria-hidden="true"></i></div>
     <div id="sidebar-tools-daily-env">
       <ul class="nav responsive-nav flex tools" id="env-group">
         <li *ngFor="let type of getlabelByType('ENV')" data-toggle="tooltip" data-html="true"
@@ -55,7 +53,6 @@ limitations under the License. -->
     <div id="calendar-env" class="chart calendar"></div>
   </div>
   <div class="mean-grup" id="daily-other">
-    <div class="infoToolip"><i class="fa fa-question-circle-o fa-1g" aria-hidden="true"></i></div>
 
     <div id="sidebar-tools-daily-other">
       <ul class="nav responsive-nav flex tools" id="other-group">

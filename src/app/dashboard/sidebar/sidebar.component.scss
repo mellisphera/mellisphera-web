@@ -30,9 +30,13 @@ li{
 li a{
     opacity: 1;
 }
+
 li a:hover{
-    background-color: initial !important;
+    background-color:inherit;
     opacity: 1 !important;
+}
+.side-active:hover{
+    background-color: white !important;
 }
 li p{
     color: black !important;
