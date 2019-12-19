@@ -1062,7 +1062,7 @@ export class GraphGlobal {
     }
       return {
         type: 'rect',
-        z2: 0 ,
+        z2: 50 ,
         shape: {
           x: -cellWidth / 2 + 2,
           y: -cellHeight / 2 + 2,
