@@ -137,7 +137,11 @@ li:first-child img{
 
  // transform: rotate(0deg);
 }
-
+.infoToolip{
+  position: absolute;
+  right: 15px;
+  bottom: 3px;
+}
 .photo{
   max-height: 75vh;
   width: 100%;

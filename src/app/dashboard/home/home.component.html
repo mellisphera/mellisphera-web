@@ -170,8 +170,8 @@ limitations under the License. -->
                         [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
                         [style.background-color]="dailyRecTh.getColorByPourcent(ruche._id)">
                         <!-- notifications -->
-                        <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
-                            class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span>
+<!--                         <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
+                            class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span> -->
                     </div>
                     <!-- Hive click -->
                     <!-- The hidden div when you click on name/Brood/Weight/Sensors -->
@@ -199,6 +199,7 @@ limitations under the License. -->
                     </div>
                 </div>
             </ng-container>
+            <div class="infoToolip"><i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i></div>
         </div>
 
         <div id="scroll"></div>
