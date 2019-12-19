@@ -21,10 +21,6 @@ limitations under the License. */
 .lang_active{
     border: 5px solid orange;
 }
-#lang-group img {
-    /*border-radius: 50px;*/
-    cursor: pointer;
-}
 .form-group label, #lang-group img  {
     margin-left: 6px;
 }

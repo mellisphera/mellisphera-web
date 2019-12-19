@@ -54,7 +54,7 @@
         "DELETE_APIARY2" : "Delete apiary",
         "DELETE_ASK" : "Delete Apiary ?",
         "ACCOUNT": {
-            "PREFERENCES" : "Preferences",
+            "PREFERENCES" : "Settings",
             "LOG_OUT": "Logout"
         },
         "CRUD" : {
@@ -95,13 +95,10 @@
         }
     },
     "SIDEBAR" : {
-        "APIARY" : "My Apiaries",
+        "APIARY" : "My Apiary",
         "HIVES" : "Hives",
-        "NOTES" : "Apiary notes",
-        "FLOWER" : "Flower",
-        "SENSORS" : "Sensors",
-        "DATA" : "Expert",
-        "ALERT_CONF": "Alarms"
+        "DATA" : "Explore",
+        "ALERT_CONF": "Alerts"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Change Password",
@@ -187,13 +184,13 @@
             "ACTION" : "Action",
             "FORM" : {
                 "NEW" : "New",
-                "NEW_NOTES" : "New note",  
+                "NEW_NOTES" : "New hive note",  
                 "DATE" : "Date Time : ",
                 "CREATE_OBS" : "Create note",
                 "CREATE_ACT" : "Create action",
                 "CLOSE" : "Close",
                 "EDIT" : "Save",
-                "EDITNOTE" : "Edit note",
+                "EDITNOTE" : "Edit hive note",
                 "DELETE" : "Delete note",
                 "DELETE_ASK" : "Delete note ?",
                 "CANCEL" : "Cancel",
@@ -248,6 +245,7 @@
             "NEW" : "New Apiary Note",
             "CREATE" : "Create note",
             "SAVE" : "Save",
+            "EDITNOTE": "Edit apiary note",
             "SELECT" : "Select your hive",
             "TYPE" : "Type : ",
             "MOVE" : "Move"
@@ -292,10 +290,11 @@
         }
     },
     "FEEDBACK" : {
-        "TITLE" : "Your feedback",
-        "MESSAGE" : "Send us your feedback",
-        "COMMENT" : "Your comment",
-        "SLACK" : "You can also join the conversation on Slack by",
+        "TITLE" : "Support",
+        "TITLE_MODAL" : "Can we help you?",
+        "COMMENT" : "Your message",
+        "MSG": "Write us an <a href=mailto:support@mellisphera.com>email</a>, chat on <a href=https://mellisphera.slack.com/shared_invite/enQtNjQzNDIwMTU2MDU1LTE0ODIxZjcwMzExMmY0OTBlMDc0ZjIyOGQwMjY0NmNmYTU3M2FkNWQ5YmNlOWZiMTFjMGVjOWVkOTQyNDk4YzY target=_blank>slack</a> or send a direct message.",
+        "SLACK" : "chat with us on",
         "SIGNUP" : "sign-up",
         "OR" : "or",
         "LOGIN" : "login",

@@ -95,13 +95,10 @@
         }
     },
     "SIDEBAR" : {
-        "APIARY" : "Mes Ruchers",
+        "APIARY" : "Mon Rucher",
         "HIVES" : "Ruches",
-        "NOTES" : "Notes du rucher",
-        "FLOWER" : "Fleur",
-        "SENSORS" : "Capteurs",
-        "DATA" : "Analyse",
-        "ALERT_CONF": "Alerts"
+        "DATA" : "Explorer",
+        "ALERT_CONF": "Alertes"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Changer de mot de passe",
@@ -247,6 +244,7 @@
             "NEW" : "Nouvelle note de rucher",
             "CREATE" : "Créer une note",
             "SAVE" : "Enregistrer",
+            "EDITNOTE": "Editer note de rucher",
             "SELECT" : "Selectionnez votre ruche",
             "TYPE" : "Type : ",
             "MOVE" : "Déplacer"
@@ -291,9 +289,10 @@
         }
     },
     "FEEDBACK" : {
-        "TITLE" : "Ecrivez-nous",
-        "MESSAGE" : "Ecrivez-nous !",
-        "COMMENT" : "Votre commentaire",
+        "TITLE" : "Support",
+        "TITLE_MODAL" : "On peut vous aider ?",
+        "COMMENT" : "Votre message",
+        "MSG": "Contactez nous par <a href=mailto:support@mellisphera.com>email</a>, sur <a href=https://mellisphera.slack.com/shared_invite/enQtNjQzNDIwMTU2MDU1LTE0ODIxZjcwMzExMmY0OTBlMDc0ZjIyOGQwMjY0NmNmYTU3M2FkNWQ5YmNlOWZiMTFjMGVjOWVkOTQyNDk4YzY target=_blank>slack</a> ou écrivez nous ci-dessous.",
         "SLACK" : "Vous pouvez aussi rejoindre notre conversation sur Slack en",
         "SIGNUP" : "créant un compte",
         "OR" : "ou",

@@ -52,7 +52,7 @@
         "DELETE_APIARY2": "Suprimir colmenar",
         "DELETE_ASK": "Suprimir el colmenar?",
         "ACCOUNT": {
-            "PREFERENCES": "preferencias",
+            "PREFERENCES": "Ajustes",
             "LOG_OUT": "Desconexion"
         },
         "CRUD": {
@@ -95,10 +95,7 @@
     "SIDEBAR": {
         "APIARY": "Colmenar",
         "HIVES": "Colmenas",
-        "NOTES": "Notas del colmenar",
-        "FLOWER": "Flor",
-        "SENSORS": "Sensor",
-        "DATA": "Analisis",
+        "DATA": "Explorar",
         "ALERT_CONF": "Alertas "
     },
     "PREFERENCE_CONFIG": {
@@ -262,6 +259,7 @@
             "NEW": "Nueva nota de colmenar",
             "CREATE": "Nueva nota",
             "SAVE": "Guardar",
+            "EDITNOTE": "Ediatar nota de colmenar",
             "SELECT": "Selecciona tu colmena",
             "TYPE": "Typo: ",
             "MOVE": "Dsplazar"
@@ -306,10 +304,11 @@
         }
     },
     "FEEDBACK": {
-        "TITLE": "Escribenos!",
-        "MESSAGE": "Escribenos!",
-        "COMMENT": "Cuéntanos lo que podemos mejorar",
-        "SLACK": "Tambien puedes conectar con nosotros en nuestro canal slack",
+        "TITLE": "Ayuda",
+        "TITLE_MODAL": "Podemos ayudarte?",
+        "COMMENT": "Tu mensaje",
+        "MSG": "Envíanos un <a href=mailto:support@mellisphera.com>email</a>, chatea en <a href=https://mellisphera.slack.com/shared_invite/enQtNjQzNDIwMTU2MDU1LTE0ODIxZjcwMzExMmY0OTBlMDc0ZjIyOGQwMjY0NmNmYTU3M2FkNWQ5YmNlOWZiMTFjMGVjOWVkOTQyNDk4YzY target=_blank>slack</a> o escríbe tu mensaje.",
+
         "SIGNUP": "crear cuenta",
         "OR": "o",
         "LOGIN": "conectarme",

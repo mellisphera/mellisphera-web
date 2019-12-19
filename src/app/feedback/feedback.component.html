@@ -21,28 +21,25 @@ limitations under the License. -->
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           &times;
         </button>
-        <h4 class="modal-title">{{ 'FEEDBACK.MESSAGE' | translate}}</h4>
+        <h4 class="modal-title">{{ 'FEEDBACK.TITLE_MODAL' | translate}}</h4>
       </div>
       <div class="modal-body">
+        <div id="description-slack">
+          <p id="headerText" [innerHTML]="'FEEDBACK.MSG' | translate"><br />
+          </p>
+        </div>
         <form [formGroup]="feedbackForm">
           <textarea formControlName="comment" placeholder="{{ 'FEEDBACK.COMMENT' | translate}}"> </textarea>
         </form>
       </div>
       <div class="modal-footer">
-        <div id="description-slack">
-          <p style="text-align:center;">{{ 'FEEDBACK.SLACK' | translate}}<br />
-            <a href="https://mellisphera.slack.com/shared_invite/enQtNjQzNDIwMTU2MDU1LTE0ODIxZjcwMzExMmY0OTBlMDc0ZjIyOGQwMjY0NmNmYTU3M2FkNWQ5YmNlOWZiMTFjMGVjOWVkOTQyNDk4YzY"
-              target="_blank">{{ 'FEEDBACK.SIGNUP' | translate}}</a> {{ 'FEEDBACK.OR' | translate}}
-            <a target="_blank" [href]="getUrlLoginByLang()">{{ 'FEEDBACK.LOGIN' | translate}}</a>
-          </p>
-        </div>
         <div id="boutons">
-          <button type="submit" class="btn btn-default" (click)="resForm();" data-dismiss="modal">
-            {{ 'FEEDBACK.CLOSE' | translate}}
-          </button>
           <button type="button" (click)="send()" class="btn btn-primary" data-dismiss="modal"
             [disabled]="feedbackForm.invalid">
             {{ 'FEEDBACK.SEND' | translate}}
+          </button>
+          <button type="submit" class="btn btn-default" (click)="resForm();" data-dismiss="modal">
+            {{ 'FEEDBACK.CLOSE' | translate}}
           </button>
         </div>
       </div>
