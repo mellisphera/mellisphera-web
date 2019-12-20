@@ -293,7 +293,7 @@
         "TITLE" : "Support",
         "TITLE_MODAL" : "Can we help you?",
         "COMMENT" : "Your message",
-        "MSG": "Write us an <a href=mailto:support@mellisphera.com>email</a>, chat on <a href=https://mellisphera.slack.com/shared_invite/enQtNjQzNDIwMTU2MDU1LTE0ODIxZjcwMzExMmY0OTBlMDc0ZjIyOGQwMjY0NmNmYTU3M2FkNWQ5YmNlOWZiMTFjMGVjOWVkOTQyNDk4YzY target=_blank>slack</a> or send a direct message.",
+        "MSG": "Write us an <a href=mailto:support@mellisphera.com>email</a>, chat on <a href=https://mellisphera.slack.com/messages/mellisphera_en/ target=_blank>slack</a> or send a direct message.",
         "SLACK" : "chat with us on",
         "SIGNUP" : "sign-up",
         "OR" : "or",

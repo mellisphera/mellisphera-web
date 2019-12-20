@@ -307,7 +307,7 @@
         "TITLE": "Ayuda",
         "TITLE_MODAL": "Podemos ayudarte?",
         "COMMENT": "Tu mensaje",
-        "MSG": "Envíanos un <a href=mailto:support@mellisphera.com>email</a>, chatea en <a href=https://mellisphera.slack.com/shared_invite/enQtNjQzNDIwMTU2MDU1LTE0ODIxZjcwMzExMmY0OTBlMDc0ZjIyOGQwMjY0NmNmYTU3M2FkNWQ5YmNlOWZiMTFjMGVjOWVkOTQyNDk4YzY target=_blank>slack</a> o escríbe tu mensaje.",
+        "MSG": "Envíanos un <a href=mailto:support@mellisphera.com>email</a>, chatea en <a href=https://mellisphera.slack.com/messages/mellisphera_en/ target=_blank>slack</a> o escríbe tu mensaje.",
 
         "SIGNUP": "crear cuenta",
         "OR": "o",

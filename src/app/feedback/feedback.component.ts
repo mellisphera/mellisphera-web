@@ -35,11 +35,7 @@ export class FeedbackComponent implements OnInit {
     private translateService: TranslateService,
     private userService: UserloggedService,
     private notifyService: NotifierService) {
-      if (this.translateService.currentLang === 'fr') {
-        this.urlSlack = CONFIG.SLACK_FR;
-      } else {
-        this.urlSlack = CONFIG.SLACk_EN;
-      }
+    this.urlSlack = CONFIG.SLACK;
     this.notify = notifyService;
   }
 
