@@ -27,6 +27,17 @@ li{
     text-align: center;
     font-size: 10px;
 }
+li a{
+    opacity: 1;
+}
+
+li a:hover{
+    background-color:inherit;
+    opacity: 1 !important;
+}
+.side-active:hover{
+    background-color: white !important;
+}
 li p{
     color: black !important;
     margin-left: 0px;

@@ -27,7 +27,11 @@ limitations under the License. */
   border-left: 6px solid #70A8B2;
   background-color: #dce8ed;
 }
-
+.infoToolip{
+  position: absolute;
+  right: 15px;
+  bottom: 3px;
+}
 /* .btn-black {
   background-color: black;
 }

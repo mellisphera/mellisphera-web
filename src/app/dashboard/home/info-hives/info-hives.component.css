@@ -63,6 +63,12 @@ hr
 }
 .calendar{
     height: 270px;
+    position: relative;
+}
+.infoToolip{
+    position: absolute;
+    right: 15px;
+    top: 4px;
 }
 
 @media only screen

@@ -11,24 +11,36 @@ limitations under the License. -->
 
 <div id="apiaryGeneral">
   <div id="graph">
-  <!-- <div class="title">
+    <!-- <div class="title">
       <img src="../../assets/img/apiary-icon.png" style="width:45px;height: 45px; margin-left: -7px; margin-top:-10px;" />
       {{this.rucherService.rucher.name}}
       <span
           *ngIf="this.rucherService.rucher.description!=null">{{': ' + this.rucherService.rucher.description}}</span>
   </div>
   <hr /> -->
-  <div id="apiaryAlerts">
-    <app-alerts></app-alerts>
+    <div class="calendar" id="apiaryAlerts">
+      <app-alerts></app-alerts>
+      <div class="infoToolip">
+<!--         <popover-content #myPopover title="Calendrier Evenement" placement="left" [animation]="true" [closeOnClickOutside]="false">
+          <span style="color: #C21F39">Rassemble les éléments important pour le rucher sélectionné:
+          <ul>
+            <li>Capteur défaillant</li>
+            <li>Alert relatif aux données</li>
+            <li>Note du rucher</li>
+          </ul>
+          </span>
+        </popover-content>
+        <a><i [popover]="myPopover" class="fa fa-question-circle-o fa-1g" aria-hidden="true"></i></a> -->
+      </div>
+    </div>
   </div>
-  </div>
-  <div id = "apiaryLeft">
-  <div id="apiarynotes">
-   <app-notes (noteChange)="onChangeNote($event)"></app-notes>
-  </div>
+  <div id="apiaryLeft">
+    <div id="apiarynotes">
+      <app-notes (noteChange)="onChangeNote($event)"></app-notes>
+    </div>
   </div>
   <div id="states">
-      <hr id="allPage" />
+    <hr id="allPage" />
     <app-states></app-states>
   </div>
-  </div>
+</div>

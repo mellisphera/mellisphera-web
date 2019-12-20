@@ -68,9 +68,9 @@ export class MelliChartsDateService {
       default:
         date.setDate(date.getDate() - 15);
     }
+    let nbDay: number = day[date.getDay()];
+    date.setDate(date.getDate() - nbDay);
     this.rangeDateForRequest = MyDate.getRange(date);
-    //let nbDay: number = day[this.rangeDateForRequest[0].getDay()];
-    //this.rangeDateForRequest[0].setDate(this.rangeDateForRequest[0].getDate() - nbDay);
 
     this.rangeDateForRequest[0].setHours(4);
     this.rangeDateForRequest[0].setSeconds(0);
@@ -78,8 +78,6 @@ export class MelliChartsDateService {
     this.rangeDateForRequest[1].setSeconds(0);
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
-
-
   }
 
   /**

@@ -45,7 +45,7 @@ export const WEATHER = {
             scale: [0.07, 0.07],
             position: [ -17, -18],
             style: {
-                fill: '#b3b3b3',
+                fill: '#00d9ff',
                 stroke:'#ffffff',
                 lineWidth: '1.578'
             }
@@ -76,7 +76,7 @@ export const WEATHER = {
             scale: [0.07, 0.07],
             position: [ -17, -18],
             style: {
-                fill: '#b3b3b3',
+                fill: '#00d9ff',
                 stroke:'#ffffff',
                 lineWidth: 2.235
             }
@@ -97,7 +97,7 @@ export const WEATHER = {
             scale: [0.07, 0.07],
             position: [ -17, -18],
             style: {
-                fill: '#b3b3b3',
+                fill: '#00d9ff',
                 stroke:'#ffffff',
                 lineWidth: 2
             }

@@ -28,6 +28,11 @@ limitations under the License. */
     color: white;
     /*background-color: #333F3D;*/
 }
+.infoToolip{
+    position: absolute;
+    right: 15px;
+    top: 4px;
+}
 .item-type{
     text-align: center;
     transition: 0.3s;

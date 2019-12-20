@@ -10,11 +10,11 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 #apiary-group{
-    overflow: auto;
+    /*overflow: auto;*/
     scrollbar-width: none;
     white-space: pre-wrap;
     overflow-y: scroll;
-    position: fixed;
+    position: absolute;
     justify-content: space-between;
     height: auto;
 }

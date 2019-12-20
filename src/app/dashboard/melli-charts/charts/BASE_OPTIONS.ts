@@ -29,8 +29,9 @@ export const BASE_OPTIONS = {
             link: { xAxisIndex: 'all' }
         },
         toolbox: {
-            orient: 'horizontal',
+            orient: 'vertical',
             itemSize: 20,
+            top: 50,
             feature: {
                 dataZoom: {
                     yAxisIndex: 'none',
@@ -61,7 +62,8 @@ export const BASE_OPTIONS = {
         ],
         grid: [{
             containLabel: true,
-            height: '80%',
+            top: 11,
+            height: '90%',
             left: 'center',
             width: '95%'
         }],
