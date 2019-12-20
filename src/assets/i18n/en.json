@@ -381,7 +381,9 @@
     },
     "MELLICHARTS": {
         "HELP": {
-
+            "BROOD": {
+                
+            }
         },
         "NAV": {
             "HIVE": "Hive",
