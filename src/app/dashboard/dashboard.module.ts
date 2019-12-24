@@ -115,7 +115,6 @@ import { FeedbackComponent } from '../feedback/feedback.component';
     FeedbackComponent,
     ManageSensorsComponent,
     ManageNotesComponent,
-    AlertConfigurationComponent,
   ]
 })
 export class DashboardModule { }

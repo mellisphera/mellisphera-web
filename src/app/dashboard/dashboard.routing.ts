@@ -38,7 +38,7 @@ const routes: Routes = [
             { path: 'manage-apiarys', component: ManageApiarysComponent, canActivate: [AuthGuardService]},
             { path: 'manage-notes', component: ManageNotesComponent, canActivate: [AuthGuardService]},
             { path: 'manage-sensors', component: ManageSensorsComponent, canActivate: [AuthGuardService]},
-            { path: 'alert-configuration', component: AlertConfigurationComponent, canActivate: [AuthGuardService]},
+            { path: 'alert-configuration', canLoad: [AuthGuardService], canActivate: [AuthGuardService], loadChildren: './alert-configuration/alert-configuration.module#AlertConfigurationModule'},
             { path: 'preferences', component: PreferenceConfigComponent, canActivate: [AuthGuardService]}
 
 
