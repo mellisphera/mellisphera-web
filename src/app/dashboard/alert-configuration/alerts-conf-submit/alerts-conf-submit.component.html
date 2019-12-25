@@ -1,3 +1,50 @@
-<p>
-  alerts-conf-submit works!
-</p>
+<div class="row">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <form class="form" role="form">
+      <div class="form-group">
+        <label for="email1">Email :</label>
+        <input type="email" *ngFor="let mail of alertUser.email" name="email1" id="email1" placeholder="email"
+          class="form-control" [value]="mail" required="required" title="">
+      </div>
+      <div class="form-group">
+        <label>Frequency :</label>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="frequency" id="daily" [(ngModel)]="alertUser.frequency" value="DAILY">
+            Daily
+          </label>
+
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="frequency" id="weekly" [(ngModel)]="alertUser.frequency" value="WEEKLY">
+            Weekly
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="frequency" id="every" [(ngModel)]="alertUser.frequency" value="EVERY_X_DAY">
+            Every
+            <input type="number" name="frequency" id="dayValue" [(ngModel)]="alertUser.dayFrequency"
+              class="form-control" required="required" title="">
+            day
+          </label>
+        </div>
+
+      </div>
+      <div class="btn-group" id="status" data-toggle="buttons">
+        <label [class]="'btn btn-default btn-on ' + (alertUser.emailEnable ? 'active': '')"
+          (click)="onEnable()">
+          <input type="radio" value="1"
+            name="multifeatured_module[module_id][status]">ON</label>
+        <label [class]="'btn btn-default btn-off ' + (alertUser.emailEnable ? 'not-active': 'active')"
+          (click)="onDisable()">
+          <input type="radio" value="0"
+            name="multifeatured_module[module_id][status]">OFF</label>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

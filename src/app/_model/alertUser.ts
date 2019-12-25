@@ -14,6 +14,11 @@ limitations under the License. */
 export interface AlertUser {
     _id: string;
     userId: string;
+    availableFrequency: string[];
+    dayFrequency: number;
+    email: string[];
+    emailEnable: boolean;
+    frequency: string;
     alertConf: Map<string, {
         enable: boolean,
         valueMet: number,
