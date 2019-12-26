@@ -1,49 +1,48 @@
 <div class="row">
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-    <form class="form" role="form">
+    <div class="form-group" *ngFor="let mail of emails; let i = index">
+      <label [for]="'email' + i">Email {{ (i + 1) }}</label>
+      <input type="email" [name]="'email' + i" [id]="'email' + i" placeholder="email"
+        class="form-control" (input)="onMailChange($event, i)" [value]="mail" required="required">
+    </div>
+    <div class="form-group">
+      <label>{{ 'ALERT_CONF_PAGE.PAGE.CONF.FREQUENCY'| translate }} :</label>
       <div class="form-group">
-        <label for="email1">Email :</label>
-        <input type="email" *ngFor="let mail of alertUser.email" name="email1" id="email1" placeholder="email"
-          class="form-control" [value]="mail" required="required" title="">
+        <label>
+          <input type="radio" name="frequency" id="daily" (ngModelChange)="onChangeFrequency()" [(ngModel)]="alertUser.frequency"
+            value="DAILY">
+          {{ 'ALERT_CONF_PAGE.PAGE.CONF.DAILY' | translate }}
+        </label>
       </div>
       <div class="form-group">
-        <label>Frequency :</label>
-        <div class="form-group">
-          <label>
-            <input type="radio" name="frequency" id="daily" [(ngModel)]="alertUser.frequency" value="DAILY">
-            Daily
-          </label>
-
-        </div>
-        <div class="form-group">
-          <label>
-            <input type="radio" name="frequency" id="weekly" [(ngModel)]="alertUser.frequency" value="WEEKLY">
-            Weekly
-          </label>
-        </div>
-        <div class="form-group">
-          <label>
-            <input type="radio" name="frequency" id="every" [(ngModel)]="alertUser.frequency" value="EVERY_X_DAY">
-            Every
-            <input type="number" name="frequency" id="dayValue" [(ngModel)]="alertUser.dayFrequency"
-              class="form-control" required="required" title="">
-            day
-          </label>
-        </div>
-
+        <label>
+          <input type="radio" name="frequency" id="weekly" (ngModelChange)="onChangeFrequency()" [(ngModel)]="alertUser.frequency"
+            value="WEEKLY">
+          {{ 'ALERT_CONF_PAGE.PAGE.CONF.WEEKLY' | translate }}
+        </label>
       </div>
-      <div class="btn-group" id="status" data-toggle="buttons">
-        <label [class]="'btn btn-default btn-on ' + (alertUser.emailEnable ? 'active': '')"
-          (click)="onEnable()">
-          <input type="radio" value="1"
-            name="multifeatured_module[module_id][status]">ON</label>
-        <label [class]="'btn btn-default btn-off ' + (alertUser.emailEnable ? 'not-active': 'active')"
-          (click)="onDisable()">
-          <input type="radio" value="0"
-            name="multifeatured_module[module_id][status]">OFF</label>
+      <div class="form-group">
+        <label>
+          <input type="radio" name="frequency" id="every" (ngModelChange)="onChangeFrequency()" [(ngModel)]="alertUser.frequency"
+            value="EVERY_X_DAY">
+          <span *ngIf="alertUser.frequency !== 'EVERY_X_DAY'">{{ 'ALERT_CONF_PAGE.PAGE.CONF.OTHER' | translate }}</span>
+          <span *ngIf="alertUser.frequency === 'EVERY_X_DAY'">{{ 'ALERT_CONF_PAGE.PAGE.CONF.EVERY' | translate }} </span>
+          <input *ngIf="alertUser.frequency === 'EVERY_X_DAY'"type="number" name="frequency" id="dayValue" [(ngModel)]="alertUser.dayFrequency" class="form-control"
+            required="required" title="">
+          <span *ngIf="alertUser.frequency === 'EVERY_X_DAY'"> {{ 'ALERT_CONF_PAGE.PAGE.CONF.DAY' | translate }}</span>
+        </label>
       </div>
 
-    </form>
+    </div>
+    <div class="btn-group" id="status" data-toggle="buttons">
+      <label [class]="'btn btn-default btn-on ' + (alertUser.emailEnable ? 'active': '')"
+        (click)="alertUser.emailEnable = !alertUser.emailEnable">
+        <input type="radio" value="1" name="multifeatured_module[module_id][status]">ON</label>
+      <label [class]="'btn btn-default btn-off ' + (alertUser.emailEnable ? 'not-active': 'active')"
+        (click)="alertUser.emailEnable = !alertUser.emailEnable">
+        <input type="radio" value="0" name="multifeatured_module[module_id][status]">OFF</label>
+    </div>
+
 
   </div>
 

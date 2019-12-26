@@ -389,6 +389,20 @@
         "NAME": "Name",
         "DESCRIPTION": "Description",
         "VALUE": "Value",
+        "PAGE": {
+            "SENSORS": "Sensor",
+            "WEATHER": "Weather",
+            "HIVE": "Hive",
+            "CONF": {
+                "TITLE": "Configuration",
+                "FREQUENCY": "Frequency",
+                "DAILY": "Daily",
+                "WEEKLY": "Weekly",
+                "DAY": "day",
+                "OTHER": "Other",
+                "EVERY": "Every"
+            }
+        },
         "STATUS": "Status"
     },
 

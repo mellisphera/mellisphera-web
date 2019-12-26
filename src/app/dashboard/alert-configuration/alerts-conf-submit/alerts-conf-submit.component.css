@@ -2,6 +2,9 @@
     display: inline-block !important;
     width: 60px !important;
 }
+.row{
+    padding: 25px;
+}
 
 .btn-default.btn-on.active{background-color: #5BB75B;color: white;}
 .btn-default.btn-off.active{background-color: #DA4F49;color: white;}

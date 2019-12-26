@@ -53,6 +53,7 @@ export class AlertsService {
     // Map color for alert type
     public mapTypeColor : Map<string,string>;
 
+    public alertConfSubject: BehaviorSubject<boolean>;
     // Alerts by id hive for one apiary
     public alertsByHiveByApiary : Map<string,AlertInterface[]>;
 
@@ -66,6 +67,7 @@ export class AlertsService {
         this.apiaryAlerts = [];
         this.mapPictoSvg = new Map();
         this.mapTypeColor = new Map();
+        this.alertConfSubject = new BehaviorSubject(false);
         this.alertsByHiveByApiary = new Map();
         this.mapPictoSvg.set('Hot', ALERTS_ICONS.Hot);
         this.mapPictoSvg.set('Rain', ALERTS_ICONS.Rain);
@@ -167,6 +169,9 @@ export class AlertsService {
         this.getAlertConfByUser(this.userService.getIdUserLoged()).subscribe(
             _alertConf => {
               this.alertUser = _alertConf;
+              this.alertConfSubject.next(true);
+            }, () => {}, () => {
+                this.alertConfSubject.complete();
             }
           );
     }

@@ -402,6 +402,20 @@
         "TYPE": "Icono",
         "VALUE": "Valor",
         "NAME": "Apellido",
+        "PAGE": {
+            "SENSORS": "Sensor",
+            "WEATHER": "Météo",
+            "HIVE": "Colmena",
+            "CONF": {
+                "TITLE": "Configuración",
+                "FREQUENCY": "Frecuencia",
+                "DAILY": "Diario",
+                "WEEKLY": "Semanal",
+                "DAY": "día",
+                "OTHER": "Otro",
+                "EVERY": "Cada"
+            }
+        },
         "DESCRIPTION": "Descripción",
         "STATUS": "Estatus"
     },

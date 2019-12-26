@@ -387,6 +387,20 @@
     "ALERT_CONF_PAGE": {
         "TYPE": "Icône",
         "VALUE": "Valeur",
+        "PAGE": {
+            "SENSORS": "Capteur",
+            "WEATHER": "Metéo",
+            "HIVE": "Ruche",
+            "CONF": {
+                "TITLE": "Configuration",
+                "FREQUENCY": "Fréquence",
+                "DAILY": "Journalier",
+                "WEEKLY": "Hebdomadaire",
+                "DAY": "jour",
+                "OTHER": "Autre",
+                "EVERY": "Tout les "
+            }
+        },
         "NAME": "Nom",
         "DESCRIPTION": "Description",
         "STATUS": "Status",

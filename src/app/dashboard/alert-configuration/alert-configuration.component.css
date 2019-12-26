@@ -5,15 +5,16 @@ nav[role=admin-navigation] {
 .nav li .btn{
     color: white !important;
 }
-
-
 .button0 {
     background-color: #4F4F51; 
     color: white; 
     border: 2px solid #70A8B2;
    border-radius: 4px;
 }
-
+.nav-active {
+    background-color: white;
+    color: #4F4F51; 
+}
 .button {
     padding: 6px 12px;
     text-align: center;
@@ -28,4 +29,17 @@ nav[role=admin-navigation] {
 
 .navbar-nav{
     margin-left: 10px;
+}
+
+@media screen and (max-width:770px) {
+    .navbar-nav{
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .navbar-nav{
+        margin: 0px;
+    }
 }

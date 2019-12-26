@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { AlertUser } from '../../../_model/alertUser';
 import { AlertsService } from '../../service/api/alerts.service';
 
@@ -7,17 +7,42 @@ import { AlertsService } from '../../service/api/alerts.service';
   templateUrl: './alerts-conf-submit.component.html',
   styleUrls: ['./alerts-conf-submit.component.css']
 })
-export class AlertsConfSubmitComponent implements OnInit {
+export class AlertsConfSubmitComponent implements OnInit, OnDestroy {
 
   public alertUser: AlertUser;
+  public emails: string[];
+  public frequency: string;
   constructor(private alertService: AlertsService) {
-    console.log(this.alertService.alertUser);
-    this.alertUser = this.alertService.alertUser;
+    this.alertUser = {
+      _id: '',
+      userId: '',
+      availableFrequency: [],
+      dayFrequency: 1,
+      email: [],
+      emailEnable: true,
+      frequency: '',
+      alertConf: new Map()
+    }
+    this.alertService.alertConfSubject.subscribe(
+      () => {}, () => {}, () => {
+        this.alertUser = this.alertService.alertUser;
+        this.frequency = this.alertUser.frequency;
+        this.emails = this.alertUser.email.slice();
+      }
+    );
   }
 
   ngOnInit() {
   }
+  
+  onMailChange(event: any, index: number) {
+    this.alertUser.email[index] = event.target.value;
+  }
+  onChangeFrequency() {
+    console.log(this.frequency);
+  }
 
-  onEnable() {}
-  onDisable() {}
+  ngOnDestroy(): void {
+
+  }
 }

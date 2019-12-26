@@ -3,20 +3,20 @@
   </div>
   <ul class="nav navbar-nav">
     <li>
-      <button type="button" class="button button0" (click)="navigate('sensor-alert')" data-toggle="tooltip"
-        data-placement="top" title="toto">Sensor</button>
+      <button type="button" class="button button0" id="sensorPage" (click)="navigate('sensor-alert', 'sensorPage')" data-toggle="tooltip"
+        data-placement="top">{{ 'ALERT_CONF_PAGE.PAGE.SENSORS' | translate }}</button>
     </li>
     <li>
-      <button type="button" class="button button0" (click)="navigate('weather-alert')" data-toggle="tooltip"
-        data-placement="top" title="toto">Weather</button>
+      <button type="button" class="button button0" id="weatherPage" (click)="navigate('weather-alert', 'weatherPage')" data-toggle="tooltip"
+        data-placement="top">{{ 'ALERT_CONF_PAGE.PAGE.WEATHER' | translate }}</button>
     </li>
     <li>
-      <button type="button" class="button button0" (click)="navigate('hive-alert')" data-toggle="tooltip"
-        data-placement="top" title="toto">Hive</button>
+      <button type="button" class="button button0" id="hivePage" (click)="navigate('hive-alert', 'hivePage')" data-toggle="tooltip"
+        data-placement="top" >{{ 'ALERT_CONF_PAGE.PAGE.HIVE' | translate }}</button>
     </li>
     <li>
-      <button type="button" class="button button0" (click)="navigate('alert-submit')" data-toggle="tooltip"
-        data-placement="top" title="toto">Submit</button>
+      <button type="button" class="button button0" id="confPage" (click)="navigate('alert-submit', 'confPage')" data-toggle="tooltip"
+        data-placement="top">{{ 'ALERT_CONF_PAGE.PAGE.CONF.TITLE' | translate }}</button>
     </li>
   </ul>
 </nav>
