@@ -394,10 +394,11 @@
             "WEATHER": "Weather",
             "HIVE": "Hive",
             "CONF": {
-                "TITLE": "Configuration",
-                "FREQUENCY": "Frequency",
-                "DAILY": "Daily",
-                "WEEKLY": "Weekly",
+                "TITLE": "Settings",
+                "MAIL": "Send email alerts :",
+                "FREQUENCY": "Send every",
+                "DAILY": "day",
+                "WEEKLY": "week",
                 "DAY": "day",
                 "OTHER": "Other",
                 "EVERY": "Every"

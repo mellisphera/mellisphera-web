@@ -407,10 +407,11 @@
             "WEATHER": "Météo",
             "HIVE": "Colmena",
             "CONF": {
-                "TITLE": "Configuración",
-                "FREQUENCY": "Frecuencia",
-                "DAILY": "Diario",
-                "WEEKLY": "Semanal",
+                "TITLE": "Configuraciones",
+                "MAIL": "Enviar alertas por correo electrónico   :",
+                "FREQUENCY": "Enviar cada",
+                "DAILY": "cía",
+                "WEEKLY": "semana",
                 "DAY": "día",
                 "OTHER": "Otro",
                 "EVERY": "Cada"

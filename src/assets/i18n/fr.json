@@ -392,10 +392,11 @@
             "WEATHER": "Metéo",
             "HIVE": "Ruche",
             "CONF": {
-                "TITLE": "Configuration",
-                "FREQUENCY": "Fréquence",
-                "DAILY": "Journalier",
-                "WEEKLY": "Hebdomadaire",
+                "TITLE": "Paramètres",
+                "MAIL": "Envoyer des alertes par e-mail",
+                "FREQUENCY": "Envoyez chaque",
+                "DAILY": "jour",
+                "WEEKLY": "semaine",
                 "DAY": "jour",
                 "OTHER": "Autre",
                 "EVERY": "Tout les "

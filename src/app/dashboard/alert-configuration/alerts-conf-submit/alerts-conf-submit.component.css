@@ -3,7 +3,25 @@
     width: 60px !important;
 }
 .row{
-    padding: 25px;
+    padding-top: 5px;
+    margin: 0px;
+}
+#switch{
+    text-align: right;
+}
+input[type='email'] {
+    width: 50%;
+}
+.col {
+    position: relative;
+}
+#status{
+    position: absolute;
+    top: 8px;
+    right: 40px;
+}
+.radioItem{
+    margin-bottom: 5px;
 }
 
 .btn-default.btn-on.active{background-color: #5BB75B;color: white;}
@@ -20,3 +38,12 @@
 
 .btn-default.btn-on-4.active{background-color: #006FFC;color: #5BB75B;}
 .btn-default.btn-off-4.active{background-color: #DA4F49;color: #DA4F49;}
+
+@media (max-width:450px) {
+    input[type='email'] {
+        width: 100%;
+    }
+    #status{
+        position: initial;
+    }
+}

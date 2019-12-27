@@ -43,7 +43,7 @@ export class AlertConfigurationComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngAfterViewInit(): void {
-    this.eltOnClick = document.getElementById('sensorPage');
+    this.eltOnClick = document.getElementById('hivePage');
     this.renderer.addClass(this.eltOnClick, 'nav-active');
 
   }
