@@ -51,6 +51,7 @@ import { MyNotifierService } from '../service/my-notifier.service';
 import { NotifList } from '../../../constants/notify';
 import { AdminService } from '../admin/service/admin.service';
 import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
+import { FitnessService } from '../service/api/fitness.service';
 
 
 @Component({
@@ -116,6 +117,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     public router: Router,
     private unitService: UnitService,
     public authService: AuthService,
+    public fitnessService: FitnessService,
     public tokenService: AtokenStorageService,
     public capteurService: CapteurService,
     public adminService: AdminService,

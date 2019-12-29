@@ -38,7 +38,7 @@
           <span *ngIf="alertUser.frequency !== 'EVERY_X_DAY'">{{ 'ALERT_CONF_PAGE.PAGE.CONF.OTHER' | translate }}</span>
           <span *ngIf="alertUser.frequency === 'EVERY_X_DAY'">{{ 'ALERT_CONF_PAGE.PAGE.CONF.EVERY' | translate }}
           </span>
-          <input *ngIf="alertUser.frequency === 'EVERY_X_DAY'" type="number" name="frequency" id="dayValue"
+          <input *ngIf="alertUser.frequency === 'EVERY_X_DAY'" step="1" type="number" name="frequency" id="dayValue"
             [(ngModel)]="alertUser.dayFrequency" class="form-control" required="required" title="">
           <span *ngIf="alertUser.frequency === 'EVERY_X_DAY'"> {{ 'ALERT_CONF_PAGE.PAGE.CONF.DAY' | translate }}</span>
         </label>

@@ -257,7 +257,6 @@ export class AlertsComponent implements OnInit {
 
         });
         option.baseOption.series.push(this.graphGlobal.getDaySerie());
-        console.log(option.baseOption);
         this.echartInstance.setOption(option, true);
         this.option = option;
       });

@@ -356,7 +356,6 @@ export class DailyRecordsWService {
     this.http.post<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/apiary/' + apiaryId, tabDate).subscribe(
       (data) => {
         if (data[0] != null) {
-          console.log(data);
           this.dailyWeightRecords = data.flat();
         }
       },

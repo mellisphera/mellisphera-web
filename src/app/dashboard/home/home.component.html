@@ -100,10 +100,10 @@ limitations under the License. -->
                     <!-- Hive Handle -->
 
                     <!-- (contextmenu)="onRightClick($event,i)"-->
-                    <div #HiveHandle data-placement="top" [title]="infoRuche" (dblclick)="onClick(ruche);"
+                    <div #HiveHandle data-placement="top" [title]="fitnessService.getMessageByFitnessCode(ruche._id)" (dblclick)="onClick(ruche);"
                         (click)="onPastilleClick(ruche)" [id]="ruche._id"
                         [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
-                        [style.background-color]="dailyRecTh.getColorByPourcent(ruche._id)">
+                        [style.background-color]="fitnessService.getFitnessByHiveId(ruche._id).fitcolor">
                         <!-- notifications -->
  <!--                        <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
                             class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span> -->
@@ -139,7 +139,7 @@ limitations under the License. -->
                     data-toggle="tooltip" [ngDraggable]="!lockHive" [handle]="HiveHandle"
                     *ngFor="let ruche of adminService.getHivesByApiaryId(rucherService.getCurrentApiary()); let i = index"
                     (endOffset)="onMoveEnd($event, ruche,i)" [id]="ruche.name" [style.top.%]="ruche.hivePosY"
-                    style="transform: none" [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)"
+                    style="transform: none" [style.left.%]="ruche.hivePosX"
                     class="hive-group drag-grid {{i}}">
                     <!-- The div is show when you right click on a hive -->
                     <div class="divCliqueDroitCache {{i}}">
@@ -165,7 +165,7 @@ limitations under the License. -->
                     <!-- Hive Handle -->
 
                     <!-- (contextmenu)="onRightClick($event,i)"-->
-                    <div #HiveHandle data-placement="top" [title]="infoRuche" (dblclick)="onClick(ruche);"
+                    <div #HiveHandle data-placement="top" [title]="fitnessService.getMessageByFitnessCode(ruche._id)" (dblclick)="onClick(ruche);"
                         (click)="onPastilleClick(ruche)" [id]="ruche._id"
                         [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
                         [style.background-color]="dailyRecTh.getColorByPourcent(ruche._id)">
