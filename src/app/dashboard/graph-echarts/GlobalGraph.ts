@@ -517,11 +517,11 @@ export class GraphGlobal {
           }
       case 'ALERT':
         if (this.translateService.currentLang === 'fr') {
-          return this.titresFR[10].titre;
+          return this.titresFR[11].titre;
         } else if (this.translateService.currentLang === 'es') {
-          return this.titresES[1].titre;
+          return this.titresES[11].titre;
         } else {
-          return this.titresEN[10].titre;
+          return this.titresEN[11].titre;
         }
         break;
       default:

@@ -13,6 +13,7 @@ import { Injectable } from '@angular/core';
 import { DataRange } from '../../../_model/data-range';
 import { MyDate } from '../../../class/MyDate';
 import { ReactiveFormsModule } from '@angular/forms';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,6 @@ export class MelliChartsDateService {
   
   setRange(scale: DataRange): void {
     let date = new Date();
-    const day: number[] = [34, 28, 29, 30, 31, 32, 33];
     switch(scale.type){
       case 'DAYS':
       case 'DAY':
@@ -68,11 +68,10 @@ export class MelliChartsDateService {
       default:
         date.setDate(date.getDate() - 15);
     }
-    let nbDay: number = day[date.getDay()];
-    date.setDate(date.getDate() - nbDay);
+    date = this.getDateBeginMonday(date);
     this.rangeDateForRequest = MyDate.getRange(date);
 
-    this.rangeDateForRequest[0].setHours(4);
+    this.rangeDateForRequest[0].setHours(0);
     this.rangeDateForRequest[0].setSeconds(0);
     this.rangeDateForRequest[1].setHours(4);
     this.rangeDateForRequest[1].setSeconds(0);
@@ -90,6 +89,17 @@ export class MelliChartsDateService {
     return this.rangeDateForRequest;
   }
 
+  getDateBeginMonday(date: Date): Date {
+    const dayInf: boolean = date.getDate() <= 6;
+    while (date.getDay() !== 1) {
+      if (dayInf) {
+        date.setDate(date.getDate() + 1);
+      } else {
+        date.setDate(date.getDate() - 1);
+      }
+    }
+    return date
+  }
 
   getDayDiffRangeRequest() {
     const d1 = this.rangeDateForRequest[0].getTime() / 86400000;
@@ -100,10 +110,10 @@ export class MelliChartsDateService {
 
   setRangeForRequest(_range: Date[] ) {
     const range: Date[] = [new Date(_range[0]), new Date(_range[1])];
-    range[0].setHours(4);
+    range[0].setHours(0);
     range[0].setMinutes(0);
     range[0].setSeconds(0);
-    range[1].setHours(4);
+    range[1].setHours(0);
     range[1].setMinutes(0);
     range[1].setSeconds(0);
     this.rangeDateForRequest = [range[0], range[1]];
