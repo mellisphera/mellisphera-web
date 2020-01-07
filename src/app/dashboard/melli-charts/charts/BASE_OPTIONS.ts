@@ -31,6 +31,7 @@ export const BASE_OPTIONS = {
         toolbox: {
             orient: 'vertical',
             itemSize: 20,
+            right: '2%',
             top: 50,
             feature: {
                 dataZoom: {
@@ -65,7 +66,7 @@ export const BASE_OPTIONS = {
             top: 11,
             height: '90%',
             left: 'center',
-            width: '95%'
+            width: '90%'
         }],
 
         yAxis:[],

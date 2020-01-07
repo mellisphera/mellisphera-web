@@ -32,7 +32,10 @@ import { AdminService } from '../../admin/service/admin.service';
 export class VitalityComponent implements OnInit, OnDestroy {
 
 
-  private option: any;
+  private option: {
+    baseOption: any,
+    media: any[]
+  };
   constructor(private stackService: StackMelliChartsService,
     private graphGlobal: GraphGlobal,
     private dailyThService: DailyRecordService,
@@ -41,7 +44,46 @@ export class VitalityComponent implements OnInit, OnDestroy {
     private melliDateService: MelliChartsDateService,
     private rucheService: RucheService,
     private unitService: UnitService) {
-    this.option = Object.assign({}, BASE_OPTIONS.baseOptionHourly);
+    this.option = {
+      baseOption : JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionHourly)),
+      media: [
+        {
+          option: {
+            grid:{
+              width: '92%'
+            },
+            toolbox: {
+              show: true,
+              right: '2%',
+            }
+          }
+        },
+        {
+          query: {// 这里写规则
+            maxWidth: 1100,
+          },
+          option: {// 这里写此规则满足下的option
+            toolbox: {
+              show: true,
+              right: -20,
+            }
+          }
+        },
+        {
+          query: {// 这里写规则
+            maxWidth: 400,
+          },
+          option: {// 这里写此规则满足下的option
+            grid:[{
+              width: '97%'
+            }],
+            toolbox: {
+              show: false
+            }
+          }
+        },
+      ]
+    };
   }
 
   ngOnInit() {
@@ -53,7 +95,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     }
     elt.classList.add('apiary-group-brood');
     this.stackService.setBroodChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-brood')));
-    this.option.series = [];
+    this.option.baseOption.series = [];
     this.setOptionForStackChart();
     console.log(this.stackService.getHiveSelect());
     if (this.stackService.getHiveSelect().length >= 1) {
@@ -64,29 +106,29 @@ export class VitalityComponent implements OnInit, OnDestroy {
     }
   }
   setOptionForStackChart(): void {
-    if (this.option.yAxis.length > 0) {
-      this.option.yAxis = [];
+    if (this.option.baseOption.yAxis.length > 0) {
+      this.option.baseOption.yAxis = [];
     }
-    if (this.option.xAxis.length > 0) {
-      this.option.xAxis = [];
+    if (this.option.baseOption.xAxis.length > 0) {
+      this.option.baseOption.xAxis = [];
     }
     let yAxis = Object.assign({}, BASE_OPTIONS.yAxis);
     yAxis.name = this.graphGlobal.brood.name;
     yAxis.min = 0;
     yAxis.max = 100;
-    this.option.yAxis.push(yAxis);
+    this.option.baseOption.yAxis.push(yAxis);
 
-    let serieMarkBrood = Object.assign({}, SERIES.serieMarkPourcent);
+    let serieMarkBrood = JSON.parse(JSON.stringify(SERIES.serieMarkPourcent));
     serieMarkBrood.markArea.data[0][0].name = this.graphGlobal.getNameZoneByGraph('BROOD');
     serieMarkBrood.markArea.data[0][0].yAxis = 80;
     serieMarkBrood.markArea.data[0][1].yAxis = 100;
-    this.option.series.push(serieMarkBrood);
+    this.option.baseOption.series.push(serieMarkBrood);
 
-    let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
+    let xAxis = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
     xAxis.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getDailyDate(new Date(value));
     };
-    this.option.tooltip.formatter = (params) => {
+    this.option.baseOption.tooltip.formatter = (params) => {
       return params.map((_elt, index) => {
         return this.getTooltipFormater(_elt.marker, (index === 0 ? this.unitService.getDailyDate(_elt.data.name) : ''), new Array(
           {
@@ -97,7 +139,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
         ));
       }).join('');
    }
-    this.option.xAxis.push(xAxis);
+    this.option.baseOption.xAxis.push(xAxis);
     this.stackService.getBroodChartInstance().setOption(this.option);
   }
 
@@ -137,7 +179,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     if (series.length > 0) {
       series.forEach(element => {
         const indexSerie = option.series.map(_serie => _serie.name).indexOf(element.name);
-        this.option.series.splice(indexSerie, 1);
+        this.option.baseOption.series.splice(indexSerie, 1);
         option.series.splice(indexSerie, 1);
       });
     }
@@ -156,11 +198,11 @@ export class VitalityComponent implements OnInit, OnDestroy {
             serieComplete.itemStyle = {
               color: this.stackService.getColorByIndex(this.getHiveIndex(obs[index].hive), obs[index].hive)
             };
-            const indexSerie = this.option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            const indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             if (indexSerie !== -1) {
-              this.option.series[indexSerie] = Object.assign({}, serieComplete);
+              this.option.baseOption.series[indexSerie] = Object.assign({}, serieComplete);
             } else {
-              this.option.series.push(Object.assign({}, serieComplete));
+              this.option.baseOption.series.push(Object.assign({}, serieComplete));
             }
           });
         })
@@ -186,7 +228,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
           serieComplete.itemStyle = {
             color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
           };
-          this.option.series.push(serieComplete);
+          this.option.baseOption.series.push(serieComplete);
           this.stackService.getBroodChartInstance().setOption(this.option);
         })
       },

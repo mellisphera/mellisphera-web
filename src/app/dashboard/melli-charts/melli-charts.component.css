@@ -150,9 +150,15 @@ nav[role=admin-navigation] {
     cursor: pointer;
 }
 #dt-scale{
+    width: 100%;
+}
+#dt-scale div{
     display: flex;
 }
-
+#dt-scale ul{
+    margin: 8px;
+    padding: 0px;
+}
 .sub-items{
     cursor: pointer;
 }
@@ -217,7 +223,9 @@ nav[role=admin-navigation] {
     }
 }
 @media screen and (max-width:1400px) {
-
+    #btn-date{
+        font-size: 12px;
+    }
 }
 @media screen and (max-width:1300px) {
     .apiary-group-hive{
@@ -298,7 +306,7 @@ nav[role=admin-navigation] {
 }
 @media screen and (max-width:500px){
     #dt-scale ul:first-child{
-        padding-left: 6px;
+        /*padding-left: 6px;*/
     }
     #dropdown{
         width: 75%;
