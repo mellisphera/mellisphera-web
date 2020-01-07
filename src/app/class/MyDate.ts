@@ -110,6 +110,9 @@ export class MyDate {
         //min.setDate(max.getDate() + 7);
 
         max.setDate(max.getDate());
+        min.setHours(0);
+        min.setMinutes(0);
+        min.setSeconds(0);
         return [min, max];
       }
     
