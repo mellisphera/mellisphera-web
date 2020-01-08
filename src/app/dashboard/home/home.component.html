@@ -14,9 +14,11 @@ limitations under the License. -->
     <nav class="navbar navbar-default">
         <ul class="nav navbar-nav buttonLeft">
             <li><button (click)="onclickInfoApiary()" id="infoApiaryButton" type="button"
-                    class="button button0">{{ 'HOME.NAVBAR.APIARY' | translate}}</button><!-- <span
+                    class="button button0">{{ 'HOME.NAVBAR.APIARY' | translate}}</button>
+                <!-- <span
                     *ngIf="numberActiveNotifByApiary() !== 0"
-                    class="badge badge-button">{{ numberActiveNotifByApiary() }}</span> --></li>
+                    class="badge badge-button">{{ numberActiveNotifByApiary() }}</span> -->
+            </li>
             <li *ngFor="let btn of btnNav"><button type="button" [id]="btn.path" (click)="navToPage(btn.path, btn.path)"
                     class="button button0">{{ btn.name }}</button></li>
             <li (click)="collapseAllActiveButton('sensors','weight','brood','name')"><button id="name" type="button"
@@ -100,12 +102,12 @@ limitations under the License. -->
                     <!-- Hive Handle -->
 
                     <!-- (contextmenu)="onRightClick($event,i)"-->
-                    <div #HiveHandle data-placement="top" [title]="fitnessService.getMessageByFitnessCode(ruche._id)" (dblclick)="onClick(ruche);"
-                        (click)="onPastilleClick(ruche)" [id]="ruche._id"
+                    <div #HiveHandle data-placement="top" [title]="fitnessService.getMessageByFitnessCode(ruche._id)"
+                        (dblclick)="onClick(ruche);" (click)="onPastilleClick(ruche)" [id]="ruche._id"
                         [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
                         [style.background-color]="fitnessService.getFitnessByHiveId(ruche._id).fitcolor">
                         <!-- notifications -->
- <!--                        <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
+                        <!--                        <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
                             class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span> -->
                     </div>
                     <!-- Hive click -->
@@ -126,10 +128,15 @@ limitations under the License. -->
                         <span *ngIf="capteurService.getCapteursByHive(ruche._id).length === 0"
                             class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
                         <ng-container *ngIf="capteurService.getCapteursByHive(ruche._id).length !== 0">
-                            <p *ngFor="let capt of increasingSort(capteurService.getCapteursByHive(ruche._id)); let i = index"
+                            <ng-container
+                                *ngFor="let capt of increasingSort(capteurService.getCapteursByHive(ruche._id)); let i = index">
+                                <p [style.background-color]="checkSensor(capt.sensorRef)" 
+                                [title]="deviceSatusService.getMessageBySensor(capt.sensorRef)"
                                 class="hive-info">
-                                {{ capt }}
-                            </p>
+                                    {{ capt.sensorRef }}
+                                </p>
+
+                            </ng-container>
                         </ng-container>
                     </div>
                 </div>
@@ -139,8 +146,7 @@ limitations under the License. -->
                     data-toggle="tooltip" [ngDraggable]="!lockHive" [handle]="HiveHandle"
                     *ngFor="let ruche of adminService.getHivesByApiaryId(rucherService.getCurrentApiary()); let i = index"
                     (endOffset)="onMoveEnd($event, ruche,i)" [id]="ruche.name" [style.top.%]="ruche.hivePosY"
-                    style="transform: none" [style.left.%]="ruche.hivePosX"
-                    class="hive-group drag-grid {{i}}">
+                    style="transform: none" [style.left.%]="ruche.hivePosX" class="hive-group drag-grid {{i}}">
                     <!-- The div is show when you right click on a hive -->
                     <div class="divCliqueDroitCache {{i}}">
                         <span>{{ 'HOME.MANAGE' | translate}} {{ruche.name.slice(-10)}}</span>
@@ -165,12 +171,12 @@ limitations under the License. -->
                     <!-- Hive Handle -->
 
                     <!-- (contextmenu)="onRightClick($event,i)"-->
-                    <div #HiveHandle data-placement="top" [title]="fitnessService.getMessageByFitnessCode(ruche._id)" (dblclick)="onClick(ruche);"
-                        (click)="onPastilleClick(ruche)" [id]="ruche._id"
+                    <div #HiveHandle data-placement="top" [title]="fitnessService.getMessageByFitnessCode(ruche._id)"
+                        (dblclick)="onClick(ruche);" (click)="onPastilleClick(ruche)" [id]="ruche._id"
                         [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
                         [style.background-color]="dailyRecTh.getColorByPourcent(ruche._id)">
                         <!-- notifications -->
-<!--                         <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
+                        <!--                         <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
                             class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span> -->
                     </div>
                     <!-- Hive click -->
@@ -191,8 +197,11 @@ limitations under the License. -->
                         <span *ngIf="capteurService.getCapteursByHive(ruche._id).length === 0"
                             class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
                         <ng-container *ngIf="capteurService.getCapteursByHive(ruche._id).length !== 0">
-                            <p *ngFor="let capt of increasingSort(capteurService.getCapteursByHive(ruche._id)); let i = index"
-                                class="hive-info">
+                            <popover-content #myPopover title="TOTO" placement="right" [animation]="true"
+                            [closeOnClickOutside]="false">
+                            <span style="color: #C21F39">TOTO</span>
+                          </popover-content>
+                            <p [popover]="myPopover" class="hive-info">
                                 {{ capt }}
                             </p>
                         </ng-container>

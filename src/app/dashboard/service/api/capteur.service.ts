@@ -135,15 +135,15 @@ export class CapteurService {
         );
     }
 
-    getCapteursByHive(hiveId : string) :  string[]{
+    getCapteursByHive(hiveId : string) :  CapteurInterface[]{
         let capteursHive : CapteurInterface[];
-        capteursHive = this.capteursByUser.filter(sensor => sensor.hiveId === hiveId);
-        let returnString : string[];
+        return this.capteursByUser.filter(sensor => sensor.hiveId === hiveId);
+/*         let returnString : string[];
         returnString = [];
         capteursHive.forEach(element => {
             returnString.push(element.sensorRef);
         });
-        return returnString;
+        return returnString; */
         // return capteursHive.map(elt => {
         //     return elt.sensorRef
         // }).join('\n');

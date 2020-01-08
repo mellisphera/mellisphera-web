@@ -26,6 +26,7 @@ import { AuthService } from '../auth/Service/auth.service';
 import { RucheService } from './service/api/ruche.service';
 import { AlertsService } from './service/api/alerts.service';
 import { FitnessService } from './service/api/fitness.service';
+import { DeviceStatusService } from './service/api/device-status.service';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -61,6 +62,7 @@ export class DashboardComponent implements OnInit {
     private myNotifierService: MyNotifierService,
     private routingHistory: RoutingHistoryService,
     private fitnessService: FitnessService,
+    private deviceStatusService: DeviceStatusService,
     private messagesService : MessagesService,
     public rucherService: RucherService,
     private router: Router) {
@@ -72,10 +74,11 @@ export class DashboardComponent implements OnInit {
         this.login.setWizardActive(false);
       }
     }); */
-    this.rucherService.getApiaryByUser(this.userService.getJwtReponse().idUser);
+    this.rucherService.getApiaryByUser(this.userService.getIdUserLoged());
     this.alertService.callInitRequest();
     this.rucheService.callHiveRequest();
-    this.fitnessService.callRequest(this.userService.getJwtReponse().idUser);
+    this.deviceStatusService.callRequest(this.userService.getIdUserLoged());
+    this.fitnessService.callRequest(this.userService.getIdUserLoged());
     this.routingHistory.loadRouting();
   }
 

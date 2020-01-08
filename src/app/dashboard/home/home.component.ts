@@ -52,6 +52,8 @@ import { NotifList } from '../../../constants/notify';
 import { AdminService } from '../admin/service/admin.service';
 import { AtokenStorageService } from '../../auth/Service/atoken-storage.service';
 import { FitnessService } from '../service/api/fitness.service';
+import { DeviceStatusService } from '../service/api/device-status.service';
+import { DeviceStatus } from '../../_model/device-status';
 
 
 @Component({
@@ -123,8 +125,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     public adminService: AdminService,
     private userConfig: UserParamsService,
     private myNotifier: MyNotifierService,
-    public dailyStockHoneyService: DailyStockHoneyService,
     private renderer: Renderer2,
+    public deviceSatusService: DeviceStatusService,
     public alertsService: AlertsService) {
 
     this.notify = notifyService;
@@ -173,6 +175,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   receiveMessage($event) {
     this.message = $event;
 
+  }
+
+  checkSensor(sensorRef: string): string{
+    let deviceStatus: DeviceStatus = this.deviceSatusService.getDeviceStatusBySensorRef(sensorRef)[0];
+    try {
+      return deviceStatus.color;
+    } catch {
+      return '#4F4F51';
+    }
   }
   /**
    *
