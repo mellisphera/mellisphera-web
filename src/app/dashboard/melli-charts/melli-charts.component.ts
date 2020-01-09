@@ -135,10 +135,14 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
 
   ifActiveApiary(apiaryId: string): string {
-    const index = this.rucherService.allApiaryAccount.findIndex(_apiary => _apiary._id === apiaryId);
-    if (document.getElementById('' + index).classList.contains('in')) {
-      return 'caret-up';
-    } else {
+    try {
+      const index = this.rucherService.allApiaryAccount.findIndex(_apiary => _apiary._id === apiaryId);
+      if (document.getElementById('' + index).classList.contains('in')) {
+        return 'caret-up';
+      } else {
+        return '';
+      }
+    } catch {
       return '';
     }
   }
@@ -381,19 +385,12 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   getColor(hive: RucheInterface): string {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
-        if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
-          return this.melliChartHive.getColorByIndex(this.adminService.allHives.map(elt => elt._id).indexOf(hive._id), hive);
-        } else {
-          return this.melliChartHive.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
-        }
+        return this.melliChartHive.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
+
         break;
       case PREFIX_PATH + 'brood':
       case PREFIX_PATH + 'stack':
-        if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
-          return this.stackService.getColorByIndex(this.adminService.allHives.map(elt => elt._id).indexOf(hive._id), hive);
-        } else {
-          return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
-        }
+        return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
         break;
     }
   }

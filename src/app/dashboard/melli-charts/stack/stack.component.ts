@@ -184,11 +184,7 @@ export class StackComponent implements OnInit {
    * @memberof StackComponent
    */
   getHiveIndex(hive: RucheInterface): number {
-    if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
-      return this.adminService.allHives.findIndex(elt => elt._id === hive._id);
-    } else {
-      return this.rucheService.ruchesAllApiary.findIndex(elt => elt._id === hive._id);
-    }
+    return this.rucheService.ruchesAllApiary.findIndex(elt => elt._id === hive._id);
   }
 
   loadAfterRangeChanged(next: Function) {

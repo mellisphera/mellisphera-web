@@ -1,20 +1,22 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div class="btn-group" id="status" data-toggle="buttons">
-      <label [class]="'btn btn-default btn-on ' + (alertUser.emailEnable ? 'active': '')"
-        (click)="alertUser.emailEnable = !alertUser.emailEnable">
-        <input type="radio" value="1" name="multifeatured_module[module_id][status]">ON</label>
-      <label [class]="'btn btn-default btn-off ' + (alertUser.emailEnable ? 'not-active': 'active')"
-        (click)="alertUser.emailEnable = !alertUser.emailEnable">
-        <input type="radio" value="0" name="multifeatured_module[module_id][status]">OFF</label>
-    </div>
     <div>
       <label>{{ 'ALERT_CONF_PAGE.PAGE.CONF.MAIL' | translate }}</label>
     </div>
-    <div class="form-group" *ngFor="let mail of emails; let i = index">
-      <input type="email" [name]="'email' + i" [id]="'email' + i" placeholder="email" class="form-control"
-        (input)="onMailChange($event, i)" [placeholder]="'email' + (i + 1)" [value]="mail" required="required">
-    </div>
+    <section id="formEmail">
+      <div class="form-group" *ngFor="let mail of emails; let i = index">
+        <input type="email" [name]="'email' + i" [id]="'email' + i" placeholder="email" class="form-control"
+          (input)="onMailChange($event, i)" [placeholder]="'Email ' + (i + 1)" [value]="mail" required="required">
+      </div>
+      <div class="btn-group" id="status" data-toggle="buttons">
+        <label [class]="'btn btn-default btn-on ' + (alertUser.emailEnable ? 'active': '')"
+          (click)="alertUser.emailEnable = !alertUser.emailEnable">
+          <input type="radio" value="1" name="multifeatured_module[module_id][status]">ON</label>
+        <label [class]="'btn btn-default btn-off ' + (alertUser.emailEnable ? 'not-active': 'active')"
+          (click)="alertUser.emailEnable = !alertUser.emailEnable">
+          <input type="radio" value="0" name="multifeatured_module[module_id][status]">OFF</label>
+      </div>
+    </section>
     <div class="form-group">
       <label>{{ 'ALERT_CONF_PAGE.PAGE.CONF.FREQUENCY'| translate }} :</label>
       <div class="form-group radioItem">
@@ -35,8 +37,8 @@
         <label>
           <input type="radio" name="frequency" id="every" (ngModelChange)="onChangeFrequency()"
             [(ngModel)]="alertUser.frequency" value="EVERY_X_DAY">
-          <span *ngIf="alertUser.frequency !== 'EVERY_X_DAY'">{{ 'ALERT_CONF_PAGE.PAGE.CONF.OTHER' | translate }}</span>
-          <span *ngIf="alertUser.frequency === 'EVERY_X_DAY'">{{ 'ALERT_CONF_PAGE.PAGE.CONF.EVERY' | translate }}
+          <span *ngIf="alertUser.frequency !== 'EVERY_X_DAY'"> {{ 'ALERT_CONF_PAGE.PAGE.CONF.OTHER' | translate }}</span>
+          <span *ngIf="alertUser.frequency === 'EVERY_X_DAY'"> {{ 'ALERT_CONF_PAGE.PAGE.CONF.EVERY' | translate }}
           </span>
           <input *ngIf="alertUser.frequency === 'EVERY_X_DAY'" step="1" type="number" name="frequency" id="dayValue"
             [(ngModel)]="alertUser.dayFrequency" class="form-control" required="required" title="">

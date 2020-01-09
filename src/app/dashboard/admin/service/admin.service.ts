@@ -22,6 +22,7 @@ import { CapteurInterface } from '../../../_model/capteur';
 import { User } from '../../../_model/user';
 import { Connection } from '../../../_model/connection';
 import { RucheService } from '../../service/api/ruche.service';
+import { JwtResponse } from '../../../_model/jwt-response';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +55,7 @@ export class AdminService {
     }
 
   getAllApiary() {
-    this.loadingService.loading = true;
+/*     this.loadingService.loading = true;
     this.httpClient.get<RucherModel[]>(CONFIG.URL + 'apiaries/all').subscribe(
       (data) => {
         this.rucherService.allApiaryAccount = data;
@@ -65,7 +66,11 @@ export class AdminService {
         this.rucherService.rucherSubject.complete();
         this.loadingService.loading = false;
       }
-    );
+    ); */
+  }
+
+  signinFromUserId(userId: string): Observable<JwtResponse> {
+    return this.httpClient.get<JwtResponse>(CONFIG.URL + `user/adminLogin/${userId}`);
   }
 
   getHivesByApiaryId(apiaryId: string): RucheInterface[] {

@@ -139,7 +139,6 @@ export class NavbarComponent implements OnInit {
         this.sidebarVisible = false;
         this.maxSizePicture = 10048576;
         this.cityByZipCode = [];
-        this.username = userService.getUser();
         if (this.userService.getJwtReponse().lang.indexOf('fr') !== -1) {
             this.translateService.use('fr');
         }else if(this.userService.getJwtReponse().lang.indexOf('es') !== -1) {

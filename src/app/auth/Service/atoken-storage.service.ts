@@ -64,13 +64,7 @@ export class AtokenStorageService {
    * @memberof AtokenStorageService
    */
   public getAuthorities(): string[] {
-    this.roles = [];
-    if (localStorage.getItem('TOKEN_KEY')) {
-      JSON.parse(localStorage.getItem('AUTHORITIES_KEY')).forEach(auth => {
-        this.roles.push(auth.authority);
-      });
-    }
- 
+    this.roles = JSON.parse(localStorage.getItem('AUTHORITIES_KEY'));
     return this.roles;
   }
 
@@ -101,7 +95,7 @@ export class AtokenStorageService {
    * @memberof AtokenStorageService
    */
   checkAuthorities(role: string): boolean{
-    return this.getAuthorities().indexOf(role) !== -1 ? true : false;
+    return this.getAuthorities().findIndex(_role => _role['authority'] === role) !== -1 ? true : false;
   }
 
 }
