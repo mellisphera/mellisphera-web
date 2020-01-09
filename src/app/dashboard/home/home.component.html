@@ -71,7 +71,7 @@ limitations under the License. -->
                     (click)="this.lockHive = !this.lockHive;"><i class="fa fa-unlock"></i></button>
             </div>
             <!-- The dive for each hive -->
-            <ng-container *ngIf="!tokenService.checkAuthorities('ROLE_ADMIN')">
+            <ng-container>
                 <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true"
                     data-toggle="tooltip" [ngDraggable]="!lockHive" [handle]="HiveHandle"
                     *ngFor="let ruche of rucheService.getHivesByApiaryId(rucherService.getCurrentApiary()); let i = index"
@@ -129,7 +129,7 @@ limitations under the License. -->
                             class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
                         <ng-container *ngIf="capteurService.getCapteursByHive(ruche._id).length !== 0">
                             <ng-container
-                                *ngFor="let capt of increasingSort(capteurService.getCapteursByHive(ruche._id)); let i = index">
+                                *ngFor="let capt of capteurService.getCapteursByHive(ruche._id); let i = index">
                                 <p [style.background-color]="checkSensor(capt.sensorRef)" 
                                 [title]="deviceSatusService.getMessageBySensor(capt.sensorRef)"
                                 class="hive-info">
@@ -137,73 +137,6 @@ limitations under the License. -->
                                 </p>
 
                             </ng-container>
-                        </ng-container>
-                    </div>
-                </div>
-            </ng-container>
-            <ng-container *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')">
-                <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true"
-                    data-toggle="tooltip" [ngDraggable]="!lockHive" [handle]="HiveHandle"
-                    *ngFor="let ruche of adminService.getHivesByApiaryId(rucherService.getCurrentApiary()); let i = index"
-                    (endOffset)="onMoveEnd($event, ruche,i)" [id]="ruche.name" [style.top.%]="ruche.hivePosY"
-                    style="transform: none" [style.left.%]="ruche.hivePosX" class="hive-group drag-grid {{i}}">
-                    <!-- The div is show when you right click on a hive -->
-                    <div class="divCliqueDroitCache {{i}}">
-                        <span>{{ 'HOME.MANAGE' | translate}} {{ruche.name.slice(-10)}}</span>
-                        <br />
-                        <!-- EDIT HIVE -->
-                        <button title="{{ 'HIVES.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
-                            (click)="onSelectRuche(ruche, i)" data-target="#editRucheModal" class="btn btn-success "
-                            style="padding: 0;border: none; background: none;">
-                            <i class="fa fa-edit fa-2x"></i>
-                        </button>
-                        <!-- DELETE HIVE -->
-                        <button type="button" class="btn btn-warning" mwlConfirmationPopover
-                            popoverTitle="{{ 'HIVES.FORM.DELETE_ASK' | translate}}" placement="top"
-                            confirmText="{{ 'HIVES.FORM.CONFIRM' | translate}}"
-                            cancelText="{{ 'HIVES.FORM.CANCEL' | translate}}" (confirm)="deleteRuche(ruche,i)"
-                            title="{{ 'HIVES.FORM.DELETE' | translate}}"
-                            style="padding: 0;border: none; background: none;">
-                            <i class="fa fa-times fa-2x"></i>
-                        </button>
-                    </div>
-                    <!-- The circle for an hive -->
-                    <!-- Hive Handle -->
-
-                    <!-- (contextmenu)="onRightClick($event,i)"-->
-                    <div #HiveHandle data-placement="top" [title]="fitnessService.getMessageByFitnessCode(ruche._id)"
-                        (dblclick)="onClick(ruche);" (click)="onPastilleClick(ruche)" [id]="ruche._id"
-                        [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
-                        [style.background-color]="dailyRecTh.getColorByPourcent(ruche._id)">
-                        <!-- notifications -->
-                        <!--                         <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
-                            class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span> -->
-                    </div>
-                    <!-- Hive click -->
-                    <!-- The hidden div when you click on name/Brood/Weight/Sensors -->
-                    <div (click)="onClick(ruche);" class="name collapse in">
-                        <span class="hive-info">{{ruche.name}}</span>
-                    </div>
-                    <div (click)="onClick(ruche);" class="brood collapse ">
-                        <span class="hive-info">{{ dailyRecTh.getPourcentByHive(ruche._id) }}</span>
-
-                    </div>
-                    <div (click)="onClick(ruche);" class="weight collapse ">
-                        <span
-                            class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightMaxByHive(ruche._id)) }}</span>
-                    </div>
-                    <div (click)="onClick(ruche);" id="collapse1"
-                        [class]="(capteurService.getCapteursByHive(ruche._id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">
-                        <span *ngIf="capteurService.getCapteursByHive(ruche._id).length === 0"
-                            class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
-                        <ng-container *ngIf="capteurService.getCapteursByHive(ruche._id).length !== 0">
-                            <popover-content #myPopover title="TOTO" placement="right" [animation]="true"
-                            [closeOnClickOutside]="false">
-                            <span style="color: #C21F39">TOTO</span>
-                          </popover-content>
-                            <p [popover]="myPopover" class="hive-info">
-                                {{ capt }}
-                            </p>
                         </ng-container>
                     </div>
                 </div>

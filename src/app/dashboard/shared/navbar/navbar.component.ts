@@ -190,7 +190,7 @@ export class NavbarComponent implements OnInit {
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         this.userService.currentMessage.subscribe(message => this.message = message);
-        this.capteurService.getUserCapteurs();
+        //this.capteurService.getUserCapteurs();
         this.initForm();
         this.initHiveForm();
         this.initSensorForm();

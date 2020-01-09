@@ -8,6 +8,7 @@ import { AlertsService } from '../../service/api/alerts.service';
 import { DeviceStatusService } from '../../service/api/device-status.service';
 import { FitnessService } from '../../service/api/fitness.service';
 import { Router } from '@angular/router';
+import { CapteurService } from '../../service/api/capteur.service';
 
 @Component({
   selector: 'app-user',
@@ -24,6 +25,7 @@ export class UserComponent implements OnInit {
     private rucheService: RucheService,
     private deviceStatusService: DeviceStatusService,
     private fitnessService: FitnessService,
+    private capteurService: CapteurService,
     private router: Router) { }
 
   ngOnInit() {
@@ -59,6 +61,7 @@ export class UserComponent implements OnInit {
         this.rucheService.callHiveRequest();
         this.deviceStatusService.callRequest(this.userService.getIdUserLoged());
         this.fitnessService.callRequest(this.userService.getIdUserLoged());
+        this.capteurService.getUserCapteurs();
       }, () => {}, () => {
         this.router.navigateByUrl('dashboard/home/info-apiary');
       }

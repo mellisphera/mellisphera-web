@@ -54,6 +54,7 @@ import { AtokenStorageService } from '../../auth/Service/atoken-storage.service'
 import { FitnessService } from '../service/api/fitness.service';
 import { DeviceStatusService } from '../service/api/device-status.service';
 import { DeviceStatus } from '../../_model/device-status';
+import { CapteurInterface } from '../../_model/capteur';
 
 
 @Component({
@@ -217,10 +218,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
     if (!this.rucheService.getCurrentHive()) {
       this.rucheService.saveCurrentHive();
-      this.capteurService.getUserCapteurs();
-    } else {
-      this.capteurService.getUserCapteurs();
     }
+
 
     // Use the user configuration
     this.userConfig.getSubject().subscribe(
@@ -374,7 +373,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 /*     this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
       this.rucherService.rucheService.ruchesAllApiary = ruches;
     }); */
-    this.capteurService.getUserCapteurs();
 
     // Call info-hives app
     this.router.navigateByUrl('dashboard/home/info-hives');
@@ -720,9 +718,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
 
   // Sort a sensors list in increasing sort
-  increasingSort(sensorsList: string[]): string[] {
+  increasingSort(sensorsList: CapteurInterface[]): CapteurInterface[] {
+    console.log(sensorsList);
     sensorsList.sort((a, b) => {
-      if (a < b) {
+      if (a.sensorRef < b.sensorRef) {
         return -1;
       } else {
         return 1;

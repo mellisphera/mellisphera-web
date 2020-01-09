@@ -121,12 +121,14 @@ export class CapteurService {
 
     getUserCapteurs() {
         this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL + 'sensors/' + this.user.getJwtReponse().idUser);
+        console.log(this.user.getJwtReponse().idUser);
         this.capteursObs.subscribe(
             (data) => {
                 this.capteursByUser = data;
                 this.sensorSubject.next(data);
                 this.capteursByHive = this.capteursByUser.filter(sensor => sensor.hiveId === this.rucheService.getCurrentHive()._id);
                 this.sensorSubject.next(this.capteursByHive);
+                console.log(this.capteursByUser);
             },
             (err) => {
                 console.log(err);

@@ -27,6 +27,7 @@ import { RucheService } from './service/api/ruche.service';
 import { AlertsService } from './service/api/alerts.service';
 import { FitnessService } from './service/api/fitness.service';
 import { DeviceStatusService } from './service/api/device-status.service';
+import { CapteurService } from './service/api/capteur.service';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -64,6 +65,7 @@ export class DashboardComponent implements OnInit {
     private fitnessService: FitnessService,
     private deviceStatusService: DeviceStatusService,
     private messagesService : MessagesService,
+    private capteurService: CapteurService,
     public rucherService: RucherService,
     private router: Router) {
     this.message = '';
@@ -78,6 +80,7 @@ export class DashboardComponent implements OnInit {
     this.alertService.callInitRequest();
     this.rucheService.callHiveRequest();
     this.deviceStatusService.callRequest(this.userService.getIdUserLoged());
+    this.capteurService.getUserCapteurs();
     this.fitnessService.callRequest(this.userService.getIdUserLoged());
     this.routingHistory.loadRouting();
   }
