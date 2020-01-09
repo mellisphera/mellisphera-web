@@ -28,6 +28,7 @@ import { AlertsService } from './service/api/alerts.service';
 import { FitnessService } from './service/api/fitness.service';
 import { DeviceStatusService } from './service/api/device-status.service';
 import { CapteurService } from './service/api/capteur.service';
+import { BehaviorSubject } from 'rxjs';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -76,6 +77,7 @@ export class DashboardComponent implements OnInit {
         this.login.setWizardActive(false);
       }
     }); */
+    this.rucheService.hiveSubject = new BehaviorSubject([]);
     this.rucherService.getApiaryByUser(this.userService.getIdUserLoged());
     this.alertService.callInitRequest();
     this.rucheService.callHiveRequest();

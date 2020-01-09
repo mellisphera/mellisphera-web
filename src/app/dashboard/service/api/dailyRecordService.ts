@@ -64,9 +64,8 @@ export class DailyRecordService {
         this.dailyRecordsDayD3D7[1] = [];
         this.dailyRecordsDayD3D7[2] = [];
         if (this.user.getUser()) {
-            this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
-                this.getDailyRecThByApiary(window.localStorage.getItem('currentApiary'));
-            });
+            this.getDailyRecThByApiary(window.localStorage.getItem('currentApiary'));
+
         }
     }
 

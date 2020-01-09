@@ -21,10 +21,7 @@ import { WizardComponent } from './wizard/wizard.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FleursFloraisonService } from './fleurs-floraison/service/fleurs.floraison.service';
 import { CapteurService } from './service/api/capteur.service';
-import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
-import { SearchFleurPipe, searchFleurByDate, searchFleurByType } from './fleurs-floraison/service/search-fleur.pipe';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { SidebarService } from './service/sidebar.service';
 import { AdminService } from './admin/service/admin.service';
@@ -86,7 +83,6 @@ import { FeedbackComponent } from '../feedback/feedback.component';
     AlertsService,
     RucheService,
     DailyRecordService,
-    FleursFloraisonService,
     AdminService,
     UnitService,
     GraphGlobal,
@@ -104,10 +100,6 @@ import { FeedbackComponent } from '../feedback/feedback.component';
   ],
   declarations: [
     DashboardComponent,
-    SearchFleurPipe,
-    searchFleurByDate,
-    searchFleurByType,
-    FleursFloraisonComponent,
     WizardComponent,
     PreferenceConfigComponent,
     ManageHivesComponent,

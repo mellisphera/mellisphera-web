@@ -19,7 +19,7 @@ limitations under the License. */
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CONFIG } from '../../../../constants/config';
 import { UserloggedService } from '../../../userlogged.service';
 import { RucheService } from './ruche.service';
@@ -45,13 +45,12 @@ export class RucherService {
     rucherSelectUpdate: RucherModel;
     rucherObs: Observable<RucherModel>;
     ruchersObs: Observable<RucherModel[]>;
-    rucherSubject: BehaviorSubject<RucherModel[]>;
+    apiarySub: Subscription;
     constructor(private http: HttpClient,
         private user: UserloggedService,
         public rucheService: RucheService,
         private loadingService: LoadingService,
         private tokenService: AtokenStorageService) {
-        this.rucherSubject = new BehaviorSubject([]);
         this.allApiaryAccount = [];
         this.initRucher();
         console.log("init rucher");
@@ -61,9 +60,6 @@ export class RucherService {
 
     }
 
-    emitApiarySubject() {
-        this.rucherSubject.next(this.ruchers.slice());
-    }
     initRucher() {
         this.rucher = {
             _id: null,
@@ -95,7 +91,6 @@ export class RucherService {
     saveCurrentApiaryId(apiaryId: string) {
         window.localStorage.removeItem('currentApiary');
         window.localStorage.setItem('currentApiary', apiaryId);
-        this.sharingApiary = this.ruchers.filter(hive => hive.userId !== this.user.getIdUserLoged());
     }
 
     getSharingApiary(): RucherModel[] {
@@ -140,7 +135,7 @@ export class RucherService {
 
     getApiaryByUser(userId: string) {
         this.loadingService.loading = true;
-        this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + userId).subscribe(
+        this.apiarySub = this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + userId).subscribe(
             (apiary) => {
                 console.log(apiary);
                 this.ruchers = apiary.filter(apiary => apiary !== null && apiary.userId === this.user.getIdUserLoged());
@@ -149,14 +144,12 @@ export class RucherService {
                     return a.name.localeCompare(b.name);
                 });
                 this.saveSharingApiary();
-                this.rucherSubject.next(this.ruchers);
             },
             (err) => {
                 console.log(err);
             }, () => {
                 this.afterRequestApiary();
                 this.currentBackground = this.rucher.photo;
-                this.rucherSubject.complete();
                 this.loadingService.loading = false;
             }
         )

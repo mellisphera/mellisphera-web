@@ -41,7 +41,6 @@ export class CapteurService {
     capteursType: Object;
     capteurObs: Observable<CapteurInterface>;
     capteursObs: Observable<CapteurInterface[]>;
-    public sensorSubject: BehaviorSubject<CapteurInterface[]>;
     /**
      *Creates an instance of CapteurService.
      * @param {HttpClient} http
@@ -50,7 +49,6 @@ export class CapteurService {
      */
     constructor(private http: HttpClient, private user: UserloggedService,
         public rucheService: RucheService) {
-        this.sensorSubject = new BehaviorSubject([]);
         this.capteursType =
             [
                 {'sensorRef' : '41', 'type' : 'T2'},
@@ -79,9 +77,6 @@ export class CapteurService {
             sensorTime: null,
             sensorBat: 0
         };
-    }
-    emitSensorSubject() {
-        this.sensorSubject.next(this.capteursByUser.slice());
     }
     /**
      *
@@ -125,15 +120,12 @@ export class CapteurService {
         this.capteursObs.subscribe(
             (data) => {
                 this.capteursByUser = data;
-                this.sensorSubject.next(data);
                 this.capteursByHive = this.capteursByUser.filter(sensor => sensor.hiveId === this.rucheService.getCurrentHive()._id);
-                this.sensorSubject.next(this.capteursByHive);
                 console.log(this.capteursByUser);
             },
             (err) => {
                 console.log(err);
-            },
-            () => { this.sensorSubject.complete(); }
+            }
         );
     }
 

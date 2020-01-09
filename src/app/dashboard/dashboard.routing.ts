@@ -15,7 +15,6 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { AuthGuardService } from '../auth/auth-guard.service';
 import { HomeComponent } from './home/home.component';
-import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
 import { MelliChartsComponent } from './melli-charts/melli-charts.component';
 import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-component.component';
 import { PreferenceConfigComponent } from './preference-config/preference-config.component';
@@ -29,7 +28,6 @@ const routes: Routes = [
     {
         path: '', component: DashboardComponent, children: [
             { path: 'home', loadChildren : './home/home.module#HomeModule', canLoad: [AuthGuardService]},
-            { path: 'fleurs-floraison', component: FleursFloraisonComponent, canLoad: [AuthGuardService]},
             { path: 'admin', loadChildren : './admin/admin.module#AdminModule', canLoad: [AuthGuardService]},
             //{ path: 'stack-apiary', component: StackApiaryComponent, canActivate: [AuthGuardService]},
             { path: 'preferences', component: PreferenceConfigComponent, canActivate: [AuthGuardService]},

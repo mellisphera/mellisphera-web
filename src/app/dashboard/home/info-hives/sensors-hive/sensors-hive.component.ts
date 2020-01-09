@@ -134,7 +134,6 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
                 this.hiveSensorSelect = hive[0];
                 const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
                 this.rucherService.rucheService.ruches[index].sensor = false;
-                this.rucherService.rucheService.emitHiveSubject();
             }, (err: string) => {
                 console.error(err);
             });
@@ -176,7 +175,6 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
                 this.capteurService.capteur.apiaryId = this.rucherService.getCurrentApiary();
                 const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.rucheService.getCurrentHive()._id);
                 this.rucherService.rucheService.ruches[index].sensor = true;
-                this.rucherService.rucheService.emitHiveSubject();
             } else {
                 this.capteurService.capteur.hiveId = null;
                 this.capteurService.capteur.apiaryId = null;
@@ -220,7 +218,6 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
                 this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
                 const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
                 this.rucherService.rucheService.ruches[index].sensor = true;
-                this.rucherService.rucheService.emitHiveSubject();
             } else {
                 this.capteurService.capteur.hiveId = null;
                 this.capteurService.capteur.apiaryId = null;
@@ -232,11 +229,9 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
                     const tempHive = this.rucherService.rucheService.ruches[index];
                     if (this.capteurService.capteursByHive.filter(sensor => sensor.hiveId === tempHive._id).length <= 1) {
                         this.rucherService.rucheService.ruches[index].sensor = false;
-                        this.rucherService.rucheService.emitHiveSubject();
                     }
                 }
                 this.capteurService.capteursByHive.splice(this.indexSensorSelect, 1);
-                this.capteurService.emitSensorSubject();
                 if(this.translateService.currentLang === 'fr'){
                     this.notifier.notify('success', 'Capteur supprimé');
                 }else{
@@ -257,7 +252,6 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
                 this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
                 const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
                 this.rucherService.rucheService.ruches[index].sensor = true;
-                this.rucherService.rucheService.emitHiveSubject();
             } else {
                 this.capteurService.capteur.hiveId = null;
                 this.capteurService.capteur.apiaryId = null;
@@ -267,7 +261,6 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
             this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
                 if((this.hiveSensorSelect._id === this.rucheService.getCurrentHive()._id) && (this.apiarySensorSelect._id === this.rucherService.getCurrentApiary())){
                     this.capteurService.capteursByHive[this.indexSensorSelect] = this.capteurService.capteur;
-                    this.capteurService.emitSensorSubject();
                 }else{
                     this.capteurService.capteursByHive.splice(this.indexSensorSelect,1);
                 }

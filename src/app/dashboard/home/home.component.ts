@@ -207,14 +207,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   ngOnInit() {
-    if (!this.rucherService.rucherSubject.closed) {
+    this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+    this.dailyRecordWservice.getDailyWeightMaxByApiary(this.rucherService.getCurrentApiary());
+    this.loadAlert();
+/*     if (!this.rucherService.rucherSubject.closed) {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
         this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
         this.dailyRecordWservice.getDailyWeightMaxByApiary(this.rucherService.getCurrentApiary());
         this.loadAlert();
-        //this.alertsService.getAllHiveAlertsByApiary(this.rucherService.getCurrentApiary());
       });
-    }
+    } */
 
     if (!this.rucheService.getCurrentHive()) {
       this.rucheService.saveCurrentHive();
@@ -638,7 +640,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   deleteRuche(ruche: RucheInterface, index: number) {
     this.rucheService.deleteRuche(ruche).subscribe(() => { }, () => { }, () => {
       this.rucheService.ruches.splice(index, 1);
-      this.rucheService.emitHiveSubject();
       if (this.translateService.currentLang === 'fr') {
         this.notify.notify('success', 'Ruche supprimée');
       } else {
@@ -666,10 +667,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.rucheService.updateRuche(this.selectHive).subscribe(() => { }, () => { }, () => {
       if (this.selectHive.apiaryId === this.rucherService.getCurrentApiary()) {
         this.rucheService.ruches[this.hiveIndex] = this.selectHive;
-        this.rucheService.emitHiveSubject();
       } else {
         this.rucheService.ruches.splice(this.hiveIndex, 1);
-        this.rucheService.emitHiveSubject();
       }
       if (this.translateService.currentLang === 'fr') {
         this.notify.notify('success', 'Ruche mis à jour');

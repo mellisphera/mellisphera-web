@@ -127,7 +127,6 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
         // update for manage pages
         let hiveIndexUpdateListAllApiary = this.rucheService.ruchesAllApiary.map(hive => hive._id).indexOf(ruche._id);
         this.rucheService.ruchesAllApiary.splice(hiveIndexUpdateListAllApiary,1);
-        this.rucheService.emitHiveSubject();
         if (this.translateService.currentLang === 'fr') {
           this.notify.notify('success', 'Ruche supprimée');
         } else {
@@ -164,7 +163,6 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
       this.rucheService.ruchesAllApiary.push(hive);
       this.rucheService.ruches.push(hive);
     }, () => { }, () => {
-      this.rucheService.emitHiveSubject();
       if (this.translateService.currentLang === 'fr'){
         this.notify.notify('success', 'Ruche créée');
       } else {
@@ -198,12 +196,10 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
         if ((this.selectHive.apiaryId === this.rucherService.getCurrentApiary()) && (this.currentApiary._id === this.rucherService.getCurrentApiary())) {
           let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive._id).indexOf(this.selectHive._id);
           this.rucheService.ruches[hiveIndexUpdate] = this.selectHive;
-          this.rucheService.emitHiveSubject();
         } else if((this.currentApiary._id === this.rucherService.getCurrentApiary())){
           let hiveIndexUpdate = this.rucheService.ruches.map(hive => hive._id).indexOf(this.selectHive._id);
           this.rucheService.ruches.splice(hiveIndexUpdate, 1);
-          this.rucheService.emitHiveSubject();
-        } else if(((this.selectHive.apiaryId === this.rucherService.getCurrentApiary()))){
+        } else if(this.selectHive.apiaryId === this.rucherService.getCurrentApiary()){
           this.rucheService.ruches.push(this.selectHive);
         }
         // update for manage pages

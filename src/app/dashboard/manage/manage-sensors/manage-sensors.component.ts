@@ -91,9 +91,7 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
       // Apiary init
-      this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
       this.apiarySensorForm = this.rucherService.rucher;
-        });
       // Hive init
       this.rucherService.rucheService.getHiveByUserId(this.userService.getJwtReponse().idUser).subscribe(ruches => {
           this.rucherService.rucheService.ruchesAllApiary = ruches;
@@ -171,7 +169,6 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
             this.capteurService.capteur.hiveId = this.hiveSensorSelect._id;
             this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
             const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
-            this.rucherService.rucheService.emitHiveSubject();
         } else {
             this.capteurService.capteur.hiveId = null;
             this.capteurService.capteur.apiaryId = null;
@@ -213,11 +210,9 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
               const tempHive = this.rucherService.rucheService.ruchesAllApiary[index];
               if (this.capteurService.capteursByUser.filter(sensor => sensor.hiveId === tempHive._id).length <= 1) {
                   this.rucherService.rucheService.ruchesAllApiary[index].sensor = false;
-                  this.rucherService.rucheService.emitHiveSubject();
               }
           }
           this.capteurService.capteursByUser.splice(index, 1);
-          this.capteurService.emitSensorSubject();
           if(this.translateService.currentLang === 'fr'){
               this.notifier.notify('success', 'Capteur supprimé');
             }else{
@@ -233,7 +228,6 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
           this.capteurService.capteur.hiveId = this.hiveSensorSelect._id;
           this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
           const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
-          this.rucherService.rucheService.emitHiveSubject();
       } else {
           this.capteurService.capteur.hiveId = null;
           this.capteurService.capteur.apiaryId = null;
@@ -242,7 +236,6 @@ export class ManageSensorsComponent implements OnInit, OnDestroy {
       this.initForm();
       this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
           this.capteurService.capteursByUser[this.indexSensorSelect] = this.capteurService.capteur;
-          this.capteurService.emitSensorSubject();
           if(this.translateService.currentLang === 'fr'){
               this.notifier.notify('success', 'Capteur mis à jour');
             }else{

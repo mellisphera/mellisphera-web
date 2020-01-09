@@ -20,7 +20,6 @@ import { AuthService } from '../../../auth/Service/auth.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { RucherService } from '../../service/api/rucher.service';
 import { RucheService } from '../../service/api/ruche.service';
-import { FleursFloraisonService } from '../../fleurs-floraison/service/fleurs.floraison.service';
 import { ObservationService } from '../../service/api/observation.service';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { DailyRecordService } from '../../service/api/dailyRecordService';
@@ -119,7 +118,6 @@ export class NavbarComponent implements OnInit {
         private adminService: AdminService,
         private rucheService: RucheService,
         public router: Router,
-        private fleursFloraisonService: FleursFloraisonService,
         private observationService: ObservationService,
         private myNotifer: MyNotifierService,
         public capteurService: CapteurService,
@@ -198,11 +196,7 @@ export class NavbarComponent implements OnInit {
     }
 
     logout() {
-        this.rucherService.rucherSubject.unsubscribe();
-        this.rucheService.hiveSubject.unsubscribe();
-        this.observationService.obsHiveSubject.unsubscribe();
         this.authService.authState.next(false);
-        this.capteurService.sensorSubject.unsubscribe();
         this.tokenService.signOut();
         this.rucherService.saveCurrentApiaryId(this.rucherService.rucher._id);
         // this.authService.connexionStatus.next(false);
@@ -374,7 +368,6 @@ export class NavbarComponent implements OnInit {
                 this.desactiveButtonHomePageActiveNameAndAlerts();
                 break;
             case '/dashboard/fleurs-floraison':
-                this.fleursFloraisonService.getUserFleur(this.rucherService.getCurrentApiary());
                 break;
             /*             case '/meteo':
                             this.meteoService.getWeather(this.rucherService.rucher.codePostal);
@@ -453,7 +446,6 @@ export class NavbarComponent implements OnInit {
             }
             this.rucherService.saveCurrentApiaryId(apiary._id);
         }, () => { }, () => {
-            this.rucherService.emitApiarySubject();
             this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
             if ((this.rucherService.ruchers.length !== 1) && (/home/g.test(this.router.url))) {
                 this.desactiveButtonHomePageActiveName();
@@ -520,7 +512,6 @@ export class NavbarComponent implements OnInit {
                 () => { }, () => { }, () => {
                     this.rucherService.ruchers[index] = this.apiaryUpdate;
                     this.rucherService.allApiaryAccount[indexAllApiary] = this.apiaryUpdate;
-                    this.rucherService.emitApiarySubject();
                     this.photoApiary = null;
                     this.editPhotoApiary = null;
                     if (this.rucherService.rucherSelectUpdate === this.rucherService.rucher) {
@@ -611,7 +602,6 @@ export class NavbarComponent implements OnInit {
                 const indexApiaryAllAccount = this.rucherService.allApiaryAccount.indexOf(this.rucherService.rucherSelectUpdate);
                 this.rucherService.allApiaryAccount.splice(indexApiaryAllAccount, 1);
                 this.rucherService.ruchers.splice(indexApiaryUser, 1);
-                this.rucherService.emitApiarySubject();
                 if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Rucher supprimé');
                 } else {
@@ -720,7 +710,6 @@ export class NavbarComponent implements OnInit {
                 }
 
             }, () => { }, () => {
-                this.rucheService.emitHiveSubject();
                 if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Ruche créée');
                 } else {
@@ -1182,7 +1171,6 @@ export class NavbarComponent implements OnInit {
                 this.capteurService.capteur.hiveId = this.hiveSensorSelect._id;
                 this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
                 const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
-                this.rucherService.rucheService.emitHiveSubject();
             } else {
                 this.capteurService.capteur.hiveId = null;
                 this.capteurService.capteur.apiaryId = null;
@@ -1330,7 +1318,6 @@ export class NavbarComponent implements OnInit {
                 this.capteurService.capteur.hiveId = this.hiveSensorSelect._id;
                 this.capteurService.capteur.apiaryId = this.getApiaryNameById(this.hiveSensorSelect.apiaryId)._id;
                 const index = this.rucherService.rucheService.ruches.map(hive => hive._id).indexOf(this.hiveSensorSelect._id);
-                this.rucherService.rucheService.emitHiveSubject();
             } else {
                 this.capteurService.capteur.hiveId = null;
                 this.capteurService.capteur.apiaryId = null;
@@ -1341,7 +1328,6 @@ export class NavbarComponent implements OnInit {
             this.capteurService.updateCapteur().subscribe(() => { }, () => { }, () => {
                 let indexSensorSelect = this.capteurService.capteursByUser.map(sensor => sensor._id).indexOf(this.capteurService.capteur._id);
                 this.capteurService.capteursByUser[indexSensorSelect] = this.capteurService.capteur;
-                this.capteurService.emitSensorSubject();
                 if (this.translateService.currentLang === 'fr') {
                     this.notifier.notify('success', 'Capteur mis à jour');
                 } else {
@@ -1363,12 +1349,10 @@ export class NavbarComponent implements OnInit {
                     const tempHive = this.rucherService.rucheService.ruchesAllApiary[index];
                     if (this.capteurService.capteursByUser.filter(sensor => sensor.hiveId === tempHive._id).length <= 1) {
                         this.rucherService.rucheService.ruchesAllApiary[index].sensor = false;
-                        this.rucherService.rucheService.emitHiveSubject();
                     }
                 }
                 let index = this.capteurService.capteursByUser.map(sensor => sensor._id).indexOf(this.capteurService.capteur._id);
                 this.capteurService.capteursByUser.splice(index, 1);
-                this.capteurService.emitSensorSubject();
                 this.initSensorForm();
                 this.editSensorInit();
                 if (this.translateService.currentLang === 'fr') {

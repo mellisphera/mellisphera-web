@@ -137,7 +137,6 @@ export class WizardComponent implements OnInit, OnDestroy {
       }
       this.rucherService.saveCurrentApiaryId(apiary._id);
     }, () => { }, () => {
-      this.rucherService.emitApiarySubject();
       this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
       this.initForm();
       this.hive.apiaryId = this.rucherService.getCurrentApiary();
@@ -145,7 +144,6 @@ export class WizardComponent implements OnInit, OnDestroy {
         this.rucherService.rucheService.ruches = new Array(hive);
         this.rucherService.rucheService.saveCurrentHive(hive);
       }, () => { }, () => {
-        this.rucherService.rucheService.emitHiveSubject();
         this.sensor.hiveId = this.rucherService.rucheService.getCurrentHive()._id;
         this.sensor.apiaryId = this.rucherService.getCurrentApiary();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {

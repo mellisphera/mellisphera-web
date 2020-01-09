@@ -149,7 +149,6 @@ export class ManageApiarysComponent implements OnInit, OnDestroy {
         }
         this.rucherService.saveCurrentApiaryId(apiary._id);
     }, () => { }, () => {
-        this.rucherService.emitApiarySubject();
         this.rucheService.getHivesByApiary(this.rucherService.getCurrentApiary());
         this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
         if (this.translateService.currentLang === 'fr') {
@@ -191,7 +190,6 @@ onEditApiary() {
     this.rucherService.updateRucher(this.rucherService.rucherSelectUpdate._id, this.apiaryUpdate).subscribe(
         () => { }, () => { }, () => {
             this.rucherService.ruchers[index] = this.apiaryUpdate;
-            this.rucherService.emitApiarySubject();
             this.photoApiary = null;
             this.editPhotoApiary = null;
             this.rucherService.rucherSelectUpdate = this.apiaryUpdate;
@@ -217,7 +215,6 @@ deleteApiary(apiary : RucherModel) {
     this.rucherService.deleteRucher(apiary).subscribe(() => { }, () => { }, () => {
         const index = this.rucherService.ruchers.indexOf(apiary);
         this.rucherService.ruchers.splice(index, 1);
-        this.rucherService.emitApiarySubject();
         if(this.translateService.currentLang === 'fr'){
             this.notify.notify('success', 'Rucher supprimé');
         }else{
