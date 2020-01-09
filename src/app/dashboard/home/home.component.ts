@@ -284,11 +284,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   onClickNextDay() {
     this.dailyRecTh.nextDay(this.rucherService.getCurrentApiary());
     this.dailyRecordWservice.nextDay(this.rucherService.getCurrentApiary());
+    this.fitnessService.nextDay(this.userService.getIdUserLoged());
+    this.deviceSatusService.nextDay(this.userService.getIdUserLoged());
   }
 
   onClickPreviousDay() {
     this.dailyRecTh.previousDay(this.rucherService.getCurrentApiary());
     this.dailyRecordWservice.previousDay(this.rucherService.getCurrentApiary());
+    this.fitnessService.previousDay(this.userService.getIdUserLoged());
+    this.deviceSatusService.previousDay(this.userService.getIdUserLoged());
   }
 
   //   checkHiveActive(): Promise<Boolean> {

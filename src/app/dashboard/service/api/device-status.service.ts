@@ -12,12 +12,40 @@ import { TranslateService } from '@ngx-translate/core';
 export class DeviceStatusService {
 
   private deviceStatus: DeviceStatus[];
-
-  constructor(private httpClient: HttpClient, private translateService: TranslateService) { }
+  public rangeStatus: Date;
+  constructor(private httpClient: HttpClient, private translateService: TranslateService) {
+    this.rangeStatus = new Date();
+    this.rangeStatus.setDate(new Date().getDate() - 2);
+    this.rangeStatus.setHours(23);
+    this.rangeStatus.setMinutes(0);
+    this.deviceStatus = [];
+  }
 
 
   getDeviceStatusByUser(userId: string): Observable<DeviceStatus[]> {
-    return this.httpClient.get<DeviceStatus[]>(CONFIG.URL + `deviceStatus/user/${userId}`);
+    let previousDay: Date = new Date();
+    previousDay.setFullYear(this.rangeStatus.getFullYear());
+    previousDay.setMonth(this.rangeStatus.getMonth());
+    previousDay.setDate(this.rangeStatus.getDate() + 1);
+    previousDay.setHours(23);
+    previousDay.setMinutes(0);
+    return this.httpClient.get<DeviceStatus[]>(CONFIG.URL + `deviceStatus/user/${userId}/${this.rangeStatus.getTime()}/${previousDay.getTime()}`);
+  }
+
+  public nextDay(userId: string): void {
+    this.rangeStatus.setDate(this.rangeStatus.getDate() + 1);
+    this.rangeStatus.setHours(23);
+    this.rangeStatus.setMinutes(0);
+    this.rangeStatus.setSeconds(0);
+    this.callRequest(userId);
+  }
+
+  public previousDay(userId: string): void {
+    this.rangeStatus.setDate(this.rangeStatus.getDate() - 1);
+    this.rangeStatus.setHours(23);
+    this.rangeStatus.setMinutes(0);
+    this.callRequest(userId);
+
   }
 
   getDeviceStatusBySensorRef(sensorRef: string): DeviceStatus[] {

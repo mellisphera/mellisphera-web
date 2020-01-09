@@ -107,7 +107,6 @@ export class DailyRecordService {
         this.rangeDailyRecord.setMinutes(0);
         this.rangeDailyRecord.setSeconds(0);
         this.getDailyRecThByApiary(apiaryId);
-
     }
     /**
      *
