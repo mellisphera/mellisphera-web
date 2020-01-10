@@ -33,16 +33,12 @@ import { UnitService } from '../service/unit.service';
 import { ObservationService } from '../service/api/observation.service';
 import { UserParamsService } from '../preference-config/service/user-params.service';
 import { DailyRecordsWService } from '../service/api/daily-records-w.service';
-import { DailyStockHoneyService } from '../service/api/daily-stock-honey.service';
 import { CapteurService } from '../service/api/capteur.service';
 import { AlertsService } from '../service/api/alerts.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
-import { stringify } from '@angular/core/src/render3/util';
 import { InfoHivesComponent } from './info-hives/info-hives.component';
 import { InfoApiaryComponent } from './info-apiary/info-apiary.component';
-import { AlertsHiveComponent } from './info-hives/alerts-hive/alerts-hive.component';
-import { AlertsComponent } from './info-apiary/alerts/alerts.component';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 import { MyDate } from '../../class/MyDate';
 import { AlertInterface } from '../../_model/alert';
@@ -543,6 +539,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       this.eltOnClickClass[i].classList.remove('in');
     }
     this.eltOnClickClass = document.getElementsByClassName(class2);
+    console.log(class2);
     for (let i = 0; i < this.eltOnClickClass.length; i++) {
       this.eltOnClickClass[i].classList.remove('in');
     }
@@ -552,20 +549,21 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     }
 
     // Active/Desactive the button clicked
+
     this.eltOnClickId = document.getElementById(idButtonActive);
-    if (document.getElementById(idButtonActive).className === 'button button1 active') {
+    if (document.getElementById(idButtonActive).classList.contains('active')){
       this.renderer.removeClass(this.eltOnClickId, 'active');
     } else {
       this.renderer.addClass(this.eltOnClickId, 'active');
     }
 
     // desactive the other buttons
-    this.eltOnClickId = document.getElementById(class1);
-    this.renderer.removeClass(this.eltOnClickId, 'active');
-    this.eltOnClickId = document.getElementById(class2);
-    this.renderer.removeClass(this.eltOnClickId, 'active');
-    this.eltOnClickId = document.getElementById(class3);
-    this.renderer.removeClass(this.eltOnClickId, 'active');
+    const elt = document.getElementsByClassName('button1');
+    for (let i = 0; i < elt.length; i++) {
+      if (elt[i].id !== idButtonActive) {
+        elt[i].classList.remove('active');
+      }
+    }
 
   }
 

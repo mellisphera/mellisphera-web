@@ -19,18 +19,21 @@ limitations under the License. -->
                     *ngIf="numberActiveNotifByApiary() !== 0"
                     class="badge badge-button">{{ numberActiveNotifByApiary() }}</span> -->
             </li>
-            <li *ngFor="let btn of btnNav"><button type="button" [id]="btn.path" (click)="navToPage(btn.path, btn.path)"
-                    class="button button0">{{ btn.name }}</button></li>
-            <li (click)="collapseAllActiveButton('sensors','weight','brood','name')"><button id="name" type="button"
+<!--             <li>
+                <button type="button" [id]="btn.path" (click)="navToPage(btn.path, btn.path)"
+                    class="button button0">{{ btn.name }}
+                </button>
+            </li> -->
+            <li (click)="collapseAllActiveButton('sensors','weight','brood','nameNav')"><button id="nameNav" type="button"
                     class="button button1 active" data-toggle="collapse"
                     data-target=".name">{{ 'HOME.NAVBAR.NAME' | translate}}</button></li>
-            <li (click)="collapseAllActiveButton('sensors','name','weight','brood')"><button id="brood" type="button"
+            <li (click)="collapseAllActiveButton('sensors','name','weight','broodNav')"><button id="broodNav" type="button"
                     class="button button1" data-toggle="collapse"
                     data-target=".brood">{{ 'HOME.NAVBAR.BROOD' | translate}}</button></li>
-            <li (click)="collapseAllActiveButton('sensors','name','brood','weight')"><button id="weight" type="button"
+            <li (click)="collapseAllActiveButton('sensors','name','brood','weightNav')"><button id="weightNav" type="button"
                     class="button button1" data-toggle="collapse"
                     data-target=".weight">{{ 'HOME.NAVBAR.WEIGHT' | translate}}</button></li>
-            <li (click)="collapseAllActiveButton('weight','name','brood','sensors')"><button id="sensors" type="button"
+            <li (click)="collapseAllActiveButton('weight','name','brood','sensorsNav')"><button id="sensorsNav" type="button"
                     class="button button1" data-toggle="collapse"
                     data-target=".sensors">{{ 'HOME.NAVBAR.SENSORS' | translate}}</button></li>
         </ul>
