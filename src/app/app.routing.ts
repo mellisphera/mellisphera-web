@@ -20,12 +20,12 @@ import { Erreur404ComponentComponent } from './erreur404-component/erreur404-com
 const routes: Routes = [
 
   { path: '', component: LoginComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent},
+  { path: 'login-bm', loadChildren: './auth-bm/auth-bm.module#AuthBmModule'},
   {
     path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule',
     canActivate: [AuthGuardService], canLoad: [AuthGuardService]
   },
-  { path: 'login-bm/:email', loadChildren: './auth-bm/auth-bm.module#AuthBmModule'},
   { path: '', redirectTo: '/', pathMatch: 'full' },
 
   { path: 'home', redirectTo: '', pathMatch: 'full',  },

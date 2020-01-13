@@ -1,151 +1,21 @@
-/**
- * 01/28/2016
- * This pen is years old, and watching at the code after all
- * those years made me fall from my chair, so I:
- * - changed all IDs to classes
- * - converted all units to pixels and em units
- * - changed all global elements to classes or children of
- *   .login
- * - cleaned the syntax to be more consistent
- * - added a lot of spaces that I so hard tried to avoid
- *   a few years ago
- *   (because it's cool to not use them)
- * - and probably something else that I can't remember anymore
- *
- * I sticked to the same philosophy, meaning:
- * - the design is almost the same
- * - only pure HTML and CSS
- * - no frameworks, preprocessors or resets
- */
-
-/* 'Open Sans' font from Google Fonts */
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
-
-body {
-  background: #456;
-  font-family: 'Open Sans', sans-serif;
+nav{
+  background-color: #208000;
 }
-
-.login_bm {
-  width: 400px;
-  margin: auto;
-  font-size: 16px;
+nav h1{
+  color: white;
 }
-
-/* Reset top and bottom margins from certain elements */
-.login-header,
-.login_bm p {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-/* The triangle form is achieved by a CSS hack */
-.login-triangle {
-  width: 0;
-  margin-right: auto;
-  margin-left: auto;
-  border: 12px solid transparent;
-  border-bottom-color: #28d;
-}
-
-.login-header {
-  background: #4F4F51;
-  padding: 20px;
-  font-size: 1.4em;
-  font-weight: normal;
-  text-align: center;
-  text-transform: uppercase;
-  color: #fff;
-}
-
-.login-container {
-  background: #ebebeb;
-  padding: 12px;
-}
-
-/* Every row inside .login-container is defined with p tags */
-.login_bm p {
-  padding: 12px;
-}
-
-.login_bm input {
-  box-sizing: border-box;
-  display: block;
-  width: 100%;
-  border-width: 1px;
-  border-style: solid;
-  padding: 16px;
-  outline: 0;
-  font-family: inherit;
-  font-size: 0.95em;
-}
-
-.login_bm input[type="email"],
-.login_bm input[type="password"] {
-  background: #fff;
-  border-color: #bbb;
-  color: #555;
-}
-
-/* Text fields' focus effect */
-.login_bm input[type="email"]:focus,
-.login_bm input[type="password"]:focus {
-  border-color: #888;
-}
-
-.login_bm input[type="submit"] {
-  background: #28d;
-  border-color: transparent;
-  color: #fff;
-  cursor: pointer;
-}
-
-.login_bm input[type="submit"]:hover {
-  background: #17c;
-}
-
-/* Buttons' focus effect */
-.login_bm input[type="submit"]:focus {
-  border-color: #05a;
-}   
-
-h3{
-  text-align: center;
+nav section{
+  display: flex;
+  justify-content: center;
 }
 #content{
-  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
-#eula{
-  text-align: justify;
-  width: 100%;
-  background-color: white;
-  padding: 5px;
-  border-radius: 20px;
-  margin:auto;
-  height: 500px;
-  overflow-y: auto;
+#text {
+  width: 80%;
 }
-.li-items{
-  padding: 5px;
-}
-#eltpos{
-  position: absolute;
-  left: 50%;
-  top: 45%;
-  transform: translate(-50%, -50%);
-}
-#eula-center{
-  text-align: center;
-  cursor: pointer;
-}
-#footer{
-  text-align: right;
-}
-@media (max-width:500px) {
-  #eula{
-    width: 100vw;
-  }
-  #eltpos{
-    width: 100%;
-  }
+#logo img{
+  margin-top: 8px;
+  margin-right: 3px;
 }

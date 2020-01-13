@@ -74,7 +74,7 @@ export class AuthService {
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
         this.translateService.addLangs(['en', 'fr', 'es']);
-        this.socketService.loadDataRequest(this.userService.getJwtReponse());
+        this.socketService.loadDataRequest(this.userService.getJwtReponse().idUser);
 
          if (this.jwtReponse.lang === null || this.jwtReponse.lang.toLowerCase().indexOf('en') !== -1) {
            this.translateService.use('en');

@@ -9,6 +9,7 @@ import { DeviceStatusService } from '../../service/api/device-status.service';
 import { FitnessService } from '../../service/api/fitness.service';
 import { Router } from '@angular/router';
 import { CapteurService } from '../../service/api/capteur.service';
+import { SocketService } from '../../service/socket.service';
 
 @Component({
   selector: 'app-user',
@@ -23,6 +24,7 @@ export class UserComponent implements OnInit {
     private rucherService: RucherService,
     private alertService: AlertsService,
     private rucheService: RucheService,
+    private socketService: SocketService,
     private deviceStatusService: DeviceStatusService,
     private fitnessService: FitnessService,
     private capteurService: CapteurService,
@@ -42,6 +44,10 @@ export class UserComponent implements OnInit {
     this.adminService.exeChangeLog(userId).subscribe(
       _res => {}
     );
+  }
+
+  loadData(userId: string) {
+    this.socketService.loadDataRequest(userId);
   }
 
   loginFromAdmin(userId: string) {

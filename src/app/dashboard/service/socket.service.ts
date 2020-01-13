@@ -34,8 +34,8 @@ export class SocketService {
     );
   }
 
-  loadDataRequest(authResponse: JwtResponse) {
-    this.socket.emit('loaData', authResponse.idUser);
+  loadDataRequest(userId: string) {
+    this.socket.emit('loaData', userId);
   }
 
   sendMailTest(userId: string) {

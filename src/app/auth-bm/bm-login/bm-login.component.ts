@@ -18,6 +18,7 @@ import { Login } from '../../_model/login';
 import { EULA } from '../../EULA';
 import * as $ from 'jquery';
 import { TranslateService } from '@ngx-translate/core';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-bm-login',
@@ -28,24 +29,33 @@ export class BmLoginComponent implements OnInit, OnDestroy {
 
   public email: string;
   public password: string;
-  public eulaRead: boolean;
+  public newUser: boolean;
   public eula = EULA;
+  private urlYtb: string;
+  public safeSrc: SafeResourceUrl;
   constructor(private route: ActivatedRoute,
     private authService: AuthService,
     private translateService: TranslateService,
-    private router: Router) {
-      this.eulaRead = false;
+    private sanitizer: DomSanitizer) {
+      this.newUser = false;
+      this.urlYtb = 'https://www.youtube.com/embed/kFMFM1hDd8s';
       this.translateService.use(this.translateService.getBrowserLang());
+      this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(this.urlYtb);
+
     }
 
   ngOnInit() {
-    document.querySelector('body').classList.add('login-bm');
-    this.email = this.route.snapshot.params.email;
-
+    //document.querySelector('body').classList.add('login-bm');
+    this.route.queryParams.subscribe(
+      _res => {
+        this.email = _res.email;
+        this.newUser = _res.new == 'true';
+      }
+    );
   }
 
   ngOnDestroy(): void {
-    document.querySelector('body').classList.remove('login-bm');
+    //document.querySelector('body').classList.remove('login-bm');
   }
 
   login(): void {
