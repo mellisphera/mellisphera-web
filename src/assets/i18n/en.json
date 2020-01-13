@@ -400,8 +400,9 @@
                 "DAILY": "day",
                 "WEEKLY": "week",
                 "DAY": "day",
-                "OTHER": "Other",
-                "EVERY": "Every"
+                "OTHER": "custom",
+                "EVERY": "Every",
+                "BTN_MAIL_TEST": "Send test email"
             }
         },
         "STATUS": "Status"

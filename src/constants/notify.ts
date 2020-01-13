@@ -16,15 +16,21 @@ export const NOTIF_MSG = {
             FR: {
                 CHANGE_NAME_DEMO_APIARY: 'Nom modifié',
                 READ_ALL_ALERTS_HIVE : 'Alertes lues',
-                SAVE_ALERT_CONF: 'Paramètres sauvegardés'
+                SAVE_ALERT_CONF: 'Paramètres sauvegardés',
+                SEND_MAIL_TEST: 'Email envoyé !'
 
 
             },
             EN: {
                 CHANGE_NAME_DEMO_APIARY: 'Name updated',
                 READ_ALL_ALERTS_HIVE : 'Alerts read',
-                SAVE_ALERT_CONF: 'Saved settings'
+                SAVE_ALERT_CONF: 'Saved settings',
+                SEND_MAIL_TEST: 'Email sent !'
 
+            },
+            ES: {
+                SEND_MAIL_TEST: 'Email enviado !',
+                SAVE_ALERT_CONF: 'Configuraciones guardadas',
             }
         },
         FAIL: {
@@ -52,6 +58,7 @@ export enum NotifList{
     AUTH_WRITE_NOTES = 'AUTH_WRITE_NOTES',
     AUTH_WRITE_NOTES_HIVE = 'AUTH_WRITE_NOTES_HIVE',
     READ_ALL_ALERTS_HIVE = 'READ_ALL_ALERTS_HIVE',
-    SAVE_ALERT_CONF = 'SAVE_ALERT_CONF'
+    SAVE_ALERT_CONF = 'SAVE_ALERT_CONF',
+    SEND_MAIL_TEST = 'SEND_MAIL_TEST'
 
 }

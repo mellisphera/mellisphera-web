@@ -14,6 +14,7 @@ limitations under the License. */
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { JwtResponse } from '../../_model/jwt-response';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class SocketService {
 
   constructor(private socket: Socket) {
     this.resultLoadDataRequest();
+    //this.resSendMail();
     }
 
   resultLoadDataRequest() {
@@ -34,5 +36,13 @@ export class SocketService {
 
   loadDataRequest(authResponse: JwtResponse) {
     this.socket.emit('loaData', authResponse.idUser);
+  }
+
+  sendMailTest(userId: string) {
+    this.socket.emit('sendTestMail', userId);
+  }
+
+  resSendMail(): Observable<any>{
+    return this.socket.fromEvent('mailSend');
   }
 }

@@ -398,8 +398,9 @@
                 "DAILY": "jour",
                 "WEEKLY": "semaine",
                 "DAY": "jour",
-                "OTHER": "Autre",
-                "EVERY": "Tout les "
+                "OTHER": "personnaliser",
+                "EVERY": "Tout les ",
+                "BTN_MAIL_TEST": "Tester email"
             }
         },
         "NAME": "Nom",

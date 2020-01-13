@@ -413,8 +413,9 @@
                 "DAILY": "cía",
                 "WEEKLY": "semana",
                 "DAY": "día",
-                "OTHER": "Otro",
-                "EVERY": "Cada"
+                "OTHER": "personalizar",
+                "EVERY": "Cada",
+                "BTN_MAIL_TEST": "Correo electrónico de prueba"
             }
         },
         "DESCRIPTION": "Descripción",
