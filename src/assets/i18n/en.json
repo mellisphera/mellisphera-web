@@ -12,13 +12,26 @@
     "MELLIUX": {
         "HELP": {
             "APIARY": {
-                "APIARY_PICTURE": "",
-                "EVENT_CALENDAR": ""
+                "APIARY_PICTURE": "This interface shows a simple and quick status of your apiary. 
+                The pellet color indicates the hive fitness (green/orange/red). Hover it to find more details.
+                The above buttons can display on every pellet the hive name, brood, weight and also device IDs
+                Click on every pellet to access to hive data on the right hand side of this interface.
+                The top right arrows arround the date at the top of the interface allow you to navigate backwards in time.
+                Hive Fitness is computed from sensor data and other parameters with our exclusive BFit model.
+                
+                first setup :
+                Drag and drop your own apiary picture or map and place the pellets on every hive location by unlocking the lock button.",
+                "EVENT_CALENDAR": "Apiary calendar shows apiary notes. general actions you did into the apiary.
+                To display hive related notes you simply need to click onto the hive pellet."
             },
             "HIVE": {
-                "EVENT_CALENDAR": "",
-                "BROOD_CALENDAR": "",
-                "WEIGHT_CALENDAR": ""
+                "EVENT_CALENDAR": "This calendar displays your notes and system notifications.
+                Hovering them you'll find more details.",
+                "BROOD_CALENDAR": "This calendar chart displays the brood progression in your hive. 
+                The range goes from 0 to 100%. 0 meaning no brood and 100% full brood into the hive. 
+                Brood level is computed from your TH or T2 sensors with our exclusive BForce model.",
+                "WEIGHT_CALENDAR": "this calendar chart displays daily productivity of hives equiped with a scale. 
+                Values consider only weight incomes and consumptions due to bees activity. Beekeeper operations like feeding or adding supper are discarded."
             }
         }
     },
@@ -381,9 +394,16 @@
     },
     "MELLICHARTS": {
         "HELP": {
-            "BROOD": {
-                
-            }
+            "HIVE" :"In this interface you can explore with great detail all data related to a hive. You can compare internal parameters with your own operations (notes) and with weather conditions.
+            Using the date navigation on the top right of the screen you can display longuer periods of time and then jump from period to period with the arrows.
+            The icons above every calendar allow you to switch among different variables (brood, weight, humidity, temperature, ect).",
+            "BROOD" : "This interface allow to overlay brood progressions of different hives in one or several apiaries. 
+            What is running behind it is our exclusive Bforce model. This model mixing empirical and machine learning data gives you a fairly good estimate of the brood level within a hive.
+            As a rule of the thumb, 10% is one frame of brood, 40% 4 frames etc. Depending on your practice and hive model you will need to adjusting those relationships.
+            
+            Important Note : only hives achieving the 80% threshold will enter the production zone allowing for honey production.",
+            "RAWDATA" : "here hou can view the raw measurements, this display is very similar to what you are already used into mybroodminder.
+            overlaying different hives/apiaries is possible too."
         },
         "NAV": {
             "HIVE": "Hive",
@@ -407,7 +427,13 @@
         "NAME": "Name",
         "DESCRIPTION": "Description",
         "VALUE": "Value",
-        "STATUS": "Status"
+        "STATUS": "Status",
+        "HELP": {
+            "ALERTS" :"In this page you can configure all alerts and notifications.
+            alerts are classified into 3 groups : in hive / weather / devices. 
+            You can start with the predefined tresholds and fine tune them based on your own experience.
+            Go to the \"configure\" tab to set your preferences for email and frequency of notifications",
+        },
     },
 
     "LOGIN_BM": {
