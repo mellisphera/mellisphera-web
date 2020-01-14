@@ -24,10 +24,28 @@
       past events and read the season development from a completely new perspective.
       In two words, you’re about to become a precision beekeeper.
     </p>
+    <div class="loginMobile">
+      <form class="login-container">
+        <div class="form-group">
+          <label for="Password">Username</label>
+          <input type="email" class="form-control" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email">
+        </div>
+  
+        <div class="form-group">
+          <label for="Password">Password</label>
+          <input type="password" class="form-control" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <button type="button" (click)="login()" class="btn btn-success">Login</button>
+        </div>
+      </form>
+    </div>
     <h2>Quick tour of Mellisphera</h2>
     <p>Watch this video to discover Mellisphera main functions</p>
-    <iframe [src]="safeSrc" width="560" height="315" frameborder="0" webkitallowfullscreen
+    <div id="ytb">
+      <iframe [src]="safeSrc" width="560" height="315" frameborder="0" webkitallowfullscreen
       mozallowfullscreen allowfullscreen></iframe>
+    </div>
     <h2>Broodminder and Mellisphera - How it works</h2>
     <p>
       Mellisphera and Broodminder environments are complementary and closely linked.
@@ -38,21 +56,20 @@
     </p>
   </div>
   <div>
-    <form class="login-container">
-      <div class="form-group">
-        <label for="Password">Username</label>
-        <input type="email" class="form-control" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email">
-      </div>
-
-      <div class="form-group">
-        <label for="Password">label</label>
-        <input type="password" class="form-control" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password">
-      </div>
-      <button type="button" (click)="login()" class="btn btn-success">Login</button>
-      <!--  <p id="eula-center"><a (click)="newUser = !newUser">{{ 'LOGIN_BM.EULA' | translate }}</a></p> -->
-
-    </form>
-    
+    <div class="loginDesktop">
+      <form class="login-container">
+        <div class="form-group">
+          <label for="Password">Username</label>
+          <input type="email" class="form-control" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email">
+        </div>
+  
+        <div class="form-group">
+          <label for="Password">Password</label>
+          <input type="password" class="form-control" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password">
+        </div>
+        <button type="button" (click)="login()" class="btn btn-success">Login</button>
+      </form>
+    </div>    
   </div>
 </section>
 <footer></footer>

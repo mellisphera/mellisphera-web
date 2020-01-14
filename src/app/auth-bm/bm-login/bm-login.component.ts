@@ -53,7 +53,6 @@ export class BmLoginComponent implements OnInit, OnDestroy {
       }
     );
   }
-
   ngOnDestroy(): void {
     //document.querySelector('body').classList.remove('login-bm');
   }

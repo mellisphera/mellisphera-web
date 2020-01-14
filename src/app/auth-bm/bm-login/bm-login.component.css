@@ -13,9 +13,57 @@ nav section{
   flex-wrap: wrap;
 }
 #text {
-  width: 80%;
+  width: 68%;
+  padding: 10px;
+  border-right: 1px solid black;
+  margin-right: 11px;
 }
 #logo img{
   margin-top: 8px;
   margin-right: 3px;
+}
+.loginMobile{
+  display: none;
+}
+@media screen and (max-width:990px) {
+  .form-group{
+    width: 50%;
+    margin: auto;
+  }
+  iframe{
+    width: 50%;
+  }
+  #text {
+    width: 100%;
+    text-align: justify;
+  }
+  h2{
+    text-align: center;
+  }
+  #ytb{
+    text-align: center;
+  }
+  .loginMobile{
+    display: block;
+  }
+  .loginDesktop{
+    display: none;
+  }
+  .login-container div:last-child{
+    margin-top: 5px;
+  }
+}
+@media screen and (max-width:710px) {
+  iframe{
+    width: 80%;
+  }
+}
+
+@media screen and (max-width:450px) {
+  iframe{
+    width: 100%;
+  }
+  .form-group{
+    width: 90%;
+  }
 }
