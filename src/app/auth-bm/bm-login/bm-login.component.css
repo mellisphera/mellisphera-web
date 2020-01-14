@@ -110,7 +110,7 @@ button{
     display: block;
   }
   .eulaDesktop{
-    display: block;
+    display: none;
   }
   .eulaMobile ol{
     padding-left: 20px;
