@@ -63,16 +63,26 @@ nav section{
 .eulaMobile ol{
   font-size: 15px;
 }
+.eulaMobile, .eulaDesktop{
+  margin-top: 15px;
+}
 ol li {
   margin-bottom: 6px;
 }
 .checkEula{
   padding: 8px;
   margin-top: 10px;
+  display: flex;
 }
 input[type='checkbox'] {
   margin-right: 3px;
   margin-left: 25px;
+}
+button{
+  width: 150px;
+}
+#footter{
+  text-align: center;
 }
 @media screen and (max-width:990px) {
   .form-group{

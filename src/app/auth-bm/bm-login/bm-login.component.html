@@ -27,10 +27,10 @@
         <input type="password" class="form-control" name="passwdMobile" [disabled]="!eulaCheck" placeholder="MyBroodminder password" [(ngModel)]="password"
           [ngModelOptions]="{standalone: true}">
       </div>
-      <p><a href="mailto:support@mellisphera.com">cannot log in</a></p>
+<!--       <p><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
       <div class="form-group">
         <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
-      </div>
+      </div> -->
     </form>
   </div>
   <section *ngIf="newUser" id="sectionEula" class="eulaMobile">
@@ -44,6 +44,10 @@
       <input type="checkbox" (input)="agreeEula($event)" value="agree"/><label>{{ 'LOGIN_BM.BTN_EUA' | translate }}</label> 
     </div>
   </section>
+  <div class="form-group loginMobile" id="footter">
+    <p><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
+    <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
+  </div>
   <div id="text">
     <h2>Becoming a precision beekeeper</h2>
     <p>
@@ -91,11 +95,7 @@
           <input type="password" [disabled]="!eulaCheck" name="passwdDesktop" class="form-control" placeholder="MyBroodminder password" [(ngModel)]="password"
             [ngModelOptions]="{standalone: true}">
         </div>
-        <p><a href="mailto:support@mellisphera.com">cannot log in</a></p>
-        <div class="form-group">
-          <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
-        </div>
-        <div *ngIf="!eulaCheck && !checkPassWordInputIsDisabled()" style="text-align: center;">
+        <div *ngIf="!eulaCheck && !checkButtonIsDisabled()" style="text-align: center;">
           <img src="./assets/img/smile.png"/>
         </div>
       </form>
@@ -108,9 +108,13 @@
         </ol>
       </div>
       <div class="checkEula">
-        <input type="checkbox" (input)="agreeEula($event)" value="agree"/><label>{{ 'LOGIN_BM.BTN_EUA' | translate }}</label> 
+        <input type="checkbox" (input)="agreeEula($event)" value="agree"/><label>{{ 'LOGIN_BM.BTN_EUA' | translate }}</label>
       </div>
     </section>
+    <div class="form-group" id="footter">
+      <p><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
+      <button type="button" id="btnLoginDesktop" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
+    </div>
   </div>
 </section>
 <footer></footer>

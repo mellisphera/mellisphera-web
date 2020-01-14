@@ -66,8 +66,8 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
     
   }
 
-  checkPassWordInputIsDisabled() {
-    return document.querySelector('.loginDesktop button' as any).disabled;
+  checkButtonIsDisabled() {
+    return (document.querySelector('#btnLoginDesktop') as any).disabled;
   }
 
 
