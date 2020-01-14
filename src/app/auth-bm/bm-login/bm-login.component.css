@@ -36,6 +36,7 @@ nav section{
   #text {
     width: 100%;
     text-align: justify;
+    border: none;
   }
   h2{
     text-align: center;
