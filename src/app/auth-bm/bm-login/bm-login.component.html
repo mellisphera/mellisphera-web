@@ -11,40 +11,59 @@
   </nav>
 </header>
 <section id="content">
+  <div class="loginMobile">
+    <form class="login-container mobile">
+      <P>
+        <label>Connection</label>
+      </P>
+      <div class="form-group">
+        <!-- <label for="Password">Username</label> -->
+        <input type="email" class="form-control" [disabled]="!eulaCheck" placeholder="MyBroodminder email" [(ngModel)]="email"
+          [ngModelOptions]="{standalone: true}">
+      </div>
+
+      <div class="form-group">
+        <!-- <label for="Password">Password</label> -->
+        <input type="password" class="form-control" [disabled]="!eulaCheck" placeholder="MyBroodminder password" [(ngModel)]="password"
+          [ngModelOptions]="{standalone: true}">
+      </div>
+      <p><a href="mailto:contact@mellisphera.com">contact us</a></p>
+      <div class="form-group">
+        <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
+      </div>
+    </form>
+  </div>
+  <section *ngIf="newUser" id="sectionEula" class="eulaMobile">
+    <h2 class="modal-title eulaTitle">{{ eula.TITLE }} <br /> {{ eula.SUBTITLE }}</h2>
+    <div>
+      <ol>
+        <li class="li-items" *ngFor="let pt of eula.POINTS; let i = index;">{{ pt }}</li>
+      </ol>
+    </div>
+    <div class="checkEula">
+      <input type="checkbox" (input)="agreeEula($event)" value="agree"/><label>{{ 'LOGIN_BM.BTN_EUA' | translate }}</label> 
+    </div>
+  </section>
   <div id="text">
     <h2>Becoming a precision beekeeper</h2>
     <p>
       We want to make your hive monitoring experience more intense. Mellisphera is a comprehensive interface that
       aggregates your hive data together with beekeeper actions and environmental weather.
       A set of unique algorithms provide actionable information. It’s no more about temperature and weight but about
-      hive fitness, brood level, honey productivity, robing or swarming… Alerts and notifications!
-
+      hive fitness, brood level, honey productivity, robing or swarming… Alerts and notifications! <span
+        (click)="readMore = !readMore">Read more</span>
+    </p>
+    <p *ngIf="readMore">
       The good news is that Mellisphera is integrated with Broodminder. Once logged in you’ll inherit your full sensor
       history. Moreover this data will be enriched with daily averages, events, alerts etc. You’ll be able to explore
       past events and read the season development from a completely new perspective.
       In two words, you’re about to become a precision beekeeper.
     </p>
-    <div class="loginMobile">
-      <form class="login-container">
-        <div class="form-group">
-          <label for="Password">Username</label>
-          <input type="email" class="form-control" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email">
-        </div>
-  
-        <div class="form-group">
-          <label for="Password">Password</label>
-          <input type="password" class="form-control" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password">
-        </div>
-        <div class="form-group">
-          <button type="button" (click)="login()" class="btn btn-success">Login</button>
-        </div>
-      </form>
-    </div>
     <h2>Quick tour of Mellisphera</h2>
     <p>Watch this video to discover Mellisphera main functions</p>
     <div id="ytb">
-      <iframe [src]="safeSrc" width="560" height="315" frameborder="0" webkitallowfullscreen
-      mozallowfullscreen allowfullscreen></iframe>
+      <iframe [src]="safeSrc" width="560" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen
+        allowfullscreen></iframe>
     </div>
     <h2>Broodminder and Mellisphera - How it works</h2>
     <p>
@@ -55,21 +74,40 @@
       Tip : use your Broodminder account and password to directly log into Mellisphera
     </p>
   </div>
-  <div>
+  <div id="loginGroup">
     <div class="loginDesktop">
-      <form class="login-container">
+      <form class="login-container desktop">
+        <P>
+          <label>Connection</label>
+        </P>
         <div class="form-group">
-          <label for="Password">Username</label>
-          <input type="email" class="form-control" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email">
+          <!-- <label for="Password">Username</label> -->
+          <input type="email" class="form-control" [disabled]="!eulaCheck" placeholder="MyBroodminder email" [(ngModel)]="email"
+            [ngModelOptions]="{standalone: true}">
         </div>
-  
+
         <div class="form-group">
-          <label for="Password">Password</label>
-          <input type="password" class="form-control" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password">
+          <!-- <label for="Password">Password</label> -->
+          <input type="password" [disabled]="!eulaCheck" class="form-control" placeholder="MyBroodminder password" [(ngModel)]="password"
+            [ngModelOptions]="{standalone: true}">
         </div>
-        <button type="button" (click)="login()" class="btn btn-success">Login</button>
+        <p><a href="mailto:contact@mellisphera.com">contact us</a></p>
+        <div class="form-group">
+          <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
+        </div>
       </form>
-    </div>    
+    </div>
+    <section *ngIf="newUser" id="sectionEula" class="eulaDesktop">
+      <h2 class="modal-title eulaTitle">{{ eula.TITLE }} <br /> {{ eula.SUBTITLE }}</h2>
+      <div>
+        <ol>
+          <li class="li-items" *ngFor="let pt of eula.POINTS; let i = index;">{{ pt }}</li>
+        </ol>
+      </div>
+      <div class="checkEula">
+        <input type="checkbox" (input)="agreeEula($event)" value="agree"/><label>{{ 'LOGIN_BM.BTN_EUA' | translate }}</label> 
+      </div>
+    </section>
   </div>
 </section>
 <footer></footer>

@@ -47,12 +47,15 @@ export class UserParamsService {
       'DD/MM/YYYY HH:mm',
       'MM/DD/YYYY HH:mm'
     ];
+    this.initService();
+
+  }
+
+  initService(): void {
     this.userPref = this.getUserPref() ? this.getUserPref() : null;
     this.prefSubject.next(this.userPref);
     this.formatDate = this.getUserPref() ?  this.getUserPref().timeFormat : this.dtFormat[0];
   }
-
-
   setFormatDt(indexFormat: number): void {
     this.userPref.timeFormat = this.dtFormat[indexFormat];
   

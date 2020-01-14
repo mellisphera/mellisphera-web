@@ -11,7 +11,7 @@ limitations under the License. */
 
 
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../auth/Service/auth.service';
 import { Login } from '../../_model/login';
@@ -25,19 +25,21 @@ import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
   templateUrl: './bm-login.component.html',
   styleUrls: ['./bm-login.component.css']
 })
-export class BmLoginComponent implements OnInit, OnDestroy {
+export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public email: string;
   public password: string;
   public newUser: boolean;
+  public readMore: boolean;
   public eula = EULA;
+  public eulaCheck: boolean;
   private urlYtb: string;
   public safeSrc: SafeResourceUrl;
   constructor(private route: ActivatedRoute,
     private authService: AuthService,
     private translateService: TranslateService,
     private sanitizer: DomSanitizer) {
-      this.newUser = false;
+      this.newUser, this.readMore = false;
       this.urlYtb = 'https://www.youtube.com/embed/kFMFM1hDd8s';
       this.translateService.use(this.translateService.getBrowserLang());
       this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(this.urlYtb);
@@ -50,19 +52,36 @@ export class BmLoginComponent implements OnInit, OnDestroy {
       _res => {
         this.email = _res.email;
         this.newUser = _res.new == 'true';
+        this.eulaCheck = !this.newUser;
       }
     );
-  }
-  ngOnDestroy(): void {
-    //document.querySelector('body').classList.remove('login-bm');
+
   }
 
+  ngAfterViewInit(): void {
+/*     console.log(document.querySelector(".eulaMobile input[type=checkbox]"));
+    if (!this.eulaCheck && window.innerWidth <= 990) {
+      document.querySelector(".eulaMobile input[type=checkbox]").scrollIntoView();
+    } */
+    
+  }
+
+
+  agreeEula(event : any) /* event checkbox */{
+    this.eulaCheck = event.target.checked;
+  }
   login(): void {
-    this.authService.login = {
-      email: this.email,
-      password: this.password
-    };
-    this.authService.signIn('LOGIN_BM');
+    if (this.eulaCheck) {
+      this.authService.login = {
+        email: this.email,
+        password: this.password
+      };
+      this.authService.signIn('LOGIN_BM');
+    }
+  }
+
+  ngOnDestroy(): void {
+    //document.querySelector('body').classList.remove('login-bm');
   }
 
 }

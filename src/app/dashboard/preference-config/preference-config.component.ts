@@ -45,6 +45,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
     this.notifyService = notifier;
   }
   ngOnInit() {
+    this.userConfig.initService();
     this.suscribPref = this.userConfig.getSubject().subscribe(
       data => {
         this.userPref = data;
@@ -52,7 +53,6 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
         this.unitSys = this.userPref.unitSystem;
         this.lang = this.userPref.lang;
         this.weatherSrc = this.userPref.weatherSource;
-        console.log(this.userPref);
       }
     );
     this.passwordForm = this.formBuilder.group({
