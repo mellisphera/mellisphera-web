@@ -66,6 +66,10 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
     
   }
 
+  checkPassWordInputIsDisabled() {
+    return document.querySelector('.loginDesktop button' as any).disabled;
+  }
+
 
   agreeEula(event : any) /* event checkbox */{
     this.eulaCheck = event.target.checked;

@@ -18,16 +18,16 @@
       </P>
       <div class="form-group">
         <!-- <label for="Password">Username</label> -->
-        <input type="email" class="form-control" [disabled]="!eulaCheck" placeholder="MyBroodminder email" [(ngModel)]="email"
+        <input type="email" class="form-control" name="emailMobile" [disabled]="!eulaCheck" placeholder="MyBroodminder email" [(ngModel)]="email"
           [ngModelOptions]="{standalone: true}">
       </div>
 
       <div class="form-group">
         <!-- <label for="Password">Password</label> -->
-        <input type="password" class="form-control" [disabled]="!eulaCheck" placeholder="MyBroodminder password" [(ngModel)]="password"
+        <input type="password" class="form-control" name="passwdMobile" [disabled]="!eulaCheck" placeholder="MyBroodminder password" [(ngModel)]="password"
           [ngModelOptions]="{standalone: true}">
       </div>
-      <p><a href="mailto:contact@mellisphera.com">contact us</a></p>
+      <p><a href="mailto:support@mellisphera.com">cannot log in</a></p>
       <div class="form-group">
         <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
       </div>
@@ -82,18 +82,21 @@
         </P>
         <div class="form-group">
           <!-- <label for="Password">Username</label> -->
-          <input type="email" class="form-control" [disabled]="!eulaCheck" placeholder="MyBroodminder email" [(ngModel)]="email"
+          <input type="email" class="form-control" name="emailDesktop" [disabled]="!eulaCheck" placeholder="MyBroodminder email" [(ngModel)]="email"
             [ngModelOptions]="{standalone: true}">
         </div>
 
         <div class="form-group">
           <!-- <label for="Password">Password</label> -->
-          <input type="password" [disabled]="!eulaCheck" class="form-control" placeholder="MyBroodminder password" [(ngModel)]="password"
+          <input type="password" [disabled]="!eulaCheck" name="passwdDesktop" class="form-control" placeholder="MyBroodminder password" [(ngModel)]="password"
             [ngModelOptions]="{standalone: true}">
         </div>
-        <p><a href="mailto:contact@mellisphera.com">contact us</a></p>
+        <p><a href="mailto:support@mellisphera.com">cannot log in</a></p>
         <div class="form-group">
           <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
+        </div>
+        <div *ngIf="!eulaCheck && !checkPassWordInputIsDisabled()" style="text-align: center;">
+          <img src="./assets/img/smile.png"/>
         </div>
       </form>
     </div>

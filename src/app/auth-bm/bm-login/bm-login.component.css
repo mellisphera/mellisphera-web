@@ -29,6 +29,10 @@ nav section{
   margin-top: 8px;
   margin-right: 3px;
 }
+.form-group{
+  width: 300px;
+  margin: auto;
+}
 .loginDesktop, .mobile p {
   text-align: center;
 }
@@ -62,7 +66,7 @@ nav section{
 ol li {
   margin-bottom: 6px;
 }
-.checkEula{
+checkEula{
   padding: 8px;
 }
 input[type='checkbox'] {
