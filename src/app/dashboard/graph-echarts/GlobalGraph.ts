@@ -55,7 +55,10 @@ export class GraphGlobal {
   };
   public moon: {
     phase: string,
-    period: string
+    period: string,
+    sunrise: string,
+    sunset: string,
+    dayLength: string
   }
   public snow: {
     name: string,
@@ -127,7 +130,10 @@ export class GraphGlobal {
     };
     this.moon = {
       phase: '',
-      period: ''
+      period: '',
+      sunrise: '',
+      sunset: '',
+      dayLength: ''
     }
     this.snow = {
       name: '',
@@ -243,6 +249,9 @@ export class GraphGlobal {
       this.weightIncome.loss = 'Perte';
       this.moon.phase = 'Phase';
       this.moon.period = 'Période';
+      this.moon.sunrise = 'Lever du soleil';
+      this.moon.sunset = 'Coucher du soleil';
+      this.moon.dayLength = 'Durée du jour';
       this.brood.name = 'Couvain (%)';
       this.snow.name = 'Neige';
       this.temp.name = 'Température (°F)';
@@ -254,6 +263,10 @@ export class GraphGlobal {
       this.rain.name = 'Lluvia';
       this.snow.name = 'Nieve';
       this.moon.phase = 'Fase';
+      this.moon.period = 'Período';
+      this.moon.sunrise = 'Amanecer';
+      this.moon.sunset = 'Atardecer';
+      this.moon.dayLength = 'Duración del día';
       this.weightIncome.gain = 'Ganancia';
       this.weightIncome.loss = 'Perdida';
       this.moon.period = 'Periodo';
@@ -267,6 +280,9 @@ export class GraphGlobal {
       this.rain.name = 'Rain';
       this.moon.phase = 'Phase';
       this.moon.period = 'Period';
+      this.moon.sunrise = 'Sunrise';
+      this.moon.sunset = 'Cunset';
+      this.moon.dayLength = 'Duration of the day';
       this.snow.name = 'Snow';
       this.temp.name = 'Temperature (°F)';
       this.wind.name = 'Wind';
@@ -296,6 +312,11 @@ export class GraphGlobal {
       this.rain.name = 'Pluie';
       this.snow.name = 'Neige';
       this.moon.phase = 'Phase';
+      this.moon.phase = 'Phase';
+      this.moon.period = 'Période';
+      this.moon.sunrise = 'Lever du soleil';
+      this.moon.sunset = 'Coucher du soleil';
+      this.moon.dayLength = 'Durée du jour';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Perte';
       this.moon.period = 'Période';
@@ -308,9 +329,12 @@ export class GraphGlobal {
       this.rain.name = 'Lluvia';
       this.snow.name = 'Nieve';
       this.moon.phase = 'Fase';
+      this.moon.period = 'Período';
+      this.moon.sunrise = 'Amanecer';
+      this.moon.sunset = 'Atardecer';
+      this.moon.dayLength = 'Duración del día';
       this.weightIncome.gain = 'Ganancia';
       this.weightIncome.loss = 'Perdida';
-      this.moon.period = 'Periodo';
       this.wind.name = 'Viento';
       this.brood.name = 'Cria (%)';
     } else {
@@ -321,6 +345,9 @@ export class GraphGlobal {
       this.weightIncome.loss = 'Loss';
       this.moon.phase = 'Phase';
       this.moon.period = 'Period';
+      this.moon.sunrise = 'Sunrise';
+      this.moon.sunset = 'Cunset';
+      this.moon.dayLength = 'Duration of the day';
       this.rain.name = 'Rain';
       this.snow.name = 'Snow';
       this.brood.name = 'Brood (%)';
@@ -879,6 +906,21 @@ export class GraphGlobal {
               name: this.moon.period,
               value: this.getMoonStatus(params.data[2]),
               unit: ''
+            },
+            {
+              name: this.moon.sunrise,
+              value: this.unitService.getHourlyDate(params.data[3]),
+              unit: ''
+            },
+            {
+              name: this.moon.sunset,
+              value: this.unitService.getHourlyDate(params.data[4]),
+              unit: ''
+            },
+            {
+              name: this.moon.dayLength,
+              value: moment(params.data[4]).toDate().getHours() - moment(params.data[3]).toDate().getHours(),
+              unit: 'h'
             }
           ));
         }

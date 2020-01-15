@@ -95,9 +95,9 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'HEXT_WEATHER_MIN', id: 'HEXT_WEATHER_MIN', unit: 'P', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/hext_min.png' },
       { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/wind.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
-      { name: 'MOON', id: 'MOON', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
+      { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
       { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/notif.png' },
-      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/tool_jhook.png' }
+      /* { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/tool_jhook.png' } */
     ];
 
     this.optionCsv = {
@@ -114,7 +114,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
     };
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
-    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
+    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[1];
+    console.log(this.currentTypeDailyEnv);
 
   }
 
@@ -385,9 +386,17 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
 
   loadDailyEnvData(rangeChange: boolean) {
-    this.melliHive.getDailyEnvChartInstance().showLoading();
-    this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
-      this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+    if (this.currentTypeDailyEnv.name === 'MOON') {
+      this.melliHive.getDailyEnvChartInstance().showLoading();
+      this.dailyManager.getChartAstro(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().apiaryId,
+        this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        this.cleanMeanAnnotation();
+
+    } else {
+      this.melliHive.getDailyEnvChartInstance().showLoading();
+      this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
+        this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+    }
   }
 
 

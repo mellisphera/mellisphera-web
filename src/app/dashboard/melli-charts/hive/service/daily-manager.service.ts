@@ -336,16 +336,18 @@ export class DailyManagerService {
   getChartAstro(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.astroService.getAstroByApiary(apiaryId, range).subscribe(
       _astro => {
-        let option = Object.assign({}, this.baseOptionExt);
+        let option = Object.assign({}, this.baseOptionEnv);
         if (rangeChange) {
-          option.series[0].data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name'], _data.moon['ascendant']));
+          option.series[0].data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_code'], 
+          _data.moon['ascendant'], _data.sys['sunrise'], _data.sys['sunset']));
         } else {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.custom);
           serie.name = type.name;
-          serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_code'], _data.moon['ascendant']));
+          serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_code'], 
+          _data.moon['ascendant'], _data.sys['sunrise'], _data.sys['sunset']));
           serie.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
@@ -387,7 +389,7 @@ export class DailyManagerService {
         chartInstance.clear();
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
-        this.baseOptionExt = option;
+        this.baseOptionEnv = option;
 
       }
     )
