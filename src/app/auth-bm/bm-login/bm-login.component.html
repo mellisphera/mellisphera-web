@@ -111,7 +111,7 @@
         <input type="checkbox" (input)="agreeEula($event)" value="agree"/><label>{{ 'LOGIN_BM.BTN_EUA' | translate }}</label>
       </div>
     </section>
-    <div class="form-group" id="footter">
+    <div class="form-group eulaDesktop" id="footter">
       <p><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
       <button type="button" id="btnLoginDesktop" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
     </div>
