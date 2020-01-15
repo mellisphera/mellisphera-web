@@ -7,6 +7,19 @@
         },
         "SIGN_UP": {}
     },
+    "MELLIUX": {
+        "HELP": {
+            "APIARY": {
+                "APIARY_PICTURE": "",
+                "EVENT_CALENDAR": ""
+            },
+            "HIVE": {
+                "EVENT_CALENDAR": "",
+                "BROOD_CALENDAR": "",
+                "WEIGHT_CALENDAR": ""
+            }
+        }
+    },
     "WIZARD": {
         "STEP_TITLE": "Bienvenido",
         "WELCOME": "Bienvenido",
@@ -381,6 +394,11 @@
         }
     },
     "MELLICHARTS": {
+        "HELP": {
+            "BROOD": {
+                
+            }
+        },
         "NAV": {
             "HIVE": "Colmena",
             "HIVE_TOOLTIP": "Colmena",

@@ -9,6 +9,19 @@
 
         }
     },
+    "MELLIUX": {
+        "HELP": {
+            "APIARY": {
+                "APIARY_PICTURE": "",
+                "EVENT_CALENDAR": ""
+            },
+            "HIVE": {
+                "EVENT_CALENDAR": "",
+                "BROOD_CALENDAR": "",
+                "WEIGHT_CALENDAR": ""
+            }
+        }
+    },
     "WIZARD": {
         "STEP_TITLE": "Welcome",
         "WELCOME": "Welcome",
@@ -367,6 +380,11 @@
         }
     },
     "MELLICHARTS": {
+        "HELP": {
+            "BROOD": {
+                
+            }
+        },
         "NAV": {
             "HIVE": "Hive",
             "HIVE_TOOLTIP": "Hive",
