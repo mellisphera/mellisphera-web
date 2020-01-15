@@ -130,8 +130,13 @@ convertWindFromUserPref(wind: number, unit: string, round?: boolean): number {
    * @returns {number}
    * @memberof UnitService
    */
-  getValRound(value: number): number {
-    const tmp = Math.pow(10, 1);
+  getValRound(value: number, valRound?: number): number {
+    let tmp: number;
+    if (valRound) {
+      tmp = Math.pow(10, valRound);
+    } else {
+      tmp = Math.pow(10, 1);
+    }
     return Math.round(value * tmp) / tmp;
   }
 }

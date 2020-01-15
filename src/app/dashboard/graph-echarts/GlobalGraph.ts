@@ -919,8 +919,13 @@ export class GraphGlobal {
             },
             {
               name: this.moon.dayLength,
-              value: moment(params.data[4]).toDate().getHours() - moment(params.data[3]).toDate().getHours(),
-              unit: 'h'
+              value: () => {
+                let duration = moment.duration(moment(params.data[4]).diff(moment(params.data[3])));
+                let hours = duration.asHours().toString().split('.')[0];
+                let minutes = (duration.asMinutes()%60).toString().split('.')[0];
+                return `${hours} h ${minutes} m`;
+              },
+              unit: ''
             }
           ));
         }

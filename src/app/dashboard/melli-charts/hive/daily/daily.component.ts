@@ -95,8 +95,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'HEXT_WEATHER_MIN', id: 'HEXT_WEATHER_MIN', unit: 'P', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/hext_min.png' },
       { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/wind.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
-      { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
       { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/notif.png' },
+      { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
       /* { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/tool_jhook.png' } */
     ];
 
@@ -114,7 +114,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     };
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
-    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[1];
+    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
     console.log(this.currentTypeDailyEnv);
 
   }
