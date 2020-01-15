@@ -345,7 +345,7 @@ export class DailyManagerService {
           }
           let serie = Object.assign({}, SERIES.custom);
           serie.name = type.name;
-          serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_name'], _data.moon['ascendant']));
+          serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_code'], _data.moon['ascendant']));
           serie.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
@@ -371,7 +371,7 @@ export class DailyManagerService {
                 stroke: 'black'
               }
             });
-            group.children = group.children.concat(this.astroService.getPicto(this.getMoonIconByPhaseName(api.value(1)), cellPoint));
+            group.children = group.children.concat(this.astroService.getPicto(this.astroService.codeToPhaseName[api.value(1)], cellPoint));
             return group;
           }
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
@@ -1094,38 +1094,6 @@ export class DailyManagerService {
       }
     );
 
-  }
-
-
-  getMoonIconByPhaseName(phaseName: string): string {
-    switch (phaseName) {
-      case 'Pleine lune':
-      case 'Full moon':
-        return 'full_moon'
-      case 'Nouvelle lune':
-      case 'New moon':
-        return 'new_moon';
-      case 'Last quarter':
-      case 'Dernier quartier':
-        return 'last_quarter';
-      case 'First Quarter':
-      case 'Premier quartier':
-        return 'first_quarter';
-      case 'Waxing gibbous':
-      case 'Gibbeuse croissante':
-        return 'wawing_gibbous';
-      case 'Waning gibbous':
-      case 'Gibbeuse décroissante':
-        return 'waning_gibbous';
-      case 'Waning crescent':
-      case 'Dernier croissant':
-        return 'last_crescent';
-      case 'Waxing crescent':
-      case 'Premier croissant':
-        return 'first_crescent';
-      default:
-        return null;
-    }
   }
 
   /**

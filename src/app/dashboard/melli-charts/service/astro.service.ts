@@ -21,7 +21,11 @@ import { MOON } from '../charts/icons/icons_astro';
 })
 export class AstroService {
 
-  constructor(private httpClient: HttpClient) { }
+  public codeToPhaseName: Array<string>;
+  constructor(private httpClient: HttpClient) {
+    this.codeToPhaseName = ['', 'full_moon', 'new_moon', 'last_quarter', 'first_quarter', 
+    'wawing_gibbous', 'waning_gibbous', 'last_crescent', 'first_crescent'];
+  }
 
   /**
    * 

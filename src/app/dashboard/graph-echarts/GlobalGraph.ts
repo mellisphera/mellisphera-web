@@ -36,6 +36,8 @@ import { CALENDAR } from '../melli-charts/charts/CALENDAR';
 import { WeatherService } from '../service/api/weather.service';
 import { SERIES } from '../melli-charts/charts/SERIES';
 import { NOTIF_CODE } from '../../../constants/notif_code';
+import { MOON_CODE } from '../../../constants/moonTrad';
+
 import { AlertsService } from '../service/api/alerts.service';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -865,11 +867,12 @@ export class GraphGlobal {
         }
         break;
       case 'MOON':
+        const lang: string = this.translateService.currentLang.toUpperCase();
         tooltip.formatter = (params) => {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
               name: this.moon.phase,
-              value: params.data[1],
+              value: MOON_CODE[params.data[1]][lang]['Name'],
               unit: ''
             },
             {
