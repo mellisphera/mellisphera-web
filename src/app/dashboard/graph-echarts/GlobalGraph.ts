@@ -281,7 +281,7 @@ export class GraphGlobal {
       this.moon.phase = 'Phase';
       this.moon.period = 'Period';
       this.moon.sunrise = 'Sunrise';
-      this.moon.sunset = 'Cunset';
+      this.moon.sunset = 'Sunset';
       this.moon.dayLength = 'Duration of the day';
       this.snow.name = 'Snow';
       this.temp.name = 'Temperature (°F)';
@@ -346,7 +346,7 @@ export class GraphGlobal {
       this.moon.phase = 'Phase';
       this.moon.period = 'Period';
       this.moon.sunrise = 'Sunrise';
-      this.moon.sunset = 'Cunset';
+      this.moon.sunset = 'Sunset';
       this.moon.dayLength = 'Duration of the day';
       this.rain.name = 'Rain';
       this.snow.name = 'Snow';
