@@ -36,11 +36,11 @@ export class MelliChartsDateService {
       { scale: 3, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
       { scale: 7, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
       { scale: 15, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
-      { scale: 1, type: 'MONTH', typeFr: 'MOI', typeEs: 'Mes'},
-      { scale: 2, type: 'MONTH', typeFr: 'MOI', typeEs: 'Mes'},
-      { scale: 3, type: 'MONTH', typeFr: 'MOI', typeEs: 'Mes'},
-      { scale: 6, type: 'MONTH', typeFr: 'MOI', typeEs: 'Mes'},
-      { scale: 9, type: 'MONTH', typeFr: 'MOI', typeEs: 'Mes'},
+      { scale: 1, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
+      { scale: 2, type: 'MONTHs', typeFr: 'MOIS', typeEs: 'Mes'},
+      { scale: 3, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
+      { scale: 6, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
+      { scale: 9, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
       { scale: 1, type: 'YEAR', typeFr: 'AN', typeEs: 'Año'}
     ];
     this.setRange(this.ranges[4]);
@@ -67,7 +67,7 @@ export class MelliChartsDateService {
     }
     date = this.getDateBeginMonday(date);
     this.rangeDateForRequest = MyDate.getRange(date);
-
+    console.log(this.rangeDateForRequest);
     this.rangeDateForRequest[0].setHours(0);
     this.rangeDateForRequest[0].setSeconds(0);
     this.rangeDateForRequest[1].setHours(4);

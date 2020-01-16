@@ -124,14 +124,16 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.rucheService.hiveSubject.subscribe(() => { }, () => { }, () => {
-      this.hiveComponent.loadDataFromHive();
-    });
+    if (this.hiveComponent != undefined) {
+      this.rucheService.hiveSubject.subscribe(() => { }, () => { }, () => {
+        this.hiveComponent.loadDataFromHive();
+      });
+    }
     this.eltOnClick = document.getElementById('hive');
     this.dateDropdown = document.getElementById('date-dropdown');
     this.renderer.addClass(this.eltOnClick, 'nav-active');
-
   }
+  
 
 
   ifActiveApiary(apiaryId: string): string {
@@ -204,8 +206,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       });
     } else if (this.router.url === PREFIX_PATH + 'brood') {
       this.broodComponent.loadAllHiveAfterRangeChange((options: any) => {
-        options.xAxis[0].min = this.melliChartDate.getRangeForReqest()[0];
-        options.xAxis[0].max = this.melliChartDate.getRangeForReqest()[1];
+        console.log(options);
+        options.baseOption.xAxis[0].min = this.melliChartDate.getRangeForReqest()[0];
+        options.baseOption.xAxis[0].max = this.melliChartDate.getRangeForReqest()[1];
         this.stackService.getBroodChartInstance().setOption(options, true);
         this.stackService.getBroodChartInstance().hideLoading();
       });

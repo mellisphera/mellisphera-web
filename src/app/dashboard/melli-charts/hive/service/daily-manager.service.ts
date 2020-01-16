@@ -1126,11 +1126,13 @@ export class DailyManagerService {
    * @memberof DailyManagerService
    */
   removeDataAllseries(_series: any): any[] {
-    let series = _series.slice();
-    series.forEach(_serie => {
-      _serie.data = new Array();
-    });
-    return series;
+    if (_series !== undefined) {
+      let series = _series.slice();
+      series.forEach(_serie => {
+        _serie.data = new Array();
+      });
+      return series;
+    }
   }
 
 
