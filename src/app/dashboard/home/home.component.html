@@ -71,8 +71,8 @@ limitations under the License. -->
                 id="apiary-photos" class="photo" />
             <!-- The button to change hive handle => click -->
             <div zIndex="100" class="lockButton">
-                <button data-toggle="tooltip" data-html="true"
-                title="" id="" type="button" class=""><i class="fa fa-file-image-o"></i></button>
+               <!--  <button data-toggle="tooltip" data-html="true"
+                title="" id="" type="button" class=""><i class="fa fa-file-image-o"></i></button> -->
                 <button *ngIf="lockHive" data-toggle="tooltip" data-html="true"
                     title="{{ 'HOME.PLACEMENTMODE' | translate}}" id="locked" type="button" class="lock"
                     (click)="this.lockHive = !this.lockHive;"><i class="fa fa-lock"></i></button>
