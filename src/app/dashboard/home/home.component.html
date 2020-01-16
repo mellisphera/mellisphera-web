@@ -146,7 +146,9 @@ limitations under the License. -->
             <popover-content #pictureTooltip title="Apiary" placement="left" [animation]="true"
                 [closeOnClickOutside]="false">
                 <span style="color: #C21F39">
-                    <p>{{ 'MELLIUX.HELP.APIARY.APIARY_PICTURE' | translate }}</p>
+                    <p>
+                        <span *ngFor="let line of 'MELLIUX.HELP.APIARY.APIARY_PICTURE' | translate">{{ line }}<br/></span>
+                    </p>
                 </span>
             </popover-content>
             <!-- <a><i [popover]="p" class="fa fa-question-circle-o fa-1g" aria-hidden="true"></i></a> -->
