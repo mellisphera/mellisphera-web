@@ -439,7 +439,7 @@
                 "WEEKLY": "week",
                 "DAY": "day",
                 "OTHER": "custom",
-                "EVERY": "Every",
+                "EVERY": "every",
                 "BTN_MAIL_TEST": "Send test email"
             }
         },

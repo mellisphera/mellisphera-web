@@ -15,7 +15,7 @@ limitations under the License. -->
 <div id="user-group">
   <ng-container *ngFor="let user of adminService.allUsers">
     <div ngDraggable *ngIf="adminService.getSensorByUser(user.username).length > 0" [id]="user.username"
-      class="panel panel-primary">
+      class="panel panel-ms">
       <div class="panel-heading">{{ user.username }} </div>
       <div class="user-sensors panel-body">
         <table class="table">

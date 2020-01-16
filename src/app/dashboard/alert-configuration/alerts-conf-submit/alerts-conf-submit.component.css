@@ -20,7 +20,7 @@ input[type='email'] {
 }
 #action{
     position: absolute;
-    top: 31%;
+    top: 0px;
     left: 280px;
 }
 .radioItem{

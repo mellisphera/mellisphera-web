@@ -86,7 +86,15 @@
 .helpTooltip{
     font-size: 12px;
 }
-
+.panel-body{
+    padding-top: 0px !important;
+}
+.panel-ms{
+    border-color: #4F4F51 !important;
+}
+.panel-heading{
+    background-color: #4F4F51 !important;
+}
 @media (max-width: 991px){
     .main-panel{
         width: 100% !important;

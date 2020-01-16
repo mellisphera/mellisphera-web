@@ -9,19 +9,19 @@ td, p, label{
     display: block;
 }
 .cols_custom{
-    width: 22%;
+    max-width: 22%;
 }
 .cols_icon{
-    width: 5%;
+    max-width: 5%;
 }
 .cols_description{
-    width: 7%;
+    max-width: 7%;
 }
 .cols_value {
-    width: 23%;
+    max-width: 23%;
 }
 .cols_val{
-    width: 10%;
+    max-width: 10%;
 }
 .disable {
     background-color: rgba(73, 73, 72, 0.3)

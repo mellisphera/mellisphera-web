@@ -435,7 +435,7 @@
                 "WEEKLY": "semaine",
                 "DAY": "jour",
                 "OTHER": "personnaliser",
-                "EVERY": "Tout les ",
+                "EVERY": "tous les ",
                 "BTN_MAIL_TEST": "Tester email"
             }
         },
