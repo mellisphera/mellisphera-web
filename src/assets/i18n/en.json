@@ -19,7 +19,7 @@
                 The top right arrows arround the date at the top of the interface allow you to navigate backwards in time.
                 Hive Fitness is computed from sensor data and other parameters with our exclusive BFit model.
                 
-                first setup :
+                First setup :
                 Drag and drop your own apiary picture or map and place the pellets on every hive location by unlocking the lock button.",
                 "EVENT_CALENDAR": "Apiary calendar shows apiary notes. general actions you did into the apiary.
                 To display hive related notes you simply need to click onto the hive pellet."
@@ -30,7 +30,7 @@
                 "BROOD_CALENDAR": "This calendar chart displays the brood progression in your hive. 
                 The range goes from 0 to 100%. 0 meaning no brood and 100% full brood into the hive. 
                 Brood level is computed from your TH or T2 sensors with our exclusive BForce model.",
-                "WEIGHT_CALENDAR": "this calendar chart displays daily productivity of hives equiped with a scale. 
+                "WEIGHT_CALENDAR": "This calendar chart displays daily productivity of hives equiped with a scale. 
                 Values consider only weight incomes and consumptions due to bees activity. Beekeeper operations like feeding or adding supper are discarded."
             }
         }
@@ -88,14 +88,14 @@
             "TITLE" : "Management menu",
             "APIARY_DESCRIPTION" : "Apiary description",
             "NAME" : "Name",
-            "NAME_ERROR" : "select a name from 1 to 20 chars",
-            "DESCRIPTION_ERROR" : "description can be 40 chars max",
+            "NAME_ERROR" : "Select a name from 1 to 20 chars",
+            "DESCRIPTION_ERROR" : "Description can be 40 chars max",
             "CITY" : "City",
             "CITY_APIARY" : "Apiary city",
             "CITY_ERROR" : "select city name",
             "ZIP_CODE" : "Zip code",
             "ZIP_CODE_APIARY" : "Apiary zip code",
-            "ZIP_ERROR" : "select zip code",
+            "ZIP_ERROR" : "Select zip code",
             "PICTURE" : "Select picture from Apiary :",
             "WARNING_PICTURE": "File size too large",
             "FILE" : "Select File",
@@ -402,7 +402,7 @@
             As a rule of the thumb, 10% is one frame of brood, 40% 4 frames etc. Depending on your practice and hive model you will need to adjusting those relationships.
             
             Important Note : only hives achieving the 80% threshold will enter the production zone allowing for honey production.",
-            "RAWDATA" : "here hou can view the raw measurements, this display is very similar to what you are already used into mybroodminder.
+            "RAWDATA" : "Here hou can view the raw measurements, this display is very similar to what you are already used into MyBroodminder.
             overlaying different hives/apiaries is possible too."
         },
         "NAV": {

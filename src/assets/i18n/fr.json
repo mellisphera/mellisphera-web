@@ -12,13 +12,26 @@
     "MELLIUX": {
         "HELP": {
             "APIARY": {
-                "APIARY_PICTURE": "",
-                "EVENT_CALENDAR": ""
+                "APIARY_PICTURE": "Cette interface montre un état simple et rapide de votre rucher. 
+                La couleur des pastilles indique l'état de santé de la ruche (vert/orange/rouge). Passez la souris dessus pour trouver plus de détails.
+                Les boutons ci-dessus peuvent afficher sur chaque pastille le nom de la ruche, le couvain, le poids et aussi les références des capteurs.
+                Cliquez sur chaque pastille pour accéder aux données de la ruche sur la droite de cette interface.
+                Les flèches en haut à droite dd l'interface autour de la date vous permettent de remonter dans le temps.
+                La santé de la ruche est calculée à partir des données des capteurs et d'autres paramètres avec notre modèle exclusif BFit.
+
+                Première configuration :
+                Glissez et déposez votre propre image ou carte de rucher et placez les pastilles sur chaque emplacement de ruche en déverrouillant le bouton de verrouillage.",
+                "EVENT_CALENDAR": "Le calendrier du rucher montre les notes du rucher et les actions générales que vous avez faites dans le rucher.
+                Pour afficher les notes relatives à la ruche, vous devez simplement cliquer sur la pastille de la ruche."
             },
             "HIVE": {
-                "EVENT_CALENDAR": "",
-                "BROOD_CALENDAR": "",
-                "WEIGHT_CALENDAR": ""
+                "EVENT_CALENDAR": "Ce calendrier affiche vos notes et les notifications du système.
+                En les survolant, vous trouverez plus de détails.",
+                "BROOD_CALENDAR": "Ce calendrier affiche la progression du couvain dans votre ruche. 
+                La plage va de 0 à 100%. 0 signifie qu'il n'y pas de couvain et 100% que le couvain est complet dans la ruche. 
+                Le niveau de couvain est calculé à partir de vos capteurs TH ou T2 avec notre modèle exclusif BForce.",
+                "WEIGHT_CALENDAR": "Ce calendrier affiche la productivité quotidienne des ruches équipées d'une balance. 
+                Les valeurs tiennent compte uniquement des revenus et des consommations de poids dus à l'activité des abeilles. Les opérations de l'apiculteur comme l'alimentation ou l'ajout de hausse sont éliminées."
             }
         }
     },
@@ -380,9 +393,16 @@
     },
     "MELLICHARTS": {
         "HELP": {
-            "BROOD": {
-                
-            }
+            "HIVE" :"Dans cette interface, vous pouvez explorer avec beaucoup de détails toutes les données relatives à une ruche. Vous pouvez comparer les paramètres internes avec vos propres opérations (notes) et avec les conditions météorologiques.
+            En utilisant la navigation par date en haut à droite de l'écran, vous pouvez afficher de plus longues périodes de temps et ensuite sauter de période en période avec les flèches.
+            Les icônes au-dessus de chaque calendrier vous permettent de passer d'une variable à l'autre (couvain, poids, humidité, température, etc.).",
+            "BROOD" : "Cette interface permet de superposer les progressions de couvain de différentes ruches dans un ou plusieurs ruchers. 
+            Ce qui se trouve derrière elle est notre modèle exclusif Bforce. Ce modèle mélangeant des données empiriques et des données d'apprentissage machine vous donne une assez bonne estimation du niveau de couvain dans une ruche.
+            En règle générale, 10% est un cadre de couvain, 40% 4 cadres etc. En fonction de votre pratique et du modèle de ruche, vous devrez ajuster ces relations.
+            
+            Note importante : seules les ruches atteignant le seuil de 80% entreront dans la zone de production permettant la production de miel.",
+            "RAWDATA" : "Ici vous pouvez voir les mesures brutes, cet affichage est très similaire à celui que vous utilisez déjà dans MyBroodminder.
+            Il est également possible de superposer différentes ruches/ruchers."
         },
         "NAV": {
             "HIVE": "Ruche",
@@ -390,7 +410,7 @@
             "BROOD": "Couvain",
             "BROOD_TOOLTIP": "Ruche",
             "DONNEE": "Données",
-            "DONNEE_TOOLTIP": "Données brute"
+            "DONNEE_TOOLTIP": "Données brutes"
         },
         "DATE": {
             "START": "Début",
@@ -408,8 +428,14 @@
         "NAME": "Nom",
         "DESCRIPTION": "Description",
         "STATUS": "Status",
-        "SAVE": "Sauvegarder les modifications"
+        "HELP": {
+            "ALERTS" :"Dans cette page, vous pouvez configurer toutes les alertes et notifications.
+            Les alertes sont classées en 3 groupes : dans la ruche / la météo / les différents capteurs. 
+            Vous pouvez commencer avec les seuils prédéfinis et les affiner en fonction de votre propre expérience.
+            Allez dans l'onglet \"configurer\" pour définir vos préférences pour l'email et la fréquence des notifications",
+        },
     },
+
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
         "BTN": "Login",
