@@ -207,8 +207,8 @@ export const BASE_OPTIONS = {
                 height: '25%', 
                 background: 'white'
             },
-             { x: '3%', y: '32%', left: '6%', width: '90%', height: '25%', background: 'white' },
-             { x: '3%', y: '63%', left: '6%', width: '90%', height: '25%', background: 'white' }
+             { x: '3%', y: '31%', left: '6%', width: '90%', height: '25%', background: 'white' },
+             { x: '3%', y: '60%', left: '6%', width: '90%', height: '30%', background: 'white' }
         ],
         dataZoom: [
               {

@@ -22,7 +22,7 @@ hr
 .infoToolip{
     position: absolute;
     right: 15px;
-    top: 4px;
+    bottom: 4px;
 }
 .calendar{
     position: relative;

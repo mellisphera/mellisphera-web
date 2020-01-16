@@ -40,6 +40,11 @@ td, p, label{
     margin-right: 10px;
     float: left;
 }
+.infoToolip{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
 /* Switch button */
 .btn-default.btn-on.active{background-color: #5BB75B;color: white;}
 .btn-default.btn-off.active{background-color: #DA4F49;color: white;}

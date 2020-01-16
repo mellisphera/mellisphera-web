@@ -20,3 +20,8 @@ limitations under the License. */
 .item-type:hover {
     cursor:pointer;
 }
+.infoToolip{
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+}

@@ -58,6 +58,11 @@ limitations under the License. -->
 </div> -->
     <!-- End of No data hive -->
     <div id="global">
+        <popover-content #pictureTooltip placement="auto" [animation]="true" [closeOnClickOutside]="false">
+            <span class="helpTooltip" style="color: #C21F39">
+                <span *ngFor="let line of 'MELLIUX.HELP.APIARY.APIARY_PICTURE' | translate">{{ line }}<br /></span>
+            </span>
+        </popover-content>
         <!-- Apiary picture -->
         <div class="grid-container" #myBounds id="cadre" ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary"
             class="my-drop-zone" [class.valid-drag]="baseDropValid" (stopped)="onDragEnd($event)"
@@ -143,17 +148,10 @@ limitations under the License. -->
                     </div>
                 </div>
             </ng-container>
-            <popover-content #pictureTooltip title="Apiary" placement="left" [animation]="true"
-                [closeOnClickOutside]="false">
-                <span style="color: #C21F39">
-                    <p>
-                        <span *ngFor="let line of 'MELLIUX.HELP.APIARY.APIARY_PICTURE' | translate">{{ line }}<br/></span>
-                    </p>
-                </span>
-            </popover-content>
             <!-- <a><i [popover]="p" class="fa fa-question-circle-o fa-1g" aria-hidden="true"></i></a> -->
-            <div [popover]="pictureTooltip" class="infoToolip"><i class="fa fa-question-circle-o fa-2x"
-                    aria-hidden="true"></i></div>
+            <div [popover]="pictureTooltip" style="font-size: 15px !important;" class="infoToolip">
+                <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+            </div>
         </div>
 
         <div id="scroll"></div>

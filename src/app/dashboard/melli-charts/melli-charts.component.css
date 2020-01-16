@@ -107,7 +107,7 @@ nav[role=admin-navigation] {
     position: relative !important;
     left: 13% !important;
     width: calc(100% - 13%);
-    height: 80vh;
+    height: 89vh;
 }
 .circle{
     border: 1px solid black;

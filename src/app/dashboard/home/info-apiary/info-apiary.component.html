@@ -21,16 +21,14 @@ limitations under the License. -->
     <div class="calendar" id="apiaryAlerts">
       <app-alerts></app-alerts>
       <div class="infoToolip">
-<!--         <popover-content #myPopover title="Calendrier Evenement" placement="left" [animation]="true" [closeOnClickOutside]="false">
-          <span style="color: #C21F39">Rassemble les éléments important pour le rucher sélectionné:
-          <ul>
-            <li>Capteur défaillant</li>
-            <li>Alert relatif aux données</li>
-            <li>Note du rucher</li>
-          </ul>
+        <popover-content #eventHelpApiaryCalendar placement="left" [animation]="true" [closeOnClickOutside]="false">
+          <span class="helpTooltip" style="color: #C21F39">
+            <span *ngFor="let line of 'MELLIUX.HELP.APIARY.EVENT_CALENDAR' | translate">{{ line }}<br /></span>
           </span>
         </popover-content>
-        <a><i [popover]="myPopover" class="fa fa-question-circle-o fa-1g" aria-hidden="true"></i></a> -->
+        <div [popover]="eventHelpApiaryCalendar" style="font-size: 15px !important;" class="infoToolip">
+          <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+        </div>
       </div>
     </div>
   </div>
