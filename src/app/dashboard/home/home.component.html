@@ -19,22 +19,22 @@ limitations under the License. -->
                     *ngIf="numberActiveNotifByApiary() !== 0"
                     class="badge badge-button">{{ numberActiveNotifByApiary() }}</span> -->
             </li>
-<!--             <li>
+            <!--             <li>
                 <button type="button" [id]="btn.path" (click)="navToPage(btn.path, btn.path)"
                     class="button button0">{{ btn.name }}
                 </button>
             </li> -->
-            <li (click)="collapseAllActiveButton('sensors','weight','brood','nameNav')"><button id="nameNav" type="button"
-                    class="button button1 active" data-toggle="collapse"
+            <li (click)="collapseAllActiveButton('sensors','weight','brood','nameNav')"><button id="nameNav"
+                    type="button" class="button button1 active" data-toggle="collapse"
                     data-target=".name">{{ 'HOME.NAVBAR.NAME' | translate}}</button></li>
-            <li (click)="collapseAllActiveButton('sensors','name','weight','broodNav')"><button id="broodNav" type="button"
-                    class="button button1" data-toggle="collapse"
+            <li (click)="collapseAllActiveButton('sensors','name','weight','broodNav')"><button id="broodNav"
+                    type="button" class="button button1" data-toggle="collapse"
                     data-target=".brood">{{ 'HOME.NAVBAR.BROOD' | translate}}</button></li>
-            <li (click)="collapseAllActiveButton('sensors','name','brood','weightNav')"><button id="weightNav" type="button"
-                    class="button button1" data-toggle="collapse"
+            <li (click)="collapseAllActiveButton('sensors','name','brood','weightNav')"><button id="weightNav"
+                    type="button" class="button button1" data-toggle="collapse"
                     data-target=".weight">{{ 'HOME.NAVBAR.WEIGHT' | translate}}</button></li>
-            <li (click)="collapseAllActiveButton('weight','name','brood','sensorsNav')"><button id="sensorsNav" type="button"
-                    class="button button1" data-toggle="collapse"
+            <li (click)="collapseAllActiveButton('weight','name','brood','sensorsNav')"><button id="sensorsNav"
+                    type="button" class="button button1" data-toggle="collapse"
                     data-target=".sensors">{{ 'HOME.NAVBAR.SENSORS' | translate}}</button></li>
         </ul>
 
@@ -133,9 +133,8 @@ limitations under the License. -->
                         <ng-container *ngIf="capteurService.getCapteursByHive(ruche._id).length !== 0">
                             <ng-container
                                 *ngFor="let capt of capteurService.getCapteursByHive(ruche._id); let i = index">
-                                <p [style.background-color]="checkSensor(capt.sensorRef)" 
-                                [title]="deviceSatusService.getMessageBySensor(capt.sensorRef)"
-                                class="hive-info">
+                                <p [style.background-color]="checkSensor(capt.sensorRef)"
+                                    [title]="deviceSatusService.getMessageBySensor(capt.sensorRef)" class="hive-info">
                                     {{ capt.sensorRef }}
                                 </p>
 
@@ -144,7 +143,15 @@ limitations under the License. -->
                     </div>
                 </div>
             </ng-container>
-            <div class="infoToolip"><i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i></div>
+            <popover-content #pictureTooltip title="Apiary" placement="left" [animation]="true"
+                [closeOnClickOutside]="false">
+                <span style="color: #C21F39">
+                    <p>{{ 'MELLIUX.HELP.APIARY.APIARY_PICTURE' | translate }}</p>
+                </span>
+            </popover-content>
+            <!-- <a><i [popover]="p" class="fa fa-question-circle-o fa-1g" aria-hidden="true"></i></a> -->
+            <div [popover]="pictureTooltip" class="infoToolip"><i class="fa fa-question-circle-o fa-2x"
+                    aria-hidden="true"></i></div>
         </div>
 
         <div id="scroll"></div>

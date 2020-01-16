@@ -277,6 +277,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     }
   }
 
+  getApiaryHelp(text: string[]) {
+    return text.join('<br/>');
+  }
+
   onClickNextDay() {
     this.dailyRecTh.nextDay(this.rucherService.getCurrentApiary());
     this.dailyRecordWservice.nextDay(this.rucherService.getCurrentApiary());
