@@ -39,7 +39,7 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
   private urlYtb: string;
   public safeSrc: SafeResourceUrl;
   constructor(private route: ActivatedRoute,
-    private authService: AuthService,
+    public authService: AuthService,
     private translateService: TranslateService,
     private sanitizer: DomSanitizer) {
       this.newUser, this.readMore = false;
