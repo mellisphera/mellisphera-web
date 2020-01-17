@@ -40,7 +40,7 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
     private translateService: TranslateService,
     private sanitizer: DomSanitizer) {
       this.newUser, this.readMore = false;
-      this.urlYtb = 'https://www.youtube.com/embed/kFMFM1hDd8s';
+      this.urlYtb = 'https://www.youtube.com/embed/pbCqpf8EY0s';
       this.translateService.use(this.translateService.getBrowserLang());
       this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(this.urlYtb);
 
