@@ -32,7 +32,6 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
   public messageList: any;
   public password: string;
   public newUser: boolean;
-  private navLanguage : string;
   public readMore: boolean;
   public eula = EULA;
   public eulaCheck: boolean;
@@ -59,7 +58,6 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.eulaCheck = !this.newUser;
       }
     );
-    this.navLanguage = navigator.language;
 
   }
 
@@ -77,12 +75,7 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   getMessageTraduction(msg: MessagesList) : string{
-    let language : string;
-    if(/fr/g.test(this.navLanguage)){
-      language = 'FR';
-    }else{
-      language = 'EN';
-    }
+    let language : string = this.translateService.currentLang.toUpperCase();
     return(MESSAGES[language][msg]);
   }
   
