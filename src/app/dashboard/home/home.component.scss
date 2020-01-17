@@ -755,10 +755,10 @@ li:first-child img{
   font-size: 35px;
 }
 
-.lock{
+.btn-picture{
   border: none;
   color: white;
-  padding: 0px !important;
+  padding: 2px !important;
   text-align: center;
   background-color: #4F4F51;
   // background-color: rgba($color: white, $alpha: 0.5);
@@ -767,21 +767,25 @@ li:first-child img{
   opacity: 0.8;
 }
 
-.lock:hover{
+.btn-picture:hover{
   // color: black;
   opacity: 1;
 }
 
-.lock .fa{
+.btn-picture .fa{
   font-size: 35px;
   margin-right: 5px;
 }
-
-.lockButton{
+.toolApiaryPicture button:first-child{
+  margin-right: 5px;
+}
+.toolApiaryPicture{
   position: absolute;
   top: 5px;
   right : 20px;
-  width: 35px;
+  width: 200px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .lockNav{

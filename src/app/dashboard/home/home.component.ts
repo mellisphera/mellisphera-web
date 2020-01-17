@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   private eltOnClickId: EventTarget;
   infoRuche: any = null;
   photoApiary: File;
+  photoBase64: string;
   username: string;
   rucheSelect: RucheInterface;
   positionHive: any;
@@ -247,6 +248,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     elt.style.height = height * 3/4 + 'px'; */
   }
 
+  onChange() {
+    console.log(this.photoApiary);
+  }
   loadAlert() {
     this.alertsService.getHiveAlertByApiaryId(this.rucherService.getCurrentApiary(),
       MyDate.getRangeForCalendarAlerts()[0].getTime(), MyDate.getRangeForCalendarAlerts()[1].getTime()).subscribe(
