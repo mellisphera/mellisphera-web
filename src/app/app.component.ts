@@ -56,7 +56,6 @@ export class AppComponent implements OnInit {
     checkLogin() {
       this.authService.authState.subscribe(
         (_status: boolean) => {
-          console.log(_status);
           if (!_status) {
             this.router.navigateByUrl('login');
           } else {
