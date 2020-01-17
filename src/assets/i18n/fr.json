@@ -170,7 +170,9 @@
         },
         "POPUP_NEW_USER": {
             "TITLE": "Bienvenue sur Mellisphera",
-            "BODY": "Nous calculons maintenant vos données, ce processus peut prendre un certain temps en fonction de l'historique de vos données. Vous verrez des données apparaître progressivement au cours des 10 prochaines minutes.",
+            "BODY": ["Nous calculons maintenant vos données.",
+            "Ce processus peut prendre un certain temps en fonction de l'historique de vos données.",
+            "Vous verrez des données apparaître progressivement au cours des 10 prochaines minutes."],
             "CLOSE_BTN": "Fermer"
         }
     },

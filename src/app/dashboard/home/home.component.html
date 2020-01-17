@@ -175,9 +175,11 @@ limitations under the License. -->
             </h5>
         </div>
         <div class="modal-body">
-            <p>{{'HOME.POPUP_NEW_USER.BODY' | translate }}</p>
+            <p>
+                <span *ngFor="let line of'HOME.POPUP_NEW_USER.BODY' | translate">{{ line }}<br/></span>
+            </p>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="closePopup();"
+                <button type="button" style="color: black;" class="btn btn-secondary" (click)="closePopup();"
                     data-dismiss="modal">{{ 'HOME.POPUP_NEW_USER.CLOSE_BTN' | translate }}</button>
             </div>
         </div>
