@@ -18,13 +18,13 @@
       </P>
       <div class="form-group">
         <!-- <label for="Password">Username</label> -->
-        <input type="email" class="form-control" name="emailMobile" [disabled]="!eulaCheck" placeholder="MyBroodminder email" [(ngModel)]="email"
+        <input type="email" class="form-control" name="emailMobile" placeholder="MyBroodminder email" [(ngModel)]="email"
           [ngModelOptions]="{standalone: true}">
       </div>
 
       <div class="form-group">
         <!-- <label for="Password">Password</label> -->
-        <input type="password" class="form-control" name="passwdMobile" [disabled]="!eulaCheck" placeholder="MyBroodminder password" [(ngModel)]="password"
+        <input type="password" class="form-control" name="passwdMobile" placeholder="MyBroodminder password" [(ngModel)]="password"
           [ngModelOptions]="{standalone: true}">
       </div>
 <!--       <p><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
@@ -46,7 +46,7 @@
   </section>
   <div class="form-group loginMobile" id="footter">
     <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
-    <p><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
+    <p class="linkContact"><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
   </div>
   <div id="text">
     <h2>Becoming a precision beekeeper</h2>
@@ -86,18 +86,18 @@
         </P>
         <div class="form-group">
           <!-- <label for="Password">Username</label> -->
-          <input type="email" class="form-control" name="emailDesktop" [disabled]="!eulaCheck" placeholder="MyBroodminder email" [(ngModel)]="email"
+          <input type="email" class="form-control" name="emailDesktop" placeholder="MyBroodminder email" [(ngModel)]="email"
             [ngModelOptions]="{standalone: true}">
         </div>
 
         <div class="form-group">
           <!-- <label for="Password">Password</label> -->
-          <input type="password" [disabled]="!eulaCheck" name="passwdDesktop" class="form-control" placeholder="MyBroodminder password" [(ngModel)]="password"
+          <input type="password" name="passwdDesktop" class="form-control" placeholder="MyBroodminder password" [(ngModel)]="password"
             [ngModelOptions]="{standalone: true}">
         </div>
-        <div *ngIf="!eulaCheck && !checkButtonIsDisabled()" style="text-align: center;">
+<!--         <div *ngIf="!eulaCheck && !checkButtonIsDisabled()" style="text-align: center;">
           <img src="./assets/img/smile.png"/>
-        </div>
+        </div> -->
       </form>
     </div>
     <section *ngIf="newUser" id="sectionEula" class="eulaDesktop">
@@ -113,7 +113,7 @@
     </section>
     <div class="form-group eulaDesktop" id="footter">
       <button type="button" id="btnLoginDesktop" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
-      <p><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
+      <p class="linkContact"><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
     </div>
   </div>
 </section>

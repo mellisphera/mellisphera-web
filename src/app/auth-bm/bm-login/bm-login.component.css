@@ -84,6 +84,9 @@ button{
 #footter{
   text-align: center;
 }
+.linkContact{
+  margin-top: 8px;
+}
 @media screen and (max-width:990px) {
   .form-group{
     width: 50%;
