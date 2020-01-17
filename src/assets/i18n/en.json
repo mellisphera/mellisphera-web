@@ -12,26 +12,28 @@
     "MELLIUX": {
         "HELP": {
             "APIARY": {
-                "APIARY_PICTURE": "This interface shows a simple and quick status of your apiary. 
-                The pellet color indicates the hive fitness (green/orange/red). Hover it to find more details.
-                The above buttons can display on every pellet the hive name, brood, weight and also device IDs
-                Click on every pellet to access to hive data on the right hand side of this interface.
-                The top right arrows arround the date at the top of the interface allow you to navigate backwards in time.
-                Hive Fitness is computed from sensor data and other parameters with our exclusive BFit model.
+                "APIARY_PICTURE": "All-in-one apiary view: simple and quick status of your apiary. 
+                Hive fitness is indicated with the pellet color (green/orange/red). Hover it to find more details.
+                Top menu displays hive contextual info: name, brood, weight and devices.
+                Click on every pellet to access specific hive data.
+                Navigate backwards in time with the arrows arround the date at the top of the interface.
+                Hive Fitness is computed with our exclusive BFit model.
                 
-                First setup :
-                Drag and drop your own apiary picture or map and place the pellets on every hive location by unlocking the lock button.",
-                "EVENT_CALENDAR": "Apiary calendar shows apiary notes. general actions you did into the apiary.
-                To display hive related notes you simply need to click onto the hive pellet."
+                First setup note:
+                1/drag and drop your own apiary picture or map 
+                2/open the lock button and place the pellets on hive location.",
+                "EVENT_CALENDAR": "Apiary calendar: use apiary notes to trace general actions you did into the apiary.
+                This calendar also displays weather alerts."
             },
             "HIVE": {
-                "EVENT_CALENDAR": "This calendar displays your notes and system notifications.
-                Hovering them you'll find more details.",
-                "BROOD_CALENDAR": "This calendar chart displays the brood progression in your hive. 
-                The range goes from 0 to 100%. 0 meaning no brood and 100% full brood into the hive. 
-                Brood level is computed from your TH or T2 sensors with our exclusive BForce model.",
-                "WEIGHT_CALENDAR": "This calendar chart displays daily productivity of hives equiped with a scale. 
-                Values consider only weight incomes and consumptions due to bees activity. Beekeeper operations like feeding or adding supper are discarded."
+                "EVENT_CALENDAR": "Event calendar: displays notes and alert notifications",
+                "BROOD_CALENDAR": "Brood calendar: displays the brood progression in your hive.
+                The range goes from 0% (no brood) to 100% (full brood). 
+                Hives with brood levels above 80% produce honey
+                Brood level is computed with our exclusive BForce model.",
+                "WEIGHT_CALENDAR": "Weight calendar: displays the daily productivity of hives equiped with a scale. 
+                Only weight incomes and consumptions are displayed. 
+                Beekeeper operations like feeding or adding supper are discarded."
             }
         }
     },
@@ -394,16 +396,18 @@
     },
     "MELLICHARTS": {
         "HELP": {
-            "HIVE" :"In this interface you can explore with great detail all data related to a hive. You can compare internal parameters with your own operations (notes) and with weather conditions.
-            Using the date navigation on the top right of the screen you can display longuer periods of time and then jump from period to period with the arrows.
-            The icons above every calendar allow you to switch among different variables (brood, weight, humidity, temperature, ect).",
-            "BROOD" : "This interface allow to overlay brood progressions of different hives in one or several apiaries. 
-            What is running behind it is our exclusive Bforce model. This model mixing empirical and machine learning data gives you a fairly good estimate of the brood level within a hive.
-            As a rule of the thumb, 10% is one frame of brood, 40% 4 frames etc. Depending on your practice and hive model you will need to adjusting those relationships.
+            "HIVE" :"Here you can explore with great detail all the data related to a hive. 
+            Compare hive data with your own operations (notes) and with weather conditions.
+            Choose the field to display with the icons above every calendar.
+            Use the date navigation (top-right of the screen) to show longuer periods of time. 
+            Jump from period to period with the arrows.",
+            "BROOD" : "Overlay brood progressions of several hives in the same or different apiaries. 
+            As a rule of the thumb, 10% is one frame of brood, 40% 4 frames etc. 
+            Depending on your practice and hive model (langstroth, dadant) you will need to adjusting those relationships.
             
-            Important Note : only hives achieving the 80% threshold will enter the production zone allowing for honey production.",
-            "RAWDATA" : "Here hou can view the raw measurements, this display is very similar to what you are already used into MyBroodminder.
-            overlaying different hives/apiaries is possible too."
+            Important Note : only hives achieving the 80% threshold will produce honey!. We hope you know how to make it happen ;)",
+            "RAWDATA" : "This display is very similar to what you are already used to in MyBroodminder.
+            Pverlaying different hives/apiaries is also possible."
         },
         "NAV": {
             "HIVE": "Hive",
