@@ -21,7 +21,7 @@ limitations under the License. */
     cursor:pointer;
 }
 .infoToolip{
-    position: absolute;
-    right: 10px;
-    bottom: 0px;
+    position: fixed;
+    right: 30px;
+    bottom: 10px;
 }

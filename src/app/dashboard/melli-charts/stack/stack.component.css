@@ -14,7 +14,7 @@ limitations under the License. */
     height: 91vh;
 }
 .infoToolip{
-    position: absolute;
-    right: 10px;
-    bottom: 0px;
+    position: fixed;
+    right: 30px;
+    bottom: 10px;
 }

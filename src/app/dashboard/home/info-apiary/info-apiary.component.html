@@ -22,11 +22,11 @@ limitations under the License. -->
       <app-alerts></app-alerts>
       <div class="infoToolip">
         <popover-content #eventHelpApiaryCalendar placement="left" [animation]="true" [closeOnClickOutside]="false">
-          <span class="helpTooltip" style="color: #C21F39">
+          <span class="helpTooltip">
             <span *ngFor="let line of 'MELLIUX.HELP.APIARY.EVENT_CALENDAR' | translate">{{ line }}<br /></span>
           </span>
         </popover-content>
-        <div [popover]="eventHelpApiaryCalendar" style="font-size: 15px !important;" class="infoToolip">
+        <div [popover]="eventHelpApiaryCalendar" style="font-size: 15px !important;">
           <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
         </div>
       </div>

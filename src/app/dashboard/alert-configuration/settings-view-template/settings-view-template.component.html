@@ -42,7 +42,7 @@ limitations under the License. -->
             <td class="text-left">
               <popover-content #myPopover title="{{ getNameByLang(alert._id) }}" placement="right" [animation]="true"
                 [closeOnClickOutside]="false">
-                <span style="color: #C21F39">{{ getNotifDescriptionFromLangage(alert.icon) }}</span>
+                <span class="helpTooltip">{{ getNotifDescriptionFromLangage(alert.icon) }}</span>
               </popover-content>
               <a [popover]="myPopover" style="font-size: 20px !important;" class="info-link"><i
                   class="fa fa-info-circle" aria-hidden="true"></i></a>
@@ -107,12 +107,12 @@ limitations under the License. -->
 <div class="infoToolip">
   <popover-content #broodToltip placement="left" [animation]="true"
       [closeOnClickOutside]="false">
-      <span class="helpTooltip" style="color: #C21F39">
+      <span class="helpTooltip">
           <span
               *ngFor="let line of 'ALERT_CONF_PAGE.HELP.ALERTS' | translate">{{ line }}<br /></span>
       </span>
   </popover-content>
-  <div [popover]="broodToltip" style="font-size: 15px !important;" class="infoToolip">
+  <div [popover]="broodToltip" style="font-size: 15px !important;">
       <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
   </div>
 </div>

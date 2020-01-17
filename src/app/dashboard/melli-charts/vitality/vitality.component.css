@@ -3,7 +3,7 @@
     height: 80vh;
 }
 .infoToolip{
-    position: absolute;
-    right: 10px;
+    position: fixed;
+    right: 30px;
     bottom: 10px;
 }
