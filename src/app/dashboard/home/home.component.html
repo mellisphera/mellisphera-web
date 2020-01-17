@@ -74,7 +74,7 @@ limitations under the License. -->
                 <input style="display: none" type="file" (lastBaseUrlChange)="changePicturePhotos($event)" ngf [(file)]="selectPhotoApiary"
                  #fileInput>
                 <button data-toggle="tooltip" (click)="fileInput.click()" data-html="true" class="btn-picture"
-                title="" id="selectPhotos" type="button"><i class="fa fa-file-image-o"></i></button>
+                title="" id="selectPhotos" type="button"><i class="fa fa-camera"></i></button>
                 <button *ngIf="lockHive" data-toggle="tooltip" data-html="true"
                     title="{{ 'HOME.PLACEMENTMODE' | translate}}" id="locked" type="button" class="btn-picture"
                     (click)="this.lockHive = !this.lockHive;"><i class="fa fa-lock"></i></button>
