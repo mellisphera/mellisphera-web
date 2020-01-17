@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   lastHighlightHandle: string;
 
   constructor(public dailyRecTh: DailyRecordService,
-    private userService: UserloggedService,
+    public userService: UserloggedService,
     private translateService: TranslateService,
     private notifyService: NotifierService,
     private formBuilder: FormBuilder,
@@ -196,6 +196,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     showDate.setMonth(this.dailyRecTh.rangeDailyRecord.getMonth());
     showDate.setDate(this.dailyRecTh.rangeDailyRecord.getDate() + 1);
     return this.unitService.getDailyDate(showDate.toISOString());
+  }
+
+  closePopup(): void {
+    this.userService.setFristConnection(false);
   }
 
   @HostListener('window:resize', ['$event'])

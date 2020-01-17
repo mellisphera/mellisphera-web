@@ -84,10 +84,10 @@ export class UserloggedService {
    * @returns {Boolean}
    * @memberof UserloggedService
    */
-  getWizardActive(): Boolean {
+  getFristConnection(): Boolean {
     return this.wizardActive;
   }
-  setWizardActive(status: boolean): void {
+  setFristConnection(status: boolean): void {
     this.wizardActive = status;
   }
   /**

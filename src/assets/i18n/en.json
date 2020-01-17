@@ -171,6 +171,11 @@
             "WEIGHT" : "Weight",
             "SENSORS" : "Sensor",
             "APIARY" : "Apiary"
+        },
+        "POPUP_NEW_USER": {
+            "TITLE": "Welcome to Mellisphera",
+            "BODY": "We are now computing your data.This process can take a while depending on your data history. You will see data appearing progressively on the next 10 minutes.",
+            "CLOSE_BTN": "Fermer"
         }
     },
     "HIVES" : {

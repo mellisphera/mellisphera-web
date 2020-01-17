@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
     this.messagesService.setLang(this.login.getCountry() ? this.login.getCountry() : 'EN');
 /*     this.rucherService.rucherSubject.subscribe(() => {}, () => {}, () => {
       if (this.rucherService.checkIfApiary()) {
-        this.login.setWizardActive(false);
+        this.login.setFristConnection(false);
       }
     }); */
     this.rucheService.hiveSubject = new BehaviorSubject([]);

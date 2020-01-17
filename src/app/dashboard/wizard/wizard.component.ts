@@ -123,7 +123,7 @@ export class WizardComponent implements OnInit, OnDestroy {
   }
 
   cancel() {
-    this.userService.setWizardActive(false);
+    this.userService.setFristConnection(false);
   }
 
   finishWizard() {
@@ -148,7 +148,7 @@ export class WizardComponent implements OnInit, OnDestroy {
         this.sensor.apiaryId = this.rucherService.getCurrentApiary();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
           this.capteurService.getUserCapteurs();
-          this.userService.setWizardActive(false);
+          this.userService.setFristConnection(false);
         });
       });
     });

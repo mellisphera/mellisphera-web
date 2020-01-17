@@ -85,7 +85,7 @@ export class AuthService {
 
         }
         if (this.jwtReponse.connexions === 1) {
-          this.userService.setWizardActive(true);
+          this.userService.setFristConnection(true);
         }
         if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
             this.router.navigateByUrl('dashboard/admin');

@@ -248,14 +248,18 @@ li:first-child img{
 .valid-drag {
   border: 3px dashed blue;
 }
-#modal {
+/*userService.getFristConnection()*/
+.modalMs {
   background-color: white;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 11;
   box-shadow: 8px 8px 5px black;
+}
+#modalMsNewConnection{
+  width: 550px;
 }
 
 .center-classe{
@@ -833,5 +837,11 @@ li:first-child img{
   .buttonLeft{
     display: flex;
     justify-content: center;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #modalMsNewConnection{
+    width: 100%;
   }
 }

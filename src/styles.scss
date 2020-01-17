@@ -39,6 +39,15 @@
 .flex{
     display: flex;
 }
+.overlay{
+    z-index: 10;
+    width: 400%;
+    height: 400%;
+    top: -100%;
+    left: -100%;
+    position: fixed;
+    background-color: rgba(0,0,0,.25);
+}
 .wizard-z-index{
     z-index: -1 !important;
 }

@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
         this.notif.notify('success', 'Inscription réussie !');
         }
         this.success = true;
-        this.userService.setWizardActive(true);
+        this.userService.setFristConnection(true);
         this.innitForm();
         setTimeout(() => {
           this.success = false;

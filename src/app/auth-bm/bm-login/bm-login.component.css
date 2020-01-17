@@ -87,6 +87,9 @@ button{
 .linkContact{
   margin-top: 8px;
 }
+.errorLogin{
+  color: red;
+}
 @media screen and (max-width:990px) {
   .form-group{
     width: 50%;
@@ -120,6 +123,7 @@ button{
   }
   .loginMobile{
     display: block;
+    margin-top: 15px;
     width: 100%;
   }
   .loginDesktop{

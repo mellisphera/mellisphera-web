@@ -167,8 +167,22 @@ limitations under the License. -->
         </div>
 
     </div>
-
-    <div *ngIf="dragPhotoApiary!=null" id="modal">
+    <div *ngIf="dragPhotoApiary!=null || userService.getFristConnection()" class="overlay"></div>
+    <div *ngIf="userService.getFristConnection()" class="modalMs" id="modalMsNewConnection">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+                <h3 class="text-center">{{ 'HOME.POPUP_NEW_USER.TITLE' | translate }}</h3>
+            </h5>
+        </div>
+        <div class="modal-body">
+            <p>{{'HOME.POPUP_NEW_USER.BODY' | translate }}</p>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closePopup();"
+                    data-dismiss="modal">{{ 'HOME.POPUP_NEW_USER.CLOSE_BTN' | translate }}</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="dragPhotoApiary!=null" class="modalMs" id="modal">
         <div class="modal-body">
             <p>{{ 'HOME.BACK' | translate}}</p>
             <div class="modal-footer">

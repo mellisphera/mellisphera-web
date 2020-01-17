@@ -19,6 +19,7 @@ import { EULA } from '../../EULA';
 import * as $ from 'jquery';
 import { TranslateService } from '@ngx-translate/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { MESSAGES, MessagesList } from '../../../constants/messages';
 
 @Component({
   selector: 'app-bm-login',
@@ -28,8 +29,10 @@ import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public email: string;
+  public messageList: any;
   public password: string;
   public newUser: boolean;
+  private navLanguage : string;
   public readMore: boolean;
   public eula = EULA;
   public eulaCheck: boolean;
@@ -40,6 +43,7 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
     private translateService: TranslateService,
     private sanitizer: DomSanitizer) {
       this.newUser, this.readMore = false;
+      this.messageList = MessagesList;
       this.urlYtb = 'https://www.youtube.com/embed/pbCqpf8EY0s';
       this.translateService.use(this.translateService.getBrowserLang());
       this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(this.urlYtb);
@@ -55,6 +59,7 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.eulaCheck = !this.newUser;
       }
     );
+    this.navLanguage = navigator.language;
 
   }
 
@@ -71,6 +76,16 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
 
+  getMessageTraduction(msg: MessagesList) : string{
+    let language : string;
+    if(/fr/g.test(this.navLanguage)){
+      language = 'FR';
+    }else{
+      language = 'EN';
+    }
+    return(MESSAGES[language][msg]);
+  }
+  
   agreeEula(event : any) /* event checkbox */{
     this.eulaCheck = event.target.checked;
   }
