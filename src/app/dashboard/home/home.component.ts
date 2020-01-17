@@ -63,7 +63,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   private eltOnClickClass: HTMLCollectionOf<Element>;
   private eltOnClickId: EventTarget;
   infoRuche: any = null;
-  photoApiary: File;
+  dragPhotoApiary: File;
+  selectPhotoApiary: File;
   photoBase64: string;
   username: string;
   rucheSelect: RucheInterface;
@@ -132,7 +133,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.lockHive = true;
     this.eltOnClickId = null;
     this.username = this.login.getUser();
-    this.photoApiary = null;
+    this.dragPhotoApiary = null;
     this.message = '';
     this.lastHighlightFix = 'dontExist';
     this.lastHighlightHandle = 'dontExist';
@@ -248,8 +249,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     elt.style.height = height * 3/4 + 'px'; */
   }
 
-  onChange() {
-    console.log(this.photoApiary);
+
+  changePicturePhotos(base64: string): void {
+    this.rucherService.rucher.photo = base64;
+    this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
+    this.selectPhotoApiary = null;
   }
   loadAlert() {
     this.alertsService.getHiveAlertByApiaryId(this.rucherService.getCurrentApiary(),
@@ -522,7 +526,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
    */
   saveBackground(): void {
     this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
-    this.photoApiary = null;
+    this.dragPhotoApiary = null;
   }
 
   /**
@@ -532,7 +536,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
    */
   cancelBackground(): void {
     this.rucherService.rucher.photo = this.rucherService.currentBackground;
-    this.photoApiary = null;
+    this.dragPhotoApiary = null;
   }
   onMouseover($ruche) {
     const ruche = JSON.parse(JSON.stringify($ruche))
