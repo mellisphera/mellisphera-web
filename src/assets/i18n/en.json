@@ -20,16 +20,16 @@
                 "Hive Fitness is computed with our exclusive BFit model.",
                 
                 "First setup note:",
-                "1/drag and drop your own apiary picture or map ",
-                "2/open the lock button and place the pellets on hive location."],
+                "1/drag and drop your own apiary picture or map.",
+                "2/open the lock button and place the pellets on hives location."],
                 "EVENT_CALENDAR": ["Apiary calendar: use apiary notes to trace general actions you did into the apiary.",
                 "This calendar also displays weather alerts."]
             },
             "HIVE": {
-                "EVENT_CALENDAR": "Event calendar: displays notes and alert notifications",
+                "EVENT_CALENDAR": "Event calendar: displays notes and alert notifications.",
                 "BROOD_CALENDAR": ["Brood calendar: displays the brood progression in your hive.",
-                "The range goes from 0% (no brood) to 100% (full brood). ",
-                "Hives with brood levels above 80% produce honey",
+                "The range goes from 0% (no brood) to 100% (full brood).",
+                "Hives with brood levels above 80% produce honey.",
                 "Brood level is computed with our exclusive BForce model."],
                 "WEIGHT_CALENDAR": ["Weight calendar: displays the daily productivity of hives equiped with a scale.", 
                 "Only weight incomes and consumptions are displayed.",
@@ -401,16 +401,16 @@
     },
     "MELLICHARTS": {
         "HELP": {
-            "HIVE" :["Here you can explore with great detail all the data related to a hive. ",
+            "HIVE" :["Here you can explore with great detail all the data related to a hive.",
             "Compare hive data with your own operations (notes) and with weather conditions.",
             "Choose the field to display with the icons above every calendar.",
-            "Use the date navigation (top-right of the screen) to show longuer periods of time. ",
+            "Use the date navigation (top-right of the screen) to show longuer periods of time.",
             "Jump from period to period with the arrows."],
-            "BROOD" : ["Overlay brood progressions of several hives in the same or different apiaries. ",
-            "As a rule of the thumb, 10% is one frame of brood, 40% 4 frames etc. ",
+            "BROOD" : ["Overlay brood progressions of several hives in the same or different apiaries.",
+            "As a rule of the thumb, 10% is one frame of brood, 40% 4 frames, etc.",
             "Depending on your practice and hive model (langstroth, dadant) you will need to adjusting those relationships.",
             
-            "Important Note : only hives achieving the 80% threshold will produce honey!. We hope you know how to make it happen"],
+            "Important Note : only hives achieving the 80% threshold will produce honey! We hope you know how to make it happen."],
             "RAWDATA" : "This display is very similar to what you are already used to in MyBroodminder. Pverlaying different hives/apiaries is also possible."
         },
         "NAV": {
@@ -454,9 +454,9 @@
         "STATUS": "Status",
         "HELP": {
             "ALERTS" : ["In this page you can configure all alerts and notifications.",
-                "alerts are classified into 3 groups : in hive / weather / devices. ",
+                "Alerts are classified into 3 groups : in hive / weather / devices.",
                 "You can start with the predefined tresholds and fine tune them based on your own experience.",
-                "Go to the \"configure\" tab to set your preferences for email and frequency of notifications"]
+                "Go to the \"configure\" tab to set your preferences for email and frequency of notifications."]
         }
     },
 

@@ -10,13 +10,28 @@
     "MELLIUX": {
         "HELP": {
             "APIARY": {
-                "APIARY_PICTURE": "",
-                "EVENT_CALENDAR": ""
+                "APIARY_PICTURE": ["Vista del colmenar todo en uno: estado simple y rápido de su colmenar. ",
+                "La aptitud de la colmena se indica con el color de los pellets (verde/naranja/rojo). Pase el cursor sobre él para ver más detalles",
+                "El menú superior muestra la información contextual de la colmena: nombre, cría, peso y dispositivos",
+                "Haga clic en cada egagrópila para acceder a los datos específicos de la colmena",
+                "Navegue hacia atrás en el tiempo con las flechas alrededor de la fecha en la parte superior de la interfaz",
+                "El estado físico de la colmena se calcula con nuestro exclusivo modelo BFit",
+                
+                "Primera nota de configuración:",
+                "1/arrastra y suelta tu propia foto o mapa del colmenar",
+                "2/abrir el botón de bloqueo y colocar los pellets en la ubicación de la colmena."],
+                "EVENT_CALENDAR": ["Calendario del colmenar: usa las notas del colmenar para rastrear las acciones generales que hiciste en el colmenar",
+                "Este calendario también muestra alertas meteorológicas."]
             },
             "HIVE": {
-                "EVENT_CALENDAR": "",
-                "BROOD_CALENDAR": "",
-                "WEIGHT_CALENDAR": ""
+                "EVENT_CALENDAR": "Calendario de eventos: muestra notas y notificaciones de alerta",
+                "BROOD_CALENDAR": ["Calendario de cría: muestra la progresión de la cría en su colmena",
+                "El rango va desde 0% (sin cría) hasta 100% (cría completa).",
+                "Las colmenas con niveles de cría superiores al 80% producen miel.",
+                "El nivel de cría se calcula con nuestro exclusivo modelo BForce."],
+                "WEIGHT_CALENDAR": ["Calendario de peso: muestra la productividad diaria de las colmenas equipadas con una balanza.", 
+                    "Sólo se muestran los ingresos y los consumos de peso.",
+                    "Las operaciones de los apicultores como alimentar o añadir la cena son descartadas."]
             }
         }
     },
@@ -400,9 +415,17 @@
     },
     "MELLICHARTS": {
         "HELP": {
-            "BROOD": {
+            "HIVE": ["Aquí puede explorar con gran detalle todos los datos relacionados con una colmena.",
+            "Compare los datos de la colmena con sus propias operaciones (notas) y con las condiciones meteorológicas.",
+            "Elija el campo a visualizar con los iconos situados encima de cada calendario.",
+            "Utilice la navegación por fecha (arriba a la derecha de la pantalla) para mostrar periodos de tiempo más largos.",
+            "Salta de un período a otro con las flechas."],
+            "BROOD": ["Superponer las progresiones de cría de varias colmenas en el mismo o diferentes colmenares",
+            "Como regla general, el 10% es un cuadro de cría, el 40% 4 cuadros, etc.",
+            "Dependiendo de su práctica y modelo de colmena (langstroth, dadant) tendrá que ajustar esas relaciones",
                 
-            }
+            "Nota importante: ¡sólo las colmenas que alcancen el umbral del 80% producirán miel ! Esperamos que sepa cómo hacerlo realidad."],
+            "RAWDATA" : "Esta pantalla es muy similar a la que ya estás acostumbrado en MyBroodminder. También es posible manipular diferentes colmenas/colmenares."
         },
         "NAV": {
             "HIVE": "Colmena",
@@ -442,7 +465,13 @@
             }
         },
         "DESCRIPTION": "Descripción",
-        "STATUS": "Estatus"
+        "STATUS": "Estatus",
+        "HELP": {
+            "ALERTS" : ["En esta página puede configurar todas las alertas y notificaciones",
+                "Las alertas están clasificadas en 3 grupos: en colmena / tiempo / dispositivos.",
+                "Puedes empezar con los umbrales predefinidos y afinarlos en base a tu propia experiencia",
+                "Vaya a la pestaña \"configurar\" para establecer sus preferencias de correo electrónico y la frecuencia de las notificaciones"]
+        }
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
