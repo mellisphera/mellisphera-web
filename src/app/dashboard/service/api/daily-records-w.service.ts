@@ -335,9 +335,9 @@ export class DailyRecordsWService {
     // console.log(this.dailyWeightRecords);
     const selectHive = this.dailyWeightRecords.filter(elt => elt.hiveId === hiveId)[0];
     if (this.unitSystem === 'METRIC') {
-      return selectHive ? this.unitService.getValRound(selectHive.weight_max) + ' kg' : '-';
+      return selectHive ? this.unitService.convertWeightFromuserPref(selectHive.weight_max, 'METRIC', true)+ ' kg' : '-';
     } else {
-      return selectHive ? this.unitService.getValRound(selectHive.weight_max) + ' lbs' : '-';
+      return selectHive ?this.unitService.convertWeightFromuserPref(selectHive.weight_max, 'IMPERIAL', true) + ' lbs' : '-';
     }
 
   }

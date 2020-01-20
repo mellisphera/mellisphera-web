@@ -106,7 +106,7 @@ convertWindFromUserPref(wind: number, unit: string, round?: boolean): number {
   convertWeightFromuserPref(weight: number, unit: string, round?: boolean): number {
     let value;
     if (unit === 'IMPERIAL') {
-      value = round? this.getValRound(weight * 2.2046): weight * 2.046;
+      value = round? this.getValRound(weight * 2.2046): weight * 2.2046;
     } else {
       value = round? this.getValRound(weight): weight;
     }
