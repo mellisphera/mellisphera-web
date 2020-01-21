@@ -256,7 +256,7 @@ export const BASE_OPTIONS = {
                     z: 100,
                     left: 'center',
                     cursor: 'unset',
-                    top: 'middle',
+                    top: 'top',
                     shape: {
                         width: 500,
                         height: 90

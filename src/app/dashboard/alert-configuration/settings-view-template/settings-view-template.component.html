@@ -47,7 +47,7 @@ limitations under the License. -->
               <a [popover]="myPopover" style="font-size: 20px !important;" class="info-link"><i
                   class="fa fa-info-circle" aria-hidden="true"></i></a>
             </td>
-            <td class="text-left">
+            <td class="text-center cols_value">
               <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
                 <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range"
                   [min]="getRangeValue(alert._id)[0]" [max]="getRangeValue(alert._id)[1]" [step]="getStep(alert._id)"

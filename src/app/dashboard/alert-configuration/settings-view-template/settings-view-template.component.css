@@ -6,13 +6,13 @@ td, p, label{
     font-size: 14px;
 }
 .name_notif{
-    display: block;
+    display: table-cell ;
 }
 .cols_custom{
     max-width: 22%;
 }
 .cols_icon{
-    max-width: 5%;
+    max-width: 25px;
 }
 .cols_description{
     max-width: 7%;
