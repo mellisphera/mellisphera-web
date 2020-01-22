@@ -99,11 +99,11 @@ export const NOTIF_CODE = {
         "icon": "WIpos",
         "FR": {
             "Subject": "Apport important de ressources",
-            "Message": "La réserve de vos abeilles a augmenté de {VAL}"
+            "Message": "La réserve de vos abeilles a gagné plus de {VAL}"
         },
         "EN": {
             "Subject": "Significant provision of resources",
-            "Message": "Your bees' stock has increased by {VAL}" 
+            "Message": "Your bees stock has gained more than {VAL}" 
         },
         "ES": {
             "Subject": "Aporte importante de recursos",
@@ -115,11 +115,11 @@ export const NOTIF_CODE = {
         "icon": "WIneg",
         "FR": {
             "Subject": "Epuisement des ressources",
-            "Message": "La réserve de vos abeilles a diminué de {VAL}"
+            "Message": "La réserve de vos abeilles a perdue plus {VAL}"
         },
         "EN": {
             "Subject": "Resource depletion",
-            "Message": "Your bees' stock has decreased by {VAL}"
+            "Message": "Your bees' stock has lost more than {VAL}"
         },
         "ES": {
             "Subject": "Consumo de reservas",

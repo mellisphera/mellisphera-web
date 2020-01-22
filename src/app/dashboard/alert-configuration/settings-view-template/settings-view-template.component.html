@@ -60,7 +60,7 @@ limitations under the License. -->
               </div>
             </td>
             <td class="text-left">
-              <div class="btn-group" id="status" data-toggle="buttons" *ngIf="alert.disable">
+              <div class="btn-group" id="status" data-toggle="buttons" *ngIf="alert.disable && emailIsEnable()">
                 <label [class]="'btn btn-default btn-on ' + (isEnable(alert._id) ? 'active': '')"
                   (click)="onEnable(alert._id)">
                   <input type="radio" [disabled]="!isAlterable(alert._id)" value="1"

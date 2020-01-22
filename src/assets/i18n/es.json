@@ -452,18 +452,18 @@
         "NAME": "Apellido",
         "PAGE": {
             "SENSORS": "Sensor",
-            "WEATHER": "Météo",
+            "WEATHER": "Meteo",
             "HIVE": "Colmena",
             "CONF": {
-                "TITLE": "Configuraciones",
+                "TITLE": "Configurar",
                 "MAIL": "Enviar alertas por correo electrónico   :",
                 "FREQUENCY": "Enviar cada",
-                "DAILY": "cía",
+                "DAILY": "día",
                 "WEEKLY": "semana",
                 "DAY": "día",
                 "OTHER": "personalizar",
                 "EVERY": "cada",
-                "BTN_MAIL_TEST": "Correo electrónico de prueba"
+                "BTN_MAIL_TEST": "Probar email"
             }
         },
         "DESCRIPTION": "Descripción",

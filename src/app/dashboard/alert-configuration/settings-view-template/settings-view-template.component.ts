@@ -25,11 +25,20 @@ export class SettingsViewTemplateComponent implements OnInit {
 
   isEnable(alertId: string): boolean {
     try {
-      return this.alertUser.alertConf[alertId].enable;
+      if (!this.alertUser.emailEnable) {
+        return false;
+      } else {
+        return this.alertUser.alertConf[alertId].enable;
+      }
     } catch { }
   }
 
   
+  emailIsEnable(): boolean {
+    try{
+      return this.alertUser.emailEnable
+    } catch {}
+  }
   /**
    *
    *
