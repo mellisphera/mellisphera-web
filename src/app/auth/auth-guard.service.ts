@@ -26,6 +26,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,): Observable<boolean> | boolean {
+      console.log(route.url[0].path);
       return this.authService.isAuth();
   }
   canLoad(route: Route): boolean {

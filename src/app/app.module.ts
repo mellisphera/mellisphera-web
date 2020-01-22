@@ -25,7 +25,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserloggedService } from './userlogged.service';
 import { AuthService } from './auth/Service/auth.service';
-import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CommonModule } from '@angular/common';
 import { SignupService } from './auth/Service/signup.service';
@@ -41,6 +40,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MyDatePipe } from './pipe/my-date.pipe';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketService } from './dashboard/service/socket.service';
+import { AuthGuardService } from './auth/auth-guard.service';
 
 const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options: {} };
 export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
@@ -91,9 +91,9 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
   providers: [
     UserloggedService,
     AuthService,
-    AuthGuardService,
     SocketService,
     JwtHelperService,
+    AuthGuardService,
     SignupService,
     // MeteoService,
     // GraphFlowerService,

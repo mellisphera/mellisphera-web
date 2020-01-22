@@ -1,0 +1,6 @@
+--2020-01-22 09:24:16--  http://localhost:4200/login?email=lorenzo.pons@free.fr
+Résolution de localhost (localhost)… 127.0.0.1
+Connexion à localhost (localhost)|127.0.0.1|:4200… connecté.
+requête HTTP transmise, en attente de la réponse… 404 Not Found
+2020-01-22 09:24:16 erreur 404 : Not Found.
+

@@ -45,7 +45,7 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
       this.messageList = MessagesList;
       this.urlYtb = 'https://www.youtube.com/embed/pbCqpf8EY0s';
       this.translateService.use(this.translateService.getBrowserLang());
-      this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(this.urlYtb);
+      this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.urlYtb);
 
     }
 

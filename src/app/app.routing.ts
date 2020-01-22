@@ -11,17 +11,24 @@ limitations under the License. */
 
 import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
-import { Routes, RouterModule, CanActivate } from '@angular/router';
+import { Routes, RouterModule, CanActivate, UrlSegment } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
 
 
+export function urlLogin(url: UrlSegment[]) {
+  console.log(url[0]);
+  return {consumed: url};
+}
+
+
 const routes: Routes = [
 
-  { path: '',loadChildren: './auth-bm/auth-bm.module#AuthBmModule' },
-  { path: 'login',  loadChildren: './auth-bm/auth-bm.module#AuthBmModule'},
-  { path: 'login-bm', loadChildren: './auth-bm/auth-bm.module#AuthBmModule'},
+  { path: '', loadChildren: './auth-bm/auth-bm.module#AuthBmModule'},
+  { path: 'login', loadChildren: './auth-bm/auth-bm.module#AuthBmModule'},
+/*   { matcher: urlLogin , loadChildren: './auth-bm/auth-bm.module#AuthBmModule'},
+ */
   {
     path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule',
     canActivate: [AuthGuardService], canLoad: [AuthGuardService]
