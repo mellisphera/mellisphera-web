@@ -14,6 +14,7 @@ limitations under the License. */
     scrollbar-width: none;
     white-space: pre-wrap;
     overflow-y: scroll;
+    z-index: 5;
     position: absolute;
     justify-content: space-between;
     height: auto;

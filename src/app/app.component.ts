@@ -57,7 +57,10 @@ export class AppComponent implements OnInit {
       this.authService.authState.subscribe(
         (_status: boolean) => {
           if (!_status) {
-            this.router.navigateByUrl('login');
+            console.log('not loggé');
+            if (this.location.path().indexOf('login?email=') === -1) {
+              this.router.navigateByUrl('login');
+            }
           } else {
             console.log('path' + this.location.path());
             if (this.location.path() === '' || this.location.path().indexOf('login?email=') !== -1) {
