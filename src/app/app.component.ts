@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
           if (!_status) {
             this.router.navigateByUrl('login');
           } else {
-            console.log(this.location.path());
+            console.log('path' + this.location.path());
             if (this.location.path() === '' || this.location.path().indexOf('login?email=') !== -1) {
               this.router.navigateByUrl('dashboard/home/info-apiary');
             }
