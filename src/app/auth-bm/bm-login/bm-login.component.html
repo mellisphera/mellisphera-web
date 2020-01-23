@@ -24,8 +24,9 @@
 
       <div class="form-group">
         <!-- <label for="Password">Password</label> -->
-        <input type="password" name="passwdDesktop" class="form-control" [placeholder]="'LOGIN_BM.FORM.PASSWORD' | translate"
-          [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+        <input type="password" name="passwdDesktop" class="form-control"
+          [placeholder]="'LOGIN_BM.FORM.PASSWORD' | translate" [(ngModel)]="password"
+          [ngModelOptions]="{standalone: true}">
       </div>
       <!--         <div *ngIf="!eulaCheck && !checkButtonIsDisabled()" style="text-align: center;">
         <img src="./assets/img/smile.png"/>
@@ -46,16 +47,18 @@
   </section>
   <div class="form-group loginMobile" id="footter">
     <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
-    <p class="linkContact"><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
-    <p class="errorLogin" *ngIf="authService.errLogin">{{getMessageTraduction(messageList.DENIED)}}</p>
+    <div class="linkForm">
+      <p class="linkContact"><a target="_blank" href="https://mybroodminder.com/login">{{ 'LOGIN.SIGN_IN.SIGN_UP_LINK' | translate }}</a></p>
+      <p class="linkContact"><a href="mailto:support@mellisphera.com">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
+      <p class="errorLogin" *ngIf="authService.errLogin">{{getMessageTraduction(messageList.DENIED)}}</p>
+    </div>
 
   </div>
   <div id="text">
     <h2>{{ 'LOGIN_BM.BECOMING.TITLE' | translate }}</h2>
     <p>
       <span *ngFor="let line of 'LOGIN_BM.BECOMING.CONTENT' | translate">{{ line }}</span>
-      <span class="read"
-        (click)="readMore = !readMore"> {{ 'LOGIN_BM.BECOMING.READ_MORE' | translate }}</span>
+      <span class="read" (click)="readMore = !readMore"> {{ 'LOGIN_BM.BECOMING.READ_MORE' | translate }}</span>
     </p>
     <p *ngIf="readMore">
       <span *ngFor="let line of 'LOGIN_BM.BECOMING.READ_MORE_CONTENT' | translate">{{ line }}</span>
@@ -85,8 +88,9 @@
 
         <div class="form-group">
           <!-- <label for="Password">Password</label> -->
-          <input type="password" name="passwdDesktop" class="form-control" [placeholder]="'LOGIN_BM.FORM.PASSWORD' | translate"
-            [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+          <input type="password" name="passwdDesktop" class="form-control"
+            [placeholder]="'LOGIN_BM.FORM.PASSWORD' | translate" [(ngModel)]="password"
+            [ngModelOptions]="{standalone: true}">
         </div>
         <!--         <div *ngIf="!eulaCheck && !checkButtonIsDisabled()" style="text-align: center;">
           <img src="./assets/img/smile.png"/>
@@ -108,8 +112,11 @@
     <div class="form-group eulaDesktop" id="footter">
       <button type="button" id="btnLoginDesktop" (click)="login()" [disabled]="!eulaCheck"
         class="btn btn-success">{{ 'LOGIN_BM.FORM.CONNECTION' | translate }}</button>
-      <p class="linkContact"><a href="mailto:support@mellisphera.com">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
-      <p class="errorLogin" *ngIf="authService.errLogin">{{getMessageTraduction(messageList.DENIED)}}</p>
+      <div class="linkForm">
+        <p class="linkContact"><a target="_blank" href="https://mybroodminder.com/login">{{ 'LOGIN.SIGN_IN.SIGN_UP_LINK' | translate }}</a></p>
+        <p class="linkContact"><a href="mailto:support@mellisphera.com">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
+        <p class="errorLogin" *ngIf="authService.errLogin">{{getMessageTraduction(messageList.DENIED)}}</p>
+      </div>
     </div>
   </div>
 </section>

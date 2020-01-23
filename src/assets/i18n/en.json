@@ -495,7 +495,7 @@
             "EMAIL": "Email MyBroodMinder",
             "PASSWORD": "Password MyBroodMinder",
             "CONNECTION": "Connection",
-            "ERR": "Cannot log in ?"
+            "ERR": "Cannot log in"
         }
     }
 }

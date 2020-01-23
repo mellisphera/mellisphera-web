@@ -19,6 +19,7 @@ nav section{
 #text {
   width: 68%;
   padding: 10px;
+  padding-left: 20px;
   border-right: 1px solid black;
   margin-right: 11px;
 }
@@ -49,6 +50,9 @@ nav section{
   color: #0366d6;
   cursor: pointer;
 }
+.linkForm{
+  margin-top: 30px;
+}
 #text .read:hover {
   text-decoration: underline;
 }
@@ -64,7 +68,7 @@ nav section{
   font-size: 15px;
 }
 .eulaMobile, .eulaDesktop{
-  margin-top: 15px;
+  margin-top: 25px;
 }
 ol li {
   margin-bottom: 6px;

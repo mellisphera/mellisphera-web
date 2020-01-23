@@ -504,7 +504,7 @@
             "EMAIL": "Email MyBroodMinder",
             "PASSWORD": "Contraseña de MyBroodMinder",
             "CONNECTION": "Conexión",
-            "ERR": "No te puedes conectar?"
+            "ERR": "No te puedes conectar"
         }
     }
 }
