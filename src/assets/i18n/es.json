@@ -479,6 +479,32 @@
         "TITLE": "Mellisphera",
         "BTN": "Conexion",
         "EULA": "Acuerdo de licencia de usuario final",
-        "BTN_EUA": "Estoy de acuerdo"
+        "BTN_EUA": "Estoy de acuerdo",
+        "BECOMING": {
+            "TITLE": "Bienvenido a la apicultura de precisión ",
+            "CONTENT": ["Con Mellisphera puedes convertirte en apicultor de precisión. Te ofrecemos es una interfaz completa que agrega los datos de tus colmenas junto con las acciones del apicultor y la meteorología. ",
+            "Nuestros algoritmos procesan la información para ofrecerte de manera clara y accesible un estado de tus colmenas en tiempo real.  Dinámica de la colmena, nivel de cría, productividad, enjambrazón son algunos de los diagnósticos que puedes recibir automáticamente a través del sistema de notificación."],
+            "READ_MORE": "Seguir leyendo",
+            "READ_MORE_CONTENT": ["La buena noticia es que Mellisphera está integrado con BroodMinder. ",
+            "Una vez conectado, heredarás del historial completo de tus sensores. ",
+            "Además, estos datos se enriquecerán con promedios diarios, eventos y alertas. ",
+            "De esta manera podrás analizar el desarrollo de la temporada desde una perspectiva completamente nueva. Te estarás convirtiendo en apicultor de precisión"]
+        },
+        "QUICK_TOUR": {
+            "TITLE": "Visita rápida a Mellisphera ",
+            "CONTENT": "Descubre las principales funciones de Mellisphera."
+        },
+        "BM_MS": {
+            "TITLE": "BroodMinder y Mellisphera - Como funciona?",
+            "CONTENT": ["Los entornos de Mellisphera y BroodMinder son complementarios y están estrechamente vinculados. ",
+            "Utiliza MyBroodMinder para configurar tus colmenares, colmenas y sensores. Esta información se actualiza en Mellisphera con cada nueva conexión. ",
+            "Mellisphera te permitirá́ de llevar a cabo análisis detallados, así́ como enviarle alertas y notificaciones personalizadas. "]
+        },
+        "FORM": {
+            "EMAIL": "Email MyBroodMinder",
+            "PASSWORD": "Contraseña de MyBroodMinder",
+            "CONNECTION": "Conexión",
+            "ERR": "No te puedes conectar?"
+        }
     }
 }

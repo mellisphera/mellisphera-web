@@ -139,9 +139,12 @@ li:first-child img{
 }
 .infoToolip{
   position: absolute;
-  right: 18px;
+  right: 5px;
   bottom: 3px;
   color: #4F4F51;
+}
+.infoToolip i {
+  width: 42px;
 }
 .photo{
   max-height: 75vh;

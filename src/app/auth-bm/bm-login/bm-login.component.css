@@ -45,11 +45,11 @@ nav section{
 .eulaMobile{
   display: none;
 }
-#text span {
+#text .read {
   color: #0366d6;
   cursor: pointer;
 }
-#text span:hover {
+#text .read:hover {
   text-decoration: underline;
 }
 #sectionEula > div{

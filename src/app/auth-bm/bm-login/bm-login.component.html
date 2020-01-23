@@ -14,22 +14,21 @@
   <div class="loginMobile">
     <form class="login-container mobile">
       <P>
-        <label>Connection</label>
+        <label>{{ 'LOGIN_BM.FORM.CONNECTION' | translate }}</label>
       </P>
       <div class="form-group">
         <!-- <label for="Password">Username</label> -->
-        <input type="email" class="form-control" name="emailMobile" placeholder="MyBroodminder email"
+        <input type="email" class="form-control" name="emailDesktop" [placeholder]="'LOGIN_BM.FORM.EMAIL' | translate"
           [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
       </div>
 
       <div class="form-group">
         <!-- <label for="Password">Password</label> -->
-        <input type="password" class="form-control" name="passwdMobile" placeholder="MyBroodminder password"
+        <input type="password" name="passwdDesktop" class="form-control" [placeholder]="'LOGIN_BM.FORM.PASSWORD' | translate"
           [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
       </div>
-      <!--       <p><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
-      <div class="form-group">
-        <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
+      <!--         <div *ngIf="!eulaCheck && !checkButtonIsDisabled()" style="text-align: center;">
+        <img src="./assets/img/smile.png"/>
       </div> -->
     </form>
   </div>
@@ -52,50 +51,41 @@
 
   </div>
   <div id="text">
-    <h2>Becoming a precision beekeeper</h2>
+    <h2>{{ 'LOGIN_BM.BECOMING.TITLE' | translate }}</h2>
     <p>
-      We want to make your hive monitoring experience more intense. Mellisphera is a comprehensive interface that
-      aggregates your hive data together with beekeeper actions and environmental weather.
-      A set of unique algorithms provide actionable information. It’s no more about temperature and weight but about
-      hive fitness, brood level, honey productivity, robing or swarming… Alerts and notifications! <span
-        (click)="readMore = !readMore">Read more</span>
+      <span *ngFor="let line of 'LOGIN_BM.BECOMING.CONTENT' | translate">{{ line }}</span>
+      <span class="read"
+        (click)="readMore = !readMore"> {{ 'LOGIN_BM.BECOMING.READ_MORE' | translate }}</span>
     </p>
     <p *ngIf="readMore">
-      The good news is that Mellisphera is integrated with Broodminder. Once logged in you’ll inherit your full sensor
-      history. Moreover this data will be enriched with daily averages, events, alerts etc. You’ll be able to explore
-      past events and read the season development from a completely new perspective.
-      In two words, you’re about to become a precision beekeeper.
+      <span *ngFor="let line of 'LOGIN_BM.BECOMING.READ_MORE_CONTENT' | translate">{{ line }}</span>
     </p>
-    <h2>Quick tour of Mellisphera</h2>
-    <p>Watch this video to discover Mellisphera main functions</p>
+    <h2>{{ 'LOGIN_BM.QUICK_TOUR.TITLE' | translate }}</h2>
+    <p>{{ 'LOGIN_BM.QUICK_TOUR.CONTENT' | translate }}</p>
     <div id="ytb">
       <iframe [src]="safeSrc" width="560" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen
         allowfullscreen></iframe>
     </div>
-    <h2>Broodminder and Mellisphera - How it works</h2>
+    <h2>{{ 'LOGIN_BM.BM_MS.TITLE' | translate }}</h2>
     <p>
-      Mellisphera and Broodminder environments are complementary and closely linked.
-      You’ll continue to use myBroodminder to set up your apiaries, hives and sensors. This information is updated into
-      Mellisphera at your next login. Mellisphera will allow you to carry detailed analysis and explorations as well as
-      sending you custom alerts and notifications.
-      Tip : use your Broodminder account and password to directly log into Mellisphera
+      <span *ngFor="let line of 'LOGIN_BM.BM_MS.CONTENT' | translate">{{ line }}</span>
     </p>
   </div>
   <div id="loginGroup">
     <div class="loginDesktop">
       <form class="login-container desktop">
         <P>
-          <label>Connection</label>
+          <label>{{ 'LOGIN_BM.FORM.CONNECTION' | translate }}</label>
         </P>
         <div class="form-group">
           <!-- <label for="Password">Username</label> -->
-          <input type="email" class="form-control" name="emailDesktop" placeholder="MyBroodminder email"
+          <input type="email" class="form-control" name="emailDesktop" [placeholder]="'LOGIN_BM.FORM.EMAIL' | translate"
             [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
         </div>
 
         <div class="form-group">
           <!-- <label for="Password">Password</label> -->
-          <input type="password" name="passwdDesktop" class="form-control" placeholder="MyBroodminder password"
+          <input type="password" name="passwdDesktop" class="form-control" [placeholder]="'LOGIN_BM.FORM.PASSWORD' | translate"
             [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
         </div>
         <!--         <div *ngIf="!eulaCheck && !checkButtonIsDisabled()" style="text-align: center;">
@@ -117,8 +107,8 @@
     </section>
     <div class="form-group eulaDesktop" id="footter">
       <button type="button" id="btnLoginDesktop" (click)="login()" [disabled]="!eulaCheck"
-        class="btn btn-success">Login</button>
-      <p class="linkContact"><a href="mailto:support@mellisphera.com">Cannot log in ?</a></p>
+        class="btn btn-success">{{ 'LOGIN_BM.FORM.CONNECTION' | translate }}</button>
+      <p class="linkContact"><a href="mailto:support@mellisphera.com">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
       <p class="errorLogin" *ngIf="authService.errLogin">{{getMessageTraduction(messageList.DENIED)}}</p>
     </div>
   </div>

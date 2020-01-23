@@ -466,6 +466,36 @@
         "TITLE": "Mellisphera",
         "BTN": "Login",
         "EULA": "End User License Agreement",
-        "BTN_EUA": "Accept EULA terms and conditions "
+        "BTN_EUA": "Accept EULA terms and conditions ",
+        "BECOMING": {
+            "TITLE": "Becoming a precision beekeeper",
+            "CONTENT": ["We want to make your hive monitoring experience more intense. Mellisphera is a comprehensive interface that",
+            "aggregates your hive data together with beekeeper actions and environmental weather.",
+            "A set of unique algorithms provide actionable information. It’s no more about temperature and weight but about",
+            "hive fitness, brood level, honey productivity, robing or swarming… Alerts and notifications!"],
+            "READ_MORE": "Read more",
+            "READ_MORE_CONTENT": ["The good news is that Mellisphera is integrated with Broodminder. Once logged in you’ll inherit your full sensor",
+            "history. Moreover this data will be enriched with daily averages, events, alerts etc. You’ll be able to explore",
+            "past events and read the season development from a completely new perspective.",
+            "In two words, you’re about to become a precision beekeeper."]
+        },
+        "QUICK_TOUR": {
+            "TITLE": "Quick tour of Mellisphera",
+            "CONTENT": "Watch this video to discover Mellisphera main functions"
+        },
+        "BM_MS": {
+            "TITLE": "Broodminder and Mellisphera - How it works",
+            "CONTENT": ["Mellisphera and Broodminder environments are complementary and closely linked.",
+            "You’ll continue to use myBroodminder to set up your apiaries, hives and sensors. This information is updated into",
+            "Mellisphera at your next login. Mellisphera will allow you to carry detailed analysis and explorations as well as",
+            "sending you custom alerts and notifications.",
+            "Tip : use your Broodminder account and password to directly log into Mellisphera"]
+        },
+        "FORM": {
+            "EMAIL": "Email MyBroodMinder",
+            "PASSWORD": "Password MyBroodMinder",
+            "CONNECTION": "Connection",
+            "ERR": "Cannot log in ?"
+        }
     }
 }
