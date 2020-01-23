@@ -58,7 +58,9 @@ export class AppComponent implements OnInit {
         (_status: boolean) => {
           if (!_status) {
             console.log('not loggé');
-            this.router.navigateByUrl('login');
+            if (this.location.path().indexOf('login?email=') === -1) {
+              this.router.navigateByUrl('login');
+            }
           } else {
             console.log('path' + this.location.path());
             if (this.location.path() === '' || this.location.path().indexOf('login?email=') !== -1) {
