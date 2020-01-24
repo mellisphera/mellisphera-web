@@ -450,7 +450,8 @@
                 "DAY": "day",
                 "OTHER": "custom",
                 "EVERY": "every",
-                "BTN_MAIL_TEST": "Send test email"
+                "BTN_MAIL_TEST": "Send test email",
+                "WARNING_TEXT": "(*) emails are sent when alerts are reported"
             }
         },
         "STATUS": "Status",

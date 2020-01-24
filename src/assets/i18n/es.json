@@ -463,7 +463,9 @@
                 "DAY": "día",
                 "OTHER": "personalizar",
                 "EVERY": "cada",
-                "BTN_MAIL_TEST": "Probar email"
+                "BTN_MAIL_TEST": "Probar email",
+                "WARNING_TEXT": "(*) la notificacion tendra lugar solamente en caso de nuevas alertas"
+
             }
         },
         "DESCRIPTION": "Descripción",

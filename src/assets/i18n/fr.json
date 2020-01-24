@@ -448,7 +448,9 @@
                 "DAY": "jour",
                 "OTHER": "personnaliser",
                 "EVERY": "tous les ",
-                "BTN_MAIL_TEST": "Tester email"
+                "BTN_MAIL_TEST": "Tester email",
+                "WARNING_TEXT": "(*) des emails sont envoyés lorsque des alertes sont signalées"
+
             }
         },
         "NAME": "Nom",

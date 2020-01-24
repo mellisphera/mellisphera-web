@@ -33,7 +33,6 @@ import { AdminService } from '../../admin/service/admin.service';
 export class StackComponent implements OnInit {
 
   public options: any;
-  private subjectSeriesComplete: BehaviorSubject<number>;
   private valueSubjectComplete: number;
   private gridIndex: Array<number>;
   constructor(private unitService: UnitService,
@@ -61,7 +60,6 @@ export class StackComponent implements OnInit {
     this.valueSubjectComplete = 0;
     this.options.xAxis = [];
     this.gridIndex = [1, 1, 0, 2];
-    this.subjectSeriesComplete = new BehaviorSubject(0);
     //log(this.options);
     /*     if (this.stackService.getEchartInstance() === null) {
           this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
@@ -198,13 +196,13 @@ export class StackComponent implements OnInit {
       return [
         { hive: _hive, 
           name: _hive.name + ' / TempExt',
-          obs: this.recordService.getTempExtByHive(_hive._id, this.melliDate.getRangeForReqest()) },
+          obs: this.recordService.getTempExtByHive(_hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
         { hive: _hive, 
           name: _hive.name + ' / TempInt',
-          obs: this.recordService.getTempIntByHive(_hive._id, this.melliDate.getRangeForReqest()) },
+          obs: this.recordService.getTempIntByHive(_hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
         { hive: _hive, 
           name: _hive.name + ' / Weight',
-          obs: this.recordService.getWeightByHive(_hive._id, this.melliDate.getRangeForReqest()) },
+          obs: this.recordService.getWeightByHive(_hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
         { hive: _hive, 
           name: _hive.name + ' / Hint',
           obs: this.recordService.getHintIntByHive(_hive._id, this.melliDate.getRangeForReqest()) }
@@ -249,11 +247,11 @@ export class StackComponent implements OnInit {
     this.stackService.getEchartInstance().showLoading();
     const obsArray: Array<any> = [
       { name: hive.name + ' / TempExt',
-      obs: this.recordService.getTempExtByHive(hive._id, this.melliDate.getRangeForReqest()) },
+      obs: this.recordService.getTempExtByHive(hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
       { name: hive.name + ' / TempInt',
-      obs: this.recordService.getTempIntByHive(hive._id, this.melliDate.getRangeForReqest()) },
+      obs: this.recordService.getTempIntByHive(hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
       { name: hive.name + ' / Weight',
-      obs: this.recordService.getWeightByHive(hive._id, this.melliDate.getRangeForReqest()) },
+      obs: this.recordService.getWeightByHive(hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
       { name: hive.name + ' / Hint',
       obs: this.recordService.getHintIntByHive(hive._id, this.melliDate.getRangeForReqest()) }
     ];
@@ -388,7 +386,6 @@ export class StackComponent implements OnInit {
     /*     this.stackService.cleanSlectedHives();
         this.options.series = [];
         this.stackService.cleanSerieFromEchartInstance(this.stackService.getEchartInstance()); */
-        this.subjectSeriesComplete.unsubscribe();
   }
 
 }

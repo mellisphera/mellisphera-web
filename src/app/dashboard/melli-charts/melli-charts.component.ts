@@ -349,7 +349,11 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           this.stackComponent.removeHiveSerie(hive);
         } else {
           this.stackService.addHive(hive);
+          let t0 = performance.now();
           this.stackComponent.loadDataByHive(hive);
+          let t1 = performance.now();
+          console.log("L'appel à faireQuelqueChose a pris " + (t1 - t0) + " millisecondes.")
+
         }
         break;
     }
