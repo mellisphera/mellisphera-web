@@ -1,0 +1,232 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
+<div class="content-page">
+  <div class="bs-example">
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-info ">
+        <div class="panel-heading ">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><b>Ruchers</b></a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+          <div class="panel-body">
+            <b class="text-success"></b>
+            <button [disabled]="rucherService.rucher._id == null" data-toggle="tooltip" data-html="true"
+              title="{{ 'NAVBAR.NEW_APIARY' | translate }}" data-toggle="modal"
+              style="margin-left: 96.5%; padding: 1;border: none;" data-target="#newApiaryFormModal"
+              class="btn btn-success btn_create">
+              <i class="fa fa-plus fa-2x"></i>
+            </button>
+
+            <!-- tables ruche -->
+            <div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Rucher</th>
+                    <th scope="col">Description</th>
+                    <th scope="col" class="text-center">Ville</th>
+                    <th scope="col" class="text-center">Code postal</th>
+                    <th class="text-right" scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let apiary of rucherService.ruchers; let apiaryIndex = index;">
+                    <td class="hive-select">{{apiary.name}}</td>
+                    <td class="hive-select">{{apiary.description}}</td>
+                    <td class="text-center">{{apiary.city}}</td>
+                    <td class="text-center">{{apiary.zipCode}}</td>
+                    <td class="text-right">
+                      <button data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.EDITAPIARY' | translate }}"
+                        data-toggle="modal" type="button" (click)="editApiaryClicked(apiary)"
+                        data-target="#editApiaryFormModal" class="btn btn-primary btn_edit"
+                        style="padding: 1;border: none;">
+                        <i class="fa fa-edit fa-2x"></i>
+                      </button>
+                      <button type="button" class="btn btn-warning btn_delete" mwlConfirmationPopover
+                        popoverTitle="{{ 'NAVBAR.DELETE_ASK' | translate }}" placement="top"
+                        confirmText="{{ 'NAVBAR.CRUD.CONFIRM' | translate }}"
+                        cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}" (confirm)="deleteApiary(apiary)"
+                        title="{{ 'HIVES.FORM.DELETE' | translate}}" style="padding: 1;border: none;">
+                        <i class="fa fa-times fa-2x"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
+</div>
+
+
+<!-- CREATE APIARY -->
+
+<div class="modal fade" id="newApiaryFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h4 class="text-center">{{ 'NAVBAR.NEW_APIARY' | translate }}</h4>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="rucherForm">
+          <div class="form-group">
+            <label for="nom" class="col-form-label">{{ 'NAVBAR.CRUD.NAME' | translate }}</label>
+            <input formControlName="name" type="text" class="form-control" id="nom">
+            <div class="alert alert-danger"
+              *ngIf="!rucherForm.controls['name'].valid && rucherForm.controls['name'].dirty">
+              {{ 'NAVBAR.CRUD.NAME_ERROR' | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Description</label>
+            <textarea formControlName="description" class="form-control" id="message-text"></textarea>
+            <div class="alert alert-danger"
+              *ngIf="!rucherForm.controls['description'].valid && rucherForm.controls['description'].dirty">
+              {{ 'NAVBAR.CRUD.DESCRIPTION_ERROR' | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="ville" class="col-form-label">{{ 'NAVBAR.CRUD.CITY' | translate }}</label>
+            <input formControlName="ville" type="text" class="form-control" id="ville">
+            <div class="alert alert-danger"
+              *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
+              {{ 'NAVBAR.CRUD.CITY_ERROR' | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="codePostal" class="col-form-label">{{ 'NAVBAR.CRUD.ZIP_CODE' | translate }}</label>
+            <input formControlName="codePostal" type="text" class="form-control" id="codePostal0">
+            <div class="alert alert-danger"
+              *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
+              {{ 'NAVBAR.CRUD.ZIP_ERROR' | translate }}
+            </div>
+          </div>
+
+          <label>{{ 'NAVBAR.CRUD.PICTURE' | translate }}</label>
+          <input style="display: none" type="file" ngf [(file)]="photoApiary" [(lastBaseUrl)]="newApiary.photo"
+            #fileInput>
+          <button (click)="fileInput.click()"
+            class="btn btn-large btn-block btn-info">{{ 'NAVBAR.CRUD.FILE' | translate }}</button>
+          <div id="upload-group">
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary" class="well my-drop-zone"
+                  [(lastBaseUrl)]="newApiary.photo" [class.valid-drag]="baseDropValid">
+                  {{ 'NAVBAR.CRUD.DROP' | translate }}
+                </div>
+              </div>
+              <div class="img-zone" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div [ngfBackground]="photoApiary"
+                  style="background-size:cover;background-repeat:no-repeat; background-position:center; height:100%; width:100%;">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" value="New Apiary"
+              (click)="apiarySubmit()" [disabled]="!rucherForm.valid">{{ 'NAVBAR.CRUD.CREATE' | translate }}</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              (click)="initForm()">{{ 'NAVBAR.CRUD.CLOSE' | translate }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT APIARY-->
+
+<div class="modal fade" id="editApiaryFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h4 class="text-center">{{ 'NAVBAR.EDITAPIARY' | translate }}</h4>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="rucherForm">
+          <div class="form-group">
+            <label for="nom" class="col-form-label">{{ 'NAVBAR.CRUD.NAME' | translate }}</label>
+            <input formControlName="name" type="text" class="form-control" id="nom">
+            <div class="alert alert-danger"
+              *ngIf="!rucherForm.controls['name'].valid && rucherForm.controls['name'].touched">
+              {{ 'NAVBAR.CRUD.NAME_ERROR' | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Description</label>
+            <textarea formControlName="description" class="form-control" id="message-text"></textarea>
+            <div class="alert alert-danger"
+              *ngIf="!rucherForm.controls['description'].valid && rucherForm.controls['description'].touched">
+              {{ 'NAVBAR.CRUD.DESCRIPTION_ERROR' | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="ville" class="col-form-label">{{ 'NAVBAR.CRUD.CITY' | translate }}</label>
+            <input formControlName="ville" type="text" class="form-control" id="ville">
+            <div class="alert alert-danger"
+              *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
+              {{ 'NAVBAR.CRUD.CITY_ERROR' | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="codePostal" class="col-form-label">{{ 'NAVBAR.CRUD.ZIP_CODE' | translate }}</label>
+            <input formControlName="codePostal" type="text" class="form-control" id="codePostal">
+            <div class="alert alert-danger"
+              *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
+              {{ 'NAVBAR.CRUD.ZIP_ERROR' | translate }}
+            </div>
+          </div>
+          <div id="edit-img-group">
+
+            <label>{{ 'NAVBAR.CRUD.PICTURE' | translate }}</label>
+            <input style="display: none" type="file" ngf [(file)]="photoApiary" [(lastBaseUrl)]="editPhotoApiary"
+              #fileEdit>
+            <button (click)="fileEdit.click()" class="btn btn-large btn-block btn-info">Select File</button>
+            <div class="img-zone">
+              <div [ngfBackground]="photoApiary"
+                style="background-size:cover;background-repeat:no-repeat; background-position:center; height:100%; width:100%;">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" value="Save Apiary"
+              (click)="onEditApiary()" [disabled]="!rucherForm.valid">{{ 'NAVBAR.CRUD.SAVE' | translate }}</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              (click)="initForm()">{{ 'NAVBAR.CRUD.CLOSE' | translate }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-feedback></app-feedback>

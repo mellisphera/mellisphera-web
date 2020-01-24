@@ -1,8 +1,19 @@
-<button id="btn-feedback" type="button" data-toggle="tooltip" data-html="true" title="{{ 'FEEDBACK.TITLE' | translate}}"
-  class="btn btn-default" data-toggle="modal" href="#feedback">
-  <img src="./assets/img/feedback.svg" />
-</button>
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
 
+<!-- <a id="feedbackElt" href="#" data-toggle="modal" data-target="#feedback">
+  <img src="./assets/icons/ui/contact.png" style="width:50px;margin-left:-5px;" />
+  <p>{{ 'FEEDBACK.TITLE' | translate}}</p>
+</a>
+ -->
 <div class="modal fade" id="feedback">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -10,29 +21,25 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           &times;
         </button>
-        <h4 class="modal-title">{{ 'FEEDBACK.MESSAGE' | translate}}</h4>
+        <h4 class="modal-title">{{ 'FEEDBACK.TITLE_MODAL' | translate}}</h4>
       </div>
       <div class="modal-body">
+        <div id="description-slack">
+          <p id="headerText" [innerHTML]="'FEEDBACK.MSG' | translate"><br />
+          </p>
+        </div>
         <form [formGroup]="feedbackForm">
           <textarea formControlName="comment" placeholder="{{ 'FEEDBACK.COMMENT' | translate}}"> </textarea>
         </form>
       </div>
       <div class="modal-footer">
-          <div id="description-slack">
-              <p style="text-align:center;">{{ 'FEEDBACK.SLACK' | translate}}<br/>
-                <a href="https://join.slack.com/t/mellisphera/shared_invite/enQtNjQzNDIwMTU2MDU1LTZiN2ZhODE1YTk2ODAwMjI1MTQyYjkzYWFkYzc4YjAwYzRhOGI2NTExZGFmOWRhNzE4OGY3MGNhZDU5NWY4NGU"
-                  target="_blank">{{ 'FEEDBACK.SIGNUP' | translate}}</a> {{ 'FEEDBACK.OR' | translate}}
-                <a target="_blank"
-                  href="https://join.slack.com/t/mellisphera/shared_invite/enQtNjQzNDIwMTU2MDU1LTZiN2ZhODE1YTk2ODAwMjI1MTQyYjkzYWFkYzc4YjAwYzRhOGI2NTExZGFmOWRhNzE4OGY3MGNhZDU5NWY4NGU">{{ 'FEEDBACK.LOGIN' | translate}}</a>
-              </p>
-            </div>
-          <div id="boutons">
-          <button type="submit" class="btn btn-default" (click)="resForm();" data-dismiss="modal">
-              {{ 'FEEDBACK.CLOSE' | translate}}
-          </button>
+        <div id="boutons">
           <button type="button" (click)="send()" class="btn btn-primary" data-dismiss="modal"
             [disabled]="feedbackForm.invalid">
             {{ 'FEEDBACK.SEND' | translate}}
+          </button>
+          <button type="submit" class="btn btn-default" (click)="resForm();" data-dismiss="modal">
+            {{ 'FEEDBACK.CLOSE' | translate}}
           </button>
         </div>
       </div>

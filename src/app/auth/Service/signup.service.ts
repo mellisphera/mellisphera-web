@@ -1,8 +1,19 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { Injectable } from '@angular/core';
 import { User } from '../../_model/user';
 import { AuthService } from './auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CONFIG } from '../../../config';
+import { CONFIG } from '../../../constants/config';
 
 
 const httpOptions = {
@@ -20,10 +31,8 @@ export class SignupService {
   constructor(private http: HttpClient) {
     this.errSignup = false;
     this.user = {
-      id : null,
+      _id : null,
       createdAt : new Date(),
-      login : { email: null, password: null},
-      phone : null,
       email : null,
       username : null,
       password : null,
@@ -31,10 +40,6 @@ export class SignupService {
       role : null,
       lastConnection : null,
       fullName : null,
-      position : null,
-      country : null,
-      city : null,
-      levelUser : null,
     }
   }
 
@@ -44,7 +49,7 @@ export class SignupService {
       (err) => {
         this.errSignup = true;
         console.log(err);
-        this.errSignupLabel = err.error.message.split('->')[1];
+        this.errSignupLabel = err.message.split('>')[1];
       },
       () => {
         if (!this.errSignup) {

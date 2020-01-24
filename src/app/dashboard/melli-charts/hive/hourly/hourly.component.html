@@ -1,0 +1,28 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
+<div id="hourly" (window:resize)="onResize($event)">
+  <div class="chart hourly" id="hourly-chart"></div>
+</div>
+<div id="sidebar-tools-hourly" class="sidebar-wrapper">
+  <ul class="nav responsive-nav" id="device_hourly">
+    <li *ngFor="let type of getlabelByType('DEVICE'); let i = index;" (click)="setType(type)" [class]="type.class"
+      [id]="type.id">{{ type.name }}
+    </li>
+  </ul>
+  <hr />
+  <ul class="nav responsive-nav" id="other_hourly">
+    <li *ngFor="let type of getlabelByType('OTHER'); let i = index" (click)="setType(type)" [class]="type.class"
+      [id]="type.id">{{ type.name }}
+    <li (click)="exportToCsv('OTHER')" class="item-type">
+      <!-- <img src="./assets/icons/exportToCsv.png"> -->to CSV</li>
+  </ul>
+</div>

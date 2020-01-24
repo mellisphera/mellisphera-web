@@ -1,25 +1,322 @@
-#hive-list{
-    text-align: center;
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
+#apiary-group{
+    /*overflow: auto;*/
+    scrollbar-width: none;
+    white-space: pre-wrap;
+    overflow-y: scroll;
+    z-index: 5;
+    position: absolute;
+    justify-content: space-between;
+    height: auto;
 }
-#hive-list li{
-    display: inline-block;
-    list-style: none;
-    padding: 5px;
-    background-color: gray;
+.apiary-group-hive{
+    width: 13%;
 }
-#hive-list li:hover{
-    background-color: aliceblue;
-    cursor: pointer;
+.apiary-group-brood{
+    width: 13%;
 }
-.hive-active{
-    background-color: white;
+.apiary-group-stack{
+    width: 13%;
+
+}
+#apiary-group, .list-group-item {
+/*     background-color: #204d74;
+ */    color: black;
+}
+#apiary-group::-webkit-scrollbar { 
+    /* This is the magic bit for WebKit */
+    display: none;
+  }
+.dropdown-menu{
+    padding: 10px;
+    color: white !important;
+    display: flex;
+    background-color: #4F4F51;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 332px;
+}
+.date-arrow{
+    border: none;
+    padding: 0px !important;
+}
+.date-arrow .fa{
+    font-size: 35px;
+}
+.fa-calendar{
+    margin-right: 5px !important;
+}
+nav[role=admin-navigation] {
     color: white;
+    background-color: #4F4F51;
 }
-#type-graph li{
-    list-style: none;
+.nav li .btn{
+    color: white !important;
+}
+.active{
+    background-color: white;
+}
+.nopadding{
+    padding: 0px !important;
+    margin: 0 !important;
+}
+.nav-date{
+     margin-right: 10px;
+     display: flex;
+     justify-content: center;
+     width: 31%;
+     margin-top: -8px;
+}
+#dropdown{
+    width: 50%;
     text-align: center;
+}
+.nav-date .btn-primary {
+    width: 100% !important;
+}
+#btn-date{
+    margin-top: 13px;
+    height: 36px;
+    padding-right: 0px;
+    background-color: #4F4F51;
+    color: white !important;
+    border: none !important;
+}
+#previous-date {
+    margin-right: 10px;
+
+}
+#next-date{
+    margin-left: 10px;
+    margin-right: 20px;
+}
+.time{
+    white-space: nowrap;
+    list-style: none;
+}
+#content{
+    position: relative !important;
+    left: 13% !important;
+    width: calc(100% - 13%);
+    height: 89vh;
+}
+.circle{
+    border: 1px solid black;
+    display: inline-block;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+
+}
+.puce-hive{
+    background-image: url('../../../assets/icons/ui/hive.png');
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size:25px;
+    margin: 2px;
+    width: 25px;
+    height: 25px;
+    margin-bottom: -8px;
+}
+
+.puce-apiary{
+    background-image: url('../../../assets/icons/ui/melliUx.svg');
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size:25px;
+    width: 25px;
+    height: 23px;
+    vertical-align: text-top;
+    margin-right: 5px;
+}
+.caret.caret-up {
+    border-top-width: 0;
+    border-bottom: 4px solid black;
+}
+.apiary-active{
+    background-color: #eafffd;
+}
+.time:hover{
+    background-color: lightslategray;
     cursor: pointer;
 }
-.type-active{
-    color: orange;
+#dt-scale{
+    width: 100%;
 }
+#dt-scale div{
+    display: flex;
+}
+#dt-scale ul{
+    margin: 8px;
+    padding: 0px;
+}
+.sub-items{
+    cursor: pointer;
+}
+
+.loading{
+    cursor: wait !important;
+}
+.btn-transparent{
+    background-color: transparent !important;
+}
+
+.button {
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 6px 1px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+
+  .button0 {
+    background-color: #4F4F51; 
+    color: white; 
+    border: 2px solid #70A8B2;
+    border-radius: 4px;
+  }
+  
+  .button0:hover {
+    background-color: white;
+    color: #4F4F51; 
+  }
+
+  .nav-active {
+    background-color: white;
+    color: #4F4F51; 
+  }
+  
+  .active0{
+    background-color: white;
+    color: #4F4F51; 
+  }
+  
+  .active0:hover{
+    color: #70A8B2; 
+    border: 2px solid #4F4F51;
+  }
+
+  .buttonLeft{
+      margin-left: 25px;
+  }
+
+  .navbar{
+      height: 50px;
+  }
+
+@media screen and (max-width:1500px) {
+    .apiary-group-hive{
+        width: 10%;
+    }
+}
+@media screen and (max-width:1400px) {
+    #btn-date{
+        font-size: 12px;
+    }
+}
+@media screen and (max-width:1300px) {
+    .apiary-group-hive{
+        width: 20%;
+    }
+    .apiary-group-brood{
+        position: relative !important;
+        height: auto;
+        width: 100%;
+    }
+    .apiary-group-stack{
+        position: relative !important;
+        height: auto;
+        width: 100%;
+    }
+    #content{
+        position: relative;
+        left: auto !important;
+        width: 100% !important;
+    }
+    #input-date{
+        width: 100%;
+    }
+}
+@media screen and (max-width:1200px) {
+    #input-date{
+        width: 100%;
+    }
+    .nav-date{
+        /* justify-content: end; */
+        width: 45%;
+    }
+
+
+}
+@media only screen 
+  and (min-width: 1024px) 
+  and (max-height: 1366px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 1.5) {
+/*     #apiary-group{
+        width: 12%;
+    } */
+}
+
+@media screen and (max-width:1000px){
+    .navbar-nav {
+        display: flex !important;
+    }
+    .nav-date{
+        /* justify-content: end; */
+        width: 100%;
+    }
+    .navbar{
+        height: 100px;
+     }
+     .buttonLeft{
+        justify-content: space-around;
+        width: 100%;
+    }
+     .apiary-group-hive{
+        position: relative !important;
+        height: auto !important;
+        width: 100%;
+    }
+    .navbar-nav{
+        /*justify-content: center !important;*/
+        margin: 0px !important;
+    }
+
+    .dropdown-menu{
+        background-color: #4F4F51 !important;
+        position: absolute !important;
+        width: 100% !important;
+    }
+}
+@media screen and (max-width:800px) {
+}
+@media screen and (max-width:500px){
+    #dt-scale ul:first-child{
+        /*padding-left: 6px;*/
+    }
+    #dropdown{
+        width: 75%;
+    }
+    .navbar-nav{
+        justify-content: space-around;
+    }
+/*     #dt-scale ul {
+        padding: 0px;
+    } */
+}
+

@@ -1,0 +1,118 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
+
+
+<div class="content-page">
+  <!--   <div class="text-right">
+    <button type="button" (click)="sortByStatus(true)" class="btn btn-primary">Enable</button>
+    <button type="button" (click)="sorByStatus(false)" class="btn btn-primary">Disable</button>
+  </div> -->
+  <section id="notif-list">
+
+    <table class="table">
+      <thead style="display: none;">
+        <tr>
+          <th scope="col" class="text-left cols_icon">{{ 'ALERT_CONF_PAGE.TYPE' | translate}}</th>
+          <th scope="col" class="text-left name_notif cols_custom">{{ 'ALERT_CONF_PAGE.NAME' | translate}}</th>
+          <th scope="col" class="text-left cols_description">{{ 'ALERT_CONF_PAGE.DESCRIPTION' | translate}}</th>
+          <th scope="col" class="text-left cols_value">{{ 'ALERT_CONF_PAGE.VALUE' | translate}}</th>
+          <th scope="col" class="text-left cols_val"></th>
+          <th scope="col" class="text-left">{{ 'ALERT_CONF_PAGE.STATUS' | translate}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let alert of alertTypes">
+          <tr [class]="(isEnable(alert._id) ? 'enable' : 'disable') + ' tr-items'"
+            *ngIf="!(alert.icon === 'StopWeather' && !userHaveWeatherStation())">
+            <td scope="row" class="text-left">
+              <img width="40px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
+            </td>
+            <td class="text-left name_notif">
+              {{ getNameByLang(alert._id) }}
+            </td>
+            <td class="text-left">
+              <popover-content #myPopover title="{{ getNameByLang(alert._id) }}" placement="right" [animation]="true"
+                [closeOnClickOutside]="false">
+                <span class="helpTooltip">{{ getNotifDescriptionFromLangage(alert.icon) }}</span>
+              </popover-content>
+              <a [popover]="myPopover" style="font-size: 20px !important;" class="info-link"><i
+                  class="fa fa-info-circle" aria-hidden="true"></i></a>
+            </td>
+            <td class="text-center cols_value">
+              <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
+                <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range"
+                  [min]="getRangeValue(alert._id)[0]" [max]="getRangeValue(alert._id)[1]" [step]="getStep(alert._id)"
+                  [value]="getUserValue(alert._id)" />
+              </div>
+            </td>
+            <td>
+              <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
+                <p>{{ getUserValue(alert._id) }} {{ getUnit(alert._id) }}{{ getPeriod(alert._id) }}</p>
+              </div>
+            </td>
+            <td class="text-left">
+              <div class="btn-group" id="status" data-toggle="buttons" *ngIf="alert.disable && emailIsEnable()">
+                <label [class]="'btn btn-default btn-on ' + (isEnable(alert._id) ? 'active': '')"
+                  (click)="onEnable(alert._id)">
+                  <input type="radio" [disabled]="!isAlterable(alert._id)" value="1"
+                    name="multifeatured_module[module_id][status]">ON</label>
+                <label [class]="'btn btn-default btn-off ' + (isEnable(alert._id) ? 'not-active': 'active')"
+                  (click)="onDisable(alert._id)">
+                  <input type="radio" [disabled]="!isAlterable(alert._id)" value="0"
+                    name="multifeatured_module[module_id][status]">OFF</label>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+
+      </tbody>
+    </table>
+
+
+    <!--     <div class="text-center">
+      <button type="button" (click)="onSave()" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ 'ALERT_CONF_PAGE.SAVE' | translate }}</button>
+    </div> -->
+
+
+
+    <!--       <ul class="list-group">
+          <li [class]="'list-group-item ' + (isEnable(alert._id) ? 'enable' : 'disable')" *ngFor="let alert of alertType">
+            <p>
+                <img width="30px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.type + '.png'">
+                {{ alert.type }}
+            </p>
+            <div class="text-center" *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
+                <input type="range" min="5" max="10" step="1"/>
+            </div>
+            <div class="btn-group" id="status" data-toggle="buttons">
+                <label [class]="'btn btn-default btn-on ' + (isEnable(alert._id) ? 'active': '')" (click)="onEnable(alert._id)">
+                <input type="radio" [disabled]="!isAlterable(alert._id)" value="1" name="multifeatured_module[module_id][status]">ON</label>
+                <label [class]="'btn btn-default btn-off ' + (isEnable(alert._id) ? 'not-active': 'active')" (click)="onDisable(alert._id)">
+                <input type="radio" [disabled]="!isAlterable(alert._id)" value="0" name="multifeatured_module[module_id][status]">OFF</label>
+              </div>
+          </li>
+        </ul> -->
+  </section>
+</div>
+
+<div class="infoToolip">
+  <popover-content #broodToltip placement="left" [animation]="true"
+      [closeOnClickOutside]="false">
+      <span class="helpTooltip">
+          <span
+              *ngFor="let line of 'ALERT_CONF_PAGE.HELP.ALERTS' | translate">{{ line }}<br /></span>
+      </span>
+  </popover-content>
+  <div [popover]="broodToltip" style="font-size: 15px !important;">
+      <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+  </div>
+</div>

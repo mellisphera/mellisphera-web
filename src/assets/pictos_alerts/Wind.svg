@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 512 512"
+   height="512"
+   width="512"
+   sodipodi:docname="wind.svg"
+   inkscape:version="0.92.4 (33fec40, 2019-01-16)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1412"
+     id="namedview957"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="0.64"
+     inkscape:cx="171.02768"
+     inkscape:cy="384.18729"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-22.171891,-131.487)"
+     id="layer1">
+    <text
+       id="text817"
+       y="193.93806"
+       x="46.846333"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.35138893px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="stroke-width:0.26458332"
+         y="196.90326"
+         x="46.846333"
+         id="tspan815" /></text>
+    <text
+       id="text821"
+       y="483.62451"
+       x="276.30627"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.93333244px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:400px;font-family:Poppins;-inkscape-font-specification:'Poppins Bold';stroke-width:0.26458332"
+         y="483.62451"
+         x="276.30627"
+         id="tspan819">W</tspan></text>
+    <rect
+       y="131.58395"
+       x="22.494968"
+       height="135.04666"
+       width="135.36974"
+       id="rect861"
+       style="opacity:1;fill:none;fill-opacity:0.9484536;stroke:none;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <use
+       id="use961"
+       inkscape:spray-origin="#rect861"
+       xlink:href="#rect861"
+       x="0"
+       y="0"
+       width="100%"
+       height="100%"
+       transform="translate(-115.56967,782.02925)" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3718"
+       style="fill:black;fill-opacity:1;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion3720"><rect
+           id="rect3722"
+           width="443.75"
+           height="106.25"
+           x="32.8125"
+           y="385.4375" /></flowRegion><flowPara
+         id="flowPara3724" /></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3726"
+       style="font-style:normal;font-weight:normal;font-size:96px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="translate(-9.078109,-115.388)"><flowRegion
+         id="flowRegion3728"
+         style="font-size:96px"><rect
+           id="rect3730"
+           width="518.75"
+           height="157.8125"
+           x="32.8125"
+           y="391.6875"
+           style="font-size:96px" /></flowRegion><flowPara
+         id="flowPara3732"
+         style="font-size:96px" /></flowRoot>    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       x="277.22659"
+       y="595.0495"
+       id="text26"><tspan
+         sodipodi:role="line"
+         id="tspan24"
+         x="277.22659"
+         y="595.0495"
+         style="font-size:80px;text-align:center;text-anchor:middle">Speed wind</tspan></text>
+  </g>
+</svg>

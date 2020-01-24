@@ -1,0 +1,90 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
+.close{
+    font-size: 30px;
+}
+
+.fa-times{
+    margin-left: 15px;
+}
+
+#user-group{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.panel{
+    width: 100%;
+    margin-bottom:1px !important;
+    padding: 4px;
+}
+#notesHives{
+    /* border: 1px dashed gray; */
+    padding: .5em;
+    height: 500px;
+    white-space: pre-wrap;
+    overflow-y: scroll;
+}
+
+.user-title{
+    text-align: center;
+}
+th{
+    color: black !important;
+}
+.battery-contain{
+    position: relative;
+}
+.battery-level{
+    padding-left: 2px;
+    color: black;
+    font-weight: bold;
+}
+.dt-picker{
+    width: 100px;
+}
+.btn_delete_modal_mobile{
+    display: none;
+}
+@media (max-width:800px) {
+    .panel {
+        width: 100% !important;
+    }
+} 
+
+.fa-plus{
+    margin-top: -3px;
+    vertical-align: center;
+}
+
+.delete{
+    position: absolute;
+    left: 15px;
+}
+
+.text-title{
+    display: inline-block;
+    width: 90%;
+}
+.user-sensors::before{
+    content: "";
+}
+@media (max-width: 500px) {
+    .btn_delete_modal{
+        display: none;
+    } 
+    .btn_delete_modal_mobile{
+        display: block;
+        padding-top: 0px !important;
+
+    }
+ }

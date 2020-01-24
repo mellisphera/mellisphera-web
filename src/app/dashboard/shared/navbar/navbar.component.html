@@ -1,3 +1,14 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -8,34 +19,83 @@
         <span class="icon-bar"></span>
       </button>
       <ul class="nav navbar-nav navbar-left" id="apiary-group">
+<!--         <li id="menuToggle">
+          <input type="checkbox" id="menuCheckbox" />
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+
+          <ul id="menu">
+            <li id="titleCRUD">{{ 'NAVBAR.CRUD.TITLE' | translate }}</li>
+            <li><a routerLink="./manage-apiarys" data-toggle="tooltip" data-placement="top"
+                title="{{ 'SIDEBAR.APIARY' | translate }}">
+                <img src="./assets/icons/ui/melliUx.png" style="width:50px;margin-left:-5px;" />
+              </a>
+              <button data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.NEW_APIARY' | translate }}"
+                data-toggle="modal" data-target="#newApiaryModal" class="btn btn-success btn-lg crud-apiary btn_create">
+                <i class="{{ 'NAVBAR.CRUD.APIARY' | translate }} fa fa-plus fa-2x"></i>
+              </button>
+              <button type="button" (click)="editRucherClicked()" class="crud btn btn-primary btn-lg crud-apiary btn_edit"
+                data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.EDIT_APIARY' | translate }}"
+                data-toggle="modal" data-target="#editApiary">
+                <i class="fa fa-edit fa-2x"></i>
+              </button>
+            </li>
+            <li><a routerLink="./manage-hives" data-toggle="tooltip" id="hives" data-placement="top"
+                title="{{ 'SIDEBAR.HIVES' | translate }}">
+                <img src="./assets/icons/ui/hive.png" style="width:50px;margin-left:-5px;" />
+              </a>
+              <button [disabled]="rucherService.rucher._id === null" (click)="rucherSelectInit()" data-toggle="tooltip"
+                data-html="true" title="{{ 'HIVES.FORM.NEW' | translate}}" data-toggle="modal"
+                data-target="#newHiveModal" class="btn btn-success btn-lg crud-apiary btn_create">
+                <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
+              </button>
+              <button data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.CRUD.EDITAHIVE' | translate}}"
+                data-toggle="modal" type="button" (click)="editHiveClicked()" data-target="#editHiveModal"
+                class="btn btn-primary btn-lg crud-apiary btn_edit">
+                <i class="fa fa-edit fa-2x"></i>
+              </button>
+            </li>
+            <li>
+              <a data-toggle="tooltip" id="notes" data-placement="top"
+                title="{{ 'SIDEBAR.NOTES' | translate }}">
+                <img src="./assets/icons/ui/notes.png" style="width:50px;margin-left:-5px;" />
+              </a>
+              <button [disabled]="rucherService.rucher._id == null" (click)="newNoteModalInit()" data-toggle="tooltip"
+                data-html="true" data-toggle="modal" data-target="#newNoteModal"
+                title="{{ 'NOTES.FORM.NEW' | translate}}" class="btn btn-success btn-lg crud-apiary btn_create">
+                <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
+              </button>
+            </li>
+            <li id="{{ 'NAVBAR.CRUD.MANAGE' | translate }}">
+              <a routerLink="./manage-sensors" data-toggle="tooltip" data-placement="top" id="sensor"
+                title="{{ 'SIDEBAR.SENSORS' | translate }}">
+                <img src="./assets/img/sensor-icon.png" style="width:50px;margin-left:-5px;" />
+              </a>
+              <button [disabled]="rucherService.rucher._id == null" (click)="newSensorInit()" data-toggle="tooltip"
+                data-html="true" data-toggle="modal" title="{{ 'CAPTEUR.FORM.NEW' | translate}}"
+                data-target="#newSensorModal" class="btn btn-success btn-lg crud-apiary btn_create">
+                <i class="{{ 'NAVBAR.CRUD.HIVES' | translate }} fa fa-plus fa-2x hive-plus"></i>
+              </button>
+              <button data-toggle="tooltip" data-html="true" data-toggle="modal" type="button"
+                title="{{ 'CAPTEUR.FORM.EDITASENSOR' | translate}}" data-target="#editSensorModal"
+                (click)="editSensorInit()" class="btn btn-primary btn-lg crud-apiary btn_edit">
+                <i class="fa fa-edit fa-2x"></i>
+              </button>
+            </li>
+          </ul>
+        </li> -->
         <li>
-          <select [(ngModel)]="rucherService.rucher" style="width: 100%" class="form-control"
+          <select [(ngModel)]="rucherService.rucher" class="form-control"
             (change)="onSelectRucher()" id="select-Apiary">
-            <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">
+            <option *ngFor="let rucher of rucherService.allApiaryAccount" [ngValue]="rucher">
               {{rucher.name}} <span class="admin_userApiary" *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
                 style="color:red;"> => {{ rucher.username }}</span>
             </option>
           </select>
-
-        </li>
-        <li>
-          <button data-backdrop="false" data-toggle="tooltip" data-html="true" title="{{ 'NAVBAR.NEW_APIARY' | translate }}" data-backdrop="false" data-toggle="modal"
-            data-target="#newRucherModal" class="btn btn-success btn-lg crud-apiary">
-            <i class="fa fa-plus fa-2x"></i>
-          </button>
-          <button data-backdrop="false" type="button" (click)="editRucherClicked()"
-            class="crud btn btn-success btn-lg crud-apiary" data-toggle="tooltip" data-backdrop="false" data-html="true" title="{{ 'NAVBAR.EDIT_APIARY' | translate }}"
-            data-toggle="modal" data-target="#editRucher">
-            <i class="fa fa-edit fa-2x"></i>
-          </button>
-          <button type="button" class="btn btn-warning btn-lg crud-apiary" data-toggle="tooltip" data-html="true"
-            title="{{ 'NAVBAR.DELETE_APIARY' | translate }}" mwlConfirmationPopover popoverTitle="{{ 'NAVBAR.DELETE_ASK' | translate }}" placement="bottom" confirmText = "{{ 'NAVBAR.CRUD.CONFIRM' | translate }}" cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}"
-            (confirm)="deleteRucher()">
-            <i class="fa fa-times fa-2x"></i>
-          </button>
         </li>
       </ul>
-      <!--       <div id="lang-group">
+      <!-- <div id="lang-group">
         <img (click)="translateService.use('fr')" src="./assets/img/fr.png" alt="FR"/>
         <img (click)="translateService.use('en')" src="./assets/img/en.png" alt="EN"/>
       </div> -->
@@ -54,7 +114,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <p>
               <img src="./assets/img/icone-account.png" style="width:2em">
-              {{ username }}
+              {{ userService.getUser() }}
               <b class="caret"></b>
             </p>
           </a>
@@ -62,8 +122,8 @@
             <li><a [routerLink]="[ './preferences']">{{ 'NAVBAR.ACCOUNT.PREFERENCES' | translate }}</a></li>
             <li class="divider"></li>
             <li><a href="#" (click)="logout()">{{ 'NAVBAR.ACCOUNT.LOG_OUT' | translate }}</a></li>
-            <li id="color-items"><span class="color-items" *ngFor="let color of sidebarService.getColors()"
-                (click)="setColor(color)"><i class="fa fa-circle" [style.color]="color.color"></i></span></li>
+<!--             <li id="color-items"><span class="color-items" *ngFor="let color of sidebarService.getColors()"
+                (click)="setColor(color)"><i class="fa fa-circle" [style.color]="color.color"></i></span></li> -->
           </ul>
         </li>
         <!--         <li>
@@ -75,72 +135,90 @@
       </ul>
     </div>
   </div>
-</nav>
+  </nav>
+
+<!-- ###############################################################
+         ###############################################################
+         ###################      MANAGE APIARY      ###################
+         ###############################################################
+         ############################################################### -->
 
 
+<!-- CREATE APIARY -->
 
-<div class="modal fade" id="newRucherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="newApiaryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          <h4 class="text-center">{{ 'NAVBAR.NEW_APIARY' | translate }}</h4>
-        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h4 class="text-center">{{ 'NAVBAR.NEW_APIARY' | translate }}</h4>
+        </h5>
       </div>
       <div class="modal-body">
         <form [formGroup]="rucherForm">
           <div class="form-group">
-            <label for="nom" class="col-form-label">{{ 'NAVBAR.CRUD.NAME' | translate }}</label>
-            <input formControlName="name" type="text" class="form-control" id="nom">
+            <label for="name" class="col-form-label">{{ 'NAVBAR.CRUD.NAME' | translate }}</label>
+            <input formControlName="name" type="text" class="form-control" id="name">
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['name'].valid && rucherForm.controls['name'].dirty">
               {{ 'NAVBAR.CRUD.NAME_ERROR' | translate }}
             </div>
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Description</label>
-            <textarea formControlName="description" class="form-control" id="message-text"></textarea>
+            <label for="message-text1" class="col-form-label">Description</label>
+            <textarea formControlName="description" class="form-control" id="message-text1"></textarea>
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['description'].valid && rucherForm.controls['description'].dirty">
               {{ 'NAVBAR.CRUD.DESCRIPTION_ERROR' | translate }}
             </div>
           </div>
           <div class="form-group">
-            <label for="ville" class="col-form-label">{{ 'NAVBAR.CRUD.CITY' | translate }}</label>
-            <input formControlName="ville" type="text" class="form-control" id="ville">
-            <div class="alert alert-danger"
-              *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
-              {{ 'NAVBAR.CRUD.CITY_ERROR' | translate }}
-            </div>
-          </div>
-          <div class="form-group">
             <label for="codePostal" class="col-form-label">{{ 'NAVBAR.CRUD.ZIP_CODE' | translate }}</label>
-            <input formControlName="codePostal" type="text" class="form-control" id="codePostal">
+            <input formControlName="codePostal" type="text" class="form-control" id="codePostal1">
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
               {{ 'NAVBAR.CRUD.ZIP_ERROR' | translate }}
             </div>
           </div>
+          <div class="form-group">
+            <label for="ville" class="col-form-label">{{ 'NAVBAR.CRUD.CITY' | translate }}</label>
+            <!--             <input formControlName="ville" type="text" class="form-control" id="ville">
+ -->
+            <input list="city" formControlName="ville" class="form-control" type="text">
+ <!--            <datalist id="city">
+              <option *ngFor="let city of cityByZipCode" [value]="city">
+            </datalist> -->
+            <div class="alert alert-danger"
+              *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
+              {{ 'NAVBAR.CRUD.CITY_ERROR' | translate }}
+            </div>
+          </div>
 
           <label>{{ 'NAVBAR.CRUD.PICTURE' | translate }}</label>
-          <input style="display: none" type="file" ngf [(file)]="photoApiary" [(lastBaseUrl)]="newApiary.photo"
-            #fileInput>
-          <button (click)="fileInput.click()" class="btn btn-large btn-block btn-info">{{ 'NAVBAR.CRUD.FILE' | translate }}</button>
+          <input style="display: none" type="file" ngf [(file)]="photoApiary" [maxSize]="maxSizePicture"
+            [(lastInvalids)]="lastInvalids" [(lastBaseUrl)]="newApiary.photo" #fileInput>
+          <button (click)="fileInput.click()"
+            class="btn btn-large btn-block btn-info">{{ 'NAVBAR.CRUD.FILE' | translate }}</button>
           <div id="upload-group">
             <div class="row">
               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary" class="well my-drop-zone"
-                  [(lastBaseUrl)]="newApiary.photo" [class.valid-drag]="baseDropValid">
+                <div ngfDrop [(validDrag)]="baseDropValid" [(file)]="photoApiary" [maxSize]="maxSizePicture"
+                  [(lastInvalids)]="lastInvalids" class="well my-drop-zone" [(lastBaseUrl)]="newApiary.photo"
+                  [class.valid-drag]="baseDropValid">
                   {{ 'NAVBAR.CRUD.DROP' | translate }}
                 </div>
+
               </div>
-              <div class="img-zone" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div [ngfBackground]="photoApiary"
-                  style="background-size:cover;background-repeat:no-repeat; background-position:center; height:100%; width:100%;">
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="img-zone" *ngIf="!lastInvalids?.length" [ngfBackground]="photoApiary"
+                  style="background-size:cover;background-repeat:no-repeat; background-position:center; width:100%;">
+                </div>
+                <div class="bg-warning" *ngIf="lastInvalids?.length" style="margin-bottom: 40px">
+                  <p style="color:red;">{{ 'NAVBAR.CRUD.WARNING_PICTURE' | translate }}</p>
                 </div>
               </div>
             </div>
@@ -150,7 +228,8 @@
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" data-dismiss="modal" value="New Apiary"
               (click)="apiarySubmit()" [disabled]="!rucherForm.valid">{{ 'NAVBAR.CRUD.CREATE' | translate }}</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">{{ 'NAVBAR.CRUD.CLOSE' | translate }}</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              (click)="initForm()">{{ 'NAVBAR.CRUD.CLOSE' | translate }}</button>
           </div>
         </form>
       </div>
@@ -159,24 +238,31 @@
 </div>
 
 
-<!--Modal modification rucher-->
+<!-- EDIT APIARY-->
 
-<div class="modal fade" id="editRucher" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="editApiary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          <h4 class="text-center">{{ 'NAVBAR.EDIT_APIARY' | translate }}</h4>
-        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h4 class="text-center">{{ 'NAVBAR.EDIT_APIARY' | translate }}</h4>
+        </h5>
       </div>
       <div class="modal-body">
+        <div class="form-group">
+          <label class="col-form-label">{{ 'NAVBAR.CRUD.APIARY_UPDATE' | translate}}</label>
+          <select [(ngModel)]="rucherService.rucherSelectUpdate" class="form-control"
+            (change)="onSelectRucherEditForm();">
+            <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option>
+          </select>
+        </div>
         <form [formGroup]="rucherForm">
           <div class="form-group">
-            <label for="nom" class="col-form-label">{{ 'NAVBAR.CRUD.NAME' | translate }}</label>
+            <label for="nom" class="col-form-label">{{ 'NAVBAR.CRUD.APIARY_NAME' | translate }}</label>
             <input formControlName="name" type="text" class="form-control" id="nom">
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['name'].valid && rucherForm.controls['name'].touched">
@@ -184,7 +270,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Description</label>
+            <label for="message-text" class="col-form-label">{{ 'NAVBAR.CRUD.APIARY_DESCRIPTION' | translate }}</label>
             <textarea formControlName="description" class="form-control" id="message-text"></textarea>
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['description'].valid && rucherForm.controls['description'].touched">
@@ -192,7 +278,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="ville" class="col-form-label">{{ 'NAVBAR.CRUD.CITY' | translate }}</label>
+            <label for="ville" class="col-form-label">{{ 'NAVBAR.CRUD.CITY_APIARY' | translate }}</label>
             <input formControlName="ville" type="text" class="form-control" id="ville">
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['ville'].valid && rucherForm.controls['ville'].touched">
@@ -200,7 +286,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="codePostal" class="col-form-label">{{ 'NAVBAR.CRUD.ZIP_CODE' | translate }}</label>
+            <label for="codePostal" class="col-form-label">{{ 'NAVBAR.CRUD.ZIP_CODE_APIARY' | translate }}</label>
             <input formControlName="codePostal" type="text" class="form-control" id="codePostal">
             <div class="alert alert-danger"
               *ngIf="!rucherForm.controls['codePostal'].valid && rucherForm.controls['codePostal'].touched">
@@ -210,12 +296,16 @@
           <div id="edit-img-group">
 
             <label>{{ 'NAVBAR.CRUD.PICTURE' | translate }}</label>
-            <input style="display: none" type="file" ngf [(file)]="photoApiary" [(lastBaseUrl)]="editPhotoApiary"
-              #fileEdit>
-            <button (click)="fileEdit.click()" class="btn btn-large btn-block btn-info">Select File</button>
-            <div class="img-zone" >
-              <div [ngfBackground]="photoApiary"
+            <input style="display: none" type="file" ngf [(file)]="photoApiary"
+              [(lastInvalids)]="lastInvalids" [(lastBaseUrl)]="editPhotoApiary" #fileEdit>
+            <button (click)="fileEdit.click()"
+              class="btn btn-large btn-block btn-info">{{ 'NAVBAR.CRUD.FILE' | translate }}</button>
+            <div class="img-zone">
+              <div [ngfBackground]="photoApiary" *ngIf="!lastInvalids?.length"
                 style="background-size:cover;background-repeat:no-repeat; background-position:center; height:100%; width:100%;">
+              </div>
+              <div class="bg-warning" *ngIf="lastInvalids?.length" style="margin-bottom: 40px">
+                <p style="color:red;">{{ 'NAVBAR.CRUD.WARNING_PICTURE' | translate }}</p>
               </div>
             </div>
           </div>
@@ -248,12 +338,524 @@
                </div>-->
 
           <div class="modal-footer">
+            <button type="button" class="btn btn-warning btn-primary delete" data-toggle="tooltip" data-html="true"
+              mwlConfirmationPopover popoverTitle="{{messageOrphanHives}}" placement="bottom"
+              confirmText="{{ 'NAVBAR.CRUD.CONFIRM' | translate }}" cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}"
+              (confirm)="deleteRucher()">{{ 'NAVBAR.DELETE_APIARY2' | translate }}</button>
             <button type="submit" class="btn btn-primary" data-dismiss="modal" value="Save Apiary"
               (click)="onEditerRucher()" [disabled]="!rucherForm.valid">{{ 'NAVBAR.CRUD.SAVE' | translate }}</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="initForm()">{{ 'NAVBAR.CRUD.CLOSE' | translate }}</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              (click)="initForm()">{{ 'NAVBAR.CRUD.CLOSE' | translate }}</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<!-- DELETE APIARY -->
+<div class="modal fade" id="deleteApiary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h4 class="text-center">{{ 'NAVBAR.DELETE_APIARY' | translate }}</h4>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
+          <select [(ngModel)]="rucherService.rucherSelectUpdate" class="form-control"
+            (change)="onSelectRucherDeleteForm();">
+            <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option>
+          </select>
+        </div>
+        <div>
+          {{messageOrphanHives}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning btn-primary" data-toggle="tooltip" data-html="true"
+            mwlConfirmationPopover popoverTitle="{{ 'NAVBAR.DELETE_ASK' | translate }}" placement="bottom"
+            confirmText="{{ 'NAVBAR.CRUD.CONFIRM' | translate }}" cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}"
+            (confirm)="deleteRucher()">{{ 'NAVBAR.DELETE_APIARY2' | translate }}</button>
+          <button type="button" class="btn btn-secondary"
+            data-dismiss="modal">{{ 'NAVBAR.CRUD.CLOSE' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ###############################################################
+         ###############################################################
+         ###################      MANAGE HIVE      ###################
+         ###############################################################
+         ############################################################### -->
+
+<!-- NEW HIVE -->
+<div class="modal fade" id="newHiveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h3 class="text-center">{{ 'HIVES.FORM.NEW' | translate}}</h3>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
+          <select [(ngModel)]="rucherService.rucherSelectUpdate" class="form-control">
+            <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option>
+          </select>
+        </div>
+        <form [formGroup]="newRucheForm">
+          <div class="form-group">
+            <label class="col-form-label">{{ 'NAVBAR.CRUD.HIVENAME' | translate}}</label>
+            <input formControlName="nomRuche" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="message-text2" class="col-form-label">{{ 'NAVBAR.CRUD.HIVEDESC' | translate}}</label>
+            <textarea formControlName="descriptionRuche" class="form-control" id="message-text2"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="createRuche();"
+              [disabled]="!newRucheForm.valid"> {{ 'HIVES.FORM.CREATE' | translate}}</button>
+            <button type="reset" class="btn btn-secondary" (click)="initHiveForm()"
+              data-dismiss="modal">{{ 'HIVES.FORM.CLOSE' | translate}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of new hive Modal -->
+
+<!-- EDIT HIVE -->
+<div class="modal fade" id="editHiveModal" backdrop="false" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h3 class="text-center">{{ 'NAVBAR.CRUD.SELECTHIVE' | translate}}</h3>
+        </h5>
+      </div>
+      <div class="modal-header">
+        <div class="form-group">
+          <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
+          <select [(ngModel)]="rucherService.rucherSelectUpdate" class="form-control"
+            (change)="onSelectRucherEditHiveForm();">
+            <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVE' | translate}}</label>
+          <select [(ngModel)]="hiveSelectUpdate" class="form-control" (change)="onSelectHiveEditHiveForm();">
+            <option *ngFor="let ruche of ruchesEditHiveForm" [ngValue]="ruche">{{ruche.name}}</option>
+          </select>
+          <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
+        </div>
+        <h4 *ngIf="(hiveSelectUpdate !== undefined) && (rucherService.rucherSelectUpdate !== undefined)"
+          class="modal-title" id="exampleModalLabel">
+          <h4 class="text-center">{{ 'NAVBAR.CRUD.EDIT' | translate}}
+            {{hiveSelectUpdate.name}} {{ 'NAVBAR.CRUD.FROMAPIARY' | translate}}
+            {{rucherService.rucherSelectUpdate.name}}</h4>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
+          <select [(ngModel)]="apiaryUpdateHive" class="form-control">
+            <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option>
+          </select>
+        </div>
+        <form [formGroup]="newRucheForm">
+          <div class="form-group">
+            <label class="col-form-label">{{ 'NAVBAR.CRUD.HIVENAME' | translate}}</label>
+            <input formControlName="nomRuche" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="3" class="col-form-label">{{ 'NAVBAR.CRUD.HIVEDESC' | translate}}</label>
+            <textarea formControlName="descriptionRuche" class="form-control" id="message-text3"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning btn-primary delete" data-toggle="tooltip" data-html="true"
+              mwlConfirmationPopover popoverTitle="{{ 'NAVBAR.CRUD.DELETEHIVEASK' | translate }}" placement="bottom"
+              confirmText="{{ 'NAVBAR.CRUD.CONFIRM' | translate }}" cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}"
+              (confirm)="deleteHive()">{{ 'NAVBAR.CRUD.DELETEHIVE' | translate }}</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditeRuche()"
+              [disabled]="!newRucheForm.valid">{{ 'HIVES.FORM.EDIT' | translate}}</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              (click)="initHiveForm()">{{ 'HIVES.FORM.CLOSE' | translate}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of edit hive Modal -->
+
+<!-- DELETE HIVE -->
+<div class="modal fade" id="deleteHiveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h4 class="text-center">{{ 'NAVBAR.CRUD.DELETEAHIVE' | translate }}</h4>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
+          <select [(ngModel)]="rucherService.rucherSelectUpdate" class="form-control"
+            (change)="onSelectRucherDeleteHiveForm();">
+            <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVE' | translate}}</label>
+          <select [(ngModel)]="hiveSelectUpdate" class="form-control">
+            <option *ngFor="let ruche of ruchesEditHiveForm" [ngValue]="ruche">{{ruche.name}}</option>
+          </select>
+          <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning btn-primary" data-toggle="tooltip" data-html="true"
+            mwlConfirmationPopover popoverTitle="{{ 'NAVBAR.CRUD.DELETEHIVEASK' | translate }}" placement="bottom"
+            confirmText="{{ 'NAVBAR.CRUD.CONFIRM' | translate }}" cancelText="{{ 'NAVBAR.CRUD.CANCEL' | translate }}"
+            (confirm)="deleteHive()">{{ 'NAVBAR.CRUD.DELETEHIVE' | translate }}</button>
+          <button type="button" class="btn btn-secondary"
+            data-dismiss="modal">{{ 'NAVBAR.CRUD.CLOSE' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ###############################################################
+         ###############################################################
+         ###################      MANAGE NOTE      ###################
+         ###############################################################
+         ############################################################### -->
+
+<!-- NEW NOTE -->
+<div class="modal fade" id="newNoteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <h3 class="text-center">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}</h3>
+        </h5>
+      </div>
+      <div class="modal-body" id="popupObs">
+        <form [formGroup]="NavbarNoteForm">
+          <div class="form-group ">
+            <label class="col-form-label" for="exampleRadios1">
+              {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.YOUWANTCREATE' | translate}}
+            </label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" formControlName="checkbox" value="apiary"
+                [checked]="!newNoteCheckbox" (click)="onchangeCheckbox($event)">
+              <label class="form-check-label"
+                for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.APIARYNOTE' | translate}}
+              </label><br />
+              <input class="form-check-input" type="radio" formControlName="checkbox" value="hive"
+                [checked]="newNoteCheckbox" (click)="onchangeCheckbox($event)">
+              <label class="form-check-label"
+                for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.HIVENOTE' | translate}}
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
+            <select [(ngModel)]="rucherService.rucherSelectUpdate" [ngModelOptions]="{standalone: true}"
+              class="form-control" (change)="onSelectApiaryNewNavbarNoteForm();">
+              <option *ngFor="let apiary of rucherService.ruchers" [ngValue]="apiary">{{apiary.name}}
+              </option>
+            </select>
+          </div>
+          <div *ngIf="newNoteCheckbox" class="form-group">
+            <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVE' | translate}}</label>
+            <select [(ngModel)]="hiveNoteSelect" [ngModelOptions]="{standalone: true}" class="form-control">
+              <option *ngFor="let hive of hivesNavbarNoteForm" [ngValue]="hive">{{hive.name}}</option>
+            </select>
+            <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
+          </div>
+          <div class="form-group">
+            <label class="example-input-wrapper">
+              {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
+              <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dtNavbar"
+                [owlDateTime]="dtNavbar">
+              <owl-date-time #dtNavbar></owl-date-time>
+            </label><br />
+            <label class="example-input-wrapper">
+              {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
+            <textarea formControlName="sentence" type="text" class="form-control" id="sentence"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="newNoteCheckbox" type="submit" class="btn btn-primary" (click)="createObservation()"
+          data-dismiss="modal" [disabled]="!NavbarNoteForm.valid">
+          {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_OBS' | translate}}</button>
+        <button *ngIf="newNoteCheckbox" type="submit" class="btn btn-primary" (click)="createAction()"
+          data-dismiss="modal" [disabled]="!NavbarNoteForm.valid">
+          {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_ACT' | translate}}</button>
+        <button *ngIf="!newNoteCheckbox" type="submit" class="btn btn-primary" (click)="createNote()"
+          data-dismiss="modal" [disabled]="!NavbarNoteForm.valid">
+          {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATENOTE' | translate}}</button>
+        <button type="button" class="btn btn-secondary" (click)="resetNavbarNoteForm()"
+          data-dismiss="modal">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of new Observation Modal -->
+
+<!-- ###############################################################
+         ###############################################################
+         ###################      MANAGE SENSOR      ###################
+         ###############################################################
+         ############################################################### -->
+
+<!-- New sensor Modal -->
+<div class="modal fade" id="newSensorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title text-center" id="exampleModalLabel">
+          <h3>{{ 'CAPTEUR.FORM.NEW' | translate}}</h3>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="newSensorForm">
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label for="ref" class="col-form-label">{{ 'CAPTEUR.FORM.REFERENCE' | translate}}</label>
+              <input #ref formControlName="reference" placeholder="xx:xx:xx" name="ref" type="text" class="form-control"
+                id="ref">
+              <div class="alert alert-danger" *ngIf="getSensorRef().errors?.pattern">
+                {{ 'CAPTEUR.FORM.REF_ERROR' | translate}}
+              </div>
+              <div class="alert alert-danger" *ngIf="getSensorRef().errors?.sensorCheck">
+                {{ 'CAPTEUR.FORM.SENS_ERROR' | translate}}
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <label class="col-form-label">Type :</label>
+              <select [disabled]="true" id="typeSensor" class="form-control">
+                <option *ngFor="let capteur of (capteurService.capteursType | sensorType:getSensorRef().value);">
+                  {{capteur.type}}</option>
+              </select>
+              <div class="alert alert-danger" hidden>
+                {{ 'CAPTEUR.FORM.SELECT_ERROR' | translate}}
+              </div>
+            </div>
+
+          </div>
+          <div class="form-group">
+            <label for="message-text4" class="col-form-label">Description :</label>
+            <input formControlName="description" class="form-control" id="message-text4">
+          </div>
+          <div class="form-group ">
+            <label class="col-form-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.LINK' | translate}}</label>
+            <div class="form-check">
+              <input class="form-check-input" value="stock" type="radio" formControlName="checkbox">
+              <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.STOCK' | translate}}
+              </label><br />
+              <input class="form-check-input" value="ruche" type="radio" formControlName="checkbox">
+              <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.INHIVE' | translate}}
+              </label>
+            </div>
+          </div>
+          <div *ngIf="getTypeAffectation().value=='ruche'">
+            <!--                         <div class="form-group">
+                          <label class="col-form-label">Apiary</label>
+                          <select [(ngModel)]="apiarySensorSelect" [ngModelOptions]="{standalone: true}"
+                              class="form-control" (change)="onSelectRucher();">
+                              <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}
+                              </option>
+                          </select>
+                      </div> -->
+            <!-- <div class="form-group">
+                            <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVEAPIARY' | translate}}</label>
+                            <select [(ngModel)]="hiveSensorSelect" [ngModelOptions]="{standalone: true}"
+                                class="form-control">
+                                <option *ngFor="let ruche of rucherService.rucheService.ruchesAllApiary"
+                                    [ngValue]="ruche">
+                                    <ng-container *ngIf = "getApiaryNameById(ruche.apiaryId) !== undefined">
+                                        {{ruche.name + ' | ' + getApiaryNameById(ruche.apiaryId).name }}
+                                    </ng-container>
+                                </option>
+                            </select>
+                            <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
+                        </div> -->
+            <div class="form-group">
+              <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
+              <select [(ngModel)]="rucherService.rucherSelectUpdate" [ngModelOptions]="{standalone: true}"
+                class="form-control" (change)="onSelectApiaryNewSensorForm();">
+                <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVE' | translate}}</label>
+              <select [(ngModel)]="hiveSensorSelect" [ngModelOptions]="{standalone: true}" class="form-control">
+                <option *ngFor="let ruche of hivesSensorForm" [ngValue]="ruche">{{ruche.name}}</option>
+              </select>
+              <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" ngbTooltip="Tooltip on top" class="btn btn-primary" data-dismiss="modal"
+              (click)="createCapteur()" [disabled]="newSensorForm.invalid">{{ 'CAPTEUR.FORM.ADD' | translate}}</button>
+            <button type="button" class="btn btn-secondary"
+              data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of new sensor Modal -->
+
+<!-- EDIT sensor Modal -->
+<div class="modal fade" id="editSensorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title text-center" id="exampleModalLabel">
+          <h3>{{ 'CAPTEUR.FORM.EDITSELECT' | translate}}</h3>
+        </h5>
+      </div>
+      <ng-container *ngIf="!hideEditSensorForm">
+        <div class="modal-header">
+          <div class="form-group">
+            <label class="col-form-label">{{ 'HIVES.FORM.APIARY' | translate}}</label>
+            <select [(ngModel)]="rucherService.rucherSelectUpdate" class="form-control"
+              (change)="onSelectApiaryEditSensorForm();">
+              <option *ngFor="let rucher of apiaryEditSensorFormOnes" [ngValue]="rucher">{{rucher.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVE' | translate}}</label>
+            <select [(ngModel)]="hiveSelectUpdate" class="form-control" (change)="onSelectHiveEditSensorForm();">
+              <option *ngFor="let ruche of hivesEditSensorFormOne" [ngValue]="ruche">{{ruche.name}}</option>
+            </select>
+            <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">{{ 'CAPTEUR.FORM.SENSOR' | translate}}</label>
+            <select [(ngModel)]="sensorSelectUpdate" class="form-control" (change)="onSelectSensorEditSensorForm();">
+              <option *ngFor="let sensor of sensorsEditSensorForm" [ngValue]="sensor">{{sensor.sensorRef}}</option>
+            </select>
+          </div>
+          <h4
+            *ngIf="sensorSelectUpdate !== undefined && hiveSelectUpdate !== undefined && rucherService.rucherSelectUpdate !== undefined"
+            class="modal-title" id="exampleModalLabel">
+            <h4 class="text-center">{{ 'CAPTEUR.FORM.EDITSENSOR' | translate}} {{sensorSelectUpdate.sensorRef}}
+              {{ 'CAPTEUR.FORM.OF' | translate}} {{hiveSelectUpdate.name}}|{{rucherService.rucherSelectUpdate.name}}
+            </h4>
+          </h4>
+        </div>
+      </ng-container>
+      <div class="modal-body">
+        <form [formGroup]="editSensorForm">
+          <ng-container *ngIf="!hideEditSensorForm">
+            <div class="form-group ">
+              <label class="col-form-label" for="exampleRadios1">
+                {{ 'CAPTEUR.FORM.LINK' | translate}}
+              </label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" formControlName="checkbox" value="stock"
+                  [checked]="!editCapteurCheckbox" (click)="onchange($event)">
+                <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.STOCK' | translate}}
+                </label><br />
+                <input class="form-check-input" type="radio" formControlName="checkbox" value="ruche"
+                  [checked]="editCapteurCheckbox" (click)="onchange($event)">
+                <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.INHIVE' | translate}}
+                </label>
+              </div>
+            </div>
+            <div *ngIf="editCapteurCheckbox">
+              <div class="form-group">
+                <label class="col-form-label">{{ 'CAPTEUR.FORM.APIARY' | translate}}</label>
+                <select [(ngModel)]="apiarySensorSelect" [ngModelOptions]="{standalone: true}" class="form-control"
+                  (change)="onSelectApiary();">
+                  <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVE' | translate}}</label>
+                <select [(ngModel)]="hiveSensorSelect" [ngModelOptions]="{standalone: true}" class="form-control">
+                  <option *ngFor="let ruche of hivesEditSensorForm" [ngValue]="ruche">
+                    {{ruche.name}}</option>
+                </select>
+                <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message-text5" class="col-form-label">Description</label>
+              <input formControlName="description" class="form-control" id="message-text5">
+            </div>
+            <div class="form-group ">
+              <div class="alert alert-success" *ngIf="editedSensorMsgE">
+                {{ 'CAPTEUR.FORM.SENSOR_EDIT' | translate}}
+                <strong>{{ 'CAPTEUR.FORM.SUCCES' | translate}}</strong>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="hideEditSensorForm">
+            <h5 class="text-center">
+              {{ 'CAPTEUR.FORM.NOSENSOR' | translate}}
+            </h5>
+          </ng-container>
+          <div class="modal-footer">
+            <ng-container *ngIf="!hideEditSensorForm">
+              <button type="button" class="btn btn-warning delete" mwlConfirmationPopover
+                popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
+                confirmText="{{ 'CAPTEUR.FORM.CONFIRM' | translate}}"
+                cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}" placement="top" (confirm)="deleteSensor()">
+                {{ 'CAPTEUR.FORM.DELETE' | translate}}
+              </button>
+              <button type="button" id="editVal" class="btn btn-primary" (click)="updateSensor()"
+                [disabled]="!editSensorForm.valid">
+                {{ 'CAPTEUR.FORM.EDIT' | translate}}</button>
+            </ng-container>
+            <button type="button" class="btn btn-secondary"
+              data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End EDIT sensor Modal -->

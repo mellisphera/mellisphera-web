@@ -1,6 +1,19 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { ConnectionService } from './service/connection.service';
 import { ConnectionsMapService } from './service/connections-map.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
+import { AdminService } from './service/admin.service';
 
 
 @Component({
@@ -11,30 +24,29 @@ import { Component, OnInit } from '@angular/core';
 export class AdminComponent implements OnInit {
 
   message= "";
-  merge: any;
-  echartInstance: any;
-
-  constructor(public connectionMap: ConnectionsMapService, public connectionService: ConnectionService) {
+  private eltOnClick: EventTarget;
+  constructor(private router: Router, 
+    private adminService: AdminService,
+    private renderer: Renderer2) {
   }
 
-  onChartInit(event) {
-    this.echartInstance = event;
-  }
   ngOnInit() {
-    this.connectionService.getConnection().subscribe(
-      data => {
-        console.log(data);
-        this.merge = data;
-      },
-      err => {},
-      () => {
-      }
-    );
-
+    this.eltOnClick = document.getElementById('status');
+    this.renderer.addClass(this.eltOnClick, 'active');
   }
 
   receiveMessage($event) {
       this.message = $event;
+  }
+  focus(id: string) {
+    if (this.eltOnClick === null ) {
+      this.eltOnClick = document.getElementById(id);
+      this.renderer.addClass(this.eltOnClick, 'active');
+    } else {
+      this.renderer.removeClass(this.eltOnClick, 'active');
+      this.eltOnClick = document.getElementById(id);
+      this.renderer.addClass(this.eltOnClick, 'active');
+    }
   }
 
 }

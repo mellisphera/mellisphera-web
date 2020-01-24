@@ -7,7 +7,7 @@
     font-family: 'Poppins';
 }
 .sidebar,.sidebar-wrapper{
-    width: 70px !important;
+    width: 95px !important;
 }
 /* .sidebar-wrapper{
     background-color: #59B53D;
@@ -16,21 +16,94 @@
     background-color: blue;
 }
 .main-panel{
-    width: calc(100% - 72px) !important;
+    width: calc(100% - 95px) !important;
 }
 .nav-open .main-panel{
-    transform: translate3d(-60px, 0, 0) !important;
+    transform: translate3d(-93px, 0, 0) !important;
+}
+.container-fluid {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
 }
 .login{
     background: url('./assets/background/rucher_login.jpg') no-repeat center;
     background-size: cover;
 }
+.login-bm{
+    background: linear-gradient(#0B68DA,#74ABF1);
+}
 .wizard-active{
      background-color: rgba($color: #000000, $alpha: 0.4);
     // filter: blur(10px);
 }
+.flex{
+    display: flex;
+}
+.overlay{
+    z-index: 10;
+    width: 400%;
+    height: 400%;
+    top: -100%;
+    left: -100%;
+    position: fixed;
+    background-color: rgba(0,0,0,.25);
+}
 .wizard-z-index{
     z-index: -1 !important;
+}
+
+.tr-items{ 
+    height: 50px;
+}
+
+.btn_edit {
+    background: none;
+    color: #337ab7;
+}
+.btn_info:hover, .btn_info:focus{
+    background: none !important;
+}
+.btn_info{
+    background: none;
+}
+.btn_delete {
+    background: none;
+    color: #f0ad4e;
+}
+.btn_delete_modal{
+    background-color: red;
+    color: white;
+}
+.btn_close{
+    background-color: darkgray;
+    color: black;
+}
+.btn_create {
+    background: none;
+    color: #5cb85c;
+}
+.owl-dt-popup-container {
+    width: 300px !important;
+    font-size: 15px !important;
+}
+/* MelliCharts */
+.ng-daterangepicker{
+    width: 100% !important;
+    height: 45px !important;
+    margin-top: 11px !important;
+}
+.helpTooltip{
+    font-size: 15px;
+    color: #4F4F51;
+}
+.panel-ms .panel-body{
+    padding-top: 0px !important;
+}
+.panel-ms{
+    border-color: #4F4F51 !important;
+}
+.note-heading{
+    background-color: #4F4F51 !important;
 }
 @media (max-width: 991px){
     .main-panel{
@@ -58,9 +131,9 @@ notifier-container ul{
 aw-wizard-navigation-bar{
     margin-bottom: 40px !important;
 }
-.btn-group{
+/* .btn-group{
     margin-top: 50px !important;
-}
+} */
 .modal-backdrop {
     display: none;
 }

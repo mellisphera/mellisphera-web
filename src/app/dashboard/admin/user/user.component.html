@@ -1,0 +1,26 @@
+<div>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Email</th>
+        <th scope="col">Username</th>
+        <th scope="col">Load data</th>
+        <th scope="col">Change log</th>
+        <th scope="col">Login</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of adminService.allUsers">
+        <td>{{ user.id }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.username }}</td>
+        <td><button (click)="loadData(user.id)" type="button" class="btn btn-success"><i class="fa fa-download" aria-hidden="true"></i></button></td>
+        <td><button (click)="exeChangeLog(user.id)" type="button" class="btn btn-success"><i class="fa fa-refresh" aria-hidden="true"></i></button></td>
+        <td><button (click)="loginFromAdmin(user.id)" type="button" class="btn btn-success"><i class="fa fa-sign-in" aria-hidden="true"></i></button></td>
+      </tr> 
+    </tbody>
+  </table>
+  
+  
+</div>

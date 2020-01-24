@@ -1,0 +1,77 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
+<div id="contain-calendar" class="flex" (window:resize)="onResize($event)">
+  <div id="daily-int">
+    <div id="sidebar-tools-daily-device">
+      <ul class="nav responsive-nav flex tools" id="device-group">
+        <li *ngFor="let type of getlabelByType('DEVICE')" data-toggle="tooltip" data-html="true"
+          [title]="graphGlobal.getTooltipByType(type)" (click)="setType(type)" [class]="type.class" [id]="type.id">
+          <img [src]="type.icons" />
+        <li>
+          <!--             <li (click)="exportToCsv('DEVICE')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
+ -->
+      </ul>
+    </div>
+    <h3 class="titleCalendar">{{ graphGlobal.getTooltipByType(currentTypeDailyDevice)}}</h3>
+    <div id="calendar-device" class="chart calendar"></div>
+    <!--     <div>
+      <p style="text-align: center;">{{ currentDeviceTextPeriodCalendar }}{{ dailyManager.meanPeriodDevice.value }}
+        {{ dailyManager.meanPeriodDevice.unit }}</p>
+      <p style="text-align: center;">{{ currentDeviceTextSevenDay }}{{ dailyManager.meanDeviceSevenDay.value }}
+        {{ dailyManager.meanDeviceSevenDay.unit }}</p>
+    </div> -->
+  </div>
+  <div id="daily-env">
+    <div id="sidebar-tools-daily-env">
+      <ul class="nav responsive-nav flex tools" id="env-group">
+        <li *ngFor="let type of getlabelByType('ENV')" data-toggle="tooltip" data-html="true"
+          [title]="graphGlobal.getTooltipByType(type)" (click)="setType(type)" [class]="type.class" [id]="type.id">
+          <img [src]="type.icons" /></li>
+        <!--               <li (click)="exportToCsv('ENV')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
+ -->
+      </ul>
+      <div class="mean-grup">
+        <!--         <ng-container *ngIf="currentTypeDailyOther.name === 'RAIN'">
+          <p style="text-align: center;">{{ currentOtherTextPeriodCalendar }}{{ dailyManager.meanPeriodOther.value }}
+            {{ dailyManager.meanPeriodOther.unit }}</p>
+          <p style="text-align: center;">{{ currentOtherTextSevenDay }}{{ dailyManager.meanOtherSevenDay.value }}
+            {{ dailyManager.meanOtherSevenDay.unit }}</p>
+        </ng-container> -->
+
+      </div>
+    </div>
+    <h3 class="titleCalendar">{{ graphGlobal.getTooltipByType(currentTypeDailyEnv)}}</h3>
+    <div id="calendar-env" class="chart calendar"></div>
+  </div>
+  <div class="mean-grup" id="daily-other">
+
+    <div id="sidebar-tools-daily-other">
+      <ul class="nav responsive-nav flex tools" id="other-group">
+        <li *ngFor="let type of getlabelByType('OTHER')" data-toggle="tooltip" data-html="true"
+          [title]="graphGlobal.getTooltipByType(type)" (click)="setType(type)" [class]="type.class" [id]="type.id">
+          <img [src]="type.icons" /></li>
+        <!--               <li (click)="exportToCsv('OTHER')" class="item-type"><img src="./assets/icons/exportToCsv.png"></li>
+ -->
+      </ul>
+    </div>
+    <h3 class="titleCalendar">{{ graphGlobal.getTooltipByType(currentTypeDailyOther)}}</h3>
+    <div id="calendar-other" class="chart calendar"></div>
+    <!--     <div class="mean-grup">
+      <ng-container *ngIf="displayMeanOtherCalendarIf()">
+        <p style="text-align: center;">{{ currentOtherTextPeriodCalendar }}{{ dailyManager.meanPeriodOther.value }}
+          {{ dailyManager.meanPeriodOther.unit }}</p>
+        <p style="text-align: center;">{{ currentOtherTextSevenDay }}{{ dailyManager.meanOtherSevenDay.value }}
+          {{ dailyManager.meanOtherSevenDay.unit }}</p>
+      </ng-container>
+    </div> -->
+  </div>
+</div>

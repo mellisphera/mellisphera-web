@@ -1,12 +1,26 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { Injectable } from '@angular/core';
 import { UserPref } from '../../_model/user-pref';
 import { isObject } from 'rxjs/internal/util/isObject';
 import { isString } from 'util';
+import { formatDate } from '@angular/common';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UnitService {
+export class 
+UnitService {
 
   constructor() { }
 
@@ -19,23 +33,7 @@ export class UnitService {
    * @memberof UnitService
    */
   getHourlyDate(date: string | Date): string {
-    if (isString(date)) {  
-      const dtSplit = date.split('T');
-      const daily = dtSplit[0];
-      const hourly = dtSplit[1].split(':');
-      var newInstanceDate = new Date(daily);
-      newInstanceDate.setHours(parseInt(hourly[0], 10));
-      newInstanceDate.setMinutes(parseInt(hourly[1], 10));
-    } else {
-      var newInstanceDate = new Date(date);
-    }
-
-    return this.getUserPref().timeFormat
-      .replace(/Y/g, String(newInstanceDate.getFullYear()))
-      .replace(/M/g, newInstanceDate.getMonth()+1 < 10 ? '0' + String(newInstanceDate.getMonth() + 1) : String(newInstanceDate.getMonth() + 1 ))
-      .replace(/D/g, newInstanceDate.getDate() < 10 ? '0' + String(newInstanceDate.getDate()) : String(newInstanceDate.getDate()))
-      .replace(/h/g, newInstanceDate.getHours() < 10 ? '0' + String(newInstanceDate.getHours()) : String(newInstanceDate.getHours()))
-      .replace(/m/g, newInstanceDate.getMinutes() < 10 ?  '0' + String(newInstanceDate.getMinutes()) :  String(newInstanceDate.getMinutes()));
+    return moment(date).format(this.getUserPref().timeFormat);
   }
 
   /**
@@ -46,17 +44,7 @@ export class UnitService {
    * @memberof UnitService
    */
   getDailyDate(date: string | Date): string {
-    let newInstanceDate = null;
-    if (isString(date)) {
-      if (date.indexOf('T')) {
-        newInstanceDate = new Date(date.split('T')[0]);
-      }
-    }
-    newInstanceDate = new Date(date);
-   return this.getUserPref().timeFormat.replace(/Y/g, String(newInstanceDate.getFullYear()))
-      .replace(/M/g, newInstanceDate.getMonth()+1 < 10 ? '0' + String(newInstanceDate.getMonth() + 1) : String(newInstanceDate.getMonth() + 1 ))
-      .replace(/D/g, newInstanceDate.getDate() < 10 ? '0' + String(newInstanceDate.getDate()) : String(newInstanceDate.getDate()))
-      .replace(/h:m/g, '');
+    return moment(date).format(this.getUserPref().timeFormat.split(' ')[0]);
   }
 
 
@@ -67,13 +55,25 @@ export class UnitService {
  * @returns {number}
  * @memberof UserParamsService
  */
-  convertTempFromUsePref(temp: number, unit: string): number {
-    if (unit === 'IMPERIAL') {
-      return this.getValRound(temp * 9 / 5 + 32);
-    } else {
-      return  this.getValRound(temp);
-    }
+convertTempFromUsePref(temp: number, unit: string, round?: boolean): number {
+  let value;
+  if (unit === 'IMPERIAL') {
+    value = round ? this.getValRound(temp * 9 / 5 + 32): temp * 9 / 5 + 32;
+  } else {
+    value =  round ? this.getValRound(temp): temp;
   }
+  return value;
+}
+
+convertWindFromUserPref(wind: number, unit: string, round?: boolean): number {
+  let value;
+  if (unit === 'IMPERIAL') {
+    value = round ? this.getValRound(wind * 2.276) : wind * 2,276;
+  } else {
+    value =  round ? this.getValRound(wind * 3.6) : wind * 3.6;
+  }
+  return value;
+}
 
   /**
    *
@@ -82,7 +82,7 @@ export class UnitService {
    * @memberof UnitService
    */
   getUserPref(): UserPref {
-    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).userPref;
+    return JSON.parse(window.localStorage.getItem('jwtReponse')).userPref;
   }
 
   /**
@@ -93,7 +93,6 @@ export class UnitService {
    * @memberof UnitService
    */
   getLocalDate(dateUtc: Date): Date {
-    console.log(dateUtc);
     return new Date(Date.UTC(dateUtc.getFullYear(), dateUtc.getMonth(), dateUtc.getDate(), dateUtc.getHours(), dateUtc.getMinutes()));
   }
 
@@ -104,12 +103,24 @@ export class UnitService {
    * @returns {number}
    * @memberof UserParamsService
    */
-  convertWeightFromuserPref(weight: number, unit: string): number {
+  convertWeightFromuserPref(weight: number, unit: string, round?: boolean): number {
+    let value;
     if (unit === 'IMPERIAL') {
-      return this.getValRound(weight * 2.2046);
+      value = round? this.getValRound(weight * 2.2046): weight * 2.2046;
     } else {
-      return this.getValRound(weight);
+      value = round? this.getValRound(weight): weight;
     }
+    return value
+  }
+
+  convertMilimetreToPouce(rain: number, unit: string, round?: boolean): number {
+    let value;
+    if (unit === 'IMPERIAL') {
+      value = rain / 25.4;
+    } else {
+      value = rain;
+    }
+    return value
   }
 
   /**
@@ -119,8 +130,13 @@ export class UnitService {
    * @returns {number}
    * @memberof UnitService
    */
-  getValRound(value: number): number {
-    const tmp = Math.pow(10, 1);
+  getValRound(value: number, valRound?: number): number {
+    let tmp: number;
+    if (valRound) {
+      tmp = Math.pow(10, valRound);
+    } else {
+      tmp = Math.pow(10, 1);
+    }
     return Math.round(value * tmp) / tmp;
   }
 }

@@ -1,0 +1,196 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
+hr
+{
+    display: inline-block;
+    width: 100%;
+}
+
+.title{
+    text-align: center;
+    margin-top: 20px;
+    font-size : medium;
+    font: bold;
+    font-weight: bold;
+}
+
+.tabRankAlert{
+    text-align: center;
+    font-size : medium;
+}
+
+
+.tabRankAlert i{
+    margin-right: 30px;
+    text-align: left !important;
+    vertical-align: middle;
+    margin-bottom: 4px;
+}
+
+.tabRankAlert i:hover{
+    color: #70A8B2;
+}
+
+ #general{
+     margin: 0px;
+     width: 500px;
+ }
+
+ #left{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#notes{
+    width: 100%;
+}
+
+#sensors{
+    width: 50%;
+}
+.calendar{
+    height: 270px;
+    position: relative;
+}
+.infoToolip{
+    position: absolute;
+    right: 15px;
+    bottom: 4px;
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+/* Styles */
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 321px) {
+/* Styles */
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen
+and (max-width : 320px) {
+/* Styles */
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+    .calendar{
+        height: 315px;
+    }
+}
+
+/* iPads (landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+    .calendar{
+        height: 230px;
+    }
+    #general{
+        width: 300px;
+    }
+}
+
+/* iPads (portrait) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+    .calendar{
+        height: 310px;
+    }
+    
+}
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (min-width : 1224px) {
+    .calendar{
+        height: 280px;
+    }
+    #general{
+        width: 350px;
+    }
+/* Styles */
+}
+
+/* Large screens ----------- */
+@media only screen
+and (min-width : 1824px) {
+    .calendar{
+        height: 285px;
+    }
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
+}
+
+/* @media (min-width : 990px) and (max-width : 1550px){
+    #notes,#sensors{
+        min-width: 100%;
+    }
+} */
+@media (max-width : 990px){
+    #left{
+        position: relative;
+        top: 0px !important;
+        display: block;
+    }
+
+    #notes{
+        width: 200%;
+    }
+    #general{
+        width: 100%;
+    }
+    #sensors{
+        width: 200%;
+    }
+}
+/* @media (max-height : 400px){
+#alerts{
+    height: 24vh;
+    }
+}
+
+
+
+@media (max-width : 990px){
+    #left{
+        position: relative;
+        top: 0px !important;
+        display: block;
+    }
+
+    #notes{
+        width: 200%;
+    }
+    
+    #sensors{
+        width: 200%;
+    }
+} */

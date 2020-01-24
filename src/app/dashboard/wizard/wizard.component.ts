@@ -1,11 +1,22 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RucherModel } from '../../_model/rucher-model';
-import { RucherService } from '../service/rucher.service';
+import { RucherService } from '../service/api/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
 import { RucheInterface } from '../../_model/ruche';
 import { CapteurInterface } from '../../_model/capteur';
-import { CapteurService } from '../capteur/capteur.service';
+import { CapteurService } from '../service/api/capteur.service';
 import { FleurObservees } from '../../_model/fleur-observees';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -70,25 +81,27 @@ export class WizardComponent implements OnInit, OnDestroy {
 
   subApiary() {
     this.apiary = this.apiaryForm.value;
-    this.apiary.createdAt = new Date();
+    this.apiary.createDate = new Date();
     this.apiary.username = this.userService.getUser();
-    this.apiary.photo = './assets/imageClient/testAccount.png';
+    if (this.translateService.currentLang === 'fr') {
+      this.apiary.photo = './assets/imageClient/background_draw_color_FR.png';
+    } else {
+      this.apiary.photo = './assets/imageClient/background_draw_color.png';
+    }
+    this.apiary.userId = this.userService.getIdUserLoged()
   }
 
   subHive() {
     this.hive = this.hiveForm.value;
-    this.hive.id = null;
+    this.hive._id = null;
+    this.hive.userId = this.userService.getIdUserLoged();
     this.hive.sensor = true;
     this.hive.username = this.userService.getUser();
 
   }
   subSensor() {
     this.sensor = this.sensorForm.value;
-    this.sensor.apiaryName = this.apiary.name;
     this.sensor.type = this.getTypeFromRef(this.sensor.sensorRef);
-    this.sensor.apiaryName = this.apiary.name;
-    this.sensor.hiveName = this.hive.name;
-    this.sensor.username = this.userService.getUser();
     this.capteurService.capteur = this.sensor;
 /*     this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
       this.capteurService.getUserCapteurs();
@@ -109,29 +122,33 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.newFlower.photo = fleur.photo; */
   }
 
+  cancel() {
+    this.userService.setFristConnection(false);
+  }
+
   finishWizard() {
     this.rucherService.createRucher(this.apiary).subscribe((apiary) => {
       if (this.rucherService.ruchers != null) {
+        this.rucherService.allApiaryAccount.push(apiary);
         this.rucherService.ruchers.push(apiary);
       } else {
         this.rucherService.ruchers = new Array(apiary);
+        this.rucherService.allApiaryAccount.push(apiary)
       }
-      this.rucherService.saveCurrentApiaryId(apiary.id);
+      this.rucherService.saveCurrentApiaryId(apiary._id);
     }, () => { }, () => {
-      this.rucherService.emitApiarySubject();
       this.rucherService.rucher = this.rucherService.ruchers[this.rucherService.ruchers.length - 1];
       this.initForm();
-      this.hive.idApiary = this.rucherService.getCurrentApiary();
+      this.hive.apiaryId = this.rucherService.getCurrentApiary();
       this.rucherService.rucheService.createRuche(this.hive).subscribe((hive) => {
-        this.rucherService.rucheService.ruches.push(hive);
-        this.rucherService.rucheService.saveCurrentHive(hive.id);
+        this.rucherService.rucheService.ruches = new Array(hive);
+        this.rucherService.rucheService.saveCurrentHive(hive);
       }, () => { }, () => {
-        this.rucherService.rucheService.emitHiveSubject();
-        this.sensor.idHive = this.rucherService.rucheService.getCurrentHive();
-        this.sensor.idApiary = this.rucherService.getCurrentApiary();
+        this.sensor.hiveId = this.rucherService.rucheService.getCurrentHive()._id;
+        this.sensor.apiaryId = this.rucherService.getCurrentApiary();
         this.capteurService.createCapteur().subscribe(() => { }, () => { }, () => {
           this.capteurService.getUserCapteurs();
-          this.userService.setWizardActive(false);
+          this.userService.setFristConnection(false);
         });
       });
     });
@@ -143,14 +160,15 @@ export class WizardComponent implements OnInit, OnDestroy {
    * @memberof WizardComponent
    */
   getTypeFromRef(sensorRef: string): string {
-    console.log(sensorRef);
     const ref = sensorRef.split(':')[0];
-    if (parseInt(ref, 10) === 41){
+    if (parseInt(ref, 10) === 41) {
       return 'T2';
     } else if (parseInt(ref, 10) === 42) {
       return 'T_HR';
+    } else if (parseInt(ref, 10) === 43) {
+      return 'WEIGHT';
     } else {
-      return 'weight';
+      return 'ALIEN';
     }
   }
 

@@ -1,0 +1,202 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
+<div id="user-group">
+    <div class="panel panel-ms">
+        <div class="panel-heading"><div class="text-title">{{ 'HIVE_DETAIL.CLICK.SENSORSTITLE' | translate}}
+            {{this.rucheService.getCurrentHive().name}}</div> <button data-toggle="tooltip" data-html="true"
+                title="{{ 'CAPTEUR.FORM.NEW' | translate}}" data-toggle="modal"
+                style="float:right;width: 10%; padding: 0;border: none; background: none;"
+                data-target="#newCapteurModal" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))" class="btn btn-success">
+                <i class="fa fa-plus fa-2x"></i>
+            </button></div>
+        <div class="user-sensors panel-body" id="sensorsHive">
+            <table class="table">
+                <tbody>
+                    <ng-container *ngFor="let capteur of ( capteurService.capteursByHive); let i = index">
+                        <tr class="hoverStyle">
+                            <td style="width: 100px;">{{capteur.sensorRef}}</td>
+                            <td class="text-right" style="width: 80px;">
+                                <button data-toggle="tooltip" data-html="true"
+                                    title="{{ 'CAPTEUR.FORM.EDITTHESENSOR' | translate}}" data-toggle="modal" type="button"
+                                    (click)="selectCapteur(capteur, i)" [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))" data-target="#editCapteurModal"
+                                    class="btn btn-primary btn_edit " style="padding: 10;border: none;margin-right: -5px;">
+                                    <i class="fa fa-edit fa-2x"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="capteurService.capteursByHive !== undefined && capteurService.capteursByHive.length === 0">
+                        <tr class="hoverStyle">
+                          <td>{{ 'HIVE_DETAIL.SENSORS.NOSENSORS' | translate}}</td>
+                        </tr>
+                      </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- New capteur Modal -->
+<div class="modal fade" id="newCapteurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">
+                    <h3>{{ 'CAPTEUR.FORM.NEW' | translate}}</h3>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="newCapteurForm">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="ref" class="col-form-label">{{ 'CAPTEUR.FORM.REFERENCE' | translate}}</label>
+                            <input #ref formControlName="reference" placeholder="xx:xx:xx" name="ref" type="text"
+                                class="form-control" id="ref">
+                            <div class="alert alert-danger" *ngIf="getSensorRef().errors?.pattern">
+                                {{ 'CAPTEUR.FORM.REF_ERROR' | translate}}
+                            </div>
+                            <div class="alert alert-danger" *ngIf="getSensorRef().errors?.sensorCheck">
+                                {{ 'CAPTEUR.FORM.SENS_ERROR' | translate}}
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-form-label">Type :</label>
+                            <select [disabled]="true" id="typeSensor" class="form-control">
+                                <option
+                                    *ngFor="let capteur of (capteurService.capteursType | sensorType:getSensorRef().value);">
+                                    {{capteur.type}}</option>
+                            </select>
+                            <div class="alert alert-danger" hidden>
+                                {{ 'CAPTEUR.FORM.SELECT_ERROR' | translate}}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-form-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.LINK' | translate}}</label>
+                        <div class="form-check">
+                            <input class="form-check-input" value="stock" type="radio" formControlName="checkbox">
+                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.STOCK' | translate}}
+                            </label><br />
+                            <input class="form-check-input" value="ruche" type="radio" formControlName="checkbox">
+                            <label class="form-check-label"
+                                for="exampleRadios1">{{ 'CAPTEUR.FORM.HIVEDETAIL' | translate}}
+                                {{this.rucheService.getCurrentHive().name}}
+                            </label>
+                        </div>
+                    </div>
+                    <div *ngIf="getTypeAffectation().value=='ruche'">
+                        <!--                         <div class="form-group">
+                            <label class="col-form-label">Apiary</label>
+                            <select [(ngModel)]="apiarySensorSelect" [ngModelOptions]="{standalone: true}"
+                                class="form-control" (change)="onSelectRucher();">
+                                <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}
+                                </option>
+                            </select>
+                        </div> -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" ngbTooltip="Tooltip on top" class="btn btn-primary" data-dismiss="modal"
+                            (click)="createCapteur()"
+                            [disabled]="newCapteurForm.invalid">{{ 'CAPTEUR.FORM.ADD' | translate}}</button>
+                        <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of new Rucher Modal -->
+
+
+<!-- EDIT CAPTEUR Modal -->
+<div class="modal fade" id="editCapteurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title text-center" id="exampleModalLabel">
+                    <h3>{{ 'CAPTEUR.FORM.EDITSENSORTITLE' | translate}}</h3>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editCapteurForm">
+                    <div class="form-group ">
+                        <label class="col-form-label" for="exampleRadios1">
+                            {{ 'CAPTEUR.FORM.LINK' | translate}}
+                        </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="checkbox" value="stock"
+                                [checked]="!editCapteurCheckbox" (click)="onchange($event)">
+                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.STOCK' | translate}}
+                            </label><br />
+                            <input class="form-check-input" type="radio" formControlName="checkbox" value="ruche"
+                                [checked]="editCapteurCheckbox" (click)="onchange($event)">
+                            <label class="form-check-label" for="exampleRadios1">{{ 'CAPTEUR.FORM.INHIVE' | translate}}
+                            </label>
+                        </div>
+                    </div>
+                    <div *ngIf="editCapteurCheckbox">
+                        <div class="form-group">
+                            <label class="col-form-label">{{ 'CAPTEUR.FORM.APIARY' | translate}}</label>
+                            <select [(ngModel)]="apiarySensorSelect" [ngModelOptions]="{standalone: true}"
+                                class="form-control" (change)="onSelectRucher();">
+                                <option *ngFor="let rucher of rucherService.ruchers" [ngValue]="rucher">{{rucher.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">{{ 'CAPTEUR.FORM.HIVE' | translate}}</label>
+                            <select [(ngModel)]="hiveSensorSelect" [ngModelOptions]="{standalone: true}"
+                                class="form-control">
+                                <option *ngFor="let ruche of rucherService.rucheService.ruches" [ngValue]="ruche">
+                                    {{ruche.name}}</option>
+                            </select>
+                            <div class="alert alert-danger" hidden>{{ 'CAPTEUR.FORM.SELECT_HIVE' | translate}}</div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="alert alert-success" *ngIf="editedSensorMsgE">
+                            {{ 'CAPTEUR.FORM.SENSOR_EDIT' | translate}}
+                            <strong>{{ 'CAPTEUR.FORM.SUCCES' | translate}}</strong>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning delete"
+                            mwlConfirmationPopover popoverTitle="{{ 'CAPTEUR.FORM.DELETE_ASK' | translate}}"
+                            confirmText="{{ 'CAPTEUR.FORM.CONFIRM' | translate}}"
+                            cancelText="{{ 'CAPTEUR.FORM.CANCEL' | translate}}" placement="top"
+                            (confirm)="deleteCapteur()">
+                            {{ 'CAPTEUR.FORM.DELETE' | translate}}
+                        </button>
+                        <button type="button" id="editVal" class="btn btn-primary" data-dismiss="modal"
+                            (click)="updateCapteur()" [disabled]="!editCapteurForm.valid">
+                            {{ 'CAPTEUR.FORM.EDIT' | translate}}</button>
+                        <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">{{ 'CAPTEUR.FORM.CLOSE' | translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End EDIT capteur Modal -->

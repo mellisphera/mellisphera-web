@@ -1,27 +1,117 @@
-<div class="row content">
-    <nav>
-        <ul id="hive-list">
-            <li *ngFor="let hive of rucherService.rucheService.ruchesAllApiary" class="hive-items"
-                (click)="onSelectHive($event, hive)">{{ hive.name }}</li>
-        </ul>
-    </nav>
-    
-    <div class="row">
-        <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 text-center">
-            <label>Start : </label><input [(ngModel)]="melliService.startCalendar" (ngModelChange)="setRangeCalendar()" type="date"/>
-            <label>End : </label><input [(ngModel)]="melliService.endCalendar"  (ngModelChange)="setRangeCalendar()" type="date"/>
-            <div echarts [options]="templateCalendar.options" [merge]="melliService.getMerge()" [loading]="loading" (chartInit)="onChartInit($event)"></div>
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
 
-        </div>
+<div [class]="'content-page ' + checkLoadindingIsComplete()">
+  <nav class="navbar navbar-default" role="admin-navigation">
+    <div class="navbar-header">
+    </div>
+    <ul class="nav navbar-nav buttonLeft">
+      <li>
+        <button type="button" [id]="btnNav[0].path" (click)="navToPage(btnNav[0].path, btnNav[0].path)"
+          class="button button0" data-toggle="tooltip" data-placement="top"
+          title="{{ 'MELLICHARTS.NAV.HIVE_TOOLTIP' | translate }}">{{ 'MELLICHARTS.NAV.HIVE' | translate }}</button>
+      </li>
+      <li>
+        <button type="button" [id]="btnNav[1].path" (click)="navToPage(btnNav[1].path, btnNav[1].path)"
+          class="button button0"data-toggle="tooltip" data-placement="top"
+          title="{{ 'MELLICHARTS.NAV.BROOD_TOOLTIP' | translate }}">{{ 'MELLICHARTS.NAV.BROOD' | translate }}</button>
+      </li>
+      <li>
+        <button type="button" [id]="btnNav[2].path" (click)="navToPage(btnNav[2].path, btnNav[2].path)"
+          class="button button0"data-toggle="tooltip" data-placement="top"
+          title="{{ 'MELLICHARTS.NAV.DONNEE_TOOLTIP' | translate }}">{{ 'MELLICHARTS.NAV.DONNEE' | translate }}</button>
+      </li>
+    </ul>
+    <ul class="nav nav-date navbar-nav navbar-right">
+      <li><button type="button" (click)="previousDate()" class="btn date-arrow btn-transparent"><i
+            class="fa fa-arrow-circle-left" id="previous-date"></i></button></li>
+      <li id="dropdown">
+        <div class="dropdown" id="date-dropdown">
+          <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
+              class="fa fa-calendar"></i>{{ melliChartDate.start | myDate: 'DAILY' }} <span id="arrow">&#8680;</span>
+            {{ melliChartDate.end | myDate: 'DAILY' }}
+            <span class="caret"></span></button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div id="input-date">
+              <div class="form-group">
+                <label>{{ 'MELLICHARTS.DATE.START' | translate }} </label>
+                <input class="form-control" [owlDateTimeTrigger]="dt1" [(ngModel)]="melliChartDate.start"
+                  [owlDateTime]="dt1">
+                <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1"
+                  #dt1></owl-date-time>
 
-        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-            <ul id="type-graph">
-                <li><i (click)="selectType($event,'tempExt')" class="fa fa-calendar fa-2x"></i></li>
-                <li><i (click)="selectType($event, 'hInt')" class="fa fa-thermometer-3 fa-2x"></i></li>
-                <li><i class="fa fa-plus-square fa-2x"></i></li>
-                <li><i (click)="selectType($event, 'weightIncome')" class="fa fa-balance-scale fa-2x"></i></li>
-            </ul>
+              </div>
+              <div class="form-group">
+                <label>{{ 'MELLICHARTS.DATE.END' | translate }} </label>
+                <input class="form-control" [owlDateTimeTrigger]="dt2" [(ngModel)]="melliChartDate.end"
+                  [owlDateTime]="dt2">
+                <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1"
+                  #dt2></owl-date-time>
+              </div>
+              <button type="button" (click)="setDateFromInput()"
+                class="btn btn-large button0 btn-block btn-primary">{{ 'MELLICHARTS.DATE.BTN_APPLY' | translate}}</button>
+            </div>
+            <div id="dt-scale">
+              <div>
+                <ul>
+                  <li class="time" *ngFor="let dt of getRangeByType('DAY')" (click)="setRangeSelect(dt)">
+                    {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
+                </ul>
+                <ul>
+                  <li class="time" *ngFor="let dt of getRangeByType('MONTH')" (click)="setRangeSelect(dt)">
+                    {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
+                </ul>
+                <ul>
+                  <li class="time" *ngFor="let dt of getRangeByType('YEAR')" (click)="setRangeSelect(dt)">
+                    {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
+      </li>
+      <li><button type="button" (click)="nextDate()" class="btn date-arrow btn-transparent"><i id="next-date"
+            class="fa fa-arrow-circle-right"></i></button></li>
+
+    </ul>
+
+  </nav>
+  <div class="row nopadding">
+    <div id="apiary-group" class="apiaryGroup">
+      <div id="main-menu" class="list-group">
+        <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
+          <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)"
+            data-toggle="collapse" data-parent="#main-menu"><span></span>{{ rucher.name }}<span [id]="rucher._id"
+              [class]="'caret ' + ifActiveApiary(rucher._id)"></span></a>
+          <div
+            [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
+            <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
+              *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index"
+              (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i class="circle"
+                [style.background-color]="getColor(ruche)"></i><span class="puce-hive"></span>{{ ruche.name }}</a>
+          </div>
+<!--           <div *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
+            [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
+            <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
+              *ngFor="let ruche of adminService.getHivesByApiaryId(rucher._id); let i = index"
+              (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i class="circle"
+                [style.background-color]="getColor(ruche)"></i><span class="puce-hive"></span>{{ ruche.name }}</a>
+          </div> -->
+        </ng-container>
+      </div>
     </div>
 
+    <div id="content">
+      <router-outlet (activate)="onActivate($event)"></router-outlet>
+    </div>
+
+  </div>
 </div>

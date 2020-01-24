@@ -1,0 +1,153 @@
+nav{
+  background-color: #4f4f51;
+}
+nav h1{
+  color: white;
+}
+nav section{
+  display: flex;
+  justify-content: center;
+}
+#content{
+  display: flex;
+  flex-wrap: wrap;
+  height: 90vh;
+}
+#loginGroup{
+  width: 30%;
+}
+#text {
+  width: 68%;
+  padding: 10px;
+  padding-left: 20px;
+  border-right: 1px solid black;
+  margin-right: 11px;
+}
+.form-control{
+  margin-top: 10px;
+}
+#logo img{
+  margin-top: 8px;
+  margin-right: 3px;
+}
+.form-group{
+  width: 300px;
+  margin: auto;
+}
+.loginDesktop, .mobile p {
+  text-align: center;
+}
+.desktop, .mobile div:last-child {
+  text-align: center;
+}
+.loginMobile{
+  display: none;
+}
+.eulaMobile{
+  display: none;
+}
+#text .read {
+  color: #0366d6;
+  cursor: pointer;
+}
+.linkForm{
+  margin-top: 30px;
+}
+#text .read:hover {
+  text-decoration: underline;
+}
+#sectionEula > div{
+  max-height: 400px;
+  overflow-y: auto;
+}
+.eulaTitle{
+  text-align: center;
+  font-size: 25px !important;
+}
+.eulaMobile ol{
+  font-size: 15px;
+}
+.eulaMobile, .eulaDesktop{
+  margin-top: 25px;
+}
+ol li {
+  margin-bottom: 6px;
+}
+.checkEula{
+  padding: 8px;
+  margin-top: 10px;
+  display: flex;
+}
+input[type='checkbox'] {
+  margin-right: 3px;
+  margin-left: 25px;
+}
+button{
+  width: 150px;
+}
+#footter{
+  text-align: center;
+}
+.linkContact{
+  margin-top: 8px;
+}
+.errorLogin{
+  color: red;
+}
+@media screen and (max-width:990px) {
+  .form-group{
+    width: 50%;
+    margin: auto;
+  }
+  iframe{
+    width: 50%;
+  }
+  #text {
+    width: 100%;
+    text-align: justify;
+    border: none;
+  }
+  h2{
+    text-align: center;
+  }
+  #loginGroup{
+    width: 100%;
+  }
+  #ytb{
+    text-align: center;
+  }
+  .eulaMobile{
+    display: block;
+  }
+  .eulaDesktop{
+    display: none;
+  }
+  .eulaMobile ol{
+    padding-left: 20px;
+  }
+  .loginMobile{
+    display: block;
+    margin-top: 15px;
+    width: 100%;
+  }
+  .loginDesktop{
+    display: none;
+  }
+  .login-container div:last-child{
+    margin-top: 5px;
+  }
+}
+@media screen and (max-width:710px) {
+  iframe{
+    width: 80%;
+  }
+}
+
+@media screen and (max-width:450px) {
+  iframe{
+    width: 100%;
+  }
+  .form-group{
+    width: 90%;
+  }
+}

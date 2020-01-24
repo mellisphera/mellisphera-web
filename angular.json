@@ -23,11 +23,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "src/assets/sass/light-bootstrap-dashboard.scss"
+              "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.js",
             ]
           },
           "configurations": {

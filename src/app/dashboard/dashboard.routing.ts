@@ -1,35 +1,42 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { AuthGuardService } from '../auth/auth-guard.service';
 import { HomeComponent } from './home/home.component';
-import { RucheRucherComponent } from './apiary/ruche-rucher/ruche.rucher.component';
-import { RapportComponent } from './rapport/rapport.component';
-import { FleursFloraisonComponent } from './fleurs-floraison/fleurs.floraison.component';
-import { MeteoComponent } from './meteo/meteo.component';
-import { AdminComponent } from './admin/admin.component';
-import { StackApiaryComponent } from './apiary/stack-apiary/stack-apiary.component';
-import { CapteurComponent } from './capteur/capteur.component';
 import { MelliChartsComponent } from './melli-charts/melli-charts.component';
 import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-component.component';
 import { PreferenceConfigComponent } from './preference-config/preference-config.component';
-import { ApiaryNotesComponent } from './apiary/apiary-notes/apiary-notes.component';
+import { ManageHivesComponent } from './manage/manage-hives/manage-hives.component';
+import { ManageApiarysComponent } from './manage/manage-apiarys/manage-apiarys.component';
+import { ManageSensorsComponent } from './manage/manage-sensors/manage-sensors.component';
+import { ManageNotesComponent } from './manage/manage-notes/manage-notes.component';
+import { AlertConfigurationComponent } from './alert-configuration/alert-configuration.component';
 
 const routes: Routes = [
     {
         path: '', component: DashboardComponent, children: [
-            { path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
-            { path: 'ruche-et-rucher', component: RucheRucherComponent, canActivate: [AuthGuardService]},
-            { path: 'ruche-detail', loadChildren: './apiary/ruche-rucher/ruche-detail/ruche.module#RucheModule'},
-            { path: 'rapport', component: RapportComponent, canActivate: [AuthGuardService]},
-            { path: 'fleurs-floraison', component: FleursFloraisonComponent, canLoad: [AuthGuardService]},
-            { path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
+            { path: 'home', loadChildren : './home/home.module#HomeModule', canLoad: [AuthGuardService]},
             { path: 'admin', loadChildren : './admin/admin.module#AdminModule', canLoad: [AuthGuardService]},
-            { path: 'stack-apiary', component: StackApiaryComponent, canActivate: [AuthGuardService]},
-            { path: 'capteurs', component: CapteurComponent},
-            { path: 'apiary-notes', component: ApiaryNotesComponent, canActivate: [AuthGuardService]},
-            { path: 'melli-charts', component: MelliChartsComponent, canActivate: [AuthGuardService]},
+            //{ path: 'stack-apiary', component: StackApiaryComponent, canActivate: [AuthGuardService]},
+            { path: 'preferences', component: PreferenceConfigComponent, canActivate: [AuthGuardService]},
+            { path: 'melli-charts', loadChildren: './melli-charts/melli-charts.module#MelliChartsModule', canLoad: [AuthGuardService]},
+            { path: 'manage-hives', component: ManageHivesComponent, canActivate: [AuthGuardService]},
+            { path: 'manage-apiarys', component: ManageApiarysComponent, canActivate: [AuthGuardService]},
+            { path: 'manage-notes', component: ManageNotesComponent, canActivate: [AuthGuardService]},
+            { path: 'manage-sensors', component: ManageSensorsComponent, canActivate: [AuthGuardService]},
+            { path: 'alert-configuration', canLoad: [AuthGuardService], canActivate: [AuthGuardService], loadChildren: './alert-configuration/alert-configuration.module#AlertConfigurationModule'},
             { path: 'preferences', component: PreferenceConfigComponent, canActivate: [AuthGuardService]}
 
 
@@ -46,17 +53,3 @@ const routes: Routes = [
   ],
 })
 export class DasboardRoutingModule { }
-
-/*
-    { path: 'ruche-et-rucher',  canActivate : [AuthGuard], component: RucheRucherComponent },
-    { path: 'capteurs',         canActivate : [AuthGuard], component: CapteurComponent },
-    { path: 'meteo',            canActivate : [AuthGuard], component: MeteoComponent },
-    { path: 'ruche-detail', canActivate : [AuthGuard], component : RucheDetailComponent},
-    { path: 'rapport',          canActivate : [AuthGuard], component: RapportComponent},
-    { path: 'fleurs-floraison', canActivate : [AuthGuard], component: FleursFloraisonComponent },
-    { path: 'home', canActivate : [AuthGuard], component: HomeComponent},
-    { path: 'admin', canActivate : [AuthGuard], component : AdminComponent},
-    { path: 'stack-apiary', canActivate : [AuthGuard], component : StackApiaryComponent},
-    { path: 'fstl', component : DemoComponent},
-    { path: 'apiary-notes', canActivate: [AuthGuard], component : ApiaryNotesComponent},
-*/

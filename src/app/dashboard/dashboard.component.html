@@ -1,15 +1,26 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
 <div class="wrapper">
   <div class="sidebar">
       <app-sidebar></app-sidebar>
       <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
   </div>
   <div class="main-panel">
-      <navbar-cmp (messageEvent)="receiveMessage($event)"></navbar-cmp>
+      <navbar-cmp (apiaryChange)="apiaryChange($event)" (messageEvent)="receiveMessage($event)"></navbar-cmp>
       <div class="container-fluid" style="background-color: white;">
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="setRouterPage($event)"></router-outlet>
       </div>
   </div>
 </div>
 <app-feedback></app-feedback>
 <!-- <button id="hideSideBar" (click)="navComponent.sidebarToggle()" style="background:none; border: none;"><i class="fa fa-arrow-circle-left fa-3x"></i></button> 
- --><app-wizard *ngIf="login.getConnexion() == 1 && login.getWizardActive()"></app-wizard>
+<app-wizard *ngIf="login.getConnexion() == 1 && login.getFristConnection()"></app-wizard> -->

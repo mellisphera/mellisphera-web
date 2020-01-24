@@ -9,11 +9,39 @@
 
         }
     },
+    "MELLIUX": {
+        "HELP": {
+            "APIARY": {
+                "APIARY_PICTURE": ["Vue globale du rucher : état simple et rapide de votre rucher. ",
+                    "Le fitness de la ruche est indiqué par la couleur des pastilles (vert/orange/rouge). Passez la souris dessus pour trouver plus de détails.",
+                    "Le menu du haut affiche les informations contextuelles de la ruche : nom, couvain, poids et capteurs.",
+                    "Cliquez sur chaque pastille pour accéder aux données spécifiques de la ruche.",
+                    "Naviguez dans le temps avec les flèches autour de la date en haut de l'interface.",
+                    "Le fitness de la ruche est calculé avec notre modèle exclusif BFit.",
+                    
+                    "Première note de configuration :",
+                    "1/déposez votre propre image ou carte du rucher.",
+                    "2/ouvrez le bouton de verrouillage et placez les pastilles sur l'emplacement des ruches."],
+                "EVENT_CALENDAR": ["Calendrier du rucher : utilisez les notes du rucher pour tracer les actions générales que vous avez faites dans le rucher.",
+                    "Ce calendrier affiche aussi les alertes météo."]
+            },
+            "HIVE": {
+                "EVENT_CALENDAR": "Calendrier des événements : affiche les notes et les notifications d'alerte.",
+                "BROOD_CALENDAR": ["Calendrier de couvain : affiche la progression du couvain dans votre ruche.",
+                    "Les valeurs vont de 0% (pas de couvain) à 100% (couvain complet).",
+                    "Les ruches dont le niveau de couvain est supérieur à 80% produisent du miel.",
+                    "Le niveau de couvain est calculé avec notre modèle exclusif BForce."],
+                "WEIGHT_CALENDAR": ["Calendrier des poids : affiche la productivité quotidienne des ruches équipées d'une balance.", 
+                    "Seuls les apports et les consommations de poids sont affichés.",
+                    "Les opérations de l'apiculteur comme l'alimentation ou l'ajout de hausse sont éliminées."]
+            }
+        }
+    },
     "WIZARD" :{
         "STEP_TITLE": "Bienvenue",
         "WELCOME": "Bienvenue",
-        "DESCRIPTION": "Nous voulons guider vos premiers pas en créant un rucher et d’autres ruches.",
-        "DESCRIPTION_2": " Une fois que vous avez terminé, vous pourrez voler de vos propres ailes",
+        "DESCRIPTION": "Nous voulons guider vos premiers pas en créant un rucher et des ruches.",
+        "DESCRIPTION_2": "Une fois que vous avez terminé, vous pourrez voler de vos propres ailes.",
         "APIARY":{
             "STEP_TITLE": "Rucher",
             "TITLE": "Créer votre rucher"
@@ -21,7 +49,7 @@
         "HIVE": {
             "STEP_TITLE": "Ruche",
             "TITLE": "Créer une ruche",
-            "DESCRIPTION": "Plus tard tu pourras créer toutes les ruches que tu veut"
+            "DESCRIPTION": "Plus tard vous pourrais créer toutes les ruches que vous voudrez."
         },
         "FLOWER": {
             "TITLE": "Ajouter des fleurs",
@@ -33,52 +61,72 @@
         },
         "DONE": {
             "STEP_TITLE": "Fin",
-            "TITLE": "Tu as finis !",
-            "DESCRIPTION": "En parcourant les différentes pages, vous trouverez les symboles suivants",
+            "TITLE": "C'est tout !",
+            "DESCRIPTION": "En parcourant les différentes pages, vous trouverez les symboles suivants:",
             "ICONS": {
-                "ADD": "Ajoute un élement (rucher, ruche, capteur, fleur)",
-                "EDIT": "Modifier un élements",
+                "ADD": "Ajouter un éléments (rucher, ruche, capteur, fleur)",
+                "EDIT": "Modifier un éléments",
                 "DELETE": "Supprimer un élément"
             }
         },
         "NEXT":"Suivant",
         "BACK": "Retour",
+        "SKIP": "Plud tard",
         "FINISH": "Terminer"
     },
     "NAVBAR": {
         "NEW_APIARY" : "Nouveau rucher",
-        "EDIT_APIARY" : "Modifier le rucher",
-        "DELETE_APIARY" : "Supprimer le rucher",
+        "EDIT_APIARY" : "Modifier un rucher",
+        "EDITAPIARY" : "Modifier le rucher",
+        "DELETE_APIARY" : "Supprimer un rucher",
+        "DELETE_APIARY2" : "Supprimer le rucher",
         "DELETE_ASK" : "Supprimer le rucher ?",
         "ACCOUNT": {
             "PREFERENCES" : "Préférences",
             "LOG_OUT": "Déconnexion"
         },
         "CRUD" : {
+            "APIARY_NAME" : "Nom du rucher",
+            "TITLE" : "Menu de gestion",
+            "APIARY_DESCRIPTION" : "Description du rucher",
             "NAME" : "Nom",
             "NAME_ERROR" : "Entrez un nom entre 1 et 20 caractères",
             "DESCRIPTION_ERROR" : "La description comporte 40 caractères max.",
             "CITY" : "Ville",
+            "CITY_APIARY" : "Ville du rucher",
             "CITY_ERROR" : "Entrez un nom de ville",
             "ZIP_CODE" : "Code postal",
+            "ZIP_CODE_APIARY" : "Code postal du rucher",
             "ZIP_ERROR" : "Entrez un code postal",
             "PICTURE" : "Ajouter une image du rucher :",
-            "FILE" : "Choisir le dossier",
+            "WARNING_PICTURE": "Taille du fichier trop grande",
+            "FILE" : "Choisir le fichier",
             "DROP" : "Faites glisser une photos ici",
             "CLOSE" : "Fermer",
-            "SAVE" : "Sauver le rucher",
+            "SAVE" : "Enregistrer",
             "CANCEL" : "Annuler",
             "CONFIRM" : "Confirmer",
-            "CREATE" : "Créer le rucher"
+            "CREATE" : "Créer le rucher",
+            "APIARY_UPDATE" : "Rucher à modifier",
+            "APIARY" : "Rucher",
+            "HIVES" : "Ruches",
+            "MANAGE": "Général",
+            "SELECTHIVE" : "Selectionnez la ruche à modifier",
+            "EDITAHIVE" : "Modifier une ruche",
+            "DELETEAHIVE" : "Supprimer une ruche",
+            "DELETEHIVE" : "Supprimer la ruche",
+            "DELETEHIVEASK" : "Supprimer la ruche ?",
+            "HIVENAME" : "Nom de la ruche",
+            "HIVEDESC" : "Description de la ruche",
+            "EDIT" : "Modifier",
+            "FROMAPIARY" : "du rucher"
         }
     },
     "SIDEBAR" : {
-        "APIARY" : "Rucher",
+        "APIARY" : "Mon Rucher",
         "HIVES" : "Ruches",
-        "NOTES" : "Notes du rucher",
-        "FLOWER" : "Fleur",
-        "SENSORS" : "Capteurs",
-        "DATA" : "Données enregistrées"
+        "DATA" : "Explorer",
+        "ALERT_CONF": "Alertes"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Changer de mot de passe",
@@ -95,15 +143,41 @@
         "SAVE_DATE" : "Sauvegarder",
         "TITLE_UNIT" : "Systèmes unitaires",
         "FORM_UNIT" : {
-            "METRIC" : "Métrique",
-            "IMPERIAL" : "Impérial",
+            "METRIC" : "Métrique (kg, °C)",
+            "IMPERIAL" : "Impérial (lb, F)",
             "SAVE" : "Sauvegarder"
-        }
+        },
+        "LANG": "Langage",
+        "WEATHER_SOURCE":"Source météo"
     },
     "HOME" : {
         "BACK" : "Sauvegarder l'image ?",
         "CHANGE" : "Sauvegarder",
-        "CANCEL" : "Annuler"
+        "CANCEL" : "Annuler",
+        "NODATA" : "-",
+        "NOSENSORS" : "-    ",
+        "CLICK" : "Cliquez sur une ruche pour plus d'informations !",
+        "PLACEMENTMODE" : "Mettre les ruches en mode 'déplacement'",
+        "CLICKMODE" : "Mettre les ruches en mode 'clic'",
+        "MANAGE" : "Gérer",
+        "WARNING" : "Attention! ",
+        "NAVBAR" : {
+            "ALERTS" : "Alertes",
+            "NOTES" : "Notes",
+            "SUMMARY": "Résumé",
+            "NAME" : "Nom",
+            "BROOD" : "Couvain",
+            "WEIGHT" : "Poids",
+            "SENSORS" : "Capteur",
+            "APIARY" : "Rucher"
+        },
+        "POPUP_NEW_USER": {
+            "TITLE": "Bienvenue sur Mellisphera",
+            "BODY": ["Nous calculons maintenant vos données.",
+            "Ce processus peut prendre un certain temps en fonction de l'historique de vos données.",
+            "Vous verrez des données apparaître progressivement au cours des 10 prochaines minutes."],
+            "CLOSE_BTN": "Fermer"
+        }
     },
     "HIVES" : {
         "HIVES" : "Ruches",
@@ -111,12 +185,14 @@
         "SENSOR" : "Capteur",
         "FORM" : {
             "NEW" : "Nouvelle ruche",
-            "EDIT" : "Modifier la ruche",
+            "EDIT" : "Enregistrer",
+            "EDITHIVE" : "Modifier la ruche",
             "DELETE" : "Supprimer la ruche",
             "DELETE_ASK" : "Supprimer la ruche ?",
             "CANCEL" : "Annuler",
             "CONFIRM" : "Confirmer",
-            "NAME" : "Nom",
+            "NAME" : "Nom de la ruche",
+            "DESCRIPTION" : "Description de la ruche",
             "CREATE" : "Créer la ruche",
             "CLOSE" : "Fermer",
             "APIARY" : "Rucher"
@@ -127,42 +203,75 @@
             "NOTES" : "Notes",
             "STOCK" : "Stock",
             "HEALTH" : "Santé",
-            "DAILY" : "Journalié",
+            "DAILY" : "Journalier",
             "CONDENSED" : "Condensé"
         },
         "OBSERVATIONS" : {
             "AO" : "Actions et observations",
-            "DATE" : "Dates",
-            "SENTENCE" : "Notes",
-            "TYPES" : "Types",
+            "TITLE" : "Notes de la ruche",
+            "DATE" : "Date",
+            "SENTENCE" : "Note",
+            "TYPES" : "Type",
             "ACTIONS" : "Modifier",
             "OBSERVATION" : "Observation",
+            "NONOTES" : "Vous n'avez pas de notes pour cette ruche.",
             "ACTION" : "Action",
             "FORM" : {
                 "NEW" : "Nouveau",
                 "NEW_NOTES" : "Nouvelle note",
                 "DATE" : "Date Heure : ",
-                "CREATE_OBS" : "Créer une observation",
+                "CREATE_OBS" : "Créer une note",
                 "CREATE_ACT" : "Créer une action",
                 "CLOSE" : "Fermer",
-                "EDIT" : "Modifier la note",
+                "EDIT" : "Enregistrer",
+                "EDITNOTE" : "Modifier la note",
                 "DELETE" : "Supprimer la note",
                 "DELETE_ASK" : "Supprimer la note ?",
                 "CANCEL" : "Annuler",
                 "CONFIRM" : "Confirmer",
                 "NOTES" : "Note : ",
-                "TYPE" : "Type"
+                "TYPE" : "Type",
+                "YOUWANTCREATE": "Vous souhaitez créer :",
+                "APIARYNOTE" : "Une note de rucher",
+                "HIVENOTE" : "Une note de ruche",
+                "CREATENOTE" : "Créer une note",
+                "LOCATION" : "Localisation",
+                "APIARYLOCATION" : "Note de rucher",
+                "HIVELOCATION" : "Note de ruche",
+                "EDITANOTE" : "Modifer une note"
             }
         },
+        "SENSORS" : {
+            "NOSENSORS" : "Vous n'avez pas de capteurs pour cette ruche."
+        },
         "STOCK" : {
-            "NO_DATA" : "Pas de données :",
+            "NO_DATA" : "_",
             "STOCK" : "Stock de miel",
-            "WEIGHT" :  "Gain de poids"
+            "WEIGHT" :  "Poids journaliers :"
         },
         "HOURLY" : {
             "RANGE" : "Intervalle :",
             "LAST" : "Depuis"
+        },
+        "CLICK" : {
+            "SENSORSTITLE" : "Capteurs de la ruche",
+            "BROOD" : "Couvain",
+            "BROODINFO" : "Le couvain est calculé à partir de la température de la ruche. Plus la température est stable autour de la zone de couvain, plus le pourcentage est élevé.",
+            "UNKNOWN" : "inconnu",
+            "ALERTS" : {
+                "TITLE" : "Alertes de la ruche",
+                "TYPE" : "TYPE",
+                "READ" : "LUE",
+                "NOALERTS" : "Pas d'alertes cette semaine pour "
+            }
+        },
+        "ALERT" : {
+            "NOALERTS" : "Pas d'inspections ni de notifications pour cette ruche depuis 2 mois."
         }
+    },
+    "ALERTS" : {
+        "TITLE" : "Alertes du rucher",
+        "NOALERTS" : "Pas d'alertes cette semaine !"
     },
     "APIARY_NOTES" : {
         "TITLE" : "Notes du rucher",
@@ -170,6 +279,7 @@
             "NEW" : "Nouvelle note de rucher",
             "CREATE" : "Créer une note",
             "SAVE" : "Enregistrer",
+            "EDITNOTE": "Editer note de rucher",
             "SELECT" : "Selectionnez votre ruche",
             "TYPE" : "Type : ",
             "MOVE" : "Déplacer"
@@ -177,7 +287,7 @@
     },
     "CAPTEUR" : {
         "SENSORS" : "Capteurs",
-        "REFERENCES" : "Références",
+        "REFERENCES" : "Référence",
         "SEARCH" : "Recherchez l'id du capteur",
         "FORM" : {
             "NEW" : "Nouveau capteur",
@@ -189,7 +299,10 @@
             "REF_ERROR" : "Vous devez sélectionner une référence valide.",
             "SENS_ERROR" : "Le capteur existe déjà !",
             "SELECT_ERROR" : "Sélectionnez la référence de votre capteur",
-            "LINK" : "Lien vers : ",
+            "LINK" : "Votre capteur se trouve : ",
+            "STOCK" : "En stock",
+            "HIVEDETAIL" : "Dans la ruche ",
+            "INHIVE" : "Dans une ruche",
             "HIVE" : "Ruche",
             "HIVEAPIARY" : "Ruche | Rucher",
             "SELECT_HIVE" : "Sélectionnez une Ruche",
@@ -197,20 +310,195 @@
             "CLOSE" : "Fermer",
             "APIARY" : "Rucher",
             "SAVE" : "Sauvegarder",
-            "EDIT" : "Modifier le capteur",
+            "EDIT" : "Enregistrer",
+            "EDITSENSORTITLE" : "Modifier le capteur",
             "SENSOR_EDIT" : "Capteur modifié",
-            "SUCCES" : "Avec succès !"
+            "SUCCES" : "Avec succès !",
+            "EDITSELECT" : "Selectionnez le capteur à modifer",
+            "SENSOR" : "Capteur",
+            "EDITSENSOR" : "Modifer",
+            "OF" : "de",
+            "NOSENSOR" : "Vous n'avez pas de capteurs à modifier.",
+            "EDITASENSOR" : "Modifer un capteur",
+            "EDITTHESENSOR" : "Modifer le capteur"
         }
     },
     "FEEDBACK" : {
-        "TITLE" : "Ecrivez-nous !",
-        "MESSAGE" : "Ecrivez-nous !",
-        "COMMENT" : "Votre commentaire",
+        "TITLE" : "Support",
+        "TITLE_MODAL" : "On peut vous aider ?",
+        "COMMENT" : "Votre message",
+        "MSG": "Contactez nous par <a href=mailto:support@mellisphera.com>email</a>, sur <a href=https://mellisphera.slack.com/messages/mellisphera_fr/ target=_blank>slack</a> ou écrivez nous ci-dessous.",
         "SLACK" : "Vous pouvez aussi rejoindre notre conversation sur Slack en",
         "SIGNUP" : "créant un compte",
         "OR" : "ou",
         "LOGIN" : "vous connectant",
         "SEND" : "Envoyer",
         "CLOSE" : "Fermer"
+    },
+    "FLOWER" : {
+        "APIARYPLANTS" : "Plantes du rucher",
+        "PLANTDIR" : "Listes des plantes",
+        "MELLIPLANTS" : "Plantes mellifères",
+        "NAME" : "Nom",
+        "STARTS" : "Débuts",
+        "ENDS" : "Fins",
+        "RELATIVE" : "Relative",
+        "BLOOMING" : "de floraison",
+        "THEORICAL" : "théorique",
+        "OBSERVED" : "observée",
+        "ABUNDANCE" : "abondance",
+        "INAPIARY" : "dans le rucher",
+        "HIGH" : "Haut",
+        "MEDIUM" : "Moyen",
+        "LOW" : "Bas",
+        "DELETEFLOWER" : "Supprimer plante",
+        "EDIT" : "Modifier",
+        "MELLIDIR" : "Liste des plantes mellifères",
+        "MYPLANTS" : "Mes plantes",
+        "SEARCHNAME" : "Rechercher par nom",
+        "SEARCHMONTH" : "Rechercher par mois",
+        "ALLTYPES" : "Tous les types",
+        "BLOOMONTH" : "Mois de floraison",
+        "COMMON" : "commun",
+        "BLOOMINGPERIOD" : "Periode de floraison",
+        "CONFIDENCELEVEL" : "Niveau de confiance",
+        "ADDTOAPIARY" : "Ajouter au rucher",
+        "CLOSE" : "Fermer"
+    },
+    "SUMMARY" : {
+        "PDF" : "Télécharger en PDF",
+        "APIARY" : "Rucher",
+        "SUMMARY" : "Résumé du rucher",
+        "ALERTSSINCE" : "alertes depuis ",
+        "NOALERTS" : "Pas d'alertes de rucher !",
+        "FOR" : "depuis",
+        "DAYS" : "jours",
+        "NONOTES":  "Pas de notes de rucher !",
+        "SUMMARYHIVES" : "Résumé des ruches + alertes depuis",
+        "NAME" : "Nom",
+        "BROOD" : "Couvain",
+        "BROODD3" : "Couvain J-3",
+        "BROODD7" : "Couvain J-7",
+        "WEIGHT" : "Poids",
+        "SENSORS" : "Capteurs",
+        "ALERTS" : "Alertes",
+        "NOHIVEALERTS" : "Pas d'alertes",
+        "NOHIVES" : "Vous n'avez pas de ruche dans ce rucher !"
+    },
+    "NOTES" : {
+        "TITLEAPIARY" : "Notes de rucher",
+        "TITLEHIVE" : "Notes de ruche",
+        "SEARCH": "Chercher une note",
+        "FORM" : {
+            "NEW" : "Nouvelle note",
+            "APIARY" : "Rucher",
+            "HIVE" : "Ruche",
+            "EDIT" : "Modifier la note",
+            "DELETE" : "Supprimer la note",
+            "DELETE_ASK" : "Supprimer la note ?",
+            "CONFIRM" : "Supprmier",
+            "CANCEL" : "Annuler"
+        }
+    },
+    "MELLICHARTS": {
+        "HELP": {
+            "HIVE" :["Ici, vous pouvez explorer avec beaucoup de détails toutes les données relatives à une ruche.",
+            "Comparez les données de la ruche avec vos propres opérations (notes) et avec les conditions météorologiques.",
+            "Choisissez le champ à afficher avec les icônes au-dessus de chaque calendrier.",
+            "Utilisez la navigation par date (en haut à droite de l'écran) pour afficher des périodes plus longues.",
+            "Sauter de période en période avec les flèches."],
+            "BROOD" : ["Superposer les progressions de couvain de plusieurs ruches dans le même ou différents ruchers.",
+            "En règle générale, 10% est un cadre de couvain, 40% 4 cadres, etc.",
+            "Selon votre pratique et le modèle de ruche (langstroth, dadant) vous devrez ajuster ces relations.",
+                
+            "Note importante : seules les ruches atteignant le seuil de 80% produiront du miel ! Nous espérons que vous saurez comment y parvenir."],
+            "RAWDATA" : "Cet affichage est très similaire à celui auquel vous êtes déjà habitué dans MyBroodminder. Il est également possible de jouer avec différentes ruches/ruchers."
+        },
+        "NAV": {
+            "HIVE": "Ruche",
+            "HIVE_TOOLTIP": "Ruche",
+            "BROOD": "Couvain",
+            "BROOD_TOOLTIP": "Ruche",
+            "DONNEE": "Données",
+            "DONNEE_TOOLTIP": "Données brutes"
+        },
+        "DATE": {
+            "START": "Début",
+            "END": "Fin",
+            "BTN_APPLY": "Appliquer"
+        },
+        "BROOD": {
+            "TITLE": "Evolution journalière du couvain"
+        }
+    },
+
+    "ALERT_CONF_PAGE": {
+        "TYPE": "Icône",
+        "VALUE": "Valeur",
+        "PAGE": {
+            "SENSORS": "Capteur",
+            "WEATHER": "Metéo",
+            "HIVE": "Ruche",
+            "CONF": {
+                "TITLE": "Paramètres",
+                "MAIL": "Envoyer des alertes par e-mail",
+                "FREQUENCY": "Envoyez chaque",
+                "DAILY": "jour",
+                "WEEKLY": "semaine",
+                "DAY": "jour",
+                "OTHER": "personnaliser",
+                "EVERY": "tous les ",
+                "BTN_MAIL_TEST": "Tester email"
+            }
+        },
+        "NAME": "Nom",
+        "DESCRIPTION": "Description",
+        "STATUS": "Status",
+        "HELP": {
+            "ALERTS" : ["Dans cette page, vous pouvez configurer toutes les alertes et notifications.",
+                "Les alertes sont classées en 3 groupes : dans la ruche / la météo / les capteurs.",
+                "Vous pouvez commencer avec les seuils prédéfinis et les affiner en fonction de votre propre expérience.",
+                "Allez dans l'onglet \"configurer\" pour définir vos préférences pour l'email et la fréquence des notifications."]
+        }
+    },
+
+    "LOGIN_BM": {
+        "TITLE": "Mellisphera",
+        "BTN": "Login",
+        "EULA": "Contrat de Licence Utilisateur Final",
+        "BTN_EUA": "J'accepte",
+
+        "BECOMING": {
+            "TITLE": "Devenir un apiculteur de précision",
+            "CONTENT": ["Nous voulons rendre votre expérience de surveillance de la ruche plus intense. Mellisphera est une interface",
+            "complète qui regroupe vos données ainsi que vos actions d’apiculteur et la météo. Un ensemble d'algorithmes",
+            "uniques fournit des informations exploitables. Il ne s'agit plus de la température et du poids mais de la forme de la",
+            "ruche, du niveau de couvain, de la productivité du miel, du vol ou de l'essaimage... sous forme d’alertes et",
+            "notifications !"],
+
+            "READ_MORE": "Lire plus",
+            "READ_MORE_CONTENT": ["La bonne nouvelle est que Mellisphera est intégré à BroodMinder. Une fois connecté, vous hériterez de l'historique",
+            "complet de vos capteurs. De plus, ces données seront enrichies de moyennes quotidiennes, d'événements,",
+            "d'alertes, etc. Vous pourrez explorer les événements passés et lire l'évolution de la saison sous un angle",
+            "complètement nouveau. En deux mots, vous êtes sur le point de devenir un apiculteur de précision."]
+        },
+        "QUICK_TOUR": {
+            "TITLE": "Visite rapide de Mellisphera",
+            "CONTENT": "Regardez cette vidéo pour découvrir les principales fonctionnalités de Mellisphera."
+        },
+        "BM_MS": {
+            "TITLE": "BroodMinder et Mellisphera - Comment ça marche ?",
+            "CONTENT": ["Les environnements Mellisphera et BroodMinder sont complémentaires et étroitement liés. Vous continuerez à",
+            "utiliser MyBroodMinder pour installer vos ruchers, ruches et capteurs. Ces informations sont mises à jour dans",
+            "Mellisphera à chaque nouvelle connexion. Mellisphera vous permettra d'effectuer des analyses et des explorations",
+            "détaillées ainsi que de vous envoyer des alertes et des notifications personnalisées. Conseil : utilisez votre compte",
+            "BroodMinder et votre mot de passe pour vous connecter directement à Mellisphera."]
+        },
+        "FORM": {
+            "EMAIL": "Email MyBroodMinder",
+            "PASSWORD": "Mot de passe MyBroodMinder",
+            "CONNECTION": "Connexion",
+            "ERR": "Je n’arrive pas à me connecter"
+        }
     }
 }

@@ -9,6 +9,34 @@
 
         }
     },
+    "MELLIUX": {
+        "HELP": {
+            "APIARY": {
+                "APIARY_PICTURE": ["All-in-one apiary view: simple and quick status of your apiary. ",
+                "Hive fitness is indicated with the pellet color (green/orange/red). Hover it to find more details.",
+                "Top menu displays hive contextual info: name, brood, weight and devices.",
+                "Click on every pellet to access specific hive data.",
+                "Navigate backwards in time with the arrows arround the date at the top of the interface.",
+                "Hive Fitness is computed with our exclusive BFit model.",
+                
+                "First setup note:",
+                "1/drag and drop your own apiary picture or map.",
+                "2/open the lock button and place the pellets on hives location."],
+                "EVENT_CALENDAR": ["Apiary calendar: use apiary notes to trace general actions you did into the apiary.",
+                "This calendar also displays weather alerts."]
+            },
+            "HIVE": {
+                "EVENT_CALENDAR": "Event calendar: displays notes and alert notifications.",
+                "BROOD_CALENDAR": ["Brood calendar: displays the brood progression in your hive.",
+                "The range goes from 0% (no brood) to 100% (full brood).",
+                "Hives with brood levels above 80% produce honey.",
+                "Brood level is computed with our exclusive BForce model."],
+                "WEIGHT_CALENDAR": ["Weight calendar: displays the daily productivity of hives equiped with a scale.", 
+                "Only weight incomes and consumptions are displayed.",
+                "Beekeeper operations like feeding or adding supper are discarded."]
+            }
+        }
+    },
     "WIZARD": {
         "STEP_TITLE": "Welcome",
         "WELCOME": "Welcome",
@@ -43,42 +71,62 @@
         },
         "NEXT": "Next",
         "BACK": "Back",
+        "SKIP": "Dismiss",
         "FINISH": "Finish"
     },
     "NAVBAR": {
         "NEW_APIARY" : "New apiary",
         "EDIT_APIARY" : "Edit apiary",
+        "EDITAPIARY" : "Edit apiary",
         "DELETE_APIARY" : "Delete apiary",
+        "DELETE_APIARY2" : "Delete apiary",
         "DELETE_ASK" : "Delete Apiary ?",
         "ACCOUNT": {
-            "PREFERENCES" : "Preferences",
+            "PREFERENCES" : "Settings",
             "LOG_OUT": "Logout"
         },
         "CRUD" : {
+            "APIARY_NAME" : "Apiary name",
+            "TITLE" : "Management menu",
+            "APIARY_DESCRIPTION" : "Apiary description",
             "NAME" : "Name",
-            "NAME_ERROR" : "select a name from 1 to 20 chars",
-            "DESCRIPTION_ERROR" : "description can be 40 chars max",
+            "NAME_ERROR" : "Select a name from 1 to 20 chars",
+            "DESCRIPTION_ERROR" : "Description can be 40 chars max",
             "CITY" : "City",
+            "CITY_APIARY" : "Apiary city",
             "CITY_ERROR" : "select city name",
             "ZIP_CODE" : "Zip code",
-            "ZIP_ERROR" : "select zip code",
+            "ZIP_CODE_APIARY" : "Apiary zip code",
+            "ZIP_ERROR" : "Select zip code",
             "PICTURE" : "Select picture from Apiary :",
+            "WARNING_PICTURE": "File size too large",
             "FILE" : "Select File",
             "DROP" : "Base drop zone",
             "CLOSE" : "Close",
-            "SAVE" : "Save Apiary",
+            "SAVE" : "Save",
             "CANCEL" : "Cancel",
             "CONFIRM" : "Confirm",
-            "CREATE" : "New apiary"
+            "CREATE" : "New apiary",
+            "APIARY_UPDATE" : "Apiary to update",
+            "APIARY" : "Apiary",
+            "HIVES" : "Hives",
+            "MANAGE": "Manage",
+            "SELECTHIVE" : "Select the hive to update",
+            "EDITAHIVE" : "Edit hive",
+            "DELETEAHIVE" : "Delete hive",
+            "DELETEHIVE" : "Delete hive",
+            "DELETEHIVEASK" : "Delete hive ?",
+            "HIVENAME" : "Hive name",
+            "HIVEDESC" : "Hive description",
+            "EDIT" : "Edit",
+            "FROMAPIARY" : "from apiary"
         }
     },
     "SIDEBAR" : {
-        "APIARY" : "Apiary",
+        "APIARY" : "My Apiary",
         "HIVES" : "Hives",
-        "NOTES" : "Apiary notes",
-        "FLOWER" : "Flower",
-        "SENSORS" : "Sensors",
-        "DATA" : "Stack data"    
+        "DATA" : "Explore",
+        "ALERT_CONF": "Alerts"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Change Password",
@@ -95,15 +143,42 @@
         "SAVE_DATE" : "Save",
         "TITLE_UNIT" : "Unit Systems",
         "FORM_UNIT" : {
-            "METRIC" : "Metric",
-            "IMPERIAL" : "Imperial",
+            "METRIC" : "Metric (kg, °C)",
+            "IMPERIAL" : "Imperial (lb, F)",
             "SAVE" : "Save"
-        }
+        },
+        "LANG": "Language",
+        "WEATHER_SOURCE":"Weather source"
+
     },
     "HOME" : {
         "BACK" : "Save background?",
         "CHANGE" : "Save changes",
-        "CANCEL" : "Cancel"
+        "CANCEL" : "Cancel",
+        "NODATA" : "-",
+        "NOSENSORS" : "-",
+        "CLICK" : "Click on a hive for more information !",
+        "PLACEMENTMODE" : "Put the hives in 'displacement' mode",
+        "CLICKMODE" : "Put the hives in 'click' mode",
+        "MANAGE" : "Manage",
+        "WARNING" : "Warning! ",
+        "NAVBAR" : {
+            "ALERTS" : "Alerts",
+            "NOTES" : "Notes",
+            "SUMMARY": "Summary",
+            "NAME" : "Name",
+            "BROOD" : "Brood",
+            "WEIGHT" : "Weight",
+            "SENSORS" : "Sensor",
+            "APIARY" : "Apiary"
+        },
+        "POPUP_NEW_USER": {
+            "TITLE": "Welcome to Mellisphera",
+            "BODY": ["We are now computing your data.",
+            "This process can take a while depending on your data history. ",
+            "You will see data appearing progressively on the next 10 minutes."],
+            "CLOSE_BTN": "Close"
+        }
     },
     "HIVES" : {
         "HIVES" : "Hives",
@@ -111,12 +186,14 @@
         "SENSOR" : "Sensor",
         "FORM" : {
             "NEW" : "New hive",
-            "EDIT" : "Edit hive",
+            "EDIT" : "Save",
+            "EDITHIVE" : "Edit hive",
             "DELETE" : "Delete hive",
             "DELETE_ASK" : "Delete hive ?",
             "CANCEL" : "Cancel",
             "CONFIRM" : "Confirm",
-            "NAME" : "Name",
+            "NAME" : "Hive name",
+            "DESCRIPTION" : "Hive description",
             "CREATE" : "Create hive",
             "CLOSE" : "Close",
             "APIARY" : "Apiary"
@@ -132,37 +209,70 @@
         },
         "OBSERVATIONS" : {
             "AO" : "Actions and observations",
+            "TITLE" : "Notes of the hive",
             "DATE" : "Dates",
             "SENTENCE" : "Sentences",
             "TYPES" : "Types",
             "ACTIONS" : "Edit",
             "OBSERVATION" : "Observation",
+            "NONOTES" : "There is no notes for this hive.",
             "ACTION" : "Action",
             "FORM" : {
                 "NEW" : "New",
-                "NEW_NOTES" : "New note",
+                "NEW_NOTES" : "New hive note",  
                 "DATE" : "Date Time : ",
-                "CREATE_OBS" : "Create observation",
+                "CREATE_OBS" : "Create note",
                 "CREATE_ACT" : "Create action",
                 "CLOSE" : "Close",
-                "EDIT" : "Edit note",
+                "EDIT" : "Save",
+                "EDITNOTE" : "Edit hive note",
                 "DELETE" : "Delete note",
                 "DELETE_ASK" : "Delete note ?",
                 "CANCEL" : "Cancel",
                 "CONFIRM" : "Confirm",
                 "NOTES" : "Note : ",
-                "TYPE" : "Type"
+                "TYPE" : "Type",
+                "YOUWANTCREATE": "You want create :",
+                "APIARYNOTE" : "An apiary note",
+                "HIVENOTE" : "A hive note",
+                "CREATENOTE" : "Create a note",
+                "LOCATION" : "Location",
+                "APIARYLOCATION" : "Apiary note",
+                "HIVELOCATION" : "Hive note",
+                "EDITANOTE" : "Edit a note"
             }
         },
+        "SENSORS" : {
+            "NOSENSORS" : "There is no sensors for this hive."
+        },
         "STOCK" : {
-            "NO_DATA" : "No data :",
+            "NO_DATA" : "",
             "STOCK" : "Honey Stock",
-            "WEIGHT" :  "Weight incomes"
+            "WEIGHT" :  "Daily weight income :"
         },
         "HOURLY" : {
             "RANGE" : "Range :",
             "LAST" : "last"
+        },
+        "CLICK" : {
+            "SENSORSTITLE" : "Sensors of the hive",
+            "BROOD" : "Brood",
+            "BROODINFO" : "The brood is calculated from the temperature of the hive. The more stable the temperature is around the brood zone, the higher the percentage is.",
+            "UNKNOWN" : "unknown",
+            "ALERTS" : {
+                "TITLE" : "Alerts of the hive",
+                "TYPE" : "TYPE",
+                "READ" : "READ",
+                "NOALERTS" : "No alerts this week for"
+            }
+        },
+        "ALERT" : {
+            "NOALERTS" : "No inspections and notifications for this hive since 2 months ."
         }
+    },
+    "ALERTS" : {
+        "TITLE" : "Alerts of the apiary",
+        "NOALERTS" : "No alerts this week !"
     },
     "APIARY_NOTES" : {
         "TITLE" : "Apiary notes",
@@ -170,6 +280,7 @@
             "NEW" : "New Apiary Note",
             "CREATE" : "Create note",
             "SAVE" : "Save",
+            "EDITNOTE": "Edit apiary note",
             "SELECT" : "Select your hive",
             "TYPE" : "Type : ",
             "MOVE" : "Move"
@@ -189,7 +300,10 @@
             "REF_ERROR" : "You should select a valid reference",
             "SENS_ERROR" : "Sensor already exist !",
             "SELECT_ERROR" : "Select your sensor reference",
-            "LINK" : "Link to : ",
+            "LINK" : "Your sensor is : ",
+            "STOCK" : "In stock",
+            "HIVEDETAIL" : "In the hive ",
+            "INHIVE" : "In a hive",
             "HIVE" : "Hive",
             "HIVEAPIARY" : "Hive | Apiary",
             "SELECT_HIVE" : "Select a hive",
@@ -197,20 +311,191 @@
             "CLOSE" : "Close",
             "APIARY" : "Apiary",
             "SAVE" : "Save",
-            "EDIT" : "Edit sensor",
+            "EDIT" : "Save",
+            "EDITSENSORTITLE" : "Edit sensor",
             "SENSOR_EDIT" : "Sensor edit",
-            "SUCCES" : "successfull !"
+            "SUCCES" : "successfull !",
+            "EDITSELECT" : "Select the sensor to edit",
+            "SENSOR" : "Sensor",
+            "EDITSENSOR" : "Edit",
+            "OF" : "of",
+            "NOSENSOR" : "You don't have sensor to edit.",
+            "EDITASENSOR" : "Edit a sensor",
+            "EDITTHESENSOR" : "Edit sensor"
         }
     },
     "FEEDBACK" : {
-        "TITLE" : "Your feedback",
-        "MESSAGE" : "Send us your feedback",
-        "COMMENT" : "Your comment",
-        "SLACK" : "You can also join the conversation on Slack by",
+        "TITLE" : "Support",
+        "TITLE_MODAL" : "Can we help you?",
+        "COMMENT" : "Your message",
+        "MSG": "Write us an <a href=mailto:support@mellisphera.com>email</a>, chat on <a href=https://mellisphera.slack.com/messages/mellisphera_en/ target=_blank>slack</a> or send a direct message.",
+        "SLACK" : "chat with us on",
         "SIGNUP" : "sign-up",
         "OR" : "or",
         "LOGIN" : "login",
         "SEND" : "Send",
         "CLOSE" : "Close"
+    },
+    "FLOWER" : {
+        "APIARYPLANTS" : "Apiary plants",
+        "PLANTDIR" : "Plants directory",
+        "MELLIPLANTS" : "Melliferous Plants",
+        "NAME" : "Name",
+        "STARTS" : "Starts",
+        "ENDS" : "Ends",
+        "RELATIVE" : "Relative",
+        "BLOOMING" : "blooming",
+        "THEORICAL" : "theorical",
+        "OBSERVED" : "observed",
+        "ABUNDANCE" : "abundance",
+        "INAPIARY" : "in apiary",
+        "HIGH" : "High",
+        "MEDIUM" : "Medium",
+        "LOW" : "Low",
+        "DELETEFLOWER" : "Delete flower",
+        "EDIT" : "Edit",
+        "MELLIDIR" : "Melliferous plants directory",
+        "MYPLANTS" : "My plants",
+        "SEARCHNAME" : "Search by name",
+        "SEARCHMONTH" : "Search by month",
+        "ALLTYPES" : "All types",
+        "BLOOMONTH" : "Blooming month",
+        "COMMON" : "Common",
+        "BLOOMINGPERIOD" : "Blooming perdiod",
+        "CONFIDENCELEVEL" : "Confidence level",
+        "ADDTOAPIARY" : "Add to apiary",
+        "CLOSE" : "Close"
+    },
+    "SUMMARY" : {
+        "PDF" : "Download in PDF",
+        "APIARY" : "Apiary",
+        "SUMMARY" : "Summary of the apiary",
+        "ALERTSSINCE" : "alerts for ",
+        "NOALERTS" : "No apiary alerts !",
+        "FOR" : "for",
+        "DAYS" : "days",
+        "NONOTES":  "No apiary notes !",
+        "SUMMARYHIVES" : "Hives summary + alerts for",
+        "NAME" : "Name",
+        "BROOD" : "Brood",
+        "BROODD3" : "Brood D-3",
+        "BROODD7" : "Brood D-7",
+        "WEIGHT" : "Weight",
+        "SENSORS" : "Sensors",
+        "ALERTS" : "Alerts",
+        "NOHIVEALERTS" : "No alerts",
+        "NOHIVES" : "There are no hives for this apiary!"
+    },
+    "NOTES" : {
+        "TITLEAPIARY" : "Apiary notes",
+        "TITLEHIVE" : "Hive notes",
+        "SEARCH": "Search a note",
+        "FORM" : {
+            "NEW" : "New note",
+            "APIARY" : "Apiary",
+            "HIVE" : "Hive",
+            "EDIT" : "Edit the note",
+            "DELETE" : "Delete the note",
+            "DELETE_ASK" : "Delete the note ?",
+            "CONFIRM" : "Delete",
+            "CANCEL" : "Cancel"
+        }
+    },
+    "MELLICHARTS": {
+        "HELP": {
+            "HIVE" :["Here you can explore with great detail all the data related to a hive.",
+            "Compare hive data with your own operations (notes) and with weather conditions.",
+            "Choose the field to display with the icons above every calendar.",
+            "Use the date navigation (top-right of the screen) to show longuer periods of time.",
+            "Jump from period to period with the arrows."],
+            "BROOD" : ["Overlay brood progressions of several hives in the same or different apiaries.",
+            "As a rule of the thumb, 10% is one frame of brood, 40% 4 frames, etc.",
+            "Depending on your practice and hive model (langstroth, dadant) you will need to adjusting those relationships.",
+            
+            "Important Note : only hives achieving the 80% threshold will produce honey! We hope you know how to make it happen."],
+            "RAWDATA" : "This display is very similar to what you are already used to in MyBroodminder. Pverlaying different hives/apiaries is also possible."
+        },
+        "NAV": {
+            "HIVE": "Hive",
+            "HIVE_TOOLTIP": "Hive",
+            "BROOD": "Brood",
+            "BROOD_TOOLTIP": "Brood",
+            "DONNEE": "Raw data",
+            "DONNEE_TOOLTIP": "Raw data"
+        },
+        "DATE": {
+            "START": "Start",
+            "END": "End",
+            "BTN_APPLY": "Apply"
+        },
+        "BROOD": {
+            "TITLE": "Daily brood progression"
+        }
+    },
+    "ALERT_CONF_PAGE": {
+        "TYPE": "Icon",
+        "NAME": "Name",
+        "DESCRIPTION": "Description",
+        "VALUE": "Value",
+        "PAGE": {
+            "SENSORS": "Sensor",
+            "WEATHER": "Weather",
+            "HIVE": "Hive",
+            "CONF": {
+                "TITLE": "Settings",
+                "MAIL": "Send email alerts :",
+                "FREQUENCY": "Send every",
+                "DAILY": "day",
+                "WEEKLY": "week",
+                "DAY": "day",
+                "OTHER": "custom",
+                "EVERY": "every",
+                "BTN_MAIL_TEST": "Send test email"
+            }
+        },
+        "STATUS": "Status",
+        "HELP": {
+            "ALERTS" : ["In this page you can configure all alerts and notifications.",
+                "Alerts are classified into 3 groups : in hive / weather / devices.",
+                "You can start with the predefined tresholds and fine tune them based on your own experience.",
+                "Go to the \"configure\" tab to set your preferences for email and frequency of notifications."]
+        }
+    },
+
+    "LOGIN_BM": {
+        "TITLE": "Mellisphera",
+        "BTN": "Login",
+        "EULA": "End User License Agreement",
+        "BTN_EUA": "Accept EULA terms and conditions ",
+        "BECOMING": {
+            "TITLE": "Becoming a precision beekeeper",
+            "CONTENT": ["We want to make your hive monitoring experience more intense. Mellisphera is a comprehensive interface that",
+            "aggregates your hive data together with beekeeper actions and environmental weather.",
+            "A set of unique algorithms provide actionable information. It’s no more about temperature and weight but about",
+            "hive fitness, brood level, honey productivity, robing or swarming… Alerts and notifications!"],
+            "READ_MORE": "Read more",
+            "READ_MORE_CONTENT": ["The good news is that Mellisphera is integrated with Broodminder. Once logged in you’ll inherit your full sensor",
+            "history. Moreover this data will be enriched with daily averages, events, alerts etc. You’ll be able to explore",
+            "past events and read the season development from a completely new perspective.",
+            "In two words, you’re about to become a precision beekeeper."]
+        },
+        "QUICK_TOUR": {
+            "TITLE": "Quick tour of Mellisphera",
+            "CONTENT": "Watch this video to discover Mellisphera main functions"
+        },
+        "BM_MS": {
+            "TITLE": "Broodminder and Mellisphera - How it works",
+            "CONTENT": ["Mellisphera and Broodminder environments are complementary and closely linked.",
+            "You’ll continue to use myBroodminder to set up your apiaries, hives and sensors. This information is updated into",
+            "Mellisphera at your next login. Mellisphera will allow you to carry detailed analysis and explorations as well as",
+            "sending you custom alerts and notifications.",
+            "Tip : use your Broodminder account and password to directly log into Mellisphera"]
+        },
+        "FORM": {
+            "EMAIL": "Email MyBroodMinder",
+            "PASSWORD": "Password MyBroodMinder",
+            "CONNECTION": "Connection",
+            "ERR": "Cannot log in"
+        }
     }
 }

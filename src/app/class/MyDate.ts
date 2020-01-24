@@ -1,3 +1,15 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+import * as moment from 'moment';
+
 export class MyDate {
     private date: Date;
     /**
@@ -8,19 +20,13 @@ export class MyDate {
      * @returns {Date[]}
      * @memberof MyDate
      */
-    static getRange(min?: Date, max?: Date): Date[] {
-        let start = new Date();
-        if (!min) {
-            start.setDate((start.getDate() - 15));
-        } else {
-            start = min;
-        }
-        const end = max ? max : new Date();
+    static getRange(start: Date): Date[] {
+        const end = new Date();
         return new Array(start, end);
     }
 
     /**
-     *
+     *getWekitDate
      *
      * @static
      * @param {string} dt
@@ -28,13 +34,41 @@ export class MyDate {
      * @memberof MyDate
      */
     static getWekitDate(dt: string): Date {
-        const tmp = dt.split('-');
-        const date = new Date();
-        date.setFullYear(parseInt(tmp[0], 10));
-        date.setMonth(parseInt(tmp[1], 10));
-        date.setDate(parseInt(parseInt(tmp[2][0], 10) + '' + parseInt(tmp[2][1], 10), 10));
-        return date;
+        try{
+            const tmp = dt.split('-');
+            const date = new Date();
+            date.setFullYear(parseInt(tmp[0]));
+            date.setMonth(parseInt(tmp[1])-1);
+            date.setDate(parseInt(parseInt(tmp[2][0]) + '' + parseInt(tmp[2][1])));
+            const hourly = tmp[2].split('T')[1].split(':');
+            date.setHours(parseInt(hourly[0]));
+            date.setMinutes(parseInt(hourly[1]));
+            // date.setHours()
+            return date;
+        } catch{}
     }
+
+
+    static compareToDailyDate(dt1: any, dt2: any) {
+        let date1: Date;
+        let date2: Date;
+        if (/-/g.test(dt1)) {
+            date1 = new Date(dt1.replace(/-/g, '/').split('T')[0]);
+        } else {
+            date1 = new Date(dt1);
+        }
+        if (/-/g.test(dt2) && !/GMT/g.test(dt2)) {
+            date2 = new Date(dt2.replace(/-/g, '/').split('T')[0]);
+        } else {
+            date2 = new Date(dt2);
+        }
+        const day1 = date1.getDate();
+        const day2 = date2.getDate();
+        return (day1 === day2) &&
+                (date1.getMonth() === date2.getMonth()) &&
+                (date1.getFullYear() === date2.getFullYear());
+    }
+
    static convertDate(date: Date){
         let jour = '' + date.getDate();
         let mois = '' + (date.getMonth() + 1);
@@ -50,6 +84,36 @@ export class MyDate {
         let min = (max.getFullYear() - 1) + '-' + (max.getMonth() + 1) + '-' + max.getDate();
         let rangeCalendar = [min, MyDate.convertDate(max)];
         return rangeCalendar;
+      }
+
+      static getRangeForCalendarHome(){
+        let max = new Date();
+        let tmp = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
+        let min = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
+        let rangeCalendar = [min, MyDate.convertDate(max)];
+        return rangeCalendar;
+      }
+
+      /**
+       *
+       *
+       * @static
+       * @returns {Date[]}
+       * @memberof MyDate
+       */
+      static getRangeForCalendarAlerts(): Date[]{
+        const day: number[] = [34, 28, 29, 30, 31, 32, 33];
+        let max = new Date();
+        let min = new Date();
+        let nbDay = day[min.getDay()];
+        min.setDate(min.getDate() - nbDay);
+        //min.setDate(max.getDate() + 7);
+
+        max.setDate(max.getDate());
+        min.setHours(0);
+        min.setMinutes(0);
+        min.setSeconds(0);
+        return [min, max];
       }
     
 /*     static getRangeFromDate(date: Date[]) {

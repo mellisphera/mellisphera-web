@@ -1,6 +1,17 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { CONFIG } from '../../../config';
+import { CONFIG } from '../../../constants/config';
 import { RequestOptions } from '@angular/http';
 
 @Injectable({
@@ -20,7 +31,7 @@ export class AtokenStorageService {
    * @memberof AtokenStorageService
    */
   getToken(): string {
-    return window.sessionStorage.getItem('TOKEN_KEY');
+    return window.localStorage.getItem('TOKEN_KEY');
   }
 
   /**
@@ -30,8 +41,8 @@ export class AtokenStorageService {
    * @memberof AtokenStorageService
    */
   saveToken(token: string): void {
-    window.sessionStorage.removeItem('TOKEN_KEY');
-    window.sessionStorage.setItem('TOKEN_KEY', token);
+    window.localStorage.removeItem('TOKEN_KEY');
+    window.localStorage.setItem('TOKEN_KEY', token);
   }
 
   /**
@@ -41,8 +52,8 @@ export class AtokenStorageService {
    * @memberof AtokenStorageService
    */
   public saveAuthorities(authorities: string[]) {
-    window.sessionStorage.removeItem('AUTHORITIES_KEY');
-    window.sessionStorage.setItem('AUTHORITIES_KEY', JSON.stringify(authorities));
+    window.localStorage.removeItem('AUTHORITIES_KEY');
+    window.localStorage.setItem('AUTHORITIES_KEY', JSON.stringify(authorities));
     this.getAuthorities();
   }
 
@@ -53,13 +64,7 @@ export class AtokenStorageService {
    * @memberof AtokenStorageService
    */
   public getAuthorities(): string[] {
-    this.roles = [];
-    if (sessionStorage.getItem('TOKEN_KEY')) {
-      JSON.parse(sessionStorage.getItem('AUTHORITIES_KEY')).forEach(auth => {
-        this.roles.push(auth.authority);
-      });
-    }
- 
+    this.roles = JSON.parse(localStorage.getItem('AUTHORITIES_KEY'));
     return this.roles;
   }
 
@@ -69,7 +74,7 @@ export class AtokenStorageService {
    * @memberof AtokenStorageService
    */
   signOut(): void {
-    window.sessionStorage.clear();
+    window.localStorage.clear();
   }
 
   /**
@@ -89,8 +94,8 @@ export class AtokenStorageService {
    * @returns {Boolean}
    * @memberof AtokenStorageService
    */
-  checkAuthorities(role: string): Boolean{
-    return this.getAuthorities().indexOf(role) !== -1 ? true : false;
+  checkAuthorities(role: string): boolean{
+    return this.getAuthorities().findIndex(_role => _role['authority'] === role) !== -1 ? true : false;
   }
 
 }

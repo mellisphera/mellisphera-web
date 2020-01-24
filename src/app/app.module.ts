@@ -1,3 +1,14 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +25,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserloggedService } from './userlogged.service';
 import { AuthService } from './auth/Service/auth.service';
-import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CommonModule } from '@angular/common';
 import { SignupService } from './auth/Service/signup.service';
@@ -28,7 +38,11 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxLoadingModule } from 'ngx-loading';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MyDatePipe } from './pipe/my-date.pipe';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { SocketService } from './dashboard/service/socket.service';
+import { AuthGuardService } from './auth/auth-guard.service';
 
+const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options: {} };
 export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
    return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
 }
@@ -47,6 +61,7 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     RouterModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    SocketIoModule.forRoot(config),
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -76,8 +91,9 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
   providers: [
     UserloggedService,
     AuthService,
-    AuthGuardService,
+    SocketService,
     JwtHelperService,
+    AuthGuardService,
     SignupService,
     // MeteoService,
     // GraphFlowerService,

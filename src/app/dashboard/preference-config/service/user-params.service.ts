@@ -1,7 +1,18 @@
+/* Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import { Injectable } from '@angular/core';
 import { UserPref } from '../../../_model/user-pref';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CONFIG } from '../../../../config';
+import { CONFIG } from '../../../../constants/config';
 import { UserloggedService } from '../../../userlogged.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -25,21 +36,26 @@ export class UserParamsService {
       timeZone: '',
       timeFormat: '',
       lang: '',
-      unitSystem: ''
+      unitSystem: '',
+      availableSource: [],
+      weatherSource: '',
+      weatherStation : false
     });
     this.dtFormat = [
-      'Y-M-D h:m',
-      'D-M-Y h:m',
-      'D/M/Y h:m'
-
+      'YYYY-MM-DD HH:mm',
+      'DD-MM-YYYY HH:mm',
+      'DD/MM/YYYY HH:mm',
+      'MM/DD/YYYY HH:mm'
     ];
+    this.initService();
+
+  }
+
+  initService(): void {
     this.userPref = this.getUserPref() ? this.getUserPref() : null;
-    console.log(this.userPref);
     this.prefSubject.next(this.userPref);
     this.formatDate = this.getUserPref() ?  this.getUserPref().timeFormat : this.dtFormat[0];
   }
-
-
   setFormatDt(indexFormat: number): void {
     this.userPref.timeFormat = this.dtFormat[indexFormat];
   
@@ -58,6 +74,13 @@ export class UserParamsService {
     this.userPref.unitSystem = unit;
   }
 
+  setLang(lang: string): void  {
+    this.userPref.lang = lang.toLowerCase();
+  }
+
+  setWeatherSource(weatherSrc: string): void {
+    this.userPref.weatherSource = weatherSrc;
+  }
   /**
    *
    *
@@ -87,7 +110,7 @@ export class UserParamsService {
    * @memberof UserParamsService
    */
   getUserPref(): UserPref {
-    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).userPref;
+    return JSON.parse(window.localStorage.getItem('jwtReponse')).userPref;
   }
 
   /**
@@ -97,11 +120,11 @@ export class UserParamsService {
    * @memberof UserParamsService
    */
   getUsername(): string {
-    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).username;
+    return JSON.parse(window.localStorage.getItem('jwtReponse')).username;
   }
 
   getIdUser() {
-    return JSON.parse(window.sessionStorage.getItem('jwtReponse')).idUser;
+    return JSON.parse(window.localStorage.getItem('jwtReponse')).idUser;
   }
 
 
