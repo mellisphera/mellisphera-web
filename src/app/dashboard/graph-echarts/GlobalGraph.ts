@@ -282,7 +282,7 @@ export class GraphGlobal {
       this.moon.period = 'Period';
       this.moon.sunrise = 'Sunrise';
       this.moon.sunset = 'Sunset';
-      this.moon.dayLength = 'daylight';
+      this.moon.dayLength = 'Daylight';
       this.snow.name = 'Snow';
       this.temp.name = 'Temperature (°F)';
       this.wind.name = 'Wind';
@@ -347,7 +347,7 @@ export class GraphGlobal {
       this.moon.period = 'Period';
       this.moon.sunrise = 'Sunrise';
       this.moon.sunset = 'Sunset';
-      this.moon.dayLength = 'daylight';
+      this.moon.dayLength = 'Daylight';
       this.rain.name = 'Rain';
       this.snow.name = 'Snow';
       this.brood.name = 'Brood (%)';
@@ -909,12 +909,12 @@ export class GraphGlobal {
             },
             {
               name: this.moon.sunrise,
-              value: this.unitService.getHourlyDate(params.data[3]),
+              value: moment(this.unitService.getHourlyDate(params.data[3])).toDate().getHours() + ' h',
               unit: ''
             },
             {
               name: this.moon.sunset,
-              value: this.unitService.getHourlyDate(params.data[4]),
+              value: moment(this.unitService.getHourlyDate(params.data[4])).toDate().getHours() + ' h',
               unit: ''
             },
             {
