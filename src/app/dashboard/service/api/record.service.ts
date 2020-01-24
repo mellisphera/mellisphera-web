@@ -286,6 +286,8 @@ export class RecordService {
     });
   }
 
+  getRecordBySensor(hiveOd, range: Date[], userId, unit) {}
+
   setUnitSystem(unit: string): void {
     this.unitSystem = unit;
   }

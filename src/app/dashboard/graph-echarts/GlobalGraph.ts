@@ -909,12 +909,12 @@ export class GraphGlobal {
             },
             {
               name: this.moon.sunrise,
-              value: moment(this.unitService.getHourlyDate(params.data[3])).toDate().getHours() + ' h',
+              value: moment(params.data[3]).toDate().getHours() + ' h ' + moment(params.data[3]).toDate().getMinutes() + ' m',
               unit: ''
             },
             {
               name: this.moon.sunset,
-              value: moment(this.unitService.getHourlyDate(params.data[4])).toDate().getHours() + ' h',
+              value: moment(params.data[4]).toDate().getHours() + ' h' + moment(params.data[3]).toDate().getMinutes() + ' m',
               unit: ''
             },
             {
