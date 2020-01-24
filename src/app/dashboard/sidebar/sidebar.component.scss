@@ -29,6 +29,7 @@ li{
 }
 li a{
     opacity: 1;
+    border-radius:0px !important;
 }
 
 li a:hover{
@@ -47,5 +48,5 @@ li p{
     font-size: 10px;
 }
 .side-active, .side-active:focus{
-    background-color: white;
+    background-color: #45AD4A;
 }
