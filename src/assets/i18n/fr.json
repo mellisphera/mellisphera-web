@@ -442,14 +442,14 @@
             "CONF": {
                 "TITLE": "Paramètres",
                 "MAIL": "Envoyer des alertes par e-mail",
-                "FREQUENCY": "Envoyer chaque",
+                "FREQUENCY": "Envoyer chaque*",
                 "DAILY": "jour",
                 "WEEKLY": "semaine",
                 "DAY": "jour",
                 "OTHER": "personnaliser",
                 "EVERY": "tous les ",
                 "BTN_MAIL_TEST": "Tester email",
-                "WARNING_TEXT": "(*) des emails sont envoyés lorsque des alertes sont signalées"
+                "WARNING_TEXT": "(*) les emails sont envoyés uniquement lorsque des alertes ont été détectées"
 
             }
         },

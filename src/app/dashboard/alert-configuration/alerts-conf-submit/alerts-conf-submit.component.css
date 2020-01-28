@@ -36,7 +36,7 @@ input[type='email'] {
     bottom: 10px;
 }
 #infoAlert{
-    color: #F218A7;
+    color: red;
 }
 .btn-default.btn-on.active{background-color: #5BB75B;color: white;}
 .btn-default.btn-off.active{background-color: #DA4F49;color: white;}
