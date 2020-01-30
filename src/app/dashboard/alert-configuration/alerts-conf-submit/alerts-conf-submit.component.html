@@ -21,7 +21,7 @@
       </div>
     </section>
     <div class="form-group">
-      <label>{{ 'ALERT_CONF_PAGE.PAGE.CONF.FREQUENCY'| translate }} :</label>
+      <label>{{ 'ALERT_CONF_PAGE.PAGE.CONF.FREQUENCY'| translate }} <span style="color: red;">*</span> :</label>
       <div class="form-group radioItem">
         <label>
           <input type="radio" [disabled]="!alertUser.emailEnable" name="frequency" id="daily" (ngModelChange)="onChangeFrequency()"

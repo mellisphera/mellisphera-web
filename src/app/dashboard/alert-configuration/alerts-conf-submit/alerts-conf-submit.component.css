@@ -1,3 +1,6 @@
+div {
+    color: #4F4F51;
+}
 #dayValue{
     display: inline-block !important;
     width: 60px !important;

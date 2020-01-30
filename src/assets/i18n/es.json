@@ -457,7 +457,7 @@
             "CONF": {
                 "TITLE": "Configurar",
                 "MAIL": "Enviar alertas por correo electrónico:",
-                "FREQUENCY": "Enviar cada*",
+                "FREQUENCY": "Enviar cada",
                 "DAILY": "día",
                 "WEEKLY": "semana",
                 "DAY": "día",

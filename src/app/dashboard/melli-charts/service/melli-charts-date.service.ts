@@ -67,11 +67,15 @@ export class MelliChartsDateService {
     }
     date = this.getDateBeginMonday(date);
     this.rangeDateForRequest = MyDate.getRange(date);
-    console.log(this.rangeDateForRequest);
     this.rangeDateForRequest[0].setHours(0);
+    this.rangeDateForRequest[0].setMinutes(0);
     this.rangeDateForRequest[0].setSeconds(0);
-    this.rangeDateForRequest[1].setHours(4);
+
+    //this.rangeDateForRequest[1].setDate(this.rangeDateForRequest[0].getDate() + 1);
+    this.rangeDateForRequest[1].setHours(23);
+    this.rangeDateForRequest[1].setMinutes(0);
     this.rangeDateForRequest[1].setSeconds(0);
+    console.log(this.rangeDateForRequest);
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
   }
@@ -110,10 +114,12 @@ export class MelliChartsDateService {
     range[0].setHours(0);
     range[0].setMinutes(0);
     range[0].setSeconds(0);
-    range[1].setHours(0);
+    //range[1].setDate(range[1].getDate());
+    range[1].setHours(23);
     range[1].setMinutes(0);
     range[1].setSeconds(0);
     this.rangeDateForRequest = [range[0], range[1]];
+    console.log(this.rangeDateForRequest);
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
   }
