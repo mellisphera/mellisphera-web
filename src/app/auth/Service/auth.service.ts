@@ -68,6 +68,7 @@ export class AuthService {
         this.tokenService.saveToken(this.jwtReponse.accessToken);
         this.tokenService.saveAuthorities(this.jwtReponse.authorities);
         this.userService.setJwtReponse(this.jwtReponse);
+        this.userService.setEmail(this.login.email);
         this.ifLoggedIn();
         this.login.email = this.jwtReponse.email;
         this.connexionStatus.next(data);
