@@ -159,6 +159,17 @@ limitations under the License. -->
             <div [popover]="pictureTooltip" style="font-size: 15px !important;" class="infoToolip btn-picture">
                 <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
             </div>
+            <div class="hub-info" title="Hub" *ngIf="hubService.getHubByApiary(rucherService.getCurrentApiary()) != null">
+                <div (click)="onClick(ruche);" class="name collapse in">
+                    <div class="ruche" 
+                    [style.background-color]="hubService.getHubByApiary(rucherService.getCurrentApiary()).working === 0? 'grey': 'green'">
+                        <i class="fa fa-wifi" aria-hidden="true"></i>
+                    </div>
+                    <span class="hive-info">
+                        {{ hubService.getHubByApiary(rucherService.getCurrentApiary()).hubRef }}
+                    </span>
+                </div>
+            </div>
         </div>
 
         <div id="scroll"></div>

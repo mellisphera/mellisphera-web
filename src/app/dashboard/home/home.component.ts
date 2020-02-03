@@ -51,6 +51,7 @@ import { FitnessService } from '../service/api/fitness.service';
 import { DeviceStatusService } from '../service/api/device-status.service';
 import { DeviceStatus } from '../../_model/device-status';
 import { CapteurInterface } from '../../_model/capteur';
+import { HubService } from '../service/api/hub.service';
 
 
 @Component({
@@ -125,6 +126,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     private userConfig: UserParamsService,
     private myNotifier: MyNotifierService,
     private renderer: Renderer2,
+    public hubService: HubService,
     public deviceSatusService: DeviceStatusService,
     public alertsService: AlertsService) {
 
@@ -197,7 +199,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     showDate.setDate(this.dailyRecTh.rangeDailyRecord.getDate() + 1);
     return this.unitService.getDailyDate(showDate.toISOString());
   }
-
   closePopup(): void {
     this.userService.setFristConnection(false);
   }
@@ -465,34 +466,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
           this.rucheService.ruchesAllApiary[hiveUpdateIndex].hivePosY = hiveUpdate.hivePosY;
         });
   }
-
-  // onMove(event, ruche: RucheInterface, id:number): void {
-  //   // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[0]);
-  //   // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2));
-  //   if(this.firstValue){
-  //     let str11 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[0];
-  //     let str21 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2);
-  //     this.translateX = +str11; 
-  //     this.translateY = +str21; 
-  //     this.firstValue = false;
-  //   }
-  //     let str1 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[0];
-  //     let str2 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2);
-  //     let translateX1 : number;
-  //     let translateY1 : number;
-  //     translateX1 = +str1;
-  //     translateY1 = +str2;
-  //     console.log(((translateX1 - this.translateX).toString()));
-  //     console.log(((translateY1 - this.translateY).toString()));
-  //     // let doc = document.getElementsByClassName(id.toString()) as HTMLCollectionOf<HTMLElement>;
-  //     // for (let i = 0; i < doc.length; i++) {
-  //     //   doc[i].style.transform = 'translate(' + ((translateX1 - this.translateX).toString())  + ', ' + ((translateY1 - this.translateY).toString()) + ') !important';
-  //     // }
-  //     document.getElementById(id.toString()).setAttribute('style','transform : translate(' + ((translateX1 - this.translateX).toString())  + 'px, ' + ((translateY1 - this.translateY).toString()) + 'px) !important; z-index:100; top: ' + ruche.hivePosY +'%; left : ' + ruche.hivePosX + '%;');
-  //     // document.getElementById(id.toString()).style.transform = ('translate(' + ((translateX1 - this.translateX).toString())  + 'px, ' + ((translateY1 - this.translateY).toString()) + 'px) !important');
-
-  //   }
-
 
   onMoving(event, id: string) {
     console.log(id);

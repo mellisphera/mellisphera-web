@@ -10,6 +10,7 @@ import { FitnessService } from '../../service/api/fitness.service';
 import { Router } from '@angular/router';
 import { CapteurService } from '../../service/api/capteur.service';
 import { SocketService } from '../../service/socket.service';
+import { HubService } from '../../service/api/hub.service';
 
 @Component({
   selector: 'app-user',
@@ -25,6 +26,7 @@ export class UserComponent implements OnInit {
     private alertService: AlertsService,
     private rucheService: RucheService,
     private socketService: SocketService,
+    private hubService: HubService,
     private deviceStatusService: DeviceStatusService,
     private fitnessService: FitnessService,
     private capteurService: CapteurService,
@@ -68,6 +70,7 @@ export class UserComponent implements OnInit {
         this.deviceStatusService.callRequest(this.userService.getIdUserLoged());
         this.fitnessService.callRequest(this.userService.getIdUserLoged());
         this.capteurService.getUserCapteurs();
+        this.hubService.callRequest(this.userService.getIdUserLoged());
       }, () => {}, () => {
         this.router.navigateByUrl('dashboard/home/info-apiary');
       }

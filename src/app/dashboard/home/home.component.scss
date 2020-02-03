@@ -43,7 +43,16 @@ li:first-child img{
 }
 
 // center buttons
-
+.hub-info{
+  position: absolute;
+  text-align: center;
+  width: 10%;
+  left: 3px;
+  bottom: 5px;
+}
+.hub-info .ruche{
+  color: white;
+}
 .button {
   padding: 6px 12px;
   text-align: center;
