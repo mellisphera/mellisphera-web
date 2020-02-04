@@ -82,7 +82,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.typeData = [
       { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type active', icons: './assets/picto_mellicharts/brood.png' },
       { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/weight_inc.png' },
-      { name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/weight_max.png' },
+      //{ name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/weight_max.png' },
       { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/tint_max.png' },
       { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/tint_min.png' },
       { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/hint.png' },
@@ -124,7 +124,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.setMeanTextHtml();
     this.calendarElements = document.getElementsByClassName('calendar');
-    this.dailyManager.setMeanAnnotation = (_type: Tools, clear?: boolean) => {
+/*     this.dailyManager.setMeanAnnotation = (_type: Tools, clear?: boolean) => {
       if (!clear) {
         this.setMeanTextHtml();
         if (_type.origin === DEVICE) {
@@ -149,7 +149,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
           this.dailyManager.baseOptionExt.graphic[0].children[1].style.text = '';
         }
       }
-    };
+    }; */
     this.initCalendar();
   }
 
@@ -228,19 +228,17 @@ export class DailyComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.melliHive.getDailyOtherChartInstance().on('legendselectchanged', (params) => {
+/*     this.melliHive.getDailyOtherChartInstance().on('legendselectchanged', (params) => {
       if (params.name.indexOf('RAIN') !== -1) {
         const origin = params.name.split(':')[0].trim();
         const serieSelected = this.dailyManager.baseOptionExt.series.filter(_serie => _serie.name === params.name)[0];
         this.dailyManager.setMeanData(serieSelected, false, this.currentTypeDailyOther);
-        // this.dailyManager.setMeanSevenDay(serieSelected)
-        //this.weatherService.getRainAllWeather(this.melliHive.getHiveSelect().apiaryId, this.melliDate.getRangeForReqest());
       }
     });
 
     this.melliHive.getDailyDeviceChartInstance().on('legendselectchanged', (params) => {
       //console.log(params);
-    });
+    }); */
   }
 
 
@@ -308,14 +306,14 @@ export class DailyComponent implements OnInit, AfterViewInit {
     // this.dailyManager.setOriginChartOption(this.currentTypeDailyDevice.origin);
   }
 
-  cleanMeanAnnotation() {
+/*   cleanMeanAnnotation() {
     const annotationOther: string = [
       this.currentOtherTextPeriodCalendar + '',
       this.currentOtherTextSevenDay + ''
     ].join('\n');
     this.dailyManager.baseOptionExt.graphic[0].children[1].style.text = annotationOther;
     this.melliHive.getDailyOtherChartInstance().setOption(this.dailyManager.baseOptionExt);
-  }
+  } */
 
   loadDailyOtherData(rangeChange: boolean) {
     this.melliHive.getDailyOtherChartInstance().showLoading();
@@ -323,12 +321,10 @@ export class DailyComponent implements OnInit, AfterViewInit {
       case 'WEATHER':
         this.dailyManager.getChartDailyWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
-        this.cleanMeanAnnotation();
         break;
       case 'MOON':
         this.dailyManager.getChartAstro(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
-        this.cleanMeanAnnotation();
         break;
       case 'RAIN':
         this.dailyManager.gatPrecipitationByApiary(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
@@ -345,7 +341,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
       case 'WIND':
         this.dailyManager.getChartWindMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
           this.melliHive.getDailyOtherChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
-        this.cleanMeanAnnotation();
         break;
       case 'HEXT_WEATHER_MAX':
         this.dailyManager.getHextMaxWeather(this.currentTypeDailyOther, this.melliHive.getHiveSelect().apiaryId,
@@ -390,7 +385,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
       this.melliHive.getDailyEnvChartInstance().showLoading();
       this.dailyManager.getChartAstro(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().apiaryId,
         this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
-        this.cleanMeanAnnotation();
 
     } else {
       this.melliHive.getDailyEnvChartInstance().showLoading();

@@ -104,6 +104,7 @@ export const BASE_OPTIONS = {
     baseOptionDailyMelliCharts: {
         // visualMap: {},
         legend: {
+            show: true
         },
 /*         title:{
             text: 'toto',
@@ -121,7 +122,6 @@ export const BASE_OPTIONS = {
             }
         }, */
         calendar: CALENDAR.calendarMelliChart,
-        graphic:[]
     },
 
     yAxis: {

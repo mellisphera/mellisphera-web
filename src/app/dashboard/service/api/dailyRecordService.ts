@@ -24,6 +24,7 @@ import { UnitService } from '../unit.service';
 import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 import { RucherService } from './rucher.service';
 import { TranslateService } from '@ngx-translate/core';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class DailyRecordService {
@@ -387,10 +388,17 @@ export class DailyRecordService {
      * @param hiveId 
      * @param range 
      */
-    public getTempIntMaxByHive(hiveId: string, range: Date[]): Observable<any[]> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMax/' + hiveId, range).map(_elt => _elt.map(_value => {
-            return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef};
-        }));
+    public getTempIntMaxByHive(hiveId: string, range: Date[], unit: string): Observable<any[]> {
+        return this.http.get<any[]>(CONFIG.URL + `dailyRecordsTH/tMax/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`).pipe(
+            map((_elt) => {
+              _elt.forEach(_x => {
+                return _x.values.map(_val => {
+                  _val.temp_int_max = _val.temp_int_max !== NaN ? this.unitService.convertTempFromUsePref(_val.temp_int_max, unit): null;
+                });
+              });
+              return _elt;
+            })
+          );
     }
     /**
      * 
@@ -398,7 +406,7 @@ export class DailyRecordService {
      * @param range 
      */
     public getHintByHive(hiveId: string, range: Date[]): Observable<any> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/hInt/' + hiveId, range);
+        return this.http.get<any[]>(CONFIG.URL + `dailyRecordsTH/hInt/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`)
     }
 
     /**
@@ -407,7 +415,7 @@ export class DailyRecordService {
      * @param range 
      */
     public getBroodByHive(hiveId: string, range: Date[]): Observable<any[]> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/brood/' + hiveId, range);
+        return this.http.get<any[]>(CONFIG.URL + `dailyRecordsTH/brood/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`);
     }
 
     /**
@@ -415,10 +423,17 @@ export class DailyRecordService {
      * @param hiveId 
      * @param range 
      */
-    public getTminByHive(hiveId: string, range: Date[]): Observable<any[]> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMin/' + hiveId, range).map(_elt => _elt.map(_value => {
-            return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef};
-        }));
+    public getTminByHive(hiveId: string, range: Date[], unit): Observable<any[]> {
+        return this.http.get<any[]>(CONFIG.URL + `dailyRecordsTH/tMin/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`).pipe(
+            map((_elt) => {
+              _elt.forEach(_x => {
+                return _x.values.map(_val => {
+                  _val.temp_int_min = _val.temp_int_min !== NaN ? this.unitService.convertTempFromUsePref(_val.temp_int_min, unit): null;
+                });
+              });
+              return _elt;
+            })
+          );
     }
 
 

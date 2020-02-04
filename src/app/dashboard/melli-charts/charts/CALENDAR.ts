@@ -53,10 +53,7 @@ export const CALENDAR = {
         }
     },
     calendarMelliChart: {
-        // height: '80%',
-        // width: '80%',
-/*         top: 200,
- */        left: 'center',
+        left: 'center',
         cellSize: [40 , 40],
         range: [
             new Date().getFullYear() + '-' + (new Date().getMonth())+ '-' + 1,
