@@ -54,9 +54,9 @@ export class RucheService {
     }
   }
   callHiveRequest() {
-    this.getAllHiveByAccount(this.user.getIdUserLoged()).subscribe(
+    this.getHiveByUserId(this.user.getIdUserLoged()).subscribe(
       _hives => {
-        this.ruchesAllApiary = _hives.flat();
+        this.ruchesAllApiary = _hives;
         console.log(this.ruchesAllApiary);
         this.hiveSubject.next(this.ruchesAllApiary);
       },
@@ -206,13 +206,6 @@ export class RucheService {
     return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + userId);
   }
 
-
-  getAllHiveByAccount(userId: string): Observable<RucheInterface[][]> {
-    const obsAllHive: Observable<RucheInterface[]>[] = [this.getHiveByUserId(this.user.getJwtReponse().idUser)].concat(this.user.getSharingApiaryId().map(apiaryId => {
-      return this.getHivesByApiary(apiaryId);
-    }));
-    return Observable.forkJoin(obsAllHive);
-  }
 
   getRucheByID(id: string) {
     return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + id);
