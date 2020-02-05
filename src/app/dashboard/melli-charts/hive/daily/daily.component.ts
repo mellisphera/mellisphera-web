@@ -20,6 +20,7 @@ import { UserloggedService } from '../../../../userlogged.service';
 import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { TranslateService } from '@ngx-translate/core';
+import * as echarts from 'echarts';
 
 const TITLE_PERIODE_CALENDAR = {
   TEXT_SUM_FR: '\nSomme sur la période: ',

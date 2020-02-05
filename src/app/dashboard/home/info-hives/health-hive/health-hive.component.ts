@@ -31,8 +31,7 @@ export class HealthHiveComponent implements OnInit {
   option: any;
   constructor(private unitService: UnitService, 
     private graphGlobal: GraphGlobal, 
-    public dailyRecordThService: DailyRecordService,
-    private rucheService: RucheService) {
+    public dailyRecordThService: DailyRecordService) {
       this.chartInstance = null;
       this.option = {
           baseOption : {

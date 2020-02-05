@@ -84,7 +84,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
         console.log(this.dailyRecordThService.mergeOptionCalendarHealth);
         this.healthHiveComponent.option.baseOption.serie = this.dailyRecordThService.mergeOptionCalendarHealth.series;
         this.healthHiveComponent.chartInstance.clear();
-        this.healthHiveComponent.chartInstance.setOption(this.healthHiveComponent.option);
+        this.healthHiveComponent.chartInstance.setOption(this.healthHiveComponent.option, true);
         if (this.healthHiveComponent.chartInstance !== null) {
           this.healthHiveComponent.chartInstance.hideLoading();
         }
