@@ -418,6 +418,10 @@ export class DailyRecordService {
         return this.http.get<any[]>(CONFIG.URL + `dailyRecordsTH/brood/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`);
     }
 
+    public getBroodOldMethod(hiveId: string, range: Date[]): Observable<any[]>{
+        return this.http.post<any[]>(CONFIG.URL + `dailyRecordsTH/brood/old/${hiveId}`, range);
+    }
+
     /**
      * 
      * @param hiveId 

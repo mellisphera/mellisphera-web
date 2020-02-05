@@ -93,7 +93,7 @@ export class HiveComponent implements OnInit, AfterViewInit {
   setHeightCalendar(loadCalendar: Function) {
     try{
       const nbDay: number = (parseInt(this.melliDate.getDayDiffRangeRequest(), 10) / 7) + 3;
-      const height: number = (nbDay * 40) + 80;
+      const height: number = (nbDay * 40) + 65;
       for (let i = 0; i < this.dailyComponent.calendarElements.length; i++) {
         this.render.setStyle(this.dailyComponent.calendarElements[i], 'height', height + 'px');
       }

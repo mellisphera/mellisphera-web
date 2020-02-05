@@ -198,8 +198,8 @@ export class DailyManagerService {
       case 'WEATHER':
         return new Array(value.iconDay, value.maxTempDay, value.minTempDay, value.maxHumidityDay, value.minHumidityDay, value.mainDay, value.maxPressureDay, value.minPressureDay);
       case 'RAIN':
-        return new Array(this.unitService.convertMilimetreToPouce(value.rainDay, this.unitService.getUserPref().unitSystem, true), 
-        this.unitService.convertMilimetreToPouce(value.snowDay, this.unitService.getUserPref().unitSystem, true), value.snowSun)
+        return new Array(this.unitService.convertMilimetreToPouce(value.rainDay, this.unitService.getUserPref().unitSystem, true),
+          this.unitService.convertMilimetreToPouce(value.snowDay, this.unitService.getUserPref().unitSystem, true), value.snowSun)
       case 'ALERT':
         return value;
       case 'TEMP_EXT_WEATHER':
@@ -338,16 +338,16 @@ export class DailyManagerService {
       _astro => {
         let option = Object.assign({}, this.baseOptionEnv);
         if (rangeChange) {
-          option.series[0].data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_code'], 
-          _data.moon['ascendant'], _data.sys['sunrise'], _data.sys['sunset']));
+          option.series[0].data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_code'],
+            _data.moon['ascendant'], _data.sys['sunrise'], _data.sys['sunset']));
         } else {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.custom);
           serie.name = type.name;
-          serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_code'], 
-          _data.moon['ascendant'], _data.sys['sunrise'], _data.sys['sunset']));
+          serie.data = _astro.map(_data => new Array<any>(_data.date, _data.moon['phase_code'],
+            _data.moon['ascendant'], _data.sys['sunrise'], _data.sys['sunset']));
           serie.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
             let cellWidth = params.coordSys.cellWidth;
@@ -395,18 +395,14 @@ export class DailyManagerService {
     )
   }
   getChartWeightincome(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    //this.getLastDayForMeanValue(this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(hiveId, this.rangeSevenDay), false, type);
+    //his.getLastDayForMeanValue(this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(hiveId, this.rangeSevenDay), false, type);
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(hiveId, range).subscribe(
       _daliW => {
-        if (_daliW.length < 1) {
-          
-        }
-        let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
+        let option = Object.assign({}, this.baseOptionsInt);
         if (rangeChange) {
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             option.series[index].data = serieComplete.data;
-            this.setMeanData(serieComplete, false, type);
           });
           this.getSerieByData(_daliW.weightIncomeLow, 'loss', SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
@@ -417,6 +413,7 @@ export class DailyManagerService {
             option.series = new Array();
           }
           option.legend.selectedMode = 'multiple';
+          option.legend.bottom = 'bottom';
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete) => {
             option.legend.data.push(serieComplete.name);
             this.setMeanData(serieComplete, false, type);
@@ -588,7 +585,7 @@ export class DailyManagerService {
           }
           let serie = Object.assign({}, SERIES.heatmap);
           serie.name = type.name;
-          serie.data = _temp.map(_data => new Array(_data.date,this.unitService.convertWindFromUserPref(_data.value.maxSpeed, this.unitService.getUserPref().unitSystem)));
+          serie.data = _temp.map(_data => new Array(_data.date, this.unitService.convertWindFromUserPref(_data.value.maxSpeed, this.unitService.getUserPref().unitSystem)));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
@@ -667,19 +664,19 @@ export class DailyManagerService {
             serieComplete.symbolSize = (val: any[]) => {
               let value: number;
               if (this.unitService.getUserPref().unitSystem === 'METRIC') {
-                if ((val[1] + val[2]) > 100){
+                if ((val[1] + val[2]) > 100) {
                   return 35;
                 } else {
                   value = val[1] + val[2];
                 }
-                return 4*Math.sqrt(value);
+                return 4 * Math.sqrt(value);
               } else {
-                if ((val[1] + val[2]) * 25.4 > 100){
+                if ((val[1] + val[2]) * 25.4 > 100) {
                   return 35;
                 } else {
                   value = val[1] + val[2];
                 }
-                return (4*Math.sqrt(value * 25.4));
+                return (4 * Math.sqrt(value * 25.4));
               }
             };
             option.series.push(serieComplete);
@@ -927,7 +924,7 @@ export class DailyManagerService {
               }
             };
             serieComplete.symbolSize = (val: Array<any>) => {
-             return (0.5 * Math.sqrt(Math.abs(50 * val[1])));
+              return (0.5 * Math.sqrt(Math.abs(50 * val[1])));
             }
             option.series.push(serieComplete);
           });
@@ -970,7 +967,7 @@ export class DailyManagerService {
                 type: 'group',
                 children: []
               };
-              const dataByDate: any[] = joinData.filter(_filter =>this.graphGlobal.compareToDate(_filter.opsDate, api.value(0)));
+              const dataByDate: any[] = joinData.filter(_filter => this.graphGlobal.compareToDate(_filter.opsDate, api.value(0)));
               group.children.push({
                 type: 'rect',
                 z2: 0,
@@ -1173,19 +1170,19 @@ export class DailyManagerService {
       value = value + parseInt(_value[1], 10);
     });
     let meanValue = this.unitService.getValRound(mean ? value / data.length : value);
-/*     switch(type.name) {
-      case 'RAIN':
-        meanValue = this.unitService.convertMilimetreToPouce(meanValue, this.unitService.getUserPref().unitSystem, false);
-        break;
-      case 'WINCOME':
-        meanValue = this.unitService.convertWeightFromuserPref(meanValue, this.unitService.getUserPref().unitSystem, false);
-        break;
-      case 'TEMP_EXT_WEATHER_MAX':
-      case 'TEMP_EXT_WEATHER_MIN':
-        meanValue = this.unitService.convertTempFromUsePref(meanValue, this.unitService.getUserPref().unitSystem, false);
-        break;
-      default:
-    } */
+    /*     switch(type.name) {
+          case 'RAIN':
+            meanValue = this.unitService.convertMilimetreToPouce(meanValue, this.unitService.getUserPref().unitSystem, false);
+            break;
+          case 'WINCOME':
+            meanValue = this.unitService.convertWeightFromuserPref(meanValue, this.unitService.getUserPref().unitSystem, false);
+            break;
+          case 'TEMP_EXT_WEATHER_MAX':
+          case 'TEMP_EXT_WEATHER_MIN':
+            meanValue = this.unitService.convertTempFromUsePref(meanValue, this.unitService.getUserPref().unitSystem, false);
+            break;
+          default:
+        } */
     if (isNaN(meanValue)) {
       meanValue = 0;
     }
@@ -1200,7 +1197,7 @@ export class DailyManagerService {
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     }
-   // this.setMeanAnnotation(type);
+    // this.setMeanAnnotation(type);
 
   }
 
@@ -1241,7 +1238,7 @@ export class DailyManagerService {
    */
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'inspect' : 'notif'};
+      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'inspect' : 'notif' };
     });
   }
 
