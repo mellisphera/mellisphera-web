@@ -43,7 +43,13 @@ export class DailyRecordService {
     public mergeOptionTint: any;
     public mergeOptionHint: any;
     private unitSystem: string;
-    public mergeOptionCalendarHealth: any;
+    public mergeOptionCalendarHealth: {
+        series: Array<any>,
+        legend: {
+            show: boolean,
+            data: Array<string>
+        }
+    };
 
     constructor(private http: HttpClient,
         private user: UserloggedService,
@@ -64,6 +70,13 @@ export class DailyRecordService {
         this.dailyRecordsDayD3D7[0] = [];
         this.dailyRecordsDayD3D7[1] = [];
         this.dailyRecordsDayD3D7[2] = [];
+        this.mergeOptionCalendarHealth = {
+            series: [],
+            legend: {
+                show: true,
+                data: []
+            }
+        };
         if (this.user.getUser()) {
             this.getDailyRecThByApiary(window.localStorage.getItem('currentApiary'));
 
@@ -88,6 +101,7 @@ export class DailyRecordService {
         })
             .subscribe(
                 (data) => {
+                    console.log(data);
                     this.dailyRecordsGraph = data;
                     this.updateMerge();
                 },
@@ -131,24 +145,11 @@ export class DailyRecordService {
      * @memberof DailyRecordService
      */
     public updateMerge(): void {
-        this.mergeOptionCalendarHealth = {
+/*         this.mergeOptionCalendarHealth = {
             series: {
                 data: this.arrayHealth
             },
-            visualMap: {
-                calculable: true,
-                min: 0,
-                max: 100,
-                orient: 'horizontal',
-                left: 'center',
-                top: 30,
-                itemWidth: 15,
-                itemSymbol: 'diamond',
-                inRange: {
-                    color: ['red', 'yellow', '#129001'],
-                },
-            },
-        };
+        }; */
         this.mergeOptionTint = {
             series: {
                 type: 'heatmap',

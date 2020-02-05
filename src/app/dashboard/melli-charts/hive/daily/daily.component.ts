@@ -14,7 +14,6 @@ import { DailyManagerService } from '../service/daily-manager.service';
 import { MelliChartsHiveService } from '../../service/melli-charts-hive.service';
 import { MelliChartsDateService } from '../../service/melli-charts-date.service';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
-import * as echarts from 'echarts';
 import { UserParamsService } from '../../../preference-config/service/user-params.service';
 import { WeatherService } from '../../../service/api/weather.service';
 import { UserloggedService } from '../../../../userlogged.service';

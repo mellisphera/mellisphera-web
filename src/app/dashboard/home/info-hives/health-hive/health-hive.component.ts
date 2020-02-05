@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { DailyRecordService } from '../../../service/api/dailyRecordService';
 import { MyDate } from '../../../../class/MyDate';
 //import { ECharts } from 'echarts';
@@ -17,16 +17,23 @@ import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
 import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
+import { RucheService } from '../../../service/api/ruche.service';
+import * as echarts from 'echarts';
 
 @Component({
   selector: 'app-health-hive',
   templateUrl: './health-hive.component.html',
   styleUrls: ['./health-hive.component.css']
 })
-export class HealthHiveComponent {
+export class HealthHiveComponent implements OnInit {
 
+  chartInstance: any;
   option: any;
-  constructor(private unitService: UnitService, private graphGlobal: GraphGlobal, public dailyRecordThService: DailyRecordService) {
+  constructor(private unitService: UnitService, 
+    private graphGlobal: GraphGlobal, 
+    public dailyRecordThService: DailyRecordService,
+    private rucheService: RucheService) {
+      this.chartInstance = null;
       this.option = {
           baseOption : {
             backgroundColor: 'white',
@@ -57,7 +64,23 @@ export class HealthHiveComponent {
                 }
             },
             legend: {
-                show: false,
+                show: true,
+                data: [],
+                bottom: 'bottom',
+                selectedMode: 'single'
+            },
+            visualMap: {
+                calculable: true,
+                min: 0,
+                max: 100,
+                orient: 'horizontal',
+                left: 'center',
+                top: 30,
+                itemWidth: 15,
+                itemSymbol: 'diamond',
+                inRange: {
+                    color: ['red', 'yellow', '#129001'],
+                },
             },
             calendar: [{
                 top: 70,
@@ -105,10 +128,7 @@ export class HealthHiveComponent {
                     }
                 }
             }],
-            series: [{
-                type: 'heatmap',
-                coordinateSystem: 'calendar',
-            }]
+            series: []
         },
         media: JSON.parse(JSON.stringify(MEDIA_QUERY_MELLIUX))
     };
@@ -124,6 +144,10 @@ export class HealthHiveComponent {
       this.option.baseOption.series.push(this.graphGlobal.getDaySerie());
 
 
+  }
+
+  ngOnInit(): void {
+    this.chartInstance = echarts.init(<HTMLDivElement>document.getElementById('graphBrood'));
   }
 
 

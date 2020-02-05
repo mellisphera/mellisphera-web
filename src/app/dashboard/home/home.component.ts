@@ -371,6 +371,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
     // For the hive alerts
     this.checkIfInfoHiveComponent().then(status => {
+      this.infoHiveComponent.loadHealthCalendar();
       this.infoHiveComponent.alertsHiveComponent.initCalendar(ruche);
       if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
         this.infoHiveComponent.alertsHiveComponent.readAllHiveAlerts(ruche);
