@@ -260,6 +260,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
     this.selectPhotoApiary = null;
   }
+
   loadAlert() {
     this.alertsService.getHiveAlertByApiaryId(this.rucherService.getCurrentApiary(),
       MyDate.getRangeForCalendarAlerts()[0].getTime(), MyDate.getRangeForCalendarAlerts()[1].getTime()).subscribe(
