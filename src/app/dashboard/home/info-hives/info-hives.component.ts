@@ -54,7 +54,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit() {
     // this.observationService.getObservationByhiveId(this.userService.getIdUserLoged());
     // this.observationService.obsHiveSubject.subscribe();
-    //this.dailyRecordThService.getByhiveId(this.rucheService.getCurrentHive()._id);
     this.dailyRecordWservice.getDailyRecordsWbyhiveId(this.rucheService.getCurrentHive()._id);
     this.loadHealthCalendar();
     // this.capteurService.getUserCapteurs();
@@ -67,7 +66,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   loadHealthCalendar() {
-    console.log("dfdffdfs");
     if (this.healthHiveComponent.chartInstance !== null) {
       this.healthHiveComponent.chartInstance.showLoading();
     }

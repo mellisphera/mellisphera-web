@@ -388,7 +388,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.dailyRecordWservice.getDailyRecordsWbyhiveId(ruche._id);
 
     //For the hive-health
-    this.dailyRecTh.getByhiveId(ruche._id);
 
     //For hive sensors
 /*     this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
