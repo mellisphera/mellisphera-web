@@ -98,7 +98,7 @@ export const CALENDAR = {
         type: '',
         min: 0,
         max: 10000,
-        top: 15,
+        bottom: 30,
         pieces: [],
         calculable: true,
         inRange: {

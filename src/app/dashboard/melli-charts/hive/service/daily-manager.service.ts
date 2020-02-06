@@ -238,7 +238,7 @@ export class DailyManagerService {
     Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
       _weather => {
         let weather = _weather.filter(_elt => _elt.value[0].mainDay !== 'Undefined');
-        let option = Object.assign({}, this.baseOptionExt);
+        let option = JSON.parse(JSON.stringify(this.baseOptionExt));
         if (rangeChange) {
           option.series = this.removeDataAllseries(option.series);
           this.getSerieByData(weather, type.name, SERIES.custom, (serieComplete: any) => {
@@ -282,8 +282,9 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          option.legend = Object.assign({}, BASE_OPTIONS.legend);
+          option.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
           option.legend.selectedMode = 'single';
+
           // option.legend.selectedMode = 'single';
           this.getSerieByData(weather, type.name, SERIES.custom, (serieComplete) => {
             serieComplete.renderItem = (params, api) => {
@@ -323,6 +324,7 @@ export class DailyManagerService {
           option.visualMap = null;
         }
         option.calendar.range = range;
+        option.legend.bottom = 'bottom';
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.clear();
         chartInstance.setOption(option);

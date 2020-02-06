@@ -147,7 +147,6 @@ export const BASE_OPTIONS = {
     legend: {
         orient: 'horizontal',
         data: [],
-        top: 15,
         selectedMode: 'multiple'
     },
     xAxis: {
