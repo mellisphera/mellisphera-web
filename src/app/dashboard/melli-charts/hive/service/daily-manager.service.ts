@@ -767,7 +767,6 @@ export class DailyManagerService {
   getChartTextMin(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getTempMinExt(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _tMinExt => {
-        console.log(_tMinExt);
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
@@ -841,7 +840,6 @@ export class DailyManagerService {
         option.legend.bottom = 'bottom';
         option.legend.data = _brood.map(_val => _val._id);
         option.legend.show = true;
-        console.log(option);
         _brood.forEach(elt => {
           let serie = {
             type: 'heatmap',

@@ -232,6 +232,7 @@ export class DailyRecordService {
         this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + apiaryId, tabDate);
         this.dailyRecTabObs.subscribe(
             (data) => {
+                console.log(data);
                 if (data[0] != null) {
                     this.dailyRecords = data;
 

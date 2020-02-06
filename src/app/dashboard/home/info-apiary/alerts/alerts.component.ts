@@ -138,7 +138,6 @@ export class AlertsComponent implements OnInit {
   }
 
   initCalendar(isReload?: boolean){
-    console.log('load');
     this.clearOption();
     this.loadCalendar();
 }
