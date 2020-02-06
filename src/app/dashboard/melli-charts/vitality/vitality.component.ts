@@ -54,7 +54,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
             },
             toolbox: {
               show: true,
-              right: '2%',
+              right: 2,
             }
           }
         },
@@ -63,10 +63,10 @@ export class VitalityComponent implements OnInit, OnDestroy {
             maxWidth: 1100,
           },
           option: {// 这里写此规则满足下的option
-            toolbox: {
+/*             toolbox: {
               show: true,
               right: -20,
-            }
+            } */
           }
         },
         {

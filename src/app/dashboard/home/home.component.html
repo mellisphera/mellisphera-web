@@ -160,7 +160,7 @@ limitations under the License. -->
                 <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
             </div>
             <div class="hub-info" title="Hub" *ngIf="hubService.getHubByApiary(rucherService.getCurrentApiary()) != null">
-                <div (click)="onClick(ruche);" class="name collapse in">
+                <div (click)="onClick(ruche);">
                     <div class="ruche" 
                     [style.background-color]="hubService.getHubByApiary(rucherService.getCurrentApiary()).working === 0? 'grey': 'green'">
                         <i class="fa fa-wifi" aria-hidden="true"></i>
