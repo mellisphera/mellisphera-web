@@ -161,6 +161,7 @@
         "PLACEMENTMODE" : "Put the hives in 'displacement' mode",
         "CLICKMODE" : "Put the hives in 'click' mode",
         "MANAGE" : "Manage",
+        "PRINT": "Print a listing of your hives",
         "WARNING" : "Warning! ",
         "NAVBAR" : {
             "ALERTS" : "Alerts",

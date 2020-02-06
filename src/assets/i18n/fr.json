@@ -159,6 +159,7 @@
         "CLICK" : "Cliquez sur une ruche pour plus d'informations !",
         "PLACEMENTMODE" : "Mettre les ruches en mode 'déplacement'",
         "CLICKMODE" : "Mettre les ruches en mode 'clic'",
+        "PRINT": "Imprimer un listing de vos ruches",
         "MANAGE" : "Gérer",
         "WARNING" : "Attention! ",
         "NAVBAR" : {

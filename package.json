@@ -48,6 +48,7 @@
     "ng-pick-datetime": "^7.0.0",
     "ngx-echarts": "^4.2.2",
     "ngx-loading": "^3.0.1",
+    "ngx-print": "^1.2.0-beta.3",
     "ngx-smart-popover": "^1.1.0",
     "ngx-socket-io": "^3.0.1",
     "node-sass": "^4.13.0",

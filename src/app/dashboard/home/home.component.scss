@@ -134,7 +134,12 @@ li:first-child img{
   margin-left: 13px;
 }
 // FOR A CELLPHONE SIZE
-
+#print{
+  margin-right: 5px;
+}
+#print .fa{
+  font-size: 30px;
+}
 // PICTURE
 #cadre {
   margin: 0px;
@@ -187,6 +192,12 @@ li:first-child img{
     margin : 0px;
     margin-left:50%;
     margin-top: 20px;
+  }
+}
+@media print{
+  li {
+    font-size: 18px;
+    padding: 5px;
   }
 }
 

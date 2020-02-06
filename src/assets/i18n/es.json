@@ -158,6 +158,7 @@
         "PLACEMENTMODE": "Put the hives in 'displacement' mode",
         "CLICKMODE": "Put the hives in 'click' mode",
         "MANAGE": "Manage",
+        "PRINT": "Imprima una lista de sus colmenas",
         "WARNING": "Warning! ",
         "NAVBAR": {
             "ALERTS": "Alertas",
