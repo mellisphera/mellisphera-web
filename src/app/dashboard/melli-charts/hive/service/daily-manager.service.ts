@@ -325,7 +325,6 @@ export class DailyManagerService {
         option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.clear();
-        //this.setMeanAnnotation(type, true);
         chartInstance.setOption(option);
         chartInstance.hideLoading();
         this.baseOptionExt = option;
@@ -384,7 +383,6 @@ export class DailyManagerService {
           option.series.push(serie);
         }
         option.calendar.range = range;
-        this.setMeanAnnotation(type, true);
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.clear();
         chartInstance.setOption(option, true);
@@ -1195,7 +1193,6 @@ export class DailyManagerService {
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     }
-    // this.setMeanAnnotation(type);
 
   }
 
@@ -1219,7 +1216,6 @@ export class DailyManagerService {
         unit: this.graphGlobal.getUnitByType(type.unit)
       };
     }
-    //this.setMeanAnnotation(type);
   }
 
 
