@@ -237,97 +237,54 @@ export class DailyManagerService {
     const weatherObs: Array<Observable<any>> = [this.weatherService.getCurrentDailyWeather(apiaryId, range), this.weatherService.getForecastDailyWeather(apiaryId, range)];
     Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
       _weather => {
-        let weather = _weather.filter(_elt => _elt.value[0].mainDay !== 'Undefined');
+        const data = _weather.filter(_elt => _elt.value[0].mainDay !== 'Undefined').map(_map => [_map.date].concat(this.getValueBySerie(_map.value, type.name), _map.sensorRef));
         let option = JSON.parse(JSON.stringify(this.baseOptionExt));
-        if (rangeChange) {
-          option.series = this.removeDataAllseries(option.series);
-          this.getSerieByData(weather, type.name, SERIES.custom, (serieComplete: any) => {
-            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            if (index !== -1) {
-              option.series[index].name = serieComplete.name;
-              option.series[index].data = serieComplete.data;
-            } else {
-              option.legend.data.push(serieComplete.name);
-              serieComplete.renderItem = (params, api) => {
-                let cellPoint = api.coord(api.value(0));
-                let cellWidth = params.coordSys.cellWidth;
-                let cellHeight = params.coordSys.cellHeight;
-                let group = {
-                  type: 'group',
-                  children: []
-                };
-                group.children.push({
-                  type: 'rect',
-                  z2: 0,
-                  shape: {
-                    x: -cellWidth / 2,
-                    y: -cellHeight / 2,
-                    width: cellWidth,
-                    height: cellHeight,
-                  },
-                  position: [cellPoint[0], cellPoint[1]],
-                  style: {
-                    fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
-                    stroke: 'black'
-                  }
-                });
-                group.children = group.children.concat(this.weatherService.getPicto(api.value(1), cellPoint));
-                return group;
-              };
-              option.series.push(serieComplete);
-            }
-          });
-          // option.series[0].data = weather.map(_data => new Array<any>(_data.date, _data.weather['mainDay'], _data.weather['iconDay'],  _data.main));
-        } else {
+        if (data.length > 0) {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          option.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
           option.legend.selectedMode = 'single';
-
-          // option.legend.selectedMode = 'single';
-          this.getSerieByData(weather, type.name, SERIES.custom, (serieComplete) => {
-            serieComplete.renderItem = (params, api) => {
-              let cellPoint = api.coord(api.value(0));
-              let cellWidth = params.coordSys.cellWidth;
-              let cellHeight = params.coordSys.cellHeight;
-              let group = {
-                type: 'group',
-                children: []
-              };
-              group.children.push({
-                type: 'rect',
-                z2: 0,
-                shape: {
-                  x: -cellWidth / 2,
-                  y: -cellHeight / 2,
-                  width: cellWidth,
-                  height: cellHeight,
-                },
-                position: [cellPoint[0], cellPoint[1]],
-                style: {
-                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
-                  stroke: 'black'
-                }
-              });
-              group.children = group.children.concat(this.weatherService.getPicto(api.value(1), cellPoint));
-              return group;
+          let serie = JSON.parse(JSON.stringify(SERIES.custom));
+          serie.data = data;
+          serie.name = data[0][9];
+          serie.renderItem = (params, api) => {
+            let cellPoint = api.coord(api.value(0));
+            let cellWidth = params.coordSys.cellWidth;
+            let cellHeight = params.coordSys.cellHeight;
+            let group = {
+              type: 'group',
+              children: []
             };
-            option.legend.data.push(serieComplete.name);
-            option.series.push(serieComplete);
-          });
-
+            group.children.push({
+              type: 'rect',
+              z2: 0,
+              shape: {
+                x: -cellWidth / 2,
+                y: -cellHeight / 2,
+                width: cellWidth,
+                height: cellHeight,
+              },
+              position: [cellPoint[0], cellPoint[1]],
+              style: {
+                fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                stroke: 'black'
+              }
+            });
+            group.children = group.children.concat(this.weatherService.getPicto(api.value(1), cellPoint));
+            return group;
+          };
+          option.legend.data = [data[0][9]];
+          option.series.push(serie);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.dayLabel.align = 'left';
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.series.push(this.graphGlobal.getDaySerie());
           option.visualMap = null;
         }
         option.calendar.range = range;
-        option.legend.bottom = 'bottom';
-        option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.clear();
-        chartInstance.setOption(option);
+        chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionExt = option;
 
@@ -413,7 +370,6 @@ export class DailyManagerService {
             option.series = new Array();
           }
           option.legend.selectedMode = 'multiple';
-          option.legend.bottom = 'bottom';
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete) => {
             option.legend.data.push(serieComplete.name);
 /*             serieComplete.symbol = GLOBAL_ICONS.WINCOME;
@@ -700,7 +656,6 @@ export class DailyManagerService {
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.bottom = 'bottom';
         option.legend.data = _tMax.map(_val => _val._id);
         option.legend.show = true;
         _tMax.forEach(elt => {
@@ -733,7 +688,6 @@ export class DailyManagerService {
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.bottom = 'bottom';
         option.legend.data = _tmpMaxExt.map(_val => _val._id);
         option.legend.show = true;
         _tmpMaxExt.forEach(elt => {
@@ -764,7 +718,6 @@ export class DailyManagerService {
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.bottom = 'bottom';
         option.legend.data = _tMinExt.map(_val => _val._id);
         option.legend.show = true;
         _tMinExt.forEach(elt => {
@@ -795,7 +748,6 @@ export class DailyManagerService {
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.bottom = 'bottom';
         option.legend.data = _hInt.map(_val => _val._id);
         option.legend.show = true;
         _hInt.forEach(elt => {
@@ -826,7 +778,6 @@ export class DailyManagerService {
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.bottom = 'bottom';
         option.legend.data = _brood.map(_val => _val._id);
         option.legend.show = true;
         _brood.forEach(elt => {
@@ -859,7 +810,6 @@ export class DailyManagerService {
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.bottom = 'bottom';
         option.legend.data = _tMin.map(_val => _val._id);
         option.legend.show = true;
         _tMin.forEach(elt => {

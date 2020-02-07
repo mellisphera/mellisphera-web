@@ -104,23 +104,13 @@ export const BASE_OPTIONS = {
     baseOptionDailyMelliCharts: {
         // visualMap: {},
         legend: {
-            show: true
+            show: true,
+            data: [],
+            bottom: 50
         },
-/*         title:{
-            text: 'toto',
-            left: 'center'
-        }, */
         axisPointer: {
             link: { xAxisIndex: 'all' }
         },
-/*         toolbox: {
-            orient: 'vertical',
-            itemSize: 20,
-            feature: {
-                dataView: { readOnly: false },
-                saveAsImage: {}
-            }
-        }, */
         calendar: CALENDAR.calendarMelliChart,
     },
 

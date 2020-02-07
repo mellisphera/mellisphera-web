@@ -37,7 +37,7 @@ export class MelliChartsDateService {
       { scale: 7, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
       { scale: 15, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
       { scale: 1, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
-      { scale: 2, type: 'MONTHs', typeFr: 'MOIS', typeEs: 'Mes'},
+      { scale: 2, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
       { scale: 3, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
       { scale: 6, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
       { scale: 9, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},

@@ -95,10 +95,11 @@ export const CALENDAR = {
         }
     },
     visualMap: {
+        show: true,
         type: '',
         min: 0,
         max: 10000,
-        bottom: 30,
+        bottom: 'bottom',
         pieces: [],
         calculable: true,
         inRange: {
