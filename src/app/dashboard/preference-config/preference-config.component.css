@@ -43,3 +43,6 @@ limitations under the License. */
 .info-link{
     font-size: 20px !important;
 }
+.panel{
+    margin: 12px;
+}

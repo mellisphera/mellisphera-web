@@ -416,7 +416,6 @@ export class DailyManagerService {
           option.legend.bottom = 'bottom';
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete) => {
             option.legend.data.push(serieComplete.name);
-            this.setMeanData(serieComplete, false, type);
 /*             serieComplete.symbol = GLOBAL_ICONS.WINCOME;
  */            serieComplete.itemStyle = {
               normal: {
@@ -494,7 +493,6 @@ export class DailyManagerService {
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         }
         option.calendar.range = range;
-        this.setMeanData(option.series, true, type);
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
@@ -528,7 +526,6 @@ export class DailyManagerService {
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         }
         option.calendar.range = range;
-        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.hideLoading();
@@ -562,7 +559,6 @@ export class DailyManagerService {
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         }
         option.calendar.range = range;
-        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         option.series.push(this.graphGlobal.getDaySerie());
         chartInstance.hideLoading();
@@ -594,7 +590,6 @@ export class DailyManagerService {
         }
         option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
-        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionExt = option;
@@ -629,7 +624,6 @@ export class DailyManagerService {
         }
         option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
-        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionExt = option;
@@ -689,7 +683,6 @@ export class DailyManagerService {
         }
         option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
-        this.setMeanData(option.series[0], false, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionExt = option;
@@ -719,7 +712,6 @@ export class DailyManagerService {
           };
           option.series.push(serie);
         });
-        this.setMeanData(option.series, true, type);
         option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
@@ -757,7 +749,6 @@ export class DailyManagerService {
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionsInt = option;
@@ -789,7 +780,6 @@ export class DailyManagerService {
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionsInt = option;
@@ -821,7 +811,6 @@ export class DailyManagerService {
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionsInt = option;
@@ -853,7 +842,6 @@ export class DailyManagerService {
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionsInt = option;
@@ -887,7 +875,6 @@ export class DailyManagerService {
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionsInt = option;
@@ -935,7 +922,6 @@ export class DailyManagerService {
         }
         option.calendar.range = range;
         option.series.push(this.graphGlobal.getDaySerie());
-        this.setMeanData(option.series, true, type);
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionsInt = option;

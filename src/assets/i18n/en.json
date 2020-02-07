@@ -56,7 +56,7 @@
             "DESCRIPTION": "Later you’ll edit and complete this list"
         },
         "SENSOR": {
-            "STEP_TITLE": "Sensor",
+            "STEP_TITLE": "Device",
             "TITLE": "Add a Broodminder sensor ID"
         },
         "DONE": {
@@ -170,7 +170,7 @@
             "NAME" : "Name",
             "BROOD" : "Brood",
             "WEIGHT" : "Weight",
-            "SENSORS" : "Sensor",
+            "SENSORS" : "Device",
             "APIARY" : "Apiary"
         },
         "POPUP_NEW_USER": {
@@ -184,7 +184,7 @@
     "HIVES" : {
         "HIVES" : "Hives",
         "HIVE" : "Hive",
-        "SENSOR" : "Sensor",
+        "SENSOR" : "Device",
         "FORM" : {
             "NEW" : "New hive",
             "EDIT" : "Save",
@@ -288,7 +288,7 @@
         }
     },
     "CAPTEUR" : {
-        "SENSORS" : "Sensors",
+        "SENSORS" : "Devices",
         "REFERENCES" : "References",
         "SEARCH" : "Search sensor id",
         "FORM" : {
@@ -382,7 +382,7 @@
         "BROODD3" : "Brood D-3",
         "BROODD7" : "Brood D-7",
         "WEIGHT" : "Weight",
-        "SENSORS" : "Sensors",
+        "SENSORS" : "Device",
         "ALERTS" : "Alerts",
         "NOHIVEALERTS" : "No alerts",
         "NOHIVES" : "There are no hives for this apiary!"
@@ -439,7 +439,7 @@
         "DESCRIPTION": "Description",
         "VALUE": "Value",
         "PAGE": {
-            "SENSORS": "Sensor",
+            "SENSORS": "Devices",
             "WEATHER": "Weather",
             "HIVE": "Hive",
             "CONF": {
