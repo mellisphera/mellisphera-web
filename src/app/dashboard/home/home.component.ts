@@ -52,7 +52,7 @@ import { DeviceStatusService } from '../service/api/device-status.service';
 import { DeviceStatus } from '../../_model/device-status';
 import { CapteurInterface } from '../../_model/capteur';
 import { HubService } from '../service/api/hub.service';
-
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
 @Component({
   selector: 'app-home',
@@ -65,6 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   private eltOnClickId: EventTarget;
   infoRuche: any = null;
   dragPhotoApiary: File;
+  public optionCsv: Object;
   selectPhotoApiary: File;
   photoBase64: string;
   username: string;
@@ -149,6 +150,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       x: 0,
       y: 0
     };
+    this.optionCsv = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'Your title',
+      useBom: true,
+      noDownload: false,
+      headers: ['HIVE', 'BROOD', 'WEIGHT', 'SENSORS', 'NOTE'],
+      nullToEmptyString: false,
+    };
 
     this.selectHive = {
       _id: '',
@@ -186,6 +199,21 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       return '#4F4F51';
     }
   }
+
+  exportToCsv(): void {
+    this.optionCsv['title'] = this.rucherService.rucher.name;
+      const data = this.rucheService.ruchesAllApiary.filter(_hive => _hive.userId === this.userService.getIdUserLoged()).map(_hive => {
+        return {
+          HIVE: _hive.name, 
+          BROOD: this.dailyRecTh.getPourcentByHive(_hive._id),
+          WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getWeightMaxByHive(_hive._id)),
+          SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef).join(' , '),
+          NOTE: this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id).map(_note => _note.description).join('\n')
+        }
+      });
+      new Angular5Csv(data, this.rucherService.rucher.name, this.optionCsv);
+  }
+
   /**
    *
    *
