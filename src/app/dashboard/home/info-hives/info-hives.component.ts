@@ -23,6 +23,7 @@ import { AlertsHiveComponent } from './alerts-hive/alerts-hive.component';
 import { UserloggedService } from '../../../userlogged.service';
 import { MyDate } from '../../../class/MyDate';
 import { HealthHiveComponent } from './health-hive/health-hive.component';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-info-hives',
@@ -64,14 +65,24 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
   }
+  existSeries(serieArray): boolean {
+    if (isUndefined(serieArray) || serieArray.length < 1 || serieArray.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
   loadHealthCalendar() {
     if (this.healthHiveComponent.chartInstance !== null) {
       this.healthHiveComponent.chartInstance.showLoading();
     }
+    let option = JSON.parse(JSON.stringify(this.healthHiveComponent.option));
+    option.baseOption.series = new Array();
     this.dailyRecordThService.getBroodByHive(this.rucheService.getCurrentHive()._id, MyDate.getRangeForCalendarAlerts()).subscribe(
       _brood => {
-        this.healthHiveComponent.option.baseOption.legend.data = _brood.map(_val => _val._id);
+        option.baseOption.legend.data = _brood.map(_val => _val._id);
         _brood.forEach(elt => {
           let serie = {
             type: 'heatmap',
@@ -79,12 +90,13 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.brood])
           };
-          this.healthHiveComponent.option.baseOption.series.push(serie);
+         option.baseOption.series.push(serie);
         });
-        console.log(this.dailyRecordThService.mergeOptionCalendarHealth);
-        this.healthHiveComponent.option.baseOption.serie = this.dailyRecordThService.mergeOptionCalendarHealth.series;
+        console.log(option.baseOption.series);
+       // this.healthHiveComponent.option.baseOption.serie = this.dailyRecordThService.mergeOptionCalendarHealth.series;
         this.healthHiveComponent.chartInstance.clear();
-        this.healthHiveComponent.chartInstance.setOption(this.healthHiveComponent.option, true);
+        this.healthHiveComponent.chartInstance.setOption(option, true);
+        this.healthHiveComponent.option = option;
         if (this.healthHiveComponent.chartInstance !== null) {
           this.healthHiveComponent.chartInstance.hideLoading();
         }
