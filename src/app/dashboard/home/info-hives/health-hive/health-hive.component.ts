@@ -46,12 +46,7 @@ export class HealthHiveComponent implements OnInit {
                     fontSize : 16
                 }
             },
-            tooltip: {
-                trigger: 'item',
-                formatter: (params) => {
-                    return params.marker + unitService.getDailyDate(params.data[0]) + '<br/>' + this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])) + ' %';
-                }
-            },
+            tooltip: {},
             toolbox: {
                 orient: 'vertical',
                 itemSize: 15,

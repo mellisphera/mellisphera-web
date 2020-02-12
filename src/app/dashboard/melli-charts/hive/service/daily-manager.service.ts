@@ -37,12 +37,12 @@ import { UserParamsService } from '../../../preference-config/service/user-param
 
 
 export interface Tools {
-  name: string;
-  id: string;
-  origin: string;
+  name?: string;
+  id?: string;
+  origin?: string;
   type?: string;
   unit?: string;
-  class: string;
+  class?: string;
   icons?: string;
 }
 

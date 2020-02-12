@@ -24,6 +24,7 @@ import { UserloggedService } from '../../../userlogged.service';
 import { MyDate } from '../../../class/MyDate';
 import { HealthHiveComponent } from './health-hive/health-hive.component';
 import { isUndefined } from 'util';
+import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 
 @Component({
   selector: 'app-info-hives',
@@ -44,6 +45,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     private route: ActivatedRoute,
     public dailyRecordThService: DailyRecordService,
     public capteurService: CapteurService,
+    private graphGlobal: GraphGlobal,
     public dailyRecordWservice: DailyRecordsWService,
     private alertsService: AlertsService) {
 
@@ -93,6 +95,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
          option.baseOption.series.push(serie);
         });
         console.log(option.baseOption.series);
+        option.baseOption.tooltip = this.graphGlobal.getTooltipBySerie({type: 'BROOD', name: 'BROOD', unit: 'P'});
        // this.healthHiveComponent.option.baseOption.serie = this.dailyRecordThService.mergeOptionCalendarHealth.series;
         this.healthHiveComponent.chartInstance.clear();
         this.healthHiveComponent.chartInstance.setOption(option, true);
