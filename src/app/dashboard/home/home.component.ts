@@ -159,7 +159,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       title: 'Your title',
       useBom: true,
       noDownload: false,
-      headers: ['HIVE', 'BROOD', 'WEIGHT', 'SENSORS', 'NOTE'],
+      headers: ['APIARY','HIVE', 'BROOD', 'WEIGHT', 'SENSORS', 'NOTE'],
       nullToEmptyString: false,
     };
 
@@ -201,14 +201,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   exportToCsv(): void {
-    this.optionCsv['title'] = this.rucherService.rucher.name;
-      const data = this.rucheService.ruchesAllApiary.filter(_hive => _hive.userId === this.userService.getIdUserLoged()).map(_hive => {
+    this.optionCsv['title'] = `Export Ms ${this.unitService.getDailyDate(new Date())}`
+      const data = this.rucheService.ruchesAllApiary.map(_hive => {
+        let noteLengh =  this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id).length;
         return {
+          APIARY: this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0].name,
           HIVE: _hive.name, 
           BROOD: this.dailyRecTh.getPourcentByHive(_hive._id),
           WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getWeightMaxByHive(_hive._id)),
           SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef).join(' , '),
-          NOTE: this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id).map(_note => _note.description).join('\n')
+          NOTE: this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id).slice(noteLengh - 10, noteLengh - 1).map(_note => this.unitService.getHourlyDate(_note.opsDate) + ' - ' +_note.description.replace(/\,/g, '')).join('\n')
         }
       });
       new Angular5Csv(data, this.rucherService.rucher.name, this.optionCsv);
