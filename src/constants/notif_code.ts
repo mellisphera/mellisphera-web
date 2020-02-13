@@ -223,56 +223,131 @@ export const NOTIF_CODE = {
         }
     },
 
-    "401": {
-        "icon": "LowBattery",
+
+    "401a": {
+        "icon": "LowBatteryT",
         "FR": {
             "Subject": "Batterie faible",
-            "Message": "Remplacer la batterie de {REF}"
+            "Message": "Remplacer la batterie de "
         },
         "EN": {
             "Subject": "Low battery",
-            "Message": "Replace the battery of {REF}" 
+            "Message": "Replace the battery of "
         },
         "ES": {
             "Subject": "Bateria baja",
-            "Message": "Cambiar la bateria de {REF}" 
+            "Message": "Cambiar la bateria de "
         }
     },
-
-    "402": {
-        "icon": "DConnect",
+​
+    "401b": {
+        "icon": "LowBatteryW",
+        "FR": {
+            "Subject": "Batterie faible",
+            "Message": "Remplacer la batterie de "
+        },
+        "EN": {
+            "Subject": "Low battery",
+            "Message": "Replace the battery of "
+        },
+        "ES": {
+            "Subject": "Bateria baja",
+            "Message": "Cambiar la bateria de "
+        }
+    },
+​
+​
+    "402a": {
+        "icon": "DConnectT",
         "FR": {
             "Subject": "Déconnexion",
-            "Message": "{REF} déconnecté depuis {PERIOD}",
+            "Message": "{REF} déconnecté depuis {DATE}",
             "Unit": " jours"
         },
         "EN": {
-            "Subject": "Disconnection",
-            "Message": "{REF} disconnected since {PERIOD}",
+            "Subject": "Device disconnect",
+            "Message": "{REF} disconnected since {DATE}",
             "Unit": " days"
         },
         "ES": {
             "Subject": "Desconexión",
-            "Message": "{REF} desconectado desde {PERIOD}",
+            "Message": "{REF} desconectado desde {DATE}",
             "Unit": " días"
         }
     },
-
-    "403": {
-        "icon": "DConnect",
+​
+    "402b": {
+        "icon": "DConnectW",
+        "FR": {
+            "Subject": "Déconnexion",
+            "Message": "{REF} déconnecté depuis {DATE}",
+            "Unit": " jours"
+        },
+        "EN": {
+            "Subject": "Device disconnect",
+            "Message": "{REF} disconnected since {DATE}",
+            "Unit": " days"
+        },
+        "ES": {
+            "Subject": "Desconexión",
+            "Message": "{REF} desconectado desde {DATE}",
+            "Unit": " días"
+        }
+    },
+​
+    "402c": {
+        "icon": "DConnectH",
+        "FR": {
+            "Subject": "Déconnexion",
+            "Message": "{REF} déconnecté depuis {DATE}",
+            "Unit": " jours"
+        },
+        "EN": {
+            "Subject": "Device disconnect",
+            "Message": "{REF} disconnected since {DATE}",
+            "Unit": " days"
+        },
+        "ES": {
+            "Subject": "Desconexión",
+            "Message": "{REF} desconectado desde {DATE}",
+            "Unit": " días"
+        }
+    },
+​
+    "403a": {
+        "icon": "PoorSignalT",
         "FR": {
             "Subject": "Mauvais signal",
-            "Message": "{REF} mauvais signal depuis {PERIOD}",
+            "Message": "{REF} mauvais signal depuis {DATE}",
             "Unit": " jours"
         },
         "EN": {
             "Subject": "Poor signal",
-            "Message": "{REF} poor signal since {PERIOD}",
+            "Message": "{REF} poor signal since {DATE}",
             "Unit": " days"
         },
         "ES": {
             "Subject": "Señal deficiente",
-            "Message": "{REF} señal deficiente desde {PERIOD}",
+            "Message": " señal deficiente desde {DATE}",
+            "Unit": " días"
+        }
+    },
+​
+    "403b": {
+        "icon": "PoorSignalW",
+        "FR": {
+            "Subject": "Mauvais signal",
+            "Message": "{REF} mauvais signal depuis {DATE}",
+            "Unit": " jours"
+        },
+        "EN": {
+            "Subject": "Poor signal",
+            "Message": "{REF} poor signal since {DATE}",
+            "Unit": " days"
+        },
+        "ES": {
+            "Subject": "Señal deficiente",
+            "Message": "{REF} señal deficiente desde {DATE}",
             "Unit": " días"
         }
     },

@@ -160,7 +160,18 @@ export class SettingsViewTemplateComponent implements OnInit {
 
   onEnable(alertId: string): void {
     if (!this.alertUser.alertConf[alertId].enable) {
-      this.alertUser.alertConf[alertId].enable = true;
+      let alertType = this.alertTypes.filter(_alert => _alert._id === alertId)[0];
+      if (alertType.icon.indexOf('LowBattery') !== -1) {
+        this.alertTypes.filter(_alType => _alType.icon.indexOf('LowBattery') !== -1).forEach(_elt => {
+          this.alertUser.alertConf[_elt._id].enable = true;
+        });
+      } else if (/DConnect/g.test(alertType.icon) || /PoorSignal/g.test(alertType.icon)) {
+        this.alertTypes.filter(_alType => /DConnect/g.test(_alType.icon) || /PoorSignal/g.test(_alType.icon)).forEach(_elt => {
+          this.alertUser.alertConf[_elt._id].enable = true;
+        });
+      } else {
+        this.alertUser.alertConf[alertId].enable = true;
+      }
     }
   }
 
@@ -175,15 +186,34 @@ export class SettingsViewTemplateComponent implements OnInit {
 
   onDisable(alertId: string): void {
     if (this.alertUser.alertConf[alertId].enable) {
-      this.alertUser.alertConf[alertId].enable = false;
+      let alertType = this.alertTypes.filter(_alert => _alert._id === alertId)[0];
+      if (alertType.icon.indexOf('LowBattery') !== -1) {
+        this.alertTypes.filter(_alType => _alType.icon.indexOf('LowBattery') !== -1).forEach(_elt => {
+          this.alertUser.alertConf[_elt._id].enable = false;
+        });
+      } else if (/DConnect/g.test(alertType.icon) || /PoorSignal/g.test(alertType.icon)) {
+        this.alertTypes.filter(_alType => /DConnect/g.test(_alType.icon) || /PoorSignal/g.test(_alType.icon)).forEach(_elt => {
+          this.alertUser.alertConf[_elt._id].enable = false;
+        });
+      } else {
+        this.alertUser.alertConf[alertId].enable = false;
+      }
     }
   }
 
   onChageValue(value: number, alertId: string) {
-    if (this.isMetric()) {
-      this.alertUser.alertConf[alertId].valueMet = value;
+    let alertType = this.alertTypes.filter(_alert => _alert._id === alertId)[0];
+    if (alertType.icon.indexOf('LowBattery') !== -1) {
+      this.alertTypes.filter(_alType => _alType.icon.indexOf('LowBattery') !== -1).forEach(_elt => {
+        this.alertUser.alertConf[_elt._id].valueMet = value;
+        this.alertUser.alertConf[_elt._id].valueImp = value;
+      });
     } else {
-      this.alertUser.alertConf[alertId].valueImp = value;
+      if (this.isMetric()) {
+        this.alertUser.alertConf[alertId].valueMet = value;
+      } else {
+        this.alertUser.alertConf[alertId].valueImp = value;
+      }
     }
   }
 
