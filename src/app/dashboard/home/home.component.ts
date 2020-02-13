@@ -53,6 +53,7 @@ import { DeviceStatus } from '../../_model/device-status';
 import { CapteurInterface } from '../../_model/capteur';
 import { HubService } from '../service/api/hub.service';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-home',
@@ -201,19 +202,20 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   exportToCsv(): void {
-    this.optionCsv['title'] = `Export Ms ${this.unitService.getDailyDate(new Date())}`
+    this.optionCsv['title'] = `Export Mellisphera ${this.unitService.getDailyDate(new Date())}`
       const data = this.rucheService.ruchesAllApiary.map(_hive => {
         let noteLengh =  this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id).length;
+        let lastNote = this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id)[noteLengh - 1];
         return {
           APIARY: this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0].name,
           HIVE: _hive.name, 
           BROOD: this.dailyRecTh.getPourcentByHive(_hive._id),
           WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getWeightMaxByHive(_hive._id)),
-          SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef).join(' , '),
-          NOTE: this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id).slice(noteLengh - 10, noteLengh - 1).map(_note => this.unitService.getHourlyDate(_note.opsDate) + ' - ' +_note.description.replace(/\,/g, '')).join('\n')
+          SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef + ' - ' + _elt.sensorBat + ' %').join('\n'),
+          NOTE: !isUndefined(lastNote) ? this.unitService.getDailyDate(lastNote.opsDate) + ' - ' + lastNote.description: '-'
         }
       });
-      new Angular5Csv(data, this.rucherService.rucher.name, this.optionCsv);
+      new Angular5Csv(data,  `Export-Mellisphera`, this.optionCsv);
   }
 
   /**
