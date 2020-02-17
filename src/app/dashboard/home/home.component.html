@@ -166,7 +166,7 @@ limitations under the License. -->
             <div class="hub-info" title="Hub" *ngIf="hubService.getHubByApiary(rucherService.getCurrentApiary()) != null">
                 <div (click)="onClick(ruche);">
                     <div class="ruche" 
-                    [style.background-color]="hubService.getHubByApiary(rucherService.getCurrentApiary()).working === 0? 'grey': 'green'">
+                    [style.background-color]="hubService.getHubByApiary(rucherService.getCurrentApiary()).working === 0? 'red': 'green'">
                         <i class="fa fa-wifi" aria-hidden="true"></i>
                     </div>
                     <span class="hive-info">
