@@ -53,6 +53,7 @@ export const CALENDAR = {
         }
     },
     calendarMelliChart: {
+        top: 5,
         left: 'center',
         cellSize: [40 , 40],
         range: [

@@ -850,9 +850,8 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = JSON.parse(JSON.stringify(SERIES.effectScatter));
-          let legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
           this.getSerieByData(_weightMax, type.name, serie, (serieComplete) => {
-            legend.data.push(serieComplete.name);
+            option.legend.data.push(serieComplete.name);
             serieComplete.itemStyle = {
               normal: {
                 color: '#00FE0C'
@@ -866,7 +865,6 @@ export class DailyManagerService {
           // serie.data = _weightMax.map(_data => new Array(_data.date, _data.value));
           option.visualMap = null;
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
-          option.legend = legend;
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         }
@@ -951,7 +949,6 @@ export class DailyManagerService {
               return group;
 
             }
-            // option.legend.data.push(serieComplete.name)
             if (index !== -1) {
               option.series[index] = serieComplete;
             } else {
@@ -963,7 +960,6 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          option.legend = Object.assign({}, BASE_OPTIONS.legend);
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
             serieComplete.renderItem = (params, api) => {
               let cellPoint = api.coord(api.value(0));
@@ -1026,12 +1022,11 @@ export class DailyManagerService {
             option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
 
             option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-            option.legend.data.push(serieComplete.name);
             option.series.push(serieComplete);
           });
         }
         option.calendar.range = range;
-        option.legend.show = false;
+        option.legend.show = true;
         option.series.push(this.graphGlobal.getDaySerie());
         option.tooltip = this.graphGlobal.getTooltipBySerie(type, joinData);
         chartInstance.clear();
