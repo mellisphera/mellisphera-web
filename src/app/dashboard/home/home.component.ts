@@ -54,6 +54,7 @@ import { CapteurInterface } from '../../_model/capteur';
 import { HubService } from '../service/api/hub.service';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 import { isUndefined } from 'util';
+import { HiveAlertComponent } from '../alert-configuration/hive-alert/hive-alert.component';
 
 @Component({
   selector: 'app-home',
@@ -160,7 +161,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       title: 'Your title',
       useBom: true,
       noDownload: false,
-      headers: ['APIARY','HIVE', 'BROOD', 'WEIGHT', 'SENSORS', 'NOTE'],
+      headers: ['APIARY','HIVE', 'BROOD', 'WEIGHT', 'BATTERY', 'SENSORS', 'NOTE'],
       nullToEmptyString: false,
     };
 
@@ -211,11 +212,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
           HIVE: _hive.name, 
           BROOD: this.dailyRecTh.getPourcentByHive(_hive._id),
           WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getWeightMaxByHive(_hive._id)),
-          SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef + ' - ' + _elt.sensorBat + ' %').join('\n'),
+          BATTERY: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorBat + ' %').join('\n'),
+          SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef).join('\n'),
           NOTE: !isUndefined(lastNote) ? this.unitService.getDailyDate(lastNote.opsDate) + ' - ' + lastNote.description: '-'
         }
-      });
-      new Angular5Csv(data,  `Export-Mellisphera`, this.optionCsv);
+      }).sort((a, b) => a.APIARY.localeCompare(b.APIARY) || a.HIVE.localeCompare(b.HIVE));
+      new Angular5Csv(data,  `Export Mellisphera ${this.unitService.getDailyDate(new Date())}`, this.optionCsv);
   }
 
   /**
