@@ -154,6 +154,7 @@ li:first-child img{
 .infoToolip{
   position: absolute;
   right: 5px;
+  font-size: 15px !important;
   bottom: 3px;
   color: #4F4F51;
 }
@@ -850,6 +851,22 @@ li:first-child img{
   margin: 0px !important;
 }
 @media (max-width: 770px) {
+  .btn-picture{
+    width: 30px;
+  }
+  .btn-picture .fa{
+    font-size: 20px !important;
+    width: 27px !important;
+    margin-right: 5px !important;
+  }
+  #locked .fa{
+    font-size: 28px;
+    margin-right: 0px;
+  }
+  .infoToolip i{
+    width: 28px;
+    font-size: 20px !important;
+  }
   .navbar{
     height: 100px;
   }

@@ -39,11 +39,6 @@ limitations under the License. -->
                     <img src="./assets/icons/ui/flowers.svg" style="width:50px;margin-left:-5px;" />
                 </a>
             </li> -->
-        <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('admin')">
-            <a routerLink="./admin" data-toggle="tooltip" id="admin" data-placement="top" title="admin">
-                <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;" />
-            </a>
-        </li>
         <!--              <li (click)="focus('stack')">
                 <a id="stack" routerLink="./stack-apiary" data-toggle="tooltip" data-placement="top" title="{{ 'SIDEBAR.DATA' | translate }}">
                     <img src="./assets/img/stack.png" style="width:30px;height: 30px; margin-top:-6px;" />
@@ -81,6 +76,11 @@ limitations under the License. -->
                 title="{{ 'SIDEBAR.ALERT_CONF' | translate }}">
                 <img src="./assets/icons/ui/userPref.png" style="width:50px;margin-left:-5px;" />
                 <p>{{ 'NAVBAR.ACCOUNT.PREFERENCES' | translate }}</p>
+            </a>
+        </li>
+        <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('admin')">
+            <a routerLink="./admin" data-toggle="tooltip" id="admin" data-placement="top" title="admin">
+                <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;" />
             </a>
         </li>
     </ul>

@@ -88,13 +88,7 @@ export class AuthService {
         if (this.jwtReponse.connexions === 1) {
           this.userService.setFristConnection(true);
         }
-        if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
-            this.router.navigateByUrl('dashboard/admin');
-
-        } else {
-          this.router.navigateByUrl('dashboard/home/info-apiary');
-
-        }
+        this.router.navigateByUrl('dashboard/home/info-apiary');
       },
       (err) => {
         this.errLogin = true;
