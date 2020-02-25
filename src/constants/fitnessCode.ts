@@ -1,6 +1,6 @@
 export const FITNESS_CODE =  {
-    "R1": {
-        "color": "Red",
+    "B1": {
+        "color": "Black",
         "FR": {
             "Message": "Ruche morte"
         },
@@ -11,9 +11,9 @@ export const FITNESS_CODE =  {
             "Message": "Colmena muerta" 
         }
     },
-
-    "R2": {
-        "color": "Red",
+​
+    "B2": {
+        "color": "Black",
         "FR": {
             "Message": "Ruche volée"
         },
@@ -21,24 +21,37 @@ export const FITNESS_CODE =  {
             "Message": "Stolen hive"
         },
         "ES": {
-            "Message": "Colmena robada"
+            "Message": "Colmena robada" 
         }
     },
-
-    "R3": {
-        "icon": "Red",
+​
+    "R1": {
+        "color": "Red",
         "FR": {
-            "Message": "Faible couvain"
+            "Message": "Ruche très faible"
         },
         "EN": {
-            "Message": "Low brood level"
+            "Message": "Very weak hive"
         },
         "ES": {
-            "Message": "Bajo nivel de cría"
+            "Message": "Colmena muy débil" 
         }
     },
-
+​
     "O1": {
+        "color": "Orange",
+        "FR": {
+            "Message": "Ruche en fort déclin"
+        },
+        "EN": {
+            "Message": "Hive in strong decrease"
+        },
+        "ES": {
+            "Message": "Colmena en fuerte declive"
+        }
+    },
+​
+    "O2": {
         "color": "Orange",
         "FR": {
             "Message": "Potentiel essaimage"
@@ -50,8 +63,8 @@ export const FITNESS_CODE =  {
             "Message": "Posible enjambre"
         }
     },
-
-    "O2": {
+​
+    "O3": {
         "color": "Orange",
         "FR": {
             "Message": "Surchauffe"
@@ -63,8 +76,8 @@ export const FITNESS_CODE =  {
             "Message": "Sobrecalentamiento" 
         }
     },
-
-    "O3": {
+​
+    "O4": {
         "color": "Orange",
         "FR": {
             "Message": "Grand froid"
@@ -76,8 +89,8 @@ export const FITNESS_CODE =  {
             "Message": "Frío extremo" 
         }
     },
-
-    "O4": {
+​
+    "O5": {
         "color": "Orange",
         "FR": {
             "Message": "Perte de poids importante"
@@ -89,7 +102,7 @@ export const FITNESS_CODE =  {
             "Message": "Perdida de peso subita, pillaje" 
         }
     },
-
+​
     "G1": {
         "color": "Green",
         "FR": {
