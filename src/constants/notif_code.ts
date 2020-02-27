@@ -382,6 +382,21 @@ export const NOTIF_CODE = {
             "Subject": "Colmena robada",
             "Message": "Sospecha de robo, el peso de tu colmena es anormalmente bajo."
         }
+    },
+    "406": {
+        "icon": "Dead",
+        "FR": {
+            "Subject": "Ruche morte",
+            "Message": "Votre ruche a été détectée morte"
+        },
+        "EN": {
+            "Subject": "Dead hive",
+            "Message": "Your hive has been detected dead"
+        },
+        "ES": {
+            "Subject": "Colmena muerta",
+            "Message": "Su colmena ha sido detectada muerta"
+        }
     }
 
 }
