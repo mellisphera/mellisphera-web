@@ -52,6 +52,8 @@
       <p class="linkContact"><a href="mailto:support@mellisphera.com">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
       <p class="errorLogin" *ngIf="authService.errLogin">{{getMessageTraduction(messageList.DENIED)}}</p>
     </div>
+    <button type="button" (click)="testAccount()" class="btn btn-default btnTest">{{ 'LOGIN_BM.FORM.TRY_MS' | translate }}</button>
+
 
   </div>
   <div id="text">
@@ -117,6 +119,8 @@
         <p class="linkContact"><a href="mailto:support@mellisphera.com">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
         <p class="errorLogin" *ngIf="authService.errLogin">{{getMessageTraduction(messageList.DENIED)}}</p>
       </div>
+      <button type="button" (click)="testAccount()"  class="btn btn-default btnTest">{{ 'LOGIN_BM.FORM.TRY_MS' | translate }}</button>
+
     </div>
   </div>
 </section>

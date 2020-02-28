@@ -49,10 +49,10 @@ export class AuthInterceptorService implements HttpInterceptor {
              errMsg = `Error: ${error.error.message}`;
            }
            else if (error.error.message) {
-             errMsg = {'Error Code': error.status,  'message' : error.error.message};
+             errMsg = {'error_code': error.status,  'message' : error.error.message};
            }
            else {  // Server Side Error
-             errMsg = `Error Code: ${error.status},  Message: ${error.message}`;
+             errMsg = `error_code: ${error.status},  Message: ${error.message}`;
            }
            if (error.status === 401) {
              this.loadingService.loading = false;

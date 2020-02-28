@@ -73,6 +73,12 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
     return (document.querySelector('#btnLoginDesktop') as any).disabled;
   }
 
+  testAccount() {
+    this.email = 'bzz@mellisphera.com';
+    this.password  ='test123';
+    this.login();
+  }
+
 
   getMessageTraduction(msg: MessagesList) : string{
     let language : string = this.translateService.currentLang.toUpperCase();

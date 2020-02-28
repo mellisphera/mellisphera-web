@@ -246,6 +246,7 @@ export class DailyManagerService {
           option.legend.selectedMode = 'single';
           let serie = JSON.parse(JSON.stringify(SERIES.custom));
           serie.data = data;
+          console.log(serie.data);
           serie.name = data[0][9];
           serie.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
