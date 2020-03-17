@@ -161,7 +161,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       title: 'Your title',
       useBom: true,
       noDownload: false,
-      headers: ['APIARY','HIVE', 'BROOD', 'WEIGHT', 'BATTERY', 'SENSORS', 'NOTE'],
+      headers: ['APIARY','HIVE', 'BROOD', 'WEIGHT', 'BATTERY', 'SENSORS', 'DERNIERE INSPECTION ANNOTEE'],
       nullToEmptyString: false,
     };
 
@@ -212,8 +212,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
           HIVE: _hive.name, 
           BROOD: this.dailyRecTh.getPourcentByHive(_hive._id),
           WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getWeightMaxByHive(_hive._id)),
-          BATTERY: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorBat + ' %').join('\n'),
-          SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef).join('\n'),
+          BATTERY: this.capteurService.getCapteursByHive(_hive._id).sort((a: CapteurInterface, b:CapteurInterface) => a.sensorRef.localeCompare(b.sensorRef)).map(_elt => _elt.sensorBat + '%').join('\n'),
+          SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef).sort((a: string, b:string) => a.localeCompare(b)).join('\n'),
           NOTE: !isUndefined(lastNote) ? this.unitService.getDailyDate(lastNote.opsDate) + ' - ' + lastNote.description: '-'
         }
       }).sort((a, b) => a.APIARY.localeCompare(b.APIARY) || a.HIVE.localeCompare(b.HIVE));
