@@ -161,7 +161,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       title: 'Your title',
       useBom: true,
       noDownload: false,
-      headers: ['APIARY','HIVE', 'BROOD', 'WEIGHT', 'BATTERY', 'SENSORS', 'DERNIERE INSPECTION ANNOTEE'],
+      headers: ['APIARY','HIVE', 'BROOD', 'WEIGHT', 'BATTERY', 'SENSORS', 'LAST ANNOTATED INSPECTION'],
       nullToEmptyString: false,
     };
 
