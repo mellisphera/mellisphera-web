@@ -49,7 +49,7 @@
     <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
     <div class="linkForm">
       <p class="linkContact"><a target="_blank" href="https://mybroodminder.com/login">{{ 'LOGIN.SIGN_IN.SIGN_UP_LINK' | translate }}</a></p>
-      <p class="linkContact"><a href="mailto:support@mellisphera.com">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
+      <p class="linkContact"><a href="mailto:support@mellisphera.com?subject=Problème de connection">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
       <p class="errorLogin" *ngIf="authService.errLogin">{{getMessageTraduction(messageList.DENIED)}}</p>
     </div>
     <button type="button" (click)="testAccount()" class="btn btn-default btnTest">{{ 'LOGIN_BM.FORM.TRY_MS' | translate }}</button>
@@ -116,7 +116,7 @@
         class="btn btn-success">{{ 'LOGIN_BM.FORM.CONNECTION' | translate }}</button>
       <div class="linkForm">
         <p class="linkContact"><a target="_blank" href="https://mybroodminder.com/login">{{ 'LOGIN.SIGN_IN.SIGN_UP_LINK' | translate }}</a></p>
-        <p class="linkContact"><a href="mailto:support@mellisphera.com">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
+        <p class="linkContact"><a href="mailto:support@mellisphera.com?subject=Problème de connection">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
         <p class="errorLogin" *ngIf="authService.errLogin">{{getMessageTraduction(messageList.DENIED)}}</p>
       </div>
       <button type="button" (click)="testAccount()"  class="btn btn-default btnTest">{{ 'LOGIN_BM.FORM.TRY_MS' | translate }}</button>

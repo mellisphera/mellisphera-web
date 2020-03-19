@@ -30,8 +30,8 @@ export const BASE_OPTIONS = {
         },
         toolbox: {
             orient: 'vertical',
-            itemSize: 18,
-            left: 'right',
+            itemSize: 20,
+            right: '2%',
             top: 50,
             feature: {
                 dataZoom: {
@@ -104,14 +104,24 @@ export const BASE_OPTIONS = {
     baseOptionDailyMelliCharts: {
         // visualMap: {},
         legend: {
-            show: true,
-            data: [],
-            bottom: 50
         },
+/*         title:{
+            text: 'toto',
+            left: 'center'
+        }, */
         axisPointer: {
             link: { xAxisIndex: 'all' }
         },
+/*         toolbox: {
+            orient: 'vertical',
+            itemSize: 20,
+            feature: {
+                dataView: { readOnly: false },
+                saveAsImage: {}
+            }
+        }, */
         calendar: CALENDAR.calendarMelliChart,
+        graphic:[]
     },
 
     yAxis: {
@@ -137,6 +147,7 @@ export const BASE_OPTIONS = {
     legend: {
         orient: 'horizontal',
         data: [],
+        top: 15,
         selectedMode: 'multiple'
     },
     xAxis: {

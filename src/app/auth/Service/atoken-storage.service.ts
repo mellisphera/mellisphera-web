@@ -57,6 +57,11 @@ export class AtokenStorageService {
     this.getAuthorities();
   }
 
+  ifDemoAccount() {
+    return this.getAuthorities().findIndex(_role => _role['authority'] === 'ROLE_TEST') !== -1 ? true : false;
+
+  }
+
   /**
    *
    *

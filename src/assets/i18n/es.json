@@ -3,7 +3,7 @@
         "SIGN_IN": {
             "DENIED": "Acceso denegado ",
             "SUBMIT": "conexion",
-            "SIGN_UP_LINK": "crear cuenta"
+            "SIGN_UP_LINK": "crear cuenta MyBroodminder"
         },
         "SIGN_UP": {}
     },
@@ -508,7 +508,9 @@
             "PASSWORD": "Contraseña de MyBroodMinder",
             "CONNECTION": "Conexión",
             "ERR": "No te puedes conectar",
-            "TRY_MS": "Prueba Mellisphera"
+            "TRY_MS": "Cuenta Démo",
+            "MAIL_SUBJECT": "Problema de conexión"
+
         }
     }
 }

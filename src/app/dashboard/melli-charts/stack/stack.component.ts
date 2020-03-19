@@ -95,7 +95,7 @@ export class StackComponent implements OnInit {
     yAxisWeight.gridIndex = 0;
     this.options.yAxis.push(yAxisWeight);
 
-    let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
+    let xAxis = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
     xAxis.gridIndex = 0;
     xAxis.max = this.melliDate.getRangeForReqest()[1];
     xAxis.min = this.melliDate.getRangeForReqest()[0];
@@ -105,14 +105,14 @@ export class StackComponent implements OnInit {
     this.options.xAxis.push(xAxis);
 
 
-    let yAxisTemp = Object.assign({}, BASE_OPTIONS.yAxis);
+    let yAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis));
     yAxisTemp.name = this.graphGlobal.temp.name;
     yAxisTemp.min = this.graphGlobal.temp.min;
     yAxisTemp.max = this.graphGlobal.temp.max;
     yAxisTemp.gridIndex = 1;
     this.options.yAxis.push(yAxisTemp);
 
-    let xAxisTemp = Object.assign({}, BASE_OPTIONS.xAxis);
+    let xAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
     xAxisTemp.gridIndex = 1;
     xAxis.max = this.melliDate.getRangeForReqest()[1];
     xAxis.min = this.melliDate.getRangeForReqest()[0];
@@ -123,7 +123,7 @@ export class StackComponent implements OnInit {
     this.options.xAxis.push(xAxisTemp);
 
 
-    let yAxisHum = Object.assign({}, BASE_OPTIONS.yAxis);
+    let yAxisHum = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis));
     yAxisHum.name = this.graphGlobal.humidity.name;
     yAxisHum.min = this.graphGlobal.humidity.min;
     yAxisHum.gridIndex = 2;
@@ -140,16 +140,18 @@ export class StackComponent implements OnInit {
     };
     this.options.xAxis.push(xAxisHum);
 
-    let serieMarkTemp = Object.assign({}, SERIES.serieMarkTemp);
+    let serieMarkTemp = JSON.parse(JSON.stringify(SERIES.serieMarkTemp));
+    console.log(serieMarkTemp);
     serieMarkTemp.yAxisIndex = 1;
     serieMarkTemp.xAxisIndex = 1;
     serieMarkTemp.markArea.data[0][0].yAxis = this.userPrefService.getUserPref().unitSystem === 'METRIC' ? 32 : 90;
     serieMarkTemp.markArea.data[0][1].yAxis = this.userPrefService.getUserPref().unitSystem === 'METRIC' ? 37 : 99;
     serieMarkTemp.markArea.data[0][0].name = this.graphGlobal.getNameZoneByGraph('TEMP');
+    console.log(serieMarkTemp);
     this.options.series.push(serieMarkTemp);
 
 
-    let serieMarkHum = Object.assign({}, SERIES.serieMarkHint);
+    let serieMarkHum = JSON.parse(JSON.stringify(SERIES.serieMarkHint));
     serieMarkHum.yAxisIndex = 2;
     serieMarkHum.xAxisIndex = 2;
     serieMarkHum.markArea.data[0][0].yAxis = 50;
@@ -168,6 +170,7 @@ export class StackComponent implements OnInit {
         ));
       }).join('');
     }
+    console.log(this.options);
     this.stackService.getEchartInstance().setOption(this.options);
   }
 
