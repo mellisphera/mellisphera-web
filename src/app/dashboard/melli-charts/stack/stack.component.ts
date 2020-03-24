@@ -87,16 +87,15 @@ export class StackComponent implements OnInit {
    * @memberof StackComponent
    */
   setOptionForStackChart(): void {
-
-    let yAxisWeight = Object.assign({}, BASE_OPTIONS.yAxis);
+    let yAxisWeight = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis));
     yAxisWeight.name = this.graphGlobal.weight.name;
     yAxisWeight.min = this.graphGlobal.weight.min;
     yAxisWeight.max = this.graphGlobal.weight.max;
-    yAxisWeight.gridIndex = 0;
+    yAxisWeight.gridIndex = 1;
     this.options.yAxis.push(yAxisWeight);
 
     let xAxis = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
-    xAxis.gridIndex = 0;
+    xAxis.gridIndex = 1;
     xAxis.max = this.melliDate.getRangeForReqest()[1];
     xAxis.min = this.melliDate.getRangeForReqest()[0];
     xAxis.axisLabel.formatter = (value: number, index: number) => {
@@ -109,11 +108,11 @@ export class StackComponent implements OnInit {
     yAxisTemp.name = this.graphGlobal.temp.name;
     yAxisTemp.min = this.graphGlobal.temp.min;
     yAxisTemp.max = this.graphGlobal.temp.max;
-    yAxisTemp.gridIndex = 1;
+    yAxisTemp.gridIndex = 0;
     this.options.yAxis.push(yAxisTemp);
 
     let xAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
-    xAxisTemp.gridIndex = 1;
+    xAxisTemp.gridIndex = 0;
     xAxis.max = this.melliDate.getRangeForReqest()[1];
     xAxis.min = this.melliDate.getRangeForReqest()[0];
 
