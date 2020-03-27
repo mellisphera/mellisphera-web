@@ -11,7 +11,7 @@ limitations under the License. -->
 
 <div class="content-page">
     <div class="panel-group">
-        <!--         <div class="panel panel-default">
+                <div class="panel panel-default">
             <div class="panel-heading">{{ 'PREFERENCE_CONFIG.TITLE_PASSWORD' | translate}}</div>
             <div class="panel-body">
                 <form [formGroup]="passwordForm" #formChangePassword="ngForm" (ngSubmit)="setNewPassword()" role="form">
@@ -42,11 +42,11 @@ limitations under the License. -->
 
                         </div>
                     </div>
-                    <button type="submit" [disabled]="formChangePassword.invalid"
+                    <button type="submit" [disabled]="passwordForm.invalid"
                         class="btn btn-primary">{{ 'PREFERENCE_CONFIG.FORM_PASSWORD.SUBMIT' | translate}}</button>
                 </form>
             </div>
-        </div> -->
+        </div>
         <div class="panel panel-default">
             <div class="panel-heading">{{ 'PREFERENCE_CONFIG.TITLE_DATE' | translate}}</div>
             <div class="panel-body">
