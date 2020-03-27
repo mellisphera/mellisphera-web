@@ -113,7 +113,7 @@ export class SettingsViewTemplateComponent implements OnInit {
 
     getPeriod(alertId: string) {
       const alert = this.alertTypes.filter(_alert => _alert._id === alertId)[0];
-      if (alert.period !== '') {
+      if (alert.period !== '' && alert.period !== null) {
         return '/' + this.getPeriodByLang(alert.period, this.translateService.currentLang);
       } else {
         return '';
