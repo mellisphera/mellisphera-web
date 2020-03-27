@@ -102,6 +102,9 @@ export class AlertsService {
         this.mapPictoSvg.set('Rswarm', ALERTS_ICONS.Rswarm);
         this.mapPictoSvg.set('DConnect', ALERTS_ICONS.DConnect);
         this.mapPictoSvg.set('Dead', ALERTS_ICONS.Dead);
+        this.mapPictoSvg.set('Oxalic', ALERTS_ICONS.Oxalic);
+        this.mapPictoSvg.set('Super+', ALERTS_ICONS["Super+"]);
+        this.mapPictoSvg.set('Super-', ALERTS_ICONS["Super-"]);
         this.mapPictoSvg.set('Prod', []);
         
         this.mapTypeColor.set('Error','black');

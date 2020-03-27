@@ -62,6 +62,21 @@ export const NOTIF_CODE = {
             "Message": "Las temperaturas serán inusualmente frías" 
         }
     },
+    "205": {
+        "icon": "Oxalic",
+        "FR": {
+            "Subject": "Traitement à l'acide oxalique",
+            "Message": "C'est le moment pour traiter vos ruches"
+        },
+        "EN": {
+            "Subject": "Oxalic acid treatment",
+            "Message": "It's time to treat your hives"
+        },
+        "ES": {
+            "Subject": "Tratamiento con ácido oxálico",
+            "Message": "Es hora de tratar sus colmenas."
+        }
+    },
 
     "301": {
         "icon": "Tmax",
@@ -220,6 +235,38 @@ export const NOTIF_CODE = {
         "ES": {
             "Subject": "Riesgo de enjambrazón",
             "Message": "El riesgo de enjambrazón será alto"
+        }
+    },
+
+    "323": {
+        "icon": "Super+",
+        "FR": {
+            "Subject": "Ajout d'une hausse",
+            "Message": "Vous avez ajouté une hausse"
+        },
+        "EN": {
+            "Subject": "Adding a super",
+            "Message": "You added a super"
+        },
+        "ES": {
+            "Subject": "Añadiendo una alza",
+            "Message": "Añadiste una alza"
+        }
+    },
+
+    "324": {
+        "icon": "Super-",
+        "FR": {
+            "Subject": "Retrait d'une hausse",
+            "Message": "Vous avez retiré une hausse"
+        },
+        "EN": {
+            "Subject": "Removing a super",
+            "Message": "You removed a super"
+        },
+        "ES": {
+            "Subject": "Supresión de una alza",
+            "Message": "Ha eliminado una alza"
         }
     },
 

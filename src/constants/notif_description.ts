@@ -24,7 +24,10 @@ export const NOTIF_DESCRIPTION5 = {
         PoorSignalT: 'Déclenchée lorsque votre capteur de température transmets peu de données durant le dernier jour. ',
         LowBatteryW: 'Déclenchée lorsque le niveau de batterie de votre capteur de poids est en dessous du seuil choisi.',
         LowBatteryT: 'Déclenchée lorsque le niveau de batterie de votre capteur de température est en dessous du seuil choisi.',
-
+        'Super+': 'A partir de l’analyse du poids de votre ruche, nous avons constaté que vous avez ajouté une hausse.',
+        'Super-': 'A partir de l’analyse du poids de votre ruche, nous avons constaté que vous avez retiré une hausse.',
+        Oxalic: 'Déclenchée lorsque le couvain moyen de vos ruches est en dessous du seuil fixé. C’est une indication vous permettant de traiter vos ruches à l’acide oxalique au bon moment.',
+        Dead: 'Notre algorithme détecte chaque jour si votre ruche est morte en fonction de différents paramètres que nous avons fixés.'
     },
     EN: {
         Honeydew: "Triggered when the weight contribution to the hive exceeds the chosen threshold during the last week.",
@@ -52,6 +55,11 @@ export const NOTIF_DESCRIPTION5 = {
         PoorSignalT: 'Triggered when your T sensor transmits little data during the last day. ',
         LowBatteryW: 'Triggered when the battery level of your W sensor is below the selected threshold.',
         LowBatteryT: 'Triggered when the battery level of your T sensor is below the selected threshold.',
+        'Super+': 'From the analysis of the weight of your hive, we found that you have added a super.',
+        'Super-': 'From the analysis of the weight of your hive, we found that you have removed a super.',
+        Oxalic: 'Triggered when the average brood in your hives is below the set threshold. This is an indication that allows you to treat your hives with oxalic acid at the right time.',
+        Dead: 'Our algorithm detects every day if your hive is dead based on various parameters we have set.'
+
     },
     ES: {
         Honeydew: 'Ganancia de peso sobre 7 dias superior al umbral',
@@ -79,5 +87,10 @@ export const NOTIF_DESCRIPTION5 = {
         PoorSignalT: 'Se activa cuando su sensor de temperatura transmite pocos datos durante el último día.',
         LowBatteryW: 'Se activa cuando el nivel de la batería de su sensor de peso está por debajo del umbral seleccionado.',
         LowBatteryT: 'Se activa cuando el nivel de la batería de su sensor de temperatura está por debajo del umbral seleccionado.',
+        'Super+': 'A partir del análisis del peso de su colmena, encontramos que ha añadido una alza.',
+        'Super-': 'A partir del análisis del peso de su colmena, encontramos que ha eliminado una subida.',
+        Oxalic: 'Se desencadena cuando el promedio de cría en sus colmenas está por debajo del umbral establecido. Esta es una indicación que le permite tratar sus colmenas con ácido oxálico en el momento adecuado.',
+        Dead: 'Nuestro algoritmo detecta cada día si su colmena está muerta basándose en diferentes parámetros que hemos establecido.'
+
     }
 }
