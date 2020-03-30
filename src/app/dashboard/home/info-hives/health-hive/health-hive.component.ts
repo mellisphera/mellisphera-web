@@ -16,8 +16,6 @@ import { MyDate } from '../../../../class/MyDate';
 import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
-import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
-import { RucheService } from '../../../service/api/ruche.service';
 import * as echarts from 'echarts';
 
 @Component({
@@ -29,9 +27,10 @@ export class HealthHiveComponent implements OnInit {
 
   chartInstance: any;
   option: any;
-  constructor(private unitService: UnitService, 
-    private graphGlobal: GraphGlobal, 
-    public dailyRecordThService: DailyRecordService) {
+  constructor(
+      private unitService: UnitService, 
+      private graphGlobal: GraphGlobal, 
+      public dailyRecordThService: DailyRecordService) {
       this.chartInstance = null;
       this.option = {
           baseOption : {
@@ -135,7 +134,7 @@ export class HealthHiveComponent implements OnInit {
             }
         },
     );
-      this.option.baseOption.series.push(this.graphGlobal.getDaySerie());
+      console.log(this.option.baseOption)
 
 
   }

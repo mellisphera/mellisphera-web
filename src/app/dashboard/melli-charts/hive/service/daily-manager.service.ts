@@ -670,6 +670,7 @@ export class DailyManagerService {
         });
         option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+        option.series.push(this.graphGlobal.getDaySerie());
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         chartInstance.setOption(option, true);
@@ -702,6 +703,7 @@ export class DailyManagerService {
         });
         option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+        option.series.push(this.graphGlobal.getDaySerie());
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         chartInstance.setOption(option, true);
@@ -732,6 +734,7 @@ export class DailyManagerService {
         });
         option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+        option.series.push(this.graphGlobal.getDaySerie());
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         chartInstance.setOption(option, true);
@@ -762,6 +765,7 @@ export class DailyManagerService {
         });
         option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+        option.series.push(this.graphGlobal.getDaySerie());
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         chartInstance.setOption(option, true);
@@ -792,6 +796,7 @@ export class DailyManagerService {
         });
         option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+        option.series.push(this.graphGlobal.getDaySerie());
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         chartInstance.setOption(option, true);
@@ -824,6 +829,7 @@ export class DailyManagerService {
         });
         option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
         option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+        option.series.push(this.graphGlobal.getDaySerie());
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
         chartInstance.setOption(option, true);

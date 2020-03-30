@@ -109,7 +109,7 @@ export class MyDate {
         min.setDate(min.getDate() - nbDay);
         //min.setDate(max.getDate() + 7);
 
-        max.setDate(max.getDate());
+        max.setDate(max.getDate() + 3);
         min.setHours(0);
         min.setMinutes(0);
         min.setSeconds(0);

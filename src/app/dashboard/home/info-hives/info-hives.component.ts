@@ -96,6 +96,8 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
         });
         console.log(option.baseOption.series);
         option.baseOption.tooltip = this.graphGlobal.getTooltipBySerie({type: 'BROOD', name: 'BROOD', unit: 'P'});
+        option.baseOption.series.push(this.graphGlobal.getDaySerie());
+        
        // this.healthHiveComponent.option.baseOption.serie = this.dailyRecordThService.mergeOptionCalendarHealth.series;
         this.healthHiveComponent.chartInstance.clear();
         this.healthHiveComponent.chartInstance.setOption(option, true);
