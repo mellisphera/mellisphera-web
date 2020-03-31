@@ -21,6 +21,7 @@ import { map } from 'rxjs-compat/operator/map';
 import { UnitService } from '../unit.service';
 import { WEATHER } from '../../melli-charts/charts/icons/icons_weather';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
+import { isUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -222,17 +223,23 @@ export class WeatherService {
 
 
   getPicto(nomPicto: string, cellPoint: Array<number>): Array<any> {
-    return WEATHER[nomPicto].map(_path => {
-      return {
-        type: 'path',
-        scale: _path.scale,
-        shape: {
-          pathData: _path.path,
-        },
-        position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
-        style: _path.style
-      };
-    });
+    if (!isUndefined(WEATHER[nomPicto])) {
+      return WEATHER[nomPicto].map(_path => {
+        return {
+          type: 'path',
+          scale: _path.scale,
+          shape: {
+            pathData: _path.path,
+          },
+          position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
+          style: _path.style
+        };
+      });
+    } else {
+      console.log(nomPicto);
+      return [];
+    }
+
   }
 
 
