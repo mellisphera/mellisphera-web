@@ -126,7 +126,8 @@
         "APIARY" : "My Apiary",
         "HIVES" : "Hives",
         "DATA" : "Explore",
-        "ALERT_CONF": "Alerts"
+        "ALERT_CONF": "Alerts",
+        "USERGUIDE": "User Guide"
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Change Password",

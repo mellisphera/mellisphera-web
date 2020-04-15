@@ -126,7 +126,9 @@
         "APIARY" : "Mon Rucher",
         "HIVES" : "Ruches",
         "DATA" : "Explorer",
-        "ALERT_CONF": "Alertes"
+        "ALERT_CONF": "Alertes",
+        "USERGUIDE": "Documentation"
+
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Changer de mot de passe",

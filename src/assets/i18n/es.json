@@ -124,7 +124,9 @@
         "APIARY": "Colmenar",
         "HIVES": "Colmenas",
         "DATA": "Explorar",
-        "ALERT_CONF": "Alertas "
+        "ALERT_CONF": "Alertas ",
+        "USERGUIDE": "Guia Usuario"
+
     },
     "PREFERENCE_CONFIG": {
         "TITLE_PASSWORD": "Modificar la contasena",
