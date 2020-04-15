@@ -7,8 +7,7 @@ An overview of the whole architecture is given below :
 ![](img/mellihealth_scheme.png)
 
 ## Give it a test
-Go to [bzz.mellisphera.com](https://bzz.mellisphera.com)
-create an account and visit a demo apiary
+Go to [bzz.mellisphera.com](https://bzz.mellisphera.com) and visit the demo apiary
 
 
 ## Getting Started
