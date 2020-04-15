@@ -1,4 +1,4 @@
-# MelliHealth web
+# Mellisphera web
 
 This is the front end of MelliHealth beekeeping platform. 
 It is closely linked with [mellihealth-api](https://github.com/mellisphera/mellihealth-api) backend.
@@ -7,7 +7,7 @@ An overview of the whole architecture is given below :
 ![](img/mellihealth_scheme.png)
 
 ## Give it a test
-Go to [app.mellisphera.com](https://app.mellisphera.com)
+Go to [bzz.mellisphera.com](https://bzz.mellisphera.com)
 create an account and visit a demo apiary
 
 
