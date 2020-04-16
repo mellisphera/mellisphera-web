@@ -80,7 +80,7 @@
         "DELETE_APIARY2": "Suprimir colmenar",
         "DELETE_ASK": "Suprimir el colmenar?",
         "ACCOUNT": {
-            "PREFERENCES": "Ajustes",
+            "PREFERENCES": "Preferencias",
             "LOG_OUT": "Desconexion"
         },
         "CRUD": {
