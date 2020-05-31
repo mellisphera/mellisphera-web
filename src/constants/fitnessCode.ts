@@ -41,10 +41,10 @@ export const FITNESS_CODE =  {
     "O1": {
         "color": "Orange",
         "FR": {
-            "Message": "Ruche faible ou en en fort déclin"
+            "Message": "Ruche faible ou en fort déclin"
         },
         "EN": {
-            "Message": "Week hive or in strong decrease"
+            "Message": "Weak hive or in strong decrease"
         },
         "ES": {
             "Message": "Colmena débil o en fuerte declive"

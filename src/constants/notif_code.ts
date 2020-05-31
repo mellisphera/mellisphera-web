@@ -234,7 +234,7 @@ export const NOTIF_CODE = {
         },
         "ES": {
             "Subject": "Riesgo de enjambrazón",
-            "Message": "Día de enjambrazón planeado"
+            "Message": "Día de enjambrazón previsto"
         }
     },
 
@@ -266,7 +266,7 @@ export const NOTIF_CODE = {
         },
         "ES": {
             "Subject": "Supresión de una alza",
-            "Message": "Ha eliminado una alza"
+            "Message": "Retiraste una alza"
         }
     },
 
@@ -411,7 +411,7 @@ export const NOTIF_CODE = {
         },
         "ES": {
             "Subject": "Sin señal de la estación meteorológica",
-            "Message": "Error de transmision de datos desde  {DATE}"
+            "Message": "Error de transmision de datos desde {DATE}"
         }
     },
 
@@ -443,7 +443,7 @@ export const NOTIF_CODE = {
         },
         "ES": {
             "Subject": "Colmena muerta",
-            "Message": "Su colmena ha sido detectada muerta"
+            "Message": "Tu colmena ha sido detectada muerta"
         }
     }
 
