@@ -2,15 +2,15 @@ export const NOTIF_CODE = {
     "201": {
         "icon": "Rain",
         "FR": {
-            "Subject": "Fortes précipitations",
+            "Subject": "Possibles fortes précipitations",
             "Message": "Les précipitations de pluie dépasseront {VAL}"
         },
         "EN": {
-            "Subject": "Heavy rainfall",
+            "Subject": "Possible heavy rainfall",
             "Message": "Rainfall will exceed {VAL}" 
         },
         "ES": {
-            "Subject": "Fuertes precipitaciones",
+            "Subject": "Posibles fuertes precipitaciones",
             "Message": "La lluvia excederá {VAL}" 
         }
     },
@@ -18,15 +18,15 @@ export const NOTIF_CODE = {
     "202": {
         "icon": "Snow",
         "FR": {
-            "Subject": "Neige abdondante",
+            "Subject": "Possible neige abdondante",
             "Message": "Les précipitations de neige dépasseront {VAL} "
         },
         "EN": {
-            "Subject": "Heavy snowfall",
+            "Subject": "Possible heavy snowfall",
             "Message": "Snowfall will exceed {VAL} " 
         },
         "ES": {
-            "Subject": "Fuerte nevada",
+            "Subject": "Posible fuerte nevada",
             "Message": "La nieve excederá {VAL}" 
         }
     },
@@ -34,15 +34,15 @@ export const NOTIF_CODE = {
     "203": {
         "icon": "Wind",
         "FR": {
-            "Subject": "Fort vent",
+            "Subject": "Possible fort vent",
             "Message": "Le vent dépassera {VAL}"
         },
         "EN": {
-            "Subject": "Strong wind",
+            "Subject": "Possible strong wind",
             "Message": "The wind will exceed {VAL}" 
         },
         "ES": {
-            "Subject": "Viento fuerte ",
+            "Subject": "Posible viento fuerte",
             "Message": "El viento excederá {VAL}" 
         }
     },
@@ -50,15 +50,15 @@ export const NOTIF_CODE = {
     "204": {
         "icon": "ColdPeriod",
         "FR": {
-            "Subject": "Jours froids à venir",
+            "Subject": "Possibles jours froids à venir",
             "Message": "Les températures seront inhabituellement froides"
         },
         "EN": {
-            "Subject": "Cold days ahead",
+            "Subject": "Possible cold days ahead",
             "Message": "Temperatures will be unusually cold" 
         },
         "ES": {
-            "Subject": "Días fríos por venir",
+            "Subject": "Posibles días fríos por venir",
             "Message": "Las temperaturas serán inusualmente frías" 
         }
     },
@@ -97,11 +97,11 @@ export const NOTIF_CODE = {
     "302": {
         "icon": "Tmin",
         "FR": {
-            "Subject": "Faible température interne ",
+            "Subject": "Faible température interne",
             "Message": "Température interne en dessous de {VAL}"
         },
         "EN": {
-            "Subject": "Low internal temperature ",
+            "Subject": "Low internal temperature",
             "Message": "Internal temperature below {VAL}" 
         },
         "ES": {
@@ -114,15 +114,15 @@ export const NOTIF_CODE = {
         "icon": "WIpos",
         "FR": {
             "Subject": "Apport important de ressources",
-            "Message": "La réserve de vos abeilles a gagné plus de {VAL}"
+            "Message": "Le gain de réserves dépasse {VAL}"
         },
         "EN": {
             "Subject": "Significant provision of resources",
-            "Message": "Your bees stock has gained more than {VAL}" 
+            "Message": "The gain of your bees' stock exceeds {VAL}" 
         },
         "ES": {
             "Subject": "Aporte importante de recursos",
-            "Message": "Las reservas han augmentado de {VAL}" 
+            "Message": "La ganancia de las reservas excede {VAL}" 
         }
     },
 
@@ -130,15 +130,15 @@ export const NOTIF_CODE = {
         "icon": "WIneg",
         "FR": {
             "Subject": "Epuisement des ressources",
-            "Message": "La réserve de vos abeilles a perdue plus {VAL}"
+            "Message": "La perte de réserves dépasse {VAL}"
         },
         "EN": {
             "Subject": "Resource depletion",
-            "Message": "Your bees' stock has lost more than {VAL}"
+            "Message": "The loss of your bees' stock exceeds {VAL}"
         },
         "ES": {
             "Subject": "Consumo de reservas",
-            "Message": "Las reservas han disminuido de {VAL}"
+            "Message": "La pérdida de reservas excede {VAL}"
         }
     },
 
@@ -226,15 +226,15 @@ export const NOTIF_CODE = {
         "icon": "Rswarm",
         "FR": {
             "Subject": "Risque d'essaimage",
-            "Message": "Le risque d'essaimage sera fort"
+            "Message": "Journée d'essaimages attendue"
         },
         "EN": {
             "Subject": "Swarm risk",
-            "Message": "The risk of swarm will be high"
+            "Message": "Swarming day expected"
         },
         "ES": {
             "Subject": "Riesgo de enjambrazón",
-            "Message": "El riesgo de enjambrazón será alto"
+            "Message": "Día de enjambrazón planeado"
         }
     },
 
@@ -419,17 +419,18 @@ export const NOTIF_CODE = {
         "icon": "Stolen",
         "FR": {
             "Subject": "Ruche volée",
-            "Message": "Suspicion de vol, le poids de votre ruche est anormalement faible"
+            "Message": "Le poids de votre ruche est anormalement faible"
         },
         "EN": {
             "Subject": "Stolen hive",
-            "Message": "Suspected of theft, the weight of your hive is abnormally low"
+            "Message": "The weight of your hive is abnormally low"
         },
         "ES": {
             "Subject": "Colmena robada",
-            "Message": "Sospecha de robo, el peso de tu colmena es anormalmente bajo."
+            "Message": "El peso de tu colmena es anormalmente bajo"
         }
     },
+    
     "406": {
         "icon": "Dead",
         "FR": {
