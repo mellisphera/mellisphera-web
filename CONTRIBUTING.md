@@ -1,4 +1,4 @@
-# Contributing to Mellihealth-web
+# Contributing to Mellisphera
 
 When contributing to this repository, please first discuss the change you wish to make via issue,
 email, or any other method with the owners of this repository before making a change. 
@@ -12,7 +12,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ### Pull Request Process
 
-1. Fork the mellisphera/mellihealth-web repo.
+1. Fork the mellisphera/mellisphera-web repo.
 2. Clone the projet from your own repo.
 3. create a new branch of work, and modify the project on it.
 
@@ -34,7 +34,7 @@ Please note we have a code of conduct, please follow it in all your interactions
     ```shell
     git push origin my-branch
     ```
-9. In GitHub, send a pull request to `mellihealth-web:master`.
+9. In GitHub, send a pull request to `mellisphera-web:master`.
 * If we suggest changes then:
   * Make the required updates.
   * Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
