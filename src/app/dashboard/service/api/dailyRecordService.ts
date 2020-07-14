@@ -157,7 +157,7 @@ export class DailyRecordService {
             tooltip: {
                 formatter: (params) => {
                     return params.marker +
-                        this.unitService.getDailyDate(params.data[0]) + '<br/>' 
+                        this.unitService.getDailyDate(params.data[0]) + '<br/>'
                         + this.unitService.getValRound(params.data[1]) + (this.unitSystem === 'METRIC' ? '°C' : '°F');
                 }
             },
@@ -383,9 +383,9 @@ export class DailyRecordService {
     }
 
     /**
-     * 
-     * @param hiveId 
-     * @param range 
+     *
+     * @param hiveId
+     * @param range
      */
     public getTempIntMaxByHive(hiveId: string, range: Date[]): Observable<any[]> {
         return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMax/' + hiveId, range).map(_elt => _elt.map(_value => {
@@ -393,27 +393,27 @@ export class DailyRecordService {
         }));
     }
     /**
-     * 
-     * @param hiveId 
-     * @param range 
+     *
+     * @param hiveId
+     * @param range
      */
     public getHintByHive(hiveId: string, range: Date[]): Observable<any> {
         return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/hInt/' + hiveId, range);
     }
 
     /**
-     * 
-     * @param hiveId 
-     * @param range 
+     *
+     * @param hiveId
+     * @param range
      */
     public getBroodByHive(hiveId: string, range: Date[]): Observable<any[]> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/brood/' + hiveId, range);
+        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/brood/old/' + hiveId, range);
     }
 
     /**
-     * 
-     * @param hiveId 
-     * @param range 
+     *
+     * @param hiveId
+     * @param range
      */
     public getTminByHive(hiveId: string, range: Date[]): Observable<any[]> {
         return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMin/' + hiveId, range).map(_elt => _elt.map(_value => {
