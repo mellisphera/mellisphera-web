@@ -95,10 +95,12 @@ export class AlertsService {
         this.mapPictoSvg.set('Storm', ALERTS_ICONS.Storm);
         this.mapPictoSvg.set('Wind3', ALERTS_ICONS.Wind3);
         this.mapPictoSvg.set('ColdPeriod2', ALERTS_ICONS.ColdPeriod2);
-        this.mapPictoSvg.set('ColdPeriod', ALERTS_ICONS.ColdPeriod);
+        this.mapPictoSvg.set('ColdDay', ALERTS_ICONS.ColdDay);
+        this.mapPictoSvg.set('HotDay', ALERTS_ICONS.HotDay);
         this.mapPictoSvg.set('WIneg', ALERTS_ICONS.WIneg);
         this.mapPictoSvg.set('StopWeather', ALERTS_ICONS.StopWeather);
         this.mapPictoSvg.set('WIpos', ALERTS_ICONS.WIpos);
+        this.mapPictoSvg.set('Wlim', ALERTS_ICONS.Wlim);
         this.mapPictoSvg.set('Rswarm', ALERTS_ICONS.Rswarm);
         this.mapPictoSvg.set('DConnect', ALERTS_ICONS.DConnect);
         this.mapPictoSvg.set('Dead', ALERTS_ICONS.Dead);
@@ -143,10 +145,13 @@ export class AlertsService {
         this.mapTypeColor.set('StopLaying','black');
         this.mapTypeColor.set('Storm','black');
         this.mapTypeColor.set('Wind3','black');
+        this.mapTypeColor.set('ColdDay','black');
+        this.mapTypeColor.set('HotDay','black');
         this.mapTypeColor.set('ColdPeriod1','black');
         this.mapTypeColor.set('ColdPeriod2','black');
         this.mapTypeColor.set('WIneg','black');
         this.mapTypeColor.set('WIpos','black');
+        this.mapTypeColor.set('Wlim','black');
         this.mapTypeColor.set('DConnect','black');
         this.mapTypeColor.set('Prod','black');
 

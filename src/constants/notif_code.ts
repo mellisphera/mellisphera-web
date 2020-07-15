@@ -48,20 +48,21 @@ export const NOTIF_CODE = {
     },
 
     "204": {
-        "icon": "ColdPeriod",
+        "icon": "ColdDay",
         "FR": {
-            "Subject": "Possibles jours froids à venir",
+            "Subject": "Possible journée froide à venir",
             "Message": "Les températures seront inhabituellement froides"
         },
         "EN": {
-            "Subject": "Possible cold days ahead",
-            "Message": "Temperatures will be unusually cold" 
+            "Subject": "Possible cold day ahead",
+            "Message": "Temperatures will be unusually cold"
         },
         "ES": {
-            "Subject": "Posibles días fríos por venir",
-            "Message": "Las temperaturas serán inusualmente frías" 
+            "Subject": "Posible día frío por venir",
+            "Message": "Las temperaturas serán inusualmente frías"
         }
     },
+
     "205": {
         "icon": "Oxalic",
         "FR": {
@@ -75,6 +76,22 @@ export const NOTIF_CODE = {
         "ES": {
             "Subject": "Tratamiento con ácido oxálico",
             "Message": "Es hora de tratar sus colmenas."
+        }
+    },
+
+    "206": {
+        "icon": "HotDay",
+        "FR": {
+            "Subject": "Possible journée chaude à venir",
+            "Message": "Les températures seront inhabituellement chaudes"
+        },
+        "EN": {
+            "Subject": "Possible hot day ahead",
+            "Message": "Temperatures will be unusually warm"
+        },
+        "ES": {
+            "Subject": "Posible día caluroso por venir",
+            "Message": "Las temperaturas serán inusualmente cálidas"
         }
     },
 
@@ -203,6 +220,22 @@ export const NOTIF_CODE = {
         "ES": {
             "Subject": "Producción de nectar",
             "Message": "El ingreso de recursos durante la última semana supera {VAL}"
+        }
+    },
+
+    "312": {
+        "icon": "Wlim",
+        "FR": {
+            "Subject": "Poids limite dépassé",
+            "Message": "Le poids de votre ruche dépasse {VAL}"
+        },
+        "EN": {
+            "Subject": "Weight limit exceeded",
+            "Message": "The weight of your hive exceeds {VAL}"
+        },
+        "ES": {
+            "Subject": "Límite de peso excedido",
+            "Message": "El peso de su colmena excede {VAL}"
         }
     },
 
