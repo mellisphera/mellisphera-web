@@ -446,14 +446,13 @@
             "CONF": {
                 "TITLE": "Settings",
                 "MAIL": "Send email alerts :",
-                "FREQUENCY": "Send every *",
+                "FREQUENCY": "Send every",
                 "DAILY": "day",
                 "WEEKLY": "week",
                 "DAY": "day",
                 "OTHER": "custom",
                 "EVERY": "every",
                 "BTN_MAIL_TEST": "Send test email",
-                "WARNING_TEXT": "(*) emails are sent when alerts are reported"
             }
         },
         "STATUS": "Status",

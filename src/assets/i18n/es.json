@@ -460,15 +460,13 @@
             "CONF": {
                 "TITLE": "Configurar",
                 "MAIL": "Enviar alertas por correo electrónico:",
-                "FREQUENCY": "Enviar cada *",
+                "FREQUENCY": "Enviar cada",
                 "DAILY": "día",
                 "WEEKLY": "semana",
                 "DAY": "día",
                 "OTHER": "personalizar",
                 "EVERY": "cada",
                 "BTN_MAIL_TEST": "Probar email",
-                "WARNING_TEXT": "(*) la notificacion tendra lugar solamente en caso de nuevas alertas"
-
             }
         },
         "DESCRIPTION": "Descripción",
