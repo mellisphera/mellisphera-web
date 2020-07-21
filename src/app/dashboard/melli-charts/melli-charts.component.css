@@ -87,6 +87,7 @@ nav[role=admin-navigation] {
 #btn-date{
     margin-top: 13px;
     height: 36px;
+    font-size: 12px;
     padding-right: 0px;
     background-color: #4F4F51;
     color: white !important;
@@ -225,7 +226,7 @@ nav[role=admin-navigation] {
 }
 @media screen and (max-width:1400px) {
     #btn-date{
-        font-size: 12px;
+        font-size: 10px;
     }
 }
 @media screen and (max-width:1300px) {

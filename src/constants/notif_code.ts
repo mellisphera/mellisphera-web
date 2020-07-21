@@ -2,15 +2,15 @@ export const NOTIF_CODE = {
     "201": {
         "icon": "Rain",
         "FR": {
-            "Subject": "Fortes précipitations",
+            "Subject": "Possibles fortes précipitations",
             "Message": "Les précipitations de pluie dépasseront {VAL}"
         },
         "EN": {
-            "Subject": "Heavy rainfall",
+            "Subject": "Possible heavy rainfall",
             "Message": "Rainfall will exceed {VAL}" 
         },
         "ES": {
-            "Subject": "Fuertes precipitaciones",
+            "Subject": "Posibles fuertes precipitaciones",
             "Message": "La lluvia excederá {VAL}" 
         }
     },
@@ -18,15 +18,15 @@ export const NOTIF_CODE = {
     "202": {
         "icon": "Snow",
         "FR": {
-            "Subject": "Neige abdondante",
+            "Subject": "Possible neige abdondante",
             "Message": "Les précipitations de neige dépasseront {VAL} "
         },
         "EN": {
-            "Subject": "Heavy snowfall",
+            "Subject": "Possible heavy snowfall",
             "Message": "Snowfall will exceed {VAL} " 
         },
         "ES": {
-            "Subject": "Fuerte nevada",
+            "Subject": "Posible fuerte nevada",
             "Message": "La nieve excederá {VAL}" 
         }
     },
@@ -34,32 +34,64 @@ export const NOTIF_CODE = {
     "203": {
         "icon": "Wind",
         "FR": {
-            "Subject": "Fort vent",
+            "Subject": "Possible fort vent",
             "Message": "Le vent dépassera {VAL}"
         },
         "EN": {
-            "Subject": "Strong wind",
+            "Subject": "Possible strong wind",
             "Message": "The wind will exceed {VAL}" 
         },
         "ES": {
-            "Subject": "Viento fuerte ",
+            "Subject": "Posible viento fuerte",
             "Message": "El viento excederá {VAL}" 
         }
     },
 
     "204": {
-        "icon": "ColdPeriod",
+        "icon": "ColdDay",
         "FR": {
-            "Subject": "Jours froids à venir",
+            "Subject": "Possible journée froide à venir",
             "Message": "Les températures seront inhabituellement froides"
         },
         "EN": {
-            "Subject": "Cold days ahead",
-            "Message": "Temperatures will be unusually cold" 
+            "Subject": "Possible cold day ahead",
+            "Message": "Temperatures will be unusually cold"
         },
         "ES": {
-            "Subject": "Días fríos por venir",
-            "Message": "Las temperaturas serán inusualmente frías" 
+            "Subject": "Posible día frío por venir",
+            "Message": "Las temperaturas serán inusualmente frías"
+        }
+    },
+
+    "205": {
+        "icon": "Oxalic",
+        "FR": {
+            "Subject": "Traitement à l'acide oxalique",
+            "Message": "C'est le moment pour traiter vos ruches"
+        },
+        "EN": {
+            "Subject": "Oxalic acid treatment",
+            "Message": "It's time to treat your hives"
+        },
+        "ES": {
+            "Subject": "Tratamiento con ácido oxálico",
+            "Message": "Es hora de tratar sus colmenas."
+        }
+    },
+
+    "206": {
+        "icon": "HotDay",
+        "FR": {
+            "Subject": "Possible journée chaude à venir",
+            "Message": "Les températures seront inhabituellement chaudes"
+        },
+        "EN": {
+            "Subject": "Possible hot day ahead",
+            "Message": "Temperatures will be unusually warm"
+        },
+        "ES": {
+            "Subject": "Posible día caluroso por venir",
+            "Message": "Las temperaturas serán inusualmente cálidas"
         }
     },
 
@@ -82,11 +114,11 @@ export const NOTIF_CODE = {
     "302": {
         "icon": "Tmin",
         "FR": {
-            "Subject": "Faible température interne ",
+            "Subject": "Faible température interne",
             "Message": "Température interne en dessous de {VAL}"
         },
         "EN": {
-            "Subject": "Low internal temperature ",
+            "Subject": "Low internal temperature",
             "Message": "Internal temperature below {VAL}" 
         },
         "ES": {
@@ -99,15 +131,15 @@ export const NOTIF_CODE = {
         "icon": "WIpos",
         "FR": {
             "Subject": "Apport important de ressources",
-            "Message": "La réserve de vos abeilles a gagné plus de {VAL}"
+            "Message": "Le gain de réserves dépasse {VAL}"
         },
         "EN": {
             "Subject": "Significant provision of resources",
-            "Message": "Your bees stock has gained more than {VAL}" 
+            "Message": "The gain of your bees' stock exceeds {VAL}" 
         },
         "ES": {
             "Subject": "Aporte importante de recursos",
-            "Message": "Las reservas han augmentado de {VAL}" 
+            "Message": "La ganancia de las reservas excede {VAL}" 
         }
     },
 
@@ -115,15 +147,15 @@ export const NOTIF_CODE = {
         "icon": "WIneg",
         "FR": {
             "Subject": "Epuisement des ressources",
-            "Message": "La réserve de vos abeilles a perdue plus {VAL}"
+            "Message": "La perte de réserves dépasse {VAL}"
         },
         "EN": {
             "Subject": "Resource depletion",
-            "Message": "Your bees' stock has lost more than {VAL}"
+            "Message": "The loss of your bees' stock exceeds {VAL}"
         },
         "ES": {
             "Subject": "Consumo de reservas",
-            "Message": "Las reservas han disminuido de {VAL}"
+            "Message": "La pérdida de reservas excede {VAL}"
         }
     },
 
@@ -191,6 +223,22 @@ export const NOTIF_CODE = {
         }
     },
 
+    "312": {
+        "icon": "Wlim",
+        "FR": {
+            "Subject": "Poids limite dépassé",
+            "Message": "Le poids de votre ruche dépasse {VAL}"
+        },
+        "EN": {
+            "Subject": "Weight limit exceeded",
+            "Message": "The weight of your hive exceeds {VAL}"
+        },
+        "ES": {
+            "Subject": "Límite de peso excedido",
+            "Message": "El peso de su colmena excede {VAL}"
+        }
+    },
+
     "321": {
         "icon": "Swarm",
         "FR": {
@@ -211,68 +259,175 @@ export const NOTIF_CODE = {
         "icon": "Rswarm",
         "FR": {
             "Subject": "Risque d'essaimage",
-            "Message": "Le risque d'essaimage sera fort"
+            "Message": "Journée d'essaimages attendue"
         },
         "EN": {
             "Subject": "Swarm risk",
-            "Message": "The risk of swarm will be high"
+            "Message": "Swarming day expected"
         },
         "ES": {
             "Subject": "Riesgo de enjambrazón",
-            "Message": "El riesgo de enjambrazón será alto"
+            "Message": "Día de enjambrazón previsto"
         }
     },
 
-    "401": {
-        "icon": "LowBattery",
+    "323": {
+        "icon": "Super+",
+        "FR": {
+            "Subject": "Ajout d'une hausse",
+            "Message": "Vous avez ajouté une hausse"
+        },
+        "EN": {
+            "Subject": "Adding a super",
+            "Message": "You added a super"
+        },
+        "ES": {
+            "Subject": "Añadiendo una alza",
+            "Message": "Añadiste una alza"
+        }
+    },
+
+    "324": {
+        "icon": "Super-",
+        "FR": {
+            "Subject": "Retrait d'une hausse",
+            "Message": "Vous avez retiré une hausse"
+        },
+        "EN": {
+            "Subject": "Removing a super",
+            "Message": "You removed a super"
+        },
+        "ES": {
+            "Subject": "Supresión de una alza",
+            "Message": "Retiraste una alza"
+        }
+    },
+
+
+    "401a": {
+        "icon": "LowBatteryT",
         "FR": {
             "Subject": "Batterie faible",
-            "Message": "Remplacer la batterie de {REF}"
+            "Message": "Remplacer la batterie de "
         },
         "EN": {
             "Subject": "Low battery",
-            "Message": "Replace the battery of {REF}" 
+            "Message": "Replace the battery of "
         },
         "ES": {
             "Subject": "Bateria baja",
-            "Message": "Cambiar la bateria de {REF}" 
+            "Message": "Cambiar la bateria de "
         }
     },
-
-    "402": {
-        "icon": "DConnect",
+​
+    "401b": {
+        "icon": "LowBatteryW",
+        "FR": {
+            "Subject": "Batterie faible",
+            "Message": "Remplacer la batterie de "
+        },
+        "EN": {
+            "Subject": "Low battery",
+            "Message": "Replace the battery of "
+        },
+        "ES": {
+            "Subject": "Bateria baja",
+            "Message": "Cambiar la bateria de "
+        }
+    },
+​
+​
+    "402a": {
+        "icon": "DConnectT",
         "FR": {
             "Subject": "Déconnexion",
-            "Message": "{REF} déconnecté depuis {PERIOD}",
+            "Message": "{REF} déconnecté depuis {DATE}",
             "Unit": " jours"
         },
         "EN": {
-            "Subject": "Disconnection",
-            "Message": "{REF} disconnected since {PERIOD}",
+            "Subject": "Device disconnect",
+            "Message": "{REF} disconnected since {DATE}",
             "Unit": " days"
         },
         "ES": {
             "Subject": "Desconexión",
-            "Message": "{REF} desconectado desde {PERIOD}",
+            "Message": "{REF} desconectado desde {DATE}",
             "Unit": " días"
         }
     },
-
-    "403": {
-        "icon": "DConnect",
+​
+    "402b": {
+        "icon": "DConnectW",
+        "FR": {
+            "Subject": "Déconnexion",
+            "Message": "{REF} déconnecté depuis {DATE}",
+            "Unit": " jours"
+        },
+        "EN": {
+            "Subject": "Device disconnect",
+            "Message": "{REF} disconnected since {DATE}",
+            "Unit": " days"
+        },
+        "ES": {
+            "Subject": "Desconexión",
+            "Message": "{REF} desconectado desde {DATE}",
+            "Unit": " días"
+        }
+    },
+​
+    "402c": {
+        "icon": "DConnectH",
+        "FR": {
+            "Subject": "Déconnexion",
+            "Message": "{REF} déconnecté depuis {DATE}",
+            "Unit": " jours"
+        },
+        "EN": {
+            "Subject": "Device disconnect",
+            "Message": "{REF} disconnected since {DATE}",
+            "Unit": " days"
+        },
+        "ES": {
+            "Subject": "Desconexión",
+            "Message": "{REF} desconectado desde {DATE}",
+            "Unit": " días"
+        }
+    },
+​
+    "403a": {
+        "icon": "PoorSignalT",
         "FR": {
             "Subject": "Mauvais signal",
-            "Message": "{REF} mauvais signal depuis {PERIOD}",
+            "Message": "{REF} mauvais signal depuis {DATE}",
             "Unit": " jours"
         },
         "EN": {
             "Subject": "Poor signal",
-            "Message": "{REF} poor signal since {PERIOD}",
+            "Message": "{REF} poor signal since {DATE}",
             "Unit": " days"
         },
         "ES": {
             "Subject": "Señal deficiente",
-            "Message": "{REF} señal deficiente desde {PERIOD}",
+            "Message": " señal deficiente desde {DATE}",
+            "Unit": " días"
+        }
+    },
+​
+    "403b": {
+        "icon": "PoorSignalW",
+        "FR": {
+            "Subject": "Mauvais signal",
+            "Message": "{REF} mauvais signal depuis {DATE}",
+            "Unit": " jours"
+        },
+        "EN": {
+            "Subject": "Poor signal",
+            "Message": "{REF} poor signal since {DATE}",
+            "Unit": " days"
+        },
+        "ES": {
+            "Subject": "Señal deficiente",
+            "Message": "{REF} señal deficiente desde {DATE}",
             "Unit": " días"
         }
     },
@@ -289,7 +444,7 @@ export const NOTIF_CODE = {
         },
         "ES": {
             "Subject": "Sin señal de la estación meteorológica",
-            "Message": "Error de transmision de datos desde  {DATE}"
+            "Message": "Error de transmision de datos desde {DATE}"
         }
     },
 
@@ -297,15 +452,31 @@ export const NOTIF_CODE = {
         "icon": "Stolen",
         "FR": {
             "Subject": "Ruche volée",
-            "Message": "Suspicion de vol, le poids de votre ruche est anormalement faible"
+            "Message": "Le poids de votre ruche est anormalement faible"
         },
         "EN": {
             "Subject": "Stolen hive",
-            "Message": "Suspected of theft, the weight of your hive is abnormally low"
+            "Message": "The weight of your hive is abnormally low"
         },
         "ES": {
             "Subject": "Colmena robada",
-            "Message": "Sospecha de robo, el peso de tu colmena es anormalmente bajo."
+            "Message": "El peso de tu colmena es anormalmente bajo"
+        }
+    },
+    
+    "406": {
+        "icon": "Dead",
+        "FR": {
+            "Subject": "Ruche morte",
+            "Message": "Votre ruche a été détectée morte"
+        },
+        "EN": {
+            "Subject": "Dead hive",
+            "Message": "Your hive has been detected dead"
+        },
+        "ES": {
+            "Subject": "Colmena muerta",
+            "Message": "Tu colmena ha sido detectada muerta"
         }
     }
 

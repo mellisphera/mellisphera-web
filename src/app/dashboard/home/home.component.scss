@@ -43,7 +43,16 @@ li:first-child img{
 }
 
 // center buttons
-
+.hub-info{
+  position: absolute;
+  text-align: center;
+  width: 10%;
+  left: 3px;
+  bottom: 5px;
+}
+.hub-info .ruche{
+  color: white;
+}
 .button {
   padding: 6px 12px;
   text-align: center;
@@ -125,7 +134,12 @@ li:first-child img{
   margin-left: 13px;
 }
 // FOR A CELLPHONE SIZE
-
+#print{
+  margin-right: 5px;
+}
+#print .fa{
+  font-size: 30px;
+}
 // PICTURE
 #cadre {
   margin: 0px;
@@ -140,6 +154,7 @@ li:first-child img{
 .infoToolip{
   position: absolute;
   right: 5px;
+  font-size: 15px !important;
   bottom: 3px;
   color: #4F4F51;
 }
@@ -178,6 +193,12 @@ li:first-child img{
     margin : 0px;
     margin-left:50%;
     margin-top: 20px;
+  }
+}
+@media print{
+  li {
+    font-size: 18px;
+    padding: 5px;
   }
 }
 
@@ -288,8 +309,8 @@ li:first-child img{
 
 .hive-info:hover{
   cursor: pointer;
-  background-color: white;
-  color: #4F4F51; 
+  //background-color: white;
+  //color: #4F4F51; 
 }
 
 .weightIncome{
@@ -830,6 +851,22 @@ li:first-child img{
   margin: 0px !important;
 }
 @media (max-width: 770px) {
+  .btn-picture{
+    width: 30px;
+  }
+  .btn-picture .fa{
+    font-size: 20px !important;
+    width: 27px !important;
+    margin-right: 5px !important;
+  }
+  #locked .fa{
+    font-size: 28px;
+    margin-right: 0px;
+  }
+  .infoToolip i{
+    width: 28px;
+    font-size: 20px !important;
+  }
   .navbar{
     height: 100px;
   }

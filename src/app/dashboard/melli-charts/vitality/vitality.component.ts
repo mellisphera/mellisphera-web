@@ -54,7 +54,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
             },
             toolbox: {
               show: true,
-              right: '2%',
+              right: 2,
             }
           }
         },
@@ -63,10 +63,10 @@ export class VitalityComponent implements OnInit, OnDestroy {
             maxWidth: 1100,
           },
           option: {// 这里写此规则满足下的option
-            toolbox: {
+/*             toolbox: {
               show: true,
               right: -20,
-            }
+            } */
           }
         },
         {
@@ -185,7 +185,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
   loadAllHiveAfterRangeChange(next: Function): void {
     const obs = this.stackService.getHiveSelect().map(_hive => {
-      return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodByHive(_hive._id, this.melliDateService.getRangeForReqest())}
+      return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodOldMethod(_hive._id, this.melliDateService.getRangeForReqest())}
     });
     Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
       _broods => {
@@ -218,7 +218,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
    */
   loadDataByHive(hive: RucheInterface): void {
     this.stackService.getBroodChartInstance().showLoading();
-    this.dailyThService.getBroodByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+    this.dailyThService.getBroodOldMethod(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
       _brood => {
         this.getSerieByData(_brood, hive.name, (serieComplete: any) => {
           serieComplete.itemStyle = {

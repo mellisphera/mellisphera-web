@@ -79,7 +79,7 @@ export class HourlyManagerService {
     });
   }
   getChartWeight(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.recordService.getWeightByHive(hiveId, range).subscribe(
+    this.recordService.getWeightByHive(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       (_weight: any) => {
         let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
@@ -114,7 +114,7 @@ export class HourlyManagerService {
 
 
   getChartTempInt(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.recordService.getTempIntByHive(hiveId, range).subscribe(
+    this.recordService.getTempIntByHive(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _temp => {
         let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
@@ -146,7 +146,7 @@ export class HourlyManagerService {
   }
 
   getChartTempExt(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.recordService.getTempExtByHive(hiveId, range).subscribe(
+    this.recordService.getTempExtByHive(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _temp_ext => {
         let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {
@@ -266,7 +266,7 @@ export class HourlyManagerService {
   }
 
   getChartBatExt(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.recordService.getBatExtByHive(hiveId, range).subscribe(
+    this.recordService.getBatExtByHive(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _batExt => {
         let option = Object.assign({}, this.baseOpions);
         if (rangeChange) {

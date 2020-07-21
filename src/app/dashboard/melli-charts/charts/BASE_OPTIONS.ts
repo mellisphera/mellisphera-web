@@ -30,8 +30,8 @@ export const BASE_OPTIONS = {
         },
         toolbox: {
             orient: 'vertical',
-            itemSize: 20,
-            right: '2%',
+            itemSize: 18,
+            left: 'right',
             top: 50,
             feature: {
                 dataZoom: {
@@ -104,24 +104,14 @@ export const BASE_OPTIONS = {
     baseOptionDailyMelliCharts: {
         // visualMap: {},
         legend: {
+            show: true,
+            data: [],
+            bottom: 50
         },
-/*         title:{
-            text: 'toto',
-            left: 'center'
-        }, */
         axisPointer: {
             link: { xAxisIndex: 'all' }
         },
-/*         toolbox: {
-            orient: 'vertical',
-            itemSize: 20,
-            feature: {
-                dataView: { readOnly: false },
-                saveAsImage: {}
-            }
-        }, */
         calendar: CALENDAR.calendarMelliChart,
-        graphic:[]
     },
 
     yAxis: {
@@ -147,7 +137,6 @@ export const BASE_OPTIONS = {
     legend: {
         orient: 'horizontal',
         data: [],
-        top: 15,
         selectedMode: 'multiple'
     },
     xAxis: {
@@ -202,13 +191,13 @@ export const BASE_OPTIONS = {
             { 
                 x: '3%', 
                 y: '2%', 
-                width: '90%',
+                width: '85%',
                 left: '6%',
-                height: '25%', 
+                height: '35%', 
                 background: 'white'
             },
-             { x: '3%', y: '31%', left: '6%', width: '90%', height: '25%', background: 'white' },
-             { x: '3%', y: '60%', left: '6%', width: '90%', height: '30%', background: 'white' }
+             { x: '3%', y: '41%', left: '6%', width: '85%', height: '25%', background: 'white' },
+             { x: '3%', y: '70%', left: '6%', width: '85%', height: '20%', background: 'white' }
         ],
         dataZoom: [
               {

@@ -62,12 +62,12 @@ hr
     width: 50%;
 }
 .calendar{
-    height: 270px;
+    height: 280px;
     position: relative;
 }
 .infoToolip{
     position: absolute;
-    right: 15px;
+    right: 40px;
     bottom: 4px;
 }
 
@@ -104,10 +104,13 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : landscape) {
     .calendar{
-        height: 230px;
+        height: 280px;
     }
     #general{
         width: 300px;
+    }
+    .infoToolip{
+        right: 10px;
     }
 }
 
@@ -118,7 +121,7 @@ and (max-device-width : 1024px)
 and (orientation : portrait) {
     .calendar{
         height: 310px;
-    }
+    }   
     
 }
 

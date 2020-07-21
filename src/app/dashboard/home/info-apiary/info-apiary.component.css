@@ -65,6 +65,11 @@ hr
 }
 
 /* MEDIA WIDTH */
+@media (max-width : 1100px){
+    .infoToolip {
+        right: 55px;
+    }
+}
 
 @media (max-width : 990px){
    #apiaryLeft{
@@ -77,7 +82,7 @@ hr
     width: 100%;
     }
     #apiaryAlerts{
-    height: 280px;
+    height: 340px;
     }
 
    #states{

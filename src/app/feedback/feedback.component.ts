@@ -57,7 +57,11 @@ export class FeedbackComponent implements OnInit {
     }
   }
   send() {
-    const body = { 'text': this.userService.getUser() + ' : ' + this.feedbackForm.value.comment};
+    let comment = this.feedbackForm.value.comment;
+    if (this.userService.getEmail()) {
+      comment += '\n\n email: ' + this.userService.getEmail();
+    }
+    const body = { 'text': this.userService.getUser() + ' : ' + comment};
     this.httpClient.post(this.urlSlack, JSON.stringify(body)).subscribe();
     if(this.translateService.currentLang === 'fr'){
       this.notify.notify('success', 'Commentaire envoyé');

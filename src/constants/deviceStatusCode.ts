@@ -2,13 +2,13 @@ export const DEVICE_STATUS_CODE = {
     "R": {
         "color": "Red",
         "FR": {
-            "Message": "Capteur déconnecté, pas de signal"
+            "Message": "Capteur déconnecté"
         },
         "EN": {
-            "Message": "Sensor disconnected, no signal"
+            "Message": "Sensor disconnected"
         },
         "ES": {
-            "Message": "Sensor desconectado, sin señal"
+            "Message": "Sensor desconectado"
         }
 	},
 	

@@ -4,7 +4,7 @@ import { Fitness } from '../../../_model/fitness';
 import { Observable } from 'rxjs';
 import { CONFIG } from '../../../../constants/config';
 import { TranslateService } from '@ngx-translate/core';
-import { FITNESS_CODE } from '../../../../constants/fitnessCOde';
+import { FITNESS_CODE } from '../../../../constants/fitnessCode';
 
 @Injectable({
   providedIn: 'root'

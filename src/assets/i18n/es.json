@@ -3,7 +3,7 @@
         "SIGN_IN": {
             "DENIED": "Acceso denegado ",
             "SUBMIT": "conexion",
-            "SIGN_UP_LINK": "crear cuenta"
+            "SIGN_UP_LINK": "crear cuenta MyBroodminder"
         },
         "SIGN_UP": {}
     },
@@ -80,7 +80,7 @@
         "DELETE_APIARY2": "Suprimir colmenar",
         "DELETE_ASK": "Suprimir el colmenar?",
         "ACCOUNT": {
-            "PREFERENCES": "Ajustes",
+            "PREFERENCES": "Preferencias",
             "LOG_OUT": "Desconexion"
         },
         "CRUD": {
@@ -124,7 +124,9 @@
         "APIARY": "Colmenar",
         "HIVES": "Colmenas",
         "DATA": "Explorar",
-        "ALERT_CONF": "Alertas "
+        "ALERT_CONF": "Alertas ",
+        "USERGUIDE": "Guia Usuario"
+
     },
     "PREFERENCE_CONFIG": {
         "TITLE_PASSWORD": "Modificar la contasena",
@@ -158,6 +160,7 @@
         "PLACEMENTMODE": "Put the hives in 'displacement' mode",
         "CLICKMODE": "Put the hives in 'click' mode",
         "MANAGE": "Manage",
+        "PRINT": "Imprima una lista de sus colmenas",
         "WARNING": "Warning! ",
         "NAVBAR": {
             "ALERTS": "Alertas",
@@ -456,7 +459,7 @@
             "HIVE": "Colmena",
             "CONF": {
                 "TITLE": "Configurar",
-                "MAIL": "Enviar alertas por correo electrónico   :",
+                "MAIL": "Enviar alertas por correo electrónico:",
                 "FREQUENCY": "Enviar cada",
                 "DAILY": "día",
                 "WEEKLY": "semana",
@@ -504,7 +507,10 @@
             "EMAIL": "Email MyBroodMinder",
             "PASSWORD": "Contraseña de MyBroodMinder",
             "CONNECTION": "Conexión",
-            "ERR": "No te puedes conectar"
+            "ERR": "No te puedes conectar",
+            "TRY_MS": "Cuenta Démo",
+            "MAIL_SUBJECT": "Problema de conexión"
+
         }
     }
 }

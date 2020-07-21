@@ -16,6 +16,11 @@ nav section{
 #loginGroup{
   width: 30%;
 }
+.btnTest{
+  background-color: #4f4f51;
+  width: 200px;
+  color: white;
+}
 #text {
   width: 68%;
   padding: 10px;

@@ -29,6 +29,7 @@ import { FitnessService } from './service/api/fitness.service';
 import { DeviceStatusService } from './service/api/device-status.service';
 import { CapteurService } from './service/api/capteur.service';
 import { BehaviorSubject } from 'rxjs';
+import { HubService } from './service/api/hub.service';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -64,6 +65,7 @@ export class DashboardComponent implements OnInit {
     private myNotifierService: MyNotifierService,
     private routingHistory: RoutingHistoryService,
     private fitnessService: FitnessService,
+    private hubService: HubService,
     private deviceStatusService: DeviceStatusService,
     private messagesService : MessagesService,
     private capteurService: CapteurService,
@@ -85,6 +87,7 @@ export class DashboardComponent implements OnInit {
     this.capteurService.getUserCapteurs();
     this.fitnessService.callRequest(this.userService.getIdUserLoged());
     this.routingHistory.loadRouting();
+    this.hubService.callRequest(this.userService.getIdUserLoged());
   }
 
   ngOnInit() {

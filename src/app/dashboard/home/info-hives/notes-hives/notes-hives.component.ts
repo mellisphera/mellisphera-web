@@ -127,7 +127,12 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.ObservationForm.reset();
       this.observationService.createObservation(this.newObs).subscribe((obs) => {
         this.observationService.observationsHive.push(obs);
-      }, () => { }, () => {
+
+      }, (_err) => {
+        if (_err.error_code === 403) {
+          this.observationService.observationsHive.push(this.newObs);
+        }
+      }, () => {
         this.observationService.emitHiveSubject();
         this.initForm();
         if (this.translateService.currentLang === 'fr'){
@@ -195,7 +200,12 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.newObs.typeInspect = formValue.type;
       const index = this.observationService.observationsHive.indexOf(this.newObs);
       // this.initForm();
-      this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
+      this.observationService.updateObservation(this.newObs).subscribe(() => { }, 
+      (_err) => {
+        if (_err.error_code === 403) {
+          this.observationService.observationsHive[index] = this.newObs;
+        }
+      }, () => {
         this.observationService.observationsHive[index] = this.newObs;
         this.observationService.emitHiveSubject();
         if (this.translateService.currentLang === 'fr') {
@@ -218,7 +228,12 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.newObs.typeInspect = formValue.type;
       const index = this.observationService.observationsHive.indexOf(this.newObs);
       document.getElementById('editObservationModal').style.display = 'none';
-      this.observationService.deleteObservation(this.newObs._id).subscribe(() => { }, () => { }, () => {
+      this.observationService.deleteObservation(this.newObs._id).subscribe(() => { }, 
+      (_err) => {
+        if (_err.error_code === 403) {
+          this.observationService.observationsHive.splice(index, 1);
+        }
+      }, () => {
         this.observationService.observationsHive.splice(index, 1);
         this.observationService.emitHiveSubject();
         if (this.translateService.currentLang === 'fr') {

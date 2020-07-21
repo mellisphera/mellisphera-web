@@ -24,6 +24,7 @@ import { UnitService } from '../unit.service';
 import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 import { RucherService } from './rucher.service';
 import { TranslateService } from '@ngx-translate/core';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class DailyRecordService {
@@ -42,7 +43,13 @@ export class DailyRecordService {
     public mergeOptionTint: any;
     public mergeOptionHint: any;
     private unitSystem: string;
-    public mergeOptionCalendarHealth: any;
+    public mergeOptionCalendarHealth: {
+        series: Array<any>,
+        legend: {
+            show: boolean,
+            data: Array<string>
+        }
+    };
 
     constructor(private http: HttpClient,
         private user: UserloggedService,
@@ -63,6 +70,13 @@ export class DailyRecordService {
         this.dailyRecordsDayD3D7[0] = [];
         this.dailyRecordsDayD3D7[1] = [];
         this.dailyRecordsDayD3D7[2] = [];
+        this.mergeOptionCalendarHealth = {
+            series: [],
+            legend: {
+                show: true,
+                data: []
+            }
+        };
         if (this.user.getUser()) {
             this.getDailyRecThByApiary(window.localStorage.getItem('currentApiary'));
 
@@ -87,6 +101,7 @@ export class DailyRecordService {
         })
             .subscribe(
                 (data) => {
+                    console.log(data);
                     this.dailyRecordsGraph = data;
                     this.updateMerge();
                 },
@@ -130,24 +145,11 @@ export class DailyRecordService {
      * @memberof DailyRecordService
      */
     public updateMerge(): void {
-        this.mergeOptionCalendarHealth = {
+/*         this.mergeOptionCalendarHealth = {
             series: {
                 data: this.arrayHealth
             },
-            visualMap: {
-                calculable: true,
-                min: 0,
-                max: 100,
-                orient: 'horizontal',
-                left: 'center',
-                top: 30,
-                itemWidth: 15,
-                itemSymbol: 'diamond',
-                inRange: {
-                    color: ['red', 'yellow', '#129001'],
-                },
-            },
-        };
+        }; */
         this.mergeOptionTint = {
             series: {
                 type: 'heatmap',
@@ -230,6 +232,7 @@ export class DailyRecordService {
         this.dailyRecTabObs = this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + apiaryId, tabDate);
         this.dailyRecTabObs.subscribe(
             (data) => {
+                console.log(data);
                 if (data[0] != null) {
                     this.dailyRecords = data;
 
@@ -387,10 +390,17 @@ export class DailyRecordService {
      * @param hiveId 
      * @param range 
      */
-    public getTempIntMaxByHive(hiveId: string, range: Date[]): Observable<any[]> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMax/' + hiveId, range).map(_elt => _elt.map(_value => {
-            return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef};
-        }));
+    public getTempIntMaxByHive(hiveId: string, range: Date[], unit: string): Observable<any[]> {
+        return this.http.get<any[]>(CONFIG.URL + `dailyRecordsTH/tMax/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`).pipe(
+            map((_elt) => {
+              _elt.forEach(_x => {
+                return _x.values.map(_val => {
+                  _val.temp_int_max = _val.temp_int_max !== NaN ? this.unitService.convertTempFromUsePref(_val.temp_int_max, unit): null;
+                });
+              });
+              return _elt;
+            })
+          );
     }
     /**
      * 
@@ -398,7 +408,7 @@ export class DailyRecordService {
      * @param range 
      */
     public getHintByHive(hiveId: string, range: Date[]): Observable<any> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/hInt/' + hiveId, range);
+        return this.http.get<any[]>(CONFIG.URL + `dailyRecordsTH/hInt/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`)
     }
 
     /**
@@ -407,7 +417,11 @@ export class DailyRecordService {
      * @param range 
      */
     public getBroodByHive(hiveId: string, range: Date[]): Observable<any[]> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/brood/' + hiveId, range);
+        return this.http.get<any[]>(CONFIG.URL + `dailyRecordsTH/brood/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`);
+    }
+
+    public getBroodOldMethod(hiveId: string, range: Date[]): Observable<any[]>{
+        return this.http.post<any[]>(CONFIG.URL + `dailyRecordsTH/brood/old/${hiveId}`, range);
     }
 
     /**
@@ -415,10 +429,17 @@ export class DailyRecordService {
      * @param hiveId 
      * @param range 
      */
-    public getTminByHive(hiveId: string, range: Date[]): Observable<any[]> {
-        return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsTH/tMin/' + hiveId, range).map(_elt => _elt.map(_value => {
-            return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef};
-        }));
+    public getTminByHive(hiveId: string, range: Date[], unit): Observable<any[]> {
+        return this.http.get<any[]>(CONFIG.URL + `dailyRecordsTH/tMin/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`).pipe(
+            map((_elt) => {
+              _elt.forEach(_x => {
+                return _x.values.map(_val => {
+                  _val.temp_int_min = _val.temp_int_min !== NaN ? this.unitService.convertTempFromUsePref(_val.temp_int_min, unit): null;
+                });
+              });
+              return _elt;
+            })
+          );
     }
 
 

@@ -32,6 +32,7 @@ import { AlertsHiveComponent } from './info-hives/alerts-hive/alerts-hive.compon
 import { InfoApiaryComponent } from './info-apiary/info-apiary.component';
 import { AlertsService } from '../service/api/alerts.service';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
+import {NgxPrintModule} from 'ngx-print';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { GraphGlobal } from '../graph-echarts/GlobalGraph';
     ReactiveFormsModule,
     SharedModule,
     ngfModule,
+    NgxPrintModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger' // set defaults here
     }),

@@ -33,7 +33,6 @@ import { AdminService } from '../../admin/service/admin.service';
 export class StackComponent implements OnInit {
 
   public options: any;
-  private subjectSeriesComplete: BehaviorSubject<number>;
   private valueSubjectComplete: number;
   private gridIndex: Array<number>;
   constructor(private unitService: UnitService,
@@ -61,7 +60,6 @@ export class StackComponent implements OnInit {
     this.valueSubjectComplete = 0;
     this.options.xAxis = [];
     this.gridIndex = [1, 1, 0, 2];
-    this.subjectSeriesComplete = new BehaviorSubject(0);
     //log(this.options);
     /*     if (this.stackService.getEchartInstance() === null) {
           this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
@@ -89,16 +87,15 @@ export class StackComponent implements OnInit {
    * @memberof StackComponent
    */
   setOptionForStackChart(): void {
-
-    let yAxisWeight = Object.assign({}, BASE_OPTIONS.yAxis);
+    let yAxisWeight = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis));
     yAxisWeight.name = this.graphGlobal.weight.name;
     yAxisWeight.min = this.graphGlobal.weight.min;
     yAxisWeight.max = this.graphGlobal.weight.max;
-    yAxisWeight.gridIndex = 0;
+    yAxisWeight.gridIndex = 1;
     this.options.yAxis.push(yAxisWeight);
 
-    let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
-    xAxis.gridIndex = 0;
+    let xAxis = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
+    xAxis.gridIndex = 1;
     xAxis.max = this.melliDate.getRangeForReqest()[1];
     xAxis.min = this.melliDate.getRangeForReqest()[0];
     xAxis.axisLabel.formatter = (value: number, index: number) => {
@@ -107,15 +104,15 @@ export class StackComponent implements OnInit {
     this.options.xAxis.push(xAxis);
 
 
-    let yAxisTemp = Object.assign({}, BASE_OPTIONS.yAxis);
+    let yAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis));
     yAxisTemp.name = this.graphGlobal.temp.name;
     yAxisTemp.min = this.graphGlobal.temp.min;
     yAxisTemp.max = this.graphGlobal.temp.max;
-    yAxisTemp.gridIndex = 1;
+    yAxisTemp.gridIndex = 0;
     this.options.yAxis.push(yAxisTemp);
 
-    let xAxisTemp = Object.assign({}, BASE_OPTIONS.xAxis);
-    xAxisTemp.gridIndex = 1;
+    let xAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
+    xAxisTemp.gridIndex = 0;
     xAxis.max = this.melliDate.getRangeForReqest()[1];
     xAxis.min = this.melliDate.getRangeForReqest()[0];
 
@@ -125,7 +122,7 @@ export class StackComponent implements OnInit {
     this.options.xAxis.push(xAxisTemp);
 
 
-    let yAxisHum = Object.assign({}, BASE_OPTIONS.yAxis);
+    let yAxisHum = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis));
     yAxisHum.name = this.graphGlobal.humidity.name;
     yAxisHum.min = this.graphGlobal.humidity.min;
     yAxisHum.gridIndex = 2;
@@ -142,16 +139,18 @@ export class StackComponent implements OnInit {
     };
     this.options.xAxis.push(xAxisHum);
 
-    let serieMarkTemp = Object.assign({}, SERIES.serieMarkTemp);
+    let serieMarkTemp = JSON.parse(JSON.stringify(SERIES.serieMarkTemp));
+    console.log(serieMarkTemp);
     serieMarkTemp.yAxisIndex = 1;
     serieMarkTemp.xAxisIndex = 1;
     serieMarkTemp.markArea.data[0][0].yAxis = this.userPrefService.getUserPref().unitSystem === 'METRIC' ? 32 : 90;
     serieMarkTemp.markArea.data[0][1].yAxis = this.userPrefService.getUserPref().unitSystem === 'METRIC' ? 37 : 99;
     serieMarkTemp.markArea.data[0][0].name = this.graphGlobal.getNameZoneByGraph('TEMP');
+    console.log(serieMarkTemp);
     this.options.series.push(serieMarkTemp);
 
 
-    let serieMarkHum = Object.assign({}, SERIES.serieMarkHint);
+    let serieMarkHum = JSON.parse(JSON.stringify(SERIES.serieMarkHint));
     serieMarkHum.yAxisIndex = 2;
     serieMarkHum.xAxisIndex = 2;
     serieMarkHum.markArea.data[0][0].yAxis = 50;
@@ -170,6 +169,7 @@ export class StackComponent implements OnInit {
         ));
       }).join('');
     }
+    console.log(this.options);
     this.stackService.getEchartInstance().setOption(this.options);
   }
 
@@ -198,13 +198,13 @@ export class StackComponent implements OnInit {
       return [
         { hive: _hive, 
           name: _hive.name + ' / TempExt',
-          obs: this.recordService.getTempExtByHive(_hive._id, this.melliDate.getRangeForReqest()) },
+          obs: this.recordService.getTempExtByHive(_hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
         { hive: _hive, 
           name: _hive.name + ' / TempInt',
-          obs: this.recordService.getTempIntByHive(_hive._id, this.melliDate.getRangeForReqest()) },
+          obs: this.recordService.getTempIntByHive(_hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
         { hive: _hive, 
           name: _hive.name + ' / Weight',
-          obs: this.recordService.getWeightByHive(_hive._id, this.melliDate.getRangeForReqest()) },
+          obs: this.recordService.getWeightByHive(_hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
         { hive: _hive, 
           name: _hive.name + ' / Hint',
           obs: this.recordService.getHintIntByHive(_hive._id, this.melliDate.getRangeForReqest()) }
@@ -249,11 +249,11 @@ export class StackComponent implements OnInit {
     this.stackService.getEchartInstance().showLoading();
     const obsArray: Array<any> = [
       { name: hive.name + ' / TempExt',
-      obs: this.recordService.getTempExtByHive(hive._id, this.melliDate.getRangeForReqest()) },
+      obs: this.recordService.getTempExtByHive(hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
       { name: hive.name + ' / TempInt',
-      obs: this.recordService.getTempIntByHive(hive._id, this.melliDate.getRangeForReqest()) },
+      obs: this.recordService.getTempIntByHive(hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
       { name: hive.name + ' / Weight',
-      obs: this.recordService.getWeightByHive(hive._id, this.melliDate.getRangeForReqest()) },
+      obs: this.recordService.getWeightByHive(hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
       { name: hive.name + ' / Hint',
       obs: this.recordService.getHintIntByHive(hive._id, this.melliDate.getRangeForReqest()) }
     ];
@@ -261,7 +261,6 @@ export class StackComponent implements OnInit {
       _record => {
         _record.forEach((_elt, index) => {
           this.getSerieByData(_elt, obsArray[index].name, (serieComplete) => {
-            console.timeEnd('someFunction');
             serieComplete.yAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
             serieComplete.xAxisIndex = this.getIndexGridByIndex(obsArray[index].name);
             serieComplete.itemStyle = {
@@ -321,7 +320,6 @@ export class StackComponent implements OnInit {
   }
 
   getSerieByData(data: any, nameSerie: string, next: Function): void {
-    console.time('someFunction');
     let sensorRef: Array<string> = [];
     data.forEach(_data => {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
@@ -388,7 +386,6 @@ export class StackComponent implements OnInit {
     /*     this.stackService.cleanSlectedHives();
         this.options.series = [];
         this.stackService.cleanSerieFromEchartInstance(this.stackService.getEchartInstance()); */
-        this.subjectSeriesComplete.unsubscribe();
   }
 
 }
