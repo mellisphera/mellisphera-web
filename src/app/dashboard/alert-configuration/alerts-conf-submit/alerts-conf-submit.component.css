@@ -1,3 +1,6 @@
+div {
+    color: #4F4F51;
+}
 #dayValue{
     display: inline-block !important;
     width: 60px !important;
@@ -35,7 +38,9 @@ input[type='email'] {
     right: 10px;
     bottom: 10px;
 }
-
+/* #infoAlert{
+    color: red;
+} */
 .btn-default.btn-on.active{background-color: #5BB75B;color: white;}
 .btn-default.btn-off.active{background-color: #DA4F49;color: white;}
 

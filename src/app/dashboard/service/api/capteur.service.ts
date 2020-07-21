@@ -116,7 +116,6 @@ export class CapteurService {
 
     getUserCapteurs() {
         this.capteursObs = this.http.get<CapteurInterface[]>(CONFIG.URL + 'sensors/' + this.user.getJwtReponse().idUser);
-        console.log(this.user.getJwtReponse().idUser);
         this.capteursObs.subscribe(
             (data) => {
                 this.capteursByUser = data;

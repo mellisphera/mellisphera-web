@@ -3,7 +3,7 @@
         "SIGN_IN": {
             "DENIED": "Accès refusé",
             "SUBMIT": "S'identifier",
-            "SIGN_UP_LINK": "Créer un compte"
+            "SIGN_UP_LINK": "creer un compte MyBroodminder"
         },
         "SIGN_UP": {
 
@@ -126,7 +126,9 @@
         "APIARY" : "Mon Rucher",
         "HIVES" : "Ruches",
         "DATA" : "Explorer",
-        "ALERT_CONF": "Alertes"
+        "ALERT_CONF": "Alertes",
+        "USERGUIDE": "Documentation"
+
     },
     "PREFERENCE_CONFIG" : {
         "TITLE_PASSWORD" : "Changer de mot de passe",
@@ -159,6 +161,7 @@
         "CLICK" : "Cliquez sur une ruche pour plus d'informations !",
         "PLACEMENTMODE" : "Mettre les ruches en mode 'déplacement'",
         "CLICKMODE" : "Mettre les ruches en mode 'clic'",
+        "PRINT": "Imprimer un listing de vos ruches",
         "MANAGE" : "Gérer",
         "WARNING" : "Attention! ",
         "NAVBAR" : {
@@ -442,7 +445,7 @@
             "CONF": {
                 "TITLE": "Paramètres",
                 "MAIL": "Envoyer des alertes par e-mail",
-                "FREQUENCY": "Envoyez chaque",
+                "FREQUENCY": "Envoyer chaque",
                 "DAILY": "jour",
                 "WEEKLY": "semaine",
                 "DAY": "jour",
@@ -498,7 +501,9 @@
             "EMAIL": "Email MyBroodMinder",
             "PASSWORD": "Mot de passe MyBroodMinder",
             "CONNECTION": "Connexion",
-            "ERR": "Je n’arrive pas à me connecter"
+            "ERR": "Je n’arrive pas à me connecter",
+            "TRY_MS": "Compte démo",
+            "MAIL_SUBJECT": "Problème de connexion"
         }
     }
 }

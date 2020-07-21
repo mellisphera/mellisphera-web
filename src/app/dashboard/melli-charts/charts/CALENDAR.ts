@@ -53,10 +53,8 @@ export const CALENDAR = {
         }
     },
     calendarMelliChart: {
-        // height: '80%',
-        // width: '80%',
-/*         top: 200,
- */        left: 'center',
+        top: 5,
+        left: 'center',
         cellSize: [40 , 40],
         range: [
             new Date().getFullYear() + '-' + (new Date().getMonth())+ '-' + 1,
@@ -98,10 +96,11 @@ export const CALENDAR = {
         }
     },
     visualMap: {
+        show: true,
         type: '',
         min: 0,
         max: 10000,
-        top: 15,
+        bottom: 'bottom',
         pieces: [],
         calculable: true,
         inRange: {

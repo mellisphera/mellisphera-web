@@ -50,6 +50,14 @@ export class UserloggedService {
     window.localStorage.setItem('jwtReponse', JSON.stringify(auth));
   }
 
+  setEmail(email: string) :void {
+    window.localStorage.setItem('emailMs', email);
+  }
+
+  getEmail(): string {
+    return window.localStorage.getItem('emailMs');
+  }
+
   getJwtReponse(): JwtResponse {
     return JSON.parse(window.localStorage.getItem('jwtReponse'));
   }

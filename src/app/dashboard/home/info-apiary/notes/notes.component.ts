@@ -165,7 +165,12 @@ export class NotesComponent implements OnInit,AfterViewChecked {
 /*         this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
           return -(moment(a.opsDate).unix() - moment(b.opsDate).unix())
         }); */
-      }, () => { }, () => {
+      }, 
+      (_err) => {
+        if (_err.error_code === 403) {
+          this.observationService.observationsApiary.push(this.newObs);
+        }
+      }, () => {
         this.noteChange.emit(this.newObs);
         if(this.translateService.currentLang === 'fr'){
           this.notify.notify('success', 'Note créée');
@@ -192,7 +197,12 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       this.newObs.apiaryId = this.rucherService.getCurrentApiary();
       this.newObs.type = 'apiary';
       const index = this.observationService.observationsApiary.indexOf(this.newObs);
-      this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
+      this.observationService.updateObservation(this.newObs).subscribe(() => { }, 
+      (_err) => {
+        if (_err.error_code === 403) {
+          this.observationService.observationsApiary[index] = this.newObs;
+        }
+      }, () => {
         this.observationService.observationsApiary[index] = this.newObs;
         this.initForm();
         if(this.translateService.currentLang === 'fr'){
@@ -215,8 +225,13 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    */
   deleteObs() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-      this.observationService.deleteObservation(this.newObs._id).subscribe(() => { }, () => { }, () => {
-        const index = this.observationService.observationsApiary.indexOf(this.newObs);
+      const index = this.observationService.observationsApiary.indexOf(this.newObs);
+      this.observationService.deleteObservation(this.newObs._id).subscribe(() => { }, 
+      (_err) => {
+        if (_err.error_code === 403) {
+          this.observationService.observationsApiary.splice(index, 1);
+        }
+      }, () => {
         this.observationService.observationsApiary.splice(index, 1);
         this.initForm();
         if(this.translateService.currentLang === 'fr'){

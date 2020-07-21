@@ -286,156 +286,7 @@ export class RecordService {
     });
   }
 
-  /**
-   *
-   *
-   * @param {string} hiveId
-   * @returns {Observable<any>}
-   * @memberof RecordService
-   */
-  getHourlyByHive(hiveId: string): Observable<any> {
-    return this.http.post<Record[]>(CONFIG.URL + 'records/hive/' + hiveId, this.rangeHourly, httpOptions).map((records) => {
-      var sensor = [];
-      var series = [];
-      records.map(res => {
-        if (sensor.indexOf(res.sensorRef) === -1) {
-          sensor.push(res.sensorRef);
-        }
-      });
-      sensor.forEach(elt => {
-        if (elt.startsWith('41')) {
-          series.push({
-            data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
-              return {
-                name: recRes.recordDate,
-                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem, false)],
-                sensorRef: recRes.sensorRef
-              };
-            }),
-            name: 'Temp-int (' + elt + ')',
-            type: 'line',
-            showSymbol: false,
-            hoverAnimation: true,
-            yAxisIndex: 1,
-            color: 'green',
-            markArea: {
-              silent: true,
-              itemStyle: {
-                color: '#EBEBEB'
-              },
-              label: {
-                show: true
-              },
-              data: [[{
-                yAxis: this.unitSystem === 'METRIC' ? '33' : '90'
-              }, {
-                yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
-              }]]
-            },
-          });
-        } else if (elt.startsWith('42')) {
-          series.push({
-            data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
-              return {
-                name: recRes.recordDate,
-                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem)],
-                sensorRef: recRes.sensorRef
-              };
-            }),
-            name: 'Temp-int (' + elt + ')',
-            type: 'line',
-            showSymbol: false,
-            hoverAnimation: true,
-            yAxisIndex: 1,
-            color: 'red',
-            markArea: {
-              silent: true,
-              itemStyle: {
-                color: '#EBEBEB'
-              },
-              label: {
-                show: true
-              },
-              data: [[{
-                yAxis: this.unitSystem === 'METRIC' ? '33' : '90'
-              }, {
-                yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
-              }]]
-            },
-          });
-        } else if (elt.startsWith('43')) {
-          series = series.concat([
-            {
-              data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
-                return {
-                  name: recRes.recordDate,
-                  value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.weight, this.unitSystem, false)],
-                  sensorRef: recRes.sensorRef
-                };
-              }),
-              name: this.graphGlobal.getTitle("Weight") + ' (' + elt + ')',
-              type: 'line',
-              showSymbol: false,
-              hoverAnimation: true,
-              yAxisIndex: 0,
-              color: 'black'
-            },
-            {
-              name: 'Temp-ext (' + elt + ')',
-              type: 'line',
-              showSymbol: false,
-              hoverAnimation: true,
-              data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
-                return {
-                  name: recRes.recordDate,
-                  value: [recRes.recordDate, this.unitService.convertWeightFromuserPref(recRes.temp_ext, this.unitSystem, false)],
-                  sensorRef: recRes.sensorRef
-                };
-              }),
-              yAxisIndex: 1,
-              color: 'blue'
-            }
-          ]);
-        } else if (elt.startsWith('39')) {
-          series.push({
-            data: records.filter(ref => ref.sensorRef === elt).map(recRes => {
-              return {
-                name: recRes.recordDate,
-                value: [recRes.recordDate, this.unitService.convertTempFromUsePref(recRes.temp_int, this.unitSystem, false)],
-                sensorRef: recRes.sensorRef
-              };
-            }),
-            name: 'Temp-int (' + elt + ')',
-            type: 'line',
-            showSymbol: false,
-            hoverAnimation: true,
-            yAxisIndex: 1,
-            color: 'green',
-            markArea: {
-              silent: true,
-              itemStyle: {
-                color: '#ff00ff'
-              },
-              label: {
-                show: true
-              },
-              data: [[{
-                yAxis: this.unitSystem === 'METRIC' ? '33' : '90'
-              }, {
-                yAxis: this.unitSystem === 'METRIC' ? '37' : '100'
-              }]]
-            },
-          });
-        }
-      });
-      return {
-        series: series,
-        legend: {
-          data: series.map(legend => legend.name)
-        }
-      };
-    });
-  }
+  getRecordBySensor(hiveOd, range: Date[], userId, unit) {}
 
   setUnitSystem(unit: string): void {
     this.unitSystem = unit;
@@ -525,10 +376,8 @@ export class RecordService {
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getWeightByHive(hiveId: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/weight/' + hiveId, range).map(_elt => _elt.map(_value => {
-      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
-    }));
+  getWeightByHive(hiveId: string, range: Date[], unit: string): Observable<any> {
+    return this.http.get<any>(CONFIG.URL + `records/weight/${hiveId}/${range[0].getTime()}/${range[1].getTime()}/${unit}`)
   }
 
   /**
@@ -539,10 +388,8 @@ export class RecordService {
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getTempIntByHive(hiveId: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/temp_int/' + hiveId, range).map(_elt => _elt.map(_value => {
-      return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
-    }));
+  getTempIntByHive(hiveId: string, range: Date[], unit: string): Observable<any> {
+    return this.http.get<any>(CONFIG.URL +`records/temp_int/${hiveId}/${range[0].getTime()}/${range[1].getTime()}/${unit}`);
   }
 
   /**
@@ -554,7 +401,7 @@ export class RecordService {
    * @memberof RecordService
    */
   getHintIntByHive(hiveId: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/hint/' + hiveId, range);
+    return this.http.get<any>(CONFIG.URL + `records/hint/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`);
   }
 
   /**
@@ -565,10 +412,8 @@ export class RecordService {
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getTempExtByHive(hiveId: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/temp_ext/' + hiveId, range).map(_elt => _elt.map(_value => {
-      return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
-    }));
+  getTempExtByHive(hiveId: string, range: Date[], unit: string): Observable<any> {
+    return this.http.get<any>(CONFIG.URL + `records/temp_ext/${hiveId}/${range[0].getTime()}/${range[1].getTime()}/${unit}`);
   }
 
   /**
@@ -579,8 +424,8 @@ export class RecordService {
    * @returns {Observable<any>}
    * @memberof RecordService
    */
-  getBatExtByHive(hiveId: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'records/batExt/' + hiveId, range );
+  getBatExtByHive(hiveId: string, range: Date[], unit: string): Observable<any> {
+    return this.http.get<any>(CONFIG.URL + `records/batExt/${hiveId}/${range[0].getTime()}/${range[1].getTime()}/${unit}`);
   }
 
   

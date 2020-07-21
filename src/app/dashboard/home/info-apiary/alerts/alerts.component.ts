@@ -174,6 +174,7 @@ export class AlertsComponent implements OnInit {
   }
 
   loadCalendar() {
+    this.echartInstance.showLoading();
     const obs: Array<Observable<any>> = [
       this.observationService.getObservationByapiaryIdForMelliUx(this.rucherService.getCurrentApiary()),
       this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts())
@@ -258,6 +259,7 @@ export class AlertsComponent implements OnInit {
         });
         option.baseOption.series.push(this.graphGlobal.getDaySerie());
         this.echartInstance.setOption(option, true);
+        this.echartInstance.hideLoading();
         this.option = option;
       });
   }

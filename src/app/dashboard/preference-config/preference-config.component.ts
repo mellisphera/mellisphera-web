@@ -109,15 +109,19 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   }
 
   setNewPassword() {
-    this.userConfig.updatePassword(this.passwordForm.get('confirmPassword').value).subscribe(
-      () => { }, () => { }, () => {
-        if (this.translateService.currentLang === 'fr') {
-          this.notifier.notify('success', 'Mot de passe sauvegardé');
-        } else {
-          this.notifier.notify('success', 'Password saved');
-        }
+      if (this.passwordForm.valid) {
+        this.userConfig.updatePassword(this.passwordForm.get('confirmPassword').value).subscribe(
+          () => { }, () => { }, () => {
+            if (this.translateService.currentLang === 'fr') {
+              this.notifier.notify('success', 'Mot de passe sauvegardé');
+            } else if (this.translateService.currentLang === 'es') {
+              this.notifier.notify('success', 'Contraseña guardada');
+            } else {
+              this.notifier.notify('success', 'Password saved');
+            }
+          }
+        );
       }
-    )
   }
 
   saveUserPref(): void {

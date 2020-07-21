@@ -25,5 +25,4 @@ export interface DailyRecordTh {
     r_int_text : string;
 	timestamp : number;
 	brood: number;
-    //[class]="getColorStatus(i)"
 }

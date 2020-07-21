@@ -20,6 +20,7 @@ import { User } from '../../../_model/user';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { UnitService } from '../unit.service';
 import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
+import { map } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -373,10 +374,17 @@ export class DailyRecordsWService {
    * @returns {Observable<any>}
    * @memberof DailyRecordsWService
    */
-  public getTempMaxExt(hiveId: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/tMax/' + hiveId, range).map(_elt => _elt.map(_value => {
-      return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
-    }));
+  public getTempMaxExt(hiveId: string, range: Date[], unit: string): Observable<any> {
+    return this.http.get<any[]>(CONFIG.URL + `dailyRecordsW/tMax/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`).pipe(
+      map((_elt) => {
+        _elt.forEach(_x => {
+          return _x.values.map(_val => {
+            _val.temp_ext_max = _val.temp_ext_max !== NaN ? this.unitService.convertTempFromUsePref(_val.temp_ext_max, unit): null;
+          });
+        });
+        return _elt;
+      })
+    );
   }
 
   /**
@@ -387,10 +395,17 @@ export class DailyRecordsWService {
    * @returns {Observable<any>}
    * @memberof DailyRecordsWService
    */
-  public getTempMinExt(hiveId: string, range: Date[]): Observable<any> {
-    return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/tMin/' + hiveId, range).map(_elt => _elt.map(_value => {
-      return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
-    }));
+  public getTempMinExt(hiveId: string, range: Date[], unit): Observable<any> {
+    return this.http.get<any[]>(CONFIG.URL + `dailyRecordsW/tMin/${hiveId}/${range[0].getTime()}/${range[1].getTime()}`).pipe(
+      map((_elt) => {
+        _elt.forEach(_x => {
+          return _x.values.map(_val => {
+            _val.temp_ext_min = _val.temp_ext_min !== NaN ? this.unitService.convertTempFromUsePref(_val.temp_ext_min, unit): null;
+          });
+        });
+        return _elt;
+      })
+    );
   }
 
 }

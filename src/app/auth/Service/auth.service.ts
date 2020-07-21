@@ -68,6 +68,7 @@ export class AuthService {
         this.tokenService.saveToken(this.jwtReponse.accessToken);
         this.tokenService.saveAuthorities(this.jwtReponse.authorities);
         this.userService.setJwtReponse(this.jwtReponse);
+        this.userService.setEmail(this.login.email);
         this.ifLoggedIn();
         this.login.email = this.jwtReponse.email;
         this.connexionStatus.next(data);
@@ -87,13 +88,7 @@ export class AuthService {
         if (this.jwtReponse.connexions === 1) {
           this.userService.setFristConnection(true);
         }
-        if (this.tokenService.checkAuthorities('ROLE_ADMIN')) {
-            this.router.navigateByUrl('dashboard/admin');
-
-        } else {
-          this.router.navigateByUrl('dashboard/home/info-apiary');
-
-        }
+        this.router.navigateByUrl('dashboard/home/info-apiary');
       },
       (err) => {
         this.errLogin = true;

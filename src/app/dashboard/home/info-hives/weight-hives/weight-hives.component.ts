@@ -65,7 +65,7 @@ export class WeightHivesComponent {
                     }
                 },
                 legend: {
-                    top: 30,
+                    bottom: 40,
                     left: 'center',
                     data: [this.graphGlobal.getTitle('gain'), this.graphGlobal.getTitle("loss")],
                     textStyle: {
@@ -73,7 +73,7 @@ export class WeightHivesComponent {
                     }
                 },
                 calendar: [{
-                    top: 60,
+                    top: 40,
                     left: 'center',
                     //height:'auto',
                     cellSize: [40, 40],
