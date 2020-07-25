@@ -13,7 +13,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { AtokenStorageService } from './auth/Service/atoken-storage.service';
-import { TranslateService } from '@ngx-translate/core'; 
+import { TranslateService } from '@ngx-translate/core';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { LoadingService } from './dashboard/service/loading.service';
 import { AuthService } from './auth/Service/auth.service';
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
   public coloursEnabled = false;
   public config = { animationType: ngxLoadingAnimationTypes.none, primaryColour: this.primaryColour, secondaryColour: this.secondaryColour}
 
- 
+
      constructor(public location: Location,
       public router: Router,
       public tokenService: AtokenStorageService,
