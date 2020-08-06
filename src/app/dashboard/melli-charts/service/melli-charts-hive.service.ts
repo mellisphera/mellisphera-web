@@ -79,7 +79,9 @@ export class MelliChartsHiveService {
   }
 
   setHiveSelect(hive: RucheInterface) {
-    this.hiveSelectForHivePage = hive;
+    if (hive! === undefined) {
+      this.hiveSelectForHivePage = hive;
+    }
   }
 
   /**
