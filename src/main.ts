@@ -19,7 +19,9 @@ import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();
+}
 
+if (environment.debug) {
   if (window) {
     window.console.log = function() {};
   }
