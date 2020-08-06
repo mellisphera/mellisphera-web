@@ -109,6 +109,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   lastHighlightHandle: string;
 
   public maxUploadFileSize: any;
+  notifyMaxUploadFile: boolean;
 
   constructor(public dailyRecTh: DailyRecordService,
     public userService: UserloggedService,
@@ -189,7 +190,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.firstValue = true;
     this.getScreenSize();
 
-    this.maxUploadFileSize = 6291456; // 6MB
+    this.maxUploadFileSize = 5291456; // 5MB
   }
 
   receiveMessage($event) {
@@ -213,7 +214,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
         let lastNote = this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id)[noteLengh - 1];
         return {
           APIARY: this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0].name,
-          HIVE: _hive.name, 
+          HIVE: _hive.name,
           BROOD: this.dailyRecTh.getPourcentByHive(_hive._id),
           WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getWeightMaxByHive(_hive._id)),
           BATTERY: this.capteurService.getCapteursByHive(_hive._id).sort((a: CapteurInterface, b:CapteurInterface) => a.sensorRef.localeCompare(b.sensorRef)).map(_elt => _elt.sensorBat + '%').join('\n'),
@@ -273,6 +274,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     );
 
     this.initForm();
+    this.notifyMaxUploadFile = false;
   }
 
   ngAfterViewInit(): void {
@@ -294,12 +296,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
 
   changePicturePhotos(base64: string): void {
+    this.notifyMaxUploadFile = false;
     if (base64.length * (3/4) < this.maxUploadFileSize) {
       this.rucherService.rucher.photo = base64;
       this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
       this.selectPhotoApiary = null;
     } else {
-      this.notifyService.notify('warning', 'Le fichier est trop volumineux pour être téléchargé. (La taille maximale du fichier est de 6 Mo)');
+      this.notifyMaxUploadFile = true;
     }
   }
 
@@ -575,8 +578,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
    * @memberof HomeComponent
    */
   saveBackground(): void {
-    this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
-    this.dragPhotoApiary = null;
+    this.notifyMaxUploadFile = false;
+    if (this.dragPhotoApiary.size < this.maxUploadFileSize) {
+      this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
+      this.dragPhotoApiary = null;
+    } else {
+      this.notifyMaxUploadFile = true;
+    }
   }
 
   /**

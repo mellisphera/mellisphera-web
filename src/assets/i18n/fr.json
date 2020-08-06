@@ -18,7 +18,7 @@
                     "Cliquez sur chaque pastille pour accéder aux données spécifiques de la ruche.",
                     "Naviguez dans le temps avec les flèches autour de la date en haut de l'interface.",
                     "Le fitness de la ruche est calculé avec notre modèle exclusif BFit.",
-                    
+
                     "Première note de configuration :",
                     "1/déposez votre propre image ou carte du rucher.",
                     "2/ouvrez le bouton de verrouillage et placez les pastilles sur l'emplacement des ruches."],
@@ -31,7 +31,7 @@
                     "Les valeurs vont de 0% (pas de couvain) à 100% (couvain complet).",
                     "Les ruches dont le niveau de couvain est supérieur à 80% produisent du miel.",
                     "Le niveau de couvain est calculé avec notre modèle exclusif BForce."],
-                "WEIGHT_CALENDAR": ["Calendrier des poids : affiche la productivité quotidienne des ruches équipées d'une balance.", 
+                "WEIGHT_CALENDAR": ["Calendrier des poids : affiche la productivité quotidienne des ruches équipées d'une balance.",
                     "Seuls les apports et les consommations de poids sont affichés.",
                     "Les opérations de l'apiculteur comme l'alimentation ou l'ajout de hausse sont éliminées."]
             }
@@ -154,6 +154,8 @@
     },
     "HOME" : {
         "BACK" : "Sauvegarder l'image ?",
+        "MAXUPLOADNOTIFY": "Le fichier ne peut pas être téléchargé : taille maximale 5 Mo",
+        "CLOSE": "proche",
         "CHANGE" : "Sauvegarder",
         "CANCEL" : "Annuler",
         "NODATA" : "-",
@@ -413,7 +415,7 @@
             "BROOD" : ["Superposer les progressions de couvain de plusieurs ruches dans le même ou différents ruchers.",
             "En règle générale, 10% est un cadre de couvain, 40% 4 cadres, etc.",
             "Selon votre pratique et le modèle de ruche (langstroth, dadant) vous devrez ajuster ces relations.",
-                
+
             "Note importante : seules les ruches atteignant le seuil de 80% produiront du miel ! Nous espérons que vous saurez comment y parvenir."],
             "RAWDATA" : "Cet affichage est très similaire à celui auquel vous êtes déjà habitué dans MyBroodminder. Il est également possible de jouer avec différentes ruches/ruchers."
         },
