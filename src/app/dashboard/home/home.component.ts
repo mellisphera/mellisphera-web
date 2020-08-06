@@ -51,10 +51,7 @@ import { FitnessService } from '../service/api/fitness.service';
 import { DeviceStatusService } from '../service/api/device-status.service';
 import { DeviceStatus } from '../../_model/device-status';
 import { CapteurInterface } from '../../_model/capteur';
-import { HubService } from '../service/api/hub.service';
-import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
-import { isUndefined } from 'util';
-import { HiveAlertComponent } from '../alert-configuration/hive-alert/hive-alert.component';
+
 
 @Component({
   selector: 'app-home',
@@ -67,7 +64,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   private eltOnClickId: EventTarget;
   infoRuche: any = null;
   dragPhotoApiary: File;
-  public optionCsv: Object;
   selectPhotoApiary: File;
   photoBase64: string;
   username: string;
@@ -109,7 +105,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   lastHighlightHandle: string;
 
   public maxUploadFileSize: any;
-  notifyMaxUploadFile: boolean;
 
   constructor(public dailyRecTh: DailyRecordService,
     public userService: UserloggedService,
@@ -132,7 +127,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     private userConfig: UserParamsService,
     private myNotifier: MyNotifierService,
     private renderer: Renderer2,
-    public hubService: HubService,
     public deviceSatusService: DeviceStatusService,
     public alertsService: AlertsService) {
 
@@ -154,18 +148,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.position = {
       x: 0,
       y: 0
-    };
-    this.optionCsv = {
-      fieldSeparator: ',',
-      quoteStrings: '"',
-      decimalseparator: '.',
-      showLabels: true,
-      showTitle: true,
-      title: 'Your title',
-      useBom: true,
-      noDownload: false,
-      headers: ['APIARY','HIVE', 'BROOD', 'WEIGHT', 'BATTERY', 'SENSORS', 'LAST ANNOTATED INSPECTION'],
-      nullToEmptyString: false,
     };
 
     this.selectHive = {
@@ -190,7 +172,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.firstValue = true;
     this.getScreenSize();
 
-    this.maxUploadFileSize = 5291456; // 5MB
+    this.maxUploadFileSize = 6291456; // 6MB
   }
 
   receiveMessage($event) {
@@ -206,25 +188,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       return '#4F4F51';
     }
   }
-
-  exportToCsv(): void {
-    this.optionCsv['title'] = `Export Mellisphera ${this.unitService.getDailyDate(new Date())}`
-      const data = this.rucheService.ruchesAllApiary.map(_hive => {
-        let noteLengh =  this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id).length;
-        let lastNote = this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id)[noteLengh - 1];
-        return {
-          APIARY: this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0].name,
-          HIVE: _hive.name,
-          BROOD: this.dailyRecTh.getPourcentByHive(_hive._id),
-          WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getWeightMaxByHive(_hive._id)),
-          BATTERY: this.capteurService.getCapteursByHive(_hive._id).sort((a: CapteurInterface, b:CapteurInterface) => a.sensorRef.localeCompare(b.sensorRef)).map(_elt => _elt.sensorBat + '%').join('\n'),
-          SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef).sort((a: string, b:string) => a.localeCompare(b)).join('\n'),
-          NOTE: !isUndefined(lastNote) ? this.unitService.getDailyDate(lastNote.opsDate) + ' - ' + lastNote.description: '-'
-        }
-      }).sort((a, b) => a.APIARY.localeCompare(b.APIARY) || a.HIVE.localeCompare(b.HIVE));
-      new Angular5Csv(data,  `Export Mellisphera ${this.unitService.getDailyDate(new Date())}`, this.optionCsv);
-  }
-
   /**
    *
    *
@@ -238,6 +201,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     showDate.setDate(this.dailyRecTh.rangeDailyRecord.getDate() + 1);
     return this.unitService.getDailyDate(showDate.toISOString());
   }
+
   closePopup(): void {
     this.userService.setFristConnection(false);
   }
@@ -274,7 +238,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     );
 
     this.initForm();
-    this.notifyMaxUploadFile = false;
   }
 
   ngAfterViewInit(): void {
@@ -296,13 +259,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
 
   changePicturePhotos(base64: string): void {
-    this.notifyMaxUploadFile = false;
     if (base64.length * (3/4) < this.maxUploadFileSize) {
       this.rucherService.rucher.photo = base64;
       this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
       this.selectPhotoApiary = null;
     } else {
-      this.notifyMaxUploadFile = true;
+      this.notifyService.notify('warning', 'Le fichier est trop volumineux pour être téléchargé. (La taille maximale du fichier est de 6 Mo)');
     }
   }
 
@@ -416,7 +378,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
     // For the hive alerts
     this.checkIfInfoHiveComponent().then(status => {
-      this.infoHiveComponent.loadHealthCalendar();
       this.infoHiveComponent.alertsHiveComponent.initCalendar(ruche);
       if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
         this.infoHiveComponent.alertsHiveComponent.readAllHiveAlerts(ruche);
@@ -433,6 +394,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.dailyRecordWservice.getDailyRecordsWbyhiveId(ruche._id);
 
     //For the hive-health
+    this.dailyRecTh.getByhiveId(ruche._id);
 
     //For hive sensors
 /*     this.rucherService.rucheService.getHiveByUserId(this.userService.getUser()).subscribe(ruches => {
@@ -513,7 +475,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
         });
   }
 
-
   // onMove(event, ruche: RucheInterface, id:number): void {
   //   // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[0]);
   //   // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2));
@@ -540,7 +501,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   //     // document.getElementById(id.toString()).style.transform = ('translate(' + ((translateX1 - this.translateX).toString())  + 'px, ' + ((translateY1 - this.translateY).toString()) + 'px) !important');
 
   //   }
-
 
 
   onMoving(event, id: string) {
@@ -578,13 +538,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
    * @memberof HomeComponent
    */
   saveBackground(): void {
-    this.notifyMaxUploadFile = false;
-    if (this.dragPhotoApiary.size < this.maxUploadFileSize) {
-      this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
-      this.dragPhotoApiary = null;
-    } else {
-      this.notifyMaxUploadFile = true;
-    }
+    this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
+    this.dragPhotoApiary = null;
   }
 
   /**

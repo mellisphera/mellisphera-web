@@ -20,7 +20,7 @@ then
 			echo "cp vers apache $1"
 			rm -rvf "/var/www/html/$1/*"
 			cp -rRv dist/cleanversion/* "/var/www/html/$1/"
-			ln -s /mellisphera/imgClient "/var/www/html/$1/assets/client"
+			ln -s "/mellisphera/imgClient.$1" "/var/www/html/$1/assets/client"
 		else
 			echo "Verifier la compilation !"
 		fi
