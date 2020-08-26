@@ -108,6 +108,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   lastHighlightFix: string;
   lastHighlightHandle: string;
 
+  public maxUploadFileSize: any;
+  notifyMaxUploadFile: boolean;
+
   constructor(public dailyRecTh: DailyRecordService,
     public userService: UserloggedService,
     private translateService: TranslateService,
@@ -186,6 +189,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.boolDraggable = true;
     this.firstValue = true;
     this.getScreenSize();
+
+    this.maxUploadFileSize = 5291456; // 5MB
   }
 
   receiveMessage($event) {
@@ -209,7 +214,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
         let lastNote = this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id)[noteLengh - 1];
         return {
           APIARY: this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0].name,
-          HIVE: _hive.name, 
+          HIVE: _hive.name,
           BROOD: this.dailyRecTh.getPourcentByHive(_hive._id),
           WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getWeightMaxByHive(_hive._id)),
           BATTERY: this.capteurService.getCapteursByHive(_hive._id).sort((a: CapteurInterface, b:CapteurInterface) => a.sensorRef.localeCompare(b.sensorRef)).map(_elt => _elt.sensorBat + '%').join('\n'),
@@ -269,6 +274,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     );
 
     this.initForm();
+    this.notifyMaxUploadFile = false;
   }
 
   ngAfterViewInit(): void {
@@ -290,9 +296,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
 
   changePicturePhotos(base64: string): void {
-    this.rucherService.rucher.photo = base64;
-    this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
-    this.selectPhotoApiary = null;
+    this.notifyMaxUploadFile = false;
+    if (base64.length * (3/4) < this.maxUploadFileSize) {
+      this.rucherService.rucher.photo = base64;
+      this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
+      this.selectPhotoApiary = null;
+    } else {
+      this.notifyMaxUploadFile = true;
+    }
   }
 
   loadAlert() {
@@ -364,7 +375,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     }
     catch {}
   }
-  
+
   onPastilleClick(hive: RucheInterface) {
     if (this.lockHive) {
       this.onClick(hive);
@@ -502,6 +513,36 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
         });
   }
 
+
+  // onMove(event, ruche: RucheInterface, id:number): void {
+  //   // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[0]);
+  //   // console.log(document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2));
+  //   if(this.firstValue){
+  //     let str11 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[0];
+  //     let str21 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2);
+  //     this.translateX = +str11;
+  //     this.translateY = +str21;
+  //     this.firstValue = false;
+  //   }
+  //     let str1 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[0];
+  //     let str2 = document.getElementById(id.toString()).style.transform.substring(10).split('px')[1].substring(2);
+  //     let translateX1 : number;
+  //     let translateY1 : number;
+  //     translateX1 = +str1;
+  //     translateY1 = +str2;
+  //     console.log(((translateX1 - this.translateX).toString()));
+  //     console.log(((translateY1 - this.translateY).toString()));
+  //     // let doc = document.getElementsByClassName(id.toString()) as HTMLCollectionOf<HTMLElement>;
+  //     // for (let i = 0; i < doc.length; i++) {
+  //     //   doc[i].style.transform = 'translate(' + ((translateX1 - this.translateX).toString())  + ', ' + ((translateY1 - this.translateY).toString()) + ') !important';
+  //     // }
+  //     document.getElementById(id.toString()).setAttribute('style','transform : translate(' + ((translateX1 - this.translateX).toString())  + 'px, ' + ((translateY1 - this.translateY).toString()) + 'px) !important; z-index:100; top: ' + ruche.hivePosY +'%; left : ' + ruche.hivePosX + '%;');
+  //     // document.getElementById(id.toString()).style.transform = ('translate(' + ((translateX1 - this.translateX).toString())  + 'px, ' + ((translateY1 - this.translateY).toString()) + 'px) !important');
+
+  //   }
+
+
+
   onMoving(event, id: string) {
     console.log(id);
     // document.getElementById(id).style.transform = 'translate(0,0)' ;
@@ -537,8 +578,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
    * @memberof HomeComponent
    */
   saveBackground(): void {
-    this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
-    this.dragPhotoApiary = null;
+    this.notifyMaxUploadFile = false;
+    if (this.dragPhotoApiary.size < this.maxUploadFileSize) {
+      this.rucherService.updateBackgroundApiary(this.rucherService.rucher._id);
+      this.dragPhotoApiary = null;
+    } else {
+      this.notifyMaxUploadFile = true;
+    }
   }
 
   /**
