@@ -18,7 +18,7 @@
                 "Click on every pellet to access specific hive data.",
                 "Navigate backwards in time with the arrows arround the date at the top of the interface.",
                 "Hive Fitness is computed with our exclusive BFit model.",
-                
+
                 "First setup note:",
                 "1/drag and drop your own apiary picture or map.",
                 "2/open the lock button and place the pellets on hives location."],
@@ -31,7 +31,7 @@
                 "The range goes from 0% (no brood) to 100% (full brood).",
                 "Hives with brood levels above 80% produce honey.",
                 "Brood level is computed with our exclusive BForce model."],
-                "WEIGHT_CALENDAR": ["Weight calendar: displays the daily productivity of hives equiped with a scale.", 
+                "WEIGHT_CALENDAR": ["Weight calendar: displays the daily productivity of hives equiped with a scale.",
                 "Only weight incomes and consumptions are displayed.",
                 "Beekeeper operations like feeding or adding supper are discarded."]
             }
@@ -154,6 +154,8 @@
     },
     "HOME" : {
         "BACK" : "Save background?",
+        "MAXUPLOADNOTIFY" : "File can not be loaded : Max file size 5Mb",
+        "CLOSE" : "Close",
         "CHANGE" : "Save changes",
         "CANCEL" : "Cancel",
         "NODATA" : "-",
@@ -221,7 +223,7 @@
             "ACTION" : "Action",
             "FORM" : {
                 "NEW" : "New",
-                "NEW_NOTES" : "New hive note",  
+                "NEW_NOTES" : "New hive note",
                 "DATE" : "Date Time : ",
                 "CREATE_OBS" : "Create note",
                 "CREATE_ACT" : "Create action",
@@ -413,7 +415,7 @@
             "BROOD" : ["Overlay brood progressions of several hives in the same or different apiaries.",
             "As a rule of the thumb, 10% is one frame of brood, 40% 4 frames, etc.",
             "Depending on your practice and hive model (langstroth, dadant) you will need to adjusting those relationships.",
-            
+
             "Important Note : only hives achieving the 80% threshold will produce honey! We hope you know how to make it happen."],
             "RAWDATA" : "This display is very similar to what you are already used to in MyBroodminder. Pverlaying different hives/apiaries is also possible."
         },

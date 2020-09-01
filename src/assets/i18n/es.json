@@ -1,516 +1,535 @@
 {
-    "LOGIN": {
-        "SIGN_IN": {
-            "DENIED": "Acceso denegado ",
-            "SUBMIT": "conexion",
-            "SIGN_UP_LINK": "crear cuenta MyBroodminder"
-        },
-        "SIGN_UP": {}
+  "LOGIN": {
+    "SIGN_IN": {
+      "DENIED": "Acceso denegado ",
+      "SUBMIT": "conexion",
+      "SIGN_UP_LINK": "crear cuenta MyBroodminder"
     },
-    "MELLIUX": {
-        "HELP": {
-            "APIARY": {
-                "APIARY_PICTURE": ["Vista del colmenar todo en uno: estado simple y rápido de su colmenar. ",
-                "La aptitud de la colmena se indica con el color de los pellets (verde/naranja/rojo). Pase el cursor sobre él para ver más detalles",
-                "El menú superior muestra la información contextual de la colmena: nombre, cría, peso y dispositivos",
-                "Haga clic en cada egagrópila para acceder a los datos específicos de la colmena",
-                "Navegue hacia atrás en el tiempo con las flechas alrededor de la fecha en la parte superior de la interfaz",
-                "El estado físico de la colmena se calcula con nuestro exclusivo modelo BFit",
-                
-                "Primera nota de configuración:",
-                "1/arrastra y suelta tu propia foto o mapa del colmenar",
-                "2/abrir el botón de bloqueo y colocar los pellets en la ubicación de la colmena."],
-                "EVENT_CALENDAR": ["Calendario del colmenar: usa las notas del colmenar para rastrear las acciones generales que hiciste en el colmenar",
-                "Este calendario también muestra alertas meteorológicas."]
-            },
-            "HIVE": {
-                "EVENT_CALENDAR": "Calendario de eventos: muestra notas y notificaciones de alerta",
-                "BROOD_CALENDAR": ["Calendario de cría: muestra la progresión de la cría en su colmena",
-                "El rango va desde 0% (sin cría) hasta 100% (cría completa).",
-                "Las colmenas con niveles de cría superiores al 80% producen miel.",
-                "El nivel de cría se calcula con nuestro exclusivo modelo BForce."],
-                "WEIGHT_CALENDAR": ["Calendario de peso: muestra la productividad diaria de las colmenas equipadas con una balanza.", 
-                    "Sólo se muestran los ingresos y los consumos de peso.",
-                    "Las operaciones de los apicultores como alimentar o añadir la cena son descartadas."]
-            }
-        }
+    "SIGN_UP": {}
+  },
+  "MELLIUX": {
+    "HELP": {
+      "APIARY": {
+        "APIARY_PICTURE": [
+          "Vista del colmenar todo en uno: estado simple y rápido de su colmenar. ",
+          "La aptitud de la colmena se indica con el color de los pellets (verde/naranja/rojo). Pase el cursor sobre él para ver más detalles",
+          "El menú superior muestra la información contextual de la colmena: nombre, cría, peso y dispositivos",
+          "Haga clic en cada egagrópila para acceder a los datos específicos de la colmena",
+          "Navegue hacia atrás en el tiempo con las flechas alrededor de la fecha en la parte superior de la interfaz",
+          "El estado físico de la colmena se calcula con nuestro exclusivo modelo BFit",
+          "Primera nota de configuración:",
+          "1/arrastra y suelta tu propia foto o mapa del colmenar",
+          "2/abrir el botón de bloqueo y colocar los pellets en la ubicación de la colmena."
+        ],
+        "EVENT_CALENDAR": [
+          "Calendario del colmenar: usa las notas del colmenar para rastrear las acciones generales que hiciste en el colmenar",
+          "Este calendario también muestra alertas meteorológicas."
+        ]
+      },
+      "HIVE": {
+        "EVENT_CALENDAR": "Calendario de eventos: muestra notas y notificaciones de alerta",
+        "BROOD_CALENDAR": [
+          "Calendario de cría: muestra la progresión de la cría en su colmena",
+          "El rango va desde 0% (sin cría) hasta 100% (cría completa).",
+          "Las colmenas con niveles de cría superiores al 80% producen miel.",
+          "El nivel de cría se calcula con nuestro exclusivo modelo BForce."
+        ],
+        "WEIGHT_CALENDAR": [
+          "Calendario de peso: muestra la productividad diaria de las colmenas equipadas con una balanza.",
+          "Sólo se muestran los ingresos y los consumos de peso.",
+          "Las operaciones de los apicultores como alimentar o añadir la cena son descartadas."
+        ]
+      }
+    }
+  },
+  "WIZARD": {
+    "STEP_TITLE": "Bienvenido",
+    "WELCOME": "Bienvenido",
+    "DESCRIPTION": "Queremos guiar tus primeros pasos creando un colmenar y algunas colmenas.",
+    "DESCRIPTION_2": "Cuando termines podras lanzarte por tu cuenta.",
+    "APIARY": {
+      "STEP_TITLE": "Colmenar",
+      "TITLE": "Crear un colmenar"
     },
-    "WIZARD": {
-        "STEP_TITLE": "Bienvenido",
-        "WELCOME": "Bienvenido",
-        "DESCRIPTION": "Queremos guiar tus primeros pasos creando un colmenar y algunas colmenas.",
-        "DESCRIPTION_2": "Cuando termines podras lanzarte por tu cuenta.",
-        "APIARY": {
-            "STEP_TITLE": "Colmenar",
-            "TITLE": "Crear un colmenar"
-        },
-        "HIVE": {
-            "STEP_TITLE": "Colmena",
-            "TITLE": "Crear colmena",
-            "DESCRIPTION": "Después podras crear todas las colmenas que quieras."
-        },
-        "FLOWER": {
-            "TITLE": "Anadir flores",
-            "DESCRIPTION": "Mas tarde podras completar esta lista"
-        },
-        "SENSOR": {
-            "STEP_TITLE": "Sensor",
-            "TITLE": "Anadir sensor"
-        },
-        "DONE": {
-            "STEP_TITLE": "Fin",
-            "TITLE": "Has terminado !",
-            "DESCRIPTION": "A medida que navegues por las diferentes páginas, encontrarás los siguientes símbolos",
-            "ICONS": {
-                "ADD": "Añadir un elemento (colmenar, colmena, sensor, flor)",
-                "EDIT": "Modificar un elemento",
-                "DELETE": "Supprimir un elemento"
-            }
-        },
-        "NEXT": "Siguiente",
-        "BACK": "Volver",
-        "SKIP": "Plud tard",
-        "FINISH": "Terminar"
-    },
-    "NAVBAR": {
-        "NEW_APIARY": "Nuevo colmenar",
-        "EDIT_APIARY": "Editar colmenar",
-        "EDITAPIARY": "Modifier le rucher",
-        "DELETE_APIARY": "Suprimir colmenar",
-        "DELETE_APIARY2": "Suprimir colmenar",
-        "DELETE_ASK": "Suprimir el colmenar?",
-        "ACCOUNT": {
-            "PREFERENCES": "Preferencias",
-            "LOG_OUT": "Desconexion"
-        },
-        "CRUD": {
-            "APIARY_NAME": "Nombre del colmenar",
-            "TITLE": "Menu de gestion",
-            "APIARY_DESCRIPTION": "Descripcion del colmenar",
-            "NAME": "Nombre",
-            "NAME_ERROR": "Introduce un nombre entre 1 et 20 caracteres",
-            "DESCRIPTION_ERROR": "La descripcion debe ser inferior a 40 caracteres.",
-            "CITY": "Ciudad",
-            "CITY_APIARY": "Ciudad del colmenar",
-            "CITY_ERROR": "Nombre de la ciudad",
-            "ZIP_CODE": "Codigo postal",
-            "ZIP_CODE_APIARY": "Codigo postal del colmenar",
-            "ZIP_ERROR": "Entra un codigo postal",
-            "PICTURE": "Añadir una imagen del colmenar:",
-            "WARNING_PICTURE": "la imagen es demasiado voluminosa",
-            "FILE": "Selecciona archivo",
-            "DROP": "Arrastra una foto aquí",
-            "CLOSE": "Cerrar",
-            "SAVE": "Guardar",
-            "CANCEL": "Anular",
-            "CONFIRM": "Confirmar",
-            "CREATE": "Crear colmenar",
-            "APIARY_UPDATE": "Colmenar a editar",
-            "APIARY": "Colmenar",
-            "HIVES": "Colmenas",
-            "MANAGE": "General",
-            "SELECTHIVE": "Selecciona la colmena",
-            "EDITAHIVE": "Edirtar colmena",
-            "DELETEAHIVE": "Suprimir colmena",
-            "DELETEHIVE": "Suprimir la colmena",
-            "DELETEHIVEASK": "Suprimir la colmena?",
-            "HIVENAME": "Nombre de la colmena",
-            "HIVEDESC": "Descripcion",
-            "EDIT": "Editar",
-            "FROMAPIARY": "del colmenar"
-        }
-    },
-    "SIDEBAR": {
-        "APIARY": "Colmenar",
-        "HIVES": "Colmenas",
-        "DATA": "Explorar",
-        "ALERT_CONF": "Alertas ",
-        "USERGUIDE": "Guia Usuario"
-
-    },
-    "PREFERENCE_CONFIG": {
-        "TITLE_PASSWORD": "Modificar la contasena",
-        "FORM_PASSWORD": {
-            "NEW": "Nueva contrasena",
-            "PASSWORD": "contrasena",
-            "CHARACTER": "6 caracteres minimo",
-            "CONFIRM": "Confirmar contrasena",
-            "ERROR": "Error !",
-            "NOT_MATCH": "Las contraseñas no coinciden",
-            "SUBMIT": "Cambiar"
-        },
-        "TITLE_DATE": "Formato de la fecha",
-        "SAVE_DATE": "Guardar",
-        "TITLE_UNIT": "Systema de unidades",
-        "FORM_UNIT": {
-            "METRIC": "Métrico (kg, °C)",
-            "IMPERIAL": "Imperial (lb, F)",
-            "SAVE": "Guardar"
-        },
-        "LANG": "Idioma",
-        "WEATHER_SOURCE":"Fuente del clima"
-    },
-    "HOME": {
-        "BACK": "Guardar la imagen?",
-        "CHANGE": "Guardar",
-        "CANCEL": "Anular",
-        "NODATA": "-",
-        "NOSENSORS": "-",
-        "CLICK": "Click on a hive for more information !",
-        "PLACEMENTMODE": "Put the hives in 'displacement' mode",
-        "CLICKMODE": "Put the hives in 'click' mode",
-        "MANAGE": "Manage",
-        "PRINT": "Imprima una lista de sus colmenas",
-        "WARNING": "Warning! ",
-        "NAVBAR": {
-            "ALERTS": "Alertas",
-            "NOTES": "Notas",
-            "SUMMARY": "Resumen",
-            "NAME": "Nombre",
-            "BROOD": "Cría",
-            "WEIGHT": "Peso",
-            "SENSORS": "Sensor",
-            "APIARY": "Colmenar"
-        },
-        "POPUP_NEW_USER": {
-            "TITLE": "Bienvenido a Mellisphera",
-            "BODY": ["Ahora calculamos sus datos. ",
-            "Este proceso puede tomar algún tiempo dependiendo de la historia de sus datos. ",
-            "Verá que los datos aparecen gradualmente durante los próximos 10 minutos."],
-            "CLOSE_BTN": "Cerrar"
-        }
-    },
-    "HIVES": {
-        "HIVES": "Colmenas",
-        "HIVE": "Colmena",
-        "SENSOR": "Sensor",
-        "FORM": {
-            "NEW": "Nueva colmena",
-            "EDIT": "Editar colmena",
-            "DELETE": "Suprimir colmena",
-            "DELETE_ASK": "Supprimir la colmena?",
-            "CANCEL": "Anular",
-            "CONFIRM": "Confirmar",
-            "NAME": "Nombre",
-            "CREATE": "Crear colmena",
-            "CLOSE": "Cerrar",
-            "APIARY": "Colmenar"
-        }
-    },
-    "HIVES": {
-        "HIVES": "Colmenas",
-        "HIVE": "Ruche",
-        "SENSOR": "Capteur",
-        "FORM": {
-            "NEW": "Nouvelle ruche",
-            "EDIT": "Enregistrer",
-            "EDITHIVE": "Modifier la ruche",
-            "DELETE": "Supprimer la ruche",
-            "DELETE_ASK": "Supprimer la ruche ?",
-            "CANCEL": "Annuler",
-            "CONFIRM": "Confirmer",
-            "NAME": "Nom de la ruche",
-            "DESCRIPTION": "Description de la ruche",
-            "CREATE": "Créer la ruche",
-            "CLOSE": "Fermer",
-            "APIARY": "Colmenar"
-        }
-    },
-    "HIVE_DETAIL": {
-        "NAV": {
-            "NOTES": "Notas",
-            "STOCK": "Stock",
-            "HEALTH": "Salud",
-            "DAILY": "Diario",
-            "CONDENSED": "Condensado"
-        },
-        "OBSERVATIONS": {
-            "AO": "Acciones u observaciones",
-            "TITLE": "Notas de la colmena",
-            "DATE": "Fecha",
-            "SENTENCE": "Nota",
-            "TYPES": "Typo",
-            "ACTIONS": "Modificar",
-            "OBSERVATION": "Observation",
-            "NONOTES": "No hay notas para esta colmena..",
-            "ACTION": "Accion",
-            "FORM": {
-                "NEW": "Nuevo",
-                "NEW_NOTES": "Nueva nota",
-                "DATE": "Fecha Hora: ",
-                "CREATE_OBS": "Nueva nota",
-                "CREATE_ACT": "Nueva accion",
-                "CLOSE": "Cerrar",
-                "EDIT": "Guardar",
-                "EDITNOTE": "Editar la nota",
-                "DELETE": "Suprimir la nota",
-                "DELETE_ASK": "Supprimir la nota ?",
-                "CANCEL": "Anular",
-                "CONFIRM": "Confirmar",
-                "NOTES": "Nota : ",
-                "TYPE": "Typo",
-                "YOUWANTCREATE": "Deseas crear:",
-                "APIARYNOTE": "Una nota en tu colmenar",
-                "HIVENOTE": "Une nota de colmena",
-                "CREATENOTE": "Nueva nota",
-                "LOCATION": "Localizacion",
-                "APIARYLOCATION": "Nota de colmenar",
-                "HIVELOCATION": "Note de colmena",
-                "EDITANOTE": "Editar nota"
-            }
-        },
-        "SENSORS": {
-            "NOSENSORS": "No hay sensores en esta colmena."
-        },
-        "STOCK": {
-            "NO_DATA": "No hay datos:",
-            "STOCK": "Stock de miel",
-            "WEIGHT": "Aumento de peso"
-        },
-        "HOURLY": {
-            "RANGE": "Intervalo :",
-            "LAST": "Desde"
-        },
-        "CLICK": {
-            "SENSORSTITLE": "Sensores de la colmena",
-            "BROOD": "Cria",
-            "BROODINFO": "La cría se calcula a partir de la temperatura de la colmena. Cuanto más estable sea la temperatura alrededor del área de cría, mayor será el porcentaje",
-            "UNKNOWN": "inconnu",
-            "ALERTS": {
-                "TITLE": "Alertas de la colmena",
-                "TYPE": "TIPO",
-                "READ": "VISTA",
-                "NOALERTS": "No hay alertas esta semana para "
-            }
-        },
-        "ALERT": {
-            "NOALERTS": "No hay inspecciones o notificaciones para esta colmena desde hace dos meses."
-        }
-    },
-    "ALERTS": {
-        "TITLE": "Alertas del colmenar",
-        "NOALERTS": "No hay alertas esta semana!"
-    },
-    "APIARY_NOTES": {
-        "TITLE": "Notas del colmenar",
-        "FORM": {
-            "NEW": "Nueva nota de colmenar",
-            "CREATE": "Nueva nota",
-            "SAVE": "Guardar",
-            "EDITNOTE": "Ediatar nota de colmenar",
-            "SELECT": "Selecciona tu colmena",
-            "TYPE": "Typo: ",
-            "MOVE": "Dsplazar"
-        }
-    },
-    "CAPTEUR": {
-        "SENSORS": "Sensores",
-        "REFERENCES": "Referencia",
-        "SEARCH": "Buscar sensor",
-        "FORM": {
-            "NEW": "Nuevo sensor",
-            "DELETE": "Supprimir sensor",
-            "DELETE_ASK": "Supprimi sensor?",
-            "CONFIRM": "Confirmar",
-            "CANCEL": "Anular",
-            "REFERENCE": "Referencia (*): ",
-            "REF_ERROR": "Debes seleccionar una referencia valida.",
-            "SENS_ERROR": "Este sensor ya existe!",
-            "SELECT_ERROR": "Sélecciona la referencia del sensor",
-            "LINK": "Tu sensor se encuentra : ",
-            "STOCK": "En stock",
-            "HIVEDETAIL": "En la colmena ",
-            "INHIVE": "En una colmena",
-            "HIVE": "Colmena",
-            "HIVEAPIARY": "Colmena | Colmenar",
-            "SELECT_HIVE": "Sélecciona una colmena",
-            "ADD": "Anadir sensor",
-            "CLOSE": "Cerrar",
-            "APIARY": "Colmenar",
-            "SAVE": "Guardar",
-            "EDIT": "Guardar",
-            "EDITSENSORTITLE": "Editar sensor",
-            "SENSOR_EDIT": "Sensor actualizado",
-            "SUCCES": "con exito!",
-            "EDITSELECT": "Selecciona el sensor que deseas editar",
-            "SENSOR": "Sensor",
-            "EDITSENSOR": "Editar",
-            "OF": "de",
-            "NOSENSOR": "No hay sensores para edicion.",
-            "EDITASENSOR": "Editar sensor",
-            "EDITTHESENSOR": "Editar sensor"
-        }
-    },
-    "FEEDBACK": {
-        "TITLE": "Ayuda",
-        "TITLE_MODAL": "Podemos ayudarte?",
-        "COMMENT": "Tu mensaje",
-        "MSG": "Envíanos un <a href=mailto:support@mellisphera.com>email</a>, chatea en <a href=https://mellisphera.slack.com/messages/mellisphera_en/ target=_blank>slack</a> o escríbe tu mensaje.",
-
-        "SIGNUP": "crear cuenta",
-        "OR": "o",
-        "LOGIN": "conectarme",
-        "SEND": "Enviar",
-        "CLOSE": "Cerrar"
+    "HIVE": {
+      "STEP_TITLE": "Colmena",
+      "TITLE": "Crear colmena",
+      "DESCRIPTION": "Después podras crear todas las colmenas que quieras."
     },
     "FLOWER": {
-        "APIARYPLANTS": "Plantas del colmenar",
-        "PLANTDIR": "Lista de plantas",
-        "MELLIPLANTS": "Plantas meliferas",
-        "NAME": "Nombre",
-        "STARTS": "Débuts",
-        "ENDS": "Fins",
-        "RELATIVE": "Relative",
-        "BLOOMING": "de floraison",
-        "THEORICAL": "théorique",
-        "OBSERVED": "observée",
-        "ABUNDANCE": "abondance",
-        "INAPIARY": "dans le rucher",
-        "HIGH": "Haut",
-        "MEDIUM": "Moyen",
-        "LOW": "Bas",
-        "DELETEFLOWER": "Supprimer plante",
-        "EDIT": "Modifier",
-        "MELLIDIR": "Liste des plantes mellifères",
-        "MYPLANTS": "Mes plantes",
-        "SEARCHNAME": "Rechercher par nom",
-        "SEARCHMONTH": "Rechercher par mois",
-        "ALLTYPES": "Tous les types",
-        "BLOOMONTH": "Mois de floraison",
-        "COMMON": "commun",
-        "BLOOMINGPERIOD": "Periode de floraison",
-        "CONFIDENCELEVEL": "Niveau de confiance",
-        "ADDTOAPIARY": "Ajouter au rucher",
-        "CLOSE": "Fermer"
+      "TITLE": "Anadir flores",
+      "DESCRIPTION": "Mas tarde podras completar esta lista"
     },
-    "SUMMARY": {
-        "PDF": "Descargar pdf",
-        "APIARY": "Colmenar",
-        "SUMMARY": "Resumen del colmenar",
-        "ALERTSSINCE": "alertas desde ",
-        "NOALERTS": "No hay alertas !",
-        "FOR": "desde",
-        "DAYS": "dias",
-        "NONOTES": "No hay notas en este colmenar !",
-        "SUMMARYHIVES": "Resumen de las colmenas + alertas desde",
-        "NAME": "Nombre",
-        "BROOD": "Cria",
-        "BROODD3": "Cria J-3",
-        "BROODD7": "Cria J-7",
-        "WEIGHT": "Peso",
-        "SENSORS": "Sensores",
-        "ALERTS": "Alertas",
-        "NOHIVEALERTS": "No hay alertas",
-        "NOHIVES": "Vous n'avez pas de ruche dans ce rucher !"
+    "SENSOR": {
+      "STEP_TITLE": "Sensor",
+      "TITLE": "Anadir sensor"
     },
-    "NOTES": {
-        "TITLEAPIARY": "Notes de rucher",
-        "TITLEHIVE": "Notes de ruche",
-        "SEARCH": "Chercher une note",
-        "FORM": {
-            "NEW": "Nueva nota",
-            "APIARY": "Colmenar",
-            "HIVE": "Ruche",
-            "EDIT": "Modifier la note",
-            "DELETE": "Supprimer la note",
-            "DELETE_ASK": "Supprimer la note ?",
-            "CONFIRM": "Supprmier",
-            "CANCEL": "Annuler"
-        }
+    "DONE": {
+      "STEP_TITLE": "Fin",
+      "TITLE": "Has terminado !",
+      "DESCRIPTION": "A medida que navegues por las diferentes páginas, encontrarás los siguientes símbolos",
+      "ICONS": {
+        "ADD": "Añadir un elemento (colmenar, colmena, sensor, flor)",
+        "EDIT": "Modificar un elemento",
+        "DELETE": "Supprimir un elemento"
+      }
     },
-    "MELLICHARTS": {
-        "HELP": {
-            "HIVE": ["Aquí puede explorar con gran detalle todos los datos relacionados con una colmena.",
-            "Compare los datos de la colmena con sus propias operaciones (notas) y con las condiciones meteorológicas.",
-            "Elija el campo a visualizar con los iconos situados encima de cada calendario.",
-            "Utilice la navegación por fecha (arriba a la derecha de la pantalla) para mostrar periodos de tiempo más largos.",
-            "Salta de un período a otro con las flechas."],
-            "BROOD": ["Superponer las progresiones de cría de varias colmenas en el mismo o diferentes colmenares",
-            "Como regla general, el 10% es un cuadro de cría, el 40% 4 cuadros, etc.",
-            "Dependiendo de su práctica y modelo de colmena (langstroth, dadant) tendrá que ajustar esas relaciones",
-                
-            "Nota importante: ¡sólo las colmenas que alcancen el umbral del 80% producirán miel ! Esperamos que sepa cómo hacerlo realidad."],
-            "RAWDATA" : "Esta pantalla es muy similar a la que ya estás acostumbrado en MyBroodminder. También es posible manipular diferentes colmenas/colmenares."
-        },
-        "NAV": {
-            "HIVE": "Colmena",
-            "HIVE_TOOLTIP": "Colmena",
-            "BROOD": "Cría",
-            "BROOD_TOOLTIP": "Cría",
-            "DONNEE": "Datos",
-            "DONNEE_TOOLTIP": "Datos"
-        },
-        "DATE": {
-            "START": "Inicio",
-            "END": "Final",
-            "BTN_APPLY": "Aplicar"
-        },
-        "BROOD": {
-            "TITLE": "Evolucion diaria de la cria"
-        }
+    "NEXT": "Siguiente",
+    "BACK": "Volver",
+    "SKIP": "Plud tard",
+    "FINISH": "Terminar"
+  },
+  "NAVBAR": {
+    "NEW_APIARY": "Nuevo colmenar",
+    "EDIT_APIARY": "Editar colmenar",
+    "EDITAPIARY": "Modifier le rucher",
+    "DELETE_APIARY": "Suprimir colmenar",
+    "DELETE_APIARY2": "Suprimir colmenar",
+    "DELETE_ASK": "Suprimir el colmenar?",
+    "ACCOUNT": {
+      "PREFERENCES": "Preferencias",
+      "LOG_OUT": "Desconexion"
     },
-    "ALERT_CONF_PAGE": {
-        "TYPE": "Icono",
-        "VALUE": "Valor",
-        "NAME": "Apellido",
-        "PAGE": {
-            "SENSORS": "Sensor",
-            "WEATHER": "Meteo",
-            "HIVE": "Colmena",
-            "CONF": {
-                "TITLE": "Configurar",
-                "MAIL": "Enviar alertas por correo electrónico:",
-                "FREQUENCY": "Enviar cada",
-                "DAILY": "día",
-                "WEEKLY": "semana",
-                "DAY": "día",
-                "OTHER": "personalizar",
-                "EVERY": "cada",
-                "BTN_MAIL_TEST": "Probar email"
-            }
-        },
-        "DESCRIPTION": "Descripción",
-        "STATUS": "Estatus",
-        "HELP": {
-            "ALERTS" : ["En esta página puede configurar todas las alertas y notificaciones",
-                "Las alertas están clasificadas en 3 grupos: en colmena / tiempo / dispositivos.",
-                "Puedes empezar con los umbrales predefinidos y afinarlos en base a tu propia experiencia",
-                "Vaya a la pestaña \"configurar\" para establecer sus preferencias de correo electrónico y la frecuencia de las notificaciones"]
-        }
-    },
-    "LOGIN_BM": {
-        "TITLE": "Mellisphera",
-        "BTN": "Conexion",
-        "EULA": "Acuerdo de licencia de usuario final",
-        "BTN_EUA": "Estoy de acuerdo",
-        "BECOMING": {
-            "TITLE": "Bienvenido a la apicultura de precisión ",
-            "CONTENT": ["Con Mellisphera puedes convertirte en apicultor de precisión. Te ofrecemos es una interfaz completa que agrega los datos de tus colmenas junto con las acciones del apicultor y la meteorología. ",
-            "Nuestros algoritmos procesan la información para ofrecerte de manera clara y accesible un estado de tus colmenas en tiempo real.  Dinámica de la colmena, nivel de cría, productividad, enjambrazón son algunos de los diagnósticos que puedes recibir automáticamente a través del sistema de notificación."],
-            "READ_MORE": "Seguir leyendo",
-            "READ_MORE_CONTENT": ["La buena noticia es que Mellisphera está integrado con BroodMinder. ",
-            "Una vez conectado, heredarás del historial completo de tus sensores. ",
-            "Además, estos datos se enriquecerán con promedios diarios, eventos y alertas. ",
-            "De esta manera podrás analizar el desarrollo de la temporada desde una perspectiva completamente nueva. Te estarás convirtiendo en apicultor de precisión"]
-        },
-        "QUICK_TOUR": {
-            "TITLE": "Visita rápida a Mellisphera ",
-            "CONTENT": "Descubre las principales funciones de Mellisphera."
-        },
-        "BM_MS": {
-            "TITLE": "BroodMinder y Mellisphera - Como funciona?",
-            "CONTENT": ["Los entornos de Mellisphera y BroodMinder son complementarios y están estrechamente vinculados. ",
-            "Utiliza MyBroodMinder para configurar tus colmenares, colmenas y sensores. Esta información se actualiza en Mellisphera con cada nueva conexión. ",
-            "Mellisphera te permitirá́ de llevar a cabo análisis detallados, así́ como enviarle alertas y notificaciones personalizadas. "]
-        },
-        "FORM": {
-            "EMAIL": "Email MyBroodMinder",
-            "PASSWORD": "Contraseña de MyBroodMinder",
-            "CONNECTION": "Conexión",
-            "ERR": "No te puedes conectar",
-            "TRY_MS": "Cuenta Démo",
-            "MAIL_SUBJECT": "Problema de conexión"
-
-        }
+    "CRUD": {
+      "APIARY_NAME": "Nombre del colmenar",
+      "TITLE": "Menu de gestion",
+      "APIARY_DESCRIPTION": "Descripcion del colmenar",
+      "NAME": "Nombre",
+      "NAME_ERROR": "Introduce un nombre entre 1 et 20 caracteres",
+      "DESCRIPTION_ERROR": "La descripcion debe ser inferior a 40 caracteres.",
+      "CITY": "Ciudad",
+      "CITY_APIARY": "Ciudad del colmenar",
+      "CITY_ERROR": "Nombre de la ciudad",
+      "ZIP_CODE": "Codigo postal",
+      "ZIP_CODE_APIARY": "Codigo postal del colmenar",
+      "ZIP_ERROR": "Entra un codigo postal",
+      "PICTURE": "Añadir una imagen del colmenar:",
+      "WARNING_PICTURE": "la imagen es demasiado voluminosa",
+      "FILE": "Selecciona archivo",
+      "DROP": "Arrastra una foto aquí",
+      "CLOSE": "Cerrar",
+      "SAVE": "Guardar",
+      "CANCEL": "Anular",
+      "CONFIRM": "Confirmar",
+      "CREATE": "Crear colmenar",
+      "APIARY_UPDATE": "Colmenar a editar",
+      "APIARY": "Colmenar",
+      "HIVES": "Colmenas",
+      "MANAGE": "General",
+      "SELECTHIVE": "Selecciona la colmena",
+      "EDITAHIVE": "Edirtar colmena",
+      "DELETEAHIVE": "Suprimir colmena",
+      "DELETEHIVE": "Suprimir la colmena",
+      "DELETEHIVEASK": "Suprimir la colmena?",
+      "HIVENAME": "Nombre de la colmena",
+      "HIVEDESC": "Descripcion",
+      "EDIT": "Editar",
+      "FROMAPIARY": "del colmenar"
     }
+  },
+  "SIDEBAR": {
+    "APIARY": "Colmenar",
+    "HIVES": "Colmenas",
+    "DATA": "Explorar",
+    "ALERT_CONF": "Alertas ",
+    "USERGUIDE": "Guia Usuario"
+  },
+  "PREFERENCE_CONFIG": {
+    "TITLE_PASSWORD": "Modificar la contasena",
+    "FORM_PASSWORD": {
+      "NEW": "Nueva contrasena",
+      "PASSWORD": "contrasena",
+      "CHARACTER": "6 caracteres minimo",
+      "CONFIRM": "Confirmar contrasena",
+      "ERROR": "Error !",
+      "NOT_MATCH": "Las contraseñas no coinciden",
+      "SUBMIT": "Cambiar"
+    },
+    "TITLE_DATE": "Formato de la fecha",
+    "SAVE_DATE": "Guardar",
+    "TITLE_UNIT": "Systema de unidades",
+    "FORM_UNIT": {
+      "METRIC": "Métrico (kg, °C)",
+      "IMPERIAL": "Imperial (lb, F)",
+      "SAVE": "Guardar"
+    },
+    "LANG": "Idioma",
+    "WEATHER_SOURCE": "Fuente del clima"
+  },
+  "HOME": {
+    "BACK": "Guardar la imagen?",
+    "MAXUPLOADNOTIFY": "La imagen no se puede cargar : talla maxi 5 Mb",
+    "CLOSE": "cerca",
+    "CHANGE": "Guardar",
+    "CANCEL": "Anular",
+    "NODATA": "-",
+    "NOSENSORS": "-",
+    "CLICK": "Click on a hive for more information !",
+    "PLACEMENTMODE": "Put the hives in 'displacement' mode",
+    "CLICKMODE": "Put the hives in 'click' mode",
+    "MANAGE": "Manage",
+    "PRINT": "Imprima una lista de sus colmenas",
+    "WARNING": "Warning! ",
+    "NAVBAR": {
+      "ALERTS": "Alertas",
+      "NOTES": "Notas",
+      "SUMMARY": "Resumen",
+      "NAME": "Nombre",
+      "BROOD": "Cría",
+      "WEIGHT": "Peso",
+      "SENSORS": "Sensor",
+      "APIARY": "Colmenar"
+    },
+    "POPUP_NEW_USER": {
+      "TITLE": "Bienvenido a Mellisphera",
+      "BODY": [
+        "Ahora calculamos sus datos. ",
+        "Este proceso puede tomar algún tiempo dependiendo de la historia de sus datos. ",
+        "Verá que los datos aparecen gradualmente durante los próximos 10 minutos."
+      ],
+      "CLOSE_BTN": "Cerrar"
+    }
+  },
+  "HIVES": {
+    "HIVES": "Colmenas",
+    "HIVE": "Colmena",
+    "SENSOR": "Sensor",
+    "FORM": {
+      "NEW": "Nueva colmena",
+      "EDIT": "Editar colmena",
+      "DELETE": "Suprimir colmena",
+      "DELETE_ASK": "Supprimir la colmena?",
+      "CANCEL": "Anular",
+      "CONFIRM": "Confirmar",
+      "NAME": "Nombre",
+      "CREATE": "Crear colmena",
+      "CLOSE": "Cerrar",
+      "APIARY": "Colmenar"
+    }
+  },
+  "HIVES": {
+    "HIVES": "Colmenas",
+    "HIVE": "Ruche",
+    "SENSOR": "Capteur",
+    "FORM": {
+      "NEW": "Nouvelle ruche",
+      "EDIT": "Enregistrer",
+      "EDITHIVE": "Modifier la ruche",
+      "DELETE": "Supprimer la ruche",
+      "DELETE_ASK": "Supprimer la ruche ?",
+      "CANCEL": "Annuler",
+      "CONFIRM": "Confirmer",
+      "NAME": "Nom de la ruche",
+      "DESCRIPTION": "Description de la ruche",
+      "CREATE": "Créer la ruche",
+      "CLOSE": "Fermer",
+      "APIARY": "Colmenar"
+    }
+  },
+  "HIVE_DETAIL": {
+    "NAV": {
+      "NOTES": "Notas",
+      "STOCK": "Stock",
+      "HEALTH": "Salud",
+      "DAILY": "Diario",
+      "CONDENSED": "Condensado"
+    },
+    "OBSERVATIONS": {
+      "AO": "Acciones u observaciones",
+      "TITLE": "Notas de la colmena",
+      "DATE": "Fecha",
+      "SENTENCE": "Nota",
+      "TYPES": "Typo",
+      "ACTIONS": "Modificar",
+      "OBSERVATION": "Observation",
+      "NONOTES": "No hay notas para esta colmena..",
+      "ACTION": "Accion",
+      "FORM": {
+        "NEW": "Nuevo",
+        "NEW_NOTES": "Nueva nota",
+        "DATE": "Fecha Hora: ",
+        "CREATE_OBS": "Nueva nota",
+        "CREATE_ACT": "Nueva accion",
+        "CLOSE": "Cerrar",
+        "EDIT": "Guardar",
+        "EDITNOTE": "Editar la nota",
+        "DELETE": "Suprimir la nota",
+        "DELETE_ASK": "Supprimir la nota ?",
+        "CANCEL": "Anular",
+        "CONFIRM": "Confirmar",
+        "NOTES": "Nota : ",
+        "TYPE": "Typo",
+        "YOUWANTCREATE": "Deseas crear:",
+        "APIARYNOTE": "Una nota en tu colmenar",
+        "HIVENOTE": "Une nota de colmena",
+        "CREATENOTE": "Nueva nota",
+        "LOCATION": "Localizacion",
+        "APIARYLOCATION": "Nota de colmenar",
+        "HIVELOCATION": "Note de colmena",
+        "EDITANOTE": "Editar nota"
+      }
+    },
+    "SENSORS": {
+      "NOSENSORS": "No hay sensores en esta colmena."
+    },
+    "STOCK": {
+      "NO_DATA": "No hay datos:",
+      "STOCK": "Stock de miel",
+      "WEIGHT": "Aumento de peso"
+    },
+    "HOURLY": {
+      "RANGE": "Intervalo :",
+      "LAST": "Desde"
+    },
+    "CLICK": {
+      "SENSORSTITLE": "Sensores de la colmena",
+      "BROOD": "Cria",
+      "BROODINFO": "La cría se calcula a partir de la temperatura de la colmena. Cuanto más estable sea la temperatura alrededor del área de cría, mayor será el porcentaje",
+      "UNKNOWN": "inconnu",
+      "ALERTS": {
+        "TITLE": "Alertas de la colmena",
+        "TYPE": "TIPO",
+        "READ": "VISTA",
+        "NOALERTS": "No hay alertas esta semana para "
+      }
+    },
+    "ALERT": {
+      "NOALERTS": "No hay inspecciones o notificaciones para esta colmena desde hace dos meses."
+    }
+  },
+  "ALERTS": {
+    "TITLE": "Alertas del colmenar",
+    "NOALERTS": "No hay alertas esta semana!"
+  },
+  "APIARY_NOTES": {
+    "TITLE": "Notas del colmenar",
+    "FORM": {
+      "NEW": "Nueva nota de colmenar",
+      "CREATE": "Nueva nota",
+      "SAVE": "Guardar",
+      "EDITNOTE": "Ediatar nota de colmenar",
+      "SELECT": "Selecciona tu colmena",
+      "TYPE": "Typo: ",
+      "MOVE": "Dsplazar"
+    }
+  },
+  "CAPTEUR": {
+    "SENSORS": "Sensores",
+    "REFERENCES": "Referencia",
+    "SEARCH": "Buscar sensor",
+    "FORM": {
+      "NEW": "Nuevo sensor",
+      "DELETE": "Supprimir sensor",
+      "DELETE_ASK": "Supprimi sensor?",
+      "CONFIRM": "Confirmar",
+      "CANCEL": "Anular",
+      "REFERENCE": "Referencia (*): ",
+      "REF_ERROR": "Debes seleccionar una referencia valida.",
+      "SENS_ERROR": "Este sensor ya existe!",
+      "SELECT_ERROR": "Sélecciona la referencia del sensor",
+      "LINK": "Tu sensor se encuentra : ",
+      "STOCK": "En stock",
+      "HIVEDETAIL": "En la colmena ",
+      "INHIVE": "En una colmena",
+      "HIVE": "Colmena",
+      "HIVEAPIARY": "Colmena | Colmenar",
+      "SELECT_HIVE": "Sélecciona una colmena",
+      "ADD": "Anadir sensor",
+      "CLOSE": "Cerrar",
+      "APIARY": "Colmenar",
+      "SAVE": "Guardar",
+      "EDIT": "Guardar",
+      "EDITSENSORTITLE": "Editar sensor",
+      "SENSOR_EDIT": "Sensor actualizado",
+      "SUCCES": "con exito!",
+      "EDITSELECT": "Selecciona el sensor que deseas editar",
+      "SENSOR": "Sensor",
+      "EDITSENSOR": "Editar",
+      "OF": "de",
+      "NOSENSOR": "No hay sensores para edicion.",
+      "EDITASENSOR": "Editar sensor",
+      "EDITTHESENSOR": "Editar sensor"
+    }
+  },
+  "FEEDBACK": {
+    "TITLE": "Ayuda",
+    "TITLE_MODAL": "Podemos ayudarte?",
+    "COMMENT": "Tu mensaje",
+    "MSG": "Envíanos un <a href=mailto:support@mellisphera.com>email</a>, chatea en <a href=https://mellisphera.slack.com/messages/mellisphera_en/ target=_blank>slack</a> o escríbe tu mensaje.",
+    "SIGNUP": "crear cuenta",
+    "OR": "o",
+    "LOGIN": "conectarme",
+    "SEND": "Enviar",
+    "CLOSE": "Cerrar"
+  },
+  "FLOWER": {
+    "APIARYPLANTS": "Plantas del colmenar",
+    "PLANTDIR": "Lista de plantas",
+    "MELLIPLANTS": "Plantas meliferas",
+    "NAME": "Nombre",
+    "STARTS": "Débuts",
+    "ENDS": "Fins",
+    "RELATIVE": "Relative",
+    "BLOOMING": "de floraison",
+    "THEORICAL": "théorique",
+    "OBSERVED": "observée",
+    "ABUNDANCE": "abondance",
+    "INAPIARY": "dans le rucher",
+    "HIGH": "Haut",
+    "MEDIUM": "Moyen",
+    "LOW": "Bas",
+    "DELETEFLOWER": "Supprimer plante",
+    "EDIT": "Modifier",
+    "MELLIDIR": "Liste des plantes mellifères",
+    "MYPLANTS": "Mes plantes",
+    "SEARCHNAME": "Rechercher par nom",
+    "SEARCHMONTH": "Rechercher par mois",
+    "ALLTYPES": "Tous les types",
+    "BLOOMONTH": "Mois de floraison",
+    "COMMON": "commun",
+    "BLOOMINGPERIOD": "Periode de floraison",
+    "CONFIDENCELEVEL": "Niveau de confiance",
+    "ADDTOAPIARY": "Ajouter au rucher",
+    "CLOSE": "Fermer"
+  },
+  "SUMMARY": {
+    "PDF": "Descargar pdf",
+    "APIARY": "Colmenar",
+    "SUMMARY": "Resumen del colmenar",
+    "ALERTSSINCE": "alertas desde ",
+    "NOALERTS": "No hay alertas !",
+    "FOR": "desde",
+    "DAYS": "dias",
+    "NONOTES": "No hay notas en este colmenar !",
+    "SUMMARYHIVES": "Resumen de las colmenas + alertas desde",
+    "NAME": "Nombre",
+    "BROOD": "Cria",
+    "BROODD3": "Cria J-3",
+    "BROODD7": "Cria J-7",
+    "WEIGHT": "Peso",
+    "SENSORS": "Sensores",
+    "ALERTS": "Alertas",
+    "NOHIVEALERTS": "No hay alertas",
+    "NOHIVES": "Vous n'avez pas de ruche dans ce rucher !"
+  },
+  "NOTES": {
+    "TITLEAPIARY": "Notes de rucher",
+    "TITLEHIVE": "Notes de ruche",
+    "SEARCH": "Chercher une note",
+    "FORM": {
+      "NEW": "Nueva nota",
+      "APIARY": "Colmenar",
+      "HIVE": "Ruche",
+      "EDIT": "Modifier la note",
+      "DELETE": "Supprimer la note",
+      "DELETE_ASK": "Supprimer la note ?",
+      "CONFIRM": "Supprmier",
+      "CANCEL": "Annuler"
+    }
+  },
+  "MELLICHARTS": {
+    "HELP": {
+      "HIVE": [
+        "Aquí puede explorar con gran detalle todos los datos relacionados con una colmena.",
+        "Compare los datos de la colmena con sus propias operaciones (notas) y con las condiciones meteorológicas.",
+        "Elija el campo a visualizar con los iconos situados encima de cada calendario.",
+        "Utilice la navegación por fecha (arriba a la derecha de la pantalla) para mostrar periodos de tiempo más largos.",
+        "Salta de un período a otro con las flechas."
+      ],
+      "BROOD": [
+        "Superponer las progresiones de cría de varias colmenas en el mismo o diferentes colmenares",
+        "Como regla general, el 10% es un cuadro de cría, el 40% 4 cuadros, etc.",
+        "Dependiendo de su práctica y modelo de colmena (langstroth, dadant) tendrá que ajustar esas relaciones",
+        "Nota importante: ¡sólo las colmenas que alcancen el umbral del 80% producirán miel ! Esperamos que sepa cómo hacerlo realidad."
+      ],
+      "RAWDATA": "Esta pantalla es muy similar a la que ya estás acostumbrado en MyBroodminder. También es posible manipular diferentes colmenas/colmenares."
+    },
+    "NAV": {
+      "HIVE": "Colmena",
+      "HIVE_TOOLTIP": "Colmena",
+      "BROOD": "Cría",
+      "BROOD_TOOLTIP": "Cría",
+      "DONNEE": "Datos",
+      "DONNEE_TOOLTIP": "Datos"
+    },
+    "DATE": {
+      "START": "Inicio",
+      "END": "Final",
+      "BTN_APPLY": "Aplicar"
+    },
+    "BROOD": {
+      "TITLE": "Evolucion diaria de la cria"
+    }
+  },
+  "ALERT_CONF_PAGE": {
+    "TYPE": "Icono",
+    "VALUE": "Valor",
+    "NAME": "Apellido",
+    "PAGE": {
+      "SENSORS": "Sensor",
+      "WEATHER": "Meteo",
+      "HIVE": "Colmena",
+      "CONF": {
+        "TITLE": "Configurar",
+        "MAIL": "Enviar alertas por correo electrónico:",
+        "FREQUENCY": "Enviar cada",
+        "DAILY": "día",
+        "WEEKLY": "semana",
+        "DAY": "día",
+        "OTHER": "personalizar",
+        "EVERY": "cada",
+        "BTN_MAIL_TEST": "Probar email"
+      }
+    },
+    "DESCRIPTION": "Descripción",
+    "STATUS": "Estatus",
+    "HELP": {
+      "ALERTS": [
+        "En esta página puede configurar todas las alertas y notificaciones",
+        "Las alertas están clasificadas en 3 grupos: en colmena / tiempo / dispositivos.",
+        "Puedes empezar con los umbrales predefinidos y afinarlos en base a tu propia experiencia",
+        "Vaya a la pestaña \"configurar\" para establecer sus preferencias de correo electrónico y la frecuencia de las notificaciones"
+      ]
+    }
+  },
+  "LOGIN_BM": {
+    "TITLE": "Mellisphera",
+    "BTN": "Conexion",
+    "EULA": "Acuerdo de licencia de usuario final",
+    "BTN_EUA": "Estoy de acuerdo",
+    "BECOMING": {
+      "TITLE": "Bienvenido a la apicultura de precisión ",
+      "CONTENT": [
+        "Con Mellisphera puedes convertirte en apicultor de precisión. Te ofrecemos es una interfaz completa que agrega los datos de tus colmenas junto con las acciones del apicultor y la meteorología. ",
+        "Nuestros algoritmos procesan la información para ofrecerte de manera clara y accesible un estado de tus colmenas en tiempo real.  Dinámica de la colmena, nivel de cría, productividad, enjambrazón son algunos de los diagnósticos que puedes recibir automáticamente a través del sistema de notificación."
+      ],
+      "READ_MORE": "Seguir leyendo",
+      "READ_MORE_CONTENT": [
+        "La buena noticia es que Mellisphera está integrado con BroodMinder. ",
+        "Una vez conectado, heredarás del historial completo de tus sensores. ",
+        "Además, estos datos se enriquecerán con promedios diarios, eventos y alertas. ",
+        "De esta manera podrás analizar el desarrollo de la temporada desde una perspectiva completamente nueva. Te estarás convirtiendo en apicultor de precisión"
+      ]
+    },
+    "QUICK_TOUR": {
+      "TITLE": "Visita rápida a Mellisphera ",
+      "CONTENT": "Descubre las principales funciones de Mellisphera."
+    },
+    "BM_MS": {
+      "TITLE": "BroodMinder y Mellisphera - Como funciona?",
+      "CONTENT": [
+        "Los entornos de Mellisphera y BroodMinder son complementarios y están estrechamente vinculados. ",
+        "Utiliza MyBroodMinder para configurar tus colmenares, colmenas y sensores. Esta información se actualiza en Mellisphera con cada nueva conexión. ",
+        "Mellisphera te permitirá́ de llevar a cabo análisis detallados, así́ como enviarle alertas y notificaciones personalizadas. "
+      ]
+    },
+    "FORM": {
+      "EMAIL": "Email MyBroodMinder",
+      "PASSWORD": "Contraseña de MyBroodMinder",
+      "CONNECTION": "Conexión",
+      "ERR": "No te puedes conectar",
+      "TRY_MS": "Cuenta Démo",
+      "MAIL_SUBJECT": "Problema de conexión"
+    }
+  }
 }
