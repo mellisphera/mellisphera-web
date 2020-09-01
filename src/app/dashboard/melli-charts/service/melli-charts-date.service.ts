@@ -46,7 +46,7 @@ export class MelliChartsDateService {
     this.setRange(this.ranges[4]);
   }
 
-  
+
   setRange(scale: DataRange): void {
     let date = new Date();
     switch(scale.type){
@@ -54,7 +54,25 @@ export class MelliChartsDateService {
         date.setDate((new Date().getDate() - scale.scale));
         break;
       case 'MONTH':
-        date.setMonth((new Date().getMonth() - scale.scale));
+
+        switch (scale.scale) {
+
+          case 1:
+            date.setDate((new Date().getDate() - 28)); // 28 days (1month)
+            break;
+          case 2:
+            date.setDate((new Date().getDate() - 36)); // 36 days (2month)
+            break;
+          case 3:
+            date.setDate((new Date().getDate() - (28 * 3))); // 84 days (3month)
+            break;
+          case 6:
+            date.setDate((new Date().getDate() - (28 * 6))); // 168 days (6month)
+            break;
+          case 9:
+            date.setDate((new Date().getDate() -  (28 * 9))); // 252 days (9month)
+            break;
+        }
         break;
       case 'YEAR':
         date.setFullYear(new Date().getFullYear() - 1);
@@ -65,7 +83,10 @@ export class MelliChartsDateService {
       default:
         date.setDate(date.getDate() - 15);
     }
-    date = this.getDateBeginMonday(date);
+    if (scale.type !== 'DAY') { // skip starting from monday for day (1day and 3daya)
+      date = this.getDateBeginMonday(date);
+    }
+
     this.rangeDateForRequest = MyDate.getRange(date);
     this.rangeDateForRequest[0].setHours(0);
     this.rangeDateForRequest[0].setMinutes(0);
