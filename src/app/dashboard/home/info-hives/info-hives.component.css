@@ -45,14 +45,28 @@ hr
      width: 500px;
  }
 
- #left{
+@media (min-width : 990px){
+  #left{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width : 1200px){
+  #left{
     position: absolute;
     top: 0px;
     left: 0px;
     width: 50%;
     display: flex;
     flex-wrap: wrap;
+  }
 }
+
 
 #notes{
     width: 100%;
@@ -121,8 +135,8 @@ and (max-device-width : 1024px)
 and (orientation : portrait) {
     .calendar{
         height: 310px;
-    }   
-    
+    }
+
 }
 
 /* Desktops and laptops ----------- */
@@ -192,8 +206,27 @@ only screen and (min-device-pixel-ratio : 1.5) {
     #notes{
         width: 200%;
     }
-    
+
     #sensors{
         width: 200%;
     }
 } */
+
+@media (max-width : 990px){
+  #calendar-right{
+    margin-left: 0%;
+    position: relative;
+  }
+}
+
+@media (max-width : 1200px){
+  #calendar-right{
+    margin-left: 10%;
+    position: relative;
+  }
+
+  .calendar-divider{
+    height: 50px;
+  }
+}
+
