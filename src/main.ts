@@ -21,7 +21,7 @@ if (environment.production) {
   enableProdMode();
 }
 
-if (environment.debug) {
+if (!environment.debug) {
   if (window) {
     window.console.log = function() {};
   }
