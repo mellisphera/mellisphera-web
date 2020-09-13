@@ -77,8 +77,7 @@ limitations under the License. -->
     <div class="grid-container" #myBounds id="cadre" ngfDrop [(validDrag)]="baseDropValid" [(file)]="dragPhotoApiary"
          class="my-drop-zone" [class.valid-drag]="baseDropValid" (stopped)="onDragEnd($event)"
          [(lastBaseUrl)]="rucherService.rucher.photo">
-<!--      <img [src]="rucherService.rucher.photo" (click)="hideRightClick($event)" style="position: static;"-->
-      <img src="../../../assets/imageClient/testAccount.png" (click)="hideRightClick($event)" style="position: static;"
+      <img [src]="rucherService.rucher.photo" (click)="hideRightClick($event)" style="position: static;"
            id="apiary-photos" class="photo"/>
       <!-- The button to change hive handle => click -->
       <div zIndex="100" class="toolApiaryPicture">
