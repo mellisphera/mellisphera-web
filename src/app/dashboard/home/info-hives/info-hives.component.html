@@ -18,50 +18,56 @@ limitations under the License. -->
         *ngIf="this.rucheService.getCurrentHive().description!=''">{{': ' + this.rucheService.getCurrentHive().description}}</span>
 </div>
 <hr /> -->
+      <div id="calendar-right">
         <div class="calendar" id="alerts">
-            <app-alerts-hive></app-alerts-hive>
-            <div class="infoToolip">
-                <popover-content #eventHelpHiveCalendar placement="left" [animation]="true"
-                    [closeOnClickOutside]="false">
+          <app-alerts-hive></app-alerts-hive>
+          <div class="infoToolip">
+            <popover-content #eventHelpHiveCalendar placement="left" [animation]="true"
+                             [closeOnClickOutside]="false">
                     <span class="helpTooltip">
                         {{  'MELLIUX.HELP.HIVE.EVENT_CALENDAR' | translate }}
                     </span>
-                </popover-content>
-                <div [popover]="eventHelpHiveCalendar" style="font-size: 15px !important;">
-                    <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
-                </div>
+            </popover-content>
+            <div [popover]="eventHelpHiveCalendar" style="font-size: 15px !important;">
+              <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
             </div>
+          </div>
         </div>
+        <div class="row calendar-divider "></div>
         <div class="calendar" id="health">
-            <app-health-hive></app-health-hive>
-            <div class="infoToolip">
-                <popover-content #broodToltip placement="left" [animation]="true"
-                    [closeOnClickOutside]="false">
+          <app-health-hive></app-health-hive>
+          <div class="infoToolip">
+            <popover-content #broodToltip placement="left" [animation]="true"
+                             [closeOnClickOutside]="false">
                     <span class="helpTooltip">
                         <span
-                            *ngFor="let line of 'MELLIUX.HELP.HIVE.BROOD_CALENDAR' | translate">{{ line }}<br /></span>
+                          *ngFor="let line of 'MELLIUX.HELP.HIVE.BROOD_CALENDAR' | translate">{{ line }}<br /></span>
                     </span>
-                </popover-content>
-                <div [popover]="broodToltip" style="font-size: 15px !important;">
-                    <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
-                </div>
+            </popover-content>
+            <div [popover]="broodToltip" style="font-size: 15px !important;">
+              <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
             </div>
+          </div>
         </div>
+
+        <div class="row calendar-divider "></div>
         <div class="calendar" id="weight">
-            <app-weight-hives></app-weight-hives>
-            <div class="infoToolip">
-                <popover-content #weightCalendarTooltip placement="left" [animation]="true"
-                    [closeOnClickOutside]="false">
+          <app-weight-hives></app-weight-hives>
+          <div class="infoToolip">
+            <popover-content #weightCalendarTooltip placement="left" [animation]="true"
+                             [closeOnClickOutside]="false">
                     <span class="helpTooltip">
                         <span
-                            *ngFor="let line of 'MELLIUX.HELP.HIVE.WEIGHT_CALENDAR' | translate">{{ line }}<br /></span>
+                          *ngFor="let line of 'MELLIUX.HELP.HIVE.WEIGHT_CALENDAR' | translate">{{ line }}<br /></span>
                     </span>
-                </popover-content>
-                <div [popover]="weightCalendarTooltip" style="font-size: 15px !important;">
-                    <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
-                </div>
+            </popover-content>
+            <div [popover]="weightCalendarTooltip" style="font-size: 15px !important;">
+              <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
             </div>
+          </div>
         </div>
+      </div>
+
         <br clear="both" />
     </div>
     <div id="left">
