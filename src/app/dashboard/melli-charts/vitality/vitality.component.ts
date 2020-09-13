@@ -91,7 +91,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     if (elt.classList.contains('apiary-group-hive')) {
       elt.classList.remove('apiary-group-hive');
     } else if (elt.classList.contains('apiary-group-stack')) {
-      elt.classList.remove('apiary-group-stack'); 
+      elt.classList.remove('apiary-group-stack');
     }
     elt.classList.add('apiary-group-brood');
     this.stackService.setBroodChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-brood')));
@@ -185,7 +185,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
   loadAllHiveAfterRangeChange(next: Function): void {
     const obs = this.stackService.getHiveSelect().map(_hive => {
-      return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodOldMethod(_hive._id, this.melliDateService.getRangeForReqest())}
+      return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodByHive(_hive._id, this.melliDateService.getRangeForReqest())}
     });
     Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
       _broods => {
@@ -236,10 +236,10 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
-   * @param markerSerie 
-   * @param date 
-   * @param series 
+   *
+   * @param markerSerie
+   * @param date
+   * @param series
    */
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';
