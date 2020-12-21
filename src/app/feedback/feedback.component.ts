@@ -14,13 +14,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserloggedService } from '../userlogged.service';
 import { NotifierService } from 'angular-notifier';
-<<<<<<< HEAD
-import { CONFIG } from 'src/config';
-=======
 import { CONFIG } from '../../constants/config';
 import { TranslateService } from '@ngx-translate/core';
->>>>>>> release/2.0
-
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -39,7 +34,6 @@ export class FeedbackComponent implements OnInit {
     private translateService: TranslateService,
     private userService: UserloggedService,
     private notifyService: NotifierService) {
-<<<<<<< HEAD
       if (this.userService.getCountry()) {
         if (this.userService.getCountry().toUpperCase() === 'FR') {
           this.urlSlack = CONFIG.SLACK_FR;
@@ -49,9 +43,6 @@ export class FeedbackComponent implements OnInit {
       } else {
         this.urlSlack = CONFIG.SLACK_EN;
       }
-=======
-    this.urlSlack = CONFIG.SLACK;
->>>>>>> release/2.0
     this.notify = notifyService;
   }
 
