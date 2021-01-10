@@ -30,6 +30,9 @@ The following libraries are used
 
 see package.json for other modules
 
+
+Important : You will also need to place the configuration file `src/constants/config.ts` at the right place. Please email us and we'll send you a template file.
+
 ### Run it for the first time
 Run `npm install` to set up all modules.\
 Launch the app on development mode with `ng serve`
