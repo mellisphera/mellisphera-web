@@ -53,12 +53,12 @@ export class CapteurService {
             [
                 {'sensorRef' : '41', 'type' : 'T2'},
                 {'sensorRef' : '42', 'type' : 'T_HR'},
-                {'sensorRef' : '43', 'type' : 'WEIGHT'}
+                {'sensorRef' : '43', 'type' : 'WEIGHT'},
                 {'sensorRef' : '47', 'type' : 'T2'},
                 {'sensorRef' : '56', 'type' : 'T_HR'},
-                {'sensorRef' : '49', 'type' : 'WEIGHT'}
-                {'sensorRef' : '57', 'type' : 'WEIGHT'}
-                {'sensorRef' : '58', 'type' : 'WEIGHT'}
+                {'sensorRef' : '49', 'type' : 'WEIGHT'},
+                {'sensorRef' : '57', 'type' : 'WEIGHT'},
+                {'sensorRef' : '58', 'type' : 'WEIGHT'},
             ];
         this.initCapteur();
         this.capteursByUser = [];

@@ -41,6 +41,7 @@ testem.log
 
 # System Files
 .DS_Store
+*.icloud
 Thumbs.db
 src/config.ts
 **config.ts
