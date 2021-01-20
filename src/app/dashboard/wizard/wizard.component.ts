@@ -161,11 +161,11 @@ export class WizardComponent implements OnInit, OnDestroy {
    */
   getTypeFromRef(sensorRef: string): string {
     const ref = sensorRef.split(':')[0];
-    if (parseInt(ref, 10) === 41) {
+    if (parseInt(ref, 10) === 41 || parseInt(ref, 10) === 47) {
       return 'T2';
-    } else if (parseInt(ref, 10) === 42) {
+    } else if (parseInt(ref, 10) === 42 || parseInt(ref, 10) === 56) {
       return 'T_HR';
-    } else if (parseInt(ref, 10) === 43) {
+    } else if (parseInt(ref, 10) === 43 || parseInt(ref, 10) === 49 || parseInt(ref, 10) === 57 || parseInt(ref, 10) === 58) {
       return 'WEIGHT';
     } else {
       return 'ALIEN';

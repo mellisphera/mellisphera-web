@@ -28,5 +28,5 @@ then
 		echo "Ce repertoire n'existe pas !"
 	fi
 else
-	echo "Ajouter le repertoire de destination en argument !"
+	echo "Ajouter le repertoire de destination en argument - test ou bzz "
 fi
