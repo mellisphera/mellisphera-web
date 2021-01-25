@@ -164,6 +164,7 @@ export const BASE_OPTIONS = {
     baseOptionStack: {
         toolbox: {
             orient: 'vertical',
+            right:10,
             itemSize: 20,
             feature: {
                 dataZoom: {
