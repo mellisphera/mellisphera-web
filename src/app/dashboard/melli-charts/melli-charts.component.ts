@@ -33,6 +33,7 @@ import { StackComponent } from './stack/stack.component';
 import { VitalityComponent } from './vitality/vitality.component';
 import { type } from 'os';
 import { TranslateService } from '@ngx-translate/core';
+import { WeightComponent } from './weight/weight.component';
 
 const PREFIX_PATH = '/dashboard/melli-charts/';
 
@@ -52,6 +53,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   private stackComponent: StackComponent;
   private dateDropdown: HTMLElement;
   private broodComponent: VitalityComponent;
+  private weightComponent: WeightComponent;
   private eltOnClick: EventTarget;
   constructor(public rucheService: RucheService,
     public rucherService: RucherService,
@@ -74,20 +76,23 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       this.btnNav = [
         { name: 'Ruche', path: 'hive' },
         { name: 'Couvain', path: 'brood' },
-        { name: 'Données', path: 'stack' }
+        { name: 'Données', path: 'stack' },
+        { name: 'Poids', path: 'weight'}
       ];
     } else if (this.translateService.currentLang === 'es') {
       this.btnNav = [
         { name: 'Colmena', path: 'hive' },
         { name: 'Cría', path: 'brood' },
-        { name: 'Datos', path: 'stack' }
+        { name: 'Datos', path: 'stack' },
+        { name: 'Peso', path: 'weight'}
       ];
     }
     else {
       this.btnNav = [
         { name: 'Hive', path: 'hive' },
         { name: 'Brood', path: 'brood' },
-        { name: 'Raw data', path: 'stack' }
+        { name: 'Raw data', path: 'stack' },
+        { name: 'Weight', path: 'weight'}
       ];
     }
 
@@ -133,7 +138,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     this.dateDropdown = document.getElementById('date-dropdown');
     this.renderer.addClass(this.eltOnClick, 'nav-active');
   }
-  
+
 
 
   ifActiveApiary(apiaryId: string): string {
@@ -204,12 +209,19 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.stackService.getEchartInstance().setOption(options, true);
         this.stackService.getEchartInstance().hideLoading();
       });
-    } else if (this.router.url === PREFIX_PATH + 'brood') {
+    } else if (this.router.url === PREFIX_PATH + 'brood' ) {
       this.broodComponent.loadAllHiveAfterRangeChange((options: any) => {
         options.baseOption.xAxis[0].min = this.melliChartDate.getRangeForReqest()[0];
         options.baseOption.xAxis[0].max = this.melliChartDate.getRangeForReqest()[1];
         this.stackService.getBroodChartInstance().setOption(options, true);
         this.stackService.getBroodChartInstance().hideLoading();
+      });
+    } else if (this.router.url === PREFIX_PATH + 'weight') {
+      this.weightComponent.loadAllHiveAfterRangeChange((options: any) => {
+        options.baseOption.xAxis[0].min = this.melliChartDate.getRangeForReqest()[0];
+        options.baseOption.xAxis[0].max = this.melliChartDate.getRangeForReqest()[1];
+        this.stackService.getWeightChartInstance().setOption(options, true);
+        this.stackService.getWeightChartInstance().hideLoading();
       });
     }
   }
@@ -231,6 +243,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       this.stackComponent = componentRef;
     } else if (componentRef instanceof VitalityComponent) {
       this.broodComponent = componentRef;
+    } else if (componentRef instanceof WeightComponent){
+        this.weightComponent = componentRef;
     }
 
   }
@@ -291,6 +305,14 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.stackService.getBroodChartInstance().setOption(options, true);
         this.stackService.getBroodChartInstance().hideLoading();
       });
+    } else if (this.router.url === PREFIX_PATH + 'weight'){
+      this.weightComponent.loadAllHiveAfterRangeChange((options: any) => {
+        options.baseOption.xAxis[0].min = this.melliChartDate.getRangeForReqest()[0];
+        options.baseOption.xAxis[0].max = this.melliChartDate.getRangeForReqest()[1];
+        this.stackService.getWeightChartInstance().setOption(options, true);
+        this.stackService.getWeightChartInstance().hideLoading();
+      });
+
     }
   }
 
@@ -354,6 +376,17 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
         }
         break;
+      case PREFIX_PATH + 'weight':
+        this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
+        if (this.stackService.ifActiveAlreadySelected(hive)) {
+          this.stackService.removeHive(hive);
+          this.weightComponent.removeHiveSerie(hive);
+
+        } else {
+          this.stackService.addHive(hive);
+          this.weightComponent.loadDataByHive(hive);
+        }
+        break;
     }
   }
 
@@ -394,6 +427,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
         break;
       case PREFIX_PATH + 'brood':
+      case PREFIX_PATH + 'weight':
       case PREFIX_PATH + 'stack':
         return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
         break;
@@ -419,6 +453,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         }
         break;
       case PREFIX_PATH + 'stack':
+      case PREFIX_PATH + 'weight':
       case PREFIX_PATH + 'brood':
         try {
           if (this.stackService.getHiveSelect().findIndex(_hive => _hive.apiaryId === apiaryId) !== -1 /* ||
@@ -440,6 +475,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         return 'complete';
       // return this.hiveComponent.hourlyComponent.chartLoading ? 'loading' : 'complete';
       case PREFIX_PATH + 'brood':
+      case PREFIX_PATH + 'weight':
       case PREFIX_PATH + 'stack':
         //return this.stackService.
         break;

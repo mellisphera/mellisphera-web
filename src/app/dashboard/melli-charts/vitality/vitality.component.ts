@@ -91,13 +91,14 @@ export class VitalityComponent implements OnInit, OnDestroy {
     if (elt.classList.contains('apiary-group-hive')) {
       elt.classList.remove('apiary-group-hive');
     } else if (elt.classList.contains('apiary-group-stack')) {
-      elt.classList.remove('apiary-group-stack'); 
+      elt.classList.remove('apiary-group-stack');
+    } else if (elt.classList.contains('apiary-group-weight')){
+      elt.classList.remove('apiary-group-weight');
     }
     elt.classList.add('apiary-group-brood');
     this.stackService.setBroodChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-brood')));
     this.option.baseOption.series = [];
     this.setOptionForStackChart();
-    console.log(this.stackService.getHiveSelect());
     if (this.stackService.getHiveSelect().length >= 1) {
       this.loadAllHiveAfterRangeChange((options: any) => {
         this.stackService.getBroodChartInstance().setOption(options, true);
@@ -124,7 +125,9 @@ export class VitalityComponent implements OnInit, OnDestroy {
     serieMarkBrood.markArea.data[0][1].yAxis = 100;
     this.option.baseOption.series.push(serieMarkBrood);
 
-    let xAxis = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
+    let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
+    xAxis.max = this.melliDateService.getRangeForReqest()[1];
+    xAxis.min = this.melliDateService.getRangeForReqest()[0];
     xAxis.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getDailyDate(new Date(value));
     };
@@ -236,10 +239,10 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
-   * @param markerSerie 
-   * @param date 
-   * @param series 
+   *
+   * @param markerSerie
+   * @param date
+   * @param series
    */
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';

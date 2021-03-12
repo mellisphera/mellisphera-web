@@ -42,7 +42,7 @@ export const BASE_OPTIONS = {
                 saveAsImage: {}
             }
         },
-        dataZoom: [
+        /*dataZoom: [
             {
                 show: true,
                 realtime: true,
@@ -60,7 +60,7 @@ export const BASE_OPTIONS = {
                 filterMode: 'empty',
                 left: 'left'
             },
-        ],
+        ],*/
         grid: [{
             containLabel: true,
             top: 11,
@@ -181,7 +181,7 @@ export const BASE_OPTIONS = {
                 animation: false,
                 type: 'cross'
             },
-            
+
             formatter: null
         },
         axisPointer: {
@@ -189,12 +189,12 @@ export const BASE_OPTIONS = {
         },
         yAxis: [],
         grid: [
-            { 
-                x: '3%', 
-                y: '2%', 
+            {
+                x: '3%',
+                y: '2%',
                 width: '85%',
                 left: '6%',
-                height: '35%', 
+                height: '35%',
                 background: 'white'
             },
              { x: '3%', y: '41%', left: '6%', width: '85%', height: '25%', background: 'white' },

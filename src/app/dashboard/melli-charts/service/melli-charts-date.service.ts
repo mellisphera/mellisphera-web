@@ -22,9 +22,12 @@ export class MelliChartsDateService {
 
 
   private rangeDateForRequest: Date[]; // for request
+  private rangeRefDayForRequest: Date[];
   /* Display */
   public start: Date;
   public end: Date;
+  public refDayStart: Date;
+  public refDayEnd: Date;
 
   public ranges: DataRange[];
   constructor() {
@@ -46,7 +49,7 @@ export class MelliChartsDateService {
     this.setRange(this.ranges[4]);
   }
 
-  
+
   setRange(scale: DataRange): void {
     let date = new Date();
     switch(scale.type){
@@ -75,7 +78,7 @@ export class MelliChartsDateService {
     this.rangeDateForRequest[1].setHours(23);
     this.rangeDateForRequest[1].setMinutes(0);
     this.rangeDateForRequest[1].setSeconds(0);
-    console.log(this.rangeDateForRequest);
+    //console.log(this.rangeDateForRequest);
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
   }
@@ -119,9 +122,29 @@ export class MelliChartsDateService {
     range[1].setMinutes(0);
     range[1].setSeconds(0);
     this.rangeDateForRequest = [range[0], range[1]];
-    console.log(this.rangeDateForRequest);
+    //console.log(this.rangeDateForRequest);
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
   }
+
+  setRefDayRangeForRequest( _range: Date[] ){
+    const range: Date[] = [new Date(_range[0]), new Date(_range[1])];
+    range[0].setHours(0);
+    range[0].setMinutes(0);
+    range[0].setSeconds(0);
+    //range[1].setDate(range[1].getDate());
+    range[1].setHours(23);
+    range[1].setMinutes(0);
+    range[1].setSeconds(0);
+    this.rangeRefDayForRequest = [range[0], range[1]];
+    //console.log(this.rangeDateForRequest);
+    this.refDayStart = this.rangeRefDayForRequest[0];
+    this.refDayEnd = this.rangeRefDayForRequest[1];
+  }
+
+  getRefDayRangeForRequest(){
+    return this.rangeRefDayForRequest;
+  }
+
 
 }

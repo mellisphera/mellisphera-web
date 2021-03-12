@@ -1,0 +1,66 @@
+<!-- Copyright 2018-present Mellisphera
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
+<div>
+  <div class="btnNavWeight">
+    <ul class="nav ul-weight">
+      <li>
+        <label for="raw-check">
+          <input id="raw-check" type="checkbox" (change)="showGraph('raw-weight')" >
+          {{ 'MELLICHARTS.WEIGHT.CHECKBOX.RAW' | translate }}
+        </label>
+      </li>
+      <li>
+        <label for="norm-check">
+          <input id="norm-check" type="checkbox" (change)="showGraph('norm-weight')" >
+          {{ 'MELLICHARTS.WEIGHT.CHECKBOX.NORM' | translate }}
+        </label>
+      </li>
+      <li>
+        <label for="gain-check">
+          <input id="gain-check" type="checkbox" (change)="showGraph('gain-weight')" >
+          {{ 'MELLICHARTS.WEIGHT.CHECKBOX.GAIN' | translate }}
+        </label>
+      </li>
+    </ul>
+    <div id="ref_date">
+      <div class="input-wrapper">
+        <i class="fa fa-calendar"></i>
+        <input class="weight_ref_date" placeholder="{{'MELLICHARTS.WEIGHT.REF_DATE' | translate}}" [(ngModel)]="ref_Date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="refDate()">
+        <owl-date-time [pickerType]="'calendar'" #dtPicker1></owl-date-time>
+    </div>
+  </div>
+
+  <div id="weight-render">
+    <section (window:resize)="onResize($event)">
+      <h3 id="raw-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.RAW' | translate }}</h3>
+      <h3 id="norm-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.NORM' | translate }}</h3>
+      <h3 id="gain-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.GAIN' | translate }}</h3>
+      <div class="chart" style="width: 100%; height:80vh;" id="graph-weight"></div>
+    </section>
+    <div class="infoToolip">
+      <popover-content #weightCalendarTooltip placement="left" [animation]="true"
+          [closeOnClickOutside]="false">
+          <span class="helpTooltip">
+            {{ 'MELLICHARTS.HELP.WEIGHT' | translate }}
+          </span>
+      </popover-content>
+      <div [popover]="weightCalendarTooltip" style="font-size: 15px !important;">
+          <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <div id="weight-table">
+
+  </div>
+</div>
+

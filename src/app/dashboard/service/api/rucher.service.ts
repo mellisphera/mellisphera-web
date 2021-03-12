@@ -139,7 +139,12 @@ export class RucherService {
             (apiary) => {
                 console.log(apiary);
                 this.ruchers = apiary.filter(apiary => apiary !== null && apiary.userId === this.user.getIdUserLoged());
+                console.log(this.ruchers);
+                /* DELETE THIS LINE IF YOU WANT TO SHOW SHARED APIARIES */
+                apiary = this.ruchers;
+                /* */
                 this.sharingApiary = apiary.filter(apiary => apiary.userId !== this.user.getIdUserLoged());
+                console.log(this.sharingApiary);
                 this.allApiaryAccount = apiary.sort((a, b) => {
                     return a.name.localeCompare(b.name);
                 });

@@ -10,6 +10,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 const BROOD = 'BROOD';
+const WEIGHT = 'WEIGHT';
 const WINCOME = 'WINCOME';
 const WEIGHT_MAX = 'WEIGHT_MAX';
 const TEMP_INT_MAX = 'TEMP_INT_MAX';
@@ -171,7 +172,7 @@ export class GraphGlobal {
       this.setMetric();
     }
 
-    //Table of titles : 
+    //Table of titles :
     //FR
     this.titresFR = [
       { 'graph': 'reserveMiel', 'titre': 'Stock de miel' },
@@ -637,8 +638,8 @@ export class GraphGlobal {
   }
 
   /**
-   * 
-   * @param typeGraph 
+   *
+   * @param typeGraph
    */
   getNameZoneByGraph(typeGraph: string): string {
     if (typeGraph === 'BROOD') {
@@ -727,9 +728,9 @@ export class GraphGlobal {
   }
 
   /**
-   * 
-   * @param date 
-   * @param optionValue 
+   *
+   * @param date
+   * @param optionValue
    */
   getColorCalendarByValue(date: Date, optionValue?: any): string {
     let dateToday = new Date();
@@ -809,9 +810,9 @@ export class GraphGlobal {
 }
 
   /**
-   * 
-   * @param type 
-   * @param extraData 
+   *
+   * @param type
+   * @param extraData
    */
   getTooltipBySerie(type: Tools, extraData?: any[]): any {
     const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);

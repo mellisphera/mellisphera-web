@@ -52,6 +52,8 @@ export class StackComponent implements OnInit {
       elt.classList.remove('apiary-group-brood');
     } else if (elt.classList.contains('apiary-group-hive')) {
       elt.classList.remove('apiary-group-hive');
+    } else if (elt.classList.contains('apiary-group-weight')){
+      elt.classList.remove('apiary-group-weight');
     }
     elt.classList.add('apiary-group-stack');
     this.options = Object.assign({}, BASE_OPTIONS.baseOptionStack);
@@ -63,9 +65,9 @@ export class StackComponent implements OnInit {
     //log(this.options);
     /*     if (this.stackService.getEchartInstance() === null) {
           this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
-          this.setOptionForStackChart();  
+          this.setOptionForStackChart();
         } */
-    
+
         this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
         if (!this.checkIfChartIsUpdate()) {
           this.setOptionForStackChart();
@@ -196,16 +198,16 @@ export class StackComponent implements OnInit {
     let obsArray = [];
     obsArray = this.stackService.getHiveSelect().map(_hive => {
       return [
-        { hive: _hive, 
+        { hive: _hive,
           name: _hive.name + ' / TempExt',
           obs: this.recordService.getTempExtByHive(_hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
-        { hive: _hive, 
+        { hive: _hive,
           name: _hive.name + ' / TempInt',
           obs: this.recordService.getTempIntByHive(_hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
-        { hive: _hive, 
+        { hive: _hive,
           name: _hive.name + ' / Weight',
           obs: this.recordService.getWeightByHive(_hive._id, this.melliDate.getRangeForReqest(), this.userPrefService.getUserPref().unitSystem) },
-        { hive: _hive, 
+        { hive: _hive,
           name: _hive.name + ' / Hint',
           obs: this.recordService.getHintIntByHive(_hive._id, this.melliDate.getRangeForReqest()) }
       ];
@@ -380,7 +382,7 @@ export class StackComponent implements OnInit {
       return false;
     }
   }
-  
+
 
   ngOnDestroy() {
     /*     this.stackService.cleanSlectedHives();

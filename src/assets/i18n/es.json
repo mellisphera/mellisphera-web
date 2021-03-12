@@ -16,7 +16,7 @@
                 "Haga clic en cada egagrópila para acceder a los datos específicos de la colmena",
                 "Navegue hacia atrás en el tiempo con las flechas alrededor de la fecha en la parte superior de la interfaz",
                 "El estado físico de la colmena se calcula con nuestro exclusivo modelo BFit",
-                
+
                 "Primera nota de configuración:",
                 "1/arrastra y suelta tu propia foto o mapa del colmenar",
                 "2/abrir el botón de bloqueo y colocar los pellets en la ubicación de la colmena."],
@@ -29,7 +29,7 @@
                 "El rango va desde 0% (sin cría) hasta 100% (cría completa).",
                 "Las colmenas con niveles de cría superiores al 80% producen miel.",
                 "El nivel de cría se calcula con nuestro exclusivo modelo BForce."],
-                "WEIGHT_CALENDAR": ["Calendario de peso: muestra la productividad diaria de las colmenas equipadas con una balanza.", 
+                "WEIGHT_CALENDAR": ["Calendario de peso: muestra la productividad diaria de las colmenas equipadas con una balanza.",
                     "Sólo se muestran los ingresos y los consumos de peso.",
                     "Las operaciones de los apicultores como alimentar o añadir la cena son descartadas."]
             }
@@ -428,9 +428,10 @@
             "BROOD": ["Superponer las progresiones de cría de varias colmenas en el mismo o diferentes colmenares",
             "Como regla general, el 10% es un cuadro de cría, el 40% 4 cuadros, etc.",
             "Dependiendo de su práctica y modelo de colmena (langstroth, dadant) tendrá que ajustar esas relaciones",
-                
+
             "Nota importante: ¡sólo las colmenas que alcancen el umbral del 80% producirán miel ! Esperamos que sepa cómo hacerlo realidad."],
-            "RAWDATA" : "Esta pantalla es muy similar a la que ya estás acostumbrado en MyBroodminder. También es posible manipular diferentes colmenas/colmenares."
+            "RAWDATA" : "Esta pantalla es muy similar a la que ya estás acostumbrado en MyBroodminder. También es posible manipular diferentes colmenas/colmenares.",
+            "WEIGHT" : "Superponer las progresiones de peso de varias colmenas en el mismo o diferentes colmenares"
         },
         "NAV": {
             "HIVE": "Colmena",
@@ -438,7 +439,9 @@
             "BROOD": "Cría",
             "BROOD_TOOLTIP": "Cría",
             "DONNEE": "Datos",
-            "DONNEE_TOOLTIP": "Datos"
+            "DONNEE_TOOLTIP": "Datos",
+            "WEIGHT" : "Peso",
+            "WEIGHT_TOOLTIP" : "Peso"
         },
         "DATE": {
             "START": "Inicio",
@@ -447,7 +450,18 @@
         },
         "BROOD": {
             "TITLE": "Evolucion diaria de la cria"
-        }
+        },
+        "WEIGHT": {
+          "RAW": "Evolucion diaria del peso",
+          "NORM": "Evolucion diaria del peso normalizado",
+          "GAIN": "Evolución diaria del aumento de peso",
+          "REF_DATE": "Fecha de referencia",
+          "CHECKBOX": {
+              "RAW": "Bruto",
+              "NORM": "Normalizado",
+              "GAIN": "Aumento"
+          }
+      }
     },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icono",

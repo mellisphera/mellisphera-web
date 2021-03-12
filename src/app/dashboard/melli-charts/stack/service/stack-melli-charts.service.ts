@@ -25,6 +25,7 @@ export class StackMelliChartsService {
   private colorByHive: Array<any>;
   private stackEchartInstance: any;
   private broodChartInstance: any;
+  private weightChartInstance: any;
   public range: DataRange;
   private arrayColor: Array<any>;
   constructor(private httpClient: HttpClient) {
@@ -66,6 +67,28 @@ export class StackMelliChartsService {
   getBroodChartInstance(): any {
     return this.broodChartInstance;
   }
+
+  /**
+  *
+  *
+  * @param {*} chartInstance
+  * @memberof StackMelliChartsService
+  */
+ setWeightChartInstance(chartInstance: any): void {
+   this.weightChartInstance = chartInstance;
+ }
+
+
+ /**
+  *
+  *
+  * @param {*} chartInstance
+  * @returns {*}
+  * @memberof StackMelliChartsService
+  */
+ getWeightChartInstance(): any {
+   return this.weightChartInstance;
+ }
 
 /**
  *

@@ -28,13 +28,14 @@ import { StackMelliChartsService } from './stack/service/stack-melli-charts.serv
 import { OwlNativeDateTimeModule, OwlDateTimeModule } from 'ng-pick-datetime';
 import { AlertsService } from '../service/api/alerts.service';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
+import { WeightComponent } from './weight/weight.component';
 
 @NgModule({
   providers:[
     DailyManagerService,
     GraphGlobal,
     HourlyManagerService,
-    StackMelliChartsService
+    StackMelliChartsService,
   ],
   declarations: [
     MelliChartsComponent,
@@ -43,7 +44,8 @@ import { GraphGlobal } from '../graph-echarts/GlobalGraph';
     StackComponent,
     VitalityComponent,
     DailyComponent,
-    HourlyComponent
+    HourlyComponent,
+    WeightComponent,
    ],
   imports: [
     MelliChartsRouting,

@@ -23,7 +23,8 @@ import { RoutingHistoryService } from '../../service/routing-history.service';
 export const PATH = {
   BROOD: /brood/g,
   HIVE: /hive/g,
-  STACK: /stack/g
+  STACK: /stack/g,
+  WEIGHT: /weight/g
 };
 
 @Component({
@@ -49,6 +50,8 @@ export class HiveComponent implements OnInit, AfterViewInit {
       elt.classList.remove('apiary-group-brood');
     } else if (elt.classList.contains('apiary-group-stack')) {
       elt.classList.remove('apiary-group-stack');
+    } else if (elt.classList.contains('apiary-group-weight')){
+      elt.classList.remove('apiary-group-weight');
     }
     elt.classList.add('apiary-group-hive');
   }

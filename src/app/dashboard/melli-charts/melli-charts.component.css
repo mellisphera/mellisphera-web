@@ -19,21 +19,14 @@ limitations under the License. */
     justify-content: space-between;
     height: auto;
 }
-.apiary-group-hive{
+.apiary-group-hive, .apiary-group-brood, .apiary-group-stack, .apiary-group-weight{
     width: 13%;
-}
-.apiary-group-brood{
-    width: 13%;
-}
-.apiary-group-stack{
-    width: 13%;
-
 }
 #apiary-group, .list-group-item {
 /*     background-color: #204d74;
  */    color: black;
 }
-#apiary-group::-webkit-scrollbar { 
+#apiary-group::-webkit-scrollbar {
     /* This is the magic bit for WebKit */
     display: none;
   }
@@ -185,29 +178,29 @@ nav[role=admin-navigation] {
   }
 
   .button0 {
-    background-color: #4F4F51; 
-    color: white; 
+    background-color: #4F4F51;
+    color: white;
     border: 2px solid #70A8B2;
     border-radius: 4px;
   }
-  
+
   .button0:hover {
     background-color: white;
-    color: #4F4F51; 
+    color: #4F4F51;
   }
 
   .nav-active {
     background-color: white;
-    color: #4F4F51; 
+    color: #4F4F51;
   }
-  
+
   .active0{
     background-color: white;
-    color: #4F4F51; 
+    color: #4F4F51;
   }
-  
+
   .active0:hover{
-    color: #70A8B2; 
+    color: #70A8B2;
     border: 2px solid #4F4F51;
   }
 
@@ -263,10 +256,10 @@ nav[role=admin-navigation] {
 
 
 }
-@media only screen 
-  and (min-width: 1024px) 
-  and (max-height: 1366px) 
-  and (orientation: landscape) 
+@media only screen
+  and (min-width: 1024px)
+  and (max-height: 1366px)
+  and (orientation: landscape)
   and (-webkit-min-device-pixel-ratio: 1.5) {
 /*     #apiary-group{
         width: 12%;

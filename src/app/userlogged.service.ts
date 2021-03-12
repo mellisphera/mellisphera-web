@@ -84,7 +84,7 @@ export class UserloggedService {
     return JSON.parse(window.localStorage.getItem('sharingApiary')) || [];
   }
 
-  
+
 
   /**
    *
