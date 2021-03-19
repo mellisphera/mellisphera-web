@@ -89,7 +89,7 @@ export class StackComponent implements OnInit {
    * @memberof StackComponent
    */
   setOptionForStackChart(): void {
-    let yAxisWeight = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis));
+    let yAxisWeight = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
     yAxisWeight.name = this.graphGlobal.weight.name;
     yAxisWeight.min = this.graphGlobal.weight.min;
     yAxisWeight.max = this.graphGlobal.weight.max;
@@ -106,7 +106,7 @@ export class StackComponent implements OnInit {
     this.options.xAxis.push(xAxis);
 
 
-    let yAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis));
+    let yAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
     yAxisTemp.name = this.graphGlobal.temp.name;
     yAxisTemp.min = this.graphGlobal.temp.min;
     yAxisTemp.max = this.graphGlobal.temp.max;
@@ -124,7 +124,7 @@ export class StackComponent implements OnInit {
     this.options.xAxis.push(xAxisTemp);
 
 
-    let yAxisHum = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis));
+    let yAxisHum = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
     yAxisHum.name = this.graphGlobal.humidity.name;
     yAxisHum.min = this.graphGlobal.humidity.min;
     yAxisHum.gridIndex = 2;

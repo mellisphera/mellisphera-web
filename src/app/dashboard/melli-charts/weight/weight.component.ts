@@ -132,7 +132,7 @@ export class WeightComponent implements OnInit {
       this.option.baseOption.xAxis = [];
     }
     // Y-Axis Options
-    let yAxis = Object.assign({}, BASE_OPTIONS.yAxis);
+    let yAxis = Object.assign({}, BASE_OPTIONS.yAxis[1]);
     if(this.gainWeightDisplay){
       yAxis.name = this.graphGlobal.weight.income_name;
     }

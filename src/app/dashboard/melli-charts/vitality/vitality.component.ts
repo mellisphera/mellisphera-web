@@ -114,7 +114,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     if (this.option.baseOption.xAxis.length > 0) {
       this.option.baseOption.xAxis = [];
     }
-    let yAxis = Object.assign({}, BASE_OPTIONS.yAxis);
+    let yAxis = Object.assign({}, BASE_OPTIONS.yAxis[0]);
     yAxis.name = this.graphGlobal.brood.name;
     yAxis.min = 0;
     yAxis.max = 100;

@@ -117,7 +117,8 @@ export const BASE_OPTIONS = {
         calendar: CALENDAR.calendarMelliChart,
     },
 
-    yAxis: {
+    yAxis: [
+      {
         name: '',
         show: true,
         nameLocation: 'middle',
@@ -128,7 +129,21 @@ export const BASE_OPTIONS = {
         min: 0,
         max: 0,
         gridIndex: 0
-    },
+      },
+      {
+        name: '',
+        show: true,
+        nameLocation: 'middle',
+        type: 'value',
+        splitArea: {},
+        nameGap: 25,
+        interval: 0,
+        min: (value) => {return 0},
+        max: (value) => {return 0},
+        gridIndex: 0
+      },
+    ],
+
     tooltip: {
         trigger: 'item',
         position: 'top',
