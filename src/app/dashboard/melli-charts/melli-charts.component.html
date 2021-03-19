@@ -48,7 +48,7 @@ limitations under the License. -->
             <div id="input-date">
               <div class="form-group">
                 <label>{{ 'MELLICHARTS.DATE.START' | translate }} </label>
-                <input class="form-control" [owlDateTimeTrigger]="dt1" [(ngModel)]="melliChartDate.start"
+                <input id="calendar-begin" class="form-control" [owlDateTimeTrigger]="dt1" [(ngModel)]="melliChartDate.start"
                   [owlDateTime]="dt1">
                 <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1"
                   #dt1></owl-date-time>
@@ -56,7 +56,7 @@ limitations under the License. -->
               </div>
               <div class="form-group">
                 <label>{{ 'MELLICHARTS.DATE.END' | translate }} </label>
-                <input class="form-control" [owlDateTimeTrigger]="dt2" [(ngModel)]="melliChartDate.end"
+                <input id="calendar-end" class="form-control" [owlDateTimeTrigger]="dt2" [(ngModel)]="melliChartDate.end"
                   [owlDateTime]="dt2">
                 <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1"
                   #dt2></owl-date-time>

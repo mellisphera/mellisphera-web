@@ -460,6 +460,20 @@
               "RAW": "Bruto",
               "NORM": "Normalizado",
               "GAIN": "Aumento"
+          },
+          "TABLE":{
+            "DATE":"Fecha",
+            "HIVE": "Colmena",
+            "RAW":{
+              "T0": "Peso a t0",
+              "7DAYS": "Pseo a D-7",
+              "15DAYS": "Peso a D-15"
+            },
+            "GAIN":{
+              "T0": "Aumento desde t0",
+              "7DAYS": "Aumento los ultimos 7 dias",
+              "15DAYS": "Aumento los ultimos 15 dias"
+            }
           }
       }
     },

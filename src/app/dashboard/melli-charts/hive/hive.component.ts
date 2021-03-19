@@ -45,6 +45,7 @@ export class HiveComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.setHeightCalendar(() => {});
+
     const elt = document.getElementsByClassName('apiaryGroup')[0];
     if (elt.classList.contains('apiary-group-brood')) {
       elt.classList.remove('apiary-group-brood');

@@ -445,8 +445,23 @@
               "RAW": "Raw",
               "NORM": "Normalized",
               "GAIN": "Gain"
+          },
+          "TABLE":{
+            "DATE":"Date",
+            "HIVE": "Hives",
+            "RAW":{
+              "T0": "Weight at t0",
+              "7DAYS": "Weight at D-7",
+              "15DAYS": "Weight at D-15"
+            },
+            "GAIN":{
+              "T0": "Gain since t0",
+              "7DAYS": "Gain last 7 days",
+              "15DAYS": "Gain last 15 days"
+            }
+
           }
-      }
+        }
     },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icon",

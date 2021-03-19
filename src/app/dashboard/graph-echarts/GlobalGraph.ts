@@ -52,7 +52,8 @@ export class GraphGlobal {
     min: number,
     max: number,
     interval: number,
-    unitW: string
+    unitW: string,
+    income_name: string
   };
   public moon: {
     phase: string,
@@ -117,7 +118,8 @@ export class GraphGlobal {
       min: null,
       max: 0,
       interval: 0,
-      unitW: 'Kg'
+      unitW: 'Kg',
+      income_name: 'Gain'
     };
     this.weightIncome = {
       gain: '',
@@ -244,6 +246,7 @@ export class GraphGlobal {
     // If he is French
     if (this.translateService.currentLang === 'fr') {
       this.weight.name = 'Poids (lbs)';
+      this.weight.income_name = 'Gain (lbs)';
       this.humidity.name = 'Humidité';
       this.rain.name = 'Pluie';
       this.weightIncome.gain = 'Gain';
@@ -260,6 +263,7 @@ export class GraphGlobal {
       // EN
     } else if (this.translateService.currentLang === 'es') {
       this.weight.name = 'Peso (lbs)';
+      this.weight.income_name = 'Aumento (lbs)';
       this.humidity.name = 'Humedad ';
       this.rain.name = 'Lluvia';
       this.snow.name = 'Nieve';
@@ -275,6 +279,7 @@ export class GraphGlobal {
       this.brood.name = 'Cria (%)';
     } else {
       this.weight.name = 'Weight (lbs)';
+      this.weight.income_name = 'Gain (lbs)';
       this.humidity.name = 'Humidity ';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Loss';
@@ -309,6 +314,7 @@ export class GraphGlobal {
     // If he is French
     if (this.translateService.currentLang === 'fr') {
       this.weight.name = 'Poids (Kg)';
+      this.weight.income_name = 'Gain (Kg)';
       this.humidity.name = 'Humidité (%)';
       this.rain.name = 'Pluie';
       this.snow.name = 'Neige';
@@ -326,6 +332,7 @@ export class GraphGlobal {
       // EN
     }  else if (this.translateService.currentLang === 'es') {
       this.weight.name = 'Peso (Kg)';
+      this.weight.income_name = 'Aumento (Kg)';
       this.humidity.name = 'Humedad (%)';
       this.rain.name = 'Lluvia';
       this.snow.name = 'Nieve';
@@ -340,6 +347,7 @@ export class GraphGlobal {
       this.brood.name = 'Cria (%)';
     } else {
       this.weight.name = 'Weight (Kg)';
+      this.weight.income_name = 'Gain (Kg)';
       this.humidity.name = 'Humidity (%)';
       this.wind.name = 'Wind';
       this.weightIncome.gain = 'Gain';

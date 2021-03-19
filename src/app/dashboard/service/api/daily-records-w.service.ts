@@ -93,7 +93,7 @@ export class DailyRecordsWService {
             }
           },
           title: {
-            text: this.graphGlobal.getTitle("ExternalTemperature") + '(max, ' + (this.unitSystem === 'METRIX' ? '°C' : '°F') + ')'
+            text: this.graphGlobal.getTitle("ExternalTemperature") + '(max, ' + (this.unitSystem === 'METRIC' ? '°C' : '°F') + ')'
           },
           visualMap: {
             min: this.unitSystem === 'METRIC' ? -10 : 15,
@@ -295,16 +295,41 @@ export class DailyRecordsWService {
   }
 
   /**
-   * 
-   * @param hiveId 
-   * @param range 
+   *
+   * @param hiveId
+   * @param range
    */
   getWeightByHive(hiveId: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightMax/' + hiveId, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
     }));;
+  }
+
+
+  /**
+   *
+   * @param hiveId
+   * @param range
+   */
+  getWeightMinByHive(hiveId: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightMin/' + hiveId, range).map(_elt => _elt.map(_value => {
+      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
+    }));;
+  }
+
+
+  /**
+   *
+   * @param hiveId
+   * @param range
+   */
+  getWeightIncomeGainByHive(hiveId: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightIncomeGain/' + hiveId, range).map(_elt => _elt.map(_value => {
+      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
+    }));;
 
   }
+
   /**
    *
    * @public
@@ -353,7 +378,7 @@ export class DailyRecordsWService {
     previousDay.setDate(this.rangeDailyRecord.getDate() - 1);
     previousDay.setHours(23);
     previousDay.setMinutes(0);
-    tabDate = [previousDay, this.rangeDailyRecord]; 
+    tabDate = [previousDay, this.rangeDailyRecord];
     this.http.post<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/apiary/' + apiaryId, tabDate).subscribe(
       (data) => {
         if (data[0] != null) {

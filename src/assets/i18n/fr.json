@@ -445,8 +445,23 @@
               "RAW": "Brut",
               "NORM": "Normalisé",
               "GAIN": "Gain"
+          },
+          "TABLE":{
+            "DATE":"Date",
+            "HIVE": "Ruches",
+            "RAW":{
+              "T0": "Poids a t0",
+              "7DAYS": "Poids a J-7",
+              "15DAYS": "Poids a J-15"
+            },
+            "GAIN":{
+              "T0": "Gain depuis t0",
+              "7DAYS": "Gain 7 derniers jours",
+              "15DAYS": "Gain 15 derniers jours"
+            }
+
           }
-      }
+        }
     },
 
     "ALERT_CONF_PAGE": {

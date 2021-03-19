@@ -15,20 +15,23 @@ import { SERIES } from "./SERIES";
 export const BASE_OPTIONS = {
     baseOptionHourly: {
         tooltip: {
-            trigger: 'axis',
+            /*trigger: 'axis',
             axisPointer: {
                 animation: false
             },
-            formatter: null
+            formatter: null*/
+            trigger:'item',
+            //showContent: true,
+            formatter: null,
         },
         legend: {
             orient: 'horizontal',
             data: [],
         },
-        axisPointer: {
+        /*axisPointer: {
             link: { xAxisIndex: 'all' }
-        },
-        toolbox: {
+        },*/
+        /*toolbox: {
             orient: 'vertical',
             itemSize: 18,
             left: 'right',
@@ -41,7 +44,7 @@ export const BASE_OPTIONS = {
                 restore: {},
                 saveAsImage: {}
             }
-        },
+        },*/
         /*dataZoom: [
             {
                 show: true,
@@ -51,13 +54,13 @@ export const BASE_OPTIONS = {
             },
             {
                 type: 'inside',
-                filterMode: 'empty',
+                filter: 'none',
                 realtime: true,
             },
             {
                 type: 'inside',
                 yAxisIndex: 0,
-                filterMode: 'empty',
+                filter: 'none',
                 left: 'left'
             },
         ],*/
@@ -121,7 +124,7 @@ export const BASE_OPTIONS = {
         type: 'value',
         splitArea: {},
         nameGap: 25,
-        //interval: 0,
+        interval: 0,
         min: 0,
         max: 0,
         gridIndex: 0

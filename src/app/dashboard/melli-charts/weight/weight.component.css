@@ -45,17 +45,90 @@
   margin-bottom: 10px;
 }
 
-.fa-calendar {
-  padding: 10px;
+.fa-calendar{
+  padding-top: 8px;
   min-width: 40px;
+  font-size: 20px;
 }
 
 .weight_ref_date{
-  width: 100%;
+  width: 85%;
   padding: 10px;
   text-align: center;
 }
 
+.delete-date{
+  height: 41px;
+  width: 10px;
+  border: 0;
+  background-color: transparent;
+  margin-left: -30px;
+}
+
+.delete-date:focus{
+  outline: 0;
+}
+
+.fa-times{
+  font-size: 24px;
+  margin-left: -10px;
+}
+
+.fa-times:hover{
+  color:red;
+}
+
 .weight_ref_date:hover{
   cursor: pointer;
+}
+
+#weight-table{
+  margin-bottom: 20px;
+}
+
+#weight-table > table{
+  font-family: 'Poppins' !important;
+  border-collapse: collapse;
+  width: 90%;
+  margin: 0 auto; /* or margin: 0 auto 0 auto */
+}
+
+#weight-table > table td, #weight-table > table th{
+  font-family: 'Poppins' !important;
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#weight-table > table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #3d3d3d;
+  color: white;
+}
+
+@media screen and (orientation: landscape){
+  .infoToolip{
+    position: fixed;
+    right: 30px;
+    bottom: 10px;
+  }
+  .fa-question-circle{
+    position: fixed;
+    right: 30px;
+    bottom: 10px;
+  }
+}
+
+@media screen and (orientation: portrait){
+  .infoToolip{
+    position: fixed;
+    right: 30px;
+    bottom: 10px;
+  }
+  .fa-question-circle{
+    position: fixed;
+    right: 30px;
+    bottom: 10px;
+  }
 }

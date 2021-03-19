@@ -52,7 +52,7 @@ export class WeightComponent implements OnInit {
         {
           option: {
             grid:{
-              width: '92%'
+              width: '90%'
             },
             toolbox: {
               show: true,
@@ -77,7 +77,7 @@ export class WeightComponent implements OnInit {
           },
           option: {// 这里写此规则满足下的option
             grid:[{
-              width: '97%'
+              width: '90%'
             }],
             toolbox: {
               show: false
@@ -89,6 +89,16 @@ export class WeightComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    const elt = document.getElementsByClassName('apiaryGroup')[0];
+    if (elt.classList.contains('apiary-group-hive')) {
+      elt.classList.remove('apiary-group-hive');
+    } else if (elt.classList.contains('apiary-group-stack')) {
+      elt.classList.remove('apiary-group-stack');
+    } else if (elt.classList.contains('apiary-group-weight')){
+      elt.classList.remove('apiary-group-brood');
+    }
+    elt.classList.add('apiary-group-brood');
     this.changeRawWeight(true);
     this.initGraph();
   }
@@ -110,6 +120,10 @@ export class WeightComponent implements OnInit {
     this.stackService.getWeightChartInstance().clear();
   }
 
+  getGainWeightDisplay(){
+    return this.gainWeightDisplay;
+  }
+
   setOptionForStackChart(): void {
     if (this.option.baseOption.yAxis.length > 0) {
       this.option.baseOption.yAxis = [];
@@ -119,20 +133,44 @@ export class WeightComponent implements OnInit {
     }
     // Y-Axis Options
     let yAxis = Object.assign({}, BASE_OPTIONS.yAxis);
-    yAxis.name = this.graphGlobal.weight.name;
+    if(this.gainWeightDisplay){
+      yAxis.name = this.graphGlobal.weight.income_name;
+    }
+    else{
+      yAxis.name = this.graphGlobal.weight.name;
+    }
+    if(this.gainWeightDisplay || this.normWeightDisplay){
+      yAxis.interval = 1;
+    }
+    else{
+      yAxis.interval = 5;
+    }
+
     // ADAPT Y AXIS TO WEIGHT DISPLAY
-    if(this.rawWeightDisplay){
-      yAxis.min = 0;
-      yAxis.max = 100;
-    }
-    else if(this.normWeightDisplay){
-      yAxis.min = 0;
-      yAxis.max = 5;
-    }
-    else if(this.gainWeightDisplay){
-      yAxis.min = -70;
-      yAxis.max = 70;
-    }
+    yAxis.min = function (value: any) {
+      if(value.min < -2){
+        let nb = Math.ceil(Math.abs(value.min)) / 2;
+        return Math.round(nb) * -2;
+      }
+      else{
+        if(value.min >= 0){
+          return 0;
+        }
+        else{
+          return -2;
+        }
+      }
+    };
+    yAxis.max = function (value) {
+      if(value.max > 5){
+        let nb = Math.ceil(value.max) / 5;
+        return Math.ceil(nb) * 5;
+      }
+      else{
+        return 5;
+      }
+    };
+
     this.option.baseOption.yAxis.push(yAxis);
 
     // X-Axis Options
@@ -143,16 +181,16 @@ export class WeightComponent implements OnInit {
       return this.unitService.getDailyDate(new Date(value));
     };
     this.option.baseOption.tooltip.formatter = (params) => {
-      return params.map((_elt, index) => {
-        return this.getTooltipFormater(_elt.marker, (index === 0 ? this.unitService.getDailyDate(_elt.data.name) : ''), new Array(
+      if(params.data.value != undefined){
+        return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data.name), new Array(
           {
-            name: _elt.seriesName,
-            value: this.unitService.getValRound(_elt.data.value[1]),
+            name: params.seriesName,
+            value: this.unitService.getValRound(params.data.value[1]),
             unit: this.graphGlobal.getUnitBySerieName('Weight')
           }
         ));
-      }).join('');
-   }
+      }
+    }
     this.option.baseOption.xAxis.push(xAxis);
     // Add Options to EChart graph
     this.stackService.getWeightChartInstance().setOption(this.option);
@@ -174,25 +212,35 @@ export class WeightComponent implements OnInit {
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';
     let templateValue = '{*} {n}: <B>{v} {u}</B> {R}';
-    let tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, date);
-    tooltipGlobal += series.map(_serie => {
-      // ADAPT GRAPH POPUP TO WEIGHT TYPE DISPLAY
-      if(this.normWeightDisplay){
-        return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, 'x'+_serie.value).replace(/{u}/g, '').replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
-      }
-      else if(this.gainWeightDisplay){
-        if(_serie.value >= 0){
-          return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, '+'+_serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+    let tooltipGlobal;
+    if(date === 'Invalid date'){
+      tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, this.unitService.getDailyDate(this.ref_Date) );
+    }
+    else{
+      tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, date);
+      tooltipGlobal += series.map(_serie => {
+        // ADAPT GRAPH POPUP TO WEIGHT TYPE DISPLAY
+        if(_serie.name === null){ // MARKLINE TOOLTIP
+          return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, '').replace(/{v}/g, '').replace(/{u}/g, '').replace(/{R}/g, '');
         }
-        else{
-          return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+        else{ // SERIES TOOLTIP
+          if(this.normWeightDisplay){
+            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, 'x'+_serie.value).replace(/{u}/g, '').replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+          }
+          else if(this.gainWeightDisplay){
+            if(_serie.value >= 0){
+              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, '+'+_serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+            }
+            else{
+              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+            }
+          }
+          else{
+            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+          }
         }
-      }
-      else{
-        return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
-      }
-    }).join('');
-
+      }).join('');
+    }
     return tooltipGlobal;
   }
 
@@ -201,105 +249,332 @@ export class WeightComponent implements OnInit {
     let obs;
 
     // GET WEIGHT FROM GIVEN DATE
-    if(this.ref_Date != undefined){ // IF REF DATE IS NOT UNDEFINED, FIND REF_WEIGHT
+    if(this.ref_Date !== undefined && this.ref_Date !== null){ // IF REF DATE IS NOT UNDEFINED, FIND REF_WEIGHT
       this.melliDateService.setRefDayRangeForRequest( [this.ref_Date, this.ref_Date] );
-      obs = this.stackService.getHiveSelect().map(_hive => {
-        return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightByHive(_hive._id, this.melliDateService.getRefDayRangeForRequest()) }
-      });
+      if(this.gainWeightDisplay){
+        obs = this.stackService.getHiveSelect().map(_hive => {
+          return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, this.melliDateService.getRefDayRangeForRequest()) }
+        });
+      }
+      else{
+        obs = this.stackService.getHiveSelect().map(_hive => {
+          return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, this.melliDateService.getRefDayRangeForRequest()) }
+        });
+      }
       Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
         _ref_weight => {
+          //console.log(_ref_weight);
           this.ref_Values = [];
+          //console.log(_ref_weight);
           _ref_weight.forEach((_elt, index) => { // ITERATE THROUGH REF WEIGHT ARRAY
-            if(_elt[0].value != undefined){
+            if(_elt[0] != undefined &&_elt[0].value != undefined){
               this.ref_Values.push(_elt[0].value);
             }
             else{
               console.log('No ref Value for' + obs[index].hive.name + ' at date ' + this.ref_Date);
+              this.ref_Values.push(null);
             }
           })
         },
         () => {},
-        () => {}
-      );
-    }
+        () => { // WHEN REF_VALUES ARE PUSHED TO ARRAY
+            // GET DAILY WEIGHT BETWEEN DATES IN NAVBAR
+            if(this.gainWeightDisplay){
+              if(this.ref_Date == undefined || this.ref_Date == null){ // IF REF_DATE IS UNDEFINED OR REF_DATE BEFORE START IN CALENDAR RANGE
+                obs = this.stackService.getHiveSelect().map(_hive => {
+                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
+                });
+              }
+              else{ // IF REF_DATE AFTER REF_DATE AFTER START IN CALENDAR RANGE
+                obs = this.stackService.getHiveSelect().map(_hive => {
+                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
+                });
+              }
 
-    // GET DAILY WEIGHT BETWEEN DATES IN NAVBAR
-    obs = this.stackService.getHiveSelect().map(_hive => {
-      return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
-    });
-    Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
-      _weight => {
-        if(this.ref_Date != undefined){ // TEST DATE IS NOT UNDEFINED
-          this.ref_Values.forEach((e,i) => {
-            if(e != null){ // TEST IF HIVE HAS REF_VALUE FOR GIVEN DATE
-              console.log("Date = "+ this.ref_Date + "\nHive name = " + obs[i].hive.name + "\nref_Value = " + e);
             }
             else{
-              console.log('No ref Value for' + obs[i].hive.name + ' at date ' + this.ref_Date);
+              obs = this.stackService.getHiveSelect().map(_hive => {
+                return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
+              });
             }
-          });
-        }
-        else{
-          if(this.normWeightDisplay || this.gainWeightDisplay){ // CONSOLE THING FOR NORMALIZED AND GAIN DISPLAY
-            console.log('Please enter a reference Date');
-          }
-        }
-        _weight.forEach((w_array: any[],index) => {
-          if(this.normWeightDisplay){ // NEW VALUES FOR NORMALIZED DISPLAY
-            w_array.forEach((_elt) => {
-              if(this.ref_Values != undefined){
-                if(this.ref_Values[index] != undefined){ // TEST IF HIVE HAS REF_VALUE
-                  let value: any = this.ref_Values[index];
-                  _elt.value = (_elt.value / value).toFixed(2);
+            Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
+              _weight => {
+                if(this.ref_Date !== undefined && this.ref_Values !== undefined){ // TEST DATE IS NOT UNDEFINED
+                  this.ref_Values.forEach((e,i) => {
+                    if(e != null){ // TEST IF HIVE HAS REF_VALUE FOR GIVEN DATE
+                      //console.log("Date = "+ this.ref_Date + "\nHive name = " + obs[i].hive.name + "\nref_Value = " + e);
+                    }
+                    else{
+                      console.log('No ref Value for' + obs[i].hive.name + ' at date ' + this.ref_Date);
+                    }
+                  });
                 }
-                else{ // DEFAULT VALUE IF NO REF VALUE
-                  _elt.value = 0.0;
+                else{
+                  if(this.normWeightDisplay){ // CONSOLE THING FOR NORMALIZED AND GAIN DISPLAY
+                    console.log('Please enter a reference Date');
+                  }
                 }
-              }
-              else{ // DEFAULT VALUE IF NO REF DATE
-                _elt.value = 0.0;
-              }
+                if(this.normWeightDisplay){ // NEW VALUES FOR NORMALIZED DISPLAY
+                  _weight.forEach((w_array: any[],index) => {
+                    w_array.forEach((_elt, i) => {
+                      if(this.ref_Values != undefined){
+                        if(this.ref_Values[index] != undefined){ // TEST IF HIVE HAS REF_VALUE
+                          let value: any = this.ref_Values[index];
+                          _elt.value = (_elt.value / value).toFixed(2);
+                        }
+                        else{ // DEFAULT VALUE IF NO REF VALUE
+                          _elt.value = 0.0;
+                        }
+                      }
+                      else{ // DEFAULT VALUE IF NO REF DATE
+                          _elt.value = 0.0;
+                      }
+                    });
+                  });
+                }
+                this.option.baseOption.series = [];
+                _weight.forEach((_elt: any[], index) => { // ITERATE THROUGH WEIGHT ARRAY
+                  this.getSerieByData(<any>_elt, obs[index].name, (serieComplete: any) => {
+                    serieComplete.itemStyle = {
+                      color: this.stackService.getColorByIndex(this.getHiveIndex(obs[index].hive), obs[index].hive)
+                    };
+                    // ADD DATA TO GRAPH
+                    let indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+                    if(this.gainWeightDisplay){
+                      serieComplete.type = 'bar';
+                    }
+                    else{
+                      serieComplete.showSymbol = true;
+                      serieComplete.symbol = 'emptyCircle';
+                      serieComplete.type = 'line';
 
-            });
-          }
-          if(this.gainWeightDisplay){ // NEW VALUES FOR GAINED DISPLAY
-            w_array.forEach((_elt) => {
-              if(this.ref_Values != undefined){
-                if(this.ref_Values[index] != undefined){
-                  let value: any = this.ref_Values[index];
-                  _elt.value = (_elt.value - value).toFixed(2);
-                }
-                else{ // DEFAULT VALUE IF NO REF VALUE
-                  _elt.value = 0.0;
-                }
+                    }
+                    if (indexSerie !== -1) {
+                      this.option.baseOption.series[indexSerie] = Object.assign({}, serieComplete);
+                    } else {
+                      this.option.baseOption.series.push(Object.assign({}, serieComplete));
+                    }
+                  });
+                  if(this.gainWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
+                    let cumul = 0.0;
+                    let lastIndex = _elt.length-1;
+                    for(let i=lastIndex; i > -1; i--){
+                      if( i !== lastIndex ){ // i > 0
+                        cumul += _elt[i].value;
+                        _elt[i].value = cumul;
+                      }
+                      else{ // i = 0
+                        _elt[i].value = 0.0;
+                      }
+                    }
+                    this.getSerieByData(<any>_elt, obs[index].name, (serieComplete: any) => {
+                      serieComplete.itemStyle = {
+                        color: this.stackService.getColorByIndex(this.getHiveIndex(obs[index].hive), obs[index].hive)
+                      };
+                      // ADD ANOTHER DATA SERIES TO GRAPH
+                      let indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+                      serieComplete.showSymbol = true;
+                      serieComplete.symbol = 'emptyCircle';
+                      serieComplete.type = 'line';
+                      if (indexSerie !== -1) {
+                        this.option.baseOption.series.splice(indexSerie+1,0,Object.assign({}, serieComplete));
+                      }
+                      else {
+                        this.option.baseOption.series.push(Object.assign({}, serieComplete));
+                      }
+                    });
+                  }
+                  // ADD MARKLINE
+                  if(this.ref_Date !== undefined && this.ref_Date !== null && this.option.baseOption.series[0] !== undefined){
+                    this.ref_Date.setHours(1);
+                    /*let j7: Date;
+                    let j14: Date;
+                    if(this.option.baseOption.series[0].data.length > 7){
+                      j7 = new Date(this.option.baseOption.series[0].data[6].name);
+                    }
+                    if(this.option.baseOption.series[0].data.length > 14){
+                      j14 = new Date(this.option.baseOption.series[0].data[14].name);
+                    }
+                    if(this.ref_Date < j14 && j14 !== undefined && j14!== null){
+                      this.option.baseOption.series[0].markLine = {data:
+                        [
+                          [
+                            {name: "Ref", xAxis: this.ref_Date, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                            {name: "end", xAxis: this.ref_Date, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                          ],
+                          [
+                            {name: "J-7", xAxis: j7, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                            {name: "end", xAxis: j7, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                          ],
+                          [
+                            {name: "J-15", xAxis: j14, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                            {name: "end", xAxis: j14, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                          ]
+                        ]
+                      }
+                    }
+                    else if(this.ref_Date < j7 && j7 !== undefined && j7 !== null){
+                      this.option.baseOption.series[0].markLine = {data:
+                        [
+                          [
+                            {name: "Ref", xAxis: this.ref_Date, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                            {name: "end", xAxis: this.ref_Date, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                          ],
+                          [
+                            {name: "J-7", xAxis: j7, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                            {name: "end", xAxis: j7, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                          ],
+                        ]
+                      }
+                    }
+                    else{*/
+                      this.option.baseOption.series[0].markLine = {data:
+                        [ {name: "", xAxis: this.ref_Date,lineStyle: {normal: { type:'dashed',color: 'red' } }, label:{normal:{show:false } } } ]
+                      }
+                    //}
+                  }
+                  this.updateTableData(_weight, obs);
+                })
+              },
+              () => {},
+              () => {
+                next(this.option);
+                this.stackService.getWeightChartInstance().hideLoading();
               }
-              else{ // DEFAULT VALUE IF NO REF DATE
-                _elt.value = 0.0;
-              }
-            });
-          }
-        })
-        _weight.forEach((_elt, index) => { // ITERATE THROUGH WEIGHT ARRAY
-          this.getSerieByData(<any>_elt, obs[index].name, (serieComplete: any) => {
-            serieComplete.itemStyle = {
-              color: this.stackService.getColorByIndex(this.getHiveIndex(obs[index].hive), obs[index].hive)
-            };
-            // ADD DATA TO GRAPH
-            const indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-            if (indexSerie !== -1) {
-              this.option.baseOption.series[indexSerie] = Object.assign({}, serieComplete);
-            } else {
-              this.option.baseOption.series.push(Object.assign({}, serieComplete));
-            }
+            )
+        }
+      );
+    }
+    else{ // IF DAILY DATE IS UNDEFINED
+      // GET DAILY WEIGHT BETWEEN DATES IN NAVBAR
+      if(this.gainWeightDisplay){
+        if(this.ref_Date == undefined || this.ref_Date == null){ // IF REF_DATE IS UNDEFINED OR REF_DATE BEFORE START IN CALENDAR RANGE
+          obs = this.stackService.getHiveSelect().map(_hive => {
+            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
           });
-        })
-      },
-      () => {},
-      () => {
-        next(this.option);
-        this.stackService.getWeightChartInstance().hideLoading();
+        }
+        else{ // IF REF_DATE AFTER REF_DATE AFTER START IN CALENDAR RANGE
+          obs = this.stackService.getHiveSelect().map(_hive => {
+            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
+          });
+        }
+
       }
-    )
+      else{
+        obs = this.stackService.getHiveSelect().map(_hive => {
+          return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
+        });
+      }
+      Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
+        _weight => {
+          if(this.ref_Date !== undefined && this.ref_Values !== undefined){ // TEST DATE IS NOT UNDEFINED
+            this.ref_Values.forEach((e,i) => {
+              if(e != null){ // TEST IF HIVE HAS REF_VALUE FOR GIVEN DATE
+                //console.log("Date = "+ this.ref_Date + "\nHive name = " + obs[i].hive.name + "\nref_Value = " + e);
+              }
+              else{
+                console.log('No ref Value for' + obs[i].hive.name + ' at date ' + this.ref_Date);
+              }
+            });
+          }
+          else{
+            if(this.normWeightDisplay){ // CONSOLE THING FOR NORMALIZED AND GAIN DISPLAY
+              console.log('Please enter a reference Date');
+            }
+          }
+          if(this.normWeightDisplay){ // NEW VALUES FOR NORMALIZED DISPLAY
+            _weight.forEach((w_array: any[],index) => {
+              w_array.forEach((_elt, i) => {
+                if(this.ref_Values != undefined){
+                  if(this.ref_Values[index] != undefined){ // TEST IF HIVE HAS REF_VALUE
+                    let value: any = this.ref_Values[index];
+                    _elt.value = (_elt.value / value).toFixed(2);
+                  }
+                  else{ // DEFAULT VALUE IF NO REF VALUE
+                    _elt.value = 0.0;
+                  }
+                }
+                else{ // DEFAULT VALUE IF NO REF DATE
+                    _elt.value = 0.0;
+                }
+              });
+            });
+          }
+          this.option.baseOption.series = [];
+          _weight.forEach((_elt: any[], index) => { // ITERATE THROUGH WEIGHT ARRAY
+            this.getSerieByData(<any>_elt, obs[index].name, (serieComplete: any) => {
+              serieComplete.itemStyle = {
+                color: this.stackService.getColorByIndex(this.getHiveIndex(obs[index].hive), obs[index].hive)
+              };
+              // ADD DATA TO GRAPH
+              let indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+              if(this.gainWeightDisplay){
+                serieComplete.type = 'bar';
+              }
+              else{
+                serieComplete.showSymbol = true;
+                serieComplete.symbol = 'emptyCircle';
+                serieComplete.type = 'line';
+
+              }
+              if (indexSerie !== -1) {
+                this.option.baseOption.series[indexSerie] = Object.assign({}, serieComplete);
+              } else {
+                this.option.baseOption.series.push(Object.assign({}, serieComplete));
+              }
+            });
+            if(this.gainWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
+              let cumul = 0.0;
+              let lastIndex = _elt.length-1;
+              for(let i=lastIndex; i > -1; i--){
+                if( i !== lastIndex ){ // i > 0
+                  cumul += _elt[i].value;
+                  _elt[i].value = cumul;
+                }
+                else{ // i = 0
+                  _elt[i].value = 0.0;
+                }
+              }
+              this.getSerieByData(<any>_elt, obs[index].name, (serieComplete: any) => {
+                serieComplete.itemStyle = {
+                  color: this.stackService.getColorByIndex(this.getHiveIndex(obs[index].hive), obs[index].hive)
+                };
+                // ADD ANOTHER DATA SERIES TO GRAPH
+                let indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+                serieComplete.showSymbol = true;
+                serieComplete.symbol = 'emptyCircle';
+                serieComplete.type = 'line';
+                if (indexSerie !== -1) {
+                  this.option.baseOption.series.splice(indexSerie+1,0,Object.assign({}, serieComplete));
+                }
+                else {
+                  this.option.baseOption.series.push(Object.assign({}, serieComplete));
+                }
+              });
+            }
+            // ADD MARKLINE
+            if(this.ref_Date !== undefined && this.ref_Date !== null && this.option.baseOption.series[0] !== undefined){
+              this.ref_Date.setHours(1);
+
+                this.option.baseOption.series[0].markLine = {data:
+                  [
+                    [
+                      {name: "", xAxis: this.ref_Date, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                      {name: "end", xAxis: this.ref_Date, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
+                    ],
+                  ]
+                }
+            }
+            this.updateTableData(_weight, obs);
+          })
+        },
+        () => {},
+        () => {
+          next(this.option);
+          this.stackService.getWeightChartInstance().hideLoading();
+        }
+      )
+    }
   }
 
   getHiveIndex(hive: RucheInterface): number {
@@ -314,7 +589,11 @@ export class WeightComponent implements OnInit {
         let serieTmp = Object.assign({}, SERIES.line);
         serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
         serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
-          return { name: _map.date, value: [_map.date, _map.value, _map.sensorRef] };
+          let newDate = new Date(_map.date);
+          newDate.setHours(1);
+          if(newDate > this.melliDateService.start && newDate < this.melliDateService.end){
+            return { name: newDate.toISOString(), value: [newDate.toISOString(), _map.value, _map.sensorRef] };
+          }
         });
         next(serieTmp);
       }
@@ -322,7 +601,7 @@ export class WeightComponent implements OnInit {
   }
 
   removeHiveSerie(hive: RucheInterface): void {
-    let option = this.stackService.getWeightChartInstance().getOption();
+    /*let option = this.stackService.getWeightChartInstance().getOption();
     const series = option.series.filter(_filter => _filter.name.indexOf(hive.name) !== -1);
     if (series.length > 0) {
       series.forEach(element => {
@@ -331,7 +610,9 @@ export class WeightComponent implements OnInit {
         option.series.splice(indexSerie, 1);
       });
     }
-    this.stackService.getWeightChartInstance().setOption(option, true);
+    this.stackService.getWeightChartInstance().setOption(option, true);*/
+    this.disposeGraph();
+    this.initGraph();
   }
 
   // RELOAD GRAPH WHEN ADDING NEW HIVE
@@ -340,6 +621,7 @@ export class WeightComponent implements OnInit {
     this.initGraph();
   }
 
+
   // SET DISPLAY RAW WEIGHT DATA
   changeRawWeight(bool :boolean){
     if(bool){
@@ -347,7 +629,7 @@ export class WeightComponent implements OnInit {
       document.getElementById("raw-weight-title").style.display = "block";
       (<HTMLInputElement> document.getElementById("raw-check")).disabled = true;
       (<HTMLInputElement> document.getElementById("raw-check")).checked = true;
-      document.getElementById("ref_date").style.display = "none";
+      document.getElementById("ref_date").style.display = "flex";
     }
     else{
       this.rawWeightDisplay = false;
@@ -393,21 +675,21 @@ export class WeightComponent implements OnInit {
 
   showGraph(name:string){ // CHANGE GRAPH ON BUTTON CLICK
     switch(name){
-      case 'raw-weight':
+      case 'raw-weight': // SHOW RAW WEIGHT GRAPH
         this.changeRawWeight(true);
         this.changeNormWeight(false);
         this.changeGainWeight(false);
         this.disposeGraph();
         this.initGraph();
         break;
-      case 'norm-weight':
+      case 'norm-weight': // SHOW NORMALIZED WEIGHT GRAPH
         this.changeRawWeight(false);
         this.changeNormWeight(true);
         this.changeGainWeight(false);
         this.disposeGraph();
         this.initGraph();
         break;
-      case 'gain-weight':
+      case 'gain-weight': // SHOW WEIGHT GAIN GRAPH
         this.changeRawWeight(false);
         this.changeNormWeight(false);
         this.changeGainWeight(true);
@@ -421,12 +703,75 @@ export class WeightComponent implements OnInit {
 
   // FUNCTION TRIGGERED WHEN REF DATE IS CHOSEN
   refDate(){
-    (<HTMLInputElement>document.getElementsByClassName('weight_ref_date')[0]).value = this.datePipe.transform(this.ref_Date, 'dd/MM/yyyy');
+    (<HTMLInputElement>document.getElementsByClassName('weight_ref_date')[0]).value = this.unitService.getDailyDate(this.ref_Date);
     this.disposeGraph();
     this.initGraph();
   }
 
+  deleteDate(){
+    (<HTMLInputElement>document.getElementsByClassName('weight_ref_date')[0]).value = "";
+    this.ref_Date = null;
+    this.disposeGraph();
+    this.initGraph();
+  }
+
+  updateTableData(weight_income_array: any[], obs: any){
+    let table = document.getElementById("weight-table").getElementsByTagName("table")[0];
+    let dateCells = document.getElementsByClassName('date-head');
+    if(this.ref_Date !== undefined && this.ref_Date !== null){
+      Array.from(dateCells).forEach(e => {
+        e.textContent = this.unitService.getDailyDate(this.ref_Date);
+      });
+    }
+    else{
+      Array.from(dateCells).forEach(e => {
+        e.textContent = this.unitService.getDailyDate(this.melliDateService.start);
+      });
+    }
+    let tbody = table.getElementsByTagName('tbody')[0];
+    tbody.innerHTML = '';
+
+    /**
+     * GET DATE FROM REF_DATE TO END DATE IN CALENDAR
+    */
+
+    weight_income_array.forEach((e, index) => {
+          let cumul;
+          let row = tbody.insertRow();
+          let cell1 = row.insertCell(); // HIVE CELL
+          cell1.innerHTML = obs[index].hive.name;
+          let cell2 = row.insertCell(); // T0 CELL
+          let cell3 = row.insertCell(); // 7DAYS CELL
+          let cell4 = row.insertCell(); // 15DAYS CELL
+          if(this.gainWeightDisplay){
+            if(e.length > 7){
+              cell3.innerHTML = (e[0].value - e[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+              if(e.length > 14){
+                cell4.innerHTML = (e[0].value - e[14].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+              }
+            }
+            cell2.innerHTML = (e[0].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+          }
+          else{
+            if( this.ref_Values !== undefined && this.ref_Values[index] !== undefined && this.rawWeightDisplay){
+              cell2.innerHTML = this.ref_Values[index].toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+            }
+            else{
+              cell2.innerHTML = "";
+            }
+            if(e.length > 7){
+              cell3.innerHTML = parseFloat(e[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+              if(e.length > 15){
+                cell4.innerHTML = parseFloat(e[14].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+              }
+            }
+          }
+    });
+  }
+
   ngOnDestroy(): void {
   }
+
+
 
 }

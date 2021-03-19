@@ -31,7 +31,7 @@ const routes: Routes = [
             { path: 'admin', loadChildren : './admin/admin.module#AdminModule', canLoad: [AuthGuardService]},
             //{ path: 'stack-apiary', component: StackApiaryComponent, canActivate: [AuthGuardService]},
             { path: 'preferences', component: PreferenceConfigComponent, canActivate: [AuthGuardService]},
-            { path: 'melli-charts', loadChildren: './melli-charts/melli-charts.module#MelliChartsModule', canLoad: [AuthGuardService]},
+            { path: 'explore', loadChildren: './melli-charts/melli-charts.module#MelliChartsModule', canLoad: [AuthGuardService]},
             { path: 'manage-hives', component: ManageHivesComponent, canActivate: [AuthGuardService]},
             { path: 'manage-apiarys', component: ManageApiarysComponent, canActivate: [AuthGuardService]},
             { path: 'manage-notes', component: ManageNotesComponent, canActivate: [AuthGuardService]},

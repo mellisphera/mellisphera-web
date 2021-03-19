@@ -34,8 +34,9 @@ import { VitalityComponent } from './vitality/vitality.component';
 import { type } from 'os';
 import { TranslateService } from '@ngx-translate/core';
 import { WeightComponent } from './weight/weight.component';
+import { UnitService } from '../service/unit.service';
 
-const PREFIX_PATH = '/dashboard/melli-charts/';
+const PREFIX_PATH = '/dashboard/explore/';
 
 
 @Component({
@@ -71,7 +72,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private translateService: TranslateService,
     private weatherService: WeatherService,
     public tokenService: AtokenStorageService,
-    private userConfig: UserParamsService) {
+    private userConfig: UserParamsService,
+    private unitService: UnitService) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
         { name: 'Ruche', path: 'hive' },
@@ -160,6 +162,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     } catch{ }
   }
   onCloseDatePicker(): void {
+    (<HTMLInputElement>document.getElementById("calendar-begin")).value = this.unitService.getDailyDate(this.melliChartDate.start);
+    (<HTMLInputElement>document.getElementById("calendar-end")).value = this.unitService.getDailyDate(this.melliChartDate.end);
     this.dateDropdown.classList.add('open');
   }
   /**

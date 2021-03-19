@@ -87,6 +87,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     const elt = document.getElementsByClassName('apiaryGroup')[0];
     if (elt.classList.contains('apiary-group-hive')) {
       elt.classList.remove('apiary-group-hive');
@@ -132,16 +133,14 @@ export class VitalityComponent implements OnInit, OnDestroy {
       return this.unitService.getDailyDate(new Date(value));
     };
     this.option.baseOption.tooltip.formatter = (params) => {
-      return params.map((_elt, index) => {
-        return this.getTooltipFormater(_elt.marker, (index === 0 ? this.unitService.getDailyDate(_elt.data.name) : ''), new Array(
-          {
-            name: _elt.seriesName,
-            value: this.unitService.getValRound(_elt.data.value[1]),
-            unit: this.graphGlobal.getUnitBySerieName('Brood')
-          }
-        ));
-      }).join('');
-   }
+      return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data.name), new Array(
+        {
+          name: params.seriesName,
+          value: this.unitService.getValRound(params.data.value[1]),
+          unit: this.graphGlobal.getUnitBySerieName('Brood')
+        }
+      ));
+    }
     this.option.baseOption.xAxis.push(xAxis);
     this.stackService.getBroodChartInstance().setOption(this.option);
   }
@@ -197,6 +196,9 @@ export class VitalityComponent implements OnInit, OnDestroy {
             serieComplete.itemStyle = {
               color: this.stackService.getColorByIndex(this.getHiveIndex(obs[index].hive), obs[index].hive)
             };
+            serieComplete.showSymbol = true;
+            serieComplete.symbol = 'emptyCircle';
+            serieComplete.type = 'line';
             const indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(serieComplete.name);
             if (indexSerie !== -1) {
               this.option.baseOption.series[indexSerie] = Object.assign({}, serieComplete);
@@ -227,6 +229,9 @@ export class VitalityComponent implements OnInit, OnDestroy {
           serieComplete.itemStyle = {
             color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
           };
+          serieComplete.showSymbol = true;
+          serieComplete.symbol = 'emptyCircle';
+          serieComplete.type = 'line';
           this.option.baseOption.series.push(serieComplete);
           this.stackService.getBroodChartInstance().setOption(this.option);
         })

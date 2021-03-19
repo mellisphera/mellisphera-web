@@ -207,16 +207,20 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       const data = this.rucheService.ruchesAllApiary.map(_hive => {
         let noteLengh =  this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id).length;
         let lastNote = this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id)[noteLengh - 1];
-        return {
-          APIARY: this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0].name,
-          HIVE: _hive.name, 
-          BROOD: this.dailyRecTh.getPourcentByHive(_hive._id),
-          WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getWeightMaxByHive(_hive._id)),
-          BATTERY: this.capteurService.getCapteursByHive(_hive._id).sort((a: CapteurInterface, b:CapteurInterface) => a.sensorRef.localeCompare(b.sensorRef)).map(_elt => _elt.sensorBat + '%').join('\n'),
-          SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef).sort((a: string, b:string) => a.localeCompare(b)).join('\n'),
-          NOTE: !isUndefined(lastNote) ? this.unitService.getDailyDate(lastNote.opsDate) + ' - ' + lastNote.description: '-'
+        if(this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0] !== undefined){
+          const apiary_name = this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0].name;
+          return {
+            APIARY: apiary_name,
+            HIVE: _hive.name,
+            BROOD: this.dailyRecTh.getPourcentByHive(_hive._id),
+            WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getWeightMaxByHive(_hive._id)),
+            BATTERY: this.capteurService.getCapteursByHive(_hive._id).sort((a: CapteurInterface, b:CapteurInterface) => a.sensorRef.localeCompare(b.sensorRef)).map(_elt => _elt.sensorBat + '%').join('\n'),
+            SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef).sort((a: string, b:string) => a.localeCompare(b)).join('\n'),
+            NOTE: !isUndefined(lastNote) ? this.unitService.getDailyDate(lastNote.opsDate) + ' - ' + lastNote.description: '-'
+          }
         }
       }).sort((a, b) => a.APIARY.localeCompare(b.APIARY) || a.HIVE.localeCompare(b.HIVE));
+      console.log(data);
       new Angular5Csv(data,  `Export Mellisphera ${this.unitService.getDailyDate(new Date())}`, this.optionCsv);
   }
 
@@ -364,7 +368,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     }
     catch {}
   }
-  
+
   onPastilleClick(hive: RucheInterface) {
     if (this.lockHive) {
       this.onClick(hive);
