@@ -753,11 +753,17 @@ export class WeightComponent implements OnInit {
             cell2.innerHTML = (e[0].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
           }
           else{
-            if( this.ref_Values !== undefined && this.ref_Values[index] !== undefined && this.rawWeightDisplay){
+            if( this.ref_Values !== undefined && this.ref_Values[index] !== undefined && this.ref_Values[index] !== null && this.rawWeightDisplay){
               cell2.innerHTML = this.ref_Values[index].toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
             }
             else{
-              cell2.innerHTML = "";
+              if(this.ref_Date === null || this.ref_Date === undefined){
+                cell2.innerHTML = "";
+              }
+              else{
+                cell2.innerHTML = "No value";
+              }
+
             }
             if(e.length > 7){
               cell3.innerHTML = parseFloat(e[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;

@@ -21,6 +21,7 @@ export class HubService {
   getHubByApiary(apiaryId: string): Hub {
     const hub: Hub = this.hubs.filter(_hub => _hub.apiaryId === apiaryId)[0];
     if (hub !== undefined && hub.hub !== 0) {
+      //console.log(hub.hubRef);
       return hub;
     } else {
       return null;
