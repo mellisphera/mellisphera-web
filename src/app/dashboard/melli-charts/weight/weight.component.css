@@ -1,12 +1,16 @@
 #raw-weight-title, #norm-weight-title, #gain-weight-title{
   display: none;
+  margin-bottom: 15px;
 }
 
-#graph-raw-weight, #graph-norm-weight, #graph-gain-weight {
+#graph-weight{
   width: 100%;
   height: 80vh;
 }
+
 .infoToolip{
+  width: 30px;
+  height: 30px;
   position: fixed;
   right: 30px;
   bottom: 10px;
@@ -28,6 +32,30 @@
 .ul-weight > li > label{
   padding-left: 5px;
   font-size: 18px;
+  display: flex;
+}
+
+.ul-weight > li > label > p{
+  margin-left: 10px;
+  margin-bottom: 0px;
+  margin-top: 3px;
+  font-size: 16px;
+  font-family: 'Poppins' !important;
+}
+
+input[type=checkbox]
+{
+  -ms-transform: scale(1.25); /* IE */
+  -moz-transform: scale(1.25); /* FF */
+  -webkit-transform: scale(1.25); /* Safari and Chrome */
+  -o-transform: scale(1.25); /* Opera */
+  transform: scale(1.25);
+  padding-right: 15px;
+}
+
+.title-active{
+  font-weight: 900;
+  text-decoration: underline;
 }
 
 #ref_date{
@@ -35,14 +63,17 @@
   display: flex;
   justify-content: center;
   font-family: 'Poppins';
+  width: 100%;
 }
 
-.input-wrapper i {
+.calendar-icon{
   position: absolute;
 }
 
 .input-wrapper {
   margin-bottom: 10px;
+  width: 35%;
+  text-align: center;
 }
 
 .fa-calendar{
@@ -58,7 +89,6 @@
 }
 
 .delete-date{
-  height: 41px;
   width: 10px;
   border: 0;
   background-color: transparent;
@@ -70,8 +100,10 @@
 }
 
 .fa-times{
+  position: absolute;
   font-size: 24px;
   margin-left: -10px;
+  margin-top: -18px;
 }
 
 .fa-times:hover{
@@ -83,7 +115,7 @@
 }
 
 #weight-table{
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 #weight-table > table{
@@ -108,6 +140,10 @@
 }
 
 @media screen and (orientation: landscape){
+  #graph-weight{
+    width: 100%;
+    height: 70vh;
+  }
   .infoToolip{
     position: fixed;
     right: 30px;
@@ -117,10 +153,17 @@
     position: fixed;
     right: 30px;
     bottom: 10px;
+  }
+  #weight-table{
+    margin-bottom: 40px;
   }
 }
 
 @media screen and (orientation: portrait){
+  #graph-weight{
+    width: 100%;
+    height: 70vh;
+  }
   .infoToolip{
     position: fixed;
     right: 30px;
@@ -130,5 +173,8 @@
     position: fixed;
     right: 30px;
     bottom: 10px;
+  }
+  #weight-table{
+    margin-bottom: 40px;
   }
 }

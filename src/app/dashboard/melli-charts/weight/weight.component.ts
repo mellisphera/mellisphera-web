@@ -147,29 +147,69 @@ export class WeightComponent implements OnInit {
     }
 
     // ADAPT Y AXIS TO WEIGHT DISPLAY
-    yAxis.min = function (value: any) {
-      if(value.min < -2){
-        let nb = Math.ceil(Math.abs(value.min)) / 2;
-        return Math.round(nb) * -2;
-      }
-      else{
-        if(value.min >= 0){
-          return 0;
+    if(this.gainWeightDisplay){
+      yAxis.min = function (value: any) {
+        if(value.min < -2){
+          let nb = Math.ceil(Math.abs(value.min)) / 2;
+          return Math.round(nb) * -2;
         }
         else{
-          return -2;
+         return -2;
         }
-      }
-    };
-    yAxis.max = function (value) {
-      if(value.max > 5){
-        let nb = Math.ceil(value.max) / 5;
-        return Math.ceil(nb) * 5;
-      }
-      else{
-        return 5;
-      }
-    };
+      };
+      yAxis.max = function (value) {
+        if(value.max > 5){
+          let nb = Math.ceil(value.max) / 5;
+          return Math.ceil(nb) * 5;
+        }
+        else{
+          return 5;
+        }
+      };
+    }
+
+    if(this.rawWeightDisplay){
+      yAxis.min = function (value: any) {
+        if(value.min < -2){
+          let nb = Math.ceil(Math.abs(value.min)) / 2;
+          return Math.round(nb) * -2;
+        }
+        else{
+          return 0;
+        }
+      };
+      yAxis.max = function (value) {
+        if(value.max > 5){
+          let nb = Math.ceil(value.max) / 5;
+          return Math.ceil(nb) * 5;
+        }
+        else{
+          return 40;
+        }
+      };
+    }
+
+    if(this.normWeightDisplay){
+      yAxis.min = function (value: any) {
+        if(value.min < -2){
+          let nb = Math.ceil(Math.abs(value.min)) / 2;
+          return Math.round(nb) * -2;
+        }
+        else{
+          return 0;
+        }
+      };
+      yAxis.max = function (value) {
+        if(value.max > 5){
+          let nb = Math.ceil(value.max) / 5;
+          return Math.ceil(nb) * 5;
+        }
+        else{
+          return 5;
+        }
+      };
+    }
+
 
     this.option.baseOption.yAxis.push(yAxis);
 
@@ -347,7 +387,12 @@ export class WeightComponent implements OnInit {
                       serieComplete.showSymbol = true;
                       serieComplete.symbol = 'emptyCircle';
                       serieComplete.type = 'line';
-
+                      serieComplete.lineStyle = {
+                        width: 2,
+                        shadowColor: 'rgba(255,255,255,1.0)',
+                        shadowBlur: 10,
+                        shadowOffsetY: 0
+                      }
                     }
                     if (indexSerie !== -1) {
                       this.option.baseOption.series[indexSerie] = Object.assign({}, serieComplete);
@@ -376,6 +421,12 @@ export class WeightComponent implements OnInit {
                       serieComplete.showSymbol = true;
                       serieComplete.symbol = 'emptyCircle';
                       serieComplete.type = 'line';
+                      serieComplete.lineStyle = {
+                        width: 2,
+                        shadowColor: 'rgba(255,255,255,1.0)',
+                        shadowBlur: 10,
+                        shadowOffsetY: 0
+                      }
                       if (indexSerie !== -1) {
                         this.option.baseOption.series.splice(indexSerie+1,0,Object.assign({}, serieComplete));
                       }
@@ -515,6 +566,13 @@ export class WeightComponent implements OnInit {
                 serieComplete.showSymbol = true;
                 serieComplete.symbol = 'emptyCircle';
                 serieComplete.type = 'line';
+                serieComplete.lineStyle = {
+                  width: 2,
+                  shadowColor: 'rgba(255,255,255,1.0)',
+                  shadowBlur: 10,
+                  shadowOffsetY: 0
+                }
+
 
               }
               if (indexSerie !== -1) {
@@ -544,6 +602,13 @@ export class WeightComponent implements OnInit {
                 serieComplete.showSymbol = true;
                 serieComplete.symbol = 'emptyCircle';
                 serieComplete.type = 'line';
+                serieComplete.lineStyle = {
+                  width: 2,
+                  shadowColor: 'rgba(255,255,255,1.0)',
+                  shadowBlur: 10,
+                  shadowOffsetY: 0
+                }
+
                 if (indexSerie !== -1) {
                   this.option.baseOption.series.splice(indexSerie+1,0,Object.assign({}, serieComplete));
                 }
@@ -630,12 +695,16 @@ export class WeightComponent implements OnInit {
       (<HTMLInputElement> document.getElementById("raw-check")).disabled = true;
       (<HTMLInputElement> document.getElementById("raw-check")).checked = true;
       document.getElementById("ref_date").style.display = "flex";
+      (<HTMLInputElement> document.getElementById("raw-check-title")).classList.add('title-active');
+      (<HTMLInputElement> document.getElementById("norm-check-title")).classList.remove('title-active');
+      (<HTMLInputElement> document.getElementById("gain-check-title")).classList.remove('title-active');
     }
     else{
       this.rawWeightDisplay = false;
       document.getElementById("raw-weight-title").style.display = "none";
       (<HTMLInputElement> document.getElementById("raw-check")).disabled = false;
       (<HTMLInputElement> document.getElementById("raw-check")).checked = false;
+      (<HTMLInputElement> document.getElementById("raw-check-title")).classList.remove('title-active');
     }
   }
 
@@ -647,12 +716,16 @@ export class WeightComponent implements OnInit {
       (<HTMLInputElement> document.getElementById("norm-check")).disabled = true;
       (<HTMLInputElement> document.getElementById("norm-check")).checked = true;
       document.getElementById("ref_date").style.display = "flex";
+      (<HTMLInputElement> document.getElementById("norm-check-title")).classList.add('title-active');
+      (<HTMLInputElement> document.getElementById("raw-check-title")).classList.remove('title-active');
+      (<HTMLInputElement> document.getElementById("gain-check-title")).classList.remove('title-active');
     }
     else{
       this.normWeightDisplay = false;
       document.getElementById("norm-weight-title").style.display = "none";
       (<HTMLInputElement> document.getElementById("norm-check")).disabled = false;
       (<HTMLInputElement> document.getElementById("norm-check")).checked = false;
+      (<HTMLInputElement> document.getElementById("norm-check-title")).classList.remove('title-active');
     }
   }
 
@@ -664,12 +737,16 @@ export class WeightComponent implements OnInit {
       (<HTMLInputElement> document.getElementById("gain-check")).disabled = true;
       (<HTMLInputElement> document.getElementById("gain-check")).checked = true;
       document.getElementById("ref_date").style.display = "flex";
+      (<HTMLInputElement> document.getElementById("gain-check-title")).classList.add('title-active');
+      (<HTMLInputElement> document.getElementById("raw-check-title")).classList.remove('title-active');
+      (<HTMLInputElement> document.getElementById("norm-check-title")).classList.remove('title-active');
     }
     else{
       this.gainWeightDisplay = false;
       document.getElementById("gain-weight-title").style.display = "none";
       (<HTMLInputElement> document.getElementById("gain-check")).disabled = false;
       (<HTMLInputElement> document.getElementById("gain-check")).checked = false;
+      (<HTMLInputElement> document.getElementById("gain-check-title")).classList.remove('title-active');
     }
   }
 
@@ -725,7 +802,15 @@ export class WeightComponent implements OnInit {
     }
     else{
       Array.from(dateCells).forEach(e => {
-        e.textContent = this.unitService.getDailyDate(this.melliDateService.start);
+        if(this.gainWeightDisplay){
+          e.textContent = this.unitService.getDailyDate(this.melliDateService.start);
+          return;
+        }
+        if(!this.gainWeightDisplay){
+          e.textContent = "Date";
+          return;
+        }
+
       });
     }
     let tbody = table.getElementsByTagName('tbody')[0];
@@ -736,7 +821,6 @@ export class WeightComponent implements OnInit {
     */
 
     weight_income_array.forEach((e, index) => {
-          let cumul;
           let row = tbody.insertRow();
           let cell1 = row.insertCell(); // HIVE CELL
           cell1.innerHTML = obs[index].hive.name;

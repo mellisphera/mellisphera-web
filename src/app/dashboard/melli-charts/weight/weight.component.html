@@ -10,54 +10,44 @@ See the License for the specific language governing permissions and
 limitations under the License. -->
 
 <div>
+  <h3 id="raw-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.RAW' | translate }}</h3>
+  <h3 id="norm-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.NORM' | translate }}</h3>
+  <h3 id="gain-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.GAIN' | translate }}</h3>
   <div class="btnNavWeight">
     <ul class="nav ul-weight">
       <li>
         <label for="raw-check">
           <input id="raw-check" type="checkbox" (change)="showGraph('raw-weight')" >
-          {{ 'MELLICHARTS.WEIGHT.CHECKBOX.RAW' | translate }}
+          <p id="raw-check-title">{{ 'MELLICHARTS.WEIGHT.CHECKBOX.RAW' | translate }}</p>
         </label>
       </li>
       <li>
         <label for="gain-check">
           <input id="gain-check" type="checkbox" (change)="showGraph('gain-weight')" >
-          {{ 'MELLICHARTS.WEIGHT.CHECKBOX.GAIN' | translate }}
+          <p id="gain-check-title">{{ 'MELLICHARTS.WEIGHT.CHECKBOX.GAIN' | translate }}</p>
         </label>
       </li>
       <li>
         <label for="norm-check">
           <input id="norm-check" type="checkbox" (change)="showGraph('norm-weight')" >
-          {{ 'MELLICHARTS.WEIGHT.CHECKBOX.NORM' | translate }}
+          <p id="norm-check-title">{{ 'MELLICHARTS.WEIGHT.CHECKBOX.NORM' | translate }}</p>
         </label>
       </li>
     </ul>
     <div id="ref_date">
       <div class="input-wrapper">
-        <i class="fa fa-calendar"></i>
+        <i class="fa fa-calendar calendar-icon"></i>
         <input class="weight_ref_date" placeholder="{{'MELLICHARTS.WEIGHT.REF_DATE' | translate}}" [(ngModel)]="ref_Date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="refDate()">
         <owl-date-time [pickerType]="'calendar'" #dtPicker1></owl-date-time>
+        <button class="delete-date" (click)="deleteDate()"><i class="fa fa-times"></i></button>
       </div>
-      <button class="delete-date" (click)="deleteDate()"><i class="fa fa-times"></i></button>
     </div>
+  </div>
 
   <div id="weight-render">
     <section (window:resize)="onResize($event)">
-      <h3 id="raw-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.RAW' | translate }}</h3>
-      <h3 id="norm-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.NORM' | translate }}</h3>
-      <h3 id="gain-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.GAIN' | translate }}</h3>
       <div class="chart" style="width: 100%; height:80vh;" id="graph-weight"></div>
     </section>
-    <div class="infoToolip">
-      <popover-content #weightCalendarTooltip placement="left" [animation]="true"
-          [closeOnClickOutside]="false">
-          <span class="helpTooltip">
-            {{ 'MELLICHARTS.HELP.WEIGHT' | translate }}
-          </span>
-      </popover-content>
-      <div [popover]="weightCalendarTooltip" style="font-size: 15px !important;">
-          <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
-      </div>
-    </div>
   </div>
 
   <div id="weight-table" *ngIf="!gainWeightDisplay">
@@ -80,27 +70,39 @@ limitations under the License. -->
       </tbody>
     </table>
   </div>
-</div>
 
-<div id="weight-table" *ngIf="gainWeightDisplay">
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th rowspan ="2">{{'MELLICHARTS.WEIGHT.TABLE.HIVE' | translate}}</th>
-        <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.T0' | translate}}</th>
-        <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.7DAYS' | translate}}</th>
-        <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.15DAYS' | translate}}</th>
-      </tr>
-      <tr>
-        <th class="date-head">{{'MELLICHARTS.WEIGHT.TABLE.DATE' | translate}}</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
+  <div id="weight-table" *ngIf="gainWeightDisplay">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th rowspan ="2">{{'MELLICHARTS.WEIGHT.TABLE.HIVE' | translate}}</th>
+          <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.T0' | translate}}</th>
+          <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.7DAYS' | translate}}</th>
+          <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.15DAYS' | translate}}</th>
+        </tr>
+        <tr>
+          <th class="date-head">{{'MELLICHARTS.WEIGHT.TABLE.DATE' | translate}}</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
 
-    </tbody>
-  </table>
-</div>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="infoToolip">
+    <popover-content #weightCalendarTooltip placement="left" [animation]="true"
+        [closeOnClickOutside]="false">
+        <span class="helpTooltip">
+          {{ 'MELLICHARTS.HELP.WEIGHT' | translate }}
+        </span>
+    </popover-content>
+    <div [popover]="weightCalendarTooltip" style="font-size: 15px !important;">
+        <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+    </div>
+  </div>
+
 </div>
 
