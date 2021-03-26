@@ -89,7 +89,7 @@ export class WeightComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log(this.rucheService.ruchesAllApiary);
     const elt = document.getElementsByClassName('apiaryGroup')[0];
     if (elt.classList.contains('apiary-group-hive')) {
       elt.classList.remove('apiary-group-hive');
@@ -125,6 +125,12 @@ export class WeightComponent implements OnInit {
   }
 
   setOptionForStackChart(): void {
+    // Add legend to chart
+    this.option.baseOption.legend.data = [];
+    this.rucheService.ruchesAllApiary.forEach(r => {
+      this.option.baseOption.legend.data.push(r.name);
+    });
+
     if (this.option.baseOption.yAxis.length > 0) {
       this.option.baseOption.yAxis = [];
     }
@@ -251,7 +257,7 @@ export class WeightComponent implements OnInit {
    */
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';
-    let templateValue = '{*} {n}: <B>{v} {u}</B> {R}';
+    let templateValue = '{*} {n}: <B>{v} {u}</B>';
     let tooltipGlobal;
     if(date === 'Invalid date'){
       tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, this.unitService.getDailyDate(this.ref_Date) );
@@ -265,18 +271,18 @@ export class WeightComponent implements OnInit {
         }
         else{ // SERIES TOOLTIP
           if(this.normWeightDisplay){
-            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, 'x'+_serie.value).replace(/{u}/g, '').replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, 'x'+_serie.value).replace(/{u}/g, '').replace(/{R}/g, '');
           }
           else if(this.gainWeightDisplay){
             if(_serie.value >= 0){
-              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, '+'+_serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, '+'+_serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '');
             }
             else{
-              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '');
             }
           }
           else{
-            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '');
           }
         }
       }).join('');
@@ -652,7 +658,7 @@ export class WeightComponent implements OnInit {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, SERIES.line);
-        serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
+        serieTmp.name = nameSerie;
         serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
           let newDate = new Date(_map.date);
           newDate.setHours(1);

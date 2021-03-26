@@ -25,7 +25,8 @@ export const BASE_OPTIONS = {
             formatter: null,
         },
         legend: {
-            orient: 'horizontal',
+            orient: 'vertical',
+            right: '0',
             data: [],
         },
         /*axisPointer: {
@@ -67,7 +68,7 @@ export const BASE_OPTIONS = {
         grid: [{
             containLabel: true,
             top: 11,
-            height: '90%',
+            height: '80%',
             left: 'center',
             width: '90%'
         }],

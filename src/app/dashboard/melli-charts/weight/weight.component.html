@@ -38,7 +38,7 @@ limitations under the License. -->
       <div class="input-wrapper">
         <i class="fa fa-calendar calendar-icon"></i>
         <input class="weight_ref_date" placeholder="{{'MELLICHARTS.WEIGHT.REF_DATE' | translate}}" [(ngModel)]="ref_Date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="refDate()">
-        <owl-date-time [pickerType]="'calendar'" #dtPicker1></owl-date-time>
+        <owl-date-time [pickerType]="'calendar'" #dtPicker1 class="weight-calendar"></owl-date-time>
         <button class="delete-date" (click)="deleteDate()"><i class="fa fa-times"></i></button>
       </div>
     </div>
@@ -46,7 +46,7 @@ limitations under the License. -->
 
   <div id="weight-render">
     <section (window:resize)="onResize($event)">
-      <div class="chart" style="width: 100%;" id="graph-weight"></div>
+      <div class="chart" id="graph-weight"></div>
     </section>
   </div>
 
