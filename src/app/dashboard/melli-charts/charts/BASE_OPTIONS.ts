@@ -26,7 +26,7 @@ export const BASE_OPTIONS = {
         },
         legend: {
             orient: 'vertical',
-            right: '0',
+            right: '5',
             data: [],
         },
         /*axisPointer: {
@@ -70,7 +70,7 @@ export const BASE_OPTIONS = {
             top: 11,
             height: '80%',
             left: 'center',
-            width: '90%'
+            width: '80%'
         }],
 
         yAxis:[],

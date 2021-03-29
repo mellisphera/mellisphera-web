@@ -52,7 +52,7 @@ export class WeightComponent implements OnInit {
         {
           option: {
             grid:{
-              width: '90%'
+              width: '80%'
             },
             toolbox: {
               show: true,

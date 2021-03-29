@@ -4,7 +4,7 @@
 }
 
 #graph-weight{
-  width: 97%;
+  width: 100%;
   height: 70vh;
 }
 
@@ -120,7 +120,7 @@ input[type=checkbox]
 #weight-table > table{
   font-family: 'Poppins' !important;
   border-collapse: collapse;
-  width: 85%;
+  width: 80%;
   margin: 0 auto; /* or margin: 0 auto 0 auto */
 }
 
@@ -183,7 +183,7 @@ input[type=checkbox]
     text-align: center;
   }
   #graph-weight{
-    width: 95%;
+    width: 100%;
     height: 70vh;
   }
 }
@@ -203,7 +203,7 @@ input[type=checkbox]
     text-align: center;
   }
   #graph-weight{
-    width: 95%;
+    width: 100%;
     height: 70vh;
   }
 }
