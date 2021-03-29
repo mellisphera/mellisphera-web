@@ -17,4 +17,5 @@ export interface UserPref {
     availableSource: string[];
     weatherSource: string;
     weatherStation: boolean;
+    dateRef: Date;
 }

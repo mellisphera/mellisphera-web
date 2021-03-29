@@ -1,6 +1,5 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { UserPref } from './../../../_model/user-pref';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as echarts from 'echarts';
 import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
@@ -13,6 +12,12 @@ import { SERIES } from '../charts/SERIES';
 import { MelliChartsDateService } from '../service/melli-charts-date.service';
 import { StackMelliChartsService } from '../stack/service/stack-melli-charts.service';
 import { DatePipe } from '@angular/common'
+import { UserParamsService } from '../../preference-config/service/user-params.service';
+import { DateTimeAdapter } from 'ng-pick-datetime';
+import { TranslateService } from '@ngx-translate/core';
+import { trackByHourSegment } from 'angular-calendar/modules/common/util';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-weight',
@@ -20,7 +25,7 @@ import { DatePipe } from '@angular/common'
   styleUrls: ['./weight.component.css'],
   providers:[DatePipe]
 })
-export class WeightComponent implements OnInit {
+export class WeightComponent implements OnInit, AfterViewInit {
 
   private option: {
     baseOption: any,
@@ -29,9 +34,14 @@ export class WeightComponent implements OnInit {
 
   public ref_Date: Date;
   public ref_Values: Number[];
+  public user_pref : UserPref;
   public rawWeightDisplay: boolean = false;
   public normWeightDisplay: boolean = false;
   public gainWeightDisplay: boolean = false;
+  public format: string;
+  //datePipe: DatePipe;
+
+  @ViewChild('inputPicker') inputPicker: ElementRef;
 
   constructor(
     private stackService: StackMelliChartsService,
@@ -40,10 +50,8 @@ export class WeightComponent implements OnInit {
     private melliDateService: MelliChartsDateService,
     private rucheService: RucheService,
     private unitService: UnitService,
-    private translateService: TranslateService,
-    private renderer: Renderer2,
-    private router: Router,
-    private datePipe: DatePipe
+    private userPrefsService: UserParamsService,
+    public datepipe: DatePipe
   ) {
     this.option = {
       // Base Option for ECharts
@@ -89,7 +97,7 @@ export class WeightComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.rucheService.ruchesAllApiary);
+    this.userPrefsService.initService();
     const elt = document.getElementsByClassName('apiaryGroup')[0];
     if (elt.classList.contains('apiary-group-hive')) {
       elt.classList.remove('apiary-group-hive');
@@ -99,8 +107,30 @@ export class WeightComponent implements OnInit {
       elt.classList.remove('apiary-group-brood');
     }
     elt.classList.add('apiary-group-brood');
-    this.changeRawWeight(true);
-    this.initGraph();
+    this.userPrefsService.getUserPrefs().subscribe(
+      _userPrefs => {
+        this.user_pref = _userPrefs;
+        console.log(_userPrefs.dateRef);
+        if(_userPrefs.dateRef != null){
+          this.ref_Date = new Date();
+          let aux: Date = new Date(_userPrefs.dateRef);
+          this.ref_Date.setTime(aux.getTime());
+        }
+      },
+      () => {},
+      () => {
+        if(this.ref_Date === null || this.ref_Date === undefined){
+          console.log('No ref Date in DB');
+        }
+        else{
+          console.log(moment(this.ref_Date).format(this.user_pref.timeFormat.split(' ')[0]));
+          this.changeDateTest();
+        }
+        //this.changeDateTest();
+        this.changeRawWeight(true);
+        this.initGraph();
+      }
+    );
   }
 
   initGraph(){
@@ -108,12 +138,16 @@ export class WeightComponent implements OnInit {
     this.option.baseOption.series = [];
     this.setOptionForStackChart();
     if (this.stackService.getHiveSelect().length >= 1) {
-        // Load Data
-        this.loadAllHiveAfterRangeChange((options: any) => {
+          // Load Data
+      this.loadAllHiveAfterRangeChange((options: any) => {
           this.stackService.getWeightChartInstance().setOption(options, true);
           this.stackService.getWeightChartInstance().hideLoading();
-        });
+      });
     }
+  }
+
+  ngAfterViewInit(){
+
   }
 
   disposeGraph(){
@@ -579,7 +613,6 @@ export class WeightComponent implements OnInit {
                   shadowOffsetY: 0
                 }
 
-
               }
               if (indexSerie !== -1) {
                 this.option.baseOption.series[indexSerie] = Object.assign({}, serieComplete);
@@ -614,7 +647,6 @@ export class WeightComponent implements OnInit {
                   shadowBlur: 10,
                   shadowOffsetY: 0
                 }
-
                 if (indexSerie !== -1) {
                   this.option.baseOption.series.splice(indexSerie+1,0,Object.assign({}, serieComplete));
                 }
@@ -787,13 +819,25 @@ export class WeightComponent implements OnInit {
   // FUNCTION TRIGGERED WHEN REF DATE IS CHOSEN
   refDate(){
     (<HTMLInputElement>document.getElementsByClassName('weight_ref_date')[0]).value = this.unitService.getDailyDate(this.ref_Date);
+    this.user_pref.dateRef = this.ref_Date;
+    this.userPrefsService.setRefDate(this.ref_Date).subscribe(
+      () => { }, () => { }, () => { }
+    );
     this.disposeGraph();
     this.initGraph();
+  }
+
+  changeDateTest(){
+    (<HTMLInputElement>document.getElementsByClassName('weight_ref_date')[0]).value = moment(this.ref_Date).format(this.user_pref.timeFormat.split(' ')[0]);
   }
 
   deleteDate(){
     (<HTMLInputElement>document.getElementsByClassName('weight_ref_date')[0]).value = "";
     this.ref_Date = null;
+    this.user_pref.dateRef = this.ref_Date;
+    this.userPrefsService.setRefDate(this.ref_Date).subscribe(
+      () => { }, () => { }, () => { }
+    );
     this.disposeGraph();
     this.initGraph();
   }

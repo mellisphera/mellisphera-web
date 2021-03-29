@@ -29,6 +29,7 @@ import { OwlNativeDateTimeModule, OwlDateTimeModule } from 'ng-pick-datetime';
 import { AlertsService } from '../service/api/alerts.service';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 import { WeightComponent } from './weight/weight.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   providers:[
@@ -36,6 +37,7 @@ import { WeightComponent } from './weight/weight.component';
     GraphGlobal,
     HourlyManagerService,
     StackMelliChartsService,
+    DatePipe
   ],
   declarations: [
     MelliChartsComponent,

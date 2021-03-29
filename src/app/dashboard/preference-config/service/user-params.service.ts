@@ -13,7 +13,6 @@ import { Injectable } from '@angular/core';
 import { UserPref } from '../../../_model/user-pref';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CONFIG } from '../../../../constants/config';
-import { UserloggedService } from '../../../userlogged.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 const httpOptions = {
@@ -39,7 +38,8 @@ export class UserParamsService {
       unitSystem: '',
       availableSource: [],
       weatherSource: '',
-      weatherStation : false
+      weatherStation : false,
+      dateRef: null
     });
     this.dtFormat = [
       'YYYY-MM-DD HH:mm',
@@ -58,7 +58,7 @@ export class UserParamsService {
   }
   setFormatDt(indexFormat: number): void {
     this.userPref.timeFormat = this.dtFormat[indexFormat];
-  
+
   }
   public getSubject(): BehaviorSubject<UserPref> {
     return this.prefSubject;
@@ -99,10 +99,20 @@ export class UserParamsService {
     return this.httpClient.put<UserPref>(CONFIG.URL + 'userPref/update/' + this.getUsername(), this.userPref, httpOptions);
   }
 
+  getUserPrefs(): Observable<UserPref> {
+    return this.httpClient.get<UserPref>(CONFIG.URL + 'userPref/' + this.getUsername(), httpOptions);
+  }
 
   updatePassword(password: string): Observable<String> {
     return this.httpClient.put<String>(CONFIG.URL + 'userPref/updatePassword/' + this.getIdUser(), password, httpOptions);
   }
+
+  setRefDate(dateRef: Date): Observable<Date>{
+    console.log('sending date_ref to server');
+    console.log(dateRef);
+    return this.httpClient.put<Date>(CONFIG.URL + 'userPref/updateRefDate/' + this.getUsername(), dateRef, httpOptions);
+  }
+
   /**
    *
    *
