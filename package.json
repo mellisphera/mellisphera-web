@@ -43,7 +43,7 @@
     "echarts-countries-js": "^1.0.4",
     "html2canvas": "^1.0.0-rc.5",
     "jquery": "^3.5.1",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "moment": "^2.26.0",
     "ng-pick-datetime": "^7.0.0",
     "ngx-echarts": "^4.2.2",
