@@ -124,12 +124,15 @@ export const BASE_OPTIONS = {
         show: true,
         nameLocation: 'middle',
         type: 'value',
-        splitArea: {},
         nameGap: 25,
-        interval: 0,
+        interval: 5,
+        splitNumber: 5,
         min: 0,
         max: 0,
-        gridIndex: 0
+        gridIndex: 0,
+        axisLine:{show:true},
+        axisTick:{show: true},
+        axisLabel:{show: true}
       },
       {
         name: '',

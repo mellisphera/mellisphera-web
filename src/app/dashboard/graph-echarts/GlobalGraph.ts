@@ -90,6 +90,7 @@ export class GraphGlobal {
     name: string,
     min: number,
     max: number,
+    interval: number,
     unitT: string,
   };
   public wind: {
@@ -160,6 +161,7 @@ export class GraphGlobal {
       name: '',
       min: null,
       max: 0,
+      interval: 0,
       unitT: '%',
     };
     this.rain = {

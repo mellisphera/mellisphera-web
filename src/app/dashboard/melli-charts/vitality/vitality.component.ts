@@ -118,6 +118,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     yAxis.name = this.graphGlobal.brood.name;
     yAxis.min = 0;
     yAxis.max = 100;
+    yAxis.interval = 20;
     this.option.baseOption.yAxis.push(yAxis);
 
     let serieMarkBrood = JSON.parse(JSON.stringify(SERIES.serieMarkPourcent));
@@ -142,6 +143,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
       ));
     }
     this.option.baseOption.xAxis.push(xAxis);
+    console.log(this.option.baseOption)
     this.stackService.getBroodChartInstance().setOption(this.option);
   }
 
