@@ -85,16 +85,13 @@ export const SERIES = {
         [{
           yAxis: 0,
           name: 'This is a mark area',
-          
+
           label: {
             show: true,
             position: "insideLeft",
             color: "black",
-            borderWidth: 1,
-            padding: 2,
+            borderWidth: 0,
             verticalAlign: 'middle',
-            shadowBlur: 2,
-            shadowColor: "yellow",
             opacity: 1
           },
           itemStyle: {
@@ -105,9 +102,10 @@ export const SERIES = {
               }, {
               offset: 1,
               color: 'rgb(255,255,255, 0.7)'
-              }])
+              }]),
+              borderColor: '#000',
           }
-          
+
         }, {
           yAxis: 0
         }]
@@ -126,7 +124,7 @@ export const SERIES = {
         [{
           yAxis: 0,
           name: 'This is a mark area',
-          
+
           label: {
             show: true,
             position: "insideLeft",
@@ -142,7 +140,7 @@ export const SERIES = {
             opacity: 0.7,
             color: '#8ec6ad'
         }
-          
+
         }, {
           yAxis: 0
         }]

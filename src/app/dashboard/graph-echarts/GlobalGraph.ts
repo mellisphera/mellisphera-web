@@ -90,6 +90,7 @@ export class GraphGlobal {
     name: string,
     min: number,
     max: number,
+    interval: number,
     unitT: string,
   };
   public wind: {
@@ -160,6 +161,7 @@ export class GraphGlobal {
       name: '',
       min: null,
       max: 0,
+      interval: 0,
       unitT: '%',
     };
     this.rain = {
@@ -1082,7 +1084,7 @@ export class GraphGlobal {
         visualMap.type = 'continuous';
         //visualMap.top = 15;
         visualMap.min = this.unitService.getUserPref().unitSystem === 'METRIC' ? 0 : 0;
-        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 125 : 100;
+        visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 45 : 28;
         visualMap.inRange.color = ['#129001', 'yellow', 'red'];
         break;
       default:
