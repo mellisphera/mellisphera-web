@@ -1,0 +1,32 @@
+<div class="inspect-container">
+    <h3>Inspections</h3>
+    <div class="inspect-time">
+        <h4>Date et heure</h4>
+        <div>
+          <i class="fa fa-calendar inspect-time-icon"></i>
+          <input class="inspect-time-input" placeholder="Choisir Date" [(ngModel)]="inspect_date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDate()">
+          <owl-date-time #dtPicker1></owl-date-time>
+          <i class="fa fa-check valid-icon"></i>
+        </div>
+    </div>
+    <div class="inspect-apiary">
+        <h4>Inspection Ruchers</h4>
+        <div>
+          <select>
+            <option>Rucher 1</option>
+            <option>Rucher 2</option>
+            <option>Rucher 3</option>
+          </select>
+        </div>
+        <div class="apiary-op">
+          <!-- Liste des pictos a afficher-->
+        </div>
+    </div>
+    <div class="inspect-hives">
+        <h4>Inspection Ruches</h4>
+        <!-- Liste des pictos a afficher par ruche-->
+    </div>
+    <div class="inspect-footer">
+        <h4>Valider</h4>
+    </div>
+</div>

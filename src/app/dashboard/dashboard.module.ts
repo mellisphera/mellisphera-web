@@ -53,6 +53,8 @@ import { AuthGuardService } from '../auth/auth-guard.service';
 import { AuthInterceptorService } from '../auth/Service/auth-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FeedbackComponent } from '../feedback/feedback.component';
+import { InspectComponent } from './inspect/inspect.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 
@@ -70,6 +72,7 @@ import { FeedbackComponent } from '../feedback/feedback.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    MatStepperModule,
     // AngularDraggableModule,
     ngfModule,
     ConfirmationPopoverModule.forRoot({
@@ -107,6 +110,7 @@ import { FeedbackComponent } from '../feedback/feedback.component';
     FeedbackComponent,
     ManageSensorsComponent,
     ManageNotesComponent,
+    InspectComponent,
   ]
 })
 export class DashboardModule { }
