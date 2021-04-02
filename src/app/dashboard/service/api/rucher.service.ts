@@ -122,6 +122,11 @@ export class RucherService {
         return this.http.get<RucherModel[]>(CONFIG.URL + 'sharing/user/' + userId);
     }
 
+    getApiariesByUserId(userid: string): Observable<RucherModel[]>{
+        console.log('sending request apiaries');
+        return this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + userid);
+    }
+
     /**
      *
      *
@@ -254,6 +259,7 @@ export class RucherService {
     getRucherNameById(apiaryId: string) : RucherModel{
         return (this.ruchers.filter(apiary => apiary._id === apiaryId)[0]);
     }
+
 
 
 }

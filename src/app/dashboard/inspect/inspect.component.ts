@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { UserPref } from '../../_model/user-pref';
-import { UserParamsService } from '../preference-config/service/user-params.service';
-import { UnitService } from '../service/unit.service';
-import * as moment from 'moment';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { InspectHistoryComponent } from './inspect-history/inspect-history.component';
+import { InspectNewComponent } from './inspect-new/inspect-new.component';
+import { InspectParamsComponent } from './inspect-params/inspect-params.component';
 
+const PREFIX_PATH = '/dashboard/inspect/';
 
 @Component({
   selector: 'app-inspect',
@@ -12,28 +12,34 @@ import * as moment from 'moment';
 })
 export class InspectComponent implements OnInit {
 
-  public inspect_date: Date;
-  public user_pref : UserPref;
+  private eltOnClick: EventTarget;
+  private inspNewComponent: InspectNewComponent;
+  private inspHistoryComponent: InspectHistoryComponent;
+  private inspParamsComponent: InspectParamsComponent;
 
   constructor(
-    private unitService: UnitService,
-    private userPrefsService: UserParamsService,
-  ) {}
-
-  ngOnInit() {
-    this.userPrefsService.getUserPrefs().subscribe(
-      _userPrefs => {
-        this.user_pref = _userPrefs;
-      },
-      () => {},
-      () => {}
-    );
+    private renderer: Renderer2,
+  ){
   }
 
-  inspectDate(): void{
-    //console.log(moment(this.inspect_date).format(this.user_pref.timeFormat));
-    (<HTMLInputElement>document.getElementsByClassName('inspect-time-input')[0]).value = moment(this.inspect_date).format(this.user_pref.timeFormat);
-    (<HTMLElement>document.getElementsByClassName('valid-icon')[0]).style.visibility ='visible';
+  ngOnInit(): void{
+
+  }
+
+  ngAfterViewInit(): void{
+    this.eltOnClick = document.getElementById('inspect-new-btn');
+    this.renderer.addClass(this.eltOnClick, 'nav-active');
+  }
+
+  setButtonActive(_id: string): void{
+    if (this.eltOnClick === null) {
+      this.eltOnClick = document.getElementById(_id);
+      this.renderer.addClass(this.eltOnClick, 'nav-active');
+    } else {
+      this.renderer.removeClass(this.eltOnClick, 'nav-active');
+      this.eltOnClick = document.getElementById(_id);
+      this.renderer.addClass(this.eltOnClick, 'nav-active');
+    }
   }
 
 }

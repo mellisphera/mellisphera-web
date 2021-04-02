@@ -55,6 +55,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { InspectComponent } from './inspect/inspect.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { InspectNewComponent } from './inspect/inspect-new/inspect-new.component';
+import { InspectHistoryComponent } from './inspect/inspect-history/inspect-history.component';
+import { InspectParamsComponent } from './inspect/inspect-params/inspect-params.component';
 
 
 
@@ -110,7 +113,6 @@ import { MatStepperModule } from '@angular/material/stepper';
     FeedbackComponent,
     ManageSensorsComponent,
     ManageNotesComponent,
-    InspectComponent,
   ]
 })
 export class DashboardModule { }

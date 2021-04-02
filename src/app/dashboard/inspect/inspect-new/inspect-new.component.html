@@ -1,0 +1,91 @@
+<div class="inspect-new-container">
+    <h3>Nouvelle Inspection</h3>
+    <div class="inspect-time">
+        <div>
+          <i class="fa fa-calendar inspect-time-icon"></i>
+          <input class="inspect-time-input" placeholder="Choisir Date" [(ngModel)]="inspect_date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDate()">
+          <owl-date-time #dtPicker1></owl-date-time>
+          <i class="fa fa-check valid-icon"></i>
+        </div>
+    </div>
+    <div class="inspect-body">
+      <div class="inspect-apiary">
+        <div class="inspect-apiary-main">
+          <div class="inspect-apiary-op">
+            <select id="inspect-apiary-select" (change)="onSelectChange()" style="margin-left: 10px;">
+              <option disabled selected value style="color:grey;"> Choisir rucher </option>
+              <option *ngFor="let apiary of user_apiaries" value="{{apiary.name}}"> {{apiary.name}} </option>
+            </select>
+            <i class="fa fa-check valid-icon"></i>
+          </div>
+          <div class="apiary-op">
+            <div class="apiary-action"> A </div>
+            <div class="apiary-action"> B </div>
+            <div class="apiary-action"> C </div>
+            <div class="apiary-action"> D </div>
+            <div class="apiary-action"> E </div>
+            <div class="apiary-action"> F </div>
+            <div class="apiary-action"> G </div>
+            <div class="apiary-action"> H </div>
+            <div class="apiary-action"> I </div>
+            <div class="apiary-action"> J </div>
+            <div class="apiary-action"> K </div>
+            <div class="apiary-action"> L </div>
+          </div>
+          <div class="inspect-apiary-notes">
+            <textarea placeholder="Notes" class="apiary-notes-input" name="Text1" cols="40" rows="5" spellcheck="false"></textarea>
+          </div>
+          <div class="inspect-apiary-todo">
+            <textarea placeholder="Taches a venir" class="apiary-todo-input" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="inspect-hive">
+
+      </div>
+    </div>
+    <!--<div class="inspect-apiary">
+        <h4>Inspection Ruchers</h4>
+        <div class="inspect-apiary-main">
+          <div class="inspect-apiary-op">
+            <div>
+              Rucher :
+              <select id="inspect-apiary-select" (change)="onSelectChange()" style="margin-left: 10px;">
+                <option disabled selected value style="color:grey;"> Choisir rucher </option>
+                <option *ngFor="let apiary of user_apiaries" value="{{apiary.name}}"> {{apiary.name}} </option>
+              </select>
+              <i class="fa fa-check valid-icon"></i>
+            </div>
+            <div class="apiary-op">
+              <div class="apiary-op-title" style="padding-left: 0;"> Actions : </div>
+              <div class="apiary-action"> A </div>
+              <div class="apiary-action"> B </div>
+              <div class="apiary-action"> C </div>
+              <div class="apiary-action"> D </div>
+              <div class="apiary-action"> E </div>
+              <div class="apiary-action"> F </div>
+              <div class="apiary-action"> G </div>
+              <div class="apiary-action"> H </div>
+              <div class="apiary-action"> I </div>
+              <div class="apiary-action"> J </div>
+            </div>
+          </div>
+          <div class="inspect-apiary-notes">
+            <div style="display: flex;">
+              <p>Notes : </p>
+              <textarea (input)="changeApiaryNotes()" class="apiary-notes-input" name="Text1" cols="40" rows="5" spellcheck="false"></textarea>
+            </div>
+            <div style="display: flex; justify-content: center;" class="apiary-save-notes">
+              <button (click)="saveApiaryNotes()">Enregistrer</button>
+              <i class="fa fa-check valid-icon"></i>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="inspect-hives">
+        <h4>Inspection Ruches</h4>
+    </div>
+    <div class="inspect-footer">
+        <h4>Valider</h4>
+    </div>-->
+</div>
