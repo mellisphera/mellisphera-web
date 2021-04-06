@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AppComponent } from './../../../app.component';
+import { Ruche } from './../../home/ruche';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as moment from 'moment';
 import { UserloggedService } from '../../../userlogged.service';
 import { RucherModel } from '../../../_model/rucher-model';
@@ -7,11 +9,46 @@ import { UserParamsService } from '../../preference-config/service/user-params.s
 import { RucheService } from '../../service/api/ruche.service';
 import { RucherService } from '../../service/api/rucher.service';
 import { UnitService } from '../../service/unit.service';
+import { RucheInterface } from '../../../_model/ruche';
+
+const PICTOS_APIARY = [
+  {name:'A', img:'../../../../assets/icons/inspect/observations/queen_grey.png'},
+  {name:'B', img:''},
+  {name:'C', img:''},
+  {name:'D', img:''},
+  {name:'E', img:''},
+  {name:'F', img:''},
+  {name:'G', img:''},
+  {name:'H', img:''},
+  {name:'I', img:''},
+  {name:'J', img:''},
+  {name:'K', img:''},
+  {name:'L', img:''},
+  {name:'M', img:''},
+  {name:'N', img:''},
+];
+
+const PICTOS_HIVES_ACTIONS = [
+  {name:'z', img:''},
+  {name:'y', img:''},
+  {name:'x', img:''},
+  {name:'w', img:''},
+  {name:'v', img:''},
+  {name:'u', img:''},
+];
+
+const PICTOS_HIVES_OBS = [
+  {name:'Z1', img:''},
+  {name:'Y2', img:''},
+  {name:'X3', img:''},
+  {name:'W4', img:''},
+];
 
 @Component({
   selector: 'app-inspect-new',
   templateUrl: './inspect-new.component.html',
-  styleUrls: ['./inspect-new.component.css']
+  styleUrls: ['./inspect-new.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class InspectNewComponent implements OnInit {
 
@@ -19,7 +56,8 @@ export class InspectNewComponent implements OnInit {
 
   public inspect_date: Date;
   public user_apiaries: RucherModel[];
-  public active_apiary_index: Number;
+  public user_hives: RucheInterface[];
+  public active_apiary_index: number;
 
   constructor(
     private unitService: UnitService,
@@ -48,10 +86,11 @@ export class InspectNewComponent implements OnInit {
         console.log(this.user_apiaries);
       }
     )
+    this.displayActions();
   }
 
   compare(a, b) {
-    // Use toUpperCase() to ignore character casing
+
     const apiA = a.name.toLowerCase();
     const apiB = b.name.toLowerCase();
 
@@ -64,6 +103,114 @@ export class InspectNewComponent implements OnInit {
     return comparison;
   }
 
+  displayActions(): void{
+    let table = (<HTMLTableElement>document.getElementById("apiary-op-table"));
+    let tr, td, button;
+    for(let i=0; i<PICTOS_APIARY.length; i++){
+      // Create new row
+      if( i%6 === 0 ){
+        tr = document.createElement('tr');
+      }
+      td = document.createElement('td');
+      button = document.createElement('button');
+      button.classList.add('apiary-action');
+
+      if(i === 0){
+        button.classList.add('apiary-action-img');
+        button.onclick = (evt: Event) => { this.test(evt) };
+      }
+      else{
+        /* CHANGE DISPLAY TO IMAGE */
+        button.textContent = PICTOS_APIARY[i].name;
+        /* END */
+        button.onclick = (evt: Event) => { this.apiaryActionButton(evt) };
+      }
+
+      td.appendChild(button);
+      tr.appendChild(td);
+      // Push row to table
+      if( (i+1)%6 === 0 ){
+        table.appendChild(tr);
+      }
+    }
+    if(PICTOS_APIARY.length%6 !== 0){ // Push last row if not complete
+      table.appendChild(tr);
+    }
+  }
+
+  displayHives(): void{
+    let tbody = document.getElementById("hives-table-body");
+    tbody.innerHTML = ''; // Empty table
+    let tr;
+    for(let i=0; i<this.user_hives.length; i++){
+      tr = document.createElement('tr');
+
+      let tdRuche = document.createElement('td');
+      tdRuche.textContent = this.user_hives[i].name;
+      tr.appendChild(tdRuche);
+
+      let tdAction = document.createElement('td');
+      let mainDiv = document.createElement('div');
+
+      let pA = document.createElement('p');
+      pA.textContent = 'Actions';
+      pA.style.paddingTop = '10px';
+      pA.style.marginBottom = '-5px';
+      pA.style.fontSize = '14px';
+      mainDiv.appendChild(pA);
+
+      let divA = document.createElement('div');
+      divA.style.display = 'flex';
+      divA.style.justifyContent = 'center';
+      for(let j=0; j<PICTOS_HIVES_ACTIONS.length; j++){
+        let divAction = document.createElement('div');
+        divAction.className = 'hives-action';
+
+        /* CHANGE DISPLAY TO IMAGE */
+        divAction.textContent = PICTOS_HIVES_ACTIONS[j].name;
+        /* END */
+
+        divA.appendChild(divAction);
+      }
+      mainDiv.appendChild(divA);
+
+      let pO = document.createElement('p');
+      pO.textContent = 'Observations';
+      pO.style.paddingTop = '10px';
+      pO.style.marginBottom = '-5px';
+      pO.style.fontSize = '14px';
+      mainDiv.appendChild(pO);
+
+      let divO = document.createElement('div');
+      divO.style.display = 'flex';
+      divO.style.justifyContent = 'center';
+      for(let j=0; j<PICTOS_HIVES_OBS.length; j++){
+        let divObs = document.createElement('div');
+        divObs.className = 'hives-action';
+
+        /* CHANGE DISPLAY TO IMAGE */
+        divObs.textContent = PICTOS_HIVES_OBS[j].name;
+        /* END */
+
+        divO.appendChild(divObs);
+      }
+      divO.style.paddingBottom = '10px';
+      mainDiv.appendChild(divO);
+
+      tdAction.appendChild(mainDiv);
+      tr.appendChild(tdAction);
+
+      let tdNotes = document.createElement('td');
+      tdNotes.textContent = 'N';
+      tr.appendChild(tdNotes);
+
+      let tdTaches = document.createElement('td');
+      tdTaches.textContent = 'T';
+      tr.appendChild(tdTaches);
+
+      tbody.appendChild(tr);
+    }
+  }
 
   inspectDate(): void{
     //console.log(moment(this.inspect_date).format(this.user_pref.timeFormat));
@@ -73,6 +220,38 @@ export class InspectNewComponent implements OnInit {
 
   onSelectChange(): void{
     (<HTMLElement>document.getElementsByClassName('valid-icon')[1]).style.visibility ='visible';
+    this.active_apiary_index = (<HTMLSelectElement>document.getElementById("inspect-apiary-select")).selectedIndex;
+    let index: number = this.active_apiary_index - 1;
+    this.rucheService.getHivesByApiary(this.user_apiaries[index]._id).subscribe(
+      _hives => {
+        console.log(_hives);
+        this.user_hives = [..._hives];
+      },
+      () => {},
+      () => {
+        this.displayHives();
+      }
+    )
+  }
+
+  test(evt: Event): void{
+    let button = (<HTMLButtonElement> evt.target);
+    if( button.classList.contains('apiary-action-img-active') ){
+        button.classList.remove('apiary-action-img-active');
+        return;
+    }
+    button.classList.add('apiary-action-img-active');
+    return;
+  }
+
+  apiaryActionButton(evt: Event): void{
+    let button = (<HTMLButtonElement> evt.target);
+    if( button.classList.contains('apiary-action-active') ){
+        button.classList.remove('apiary-action-active');
+        return;
+    }
+    button.classList.add('apiary-action-active');
+    return;
   }
 
   changeApiaryNotes(): void{

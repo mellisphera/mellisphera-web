@@ -10,7 +10,9 @@
 
 .inspect-body{
   width: 99%;
-  border-top: 1px solid black;
+  border-top: 1px solid #999999;
+  border-bottom: 1px solid #999999;
+  display: flex;
 }
 
 .inspect-time{
@@ -18,12 +20,18 @@
   width: 96%
 }
 
-.inspect-apiary, .inspect-hives{
+.inspect-apiary, .inspect-hive{
   width: 50%;
+  height: 600px;
+}
+
+.inspect-hive{
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .inspect-apiary{
-  border-right: 1px solid black;
+  border-right: 1px dashed black;
 }
 
 .inspect-apiary-main{
@@ -61,30 +69,50 @@
 }
 
 .apiary-op{
-  width: 80%;
-  height: 50px;
+  width: 100%;
   display: flex;
   margin: 10px 10px;
 }
 
-.apiary-action{
+.apiary-op table{
+  border-collapse:separate;
+  border-spacing:5px;
+}
+
+.apiary-op table tr{
+  margin: 0 5px;
+}
+
+.apiary-action, .hives-action{
   border: 1px solid lightgrey;
   border-radius: 3px;
-  margin: 0 auto;
-  width: 42px;
+  margin: 5px 0;
   text-align: center;
-  width: 9%;
-  height: 100%;
+  height: 50px;
+  width: 50px;
+  color: grey;
 }
 
-.apiary-action:first-child{
-  margin-left: 0;
-  margin-right: auto;
+.apiary-action-img{
+  background-size: 45px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/icons/inspect/observations/queen_grey.png');
 }
 
-.apiary-action:last-child{
-  margin-left: auto;
-  margin-right: 0;
+.apiary-action-img-active{
+  background-size: 45px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/icons/inspect/observations/queen_color.png');
+}
+
+.apiary-action-active{
+  color: blue;
+}
+
+.hives-action{
+  margin: 5px 5px;
+  height: 30px;
+  width: 30px;
 }
 
 .inspect-apiary-notes, .inspect-apiary-todo{
@@ -99,6 +127,32 @@
   resize: none;
 }
 
+#hives-table{
+  margin: 10px 10px;
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+#hives-table-head tr th{
+  text-align: center;
+}
+
+#hives-table-body tr{
+  border-bottom: 1px solid #444;
+}
+
+.inspect-footer{
+  display: flex;
+  justify-content: right;
+  width: 98%;
+  margin: 40px auto;
+}
+
+.inspect-footer button{
+  margin-left: 20px;
+  width: 100px;
+}
 
 @media screen and (max-width: 1200px){
   .inspect-time-input{
