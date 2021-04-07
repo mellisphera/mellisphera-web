@@ -1,5 +1,3 @@
-import { AppComponent } from './../../../app.component';
-import { Ruche } from './../../home/ruche';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as moment from 'moment';
 import { UserloggedService } from '../../../userlogged.service';
@@ -10,6 +8,11 @@ import { RucheService } from '../../service/api/ruche.service';
 import { RucherService } from '../../service/api/rucher.service';
 import { UnitService } from '../../service/unit.service';
 import { RucheInterface } from '../../../_model/ruche';
+
+import { InspApiary } from '../../../_model/inspApiary';
+import { InspHive } from '../../../_model/inspHive';
+import { InspHiveService } from './../../service/api/insp-hive.service';
+import { InspApiaryService } from './../../service/api/insp-apiary.service';
 
 const PICTOS_APIARY = [
   {name:'A', img:'../../../../assets/icons/inspect/observations/queen_grey.png'},
@@ -59,12 +62,24 @@ export class InspectNewComponent implements OnInit {
   public user_hives: RucheInterface[];
   public active_apiary_index: number;
 
+  public new_inspApiary: InspApiary = {
+    _id: null,
+    date: null,
+    apiaryId: null,
+    tasks: [],
+    notes: null,
+    todo: null,
+  };
+  public new_inspHives: InspHive[] = [];
+
   constructor(
     private unitService: UnitService,
     private userPrefsService: UserParamsService,
     private rucherService: RucherService,
     private rucheService: RucheService,
     private userService: UserloggedService,
+    private inspApiaryService: InspApiaryService,
+    private inspHiveService: InspHiveService
   ) {}
 
   ngOnInit() {
@@ -84,6 +99,16 @@ export class InspectNewComponent implements OnInit {
       () => {
         this.user_apiaries.sort(this.compare);
         console.log(this.user_apiaries);
+        this.initFakeInspApi();
+        this.rucheService.getHivesByApiary(this.user_apiaries[0]._id).subscribe(
+          _hives => {
+            this.user_hives = [..._hives];
+          },
+          () => {},
+          () => {
+            this.initFakeInspHives();
+          }
+        )
       }
     )
     this.displayActions();
@@ -254,18 +279,57 @@ export class InspectNewComponent implements OnInit {
     return;
   }
 
-  changeApiaryNotes(): void{
-    if( (<HTMLElement>document.getElementsByClassName('valid-icon')[2]).style.visibility === 'visible' ){
-      (<HTMLElement>document.getElementsByClassName('valid-icon')[2]).style.visibility ='hidden';
-    }
-  }
-
-  saveApiaryNotes(): void{
-    (<HTMLElement>document.getElementsByClassName('valid-icon')[2]).style.visibility ='visible';
-  }
-
   reset(){
 
+  }
+
+  saveInspection(): void{
+    this.inspApiaryService.createNewInspApiary(this.new_inspApiary).subscribe(
+      () => {},
+      () => {},
+      () => {
+        this.new_inspHives.forEach(insp => {
+          this.inspHiveService.createNewInspHive(insp).subscribe(
+            () => {}, () => {}, () => {}
+          );
+        })
+      }
+    );
+  }
+
+  initFakeInspApi(): void{
+    this.new_inspApiary._id = null;
+    this.new_inspApiary.date = new Date();
+    this.new_inspApiary.apiaryId = this.user_apiaries[this.active_apiary_index]._id;
+    this.new_inspApiary.tasks = ['oui', 'oui2'];
+    this.new_inspApiary.notes = 'Je teste un truc';
+    this.new_inspApiary.todo = 'Faut regler les soucis';
+  }
+
+  initFakeInspHives(): void{
+    let aux: InspHive = {
+      _id: null,
+      inspId: null,
+      date: new Date(),
+      apiaryId: this.user_apiaries[this.active_apiary_index]._id,
+      hiveId: this.user_hives[0]._id,
+      tasks: ['A', 'C', 'D'],
+      notes: 'Test 1 hive',
+      todo: 'Test all',
+    };
+    this.new_inspHives.push(aux);
+    aux = {
+      _id: null,
+      inspId: null,
+      date: new Date(),
+      apiaryId: this.user_apiaries[this.active_apiary_index]._id,
+      hiveId: this.user_hives[0]._id,
+      tasks: ['D', 'F', 'G'],
+      notes: 'Test 1 hive2',
+      todo: 'Test all hives 2',
+    }
+    this.new_inspHives.push(aux);
+    console.log(this.new_inspHives);
   }
 
 }
