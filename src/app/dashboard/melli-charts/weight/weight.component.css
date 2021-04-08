@@ -103,7 +103,7 @@ input[type=checkbox]
   position: absolute;
   font-size: 20px;
   margin-left: -10px;
-  margin-top: -16px;
+  margin-top: -15px;
 }
 
 .fa-times:hover{
