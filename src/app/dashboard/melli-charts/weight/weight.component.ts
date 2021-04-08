@@ -869,7 +869,6 @@ export class WeightComponent implements OnInit, AfterViewInit {
     /**
      * GET DATE FROM REF_DATE TO END DATE IN CALENDAR
     */
-
     weight_income_array.forEach((e, index) => {
           let row = tbody.insertRow();
           let cell1 = row.insertCell(); // HIVE CELL
@@ -878,13 +877,24 @@ export class WeightComponent implements OnInit, AfterViewInit {
           let cell3 = row.insertCell(); // 7DAYS CELL
           let cell4 = row.insertCell(); // 15DAYS CELL
           if(this.gainWeightDisplay){
-            if(e.length > 7){
-              cell3.innerHTML = (e[0].value - e[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
-              if(e.length > 14){
-                cell4.innerHTML = (e[0].value - e[14].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+            if(e.length > 0){
+              if(e.length > 7){
+                cell3.innerHTML = (e[0].value - e[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+                if(e.length > 14){
+                  cell4.innerHTML = (e[0].value - e[14].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+                }
+              }
+              if( this.ref_Values != undefined && this.ref_Values[index] != undefined && this.ref_Values[index] != null ){
+                cell2.innerHTML = (e[0].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+              }
+              else{
+                cell2.innerHTML = "No Value";
               }
             }
-            cell2.innerHTML = (e[0].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+            else{
+              cell2.innerHTML = "No Value";
+            }
+
           }
           else{
             if( this.ref_Values !== undefined && this.ref_Values[index] !== undefined && this.ref_Values[index] !== null && this.rawWeightDisplay){
