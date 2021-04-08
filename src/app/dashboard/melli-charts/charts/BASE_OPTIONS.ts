@@ -26,7 +26,7 @@ export const BASE_OPTIONS = {
         },
         legend: {
             orient: 'vertical',
-            right: '5',
+            right: '20',
             data: [],
         },
         /*axisPointer: {
@@ -68,7 +68,7 @@ export const BASE_OPTIONS = {
         grid: [{
             containLabel: true,
             top: 11,
-            height: '80%',
+            height: '97%',
             left: 'center',
             width: '80%'
         }],

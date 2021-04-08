@@ -478,51 +478,14 @@ export class WeightComponent implements OnInit, AfterViewInit {
                   // ADD MARKLINE
                   if(this.ref_Date !== undefined && this.ref_Date !== null && this.option.baseOption.series[0] !== undefined){
                     this.ref_Date.setHours(1);
-                    /*let j7: Date;
-                    let j14: Date;
-                    if(this.option.baseOption.series[0].data.length > 7){
-                      j7 = new Date(this.option.baseOption.series[0].data[6].name);
-                    }
-                    if(this.option.baseOption.series[0].data.length > 14){
-                      j14 = new Date(this.option.baseOption.series[0].data[14].name);
-                    }
-                    if(this.ref_Date < j14 && j14 !== undefined && j14!== null){
-                      this.option.baseOption.series[0].markLine = {data:
-                        [
-                          [
-                            {name: "Ref", xAxis: this.ref_Date, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                            {name: "end", xAxis: this.ref_Date, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                          ],
-                          [
-                            {name: "J-7", xAxis: j7, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                            {name: "end", xAxis: j7, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                          ],
-                          [
-                            {name: "J-15", xAxis: j14, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                            {name: "end", xAxis: j14, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                          ]
-                        ]
+
+                      this.option.baseOption.series[0].markLine =
+                      {
+                        data: [ {name: "", xAxis: this.ref_Date} ],
+                        lineStyle: {normal: { type:'dashed',color: 'red', width: 2} },
+                        label:{normal:{show:false } },
+                        symbol: ['circle', 'none']
                       }
-                    }
-                    else if(this.ref_Date < j7 && j7 !== undefined && j7 !== null){
-                      this.option.baseOption.series[0].markLine = {data:
-                        [
-                          [
-                            {name: "Ref", xAxis: this.ref_Date, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                            {name: "end", xAxis: this.ref_Date, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                          ],
-                          [
-                            {name: "J-7", xAxis: j7, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                            {name: "end", xAxis: j7, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                          ],
-                        ]
-                      }
-                    }
-                    else{*/
-                      this.option.baseOption.series[0].markLine = {data:
-                        [ {name: "", xAxis: this.ref_Date,lineStyle: {normal: { type:'dashed',color: 'red' } }, label:{normal:{show:false } } } ]
-                      }
-                    //}
                   }
                   this.updateTableData(_weight, obs);
                 })
@@ -659,13 +622,12 @@ export class WeightComponent implements OnInit, AfterViewInit {
             if(this.ref_Date !== undefined && this.ref_Date !== null && this.option.baseOption.series[0] !== undefined){
               this.ref_Date.setHours(1);
 
-                this.option.baseOption.series[0].markLine = {data:
-                  [
-                    [
-                      {name: "", xAxis: this.ref_Date, yAxis: this.option.baseOption.yAxis[0].min, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                      {name: "end", xAxis: this.ref_Date, yAxis:this.option.baseOption.yAxis[0].max, lineStyle: {normal: { type:'dashed',color: 'red'}} },
-                    ],
-                  ]
+                this.option.baseOption.series[0].markLine =
+                {
+                  data: [ {name: "", xAxis: this.ref_Date} ],
+                  lineStyle: {normal: { type:'dashed',color: 'red', width: 2} },
+                  label:{normal:{show:false } },
+                  symbol: ['circle', 'none']
                 }
             }
             this.updateTableData(_weight, obs);
@@ -704,24 +666,317 @@ export class WeightComponent implements OnInit, AfterViewInit {
   }
 
   removeHiveSerie(hive: RucheInterface): void {
-    /*let option = this.stackService.getWeightChartInstance().getOption();
-    const series = option.series.filter(_filter => _filter.name.indexOf(hive.name) !== -1);
+    const series = this.option.baseOption.series.filter(_filter => _filter.name.indexOf(hive.name) !== -1);
+    let indexSerie;
+    let nb = series.length;
     if (series.length > 0) {
       series.forEach(element => {
-        const indexSerie = option.series.map(_serie => _serie.name).indexOf(element.name);
+        indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(element.name);
         this.option.baseOption.series.splice(indexSerie, 1);
-        option.series.splice(indexSerie, 1);
       });
+      if(indexSerie === 0 && this.option.baseOption.series.length > 0){
+        this.option.baseOption.series[0].markLine =
+        {
+          data: [ {name: "", xAxis: this.ref_Date} ],
+          lineStyle: {normal: { type:'dashed',color: 'red', width: 2} },
+          label:{normal:{show:false } },
+          symbol: ['circle', 'none']
+        }
+      }
     }
-    this.stackService.getWeightChartInstance().setOption(option, true);*/
-    this.disposeGraph();
-    this.initGraph();
+    this.stackService.getWeightChartInstance().setOption(this.option, true);
+    this.removeDataFromTable(hive.name);
   }
 
   // RELOAD GRAPH WHEN ADDING NEW HIVE
   loadDataByHive(hive: RucheInterface): void {
-    this.disposeGraph();
-    this.initGraph();
+    this.stackService.getWeightChartInstance().showLoading();
+    let ref_val;
+    if(this.gainWeightDisplay){ // GAIN WEIGHT DISPLAY
+      if(this.ref_Date != undefined && this.ref_Date != null ){
+        this.dailyWService.getWeightIncomeGainByHive(hive._id, this.melliDateService.getRefDayRangeForRequest()).subscribe(
+          _ref_weight => {
+            if(_ref_weight.length > 0){
+              this.ref_Values.push(_ref_weight[0].value);
+              ref_val = _ref_weight[0].value;
+            }
+            else{
+              this.ref_Values.push(null);
+              ref_val = null;
+            }
+          },
+          () => {},
+          () => {
+            this.dailyWService.getWeightIncomeGainByHive(hive._id, [this.ref_Date, this.melliDateService.end]).subscribe(
+              _weight => {
+                this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
+                  serieComplete.itemStyle = {
+                    color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
+                  };
+                  serieComplete.type = 'bar';
+                  if(this.option.baseOption.series.length === 0){
+                    serieComplete.markLine =
+                    {
+                      data: [ {name: "", xAxis: this.ref_Date} ],
+                      lineStyle: {normal: { type:'dashed',color: 'red', width: 2} },
+                      label:{normal:{show:false } },
+                      symbol: ['circle', 'none']
+                    }
+                  }
+                  this.option.baseOption.series.push(serieComplete);
+                  this.stackService.getWeightChartInstance().setOption(this.option);
+                });
+                let cumul = 0.0;
+                let lastIndex = _weight.length-1;
+                for(let i=lastIndex; i > -1; i--){
+                  if( i !== lastIndex ){ // i > 0
+                    cumul += _weight[i].value;
+                    _weight[i].value = cumul;
+                  }
+                  else{ // i = 0
+                    _weight[i].value = 0.0;
+                  }
+                }
+                this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
+                  serieComplete.itemStyle = {
+                    color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
+                  };
+                  serieComplete.showSymbol = true;
+                  serieComplete.symbol = 'emptyCircle';
+                  serieComplete.type = 'line';
+                  serieComplete.lineStyle = {
+                    width: 2,
+                    shadowColor: 'rgba(255,255,255,1.0)',
+                    shadowBlur: 10,
+                    shadowOffsetY: 0
+                  }
+                  this.option.baseOption.series.push(serieComplete);
+                  this.stackService.getWeightChartInstance().setOption(this.option);
+                  this.addDataToTable(_weight, ref_val, hive.name);
+                });
+              },
+              () => {},
+              () => {
+                this.stackService.getWeightChartInstance().hideLoading();
+              }
+            )
+          }
+        )
+      }
+      else{
+        this.dailyWService.getWeightIncomeGainByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+          _weight => {
+            this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
+              serieComplete.itemStyle = {
+                color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
+              };
+              serieComplete.type = 'bar';
+              this.option.baseOption.series.push(serieComplete);
+              this.stackService.getWeightChartInstance().setOption(this.option);
+            });
+            let cumul = 0.0;
+            let lastIndex = _weight.length-1;
+            for(let i=lastIndex; i > -1; i--){
+              if( i !== lastIndex ){ // i > 0
+                cumul += _weight[i].value;
+                _weight[i].value = cumul;
+              }
+              else{ // i = 0
+                _weight[i].value = 0.0;
+              }
+            }
+            this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
+              serieComplete.itemStyle = {
+                color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
+              };
+              serieComplete.showSymbol = true;
+              serieComplete.symbol = 'emptyCircle';
+              serieComplete.type = 'line';
+              serieComplete.lineStyle = {
+                width: 2,
+              }
+              this.option.baseOption.series.push(serieComplete);
+              this.stackService.getWeightChartInstance().setOption(this.option);
+              this.addDataToTable(_weight, null, hive.name);
+            });
+          },
+          () => {},
+          () => {
+            this.stackService.getWeightChartInstance().hideLoading();
+          }
+        )
+      }
+    }
+    if(this.normWeightDisplay){ // NORM WEIGHT DISPLAY
+      if(this.ref_Date != undefined && this.ref_Date != null){
+        this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRefDayRangeForRequest()).subscribe(
+          _ref_weight => {
+            if(_ref_weight.length > 0){
+              this.ref_Values.push(_ref_weight[0].value);
+              ref_val = _ref_weight[0].value;
+            }
+            else{
+              this.ref_Values.push(null);
+              ref_val = null;
+            }
+          },
+          () => {},
+          () => {
+            this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+              _weight => {
+                _weight.forEach( e => {
+                  if(ref_val != null){
+                    e.value = e.value / ref_val;
+                  }
+                  else{
+                    e.value = 0.0;
+                  }
+                });
+                this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
+                  serieComplete.itemStyle = {
+                    color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
+                  };
+                  serieComplete.showSymbol = true;
+                  serieComplete.symbol = 'emptyCircle';
+                  serieComplete.type = 'line';
+                  serieComplete.lineStyle = {
+                    width: 2,
+                  }
+                  if(this.option.baseOption.series.length === 0){
+                    serieComplete.markLine =
+                    {
+                      data: [ {name: "", xAxis: this.ref_Date} ],
+                      lineStyle: {normal: { type:'dashed',color: 'red', width: 2} },
+                      label:{normal:{show:false } },
+                      symbol: ['circle', 'none']
+                    }
+                  }
+                  this.option.baseOption.series.push(serieComplete);
+                  this.stackService.getWeightChartInstance().setOption(this.option);
+                  this.addDataToTable(_weight, ref_val, hive.name);
+                });
+              },
+              () => {},
+              () => {
+                this.stackService.getWeightChartInstance().hideLoading();
+              }
+            )
+          }
+        );
+      }
+      else{
+        this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+          _weight => {
+            _weight.forEach(e => {
+              e.value = 0.0;
+            })
+            this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
+              serieComplete.itemStyle = {
+                color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
+              };
+              serieComplete.showSymbol = true;
+              serieComplete.symbol = 'emptyCircle';
+              serieComplete.type = 'line';
+              serieComplete.lineStyle = {
+                width: 2,
+                shadowColor: 'rgba(255,255,255,1.0)',
+                shadowBlur: 10,
+                shadowOffsetY: 0
+              }
+              this.option.baseOption.series.push(serieComplete);
+              this.stackService.getWeightChartInstance().setOption(this.option);
+              this.addDataToTable(_weight, null, hive.name);
+            });
+          },
+          () => {},
+          () => {
+            this.stackService.getWeightChartInstance().hideLoading();
+          }
+        )
+      }
+
+    }
+    if(this.rawWeightDisplay){
+      if(this.ref_Date != undefined && this.ref_Date != null){ // REF DATE DEFINED
+        this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRefDayRangeForRequest()).subscribe(
+          _ref_weight => {
+            if(_ref_weight.length > 0){
+              this.ref_Values.push(_ref_weight[0].value);
+              ref_val = _ref_weight[0].value;
+            }
+            else{
+              this.ref_Values.push( null );
+              ref_val = null;
+            }
+          },
+          () => {},
+          () => {
+            this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+              _weight => {
+                this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
+                  serieComplete.itemStyle = {
+                    color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
+                  };
+                  serieComplete.showSymbol = true;
+                  serieComplete.symbol = 'emptyCircle';
+                  serieComplete.type = 'line';
+                  serieComplete.lineStyle = {
+                    width: 2,
+                    shadowColor: 'rgba(255,255,255,1.0)',
+                    shadowBlur: 10,
+                    shadowOffsetY: 0
+                  }
+                  if(this.option.baseOption.series.length === 0){
+                    serieComplete.markLine =
+                    {
+                      data: [ {name: "", xAxis: this.ref_Date} ],
+                      lineStyle: {normal: { type:'dashed',color: 'red', width: 2} },
+                      label:{normal:{show:false } },
+                      symbol: ['circle', 'none']
+                    }
+                  }
+                  this.option.baseOption.series.push(serieComplete);
+                  this.stackService.getWeightChartInstance().setOption(this.option);
+                  this.addDataToTable(_weight, ref_val, hive.name);
+                });
+              },
+              () => {},
+              () => {
+                this.stackService.getWeightChartInstance().hideLoading();
+                console.log(this.option.baseOption.series);
+              }
+            )
+          }
+        )
+      }
+      else{ // NO REF DATE
+        this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+          _weight => {
+            this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
+              serieComplete.itemStyle = {
+                color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
+              };
+              serieComplete.showSymbol = true;
+              serieComplete.symbol = 'emptyCircle';
+              serieComplete.type = 'line';
+              serieComplete.lineStyle = {
+                width: 2,
+                shadowColor: 'rgba(255,255,255,1.0)',
+                shadowBlur: 10,
+                shadowOffsetY: 0
+              }
+              this.option.baseOption.series.push(serieComplete);
+              this.stackService.getWeightChartInstance().setOption(this.option);
+              this.addDataToTable(_weight, null, hive.name);
+            });
+          },
+          () => {},
+          () => {
+            this.stackService.getWeightChartInstance().hideLoading();
+          }
+        )
+      }
+    }
   }
 
 
@@ -845,6 +1100,12 @@ export class WeightComponent implements OnInit, AfterViewInit {
   updateTableData(weight_income_array: any[], obs: any){
     let table = document.getElementById("weight-table").getElementsByTagName("table")[0];
     let dateCells = document.getElementsByClassName('date-head');
+    let dateJ7 = document.getElementsByClassName('date-j-7');
+    let dateJ15 = document.getElementsByClassName('date-j-15');
+    let j7: Date = new Date(this.melliDateService.end);
+    j7.setDate(j7.getDate() - 7);
+    let j15: Date = new Date(this.melliDateService.end);
+    j15.setDate(j15.getDate() - 15);
     if(this.ref_Date !== undefined && this.ref_Date !== null){
       Array.from(dateCells).forEach(e => {
         e.textContent = this.unitService.getDailyDate(this.ref_Date);
@@ -863,6 +1124,14 @@ export class WeightComponent implements OnInit, AfterViewInit {
 
       });
     }
+
+    Array.from(dateJ7).forEach(e => {
+      e.textContent = this.unitService.getDailyDate(j7);
+    })
+    Array.from(dateJ15).forEach(e => {
+      e.textContent = this.unitService.getDailyDate(j15);
+    })
+
     let tbody = table.getElementsByTagName('tbody')[0];
     tbody.innerHTML = '';
 
@@ -878,9 +1147,9 @@ export class WeightComponent implements OnInit, AfterViewInit {
           let cell4 = row.insertCell(); // 15DAYS CELL
           if(this.gainWeightDisplay){
             if(e.length > 0){
-              if(e.length > 7){
+              if(e.length >= 7){
                 cell3.innerHTML = (e[0].value - e[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
-                if(e.length > 14){
+                if(e.length >= 15){
                   cell4.innerHTML = (e[0].value - e[14].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
                 }
               }
@@ -896,7 +1165,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
             }
           }
           else{
-            if( this.ref_Values !== undefined && this.ref_Values[index] !== undefined && this.ref_Values[index] !== null && this.rawWeightDisplay){
+            if( this.ref_Values !== undefined && this.ref_Values[index] !== undefined && this.ref_Values[index] !== null){
               cell2.innerHTML = this.ref_Values[index].toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
             }
             else{
@@ -906,16 +1175,82 @@ export class WeightComponent implements OnInit, AfterViewInit {
               else{
                 cell2.innerHTML = "No value";
               }
-
             }
-            if(e.length > 7){
+            if(e.length >= 7){
               cell3.innerHTML = parseFloat(e[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
-              if(e.length > 15){
+              if(this.normWeightDisplay){
+                cell3.innerHTML = 'x' + parseFloat(e[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+              }
+              if(e.length >= 15){
                 cell4.innerHTML = parseFloat(e[14].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+                if(this.normWeightDisplay){
+                  cell4.innerHTML = 'x' + parseFloat(e[14].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+                }
               }
             }
           }
     });
+  }
+
+  addDataToTable(_weight: any[], ref_val: number | null, name: string): void{
+    let table = document.getElementById("weight-table").getElementsByTagName("table")[0];
+    let tbody = table.getElementsByTagName('tbody')[0];
+    let row = tbody.insertRow();
+    let cell1 = row.insertCell(); // HIVE CELL
+    cell1.innerHTML = name;
+    let cell2 = row.insertCell(); // T0 CELL
+    if(ref_val == null){
+      cell2.innerHTML = "No Value";
+    }
+    else{
+      if(this.gainWeightDisplay){
+        cell2.innerHTML = _weight[0].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      }
+      else{
+        cell2.innerHTML = ref_val.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      }
+    }
+    let cell3 = row.insertCell(); // 7DAYS CELL
+    if(this.gainWeightDisplay){
+      if(_weight.length >= 7){
+        cell3.innerHTML = (_weight[0].value - _weight[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      }
+    }
+    if(this.normWeightDisplay){
+      if(_weight.length >= 7){
+        cell3.innerHTML = 'x' + _weight[6].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      }
+    }
+    if(this.rawWeightDisplay){
+      if(_weight.length >= 7){
+        cell3.innerHTML =  _weight[6].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      }
+    }
+    let cell4 = row.insertCell(); // 15DAYS CELL
+    if(this.gainWeightDisplay){
+      if(_weight.length >= 15){
+        cell4.innerHTML = (_weight[0].value - _weight[14].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      }
+    }
+    if(this.normWeightDisplay){
+      if(_weight.length >= 15){
+        cell4.innerHTML = 'x' + _weight[14].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      }
+    }
+    if(this.rawWeightDisplay){
+      if(_weight.length >= 15){
+        cell4.innerHTML =  _weight[14].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      }
+    }
+
+  }
+
+  removeDataFromTable(name: string): void{
+    let table = document.getElementById("weight-table").getElementsByTagName("table")[0];
+    let tbody = table.getElementsByTagName('tbody')[0];
+    let tr = tbody.getElementsByTagName('tr');
+    let index = Array.from(tr).findIndex(e => e.cells[0].innerHTML === name);
+    tbody.deleteRow(index);
   }
 
   ngOnDestroy(): void {
