@@ -171,6 +171,27 @@ export class WeightComponent implements OnInit, AfterViewInit {
     if (this.option.baseOption.xAxis.length > 0) {
       this.option.baseOption.xAxis = [];
     }
+
+    // X-Axis Options
+    let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
+    xAxis.max = this.melliDateService.getRangeForReqest()[1];
+    xAxis.min = this.melliDateService.getRangeForReqest()[0];
+    xAxis.axisLabel.formatter = (value: number, index: number) => {
+      return this.unitService.getDailyDate(new Date(value));
+    };
+    this.option.baseOption.tooltip.formatter = (params) => {
+      if(params.data.value != undefined){
+        return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data.name), new Array(
+          {
+            name: params.seriesName,
+            value: this.unitService.getValRound(params.data.value[1]),
+            unit: this.graphGlobal.getUnitBySerieName('Weight')
+          }
+        ));
+      }
+    }
+    this.option.baseOption.xAxis.push(xAxis);
+
     // Y-Axis Options
     let yAxis = Object.assign({}, BASE_OPTIONS.yAxis[1]);
     if(this.gainWeightDisplay){
@@ -249,29 +270,8 @@ export class WeightComponent implements OnInit, AfterViewInit {
         }
       };
     }
-
-
     this.option.baseOption.yAxis.push(yAxis);
 
-    // X-Axis Options
-    let xAxis = Object.assign({}, BASE_OPTIONS.xAxis);
-    xAxis.max = this.melliDateService.getRangeForReqest()[1];
-    xAxis.min = this.melliDateService.getRangeForReqest()[0];
-    xAxis.axisLabel.formatter = (value: number, index: number) => {
-      return this.unitService.getDailyDate(new Date(value));
-    };
-    this.option.baseOption.tooltip.formatter = (params) => {
-      if(params.data.value != undefined){
-        return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data.name), new Array(
-          {
-            name: params.seriesName,
-            value: this.unitService.getValRound(params.data.value[1]),
-            unit: this.graphGlobal.getUnitBySerieName('Weight')
-          }
-        ));
-      }
-    }
-    this.option.baseOption.xAxis.push(xAxis);
     // Add Options to EChart graph
     this.stackService.getWeightChartInstance().setOption(this.option);
   }
@@ -894,7 +894,6 @@ export class WeightComponent implements OnInit, AfterViewInit {
             else{
               cell2.innerHTML = "No Value";
             }
-
           }
           else{
             if( this.ref_Values !== undefined && this.ref_Values[index] !== undefined && this.ref_Values[index] !== null && this.rawWeightDisplay){

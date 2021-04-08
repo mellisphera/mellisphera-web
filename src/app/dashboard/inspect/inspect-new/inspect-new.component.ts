@@ -14,21 +14,45 @@ import { InspHive } from '../../../_model/inspHive';
 import { InspHiveService } from './../../service/api/insp-hive.service';
 import { InspApiaryService } from './../../service/api/insp-apiary.service';
 
-const PICTOS_APIARY = [
-  {name:'A', img:'../../../../assets/icons/inspect/observations/queen_grey.png'},
-  {name:'B', img:''},
-  {name:'C', img:''},
-  {name:'D', img:''},
-  {name:'E', img:''},
-  {name:'F', img:''},
-  {name:'G', img:''},
-  {name:'H', img:''},
-  {name:'I', img:''},
-  {name:'J', img:''},
-  {name:'K', img:''},
-  {name:'L', img:''},
-  {name:'M', img:''},
-  {name:'N', img:''},
+const PICTOS_APIARY_ACTIONS = [
+  {name:'A1', img:'../../../../assets/icons/inspect/observations/queen_grey.png'},
+  {name:'A2', img:''},
+  {name:'A3', img:''},
+  {name:'A4', img:''},
+  {name:'A5', img:''},
+  {name:'A6', img:''},
+  {name:'A7', img:''},
+  {name:'A8', img:''},
+  {name:'A9', img:''},
+  {name:'A10', img:''},
+  {name:'A11', img:''},
+  {name:'A12', img:''},
+  {name:'A13', img:''},
+  {name:'A14', img:''},
+  {name:'A15', img:''},
+  {name:'A16', img:''},
+  {name:'A17', img:''},
+  {name:'A18', img:''},
+  {name:'A19', img:''},
+  {name:'A20', img:''},
+  {name:'A21', img:''},
+  {name:'A22', img:''},
+  {name:'A23', img:''},
+  {name:'A24', img:''},
+];
+
+const PICTOS_APIARY_OBS = [
+  {name:'O1', img:''},
+  {name:'O2', img:''},
+  {name:'O3', img:''},
+  {name:'O4', img:''},
+  {name:'O5', img:''},
+  {name:'O6', img:''},
+  {name:'O7', img:''},
+  {name:'O8', img:''},
+  {name:'O9', img:''},
+  {name:'O10', img:''},
+  {name:'O11', img:''},
 ];
 
 const PICTOS_HIVES_ACTIONS = [
@@ -111,7 +135,8 @@ export class InspectNewComponent implements OnInit {
         )
       }
     )
-    this.displayActions();
+    this.displayApiaryActions();
+    this.displayApiaryObs();
   }
 
   compare(a, b) {
@@ -128,12 +153,13 @@ export class InspectNewComponent implements OnInit {
     return comparison;
   }
 
-  displayActions(): void{
+  // DISPLAY ACTIONS IN APIARY
+  displayApiaryActions(): void{
     let table = (<HTMLTableElement>document.getElementById("apiary-op-table"));
     let tr, td, button;
-    for(let i=0; i<PICTOS_APIARY.length; i++){
+    for(let i=0; i<PICTOS_APIARY_ACTIONS.length; i++){
       // Create new row
-      if( i%6 === 0 ){
+      if( i%8 === 0 ){
         tr = document.createElement('tr');
       }
       td = document.createElement('td');
@@ -146,19 +172,49 @@ export class InspectNewComponent implements OnInit {
       }
       else{
         /* CHANGE DISPLAY TO IMAGE */
-        button.textContent = PICTOS_APIARY[i].name;
+        button.textContent = PICTOS_APIARY_ACTIONS[i].name;
         /* END */
-        button.onclick = (evt: Event) => { this.apiaryActionButton(evt) };
+        button.onclick = (evt: Event) => { this.apiaryButton(evt) };
       }
 
       td.appendChild(button);
       tr.appendChild(td);
       // Push row to table
-      if( (i+1)%6 === 0 ){
+      if( (i+1)%8 === 0 ){
         table.appendChild(tr);
       }
     }
-    if(PICTOS_APIARY.length%6 !== 0){ // Push last row if not complete
+    if(PICTOS_APIARY_ACTIONS.length%6 !== 0){ // Push last row if not complete
+      table.appendChild(tr);
+    }
+  }
+
+  // DISPLAY OBSERVATIONS IN APIARY
+  displayApiaryObs(): void{
+    let table = (<HTMLTableElement>document.getElementById("apiary-obs-table"));
+    let tr, td, button;
+    for(let i=0; i<PICTOS_APIARY_OBS.length; i++){
+      // Create new row
+      if( i%8 === 0 ){
+        tr = document.createElement('tr');
+      }
+      td = document.createElement('td');
+      button = document.createElement('button');
+      button.classList.add('apiary-obs');
+
+      /* CHANGE DISPLAY TO IMAGE */
+      button.textContent = PICTOS_APIARY_OBS[i].name;
+      /* END */
+      button.onclick = (evt: Event) => { this.apiaryButton(evt) };
+
+      td.appendChild(button);
+      tr.appendChild(td);
+      // Push row to table
+      if( (i+1)%8 === 0 ){
+        table.appendChild(tr);
+      }
+    }
+    if(PICTOS_APIARY_OBS.length%6 !== 0){ // Push last row if not complete
       table.appendChild(tr);
     }
   }
@@ -269,15 +325,17 @@ export class InspectNewComponent implements OnInit {
     return;
   }
 
-  apiaryActionButton(evt: Event): void{
+  apiaryButton(evt: Event): void{
     let button = (<HTMLButtonElement> evt.target);
-    if( button.classList.contains('apiary-action-active') ){
-        button.classList.remove('apiary-action-active');
+    if( button.classList.contains('apiary-btn-active') ){
+        button.classList.remove('apiary-btn-active');
         return;
     }
-    button.classList.add('apiary-action-active');
+    button.classList.add('apiary-btn-active');
     return;
   }
+
+  apiaryObsButton
 
   reset(){
 

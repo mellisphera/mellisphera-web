@@ -68,44 +68,51 @@
   visibility: hidden;
 }
 
-.apiary-op{
+.apiary-op, .apiary-obs-div{
   width: 100%;
   display: flex;
   margin: 10px 10px;
 }
 
-.apiary-op table{
+.apiary-op table, .apiary-obs-div table{
   border-collapse:separate;
   border-spacing:5px;
 }
 
-.apiary-op table tr{
+.apiary-op table tr, .apiary-obs-div table tr{
   margin: 0 5px;
 }
 
-.apiary-action, .hives-action{
-  border: 1px solid lightgrey;
+.apiary-action, .hives-action, .apiary-obs, .hives-obs{
   border-radius: 3px;
   margin: 5px 0;
   text-align: center;
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
   color: grey;
 }
 
+.apiary-action, .hives-action{
+  border: 1px solid green;
+}
+
+.apiary-obs, .hives-obs{
+  border: 1px solid skyblue;
+}
+
 .apiary-action-img{
-  background-size: 45px;
+  background-size: 35px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/icons/inspect/observations/queen_grey.png');
 }
 
 .apiary-action-img-active{
-  background-size: 45px;
+  background-size: 35px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/icons/inspect/observations/queen_color.png');
 }
 
-.apiary-action-active{
+.apiary-btn-active{
   color: blue;
 }
 
