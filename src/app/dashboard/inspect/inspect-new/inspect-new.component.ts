@@ -342,7 +342,7 @@ export class InspectNewComponent implements OnInit {
   }
 
   saveInspection(): void{
-    this.inspApiaryService.createNewInspApiary(this.new_inspApiary).subscribe(
+    /*this.inspApiaryService.createNewInspApiary(this.new_inspApiary).subscribe(
       () => {},
       () => {},
       () => {
@@ -352,7 +352,7 @@ export class InspectNewComponent implements OnInit {
           );
         })
       }
-    );
+    );*/
   }
 
   initFakeInspApi(): void{
