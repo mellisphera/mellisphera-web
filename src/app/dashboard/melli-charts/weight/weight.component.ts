@@ -60,7 +60,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
         {
           option: {
             grid:{
-              width: '80%'
+              width: '85%'
             },
             toolbox: {
               show: true,
@@ -196,14 +196,14 @@ export class WeightComponent implements OnInit, AfterViewInit {
     let yAxis = Object.assign({}, BASE_OPTIONS.yAxis[1]);
     if(this.gainWeightDisplay){
       yAxis.name = this.graphGlobal.weight.income_name;
-    }
-    else{
-      yAxis.name = this.graphGlobal.weight.name;
-    }
-    if(this.gainWeightDisplay || this.normWeightDisplay){
       yAxis.interval = 1;
     }
-    else{
+    if(this.rawWeightDisplay){
+      yAxis.name = this.graphGlobal.weight.name;
+      yAxis.interval = 5;
+    }
+    if(this.normWeightDisplay){
+      yAxis.name = this.graphGlobal.weight.norm_name;
       yAxis.interval = 5;
     }
 
@@ -252,21 +252,21 @@ export class WeightComponent implements OnInit, AfterViewInit {
 
     if(this.normWeightDisplay){
       yAxis.min = function (value: any) {
-        if(value.min < -2){
-          let nb = Math.ceil(Math.abs(value.min)) / 2;
-          return Math.round(nb) * -2;
+        if(value.min < -5){
+          let nb = Math.ceil(Math.abs(value.min)) / 5;
+          return Math.ceil(nb) * -5;
         }
         else{
-          return 0;
+          return -5;
         }
       };
       yAxis.max = function (value) {
-        if(value.max > 5){
+        if(value.max > 10){
           let nb = Math.ceil(value.max) / 5;
           return Math.ceil(nb) * 5;
         }
         else{
-          return 5;
+          return 10;
         }
       };
     }
@@ -326,7 +326,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
 
   loadAllHiveAfterRangeChange(next: Function): void {
 
-    let obs;
+    let obs, rawWeight, weight;
 
     // GET WEIGHT FROM GIVEN DATE
     if(this.ref_Date !== undefined && this.ref_Date !== null){ // IF REF DATE IS NOT UNDEFINED, FIND REF_WEIGHT
@@ -396,11 +396,12 @@ export class WeightComponent implements OnInit, AfterViewInit {
                 }
                 if(this.normWeightDisplay){ // NEW VALUES FOR NORMALIZED DISPLAY
                   _weight.forEach((w_array: any[],index) => {
-                    w_array.forEach((_elt, i) => {
+                    let t = [...w_array];
+                    t.forEach((_elt, i) => {
                       if(this.ref_Values != undefined){
                         if(this.ref_Values[index] != undefined){ // TEST IF HIVE HAS REF_VALUE
                           let value: any = this.ref_Values[index];
-                          _elt.value = (_elt.value / value).toFixed(2);
+                          _elt.value = (((_elt.value / value) - 1) * 100).toFixed(2);
                         }
                         else{ // DEFAULT VALUE IF NO REF VALUE
                           _elt.value = 0.0;
@@ -411,6 +412,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
                       }
                     });
                   });
+                  weight = [..._weight];
                 }
                 this.option.baseOption.series = [];
                 _weight.forEach((_elt: any[], index) => { // ITERATE THROUGH WEIGHT ARRAY
@@ -487,11 +489,16 @@ export class WeightComponent implements OnInit, AfterViewInit {
                         symbol: ['circle', 'none']
                       }
                   }
-                  this.updateTableData(_weight, obs);
+                  if(!this.normWeightDisplay){
+                    this.updateTableData(_weight, obs);
+                  }
                 })
               },
               () => {},
               () => {
+                if(this.normWeightDisplay){
+                  this.updateNormTableData(weight, obs);
+                }
                 next(this.option);
                 this.stackService.getWeightChartInstance().hideLoading();
               }
@@ -539,20 +546,10 @@ export class WeightComponent implements OnInit, AfterViewInit {
           if(this.normWeightDisplay){ // NEW VALUES FOR NORMALIZED DISPLAY
             _weight.forEach((w_array: any[],index) => {
               w_array.forEach((_elt, i) => {
-                if(this.ref_Values != undefined){
-                  if(this.ref_Values[index] != undefined){ // TEST IF HIVE HAS REF_VALUE
-                    let value: any = this.ref_Values[index];
-                    _elt.value = (_elt.value / value).toFixed(2);
-                  }
-                  else{ // DEFAULT VALUE IF NO REF VALUE
-                    _elt.value = 0.0;
-                  }
-                }
-                else{ // DEFAULT VALUE IF NO REF DATE
-                    _elt.value = 0.0;
-                }
+                _elt.value = 0.0;
               });
             });
+            weight = [..._weight];
           }
           this.option.baseOption.series = [];
           _weight.forEach((_elt: any[], index) => { // ITERATE THROUGH WEIGHT ARRAY
@@ -630,11 +627,16 @@ export class WeightComponent implements OnInit, AfterViewInit {
                   symbol: ['circle', 'none']
                 }
             }
-            this.updateTableData(_weight, obs);
+            if(!this.normWeightDisplay){
+              this.updateTableData(_weight, obs);
+            }
           })
         },
         () => {},
         () => {
+          if(this.normWeightDisplay){
+            this.updateNormTableData(weight, obs);
+          }
           next(this.option);
           this.stackService.getWeightChartInstance().hideLoading();
         }
@@ -811,6 +813,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
       if(this.ref_Date != undefined && this.ref_Date != null){
         this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRefDayRangeForRequest()).subscribe(
           _ref_weight => {
+            console.log(_ref_weight);
             if(_ref_weight.length > 0){
               this.ref_Values.push(_ref_weight[0].value);
               ref_val = _ref_weight[0].value;
@@ -826,7 +829,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
               _weight => {
                 _weight.forEach( e => {
                   if(ref_val != null){
-                    e.value = e.value / ref_val;
+                    e.value = ((e.value / ref_val) - 1)*100;
                   }
                   else{
                     e.value = 0.0;
@@ -853,7 +856,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
                   }
                   this.option.baseOption.series.push(serieComplete);
                   this.stackService.getWeightChartInstance().setOption(this.option);
-                  this.addDataToTable(_weight, ref_val, hive.name);
+                  this.addDataToNormTable(_weight, ref_val, hive);
                 });
               },
               () => {},
@@ -885,7 +888,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
               }
               this.option.baseOption.series.push(serieComplete);
               this.stackService.getWeightChartInstance().setOption(this.option);
-              this.addDataToTable(_weight, null, hive.name);
+              this.addDataToNormTable(_weight, null, hive);
             });
           },
           () => {},
@@ -943,7 +946,6 @@ export class WeightComponent implements OnInit, AfterViewInit {
               () => {},
               () => {
                 this.stackService.getWeightChartInstance().hideLoading();
-                console.log(this.option.baseOption.series);
               }
             )
           }
@@ -1251,6 +1253,132 @@ export class WeightComponent implements OnInit, AfterViewInit {
     let tr = tbody.getElementsByTagName('tr');
     let index = Array.from(tr).findIndex(e => e.cells[0].innerHTML === name);
     tbody.deleteRow(index);
+  }
+
+  updateNormTableData(normWeight: any[], obs:any){
+    let rawWeight;
+    Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
+      _weight => {
+        rawWeight = [..._weight];
+      },
+      () => {},
+      () => {
+        let table = document.getElementById("weight-table").getElementsByTagName("table")[0];
+        let tbody = table.getElementsByTagName('tbody')[0];
+        tbody.innerHTML = '';
+        let dateCells = document.getElementsByClassName('date-head');
+        let dateCurrent = document.getElementsByClassName('date-current')[0];
+        console.log(dateCurrent);
+        let dateJ7 = document.getElementsByClassName('date-j-7-norm')[0];
+        let dateJ15 = document.getElementsByClassName('date-j-15-norm')[0];
+        Array.from(dateCells).forEach(e => {
+          if(this.ref_Date != undefined && this.ref_Date != null){
+            e.textContent = this.unitService.getDailyDate(this.ref_Date);
+          }
+          else e.textContent = "No Ref Date";
+        });
+        let date = new Date(rawWeight[0][0].date);
+        let date7 = new Date(date);
+        date7.setDate(date.getDate() - 7);
+        let date15 = new Date(date);
+        date15.setDate(date.getDate() - 15);
+        dateCurrent.textContent = this.unitService.getDailyDate(date);
+        dateJ7.textContent = this.unitService.getDailyDate(date7);
+        dateJ15.textContent = this.unitService.getDailyDate(date15);
+        rawWeight.forEach((e,i) => {
+          let aux = new Date(e[0].date);
+          if(date.getTime() < aux.getTime()){
+            date = new Date(e[0].date);
+            dateCurrent.textContent = this.unitService.getDailyDate(date);
+            date7.setDate(date.getDate() - 7);
+            dateJ7.textContent = this.unitService.getDailyDate(date7);
+            date7.setDate(date.getDate() - 15);
+            dateJ15.textContent = this.unitService.getDailyDate(date15);
+          }
+          let row = tbody.insertRow();
+          let cell1 = row.insertCell();
+          cell1.innerHTML = obs[i].hive.name;
+          let cell2 = row.insertCell();
+          if(this.ref_Values != undefined && this.ref_Values[i] != undefined && this.ref_Values[i] != null && this.ref_Date != null){
+            cell2.innerHTML = this.ref_Values[i].toFixed(2)+ ' ' + this.graphGlobal.weight.unitW;
+          }
+          else{
+            cell2.innerHTML = "No Ref Value";
+          }
+          let cell3 = row.insertCell();
+          if(e.length > 0 && new Date(e[0].date).getTime() === date.getTime()){
+            cell3.innerHTML = e[0].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+          }
+          let cell4 = row.insertCell();
+          if(normWeight[i].length > 0){
+            if((normWeight[i][0].value) >= 0) cell4.innerHTML = '+ ' + (normWeight[i][0].value).toFixed(2) + ' %';
+            else cell4.innerHTML = '- ' + Math.abs(normWeight[i][0].value).toFixed(2) + ' %';
+          }
+          let cell5 = row.insertCell();
+          if(e.length >= 7 && this.ref_Date != null){
+            console.log(e);
+            if(( (e[0].value / e[7].value) - 1) >= 0) cell5.innerHTML = '+ ' +(( (e[0].value / e[7].value) - 1) * 100).toFixed(2) + ' %';
+            else cell5.innerHTML = '- ' + Math.abs(( (e[0].value / e[7].value) - 1) * 100).toFixed(2) + ' %';
+          }
+          let cell6 = row.insertCell();
+          if(e.length >= 15 && this.ref_Date != null){
+            if(( (e[0].value / e[15].value) - 1) >= 0) cell6.innerHTML = '+ ' +(( (e[0].value / e[15].value) - 1) * 100).toFixed(2) + ' %';
+            else cell6.innerHTML = '- ' + Math.abs(( (e[0].value / e[15].value) - 1) * 100).toFixed(2) + ' %';
+          }
+        });
+      }
+    );
+  }
+
+  addDataToNormTable(normWeight: any[], ref_val: number | null, hive: RucheInterface){
+    let rawWeight;
+    this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+      _weight => {
+        rawWeight = [..._weight];
+      },
+      () => {},
+      () => {
+        console.log(rawWeight);
+        let table = document.getElementById("weight-table").getElementsByTagName("table")[0];
+        let tbody = table.getElementsByTagName('tbody')[0];
+        let dateCells = document.getElementsByClassName('date-head');
+        let dateCurrent = document.getElementsByClassName('date-current')[0];
+        let dateJ7 = document.getElementsByClassName('date-j-7-norm')[0];
+        let dateJ15 = document.getElementsByClassName('date-j-15-norm')[0];
+        let date = new Date(dateCurrent.innerHTML);
+        let row = tbody.insertRow();
+        let cell1 = row.insertCell();
+        cell1.innerHTML = hive.name;
+        let cell2 = row.insertCell();
+        if(ref_val != null && this.ref_Date != null){
+          cell2.innerHTML = ref_val.toFixed(2)+ ' ' + this.graphGlobal.weight.unitW;
+        }
+        else{
+          cell2.innerHTML = "No Ref Value";
+        }
+        let cell3 = row.insertCell();
+        let string = this.unitService.getDailyDate(new Date(rawWeight[0].date));
+        if(rawWeight.length > 0 && new Date(string).getTime() === date.getTime()){
+          cell3.innerHTML = rawWeight[0].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+        }
+        let cell4 = row.insertCell();
+        if(normWeight.length > 0){
+          if((normWeight[0].value) >= 0) cell4.innerHTML = '+ ' + (normWeight[0].value).toFixed(2) + ' %';
+          else cell4.innerHTML = '- ' + Math.abs(normWeight[0].value).toFixed(2) + ' %';
+        }
+        let cell5 = row.insertCell();
+        if(rawWeight.length >= 7 && this.ref_Date != null){
+          if(( (rawWeight[0].value / rawWeight[7].value)*100 - 100) >= 0) cell5.innerHTML = '+ ' +(( (rawWeight[0].value / rawWeight[7].value)*100 - 100)).toFixed(2) + ' %';
+          else cell5.innerHTML = '- ' + Math.abs(( (rawWeight[0].value / rawWeight[7].value)*100 - 100)).toFixed(2) + ' %';
+        }
+        let cell6 = row.insertCell();
+        if(rawWeight.length >= 15 && this.ref_Date != null){
+          if(( (rawWeight[0].value / rawWeight[15].value)*100 - 100) >= 0) cell6.innerHTML = '+ ' +(( (rawWeight[0].value / rawWeight[15].value)*100 - 100)).toFixed(2) + ' %';
+          else cell6.innerHTML = '- ' + Math.abs(( (rawWeight[0].value / rawWeight[15].value)*100 - 100)).toFixed(2) + ' %';
+        }
+      }
+    )
+
   }
 
   ngOnDestroy(): void {

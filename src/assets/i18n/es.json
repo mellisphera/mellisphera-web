@@ -466,13 +466,20 @@
             "HIVE": "Colmena",
             "RAW":{
               "T0": "Peso a t0",
-              "7DAYS": "Pseo a D-7",
+              "7DAYS": "Peso a D-7",
               "15DAYS": "Peso a D-15"
             },
             "GAIN":{
               "T0": "Aumento desde t0",
               "7DAYS": "Aumento los ultimos 7 dias",
               "15DAYS": "Aumento los ultimos 15 dias"
+            },
+            "NORM":{
+              "T0": "Peso a t0",
+              "CURRENT": "Peso actual",
+              "VAR_TO": "Variacion desde t0",
+              "VAR_7DAYS": "Variacion los ultimos 7 dias",
+              "VAR_15DAYS": "Variacion los ultimos 15 dias"
             }
           }
       }

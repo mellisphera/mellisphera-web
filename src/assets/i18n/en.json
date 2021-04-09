@@ -458,8 +458,14 @@
               "T0": "Gain since t0",
               "7DAYS": "Gain last 7 days",
               "15DAYS": "Gain last 15 days"
+            },
+            "NORM":{
+              "T0": "Weight at t0",
+              "CURRENT": "Current Weight",
+              "VAR_TO": "Variation since t0",
+              "VAR_7DAYS": "Variation since D-7",
+              "VAR_15DAYS": "Variation since D-15"
             }
-
           }
         }
     },

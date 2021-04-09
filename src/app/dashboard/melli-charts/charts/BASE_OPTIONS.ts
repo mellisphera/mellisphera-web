@@ -25,8 +25,10 @@ export const BASE_OPTIONS = {
             formatter: null,
         },
         legend: {
-            orient: 'vertical',
-            right: '20',
+            width: '100%',
+            orient: 'horizontal',
+            top: '0',
+            align: 'left',
             data: [],
         },
         /*axisPointer: {
@@ -67,8 +69,8 @@ export const BASE_OPTIONS = {
         ],*/
         grid: [{
             containLabel: true,
-            top: 11,
-            height: '97%',
+            top: 20,
+            height: '95%',
             left: 'center',
             width: '80%'
         }],
@@ -140,11 +142,11 @@ export const BASE_OPTIONS = {
         nameLocation: 'middle',
         type: 'value',
         splitArea: {},
-        nameGap: 25,
-        interval: 0,
+        nameGap: 35,
+        interval: 5,
         min: (value) => {return 0},
         max: (value) => {return 0},
-        gridIndex: 0
+        gridIndex: 0,
       },
     ],
 

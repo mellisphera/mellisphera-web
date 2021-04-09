@@ -114,6 +114,10 @@ input[type=checkbox]
   cursor: pointer;
 }
 
+#weight-render{
+  margin-top: 20px;
+}
+
 #weight-table{
   margin-top: 1%;
 }
@@ -127,7 +131,7 @@ input[type=checkbox]
 
 #weight-table > table td, #weight-table > table th{
   font-family: 'Poppins' !important;
-  border: 1px solid #ddd;
+  border: 1px solid white;
   padding: 8px;
 }
 
@@ -135,8 +139,9 @@ input[type=checkbox]
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #3d3d3d;
-  color: white;
+  background-color: #c5c5c5;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
 }
 
 #separator{
@@ -152,20 +157,32 @@ input[type=checkbox]
 @media screen and (max-width: 400px) {
   .input-wrapper {
     margin-bottom: 10px;
-    width: 50%;
-    text-align: center;
+    width: 60%;
   }
   ::ng-deep .owl-dt-popup {
     right: 0 !important;
   }
   .weight_ref_date{
     width: 100%;
-    padding: 10px;
     text-align: center;
   }
   #graph-weight{
     width: 95%;
     height: 60vh;
+  }
+  #weight-table{
+    margin-top: 2%;
+  }
+  #weight-table > table{
+    font-family: 'Poppins' !important;
+    width: 90%;
+    border-collapse: collapse;
+    margin: 0 auto; /* or margin: 0 auto 0 auto */
+  }
+  #weight-table > table td, #weight-table > table th{
+    font-family: 'Poppins' !important;
+    padding: 8px;
+    font-size: 10px !important;
   }
 }
 
@@ -180,7 +197,6 @@ input[type=checkbox]
   }
   .weight_ref_date{
     width: 80%;
-    padding: 10px;
     text-align: center;
   }
   #graph-weight{
@@ -200,7 +216,6 @@ input[type=checkbox]
   }
   .weight_ref_date{
     width: 70%;
-    padding: 10px;
     text-align: center;
   }
   #graph-weight{

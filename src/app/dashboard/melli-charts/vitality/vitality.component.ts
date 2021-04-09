@@ -50,7 +50,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
         {
           option: {
             grid:{
-              width: '92%'
+              width: '85%'
             },
             toolbox: {
               show: true,

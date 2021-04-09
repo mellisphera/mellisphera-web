@@ -50,7 +50,7 @@ limitations under the License. -->
     </section>
   </div>
 
-  <div id="weight-table" *ngIf="!gainWeightDisplay">
+  <div id="weight-table" *ngIf="rawWeightDisplay">
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -63,6 +63,31 @@ limitations under the License. -->
           <th class="date-head">Date</th>
           <th class="date-j-7"></th>
           <th class="date-j-15"></th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div id="weight-table" *ngIf="normWeightDisplay">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th rowspan ="2">{{'MELLICHARTS.WEIGHT.TABLE.HIVE' | translate}}</th>
+          <th>{{'MELLICHARTS.WEIGHT.TABLE.NORM.T0' | translate}}</th>
+          <th>{{'MELLICHARTS.WEIGHT.TABLE.NORM.CURRENT' | translate}}</th>
+          <th>{{'MELLICHARTS.WEIGHT.TABLE.NORM.VAR_TO' | translate}}</th>
+          <th>{{'MELLICHARTS.WEIGHT.TABLE.NORM.VAR_7DAYS' | translate}}</th>
+          <th>{{'MELLICHARTS.WEIGHT.TABLE.NORM.VAR_15DAYS' | translate}}</th>
+        </tr>
+        <tr>
+          <th class="date-head">Date</th>
+          <th class="date-current"></th>
+          <th class="date-head"></th>
+          <th class="date-j-7-norm"></th>
+          <th class="date-j-15-norm"></th>
         </tr>
       </thead>
       <tbody>
