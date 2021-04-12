@@ -62,3 +62,19 @@ nav[role=admin-navigation] {
 .navbar{
     height: 50px;
 }
+
+@media screen and (max-width:1000px){
+  .navbar-nav {
+      display: flex !important;
+  }
+  .navbar{
+      height: 100px;
+  }
+  .buttonLeft{
+      justify-content: space-around;
+      width: 100%;
+  }
+  .navbar-nav{
+      margin: 0px !important;
+  }
+}

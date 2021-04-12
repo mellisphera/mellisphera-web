@@ -8,11 +8,13 @@ import { RucheService } from '../../service/api/ruche.service';
 import { RucherService } from '../../service/api/rucher.service';
 import { UnitService } from '../../service/unit.service';
 import { RucheInterface } from '../../../_model/ruche';
+import { TranslateService } from '@ngx-translate/core';
 
 import { InspApiary } from '../../../_model/inspApiary';
 import { InspHive } from '../../../_model/inspHive';
 import { InspHiveService } from './../../service/api/insp-hive.service';
 import { InspApiaryService } from './../../service/api/insp-apiary.service';
+import { d } from '@angular/core/src/render3';
 
 const PICTOS_APIARY_ACTIONS = [
   {name:'A1', img:'../../../../assets/icons/inspect/observations/queen_grey.png'},
@@ -66,9 +68,9 @@ const PICTOS_HIVES_ACTIONS = [
 
 const PICTOS_HIVES_OBS = [
   {name:'Z1', img:''},
-  {name:'Y2', img:''},
+  /*{name:'Y2', img:''},
   {name:'X3', img:''},
-  {name:'W4', img:''},
+  {name:'W4', img:''},*/
 ];
 
 @Component({
@@ -103,7 +105,8 @@ export class InspectNewComponent implements OnInit {
     private rucheService: RucheService,
     private userService: UserloggedService,
     private inspApiaryService: InspApiaryService,
-    private inspHiveService: InspHiveService
+    private inspHiveService: InspHiveService,
+    public translateService: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -224,72 +227,111 @@ export class InspectNewComponent implements OnInit {
     tbody.innerHTML = ''; // Empty table
     let tr;
     for(let i=0; i<this.user_hives.length; i++){
-      tr = document.createElement('tr');
+      let div = document.createElement('div');
+      div.className = 'hives-item';
+      let div1 = document.createElement('div');
+      div1.className = 'hives-div-main';
+      div1.style.display ='flex';
+      let divNote = document.createElement('div');
+      divNote.className = 'hives-div-note';
+      let divTodo = document.createElement('div');
+      divTodo.className = 'hives-div-todo';
 
-      let tdRuche = document.createElement('td');
+      let tdRuche = document.createElement('p');
       tdRuche.textContent = this.user_hives[i].name;
-      tr.appendChild(tdRuche);
+      div1.appendChild(tdRuche);
 
-      let tdAction = document.createElement('td');
+      let tdAction = document.createElement('div');
       let mainDiv = document.createElement('div');
-
-      let pA = document.createElement('p');
-      pA.textContent = 'Actions';
-      pA.style.paddingTop = '10px';
-      pA.style.marginBottom = '-5px';
-      pA.style.fontSize = '14px';
-      mainDiv.appendChild(pA);
 
       let divA = document.createElement('div');
       divA.style.display = 'flex';
       divA.style.justifyContent = 'center';
       for(let j=0; j<PICTOS_HIVES_ACTIONS.length; j++){
         let divAction = document.createElement('div');
-        divAction.className = 'hives-action';
+        //divAction.className = 'hives-action';
+
+        let button = document.createElement('button');
+        button.className = 'hives-action';
 
         /* CHANGE DISPLAY TO IMAGE */
-        divAction.textContent = PICTOS_HIVES_ACTIONS[j].name;
+        button.textContent = PICTOS_HIVES_ACTIONS[j].name;
         /* END */
 
+        button.onclick = (evt: Event) => { this.apiaryButton(evt) };
+
+        divAction.appendChild(button);
         divA.appendChild(divAction);
       }
+      divA.style.marginTop = '15px';
+      divA.style.marginLeft = '10px';
       mainDiv.appendChild(divA);
-
-      let pO = document.createElement('p');
-      pO.textContent = 'Observations';
-      pO.style.paddingTop = '10px';
-      pO.style.marginBottom = '-5px';
-      pO.style.fontSize = '14px';
-      mainDiv.appendChild(pO);
 
       let divO = document.createElement('div');
       divO.style.display = 'flex';
       divO.style.justifyContent = 'center';
       for(let j=0; j<PICTOS_HIVES_OBS.length; j++){
         let divObs = document.createElement('div');
-        divObs.className = 'hives-action';
+        let button = document.createElement('button');
+        button.className = 'hives-obs';
 
         /* CHANGE DISPLAY TO IMAGE */
-        divObs.textContent = PICTOS_HIVES_OBS[j].name;
+        button.textContent = PICTOS_HIVES_OBS[j].name;
         /* END */
+
+        button.onclick = (evt: Event) => { this.apiaryButton(evt) };
+
+        divObs.appendChild(button);
 
         divO.appendChild(divObs);
       }
-      divO.style.paddingBottom = '10px';
+      divO.style.paddingBottom = '15px';
+      divO.style.marginLeft = '10px';
       mainDiv.appendChild(divO);
 
       tdAction.appendChild(mainDiv);
-      tr.appendChild(tdAction);
+      div1.appendChild(tdAction);
 
-      let tdNotes = document.createElement('td');
-      tdNotes.textContent = 'N';
-      tr.appendChild(tdNotes);
+      let textAreaNotes = document.createElement('textarea');
+      textAreaNotes.className = 'hives-note-textarea';
+      textAreaNotes.name = 'text-note';
+      textAreaNotes.spellcheck = false;
+      textAreaNotes.cols = 40;
+      textAreaNotes.rows = 5;
+      textAreaNotes.placeholder = 'Notes...';
 
-      let tdTaches = document.createElement('td');
-      tdTaches.textContent = 'T';
-      tr.appendChild(tdTaches);
+      divNote.appendChild(textAreaNotes);
 
-      tbody.appendChild(tr);
+      let textAreaTodo = document.createElement('textarea');
+      textAreaTodo.className = 'hives-todo-textarea';
+      textAreaTodo.name = 'text-todo';
+      textAreaTodo.spellcheck = false;
+      textAreaTodo.cols = 40;
+      textAreaTodo.rows = 5;
+      textAreaTodo.placeholder = 'Todo...';
+
+      divTodo.appendChild(textAreaTodo);
+
+      let tdNotes = document.createElement('div');
+      let btnNotes = document.createElement('button');
+      btnNotes.className = 'hives-notes';
+      btnNotes.onclick = (evt: Event) => { this.toggleNote(evt) };
+      tdNotes.appendChild(btnNotes);
+      div1.appendChild(tdNotes);
+
+      let tdTaches = document.createElement('div');
+      let btnTaches = document.createElement('button');
+      btnTaches.className = 'hives-todo';
+      btnTaches.onclick = (evt: Event) => { this.toggleTodo(evt) };
+      tdTaches.appendChild(btnTaches);
+      div1.appendChild(tdTaches);
+
+      div.appendChild(div1);
+
+      div.appendChild(divNote);
+      div.appendChild(divTodo);
+
+      tbody.appendChild(div);
     }
   }
 
@@ -335,7 +377,36 @@ export class InspectNewComponent implements OnInit {
     return;
   }
 
-  apiaryObsButton
+  toggleNote(evt: Event){
+    let button = (<HTMLButtonElement> evt.target);
+    let textArea = button.parentNode.parentNode.parentNode.children[1].children[0];
+    if(textArea.classList.contains('hives-note-textarea-active')){
+      textArea.classList.add('hives-note-textarea-inactive');
+      setTimeout(()=> {
+        textArea.classList.remove('hives-note-textarea-inactive');
+        textArea.classList.remove('hives-note-textarea-active');
+      }, 400);
+    }
+    else{
+      textArea.classList.add('hives-note-textarea-active');
+    }
+
+  }
+
+  toggleTodo(evt: Event){
+    let button = (<HTMLButtonElement> evt.target);
+    let textArea = button.parentNode.parentNode.parentNode.children[2].children[0];
+    if(textArea.classList.contains('hives-todo-textarea-active')){
+      textArea.classList.add('hives-todo-textarea-inactive');
+      setTimeout(()=> {
+        textArea.classList.remove('hives-todo-textarea-inactive');
+        textArea.classList.remove('hives-todo-textarea-active');
+      }, 400);
+    }
+    else{
+      textArea.classList.add('hives-todo-textarea-active');
+    }
+  }
 
   reset(){
 

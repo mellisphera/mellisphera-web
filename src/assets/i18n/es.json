@@ -484,6 +484,30 @@
           }
       }
     },
+    "INSPECT":{
+      "SIDEBAR":"Inspeccionar",
+      "SIDEBAR_TOOLTIP":"Inspeccionar",
+      "NAV":{
+        "NEW":"Nueva",
+        "HISTORY":"Histórico",
+        "PARAMS":"Configuracion"
+      },
+      "NEW": {
+        "TITLE":"Nueva Inspección",
+        "PLACEHOLDER":"Elegir fecha",
+        "DEFAULT_SELECT":"Elegir colmenar",
+        "NOTE_PLACEHOLDER":"Notas...",
+        "TODO_PLACEHOLDER":"Proximas tareas...",
+        "TAB":{
+          "HIVE": "Colmena",
+          "ACT_OBS": "Acciones y Observaciones"
+        },
+        "BTN_SAVE":"Guardar",
+        "BTN_PRINT":"Imprimir"
+      },
+      "HISTORY":{},
+      "PARAMS":{}
+    },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icono",
         "VALUE": "Valor",

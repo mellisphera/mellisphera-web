@@ -1,9 +1,9 @@
 <div class="inspect-new-container">
-    <h3>Nouvelle Inspection</h3>
+    <h3>{{'INSPECT.NEW.TITLE' | translate }}</h3>
     <div class="inspect-time">
-        <div>
+        <div style="display: flex;">
           <i class="fa fa-calendar inspect-time-icon"></i>
-          <input class="inspect-time-input" placeholder="Choisir Date" [(ngModel)]="inspect_date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDate()">
+          <input class="inspect-time-input" placeholder="{{'INSPECT.NEW.PLACEHOLDER' | translate}}" [(ngModel)]="inspect_date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDate()">
           <owl-date-time #dtPicker1></owl-date-time>
           <i class="fa fa-check valid-icon"></i>
         </div>
@@ -13,7 +13,7 @@
         <div class="inspect-apiary-main">
           <div class="inspect-apiary-op">
             <select id="inspect-apiary-select" (change)="onSelectChange()" style="margin-left: 10px;">
-              <option disabled selected value style="color:grey;"> Choisir rucher </option>
+              <option disabled selected value style="color:grey;"> {{'INSPECT.NEW.DEFAULT_SELECT' | translate}} </option>
               <option *ngFor="let apiary of user_apiaries" value="{{apiary.name}}"> {{apiary.name}} </option>
             </select>
             <i class="fa fa-check valid-icon"></i>
@@ -29,31 +29,31 @@
             </table>
           </div>
           <div class="inspect-apiary-notes">
-            <textarea placeholder="Notes" class="apiary-notes-input" name="Text1" cols="40" rows="5" spellcheck="false"></textarea>
+            <textarea placeholder="{{'INSPECT.NEW.NOTE_PLACEHOLDER' | translate}}" class="apiary-notes-input" name="Text1" cols="40" rows="5" spellcheck="false"></textarea>
           </div>
           <div class="inspect-apiary-todo">
-            <textarea placeholder="Taches a venir" class="apiary-todo-input" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
+            <textarea placeholder="{{'INSPECT.NEW.TODO_PLACEHOLDER' | translate}}" class="apiary-todo-input" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
           </div>
         </div>
       </div>
       <div class="inspect-hive">
-        <table id="hives-table">
-          <thead id="hives-table-head">
-            <tr>
-              <th>Ruche</th>
-              <th>Actions & Observations</th>
-              <th>Notes</th>
-              <th>Taches</th>
-            </tr>
-          </thead>
-          <tbody id="hives-table-body">
+        <div id="hives-table">
+          <div id="hives-table-head">
+            <div style="display: flex; height: 40px; vertical-align: middle;">
+              <p class="hives-table-head-hive">{{'INSPECT.NEW.TAB.HIVE' | translate}}</p>
+              <p class="hives-table-head-action">{{'INSPECT.NEW.TAB.ACT_OBS' | translate}}</p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+          <div id="hives-table-body">
             <!-- Content added in TS function -->
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     </div>
     <div class="inspect-footer">
-      <button>Imprimer</button>
-      <button (click)="saveInspection()">Enregistrer</button>
+      <button>{{'INSPECT.NEW.BTN_PRINT' | translate}}</button>
+      <button (click)="saveInspection()">{{'INSPECT.NEW.BTN_SAVE' | translate}}</button>
     </div>
 </div>

@@ -469,7 +469,30 @@
           }
         }
     },
-
+    "INSPECT":{
+      "SIDEBAR":"Inspecter",
+      "SIDEBAR_TOOLTIP":"Inspecter",
+      "NAV":{
+        "NEW":"Nouvelle",
+        "HISTORY":"Historique",
+        "PARAMS":"Parametres"
+      },
+      "NEW": {
+        "TITLE":"Nouvelle Inspection",
+        "PLACEHOLDER":"Choisir date",
+        "DEFAULT_SELECT":"Choisir rucher",
+        "NOTE_PLACEHOLDER":"Notes...",
+        "TODO_PLACEHOLDER":"Taches a venir...",
+        "TAB":{
+          "HIVE": "Ruche",
+          "ACT_OBS": "Actions et Observations"
+        },
+        "BTN_SAVE":"Sauvegarder",
+        "BTN_PRINT":"Enregistrer"
+      },
+      "HISTORY":{},
+      "PARAMS":{}
+    },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icône",
         "VALUE": "Valeur",

@@ -469,6 +469,30 @@
           }
         }
     },
+    "INSPECT":{
+      "SIDEBAR":"Inspect",
+      "SIDEBAR_TOOLTIP":"Inspect",
+      "NAV":{
+        "NEW":"New",
+        "HISTORY":"History",
+        "PARAMS":"Parameters"
+      },
+      "NEW": {
+        "TITLE":"New Inspection",
+        "PLACEHOLDER":"Choose date",
+        "DEFAULT_SELECT":"Choose apiary",
+        "NOTE_PLACEHOLDER":"Notes...",
+        "TODO_PLACEHOLDER":"Tasks to do...",
+        "TAB":{
+          "HIVE": "Hive",
+          "ACT_OBS": "Actions and Observations"
+        },
+        "BTN_SAVE":"Save",
+        "BTN_PRINT":"Print"
+      },
+      "HISTORY":{},
+      "PARAMS":{}
+    },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icon",
         "NAME": "Name",

@@ -13,16 +13,19 @@ import { InspectNewComponent } from './inspect-new/inspect-new.component';
 import { InspectParamsComponent } from './inspect-params/inspect-params.component';
 import { InspectComponent } from './inspect.component';
 import { InspectRouting } from './inspect.routing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
+    SharedModule,
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    InspectRouting
+    InspectRouting,
   ],
   providers: [
     RucherService,
