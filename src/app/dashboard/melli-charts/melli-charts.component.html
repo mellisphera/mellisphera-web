@@ -71,6 +71,10 @@ limitations under the License. -->
                     {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
                 </ul>
                 <ul>
+                  <li class="time" *ngFor="let dt of getRangeByType('WEEK')" (click)="setRangeSelect(dt)">
+                    {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
+                </ul>
+                <ul>
                   <li class="time" *ngFor="let dt of getRangeByType('MONTH')" (click)="setRangeSelect(dt)">
                     {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
                 </ul>

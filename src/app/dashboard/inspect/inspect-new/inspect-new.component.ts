@@ -14,23 +14,24 @@ import { InspApiary } from '../../../_model/inspApiary';
 import { InspHive } from '../../../_model/inspHive';
 import { InspHiveService } from './../../service/api/insp-hive.service';
 import { InspApiaryService } from './../../service/api/insp-apiary.service';
-import { d } from '@angular/core/src/render3';
+
+const IMG_PATH = '../../../../assets/icons/inspect/';
 
 const PICTOS_APIARY_ACTIONS = [
-  {name:'A1', img:'../../../../assets/icons/inspect/observations/queen_grey.png'},
-  {name:'A2', img:''},
-  {name:'A3', img:''},
-  {name:'A4', img:''},
-  {name:'A5', img:''},
-  {name:'A6', img:''},
-  {name:'A7', img:''},
-  {name:'A8', img:''},
-  {name:'A9', img:''},
-  {name:'A10', img:''},
-  {name:'A11', img:''},
-  {name:'A12', img:''},
-  {name:'A13', img:''},
-  {name:'A14', img:''},
+  {name:'queen', img:'observations/crown_grey.svg', img_active: 'observations/crown.svg', class:'apiary-queen-img'},
+  {name:'A2', img:'', class:''},
+  {name:'A3', img:'', class:''},
+  {name:'A4', img:'', class:''},
+  {name:'A5', img:'', class:''},
+  {name:'A6', img:'', class:''},
+  {name:'A7', img:'', class:''},
+  {name:'A8', img:'', class:''},
+  {name:'A9', img:'', class:''},
+  {name:'A10', img:'', class:''},
+  {name:'A11', img:'', class:''},
+  {name:'A12', img:'', class:''},
+  {name:'A13', img:'', class:''},
+  /*{name:'A14', img:''},
   {name:'A15', img:''},
   {name:'A16', img:''},
   {name:'A17', img:''},
@@ -40,34 +41,34 @@ const PICTOS_APIARY_ACTIONS = [
   {name:'A21', img:''},
   {name:'A22', img:''},
   {name:'A23', img:''},
-  {name:'A24', img:''},
+  {name:'A24', img:''},*/
 ];
 
 const PICTOS_APIARY_OBS = [
-  {name:'O1', img:''},
-  {name:'O2', img:''},
-  {name:'O3', img:''},
-  {name:'O4', img:''},
-  {name:'O5', img:''},
-  {name:'O6', img:''},
-  {name:'O7', img:''},
-  {name:'O8', img:''},
-  {name:'O9', img:''},
-  {name:'O10', img:''},
-  {name:'O11', img:''},
+  {name:'O1', img:'', class:''},
+  {name:'O2', img:'', class:''},
+  {name:'O3', img:'', class:''},
+  {name:'O4', img:'', class:''},
+  {name:'O5', img:'', class:''},
+  {name:'O6', img:'', class:''},
+  {name:'O7', img:'', class:''},
+  {name:'O8', img:'', class:''},
+  {name:'O9', img:'', class:''},
+  {name:'O10', img:'', class:''},
+  {name:'O11', img:'', class:''},
 ];
 
 const PICTOS_HIVES_ACTIONS = [
-  {name:'z', img:''},
-  {name:'y', img:''},
-  {name:'x', img:''},
-  {name:'w', img:''},
-  {name:'v', img:''},
-  {name:'u', img:''},
+  {name:'z', img:'', class:''},
+  {name:'y', img:'', class:''},
+  {name:'x', img:'', class:''},
+  {name:'w', img:'', class:''},
+  {name:'v', img:'', class:''},
+  {name:'u', img:'', class:''},
 ];
 
 const PICTOS_HIVES_OBS = [
-  {name:'Z1', img:''},
+  {name:'swarm', img:'observations/swarm_grey.png', img_active: 'observations/swarm.png', class:'hives-swarm-img'},
   /*{name:'Y2', img:''},
   {name:'X3', img:''},
   {name:'W4', img:''},*/
@@ -93,6 +94,7 @@ export class InspectNewComponent implements OnInit {
     date: null,
     apiaryId: null,
     tasks: [],
+    obs: [],
     notes: null,
     todo: null,
   };
@@ -170,7 +172,7 @@ export class InspectNewComponent implements OnInit {
       button.classList.add('apiary-action');
 
       if(i === 0){
-        button.classList.add('apiary-action-img');
+        button.classList.add('apiary-queen-img');
         button.onclick = (evt: Event) => { this.test(evt) };
       }
       else{
@@ -254,11 +256,19 @@ export class InspectNewComponent implements OnInit {
         let button = document.createElement('button');
         button.className = 'hives-action';
 
-        /* CHANGE DISPLAY TO IMAGE */
-        button.textContent = PICTOS_HIVES_ACTIONS[j].name;
-        /* END */
-
-        button.onclick = (evt: Event) => { this.apiaryButton(evt) };
+        if(PICTOS_HIVES_ACTIONS[j].class !== ''){
+          button.classList.add(PICTOS_HIVES_ACTIONS[j].class);
+          button.onclick = (evt: Event) => {
+            let nb = j;
+            this.hiveButton(evt, 'action', nb)
+          };
+        }
+        else{
+          /* CHANGE DISPLAY TO IMAGE */
+          button.textContent = PICTOS_HIVES_ACTIONS[j].name;
+          /* END */
+          button.onclick = (evt: Event) => { this.apiaryButton(evt) };
+        }
 
         divAction.appendChild(button);
         divA.appendChild(divAction);
@@ -275,11 +285,19 @@ export class InspectNewComponent implements OnInit {
         let button = document.createElement('button');
         button.className = 'hives-obs';
 
-        /* CHANGE DISPLAY TO IMAGE */
-        button.textContent = PICTOS_HIVES_OBS[j].name;
-        /* END */
-
-        button.onclick = (evt: Event) => { this.apiaryButton(evt) };
+        if(PICTOS_HIVES_OBS[j].class !== ''){
+          button.classList.add(PICTOS_HIVES_OBS[j].class);
+          button.onclick = (evt: Event) => {
+            let nb = j;
+            this.hiveButton(evt, 'obs', nb)
+          };
+        }
+        else{
+          /* CHANGE DISPLAY TO IMAGE */
+          button.textContent = PICTOS_HIVES_OBS[j].name;
+          /* END */
+          button.onclick = (evt: Event) => { this.apiaryButton(evt) };
+        }
 
         divObs.appendChild(button);
 
@@ -336,8 +354,14 @@ export class InspectNewComponent implements OnInit {
   }
 
   inspectDate(): void{
-    //console.log(moment(this.inspect_date).format(this.user_pref.timeFormat));
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input')[0]).value = moment(this.inspect_date).format(this.user_pref.timeFormat);
+    /* NEW INSPECTION CHANGE DATE */
+    this.new_inspApiary.date = new Date(this.inspect_date);
+    this.new_inspHives.forEach(e => {
+      e.date = new Date(this.inspect_date);
+    })
+    /* END */
+    console.log(this.new_inspApiary.date);
     (<HTMLElement>document.getElementsByClassName('valid-icon')[0]).style.visibility ='visible';
   }
 
@@ -345,6 +369,9 @@ export class InspectNewComponent implements OnInit {
     (<HTMLElement>document.getElementsByClassName('valid-icon')[1]).style.visibility ='visible';
     this.active_apiary_index = (<HTMLSelectElement>document.getElementById("inspect-apiary-select")).selectedIndex;
     let index: number = this.active_apiary_index - 1;
+    /* NEW INSPECTION CHANGE APIARY ID */
+    this.new_inspApiary.apiaryId = this.user_apiaries[index]._id;
+    /* END */
     this.rucheService.getHivesByApiary(this.user_apiaries[index]._id).subscribe(
       _hives => {
         console.log(_hives);
@@ -359,11 +386,11 @@ export class InspectNewComponent implements OnInit {
 
   test(evt: Event): void{
     let button = (<HTMLButtonElement> evt.target);
-    if( button.classList.contains('apiary-action-img-active') ){
-        button.classList.remove('apiary-action-img-active');
+    if( button.classList.contains('apiary-queen-img-active') ){
+        button.classList.remove('apiary-queen-img-active');
         return;
     }
-    button.classList.add('apiary-action-img-active');
+    button.classList.add('apiary-queen-img-active');
     return;
   }
 
@@ -375,6 +402,27 @@ export class InspectNewComponent implements OnInit {
     }
     button.classList.add('apiary-btn-active');
     return;
+  }
+
+  hiveButton(evt: Event, type: string, index: number): void{
+    console.log(index);
+    let button = (<HTMLButtonElement> evt.target);
+    if(type === 'action'){
+      if( button.classList.contains(PICTOS_HIVES_ACTIONS[index].class + '-active') ){
+        button.classList.remove(PICTOS_HIVES_ACTIONS[index].class + '-active');
+        return;
+      }
+      button.classList.add(PICTOS_HIVES_ACTIONS[index].class + '-active');
+      return;
+    }
+    if(type === 'obs'){
+      if( button.classList.contains(PICTOS_HIVES_OBS[index].class + '-active') ){
+        button.classList.remove(PICTOS_HIVES_OBS[index].class + '-active');
+        return;
+      }
+      button.classList.add(PICTOS_HIVES_OBS[index].class + '-active');
+      return;
+    }
   }
 
   toggleNote(evt: Event){
@@ -413,7 +461,7 @@ export class InspectNewComponent implements OnInit {
   }
 
   saveInspection(): void{
-    /*this.inspApiaryService.createNewInspApiary(this.new_inspApiary).subscribe(
+    this.inspApiaryService.createNewInspApiary(this.new_inspApiary).subscribe(
       () => {},
       () => {},
       () => {
@@ -423,14 +471,20 @@ export class InspectNewComponent implements OnInit {
           );
         })
       }
-    );*/
+    );
   }
 
   initFakeInspApi(): void{
     this.new_inspApiary._id = null;
     this.new_inspApiary.date = new Date();
     this.new_inspApiary.apiaryId = this.user_apiaries[this.active_apiary_index]._id;
-    this.new_inspApiary.tasks = ['oui', 'oui2'];
+    this.new_inspApiary.tasks = [
+      {name:'A2', img:''},
+      {name:'A3', img:''},
+    ];
+    this.new_inspApiary.obs = [
+      {name:'O2', img:''},
+    ];
     this.new_inspApiary.notes = 'Je teste un truc';
     this.new_inspApiary.todo = 'Faut regler les soucis';
   }
@@ -442,23 +496,16 @@ export class InspectNewComponent implements OnInit {
       date: new Date(),
       apiaryId: this.user_apiaries[this.active_apiary_index]._id,
       hiveId: this.user_hives[0]._id,
-      tasks: ['A', 'C', 'D'],
+      tasks: [
+        {name:'A', img:''},
+        {name:'C', img:''}
+      ],
+      obs: [
+        {name:'swarm', img:'observations/swarm.png'}
+      ],
       notes: 'Test 1 hive',
       todo: 'Test all',
     };
     this.new_inspHives.push(aux);
-    aux = {
-      _id: null,
-      inspId: null,
-      date: new Date(),
-      apiaryId: this.user_apiaries[this.active_apiary_index]._id,
-      hiveId: this.user_hives[0]._id,
-      tasks: ['D', 'F', 'G'],
-      notes: 'Test 1 hive2',
-      todo: 'Test all hives 2',
-    }
-    this.new_inspHives.push(aux);
-    console.log(this.new_inspHives);
   }
-
 }

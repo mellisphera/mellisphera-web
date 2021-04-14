@@ -4,7 +4,8 @@ export interface InspHive{
   date: Date,
   apiaryId: string,
   hiveId: string,
-  tasks: string[],
+  tasks: any[],
+  obs: any[]
   notes: string,
   todo: string
 }

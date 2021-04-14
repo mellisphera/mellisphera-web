@@ -41,7 +41,7 @@ export class InspHiveService {
    * @param date
    */
    getInspHiveByApiaryIdAndDate(apiaryId: string, date: Date): Observable<InspHive[]> {
-      return this.http.post<InspHive[]>(CONFIG.URL + 'inspHive/apiaryId/date' + apiaryId, date, httpOptions);
+      return this.http.post<InspHive[]>(CONFIG.URL + 'inspHive/apiaryId/date/' + apiaryId, date, httpOptions);
   }
 
   /**
@@ -50,7 +50,7 @@ export class InspHiveService {
    * @param range
    */
    getInspHiveByApiaryIdAndDateBetween(apiaryId: string, range: Date[]): Observable<InspHive[]> {
-      return this.http.post<InspHive[]>(CONFIG.URL + 'inspHive/apiaryId/between' + apiaryId, range, httpOptions);
+      return this.http.post<InspHive[]>(CONFIG.URL + 'inspHive/apiaryId/between/' + apiaryId, range, httpOptions);
   }
 
   /**
@@ -68,7 +68,7 @@ export class InspHiveService {
   * @param date
   */
   getInspHiveByHiveIdAndDate(hiveId: string, date: Date): Observable<InspHive[]> {
-    return this.http.post<InspHive[]>(CONFIG.URL + 'inspHive/hiveId/date' + hiveId, date, httpOptions);
+    return this.http.post<InspHive[]>(CONFIG.URL + 'inspHive/hiveId/date/' + hiveId, date, httpOptions);
   }
 
   /**
@@ -77,7 +77,7 @@ export class InspHiveService {
   * @param range
   */
   getInspHiveByHiveIdAndDateBetween(hiveId: string, range: Date[]): Observable<InspHive[]> {
-    return this.http.post<InspHive[]>(CONFIG.URL + 'inspHive/hiveId/between' + hiveId, range, httpOptions);
+    return this.http.post<InspHive[]>(CONFIG.URL + 'inspHive/hiveId/between/' + hiveId, range, httpOptions);
   }
 
   /**

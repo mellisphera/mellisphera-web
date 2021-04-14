@@ -80,16 +80,18 @@ nav[role=admin-navigation] {
 #btn-date{
     margin-top: 13px;
     height: 36px;
-    font-size: 12px;
-    padding-right: 0px;
+    font-size: 14px;
+    padding: 0px;
     background-color: #4F4F51;
     color: white !important;
     border: none !important;
 }
+
 #previous-date {
     margin-right: 10px;
 
 }
+
 #next-date{
     margin-left: 10px;
     margin-right: 20px;
@@ -219,7 +221,7 @@ nav[role=admin-navigation] {
 }
 @media screen and (max-width:1400px) {
     #btn-date{
-        font-size: 10px;
+        font-size: 14px;
     }
 }
 @media screen and (max-width:1300px) {
@@ -276,12 +278,12 @@ nav[role=admin-navigation] {
     }
     .navbar{
         height: 100px;
-     }
-     .buttonLeft{
+    }
+    .buttonLeft{
         justify-content: space-around;
         width: 100%;
     }
-     .apiary-group-hive{
+    .apiary-group-hive{
         position: relative !important;
         height: auto !important;
         width: 100%;

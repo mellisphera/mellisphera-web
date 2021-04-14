@@ -79,6 +79,7 @@
   margin-top: 3px;
   color: green;
   visibility: hidden;
+  left: 20%;
 }
 
 .apiary-op, .apiary-obs-div{
@@ -113,17 +114,31 @@
   border: 1px solid skyblue;
 }
 
-.apiary-action-img{
+.apiary-queen-img{
   background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/icons/inspect/observations/crown_grey.svg');
   background-position: center;
 }
 
-.apiary-action-img-active{
+.apiary-queen-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/icons/inspect/observations/crown.svg');
+  background-position: center;
+}
+
+.hives-swarm-img{
+  background-size: 52px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/icons/inspect/observations/swarm_grey.svg');
+  background-position: center;
+}
+
+.hives-swarm-img-active{
+  background-size: 52px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/icons/inspect/observations/swarm.svg');
   background-position: center;
 }
 
@@ -339,6 +354,9 @@
     width: 55%;
     overflow-x: hidden;
   }
+  .valid-icon{
+    left: 30%;
+  }
 }
 
 @media screen and (max-width: 1000px){
@@ -360,6 +378,9 @@
     border-top: 1px solid #999999;
     border-bottom: 1px solid #999999;
     display: block;
+  }
+  .valid-icon{
+    left: 40%;
   }
 }
 
@@ -383,6 +404,9 @@
     border-bottom: 1px solid #999999;
     display: block;
   }
+  .valid-icon{
+    left: 50%;
+  }
 }
 
 @media screen and (max-width: 600px){
@@ -394,6 +418,10 @@
   .inspect-time-input{
     margin: 0 auto;
     width: 90%;
+  }
+
+  .valid-icon{
+    left: 90%;
   }
 
   .inspect-time-icon{

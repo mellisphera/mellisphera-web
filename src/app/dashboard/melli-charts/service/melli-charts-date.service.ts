@@ -35,10 +35,12 @@ export class MelliChartsDateService {
 /*       { scale: 1, type: 'HOUR'},
       { scale: 6, type: 'HOURS'},
       { scale: 12, type: 'HOURS'}, */
-      { scale: 1, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
+      { scale: 2, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
       { scale: 3, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
-      { scale: 7, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
-      { scale: 15, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
+      { scale: 5, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
+      { scale: 1, type: 'WEEK', typeFr: 'SEMAINE', typeEs: 'Semana'},
+      { scale: 2, type: 'WEEK', typeFr: 'SEMAINE', typeEs: 'Semana'},
+      { scale: 3, type: 'WEEK', typeFr: 'SEMAINE', typeEs: 'Semana'},
       { scale: 1, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
       { scale: 2, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
       { scale: 3, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
@@ -46,7 +48,7 @@ export class MelliChartsDateService {
       { scale: 9, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
       { scale: 1, type: 'YEAR', typeFr: 'AN', typeEs: 'Año'}
     ];
-    this.setRange(this.ranges[4]);
+    this.setRange(this.ranges[6]);
   }
 
 
@@ -55,6 +57,9 @@ export class MelliChartsDateService {
     switch(scale.type){
       case 'DAY':
         date.setDate((new Date().getDate() - scale.scale));
+        break;
+      case 'WEEK':
+        date.setDate((new Date().getDate() - (scale.scale*7) ));
         break;
       case 'MONTH':
         date.setMonth((new Date().getMonth() - scale.scale));
@@ -68,14 +73,14 @@ export class MelliChartsDateService {
       default:
         date.setDate(date.getDate() - 15);
     }
-    date = this.getDateBeginMonday(date);
+    //date = this.getDateBeginMonday(date);
     this.rangeDateForRequest = MyDate.getRange(date);
     this.rangeDateForRequest[0].setHours(0);
     this.rangeDateForRequest[0].setMinutes(0);
     this.rangeDateForRequest[0].setSeconds(0);
 
     //this.rangeDateForRequest[1].setDate(this.rangeDateForRequest[0].getDate() + 1);
-    this.rangeDateForRequest[1].setHours(23);
+    this.rangeDateForRequest[1].setHours(0);
     this.rangeDateForRequest[1].setMinutes(0);
     this.rangeDateForRequest[1].setSeconds(0);
     //console.log(this.rangeDateForRequest);
