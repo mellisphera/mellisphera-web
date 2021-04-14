@@ -49,8 +49,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
     private melliDateService: MelliChartsDateService,
     private rucheService: RucheService,
     private unitService: UnitService,
-    //private inspApiaryService: InspApiaryService,
-    //private inspHiveService: InspHiveService
+    private inspApiaryService: InspApiaryService,
+    private inspHiveService: InspHiveService
     ){
     this.option = {
       baseOption : JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionHourly)),
@@ -216,7 +216,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
             } else {
               this.option.baseOption.series.push(Object.assign({}, serieComplete));
             }
-            /*this.inspHiveService.getInspHiveByHiveIdAndDateBetween(obs[index].hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+            this.inspHiveService.getInspHiveByHiveIdAndDateBetween(obs[index].hive._id, this.melliDateService.getRangeForReqest()).subscribe(
               _hive_insp => {
                 _hive_insp.forEach(insp => {
                   console.log("j'ai une inspec la");
@@ -269,7 +269,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
               },
               () => {},
               () => {}
-            );*/
+            );
           });
         })
       },
@@ -312,13 +312,12 @@ export class VitalityComponent implements OnInit, OnDestroy {
       },
       () => {},
       () => {
-        this.stackService.getBroodChartInstance().hideLoading(); // TO REMOVE
-        //this.loadEventsByHive(hive, serie);
+        this.loadEventsByHive(hive, serie);
       }
     )
   }
 
-  /*loadEventsByHive(hive: RucheInterface, serie:any): void{
+  loadEventsByHive(hive: RucheInterface, serie:any): void{
     this.inspHiveService.getInspHiveByHiveId(hive._id).subscribe(
       _hive_insp => {
         let d1 : Date = new Date(_hive_insp[0].date);
@@ -373,7 +372,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
         this.stackService.getBroodChartInstance().hideLoading();
       }
     );
-  }*/
+  }
 
   /**
    *
