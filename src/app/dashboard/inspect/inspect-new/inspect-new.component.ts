@@ -18,19 +18,19 @@ import { InspApiaryService } from './../../service/api/insp-apiary.service';
 const IMG_PATH = '../../../../assets/icons/inspect/';
 
 const PICTOS_APIARY_ACTIONS = [
-  {name:'queen', img:'observations/crown_grey.svg', img_active: 'observations/crown.svg', class:'apiary-queen-img'},
-  {name:'A2', img:'', class:''},
-  {name:'A3', img:'', class:''},
-  {name:'A4', img:'', class:''},
-  {name:'A5', img:'', class:''},
-  {name:'A6', img:'', class:''},
-  {name:'A7', img:'', class:''},
-  {name:'A8', img:'', class:''},
-  {name:'A9', img:'', class:''},
-  {name:'A10', img:'', class:''},
-  {name:'A11', img:'', class:''},
-  {name:'A12', img:'', class:''},
-  {name:'A13', img:'', class:''},
+  {name:'queen', img:'observations/crown_grey.png', img_active: 'observations/crown.png', class:'apiary-queen-img'},
+  {name:'A2', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'A3', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'A4', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'A5', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'A6', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'A7', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'A8', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'A9', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'A10', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'A11', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'A12', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'A13', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
   /*{name:'A14', img:''},
   {name:'A15', img:''},
   {name:'A16', img:''},
@@ -45,26 +45,26 @@ const PICTOS_APIARY_ACTIONS = [
 ];
 
 const PICTOS_APIARY_OBS = [
-  {name:'O1', img:'', class:''},
-  {name:'O2', img:'', class:''},
-  {name:'O3', img:'', class:''},
-  {name:'O4', img:'', class:''},
-  {name:'O5', img:'', class:''},
-  {name:'O6', img:'', class:''},
-  {name:'O7', img:'', class:''},
-  {name:'O8', img:'', class:''},
-  {name:'O9', img:'', class:''},
-  {name:'O10', img:'', class:''},
-  {name:'O11', img:'', class:''},
+  {name:'O1', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'O2', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'O3', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'O4', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'O5', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'O6', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'O7', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'O8', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'O9', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'O10', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'O11', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
 ];
 
 const PICTOS_HIVES_ACTIONS = [
-  {name:'z', img:'', class:''},
-  {name:'y', img:'', class:''},
-  {name:'x', img:'', class:''},
-  {name:'w', img:'', class:''},
-  {name:'v', img:'', class:''},
-  {name:'u', img:'', class:''},
+  {name:'z', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'y', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'x', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'w', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'v', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'u', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
 ];
 
 const PICTOS_HIVES_OBS = [
@@ -127,15 +127,12 @@ export class InspectNewComponent implements OnInit {
       () => {},
       () => {
         this.user_apiaries.sort(this.compare);
-        console.log(this.user_apiaries);
-        this.initFakeInspApi();
         this.rucheService.getHivesByApiary(this.user_apiaries[0]._id).subscribe(
           _hives => {
             this.user_hives = [..._hives];
           },
           () => {},
           () => {
-            this.initFakeInspHives();
           }
         )
       }
@@ -171,16 +168,12 @@ export class InspectNewComponent implements OnInit {
       button = document.createElement('button');
       button.classList.add('apiary-action');
 
-      if(i === 0){
-        button.classList.add('apiary-queen-img');
-        button.onclick = (evt: Event) => { this.test(evt) };
-      }
-      else{
-        /* CHANGE DISPLAY TO IMAGE */
-        button.textContent = PICTOS_APIARY_ACTIONS[i].name;
-        /* END */
-        button.onclick = (evt: Event) => { this.apiaryButton(evt) };
-      }
+      button.classList.add(PICTOS_APIARY_ACTIONS[i].class);
+      button.onclick = (evt: Event) => {
+          let n = i;
+          this.apiaryButton(evt, 'action', n);
+      };
+
 
       td.appendChild(button);
       tr.appendChild(td);
@@ -207,10 +200,11 @@ export class InspectNewComponent implements OnInit {
       button = document.createElement('button');
       button.classList.add('apiary-obs');
 
-      /* CHANGE DISPLAY TO IMAGE */
-      button.textContent = PICTOS_APIARY_OBS[i].name;
-      /* END */
-      button.onclick = (evt: Event) => { this.apiaryButton(evt) };
+      button.classList.add(PICTOS_APIARY_OBS[i].class);
+      button.onclick = (evt: Event) => {
+        let n = i;
+        this.apiaryButton(evt, 'obs', n)
+      };
 
       td.appendChild(button);
       tr.appendChild(td);
@@ -256,19 +250,12 @@ export class InspectNewComponent implements OnInit {
         let button = document.createElement('button');
         button.className = 'hives-action';
 
-        if(PICTOS_HIVES_ACTIONS[j].class !== ''){
-          button.classList.add(PICTOS_HIVES_ACTIONS[j].class);
-          button.onclick = (evt: Event) => {
-            let nb = j;
-            this.hiveButton(evt, 'action', nb)
-          };
-        }
-        else{
-          /* CHANGE DISPLAY TO IMAGE */
-          button.textContent = PICTOS_HIVES_ACTIONS[j].name;
-          /* END */
-          button.onclick = (evt: Event) => { this.apiaryButton(evt) };
-        }
+        button.classList.add(PICTOS_HIVES_ACTIONS[j].class);
+        button.onclick = (evt: Event) => {
+          let n = i;
+          let nb = j;
+          this.hiveButton(evt, 'action', i, nb);
+        };
 
         divAction.appendChild(button);
         divA.appendChild(divAction);
@@ -285,19 +272,12 @@ export class InspectNewComponent implements OnInit {
         let button = document.createElement('button');
         button.className = 'hives-obs';
 
-        if(PICTOS_HIVES_OBS[j].class !== ''){
-          button.classList.add(PICTOS_HIVES_OBS[j].class);
-          button.onclick = (evt: Event) => {
-            let nb = j;
-            this.hiveButton(evt, 'obs', nb)
-          };
-        }
-        else{
-          /* CHANGE DISPLAY TO IMAGE */
-          button.textContent = PICTOS_HIVES_OBS[j].name;
-          /* END */
-          button.onclick = (evt: Event) => { this.apiaryButton(evt) };
-        }
+        button.classList.add(PICTOS_HIVES_OBS[j].class);
+        button.onclick = (evt: Event) => {
+          let n = i;
+          let nb = j;
+          this.hiveButton(evt, 'obs', n, nb)
+        };
 
         divObs.appendChild(button);
 
@@ -317,6 +297,10 @@ export class InspectNewComponent implements OnInit {
       textAreaNotes.cols = 40;
       textAreaNotes.rows = 5;
       textAreaNotes.placeholder = 'Notes...';
+      textAreaNotes.onchange = (evt: Event) => {
+        let n = i;
+        this.saveInspHivesNotes(evt, n);
+      }
 
       divNote.appendChild(textAreaNotes);
 
@@ -327,6 +311,10 @@ export class InspectNewComponent implements OnInit {
       textAreaTodo.cols = 40;
       textAreaTodo.rows = 5;
       textAreaTodo.placeholder = 'Todo...';
+      textAreaTodo.onchange = (evt: Event) => {
+        let n = i;
+        this.saveInspHivesTodo(evt, n);
+      }
 
       divTodo.appendChild(textAreaTodo);
 
@@ -350,6 +338,8 @@ export class InspectNewComponent implements OnInit {
       div.appendChild(divTodo);
 
       tbody.appendChild(div);
+
+      this.createInspHive(i);
     }
   }
 
@@ -359,22 +349,23 @@ export class InspectNewComponent implements OnInit {
     this.new_inspApiary.date = new Date(this.inspect_date);
     this.new_inspHives.forEach(e => {
       e.date = new Date(this.inspect_date);
-    })
+    });
     /* END */
     console.log(this.new_inspApiary.date);
-    (<HTMLElement>document.getElementsByClassName('valid-icon')[0]).style.visibility ='visible';
+    (<HTMLElement>document.getElementsByClassName('valid-icon-date')[0]).style.visibility ='visible';
   }
 
   onSelectChange(): void{
-    (<HTMLElement>document.getElementsByClassName('valid-icon')[1]).style.visibility ='visible';
+    (<HTMLElement>document.getElementsByClassName('valid-icon-select')[0]).style.visibility ='visible';
     this.active_apiary_index = (<HTMLSelectElement>document.getElementById("inspect-apiary-select")).selectedIndex;
     let index: number = this.active_apiary_index - 1;
     /* NEW INSPECTION CHANGE APIARY ID */
     this.new_inspApiary.apiaryId = this.user_apiaries[index]._id;
+    this.new_inspHives = [];
     /* END */
+    this.reset();
     this.rucheService.getHivesByApiary(this.user_apiaries[index]._id).subscribe(
       _hives => {
-        console.log(_hives);
         this.user_hives = [..._hives];
       },
       () => {},
@@ -384,48 +375,69 @@ export class InspectNewComponent implements OnInit {
     )
   }
 
-  test(evt: Event): void{
-    let button = (<HTMLButtonElement> evt.target);
-    if( button.classList.contains('apiary-queen-img-active') ){
-        button.classList.remove('apiary-queen-img-active');
-        return;
-    }
-    button.classList.add('apiary-queen-img-active');
-    return;
-  }
-
-  apiaryButton(evt: Event): void{
-    let button = (<HTMLButtonElement> evt.target);
-    if( button.classList.contains('apiary-btn-active') ){
-        button.classList.remove('apiary-btn-active');
-        return;
-    }
-    button.classList.add('apiary-btn-active');
-    return;
-  }
-
-  hiveButton(evt: Event, type: string, index: number): void{
-    console.log(index);
+  apiaryButton(evt: Event, type: string, btnIndex: number): void{
     let button = (<HTMLButtonElement> evt.target);
     if(type === 'action'){
-      if( button.classList.contains(PICTOS_HIVES_ACTIONS[index].class + '-active') ){
-        button.classList.remove(PICTOS_HIVES_ACTIONS[index].class + '-active');
+      if( button.classList.contains(PICTOS_APIARY_ACTIONS[btnIndex].class + '-active') ){
+        button.classList.remove(PICTOS_APIARY_ACTIONS[btnIndex].class + '-active');
+        let i = this.new_inspApiary.tasks.findIndex(e => e.name === PICTOS_APIARY_ACTIONS[btnIndex].name);
+        this.new_inspApiary.tasks.splice(i,1);
         return;
       }
-      button.classList.add(PICTOS_HIVES_ACTIONS[index].class + '-active');
+      button.classList.add(PICTOS_APIARY_ACTIONS[btnIndex].class + '-active');
+      this.new_inspApiary.tasks.push({name:PICTOS_APIARY_ACTIONS[btnIndex].name, img:PICTOS_APIARY_ACTIONS[btnIndex].img_active});
       return;
     }
     if(type === 'obs'){
-      if( button.classList.contains(PICTOS_HIVES_OBS[index].class + '-active') ){
-        button.classList.remove(PICTOS_HIVES_OBS[index].class + '-active');
+      if( button.classList.contains(PICTOS_APIARY_OBS[btnIndex].class + '-active') ){
+        button.classList.remove(PICTOS_APIARY_OBS[btnIndex].class + '-active');
+        let i = this.new_inspApiary.obs.findIndex(e => e.name === PICTOS_APIARY_OBS[btnIndex].name);
+        this.new_inspApiary.obs.splice(i,1);
         return;
       }
-      button.classList.add(PICTOS_HIVES_OBS[index].class + '-active');
+      button.classList.add(PICTOS_APIARY_OBS[btnIndex].class + '-active');
+      this.new_inspApiary.obs.push({name:PICTOS_APIARY_OBS[btnIndex].name, img:PICTOS_APIARY_OBS[btnIndex].img_active});
       return;
     }
   }
 
-  toggleNote(evt: Event){
+  saveApiaryNotes(evt: Event): void{
+    let textArea = <HTMLTextAreaElement>evt.target;
+    this.new_inspApiary.notes = textArea.value;
+  }
+
+  saveApiaryTodo(evt: Event): void{
+    let textArea = <HTMLTextAreaElement>evt.target;
+    this.new_inspApiary.todo = textArea.value;
+  }
+
+  hiveButton(evt: Event, type: string, hiveIndex: number, btnIndex: number): void{
+    let button = (<HTMLButtonElement> evt.target);
+    if(type === 'action'){
+      if( button.classList.contains(PICTOS_HIVES_ACTIONS[btnIndex].class + '-active') ){
+        button.classList.remove(PICTOS_HIVES_ACTIONS[btnIndex].class + '-active');
+        let i = this.new_inspHives[hiveIndex].tasks.findIndex(e => e.name === PICTOS_HIVES_ACTIONS[btnIndex].name);
+        this.new_inspHives[hiveIndex].tasks.splice(i, 1);
+        return;
+      }
+      button.classList.add(PICTOS_HIVES_ACTIONS[btnIndex].class + '-active');
+      this.new_inspHives[hiveIndex].tasks.push({name:PICTOS_HIVES_ACTIONS[btnIndex].name, img:PICTOS_HIVES_ACTIONS[btnIndex].img_active});
+      return;
+    }
+    if(type === 'obs'){
+      if( button.classList.contains(PICTOS_HIVES_OBS[btnIndex].class + '-active') ){
+        button.classList.remove(PICTOS_HIVES_OBS[btnIndex].class + '-active');
+        let i = this.new_inspHives[hiveIndex].obs.findIndex(e => e.name === PICTOS_HIVES_OBS[btnIndex].name);
+        this.new_inspHives[hiveIndex].obs.splice(i, 1);
+        return;
+      }
+      button.classList.add(PICTOS_HIVES_OBS[btnIndex].class + '-active');
+      this.new_inspHives[hiveIndex].obs.push({name:PICTOS_HIVES_OBS[btnIndex].name, img:PICTOS_HIVES_OBS[btnIndex].img_active});
+      return;
+    }
+  }
+
+  toggleNote(evt: Event): void{
     let button = (<HTMLButtonElement> evt.target);
     let textArea = button.parentNode.parentNode.parentNode.children[1].children[0];
     if(textArea.classList.contains('hives-note-textarea-active')){
@@ -441,7 +453,7 @@ export class InspectNewComponent implements OnInit {
 
   }
 
-  toggleTodo(evt: Event){
+  toggleTodo(evt: Event): void{
     let button = (<HTMLButtonElement> evt.target);
     let textArea = button.parentNode.parentNode.parentNode.children[2].children[0];
     if(textArea.classList.contains('hives-todo-textarea-active')){
@@ -456,12 +468,92 @@ export class InspectNewComponent implements OnInit {
     }
   }
 
-  reset(){
+  saveInspHivesNotes(evt: Event, hiveIndex: number): void{
+    let textArea = <HTMLTextAreaElement>evt.target;
+    this.new_inspHives[hiveIndex].notes = textArea.value;
+  }
+
+  saveInspHivesTodo(evt: Event, hiveIndex: number): void{
+    let textArea = <HTMLTextAreaElement>evt.target;
+    this.new_inspHives[hiveIndex].todo = textArea.value;
+  }
+
+  reset(): void{
+    let apiAct: HTMLTableElement = (<HTMLTableElement>document.getElementById("apiary-op-table"));
+    Array.from(apiAct.children).forEach((row,i) => {
+      Array.from(row.children).forEach((cell,j) => {
+        if(cell.children[0].classList.contains(PICTOS_APIARY_ACTIONS[i*8 + j].class + '-active')){
+          cell.children[0].classList.remove(PICTOS_APIARY_ACTIONS[i*8 + j].class + '-active');
+        }
+      });
+    });
+    let apiObs: HTMLTableElement = (<HTMLTableElement>document.getElementById("apiary-obs-table"));
+    Array.from(apiObs.children).forEach((row,i) => {
+      Array.from(row.children).forEach((cell,j) => {
+        if(cell.children[0].classList.contains(PICTOS_APIARY_OBS[i*8 + j].class + '-active')){
+          cell.children[0].classList.remove(PICTOS_APIARY_OBS[i*8 + j].class + '-active');
+        }
+      });
+    });
+    let apiNotes: HTMLTextAreaElement = (<HTMLTextAreaElement>document.getElementsByClassName("apiary-notes-input")[0]);
+    apiNotes.value = '';
+    let apiTodo: HTMLTextAreaElement = (<HTMLTextAreaElement>document.getElementsByClassName("apiary-todo-input")[0]);
+    apiTodo.value = '';
+
+    this.new_inspApiary.tasks = [];
+    this.new_inspApiary.obs = [];
+    this.new_inspApiary.notes = null;
+    this.new_inspApiary.todo = null;
 
   }
 
+  removeInspHiveNull(): InspHive[]{
+    let i = 0;
+    let tab = [...this.new_inspHives];
+    while(i < tab.length){
+      if(
+        tab[i].notes == null &&
+        tab[i].todo == null &&
+        tab[i].tasks.length === 0 &&
+        tab[i].obs.length === 0
+      ){
+        tab.splice(i,1);
+      }
+      else{
+        i += 1;
+      }
+    }
+    return tab;
+  }
+
+  createInspHive(hiveIndex: number): void{
+    let new_insp : InspHive = {
+      _id: null,
+      inspId: null,
+      date: null,
+      apiaryId: null,
+      tasks: [],
+      obs: [],
+      hiveId: null,
+      notes: null,
+      todo: null,
+    }
+    if(this.new_inspApiary.date != null){
+      new_insp.date = this.new_inspApiary.date;
+    }
+    new_insp.apiaryId = this.user_apiaries[this.active_apiary_index - 1]._id;
+    new_insp.hiveId = this.user_hives[hiveIndex]._id;
+    this.new_inspHives.push(new_insp);
+  }
+
+  deleteInspHive(index: number): void{
+    this.new_inspHives.splice(index, 1);
+  }
+
   saveInspection(): void{
-    this.inspApiaryService.createNewInspApiary(this.new_inspApiary).subscribe(
+    let hives_to_send = this.removeInspHiveNull();
+    console.log(hives_to_send);
+    /*this.inspApiaryService.createNewInspApiary(this.new_inspApiary).subscribe(
       () => {},
       () => {},
       () => {
@@ -471,41 +563,7 @@ export class InspectNewComponent implements OnInit {
           );
         })
       }
-    );
+    );*/
   }
 
-  initFakeInspApi(): void{
-    this.new_inspApiary._id = null;
-    this.new_inspApiary.date = new Date();
-    this.new_inspApiary.apiaryId = this.user_apiaries[this.active_apiary_index]._id;
-    this.new_inspApiary.tasks = [
-      {name:'A2', img:''},
-      {name:'A3', img:''},
-    ];
-    this.new_inspApiary.obs = [
-      {name:'O2', img:''},
-    ];
-    this.new_inspApiary.notes = 'Je teste un truc';
-    this.new_inspApiary.todo = 'Faut regler les soucis';
-  }
-
-  initFakeInspHives(): void{
-    let aux: InspHive = {
-      _id: null,
-      inspId: null,
-      date: new Date(),
-      apiaryId: this.user_apiaries[this.active_apiary_index]._id,
-      hiveId: this.user_hives[0]._id,
-      tasks: [
-        {name:'A', img:''},
-        {name:'C', img:''}
-      ],
-      obs: [
-        {name:'swarm', img:'observations/swarm.png'}
-      ],
-      notes: 'Test 1 hive',
-      todo: 'Test all',
-    };
-    this.new_inspHives.push(aux);
-  }
 }

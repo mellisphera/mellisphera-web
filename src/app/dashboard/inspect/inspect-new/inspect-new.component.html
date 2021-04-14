@@ -1,23 +1,25 @@
 <div class="inspect-new-container">
     <h3>{{'INSPECT.NEW.TITLE' | translate }}</h3>
     <div class="inspect-time">
-        <div style="display: flex;">
-          <i class="fa fa-calendar inspect-time-icon"></i>
-          <input class="inspect-time-input" placeholder="{{'INSPECT.NEW.PLACEHOLDER' | translate}}" [(ngModel)]="inspect_date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDate()">
-          <owl-date-time #dtPicker1></owl-date-time>
-          <i class="fa fa-check valid-icon"></i>
+        <div>
+          <div class="inspect-apiary-op">
+            <select id="inspect-apiary-select" (change)="onSelectChange()" style="margin-left: 10px;width:180px;">
+              <option disabled selected value style="color:grey;"> {{'INSPECT.NEW.DEFAULT_SELECT' | translate}} </option>
+              <option *ngFor="let apiary of user_apiaries" value="{{apiary.name}}"> {{apiary.name}} </option>
+            </select>
+            <i class="fa fa-check valid-icon-select"></i>
+          </div>
+          <div>
+            <i class="fa fa-calendar inspect-time-icon"></i>
+            <input class="inspect-time-input" placeholder="{{'INSPECT.NEW.PLACEHOLDER' | translate}}" [(ngModel)]="inspect_date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDate()">
+            <owl-date-time #dtPicker1></owl-date-time>
+            <i class="fa fa-check valid-icon-date"></i>
+          </div>
         </div>
     </div>
     <div class="inspect-body">
       <div class="inspect-apiary">
         <div class="inspect-apiary-main">
-          <div class="inspect-apiary-op">
-            <select id="inspect-apiary-select" (change)="onSelectChange()" style="margin-left: 10px;">
-              <option disabled selected value style="color:grey;"> {{'INSPECT.NEW.DEFAULT_SELECT' | translate}} </option>
-              <option *ngFor="let apiary of user_apiaries" value="{{apiary.name}}"> {{apiary.name}} </option>
-            </select>
-            <i class="fa fa-check valid-icon"></i>
-          </div>
           <div class="apiary-op">
             <table id="apiary-op-table">
               <!-- Content added in TS function -->
@@ -29,10 +31,10 @@
             </table>
           </div>
           <div class="inspect-apiary-notes">
-            <textarea placeholder="{{'INSPECT.NEW.NOTE_PLACEHOLDER' | translate}}" class="apiary-notes-input" name="Text1" cols="40" rows="5" spellcheck="false"></textarea>
+            <textarea placeholder="{{'INSPECT.NEW.NOTE_PLACEHOLDER' | translate}}" (change)="saveApiaryNotes($event)" class="apiary-notes-input" name="Text1" cols="40" rows="5" spellcheck="false"></textarea>
           </div>
           <div class="inspect-apiary-todo">
-            <textarea placeholder="{{'INSPECT.NEW.TODO_PLACEHOLDER' | translate}}" class="apiary-todo-input" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
+            <textarea placeholder="{{'INSPECT.NEW.TODO_PLACEHOLDER' | translate}}" (change)="saveApiaryTodo($event)" class="apiary-todo-input" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
           </div>
         </div>
       </div>
