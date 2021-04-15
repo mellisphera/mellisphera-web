@@ -490,7 +490,12 @@
         "BTN_SAVE":"Enregistrer",
         "BTN_PRINT":"Imprimer"
       },
-      "HISTORY":{},
+      "HISTORY":{
+        "TITLE":"Historique des inspections",
+        "PLACEHOLDER_START":"Choisir date depart",
+        "PLACEHOLDER_END":"Choisir date fin"
+
+      },
       "PARAMS":{}
     },
     "ALERT_CONF_PAGE": {

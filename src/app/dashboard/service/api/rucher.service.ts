@@ -123,7 +123,6 @@ export class RucherService {
     }
 
     getApiariesByUserId(userid: string): Observable<RucherModel[]>{
-        console.log('sending request apiaries');
         return this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + userid);
     }
 

@@ -40,6 +40,10 @@ nav[role=admin-navigation] {
   color: #4F4F51;
 }
 
+.button0:focus {
+  outline: 0;
+}
+
 .nav-active {
   background-color: white;
   color: #4F4F51;

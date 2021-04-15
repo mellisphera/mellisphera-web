@@ -1,3 +1,29 @@
-<p>
-  inspect-history works!
-</p>
+<div class="inspect-history-container">
+  <h3>{{'INSPECT.HISTORY.TITLE' | translate }}</h3>
+  <div class="inspect-history-body">
+    <div class="inspect-history-search">
+      <h4>{{'INSPECT.HISTORY.SEARCH' | translate}}</h4>
+      <div class="inspect-history-search-components">
+        <div>
+          <select id="inspect-apiary-select" (change)="onSelectChange()" style="margin-left: 10px;width:180px;">
+            <option disabled selected value style="color:grey;"> {{'INSPECT.NEW.DEFAULT_SELECT' | translate}} </option>
+            <option *ngFor="let apiary of user_apiaries" value="{{apiary.name}}"> {{apiary.name}} </option>
+          </select>
+          <i class="fa fa-check valid-icon"></i>
+        </div>
+        <div>
+          <i class="fa fa-calendar inspect-time-icon"></i>
+          <input class="inspect-time-input date-start" placeholder="{{'INSPECT.HISTORY.PLACEHOLDER_START' | translate}}" [(ngModel)]="inspect_date_start" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDateStart()">
+          <owl-date-time #dtPicker1></owl-date-time>
+          <i class="fa fa-check valid-icon"></i>
+        </div>
+        <div>
+          <i class="fa fa-calendar inspect-time-icon"></i>
+          <input class="inspect-time-input date-end" placeholder="{{'INSPECT.HISTORY.PLACEHOLDER_END' | translate}}" [(ngModel)]="inspect_date_end" [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2" (ngModelChange)="inspectDateEnd()">
+          <owl-date-time #dtPicker2></owl-date-time>
+          <i class="fa fa-check valid-icon"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

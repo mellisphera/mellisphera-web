@@ -490,7 +490,12 @@
         "BTN_SAVE":"Save",
         "BTN_PRINT":"Print"
       },
-      "HISTORY":{},
+      "HISTORY":{
+        "TITLE":"Inspection history",
+        "SEARCH":"Research",
+        "PLACEHOLDER_START":"Choose start date",
+        "PLACEHOLDER_END":"Choose end date"
+      },
       "PARAMS":{}
     },
     "ALERT_CONF_PAGE": {

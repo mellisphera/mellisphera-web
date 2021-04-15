@@ -553,17 +553,17 @@ export class InspectNewComponent implements OnInit {
   saveInspection(): void{
     let hives_to_send = this.removeInspHiveNull();
     console.log(hives_to_send);
-    /*this.inspApiaryService.createNewInspApiary(this.new_inspApiary).subscribe(
+    this.inspApiaryService.createNewInspApiary(this.new_inspApiary).subscribe(
       () => {},
       () => {},
       () => {
-        this.new_inspHives.forEach(insp => {
+        hives_to_send.forEach(insp => {
           this.inspHiveService.createNewInspHive(insp).subscribe(
             () => {}, () => {}, () => {}
           );
         })
       }
-    );*/
+    );
   }
 
 }

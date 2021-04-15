@@ -1,0 +1,51 @@
+.inspect-history-container{
+  width: 100%;
+  padding-left: 10px;
+}
+
+.inspect-history-container h3{
+  padding-bottom: 20px;
+  margin-left: 20px;
+}
+
+.inspect-history-search{
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  border-bottom-left-radius: 3px;
+  margin-left: 10px;
+  width: 98%;
+}
+
+.inspect-history-search h4{
+  margin-left: 10px;
+  padding-bottom: 10px;
+}
+
+.inspect-history-search-components{
+  display: flex;
+}
+
+.inspect-history-search-components div{
+  margin-right: 60px;
+}
+
+.inspect-history-search-components input{
+  text-align: center;
+}
+
+.inspect-history-search-components select{
+  margin-bottom: 20px;
+}
+
+.valid-icon{
+  position: absolute;
+  color: green;
+  min-width: 40px;
+  font-size: 24px;
+  visibility: hidden;
+}
+
+.inspect-time-icon{
+  position: absolute;
+  padding: 6px 5px;
+}

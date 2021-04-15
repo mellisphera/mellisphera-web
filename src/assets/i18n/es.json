@@ -489,7 +489,7 @@
       "SIDEBAR_TOOLTIP":"Inspeccionar",
       "NAV":{
         "NEW":"Nueva",
-        "HISTORY":"Histórico",
+        "HISTORY":"Historial",
         "PARAMS":"Configuracion"
       },
       "NEW": {
@@ -505,7 +505,13 @@
         "BTN_SAVE":"Guardar",
         "BTN_PRINT":"Imprimir"
       },
-      "HISTORY":{},
+      "HISTORY":{
+        "TITLE":"Historial de inspección",
+        "SEARCH":"Busqueda",
+        "PLACEHOLDER_START":"Eligir la fecha de inicio",
+        "PLACEHOLDER_END":"Eligir la fecha final"
+
+      },
       "PARAMS":{}
     },
     "ALERT_CONF_PAGE": {
