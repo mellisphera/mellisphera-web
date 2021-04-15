@@ -219,50 +219,53 @@ export class VitalityComponent implements OnInit, OnDestroy {
             this.inspHiveService.getInspHiveByHiveIdAndDateBetween(obs[index].hive._id, this.melliDateService.getRangeForReqest()).subscribe(
               _hive_insp => {
                 _hive_insp.forEach(insp => {
-                  let d1 : Date = new Date(_hive_insp[0].date);
-                  d1.setHours(14);
-                  d1.setMinutes(0);
-                  d1.setSeconds(0);
-                  let insp_index = serieComplete.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
-                  if(insp_index != -1){
-                    let data = [
-                      {
-                        name:serieComplete.data[insp_index].name,
-                        value:[serieComplete.data[insp_index].value[0], serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
-                      }
-                    ];
-                    let newSerie = {
-                      name: serieComplete.name,
-                      type:'custom',
-                      //id: 'swarm',
-                      renderItem: (param, api) => {
-                        let point = api.coord([api.value(0), api.value(1)]);
-                        return {
-                          type: 'image',
-                          style: {
-                            image: INSPECT_IMG_PATH + _hive_insp[0].obs[0].img,
-                            x: -30 / 2,
-                            y: -40,
-                            width: 40,
-                            height: 40,
-                          },
-                          position:point,
-                          encode: {
-                            x: 0,
-                            y: 1,
-                            // `dim2` and `dim3` will displayed in tooltip.
-                            tooltip: [0, 1]
-                          },
-                          // `dim2` is named as "Age" and `dim3` is named as "Satisfaction".
-                          dimensions: ['Date', 'Value', null],
+                  if(insp.obs.length > 0){
+                    let d1 : Date = new Date(insp.date);
+                    d1.setHours(14);
+                    d1.setMinutes(0);
+                    d1.setSeconds(0);
+                    let insp_index = serieComplete.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
+                    if(insp_index != -1){
+                      let data = [
+                        {
+                          name:serieComplete.data[insp_index].name,
+                          value:[serieComplete.data[insp_index].value[0], serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
                         }
-                      },
-                      data: data,
-                      z: 10,
+                      ];
+                      let newSerie = {
+                        name: serieComplete.name,
+                        type:'custom',
+                        //id: 'swarm',
+                        renderItem: (param, api) => {
+                          let point = api.coord([api.value(0), api.value(1)]);
+                          return {
+                            type: 'image',
+                            style: {
+                              image: INSPECT_IMG_PATH + _hive_insp[0].obs[0].img,
+                              x: -30 / 2,
+                              y: -40,
+                              width: 40,
+                              height: 40,
+                            },
+                            position:point,
+                            encode: {
+                              x: 0,
+                              y: 1,
+                              // `dim2` and `dim3` will displayed in tooltip.
+                              tooltip: [0, 1]
+                            },
+                            // `dim2` is named as "Age" and `dim3` is named as "Satisfaction".
+                            dimensions: ['Date', 'Value', null],
+                          }
+                        },
+                        data: data,
+                        z: 10,
+                      }
+                      this.option.baseOption.series.push(Object.assign({}, newSerie));
+                      this.stackService.getBroodChartInstance().setOption(this.option);
                     }
-                    this.option.baseOption.series.push(Object.assign({}, newSerie));
-                    this.stackService.getBroodChartInstance().setOption(this.option);
                   }
+
                 })
               },
               () => {},
@@ -318,53 +321,55 @@ export class VitalityComponent implements OnInit, OnDestroy {
   loadEventsByHive(hive: RucheInterface, serie:any): void{
     this.inspHiveService.getInspHiveByHiveIdAndDateBetween(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
       _hive_insp => {
-        if(_hive_insp.length > 0){
-          let d1 : Date = new Date(_hive_insp[0].date);
-          d1.setHours(14);
-          d1.setMinutes(0);
-          d1.setSeconds(0);
-          let index = serie.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
-          if(index != -1){
-            let data = [
-              {
-                name:serie.data[index].name,
-                value:[serie.data[index].value[0], serie.data[index].value[1], serie.data[index].value[2]]
-              }
-            ];
-            let newSerie = {
-              name: serie.name,
-              type:'custom',
-              //id: 'swarm',
-              renderItem: (param, api) => {
-                let point = api.coord([api.value(0), api.value(1)]);
-                return {
-                  type: 'image',
-                  style: {
-                    image: INSPECT_IMG_PATH + _hive_insp[0].obs[0].img,
-                    x: -30 / 2,
-                    y: -40,
-                    width: 40,
-                    height: 40,
-                  },
-                  position:point,
-                  encode: {
-                    x: 0,
-                    y: 1,
-                    // `dim2` and `dim3` will displayed in tooltip.
-                    tooltip: [0, 1]
-                  },
-                  // `dim2` is named as "Age" and `dim3` is named as "Satisfaction".
-                  dimensions: ['Date', 'Value', null],
+        _hive_insp.forEach( insp => {
+          if(insp.obs.length > 0){
+            let d1 : Date = new Date(insp.date);
+            d1.setHours(14);
+            d1.setMinutes(0);
+            d1.setSeconds(0);
+            let index = serie.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
+            if(index != -1){
+              let data = [
+                {
+                  name:serie.data[index].name,
+                  value:[serie.data[index].value[0], serie.data[index].value[1], serie.data[index].value[2]]
                 }
-              },
-              data: data,
-              z: 10,
+              ];
+              let newSerie = {
+                name: serie.name,
+                type:'custom',
+                //id: 'swarm',
+                renderItem: (param, api) => {
+                  let point = api.coord([api.value(0), api.value(1)]);
+                  return {
+                    type: 'image',
+                    style: {
+                      image: INSPECT_IMG_PATH + _hive_insp[0].obs[0].img,
+                      x: -30 / 2,
+                      y: -40,
+                      width: 40,
+                      height: 40,
+                    },
+                    position:point,
+                    encode: {
+                      x: 0,
+                      y: 1,
+                      // `dim2` and `dim3` will displayed in tooltip.
+                      tooltip: [0, 1]
+                    },
+                    // `dim2` is named as "Age" and `dim3` is named as "Satisfaction".
+                    dimensions: ['Date', 'Value', null],
+                  }
+                },
+                data: data,
+                z: 10,
+              }
+              //console.log(newSerie);
+              this.option.baseOption.series.push(newSerie);
+              this.stackService.getBroodChartInstance().setOption(this.option);
             }
-            //console.log(newSerie);
-            this.option.baseOption.series.push(newSerie);
-            this.stackService.getBroodChartInstance().setOption(this.option);
           }
-        }
+        });
       },
       () => {},
       () => {

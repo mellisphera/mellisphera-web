@@ -125,6 +125,7 @@
     "SIDEBAR" : {
         "APIARY" : "My Apiary",
         "HIVES" : "Hives",
+        "INSPECT": "Inspect",
         "DATA" : "Explore",
         "ALERT_CONF": "Alerts",
         "USERGUIDE": "User Guide"

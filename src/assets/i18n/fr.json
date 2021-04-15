@@ -125,6 +125,7 @@
     "SIDEBAR" : {
         "APIARY" : "Mon Rucher",
         "HIVES" : "Ruches",
+        "INSPECT": "Inspecter",
         "DATA" : "Explorer",
         "ALERT_CONF": "Alertes",
         "USERGUIDE": "Documentation"

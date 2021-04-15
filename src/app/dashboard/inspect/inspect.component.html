@@ -7,19 +7,19 @@
         <button type="button" id="inspect-new-btn" (click)="setButtonActive('inspect-new-btn')"
           class="button button0" data-toggle="tooltip" data-placement="top" title="Nouvelle"
           routerLink="./new">
-          Nouvelle</button>
+          {{ 'INSPECT.NAV.NEW' | translate }}</button>
       </li>
       <li>
         <button type="button" id="inspect-history-btn" (click)="setButtonActive('inspect-history-btn')"
           class="button button0" data-toggle="tooltip" data-placement="top" title="Historique"
           routerLink="./history">
-          Historique</button>
+          {{ 'INSPECT.NAV.HISTORY' | translate }}</button>
       </li>
       <li>
         <button type="button" id="inspect-params-btn" (click)="setButtonActive('inspect-params-btn')"
           class="button button0" data-toggle="tooltip" data-placement="top" title="Parametres"
           routerLink="./params">
-          Parametres</button>
+          {{ 'INSPECT.NAV.PARAMS' | translate }}</button>
       </li>
     </ul>
   </nav>

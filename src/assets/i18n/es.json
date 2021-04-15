@@ -123,6 +123,7 @@
     "SIDEBAR": {
         "APIARY": "Colmenar",
         "HIVES": "Colmenas",
+        "INSPECT": "Inspeccionar",
         "DATA": "Explorar",
         "ALERT_CONF": "Alertas ",
         "USERGUIDE": "Guia Usuario"
