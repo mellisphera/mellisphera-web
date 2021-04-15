@@ -1,3 +1,4 @@
+import { InspHive } from './../../../_model/inspHive';
 /* Copyright 2018-present Mellisphera
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,6 +29,11 @@ import { InspHiveService } from '../../service/api/insp-hive.service';
 
 const INSPECT_IMG_PATH = '../../../../assets/icons/inspect/';
 
+class InspHiveItem{
+    name: string;
+    insp: InspHive[];
+}
+
 @Component({
   selector: 'app-vitality',
   templateUrl: './vitality.component.html',
@@ -35,6 +41,7 @@ const INSPECT_IMG_PATH = '../../../../assets/icons/inspect/';
 })
 export class VitalityComponent implements OnInit, OnDestroy {
 
+  private inspHives: InspHiveItem[];
 
   private option: {
     baseOption: any,
@@ -141,18 +148,29 @@ export class VitalityComponent implements OnInit, OnDestroy {
     xAxis.axisLabel.formatter = (value: number, index: number) => {
       return this.unitService.getDailyDate(new Date(value));
     };
-    this.option.baseOption.tooltip.formatter = (params) => {
-      return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data.name), new Array(
-        {
-          name: params.seriesName,
-          value: this.unitService.getValRound(params.data.value[1]),
-          unit: this.graphGlobal.getUnitBySerieName('Brood')
-        }
-      ));
 
+    this.option.baseOption.tooltip.formatter = (params) => {
+      let words = params.seriesName.split(' | ');
+      if(words.includes('swarm')){
+        this.option.baseOption.tooltip.backgroundColor = 'rgba(0, 0, 60, 0.7)';
+        this.stackService.getBroodChartInstance().setOption(this.option);
+        let indexSerie = this.option.baseOption.series.findIndex(_s => _s.name === params.seriesName);
+        let indexHiveInsp = this.inspHives.findIndex(_insp => _insp.name === words[0]);
+        return this.getInspTooltipFormatter(params, indexSerie, indexHiveInsp);
+      }
+      else{
+        this.option.baseOption.tooltip.backgroundColor = 'rgba(50,50,50,0.7)';
+        this.stackService.getBroodChartInstance().setOption(this.option);
+        return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data.name), new Array(
+          {
+            name: params.seriesName,
+            value: this.unitService.getValRound(params.data.value[1]),
+            unit: this.graphGlobal.getUnitBySerieName('Brood')
+          }
+        ));
+      }
     }
     this.option.baseOption.xAxis.push(xAxis);
-    console.log(this.option.baseOption)
     this.stackService.getBroodChartInstance().setOption(this.option);
   }
 
@@ -193,13 +211,20 @@ export class VitalityComponent implements OnInit, OnDestroy {
       });
     }
     this.stackService.getBroodChartInstance().setOption(option, true);
+    let index = this.inspHives.findIndex(_elt => _elt.name === hive.name);
+    this.inspHives.splice(index, 1);
+    console.log(this.inspHives);
   }
 
 
   loadAllHiveAfterRangeChange(next: Function): void {
+    this.option.baseOption.series.length = 1;
     const obs = this.stackService.getHiveSelect().map(_hive => {
       return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodOldMethod(_hive._id, this.melliDateService.getRangeForReqest())}
     });
+    this.inspHives = [];
+    console.log(this.option.baseOption.series);
+    console.log('on recommence');
     Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
       _broods => {
         _broods.forEach((_elt, index) => {
@@ -218,6 +243,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
             }
             this.inspHiveService.getInspHiveByHiveIdAndDateBetween(obs[index].hive._id, this.melliDateService.getRangeForReqest()).subscribe(
               _hive_insp => {
+                let item : InspHiveItem = {name: obs[index].hive.name, insp: [..._hive_insp]};
+                this.inspHives.push(item);
                 _hive_insp.forEach(insp => {
                   if(insp.obs.length > 0){
                     let d1 : Date = new Date(insp.date);
@@ -228,13 +255,16 @@ export class VitalityComponent implements OnInit, OnDestroy {
                     if(insp_index != -1){
                       let data = [
                         {
-                          name:serieComplete.data[insp_index].name,
-                          value:[serieComplete.data[insp_index].value[0], serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
+                          name:insp.date,
+                          value:[insp.date, serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
                         }
                       ];
                       let newSerie = {
-                        name: serieComplete.name,
+                        name: serieComplete.name + ' | ' + insp.obs[0].name,
                         type:'custom',
+                        itemStyle:{
+                          opacity: 1,
+                        },
                         //id: 'swarm',
                         renderItem: (param, api) => {
                           let point = api.coord([api.value(0), api.value(1)]);
@@ -248,14 +278,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
                               height: 40,
                             },
                             position:point,
-                            encode: {
-                              x: 0,
-                              y: 1,
-                              // `dim2` and `dim3` will displayed in tooltip.
-                              tooltip: [0, 1]
-                            },
-                            // `dim2` is named as "Age" and `dim3` is named as "Satisfaction".
-                            dimensions: ['Date', 'Value', null],
                           }
                         },
                         data: data,
@@ -319,8 +341,11 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   loadEventsByHive(hive: RucheInterface, serie:any): void{
+    let data = [];
     this.inspHiveService.getInspHiveByHiveIdAndDateBetween(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
       _hive_insp => {
+        let item : InspHiveItem = {name: hive.name, insp: [..._hive_insp]};
+        this.inspHives.push(item);
         _hive_insp.forEach( insp => {
           if(insp.obs.length > 0){
             let d1 : Date = new Date(insp.date);
@@ -329,15 +354,18 @@ export class VitalityComponent implements OnInit, OnDestroy {
             d1.setSeconds(0);
             let index = serie.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
             if(index != -1){
-              let data = [
+              data = [
                 {
-                  name:serie.data[index].name,
-                  value:[serie.data[index].value[0], serie.data[index].value[1], serie.data[index].value[2]]
+                  name:insp.date,
+                  value:[insp.date, serie.data[index].value[1], serie.data[index].value[2]]
                 }
               ];
               let newSerie = {
-                name: serie.name,
+                name: serie.name + ' | ' + insp.obs[0].name,
                 type:'custom',
+                itemStyle:{
+                  opacity: 1,
+                },
                 //id: 'swarm',
                 renderItem: (param, api) => {
                   let point = api.coord([api.value(0), api.value(1)]);
@@ -351,14 +379,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
                       height: 40,
                     },
                     position:point,
-                    encode: {
-                      x: 0,
-                      y: 1,
-                      // `dim2` and `dim3` will displayed in tooltip.
-                      tooltip: [0, 1]
-                    },
-                    // `dim2` is named as "Age" and `dim3` is named as "Satisfaction".
-                    dimensions: ['Date', 'Value', null],
                   }
                 },
                 data: data,
@@ -373,6 +393,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
       },
       () => {},
       () => {
+        console.log(this.inspHives);
         this.stackService.getBroodChartInstance().hideLoading();
       }
     );
@@ -393,6 +414,19 @@ export class VitalityComponent implements OnInit, OnDestroy {
     }).join('');
 
     return tooltipGlobal;
+  }
+
+  getInspTooltipFormatter(params: any, indexSerie: number, indexHiveInsp: number): string{
+    //console.log(params);
+    let item : InspHiveItem = this.inspHives[indexHiveInsp];
+    let test =
+    "<div>" +
+      "<h3></h3>" +
+      "<div>Bonjour1</div>" +
+      "<div>Bonjour2</div>" +
+      "<div>Bonjour3</div>" +
+    "</div>";
+    return test;
   }
 
   ngOnDestroy(): void {
