@@ -313,6 +313,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
       },
       () => {},
       () => {
+        this.stackService.getBroodChartInstance().hideLoading();
         //this.loadEventsByHive(hive, serie);
       }
     )
