@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, Renderer2, ViewChild, AfterViewChecked, AfterViewInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, AfterViewChecked, AfterViewInit, AfterContentChecked, Input } from '@angular/core';
 import { RucheService } from '../service/api/ruche.service';
 import { RucherService } from '../service/api/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
@@ -45,6 +45,9 @@ const PREFIX_PATH = '/dashboard/explore/';
   styleUrls: ['./melli-charts.component.css']
 })
 export class MelliChartsComponent implements OnInit, AfterViewInit {
+
+  public xPosContextMenu: number = 0;
+  public yPosContextMenu: number = 0;
 
   public btnNav: any[];
   private btnTypeElement: HTMLElement;
@@ -488,6 +491,25 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         //return this.stackService.
         break;
     }
+  }
+
+  showContextMenu(ruche: RucheInterface, evt: MouseEvent): void{
+    evt.stopPropagation();
+    evt.preventDefault();
+    let menu = (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]);
+    menu.style.top = evt.clientY + 'px';
+    menu.style.left = (evt.clientX-80) + 'px';
+    menu.style.visibility = 'visible';
+
+    let list = (<HTMLElement>menu.getElementsByClassName('context-menu-group')[0]);
+    let name = (<HTMLElement>menu.getElementsByClassName('hive-name')[0]);
+    let circle = (<HTMLElement>menu.getElementsByClassName('circle')[0]);
+    circle.style.backgroundColor = this.getColor(ruche);
+    name.innerHTML =  '  ' + ruche.name;
+  }
+
+  closeContextMenu(){
+    (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]).style.visibility = 'hidden';
   }
 
 }

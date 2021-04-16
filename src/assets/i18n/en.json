@@ -435,7 +435,10 @@
             "BTN_APPLY": "Apply"
         },
         "BROOD": {
-            "TITLE": "Daily brood progression"
+            "TITLE": "Daily brood progression",
+            "TOOLTIP":{
+              "SWARM":"Swarming"
+            }
         },
         "WEIGHT": {
           "RAW": "Daily weight progression",
@@ -473,6 +476,10 @@
     "INSPECT":{
       "SIDEBAR":"Inspect",
       "SIDEBAR_TOOLTIP":"Inspect",
+      "ACTIONS":"Actions",
+      "OBS":"Observations",
+      "NOTES":"Notes",
+      "TODO":"Tasks",
       "NAV":{
         "NEW":"New",
         "HISTORY":"History",

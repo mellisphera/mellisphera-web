@@ -450,7 +450,10 @@
             "BTN_APPLY": "Aplicar"
         },
         "BROOD": {
-            "TITLE": "Evolucion diaria de la cria"
+            "TITLE": "Evolucion diaria de la cria",
+            "TOOLTIP":{
+              "SWARM":"Enjambrazón"
+            }
         },
         "WEIGHT": {
           "RAW": "Evolucion diaria del peso",
@@ -488,6 +491,10 @@
     "INSPECT":{
       "SIDEBAR":"Inspeccionar",
       "SIDEBAR_TOOLTIP":"Inspeccionar",
+      "ACTIONS":"Acciones",
+      "OBS":"Observaciones",
+      "NOTES":"Notas",
+      "TODO":"Tareas",
       "NAV":{
         "NEW":"Nueva",
         "HISTORY":"Histórico",

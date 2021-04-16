@@ -435,7 +435,10 @@
             "BTN_APPLY": "Appliquer"
         },
         "BROOD": {
-            "TITLE": "Evolution journalière du couvain"
+            "TITLE": "Evolution journalière du couvain",
+            "TOOLTIP":{
+              "SWARM":"Essaimage"
+            }
         },
         "WEIGHT": {
           "RAW": "Evolution journalière du poids",
@@ -473,6 +476,10 @@
     "INSPECT":{
       "SIDEBAR":"Inspecter",
       "SIDEBAR_TOOLTIP":"Inspecter",
+      "ACTIONS":"Actions",
+      "OBS":"Observations",
+      "NOTES":"Notes",
+      "TODO":"Taches",
       "NAV":{
         "NEW":"Nouvelle",
         "HISTORY":"Historique",

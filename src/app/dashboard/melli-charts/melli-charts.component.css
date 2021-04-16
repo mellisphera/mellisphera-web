@@ -114,7 +114,7 @@ nav[role=admin-navigation] {
     height: 14px;
 
 }
-.puce-hive{
+.puce-hive, hive-circle{
     background-image: url('../../../assets/icons/ui/hive.png');
     display: inline-block;
     background-repeat: no-repeat;
@@ -212,6 +212,21 @@ nav[role=admin-navigation] {
 
   .navbar{
       height: 50px;
+  }
+
+  .right-click-menu{
+    position: absolute;
+    visibility: hidden;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 200px;
+    z-index: 6;
+  }
+
+  .context-menu-group{
+    margin-left: 0px;
+    list-style-type: none;
   }
 
 @media screen and (max-width:1500px) {

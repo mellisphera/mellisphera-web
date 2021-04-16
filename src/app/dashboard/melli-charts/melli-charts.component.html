@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
 
-<div [class]="'content-page ' + checkLoadindingIsComplete()">
+<div [class]="'content-page ' + checkLoadindingIsComplete()" (click)="closeContextMenu()">
   <nav class="navbar navbar-default" role="admin-navigation">
     <div class="navbar-header">
     </div>
@@ -104,7 +104,7 @@ limitations under the License. -->
             [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
             <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
               *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index"
-              (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i class="circle"
+              (click)="selectHive(ruche, $event)" (contextmenu)="showContextMenu(ruche, $event)" data-parent="#sub-menu"><i class="circle"
                 [style.background-color]="getColor(ruche)"></i><span class="puce-hive"></span>{{ ruche.name }}</a>
           </div>
 <!--           <div *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
@@ -120,6 +120,21 @@ limitations under the License. -->
 
     <div id="content">
       <router-outlet (activate)="onActivate($event)"></router-outlet>
+    </div>
+
+    <div class="right-click-menu">
+      <div style="margin-left:5px; margin-top:5px;">
+        <span style="display:flex; align-items: center; height:24px;" class="hive-title">
+          <i class="circle"></i>
+          <p style="margin-bottom:0px; margin-left:10px; font-size:14px;" class="hive-name"></p>
+        </span>
+      </div>
+      <div>
+        <ul style="padding-left:20px; padding-top:10px;" class="context-menu-group">
+          <li style="height:30px; display:flex; align-items:center;">Ajouter evenement</li>
+          <li style="height:30px; display:flex; align-items:center;">Supprimer evenement</li>
+        </ul>
+      </div>
     </div>
 
   </div>

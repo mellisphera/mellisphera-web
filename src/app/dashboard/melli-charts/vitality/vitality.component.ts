@@ -1,4 +1,3 @@
-import { InspHive } from './../../../_model/inspHive';
 /* Copyright 2018-present Mellisphera
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,6 +25,12 @@ import { AtokenStorageService } from '../../../auth/Service/atoken-storage.servi
 import { AdminService } from '../../admin/service/admin.service';
 import { InspApiaryService } from '../../service/api/insp-apiary.service';
 import { InspHiveService } from '../../service/api/insp-hive.service';
+import * as moment from 'moment';
+import { UserParamsService } from '../../preference-config/service/user-params.service';
+import { UserPref } from '../../../_model/user-pref';
+
+import { InspHive } from './../../../_model/inspHive';
+import { TranslateService } from '@ngx-translate/core';
 
 const INSPECT_IMG_PATH = '../../../../assets/icons/inspect/';
 
@@ -42,6 +47,7 @@ class InspHiveItem{
 export class VitalityComponent implements OnInit, OnDestroy {
 
   private inspHives: InspHiveItem[];
+  public user_pref : UserPref;
 
   private option: {
     baseOption: any,
@@ -57,7 +63,9 @@ export class VitalityComponent implements OnInit, OnDestroy {
     private rucheService: RucheService,
     private unitService: UnitService,
     private inspApiaryService: InspApiaryService,
-    private inspHiveService: InspHiveService
+    private inspHiveService: InspHiveService,
+    private userPrefsService: UserParamsService,
+    private translate : TranslateService
     ){
     this.option = {
       baseOption : JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionHourly)),
@@ -103,6 +111,13 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    this.userPrefsService.getUserPrefs().subscribe(
+      _userPrefs => {
+        this.user_pref = _userPrefs;
+      },
+      () => {},
+      () => {}
+    );
     const elt = document.getElementsByClassName('apiaryGroup')[0];
     if (elt.classList.contains('apiary-group-hive')) {
       elt.classList.remove('apiary-group-hive');
@@ -151,12 +166,13 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
     this.option.baseOption.tooltip.formatter = (params) => {
       let words = params.seriesName.split(' | ');
-      if(words.includes('swarm')){
+      if(words.includes('inspection')){
         this.option.baseOption.tooltip.backgroundColor = 'rgba(0, 0, 60, 0.7)';
         this.stackService.getBroodChartInstance().setOption(this.option);
         let indexSerie = this.option.baseOption.series.findIndex(_s => _s.name === params.seriesName);
-        let indexHiveInsp = this.inspHives.findIndex(_insp => _insp.name === words[0]);
-        return this.getInspTooltipFormatter(params, indexSerie, indexHiveInsp);
+        let indexHiveInspItem = this.inspHives.findIndex(_insp => _insp.name === words[0]);
+        let indexHiveInsp = this.inspHives[indexHiveInspItem].insp.findIndex(_insp => new Date(_insp.date).getTime() === new Date(params.name).getTime());
+        return this.getInspTooltipFormatter(words[0], indexSerie, indexHiveInspItem, indexHiveInsp);
       }
       else{
         this.option.baseOption.tooltip.backgroundColor = 'rgba(50,50,50,0.7)';
@@ -223,8 +239,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
       return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodOldMethod(_hive._id, this.melliDateService.getRangeForReqest())}
     });
     this.inspHives = [];
-    console.log(this.option.baseOption.series);
-    console.log('on recommence');
     Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
       _broods => {
         _broods.forEach((_elt, index) => {
@@ -248,7 +262,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 _hive_insp.forEach(insp => {
                   if(insp.obs.length > 0){
                     let d1 : Date = new Date(insp.date);
-                    d1.setHours(14);
+                    d1.setHours(12 - (d1.getTimezoneOffset()/60));
                     d1.setMinutes(0);
                     d1.setSeconds(0);
                     let insp_index = serieComplete.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
@@ -260,7 +274,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                         }
                       ];
                       let newSerie = {
-                        name: serieComplete.name + ' | ' + insp.obs[0].name,
+                        name: serieComplete.name + ' | inspection',
                         type:'custom',
                         itemStyle:{
                           opacity: 1,
@@ -271,11 +285,11 @@ export class VitalityComponent implements OnInit, OnDestroy {
                           return {
                             type: 'image',
                             style: {
-                              image: INSPECT_IMG_PATH + _hive_insp[0].obs[0].img,
-                              x: -30 / 2,
-                              y: -40,
-                              width: 40,
-                              height: 40,
+                              image: INSPECT_IMG_PATH + '4_tool_jhook.png',
+                              x: -25 / 2,
+                              y: -40 / 2,
+                              width: 25,
+                              height: 25,
                             },
                             position:point,
                           }
@@ -287,7 +301,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
                       this.stackService.getBroodChartInstance().setOption(this.option);
                     }
                   }
-
                 })
               },
               () => {},
@@ -349,7 +362,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
         _hive_insp.forEach( insp => {
           if(insp.obs.length > 0){
             let d1 : Date = new Date(insp.date);
-            d1.setHours(14);
+            d1.setHours(12 - (d1.getTimezoneOffset()/60));
             d1.setMinutes(0);
             d1.setSeconds(0);
             let index = serie.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
@@ -361,7 +374,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 }
               ];
               let newSerie = {
-                name: serie.name + ' | ' + insp.obs[0].name,
+                name: serie.name + ' | inspection',
                 type:'custom',
                 itemStyle:{
                   opacity: 1,
@@ -372,11 +385,11 @@ export class VitalityComponent implements OnInit, OnDestroy {
                   return {
                     type: 'image',
                     style: {
-                      image: INSPECT_IMG_PATH + _hive_insp[0].obs[0].img,
-                      x: -30 / 2,
-                      y: -40,
-                      width: 40,
-                      height: 40,
+                      image: INSPECT_IMG_PATH + '4_tool_jhook.png',
+                      x: -25 / 2,
+                      y: -50 /2,
+                      width: 25,
+                      height: 25,
                     },
                     position:point,
                   }
@@ -416,17 +429,42 @@ export class VitalityComponent implements OnInit, OnDestroy {
     return tooltipGlobal;
   }
 
-  getInspTooltipFormatter(params: any, indexSerie: number, indexHiveInsp: number): string{
+  getInspTooltipFormatter(hiveName: string, indexSerie: number, indexHiveInspItem: number, indexHiveInsp: number): string{
     //console.log(params);
-    let item : InspHiveItem = this.inspHives[indexHiveInsp];
-    let test =
-    "<div>" +
-      "<h3></h3>" +
-      "<div>Bonjour1</div>" +
-      "<div>Bonjour2</div>" +
-      "<div>Bonjour3</div>" +
-    "</div>";
-    return test;
+    //let item : InspHiveItem = this.inspHives[indexHiveInspItem];
+    let insp : InspHive = this.inspHives[indexHiveInspItem].insp[indexHiveInsp];
+    let date : Date = new Date(insp.date);
+    let test = date.getTimezoneOffset();
+    let obsString = this.translate.instant('INSPECT.OBS');
+    let notesString = this.translate.instant('INSPECT.NOTES');
+    let todoString = this.translate.instant('INSPECT.TODO');
+    date.setHours(date.getHours() + (test / 60));
+    let res =
+    `<div>` +
+    `<h5>${hiveName} | ${this.unitService.getHourlyDate(date)} </h5>` +
+    `<div>${obsString} : `;
+    insp.obs.forEach( o => {
+      let name = this.translate.instant('MELLICHARTS.BROOD.TOOLTIP.'+ o.name.toUpperCase());
+      res += `<div style="display:flex; width:100%; justify-content:center; align-items:center; margin-left: 5px;">`;
+      res += `<div style="width:25px; height:25px; margin-top:-5px; background-image:url('${INSPECT_IMG_PATH + o.img}'); background-repeat:no-repeat; background-size:25px; background-position: center;"></div>`;
+      res += `<div style="height:32px; display:flex; margin-left:10px; margin-top:5px; align-items:center;">${name}</div>`
+      res += `</div>`;
+    });
+    res += `</div>`;
+
+    res += `<div style="margin-top: 10px;">${notesString} : `;
+    if(insp.notes != null){
+      res += `<div style="margin-left: 5px; display:flex; width:100%; justify-content:center; align-items:center;">${insp.notes}</div>`;
+    }
+    res += `</div>`;
+
+    res += `<div style="margin-top: 10px;">${todoString} : `;
+    if(insp.todo != null){
+      res += `<div style="margin-left: 5px; display:flex; width:100%; justify-content:center; align-items:center;">${insp.todo}</div>`;
+    }
+    res += `</div>`;
+
+    return res;
   }
 
   ngOnDestroy(): void {
