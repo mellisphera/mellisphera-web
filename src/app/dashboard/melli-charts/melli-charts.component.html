@@ -123,19 +123,53 @@ limitations under the License. -->
     </div>
 
     <div class="right-click-menu">
-      <div style="margin-left:5px; margin-top:5px;">
-        <span style="display:flex; align-items: center; height:24px;" class="hive-title">
+      <div class="right-click-title">
+        <span class="hive-title">
           <i class="circle"></i>
-          <p style="margin-bottom:0px; margin-left:10px; font-size:14px;" class="hive-name"></p>
+          <p class="hive-name"></p>
         </span>
       </div>
       <div>
-        <ul style="padding-left:20px; padding-top:10px;" class="context-menu-group">
-          <li style="height:30px; display:flex; align-items:center;">Ajouter evenement</li>
-          <li style="height:30px; display:flex; align-items:center;">Supprimer evenement</li>
+        <ul class="context-menu-group">
+          <li class="context-menu-choice add-event" (click)="showAddEvent()" ><i class="fa fa-plus"></i><p>{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</p></li>
+          <li class="context-menu-choice delete-event" (click)="showDeleteEvent()" ><i class="fa fa-minus"></i><p>{{'MELLICHARTS.EVENT.DELETE.TITLE' | translate}}</p></li>
         </ul>
       </div>
     </div>
 
+  </div>
+  <div class="black-filter"></div>
+  <div class="add-event-screen">
+    <h3>{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h3>
+    <div class="add-event-date">
+      <h4 style="padding-right:10px;">Date</h4>
+      <div>
+        <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
+        <owl-date-time #dtEvent></owl-date-time>
+      </div>
+    </div>
+    <div class="add-event-choice">
+      <h4 style="padding-right:10px;">{{'MELLICHARTS.EVENT.ADD.EVENT' | translate}}</h4>
+      <div>
+        <select class="add-event-select"></select>
+        <img class="add-event-img">
+      </div>
+    </div>
+    <div class="add-event-notes">
+      <h4 style="padding-right:10px;">{{'MELLICHARTS.EVENT.ADD.NOTES' | translate}}</h4>
+      <div>
+        <textarea placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}"></textarea>
+      </div>
+    </div>
+    <div class="add-event-buttons">
+      <button class="btn btn-danger" style="margin-right:10px;" (click)="discardAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+      <button class="btn btn-success" style="margin-left:10px;" (click)="discardAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
+    </div>
+  </div>
+  <div class="delete-event-screen">
+    <div class="add-event-buttons">
+      <button class="btn btn-danger" style="margin-right:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+      <button class="btn btn-success" style="margin-left:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
+    </div>
   </div>
 </div>

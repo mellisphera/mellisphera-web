@@ -486,7 +486,24 @@
               "VAR_15DAYS": "Variacion los ultimos 15 dias"
             }
           }
-      }
+        },
+        "EVENT":{
+          "ADD":{
+            "TITLE": "Añadir evento",
+            "DATE": "Fecha",
+            "DATE_PLACEHOLDER": "Elegir fecha",
+            "EVENT": "Evento",
+            "NOTES": "Notas",
+            "NOTES_PLACEHOLDER":"Notas..."
+          },
+          "DELETE":{
+            "TITLE": "Retirar Evento"
+          },
+          "BUTTONS":{
+            "ADD":"Añadir",
+            "CANCEL":"Anular"
+          }
+        }
     },
     "INSPECT":{
       "SIDEBAR":"Inspeccionar",

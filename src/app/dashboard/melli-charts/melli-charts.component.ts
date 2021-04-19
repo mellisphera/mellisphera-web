@@ -35,9 +35,12 @@ import { type } from 'os';
 import { TranslateService } from '@ngx-translate/core';
 import { WeightComponent } from './weight/weight.component';
 import { UnitService } from '../service/unit.service';
+import * as moment from 'moment';
+import { UserPref } from '../../_model/user-pref';
+import { HiveEvent } from '../../_model/hive_event';
 
 const PREFIX_PATH = '/dashboard/explore/';
-
+const IMG_PATH = '../../../assets/icons/inspect/';
 
 @Component({
   selector: 'app-melli-charts',
@@ -48,6 +51,23 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   public xPosContextMenu: number = 0;
   public yPosContextMenu: number = 0;
+
+  public newEventDate: Date;
+  public hiveEvent: RucheInterface;
+
+  public new_event : HiveEvent = {
+    _id: null,
+    hiveId: null,
+    hiveName: null,
+    date: null,
+    img: null,
+    eventName: null,
+    eventNameEn: null,
+    eventNameEs: null,
+    notes: null
+  }
+
+  public user_pref : UserPref;
 
   public btnNav: any[];
   private btnTypeElement: HTMLElement;
@@ -76,6 +96,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private weatherService: WeatherService,
     public tokenService: AtokenStorageService,
     private userConfig: UserParamsService,
+    private userPrefsService: UserParamsService,
     private unitService: UnitService) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
@@ -107,6 +128,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.userPrefsService.getUserPrefs().subscribe(
+      _userPrefs => {
+        this.user_pref = _userPrefs;
+      },
+      () => {},
+      () => {}
+    );
     this.userConfig.getSubject().subscribe(
       data => {
         this.recordService.setUnitSystem(data.unitSystem);
@@ -506,10 +534,53 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     let circle = (<HTMLElement>menu.getElementsByClassName('circle')[0]);
     circle.style.backgroundColor = this.getColor(ruche);
     name.innerHTML =  '  ' + ruche.name;
+
+    this.hiveEvent = Object.assign({}, ruche);
   }
 
-  closeContextMenu(){
+  closeContextMenu(): void{
     (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]).style.visibility = 'hidden';
   }
 
+  showAddEvent(): void{
+    this.new_event.hiveId = this.hiveEvent._id;
+    this.new_event.hiveName = this.hiveEvent.name;
+    (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'block';
+    (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'block';
+    this.addOptionsSelect();
+  }
+
+  discardAddEvent(): void{
+    (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'none';
+    (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'none';
+  }
+
+  addOptionsSelect(): void{
+    let select = (<HTMLSelectElement>document.getElementsByClassName('add-event-select')[0]);
+    let img = (<HTMLImageElement>document.getElementsByClassName('add-event-img')[0]);
+    let option = document.createElement('option');
+    option.value = '0';
+    option.text = 'Essaimage';
+
+    img.src = IMG_PATH + 'observations/swarm.png';
+    img.width = 30;
+    img.height = 30;
+
+    select.add(option);
+  }
+
+  setNewEventDate(): void{
+    (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = moment(this.newEventDate).format(this.user_pref.timeFormat);
+    this.new_event.date = this.newEventDate;
+  }
+
+  showDeleteEvent(): void{
+    (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'block';
+    (<HTMLElement>document.getElementsByClassName('delete-event-screen')[0]).style.display = 'block';
+  }
+
+  discardDeleteEvent(): void{
+    (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'none';
+    (<HTMLElement>document.getElementsByClassName('delete-event-screen')[0]).style.display = 'none';
+  }
 }
