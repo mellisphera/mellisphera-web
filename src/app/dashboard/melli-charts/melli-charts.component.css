@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-#apiary-group{
+.apiaryGroup{
     /*overflow: auto;*/
     scrollbar-width: none;
     white-space: pre-wrap;
@@ -22,11 +22,11 @@ limitations under the License. */
 .apiary-group-hive, .apiary-group-brood, .apiary-group-stack, .apiary-group-weight{
     width: 13%;
 }
-#apiary-group, .list-group-item {
+.apiaryGroup, .list-group-item {
 /*     background-color: #204d74;
  */    color: black;
 }
-#apiary-group::-webkit-scrollbar {
+.apiaryGroup::-webkit-scrollbar {
     /* This is the magic bit for WebKit */
     display: none;
   }
@@ -63,12 +63,14 @@ nav[role=admin-navigation] {
     padding: 0px !important;
     margin: 0 !important;
 }
+
 .nav-date{
-     margin-right: 10px;
+     margin-right: 20px;
      display: flex;
-     justify-content: center;
-     width: 31%;
-     margin-top: -8px;
+     justify-content: space-around;
+     align-items: center;
+     width: 500px;
+     height: 48px;
 }
 #dropdown{
     width: 50%;
@@ -93,7 +95,6 @@ nav[role=admin-navigation] {
 }
 
 #next-date{
-    margin-left: 10px;
     margin-right: 20px;
 }
 .time{
@@ -213,6 +214,31 @@ nav[role=admin-navigation] {
   height: 50px;
 }
 
+.filters-ul{
+  margin-left: 20px;
+}
+
+.filters-btn{
+  width: 40px;
+  height: 40px;
+  margin-left: 15px;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  opacity: 0.6;
+  margin: 0;
+}
+
+.filters-btn:hover{
+  opacity: 1.0;
+}
+
+.filters-btn > img{
+  height: 40px;
+  width: 40px;
+  margin-top: -6px;
+}
+
 .right-click-menu{
   position: absolute;
   visibility: hidden;
@@ -266,10 +292,12 @@ nav[role=admin-navigation] {
 
 .fa-plus{
   color:green;
+  margin-left: 15px !important;
 }
 
 .fa-minus{
   color: darkred;
+  margin-left: 15px !important;
 }
 
 .context-menu-choice p{
@@ -316,15 +344,23 @@ nav[role=admin-navigation] {
   text-align: center;
 }
 
-.add-event-date, .add-event-choice, .add-event-notes{
+.add-event-date{
   width: 98%;
-  margin-left: auto;
-  margin-right: auto;
   height: 15%;
   margin-top: 30px;
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
-  border-bottom-left-radius: 4px;
+  margin-left: 1%;
+  border-bottom: 1px solid #999;
+}
+
+.add-event-choice, .add-event-notes{
+  width: 98%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 15%;
+  margin-top: 30px;
+  margin-left: 1%;
+  border-bottom: 1px solid #999;
 }
 
 .add-event-notes{
@@ -336,15 +372,31 @@ nav[role=admin-navigation] {
   margin-left: 5px;
 }
 
-.add-event-date > div, .add-event-choice > div, .add-event-notes > div{
+.add-event-time-error{
+  color: darkred;
+  display: none;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-event-date > div:nth-child(1){
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-event-choice > div, .add-event-notes > div{
   height: 80%;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .add-event-screen input, .add-event-screen select, .add-event-screen textarea{
   width: 200px;
-  margin-left: 20px;
+  margin: 0 auto;
 }
 
 .add-event-screen input, .add-event-screen select{
@@ -357,7 +409,7 @@ nav[role=admin-navigation] {
 
 .add-event-screen textarea{
   resize: none;
-  width: 400px;
+  width: 45%;
   height: 80%;
 }
 
@@ -372,14 +424,63 @@ nav[role=admin-navigation] {
   text-align: center;
 }
 
+.hives-obs{
+  margin: 5px 5px;
+  height: 40px;
+  width: 40px;
+  border: 1px solid skyblue;
+  box-shadow: 1px 1px 3px black;
+}
+
+.hives-obs:active{
+  transform: translateX(1px) translateY(1px);
+  box-shadow: 0px 0px 1px black;
+}
+
+.hives-obs:focus{
+  outline: 0;
+}
+
+.hives-swarm-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/icons/inspect/observations/swarm_grey.png');
+  background-position: center;
+}
+
+.hives-swarm-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/icons/inspect/observations/swarm.png');
+  background-position: center;
+}
+
 @media screen and (max-width:1500px) {
     .apiary-group-hive{
         width: 10%;
+    }
+    .fa-plus{
+      color:green;
+      margin-left: 15px !important;
+    }
+
+    .fa-minus{
+      color: darkred;
+      margin-left: 15px !important;
     }
 }
 @media screen and (max-width:1400px) {
     #btn-date{
         font-size: 14px;
+    }
+    .fa-plus{
+      color:green;
+      margin-left: 15px !important;
+    }
+
+    .fa-minus{
+      color: darkred;
+      margin-left: 15px !important;
     }
 }
 @media screen and (max-width:1300px) {
@@ -404,6 +505,15 @@ nav[role=admin-navigation] {
     #input-date{
         width: 100%;
     }
+    .fa-plus{
+      color:green;
+      margin-left: 15px !important;
+    }
+
+    .fa-minus{
+      color: darkred;
+      margin-left: 15px !important;
+    }
 }
 @media screen and (max-width:1200px) {
     #input-date{
@@ -411,9 +521,18 @@ nav[role=admin-navigation] {
     }
     .nav-date{
         /* justify-content: end; */
-        width: 45%;
+        width: 500px;
     }
 
+    .fa-plus{
+      color:green;
+      margin-left: 15px !important;
+    }
+
+    .fa-minus{
+      color: darkred;
+      margin-left: 15px !important;
+    }
 
 }
 @media only screen
@@ -421,12 +540,13 @@ nav[role=admin-navigation] {
   and (max-height: 1366px)
   and (orientation: landscape)
   and (-webkit-min-device-pixel-ratio: 1.5) {
-/*     #apiary-group{
+/*     .apiaryGroup{
         width: 12%;
     } */
 }
 
 @media screen and (max-width:1000px){
+
     .navbar-nav {
         display: flex !important;
     }
@@ -437,6 +557,11 @@ nav[role=admin-navigation] {
     .navbar{
         height: 100px;
     }
+
+    .apiary-navbar{
+      height: 60px;
+    }
+
     .buttonLeft{
         justify-content: space-around;
         width: 100%;
@@ -456,8 +581,28 @@ nav[role=admin-navigation] {
         position: absolute !important;
         width: 100% !important;
     }
+    .fa-plus{
+      color:green;
+      margin-left: 15px !important;
+    }
+
+    .fa-minus{
+      color: darkred;
+      margin-left: 15px !important;
+    }
 }
 @media screen and (max-width:800px) {
+
+  .fa-plus{
+    color:green;
+    margin-left: 15px !important;
+  }
+
+  .fa-minus{
+    color: darkred;
+    margin-left: 15px !important;
+  }
+
 }
 @media screen and (max-width:500px){
     /*#dt-scale ul:first-child{
@@ -467,10 +612,40 @@ nav[role=admin-navigation] {
         width: 75%;
     }
     .navbar-nav{
-        justify-content: space-around;
+       width: 100%;
     }
 /*     #dt-scale ul {
         padding: 0px;
     } */
+
+    .filters-ul{
+      margin-left: 5px;
+      margin-right: 20px;
+    }
+
+    .filters-btn{
+      width: 35px;
+      height: 35px;
+      background-color: transparent;
+      border: 0;
+      outline: 0;
+      margin: 0;
+    }
+
+    .filters-btn > img{
+      width: 35px;
+      height: 35px;
+    }
+
+    .fa-plus{
+      color:green;
+      margin-left: 15px !important;
+    }
+
+    .fa-minus{
+      color: darkred;
+      margin-left: 15px !important;
+    }
+
 }
 

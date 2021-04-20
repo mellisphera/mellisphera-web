@@ -477,9 +477,12 @@
             "TITLE": "Add Event",
             "DATE": "Date",
             "DATE_PLACEHOLDER": "Choose date",
+            "DATE_ERROR": "Please fill the date field",
             "EVENT": "Event",
             "NOTES": "Notes",
-            "NOTES_PLACEHOLDER":"Notes..."
+            "NOTES_PLACEHOLDER":"Notes...",
+            "TODO": "Tasks",
+            "TODO_PLACEHOLDER":"Tasks..."
           },
           "DELETE":{
             "TITLE": "Delete Event"

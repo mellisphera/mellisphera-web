@@ -492,9 +492,12 @@
             "TITLE": "Añadir evento",
             "DATE": "Fecha",
             "DATE_PLACEHOLDER": "Elegir fecha",
+            "DATE_ERROR": "Por favor complete la fecha",
             "EVENT": "Evento",
             "NOTES": "Notas",
-            "NOTES_PLACEHOLDER":"Notas..."
+            "NOTES_PLACEHOLDER":"Notas...",
+            "TODO": "Tareas",
+            "TODO_PLACEHOLDER":"Tareas..."
           },
           "DELETE":{
             "TITLE": "Retirar Evento"

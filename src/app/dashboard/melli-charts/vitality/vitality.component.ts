@@ -435,14 +435,11 @@ export class VitalityComponent implements OnInit, OnDestroy {
     let insp : InspHive = this.inspHives[indexHiveInspItem].insp[indexHiveInsp];
     let date : Date = new Date(insp.date);
     let test = date.getTimezoneOffset();
-    let obsString = this.translate.instant('INSPECT.OBS');
-    let notesString = this.translate.instant('INSPECT.NOTES');
-    let todoString = this.translate.instant('INSPECT.TODO');
     date.setHours(date.getHours() + (test / 60));
     let res =
     `<div>` +
     `<h5>${hiveName} | ${this.unitService.getHourlyDate(date)} </h5>` +
-    `<div>${obsString} : `;
+    `<div>`;
     insp.obs.forEach( o => {
       let name = this.translate.instant('MELLICHARTS.BROOD.TOOLTIP.'+ o.name.toUpperCase());
       res += `<div style="display:flex; width:100%; justify-content:center; align-items:center; margin-left: 5px;">`;
@@ -452,13 +449,13 @@ export class VitalityComponent implements OnInit, OnDestroy {
     });
     res += `</div>`;
 
-    res += `<div style="margin-top: 10px;">${notesString} : `;
+    res += `<div style="margin-top: 10px;">`;
     if(insp.notes != null){
       res += `<div style="margin-left: 5px; display:flex; width:100%; justify-content:center; align-items:center;">${insp.notes}</div>`;
     }
     res += `</div>`;
 
-    res += `<div style="margin-top: 10px;">${todoString} : `;
+    res += `<div style="margin-top: 10px;">`;
     if(insp.todo != null){
       res += `<div style="margin-left: 5px; display:flex; width:100%; justify-content:center; align-items:center;">${insp.todo}</div>`;
     }

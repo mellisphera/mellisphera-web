@@ -88,4 +88,13 @@ export class InspHiveService {
    createNewInspHive(inspHive: InspHive): Observable<InspHive> {
       return this.http.post<InspHive>(CONFIG.URL + 'inspHive', inspHive, httpOptions);
    }
+
+   /**
+   *
+   * @param inspHive
+   *
+   */
+    createNewInspHiveEvent(inspHive: InspHive): Observable<InspHive> {
+      return this.http.post<InspHive>(CONFIG.URL + 'inspHive/event', inspHive, httpOptions);
+   }
 }

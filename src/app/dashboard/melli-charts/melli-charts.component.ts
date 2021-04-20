@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, Renderer2, ViewChild, AfterViewChecked, AfterViewInit, AfterContentChecked, Input } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, AfterViewChecked, AfterViewInit, AfterContentChecked, Input, ViewEncapsulation } from '@angular/core';
 import { RucheService } from '../service/api/ruche.service';
 import { RucherService } from '../service/api/rucher.service';
 import { UserloggedService } from '../../userlogged.service';
@@ -37,15 +37,27 @@ import { WeightComponent } from './weight/weight.component';
 import { UnitService } from '../service/unit.service';
 import * as moment from 'moment';
 import { UserPref } from '../../_model/user-pref';
-import { HiveEvent } from '../../_model/hive_event';
+import { InspHive } from '../../_model/inspHive';
+import { InspHiveService } from '../service/api/insp-hive.service';
 
 const PREFIX_PATH = '/dashboard/explore/';
 const IMG_PATH = '../../../assets/icons/inspect/';
 
+const PICTOS_HIVES_OBS = [
+  {name:'swarm', img:'observations/swarm_grey.png', img_active: 'observations/swarm.png', class:'hives-swarm-img'},
+  /*{name:'Y2', img:''},
+  {name:'X3', img:''},
+  {name:'W4', img:''},*/
+];
+
 @Component({
   selector: 'app-melli-charts',
   templateUrl: './melli-charts.component.html',
-  styleUrls: ['./melli-charts.component.css']
+  styleUrls: ['./melli-charts.component.css',
+              '../shared/navbar/navbar.component.scss',
+              '../dashboard.component.css'
+              ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MelliChartsComponent implements OnInit, AfterViewInit {
 
@@ -54,17 +66,18 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   public newEventDate: Date;
   public hiveEvent: RucheInterface;
+  public apiaryEvent: RucherModel;
 
-  public new_event : HiveEvent = {
+  public new_event : InspHive = {
     _id: null,
-    hiveId: null,
-    hiveName: null,
+    inspId: null,
     date: null,
-    img: null,
-    eventName: null,
-    eventNameEn: null,
-    eventNameEs: null,
-    notes: null
+    apiaryId: null,
+    hiveId: null,
+    tasks: [],
+    obs: [],
+    notes: null,
+    todo: null
   }
 
   public user_pref : UserPref;
@@ -97,7 +110,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     public tokenService: AtokenStorageService,
     private userConfig: UserParamsService,
     private userPrefsService: UserParamsService,
-    private unitService: UnitService) {
+    private unitService: UnitService,
+    private inspHiveService: InspHiveService) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
         { name: 'Ruche', path: 'hive' },
@@ -374,7 +388,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl(PREFIX_PATH + path);
   }
 
-
   /**
    *
    *
@@ -535,19 +548,110 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     circle.style.backgroundColor = this.getColor(ruche);
     name.innerHTML =  '  ' + ruche.name;
 
+    this.new_event = {
+      _id: null,
+      inspId: null,
+      date: null,
+      apiaryId: null,
+      hiveId: null,
+      tasks: [],
+      obs: [],
+      notes: null,
+      todo: null
+    }
+
     this.hiveEvent = Object.assign({}, ruche);
+    this.new_event.apiaryId = ruche.apiaryId;
+
+    this.rucherService.findRucherById(ruche.apiaryId, (apiary) => {
+      this.apiaryEvent = Object.assign({}, apiary);
+    });
   }
 
   closeContextMenu(): void{
     (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]).style.visibility = 'hidden';
   }
 
+  // <--- ADD EVENT SCREEN --->
+
   showAddEvent(): void{
     this.new_event.hiveId = this.hiveEvent._id;
-    this.new_event.hiveName = this.hiveEvent.name;
+    this.new_event.apiaryId = this.hiveEvent.apiaryId;
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'block';
     (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'block';
-    this.addOptionsSelect();
+    this.addObsList();
+  }
+
+  addObsList(): void{
+    let obsDiv = (<HTMLElement>document.getElementsByClassName('add-event-choice-obs')[0]);
+    obsDiv.innerHTML = '';
+    let div;
+    for(let i=0; i<PICTOS_HIVES_OBS.length; i++){
+      if( i%6 === 0 ){
+        div = document.createElement('div');
+      }
+
+      let button = document.createElement('button');
+      button.className = 'hives-obs';
+
+      button.classList.add(PICTOS_HIVES_OBS[i].class);
+      button.onclick = (evt: Event) => {
+        let n = i;
+        this.hiveButton(evt, n);
+      };
+
+      div.appendChild(button);
+
+      if( (i+1)%6 === 0 ){
+        obsDiv.appendChild(div);
+      }
+    }
+    if(PICTOS_HIVES_OBS.length%6 !== 0){ // Push last row if not complete
+      obsDiv.appendChild(div);
+    }
+  }
+
+  hiveButton(evt: Event, btnIndex: number): void{
+    let button = (<HTMLButtonElement> evt.target);
+    if( button.classList.contains(PICTOS_HIVES_OBS[btnIndex].class + '-active') ){
+      button.classList.remove(PICTOS_HIVES_OBS[btnIndex].class + '-active');
+      let i = this.new_event.obs.findIndex(e => e.name === PICTOS_HIVES_OBS[btnIndex].name);
+      this.new_event.obs.splice(i, 1);
+      return;
+    }
+    button.classList.add(PICTOS_HIVES_OBS[btnIndex].class + '-active');
+    this.new_event.obs.push({name:PICTOS_HIVES_OBS[btnIndex].name, img:PICTOS_HIVES_OBS[btnIndex].img_active});
+    return;
+  }
+
+  setNewEventDate(): void{
+    (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = moment(this.newEventDate).format(this.user_pref.timeFormat);
+    this.new_event.date = this.newEventDate;
+  }
+
+  saveNotes(evt: Event): void{
+    let textArea = <HTMLTextAreaElement>evt.target;
+    this.new_event.notes = textArea.value;
+  }
+
+  saveTodo(evt: Event): void{
+    let textArea = <HTMLTextAreaElement>evt.target;
+    this.new_event.todo = textArea.value;
+  }
+
+  insertAddEvent(): void{
+    console.log(this.new_event);
+    if(this.new_event.date == null){
+      (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'flex';
+      return;
+    }
+    (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
+    (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'none';
+    (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'none';
+    this.inspHiveService.createNewInspHiveEvent(this.new_event).subscribe(
+      () => {}, () => {}, () => {}
+    );
+    return;
   }
 
   discardAddEvent(): void{
@@ -555,24 +659,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'none';
   }
 
-  addOptionsSelect(): void{
-    let select = (<HTMLSelectElement>document.getElementsByClassName('add-event-select')[0]);
-    let img = (<HTMLImageElement>document.getElementsByClassName('add-event-img')[0]);
-    let option = document.createElement('option');
-    option.value = '0';
-    option.text = 'Essaimage';
+  // <--- END ADD EVENT SCREEN --->
 
-    img.src = IMG_PATH + 'observations/swarm.png';
-    img.width = 30;
-    img.height = 30;
-
-    select.add(option);
-  }
-
-  setNewEventDate(): void{
-    (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = moment(this.newEventDate).format(this.user_pref.timeFormat);
-    this.new_event.date = this.newEventDate;
-  }
 
   showDeleteEvent(): void{
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'block';

@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default apiary-navbar">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" (click)="sidebarToggle()">
@@ -114,7 +114,7 @@ limitations under the License. -->
               <b class="caret"></b>
             </p>
           </a>
-          <ul class="dropdown-menu">
+          <ul id="navbar-dropdown" class="dropdown-menu">
             <li><a [routerLink]="[ './preferences']">{{ 'NAVBAR.ACCOUNT.PREFERENCES' | translate }}</a></li>
             <li class="divider"></li>
             <li><a href="#" (click)="logout()">{{ 'NAVBAR.ACCOUNT.LOG_OUT' | translate }}</a></li>
@@ -314,10 +314,10 @@ limitations under the License. -->
                <input
                   style="display: none"
                   type="file"
-                  ngf [(file)]="photoApiary" 
+                  ngf [(file)]="photoApiary"
                   #fileInput>
                 <button (click)="fileInput.click()" class="btn btn-large btn-block btn-info">Select File</button>
-               <div id="upload-group"> 
+               <div id="upload-group">
                  <div
                  ngfDrop
                  [(validDrag)] = "baseDropValid"

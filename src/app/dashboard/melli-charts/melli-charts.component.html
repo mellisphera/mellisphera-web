@@ -88,13 +88,17 @@ limitations under the License. -->
         </div>
       </li>
       <li><button type="button" (click)="nextDate()" class="btn date-arrow btn-transparent"><i id="next-date"
-            class="fa fa-arrow-circle-right"></i></button></li>
-
+            class="fa fa-arrow-circle-right"></i></button>
+      </li>
+      <li class="filters-ul">
+        <button class="btn filters-btn">
+          <img src="../../../assets/icons/ui/user_prefs.svg">
+        </button>
+    </li>
     </ul>
-
   </nav>
   <div class="row nopadding">
-    <div id="apiary-group" class="apiaryGroup">
+    <div class="apiaryGroup">
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
           <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)"
@@ -140,33 +144,31 @@ limitations under the License. -->
   </div>
   <div class="black-filter"></div>
   <div class="add-event-screen">
-    <h3>{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h3>
+    <h3>{{hiveEvent?.name}} | {{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h3>
     <div class="add-event-date">
-      <h4 style="padding-right:10px;">Date</h4>
       <div>
         <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
         <owl-date-time #dtEvent></owl-date-time>
       </div>
+      <div class="add-event-time-error">
+        {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
+      </div>
     </div>
     <div class="add-event-choice">
-      <h4 style="padding-right:10px;">{{'MELLICHARTS.EVENT.ADD.EVENT' | translate}}</h4>
-      <div>
-        <select class="add-event-select"></select>
-        <img class="add-event-img">
+      <div class="add-event-choice-obs">
       </div>
     </div>
     <div class="add-event-notes">
-      <h4 style="padding-right:10px;">{{'MELLICHARTS.EVENT.ADD.NOTES' | translate}}</h4>
-      <div>
-        <textarea placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}"></textarea>
-      </div>
+        <textarea placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+        <textarea placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
     </div>
     <div class="add-event-buttons">
       <button class="btn btn-danger" style="margin-right:10px;" (click)="discardAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
-      <button class="btn btn-success" style="margin-left:10px;" (click)="discardAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
+      <button class="btn btn-success" style="margin-left:10px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
     </div>
   </div>
   <div class="delete-event-screen">
+    <h3>{{hiveEvent?.name}} | {{'MELLICHARTS.EVENT.DELETE.TITLE' | translate}}</h3>
     <div class="add-event-buttons">
       <button class="btn btn-danger" style="margin-right:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
       <button class="btn btn-success" style="margin-left:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>

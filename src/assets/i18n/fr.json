@@ -477,9 +477,12 @@
             "TITLE": "Ajouter Evenement",
             "DATE": "Date",
             "DATE_PLACEHOLDER": "Choisir date",
+            "DATE_ERROR": "Veuillez renseigner une date",
             "EVENT": "Evenement",
             "NOTES": "Notes",
-            "NOTES_PLACEHOLDER":"Notes..."
+            "NOTES_PLACEHOLDER":"Notes...",
+            "TODO": "Taches",
+            "TODO_PLACEHOLDER":"Taches..."
           },
           "DELETE":{
             "TITLE": "Supprimer Evenement"
