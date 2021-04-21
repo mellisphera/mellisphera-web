@@ -305,7 +305,10 @@ export class WeightComponent implements OnInit, AfterViewInit {
         }
         else{ // SERIES TOOLTIP
           if(this.normWeightDisplay){
-            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, 'x'+_serie.value).replace(/{u}/g, '').replace(/{R}/g, '');
+            if(_serie.value >= 0){
+              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, '+' +_serie.value+'%').replace(/{u}/g, '').replace(/{R}/g, '');
+            }
+            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value+'%').replace(/{u}/g, '').replace(/{R}/g, '');
           }
           else if(this.gainWeightDisplay){
             if(_serie.value >= 0){
@@ -1311,12 +1314,11 @@ export class WeightComponent implements OnInit, AfterViewInit {
           }
           let cell4 = row.insertCell();
           if(normWeight[i].length > 0){
-            if((normWeight[i][0].value) >= 0) cell4.innerHTML = '+ ' + (normWeight[i][0].value).toFixed(2) + ' %';
+            if((normWeight[i][0].value) >= 0) cell4.innerHTML = '+ ' + parseFloat(normWeight[i][0].value).toFixed(2) + ' %';
             else cell4.innerHTML = '- ' + Math.abs(normWeight[i][0].value).toFixed(2) + ' %';
           }
           let cell5 = row.insertCell();
           if(e.length >= 7 && this.ref_Date != null){
-            console.log(e);
             if(( (e[0].value / e[7].value) - 1) >= 0) cell5.innerHTML = '+ ' +(( (e[0].value / e[7].value) - 1) * 100).toFixed(2) + ' %';
             else cell5.innerHTML = '- ' + Math.abs(( (e[0].value / e[7].value) - 1) * 100).toFixed(2) + ' %';
           }
@@ -1338,14 +1340,8 @@ export class WeightComponent implements OnInit, AfterViewInit {
       },
       () => {},
       () => {
-        console.log(rawWeight);
         let table = document.getElementById("weight-table").getElementsByTagName("table")[0];
         let tbody = table.getElementsByTagName('tbody')[0];
-        let dateCells = document.getElementsByClassName('date-head');
-        let dateCurrent = document.getElementsByClassName('date-current')[0];
-        let dateJ7 = document.getElementsByClassName('date-j-7-norm')[0];
-        let dateJ15 = document.getElementsByClassName('date-j-15-norm')[0];
-        let date = new Date(dateCurrent.innerHTML);
         let row = tbody.insertRow();
         let cell1 = row.insertCell();
         cell1.innerHTML = hive.name;
@@ -1358,7 +1354,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
         }
         let cell3 = row.insertCell();
         let string = this.unitService.getDailyDate(new Date(rawWeight[0].date));
-        if(rawWeight.length > 0 && new Date(string).getTime() === date.getTime()){
+        if(rawWeight.length > 0){
           cell3.innerHTML = rawWeight[0].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
         }
         let cell4 = row.insertCell();
