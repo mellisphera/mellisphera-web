@@ -1306,12 +1306,12 @@ export class WeightComponent implements OnInit, AfterViewInit {
             cell2.innerHTML = "No Ref Value";
           }
           let cell3 = row.insertCell();
-          if(e.length > 0 && new Date(e[0].date).getTime() === date.getTime()){
+          if(e.length > 0){
             cell3.innerHTML = e[0].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
           }
           let cell4 = row.insertCell();
           if(normWeight[i].length > 0){
-            if((normWeight[i][0].value) >= 0) cell4.innerHTML = '+ ' + (normWeight[i][0].value).toFixed(2) + ' %';
+            if((normWeight[i][0].value) >= 0) cell4.innerHTML = '+ ' + parseFloat(normWeight[i][0].value).toFixed(2) + ' %';
             else cell4.innerHTML = '- ' + Math.abs(normWeight[i][0].value).toFixed(2) + ' %';
           }
           let cell5 = row.insertCell();
@@ -1358,7 +1358,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
         }
         let cell3 = row.insertCell();
         let string = this.unitService.getDailyDate(new Date(rawWeight[0].date));
-        if(rawWeight.length > 0 && new Date(string).getTime() === date.getTime()){
+        if(rawWeight.length > 0){
           cell3.innerHTML = rawWeight[0].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
         }
         let cell4 = row.insertCell();
