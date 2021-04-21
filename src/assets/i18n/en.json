@@ -489,7 +489,8 @@
           },
           "BUTTONS":{
             "ADD":"Add",
-            "CANCEL":"Cancel"
+            "CANCEL":"Cancel",
+            "DELETE":"Delete"
           }
         }
     },

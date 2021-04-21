@@ -39,6 +39,7 @@ import * as moment from 'moment';
 import { UserPref } from '../../_model/user-pref';
 import { InspHive } from '../../_model/inspHive';
 import { InspHiveService } from '../service/api/insp-hive.service';
+import { p } from '@angular/core/src/render3';
 
 const PREFIX_PATH = '/dashboard/explore/';
 const IMG_PATH = '../../../assets/icons/inspect/';
@@ -67,6 +68,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   public newEventDate: Date;
   public hiveEvent: RucheInterface;
   public apiaryEvent: RucherModel;
+
+  public hiveEventList: InspHive[];
 
   public new_event : InspHive = {
     _id: null,
@@ -665,10 +668,58 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   showDeleteEvent(): void{
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'block';
     (<HTMLElement>document.getElementsByClassName('delete-event-screen')[0]).style.display = 'block';
+    this.hiveEventList = [];
+    this.inspHiveService.getInspHiveByHiveId(this.hiveEvent._id).subscribe(
+      _hives_insp => {
+        _hives_insp.forEach( insp => {
+          if(insp.inspId == null){
+            this.hiveEventList.push(insp);
+          }
+        })
+      },
+      () => {
+
+      },
+      () => {
+        this.showEventList();
+      }
+    );
+
   }
 
   discardDeleteEvent(): void{
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'none';
     (<HTMLElement>document.getElementsByClassName('delete-event-screen')[0]).style.display = 'none';
+  }
+
+  showEventList(): void{
+    let container = (<HTMLElement>document.getElementsByClassName('delete-event-list')[0]);
+    container.innerHTML = '';
+    this.hiveEventList.forEach( (evt,index) => {
+      let div = document.createElement('div');
+      div.className = 'delete-event-item';
+
+      let div1 = document.createElement('div');
+      div1.className = 'delete-event-item-logo';
+      div.appendChild(div1);
+
+
+      let div2 = document.createElement('div');
+      let p1 = document.createElement('p');
+      p1.textContent = this.unitService.getHourlyDate(new Date(evt.date));
+      div2.appendChild(p1);
+      div.appendChild(div2);
+
+      let div3 = document.createElement('div');
+      div3.style.display = 'flex';
+      evt.obs.forEach((obs) => {
+        let obsDiv = document.createElement('div');
+        obsDiv.className = "hives-obs-delete hives-" + obs.name + "-img-active";
+        div3.appendChild(obsDiv);
+      });
+      div.appendChild(div3);
+
+      container.appendChild(div);
+    });
   }
 }

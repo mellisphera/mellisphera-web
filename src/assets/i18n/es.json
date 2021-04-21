@@ -504,7 +504,8 @@
           },
           "BUTTONS":{
             "ADD":"Añadir",
-            "CANCEL":"Anular"
+            "CANCEL":"Anular",
+            "DELETE":"Retirar"
           }
         }
     },

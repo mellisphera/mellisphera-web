@@ -33,6 +33,7 @@ import { InspHive } from './../../../_model/inspHive';
 import { TranslateService } from '@ngx-translate/core';
 
 const INSPECT_IMG_PATH = '../../../../assets/icons/inspect/';
+const ALERT_IMG_PATH = '../../../../assets/icons/ui/';
 
 class InspHiveItem{
     name: string;
@@ -166,8 +167,13 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
     this.option.baseOption.tooltip.formatter = (params) => {
       let words = params.seriesName.split(' | ');
-      if(words.includes('inspection')){
-        this.option.baseOption.tooltip.backgroundColor = 'rgba(0, 0, 60, 0.7)';
+      if(words.includes('inspection') || words.includes('event')){
+        if(words.includes('inspection')){
+          this.option.baseOption.tooltip.backgroundColor = 'rgba(0, 0, 60, 0.7)';
+        }
+        if(words.includes('event')){
+          this.option.baseOption.tooltip.backgroundColor = 'rgba(0, 60, 0, 0.7)';
+        }
         this.stackService.getBroodChartInstance().setOption(this.option);
         let indexSerie = this.option.baseOption.series.findIndex(_s => _s.name === params.seriesName);
         let indexHiveInspItem = this.inspHives.findIndex(_insp => _insp.name === words[0]);
@@ -229,11 +235,11 @@ export class VitalityComponent implements OnInit, OnDestroy {
     this.stackService.getBroodChartInstance().setOption(option, true);
     let index = this.inspHives.findIndex(_elt => _elt.name === hive.name);
     this.inspHives.splice(index, 1);
-    console.log(this.inspHives);
   }
 
 
   loadAllHiveAfterRangeChange(next: Function): void {
+    let new_series = [];
     this.option.baseOption.series.length = 1;
     const obs = this.stackService.getHiveSelect().map(_hive => {
       return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodOldMethod(_hive._id, this.melliDateService.getRangeForReqest())}
@@ -267,44 +273,96 @@ export class VitalityComponent implements OnInit, OnDestroy {
                     d1.setSeconds(0);
                     let insp_index = serieComplete.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
                     if(insp_index != -1){
+                      let new_item = {
+                        name:insp.date,
+                        value:[insp.date, serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
+                      };
                       let data = [
-                        {
-                          name:insp.date,
-                          value:[insp.date, serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
-                        }
+                        new_item
                       ];
-                      let newSerie = {
-                        name: serieComplete.name + ' | inspection',
-                        type:'custom',
-                        itemStyle:{
-                          opacity: 1,
-                        },
-                        //id: 'swarm',
-                        renderItem: (param, api) => {
-                          let point = api.coord([api.value(0), api.value(1)]);
-                          return {
-                            type: 'image',
-                            style: {
-                              image: INSPECT_IMG_PATH + '4_tool_jhook.png',
-                              x: -25 / 2,
-                              y: -40 / 2,
-                              width: 25,
-                              height: 25,
+                      if(insp.inspId != null){
+                        let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | inspection');
+                        if(seriesIndex !== -1){
+                          new_series[seriesIndex].data.push(new_item);
+                        }
+                        else{
+                          let newSerie = {
+                            name: serieComplete.name + ' | inspection',
+                            type:'custom',
+                            itemStyle:{
+                              opacity: 1,
                             },
-                            position:point,
+                            //id: 'swarm',
+                            renderItem: (param, api) => {
+                              let point = api.coord([api.value(0), api.value(1)]);
+                              return {
+                                type: 'image',
+                                style: {
+                                  image: INSPECT_IMG_PATH + '4_tool_jhook.png',
+                                  x: -25 / 2,
+                                  y: -40 / 2,
+                                  width: 25,
+                                  height: 25,
+                                },
+                                position:point,
+                              }
+                            },
+                            data: data,
+                            z: 10,
                           }
-                        },
-                        data: data,
-                        z: 10,
+                          new_series.push(newSerie);
+                        }
                       }
-                      this.option.baseOption.series.push(Object.assign({}, newSerie));
-                      this.stackService.getBroodChartInstance().setOption(this.option);
+                      else{
+                        let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | event');
+                        if(seriesIndex !== -1){
+                          new_series[seriesIndex].data.push(new_item);
+                        }
+                        else{
+                          let newSerie = {
+                            name: serieComplete.name + ' | event',
+                            type:'custom',
+                            itemStyle:{
+                              opacity: 1,
+                            },
+                            //id: 'swarm',
+                            renderItem: (param, api) => {
+                              let point = api.coord([api.value(0), api.value(1)]);
+                              return {
+                                type: 'image',
+                                style: {
+                                  image: ALERT_IMG_PATH + 'alert-icon.png',
+                                  x: -20 / 2,
+                                  y: -30 / 2,
+                                  width: 20,
+                                  height: 20,
+                                },
+                                position:point,
+                              }
+                            },
+                            data: data,
+                            z: 10,
+                          }
+                          new_series.push(newSerie);
+                        }
+                      }
+                      //this.stackService.getBroodChartInstance().setOption(this.option);
                     }
                   }
                 })
               },
               () => {},
-              () => {}
+              () => {
+                new_series.forEach(s =>{
+                  let indexSerie = this.option.baseOption.series.findIndex(e => e.name === s.name);
+                  if (indexSerie !== -1) {
+                    this.option.baseOption.series[indexSerie] = Object.assign({}, s);
+                  } else {
+                    this.option.baseOption.series.push(Object.assign({}, s));
+                  }
+                });
+                this.stackService.getBroodChartInstance().setOption(this.option);
+              }
             );
           });
         })
@@ -355,6 +413,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
   loadEventsByHive(hive: RucheInterface, serie:any): void{
     let data = [];
+    let new_series = [];
     this.inspHiveService.getInspHiveByHiveIdAndDateBetween(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
       _hive_insp => {
         let item : InspHiveItem = {name: hive.name, insp: [..._hive_insp]};
@@ -367,46 +426,92 @@ export class VitalityComponent implements OnInit, OnDestroy {
             d1.setSeconds(0);
             let index = serie.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
             if(index != -1){
+              let new_item = {
+                name:insp.date,
+                value:[insp.date, serie.data[index].value[1], serie.data[index].value[2]]
+              };
               data = [
-                {
-                  name:insp.date,
-                  value:[insp.date, serie.data[index].value[1], serie.data[index].value[2]]
-                }
+                new_item
               ];
-              let newSerie = {
-                name: serie.name + ' | inspection',
-                type:'custom',
-                itemStyle:{
-                  opacity: 1,
-                },
-                //id: 'swarm',
-                renderItem: (param, api) => {
-                  let point = api.coord([api.value(0), api.value(1)]);
-                  return {
-                    type: 'image',
-                    style: {
-                      image: INSPECT_IMG_PATH + '4_tool_jhook.png',
-                      x: -25 / 2,
-                      y: -50 /2,
-                      width: 25,
-                      height: 25,
+              if(insp.inspId != null){
+                let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | inspection');
+                if(seriesIndex !== -1){
+                  new_series[seriesIndex].data.push(new_item);
+                }
+                else{
+                  let newSerie = {
+                    name: serie.name + ' | inspection',
+                    type:'custom',
+                    itemStyle:{
+                      opacity: 1,
                     },
-                    position:point,
+                    //id: 'swarm',
+                    renderItem: (param, api) => {
+                      let point = api.coord([api.value(0), api.value(1)]);
+                      return {
+                        type: 'image',
+                        style: {
+                          image: INSPECT_IMG_PATH + '4_tool_jhook.png',
+                          x: -25 / 2,
+                          y: -50 /2,
+                          width: 25,
+                          height: 25,
+                        },
+                        position:point,
+                      }
+                    },
+                    data: data,
+                    z: 10,
                   }
-                },
-                data: data,
-                z: 10,
+                  new_series.push(newSerie);
+                }
+              }
+              else{
+                let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | event');
+                if(seriesIndex !== -1){
+                  new_series[seriesIndex].data.push(new_item);
+                }
+                else{
+                  let newSerie = {
+                    name: serie.name + ' | event',
+                    type:'custom',
+                    itemStyle:{
+                      opacity: 1,
+                    },
+                    //id: 'swarm',
+                    renderItem: (param, api) => {
+                      let point = api.coord([api.value(0), api.value(1)]);
+                      return {
+                        type: 'image',
+                        style: {
+                          image: ALERT_IMG_PATH + 'alert-icon.png',
+                          x: -20 / 2,
+                          y: -30 /2,
+                          width: 20,
+                          height: 20,
+                        },
+                        position:point,
+                      }
+                    },
+                    data: data,
+                    z: 10,
+                  }
+                  new_series.push(newSerie);
+                }
               }
               //console.log(newSerie);
-              this.option.baseOption.series.push(newSerie);
-              this.stackService.getBroodChartInstance().setOption(this.option);
+              //this.option.baseOption.series.push(newSerie);
+              //this.stackService.getBroodChartInstance().setOption(this.option);
             }
           }
         });
       },
       () => {},
       () => {
-        console.log(this.inspHives);
+        new_series.forEach(s =>{
+          this.option.baseOption.series.push(s);
+        });
+        this.stackService.getBroodChartInstance().setOption(this.option);
         this.stackService.getBroodChartInstance().hideLoading();
       }
     );
@@ -434,8 +539,11 @@ export class VitalityComponent implements OnInit, OnDestroy {
     //let item : InspHiveItem = this.inspHives[indexHiveInspItem];
     let insp : InspHive = this.inspHives[indexHiveInspItem].insp[indexHiveInsp];
     let date : Date = new Date(insp.date);
-    let test = date.getTimezoneOffset();
-    date.setHours(date.getHours() + (test / 60));
+    if(insp.inspId != null){
+      let test = date.getTimezoneOffset();
+      date.setHours(date.getHours() + (test / 60));
+    }
+    console.log(date);
     let res =
     `<div>` +
     `<h5>${hiveName} | ${this.unitService.getHourlyDate(date)} </h5>` +
@@ -462,6 +570,18 @@ export class VitalityComponent implements OnInit, OnDestroy {
     res += `</div>`;
 
     return res;
+  }
+
+  insertNewEvent(): void{
+
+  }
+
+  deleteEvent(): void{
+
+  }
+
+  applyFilters(): void{
+
   }
 
   ngOnDestroy(): void {

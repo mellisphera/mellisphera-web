@@ -97,4 +97,13 @@ export class InspHiveService {
     createNewInspHiveEvent(inspHive: InspHive): Observable<InspHive> {
       return this.http.post<InspHive>(CONFIG.URL + 'inspHive/event', inspHive, httpOptions);
    }
+
+    /**
+   *
+   * @param inspHive
+   *
+   */
+     deleteInspHiveEvent(inspHive: InspHive): Observable<InspHive> {
+      return this.http.post<InspHive>(CONFIG.URL + 'inspHive/event/delete', inspHive, httpOptions);
+   }
 }

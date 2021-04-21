@@ -32,7 +32,7 @@ limitations under the License. */
   }
 .dropdown-menu{
     padding: 10px;
-    color: white !important;
+    color: white;
     display: flex;
     background-color: #4F4F51;
     justify-content: space-between;
@@ -216,6 +216,39 @@ nav[role=admin-navigation] {
 
 .filters-ul{
   margin-left: 20px;
+}
+
+#filtersMenu{
+  background-color: white;
+  width: 200px;
+  height: 200px;
+}
+
+#filtersMenu > div{
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.filters-insp p, .filters-alerts p{
+  color: black;
+}
+
+#filters-insp-check,
+#filters-alerts-check,
+#filters-alerts-swarm-check{
+  margin-right: 8px;
+  transform: scale(1.25);
+}
+
+.filters-insp-title,
+.filters-alerts-title,
+.filters-alerts-swarm-title{
+  font-size: 14px;
+  font-family: 'Poppins';
+}
+
+.filters-alerts-swarm{
+  margin-left: 30px;
 }
 
 .filters-btn{
@@ -453,6 +486,55 @@ nav[role=admin-navigation] {
   background-repeat: no-repeat;
   background-image: url('../../../assets/icons/inspect/observations/swarm.png');
   background-position: center;
+}
+
+.delete-event-screen h3{
+  text-align: center;
+}
+
+.delete-event-list{
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 99%;
+  overflow-y: auto;
+}
+
+.delete-event-list > div:nth-child(2n){
+  background-color: #eaffeb;
+}
+
+.delete-event-item{
+  border: 1px solid #444;
+  border-radius: 3px;
+  width: 80%;
+  height: 50px;
+  margin: 5px auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-event-item > div > p{
+  font-family: 'Poppins';
+  margin:0;
+}
+
+.delete-event-item-logo{
+  width: 30px;
+  height: 30px;
+  background:url('../../../assets/icons/ui/alert-icon.png') center no-repeat;
+  background-size: 25px;
+}
+
+.hives-obs-delete{
+  margin: 5px 5px;
+  height: 40px;
+  width: 40px;
+  border: 1px solid skyblue;
+  box-shadow: 1px 1px 3px black;
+  background-color: #eee;
 }
 
 @media screen and (max-width:1500px) {

@@ -91,9 +91,32 @@ limitations under the License. -->
             class="fa fa-arrow-circle-right"></i></button>
       </li>
       <li class="filters-ul">
-        <button class="btn filters-btn">
+        <button class="btn filters-btn dropdown dropdown-toogle" type="button" id="filtersMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="../../../assets/icons/ui/user_prefs.svg">
         </button>
+        <div id="filtersMenu" class="dropdown-menu" aria-labelledby="filtersMenuButton">
+          <div class="filters-insp">
+            <label for="filters-insp-check">
+              <input id="filters-insp-check" type="checkbox" checked>
+              <p class="filters-insp-title">Toutes inspections</p>
+              <img src="../../../assets/icons/inspect/inspectsV2/4_tool_jhook.svg" width="20" height="20" style="margin-left:5px;">
+            </label>
+          </div>
+          <div class="filters-alerts">
+            <label for="filters-alerts-check">
+              <input id="filters-alerts-check" type="checkbox" checked>
+              <p class="filters-alerts-title">Toutes alertes</p>
+              <img src="../../../assets/icons/ui/alert-icon.png" width="20" height="20" style="margin-left:5px;">
+            </label>
+            <div class="filters-alerts-swarm">
+              <label for="filters-alerts-swarm-check">
+                <input id="filters-alerts-swarm-check" type="checkbox" checked disabled>
+                <p class="filters-alerts-swarm-title">Essaimage</p>
+                <img src="../../../assets/icons/inspect/observations/swarm.png" width="30" height="30" style="margin-top:-15px; margin-left:5px;">
+              </label>
+            </div>
+          </div>
+        </div>
     </li>
     </ul>
   </nav>
@@ -169,9 +192,11 @@ limitations under the License. -->
   </div>
   <div class="delete-event-screen">
     <h3>{{hiveEvent?.name}} | {{'MELLICHARTS.EVENT.DELETE.TITLE' | translate}}</h3>
+    <div class="delete-event-list">
+    </div>
     <div class="add-event-buttons">
       <button class="btn btn-danger" style="margin-right:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
-      <button class="btn btn-success" style="margin-left:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
+      <button class="btn btn-success" style="margin-left:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}</button>
     </div>
   </div>
 </div>
