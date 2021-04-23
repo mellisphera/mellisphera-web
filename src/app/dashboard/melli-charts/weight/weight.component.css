@@ -20,7 +20,7 @@
   width: 100%;
   display: flex !important;
   justify-content: center;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .ul-weight > li {
@@ -112,10 +112,6 @@ input[type=checkbox]
 
 .weight_ref_date:hover{
   cursor: pointer;
-}
-
-#weight-render{
-  margin-top: 10px;
 }
 
 #weight-table{

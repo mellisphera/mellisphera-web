@@ -69,8 +69,8 @@ export const BASE_OPTIONS = {
         ],*/
         grid: [{
             containLabel: true,
-            top: 20,
-            height: '95%',
+            top: 30,
+            height: '90%',
             left: 'center',
             width: '80%'
         }],
