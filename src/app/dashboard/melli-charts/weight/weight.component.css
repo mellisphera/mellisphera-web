@@ -20,6 +20,7 @@
   width: 100%;
   display: flex !important;
   justify-content: center;
+  margin-bottom: 10px;
 }
 
 .ul-weight > li {
@@ -38,7 +39,6 @@
 .ul-weight > li > label > p{
   margin-left: 10px;
   margin-bottom: 0px;
-  margin-top: 3px;
   font-size: 16px;
   font-family: 'Poppins' !important;
 }
@@ -115,7 +115,7 @@ input[type=checkbox]
 }
 
 #weight-render{
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 #weight-table{
