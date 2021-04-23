@@ -754,8 +754,8 @@ export class WeightComponent implements OnInit, AfterViewInit {
                   }
                   this.option.baseOption.series.push(serieComplete);
                   this.stackService.getWeightChartInstance().setOption(this.option);
-                  this.addDataToTable(_weight, ref_val, hive.name);
                 });
+                this.addDataToTable(_weight, ref_val, hive.name);
               },
               () => {},
               () => {
@@ -799,8 +799,8 @@ export class WeightComponent implements OnInit, AfterViewInit {
               }
               this.option.baseOption.series.push(serieComplete);
               this.stackService.getWeightChartInstance().setOption(this.option);
-              this.addDataToTable(_weight, null, hive.name);
             });
+            this.addDataToTable(_weight, null, hive.name);
           },
           () => {},
           () => {
@@ -1252,7 +1252,9 @@ export class WeightComponent implements OnInit, AfterViewInit {
     let tbody = table.getElementsByTagName('tbody')[0];
     let tr = tbody.getElementsByTagName('tr');
     let index = Array.from(tr).findIndex(e => e.cells[0].innerHTML === name);
-    tbody.deleteRow(index);
+    if(index > -1){
+      tbody.deleteRow(index);
+    }
   }
 
   updateNormTableData(normWeight: any[], obs:any){
