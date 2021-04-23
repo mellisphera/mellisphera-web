@@ -286,30 +286,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                           new_series[seriesIndex].data.push(new_item);
                         }
                         else{
-                          let newSerie = {
-                            name: serieComplete.name + ' | inspection',
-                            type:'custom',
-                            itemStyle:{
-                              opacity: 1,
-                            },
-                            //id: 'swarm',
-                            renderItem: (param, api) => {
-                              let point = api.coord([api.value(0), api.value(1)]);
-                              return {
-                                type: 'image',
-                                style: {
-                                  image: INSPECT_IMG_PATH + '4_tool_jhook.png',
-                                  x: -25 / 2,
-                                  y: -40 / 2,
-                                  width: 25,
-                                  height: 25,
-                                },
-                                position:point,
-                              }
-                            },
-                            data: data,
-                            z: 10,
-                          }
+                          let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'inspection', INSPECT_IMG_PATH + '4_tool_jhook.png', 25, -25/2, -40/2);
                           new_series.push(newSerie);
                         }
                       }
@@ -319,34 +296,10 @@ export class VitalityComponent implements OnInit, OnDestroy {
                           new_series[seriesIndex].data.push(new_item);
                         }
                         else{
-                          let newSerie = {
-                            name: serieComplete.name + ' | event',
-                            type:'custom',
-                            itemStyle:{
-                              opacity: 1,
-                            },
-                            //id: 'swarm',
-                            renderItem: (param, api) => {
-                              let point = api.coord([api.value(0), api.value(1)]);
-                              return {
-                                type: 'image',
-                                style: {
-                                  image: ALERT_IMG_PATH + 'alert-icon.png',
-                                  x: -20 / 2,
-                                  y: -30 / 2,
-                                  width: 20,
-                                  height: 20,
-                                },
-                                position:point,
-                              }
-                            },
-                            data: data,
-                            z: 10,
-                          }
+                          let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'event', ALERT_IMG_PATH + 'alert-icon.png', 20, -20/2, -30/2);
                           new_series.push(newSerie);
                         }
                       }
-                      //this.stackService.getBroodChartInstance().setOption(this.option);
                     }
                   }
                 })
@@ -373,6 +326,38 @@ export class VitalityComponent implements OnInit, OnDestroy {
       }
     )
   }
+
+  createNewCustomSerie(serie: any, new_item: any, type: string, img: string, size:number, x_pos: number, y_pos: number): any{
+    let new_data = [
+      new_item
+    ];
+    return {
+      name: serie.name + ' | ' + type,
+      type:'custom',
+      itemStyle:{
+        opacity: 1,
+      },
+      //id: 'swarm',
+      renderItem: (param, api) => {
+        let point = api.coord([api.value(0), api.value(1)]);
+        return {
+          type: 'image',
+          style: {
+            image: img,
+            x: x_pos,
+            y: y_pos,
+            width: size,
+            height: size,
+          },
+          position:point,
+        }
+      },
+      data: new_data,
+      silent: false,
+      z: 10,
+    };
+  }
+
 
   /*loadEventsByHiveAfterRangeChange(): void{
     console.log(this.stackService.getHiveSelect());
@@ -439,30 +424,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                   new_series[seriesIndex].data.push(new_item);
                 }
                 else{
-                  let newSerie = {
-                    name: serie.name + ' | inspection',
-                    type:'custom',
-                    itemStyle:{
-                      opacity: 1,
-                    },
-                    //id: 'swarm',
-                    renderItem: (param, api) => {
-                      let point = api.coord([api.value(0), api.value(1)]);
-                      return {
-                        type: 'image',
-                        style: {
-                          image: INSPECT_IMG_PATH + '4_tool_jhook.png',
-                          x: -25 / 2,
-                          y: -50 /2,
-                          width: 25,
-                          height: 25,
-                        },
-                        position:point,
-                      }
-                    },
-                    data: data,
-                    z: 10,
-                  }
+                  let newSerie = this.createNewCustomSerie(serie, new_item, 'inspection', INSPECT_IMG_PATH + '4_tool_jhook.png', 25, -25/2, -40/2);
                   new_series.push(newSerie);
                 }
               }
@@ -472,36 +434,10 @@ export class VitalityComponent implements OnInit, OnDestroy {
                   new_series[seriesIndex].data.push(new_item);
                 }
                 else{
-                  let newSerie = {
-                    name: serie.name + ' | event',
-                    type:'custom',
-                    itemStyle:{
-                      opacity: 1,
-                    },
-                    //id: 'swarm',
-                    renderItem: (param, api) => {
-                      let point = api.coord([api.value(0), api.value(1)]);
-                      return {
-                        type: 'image',
-                        style: {
-                          image: ALERT_IMG_PATH + 'alert-icon.png',
-                          x: -20 / 2,
-                          y: -30 /2,
-                          width: 20,
-                          height: 20,
-                        },
-                        position:point,
-                      }
-                    },
-                    data: data,
-                    z: 10,
-                  }
+                  let newSerie = this.createNewCustomSerie(serie, new_item, 'event', ALERT_IMG_PATH + 'alert-icon.png', 20, -20/2, -30/2);
                   new_series.push(newSerie);
                 }
               }
-              //console.log(newSerie);
-              //this.option.baseOption.series.push(newSerie);
-              //this.stackService.getBroodChartInstance().setOption(this.option);
             }
           }
         });
@@ -543,7 +479,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
       let test = date.getTimezoneOffset();
       date.setHours(date.getHours() + (test / 60));
     }
-    console.log(date);
     let res =
     `<div>` +
     `<h5>${hiveName} | ${this.unitService.getHourlyDate(date)} </h5>` +
@@ -572,12 +507,145 @@ export class VitalityComponent implements OnInit, OnDestroy {
     return res;
   }
 
-  insertNewEvent(): void{
+  insertNewEvent(hive_event: InspHive): void{
+
+    let hive_name: string;
+
+    this.rucheService.getHiveByHiveId(hive_event.hiveId).subscribe(
+      _hive => {
+        hive_name = _hive.name;
+      },
+      () => {},
+      () => {
+        for(let i=0; i<this.inspHives.length; i++){
+          if(this.inspHives[i].name === hive_name){
+            this.inspHives[i].insp.push(hive_event);
+            break;
+          }
+        }
+
+        let seriesEventIndex: number = -1;
+        for(let i=0; i<this.option.baseOption.series.length; i++){
+          let words = this.option.baseOption.series[i].name.split(' | ');
+          if(words.includes(hive_name) && words.includes('event')){
+            seriesEventIndex = i;
+            break;
+          }
+        }
+
+        if(seriesEventIndex === -1){
+          this.insertAlertNewSerie(hive_event, hive_name);
+        }
+        else{
+          this.insertAlertExistingSerie(hive_event, hive_name, seriesEventIndex);
+        }
+      }
+    )
 
   }
 
-  deleteEvent(): void{
+  insertAlertNewSerie(hive_event: InspHive, hive_name: string): void{
+     // create new serie if hive selected
+     let selected = -1;
+     selected = this.stackService.getHiveSelect().findIndex( h => h.name === hive_name );
+     if(selected !== -1){
+       let seriesIndex = -1;
+       let seriesDataIndex = -1;
+       for(let i=0; i<this.option.baseOption.series.length; i++){
+         let words = this.option.baseOption.series[i].name.split(' | ');
+         if(words.includes(hive_name) && words.length === 2 && this.option.baseOption.series[i].data.length != null){
+           for(let j=0; j<this.option.baseOption.series[i].data.length; j++){
+             let d1 : Date = new Date(hive_event.date);
+             d1.setHours(12 - (d1.getTimezoneOffset()/60));
+             d1.setMinutes(0);
+             d1.setSeconds(0);
+             if(new Date(this.option.baseOption.series[i].data[j].name).getTime() === d1.getTime() && this.option.baseOption.series[i].data[j].value[1] != null){
+               seriesIndex = i;
+               seriesDataIndex = j;
+               break;
+             }
+           }
+         }
+       }
 
+       if(seriesDataIndex !== -1){
+         let new_item = {
+           name:hive_event.date,
+           value:[hive_event.date, this.option.baseOption.series[seriesIndex].data[seriesDataIndex].value[1], this.option.baseOption.series[seriesIndex].data[seriesDataIndex].value[2]]
+         };
+         let data = [
+           new_item
+         ];
+         let newSerie = this.createNewCustomSerie(this.option.baseOption.series[seriesIndex], new_item, 'event', ALERT_IMG_PATH + 'alert-icon.png', 20, -20/2, -30/2);
+         this.option.baseOption.series.push(newSerie);
+         this.stackService.getBroodChartInstance().setOption(this.option);
+       }
+     }
+  }
+
+  insertAlertExistingSerie(hive_event: InspHive, hive_name: string, seriesEventIndex: number): void{
+    let seriesIndex = -1;
+          let seriesDataIndex = -1;
+          for(let i=0; i<this.option.baseOption.series.length; i++){
+            let words = this.option.baseOption.series[i].name.split(' | ');
+            if(words.includes(hive_name) && words.length === 2 && this.option.baseOption.series[i].data.length != null){
+              for(let j=0; j<this.option.baseOption.series[i].data.length; j++){
+                let d1 : Date = new Date(hive_event.date);
+                d1.setHours(12 - (d1.getTimezoneOffset()/60));
+                d1.setMinutes(0);
+                d1.setSeconds(0);
+                if(new Date(this.option.baseOption.series[i].data[j].name).getTime() === d1.getTime() && this.option.baseOption.series[i].data[j].value[1] != null){
+                  seriesIndex = i;
+                  seriesDataIndex = j;
+                  break;
+                }
+              }
+            }
+          }
+
+          let serie = Object.assign({}, this.option.baseOption.series[seriesIndex]);
+          if(seriesDataIndex !== -1){
+            let new_item = {
+              name:hive_event.date,
+              value:[hive_event.date, serie.data[seriesDataIndex].value[1], serie.data[seriesDataIndex].value[2]]
+            };
+            this.option.baseOption.series[seriesEventIndex].data.push(new_item);
+            this.stackService.getBroodChartInstance().setOption(this.option);
+          }
+  }
+
+  deleteEvents(ids: String[], insps: InspHive[]): void{
+    loopids:
+      for(let i = 0; i<ids.length; i++){
+        let insp_delete: InspHive;
+        let insp_item_index;
+        let insp_index_del;
+    loopinspHives:
+        for(let j = 0; j<this.inspHives.length; j++){
+          for(let k=0; k<this.inspHives[j].insp.length; k++){
+            if( new Date(this.inspHives[j].insp[k].date).getTime() === new Date(insps[i].date).getTime() ){
+              insp_delete = Object.assign({}, this.inspHives[j].insp[k]);
+              insp_item_index = j;
+              insp_index_del = k;
+              break loopinspHives;
+            }
+          }
+        }
+    loopOptionSerie:
+        for(let t=0; t<this.option.baseOption.series.length; t++){
+          if(this.option.baseOption.series[t].data != null){
+            for(let u=0; u<this.option.baseOption.series[t].data.length; u++){
+              if(this.option.baseOption.series[t].data[u].name === insp_delete.date){
+                this.option.baseOption.series[t].data.splice(u, 1);
+                this.inspHives[insp_item_index].insp.slice(insp_index_del, 1);
+                break loopOptionSerie;
+              }
+            }
+          }
+        }
+      }
+
+      this.stackService.getBroodChartInstance().setOption(this.option);
   }
 
   applyFilters(): void{

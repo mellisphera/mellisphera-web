@@ -492,6 +492,15 @@
             "CANCEL":"Cancel",
             "DELETE":"Delete"
           }
+        },
+        "FILTERS":{
+          "INSPECTION":{
+            "ALL": "All Inspections"
+          },
+          "ALERT":{
+            "ALL": "All Alerts",
+            "SWARM": "Swarming"
+          }
         }
     },
     "INSPECT":{

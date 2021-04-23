@@ -447,7 +447,7 @@ nav[role=admin-navigation] {
 }
 
 .add-event-buttons{
-  width: 98%;
+  width: 90%;
   display: flex;
   justify-content: flex-end;
   margin-top: 5%;
@@ -457,21 +457,12 @@ nav[role=admin-navigation] {
   text-align: center;
 }
 
-.hives-obs{
+.hives-obs-add{
   margin: 5px 5px;
   height: 40px;
   width: 40px;
   border: 1px solid skyblue;
   box-shadow: 1px 1px 3px black;
-}
-
-.hives-obs:active{
-  transform: translateX(1px) translateY(1px);
-  box-shadow: 0px 0px 1px black;
-}
-
-.hives-obs:focus{
-  outline: 0;
 }
 
 .hives-swarm-img{
@@ -497,6 +488,7 @@ nav[role=admin-navigation] {
   margin-left: auto;
   margin-right: auto;
   width: 99%;
+  height: 65%;
   overflow-y: auto;
 }
 
@@ -504,15 +496,20 @@ nav[role=admin-navigation] {
   background-color: #eaffeb;
 }
 
-.delete-event-item{
+.delete-event-item-container{
+  width: 80%;
+  margin: 5px auto;
   border: 1px solid #444;
   border-radius: 3px;
-  width: 80%;
-  height: 50px;
+}
+
+.delete-event-item{
+  width: 100%;
+  min-height: 50px;
   margin: 5px auto;
   text-align: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -530,12 +527,134 @@ nav[role=admin-navigation] {
 
 .hives-obs-delete{
   margin: 5px 5px;
-  height: 40px;
-  width: 40px;
+  height: 38px;
+  width: 38px;
   border: 1px solid skyblue;
   box-shadow: 1px 1px 3px black;
   background-color: #eee;
 }
+
+.hives-notes-delete:active, .hives-todo-delete:active, .hives-obs-add:active{
+  transform: translateX(1px) translateY(1px);
+  box-shadow: 0px 0px 1px black;
+
+}
+
+.hives-notes-delete:focus, .hives-todo-delete:focus, .hives-obs-add:focus{
+  outline: 0;
+}
+
+.hives-notes-delete, .hives-todo-delete{
+  margin: 0 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 3px;
+  border: 1px solid #999999;
+  box-shadow: 1px 1px 3px black;
+}
+
+.hives-notes-delete{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/icons/inspect/notes.png');
+  background-position: center;
+}
+
+.hives-todo-delete{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/icons/inspect/todo.png');
+  background-position: center;
+}
+
+.hives-note-textarea-delete, .hives-todo-textarea-delete{
+  resize: none;
+  height: 50px;
+  width: 80%;
+  margin-bottom: 5px;
+  display: none;
+  overflow-y: hidden;
+}
+
+.hives-note-textarea-delete-active{
+  height: 50px;
+  display: initial;
+  animation-name: show-note-delete;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in;
+}
+
+@keyframes show-note-delete {
+  from {
+    height: 10px;
+  }
+  to {
+    height: 50px;
+  }
+}
+
+.hives-note-textarea-delete-inactive{
+  animation-name: hide-note-delete;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes hide-note-delete {
+  from {
+    height: 50px;
+  }
+  to {
+    height: 10px;
+  }
+}
+
+.hives-todo-textarea-delete-active{
+  height: 50px;
+  display: initial;
+  animation-name: show-todo-delete;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in;
+}
+
+@keyframes show-todo-delete {
+  from {
+    height: 10px;
+  }
+  to {
+    height: 50px;
+  }
+}
+
+.hives-todo-textarea-delete-inactive{
+  animation-name: hide-todo-delete;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes hide-todo-delete {
+  from {
+    height: 50px;
+  }
+  to {
+    height: 10px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media screen and (max-width:1500px) {
     .apiary-group-hive{

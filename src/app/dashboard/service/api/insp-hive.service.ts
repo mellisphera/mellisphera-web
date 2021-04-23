@@ -103,7 +103,7 @@ export class InspHiveService {
    * @param inspHive
    *
    */
-     deleteInspHiveEvent(inspHive: InspHive): Observable<InspHive> {
-      return this.http.post<InspHive>(CONFIG.URL + 'inspHive/event/delete', inspHive, httpOptions);
+    deleteInspHiveEvent(arrayId: String[]): Observable<String[]>{
+      return this.http.post<String[]>(CONFIG.URL + 'inspHive/event/delete', arrayId, httpOptions);
    }
 }

@@ -98,20 +98,20 @@ limitations under the License. -->
           <div class="filters-insp">
             <label for="filters-insp-check">
               <input id="filters-insp-check" type="checkbox" checked>
-              <p class="filters-insp-title">Toutes inspections</p>
+              <p class="filters-insp-title">{{ 'MELLICHARTS.FILTERS.INSPECTION.ALL' | translate}}</p>
               <img src="../../../assets/icons/inspect/inspectsV2/4_tool_jhook.svg" width="20" height="20" style="margin-left:5px;">
             </label>
           </div>
           <div class="filters-alerts">
             <label for="filters-alerts-check">
               <input id="filters-alerts-check" type="checkbox" checked>
-              <p class="filters-alerts-title">Toutes alertes</p>
+              <p class="filters-alerts-title">{{ 'MELLICHARTS.FILTERS.ALERT.ALL' | translate}}</p>
               <img src="../../../assets/icons/ui/alert-icon.png" width="20" height="20" style="margin-left:5px;">
             </label>
             <div class="filters-alerts-swarm">
               <label for="filters-alerts-swarm-check">
                 <input id="filters-alerts-swarm-check" type="checkbox" checked disabled>
-                <p class="filters-alerts-swarm-title">Essaimage</p>
+                <p class="filters-alerts-swarm-title">{{ 'MELLICHARTS.FILTERS.ALERT.SWARM' | translate}}</p>
                 <img src="../../../assets/icons/inspect/observations/swarm.png" width="30" height="30" style="margin-top:-15px; margin-left:5px;">
               </label>
             </div>
@@ -196,7 +196,7 @@ limitations under the License. -->
     </div>
     <div class="add-event-buttons">
       <button class="btn btn-danger" style="margin-right:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
-      <button class="btn btn-success" style="margin-left:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}</button>
+      <button class="btn btn-success" style="margin-left:10px;" (click)="deleteDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}</button>
     </div>
   </div>
 </div>

@@ -188,7 +188,7 @@ export class RucheService {
    *
    * @returns {RucheInterface[]}
    * @memberof RucheService
-   * @description without hives shared 
+   * @description without hives shared
    */
   getUserHive(): RucheInterface[] {
     return this.ruches.filter(hive => hive.userId === this.user.getIdUserLoged());
@@ -210,6 +210,13 @@ export class RucheService {
   getRucheByID(id: string) {
     return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + id);
   }
+
+
+  getHiveByHiveId(hiveId: string): Observable<RucheInterface>{
+    return this.http.get<RucheInterface>(CONFIG.URL + 'hives/hiveId/' + hiveId);
+  }
+
+
   updateCoordonneesRuche(ruche: RucheInterface) {
     return this.http.put<RucheInterface>(CONFIG.URL + 'hives/update/coordonnees/' + ruche._id, ruche, httpOptions);
   }
@@ -224,7 +231,7 @@ export class RucheService {
     return this.http.put<RucheInterface>(CONFIG.URL + 'hives/update/' + hive._id, hive, httpOptions);
   }
 
-  /**   
+  /**
    *
    *
    * @param {RucheInterface} ruche

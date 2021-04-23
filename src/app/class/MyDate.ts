@@ -109,13 +109,13 @@ export class MyDate {
         min.setDate(min.getDate() - nbDay);
         //min.setDate(max.getDate() + 7);
 
-        max.setDate(max.getDate() + 3);
+        max.setDate(max.getDate() + 1);
         min.setHours(0);
         min.setMinutes(0);
         min.setSeconds(0);
         return [min, max];
       }
-    
+
 /*     static getRangeFromDate(date: Date[]) {
 
     } */

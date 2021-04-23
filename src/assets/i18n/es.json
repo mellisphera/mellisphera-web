@@ -507,6 +507,15 @@
             "CANCEL":"Anular",
             "DELETE":"Retirar"
           }
+        },
+        "FILTERS":{
+          "INSPECTION":{
+            "ALL": "Todas Inspecciones"
+          },
+          "ALERT":{
+            "ALL": "Todas Alertas",
+            "SWARM": "Enjambrazón"
+          }
         }
     },
     "INSPECT":{

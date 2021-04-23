@@ -492,6 +492,15 @@
             "CANCEL":"Annuler",
             "DELETE":"Supprimer"
           }
+        },
+        "FILTERS":{
+          "INSPECTION":{
+            "ALL": "Toutes Inspections"
+          },
+          "ALERT":{
+            "ALL": "Toutes Alertes",
+            "SWARM": "Essaimage"
+          }
         }
     },
     "INSPECT":{
