@@ -510,11 +510,14 @@
         },
         "FILTERS":{
           "INSPECTION":{
-            "ALL": "Todas Inspecciones"
+            "ALL": "Inspecciones"
           },
           "ALERT":{
-            "ALL": "Todas Alertas",
+            "ALL": "Alertas",
             "SWARM": "Enjambrazón"
+          },
+          "EVENT":{
+            "ALL": "Eventos"
           }
         }
     },

@@ -266,39 +266,37 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 let item : InspHiveItem = {name: obs[index].hive.name, insp: [..._hive_insp]};
                 this.inspHives.push(item);
                 _hive_insp.forEach(insp => {
-                  if(insp.obs.length > 0){
-                    let d1 : Date = new Date(insp.date);
-                    d1.setHours(12 - (d1.getTimezoneOffset()/60));
-                    d1.setMinutes(0);
-                    d1.setSeconds(0);
-                    let insp_index = serieComplete.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
-                    if(insp_index != -1){
-                      let new_item = {
-                        name:insp.date,
-                        value:[insp.date, serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
-                      };
-                      let data = [
-                        new_item
-                      ];
-                      if(insp.inspId != null){
-                        let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | inspection');
-                        if(seriesIndex !== -1){
-                          new_series[seriesIndex].data.push(new_item);
-                        }
-                        else{
-                          let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'inspection', INSPECT_IMG_PATH + '4_tool_jhook.png', 25, -25/2, -40/2);
-                          new_series.push(newSerie);
-                        }
+                  let d1 : Date = new Date(insp.date);
+                  d1.setHours(12 - (d1.getTimezoneOffset()/60));
+                  d1.setMinutes(0);
+                  d1.setSeconds(0);
+                  let insp_index = serieComplete.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
+                  if(insp_index != -1){
+                    let new_item = {
+                      name:insp.date,
+                      value:[insp.date, serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
+                    };
+                    let data = [
+                      new_item
+                    ];
+                    if(insp.inspId != null){
+                      let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | inspection');
+                      if(seriesIndex !== -1){
+                        new_series[seriesIndex].data.push(new_item);
                       }
                       else{
-                        let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | event');
-                        if(seriesIndex !== -1){
-                          new_series[seriesIndex].data.push(new_item);
-                        }
-                        else{
-                          let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'event', ALERT_IMG_PATH + 'alert-icon.png', 20, -20/2, -30/2);
-                          new_series.push(newSerie);
-                        }
+                        let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'inspection', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook_api.png', 30, -30/2, -40/2);
+                        new_series.push(newSerie);
+                      }
+                    }
+                    else{
+                      let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | event');
+                      if(seriesIndex !== -1){
+                        new_series[seriesIndex].data.push(new_item);
+                      }
+                      else{
+                        let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'event', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook.png', 30, -30/2, -40/2);
+                        new_series.push(newSerie);
                       }
                     }
                   }
@@ -404,39 +402,37 @@ export class VitalityComponent implements OnInit, OnDestroy {
         let item : InspHiveItem = {name: hive.name, insp: [..._hive_insp]};
         this.inspHives.push(item);
         _hive_insp.forEach( insp => {
-          if(insp.obs.length > 0){
-            let d1 : Date = new Date(insp.date);
-            d1.setHours(12 - (d1.getTimezoneOffset()/60));
-            d1.setMinutes(0);
-            d1.setSeconds(0);
-            let index = serie.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
-            if(index != -1){
-              let new_item = {
-                name:insp.date,
-                value:[insp.date, serie.data[index].value[1], serie.data[index].value[2]]
-              };
-              data = [
-                new_item
-              ];
-              if(insp.inspId != null){
-                let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | inspection');
-                if(seriesIndex !== -1){
-                  new_series[seriesIndex].data.push(new_item);
-                }
-                else{
-                  let newSerie = this.createNewCustomSerie(serie, new_item, 'inspection', INSPECT_IMG_PATH + '4_tool_jhook.png', 25, -25/2, -40/2);
-                  new_series.push(newSerie);
-                }
+          let d1 : Date = new Date(insp.date);
+          d1.setHours(12 - (d1.getTimezoneOffset()/60));
+          d1.setMinutes(0);
+          d1.setSeconds(0);
+          let index = serie.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
+          if(index != -1){
+            let new_item = {
+              name:insp.date,
+              value:[insp.date, serie.data[index].value[1], serie.data[index].value[2]]
+            };
+            data = [
+              new_item
+            ];
+            if(insp.inspId != null){
+              let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | inspection');
+              if(seriesIndex !== -1){
+                new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | event');
-                if(seriesIndex !== -1){
-                  new_series[seriesIndex].data.push(new_item);
-                }
-                else{
-                  let newSerie = this.createNewCustomSerie(serie, new_item, 'event', ALERT_IMG_PATH + 'alert-icon.png', 20, -20/2, -30/2);
-                  new_series.push(newSerie);
-                }
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'inspection', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook_api.png', 30, -30/2, -40/2);
+                new_series.push(newSerie);
+              }
+            }
+            else{
+              let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | event');
+              if(seriesIndex !== -1){
+                new_series[seriesIndex].data.push(new_item);
+              }
+              else{
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'event', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook.png', 30, -30/2, -40/2);
+                new_series.push(newSerie);
               }
             }
           }
@@ -576,7 +572,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
          let data = [
            new_item
          ];
-         let newSerie = this.createNewCustomSerie(this.option.baseOption.series[seriesIndex], new_item, 'event', ALERT_IMG_PATH + 'alert-icon.png', 20, -20/2, -30/2);
+         let newSerie = this.createNewCustomSerie(this.option.baseOption.series[seriesIndex], new_item, 'event', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook.png', 30, -30/2, -40/2);
          this.option.baseOption.series.push(newSerie);
          this.stackService.getBroodChartInstance().setOption(this.option);
        }

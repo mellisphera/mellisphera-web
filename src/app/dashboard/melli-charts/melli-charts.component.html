@@ -94,27 +94,19 @@ limitations under the License. -->
         <button class="btn filters-btn dropdown dropdown-toogle" type="button" id="filtersMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="../../../assets/icons/ui/user_prefs.svg">
         </button>
-        <div id="filtersMenu" class="dropdown-menu" aria-labelledby="filtersMenuButton">
-          <div class="filters-insp">
-            <label for="filters-insp-check">
-              <input id="filters-insp-check" type="checkbox" checked>
-              <p class="filters-insp-title">{{ 'MELLICHARTS.FILTERS.INSPECTION.ALL' | translate}}</p>
-              <img src="../../../assets/icons/inspect/inspectsV2/4_tool_jhook.svg" width="20" height="20" style="margin-left:5px;">
-            </label>
-          </div>
+        <div id="filtersMenu" class="dropdown-menu" aria-labelledby="filtersMenuButton" (click)="filterMenu($event)">
           <div class="filters-alerts">
-            <label for="filters-alerts-check">
-              <input id="filters-alerts-check" type="checkbox" checked>
-              <p class="filters-alerts-title">{{ 'MELLICHARTS.FILTERS.ALERT.ALL' | translate}}</p>
-              <img src="../../../assets/icons/ui/alert-icon.png" width="20" height="20" style="margin-left:5px;">
-            </label>
-            <div class="filters-alerts-swarm">
-              <label for="filters-alerts-swarm-check">
-                <input id="filters-alerts-swarm-check" type="checkbox" checked disabled>
-                <p class="filters-alerts-swarm-title">{{ 'MELLICHARTS.FILTERS.ALERT.SWARM' | translate}}</p>
-                <img src="../../../assets/icons/inspect/observations/swarm.png" width="30" height="30" style="margin-top:-15px; margin-left:5px;">
-              </label>
-            </div>
+            <input type="button" class="filters-alerts-btn-active" width="35" height="35" (click)="filterButton($event)">
+            <p class="filters-alerts-title">{{ 'MELLICHARTS.FILTERS.ALERT.ALL' | translate}}</p>
+          </div>
+          <div class="filters-insp">
+            <input type="button" class="filters-insp-btn-active" width="35" height="35" (click)="filterButton($event)">
+            <p class="filters-insp-title">{{ 'MELLICHARTS.FILTERS.INSPECTION.ALL' | translate}}</p>
+          </div>
+          <div class="filters-events">
+            <input type="button" class="filters-events-btn-active" width="35" height="35" (click)="filterButton($event)">
+            <p class="filters-events-title">{{ 'MELLICHARTS.FILTERS.EVENT.ALL' | translate}}</p>
+            <!--<img src="../../../assets/icons/inspect/inspectsV2/4_tool_jhook.svg" width="25" height="25" style="margin-left:5px;">-->
           </div>
         </div>
     </li>

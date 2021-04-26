@@ -684,6 +684,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   // <--- END ADD EVENT SCREEN --->
 
+  // <--- DELETE EVENT SCREEN --->
 
   showDeleteEvent(): void{
     this.hiveEventToDelete = [];
@@ -891,6 +892,25 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       case PREFIX_PATH + 'stack':
         break;
     }
+  }
+
+  // <--- END DELETE EVENT SCREEN --->
+
+  // <--- FILTERS BEHAVIOUR --->
+
+  filterMenu(e: Event){
+    e.stopPropagation();
+  }
+
+  filterButton(evt: Event){
+    let button = (<HTMLInputElement>evt.target);
+    if(button.className.includes('-active')){
+      button.className = button.className.slice(0, -7);
+      return;
+    }
+    button.className = button.className + '-active';
+    return;
+
   }
 
 }

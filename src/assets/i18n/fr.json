@@ -495,11 +495,14 @@
         },
         "FILTERS":{
           "INSPECTION":{
-            "ALL": "Toutes Inspections"
+            "ALL": "Inspections"
           },
           "ALERT":{
-            "ALL": "Toutes Alertes",
+            "ALL": "Alertes",
             "SWARM": "Essaimage"
+          },
+          "EVENT":{
+            "ALL": "Evenements"
           }
         }
     },

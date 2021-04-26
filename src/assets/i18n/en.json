@@ -495,11 +495,14 @@
         },
         "FILTERS":{
           "INSPECTION":{
-            "ALL": "All Inspections"
+            "ALL": "Inspections"
           },
           "ALERT":{
-            "ALL": "All Alerts",
+            "ALL": "Alerts",
             "SWARM": "Swarming"
+          },
+          "EVENT":{
+            "ALL": "Events"
           }
         }
     },

@@ -229,20 +229,54 @@ nav[role=admin-navigation] {
   font-size: 13px;
 }
 
-.filters-insp p, .filters-alerts p{
+.filters-insp p, .filters-alerts p, .filters-events p{
   color: black;
 }
 
-#filters-insp-check,
-#filters-alerts-check,
-#filters-alerts-swarm-check{
+.filters-alerts-btn,
+.filters-alerts-btn-active,
+.filters-insp-btn,
+.filters-insp-btn-active,
+.filters-events-btn,
+.filters-events-btn-active{
   margin-right: 8px;
-  transform: scale(1.25);
+  width: 35px !important;
+  height: 35px !important;
+}
+
+.filters-alerts-btn{
+  background: url('../../../assets/icons/inspect/inspect_v3/notif_grey.svg') center no-repeat;
+  background-size: 25px;
+}
+
+.filters-alerts-btn-active{
+  background: url('../../../assets/icons/inspect/inspect_v3/notif.svg') center no-repeat;
+  background-size: 25px;
+}
+
+.filters-insp-btn{
+  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook_grey.svg') center no-repeat;
+  background-size: 30px;
+}
+
+.filters-insp-btn-active{
+  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook_api.svg') center no-repeat;
+  background-size: 30px;
+}
+
+.filters-events-btn{
+  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook_grey.svg') center no-repeat;
+  background-size: 30px;
+}
+
+.filters-events-btn-active{
+  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook.svg') center no-repeat;
+  background-size: 30px;
 }
 
 .filters-insp-title,
 .filters-alerts-title,
-.filters-alerts-swarm-title{
+.filters-events-title{
   font-size: 14px;
   font-family: 'Poppins';
 }
