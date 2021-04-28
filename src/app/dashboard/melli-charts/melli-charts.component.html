@@ -184,7 +184,9 @@ limitations under the License. -->
   </div>
   <div class="delete-event-screen">
     <h3>{{hiveEvent?.name}} | {{'MELLICHARTS.EVENT.DELETE.TITLE' | translate}}</h3>
-    <div class="delete-event-list">
+    <div class="delete-list">
+      <div class="delete-event-list"></div>
+      <div class="delete-alert-list"></div>
     </div>
     <div class="add-event-buttons">
       <button class="btn btn-danger" style="margin-right:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>

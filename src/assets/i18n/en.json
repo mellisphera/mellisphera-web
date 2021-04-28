@@ -503,6 +503,24 @@
           },
           "EVENT":{
             "ALL": "Events"
+          },
+          "DISPLAY":{
+            "HONEYDEW":"Nectar Flow",
+            "SWARM":"Swarm occured",
+            "RSWARM":"Swarm risk",
+            "TMAX":"High internal temp.",
+            "TMIN":"Low internal temp.",
+            "LOWBROOD":"Low brood level",
+            "WINEG":"Rapid weight loss",
+            "WIPOS":"Rapid weight gain",
+            "HMAX":"High internal humidity",
+            "HMIN":"Low internal humidity",
+            "STOLEN":"Stolen hive",
+            "DEAD":"Dead hive",
+            "OXALIC":"Oxalic acid treatment",
+            "SUPER+":"Adding super",
+            "SUPER-":"Removing super",
+            "WLIM":"Weight limit"
           }
         }
     },

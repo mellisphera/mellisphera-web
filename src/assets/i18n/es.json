@@ -518,6 +518,24 @@
           },
           "EVENT":{
             "ALL": "Eventos"
+          },
+          "DISPLAY":{
+            "HONEYDEW":"Rocío de miel",
+            "SWARM":"Enjambrazón",
+            "RSWARM":"Riesgo de enjambrazón",
+            "TMAX":"Fuerte temp. interna",
+            "TMIN":"Baja temp. interna",
+            "LOWBROOD":"Bajo nivel de cria",
+            "WINEG":"Pérdida peso importante",
+            "WIPOS":"Ganancia peso importante",
+            "HMAX":"Alta humedad interna",
+            "HMIN":"Baja humedad interna",
+            "STOLEN":"Colmena robada",
+            "DEAD":"Colmena muerta",
+            "OXALIC":"Tratamiento ácido oxálico",
+            "SUPER+":"Añadiendo alza",
+            "SUPER-":"Supresión alza",
+            "WLIM":"Umbral de peso"
           }
         }
     },

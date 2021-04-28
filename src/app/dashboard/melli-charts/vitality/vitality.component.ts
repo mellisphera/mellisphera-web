@@ -1,3 +1,4 @@
+
 /* Copyright 2018-present Mellisphera
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,16 +29,22 @@ import { InspHiveService } from '../../service/api/insp-hive.service';
 import * as moment from 'moment';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { UserPref } from '../../../_model/user-pref';
-
+import { AlertInterface } from './../../../_model/alert';
 import { InspHive } from './../../../_model/inspHive';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertsService } from './../../service/api/alerts.service';
 
 const INSPECT_IMG_PATH = '../../../../assets/icons/inspect/';
-const ALERT_IMG_PATH = '../../../../assets/icons/ui/';
+const ALERT_IMG_PATH = '../../../../assets/pictos_alerts/charts/';
 
 class InspHiveItem{
     name: string;
     insp: InspHive[];
+}
+
+class AlertHiveItem{
+  name: string;
+  alerts: AlertInterface[];
 }
 
 @Component({
@@ -48,6 +55,7 @@ class InspHiveItem{
 export class VitalityComponent implements OnInit, OnDestroy {
 
   private inspHives: InspHiveItem[];
+  private alertHives: AlertHiveItem[];
   public user_pref : UserPref;
 
   private option: {
@@ -66,7 +74,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
     private inspApiaryService: InspApiaryService,
     private inspHiveService: InspHiveService,
     private userPrefsService: UserParamsService,
-    private translate : TranslateService
+    private translate: TranslateService,
+    private alertService: AlertsService
     ){
     this.option = {
       baseOption : JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionHourly)),
@@ -169,10 +178,13 @@ export class VitalityComponent implements OnInit, OnDestroy {
       let words = params.seriesName.split(' | ');
       if(words.includes('inspection') || words.includes('event')){
         if(words.includes('inspection')){
-          this.option.baseOption.tooltip.backgroundColor = 'rgba(0, 0, 60, 0.7)';
+          this.option.baseOption.tooltip.backgroundColor = 'rgba(60, 0, 0, 0.7)';
         }
         if(words.includes('event')){
-          this.option.baseOption.tooltip.backgroundColor = 'rgba(0, 60, 0, 0.7)';
+          this.option.baseOption.tooltip.backgroundColor = 'rgba(60, 60, 0, 0.7)';
+        }
+        if(words.includes('alert')){
+          this.option.baseOption.tooltip.backgroundColor = 'rgba(0, 0, 30, 0.7)';
         }
         this.stackService.getBroodChartInstance().setOption(this.option);
         let indexSerie = this.option.baseOption.series.findIndex(_s => _s.name === params.seriesName);
@@ -237,14 +249,18 @@ export class VitalityComponent implements OnInit, OnDestroy {
     this.inspHives.splice(index, 1);
   }
 
+  filterHiveSerie(): void{
+
+  }
+
 
   loadAllHiveAfterRangeChange(next: Function): void {
-    let new_series = [];
     this.option.baseOption.series.length = 1;
     const obs = this.stackService.getHiveSelect().map(_hive => {
       return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodOldMethod(_hive._id, this.melliDateService.getRangeForReqest())}
     });
     this.inspHives = [];
+    this.alertHives = [];
     Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
       _broods => {
         _broods.forEach((_elt, index) => {
@@ -261,60 +277,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
             } else {
               this.option.baseOption.series.push(Object.assign({}, serieComplete));
             }
-            this.inspHiveService.getInspHiveByHiveIdAndDateBetween(obs[index].hive._id, this.melliDateService.getRangeForReqest()).subscribe(
-              _hive_insp => {
-                let item : InspHiveItem = {name: obs[index].hive.name, insp: [..._hive_insp]};
-                this.inspHives.push(item);
-                _hive_insp.forEach(insp => {
-                  let d1 : Date = new Date(insp.date);
-                  d1.setHours(12 - (d1.getTimezoneOffset()/60));
-                  d1.setMinutes(0);
-                  d1.setSeconds(0);
-                  let insp_index = serieComplete.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
-                  if(insp_index != -1){
-                    let new_item = {
-                      name:insp.date,
-                      value:[insp.date, serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
-                    };
-                    let data = [
-                      new_item
-                    ];
-                    if(insp.inspId != null){
-                      let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | inspection');
-                      if(seriesIndex !== -1){
-                        new_series[seriesIndex].data.push(new_item);
-                      }
-                      else{
-                        let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'inspection', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook_api.png', 30, -30/2, -40/2);
-                        new_series.push(newSerie);
-                      }
-                    }
-                    else{
-                      let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | event');
-                      if(seriesIndex !== -1){
-                        new_series[seriesIndex].data.push(new_item);
-                      }
-                      else{
-                        let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'event', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook.png', 30, -30/2, -40/2);
-                        new_series.push(newSerie);
-                      }
-                    }
-                  }
-                })
-              },
-              () => {},
-              () => {
-                new_series.forEach(s =>{
-                  let indexSerie = this.option.baseOption.series.findIndex(e => e.name === s.name);
-                  if (indexSerie !== -1) {
-                    this.option.baseOption.series[indexSerie] = Object.assign({}, s);
-                  } else {
-                    this.option.baseOption.series.push(Object.assign({}, s));
-                  }
-                });
-                this.stackService.getBroodChartInstance().setOption(this.option);
-              }
-            );
+            this.loadEventsByHiveAfterRangeChange(obs, index, serieComplete);
           });
         })
       },
@@ -323,6 +286,112 @@ export class VitalityComponent implements OnInit, OnDestroy {
         next(this.option);
       }
     )
+  }
+
+  loadEventsByHiveAfterRangeChange(obs: any, index: number, serieComplete: any): void{
+    let new_series = [];
+    this.inspHiveService.getInspHiveByHiveIdAndDateBetween(obs[index].hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+      _hive_insp => {
+        let item : InspHiveItem = {name: obs[index].hive.name, insp: [..._hive_insp]};
+        this.inspHives.push(item);
+        _hive_insp.forEach(insp => {
+          let d1 : Date = new Date(insp.date);
+          d1.setHours(12 - (d1.getTimezoneOffset()/60));
+          d1.setMinutes(0);
+          d1.setSeconds(0);
+          let insp_index = serieComplete.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
+          if(insp_index != -1){
+            let new_item = {
+              name:insp.date,
+              value:[insp.date, serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
+            };
+            let data = [
+              new_item
+            ];
+            if(insp.inspId != null){
+              let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | inspection');
+              if(seriesIndex !== -1){
+                new_series[seriesIndex].data.push(new_item);
+              }
+              else{
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'inspection', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook_api.png', 30, -30/2, -40/2);
+                new_series.push(newSerie);
+              }
+            }
+            else{
+              let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | event');
+              if(seriesIndex !== -1){
+                new_series[seriesIndex].data.push(new_item);
+              }
+              else{
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'event', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook.png', 30, -30/2, -40/2);
+                new_series.push(newSerie);
+              }
+            }
+          }
+        })
+      },
+      () => {},
+      () => {
+        new_series.forEach(s =>{
+          let indexSerie = this.option.baseOption.series.findIndex(e => e.name === s.name);
+          if (indexSerie !== -1) {
+            this.option.baseOption.series[indexSerie] = Object.assign({}, s);
+          } else {
+            this.option.baseOption.series.push(Object.assign({}, s));
+          }
+        });
+        this.loadAlertByHiveAfterRangeChange(obs, index, serieComplete);
+        //this.stackService.getBroodChartInstance().setOption(this.option);
+      }
+    );
+  }
+
+  loadAlertByHiveAfterRangeChange(obs: any, index: number, serieComplete: any): void{
+    let new_series = [];
+    this.alertService.getAlertByHive(obs[index].hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+      _hive_alerts => {
+        let item : AlertHiveItem = {name: obs[index].hive.name, alerts: [..._hive_alerts]};
+        this.alertHives.push(item);
+        _hive_alerts.forEach( alert => {
+          let d1 : Date = new Date(alert.opsDate);
+          d1.setHours(12 - (d1.getTimezoneOffset()/60));
+          d1.setMinutes(0);
+          d1.setSeconds(0);
+          let alert_index = serieComplete.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
+          if(alert_index !== -1){
+            let new_item = {
+              name:alert.opsDate,
+              value:[alert.opsDate, serieComplete.data[alert_index].value[1], serieComplete.data[alert_index].value[2]]
+            };
+            let data = [
+              new_item
+            ];
+            let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | alert | ' + alert.icon);
+            if(seriesIndex !== -1){
+              new_series[seriesIndex].data.push(new_item);
+            }
+            else{
+              let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'alert | ' + alert.icon, ALERT_IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
+              new_series.push(newSerie);
+            }
+          }
+        });
+      },
+      () => {},
+      () => {
+        new_series.forEach(s =>{
+          let indexSerie = this.option.baseOption.series.findIndex(e => e.name === s.name);
+          if (indexSerie !== -1) {
+            this.option.baseOption.series[indexSerie] = Object.assign({}, s);
+          } else {
+            this.option.baseOption.series.push(Object.assign({}, s));
+          }
+        });
+        this.stackService.getBroodChartInstance().setOption(this.option);
+      }
+    );
+
   }
 
   createNewCustomSerie(serie: any, new_item: any, type: string, img: string, size:number, x_pos: number, y_pos: number): any{
@@ -355,14 +424,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
       z: 10,
     };
   }
-
-
-  /*loadEventsByHiveAfterRangeChange(): void{
-    console.log(this.stackService.getHiveSelect());
-    this.stackService.getHiveSelect().forEach(_elt => {
-
-    })
-  }*/
 
   /**
    *
@@ -443,6 +504,48 @@ export class VitalityComponent implements OnInit, OnDestroy {
         new_series.forEach(s =>{
           this.option.baseOption.series.push(s);
         });
+        this.loadAlertsByHive(hive, serie);
+      }
+    );
+  }
+
+  loadAlertsByHive(hive: RucheInterface, serie:any): void{
+    let data = [];
+    let new_series = [];
+    this.alertService.getAlertByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+      _hive_alerts => {
+        let item : AlertHiveItem = {name: hive.name, alerts: [..._hive_alerts]};
+        this.alertHives.push(item);
+        _hive_alerts.forEach( alert => {
+          let d1 : Date = new Date(alert.opsDate);
+          d1.setHours(12 - (d1.getTimezoneOffset()/60));
+          d1.setMinutes(0);
+          d1.setSeconds(0);
+          let index = serie.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
+          if(index !== -1){
+            let new_item = {
+              name: alert.opsDate,
+              value:[alert.opsDate, serie.data[index].value[1], serie.data[index].value[2]]
+            };
+            data = [
+              new_item
+            ];
+            let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | alert | ' + alert.icon);
+            if(seriesIndex !== -1){
+              new_series[seriesIndex].data.push(new_item);
+            }
+            else{
+              let newSerie = this.createNewCustomSerie(serie, new_item, 'alert | ' + alert.icon, ALERT_IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
+              new_series.push(newSerie);
+            }
+          }
+        })
+      },
+      () => {},
+      () => {
+        new_series.forEach(s =>{
+          this.option.baseOption.series.push(s);
+        });
         this.stackService.getBroodChartInstance().setOption(this.option);
         this.stackService.getBroodChartInstance().hideLoading();
       }
@@ -467,8 +570,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   getInspTooltipFormatter(hiveName: string, indexSerie: number, indexHiveInspItem: number, indexHiveInsp: number): string{
-    //console.log(params);
-    //let item : InspHiveItem = this.inspHives[indexHiveInspItem];
     let insp : InspHive = this.inspHives[indexHiveInspItem].insp[indexHiveInsp];
     let date : Date = new Date(insp.date);
     if(insp.inspId != null){
@@ -504,9 +605,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   insertNewEvent(hive_event: InspHive): void{
-
     let hive_name: string;
-
     this.rucheService.getHiveByHiveId(hive_event.hiveId).subscribe(
       _hive => {
         hive_name = _hive.name;
@@ -581,33 +680,33 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
   insertAlertExistingSerie(hive_event: InspHive, hive_name: string, seriesEventIndex: number): void{
     let seriesIndex = -1;
-          let seriesDataIndex = -1;
-          for(let i=0; i<this.option.baseOption.series.length; i++){
-            let words = this.option.baseOption.series[i].name.split(' | ');
-            if(words.includes(hive_name) && words.length === 2 && this.option.baseOption.series[i].data.length != null){
-              for(let j=0; j<this.option.baseOption.series[i].data.length; j++){
-                let d1 : Date = new Date(hive_event.date);
-                d1.setHours(12 - (d1.getTimezoneOffset()/60));
-                d1.setMinutes(0);
-                d1.setSeconds(0);
-                if(new Date(this.option.baseOption.series[i].data[j].name).getTime() === d1.getTime() && this.option.baseOption.series[i].data[j].value[1] != null){
-                  seriesIndex = i;
-                  seriesDataIndex = j;
-                  break;
-                }
-              }
-            }
+    let seriesDataIndex = -1;
+    for(let i=0; i<this.option.baseOption.series.length; i++){
+      let words = this.option.baseOption.series[i].name.split(' | ');
+      if(words.includes(hive_name) && words.length === 2 && this.option.baseOption.series[i].data.length != null){
+        for(let j=0; j<this.option.baseOption.series[i].data.length; j++){
+          let d1 : Date = new Date(hive_event.date);
+          d1.setHours(12 - (d1.getTimezoneOffset()/60));
+          d1.setMinutes(0);
+          d1.setSeconds(0);
+          if(new Date(this.option.baseOption.series[i].data[j].name).getTime() === d1.getTime() && this.option.baseOption.series[i].data[j].value[1] != null){
+            seriesIndex = i;
+            seriesDataIndex = j;
+            break;
           }
+        }
+      }
+    }
 
-          let serie = Object.assign({}, this.option.baseOption.series[seriesIndex]);
-          if(seriesDataIndex !== -1){
-            let new_item = {
-              name:hive_event.date,
-              value:[hive_event.date, serie.data[seriesDataIndex].value[1], serie.data[seriesDataIndex].value[2]]
-            };
-            this.option.baseOption.series[seriesEventIndex].data.push(new_item);
-            this.stackService.getBroodChartInstance().setOption(this.option);
-          }
+    let serie = Object.assign({}, this.option.baseOption.series[seriesIndex]);
+    if(seriesDataIndex !== -1){
+      let new_item = {
+        name:hive_event.date,
+        value:[hive_event.date, serie.data[seriesDataIndex].value[1], serie.data[seriesDataIndex].value[2]]
+      };
+      this.option.baseOption.series[seriesEventIndex].data.push(new_item);
+      this.stackService.getBroodChartInstance().setOption(this.option);
+    }
   }
 
   deleteEvents(ids: String[], insps: InspHive[]): void{
@@ -640,8 +739,11 @@ export class VitalityComponent implements OnInit, OnDestroy {
           }
         }
       }
-
       this.stackService.getBroodChartInstance().setOption(this.option);
+  }
+
+  deleteAlerts(): void{
+
   }
 
   applyFilters(): void{
@@ -649,7 +751,5 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-   //this.stackService.cleanSlectedHives();
-   //this.stackService.getBroodChartInstance().dispose();
   }
 }

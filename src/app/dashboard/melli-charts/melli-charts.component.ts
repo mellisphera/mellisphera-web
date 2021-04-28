@@ -31,7 +31,6 @@ import { WeatherService } from '../service/api/weather.service';
 import { StackMelliChartsService } from './stack/service/stack-melli-charts.service';
 import { StackComponent } from './stack/stack.component';
 import { VitalityComponent } from './vitality/vitality.component';
-import { type } from 'os';
 import { TranslateService } from '@ngx-translate/core';
 import { WeightComponent } from './weight/weight.component';
 import { UnitService } from '../service/unit.service';
@@ -39,14 +38,15 @@ import * as moment from 'moment';
 import { UserPref } from '../../_model/user-pref';
 import { InspHive } from '../../_model/inspHive';
 import { InspHiveService } from '../service/api/insp-hive.service';
-import { p } from '@angular/core/src/render3';
-import { checkNoChanges } from '@angular/core/src/render3/instructions';
+import { AlertInterface } from './../../_model/alert';
+import { AlertsService } from './../service/api/alerts.service';
 
 const PREFIX_PATH = '/dashboard/explore/';
 const IMG_PATH = '../../../assets/icons/inspect/';
+const ALERTS_ICONS_PATH = '../../../assets/pictos_alerts/iconesPNG/';
 
 const PICTOS_HIVES_OBS = [
-  {name:'swarm', img:'observations/swarm_grey.png', img_active: 'observations/swarm.png', class:'hives-swarm-img'},
+  {name: 'swarm', img: 'observations/swarm_grey.png', img_active: 'observations/swarm.png', class: 'hives-swarm-img'},
   /*{name:'Y2', img:''},
   {name:'X3', img:''},
   {name:'W4', img:''},*/
@@ -63,17 +63,19 @@ const PICTOS_HIVES_OBS = [
 })
 export class MelliChartsComponent implements OnInit, AfterViewInit {
 
-  public xPosContextMenu: number = 0;
-  public yPosContextMenu: number = 0;
+  public xPosContextMenu = 0;
+  public yPosContextMenu = 0;
 
   public newEventDate: Date;
   public hiveEvent: RucheInterface;
   public apiaryEvent: RucherModel;
 
   public hiveEventList: InspHive[];
+  public hiveAlertList: AlertInterface[];
   public hiveEventToDelete: InspHive[] | null;
+  public hiveAlertToDelete: AlertInterface[] | null;
 
-  public new_event : InspHive = {
+  public new_event: InspHive = {
     _id: null,
     inspId: null,
     date: null,
@@ -83,9 +85,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     obs: [],
     notes: null,
     todo: null
-  }
+  };
 
-  public user_pref : UserPref;
+  public user_pref: UserPref;
 
   public btnNav: any[];
   private btnTypeElement: HTMLElement;
@@ -116,7 +118,10 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private userConfig: UserParamsService,
     private userPrefsService: UserParamsService,
     private unitService: UnitService,
-    private inspHiveService: InspHiveService) {
+    private inspHiveService: InspHiveService,
+    private alertService: AlertsService,
+    private translate : TranslateService
+    ) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
         { name: 'Ruche', path: 'hive' },
@@ -131,8 +136,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         { name: 'Datos', path: 'stack' },
         { name: 'Peso', path: 'weight'}
       ];
-    }
-    else {
+    } else {
       this.btnNav = [
         { name: 'Hive', path: 'hive' },
         { name: 'Brood', path: 'brood' },
@@ -143,7 +147,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
     this.datePickerConfig = {
 
-    }
+    };
   }
 
   ngOnInit() {
@@ -175,7 +179,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
 
       }
-    )
+    );
 
 
   }
@@ -209,11 +213,11 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   ifCurrentApiary(apiaryId: string): string {
     try {
       return apiaryId === this.melliChartHive.getHiveSelect().apiaryId ? 'in' : '';
-    } catch{ }
+    } catch { }
   }
   onCloseDatePicker(): void {
-    (<HTMLInputElement>document.getElementById("calendar-begin")).value = this.unitService.getDailyDate(this.melliChartDate.start);
-    (<HTMLInputElement>document.getElementById("calendar-end")).value = this.unitService.getDailyDate(this.melliChartDate.end);
+    (<HTMLInputElement>document.getElementById('calendar-begin')).value = this.unitService.getDailyDate(this.melliChartDate.start);
+    (<HTMLInputElement>document.getElementById('calendar-end')).value = this.unitService.getDailyDate(this.melliChartDate.end);
     this.dateDropdown.classList.add('open');
   }
   /**
@@ -297,7 +301,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       this.stackComponent = componentRef;
     } else if (componentRef instanceof VitalityComponent) {
       this.broodComponent = componentRef;
-    } else if (componentRef instanceof WeightComponent){
+    } else if (componentRef instanceof WeightComponent) {
         this.weightComponent = componentRef;
     }
 
@@ -313,7 +317,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    */
   getRangeByType(type: string): Array<DataRange> {
     let arg: DataRange;
-    let ranges: Array<DataRange> = this.melliChartDate.ranges.filter(elt => elt.type === type || elt.type === type + 'S');
+    const ranges: Array<DataRange> = this.melliChartDate.ranges.filter(elt => elt.type === type || elt.type === type + 'S');
     if (type === 'YEAR') {
       arg = this.melliChartDate.ranges[10];
       ranges.unshift(arg);
@@ -346,8 +350,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   setDateFromInput(): void {
-    let start = this.melliChartDate.start;
-    let end = this.melliChartDate.end;
+    const start = this.melliChartDate.start;
+    const end = this.melliChartDate.end;
     this.melliChartDate.setRangeForRequest([start, end]);
     if (this.router.url === PREFIX_PATH + 'hive') {
       this.hiveComponent.setRangeChart();
@@ -363,7 +367,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.stackService.getBroodChartInstance().setOption(options, true);
         this.stackService.getBroodChartInstance().hideLoading();
       });
-    } else if (this.router.url === PREFIX_PATH + 'weight'){
+    } else if (this.router.url === PREFIX_PATH + 'weight') {
       this.weightComponent.loadAllHiveAfterRangeChange((options: any) => {
         options.baseOption.xAxis[0].min = this.melliChartDate.getRangeForReqest()[0];
         options.baseOption.xAxis[0].max = this.melliChartDate.getRangeForReqest()[1];
@@ -427,9 +431,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           this.stackComponent.removeHiveSerie(hive);
         } else {
           this.stackService.addHive(hive);
-          let t0 = performance.now();
+          const t0 = performance.now();
           this.stackComponent.loadDataByHive(hive);
-          let t1 = performance.now();
+          const t1 = performance.now();
 
         }
         break;
@@ -539,17 +543,17 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  showContextMenu(ruche: RucheInterface, evt: MouseEvent): void{
+  showContextMenu(ruche: RucheInterface, evt: MouseEvent): void {
     evt.stopPropagation();
     evt.preventDefault();
-    let menu = (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]);
+    const menu = (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]);
     menu.style.top = evt.clientY + 'px';
-    menu.style.left = (evt.clientX-80) + 'px';
+    menu.style.left = (evt.clientX - 80) + 'px';
     menu.style.visibility = 'visible';
 
-    let list = (<HTMLElement>menu.getElementsByClassName('context-menu-group')[0]);
-    let name = (<HTMLElement>menu.getElementsByClassName('hive-name')[0]);
-    let circle = (<HTMLElement>menu.getElementsByClassName('circle')[0]);
+    const list = (<HTMLElement>menu.getElementsByClassName('context-menu-group')[0]);
+    const name = (<HTMLElement>menu.getElementsByClassName('hive-name')[0]);
+    const circle = (<HTMLElement>menu.getElementsByClassName('circle')[0]);
     circle.style.backgroundColor = this.getColor(ruche);
     name.innerHTML =  '  ' + ruche.name;
 
@@ -563,7 +567,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       obs: [],
       notes: null,
       todo: null
-    }
+    };
 
     this.hiveEvent = Object.assign({}, ruche);
     this.new_event.apiaryId = ruche.apiaryId;
@@ -572,17 +576,17 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       this.apiaryEvent = Object.assign({}, apiary);
     });
 
-    let container = (<HTMLElement>document.getElementsByClassName('delete-event-list')[0]);
+    const container = (<HTMLElement>document.getElementsByClassName('delete-event-list')[0]);
     container.innerHTML = '';
   }
 
-  closeContextMenu(): void{
+  closeContextMenu(): void {
     (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]).style.visibility = 'hidden';
   }
 
   // <--- ADD EVENT SCREEN --->
 
-  showAddEvent(): void{
+  showAddEvent(): void {
     this.new_event.hiveId = this.hiveEvent._id;
     this.new_event.apiaryId = this.hiveEvent.apiaryId;
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'block';
@@ -591,65 +595,65 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     this.addObsList();
   }
 
-  addObsList(): void{
-    let obsDiv = (<HTMLElement>document.getElementsByClassName('add-event-choice-obs')[0]);
+  addObsList(): void {
+    const obsDiv = (<HTMLElement>document.getElementsByClassName('add-event-choice-obs')[0]);
     obsDiv.innerHTML = '';
     let div;
-    for(let i=0; i<PICTOS_HIVES_OBS.length; i++){
-      if( i%6 === 0 ){
+    for (let i = 0; i < PICTOS_HIVES_OBS.length; i++) {
+      if ( i % 6 === 0 ) {
         div = document.createElement('div');
       }
 
-      let button = document.createElement('button');
+      const button = document.createElement('button');
       button.className = 'hives-obs-add';
 
       button.classList.add(PICTOS_HIVES_OBS[i].class);
       button.onclick = (evt: Event) => {
-        let n = i;
+        const n = i;
         this.hiveButton(evt, n);
       };
 
       div.appendChild(button);
 
-      if( (i+1)%6 === 0 ){
+      if ( (i + 1) % 6 === 0 ) {
         obsDiv.appendChild(div);
       }
     }
-    if(PICTOS_HIVES_OBS.length%6 !== 0){ // Push last row if not complete
+    if (PICTOS_HIVES_OBS.length % 6 !== 0) { // Push last row if not complete
       obsDiv.appendChild(div);
     }
   }
 
-  hiveButton(evt: Event, btnIndex: number): void{
-    let button = (<HTMLButtonElement> evt.target);
-    if( button.classList.contains(PICTOS_HIVES_OBS[btnIndex].class + '-active') ){
+  hiveButton(evt: Event, btnIndex: number): void {
+    const button = (<HTMLButtonElement> evt.target);
+    if ( button.classList.contains(PICTOS_HIVES_OBS[btnIndex].class + '-active') ) {
       button.classList.remove(PICTOS_HIVES_OBS[btnIndex].class + '-active');
-      let i = this.new_event.obs.findIndex(e => e.name === PICTOS_HIVES_OBS[btnIndex].name);
+      const i = this.new_event.obs.findIndex(e => e.name === PICTOS_HIVES_OBS[btnIndex].name);
       this.new_event.obs.splice(i, 1);
       return;
     }
     button.classList.add(PICTOS_HIVES_OBS[btnIndex].class + '-active');
-    this.new_event.obs.push({name:PICTOS_HIVES_OBS[btnIndex].name, img:PICTOS_HIVES_OBS[btnIndex].img_active});
+    this.new_event.obs.push({name: PICTOS_HIVES_OBS[btnIndex].name, img: PICTOS_HIVES_OBS[btnIndex].img_active});
     return;
   }
 
-  setNewEventDate(): void{
+  setNewEventDate(): void {
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = moment(this.newEventDate).format(this.user_pref.timeFormat);
     this.new_event.date = this.newEventDate;
   }
 
-  saveNotes(evt: Event): void{
-    let textArea = <HTMLTextAreaElement>evt.target;
+  saveNotes(evt: Event): void {
+    const textArea = <HTMLTextAreaElement>evt.target;
     this.new_event.notes = textArea.value;
   }
 
-  saveTodo(evt: Event): void{
-    let textArea = <HTMLTextAreaElement>evt.target;
+  saveTodo(evt: Event): void {
+    const textArea = <HTMLTextAreaElement>evt.target;
     this.new_event.todo = textArea.value;
   }
 
-  insertAddEvent(): void{
-    if(this.new_event.date == null){
+  insertAddEvent(): void {
+    if (this.new_event.date == null) {
       (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'flex';
       return;
     }
@@ -663,13 +667,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     return;
   }
 
-  discardAddEvent(): void{
+  discardAddEvent(): void {
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'none';
     (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'none';
   }
 
-  insertOnGraph(): void{
-    switch(this.router.url){
+  insertOnGraph(): void {
+    switch (this.router.url) {
       case PREFIX_PATH + 'hive':
         break;
       case PREFIX_PATH + 'brood':
@@ -686,121 +690,137 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   // <--- DELETE EVENT SCREEN --->
 
-  showDeleteEvent(): void{
+  showDeleteEvent(): void {
     this.hiveEventToDelete = [];
+    this.hiveAlertToDelete = [];
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'block';
     (<HTMLElement>document.getElementsByClassName('delete-event-screen')[0]).style.display = 'block';
     this.hiveEventList = [];
+    this.hiveAlertList = [];
     this.inspHiveService.getInspHiveByHiveId(this.hiveEvent._id).subscribe(
       _hives_insp => {
         _hives_insp.forEach( insp => {
-          if(insp.inspId == null){
+          if (insp.inspId == null) {
             this.hiveEventList.push(insp);
           }
-        })
+        });
       },
+      () => {},
       () => {
-
-      },
-      () => {
-        for(let i=0; i<this.hiveEventList.length; i++){
+        for (let i = 0; i < this.hiveEventList.length; i++) {
           this.hiveEventToDelete[i] = null;
         }
-        this.showEventList();
+        this.alertService.getAllAlertsByHive(this.hiveEvent._id).subscribe(
+          _hives_alerts => {
+            _hives_alerts.forEach( alert => {
+              this.hiveAlertList.push(alert);
+            });
+          },
+          () => {},
+          () => {
+            for (let i = 0; i < this.hiveAlertList.length; i++) {
+              this.hiveAlertToDelete[i] = null;
+            }
+            this.showEventList();
+          }
+        )
       }
     );
 
   }
 
-  showEventList(): void{
-    let container = (<HTMLElement>document.getElementsByClassName('delete-event-list')[0]);
-    container.innerHTML = '';
-    this.hiveEventList.forEach( (evt,index) => {
-      let divItem = document.createElement('div');
+  showEventList(): void {
+    const containerEvent = (<HTMLElement>document.getElementsByClassName('delete-event-list')[0]);
+    containerEvent.innerHTML = '';
+    const containerAlert = (<HTMLElement>document.getElementsByClassName('delete-alert-list')[0]);
+    containerAlert.innerHTML = '';
+    // Loading all events
+    this.hiveEventList.forEach( (evt, index) => {
+      const divItem = document.createElement('div');
       divItem.className = 'delete-event-item-container';
 
-      let div = document.createElement('div');
+      const div = document.createElement('div');
       div.className = 'delete-event-item';
 
-      let div1 = document.createElement('div');
+      const div1 = document.createElement('div');
       div1.className = 'delete-event-item-logo';
       div1.style.width = '50px';
       div.appendChild(div1);
 
 
-      let div2 = document.createElement('div');
+      const div2 = document.createElement('div');
       div2.style.width = '20%';
       div2.style.textAlign = 'center';
-      let p1 = document.createElement('p');
+      const p1 = document.createElement('p');
       p1.textContent = this.unitService.getHourlyDate(new Date(evt.date));
       div2.appendChild(p1);
       div.appendChild(div2);
 
-      let div3 = document.createElement('div');
+      const div3 = document.createElement('div');
       div3.style.width = '40%';
       div3.style.display = 'flex';
       div3.style.justifyContent = 'center';
       div3.style.alignItems = 'center';
       evt.obs.forEach((obs) => {
-        let obsDiv = document.createElement('div');
-        obsDiv.className = "hives-obs-delete hives-" + obs.name + "-img-active";
+        const obsDiv = document.createElement('div');
+        obsDiv.className = 'hives-obs-delete hives-' + obs.name + '-img-active';
         div3.appendChild(obsDiv);
       });
       div.appendChild(div3);
 
-      let div4 = document.createElement('div');
+      const div4 = document.createElement('div');
       div4.style.height = '50px';
       div4.style.display = 'flex';
       div4.style.justifyContent = 'center';
       div4.style.alignItems = 'center';
-      let btnNotes = document.createElement('button');
+      const btnNotes = document.createElement('button');
       btnNotes.className = 'hives-notes-delete';
-      btnNotes.onclick = (evt: Event) => { this.toggleNotes(evt) };
+      btnNotes.onclick = (evt: Event) => { this.toggleNotes(evt); };
       div4.appendChild(btnNotes);
       div.appendChild(div4);
 
-      let div5 = document.createElement('div');
+      const div5 = document.createElement('div');
       div5.style.height = '50px';
       div5.style.display = 'flex';
       div5.style.justifyContent = 'center';
       div5.style.alignItems = 'center';
-      let btnTaches = document.createElement('button');
+      const btnTaches = document.createElement('button');
       btnTaches.className = 'hives-todo-delete';
-      btnTaches.onclick = (evt: Event) => { this.toggleTodo(evt) };
+      btnTaches.onclick = (evt: Event) => { this.toggleTodo(evt); };
       div5.appendChild(btnTaches);
       div.appendChild(div5);
 
-      let div6 = document.createElement('div');
+      const div6 = document.createElement('div');
       div6.style.height = '50px';
       div6.style.display = 'flex';
       div6.style.justifyContent = 'center';
       div6.style.alignItems = 'center';
-      let checkbox = document.createElement('input');
-      checkbox.type ='checkbox';
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
       checkbox.onchange = (evt: Event) => {
-        let n = index;
+        const n = index;
         this.deleteChange(evt, n);
-      }
+      };
 
       div6.appendChild(checkbox);
       div.appendChild(div6);
 
-      let divNotes = document.createElement('div');
+      const divNotes = document.createElement('div');
       divNotes.style.display = 'flex';
-      divNotes.style.justifyContent ='center';
-      divNotes.style.alignItems ='center';
-      let textNotes = document.createElement('textarea');
+      divNotes.style.justifyContent = 'center';
+      divNotes.style.alignItems = 'center';
+      const textNotes = document.createElement('textarea');
       textNotes.disabled = true;
       textNotes.spellcheck = false;
       textNotes.className = 'hives-todo-textarea-delete';
       textNotes.value = evt.notes;
       divNotes.appendChild(textNotes);
 
-      let divTodo = document.createElement('div');
+      const divTodo = document.createElement('div');
       divTodo.style.display = 'flex';
-      divTodo.style.justifyContent ='center';
-      divTodo.style.alignItems ='center';
-      let textTodo = document.createElement('textarea');
+      divTodo.style.justifyContent = 'center';
+      divTodo.style.alignItems = 'center';
+      const textTodo = document.createElement('textarea');
       textTodo.disabled = true;
       textTodo.spellcheck = false;
       textTodo.className = 'hives-todo-textarea-delete';
@@ -812,56 +832,114 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       divItem.appendChild(divNotes);
       divItem.appendChild(divTodo);
 
-      container.appendChild(divItem);
+      containerEvent.appendChild(divItem);
+    });
+
+    // Loading all alerts
+    this.hiveAlertList.forEach((alt,index) => {
+      const divItem = document.createElement('div');
+      divItem.className = 'delete-alert-item-container';
+
+      const div = document.createElement('div');
+      div.className = 'delete-alert-item';
+
+      const div1 = document.createElement('div');
+      div1.className = 'delete-alert-item-logo';
+      div1.style.width = '50px';
+      div.appendChild(div1);
+
+      const div2 = document.createElement('div');
+      div2.style.width = '20%';
+      div2.style.textAlign = 'center';
+      const p1 = document.createElement('p');
+      p1.textContent = this.unitService.getHourlyDate(new Date(alt.opsDate));
+      div2.appendChild(p1);
+      div.appendChild(div2);
+
+      const div3 = document.createElement('div');
+      div3.style.width = '40%';
+      div3.style.display = 'flex';
+      div3.style.justifyContent = 'center';
+      div3.style.alignItems = 'center';
+      const divAltLogo = document.createElement('div');
+      divAltLogo.className = 'hives-alert-delete';
+      divAltLogo.style.background = "rgb(238,238,238) url('"+ ALERTS_ICONS_PATH + alt.icon + ".png" +"') no-repeat center";
+      divAltLogo.style.backgroundSize = '32px';
+      div3.appendChild(divAltLogo);
+      div.appendChild(div3);
+
+      const div4 = document.createElement('div');
+      div4.style.width = '130px';
+      div4.style.textAlign = 'center';
+      const p2 = document.createElement('p');
+      p2.textContent = this.translate.instant('MELLICHARTS.FILTERS.DISPLAY.'+ alt.icon.toUpperCase());
+      p2.style.fontSize = '14px';
+      div4.appendChild(p2);
+      div.appendChild(div4);
+
+      const div5 = document.createElement('div');
+      div5.style.height = '50px';
+      div5.style.display = 'flex';
+      div5.style.justifyContent = 'center';
+      div5.style.alignItems = 'center';
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.onchange = (evt: Event) => {
+        const n = index;
+        //this.deleteChange(evt, n);
+      };
+
+      div5.appendChild(checkbox);
+      div.appendChild(div5);
+
+      divItem.appendChild(div);
+      containerAlert.appendChild(divItem);
     });
   }
 
-  toggleNotes(evt: Event): void{
-    let button = (<HTMLButtonElement> evt.target);
-    let textArea = button.parentNode.parentNode.parentNode.children[1].children[0];
-    if(textArea.classList.contains('hives-note-textarea-delete-active')){
+  toggleNotes(evt: Event): void {
+    const button = (<HTMLButtonElement> evt.target);
+    const textArea = button.parentNode.parentNode.parentNode.children[1].children[0];
+    if (textArea.classList.contains('hives-note-textarea-delete-active')) {
       textArea.classList.add('hives-note-textarea-delete-inactive');
-      setTimeout(()=> {
+      setTimeout(() => {
         textArea.classList.remove('hives-note-textarea-delete-inactive');
         textArea.classList.remove('hives-note-textarea-delete-active');
       }, 400);
-    }
-    else{
+    } else {
       textArea.classList.add('hives-note-textarea-delete-active');
     }
 
   }
 
-  toggleTodo(evt: Event): void{
-    let button = (<HTMLButtonElement> evt.target);
-    let textArea = button.parentNode.parentNode.parentNode.children[2].children[0];
-    if(textArea.classList.contains('hives-todo-textarea-delete-active')){
+  toggleTodo(evt: Event): void {
+    const button = (<HTMLButtonElement> evt.target);
+    const textArea = button.parentNode.parentNode.parentNode.children[2].children[0];
+    if (textArea.classList.contains('hives-todo-textarea-delete-active')) {
       textArea.classList.add('hives-todo-textarea-delete-inactive');
-      setTimeout(()=> {
+      setTimeout(() => {
         textArea.classList.remove('hives-todo-textarea-delete-inactive');
         textArea.classList.remove('hives-todo-textarea-delete-active');
       }, 400);
-    }
-    else{
+    } else {
       textArea.classList.add('hives-todo-textarea-delete-active');
     }
   }
 
-  deleteChange(evt: Event, index: number): void{
-    let checkbox = (<HTMLInputElement>evt.target);
-    if(checkbox.checked){
-      this.hiveEventToDelete[index] = Object.assign({},this.hiveEventList[index]);
-    }
-    else{
+  deleteChange(evt: Event, index: number): void {
+    const checkbox = (<HTMLInputElement>evt.target);
+    if (checkbox.checked) {
+      this.hiveEventToDelete[index] = Object.assign({}, this.hiveEventList[index]);
+    } else {
       this.hiveEventToDelete[index] = null;
     }
   }
 
-  deleteDeleteEvent(): void{
-    let arrayId: string[] = [];
-    let inspArray: InspHive[] = [];
+  deleteDeleteEvent(): void {
+    const arrayId: string[] = [];
+    const inspArray: InspHive[] = [];
     this.hiveEventToDelete.forEach(e => {
-      if(e != null){
+      if (e != null) {
         arrayId.push(e._id);
         inspArray.push(e);
       }
@@ -875,13 +953,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     (<HTMLElement>document.getElementsByClassName('delete-event-screen')[0]).style.display = 'none';
   }
 
-  discardDeleteEvent(): void{
+  discardDeleteEvent(): void {
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'none';
     (<HTMLElement>document.getElementsByClassName('delete-event-screen')[0]).style.display = 'none';
   }
 
-  deleteOnGraph(arrayId: string[], inspArray: InspHive[]): void{
-    switch(this.router.url){
+  deleteOnGraph(arrayId: string[], inspArray: InspHive[]): void {
+    switch (this.router.url) {
       case PREFIX_PATH + 'hive':
         break;
       case PREFIX_PATH + 'brood':
@@ -898,13 +976,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   // <--- FILTERS BEHAVIOUR --->
 
-  filterMenu(e: Event){
+  filterMenu(e: Event) {
     e.stopPropagation();
   }
 
-  filterButton(evt: Event){
-    let button = (<HTMLInputElement>evt.target);
-    if(button.className.includes('-active')){
+  filterButton(evt: Event) {
+    const button = (<HTMLInputElement>evt.target);
+    if (button.className.includes('-active')) {
       button.className = button.className.slice(0, -7);
       return;
     }

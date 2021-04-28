@@ -242,6 +242,7 @@ nav[role=admin-navigation] {
   margin-right: 8px;
   width: 35px !important;
   height: 35px !important;
+  border-radius: 5px;
 }
 
 .filters-alerts-btn{
@@ -517,7 +518,7 @@ nav[role=admin-navigation] {
   text-align: center;
 }
 
-.delete-event-list{
+.delete-list{
   margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
@@ -525,19 +526,24 @@ nav[role=admin-navigation] {
   height: 65%;
   overflow-y: auto;
 }
-
 .delete-event-list > div:nth-child(2n){
   background-color: #eaffeb;
 }
 
-.delete-event-item-container{
+.delete-alert-list > div:nth-child(2n){
+  background-color: #eaffeb;
+}
+
+.delete-event-item-container,
+.delete-alert-item-container{
   width: 80%;
   margin: 5px auto;
   border: 1px solid #444;
   border-radius: 3px;
 }
 
-.delete-event-item{
+.delete-event-item,
+.delete-alert-item{
   width: 100%;
   min-height: 50px;
   margin: 5px auto;
@@ -547,15 +553,23 @@ nav[role=admin-navigation] {
   align-items: center;
 }
 
-.delete-event-item > div > p{
+.delete-event-item > div > p,
+.delete-alert-item > div > p{
   font-family: 'Poppins';
   margin:0;
 }
 
 .delete-event-item-logo{
-  width: 30px;
-  height: 30px;
-  background:url('../../../assets/icons/ui/alert-icon.png') center no-repeat;
+  width: 35px;
+  height: 35px;
+  background:url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook.png') center no-repeat;
+  background-size: 30px;
+}
+
+.delete-alert-item-logo{
+  width: 35px;
+  height: 35px;
+  background:url('../../../assets/icons/inspect/inspect_v3/notif.png') center no-repeat;
   background-size: 25px;
 }
 
@@ -564,6 +578,15 @@ nav[role=admin-navigation] {
   height: 38px;
   width: 38px;
   border: 1px solid skyblue;
+  box-shadow: 1px 1px 3px black;
+  background-color: #eee;
+}
+
+.hives-alert-delete{
+  margin: 5px 5px;
+  height: 38px;
+  width: 38px;
+  border: 1px solid lightcoral;
   box-shadow: 1px 1px 3px black;
   background-color: #eee;
 }

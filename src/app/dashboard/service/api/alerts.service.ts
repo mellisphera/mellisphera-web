@@ -43,21 +43,21 @@ export class AlertsService {
     // alerts by hive
     public hiveAlerts: AlertInterface[];
     // alerts actives by apiary
-    public numberApiaryAlertsActives : number;
+    public numberApiaryAlertsActives: number;
     // alerts actives for one apiary
 
 
     // Map pictos in SVG Path
-    public mapPictoSvg : Map<string,Array<any>>;
+    public mapPictoSvg: Map<string, Array<any>>;
 
     // Map color for alert type
-    public mapTypeColor : Map<string,string>;
+    public mapTypeColor: Map<string, string>;
 
     public alertConfSubject: BehaviorSubject<boolean>;
     // Alerts by id hive for one apiary
-    public alertsByHiveByApiary : Map<string,AlertInterface[]>;
+    public alertsByHiveByApiary: Map<string, AlertInterface[]>;
 
-    constructor(private http: HttpClient, 
+    constructor(private http: HttpClient,
         private userService: UserloggedService,
         private unitService: UnitService,
         private translateService: TranslateService,
@@ -79,7 +79,7 @@ export class AlertsService {
         this.mapPictoSvg.set('Swarm', ALERTS_ICONS.Swarm);
         this.mapPictoSvg.set('Honeydew', ALERTS_ICONS.Honeydew);
         this.mapPictoSvg.set('Hmin', ALERTS_ICONS.Hmin);
-        this.mapPictoSvg.set("Stolen", ALERTS_ICONS.Stolen);
+        this.mapPictoSvg.set('Stolen', ALERTS_ICONS.Stolen);
         this.mapPictoSvg.set('Tmin', ALERTS_ICONS.Tmin);
         this.mapPictoSvg.set('Tmax', ALERTS_ICONS.Tmax);
         this.mapPictoSvg.set('LowBrood', ALERTS_ICONS.LowBrood);
@@ -105,63 +105,63 @@ export class AlertsService {
         this.mapPictoSvg.set('DConnect', ALERTS_ICONS.DConnect);
         this.mapPictoSvg.set('Dead', ALERTS_ICONS.Dead);
         this.mapPictoSvg.set('Oxalic', ALERTS_ICONS.Oxalic);
-        this.mapPictoSvg.set('Super+', ALERTS_ICONS["Super+"]);
-        this.mapPictoSvg.set('Super-', ALERTS_ICONS["Super-"]);
+        this.mapPictoSvg.set('Super+', ALERTS_ICONS['Super+']);
+        this.mapPictoSvg.set('Super-', ALERTS_ICONS['Super-']);
         this.mapPictoSvg.set('Prod', []);
-        
-        this.mapTypeColor.set('Error','black');
-        this.mapTypeColor.set('Hot','black');
-        this.mapTypeColor.set('Cold','black');
-        this.mapTypeColor.set('Wind','black');
-        this.mapTypeColor.set('Rain','black');
-        this.mapTypeColor.set('Snow','black');
-        this.mapTypeColor.set('Swarm','black');
-        this.mapTypeColor.set('Honeydew','black');
-        this.mapTypeColor.set('Harvest','black');
-        this.mapTypeColor.set('LowBattery','black');
-        this.mapTypeColor.set('WIncVar','black');
-        this.mapTypeColor.set('Wdelta','black');
-        this.mapTypeColor.set('WVar','black');
-        this.mapTypeColor.set('Hmax','black');
-        this.mapTypeColor.set('Hmin','black');
-        this.mapTypeColor.set('TVarHour','black');
-        this.mapTypeColor.set('HVarDay','black');
-        this.mapTypeColor.set('TVarDay','blue');
-        this.mapTypeColor.set('HVarHour','black');
-        this.mapTypeColor.set('Tdelta','black');
-        this.mapTypeColor.set('Tmin','black');
-        this.mapTypeColor.set('Tmax','black');
-        this.mapTypeColor.set('LowBrood','black');
-        this.mapTypeColor.set('BVar','black');
-        this.mapTypeColor.set('NewBrood','black');
-        this.mapTypeColor.set('NewLaying','black');
-        this.mapTypeColor.set('Queen','black');
-        this.mapTypeColor.set('Rain3','black');
-        this.mapTypeColor.set('Rain6','black');
-        this.mapTypeColor.set('RainT3','black');
-        this.mapTypeColor.set('Rswarm','black');
-        this.mapTypeColor.set('Snow3','black');
-        this.mapTypeColor.set('StopBrood','black');
-        this.mapTypeColor.set('StopLaying','black');
-        this.mapTypeColor.set('Storm','black');
-        this.mapTypeColor.set('Wind3','black');
-        this.mapTypeColor.set('ColdDay','black');
-        this.mapTypeColor.set('HotDay','black');
-        this.mapTypeColor.set('ColdPeriod1','black');
-        this.mapTypeColor.set('ColdPeriod2','black');
-        this.mapTypeColor.set('WIneg','black');
-        this.mapTypeColor.set('WIpos','black');
-        this.mapTypeColor.set('Wlim','black');
-        this.mapTypeColor.set('DConnect','black');
-        this.mapTypeColor.set('Prod','black');
+
+        this.mapTypeColor.set('Error', 'black');
+        this.mapTypeColor.set('Hot', 'black');
+        this.mapTypeColor.set('Cold', 'black');
+        this.mapTypeColor.set('Wind', 'black');
+        this.mapTypeColor.set('Rain', 'black');
+        this.mapTypeColor.set('Snow', 'black');
+        this.mapTypeColor.set('Swarm', 'black');
+        this.mapTypeColor.set('Honeydew', 'black');
+        this.mapTypeColor.set('Harvest', 'black');
+        this.mapTypeColor.set('LowBattery', 'black');
+        this.mapTypeColor.set('WIncVar', 'black');
+        this.mapTypeColor.set('Wdelta', 'black');
+        this.mapTypeColor.set('WVar', 'black');
+        this.mapTypeColor.set('Hmax', 'black');
+        this.mapTypeColor.set('Hmin', 'black');
+        this.mapTypeColor.set('TVarHour', 'black');
+        this.mapTypeColor.set('HVarDay', 'black');
+        this.mapTypeColor.set('TVarDay', 'blue');
+        this.mapTypeColor.set('HVarHour', 'black');
+        this.mapTypeColor.set('Tdelta', 'black');
+        this.mapTypeColor.set('Tmin', 'black');
+        this.mapTypeColor.set('Tmax', 'black');
+        this.mapTypeColor.set('LowBrood', 'black');
+        this.mapTypeColor.set('BVar', 'black');
+        this.mapTypeColor.set('NewBrood', 'black');
+        this.mapTypeColor.set('NewLaying', 'black');
+        this.mapTypeColor.set('Queen', 'black');
+        this.mapTypeColor.set('Rain3', 'black');
+        this.mapTypeColor.set('Rain6', 'black');
+        this.mapTypeColor.set('RainT3', 'black');
+        this.mapTypeColor.set('Rswarm', 'black');
+        this.mapTypeColor.set('Snow3', 'black');
+        this.mapTypeColor.set('StopBrood', 'black');
+        this.mapTypeColor.set('StopLaying', 'black');
+        this.mapTypeColor.set('Storm', 'black');
+        this.mapTypeColor.set('Wind3', 'black');
+        this.mapTypeColor.set('ColdDay', 'black');
+        this.mapTypeColor.set('HotDay', 'black');
+        this.mapTypeColor.set('ColdPeriod1', 'black');
+        this.mapTypeColor.set('ColdPeriod2', 'black');
+        this.mapTypeColor.set('WIneg', 'black');
+        this.mapTypeColor.set('WIpos', 'black');
+        this.mapTypeColor.set('Wlim', 'black');
+        this.mapTypeColor.set('DConnect', 'black');
+        this.mapTypeColor.set('Prod', 'black');
 
         }
 
-        
+
     // Fonction to get all alerts for one apiary
 
     // Fonction to get all alerts for one apiary
-    getAlertsByApiary(apiaryId: string, range){
+    getAlertsByApiary(apiaryId: string, range) {
         // the format is AlertInterface[]
         return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/between/apiary/' + apiaryId, range);
     }
@@ -172,7 +172,7 @@ export class AlertsService {
                 this.alertTypes = _alerts.sort((alertA, alertB) => {
                     return alertA.category.localeCompare(alertB.category);
                 });
-                //console.log(this.alertTypes);
+                // console.log(this.alertTypes);
             }
         );
         this.getAlertConfByUser(this.userService.getIdUserLoged()).subscribe(
@@ -201,6 +201,18 @@ export class AlertsService {
         return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/between/hive/' + hiveId, range);
     }
 
+    /**
+     *
+     *
+     * @param {string} hiveId
+     * @param {Date[]} range
+     * @returns {Observable<AlertInterface[]>}
+     * @memberof AlertsService
+     */
+    getAllAlertsByHive(hiveId: string): Observable<AlertInterface[]> {
+      return this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/hive/' + hiveId, httpOptions);
+  }
+
 
     /**
      *
@@ -212,7 +224,7 @@ export class AlertsService {
     getMessageAlertByCode(args: AlertInterface): string {
         const alertId = this.alertTypes.filter(_alert => _alert.icon === NOTIF_CODE[args.code].icon)[0]._id;
         const lang = this.translateService.currentLang.toUpperCase();
-        let msg: string = NOTIF_CODE[args.code][lang].Message;
+        const msg: string = NOTIF_CODE[args.code][lang].Message;
         return msg.replace(/{VAL}/g, this.getUserValue(alertId))
         .replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef)
         .replace(/{PERIOD}/g, this.getUserValue(alertId)).replace(/day/g, this.getDayLabelByLang(lang));
@@ -231,7 +243,7 @@ export class AlertsService {
     }
 
     getDayLabelByLang(lang: string): string {
-        switch(lang) {
+        switch (lang) {
             case 'EN':
                 return 'day';
             case 'FR':
@@ -274,7 +286,7 @@ export class AlertsService {
     }
 
     // Fonction to check/uncheck an alert
-    updateAlert(idAlert : string , boolean : boolean): Observable<AlertInterface> {
+    updateAlert(idAlert: string , boolean: boolean): Observable<AlertInterface> {
         return this.http.put<AlertInterface>(CONFIG.URL + 'alertSend/update/' + idAlert , boolean, httpOptions);
     }
 
@@ -303,10 +315,10 @@ export class AlertsService {
     isMetric(): boolean {
         return this.userPrefService.getUserPref().unitSystem === 'METRIC';
       }
-      
+
 
     // Here there are all the alerts pictos
-    getPicto(nomPicto: string, cellPoint: Array<number>, params? :any): Array<Object> {
+    getPicto(nomPicto: string, cellPoint: Array<number>, params?: any): Array<Object> {
         try {
             return this.mapPictoSvg.get(nomPicto).map(_alert => {
                 return {
@@ -322,7 +334,7 @@ export class AlertsService {
         } catch {}
     }
 
-    getColor(typeAlert : string) : string {
+    getColor(typeAlert: string): string {
         return (this.mapTypeColor.get(typeAlert));
     }
 

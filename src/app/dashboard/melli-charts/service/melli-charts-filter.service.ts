@@ -5,9 +5,16 @@ import { Injectable } from '@angular/core';
 })
 export class MelliChartsFilterService {
 
-  private filters: any = {};
+  private filters: any = [
+    {'Inspection': true},
+    {'Events': true},
+    {'Alerts': true},
+  ];
 
-  constructor() { 
-    this.filters;
+  constructor() {
+  }
+
+  changeFilter(filter: string, bool: boolean): void{
+    this.filters[filter] = bool;
   }
 }

@@ -503,6 +503,24 @@
           },
           "EVENT":{
             "ALL": "Evenements"
+          },
+          "DISPLAY":{
+            "HONEYDEW":"Miellée",
+            "SWARM":"Essaimage",
+            "RSWARM":"Risque d'essaimage",
+            "TMAX":"Forte temp. interne",
+            "TMIN":"Faible temp. interne",
+            "LOWBROOD":"Faible niveau couvain",
+            "WINEG":"Perte poids élevé",
+            "WIPOS":"Gain poids élevé",
+            "HMAX":"Forte humidité interne",
+            "HMIN":"Faible humidité interne",
+            "STOLEN":"Ruche volée",
+            "DEAD":"Ruche morte",
+            "OXALIC":"Traitement acide oxalique",
+            "SUPER+":"Ajout hausse",
+            "SUPER-":"Retrait hausse",
+            "WLIM":"Seuil poids"
           }
         }
     },
