@@ -88,7 +88,7 @@ export class MelliChartsDateService {
     this.rangeDateForRequest[0].setSeconds(0);
 
     //this.rangeDateForRequest[1].setDate(this.rangeDateForRequest[0].getDate() + 1);
-    this.rangeDateForRequest[1].setHours(0);
+    this.rangeDateForRequest[1].setHours(23);
     this.rangeDateForRequest[1].setMinutes(0);
     this.rangeDateForRequest[1].setSeconds(0);
     //console.log(this.rangeDateForRequest);
