@@ -40,10 +40,12 @@ import { InspHive } from '../../_model/inspHive';
 import { InspHiveService } from '../service/api/insp-hive.service';
 import { AlertInterface } from './../../_model/alert';
 import { AlertsService } from './../service/api/alerts.service';
+import { MelliChartsFilterService } from './service/melli-charts-filter.service';
 
 const PREFIX_PATH = '/dashboard/explore/';
 const IMG_PATH = '../../../assets/icons/inspect/';
 const ALERTS_ICONS_PATH = '../../../assets/pictos_alerts/iconesPNG/';
+const ALERTS_CHART_PATH = '../../../assets/pictos_alerts/charts/';
 
 const PICTOS_HIVES_OBS = [
   {name: 'swarm', img: 'observations/swarm_grey.png', img_active: 'observations/swarm.png', class: 'hives-swarm-img'},
@@ -120,7 +122,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private unitService: UnitService,
     private inspHiveService: InspHiveService,
     private alertService: AlertsService,
-    private translate : TranslateService
+    private translate: TranslateService,
+    public melliFilters: MelliChartsFilterService
     ) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
@@ -976,19 +979,91 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   // <--- FILTERS BEHAVIOUR --->
 
-  filterMenu(e: Event) {
+  openFiltersMenu(evt: Event){
+    this.buildFilterDisplay();
+  }
+
+
+  filterMenu(e: Event): void{
     e.stopPropagation();
   }
 
-  filterButton(evt: Event) {
+  buildFilterDisplay(): void{
+    let container = (<HTMLElement>document.getElementsByClassName('filters-events-display')[0]);
+    container.innerHTML = '';
+    this.melliFilters.alertsDisplay.forEach( alert => {
+      let input = document.createElement('input');
+      input.type = 'button';
+      input.value = alert.name;
+      if(alert.show){
+        input.className = 'filters-events-display-' + alert.name +'-active';
+      }
+      else{
+        input.className = 'filters-events-display-' + alert.name;
+      }
+      input.onclick = (evt: Event) => { this.filterDisplayButton(evt); }
+      container.appendChild(input);
+    });
+  }
+
+  filterButton(evt: Event): void{
     const button = (<HTMLInputElement>evt.target);
+    const filter: string = button.nextSibling.textContent;
+    let active: boolean = false;
     if (button.className.includes('-active')) {
       button.className = button.className.slice(0, -7);
+      active = false;
+    }
+    else{
+      button.className = button.className + '-active';
+      active = true;
+    }
+    if(button.className.includes('alert')){
+      this.melliFilters.changeFilter('alert', active);
+      this.applyFilter('alert', active);
       return;
     }
-    button.className = button.className + '-active';
-    return;
+    if(button.className.includes('inspection')){
+      this.melliFilters.changeFilter('inspection', active);
+      this.applyFilter('inspection', active);
+      return;
+    }
+    if(button.className.includes('event')){
+      this.melliFilters.changeFilter('event', active);
+      this.applyFilter('event', active);
+      return;
+    }
+  }
 
+  filterDisplayButton(evt: Event): void{
+    const button = (<HTMLInputElement>evt.target);
+    let active: boolean = false;
+    if (button.className.includes('-active')) {
+      button.className = button.className.slice(0, -7);
+      active = false;
+    }
+    else{
+      button.className = button.className + '-active';
+      active = true;
+    }
+    this.melliFilters.changeDisplay(button.value, active);
+    let index = this.melliFilters.alertsDisplay.findIndex( alert => alert.name === button.value);
+    this.melliFilters.alertsDisplay[index].show = active;
+    this.applyFilter('alert', true);
+  }
+
+  applyFilter(filterName: string, show: boolean): void{
+    switch (this.router.url) {
+      case PREFIX_PATH + 'hive':
+        break;
+      case PREFIX_PATH + 'brood':
+        this.broodComponent.applyFilter(filterName, show);
+        break;
+      case PREFIX_PATH + 'weight':
+        break;
+      case PREFIX_PATH + 'stack':
+        break;
+    }
   }
 
 }

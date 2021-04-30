@@ -218,74 +218,6 @@ nav[role=admin-navigation] {
   margin-left: 20px;
 }
 
-#filtersMenu{
-  background-color: white;
-  width: 200px;
-  height: 200px;
-}
-
-#filtersMenu > div{
-  margin-bottom: 10px;
-  font-size: 13px;
-}
-
-.filters-insp p, .filters-alerts p, .filters-events p{
-  color: black;
-}
-
-.filters-alerts-btn,
-.filters-alerts-btn-active,
-.filters-insp-btn,
-.filters-insp-btn-active,
-.filters-events-btn,
-.filters-events-btn-active{
-  margin-right: 8px;
-  width: 35px !important;
-  height: 35px !important;
-  border-radius: 5px;
-}
-
-.filters-alerts-btn{
-  background: url('../../../assets/icons/inspect/inspect_v3/notif_grey.svg') center no-repeat;
-  background-size: 25px;
-}
-
-.filters-alerts-btn-active{
-  background: url('../../../assets/icons/inspect/inspect_v3/notif.svg') center no-repeat;
-  background-size: 25px;
-}
-
-.filters-insp-btn{
-  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook_grey.svg') center no-repeat;
-  background-size: 30px;
-}
-
-.filters-insp-btn-active{
-  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook_api.svg') center no-repeat;
-  background-size: 30px;
-}
-
-.filters-events-btn{
-  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook_grey.svg') center no-repeat;
-  background-size: 30px;
-}
-
-.filters-events-btn-active{
-  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook.svg') center no-repeat;
-  background-size: 30px;
-}
-
-.filters-insp-title,
-.filters-alerts-title,
-.filters-events-title{
-  font-size: 14px;
-  font-family: 'Poppins';
-}
-
-.filters-alerts-swarm{
-  margin-left: 30px;
-}
-
 .filters-btn{
   width: 40px;
   height: 40px;
@@ -306,6 +238,345 @@ nav[role=admin-navigation] {
   width: 40px;
   margin-top: -6px;
 }
+
+
+#filtersMenu{
+  background-color: white;
+  width: 200px;
+}
+
+#filtersMenu > div{
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.filters-insp p, .filters-alerts p, .filters-events p{
+  color: black;
+}
+
+.filters-alerts-btn,
+.filters-alerts-btn-active,
+.filters-insp-btn,
+.filters-insp-btn-active,
+.filters-events-btn,
+.filters-events-btn-active{
+  margin-right: 8px;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 5px;
+}
+
+.filters-alerts-btn{
+  background: url('../../../assets/icons/inspect/inspect_v3/notif_grey.svg') center no-repeat;
+  background-size: 30px;
+}
+
+.filters-alerts-btn-active{
+  background: url('../../../assets/icons/inspect/inspect_v3/notif.svg') center no-repeat;
+  background-size: 30px;
+}
+
+.filters-insp-btn{
+  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook_grey.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-insp-btn-active{
+  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook_api.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-btn{
+  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook_grey.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-btn-active{
+  background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-insp-title,
+.filters-alerts-title,
+.filters-events-title{
+  font-size: 14px;
+  font-family: 'Poppins';
+}
+
+.filters-alerts-swarm{
+  margin-left: 30px;
+}
+
+.filters-events-display{
+  display: grid;
+  grid: repeat(4, 40px) / auto-flow 46px;
+  color: transparent;
+  margin-top: 10px;
+}
+
+.filters-events-item{
+  margin-top: 10px;
+
+}
+
+.filters-events-display-Dead{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Dead_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Dead-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Dead.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Hmax{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Hmax_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Hmax-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Hmax.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Hmin{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Hmin_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Hmin-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Hmin.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Honeydew{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Honeydew_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Honeydew-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Honeydew.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-LowBrood{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/LowBrood_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-LowBrood-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/LowBrood.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Oxalic{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Oxalic_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Oxalic-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Oxalic.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Rswarm{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Rswarm_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Rswarm-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Rswarm.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Stolen{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Stolen_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Stolen-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Stolen.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-SuperMore{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Super+_grey.png') center no-repeat;
+  background-size: 45px;
+}
+
+.filters-events-display-SuperMore-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Super+.png') center no-repeat;
+  background-size: 45px;
+}
+
+.filters-events-display-SuperLess{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Super-_grey.png') center no-repeat;
+  background-size: 45px;
+}
+
+.filters-events-display-SuperLess-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Super-.png') center no-repeat;
+  background-size: 45px;
+}
+
+.filters-events-display-Swarm{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Swarm_grey.png') center no-repeat;
+  background-size: 33px;
+}
+
+.filters-events-display-Swarm-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Swarm.png') center no-repeat;
+  background-size: 33px;
+}
+
+.filters-events-display-Tmax{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Tmax_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Tmax-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Tmax.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Tmin{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Tmin_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Tmin-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Tmin.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-WIneg{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/WIneg_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-WIneg-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/WIneg.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-WIpos{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/WIpos_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-WIpos-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/WIpos.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Wlim{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Wlim_grey.png') center no-repeat;
+  background-size: 35px;
+}
+
+.filters-events-display-Wlim-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../assets/pictos_alerts/charts/Wlim.png') center no-repeat;
+  background-size: 35px;
+}
+
+
+
 
 .right-click-menu{
   position: absolute;
@@ -696,9 +967,6 @@ nav[role=admin-navigation] {
     height: 10px;
   }
 }
-
-
-
 
 
 

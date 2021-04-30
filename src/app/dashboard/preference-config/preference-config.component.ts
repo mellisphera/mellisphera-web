@@ -36,7 +36,9 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   public userPref: UserPref;
   public lang: string;
   public passwordForm: FormGroup;
-  constructor(public userConfig: UserParamsService, private authService: AuthService,
+  constructor(
+    public userConfig: UserParamsService,
+    private authService: AuthService,
     private notifier: NotifierService,
     private graphGlobalService: GraphGlobal,
     private userService: UserloggedService,

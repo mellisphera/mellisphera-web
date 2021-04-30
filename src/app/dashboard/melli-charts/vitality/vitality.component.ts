@@ -33,6 +33,7 @@ import { AlertInterface } from './../../../_model/alert';
 import { InspHive } from './../../../_model/inspHive';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertsService } from './../../service/api/alerts.service';
+import { MelliChartsFilterService } from '../service/melli-charts-filter.service';
 
 const INSPECT_IMG_PATH = '../../../../assets/icons/inspect/';
 const ALERT_IMG_PATH = '../../../../assets/pictos_alerts/charts/';
@@ -75,7 +76,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
     private inspHiveService: InspHiveService,
     private userPrefsService: UserParamsService,
     private translate: TranslateService,
-    private alertService: AlertsService
+    private alertService: AlertsService,
+    private melliFilters: MelliChartsFilterService
     ){
     this.option = {
       baseOption : JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionHourly)),
@@ -249,10 +251,27 @@ export class VitalityComponent implements OnInit, OnDestroy {
     this.inspHives.splice(index, 1);
   }
 
-  filterHiveSerie(): void{
-
+  removeSerieByFilter(filterName: string): void{
+    let option = this.stackService.getBroodChartInstance().getOption();
+    const series = option.series.filter(_filter => _filter.name.indexOf(filterName) !== -1);
+    if (series.length > 0) {
+      series.forEach(element => {
+        const indexSerie = option.series.map(_serie => _serie.name).indexOf(element.name);
+        this.option.baseOption.series.splice(indexSerie, 1);
+        option.series.splice(indexSerie, 1);
+      });
+    }
+    this.stackService.getBroodChartInstance().setOption(option, true);
   }
 
+  loadSerieByFilter(filterName: string): void{
+    if (this.stackService.getHiveSelect().length >= 1) {
+      this.loadAllHiveAfterRangeChange((options: any) => {
+        this.stackService.getBroodChartInstance().setOption(options, true);
+        this.stackService.getBroodChartInstance().hideLoading();
+      });
+    }
+  }
 
   loadAllHiveAfterRangeChange(next: Function): void {
     this.option.baseOption.series.length = 1;
@@ -308,7 +327,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
             let data = [
               new_item
             ];
-            if(insp.inspId != null){
+            if(insp.inspId != null && this.melliFilters.getShowInsp()){
               let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | inspection');
               if(seriesIndex !== -1){
                 new_series[seriesIndex].data.push(new_item);
@@ -318,7 +337,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series.push(newSerie);
               }
             }
-            else{
+            if(insp.inspId == null && this.melliFilters.getShowEvent()){
               let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | event');
               if(seriesIndex !== -1){
                 new_series[seriesIndex].data.push(new_item);
@@ -367,13 +386,15 @@ export class VitalityComponent implements OnInit, OnDestroy {
             let data = [
               new_item
             ];
-            let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | alert | ' + alert.icon);
-            if(seriesIndex !== -1){
-              new_series[seriesIndex].data.push(new_item);
-            }
-            else{
-              let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'alert | ' + alert.icon, ALERT_IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
-              new_series.push(newSerie);
+            if(this.melliFilters.getShowAlert() && this.melliFilters.getShowAlertIcon(alert.icon)){
+              let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | alert | ' + alert.icon);
+              if(seriesIndex !== -1){
+                new_series[seriesIndex].data.push(new_item);
+              }
+              else{
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'alert | ' + alert.icon, ALERT_IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
+                new_series.push(newSerie);
+              }
             }
           }
         });
@@ -476,7 +497,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
             data = [
               new_item
             ];
-            if(insp.inspId != null){
+            if(insp.inspId != null && this.melliFilters.getShowInsp()){
               let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | inspection');
               if(seriesIndex !== -1){
                 new_series[seriesIndex].data.push(new_item);
@@ -486,7 +507,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series.push(newSerie);
               }
             }
-            else{
+            if(insp.inspId == null && this.melliFilters.getShowEvent()){
               let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | event');
               if(seriesIndex !== -1){
                 new_series[seriesIndex].data.push(new_item);
@@ -530,14 +551,17 @@ export class VitalityComponent implements OnInit, OnDestroy {
             data = [
               new_item
             ];
-            let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | alert | ' + alert.icon);
-            if(seriesIndex !== -1){
-              new_series[seriesIndex].data.push(new_item);
+            if(this.melliFilters.getShowAlert() && this.melliFilters.getShowAlertIcon(alert.icon)){
+              let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | alert | ' + alert.icon);
+              if(seriesIndex !== -1){
+                new_series[seriesIndex].data.push(new_item);
+              }
+              else{
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'alert | ' + alert.icon, ALERT_IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
+                new_series.push(newSerie);
+              }
             }
-            else{
-              let newSerie = this.createNewCustomSerie(serie, new_item, 'alert | ' + alert.icon, ALERT_IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
-              new_series.push(newSerie);
-            }
+
           }
         })
       },
@@ -746,8 +770,15 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
   }
 
-  applyFilters(): void{
-
+  applyFilter(filter: string, show: boolean): void{
+    if(show){
+      this.loadSerieByFilter(filter);
+      return;
+    }
+    if(!show){
+      this.removeSerieByFilter(filter);
+      return;
+    }
   }
 
   ngOnDestroy(): void {

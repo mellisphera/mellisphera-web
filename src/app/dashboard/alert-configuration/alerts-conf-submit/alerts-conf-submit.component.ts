@@ -15,7 +15,7 @@ export class AlertsConfSubmitComponent implements OnInit, OnDestroy {
   public alertUser: AlertUser;
   public emails: string[];
   public frequency: string;
-  constructor(private alertService: AlertsService, 
+  constructor(private alertService: AlertsService,
     private socketService: SocketService,
     private notifService: MyNotifierService) {
     this.alertUser = {
@@ -26,7 +26,8 @@ export class AlertsConfSubmitComponent implements OnInit, OnDestroy {
       email: [],
       emailEnable: true,
       frequency: '',
-      alertConf: new Map()
+      alertConf: new Map(),
+      lastSend : null,
     }
     this.alertService.alertConfSubject.subscribe(
       () => {}, () => {}, () => {
@@ -39,14 +40,14 @@ export class AlertsConfSubmitComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
   }
-  
+
   onMailChange(event: any, index: number) {
     this.alertUser.email[index] = event.target.value;
   }
   onChangeFrequency() {
     console.log(this.frequency);
   }
-  
+
   sendTestMail() {
     this.socketService.sendMailTest(this.alertUser.userId);
     this.socketService.resSendMail().subscribe(

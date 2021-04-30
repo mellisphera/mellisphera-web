@@ -91,7 +91,7 @@ limitations under the License. -->
             class="fa fa-arrow-circle-right"></i></button>
       </li>
       <li class="filters-ul">
-        <button class="btn filters-btn dropdown dropdown-toogle" type="button" id="filtersMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn filters-btn dropdown dropdown-toogle" type="button" id="filtersMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="openFiltersMenu($event)">
           <img src="../../../assets/icons/ui/user_prefs.svg">
         </button>
         <div id="filtersMenu" class="dropdown-menu" aria-labelledby="filtersMenuButton" (click)="filterMenu($event)">
@@ -107,6 +107,8 @@ limitations under the License. -->
             <input type="button" class="filters-events-btn-active" width="35" height="35" (click)="filterButton($event)">
             <p class="filters-events-title">{{ 'MELLICHARTS.FILTERS.EVENT.ALL' | translate}}</p>
             <!--<img src="../../../assets/icons/inspect/inspectsV2/4_tool_jhook.svg" width="25" height="25" style="margin-left:5px;">-->
+          </div>
+          <div class="filters-events-display">
           </div>
         </div>
     </li>
