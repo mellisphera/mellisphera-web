@@ -241,7 +241,7 @@ export class InspectionService {
   *
   */
   deleteHiveInsp(ids: String[]): Observable<String[]> {
-    return this.http.post<String[]>(CONFIG.URL + 'inspection/delete/hive/' , insp, httpOptions);
+    return this.http.post<String[]>(CONFIG.URL + 'inspection/delete/hive/' , ids, httpOptions);
   }
 
 
