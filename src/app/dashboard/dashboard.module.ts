@@ -102,6 +102,7 @@ import { InspectParamsComponent } from './inspect/inspect-params/inspect-params.
     MessagesService,
     UserParamsService,
     //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
 
   ],
   declarations: [
