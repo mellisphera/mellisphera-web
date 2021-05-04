@@ -211,7 +211,11 @@ export class AlertsService {
      */
     getAllAlertsByHive(hiveId: string): Observable<AlertInterface[]> {
       return this.http.get<AlertInterface[]>(CONFIG.URL + 'alertSend/hive/' + hiveId, httpOptions);
-  }
+    }
+
+    deleteAlerts(ids: String[]): Observable<String[]>{
+      return this.http.post<String[]>(CONFIG.URL + 'alertSend/delete/' , ids, httpOptions);
+    }
 
 
     /**

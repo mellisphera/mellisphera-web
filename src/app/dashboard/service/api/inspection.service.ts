@@ -43,7 +43,7 @@ export class InspectionService {
   *
   */
   getInspectionByApiaryInspIdAndCreateDateBetween(apiaryInspId: string, createRange: Date[]): Observable<Inspection[]> {
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/apiaryinspid/' + apiaryInspId, createRange, httpOptions);
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/apiaryinspid/createbetween/' + apiaryInspId, createRange, httpOptions);
   }
 
 
@@ -54,7 +54,7 @@ export class InspectionService {
   *
   */
   getInspectionByApiaryInspIdAndOpsDateBetween(apiaryInspId: string, opsRange: Date[]): Observable<Inspection[]> {
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/apiaryinspid/' + apiaryInspId, opsRange, httpOptions);
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/apiaryinspid/opsbetween/' + apiaryInspId, opsRange, httpOptions);
   }
 
 
@@ -75,7 +75,7 @@ export class InspectionService {
   *
   */
   getInspectionByApiaryIdAndCreateDate(apiaryId: string, createDate: Date): Observable<Inspection> {
-    return this.http.post<Inspection>(CONFIG.URL + 'inspection/apiaryid/' + apiaryId, createDate, httpOptions);
+    return this.http.post<Inspection>(CONFIG.URL + 'inspection/apiaryid/create/' + apiaryId, createDate, httpOptions);
   }
 
 
@@ -86,7 +86,7 @@ export class InspectionService {
   *
   */
   getInspectionByApiaryIdAndCreateDateBetween(apiaryId: string, createRange: Date[]): Observable<Inspection[]> {
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/apiaryid/' + apiaryId, createRange, httpOptions);
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/apiaryid/createbetween/' + apiaryId, createRange, httpOptions);
   }
 
 
@@ -97,7 +97,7 @@ export class InspectionService {
   *
   */
   getInspectionByApiaryIdAndOpsDateBetween(apiaryId: string, opsRange: Date[]): Observable<Inspection[]> {
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/apiaryid/' + apiaryId, opsRange, httpOptions);
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/apiaryid/opsbetween/' + apiaryId, opsRange, httpOptions);
   }
 
 
@@ -117,7 +117,7 @@ export class InspectionService {
   *
   */
   getInspectionByCreateDateBetween(createRange: Date): Observable<Inspection[]> {
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/createdate/', createRange, httpOptions);
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/createdate/between/', createRange, httpOptions);
   }
 
 
@@ -137,7 +137,7 @@ export class InspectionService {
   *
   */
   getInspectionByOpsDateBetween(opsRange: Date): Observable<Inspection[]> {
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/opsdate/', opsRange, httpOptions);
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/opsdate/between/', opsRange, httpOptions);
   }
 
 
@@ -158,7 +158,7 @@ export class InspectionService {
   *
   */
   getInspectionByHiveIdAndCreateDateBetween(hiveId: string, createRange: Date[]): Observable<Inspection[]> {
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/hiveid/' + hiveId, createRange, httpOptions);
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/hiveid/createbetween/' + hiveId, createRange, httpOptions);
   }
 
 
@@ -169,7 +169,7 @@ export class InspectionService {
   *
   */
   getInspectionByHiveIdAndOpsDateBetween(hiveId: string, opsRange: Date[]): Observable<Inspection[]> {
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/hiveid/' + hiveId, opsRange, httpOptions);
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/hiveid/opsbetween/' + hiveId, opsRange, httpOptions);
   }
 
 
@@ -190,7 +190,7 @@ export class InspectionService {
   *
   */
   getInspectionByTypeAndCreateDateBetween(type: string, createRange: Date[]): Observable<Inspection[]> {
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/type/' + type, createRange, httpOptions);
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/type/createbetween/' + type, createRange, httpOptions);
   }
 
 
@@ -201,7 +201,7 @@ export class InspectionService {
   *
   */
   getInspectionByTypeAndOpsDateBetween(type: string, opsRange: Date[]): Observable<Inspection[]> {
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/type/' + type, opsRange, httpOptions);
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/type/opsbetween/' + type, opsRange, httpOptions);
   }
 
 
@@ -221,7 +221,7 @@ export class InspectionService {
   *
   */
   insertHiveInsp(insp: Inspection): Observable<Inspection> {
-    return this.http.post<Inspection>(CONFIG.URL + 'inspection/insp/hive/' , insp, httpOptions);
+    return this.http.post<Inspection>(CONFIG.URL + 'inspection/insert/insp/hive/' , insp, httpOptions);
   }
 
 
@@ -231,7 +231,7 @@ export class InspectionService {
   *
   */
   insertHiveEvent(insp: Inspection): Observable<Inspection> {
-    return this.http.post<Inspection>(CONFIG.URL + 'inspection/event/hive/' , insp, httpOptions);
+    return this.http.post<Inspection>(CONFIG.URL + 'inspection/insert/event/hive/' , insp, httpOptions);
   }
 
 

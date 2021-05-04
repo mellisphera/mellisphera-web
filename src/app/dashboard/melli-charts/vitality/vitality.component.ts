@@ -34,13 +34,15 @@ import { InspHive } from './../../../_model/inspHive';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertsService } from './../../service/api/alerts.service';
 import { MelliChartsFilterService } from '../service/melli-charts-filter.service';
+import { InspectionService } from './../../service/api/inspection.service';
+import { Inspection } from '../../../_model/inspection';
 
 const INSPECT_IMG_PATH = '../../../../assets/icons/inspect/';
 const ALERT_IMG_PATH = '../../../../assets/pictos_alerts/charts/';
 
 class InspHiveItem{
     name: string;
-    insp: InspHive[];
+    insp: Inspection[];
 }
 
 class AlertHiveItem{
@@ -77,7 +79,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
     private userPrefsService: UserParamsService,
     private translate: TranslateService,
     private alertService: AlertsService,
-    private melliFilters: MelliChartsFilterService
+    private melliFilters: MelliChartsFilterService,
+    private inspService: InspectionService
     ){
     this.option = {
       baseOption : JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionHourly)),
@@ -191,7 +194,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
         this.stackService.getBroodChartInstance().setOption(this.option);
         let indexSerie = this.option.baseOption.series.findIndex(_s => _s.name === params.seriesName);
         let indexHiveInspItem = this.inspHives.findIndex(_insp => _insp.name === words[0]);
-        let indexHiveInsp = this.inspHives[indexHiveInspItem].insp.findIndex(_insp => new Date(_insp.date).getTime() === new Date(params.name).getTime());
+        let indexHiveInsp = this.inspHives[indexHiveInspItem].insp.findIndex(_insp => new Date(_insp.opsDate).getTime() === new Date(params.name).getTime());
         return this.getInspTooltipFormatter(words[0], indexSerie, indexHiveInspItem, indexHiveInsp);
       }
       else{
@@ -309,25 +312,25 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
   loadEventsByHiveAfterRangeChange(obs: any, index: number, serieComplete: any): void{
     let new_series = [];
-    this.inspHiveService.getInspHiveByHiveIdAndDateBetween(obs[index].hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+    this.inspService.getInspectionByHiveIdAndOpsDateBetween(obs[index].hive._id, this.melliDateService.getRangeForReqest()).subscribe(
       _hive_insp => {
         let item : InspHiveItem = {name: obs[index].hive.name, insp: [..._hive_insp]};
         this.inspHives.push(item);
         _hive_insp.forEach(insp => {
-          let d1 : Date = new Date(insp.date);
+          let d1 : Date = new Date(insp.opsDate);
           d1.setHours(12 - (d1.getTimezoneOffset()/60));
           d1.setMinutes(0);
           d1.setSeconds(0);
           let insp_index = serieComplete.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
           if(insp_index != -1){
             let new_item = {
-              name:insp.date,
-              value:[insp.date, serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
+              name:insp.opsDate,
+              value:[insp.opsDate, serieComplete.data[insp_index].value[1], serieComplete.data[insp_index].value[2]]
             };
             let data = [
               new_item
             ];
-            if(insp.inspId != null && this.melliFilters.getShowInsp()){
+            if(insp.type == 'hive' && insp.apiaryInspId != null && this.melliFilters.getShowInsp()){
               let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | inspection');
               if(seriesIndex !== -1){
                 new_series[seriesIndex].data.push(new_item);
@@ -337,7 +340,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series.push(newSerie);
               }
             }
-            if(insp.inspId == null && this.melliFilters.getShowEvent()){
+            if(insp.type == 'hive' && insp.apiaryInspId == null && this.melliFilters.getShowEvent()){
               let seriesIndex = new_series.findIndex( s => s.name === serieComplete.name + ' | event');
               if(seriesIndex !== -1){
                 new_series[seriesIndex].data.push(new_item);
@@ -479,25 +482,25 @@ export class VitalityComponent implements OnInit, OnDestroy {
   loadEventsByHive(hive: RucheInterface, serie:any): void{
     let data = [];
     let new_series = [];
-    this.inspHiveService.getInspHiveByHiveIdAndDateBetween(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+    this.inspService.getInspectionByHiveIdAndOpsDateBetween(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
       _hive_insp => {
         let item : InspHiveItem = {name: hive.name, insp: [..._hive_insp]};
         this.inspHives.push(item);
         _hive_insp.forEach( insp => {
-          let d1 : Date = new Date(insp.date);
+          let d1 : Date = new Date(insp.opsDate);
           d1.setHours(12 - (d1.getTimezoneOffset()/60));
           d1.setMinutes(0);
           d1.setSeconds(0);
           let index = serie.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
           if(index != -1){
             let new_item = {
-              name:insp.date,
-              value:[insp.date, serie.data[index].value[1], serie.data[index].value[2]]
+              name:insp.opsDate,
+              value:[insp.opsDate, serie.data[index].value[1], serie.data[index].value[2]]
             };
             data = [
               new_item
             ];
-            if(insp.inspId != null && this.melliFilters.getShowInsp()){
+            if(insp.type == 'hive' && insp.apiaryInspId != null && this.melliFilters.getShowInsp()){
               let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | inspection');
               if(seriesIndex !== -1){
                 new_series[seriesIndex].data.push(new_item);
@@ -507,7 +510,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series.push(newSerie);
               }
             }
-            if(insp.inspId == null && this.melliFilters.getShowEvent()){
+            if(insp.type == 'hive' && insp.apiaryInspId == null && this.melliFilters.getShowEvent()){
               let seriesIndex = new_series.findIndex( s => s.name === serie.name + ' | event');
               if(seriesIndex !== -1){
                 new_series[seriesIndex].data.push(new_item);
@@ -594,28 +597,30 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   getInspTooltipFormatter(hiveName: string, indexSerie: number, indexHiveInspItem: number, indexHiveInsp: number): string{
-    let insp : InspHive = this.inspHives[indexHiveInspItem].insp[indexHiveInsp];
-    let date : Date = new Date(insp.date);
-    if(insp.inspId != null){
+    let insp : Inspection = this.inspHives[indexHiveInspItem].insp[indexHiveInsp];
+    let date : Date = new Date(insp.opsDate);
+    if(insp.apiaryInspId != null){
       let test = date.getTimezoneOffset();
       date.setHours(date.getHours() + (test / 60));
     }
     let res =
     `<div>` +
-    `<h5>${hiveName} | ${this.unitService.getHourlyDate(date)} </h5>` +
-    `<div>`;
-    insp.obs.forEach( o => {
-      let name = this.translate.instant('MELLICHARTS.BROOD.TOOLTIP.'+ o.name.toUpperCase());
-      res += `<div style="display:flex; width:100%; justify-content:center; align-items:center; margin-left: 5px;">`;
-      res += `<div style="width:25px; height:25px; margin-top:-5px; background-image:url('${INSPECT_IMG_PATH + o.img}'); background-repeat:no-repeat; background-size:25px; background-position: center;"></div>`;
-      res += `<div style="height:32px; display:flex; margin-left:10px; margin-top:5px; align-items:center;">${name}</div>`
+    `<h5>${hiveName} | ${this.unitService.getHourlyDate(date)} </h5>`;
+    if(insp.obs != null){
+      res += `<div>`;
+      insp.obs.forEach( o => {
+        let name = this.translate.instant('MELLICHARTS.BROOD.TOOLTIP.'+ o.name.toUpperCase());
+        res += `<div style="display:flex; width:100%; justify-content:center; align-items:center; margin-left: 5px;">`;
+        res += `<div style="width:25px; height:25px; margin-top:-5px; background-image:url('${INSPECT_IMG_PATH + o.img}'); background-repeat:no-repeat; background-size:25px; background-position: center;"></div>`;
+        res += `<div style="height:32px; display:flex; margin-left:10px; margin-top:5px; align-items:center;">${name}</div>`
+        res += `</div>`;
+      });
       res += `</div>`;
-    });
-    res += `</div>`;
+    }
 
     res += `<div style="margin-top: 10px;">`;
-    if(insp.notes != null){
-      res += `<div style="margin-left: 5px; display:flex; width:100%; justify-content:center; align-items:center;">${insp.notes}</div>`;
+    if(insp.description != null){
+      res += `<div style="margin-left: 5px; display:flex; width:100%; justify-content:center; align-items:center;">${insp.description}</div>`;
     }
     res += `</div>`;
 
@@ -628,7 +633,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     return res;
   }
 
-  insertNewEvent(hive_event: InspHive): void{
+  insertNewEvent(hive_event: Inspection): void{
     let hive_name: string;
     this.rucheService.getHiveByHiveId(hive_event.hiveId).subscribe(
       _hive => {
@@ -663,7 +668,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
   }
 
-  insertAlertNewSerie(hive_event: InspHive, hive_name: string): void{
+  insertAlertNewSerie(hive_event: Inspection, hive_name: string): void{
      // create new serie if hive selected
      let selected = -1;
      selected = this.stackService.getHiveSelect().findIndex( h => h.name === hive_name );
@@ -674,7 +679,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
          let words = this.option.baseOption.series[i].name.split(' | ');
          if(words.includes(hive_name) && words.length === 2 && this.option.baseOption.series[i].data.length != null){
            for(let j=0; j<this.option.baseOption.series[i].data.length; j++){
-             let d1 : Date = new Date(hive_event.date);
+             let d1 : Date = new Date(hive_event.opsDate);
              d1.setHours(12 - (d1.getTimezoneOffset()/60));
              d1.setMinutes(0);
              d1.setSeconds(0);
@@ -689,8 +694,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
        if(seriesDataIndex !== -1){
          let new_item = {
-           name:hive_event.date,
-           value:[hive_event.date, this.option.baseOption.series[seriesIndex].data[seriesDataIndex].value[1], this.option.baseOption.series[seriesIndex].data[seriesDataIndex].value[2]]
+           name:hive_event.opsDate,
+           value:[hive_event.opsDate, this.option.baseOption.series[seriesIndex].data[seriesDataIndex].value[1], this.option.baseOption.series[seriesIndex].data[seriesDataIndex].value[2]]
          };
          let data = [
            new_item
@@ -702,14 +707,14 @@ export class VitalityComponent implements OnInit, OnDestroy {
      }
   }
 
-  insertAlertExistingSerie(hive_event: InspHive, hive_name: string, seriesEventIndex: number): void{
+  insertAlertExistingSerie(hive_event: Inspection, hive_name: string, seriesEventIndex: number): void{
     let seriesIndex = -1;
     let seriesDataIndex = -1;
     for(let i=0; i<this.option.baseOption.series.length; i++){
       let words = this.option.baseOption.series[i].name.split(' | ');
       if(words.includes(hive_name) && words.length === 2 && this.option.baseOption.series[i].data.length != null){
         for(let j=0; j<this.option.baseOption.series[i].data.length; j++){
-          let d1 : Date = new Date(hive_event.date);
+          let d1 : Date = new Date(hive_event.opsDate);
           d1.setHours(12 - (d1.getTimezoneOffset()/60));
           d1.setMinutes(0);
           d1.setSeconds(0);
@@ -725,24 +730,24 @@ export class VitalityComponent implements OnInit, OnDestroy {
     let serie = Object.assign({}, this.option.baseOption.series[seriesIndex]);
     if(seriesDataIndex !== -1){
       let new_item = {
-        name:hive_event.date,
-        value:[hive_event.date, serie.data[seriesDataIndex].value[1], serie.data[seriesDataIndex].value[2]]
+        name:hive_event.opsDate,
+        value:[hive_event.opsDate, serie.data[seriesDataIndex].value[1], serie.data[seriesDataIndex].value[2]]
       };
       this.option.baseOption.series[seriesEventIndex].data.push(new_item);
       this.stackService.getBroodChartInstance().setOption(this.option);
     }
   }
 
-  deleteEvents(ids: String[], insps: InspHive[]): void{
+  deleteEvents(ids: String[], insps: Inspection[]): void{
     loopids:
       for(let i = 0; i<ids.length; i++){
-        let insp_delete: InspHive;
+        let insp_delete: Inspection;
         let insp_item_index;
         let insp_index_del;
     loopinspHives:
         for(let j = 0; j<this.inspHives.length; j++){
           for(let k=0; k<this.inspHives[j].insp.length; k++){
-            if( new Date(this.inspHives[j].insp[k].date).getTime() === new Date(insps[i].date).getTime() ){
+            if( new Date(this.inspHives[j].insp[k].opsDate).getTime() === new Date(insps[i].opsDate).getTime() ){
               insp_delete = Object.assign({}, this.inspHives[j].insp[k]);
               insp_item_index = j;
               insp_index_del = k;
@@ -754,9 +759,9 @@ export class VitalityComponent implements OnInit, OnDestroy {
         for(let t=0; t<this.option.baseOption.series.length; t++){
           if(this.option.baseOption.series[t].data != null){
             for(let u=0; u<this.option.baseOption.series[t].data.length; u++){
-              if(this.option.baseOption.series[t].data[u].name === insp_delete.date){
+              if(this.option.baseOption.series[t].data[u].name === insp_delete.opsDate){
                 this.option.baseOption.series[t].data.splice(u, 1);
-                this.inspHives[insp_item_index].insp.slice(insp_index_del, 1);
+                this.inspHives[insp_item_index].insp.splice(insp_index_del, 1);
                 break loopOptionSerie;
               }
             }
@@ -766,8 +771,43 @@ export class VitalityComponent implements OnInit, OnDestroy {
       this.stackService.getBroodChartInstance().setOption(this.option);
   }
 
-  deleteAlerts(): void{
-
+  deleteAlerts(ids: String[], alerts: AlertInterface[]): void{
+    console.log(ids);
+    loopids:
+      for(let i = 0; i<ids.length; i++){
+        let alert_delete: AlertInterface;
+        let alert_item_index;
+        let alert_index_del;
+    loopAlertHives:
+        for(let j = 0; j<this.alertHives.length; j++){
+          for(let k=0; k<this.alertHives[j].alerts.length; k++){
+            if( this.alertHives[j].alerts[k]._id === alerts[i]._id ){
+              alert_delete = Object.assign({}, this.alertHives[j].alerts[k]);
+              alert_item_index = j;
+              alert_index_del = k;
+              break loopAlertHives;
+            }
+          }
+        }
+    loopOptionSerie:
+        for(let t=0; t<this.option.baseOption.series.length; t++){
+          console.log(this.option.baseOption.series[t]);
+          if(this.option.baseOption.series[t].data != null){
+            for(let u=0; u<this.option.baseOption.series[t].data.length; u++){
+              if(this.option.baseOption.series[t].data[u].name === alert_delete.opsDate
+                 && this.option.baseOption.series[t].name.includes('alert')
+                ){
+                console.log(this.option.baseOption.series[t].data[u].name);
+                console.log(alert_delete.opsDate);
+                this.option.baseOption.series[t].data.splice(u, 1);
+                this.alertHives[alert_item_index].alerts.splice(alert_index_del, 1);
+                break loopOptionSerie;
+              }
+            }
+          }
+        }
+      }
+      this.stackService.getBroodChartInstance().setOption(this.option);
   }
 
   applyFilter(filter: string, show: boolean): void{

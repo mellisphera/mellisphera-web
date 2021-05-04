@@ -476,7 +476,7 @@
           "ADD":{
             "TITLE": "Add Event",
             "DATE": "Date",
-            "DATE_PLACEHOLDER": "Choose date",
+            "DATE_PLACEHOLDER": "Observation date",
             "DATE_ERROR": "Please fill the date field",
             "EVENT": "Event",
             "NOTES": "Notes",

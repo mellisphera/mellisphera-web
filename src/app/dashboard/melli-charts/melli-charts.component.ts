@@ -41,6 +41,9 @@ import { InspHiveService } from '../service/api/insp-hive.service';
 import { AlertInterface } from './../../_model/alert';
 import { AlertsService } from './../service/api/alerts.service';
 import { MelliChartsFilterService } from './service/melli-charts-filter.service';
+import { InspectionService } from './../service/api/inspection.service';
+import { Inspection } from '../../_model/inspection';
+import { arrayBufferToBase64 } from 'angular-file/file-upload/fileTools';
 
 const PREFIX_PATH = '/dashboard/explore/';
 const IMG_PATH = '../../../assets/icons/inspect/';
@@ -72,20 +75,24 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   public hiveEvent: RucheInterface;
   public apiaryEvent: RucherModel;
 
-  public hiveEventList: InspHive[];
+  public hiveEventList: Inspection[];
   public hiveAlertList: AlertInterface[];
-  public hiveEventToDelete: InspHive[] | null;
+  public hiveEventToDelete: Inspection[] | null;
   public hiveAlertToDelete: AlertInterface[] | null;
 
-  public new_event: InspHive = {
+  public new_event: Inspection = {
     _id: null,
-    inspId: null,
-    date: null,
+    apiaryInspId: null,
     apiaryId: null,
     hiveId: null,
+    userId: null,
+    createDate: null,
+    opsDate: null,
+    type: null,
+    description: null,
+    tags: [],
     tasks: [],
     obs: [],
-    notes: null,
     todo: null
   };
 
@@ -123,7 +130,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private inspHiveService: InspHiveService,
     private alertService: AlertsService,
     private translate: TranslateService,
-    public melliFilters: MelliChartsFilterService
+    public melliFilters: MelliChartsFilterService,
+    private inspService: InspectionService,
     ) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
@@ -562,13 +570,17 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
     this.new_event = {
       _id: null,
-      inspId: null,
-      date: null,
+      apiaryInspId: null,
       apiaryId: null,
       hiveId: null,
+      userId: null,
+      createDate: null,
+      opsDate: null,
+      type: null,
+      description: null,
+      tags: [],
       tasks: [],
       obs: [],
-      notes: null,
       todo: null
     };
 
@@ -592,6 +604,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   showAddEvent(): void {
     this.new_event.hiveId = this.hiveEvent._id;
     this.new_event.apiaryId = this.hiveEvent.apiaryId;
+    this.new_event.userId = this.userService.getIdUserLoged();
+    this.new_event.createDate = new Date();
+    this.new_event.type = 'hive';
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'block';
     (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'block';
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = null;
@@ -642,12 +657,12 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   setNewEventDate(): void {
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = moment(this.newEventDate).format(this.user_pref.timeFormat);
-    this.new_event.date = this.newEventDate;
+    this.new_event.opsDate = this.newEventDate;
   }
 
   saveNotes(evt: Event): void {
     const textArea = <HTMLTextAreaElement>evt.target;
-    this.new_event.notes = textArea.value;
+    this.new_event.description = textArea.value;
   }
 
   saveTodo(evt: Event): void {
@@ -656,14 +671,14 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   insertAddEvent(): void {
-    if (this.new_event.date == null) {
+    if (this.new_event.opsDate == null) {
       (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'flex';
       return;
     }
     (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'none';
     (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'none';
-    this.inspHiveService.createNewInspHiveEvent(this.new_event).subscribe(
+    this.inspService.insertHiveEvent(this.new_event).subscribe(
       () => {}, () => {}, () => {}
     );
     this.insertOnGraph();
@@ -700,10 +715,10 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     (<HTMLElement>document.getElementsByClassName('delete-event-screen')[0]).style.display = 'block';
     this.hiveEventList = [];
     this.hiveAlertList = [];
-    this.inspHiveService.getInspHiveByHiveId(this.hiveEvent._id).subscribe(
+    this.inspService.getInspectionByHiveId(this.hiveEvent._id).subscribe(
       _hives_insp => {
         _hives_insp.forEach( insp => {
-          if (insp.inspId == null) {
+          if (insp.apiaryInspId == null) {
             this.hiveEventList.push(insp);
           }
         });
@@ -755,7 +770,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       div2.style.width = '20%';
       div2.style.textAlign = 'center';
       const p1 = document.createElement('p');
-      p1.textContent = this.unitService.getHourlyDate(new Date(evt.date));
+      p1.textContent = this.unitService.getHourlyDate(new Date(evt.opsDate));
       div2.appendChild(p1);
       div.appendChild(div2);
 
@@ -764,11 +779,14 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       div3.style.display = 'flex';
       div3.style.justifyContent = 'center';
       div3.style.alignItems = 'center';
-      evt.obs.forEach((obs) => {
-        const obsDiv = document.createElement('div');
-        obsDiv.className = 'hives-obs-delete hives-' + obs.name + '-img-active';
-        div3.appendChild(obsDiv);
-      });
+      if(evt.obs != null){
+        evt.obs.forEach((obs) => {
+          const obsDiv = document.createElement('div');
+          obsDiv.className = 'hives-obs-delete hives-' + obs.name + '-img-active';
+          div3.appendChild(obsDiv);
+        });
+      }
+
       div.appendChild(div3);
 
       const div4 = document.createElement('div');
@@ -802,7 +820,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       checkbox.type = 'checkbox';
       checkbox.onchange = (evt: Event) => {
         const n = index;
-        this.deleteChange(evt, n);
+        const type = 'event';
+        this.deleteChange(evt, n, type);
       };
 
       div6.appendChild(checkbox);
@@ -816,7 +835,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       textNotes.disabled = true;
       textNotes.spellcheck = false;
       textNotes.className = 'hives-todo-textarea-delete';
-      textNotes.value = evt.notes;
+      textNotes.value = evt.description;
       divNotes.appendChild(textNotes);
 
       const divTodo = document.createElement('div');
@@ -889,7 +908,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       checkbox.type = 'checkbox';
       checkbox.onchange = (evt: Event) => {
         const n = index;
-        //this.deleteChange(evt, n);
+        const type = 'alert';
+        this.deleteChange(evt, n, type);
       };
 
       div5.appendChild(checkbox);
@@ -929,27 +949,51 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  deleteChange(evt: Event, index: number): void {
+  deleteChange(evt: Event, index: number, type: string): void {
     const checkbox = (<HTMLInputElement>evt.target);
-    if (checkbox.checked) {
-      this.hiveEventToDelete[index] = Object.assign({}, this.hiveEventList[index]);
-    } else {
-      this.hiveEventToDelete[index] = null;
+    if(type === 'event'){
+      if (checkbox.checked) {
+        this.hiveEventToDelete[index] = Object.assign({}, this.hiveEventList[index]);
+      } else {
+        this.hiveEventToDelete[index] = null;
+      }
+      return;
+    }
+    if(type === 'alert'){
+      if (checkbox.checked) {
+        this.hiveAlertToDelete[index] = Object.assign({}, this.hiveAlertList[index]);
+      } else {
+        this.hiveAlertToDelete[index] = null;
+      }
+      return;
     }
   }
 
   deleteDeleteEvent(): void {
     const arrayId: string[] = [];
-    const inspArray: InspHive[] = [];
+    const inspArray: Inspection[] = [];
+    const arrayIdAlert: string[] = [];
+    const alertArray: AlertInterface[] = [];
     this.hiveEventToDelete.forEach(e => {
       if (e != null) {
         arrayId.push(e._id);
         inspArray.push(e);
       }
     });
-    this.inspHiveService.deleteInspHiveEvent(arrayId).subscribe(
+    this.hiveAlertToDelete.forEach(a => {
+      if (a != null){
+        arrayIdAlert.push(a._id);
+        alertArray.push(a);
+      }
+    })
+    this.inspService.deleteHiveInsp(arrayId).subscribe(
       () => {}, () => {}, () => {
         this.deleteOnGraph(arrayId, inspArray);
+      }
+    );
+    this.alertService.deleteAlerts(arrayIdAlert).subscribe(
+      () => {}, () => {}, () => {
+        this.deleteAlertOnGraph(arrayIdAlert, alertArray);
       }
     );
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'none';
@@ -961,12 +1005,26 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     (<HTMLElement>document.getElementsByClassName('delete-event-screen')[0]).style.display = 'none';
   }
 
-  deleteOnGraph(arrayId: string[], inspArray: InspHive[]): void {
+  deleteOnGraph(arrayId: string[], inspArray: Inspection[]): void {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
         break;
       case PREFIX_PATH + 'brood':
         this.broodComponent.deleteEvents(arrayId, inspArray);
+        break;
+      case PREFIX_PATH + 'weight':
+        break;
+      case PREFIX_PATH + 'stack':
+        break;
+    }
+  }
+
+  deleteAlertOnGraph(arrayId: string[], alertArray: AlertInterface[]): void{
+    switch (this.router.url) {
+      case PREFIX_PATH + 'hive':
+        break;
+      case PREFIX_PATH + 'brood':
+        this.broodComponent.deleteAlerts(arrayId, alertArray);
         break;
       case PREFIX_PATH + 'weight':
         break;
