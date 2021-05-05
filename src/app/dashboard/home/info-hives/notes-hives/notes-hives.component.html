@@ -32,7 +32,7 @@ limitations under the License. -->
     <div class="user-sensors panel-body" id="notesHives">
       <table class="table">
         <tbody>
-          <ng-container *ngFor="let hiveObs of getNoteByHiveId(rucheService.getCurrentHive()._id); index as i">
+          <ng-container *ngFor="let hiveObs of getInspectionByHiveId(rucheService.getCurrentHive()._id); index as i">
               <tr class="hoverStyle" *ngIf="hiveObs.type === 'hive'">
                 <td style="width: 100px;">{{ hiveObs.opsDate | myDate }}</td>
                 <td>{{hiveObs.description}}</td>
@@ -51,7 +51,7 @@ limitations under the License. -->
 
           </ng-container>
           <ng-container
-            *ngIf="observationService.observationsHive !== undefined && observationService.observationsHive.length === 0">
+            *ngIf="inspectionService.inspectionsHive !== undefined && inspectionService.inspectionsHive.length === 0">
             <tr class="hoverStyle">
               <td>{{ 'HIVE_DETAIL.OBSERVATIONS.NONOTES' | translate}}</td>
             </tr>

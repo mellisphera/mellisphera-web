@@ -33,6 +33,7 @@ import { AlertInterface } from '../../../../_model/alert';
 import { GLOBAL_ICONS } from '../../charts/icons/icons';
 import { MyDate } from '../../../../class/MyDate';
 import { UserParamsService } from '../../../preference-config/service/user-params.service';
+import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
 
 
 
@@ -88,7 +89,8 @@ export class DailyManagerService {
     private graphGlobal: GraphGlobal,
     private astroService: AstroService,
     private dailyStock: DailyStockHoneyService,
-    private unitService: UnitService
+    private unitService: UnitService,
+    private inspectionService: InspectionService,
   ) {
     this.meanPeriodDevice = {
       value: 0,
@@ -886,7 +888,7 @@ export class DailyManagerService {
 
   getChartAlert(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     const obs: Array<Observable<any>> = [
-      this.observationService.getObservationByHiveForMelliCharts(hiveId, range),
+      this.inspectionService.getInspectionByHiveIdAndOpsDateBetween(hiveId, range),
       this.alertService.getAlertByHive(hiveId, range)
     ]
     Observable.forkJoin(obs).subscribe(
@@ -1106,7 +1108,7 @@ export class DailyManagerService {
       value = value + parseInt(_value[1], 10);
     });
     let meanValue = this.unitService.getValRound(mean ? value / data.length : value);
-    /*     switch(type.name) {
+    /* switch(type.name) {
           case 'RAIN':
             meanValue = this.unitService.convertMilimetreToPouce(meanValue, this.unitService.getUserPref().unitSystem, false);
             break;

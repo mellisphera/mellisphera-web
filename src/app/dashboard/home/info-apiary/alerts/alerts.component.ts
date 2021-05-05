@@ -27,6 +27,7 @@ import { SERIES } from '../../../melli-charts/charts/SERIES';
 import { GLOBAL_ICONS } from '../../../melli-charts/charts/icons/icons';
 import * as echarts from 'echarts';
 import { TranslateService } from '@ngx-translate/core';
+import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
 
 @Component({
   selector: 'app-alerts',
@@ -60,7 +61,8 @@ export class AlertsComponent implements OnInit {
     public login: UserloggedService,
     private graphGlobal: GraphGlobal,
     private myNotifer: MyNotifierService,
-    private unitService: UnitService) {
+    private unitService: UnitService,
+    private inspService: InspectionService) {
 
     this.notifier = this.notifierService;
     this.eltOnClickId = null;
@@ -176,7 +178,7 @@ export class AlertsComponent implements OnInit {
   loadCalendar() {
     this.echartInstance.showLoading();
     const obs: Array<Observable<any>> = [
-      this.observationService.getObservationByapiaryIdForMelliUx(this.rucherService.getCurrentApiary()),
+      this.inspService.getInspectionByApiaryId(this.rucherService.rucher._id),
       this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts())
     ];
     Observable.forkJoin(obs).subscribe(
@@ -309,11 +311,11 @@ export class AlertsComponent implements OnInit {
         if (_singleData.description || _singleData.description === '') {
           type = 'Inspection';
           img = '<img style={S} src={I} />';
-          img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
+          img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect-api.svg');
         } else {
           img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.icon + '.svg />';
         }
-        img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
+        img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:30px;height:30px; background-color:red;');
         return {
           name: img,
           value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertsService.getMessageAlertByCode(_singleData),

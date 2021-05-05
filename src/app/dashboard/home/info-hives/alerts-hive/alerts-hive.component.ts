@@ -30,6 +30,7 @@ import { SERIES } from '../../../melli-charts/charts/SERIES';
 import { GLOBAL_ICONS } from '../../../melli-charts/charts/icons/icons';
 import * as echarts from 'echarts';
 import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
+import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
 
 
 @Component({
@@ -66,7 +67,8 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
     public notifierService: NotifierService,
     private renderer: Renderer2,
     private myNotifer: MyNotifierService,
-    private observationService: ObservationService) {
+    private observationService: ObservationService,
+    private inspService: InspectionService) {
     this.echartInstance = null;
     this.noData = true;
     this.img = 'M581.176,290.588C581.176,130.087,451.09,0,290.588,0S0,130.087,0,290.588s130.087,290.588,290.588,290.588' +
@@ -178,7 +180,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
 
   loadCalendar() {
     const obs: Array<Observable<any>> = [
-      this.observationService.getObservationByHiveForMelliCharts(this.rucheService.getCurrentHive()._id, MyDate.getRangeForCalendarAlerts()),
+      this.inspService.getInspectionByHiveIdAndOpsDateBetween(this.rucheService.getCurrentHive()._id, MyDate.getRangeForCalendarAlerts()),
       this.alertsService.getAlertByHive(this.rucheService.getCurrentHive()._id, MyDate.getRangeForCalendarAlerts())
     ];
     Observable.forkJoin(obs).subscribe(
@@ -227,7 +229,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
               const nbNote = dataByDate.filter(_elt => _elt.description).length;
               //console.log(nbNote + '===' + dataByDate.length)
               if (nbNote === dataByDate.length) {
-                path = this.observationService.getPictoInspect(cellPoint);
+                path = this.observationService.getPictoEvent(cellPoint);
                 group.children = group.children.concat(path);
               } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                 path = {
@@ -246,7 +248,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
               }
             } else if (dataByDate.length === 1) {
               if (dataByDate !== undefined && dataByDate[0].description) {
-                group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
+                group.children = group.children.concat(this.observationService.getPictoEvent(cellPoint));
               } else {
                 group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].icon, cellPoint, params.coordSys));
               }
@@ -328,7 +330,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
           } else {
             img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.icon + '.svg />';
           }
-          img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
+          img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:30px;height:30px; background-color:red;');
           return {
             name: img,
             value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertsService.getMessageAlertByCode(_singleData),

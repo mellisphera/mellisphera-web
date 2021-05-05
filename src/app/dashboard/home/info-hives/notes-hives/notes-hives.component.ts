@@ -26,6 +26,8 @@ import { MyNotifierService } from '../../../service/my-notifier.service';
 import { NotifList } from '../../../../../constants/notify';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
+import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
+import { Inspection } from '../../../../_model/inspection';
 
 @Component({
   selector: 'app-notes-hives',
@@ -35,11 +37,13 @@ import * as moment from 'moment';
 export class NotesHivesComponent implements OnInit,AfterViewChecked {
   @Output() noteChange = new EventEmitter<any>();
   ObservationForm: FormGroup;
+  InspectionForm: FormGroup;
   screenHeight:any;
     screenWidth:any;
   radioObs: boolean;
   typeAjout: any;
   private newObs: Observation;
+  private newInsp: Inspection;
   private notifier: NotifierService;
   typeObs: boolean;
   optionsDate = {
@@ -56,7 +60,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     private notifyService: NotifierService,
     public userParamService: UserParamsService,
     public userService: UserloggedService,
-    private myNotifer: MyNotifierService
+    private myNotifer: MyNotifierService,
+    public inspectionService: InspectionService
   ) {
     this.typeObs = false;
     this.notifier = notifyService;
@@ -102,6 +107,23 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       return -(moment(noteA.opsDate).unix() - moment(noteB.opsDate).unix());
     });
   }
+
+
+ /**
+  *
+  *
+  * @param {string} apiaryId
+  * @returns {Inspection[]}
+  * @memberof NotesComponent
+  */
+  getInspectionByHiveId(hiveId: string): Inspection[]{
+    return this.inspectionService.inspectionsHive.filter(_insp => _insp.hiveId === hiveId).sort((inspA, inspB) => {
+      return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
+    });
+  }
+
+
+
   initForm() {
     const defautDate = new Date();
     // defautDate.setUTCHours(new Date().getHours());
@@ -110,42 +132,47 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       'type': 'HiveObs',
       'date': [ moment().toDate(), Validators.required],
     });
+    this.InspectionForm = this.formBuilder.group({
+      'sentence': [null, Validators.compose([Validators.required])],
+      'type': 'HiveObs',
+      'date': [ moment().toDate(), Validators.required],
+    });
   }
 
-  createObservation() {
+  createInspection() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-      const formValue = this.ObservationForm.value;
-      this.newObs = formValue;
-      this.newObs.typeInspect = 'HiveObs';
-      this.newObs.type = 'hive';
-      this.newObs.opsDate = formValue.date;
-      this.newObs.createDate = new Date();
-      this.newObs.description = formValue.sentence;
-      this.newObs.hiveId = this.rucheService.getCurrentHive()._id;
-      this.newObs.apiaryId = this.rucherService.rucher._id;
-      this.newObs.userId = this.userService.getIdUserLoged();
-      this.ObservationForm.reset();
-      this.observationService.createObservation(this.newObs).subscribe((obs) => {
-        this.observationService.observationsHive.push(obs);
+      const formValue = this.InspectionForm.value;
+      this.newInsp = formValue;
+      this.newInsp.type = 'hive';
+      this.newInsp.opsDate = formValue.date;
+      this.newInsp.createDate = new Date();
+      this.newInsp.description = formValue.sentence;
+      this.newInsp.hiveId = this.rucheService.getCurrentHive()._id;
+      this.newInsp.apiaryId = this.rucherService.rucher._id;
+      this.newInsp.userId = this.userService.getIdUserLoged();
+      this.InspectionForm.reset();
+      this.inspectionService.insertHiveEvent(this.newInsp).subscribe((obs) => {
+        this.inspectionService.inspectionsHive.push(obs);
 
       }, (_err) => {
         if (_err.error_code === 403) {
-          this.observationService.observationsHive.push(this.newObs);
+          this.inspectionService.inspectionsHive.push(this.newInsp);
         }
       }, () => {
-        this.observationService.emitHiveSubject();
+        this.inspectionService.emitHiveSubject();
         this.initForm();
         if (this.translateService.currentLang === 'fr'){
-          this.notifier.notify('success', 'Observation créée');
+          this.notifier.notify('success', 'Inspection créée');
         } else {
-          this.notifier.notify('success', 'Created Observation');
+          this.notifier.notify('success', 'Created Inspection');
         }
-        this.noteChange.emit(this.newObs);
+        this.noteChange.emit(this.newInsp);
       });
     } else {
       this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
     }
   }
+  
   createAction() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.ObservationForm.value;
@@ -187,33 +214,32 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     this.ObservationForm.setValue(donnée);
   }
 
-  onEditObservation() {
+  onEditInspection() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-      const formValue = this.ObservationForm.value;
-      this.newObs.description = formValue.sentence;
-      this.newObs.createDate = new Date();
-      this.newObs.type = 'hive';
-      this.newObs.opsDate = formValue.date;
-      this.newObs.userId = this.userService.getIdUserLoged();
-      this.newObs.apiaryId = this.rucherService.rucher._id;
-      this.newObs.hiveId = this.rucheService.getCurrentHive()._id;
-      this.newObs.typeInspect = formValue.type;
-      const index = this.observationService.observationsHive.indexOf(this.newObs);
+      const formValue = this.InspectionForm.value;
+      this.newInsp.description = formValue.sentence;
+      this.newInsp.createDate = new Date();
+      this.newInsp.type = 'hive';
+      this.newInsp.opsDate = formValue.date;
+      this.newInsp.userId = this.userService.getIdUserLoged();
+      this.newInsp.apiaryId = this.rucherService.rucher._id;
+      this.newInsp.hiveId = this.rucheService.getCurrentHive()._id;
+      const index = this.inspectionService.inspectionsHive.indexOf(this.newInsp);
       // this.initForm();
-      this.observationService.updateObservation(this.newObs).subscribe(() => { }, 
+      this.inspectionService.updateInspection(this.newInsp).subscribe(() => { }, 
       (_err) => {
         if (_err.error_code === 403) {
-          this.observationService.observationsHive[index] = this.newObs;
+          this.inspectionService.inspectionsHive[index] = this.newInsp;
         }
       }, () => {
-        this.observationService.observationsHive[index] = this.newObs;
-        this.observationService.emitHiveSubject();
+        this.inspectionService.inspectionsHive[index] = this.newInsp;
+        this.inspectionService.emitHiveSubject();
         if (this.translateService.currentLang === 'fr') {
-          this.notifier.notify('success', 'Note mis à jour');
+          this.notifier.notify('success', 'Inspection mis à jour');
         } else {
-          this.notifier.notify('success', 'Updated Note');
+          this.notifier.notify('success', 'Updated Inspection');
         }
-        this.noteChange.emit(this.newObs);
+        this.noteChange.emit(this.newInsp);
       })
     } else {
       this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
@@ -222,24 +248,23 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
 
   deleteObsR() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-      const formValue = this.ObservationForm.value;
-      this.newObs.description = formValue.sentence;
-      this.newObs.createDate = formValue.date;
-      this.newObs.typeInspect = formValue.type;
-      const index = this.observationService.observationsHive.indexOf(this.newObs);
+      const formValue = this.InspectionForm.value;
+      this.newInsp.description = formValue.sentence;
+      this.newInsp.createDate = formValue.date;
+      const index = this.inspectionService.inspectionsHive.indexOf(this.newInsp);
       document.getElementById('editObservationModal').style.display = 'none';
-      this.observationService.deleteObservation(this.newObs._id).subscribe(() => { }, 
+      this.inspectionService.deleteHiveInsp([this.newObs._id]).subscribe(() => { }, 
       (_err) => {
         if (_err.error_code === 403) {
-          this.observationService.observationsHive.splice(index, 1);
+          this.inspectionService.inspectionsHive.splice(index, 1);
         }
       }, () => {
-        this.observationService.observationsHive.splice(index, 1);
-        this.observationService.emitHiveSubject();
+        this.inspectionService.inspectionsHive.splice(index, 1);
+        this.inspectionService.emitHiveSubject();
         if (this.translateService.currentLang === 'fr') {
-          this.notifier.notify('success', 'Note supprimée');
+          this.notifier.notify('success', 'Inspection supprimée');
         } else {
-          this.notifier.notify('success', 'Deleted Note');
+          this.notifier.notify('success', 'Inspection Note');
         }
         this.noteChange.emit(false);
       });
@@ -249,7 +274,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   }
 
   resetObservationForm() {
-    this.ObservationForm.get('sentence').reset();
+    this.InspectionForm.get('sentence').reset();
   }
 
 }

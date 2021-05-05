@@ -19,7 +19,7 @@ import { DataRange } from '../../../_model/data-range';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { UnitService } from '../unit.service';
 import { RucheService } from './ruche.service';
-import { INSPECTIONS } from '../../melli-charts/charts/icons/icon_inspect';
+import { INSPECTIONS, EVENTS } from '../../melli-charts/charts/icons/icon_inspect';
 import { filter } from 'rxjs/operators';
 
 const httpOptions = {
@@ -213,6 +213,20 @@ export class ObservationService {
   
   getPictoInspect(cellPoint: Array<number>) {
     return INSPECTIONS.HiveAct.map(_path => {
+      return  {
+          type: 'path',
+          scale: _path.scale,
+          shape: {
+              pathData: _path.path,
+          },
+          position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
+          style: _path.style
+      };
+    });
+  }
+
+  getPictoEvent(cellPoint: Array<number>){
+    return EVENTS.HiveAct.map(_path => {
       return  {
           type: 'path',
           scale: _path.scale,

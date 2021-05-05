@@ -22,6 +22,8 @@ import { MyNotifierService } from '../../../service/my-notifier.service';
 import { NotifList } from '../../../../../constants/notify';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
+import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
+import { Inspection } from '../../../../_model/inspection';
 
 @Component({
   selector: 'app-notes',
@@ -40,6 +42,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   public message: string;
   private selectHive: RucheInterface;
   public observationForm: FormGroup;
+  public inspectionForm: FormGroup;
   private hiveIndex: number;
   public type: string;
   public noteDateTime: Date;
@@ -47,6 +50,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   private notify: NotifierService;
   private subscribe: Subscription;
   private newObs: Observation;
+  private newInsp: Inspection;
   public updateRucherInput: boolean;
   public settings: any;
   private obsSubject: Subscription;
@@ -54,6 +58,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   constructor(public rucherService: RucherService,
     private notifyService: NotifierService,
     public observationService: ObservationService,
+    public inspectionService: InspectionService,
     private formBuilder: FormBuilder,
     public userService: UserloggedService,
     private translateService: TranslateService,
@@ -104,6 +109,19 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     });
   }
 
+   /**
+   *
+   *
+   * @param {string} apiaryId
+   * @returns {Inspection[]}
+   * @memberof NotesComponent
+   */
+  getInspectionByApiaryId(apiaryId: string): Inspection[]{
+    return this.inspectionService.inspectionsApiary.filter(_insp => _insp.apiaryId === apiaryId).sort((inspA, inspB) => {
+      return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
+    });
+  }
+
   /**
    *
    *
@@ -148,35 +166,34 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    *
    * @memberof ApiaryNotesComponent
    */
-  createObservation() {
+  createInspection() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-      const formValue = this.observationForm.value;
-      this.newObs = formValue;
-      this.newObs.apiaryId = this.rucherService.rucher._id;
-      this.newObs.opsDate = formValue.date;
-      this.newObs.createDate = new Date();
-      this.newObs.description = formValue.sentence;
-      this.newObs.type = 'apiary';
-      this.newObs.typeInspect = 'ApiaryObs';
-      this.newObs.userId = this.userService.getIdUserLoged();
+      const formValue = this.inspectionForm.value;
+      this.newInsp = formValue;
+      this.newInsp.apiaryId = this.rucherService.rucher._id;
+      this.newInsp.opsDate = formValue.date;
+      this.newInsp.createDate = new Date();
+      this.newInsp.description = formValue.sentence;
+      this.newInsp.type = 'apiary';
+      this.newInsp.userId = this.userService.getIdUserLoged();
       this.initForm();
-      this.observationService.createObservation(this.newObs).subscribe((obs) => {
-        this.observationService.observationsApiary.push(obs);
+      this.inspectionService.insertApiary(this.newInsp).subscribe((obs) => {
+        this.inspectionService.inspectionsApiary.push(obs);
 /*         this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
           return -(moment(a.opsDate).unix() - moment(b.opsDate).unix())
         }); */
       }, 
       (_err) => {
         if (_err.error_code === 403) {
-          this.observationService.observationsApiary.push(this.newObs);
+          this.inspectionService.inspectionsApiary.push(this.newInsp);
         }
       }, () => {
-        this.noteChange.emit(this.newObs);
+        this.noteChange.emit(this.newInsp);
         if(this.translateService.currentLang === 'fr'){
-          this.notify.notify('success', 'Note créée');
+          this.notify.notify('success', 'Inspection créée');
           
         }else{
-          this.notify.notify('success', 'Created Note');
+          this.notify.notify('success', 'Created Inspection');
         }
       });
     } else {
@@ -188,27 +205,27 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    *
    * @memberof ApiaryNotesComponent
    */
-  onEditObservation() {
+  onEditInspection() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-      const formValue = this.observationForm.value;
-      this.newObs.description = formValue.sentence;
-      this.newObs.opsDate = formValue.date;
-      this.newObs.userId = this.userService.getIdUserLoged();
-      this.newObs.apiaryId = this.rucherService.getCurrentApiary();
-      this.newObs.type = 'apiary';
-      const index = this.observationService.observationsApiary.indexOf(this.newObs);
-      this.observationService.updateObservation(this.newObs).subscribe(() => { }, 
+      const formValue = this.inspectionForm.value;
+      this.newInsp.description = formValue.sentence;
+      this.newInsp.opsDate = formValue.date;
+      this.newInsp.userId = this.userService.getIdUserLoged();
+      this.newInsp.apiaryId = this.rucherService.getCurrentApiary();
+      this.newInsp.type = 'apiary';
+      const index = this.inspectionService.inspectionsApiary.indexOf(this.newInsp);
+      this.inspectionService.updateInspection(this.newInsp).subscribe(() => { }, 
       (_err) => {
         if (_err.error_code === 403) {
-          this.observationService.observationsApiary[index] = this.newObs;
+          this.inspectionService.inspectionsApiary[index] = this.newInsp;
         }
       }, () => {
-        this.observationService.observationsApiary[index] = this.newObs;
+        this.inspectionService.inspectionsApiary[index] = this.newInsp;
         this.initForm();
         if(this.translateService.currentLang === 'fr'){
-          this.notify.notify('success', 'Note mis à jour');
+          this.notify.notify('success', 'Inspection mis à jour');
         }else{
-          this.notify.notify('success', 'Updated Note');
+          this.notify.notify('success', 'Updated Inspection');
         }
         this.noteChange.emit(this.newObs);
       });
@@ -225,19 +242,19 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    */
   deleteObs() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-      const index = this.observationService.observationsApiary.indexOf(this.newObs);
-      this.observationService.deleteObservation(this.newObs._id).subscribe(() => { }, 
+      const index = this.inspectionService.inspectionsApiary.indexOf(this.newInsp);
+      this.inspectionService.deleteHiveInsp([this.newInsp._id]).subscribe(() => { }, 
       (_err) => {
         if (_err.error_code === 403) {
-          this.observationService.observationsApiary.splice(index, 1);
+          this.inspectionService.inspectionsApiary.splice(index, 1);
         }
       }, () => {
-        this.observationService.observationsApiary.splice(index, 1);
+        this.inspectionService.inspectionsApiary.splice(index, 1);
         this.initForm();
         if(this.translateService.currentLang === 'fr'){
-          this.notify.notify('success', 'Note supprimée');
+          this.notify.notify('success', 'Inspection supprimée');
         }else{
-          this.notify.notify('success', 'Deleted Note');
+          this.notify.notify('success', 'Deleted Inspection');
         }
         this.noteChange.emit(false);
       });
@@ -251,7 +268,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @memberof ApiaryNotesComponent
    */
   initForm() {
-    this.observationForm = this.formBuilder.group({
+    this.inspectionForm = this.formBuilder.group({
       'sentence': [null, Validators.compose([Validators.required])],
       'date': moment().toDate(),
     });

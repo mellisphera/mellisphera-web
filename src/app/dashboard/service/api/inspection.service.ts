@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CONFIG } from '../../../../constants/config';
 
 import { Inspection } from '../../../_model/inspection';
@@ -14,7 +14,27 @@ const httpOptions = {
 })
 export class InspectionService {
 
-  constructor(private http: HttpClient) { }
+  inspectionsHive: Inspection[];
+  inspectionsApiary: Inspection[];
+  inspectionsApiaryUser: Inspection[];
+  inspectionsHiveUser: Inspection[];
+  public obsHiveSubject: BehaviorSubject<Inspection[]>;
+  constructor(private http: HttpClient) { 
+    this.inspectionsApiary = [];
+    this.inspectionsHive = [];
+    this.inspectionsApiaryUser = [];
+    this.inspectionsHiveUser = [];
+    this.obsHiveSubject = new BehaviorSubject([]);
+  }
+
+  /**
+   *
+   *
+   * @memberof ObservationService
+   */
+  emitHiveSubject() {
+    this.obsHiveSubject.next(this.inspectionsHive.slice());
+  }
 
   /**
   *
@@ -23,6 +43,25 @@ export class InspectionService {
   */
   getInspectionById(_id: string): Observable<Inspection> {
     return this.http.get<Inspection>(CONFIG.URL + 'inspection/_id/' + _id, httpOptions);
+  }
+
+
+  /**
+  *
+  * @param userId
+  *
+  */
+  getInspectionByUserId(userId: string): void {
+    this.http.get<Inspection[]>(CONFIG.URL + 'inspection/user/' + userId, httpOptions).subscribe(
+      _insp => {
+        this.inspectionsHive = _insp.filter(_insp => _insp.type === 'hive').sort((inspA, inspB) => {
+          return new Date(inspA.opsDate).getTime() - new Date(inspB.opsDate).getTime();
+        });
+        this.inspectionsApiary = _insp.filter(_insp => _insp.type === 'apiary').sort((inspA, inspB) => {
+          return new Date(inspA.opsDate).getTime() - new Date(inspB.opsDate).getTime();
+        });
+      }
+    );
   }
 
 
@@ -234,6 +273,14 @@ export class InspectionService {
     return this.http.post<Inspection>(CONFIG.URL + 'inspection/insert/event/hive/' , insp, httpOptions);
   }
 
+  /**
+  *
+  * @param insp
+  *
+  */
+  updateInspection(insp: Inspection): Observable<Inspection> {
+    return this.http.put<Inspection>(CONFIG.URL + 'inspection/update/' + insp._id, insp);
+  }
 
   /**
   *

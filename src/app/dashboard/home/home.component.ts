@@ -55,6 +55,7 @@ import { HubService } from '../service/api/hub.service';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 import { isUndefined } from 'util';
 import { HiveAlertComponent } from '../alert-configuration/hive-alert/hive-alert.component';
+import { InspectionService } from '../service/api/inspection.service';
 
 @Component({
   selector: 'app-home',
@@ -131,7 +132,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     private renderer: Renderer2,
     public hubService: HubService,
     public deviceSatusService: DeviceStatusService,
-    public alertsService: AlertsService) {
+    public alertsService: AlertsService,
+    public inspService: InspectionService) {
 
     this.notify = notifyService;
     this.eltOnClickClass = null;
@@ -182,6 +184,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     };
 
     this.observationService.getNoteByUserId(this.userService.getIdUserLoged());
+    this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
+
 
     this.boolDraggable = true;
     this.firstValue = true;
@@ -205,8 +209,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   exportToCsv(): void {
     this.optionCsv['title'] = `Export Mellisphera ${this.unitService.getDailyDate(new Date())}`
       const data = this.rucheService.ruchesAllApiary.map(_hive => {
-        let noteLengh =  this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id).length;
-        let lastNote = this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id)[noteLengh - 1];
+        let noteLengh =  this.inspService.inspectionsHive.filter(_insp => _insp.hiveId === _hive._id).length;
+        let lastNote = this.inspService.inspectionsHive.filter(_insp => _insp.hiveId === _hive._id)[noteLengh - 1];
         if(this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0] !== undefined){
           const apiary_name = this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0].name;
           return {
