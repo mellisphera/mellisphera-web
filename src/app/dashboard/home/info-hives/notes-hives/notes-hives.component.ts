@@ -273,7 +273,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     }
   }
 
-  resetObservationForm() {
+  resetInspectionForm() {
     this.InspectionForm.get('sentence').reset();
   }
 

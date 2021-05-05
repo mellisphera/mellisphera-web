@@ -107,7 +107,7 @@ limitations under the License. -->
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="createObservation()" data-dismiss="modal"
+        <button type="submit" class="btn btn-primary" (click)="createInspection()" data-dismiss="modal"
           [disabled]="!ObservationForm.valid"> {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_OBS' | translate}}</button>
 <!--         <button type="submit" class="btn btn-primary" (click)="createAction()" data-dismiss="modal"
           [disabled]="!ObservationForm.valid"> {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_ACT' | translate}}</button> -->
@@ -136,7 +136,7 @@ limitations under the License. -->
         </h5>
       </div>
       <div class="modal-body">
-        <form [formGroup]="ObservationForm" (ngSubmit)="onEditObservation()">
+        <form [formGroup]="ObservationForm" (ngSubmit)="onEditInspection()">
 <!--           <div class="form-group">
             <label class="col-form-label"
               for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.TYPE' | translate}}</label>
@@ -181,10 +181,10 @@ limitations under the License. -->
         cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObsR()">
         <i class="fa fa-trash fa-2x"></i>
       </button>
-        <button type="submit" class="btn btn-primary" (click)="onEditObservation()" [disabled]="!ObservationForm.valid">
+        <button type="submit" class="btn btn-primary" (click)="onEditInspection()" [disabled]="!InspectionForm.valid">
           {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.EDIT' | translate}}</button>
         <button type="button" class="btn btn-secondary btn_close" data-dismiss="modal"
-          (click)="resetObservationForm()">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
+          (click)="resetInspectionForm()">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
       </div>
     </div>
   </div>
