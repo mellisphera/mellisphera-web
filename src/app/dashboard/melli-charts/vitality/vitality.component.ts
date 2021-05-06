@@ -183,19 +183,24 @@ export class VitalityComponent implements OnInit, OnDestroy {
       let words = params.seriesName.split(' | ');
       if(words.includes('inspection') || words.includes('event')){
         if(words.includes('inspection')){
-          this.option.baseOption.tooltip.backgroundColor = 'rgba(60, 0, 0, 0.7)';
+          this.option.baseOption.tooltip.backgroundColor = 'rgba(30, 0, 0, 0.7)';
         }
         if(words.includes('event')){
-          this.option.baseOption.tooltip.backgroundColor = 'rgba(60, 60, 0, 0.7)';
-        }
-        if(words.includes('alert')){
-          this.option.baseOption.tooltip.backgroundColor = 'rgba(0, 0, 30, 0.7)';
+          this.option.baseOption.tooltip.backgroundColor = 'rgba(30, 30, 0, 0.7)';
         }
         this.stackService.getBroodChartInstance().setOption(this.option);
         let indexSerie = this.option.baseOption.series.findIndex(_s => _s.name === params.seriesName);
         let indexHiveInspItem = this.inspHives.findIndex(_insp => _insp.name === words[0]);
         let indexHiveInsp = this.inspHives[indexHiveInspItem].insp.findIndex(_insp => new Date(_insp.opsDate).getTime() === new Date(params.name).getTime());
         return this.getInspTooltipFormatter(words[0], indexSerie, indexHiveInspItem, indexHiveInsp);
+      }
+      else if(words.includes('alert')){
+        this.option.baseOption.tooltip.backgroundColor = 'rgba(0, 0, 30, 0.7)';
+        this.stackService.getBroodChartInstance().setOption(this.option);
+        let indexSerie = this.option.baseOption.series.findIndex(_s => _s.name === params.seriesName);
+        let indexHiveAlertItem = this.alertHives.findIndex(_alert => _alert.name === words[0]);
+        let indexHiveAlert = this.alertHives[indexHiveAlertItem].alerts.findIndex(_alert => new Date(_alert.opsDate).getTime() === new Date(params.name).getTime());
+        return this.getAlertTooltipFormatter(words[0], indexSerie, indexHiveAlertItem, indexHiveAlert);
       }
       else{
         this.option.baseOption.tooltip.backgroundColor = 'rgba(50,50,50,0.7)';
@@ -605,9 +610,10 @@ export class VitalityComponent implements OnInit, OnDestroy {
     }
     let res =
     `<div>` +
-    `<h5>${hiveName} | ${this.unitService.getHourlyDate(date)} </h5>`;
+    `<h5 style="text-align:center;">${hiveName}</h5>` +
+    `<h5 style="text-align:center;">${this.unitService.getHourlyDate(date)} </h5>`;
     if(insp.obs != null){
-      res += `<div>`;
+      res += `<div style="margin-right:10px;">`;
       insp.obs.forEach( o => {
         let name = this.translate.instant('MELLICHARTS.BROOD.TOOLTIP.'+ o.name.toUpperCase());
         res += `<div style="display:flex; width:100%; justify-content:center; align-items:center; margin-left: 5px;">`;
@@ -632,6 +638,25 @@ export class VitalityComponent implements OnInit, OnDestroy {
 
     return res;
   }
+
+
+  getAlertTooltipFormatter(hiveName: string, indexSerie: number, indexHiveAlertItem: number, indexHiveAlert: number): string{
+    let alert : AlertInterface = this.alertHives[indexHiveAlertItem].alerts[indexHiveAlert];
+    let date : Date = new Date(alert.opsDate);
+    let name = this.translate.instant('MELLICHARTS.FILTERS.DISPLAY.' + alert.icon.toUpperCase());
+    let test = date.getTimezoneOffset();
+    date.setHours(date.getHours() + (test / 60));
+    let res =
+    `<div>` +
+    `<h5 style="text-align:center;">${hiveName}</h5>` +
+    `<h5 style="text-align:center;">${this.unitService.getHourlyDate(date)}</h5>` +
+    `<div style="display:flex; justify-content:center; align-items:center;">` + 
+    `<img width=30 height=30 src=${ALERT_IMG_PATH + alert.icon + '.png'}>` +
+    `<p>${name}</p>` +
+    `</div>`;
+    return res;
+  }
+
 
   insertNewEvent(hive_event: Inspection): void{
     let hive_name: string;
