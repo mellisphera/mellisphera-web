@@ -122,6 +122,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.echartInstance == null) {
       this.echartInstance = echarts.init(<HTMLDivElement>document.getElementById('graph'));
+      this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();
       this.loadCalendar();
     }
   }
@@ -149,6 +150,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
   initCalendar(hive?: RucheInterface) {
     this.echartInstance.clear();
     this.cleanOption();
+    this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();
     this.loadCalendar();
   }
 

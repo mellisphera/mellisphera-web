@@ -204,14 +204,14 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     }
   }
 
-  onSelectObsR(hiveOBS) {
-    this.newObs = hiveOBS;
+  onSelectObsR(hiveInsp) {
+    this.newInsp = hiveInsp;
     const donnée = {
-      sentence: this.newObs.description,
-      type: this.newObs.typeInspect,
-      date: moment(this.newObs.opsDate).toDate()
+      sentence: this.newInsp.description,
+      type: this.newInsp.type,
+      date: moment(this.newInsp.opsDate).toDate()
     };;
-    this.ObservationForm.setValue(donnée);
+    this.InspectionForm.setValue(donnée);
   }
 
   onEditInspection() {

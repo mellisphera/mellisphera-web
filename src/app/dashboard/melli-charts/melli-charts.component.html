@@ -177,11 +177,13 @@ limitations under the License. -->
     </div>
     <div class="add-event-notes">
         <textarea placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
-        <textarea placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+    </div>
+    <div class="add-event-todo">
+      <textarea placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
     </div>
     <div class="add-event-buttons">
-      <button class="btn btn-danger" style="margin-right:10px;" (click)="discardAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
-      <button class="btn btn-success" style="margin-left:10px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
+      <button class="btn btn-danger" style="margin-right:10px;height:34px;" (click)="discardAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+      <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
     </div>
   </div>
   <div class="delete-event-screen">
@@ -190,7 +192,7 @@ limitations under the License. -->
       <div class="delete-event-list"></div>
       <div class="delete-alert-list"></div>
     </div>
-    <div class="add-event-buttons">
+    <div class="delete-event-buttons">
       <button class="btn btn-danger" style="margin-right:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
       <button class="btn btn-success" style="margin-left:10px;" (click)="deleteDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}</button>
     </div>

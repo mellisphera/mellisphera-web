@@ -25,6 +25,7 @@ import { MyDate } from '../../../class/MyDate';
 import { HealthHiveComponent } from './health-hive/health-hive.component';
 import { isUndefined } from 'util';
 import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
+import { WeightHivesComponent } from './weight-hives/weight-hives.component';
 
 @Component({
   selector: 'app-info-hives',
@@ -38,6 +39,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   screenWidth: any;
   @ViewChild(AlertsHiveComponent) alertsHiveComponent: AlertsHiveComponent;
   @ViewChild(HealthHiveComponent) healthHiveComponent: HealthHiveComponent;
+  @ViewChild(WeightHivesComponent) weightHiveComponent: WeightHivesComponent;
 
   constructor(private observationService: ObservationService,
     public rucheService: RucheService,
@@ -80,6 +82,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.healthHiveComponent.chartInstance !== null) {
       this.healthHiveComponent.chartInstance.showLoading();
     }
+    this.healthHiveComponent.initGraph();
     let option = JSON.parse(JSON.stringify(this.healthHiveComponent.option));
     option.baseOption.series = new Array();
     this.dailyRecordThService.getBroodByHive(this.rucheService.getCurrentHive()._id, MyDate.getRangeForCalendarAlerts()).subscribe(

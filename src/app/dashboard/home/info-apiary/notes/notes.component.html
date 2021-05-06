@@ -41,7 +41,7 @@ limitations under the License. -->
                 <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.EDIT' | translate}}"
                   data-toggle="modal" type="button" data-target="#editObservationModal"
                   [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
-                  (click)="onSelectObs(obs)" class="btn btn-success btn_create"
+                  (click)="onSelectInsp(obs)" class="btn btn-success btn_create"
                   style="padding: 10;border: none;margin-right: -5px;">
                   <i class="fa fa-edit fa-2x"></i>
                 </button>

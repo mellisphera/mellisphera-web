@@ -99,8 +99,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   private notify: NotifierService;
   private selectHive: RucheInterface;
   private hiveIndex: number;
-  private infoHiveComponent: any;
-  private infoApiaryComponent: any;
+  private infoHiveComponent: InfoHivesComponent;
+  private infoApiaryComponent: InfoApiaryComponent;
   screenHeight: any;
   public apiaryAlertsActives: AlertInterface[];
   // Hive alerts by apiay
@@ -236,9 +236,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
    */
   getDateDaily(): string {
     let showDate = new Date();
-    showDate.setFullYear(this.dailyRecTh.rangeDailyRecord.getFullYear());
-    showDate.setMonth(this.dailyRecTh.rangeDailyRecord.getMonth());
-    showDate.setDate(this.dailyRecTh.rangeDailyRecord.getDate() + 1);
+    showDate.setFullYear(MyDate.end.getFullYear());
+    showDate.setMonth(MyDate.end.getMonth());
+    showDate.setDate(MyDate.end.getDate());
     return this.unitService.getDailyDate(showDate.toISOString());
   }
   closePopup(): void {
@@ -342,6 +342,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.dailyRecordWservice.nextDay(this.rucherService.getCurrentApiary());
     this.fitnessService.nextDay(this.userService.getIdUserLoged());
     this.deviceSatusService.nextDay(this.userService.getIdUserLoged());
+    MyDate.end.setDate(MyDate.end.getDate() + 1);
+    this.updateCalendars();
   }
 
   onClickPreviousDay() {
@@ -349,6 +351,21 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.dailyRecordWservice.previousDay(this.rucherService.getCurrentApiary());
     this.fitnessService.previousDay(this.userService.getIdUserLoged());
     this.deviceSatusService.previousDay(this.userService.getIdUserLoged());
+    MyDate.end.setDate(MyDate.end.getDate() - 1);
+    this.updateCalendars();
+  }
+
+  updateCalendars(){
+    switch(this.router.url){
+      case '/dashboard/home/info-apiary':
+        this.infoApiaryComponent.alertsComponent.initCalendar();
+        break;
+      case '/dashboard/home/info-hives':
+        this.infoHiveComponent.alertsHiveComponent.initCalendar();
+        this.infoHiveComponent.loadHealthCalendar();
+        this.infoHiveComponent.weightHiveComponent.initGraph();
+        break;
+    }
   }
 
   //   checkHiveActive(): Promise<Boolean> {
@@ -571,7 +588,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       this.eltOnClickClass[i].classList.remove('in');
     }
     this.eltOnClickClass = document.getElementsByClassName(class2);
-    console.log(class2);
     for (let i = 0; i < this.eltOnClickClass.length; i++) {
       this.eltOnClickClass[i].classList.remove('in');
     }

@@ -279,7 +279,7 @@ export class InspectionService {
   *
   */
   updateInspection(insp: Inspection): Observable<Inspection> {
-    return this.http.put<Inspection>(CONFIG.URL + 'inspection/update/' + insp._id, insp);
+    return this.http.put<Inspection>(CONFIG.URL + 'inspection/update/' + insp._id, insp, httpOptions);
   }
 
   /**

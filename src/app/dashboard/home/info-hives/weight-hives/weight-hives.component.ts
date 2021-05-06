@@ -19,6 +19,7 @@ import { MyDate } from '../../../../class/MyDate';
 import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
+import * as echarts from 'echarts';
 
 @Component({
     selector: 'app-weight-hives',
@@ -27,6 +28,7 @@ import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/M
 })
 export class WeightHivesComponent {
     option: any;
+    private echartInstance: any;
     constructor(public dailyRecordWservice: DailyRecordsWService,
         public calendrierPoids: CalendrierPoidsService,
         public rucheService: RucheService,
@@ -189,5 +191,20 @@ export class WeightHivesComponent {
         if (parseInt(mois) < 10) { mois = '0' + mois; }
 
         return anee + '-' + mois + '-' + jour;
+    }
+
+    ngOnInit(): void {
+        if (this.echartInstance == null) {
+            this.echartInstance = echarts.init(<HTMLDivElement>document.getElementById('calendrierPoids'));
+            this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
+            this.initGraph();
+          }
+    }
+
+    initGraph(): void{
+        this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
+        this.option.baseOption.series = new Array();
+        this.option.baseOption.series.push(this.graphGlobal.getDaySerie());
+        this.echartInstance.setOption(this.option, true);
     }
 }

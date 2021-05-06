@@ -80,7 +80,7 @@ limitations under the License. -->
       </div>
 
       <div class="modal-body" id="popupObs">
-        <form [formGroup]="ObservationForm">
+        <form [formGroup]="InspectionForm">
           <div class="form-group">
             <!-- <label for="sentence" class="col-form-label">Observations/Actions</label><br /> -->
             <!-- <input type="date" formControlName="date"> -->
@@ -108,7 +108,7 @@ limitations under the License. -->
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary" (click)="createInspection()" data-dismiss="modal"
-          [disabled]="!ObservationForm.valid"> {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_OBS' | translate}}</button>
+          [disabled]="!InspectionForm.valid"> {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_OBS' | translate}}</button>
 <!--         <button type="submit" class="btn btn-primary" (click)="createAction()" data-dismiss="modal"
           [disabled]="!ObservationForm.valid"> {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CREATE_ACT' | translate}}</button> -->
         <button type="button" class="btn btn-secondary btn_close" (click)="resetInspectionForm()"
@@ -136,7 +136,7 @@ limitations under the License. -->
         </h5>
       </div>
       <div class="modal-body">
-        <form [formGroup]="ObservationForm" (ngSubmit)="onEditInspection()">
+        <form [formGroup]="InspectionForm" (ngSubmit)="onEditInspection()">
 <!--           <div class="form-group">
             <label class="col-form-label"
               for="exampleRadios1">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.TYPE' | translate}}</label>

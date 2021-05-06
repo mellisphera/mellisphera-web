@@ -141,7 +141,12 @@ export class HealthHiveComponent implements OnInit {
 
   ngOnInit(): void {
     this.chartInstance = echarts.init(<HTMLDivElement>document.getElementById('graphBrood'));
+    this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
   }
 
+  initGraph(){
+    this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
+    this.option.baseOption.series = new Array();
+  }
 
 }

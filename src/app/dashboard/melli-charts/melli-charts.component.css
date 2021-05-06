@@ -666,7 +666,7 @@ nav[role=admin-navigation] {
 }
 
 .add-event-screen, .delete-event-screen{
-  width: 60%;
+  width: 30%;
   height: 60%;
   position: absolute;
   top: calc(50% + 52px);
@@ -685,13 +685,12 @@ nav[role=admin-navigation] {
 
 .add-event-date{
   width: 98%;
-  height: 15%;
+  height: 5%;
   margin-top: 30px;
   margin-left: 1%;
-  border-bottom: 1px solid #999;
 }
 
-.add-event-choice, .add-event-notes{
+.add-event-choice{
   width: 98%;
   display: flex;
   justify-content: center;
@@ -699,11 +698,16 @@ nav[role=admin-navigation] {
   height: 15%;
   margin-top: 30px;
   margin-left: 1%;
-  border-bottom: 1px solid #999;
 }
 
-.add-event-notes{
+.add-event-notes, .add-event-todo{
+  width: 98%;
   height: 25%;
+  margin-top: 20px;
+  margin-left: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .add-event-date h4, .add-event-choice h4, .add-event-notes h4{
@@ -733,7 +737,7 @@ nav[role=admin-navigation] {
   justify-content: center;
 }
 
-.add-event-screen input, .add-event-screen select, .add-event-screen textarea{
+.add-event-screen input, .add-event-screen select{
   width: 200px;
   margin: 0 auto;
 }
@@ -747,16 +751,18 @@ nav[role=admin-navigation] {
 }
 
 .add-event-screen textarea{
+  margin: 0 auto;
   resize: none;
-  width: 45%;
+  width: 90%;
   height: 80%;
 }
 
 .add-event-buttons{
-  width: 90%;
+  width: 94%;
   display: flex;
   justify-content: flex-end;
-  margin-top: 5%;
+  align-items: flex-end;
+  height: 10%;
 }
 
 .add-event-time-input{
@@ -966,6 +972,15 @@ nav[role=admin-navigation] {
   to {
     height: 10px;
   }
+}
+
+
+.delete-event-buttons{
+  width: 94%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 22%;
 }
 
 

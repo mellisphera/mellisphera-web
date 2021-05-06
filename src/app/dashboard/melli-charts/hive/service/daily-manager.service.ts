@@ -929,7 +929,7 @@ export class DailyManagerService {
                 const nbNote = dataByDate.filter(_elt => _elt.description).length;
                 //console.log(nbNote + '===' + dataByDate.length)
                 if (nbNote === dataByDate.length) {
-                  path = this.observationService.getPictoInspect(cellPoint);
+                  path = this.observationService.getPictoEvent(cellPoint);
                   group.children = group.children.concat(path);
                 } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                   path = {
@@ -949,7 +949,7 @@ export class DailyManagerService {
               } else if (dataByDate.length === 1) {
                 let icon;
                 if (dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
+                  group.children = group.children.concat(this.observationService.getPictoEvent(cellPoint));
                 } else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                   // icon = this.alertService.getPicto(dataByDate[0].type);
@@ -1001,7 +1001,7 @@ export class DailyManagerService {
                 const nbNote = dataByDate.filter(_elt => _elt.description).length;
                 //console.log(nbNote + '===' + dataByDate.length)
                 if (nbNote === dataByDate.length) {
-                  path = this.observationService.getPictoInspect(cellPoint);
+                  path = this.observationService.getPictoEvent(cellPoint);
                   group.children = group.children.concat(path);
                 } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                   path = {
@@ -1020,7 +1020,7 @@ export class DailyManagerService {
                 }
               } else if (dataByDate.length === 1) {
                 if (dataByDate !== undefined && dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
+                  group.children = group.children.concat(this.observationService.getPictoEvent(cellPoint));
                 } else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                 }
@@ -1174,6 +1174,21 @@ export class DailyManagerService {
    */
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
+      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'inspect' : 'notif' };
+    });
+  }
+
+
+  /**
+   *
+   *
+   * @param {any[]} _obs
+   * @param {any[]} _alert
+   * @returns {any[]}
+   * @memberof DailyManagerService
+   */
+  joinInspectionAlert(_insp: any[], _alert: any[]): any[] {
+    return _insp.concat(_alert).map(_elt => {
       return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'inspect' : 'notif' };
     });
   }

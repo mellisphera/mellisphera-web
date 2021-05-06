@@ -12,6 +12,11 @@ import * as moment from 'moment';
 
 export class MyDate {
     private date: Date;
+
+    public static start: Date;
+    public static end: Date = new Date();
+
+
     /**
      *
      *
@@ -79,7 +84,10 @@ export class MyDate {
       }
 
     static getRangeForCalendar(){
-        let max = new Date();
+        let max = MyDate.end;
+        max.setHours(23);
+        max.setMinutes(59);
+        max.setSeconds(59);
         let tmp = (max.getFullYear() - 1) + '-' + (max.getMonth() + 1) + '-' + max.getDate();
         let min = (max.getFullYear() - 1) + '-' + (max.getMonth() + 1) + '-' + max.getDate();
         let rangeCalendar = [min, MyDate.convertDate(max)];
@@ -87,7 +95,10 @@ export class MyDate {
       }
 
       static getRangeForCalendarHome(){
-        let max = new Date();
+        let max = MyDate.end;
+        max.setHours(23);
+        max.setMinutes(59);
+        max.setSeconds(59);
         let tmp = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
         let min = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
         let rangeCalendar = [min, MyDate.convertDate(max)];
@@ -103,13 +114,15 @@ export class MyDate {
        */
       static getRangeForCalendarAlerts(): Date[]{
         const day: number[] = [34, 28, 29, 30, 31, 32, 33];
-        let max = new Date();
+        let max = MyDate.end;
+        max.setHours(23);
+        max.setMinutes(59);
+        max.setSeconds(59);
         let min = new Date();
-        let nbDay = day[min.getDay()];
-        min.setDate(min.getDate() - nbDay);
+        min.setTime(max.getTime());
+        min.setMonth(min.getMonth() - 1);
         //min.setDate(max.getDate() + 7);
 
-        max.setDate(max.getDate() + 1);
         min.setHours(0);
         min.setMinutes(0);
         min.setSeconds(0);

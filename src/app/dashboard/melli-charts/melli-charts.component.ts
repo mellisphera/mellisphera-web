@@ -693,6 +693,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   insertOnGraph(): void {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
+        this.hiveComponent.dailyComponent.loadDailyEnvData(false);
         break;
       case PREFIX_PATH + 'brood':
         this.broodComponent.insertNewEvent(this.new_event);
@@ -1008,6 +1009,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   deleteOnGraph(arrayId: string[], inspArray: Inspection[]): void {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
+        this.hiveComponent.dailyComponent.loadDailyEnvData(false);
         break;
       case PREFIX_PATH + 'brood':
         this.broodComponent.deleteEvents(arrayId, inspArray);
@@ -1022,6 +1024,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   deleteAlertOnGraph(arrayId: string[], alertArray: AlertInterface[]): void{
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
+        this.hiveComponent.dailyComponent.loadDailyEnvData(false);
         break;
       case PREFIX_PATH + 'brood':
         this.broodComponent.deleteAlerts(arrayId, alertArray);

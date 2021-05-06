@@ -141,6 +141,22 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   /**
    *
    *
+   * @param {Observation} obs
+   * @memberof ApiaryNotesComponent
+   */
+  onSelectInsp(obs: Inspection) {
+    this.hiveToMv = this.rucherService.rucheService.ruches[0];
+    this.newInsp = obs;
+    const donnée = {
+      sentence: this.newInsp.description,
+      date: moment(obs.opsDate).toDate()
+    };
+    this.inspectionForm.setValue(donnée);
+  }
+
+  /**
+   *
+   *
    * @memberof ApiaryNotesComponent
    */
   mvToActions() {

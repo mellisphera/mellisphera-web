@@ -122,7 +122,6 @@ export class AlertsComponent implements OnInit {
     this.option.baseOption.calendar.orient = 'vertical';
     //this.option.calendar.top = 70;
     this.option.baseOption.calendar.left = 'center';
-    this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();
     this.option.baseOption.calendar.cellSize = [50, 50];
     this.option.baseOption.series = new Array();
   }
@@ -130,6 +129,7 @@ export class AlertsComponent implements OnInit {
     if (this.echartInstance == null) {
       this.echartInstance = echarts.init(<HTMLDivElement>document.getElementById('notif-celendar'));
       this.clearOption();
+      this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();
       this.loadCalendar();
     }
   }
@@ -141,12 +141,13 @@ export class AlertsComponent implements OnInit {
 
   initCalendar(isReload?: boolean){
     this.clearOption();
+    this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();
     this.loadCalendar();
 }
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'Inspections' : 'Notifications' }
+      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'Inspections' : 'Notifications', type: _elt.type  }
     });
   }
 
@@ -165,7 +166,7 @@ export class AlertsComponent implements OnInit {
         serieTmp.name = _data.sensorRef;
         if (data.map(_elt => _elt.date)[0] !== undefined) {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
-            return [_map.date, _map.value, _map.sensorRef];
+            return [_map.date, _map.value, _map.sensorRef, _map.type];
           });
         } else {
           serieTmp.data = data;
@@ -178,11 +179,12 @@ export class AlertsComponent implements OnInit {
   loadCalendar() {
     this.echartInstance.showLoading();
     const obs: Array<Observable<any>> = [
-      this.inspService.getInspectionByApiaryId(this.rucherService.rucher._id),
+      this.inspService.getInspectionByApiaryIdAndOpsDateBetween(this.rucherService.rucher._id, MyDate.getRangeForCalendarAlerts()),
       this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts())
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
+        console.log(_data);
         const dateJoin = this.joinObservationAlert(_data[0].filter(_elt => _elt.type === 'apiary'), _data[1]);
         const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.option);
@@ -270,6 +272,7 @@ export class AlertsComponent implements OnInit {
     let templateHeaderTooltip = '{*} <B>{D}</B> </br>';
     let templateValue = '{n}: <B>{v} {u}</B>';
     let tooltipGlobal;
+    console.log(series);
     tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
       if (/picto/g.test(_serie.name) || _serie.name === '') {
@@ -299,6 +302,7 @@ export class AlertsComponent implements OnInit {
   }
 
   getTooltipBySerie(extraData?: any[]): any {
+    console.log(extraData);
     const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
     tooltip.formatter = (params) => {
       if(params.data[3] !== 'OK'){
@@ -310,8 +314,15 @@ export class AlertsComponent implements OnInit {
         let img = '';
         if (_singleData.description || _singleData.description === '') {
           type = 'Inspection';
-          img = '<img style={S} src={I} />';
-          img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect-api.svg');
+          if(_singleData.type === 'apiary'){
+            img = '<img style={S} src={I} />';
+            img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect-api.svg');
+          }
+          if(_singleData.type === 'hive'){
+            img = '<img style={S} src={I} />';
+            img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
+          }
+          
         } else {
           img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.icon + '.svg />';
         }

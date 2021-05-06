@@ -56,7 +56,6 @@ export class DeviceStatusService {
     this.getDeviceStatusByUser(userId).subscribe(
       _res => {
         this.deviceStatus = _res;
-        console.log(this.deviceStatus);
       }
     )
   }
