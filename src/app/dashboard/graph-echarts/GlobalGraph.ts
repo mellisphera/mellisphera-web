@@ -23,6 +23,7 @@ const TEMP_EXT_WEATHER_MAX = 'TEMP_EXT_WEATHER_MAX';
 const TEMP_EXT_WEATHER_MIN = 'TEMP_EXT_WEATHER_MIN';
 const TEMP_INT_WEATHER = 'TEMP_INT_WEATHER';
 const WIND = 'WIND';
+const FITNESS = 'FITNESS';
 
 import { Injectable } from '@angular/core';
 import { UserParamsService } from '../preference-config/service/user-params.service';
@@ -38,10 +39,12 @@ import { WeatherService } from '../service/api/weather.service';
 import { SERIES } from '../melli-charts/charts/SERIES';
 import { NOTIF_CODE } from '../../../constants/notif_code';
 import { MOON_CODE } from '../../../constants/moonTrad';
+import { FITNESS_CODE } from '../../../constants/fitnessCode';
 
 import { AlertsService } from '../service/api/alerts.service';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
+import { ignoreElements } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +59,9 @@ export class GraphGlobal {
     income_name: string,
     norm_name: string
   };
+  public fitness:{
+    name: string,
+  }
   public moon: {
     phase: string,
     period: string,
@@ -128,6 +134,9 @@ export class GraphGlobal {
       gain: '',
       loss: ''
     };
+    this.fitness = {
+      name:'Fitness',
+    }
     this.temp = {
       name: '',
       min: null,
@@ -199,6 +208,7 @@ export class GraphGlobal {
       { graph: 'Moon', titre: 'Calendrier lunaire' },
       { graph: 'Rain', titre: 'Précipitations' },
       { graph: 'Wind', titre: 'Vent' },
+      { graph: 'Fitness', titre: 'Santé de la ruche'}
 
     ];
     this.titresES = [
@@ -219,7 +229,8 @@ export class GraphGlobal {
       { graph: 'Weather', titre: 'Meteorologia' },
       { graph: 'Moon', titre: 'Calendario lunar' },
       { graph: 'Rain', titre: 'Precipitaciones' },
-      { graph: 'Wind', titre: 'Viento' }
+      { graph: 'Wind', titre: 'Viento' },
+      { graph: 'Fitness', titre: 'Salud de la colmena'}
     ];
 
     // EN
@@ -242,6 +253,7 @@ export class GraphGlobal {
       { graph: 'Moon', titre: 'Moon calendar' },
       { graph: 'Rain', titre: 'Precipitation' },
       { graph: 'Wind', titre: 'Wind' },
+      { graph: 'Fitness', titre: 'Hive health'}
     ];
   }
 
@@ -572,6 +584,14 @@ export class GraphGlobal {
           return this.titresEN[11].titre;
         }
         break;
+      case 'FITNESS':
+        if (this.translateService.currentLang === 'fr') {
+          return this.titresFR[18].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[18].titre;
+        } else {
+          return this.titresEN[18].titre;
+        }
       default:
         return '';
     }
@@ -808,6 +828,9 @@ export class GraphGlobal {
       case WIND:
         name = this.wind.name;
         break;
+      case FITNESS:
+        name = this.fitness.name;
+        break;
       default:
         break;
     }
@@ -973,13 +996,24 @@ export class GraphGlobal {
           }));
         }
         break;
-      case WINCOME:
+      case 'WINCOME':
         tooltip.formatter = (params) => {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
               name: this.getNameCalendarByType(type.name, params.data[1]),
               value: this.unitService.getValRound(params.data[1]),
               unit: this.getUnitByType(type.unit)
+            },
+          ));
+        }
+        break;
+      case 'FITNESS':
+        tooltip.formatter = (params) => {
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+            {
+              name: params.seriesName,
+              value: params.data[1],
+              unit: ''
             },
           ));
         }
@@ -1095,6 +1129,23 @@ export class GraphGlobal {
         visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 45 : 28;
         visualMap.inRange.color = ['#129001', 'yellow', 'red'];
         break;
+      case 'FITNESS':
+        visualMap.type = 'continuous';
+        visualMap.min = 0;
+        visualMap.max = 100;
+        visualMap.inRange.color = ['black', 'red', 'orange', 'green'];
+        /*if(this.translateService.currentLang === 'fr'){
+          visualMap.categories = ['Blanc', 'Noir', 'Rouge', 'Orange', 'Vert'];
+        }
+        if(this.translateService.currentLang === 'es'){
+          visualMap.categories = ['Blanco', 'Negro', 'Rojo', 'Naranja', 'Verde'];
+        }
+        if(this.translateService.currentLang === 'en'){
+          visualMap.categories = ['White', 'Black', 'Red', 'Orange', 'Green'];
+        }*/
+        
+        //visualMap.show = false;
+        break;
       default:
         break;
     }
@@ -1157,9 +1208,121 @@ export class GraphGlobal {
     tooltipGlobal += series.map(_serie => {
       if (/picto/g.test(_serie.name) || _serie.name === '') {
         return templateValue.replace(/:/g, '').replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit)
-      } else {
-        return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
       }
+      else{
+        let words = _serie.name.split(' | ');
+        if( _serie.name.includes('FITNESS') ){
+          let msg, lang, code;
+          lang = this.translateService.currentLang.toUpperCase();
+          code = words[1];
+          switch(code){
+            case 'B1':
+              if(lang === 'FR'){
+                msg = FITNESS_CODE.B1.FR.Message;
+              }
+              if(lang === 'ES'){
+                msg = FITNESS_CODE.B1.ES.Message;
+              }
+              if(lang === 'EN'){
+                msg = FITNESS_CODE.B1.EN.Message;
+              }
+              break;
+            case 'B2':
+              if(lang === 'FR'){
+                msg = FITNESS_CODE.B2.FR.Message;
+              }
+              if(lang === 'ES'){
+                msg = FITNESS_CODE.B2.ES.Message;
+              }
+              if(lang === 'EN'){
+                msg = FITNESS_CODE.B2.EN.Message;
+              }
+              break;
+            case 'R1':
+              if(lang === 'FR'){
+                msg = FITNESS_CODE.R1.FR.Message;
+              }
+              if(lang === 'ES'){
+                msg = FITNESS_CODE.R1.ES.Message;
+              }
+              if(lang === 'EN'){
+                msg = FITNESS_CODE.R1.EN.Message;
+              }
+              break;
+            case 'O1':
+              if(lang === 'FR'){
+                msg = FITNESS_CODE.O1.FR.Message;
+              }
+              if(lang === 'ES'){
+                msg = FITNESS_CODE.O1.ES.Message;
+              }
+              if(lang === 'EN'){
+                msg = FITNESS_CODE.O1.EN.Message;
+              }
+              break;
+            case 'O2':
+              if(lang === 'FR'){
+                msg = FITNESS_CODE.O2.FR.Message;
+              }
+              if(lang === 'ES'){
+                msg = FITNESS_CODE.O2.ES.Message;
+              }
+              if(lang === 'EN'){
+                msg = FITNESS_CODE.O2.EN.Message;
+              }
+              break;
+            case 'O3':
+              if(lang === 'FR'){
+                msg = FITNESS_CODE.O3.FR.Message;
+              }
+              if(lang === 'ES'){
+                msg = FITNESS_CODE.O3.ES.Message;
+              }
+              if(lang === 'EN'){
+                msg = FITNESS_CODE.O3.EN.Message;
+              }
+              break;
+            case 'O4':
+              if(lang === 'FR'){
+                msg = FITNESS_CODE.O4.FR.Message;
+              }
+              if(lang === 'ES'){
+                msg = FITNESS_CODE.O4.ES.Message;
+              }
+              if(lang === 'EN'){
+                msg = FITNESS_CODE.O4.EN.Message;
+              }
+              break;
+            case 'O5':
+              if(lang === 'FR'){
+                msg = FITNESS_CODE.O5.FR.Message;
+              }
+              if(lang === 'ES'){
+                msg = FITNESS_CODE.O5.ES.Message;
+              }
+              if(lang === 'EN'){
+                msg = FITNESS_CODE.O5.EN.Message;
+              }
+              break;
+            case 'G1':
+              if(lang === 'FR'){
+                msg = FITNESS_CODE.G1.FR.Message;
+              }
+              if(lang === 'ES'){
+                msg = FITNESS_CODE.G1.ES.Message;
+              }
+              if(lang === 'EN'){
+                msg = FITNESS_CODE.G1.EN.Message;
+              }
+              break;
+          }
+          return msg;
+        } 
+        else {
+          return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
+        }
+      } 
+      
     }).join('</br>');
 
     return tooltipGlobal;

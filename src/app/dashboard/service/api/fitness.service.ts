@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Fitness } from '../../../_model/fitness';
 import { Observable } from 'rxjs';
 import { CONFIG } from '../../../../constants/config';
 import { TranslateService } from '@ngx-translate/core';
 import { FITNESS_CODE } from '../../../../constants/fitnessCode';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -83,5 +87,8 @@ export class FitnessService {
     )
   }
 
+  public getFitnessByHiveIdAndDate(hiveId: string, range: Date[]): Observable<Fitness[]>{
+    return this.httpClient.post<Fitness[]>(CONFIG.URL + 'fitness/daily/' + hiveId, range, httpOptions);
+  }
 
 }

@@ -34,6 +34,7 @@ import { GLOBAL_ICONS } from '../../charts/icons/icons';
 import { MyDate } from '../../../../class/MyDate';
 import { UserParamsService } from '../../../preference-config/service/user-params.service';
 import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
+import { FitnessService } from '../../../../dashboard/service/api/fitness.service';
 
 
 
@@ -82,6 +83,7 @@ export class DailyManagerService {
   constructor(
     private dailyWService: DailyRecordsWService,
     private dailyHService: DailyRecordService,
+    private fitnessService: FitnessService,
     private userPref: UserParamsService,
     private alertService: AlertsService,
     private weatherService: WeatherService,
@@ -248,7 +250,7 @@ export class DailyManagerService {
           option.legend.selectedMode = 'single';
           let serie = JSON.parse(JSON.stringify(SERIES.custom));
           serie.data = data;
-          console.log(serie.data);
+          //console.log(serie.data);
           serie.name = data[0][9];
           serie.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
@@ -804,7 +806,7 @@ export class DailyManagerService {
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionsInt = option;
-
+        
       }
     )
   }
@@ -1046,6 +1048,55 @@ export class DailyManagerService {
       }
     );
 
+  }
+
+
+  getChartFitness(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean){
+    this.fitnessService.getFitnessByHiveIdAndDate(hiveId, range).subscribe(
+      _fitness => {
+        
+        let option = Object.assign({}, this.baseOptionsInt);
+        if ( this.existSeries(option.series, type.name) ){
+          option.series = new Array();
+        }
+        option.calendar.range = range;
+        option.legend.show = false;
+        _fitness.forEach(elt => {
+          let nb;
+          switch(elt.fitcolor){
+            case 'Green':
+              nb = 100;
+              break;
+            case 'Orange':
+              nb = 66;
+              break;
+            case 'Red':
+              nb = 33;
+              break;
+            case 'Black':
+              nb = 0;
+              break;
+          }
+          let item = [elt.date, nb];
+          let serie = {
+            type: 'heatmap',
+            name: type.name + ' | ' + elt.fitcode,
+            coordinateSystem: 'calendar',
+            data: [item]
+          }
+          option.series.push(serie);
+        });
+        option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+        option.tooltip = this.graphGlobal.getTooltipBySerie(type);  
+        option.series.push(this.graphGlobal.getDaySerie());
+        option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+        option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+        chartInstance.clear();
+        chartInstance.setOption(option, true);
+        chartInstance.hideLoading();
+        this.baseOptionsInt = option;
+      }
+    );
   }
 
   /**

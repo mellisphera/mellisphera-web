@@ -184,7 +184,6 @@ export class AlertsComponent implements OnInit {
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
-        console.log(_data);
         const dateJoin = this.joinObservationAlert(_data[0].filter(_elt => _elt.type === 'apiary'), _data[1]);
         const joinData = _data[0].concat(_data[1]);
         let option = Object.assign({}, this.option);
@@ -302,7 +301,6 @@ export class AlertsComponent implements OnInit {
   }
 
   getTooltipBySerie(extraData?: any[]): any {
-    console.log(extraData);
     const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
     tooltip.formatter = (params) => {
       if(params.data[3] !== 'OK'){

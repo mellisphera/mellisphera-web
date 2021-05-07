@@ -82,6 +82,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.typeData = [
       { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type active', icons: './assets/picto_mellicharts/brood.png' },
       { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/weight_inc.png' },
+      { name: 'FITNESS', id: 'FITNESS', unit: '', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/fitness.png' },
       //{ name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/weight_max.png' },
       { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/tint_max.png' },
       { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/tint_min.png' },
@@ -300,6 +301,9 @@ export class DailyComponent implements OnInit, AfterViewInit {
         this.dailyManager.getChartWeight(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
           this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
+      case 'FITNESS':
+        this.dailyManager.getChartFitness(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
+          this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
       default:
         break;
     }
