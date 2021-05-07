@@ -319,6 +319,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     let new_series = [];
     this.inspService.getInspectionByHiveIdAndOpsDateBetween(obs[index].hive._id, this.melliDateService.getRangeForReqest()).subscribe(
       _hive_insp => {
+        console.log(_hive_insp);
         let item : InspHiveItem = {name: obs[index].hive.name, insp: [..._hive_insp]};
         this.inspHives.push(item);
         _hive_insp.forEach(insp => {
@@ -326,6 +327,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
           d1.setHours(12 - (d1.getTimezoneOffset()/60));
           d1.setMinutes(0);
           d1.setSeconds(0);
+          d1.setMilliseconds(0);
           let insp_index = serieComplete.data.findIndex(e => new Date(e.name).getTime() === d1.getTime());
           if(insp_index != -1){
             let new_item = {
