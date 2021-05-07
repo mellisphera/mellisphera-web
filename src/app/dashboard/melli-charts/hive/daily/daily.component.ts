@@ -96,9 +96,10 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'HEXT_WEATHER_MIN', id: 'HEXT_WEATHER_MIN', unit: 'P', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/hext_min.png' },
       { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/wind.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
+      { name: 'EVENT-APIARY', id: 'EVENT-APIARY', origin: 'ENV', class: 'item-type', icons: './assets/icons/inspect/inspect_v3/4_tool_jhook_api.png' },
+      { name: 'EVENT-HIVE', id: 'EVENT-HIVE', origin: 'ENV', class: 'item-type', icons: './assets/icons/inspect/inspect_v3/4_tool_jhook.png' },
       { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/notif.png' },
-      { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
-      /* { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/tool_jhook.png' } */
+      { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: './assets/picto_mellicharts/moon.png' },
     ];
 
     this.optionCsv = {
@@ -385,7 +386,25 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
 
   loadDailyEnvData(rangeChange: boolean) {
-    if (this.currentTypeDailyEnv.name === 'MOON') {
+    switch(this.currentTypeDailyEnv.name){
+      case 'EVENT-APIARY':
+        break;
+      case 'EVENT-HIVE':
+        break;
+      case 'ALERT':
+        this.melliHive.getDailyEnvChartInstance().showLoading();
+        this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
+          this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        break;
+      case 'MOON':
+        this.melliHive.getDailyEnvChartInstance().showLoading();
+        this.dailyManager.getChartAstro(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().apiaryId,
+          this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        break;
+      default:
+        break;
+    }
+    /*if (this.currentTypeDailyEnv.name === 'MOON') {
       this.melliHive.getDailyEnvChartInstance().showLoading();
       this.dailyManager.getChartAstro(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().apiaryId,
         this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
@@ -394,7 +413,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
       this.melliHive.getDailyEnvChartInstance().showLoading();
       this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
         this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
-    }
+    }*/
   }
 
 
