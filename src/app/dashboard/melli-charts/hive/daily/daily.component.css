@@ -72,6 +72,13 @@ limitations under the License. */
     position: relative;
 }
 
+@media screen and (max-width:1640px){
+    .item-type{
+        height: 40px;
+        width: 40px;
+    }
+}
+
 @media screen and (max-width:1451px) {
     .item-type{
         height: 35px;

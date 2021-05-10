@@ -30,6 +30,8 @@ import { AlertsService } from '../service/api/alerts.service';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 import { WeightComponent } from './weight/weight.component';
 import { DatePipe } from '@angular/common';
+import { MatFormFieldModule, MatChipsModule, MatLabel, MatIconModule, MatInputModule } from '@angular/material';
+
 
 @NgModule({
   providers:[
@@ -58,6 +60,10 @@ import { DatePipe } from '@angular/common';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatChipsModule, 
+    MatIconModule,
+    MatInputModule
   ]
 })
 export class MelliChartsModule { }

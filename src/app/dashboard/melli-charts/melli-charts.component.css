@@ -125,6 +125,16 @@ nav[role=admin-navigation] {
     margin-bottom: -8px;
 }
 
+.list-group-hive-item{
+  width:90%;
+  color: black !important;
+  text-decoration: none !important;
+}
+
+.hive-more-button{
+  justify-content: flex-end;
+}
+
 .puce-apiary{
     background-image: url('../../../assets/icons/ui/melliUx.svg');
     display: inline-block;
@@ -666,7 +676,7 @@ nav[role=admin-navigation] {
 }
 
 .add-event-screen, .delete-event-screen{
-  width: 30%;
+  width: 450px;
   height: 60%;
   position: absolute;
   top: calc(50% + 52px);
@@ -679,8 +689,21 @@ nav[role=admin-navigation] {
   display: none;
 }
 
-.add-event-screen h3{
-  text-align: center;
+.add-event-screen input, 
+.add-event-screen textarea,
+.delete-event-screen input,
+.delete-event-screen textarea{
+  border: 1px solid #999999;
+}
+
+.add-event-screen h4{
+  text-align: left;
+  margin-left: 4%;
+}
+
+.add-event-screen > .main-title{
+  font-weight: bold;
+  margin-top: 20px;
 }
 
 .add-event-date{
@@ -691,23 +714,62 @@ nav[role=admin-navigation] {
 }
 
 .add-event-choice{
-  width: 98%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
   height: 15%;
-  margin-top: 30px;
-  margin-left: 1%;
+  margin-top: 20px;
 }
 
 .add-event-notes, .add-event-todo{
-  width: 98%;
-  height: 25%;
+  width: 92%;
+  height: 15%;
   margin-top: 20px;
-  margin-left: 1%;
+  margin-left: 4%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.add-event-tags{
+  width: 92%;
+  margin-top: 20px;
+  margin-left: 4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-event-tags-container{
+  width: 92%;
+  margin: 0 52px;
+  display: flex;
+}
+
+.add-event-tag-chip{
+  background-color: #ccc;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-event-tag-chip p{
+  margin-bottom: 0px;
+  margin-left: 10px;
+}
+
+.add-event-tags-button{
+  margin-left: 23px;
+  width: 15%;
+}
+
+.add-event-tags-delete{
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+.add-event-tags-delete:hover{
+  color: red;
 }
 
 .add-event-date h4, .add-event-choice h4, .add-event-notes h4{
@@ -718,32 +780,41 @@ nav[role=admin-navigation] {
 .add-event-time-error{
   color: darkred;
   display: none;
-  height: 40px;
-  align-items: center;
-  justify-content: center;
+  height: 20px;
+  margin-left: 3%;
 }
 
 .add-event-date > div:nth-child(1){
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 25px;
+  margin-left: 3%;
+}
+
+.add-event-date > div:nth-child(1) input[type=number]::-webkit-inner-spin-button{
+  opacity: 1;
 }
 
 .add-event-choice > div, .add-event-notes > div{
   height: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-left: 3.5%;
+}
+
+.add-event-hours-input, .add-event-minutes-input{
+  width: 50px !important;
+  margin-left: 5px !important;
 }
 
 .add-event-screen input, .add-event-screen select{
-  width: 200px;
+  width: 170px;
   margin: 0 auto;
 }
 
 .add-event-screen input, .add-event-screen select{
-  height: 30px;
+  height: 20px;
+}
+
+.add-event-tags-container input{
+  width: 100%;
+  margin: 0 5px;
 }
 
 .add-event-img{
@@ -753,20 +824,18 @@ nav[role=admin-navigation] {
 .add-event-screen textarea{
   margin: 0 auto;
   resize: none;
-  width: 90%;
+  width: 80%;
   height: 80%;
 }
 
 .add-event-buttons{
-  width: 94%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  position: absolute;
+  top: 85%;
+  left: 55%;
   height: 10%;
-}
-
-.add-event-time-input{
-  text-align: center;
 }
 
 .hives-obs-add{
@@ -788,6 +857,20 @@ nav[role=admin-navigation] {
   background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/icons/inspect/observations/swarm.png');
+  background-position: center;
+}
+
+.hives-default-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/icons/inspect/default_grey.png');
+  background-position: center;
+} 
+
+.hives-default-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/icons/inspect/default.png');
   background-position: center;
 }
 
@@ -997,9 +1080,7 @@ nav[role=admin-navigation] {
 
 
 @media screen and (max-width:1500px) {
-    .apiary-group-hive{
-        width: 10%;
-    }
+    
     .fa-plus{
       color:green;
       margin-left: 15px !important;

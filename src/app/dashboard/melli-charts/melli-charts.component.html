@@ -123,10 +123,17 @@ limitations under the License. -->
               [class]="'caret ' + ifActiveApiary(rucher._id)"></span></a>
           <div
             [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
-            <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
-              *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index"
-              (click)="selectHive(ruche, $event)" (contextmenu)="showContextMenu(ruche, $event)" data-parent="#sub-menu"><i class="circle"
-                [style.background-color]="getColor(ruche)"></i><span class="puce-hive"></span>{{ ruche.name }}</a>
+            <div [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
+            *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index"
+            (contextmenu)="showContextMenu(ruche, $event)"
+            style="display:flex; align-items:center;">
+              <a class="list-group-hive-item" (click)="selectHive(ruche, $event)"  data-parent="#sub-menu">
+                <i class="circle" [style.background-color]="getColor(ruche)"></i>
+                <span class="puce-hive"></span>{{ ruche.name }}
+              </a>
+              <input class="hive-more-button" type="image" width="20" height="20" src="../../../assets/icons/ui/more.svg" (click)="showContextMenu(ruche, $event)">
+            </div>
+           
           </div>
 <!--           <div *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
             [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
@@ -161,11 +168,15 @@ limitations under the License. -->
   </div>
   <div class="black-filter"></div>
   <div class="add-event-screen">
-    <h3>{{hiveEvent?.name}} | {{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h3>
+    <h4 class="main-title">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
+    <h4>{{hiveEvent?.name}}</h4>
     <div class="add-event-date">
       <div>
         <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
-        <owl-date-time #dtEvent></owl-date-time>
+        <owl-date-time [pickerType]="'calendar'" #dtEvent></owl-date-time>
+        <input class="add-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours()">
+        :
+        <input class="add-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes()">
       </div>
       <div class="add-event-time-error">
         {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
@@ -176,11 +187,28 @@ limitations under the License. -->
       </div>
     </div>
     <div class="add-event-notes">
-        <textarea placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+        <img width="30" height="30" src="../../../assets/icons/inspect/notes.png">
+        <textarea class="add-event-notes-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
     </div>
     <div class="add-event-todo">
-      <textarea placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+      <img width="30" height="30" src="../../../assets/icons/inspect/todo.png">
+      <textarea class="add-event-todo-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
     </div>
+    <!--<div class="add-event-tags">
+      Tags
+      <div class="add-event-tags-container">
+        <div style="border-bottom: 1px solid black; width:80%; display: flex;">
+          <div *ngFor="let tag of tags" class="add-event-tag-chip">
+
+              <p>{{tag}}</p>
+              <i class="fa fa-times add-event-tags-delete" (click)="removeTag(tag)"></i>
+           
+          </div>
+          <input class="add-event-tags-input" style="border:0;" type="text" placeholder="Tag..." required aria-required="true">
+        </div>
+        <button class="add-event-tags-button" (click)="addTag($event)">Ajouter</button>
+      </div>
+    </div>-->
     <div class="add-event-buttons">
       <button class="btn btn-danger" style="margin-right:10px;height:34px;" (click)="discardAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
       <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>

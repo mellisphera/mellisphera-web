@@ -44,6 +44,7 @@ import { MelliChartsFilterService } from './service/melli-charts-filter.service'
 import { InspectionService } from './../service/api/inspection.service';
 import { Inspection } from '../../_model/inspection';
 import { arrayBufferToBase64 } from 'angular-file/file-upload/fileTools';
+import { MatChipInputEvent } from '@angular/material';
 
 const PREFIX_PATH = '/dashboard/explore/';
 const IMG_PATH = '../../../assets/icons/inspect/';
@@ -52,6 +53,14 @@ const ALERTS_CHART_PATH = '../../../assets/pictos_alerts/charts/';
 
 const PICTOS_HIVES_OBS = [
   {name: 'swarm', img: 'observations/swarm_grey.png', img_active: 'observations/swarm.png', class: 'hives-swarm-img'},
+  {name:'O1', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'O2', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'O3', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'O4', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'O5', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'O6', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'O7', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'O8', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
   /*{name:'Y2', img:''},
   {name:'X3', img:''},
   {name:'W4', img:''},*/
@@ -95,6 +104,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     obs: [],
     todo: null
   };
+
+  public tags: string[] = [];
 
   public user_pref: UserPref;
 
@@ -610,6 +621,12 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'block';
     (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'block';
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = null;
+    (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = null;
+    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = null;
+    (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = true;
+    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = true;
+    (<HTMLTextAreaElement>document.getElementsByClassName('add-event-notes-textarea')[0]).value = null;
+    (<HTMLTextAreaElement>document.getElementsByClassName('add-event-todo-textarea')[0]).value = null;
     this.addObsList();
   }
 
@@ -618,7 +635,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     obsDiv.innerHTML = '';
     let div;
     for (let i = 0; i < PICTOS_HIVES_OBS.length; i++) {
-      if ( i % 6 === 0 ) {
+      if ( i % 8 === 0 ) {
         div = document.createElement('div');
       }
 
@@ -633,11 +650,11 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
       div.appendChild(button);
 
-      if ( (i + 1) % 6 === 0 ) {
+      if ( (i + 1) % 8 === 0 ) {
         obsDiv.appendChild(div);
       }
     }
-    if (PICTOS_HIVES_OBS.length % 6 !== 0) { // Push last row if not complete
+    if (PICTOS_HIVES_OBS.length % 8 !== 0) { // Push last row if not complete
       obsDiv.appendChild(div);
     }
   }
@@ -656,7 +673,19 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   setNewEventDate(): void {
-    (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = moment(this.newEventDate).format(this.user_pref.timeFormat);
+    (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
+    this.new_event.opsDate = this.newEventDate;
+    (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = false;
+    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = false;
+  }
+
+  setNewEventHours(): void{
+    this.newEventDate.setHours( parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value) );
+    this.new_event.opsDate = this.newEventDate;
+  }
+
+  setNewEventMinutes(): void{
+    this.newEventDate.setMinutes( parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value) );
     this.new_event.opsDate = this.newEventDate;
   }
 
@@ -668,6 +697,29 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   saveTodo(evt: Event): void {
     const textArea = <HTMLTextAreaElement>evt.target;
     this.new_event.todo = textArea.value;
+  }
+
+  addTag(event: Event): void{
+    const input = <HTMLInputElement>document.getElementsByClassName('add-event-tags-input')[0];
+    const value = input.value;
+
+    // Add our fruit
+    if (value != null && value != '') {
+      this.tags.push(value);
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeTag(tag: string): void{
+    const index = this.tags.indexOf(tag);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
   }
 
   insertAddEvent(): void {

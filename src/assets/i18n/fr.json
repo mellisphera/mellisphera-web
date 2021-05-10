@@ -474,7 +474,7 @@
         },
         "EVENT":{
           "ADD":{
-            "TITLE": "Ajouter Evenement",
+            "TITLE": "Creer Evenement",
             "DATE": "Date",
             "DATE_PLACEHOLDER": "Date d'observation",
             "DATE_ERROR": "Veuillez renseigner une date",
@@ -485,7 +485,7 @@
             "TODO_PLACEHOLDER":"Taches..."
           },
           "DELETE":{
-            "TITLE": "Supprimer Evenement"
+            "TITLE": "Gerer Evenement"
           },
           "BUTTONS":{
             "ADD":"Ajouter",
