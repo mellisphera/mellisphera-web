@@ -271,7 +271,6 @@ export class AlertsComponent implements OnInit {
     let templateHeaderTooltip = '{*} <B>{D}</B> </br>';
     let templateValue = '{n}: <B>{v} {u}</B>';
     let tooltipGlobal;
-    console.log(series);
     tooltipGlobal = templateHeaderTooltip.replace(/{\*}/g, markerSerie).replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
       if (/picto/g.test(_serie.name) || _serie.name === '') {

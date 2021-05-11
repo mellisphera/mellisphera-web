@@ -477,7 +477,7 @@
             "TITLE": "Create Event",
             "DATE": "Date",
             "DATE_PLACEHOLDER": "Observation date",
-            "DATE_ERROR": "Please fill the date field",
+            "DATE_ERROR": "Please fill the date field with a valid date",
             "EVENT": "Event",
             "NOTES": "Notes",
             "NOTES_PLACEHOLDER":"Notes...",

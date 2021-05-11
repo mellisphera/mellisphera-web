@@ -55,6 +55,272 @@ th{
 .btn_delete_modal_mobile{
     display: none;
 }
+
+.add_icon{
+  margin-top: -3px !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  background: none;
+  color: #5cb85c !important; 
+}
+
+.add_icon:hover{
+  color: #ffffff !important; 
+}
+
+.add_icon:active{
+  color:white !important; 
+}
+
+.add-event-screen{
+    width: 450px;
+    height: 60%;
+    position: absolute;
+    top: calc(50% + 52px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    z-index: 12;
+    display: block;
+}
+
+.add-event-screen input, 
+.add-event-screen textarea,
+.delete-event-screen input,
+.delete-event-screen textarea{
+    border: 1px solid #999999;
+}
+
+.add-event-screen h4{
+    text-align: left;
+    margin-left: 4%;
+}
+
+.add-event-screen > .main-title{
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.add-event-date{
+  width: 98%;
+  height: 7%;
+  margin-top: 30px;
+  margin-left: 1%;
+}
+
+.add-event-choice{
+  width: 100%;
+  height: 15%;
+  margin-top: 20px;
+}
+
+.add-event-notes, .add-event-todo{
+  width: 92%;
+  height: 16%;
+  margin-top: 20px;
+  margin-left: 4%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.add-event-notes{
+  margin-top: 30px;
+}
+
+.add-event-tags{
+  width: 92%;
+  margin-top: 20px;
+  margin-left: 4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-event-tags-container{
+  width: 92%;
+  margin: 0 52px;
+  display: flex;
+}
+
+.add-event-tag-chip{
+  background-color: #ccc;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-event-tag-chip p{
+  margin-bottom: 0px;
+  margin-left: 10px;
+}
+
+.add-event-tags-button{
+  margin-left: 23px;
+  width: 15%;
+}
+
+.add-event-tags-delete{
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+.add-event-tags-delete:hover{
+  color: red;
+}
+
+.add-event-date h4, .add-event-choice h4, .add-event-notes h4{
+  margin-bottom: 0;
+  margin-left: 5px;
+}
+
+.add-event-time-error{
+  color: darkred;
+  display: none;
+  height: 30px;
+  margin-left: 3%;
+  margin-top: 5px;
+}
+
+.add-event-date > div:nth-child(1){
+  height: 25px;
+  margin-left: 3%;
+}
+
+.add-event-date > div:nth-child(1) input[type=number]::-webkit-inner-spin-button{
+  opacity: 1;
+}
+
+.add-event-choice > div, .add-event-notes > div{
+  height: 80%;
+  margin-left: 3.5%;
+}
+
+.add-event-hours-input, .add-event-minutes-input{
+  width: 50px !important;
+  margin-left: 5px !important;
+}
+
+.add-event-screen input, .add-event-screen select{
+  width: 170px;
+  margin: 0 auto;
+}
+
+.add-event-screen input, .add-event-screen select{
+  height: 30px;
+}
+
+.add-event-tags-container input{
+  width: 100%;
+  margin: 0 5px;
+}
+
+.add-event-img{
+  margin-left: 20px;
+}
+
+.add-event-screen textarea{
+  margin: 0 auto;
+  resize: none;
+  width: 80%;
+  height: 100%;
+}
+
+.add-event-notes-textarea, .add-event-todo-textarea{
+  visibility: hidden;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+
+.hives-note-textarea-add-active{
+  visibility: visible;
+}
+
+.hives-todo-textarea-add-active{
+  visibility: visible;
+}
+
+
+.add-event-buttons{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: absolute;
+  top: 85%;
+  left: 55%;
+  height: 10%;
+}
+
+.hives-obs-add{
+  margin: 5px 5px;
+  height: 40px;
+  width: 40px;
+  border: 1px solid skyblue;
+  box-shadow: 1px 1px 3px black;
+}
+
+.hives-swarm-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/icons/inspect/observations/swarm_grey.png');
+  background-position: center;
+}
+
+.hives-swarm-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/icons/inspect/observations/swarm.png');
+  background-position: center;
+}
+
+.hives-default-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/icons/inspect/default_grey.png');
+  background-position: center;
+} 
+
+.hives-default-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/icons/inspect/default.png');
+  background-position: center;
+}
+
+.add-event-notes-toggle{
+  border-radius: 3px;
+  margin: 0 3px;
+  height: 40px;
+  width: 40px;
+  box-shadow: 1px 1px 3px black;
+  border: 1px solid gray;
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/icons/inspect/notes.png');
+  background-position: center;
+}
+
+.add-event-todo-toggle{
+  border-radius: 3px;
+  margin: 0 3px;
+  height: 40px;
+  width: 40px;
+  box-shadow: 1px 1px 3px black;
+  border: 1px solid gray;
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/icons/inspect/todo.png');
+  background-position: center;
+}
+
+
+
 @media (max-width:800px) {
     .panel {
         width: 100% !important;

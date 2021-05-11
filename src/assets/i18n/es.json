@@ -492,7 +492,7 @@
             "TITLE": "Crear evento",
             "DATE": "Fecha",
             "DATE_PLACEHOLDER": "Fecha de observacion",
-            "DATE_ERROR": "Por favor complete la fecha",
+            "DATE_ERROR": "Por favor complete la fecha con una fecha válida",
             "EVENT": "Evento",
             "NOTES": "Notas",
             "NOTES_PLACEHOLDER":"Notas...",

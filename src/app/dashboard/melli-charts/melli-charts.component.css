@@ -133,6 +133,25 @@ nav[role=admin-navigation] {
 
 .hive-more-button{
   justify-content: flex-end;
+  background-color: transparent;
+  border: 0;
+  color: black;
+  height: 30px;
+}
+
+.hive-more-button:hover{
+  background-color: transparent;
+  color: green;
+}
+
+.hive-more-button:active{
+  background-color: transparent;
+  color: green;
+}
+
+.hive-more-button:focus{
+  background-color: transparent;
+  color: green;
 }
 
 .puce-apiary{
@@ -641,12 +660,12 @@ nav[role=admin-navigation] {
 
 .fa-plus{
   color:green;
-  margin-left: 15px !important;
+  margin-left: 15px;
 }
 
 .fa-minus{
   color: darkred;
-  margin-left: 15px !important;
+  margin-left: 15px;
 }
 
 .context-menu-choice p{
@@ -708,7 +727,7 @@ nav[role=admin-navigation] {
 
 .add-event-date{
   width: 98%;
-  height: 5%;
+  height: 7%;
   margin-top: 30px;
   margin-left: 1%;
 }
@@ -721,12 +740,16 @@ nav[role=admin-navigation] {
 
 .add-event-notes, .add-event-todo{
   width: 92%;
-  height: 15%;
+  height: 16%;
   margin-top: 20px;
   margin-left: 4%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+}
+
+.add-event-notes{
+  margin-top: 30px;
 }
 
 .add-event-tags{
@@ -780,8 +803,9 @@ nav[role=admin-navigation] {
 .add-event-time-error{
   color: darkred;
   display: none;
-  height: 20px;
+  height: 30px;
   margin-left: 3%;
+  margin-top: 5px;
 }
 
 .add-event-date > div:nth-child(1){
@@ -809,7 +833,7 @@ nav[role=admin-navigation] {
 }
 
 .add-event-screen input, .add-event-screen select{
-  height: 20px;
+  height: 30px;
 }
 
 .add-event-tags-container input{
@@ -825,7 +849,22 @@ nav[role=admin-navigation] {
   margin: 0 auto;
   resize: none;
   width: 80%;
-  height: 80%;
+  height: 100%;
+}
+
+.add-event-notes-textarea, .add-event-todo-textarea{
+  visibility: hidden;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+
+.hives-note-textarea-add-active{
+  visibility: visible;
+}
+
+.hives-todo-textarea-add-active{
+  visibility: visible;
 }
 
 .add-event-buttons{
@@ -871,6 +910,32 @@ nav[role=admin-navigation] {
   background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/icons/inspect/default.png');
+  background-position: center;
+}
+
+.add-event-notes-toggle{
+  border-radius: 3px;
+  margin: 0 3px;
+  height: 40px;
+  width: 40px;
+  box-shadow: 1px 1px 3px black;
+  border: 1px solid gray;
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/icons/inspect/notes.png');
+  background-position: center;
+}
+
+.add-event-todo-toggle{
+  border-radius: 3px;
+  margin: 0 3px;
+  height: 40px;
+  width: 40px;
+  box-shadow: 1px 1px 3px black;
+  border: 1px solid gray;
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/icons/inspect/todo.png');
   background-position: center;
 }
 
@@ -951,7 +1016,11 @@ nav[role=admin-navigation] {
   background-color: #eee;
 }
 
-.hives-notes-delete:active, .hives-todo-delete:active, .hives-obs-add:active{
+.hives-notes-delete:active, 
+.hives-todo-delete:active, 
+.hives-obs-add:active,
+.add-event-notes-toggle:active,
+.add-event-todo-toggle:active{
   transform: translateX(1px) translateY(1px);
   box-shadow: 0px 0px 1px black;
 
@@ -1083,12 +1152,12 @@ nav[role=admin-navigation] {
     
     .fa-plus{
       color:green;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 
     .fa-minus{
       color: darkred;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 }
 @media screen and (max-width:1400px) {
@@ -1097,12 +1166,12 @@ nav[role=admin-navigation] {
     }
     .fa-plus{
       color:green;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 
     .fa-minus{
       color: darkred;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 }
 @media screen and (max-width:1300px) {
@@ -1129,12 +1198,12 @@ nav[role=admin-navigation] {
     }
     .fa-plus{
       color:green;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 
     .fa-minus{
       color: darkred;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 }
 @media screen and (max-width:1200px) {
@@ -1148,12 +1217,12 @@ nav[role=admin-navigation] {
 
     .fa-plus{
       color:green;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 
     .fa-minus{
       color: darkred;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 
 }
@@ -1205,24 +1274,24 @@ nav[role=admin-navigation] {
     }
     .fa-plus{
       color:green;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 
     .fa-minus{
       color: darkred;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 }
 @media screen and (max-width:800px) {
 
   .fa-plus{
     color:green;
-    margin-left: 15px !important;
+    margin-left: 15px;
   }
 
   .fa-minus{
     color: darkred;
-    margin-left: 15px !important;
+    margin-left: 15px;
   }
 
 }
@@ -1261,12 +1330,12 @@ nav[role=admin-navigation] {
 
     .fa-plus{
       color:green;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 
     .fa-minus{
       color: darkred;
-      margin-left: 15px !important;
+      margin-left: 15px;
     }
 
 }

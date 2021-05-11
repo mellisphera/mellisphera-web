@@ -477,7 +477,7 @@
             "TITLE": "Creer Evenement",
             "DATE": "Date",
             "DATE_PLACEHOLDER": "Date d'observation",
-            "DATE_ERROR": "Veuillez renseigner une date",
+            "DATE_ERROR": "Veuillez renseigner une date valide",
             "EVENT": "Evenement",
             "NOTES": "Notes",
             "NOTES_PLACEHOLDER":"Notes...",

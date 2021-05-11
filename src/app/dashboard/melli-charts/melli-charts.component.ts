@@ -569,8 +569,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     evt.stopPropagation();
     evt.preventDefault();
     const menu = (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]);
-    menu.style.top = evt.clientY + 'px';
-    menu.style.left = (evt.clientX - 80) + 'px';
+    menu.style.top = (evt.clientY + 5) + 'px';
+    menu.style.left = (evt.clientX - 160) + 'px';
     menu.style.visibility = 'visible';
 
     const list = (<HTMLElement>menu.getElementsByClassName('context-menu-group')[0]);
@@ -689,9 +689,27 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     this.new_event.opsDate = this.newEventDate;
   }
 
+  showNotes(){
+    let textArea = <HTMLTextAreaElement>document.getElementsByClassName('add-event-notes-textarea')[0];
+    if (textArea.classList.contains('hives-note-textarea-add-active')) {
+        textArea.classList.remove('hives-note-textarea-add-active');
+    } else {
+      textArea.classList.add('hives-note-textarea-add-active');
+    }
+  }
+
   saveNotes(evt: Event): void {
     const textArea = <HTMLTextAreaElement>evt.target;
     this.new_event.description = textArea.value;
+  }
+
+  showTodo(){
+    let textArea = <HTMLTextAreaElement>document.getElementsByClassName('add-event-todo-textarea')[0];
+    if (textArea.classList.contains('hives-todo-textarea-add-active')) {
+        textArea.classList.remove('hives-todo-textarea-add-active');
+    } else {
+      textArea.classList.add('hives-todo-textarea-add-active');
+    }
   }
 
   saveTodo(evt: Event): void {
@@ -723,7 +741,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   insertAddEvent(): void {
-    if (this.new_event.opsDate == null) {
+    let hours = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value) 
+    let minutes = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value) 
+    if (this.new_event.opsDate == null  || hours > 23 || minutes > 59 ) {
       (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'flex';
       return;
     }

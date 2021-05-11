@@ -131,7 +131,7 @@ limitations under the License. -->
                 <i class="circle" [style.background-color]="getColor(ruche)"></i>
                 <span class="puce-hive"></span>{{ ruche.name }}
               </a>
-              <input class="hive-more-button" type="image" width="20" height="20" src="../../../assets/icons/ui/more.svg" (click)="showContextMenu(ruche, $event)">
+              <button class="hive-more-button" (click)="showContextMenu(ruche, $event)"><i class="fa fa-ellipsis-h fa-2x"></i></button>
             </div>
            
           </div>
@@ -167,7 +167,7 @@ limitations under the License. -->
 
   </div>
   <div class="black-filter"></div>
-  <div class="add-event-screen">
+  <div class="add-event-screen" style="display:none;">
     <h4 class="main-title">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
     <h4>{{hiveEvent?.name}}</h4>
     <div class="add-event-date">
@@ -187,12 +187,12 @@ limitations under the License. -->
       </div>
     </div>
     <div class="add-event-notes">
-        <img width="30" height="30" src="../../../assets/icons/inspect/notes.png">
+        <button class="add-event-notes-toggle" (click)="showNotes()"></button>
         <textarea class="add-event-notes-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
     </div>
     <div class="add-event-todo">
-      <img width="30" height="30" src="../../../assets/icons/inspect/todo.png">
-      <textarea class="add-event-todo-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        <button class="add-event-todo-toggle" (click)="showTodo()"></button>
+        <textarea class="add-event-todo-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
     </div>
     <!--<div class="add-event-tags">
       Tags
@@ -214,6 +214,8 @@ limitations under the License. -->
       <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
     </div>
   </div>
+
+
   <div class="delete-event-screen">
     <h3>{{hiveEvent?.name}} | {{'MELLICHARTS.EVENT.DELETE.TITLE' | translate}}</h3>
     <div class="delete-list">
