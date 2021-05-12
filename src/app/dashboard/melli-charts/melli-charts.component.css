@@ -12,7 +12,6 @@ limitations under the License. */
 .apiaryGroup{
     /*overflow: auto;*/
     scrollbar-width: none;
-    white-space: pre-wrap;
     overflow-y: scroll;
     z-index: 5;
     position: absolute;
@@ -24,12 +23,17 @@ limitations under the License. */
 }
 .apiaryGroup, .list-group-item {
 /*     background-color: #204d74;
- */    color: black;
+ */ color: black;
 }
 .apiaryGroup::-webkit-scrollbar {
     /* This is the magic bit for WebKit */
     display: none;
-  }
+}
+
+.list-group-item::after{
+  content: none;
+}
+
 .dropdown-menu{
     padding: 10px;
     color: white;
@@ -683,41 +687,30 @@ nav[role=admin-navigation] {
   cursor: pointer;
 }
 
-.black-filter{
-  position: absolute;
-  top: 52px;
-  left: 0px;
-  width: calc(100% - 1px);
-  height: calc(100% - 52px) !important;
-  background-color: rgba(0,0,0,0.5);
-  z-index: 11;
-  display: none;
+.add-event-screen{
+    width: 450px;
+    height: 60%;
+    position: absolute;
+    top: calc(50% + 52px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    z-index: 12;
+    display: block;
 }
 
-.add-event-screen, .delete-event-screen{
-  width: 450px;
-  height: 60%;
-  position: absolute;
-  top: calc(50% + 52px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  background-color: white;
-  border: 2px solid black;
-  border-radius: 8px;
-  z-index: 12;
-  display: none;
-}
-
-.add-event-screen input, 
+.add-event-screen input,
 .add-event-screen textarea,
 .delete-event-screen input,
 .delete-event-screen textarea{
-  border: 1px solid #999999;
+    border: 1px solid #999999;
 }
 
 .add-event-screen h4{
-  text-align: left;
-  margin-left: 4%;
+    text-align: left;
+    margin-left: 4%;
 }
 
 .add-event-screen > .main-title{
@@ -729,7 +722,6 @@ nav[role=admin-navigation] {
   width: 98%;
   height: 7%;
   margin-top: 30px;
-  margin-left: 1%;
 }
 
 .add-event-choice{
@@ -742,10 +734,9 @@ nav[role=admin-navigation] {
   width: 92%;
   height: 16%;
   margin-top: 20px;
-  margin-left: 4%;
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .add-event-notes{
@@ -755,7 +746,6 @@ nav[role=admin-navigation] {
 .add-event-tags{
   width: 92%;
   margin-top: 20px;
-  margin-left: 4%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -800,17 +790,20 @@ nav[role=admin-navigation] {
   margin-left: 5px;
 }
 
+.add-event-time-input{
+  width:150px;
+}
+
 .add-event-time-error{
   color: darkred;
   display: none;
   height: 30px;
-  margin-left: 3%;
-  margin-top: 5px;
+  margin-left: 1%;
+  margin-top: 15px;
 }
 
 .add-event-date > div:nth-child(1){
   height: 25px;
-  margin-left: 3%;
 }
 
 .add-event-date > div:nth-child(1) input[type=number]::-webkit-inner-spin-button{
@@ -819,7 +812,6 @@ nav[role=admin-navigation] {
 
 .add-event-choice > div, .add-event-notes > div{
   height: 80%;
-  margin-left: 3.5%;
 }
 
 .add-event-hours-input, .add-event-minutes-input{
@@ -845,17 +837,13 @@ nav[role=admin-navigation] {
   margin-left: 20px;
 }
 
-.add-event-screen textarea{
-  margin: 0 auto;
-  resize: none;
-  width: 80%;
-  height: 100%;
-}
-
 .add-event-notes-textarea, .add-event-todo-textarea{
   visibility: hidden;
-  height: 100%;
   overflow-y: hidden;
+  margin-left: 5px;
+  resize: none;
+  width: 100%;
+  height: 90px;
 }
 
 
@@ -867,13 +855,11 @@ nav[role=admin-navigation] {
   visibility: visible;
 }
 
+
 .add-event-buttons{
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  position: absolute;
-  top: 85%;
-  left: 55%;
   height: 10%;
 }
 
@@ -904,7 +890,7 @@ nav[role=admin-navigation] {
   background-repeat: no-repeat;
   background-image: url('../../../assets/icons/inspect/default_grey.png');
   background-position: center;
-} 
+}
 
 .hives-default-img-active{
   background-size: 32px;
@@ -939,204 +925,6 @@ nav[role=admin-navigation] {
   background-position: center;
 }
 
-.delete-event-screen h3{
-  text-align: center;
-}
-
-.delete-list{
-  margin-top: 40px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 99%;
-  height: 65%;
-  overflow-y: auto;
-}
-.delete-event-list > div:nth-child(2n){
-  background-color: #eaffeb;
-}
-
-.delete-alert-list > div:nth-child(2n){
-  background-color: #eaffeb;
-}
-
-.delete-event-item-container,
-.delete-alert-item-container{
-  width: 80%;
-  margin: 5px auto;
-  border: 1px solid #444;
-  border-radius: 3px;
-}
-
-.delete-event-item,
-.delete-alert-item{
-  width: 100%;
-  min-height: 50px;
-  margin: 5px auto;
-  text-align: center;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.delete-event-item > div > p,
-.delete-alert-item > div > p{
-  font-family: 'Poppins';
-  margin:0;
-}
-
-.delete-event-item-logo{
-  width: 35px;
-  height: 35px;
-  background:url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook.png') center no-repeat;
-  background-size: 30px;
-}
-
-.delete-alert-item-logo{
-  width: 35px;
-  height: 35px;
-  background:url('../../../assets/icons/inspect/inspect_v3/notif.png') center no-repeat;
-  background-size: 25px;
-}
-
-.hives-obs-delete{
-  margin: 5px 5px;
-  height: 38px;
-  width: 38px;
-  border: 1px solid skyblue;
-  box-shadow: 1px 1px 3px black;
-  background-color: #eee;
-}
-
-.hives-alert-delete{
-  margin: 5px 5px;
-  height: 38px;
-  width: 38px;
-  border: 1px solid lightcoral;
-  box-shadow: 1px 1px 3px black;
-  background-color: #eee;
-}
-
-.hives-notes-delete:active, 
-.hives-todo-delete:active, 
-.hives-obs-add:active,
-.add-event-notes-toggle:active,
-.add-event-todo-toggle:active{
-  transform: translateX(1px) translateY(1px);
-  box-shadow: 0px 0px 1px black;
-
-}
-
-.hives-notes-delete:focus, .hives-todo-delete:focus, .hives-obs-add:focus{
-  outline: 0;
-}
-
-.hives-notes-delete, .hives-todo-delete{
-  margin: 0 5px;
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
-  border: 1px solid #999999;
-  box-shadow: 1px 1px 3px black;
-}
-
-.hives-notes-delete{
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../assets/icons/inspect/notes.png');
-  background-position: center;
-}
-
-.hives-todo-delete{
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../assets/icons/inspect/todo.png');
-  background-position: center;
-}
-
-.hives-note-textarea-delete, .hives-todo-textarea-delete{
-  resize: none;
-  height: 50px;
-  width: 80%;
-  margin-bottom: 5px;
-  display: none;
-  overflow-y: hidden;
-}
-
-.hives-note-textarea-delete-active{
-  height: 50px;
-  display: initial;
-  animation-name: show-note-delete;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in;
-}
-
-@keyframes show-note-delete {
-  from {
-    height: 10px;
-  }
-  to {
-    height: 50px;
-  }
-}
-
-.hives-note-textarea-delete-inactive{
-  animation-name: hide-note-delete;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out;
-}
-
-@keyframes hide-note-delete {
-  from {
-    height: 50px;
-  }
-  to {
-    height: 10px;
-  }
-}
-
-.hives-todo-textarea-delete-active{
-  height: 50px;
-  display: initial;
-  animation-name: show-todo-delete;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in;
-}
-
-@keyframes show-todo-delete {
-  from {
-    height: 10px;
-  }
-  to {
-    height: 50px;
-  }
-}
-
-.hives-todo-textarea-delete-inactive{
-  animation-name: hide-todo-delete;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out;
-}
-
-@keyframes hide-todo-delete {
-  from {
-    height: 50px;
-  }
-  to {
-    height: 10px;
-  }
-}
-
-
-.delete-event-buttons{
-  width: 94%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  height: 22%;
-}
-
-
-
 
 
 
@@ -1149,7 +937,7 @@ nav[role=admin-navigation] {
 
 
 @media screen and (max-width:1500px) {
-    
+
     .fa-plus{
       color:green;
       margin-left: 15px;

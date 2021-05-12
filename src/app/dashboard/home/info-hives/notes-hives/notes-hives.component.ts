@@ -165,7 +165,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   * @memberof NotesComponent
   */
   getInspectionByHiveId(hiveId: string): Inspection[]{
-    return this.inspectionService.inspectionsHive.filter(_insp => _insp.hiveId === hiveId).sort((inspA, inspB) => {
+    let start = new Date();
+    start.setDate(start.getDate() - 35);
+    return this.inspectionService.inspectionsHive.filter(_insp => (_insp.hiveId === hiveId && new Date(_insp.opsDate) >= start) ).sort((inspA, inspB) => {
       return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
     });
   }
@@ -220,7 +222,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
     }
   }
-  
+
   createAction() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const formValue = this.ObservationForm.value;
@@ -274,7 +276,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.newInsp.hiveId = this.rucheService.getCurrentHive()._id;
       const index = this.inspectionService.inspectionsHive.indexOf(this.newInsp);
       // this.initForm();
-      this.inspectionService.updateInspection(this.newInsp).subscribe(() => { }, 
+      this.inspectionService.updateInspection(this.newInsp).subscribe(() => { },
       (_err) => {
         if (_err.error_code === 403) {
           this.inspectionService.inspectionsHive[index] = this.newInsp;
@@ -301,7 +303,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       this.newInsp.createDate = formValue.date;
       const index = this.inspectionService.inspectionsHive.indexOf(this.newInsp);
       document.getElementById('editObservationModal').style.display = 'none';
-      this.inspectionService.deleteHiveInsp([this.newObs._id]).subscribe(() => { }, 
+      this.inspectionService.deleteHiveInsp([this.newObs._id]).subscribe(() => { },
       (_err) => {
         if (_err.error_code === 403) {
           this.inspectionService.inspectionsHive.splice(index, 1);
@@ -324,6 +326,46 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   resetInspectionForm() {
     this.InspectionForm.get('sentence').reset();
   }
+
+
+  showContextMenu(evt: MouseEvent): void {
+    evt.stopPropagation();
+    evt.preventDefault();
+    const menu = (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]);
+    menu.style.top = '40px';
+    menu.style.left = (evt.clientX - 180) + 'px';
+    menu.style.visibility = 'visible';
+
+    const list = (<HTMLElement>menu.getElementsByClassName('context-menu-group')[0]);
+
+    this.new_event = {
+      _id: null,
+      apiaryInspId: null,
+      apiaryId: null,
+      hiveId: null,
+      userId: null,
+      createDate: null,
+      opsDate: null,
+      type: null,
+      description: null,
+      tags: [],
+      tasks: [],
+      obs: [],
+      todo: null
+    };
+
+    this.hiveEvent = Object.assign({}, this.rucheService.getCurrentHive());
+    this.new_event.hiveId = this.hiveEvent._id;
+
+    this.apiaryEvent = Object.assign({}, this.rucherService.rucher);
+    this.new_event.apiaryId = this.rucherService.rucher._id;
+  }
+
+  closeContextMenu(): void {
+    (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]).style.visibility = 'hidden';
+  }
+
+
 
   // <--- ADD EVENT SCREEN --->
 
@@ -454,8 +496,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   }
 
   insertAddEvent(): void {
-    let hours = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value) 
-    let minutes = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value) 
+    let hours = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value)
+    let minutes = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value)
     if (this.new_event.opsDate == null  || hours > 23 || minutes > 59 ) {
       (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'flex';
       return;
@@ -464,14 +506,14 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     this.inspectionService.insertHiveEvent(this.new_event).subscribe(
       () => {
         this.inspectionService.inspectionsHive.push(this.new_event);
-      }, 
-      () => {}, 
+      },
+      () => {},
       () => {
         this.noteChange.emit(this.new_event);
         this.inspectionService.emitHiveSubject();
         if(this.translateService.currentLang === 'fr'){
           this.notifier.notify('success', 'Inspection créée');
-          
+
         }else{
           this.notifier.notify('success', 'Created Inspection');
         }

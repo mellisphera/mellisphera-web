@@ -62,15 +62,15 @@ th{
   margin-left: 0 !important;
   margin-right: 0 !important;
   background: none;
-  color: #5cb85c !important; 
+  color: #5cb85c !important;
 }
 
 .add_icon:hover{
-  color: #ffffff !important; 
+  color: #ffffff !important;
 }
 
 .add_icon:active{
-  color:white !important; 
+  color:white !important;
 }
 
 .add-event-screen{
@@ -87,7 +87,7 @@ th{
     display: block;
 }
 
-.add-event-screen input, 
+.add-event-screen input,
 .add-event-screen textarea,
 .delete-event-screen input,
 .delete-event-screen textarea{
@@ -108,7 +108,6 @@ th{
   width: 98%;
   height: 7%;
   margin-top: 30px;
-  margin-left: 1%;
 }
 
 .add-event-choice{
@@ -121,10 +120,9 @@ th{
   width: 92%;
   height: 16%;
   margin-top: 20px;
-  margin-left: 4%;
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .add-event-notes{
@@ -134,7 +132,6 @@ th{
 .add-event-tags{
   width: 92%;
   margin-top: 20px;
-  margin-left: 4%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -179,17 +176,20 @@ th{
   margin-left: 5px;
 }
 
+.add-event-time-input{
+  width:150px;
+}
+
 .add-event-time-error{
   color: darkred;
   display: none;
   height: 30px;
-  margin-left: 3%;
-  margin-top: 5px;
+  margin-left: 1%;
+  margin-top: 15px;
 }
 
 .add-event-date > div:nth-child(1){
   height: 25px;
-  margin-left: 3%;
 }
 
 .add-event-date > div:nth-child(1) input[type=number]::-webkit-inner-spin-button{
@@ -198,7 +198,6 @@ th{
 
 .add-event-choice > div, .add-event-notes > div{
   height: 80%;
-  margin-left: 3.5%;
 }
 
 .add-event-hours-input, .add-event-minutes-input{
@@ -224,17 +223,13 @@ th{
   margin-left: 20px;
 }
 
-.add-event-screen textarea{
-  margin: 0 auto;
-  resize: none;
-  width: 80%;
-  height: 100%;
-}
-
 .add-event-notes-textarea, .add-event-todo-textarea{
   visibility: hidden;
-  height: 100%;
   overflow-y: hidden;
+  margin-left: 5px;
+  resize: none;
+  width: 100%;
+  height: 90px;
 }
 
 
@@ -251,9 +246,6 @@ th{
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  position: absolute;
-  top: 85%;
-  left: 55%;
   height: 10%;
 }
 
@@ -284,7 +276,7 @@ th{
   background-repeat: no-repeat;
   background-image: url('../../../../../assets/icons/inspect/default_grey.png');
   background-position: center;
-} 
+}
 
 .hives-default-img-active{
   background-size: 32px;
@@ -325,7 +317,7 @@ th{
     .panel {
         width: 100% !important;
     }
-} 
+}
 
 .fa-plus{
     margin-top: -3px;
@@ -347,7 +339,7 @@ th{
 @media (max-width: 500px) {
     .btn_delete_modal{
         display: none;
-    } 
+    }
     .btn_delete_modal_mobile{
         display: block;
         padding-top: 0px !important;

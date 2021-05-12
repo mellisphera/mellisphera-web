@@ -34,6 +34,11 @@ limitations under the License. -->
           class="button button0"data-toggle="tooltip" data-placement="top"
           title="{{ 'MELLICHARTS.NAV.DONNEE_TOOLTIP' | translate }}">{{ 'MELLICHARTS.NAV.DONNEE' | translate }}</button>
       </li>
+      <li>
+        <button type="button" [id]="btnNav[4].path" (click)="navToPage(btnNav[4].path, btnNav[4].path)"
+          class="button button0" data-toggle="tooltip" data-placement="top"
+          title="{{ 'MELLICHARTS.NAV.EVENTS_TOOLTIP' | translate }}">{{ 'MELLICHARTS.NAV.EVENTS' | translate }}</button>
+      </li>
     </ul>
     <ul class="nav nav-date navbar-nav navbar-right">
       <li><button type="button" (click)="previousDate()" class="btn date-arrow btn-transparent"><i
@@ -118,9 +123,15 @@ limitations under the License. -->
     <div class="apiaryGroup">
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
-          <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)"
-            data-toggle="collapse" data-parent="#main-menu"><span></span>{{ rucher.name }}<span [id]="rucher._id"
-              [class]="'caret ' + ifActiveApiary(rucher._id)"></span></a>
+          <div (click)="selectAllHive(rucher, rucher._id + '_span')" [id]="rucher._id" style="display: flex; align-items: center;" data-parent="#main-menu" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)">
+            <a  [id]="rucher._id + '_link'"[href]="'#' + i" data-toggle="collapse" (click)="ifActiveApiary(rucher._id + '_link',rucher._id)">
+              <i [class]="'fa fa-chevron-right ' + ifActiveIcon(rucher._id) "></i>
+              <!--<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span>-->
+            </a>
+            <span [id]="rucher._id + '_span'">{{ rucher.name }}</span>
+            <button style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)"><i class="fa fa-ellipsis-h fa-2x" style="margin-right: 0;"></i></button>
+          </div>
+
           <div
             [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
             <div [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
@@ -131,9 +142,9 @@ limitations under the License. -->
                 <i class="circle" [style.background-color]="getColor(ruche)"></i>
                 <span class="puce-hive"></span>{{ ruche.name }}
               </a>
-              <button class="hive-more-button" (click)="showContextMenu(ruche, $event)"><i class="fa fa-ellipsis-h fa-2x"></i></button>
+              <button class="hive-more-button" (click)="showContextMenu(null, ruche, $event)"><i class="fa fa-ellipsis-h fa-2x" style="margin-right: 0;"></i></button>
             </div>
-           
+
           </div>
 <!--           <div *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
             [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
@@ -159,72 +170,56 @@ limitations under the License. -->
       </div>
       <div>
         <ul class="context-menu-group">
-          <li class="context-menu-choice add-event" (click)="showAddEvent()" ><i class="fa fa-plus"></i><p>{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</p></li>
-          <li class="context-menu-choice delete-event" (click)="showDeleteEvent()" ><i class="fa fa-minus"></i><p>{{'MELLICHARTS.EVENT.DELETE.TITLE' | translate}}</p></li>
+          <li class="context-menu-choice add-event" data-toggle="modal" data-target="#newInspectionModal" (click)="showAddEvent()">
+            <i class="fa fa-plus"></i>
+            <p>{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</p>
+          </li>
         </ul>
       </div>
     </div>
-
   </div>
-  <div class="black-filter"></div>
-  <div class="add-event-screen" style="display:none;">
-    <h4 class="main-title">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
-    <h4>{{hiveEvent?.name}}</h4>
-    <div class="add-event-date">
-      <div>
-        <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
-        <owl-date-time [pickerType]="'calendar'" #dtEvent></owl-date-time>
-        <input class="add-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours()">
-        :
-        <input class="add-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes()">
-      </div>
-      <div class="add-event-time-error">
-        {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
-      </div>
-    </div>
-    <div class="add-event-choice">
-      <div class="add-event-choice-obs">
-      </div>
-    </div>
-    <div class="add-event-notes">
-        <button class="add-event-notes-toggle" (click)="showNotes()"></button>
-        <textarea class="add-event-notes-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
-    </div>
-    <div class="add-event-todo">
-        <button class="add-event-todo-toggle" (click)="showTodo()"></button>
-        <textarea class="add-event-todo-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
-    </div>
-    <!--<div class="add-event-tags">
-      Tags
-      <div class="add-event-tags-container">
-        <div style="border-bottom: 1px solid black; width:80%; display: flex;">
-          <div *ngFor="let tag of tags" class="add-event-tag-chip">
 
-              <p>{{tag}}</p>
-              <i class="fa fa-times add-event-tags-delete" (click)="removeTag(tag)"></i>
-           
+
+<!--New Inspection Modal-->
+<div class="modal fade" id="newInspectionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
+        <h4 *ngIf="typeEvent === 'hive'">{{hiveEvent?.name}}</h4>
+        <h4 *ngIf="typeEvent === 'apiary'">{{apiaryEvent?.name}}</h4>
+        <div class="add-event-date">
+          <div>
+            <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
+            <owl-date-time [pickerType]="'calendar'" #dtEvent></owl-date-time>
+            <input class="add-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours()">
+            :
+            <input class="add-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes()">
           </div>
-          <input class="add-event-tags-input" style="border:0;" type="text" placeholder="Tag..." required aria-required="true">
+          <div class="add-event-time-error">
+            {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
+          </div>
         </div>
-        <button class="add-event-tags-button" (click)="addTag($event)">Ajouter</button>
       </div>
-    </div>-->
-    <div class="add-event-buttons">
-      <button class="btn btn-danger" style="margin-right:10px;height:34px;" (click)="discardAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
-      <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
-    </div>
-  </div>
-
-
-  <div class="delete-event-screen">
-    <h3>{{hiveEvent?.name}} | {{'MELLICHARTS.EVENT.DELETE.TITLE' | translate}}</h3>
-    <div class="delete-list">
-      <div class="delete-event-list"></div>
-      <div class="delete-alert-list"></div>
-    </div>
-    <div class="delete-event-buttons">
-      <button class="btn btn-danger" style="margin-right:10px;" (click)="discardDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
-      <button class="btn btn-success" style="margin-left:10px;" (click)="deleteDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}</button>
+      <div class="modal-body">
+        <div class="add-event-choice">
+          <div class="add-event-choice-obs">
+          </div>
+        </div>
+        <div class="add-event-notes">
+            <button class="add-event-notes-toggle" (click)="showNotes()"></button>
+            <textarea class="add-event-notes-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="add-event-todo">
+            <button class="add-event-todo-toggle" (click)="showTodo()"></button>
+            <textarea class="add-event-todo-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons">
+          <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
+        </div>
     </div>
   </div>
 </div>

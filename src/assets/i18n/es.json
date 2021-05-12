@@ -442,7 +442,9 @@
             "DONNEE": "Datos",
             "DONNEE_TOOLTIP": "Datos",
             "WEIGHT" : "Peso",
-            "WEIGHT_TOOLTIP" : "Peso"
+            "WEIGHT_TOOLTIP" : "Peso",
+            "EVENTS": "Eventos",
+            "EVENTS_TOOLTIP": "Eventos"
         },
         "DATE": {
             "START": "Inicio",

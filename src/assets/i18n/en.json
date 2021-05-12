@@ -427,7 +427,9 @@
             "DONNEE": "Raw data",
             "DONNEE_TOOLTIP": "Raw data",
             "WEIGHT": "Weight",
-            "WEIGHT_TOOLTIP": "Weight"
+            "WEIGHT_TOOLTIP": "Weight",
+            "EVENTS": "Events",
+            "EVENTS_TOOLTIP": "Events"
         },
         "DATE": {
             "START": "Start",

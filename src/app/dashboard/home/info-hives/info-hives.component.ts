@@ -26,6 +26,7 @@ import { HealthHiveComponent } from './health-hive/health-hive.component';
 import { isUndefined } from 'util';
 import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 import { WeightHivesComponent } from './weight-hives/weight-hives.component';
+import { NotesHivesComponent } from './notes-hives/notes-hives.component';
 
 @Component({
   selector: 'app-info-hives',
@@ -40,6 +41,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild(AlertsHiveComponent) alertsHiveComponent: AlertsHiveComponent;
   @ViewChild(HealthHiveComponent) healthHiveComponent: HealthHiveComponent;
   @ViewChild(WeightHivesComponent) weightHiveComponent: WeightHivesComponent;
+  @ViewChild(NotesHivesComponent) notesHiveComponent: NotesHivesComponent
 
   constructor(private observationService: ObservationService,
     public rucheService: RucheService,
@@ -100,7 +102,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
         console.log(option.baseOption.series);
         option.baseOption.tooltip = this.graphGlobal.getTooltipBySerie({type: 'BROOD', name: 'BROOD', unit: 'P'});
         option.baseOption.series.push(this.graphGlobal.getDaySerie());
-        
+
        // this.healthHiveComponent.option.baseOption.serie = this.dailyRecordThService.mergeOptionCalendarHealth.series;
         this.healthHiveComponent.chartInstance.clear();
         this.healthHiveComponent.chartInstance.setOption(option, true);

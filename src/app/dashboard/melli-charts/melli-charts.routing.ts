@@ -19,6 +19,7 @@ import { MapComponent } from "./map/map.component";
 import { VitalityComponent } from "./vitality/vitality.component";
 import { StackComponent } from "./stack/stack.component";
 import { WeightComponent } from './weight/weight.component';
+import { EventsComponent } from "./events/events.component";
 
 const routes: Routes = [
     {
@@ -28,6 +29,7 @@ const routes: Routes = [
             { path: 'brood', component: VitalityComponent, canActivate: [AuthGuardService]},
             { path: 'stack', component: StackComponent, canActivate: [AuthGuardService]},
             { path: 'weight', component: WeightComponent, canActivate: [AuthGuardService]},
+            { path: 'events', component: EventsComponent, canActivate: [AuthGuardService]},
             { path: '', redirectTo: 'hive', pathMatch: 'full', canActivate: [AuthGuardService]}
             //{ path: '', redirectTo: 'hive', pathMatch: 'full', canActivate: [AuthGuardService]}
         ]

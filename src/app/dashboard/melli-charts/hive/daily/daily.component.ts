@@ -96,8 +96,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'HEXT_WEATHER_MIN', id: 'HEXT_WEATHER_MIN', unit: 'P', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/hext_min.png' },
       { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/wind.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
-      { name: 'EVENT-APIARY', id: 'EVENT-APIARY', origin: 'ENV', class: 'item-type', icons: './assets/icons/inspect/inspect_v3/4_tool_jhook_api.png' },
-      { name: 'EVENT-HIVE', id: 'EVENT-HIVE', origin: 'ENV', class: 'item-type', icons: './assets/icons/inspect/inspect_v3/4_tool_jhook.png' },
+      //{ name: 'EVENT-APIARY', id: 'EVENT-APIARY', origin: 'ENV', class: 'item-type', icons: './assets/icons/inspect/inspect_v3/4_tool_jhook_api.png' },
+      //{ name: 'EVENT-HIVE', id: 'EVENT-HIVE', origin: 'ENV', class: 'item-type', icons: './assets/icons/inspect/inspect_v3/4_tool_jhook.png' },
       { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/notif.png' },
       { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: './assets/picto_mellicharts/moon.png' },
     ];

@@ -427,7 +427,9 @@
             "DONNEE": "Données",
             "DONNEE_TOOLTIP": "Données brutes",
             "WEIGHT": "Poids",
-            "WEIGHT_TOOLTIP": "Poids"
+            "WEIGHT_TOOLTIP": "Poids",
+            "EVENTS": "Evenements",
+            "EVENTS_TOOLTIP": "Evenements"
         },
         "DATE": {
             "START": "Début",

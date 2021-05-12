@@ -31,6 +31,7 @@ import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 import { WeightComponent } from './weight/weight.component';
 import { DatePipe } from '@angular/common';
 import { MatFormFieldModule, MatChipsModule, MatLabel, MatIconModule, MatInputModule } from '@angular/material';
+import { EventsComponent } from './events/events.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { MatFormFieldModule, MatChipsModule, MatLabel, MatIconModule, MatInputMo
     DailyComponent,
     HourlyComponent,
     WeightComponent,
+    EventsComponent,
    ],
   imports: [
     MelliChartsRouting,

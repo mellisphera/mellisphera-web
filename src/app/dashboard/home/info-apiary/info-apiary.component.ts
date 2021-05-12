@@ -13,6 +13,7 @@ import { Component, OnInit, AfterViewChecked,HostListener,ViewChild, Renderer2 }
 import { RucherService } from '../../service/api/rucher.service';
 import { AlertsComponent } from './alerts/alerts.component';
 import { Observation } from '../../../_model/observation';
+import { NotesComponent } from './notes/notes.component';
 
 @Component({
   selector: 'app-info-apiary',
@@ -25,6 +26,7 @@ export class InfoApiaryComponent implements OnInit, AfterViewChecked {
   screenWidth:any;
   private eltOnClickId: EventTarget;
   @ViewChild(AlertsComponent) alertsComponent: AlertsComponent;
+  @ViewChild(NotesComponent) notesComponent: NotesComponent;
 
   constructor(public rucherService: RucherService,
     private renderer: Renderer2) {

@@ -45,6 +45,7 @@ import { InspectionService } from './../service/api/inspection.service';
 import { Inspection } from '../../_model/inspection';
 import { arrayBufferToBase64 } from 'angular-file/file-upload/fileTools';
 import { MatChipInputEvent } from '@angular/material';
+import { NotifierService } from 'angular-notifier';
 
 const PREFIX_PATH = '/dashboard/explore/';
 const IMG_PATH = '../../../assets/icons/inspect/';
@@ -83,6 +84,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   public newEventDate: Date;
   public hiveEvent: RucheInterface;
   public apiaryEvent: RucherModel;
+  public typeEvent: string;
 
   public hiveEventList: Inspection[];
   public hiveAlertList: AlertInterface[];
@@ -143,27 +145,31 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private translate: TranslateService,
     public melliFilters: MelliChartsFilterService,
     private inspService: InspectionService,
+    private notify: NotifierService,
     ) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
         { name: 'Ruche', path: 'hive' },
         { name: 'Couvain', path: 'brood' },
         { name: 'Données', path: 'stack' },
-        { name: 'Poids', path: 'weight'}
+        { name: 'Poids', path: 'weight'},
+        { name: 'Evenements', path: 'events'},
       ];
     } else if (this.translateService.currentLang === 'es') {
       this.btnNav = [
         { name: 'Colmena', path: 'hive' },
         { name: 'Cría', path: 'brood' },
         { name: 'Datos', path: 'stack' },
-        { name: 'Peso', path: 'weight'}
+        { name: 'Peso', path: 'weight'},
+        { name: 'Eventos', path: 'events'},
       ];
     } else {
       this.btnNav = [
         { name: 'Hive', path: 'hive' },
         { name: 'Brood', path: 'brood' },
         { name: 'Raw data', path: 'stack' },
-        { name: 'Weight', path: 'weight'}
+        { name: 'Weight', path: 'weight'},
+        { name: 'Events', path: 'events'},
       ];
     }
 
@@ -219,14 +225,32 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
 
 
-  ifActiveApiary(apiaryId: string): string {
+  ifActiveApiary(idLink: string, apiaryId: string): void {
+    let link = (<HTMLLinkElement>document.getElementById(idLink));
+    let divId = (<HTMLDivElement>document.getElementById(apiaryId));
+    let icon = (<HTMLElement>link.getElementsByTagName('i')[0]);
     try {
       const index = this.rucherService.allApiaryAccount.findIndex(_apiary => _apiary._id === apiaryId);
       if (document.getElementById('' + index).classList.contains('in')) {
-        return 'caret-up';
-      } else {
-        return '';
+        divId.classList.remove('apiary-active');
+        icon.classList.add('fa-rotate-90');
+        return;
       }
+      divId.classList.add('apiary-active');
+      icon.classList.remove('fa-rotate-90');
+      return;
+    } catch {
+      return;
+    }
+  }
+
+  ifActiveIcon(apiaryId: string): string {
+    try {
+      const index = this.rucherService.allApiaryAccount.findIndex(_apiary => _apiary._id === apiaryId);
+      if (document.getElementById('' + index).classList.contains('in')) {
+        return 'fa-rotate-90';
+      }
+      return '';
     } catch {
       return '';
     }
@@ -237,11 +261,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       return apiaryId === this.melliChartHive.getHiveSelect().apiaryId ? 'in' : '';
     } catch { }
   }
+
   onCloseDatePicker(): void {
     (<HTMLInputElement>document.getElementById('calendar-begin')).value = this.unitService.getDailyDate(this.melliChartDate.start);
     (<HTMLInputElement>document.getElementById('calendar-end')).value = this.unitService.getDailyDate(this.melliChartDate.end);
     this.dateDropdown.classList.add('open');
   }
+
   /**
    *
    *
@@ -474,6 +500,11 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
 
+  selectAllHive(rucher: RucherModel, spanId: string): void {
+    let span = (<HTMLSpanElement>document.getElementById(spanId));
+
+  }
+
 
   /**
    *
@@ -565,19 +596,26 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  showContextMenu(ruche: RucheInterface, evt: MouseEvent): void {
+  showContextMenu(rucher: RucherModel, ruche: RucheInterface, evt: MouseEvent): void {
     evt.stopPropagation();
     evt.preventDefault();
     const menu = (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]);
     menu.style.top = (evt.clientY + 5) + 'px';
-    menu.style.left = (evt.clientX - 160) + 'px';
+    menu.style.left = (evt.clientX - 180) + 'px';
     menu.style.visibility = 'visible';
 
     const list = (<HTMLElement>menu.getElementsByClassName('context-menu-group')[0]);
     const name = (<HTMLElement>menu.getElementsByClassName('hive-name')[0]);
     const circle = (<HTMLElement>menu.getElementsByClassName('circle')[0]);
-    circle.style.backgroundColor = this.getColor(ruche);
-    name.innerHTML =  '  ' + ruche.name;
+
+    if(ruche != null){
+      circle.style.backgroundColor = this.getColor(ruche);
+      name.innerHTML =  '  ' + ruche.name;
+    }
+    if(rucher != null){
+      name.innerHTML =  '  ' + rucher.name;
+    }
+
 
     this.new_event = {
       _id: null,
@@ -595,15 +633,24 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       todo: null
     };
 
-    this.hiveEvent = Object.assign({}, ruche);
-    this.new_event.apiaryId = ruche.apiaryId;
+    if(ruche != null){
+      this.hiveEvent = Object.assign({}, ruche);
+      this.typeEvent = 'hive';
+      this.rucherService.findRucherById(ruche.apiaryId, (apiary) => {
+        this.apiaryEvent = Object.assign({}, apiary);
+      });
+      this.new_event.apiaryId = ruche.apiaryId;
+      this.new_event.type = this.typeEvent;
+      this.new_event.hiveId = ruche._id;
+      return;
+    }
 
-    this.rucherService.findRucherById(ruche.apiaryId, (apiary) => {
-      this.apiaryEvent = Object.assign({}, apiary);
-    });
+    this.apiaryEvent = Object.assign({}, rucher);
+    this.typeEvent = 'apiary';
+    this.new_event.type = this.typeEvent;
+    this.new_event.apiaryId = rucher._id;
+    return;
 
-    const container = (<HTMLElement>document.getElementsByClassName('delete-event-list')[0]);
-    container.innerHTML = '';
   }
 
   closeContextMenu(): void {
@@ -613,13 +660,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   // <--- ADD EVENT SCREEN --->
 
   showAddEvent(): void {
-    this.new_event.hiveId = this.hiveEvent._id;
-    this.new_event.apiaryId = this.hiveEvent.apiaryId;
     this.new_event.userId = this.userService.getIdUserLoged();
     this.new_event.createDate = new Date();
-    this.new_event.type = 'hive';
-    (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'block';
-    (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'block';
+    (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = null;
     (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = null;
     (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = null;
@@ -741,25 +784,27 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   insertAddEvent(): void {
-    let hours = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value) 
-    let minutes = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value) 
+    let hours = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value)
+    let minutes = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value)
     if (this.new_event.opsDate == null  || hours > 23 || minutes > 59 ) {
       (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'flex';
       return;
     }
     (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
-    (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'none';
-    (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'none';
     this.inspService.insertHiveEvent(this.new_event).subscribe(
-      () => {}, () => {}, () => {}
+      () => {},
+      () => {},
+      () => {
+        if(this.translateService.currentLang === 'fr'){
+          this.notify.notify('success', 'Inspection créée');
+
+        }else{
+          this.notify.notify('success', 'Created Inspection');
+        }
+      }
     );
     this.insertOnGraph();
     return;
-  }
-
-  discardAddEvent(): void {
-    (<HTMLElement>document.getElementsByClassName('black-filter')[0]).style.display = 'none';
-    (<HTMLElement>document.getElementsByClassName('add-event-screen')[0]).style.display = 'none';
   }
 
   insertOnGraph(): void {

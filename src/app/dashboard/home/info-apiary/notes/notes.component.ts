@@ -63,11 +63,6 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   public hiveEvent: RucheInterface;
   public apiaryEvent: RucherModel;
 
-  public hiveEventList: Inspection[];
-  public hiveAlertList: AlertInterface[];
-  public hiveEventToDelete: Inspection[] | null;
-  public hiveAlertToDelete: AlertInterface[] | null;
-
   public new_event: Inspection = {
     _id: null,
     apiaryInspId: null,
@@ -172,7 +167,9 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    * @memberof NotesComponent
    */
   getInspectionByApiaryId(apiaryId: string): Inspection[]{
-    return this.inspectionService.inspectionsApiary.filter(_insp => _insp.apiaryId === apiaryId ).sort((inspA, inspB) => {
+    let start = new Date();
+    start.setDate(start.getDate() - 35);
+    return this.inspectionService.inspectionsApiary.filter(_insp => (_insp.apiaryId === apiaryId && new Date(_insp.opsDate) >= start) ).sort((inspA, inspB) => {
       return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
     });
   }
@@ -253,7 +250,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
 /*         this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
           return -(moment(a.opsDate).unix() - moment(b.opsDate).unix())
         }); */
-      }, 
+      },
       (_err) => {
         if (_err.error_code === 403) {
           this.inspectionService.inspectionsApiary.push(this.newInsp);
@@ -262,7 +259,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
         this.noteChange.emit(this.newInsp);
         if(this.translateService.currentLang === 'fr'){
           this.notify.notify('success', 'Inspection créée');
-          
+
         }else{
           this.notify.notify('success', 'Created Inspection');
         }
@@ -285,7 +282,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       this.newInsp.apiaryId = this.rucherService.getCurrentApiary();
       this.newInsp.type = 'apiary';
       const index = this.inspectionService.inspectionsApiary.indexOf(this.newInsp);
-      this.inspectionService.updateInspection(this.newInsp).subscribe(() => { }, 
+      this.inspectionService.updateInspection(this.newInsp).subscribe(() => { },
       (_err) => {
         if (_err.error_code === 403) {
           this.inspectionService.inspectionsApiary[index] = this.newInsp;
@@ -314,7 +311,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   deleteObs() {
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       const index = this.inspectionService.inspectionsApiary.indexOf(this.newInsp);
-      this.inspectionService.deleteHiveInsp([this.newInsp._id]).subscribe(() => { }, 
+      this.inspectionService.deleteHiveInsp([this.newInsp._id]).subscribe(() => { },
       (_err) => {
         if (_err.error_code === 403) {
           this.inspectionService.inspectionsApiary.splice(index, 1);
@@ -358,7 +355,42 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   }
 
 
-   // <--- ADD EVENT SCREEN --->
+
+  showContextMenu(evt: MouseEvent): void {
+    evt.stopPropagation();
+    evt.preventDefault();
+    const menu = (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]);
+    menu.style.top = '40px';
+    menu.style.left = (evt.clientX - 180) + 'px';
+    menu.style.visibility = 'visible';
+
+    const list = (<HTMLElement>menu.getElementsByClassName('context-menu-group')[0]);
+
+    this.new_event = {
+      _id: null,
+      apiaryInspId: null,
+      apiaryId: null,
+      hiveId: null,
+      userId: null,
+      createDate: null,
+      opsDate: null,
+      type: null,
+      description: null,
+      tags: [],
+      tasks: [],
+      obs: [],
+      todo: null
+    };
+
+    this.apiaryEvent = Object.assign({}, this.rucherService.rucher);
+    this.new_event.apiaryId = this.rucherService.rucher._id;
+  }
+
+  closeContextMenu(): void {
+    (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]).style.visibility = 'hidden';
+  }
+
+  // <--- ADD EVENT SCREEN --->
 
   showAddEvent(): void {
     this.new_event.apiaryId = this.rucherService.rucher._id;
@@ -486,8 +518,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   }
 
   insertAddEvent(): void {
-    let hours = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value) 
-    let minutes = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value) 
+    let hours = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value)
+    let minutes = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value)
     if (this.new_event.opsDate == null  || hours > 23 || minutes > 59 ) {
       (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'flex';
       return;
@@ -496,13 +528,13 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     this.inspService.insertHiveEvent(this.new_event).subscribe(
       () => {
         this.inspectionService.inspectionsApiary.push(this.new_event);
-      }, 
-      () => {}, 
+      },
+      () => {},
       () => {
         this.noteChange.emit(this.new_event);
         if(this.translateService.currentLang === 'fr'){
           this.notify.notify('success', 'Inspection créée');
-          
+
         }else{
           this.notify.notify('success', 'Created Inspection');
         }
