@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, ObservableLike } from 'rxjs';
 import { CONFIG } from '../../../../constants/config';
 
 import { Inspection } from '../../../_model/inspection';
@@ -241,6 +241,17 @@ export class InspectionService {
   */
   getInspectionByTypeAndOpsDateBetween(type: string, opsRange: Date[]): Observable<Inspection[]> {
     return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/type/opsbetween/' + type, opsRange, httpOptions);
+  }
+
+
+  /**
+  *
+  * @param type
+  * @param opsRange
+  *
+  */
+  getInspectionByFilters(apiaryId: string, hiveIds: string[], opsRange: Date[], types: string[]): Observable<Inspection[]>{
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/filter/' + apiaryId, {'hiveIds': hiveIds, 'opsRange': opsRange, 'types': types}, httpOptions);
   }
 
 

@@ -126,7 +126,10 @@ export class DailyComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.setMeanTextHtml();
     this.calendarElements = document.getElementsByClassName('calendar');
-/*     this.dailyManager.setMeanAnnotation = (_type: Tools, clear?: boolean) => {
+    this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
+    this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
+    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
+  /*this.dailyManager.setMeanAnnotation = (_type: Tools, clear?: boolean) => {
       if (!clear) {
         this.setMeanTextHtml();
         if (_type.origin === DEVICE) {

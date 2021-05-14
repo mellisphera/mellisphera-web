@@ -18,7 +18,7 @@ limitations under the License. */
     justify-content: space-between;
     height: auto;
 }
-.apiary-group-hive, .apiary-group-brood, .apiary-group-stack, .apiary-group-weight{
+.apiary-group-hive, .apiary-group-brood, .apiary-group-stack, .apiary-group-weight, .apiary-group-events{
     width: 13%;
 }
 .apiaryGroup, .list-group-item {
@@ -285,6 +285,13 @@ nav[role=admin-navigation] {
 
 .filters-insp p, .filters-alerts p, .filters-events p{
   color: black;
+}
+
+.filters-alerts,
+.filters-events,
+.filters-insp{
+  display: flex;
+  align-items: center;
 }
 
 .filters-alerts-btn,

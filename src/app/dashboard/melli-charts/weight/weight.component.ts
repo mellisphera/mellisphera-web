@@ -103,10 +103,12 @@ export class WeightComponent implements OnInit, AfterViewInit {
       elt.classList.remove('apiary-group-hive');
     } else if (elt.classList.contains('apiary-group-stack')) {
       elt.classList.remove('apiary-group-stack');
-    } else if (elt.classList.contains('apiary-group-weight')){
+    } else if (elt.classList.contains('apiary-group-brood')){
       elt.classList.remove('apiary-group-brood');
+    } else if (elt.classList.contains('apiary-group-events')){
+      elt.classList.remove('apiary-group-events');
     }
-    elt.classList.add('apiary-group-brood');
+    elt.classList.add('apiary-group-weight');
     this.userPrefsService.getUserPrefs().subscribe(
       _userPrefs => {
         this.user_pref = _userPrefs;

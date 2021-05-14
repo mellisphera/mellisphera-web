@@ -140,6 +140,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
       elt.classList.remove('apiary-group-stack');
     } else if (elt.classList.contains('apiary-group-weight')){
       elt.classList.remove('apiary-group-weight');
+    } else if (elt.classList.contains('apiary-group-events')){
+      elt.classList.remove('apiary-group-events');
     }
     elt.classList.add('apiary-group-brood');
     this.stackService.setBroodChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-brood')));

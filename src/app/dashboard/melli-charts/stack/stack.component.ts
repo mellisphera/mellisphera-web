@@ -54,6 +54,8 @@ export class StackComponent implements OnInit {
       elt.classList.remove('apiary-group-hive');
     } else if (elt.classList.contains('apiary-group-weight')){
       elt.classList.remove('apiary-group-weight');
+    } else if (elt.classList.contains('apiary-group-events')){
+      elt.classList.remove('apiary-group-events');
     }
     elt.classList.add('apiary-group-stack');
     this.options = Object.assign({}, BASE_OPTIONS.baseOptionStack);

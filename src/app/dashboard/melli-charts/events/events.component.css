@@ -1,0 +1,66 @@
+.infoToolip{
+    position: fixed;
+    right: 30px;
+    bottom: 10px;
+}
+
+.content{
+    width: 100%;
+    height: 100%;
+}
+
+.table-events{
+    width: 98%;
+    margin-top: 20px;
+    margin-left: 1%;
+}
+
+.table-events th{
+    text-align: center;
+    height: 40px;
+}
+
+.table-events tbody{
+    text-align: center;
+}
+
+.table-events td{
+    text-align: center;
+}
+
+.table-events tbody:nth-child(n){
+    border-bottom: #ddd;
+}
+
+.apiary-icon{
+    background: url('../../../../assets/icons/inspect/inspect_v3/4_tool_jhook_api.png') center no-repeat;
+    background-size: 30px;
+}
+
+.event-icon{
+    background: url('../../../../assets/icons/inspect/inspect_v3/4_tool_jhook.png') center no-repeat;
+    background-size: 30px;
+}
+
+.alert-icon{
+    background: url('../../../../assets/icons/ui/alert-icon.png') center no-repeat;
+    background-size: 30px;
+}
+
+.edit-icon{
+    color:black;
+    font-size: 25px;
+}
+
+.edit-icon:hover{
+    color: green;
+}
+
+.delete-icon{
+    color:black;
+    font-size: 25px;
+}
+
+.delete-icon:hover{
+    color: red;
+}

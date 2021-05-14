@@ -1,6 +1,5 @@
 import { filter } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { inspect } from 'util';
 
 const ALERTS_CHART_PATH = '../../../../assets/pictos_alerts/charts/';
 
@@ -91,6 +90,17 @@ export class MelliChartsFilterService {
       return this.filters.display['SuperLess'];
     }
     return this.filters.display[icon];
+  }
+
+  getEventArrayFilter(): Array<string>{
+    let arr = [];
+    if(this.filters.insp){
+      arr.push('apiary');
+    }
+    if(this.filters.event){
+      arr.push('hive');
+    }
+    return arr;
   }
 
 }

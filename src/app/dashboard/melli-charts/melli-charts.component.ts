@@ -46,6 +46,7 @@ import { Inspection } from '../../_model/inspection';
 import { arrayBufferToBase64 } from 'angular-file/file-upload/fileTools';
 import { MatChipInputEvent } from '@angular/material';
 import { NotifierService } from 'angular-notifier';
+import { EventsComponent } from './events/events.component';
 
 const PREFIX_PATH = '/dashboard/explore/';
 const IMG_PATH = '../../../assets/icons/inspect/';
@@ -120,6 +121,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   private dateDropdown: HTMLElement;
   private broodComponent: VitalityComponent;
   private weightComponent: WeightComponent;
+  private eventsComponent: EventsComponent;
   private eltOnClick: EventTarget;
   constructor(public rucheService: RucheService,
     public rucherService: RucherService,
@@ -329,6 +331,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.stackService.getWeightChartInstance().setOption(options, true);
         this.stackService.getWeightChartInstance().hideLoading();
       });
+    } else if (this.router.url === PREFIX_PATH + 'events'){
+      this.eventsComponent.loadAll();
     }
   }
 
@@ -350,7 +354,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     } else if (componentRef instanceof VitalityComponent) {
       this.broodComponent = componentRef;
     } else if (componentRef instanceof WeightComponent) {
-        this.weightComponent = componentRef;
+      this.weightComponent = componentRef;
+    } else if (componentRef instanceof EventsComponent){
+      this.eventsComponent = componentRef;
     }
 
   }
@@ -423,6 +429,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.stackService.getWeightChartInstance().hideLoading();
       });
 
+    } else if (this.router.url === PREFIX_PATH + 'events'){
+      this.eventsComponent.loadAll();
     }
   }
 
@@ -496,6 +504,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           this.weightComponent.loadDataByHive(hive);
         }
         break;
+      case PREFIX_PATH + 'events':
+        if (this.stackService.ifActiveAlreadySelected(hive)) {
+          this.stackService.removeHive(hive);
+        } else {
+          this.stackService.addHive(hive);
+        }
+        break;
     }
   }
 
@@ -542,6 +557,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         break;
       case PREFIX_PATH + 'brood':
       case PREFIX_PATH + 'weight':
+      case PREFIX_PATH + 'events' :
       case PREFIX_PATH + 'stack':
         return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
         break;
@@ -568,6 +584,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         break;
       case PREFIX_PATH + 'stack':
       case PREFIX_PATH + 'weight':
+      case PREFIX_PATH + 'events' :
       case PREFIX_PATH + 'brood':
         try {
           if (this.stackService.getHiveSelect().findIndex(_hive => _hive.apiaryId === apiaryId) !== -1 /* ||
@@ -590,6 +607,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       // return this.hiveComponent.hourlyComponent.chartLoading ? 'loading' : 'complete';
       case PREFIX_PATH + 'brood':
       case PREFIX_PATH + 'weight':
+      case PREFIX_PATH + 'events':
       case PREFIX_PATH + 'stack':
         //return this.stackService.
         break;
@@ -1240,6 +1258,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       case PREFIX_PATH + 'weight':
         break;
       case PREFIX_PATH + 'stack':
+        break;
+      case PREFIX_PATH + 'events':
         break;
     }
   }

@@ -24,7 +24,8 @@ export const PATH = {
   BROOD: /brood/g,
   HIVE: /hive/g,
   STACK: /stack/g,
-  WEIGHT: /weight/g
+  WEIGHT: /weight/g,
+  EVENTS: /events/g
 };
 
 @Component({
@@ -53,14 +54,22 @@ export class HiveComponent implements OnInit, AfterViewInit {
       elt.classList.remove('apiary-group-stack');
     } else if (elt.classList.contains('apiary-group-weight')){
       elt.classList.remove('apiary-group-weight');
+    } else if (elt.classList.contains('apiary-group-events')){
+      elt.classList.remove('apiary-group-events');
     }
     elt.classList.add('apiary-group-hive');
   }
 
   ngAfterViewInit(): void {
-    if (PATH.BROOD.test(this.routingHistory.getPreviousUrl()) || PATH.STACK.test(this.routingHistory.getPreviousUrl())) {
+    if (
+      PATH.BROOD.test(this.routingHistory.getPreviousUrl()) || 
+      PATH.STACK.test(this.routingHistory.getPreviousUrl()) ||
+      PATH.WEIGHT.test(this.routingHistory.getPreviousUrl()) ||
+      PATH.EVENTS.test(this.routingHistory.getPreviousUrl())
+    ) {
       this.setRangeChart();
     }
+    
   }
 
   /**

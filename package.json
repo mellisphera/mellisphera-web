@@ -41,6 +41,7 @@
     "core-js": "^2.6.11",
     "echarts": "^4.8.0",
     "echarts-countries-js": "^1.0.4",
+    "font-awesome": "^4.7.0",
     "html2canvas": "^1.0.0-rc.5",
     "jquery": "^3.5.1",
     "jspdf": "^1.5.3",
