@@ -11,6 +11,8 @@ import { StackMelliChartsService } from '../stack/service/stack-melli-charts.ser
 import { iif, Observable } from 'rxjs';
 import { UnitService } from '../../service/unit.service';
 import { RucherService } from '../../service/api/rucher.service';
+import { TranslateService } from '@ngx-translate/core';
+import { RucherModel } from '../../../_model/rucher-model';
 
 const INSPECT_IMG_PATH = '../../../../assets/icons/inspect/';
 const ALERT_IMG_PATH = '../../../../assets/pictos_alerts/charts/';
@@ -28,6 +30,9 @@ export class EventsComponent implements OnInit {
 
   private events: Inspection[] = [];
   private alerts: AlertInterface[] = [];
+
+  private apiaries: string[] = []
+  private hives: string[] = []
   
   constructor(
     private rucheService: RucheService,
@@ -37,7 +42,8 @@ export class EventsComponent implements OnInit {
     private alertService: AlertsService,
     private inspService: InspectionService,
     private stackService: StackMelliChartsService,
-    private unitService: UnitService
+    private unitService: UnitService,
+    private translate: TranslateService
   )
   { }
 
@@ -67,18 +73,21 @@ export class EventsComponent implements OnInit {
   }
 
   getApiariesId(): string[]{
-    return [ ...Array.from(new Set( this.stackService.getHiveSelect().map(_hive => _hive.apiaryId) )) ];
+    this.apiaries = [ ...Array.from(new Set( this.stackService.getHiveSelect().map(_hive => _hive.apiaryId) )) ];
+    return this.apiaries;
+  }
+
+  apiaryLoaded(apiaryId: string): boolean{
+    if(this.apiaries.findIndex(_id => _id === apiaryId) > -1){
+      return true;
+    }
+    return false;
   }
 
   loadAll(): void{
-    /*const obsInsp = this.stackService.getHiveSelect().map(_hive => {
-      return { hive: _hive, name: _hive.name, obs: this.inspService.getInspectionsByFilters(_hive._id, this.melliDateService.getRangeForReqest())}
-    });
-    const obsAlert = this.stackService.getHiveSelect().map(_hive => {
-      return { hive: _hive, name: _hive.name, obs: this.dailyThService.getBroodOldMethod(_hive._id, this.melliDateService.getRangeForReqest())}
-    });
-    this.inspService.getInspectionsByFilters()*/
     console.log(this.getApiariesId());
+    this.tbody.innerHTML = '';
+    let locations = ['Apiary', 'Hive'];
     const obsInsp = this.getApiariesId().map(_id => {
       return { _id: _id, 
                obs: this.inspService.getInspectionByFilters(_id, 
@@ -88,9 +97,18 @@ export class EventsComponent implements OnInit {
                                                            )
               }
     });
+    const obsAlert = this.getApiariesId().map(_id => {
+      return { _id: _id, 
+               obs: this.alertService.getAlertsByFilters(_id, 
+                                                         this.stackService.getHiveSelectIds(), 
+                                                         this.melliDate.getRangeForReqest(), 
+                                                         this.melliFilters.getPictosArrayFilter(),
+                                                         locations
+                                                        )
+              }
+    });
     Observable.forkJoin(obsInsp.map(_elt => _elt.obs)).subscribe(
       insps_events => {
-        console.log(insps_events);
         insps_events.forEach(_elt => {
           _elt.forEach(_insp => {
             this.tbody.appendChild( this.createRowInsp(_insp) );
@@ -100,13 +118,54 @@ export class EventsComponent implements OnInit {
       () => {},
       () => {}
     );
+
+    Observable.forkJoin(obsAlert.map(_elt => _elt.obs)).subscribe(
+      alerts => {
+        alerts.forEach(_elt => {
+          _elt.forEach(_alert => {
+            this.tbody.appendChild( this.createRowAlert(_alert) );
+          });
+        });
+      },
+      () => {},
+      () => {}
+    );
+
   }
 
   loadHive(hive: RucheInterface): void {
-
+    let types = ['hive'];
+    let locations = ['Hive'];
+    if(!this.apiaryLoaded(hive.apiaryId)){
+      types.push('apiary');
+      locations.push('Apiary');
+      this.apiaries.push(hive.apiaryId);
+    }
+    this.inspService.getInspectionByFilters(hive.apiaryId, [hive._id], this.melliDate.getRangeForReqest(), types).subscribe(
+      _inspections => {
+        _inspections.forEach(_insp => {
+          this.tbody.insertBefore(this.createRowInsp(_insp), this.tbody.firstElementChild);
+        });
+      },
+      () => {},
+      () => {}
+    );
+    this.alertService.getAlertsByFilters(hive.apiaryId, [hive._id], this.melliDate.getRangeForReqest(), this.melliFilters.getPictosArrayFilter(), locations).subscribe(
+      _alerts => {
+        _alerts.forEach(_alt => {
+          this.tbody.insertBefore(this.createRowAlert(_alt), this.tbody.firstElementChild);
+        })
+      },
+      () => {},
+      () => {}
+    );
   }
 
   removeHive(hive: RucheInterface): void {
+
+  }
+
+  removeApiary(apiary: RucherModel): void {
 
   }
 
@@ -156,9 +215,27 @@ export class EventsComponent implements OnInit {
 
     // Liste des pictos
     let cell5 = document.createElement('td');
+    let container = document.createElement('div');
+    container.style.height = "30px";
+    container.style.display = "flex";
+    container.style.justifyContent = "center";
+    container.style.alignItems = "center";
+    if(_insp.obs != null){
+      _insp.obs.forEach(_obs => {
+        let div = document.createElement('div');
+        div.style.background = "url('../../../../assets/icons/inspect/"+ _obs.img +"') center no-repeat";
+        div.style.backgroundSize = "30px";
+        div.style.height = "30px";
+        div.style.width = "30px";
+        div.style.margin = "0 3px";
+        container.appendChild(div);
+      });
+      cell5.appendChild(container);
+    }
 
      // Notes & taches
     let cell6 = document.createElement('td');
+    cell6.innerHTML = _insp.description;
 
     // Editer
     let cell7 = document.createElement('td');
@@ -171,6 +248,56 @@ export class EventsComponent implements OnInit {
 
     tr.append(cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8);
     
+    return tr;
+  }
+
+  createRowAlert(_alert: AlertInterface): HTMLTableRowElement{
+    let tr = document.createElement('tr');
+    tr.style.marginBottom = '5px';
+    tr.style.borderBottom = '1px solid #ddd';
+
+    let cell1 = document.createElement('td');
+    cell1.innerHTML = this.rucherService.getRucherNameById(_alert.apiaryId).name;
+
+    let cell2 = document.createElement('td');
+    if(_alert.hiveId != null){
+      cell2.innerHTML = this.rucheService.getRucheNameById(_alert.hiveId).name;
+    }
+
+    let cell3 = document.createElement('td');
+    let hours = '' + new Date(_alert.opsDate).getHours();
+    let minutes = '' + new Date(_alert.opsDate).getMinutes(); 
+    if(new Date(_alert.opsDate).getHours() < 10){
+      hours = '0' + new Date(_alert.opsDate).getHours();
+    }
+    if(new Date(_alert.opsDate).getMinutes() < 10){
+      minutes = '0' + new Date(_alert.opsDate).getMinutes();
+    }
+    cell3.innerHTML = this.unitService.getDailyDate(_alert.opsDate) + '<br />' + hours + ':' +  minutes; 
+
+    let cell4 = document.createElement('td');
+    cell4.className = 'alert-icon';
+
+    // Liste des pictos
+    let cell5 = document.createElement('td');
+    cell5.style.background = "url('../../../../assets/pictos_alerts/charts/"+ _alert.icon +".png') center no-repeat";
+    cell5.style.backgroundSize = "30px";
+
+     // Notes & taches
+    let cell6 = document.createElement('td');
+    cell6.innerHTML = this.translate.instant('MELLICHARTS.FILTERS.DISPLAY.' + _alert.icon.toUpperCase());
+
+    // Editer
+    let cell7 = document.createElement('td');
+    cell7.innerHTML = '<i class="fa fa-pen edit-icon"></i>'
+    
+
+    // Supprimer
+    let cell8 = document.createElement('td');
+    cell8.innerHTML = '<i class="fa fa-trash delete-icon"></i>';
+
+    tr.append(cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8);
+
     return tr;
   }
 

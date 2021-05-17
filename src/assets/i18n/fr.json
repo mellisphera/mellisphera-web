@@ -475,6 +475,7 @@
           }
         },
         "EVENT":{
+          "TITLE":"Evenements",
           "ADD":{
             "TITLE": "Creer Evenement",
             "DATE": "Date",
@@ -493,6 +494,18 @@
             "ADD":"Ajouter",
             "CANCEL":"Annuler",
             "DELETE":"Supprimer"
+          },
+          "TABLE":{
+            "HEADER":{
+                "APIARY":"Rucher",
+                "HIVE":"Ruche",
+                "DATE":"Date Evenement",
+                "TYPE":"Type Evenement",
+                "PICTOS":"Evenements",
+                "NOTES_TASKS":"Notes & Taches",
+                "EDIT":"Editer",
+                "DELETE":"Supprimer"
+            }
           }
         },
         "FILTERS":{
@@ -522,6 +535,8 @@
             "OXALIC":"Traitement acide oxalique",
             "SUPER+":"Ajout hausse",
             "SUPER-":"Retrait hausse",
+            "SUPERMORE":"Ajout hausse",
+            "SUPERLESS":"Retrait hausse",
             "WLIM":"Seuil poids"
           }
         }

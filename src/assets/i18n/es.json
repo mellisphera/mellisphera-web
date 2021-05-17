@@ -490,6 +490,7 @@
           }
         },
         "EVENT":{
+          "TITLE":"Eventos",
           "ADD":{
             "TITLE": "Crear evento",
             "DATE": "Fecha",
@@ -508,6 +509,18 @@
             "ADD":"Añadir",
             "CANCEL":"Anular",
             "DELETE":"Retirar"
+          },
+          "TABLE":{
+            "HEADER":{
+                "APIARY":"Colmenar",
+                "HIVE":"Colmena",
+                "DATE":"Fecha de Evento",
+                "TYPE":"Typo de Evento",
+                "PICTOS":"Eventos",
+                "NOTES_TASKS":"Notas & Tareas",
+                "EDIT":"Editar",
+                "DELETE":"Eliminar"
+            }
           }
         },
         "FILTERS":{

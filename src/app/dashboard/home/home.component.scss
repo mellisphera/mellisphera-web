@@ -805,8 +805,9 @@ li:first-child img{
   opacity: 1;
 }
 
-.btn-picture .fa{
-  font-size: 35px;
+.btn-picture .fa,
+.btn-picture .far{
+  font-size: 26px;
   margin-right: 5px;
 }
 #selectPhotos{

@@ -10,7 +10,7 @@ const ALERTS_ICONS_PATH = '../../../../assets/pictos_alerts/charts/';
 })
 export class MelliChartsFilterService {
 
-  public alertsDisplay:any = [
+  public alertsDisplay:any[] = [
     {name:'Dead', show: true},
     {name:'Hmax', show: true},
     {name:'Hmin', show: true},
@@ -100,6 +100,12 @@ export class MelliChartsFilterService {
     if(this.filters.event){
       arr.push('hive');
     }
+    return arr;
+  }
+
+  getPictosArrayFilter(): Array<string>{
+    let arr = [];
+    arr = this.alertsDisplay.filter(disp => disp.show).map(disp => disp.name);
     return arr;
   }
 

@@ -507,8 +507,10 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       case PREFIX_PATH + 'events':
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
+          this.eventsComponent.removeHive(hive);
         } else {
           this.stackService.addHive(hive);
+          this.eventsComponent.loadHive(hive);
         }
         break;
     }

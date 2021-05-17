@@ -68,18 +68,15 @@ input[type=checkbox]
 
 .calendar-icon{
   position: absolute;
+  padding-top: 4px;
+  min-width: 40px;
+  font-size: 18px;
 }
 
 .input-wrapper {
   margin-bottom: 10px;
   width: 35%;
   text-align: center;
-}
-
-.fa-calendar{
-  padding-top: 4px;
-  min-width: 40px;
-  font-size: 18px;
 }
 
 .weight_ref_date{

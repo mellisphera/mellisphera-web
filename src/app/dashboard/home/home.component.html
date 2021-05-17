@@ -72,7 +72,7 @@ limitations under the License. -->
             <!-- The button to change hive handle => click -->
             <div zIndex="100" class="toolApiaryPicture">
                 <button data-toggle="tooltip" data-html="true" (click)="exportToCsv()" class="btn-picture"
-                title="{{ 'HOME.PRINT' | translate}}" id="print" type="button"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+                title="{{ 'HOME.PRINT' | translate}}" id="print" type="button"><i class="far fa-file-excel" aria-hidden="true"></i></button>
                 <!-- <button data-toggle="tooltip" data-html="true" class="btn-picture"
                 title="{{ 'HOME.PRINT' | translate}}" id="print" printSectionId="print-section" [printTitle]="rucherService.rucher.name" ngxPrint [useExistingCss]="true" type="button"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
                 <input style="display: none" type="file" (lastBaseUrlChange)="changePicturePhotos($event)" ngf [(file)]="selectPhotoApiary"

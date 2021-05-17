@@ -475,6 +475,7 @@
           }
         },
         "EVENT":{
+          "TITLE":"Events",
           "ADD":{
             "TITLE": "Create Event",
             "DATE": "Date",
@@ -493,6 +494,18 @@
             "ADD":"Add",
             "CANCEL":"Cancel",
             "DELETE":"Delete"
+          },
+          "TABLE":{
+            "HEADER":{
+                "APIARY":"Apiary",
+                "HIVE":"Hive",
+                "DATE":"Event date",
+                "TYPE":"Event type",
+                "PICTOS":"Events",
+                "NOTES_TASKS":"Notes & Tasks",
+                "EDIT":"Edit",
+                "DELETE":"Delete"
+            }
           }
         },
         "FILTERS":{
