@@ -13,18 +13,38 @@
     width: 98%;
     margin-top: 20px;
     margin-left: 1%;
+    border-collapse: collapse;
 }
 
 .table-events th{
     text-align: center;
     height: 40px;
+    border-bottom: 1px solid #ddd;
 }
 
-.table-events tbody{
-    text-align: center;
+.table-events pre{
+    text-align: left;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0 0 0 5px;
+    font-family: "Roboto","Helvetica Neue",Arial,sans-serif;
+    font-size: 14px;
+}
+
+.table-events p{
+    font-size: 14px;
+    text-align: left;
+    margin: 0 0 0 5px;
 }
 
 .table-events td{
+    text-align: center;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.table-events tbody{
     text-align: center;
 }
 
@@ -32,7 +52,7 @@
     border-bottom: #ddd;
 }
 
-.apiary-icon{
+.inspection-icon{
     background: url('../../../../assets/icons/inspect/inspect_v3/4_tool_jhook_api.png') center no-repeat;
     background-size: 30px;
 }
@@ -49,18 +69,34 @@
 
 .edit-icon{
     color:black;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .edit-icon:hover{
-    color: green;
+    color: rgb(0, 180, 0);
 }
 
 .delete-icon{
     color:black;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .delete-icon:hover{
     color: red;
+}
+
+.event-obs-container{
+    width: 144px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+.event-obs-item{
+    min-width: 30px;
+    max-width: 30px;
+    height: 30px;
+    margin: 3px;
 }

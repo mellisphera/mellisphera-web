@@ -824,6 +824,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       }
     );
     this.insertOnGraph();
+    $('#newInspectionModal').modal('hide'); 
     return;
   }
 
@@ -1262,6 +1263,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       case PREFIX_PATH + 'stack':
         break;
       case PREFIX_PATH + 'events':
+        this.eventsComponent.applyFilter(filterName, show);
         break;
     }
   }

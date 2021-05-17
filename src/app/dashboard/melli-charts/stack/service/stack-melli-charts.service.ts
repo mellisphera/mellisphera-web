@@ -253,4 +253,9 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
   checkHiveisActive(hiveId: string) {
     return this.arrayHiveSelect.filter(hive => hive._id === hiveId).length > 0 ? 'active' : '';
   }
+
+  getHiveSelectFromApiaryId(apiaryId: string): number{
+    let nb = this.arrayHiveSelect.filter(_hive => _hive.apiaryId === apiaryId).length;
+    return nb;
+  }
 }

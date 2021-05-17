@@ -207,6 +207,11 @@ export class RucherService {
         next(this.allApiaryAccount.filter(apiary => apiary._id === apiaryId));
     }
 
+
+    getApiaryByApiaryId(apiaryId: string): RucherModel{
+        return this.allApiaryAccount.filter(apiary => apiary._id === apiaryId)[0];
+    }
+
     /**
      *
      *

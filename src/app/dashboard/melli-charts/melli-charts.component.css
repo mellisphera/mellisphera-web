@@ -296,8 +296,8 @@ nav[role=admin-navigation] {
 
 .filters-alerts-btn,
 .filters-alerts-btn-active,
-.filters-insp-btn,
-.filters-insp-btn-active,
+.filters-inspection-btn,
+.filters-inspection-btn-active,
 .filters-events-btn,
 .filters-events-btn-active{
   margin-right: 8px;
@@ -316,12 +316,12 @@ nav[role=admin-navigation] {
   background-size: 30px;
 }
 
-.filters-insp-btn{
+.filters-inspection-btn{
   background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook_grey.svg') center no-repeat;
   background-size: 35px;
 }
 
-.filters-insp-btn-active{
+.filters-inspection-btn-active{
   background: url('../../../assets/icons/inspect/inspect_v3/4_tool_jhook_api.svg') center no-repeat;
   background-size: 35px;
 }
