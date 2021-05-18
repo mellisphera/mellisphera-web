@@ -487,7 +487,7 @@ nav[role=admin-navigation] {
   background-size: 35px;
 }
 
-.filters-events-display-SuperMore{
+.filters-events-display-Super\+{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -495,7 +495,7 @@ nav[role=admin-navigation] {
   background-size: 45px;
 }
 
-.filters-events-display-SuperMore-active{
+.filters-events-display-Super\+-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -503,7 +503,7 @@ nav[role=admin-navigation] {
   background-size: 45px;
 }
 
-.filters-events-display-SuperLess{
+.filters-events-display-Super-{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -511,7 +511,7 @@ nav[role=admin-navigation] {
   background-size: 45px;
 }
 
-.filters-events-display-SuperLess-active{
+.filters-events-display-Super--active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -737,6 +737,14 @@ nav[role=admin-navigation] {
   margin-top: 20px;
 }
 
+.add-event-choice-obs{
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
 .add-event-notes, .add-event-todo{
   width: 92%;
   height: 16%;
@@ -845,7 +853,7 @@ nav[role=admin-navigation] {
 }
 
 .add-event-notes-textarea, .add-event-todo-textarea{
-  visibility: hidden;
+  display: none;
   overflow-y: hidden;
   margin-left: 5px;
   resize: none;
@@ -855,11 +863,11 @@ nav[role=admin-navigation] {
 
 
 .hives-note-textarea-add-active{
-  visibility: visible;
+  display: block;
 }
 
 .hives-todo-textarea-add-active{
-  visibility: visible;
+  display: block;
 }
 
 

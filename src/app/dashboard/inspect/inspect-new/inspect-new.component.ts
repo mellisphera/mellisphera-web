@@ -19,59 +19,45 @@ const IMG_PATH = '../../../../assets/icons/inspect/';
 
 const PICTOS_APIARY_ACTIONS = [
   {name:'queen', img:'observations/crown_grey.png', img_active: 'observations/crown.png', class:'apiary-queen-img'},
-  {name:'A2', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'A3', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'A4', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'A5', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'A6', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'A7', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'A8', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'A9', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'A10', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'A11', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'A12', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'A13', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  /*{name:'A14', img:''},
-  {name:'A15', img:''},
-  {name:'A16', img:''},
-  {name:'A17', img:''},
-  {name:'A18', img:''},
-  {name:'A19', img:''},
-  {name:'A20', img:''},
-  {name:'A21', img:''},
-  {name:'A22', img:''},
-  {name:'A23', img:''},
-  {name:'A24', img:''},*/
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
 ];
 
 const PICTOS_APIARY_OBS = [
-  {name:'O1', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'O2', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'O3', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'O4', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'O5', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'O6', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'O7', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'O8', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'O9', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'O10', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'O11', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
 ];
 
 const PICTOS_HIVES_ACTIONS = [
-  {name:'z', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'y', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'x', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'w', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'v', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
-  {name:'u', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'apiary-default-img'},
 ];
 
 const PICTOS_HIVES_OBS = [
   {name:'swarm', img:'observations/swarm_grey.png', img_active: 'observations/swarm.png', class:'hives-swarm-img'},
-  /*{name:'Y2', img:''},
-  {name:'X3', img:''},
-  {name:'W4', img:''},*/
 ];
 
 @Component({

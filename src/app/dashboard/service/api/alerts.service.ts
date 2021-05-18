@@ -343,7 +343,7 @@ export class AlertsService {
     }
 
     getAlertsByFilters(apiaryId: string, hiveIds: string[], opsRange: Date[], pictos: string[], locations: string[]): Observable<AlertInterface[]>{
-        return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/filter/' + apiaryId, {'hiveIds': hiveIds, 'opsRange': opsRange, 'pictos': pictos, 'locations': locations}, httpOptions);
+        return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/filter/' + apiaryId, {'hiveIds': hiveIds, 'opsRange': opsRange, 'pictos': pictos, 'loc': locations}, httpOptions);
     }
 
 }

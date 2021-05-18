@@ -34,18 +34,15 @@ import { AlertInterface } from '../../../../_model/alert';
 import { UnitService } from '../../../../dashboard/service/unit.service';
 
 const PICTOS_HIVES_OBS = [
-  {name: 'swarm', img: 'observations/swarm_grey.png', img_active: 'observations/swarm.png', class: 'hives-swarm-img'},
-  {name:'O1', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O2', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O3', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O4', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O5', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O6', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O7', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O8', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  /*{name:'Y2', img:''},
-  {name:'X3', img:''},
-  {name:'W4', img:''},*/
+  {name:'swarm', img: 'observations/swarm_grey.png', img_active: 'observations/swarm.png', class: 'hives-swarm-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
 ];
 
 @Component({
@@ -388,11 +385,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   addObsList(): void {
     const obsDiv = (<HTMLElement>document.getElementsByClassName('add-event-choice-obs')[0]);
     obsDiv.innerHTML = '';
-    let div;
     for (let i = 0; i < PICTOS_HIVES_OBS.length; i++) {
-      if ( i % 8 === 0 ) {
-        div = document.createElement('div');
-      }
 
       const button = document.createElement('button');
       button.className = 'hives-obs-add';
@@ -403,14 +396,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         this.hiveButton(evt, n);
       };
 
-      div.appendChild(button);
+      obsDiv.appendChild(button);
 
-      if ( (i + 1) % 8 === 0 ) {
-        obsDiv.appendChild(div);
-      }
-    }
-    if (PICTOS_HIVES_OBS.length % 8 !== 0) { // Push last row if not complete
-      obsDiv.appendChild(div);
     }
   }
 

@@ -19,7 +19,7 @@ export class InspectionService {
   inspectionsApiaryUser: Inspection[];
   inspectionsHiveUser: Inspection[];
   public obsHiveSubject: BehaviorSubject<Inspection[]>;
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.inspectionsApiary = [];
     this.inspectionsHive = [];
     this.inspectionsApiaryUser = [];
@@ -250,8 +250,8 @@ export class InspectionService {
   * @param opsRange
   *
   */
-  getInspectionByFilters(apiaryId: string, hiveIds: string[], opsRange: Date[], types: string[]): Observable<Inspection[]>{
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/filter/' + apiaryId, {'hiveIds': hiveIds, 'opsRange': opsRange, 'types': types}, httpOptions);
+  getInspectionByFilters(apiaryId: string, hiveIds: string[], opsRange: Date[], types: string[], pictos: string[], empty: boolean): Observable<Inspection[]>{
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/filter/' + apiaryId, {'hiveIds': hiveIds, 'opsRange': opsRange, 'types': types, 'pictos':pictos, 'empty': empty}, httpOptions);
   }
 
 

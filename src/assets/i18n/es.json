@@ -502,8 +502,11 @@
             "TODO": "Tareas",
             "TODO_PLACEHOLDER":"Tareas..."
           },
+          "EDIT":{
+            "TITLE":"Editar Evento"
+          },
           "DELETE":{
-            "TITLE": "Gestionar Evento"
+            "TITLE": "Retirar Evento"
           },
           "BUTTONS":{
             "ADD":"Añadir",

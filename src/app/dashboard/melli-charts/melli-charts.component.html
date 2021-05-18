@@ -100,10 +100,6 @@ limitations under the License. -->
           <img src="../../../assets/icons/ui/user_prefs.svg">
         </button>
         <div id="filtersMenu" class="dropdown-menu" aria-labelledby="filtersMenuButton" (click)="filterMenu($event)">
-          <div class="filters-alerts">
-            <input type="button" class="filters-alerts-btn-active" width="35" height="35" (click)="filterButton($event)">
-            <p class="filters-alerts-title">{{ 'MELLICHARTS.FILTERS.ALERT.ALL' | translate}}</p>
-          </div>
           <div class="filters-insp">
             <input type="button" class="filters-inspection-btn-active" width="35" height="35" (click)="filterButton($event)">
             <p class="filters-insp-title">{{ 'MELLICHARTS.FILTERS.INSPECTION.ALL' | translate}}</p>
@@ -112,6 +108,10 @@ limitations under the License. -->
             <input type="button" class="filters-events-btn-active" width="35" height="35" (click)="filterButton($event)">
             <p class="filters-events-title">{{ 'MELLICHARTS.FILTERS.EVENT.ALL' | translate}}</p>
             <!--<img src="../../../assets/icons/inspect/inspectsV2/4_tool_jhook.svg" width="25" height="25" style="margin-left:5px;">-->
+          </div>
+          <div class="filters-alerts">
+            <input type="button" class="filters-alerts-btn-active" width="35" height="35" (click)="filterButton($event)">
+            <p class="filters-alerts-title">{{ 'MELLICHARTS.FILTERS.ALERT.ALL' | translate}}</p>
           </div>
           <div class="filters-events-display">
           </div>
@@ -123,13 +123,13 @@ limitations under the License. -->
     <div class="apiaryGroup">
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
-          <div (click)="selectAllHive(rucher, rucher._id + '_span')" [id]="rucher._id" style="display: flex; align-items: center;" data-parent="#main-menu" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)">
+          <div (click)="selectAllHive(rucher, rucher._id + '_span')" [id]="rucher._id" style="display: flex; align-items: center;padding-right: 4px;" data-parent="#main-menu" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)">
             <a  [id]="rucher._id + '_link'"[href]="'#' + i" data-toggle="collapse" (click)="ifActiveApiary(rucher._id + '_link',rucher._id)">
               <i [class]="'fa fa-chevron-right ' + ifActiveIcon(rucher._id) "></i>
               <!--<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span>-->
             </a>
             <span [id]="rucher._id + '_span'">{{ rucher.name }}</span>
-            <button style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)"><i class="fa fa-ellipsis-h fa-2x" style="margin-right: 0;"></i></button>
+            <button style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)"><i class="fa fa-ellipsis-h fa-1.5x" style="margin-right: 0;font-size: 20px;"></i></button>
           </div>
 
           <div
@@ -137,12 +137,12 @@ limitations under the License. -->
             <div [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
             *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index"
             (contextmenu)="showContextMenu(ruche, $event)"
-            style="display:flex; align-items:center;">
+            style="display:flex; align-items:center;padding-right: 4px;">
               <a class="list-group-hive-item" (click)="selectHive(ruche, $event)"  data-parent="#sub-menu">
                 <i class="circle" [style.background-color]="getColor(ruche)"></i>
                 <span class="puce-hive"></span>{{ ruche.name }}
               </a>
-              <button class="hive-more-button" (click)="showContextMenu(null, ruche, $event)"><i class="fa fa-ellipsis-h fa-2x" style="margin-right: 0;"></i></button>
+              <button class="hive-more-button" (click)="showContextMenu(null, ruche, $event)"><i class="fa fa-ellipsis-h fa-2x" style="margin-right: 0;font-size: 20px;"></i></button>
             </div>
 
           </div>

@@ -13,9 +13,54 @@
       <th style="width: 40%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.NOTES_TASKS' | translate }}</th>
       <th style="width: 5%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.EDIT' | translate }}</th>
       <th style="width: 5%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.DELETE' | translate }}</th>
+      <th style="width: 0%;display: none">_id</th>
     </thead>
     <tbody class="table-body-events">
-      
+
     </tbody>
   </table>
+</div>
+
+<!--Edit Inspection Modal-->
+<div class="modal fade" id="editInspectionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.EDIT.TITLE' | translate}}</h4>
+        <h4 *ngIf="eventToEdit?.type === 'hive'">{{hiveEvent?.name}}</h4>
+        <h4 *ngIf="eventToEdit?.type === 'apiary'">{{apiaryEvent?.name}}</h4>
+        <div class="add-event-date">
+          <div>
+            <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
+            <owl-date-time [pickerType]="'calendar'" #dtEvent></owl-date-time>
+            <input class="add-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours()" value="{{newEventDate?.getHours()}}">
+            :
+            <input class="add-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes()" value="{{newEventDate?.getMinutes()}}">
+          </div>
+          <div class="add-event-time-error">
+            {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="add-event-choice">
+          <div class="add-event-choice-obs">
+          </div>
+        </div>
+        <div class="add-event-notes">
+            <button class="add-event-notes-toggle" (click)="showNotes()"></button>
+            <textarea value="{{eventToEdit?.description}}" class="add-event-notes-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="add-event-todo">
+            <button class="add-event-todo-toggle" (click)="showTodo()"></button>
+            <textarea value="{{eventToEdit?.tasks}}" class="add-event-todo-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons">
+          <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="confirmEditEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
+        </div>
+    </div>
+  </div>
 </div>

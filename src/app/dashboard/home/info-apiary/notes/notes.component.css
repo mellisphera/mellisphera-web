@@ -213,6 +213,14 @@ th{
   margin-top: 20px;
 }
 
+.add-event-choice-obs{
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
 .add-event-notes, .add-event-todo{
   width: 92%;
   height: 16%;
@@ -321,7 +329,7 @@ th{
 }
 
 .add-event-notes-textarea, .add-event-todo-textarea{
-  visibility: hidden;
+  display:none;
   overflow-y: hidden;
   margin-left: 5px;
   resize: none;
@@ -331,11 +339,11 @@ th{
 
 
 .hives-note-textarea-add-active{
-  visibility: visible;
+  display: block;
 }
 
 .hives-todo-textarea-add-active{
-  visibility: visible;
+  display: block;
 }
 
 

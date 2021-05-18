@@ -19,14 +19,15 @@ export class MelliChartsFilterService {
     {name:'Oxalic', show: true},
     {name:'Rswarm', show: true},
     {name:'Stolen', show: true},
-    {name:'SuperMore', show: true},
-    {name:'SuperLess', show: true},
+    {name:'Super+', show: true},
+    {name:'Super-', show: true},
     {name:'Swarm', show: true},
     {name:'Tmax', show: true},
     {name:'Tmin', show: true},
     {name:'WIneg', show: true},
     {name:'WIpos', show: true},
     {name:'Wlim', show: true},
+
   ];
 
   private filters: any = {
@@ -49,7 +50,8 @@ export class MelliChartsFilterService {
       Tmin: true,
       WIneg: true,
       WIpos: true,
-      Wlim: true
+      Wlim: true,
+      default: true
     }
   };
 
@@ -106,6 +108,7 @@ export class MelliChartsFilterService {
   getPictosArrayFilter(): Array<string>{
     let arr = [];
     arr = this.alertsDisplay.filter(disp => disp.show).map(disp => disp.name);
+    arr.push('default');
     return arr;
   }
 

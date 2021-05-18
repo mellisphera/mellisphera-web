@@ -55,17 +55,14 @@ const ALERTS_CHART_PATH = '../../../assets/pictos_alerts/charts/';
 
 const PICTOS_HIVES_OBS = [
   {name: 'swarm', img: 'observations/swarm_grey.png', img_active: 'observations/swarm.png', class: 'hives-swarm-img'},
-  {name:'O1', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O2', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O3', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O4', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O5', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O6', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O7', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'O8', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  /*{name:'Y2', img:''},
-  {name:'X3', img:''},
-  {name:'W4', img:''},*/
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
+  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
 ];
 
 @Component({
@@ -698,9 +695,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     obsDiv.innerHTML = '';
     let div;
     for (let i = 0; i < PICTOS_HIVES_OBS.length; i++) {
-      if ( i % 8 === 0 ) {
+      /*if ( i % 8 === 0 ) {
         div = document.createElement('div');
-      }
+      }*/
 
       const button = document.createElement('button');
       button.className = 'hives-obs-add';
@@ -711,15 +708,17 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.hiveButton(evt, n);
       };
 
-      div.appendChild(button);
+      obsDiv.appendChild(button);
 
-      if ( (i + 1) % 8 === 0 ) {
+      //div.appendChild(button);
+
+      /*if ( (i + 1) % 8 === 0 ) {
         obsDiv.appendChild(div);
-      }
+      }*/
     }
-    if (PICTOS_HIVES_OBS.length % 8 !== 0) { // Push last row if not complete
+    /*if (PICTOS_HIVES_OBS.length % 8 !== 0) { // Push last row if not complete
       obsDiv.appendChild(div);
-    }
+    }*/
   }
 
   hiveButton(evt: Event, btnIndex: number): void {
@@ -824,7 +823,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       }
     );
     this.insertOnGraph();
-    $('#newInspectionModal').modal('hide'); 
+    $('#newInspectionModal').modal('hide');
     return;
   }
 
@@ -1248,7 +1247,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     this.melliFilters.changeDisplay(button.value, active);
     let index = this.melliFilters.alertsDisplay.findIndex( alert => alert.name === button.value);
     this.melliFilters.alertsDisplay[index].show = active;
-    this.applyFilter('alert', true);
+    this.applyDisplay(button.value, active);
   }
 
   applyFilter(filterName: string, show: boolean): void{
@@ -1264,6 +1263,23 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         break;
       case PREFIX_PATH + 'events':
         this.eventsComponent.applyFilter(filterName, show);
+        break;
+    }
+  }
+
+  applyDisplay(displayName: string, show: boolean): void{
+    switch (this.router.url) {
+      case PREFIX_PATH + 'hive':
+        break;
+      case PREFIX_PATH + 'brood':
+        this.broodComponent.applyFilter('alert', true);
+        break;
+      case PREFIX_PATH + 'weight':
+        break;
+      case PREFIX_PATH + 'stack':
+        break;
+      case PREFIX_PATH + 'events':
+        this.eventsComponent.applyDisplay(displayName, show);
         break;
     }
   }

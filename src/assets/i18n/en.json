@@ -487,8 +487,11 @@
             "TODO": "Tasks",
             "TODO_PLACEHOLDER":"Tasks..."
           },
+          "EDIT":{
+            "TITLE":"Edit Event"
+          },
           "DELETE":{
-            "TITLE": "Manage Event"
+            "TITLE": "Delete Event"
           },
           "BUTTONS":{
             "ADD":"Add",
