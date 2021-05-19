@@ -496,6 +496,7 @@
           "BUTTONS":{
             "ADD":"Add",
             "CANCEL":"Cancel",
+            "EDIT":"Edit",
             "DELETE":"Delete"
           },
           "TABLE":{
@@ -510,6 +511,14 @@
                 "DELETE":"Delete"
             }
           }
+        },
+        "ALERT":{
+            "TITLE":"Alert",
+            "EDIT":{
+                "TITLE":"Edit Alert"
+            },
+            "DATE_ERROR":"Please fill the date field with a valid date",
+            "ALERT_ERROR":"Please choose an alert"
         },
         "FILTERS":{
           "INSPECTION":{

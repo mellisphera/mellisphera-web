@@ -511,6 +511,7 @@
           "BUTTONS":{
             "ADD":"Añadir",
             "CANCEL":"Anular",
+            "EDIT":"Editar",
             "DELETE":"Retirar"
           },
           "TABLE":{
@@ -525,6 +526,14 @@
                 "DELETE":"Eliminar"
             }
           }
+        },
+        "ALERT":{
+            "TITLE":"Alertas",
+            "EDIT":{
+                "TITLE":"Editar Alertas"
+            },
+            "DATE_ERROR": "Por favor complete la fecha con una fecha válida",
+            "ALERT_ERROR": "Por favor elige una alerta"
         },
         "FILTERS":{
           "INSPECTION":{

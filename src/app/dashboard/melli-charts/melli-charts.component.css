@@ -805,11 +805,14 @@ nav[role=admin-navigation] {
   margin-left: 5px;
 }
 
-.add-event-time-input{
+.add-event-time-input,
+.add-alert-time-input{
   width:150px;
 }
 
-.add-event-time-error{
+.add-event-time-error,
+.add-alert-time-error,
+.add-alert-error{
   color: darkred;
   display: none;
   height: 30px;
@@ -829,9 +832,11 @@ nav[role=admin-navigation] {
   height: 80%;
 }
 
-.add-event-hours-input, .add-event-minutes-input{
+.add-event-hours-input, .add-event-minutes-input,
+.add-alert-hours-input, .add-alert-minutes-input{
   width: 50px !important;
-  margin-left: 5px !important;
+  margin-left: 2px !important;
+  margin-right: 2px !important;
 }
 
 .add-event-screen input, .add-event-screen select{

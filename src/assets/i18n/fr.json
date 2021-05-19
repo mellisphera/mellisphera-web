@@ -496,6 +496,7 @@
           "BUTTONS":{
             "ADD":"Ajouter",
             "CANCEL":"Annuler",
+            "EDIT":"Editer",
             "DELETE":"Supprimer"
           },
           "TABLE":{
@@ -510,6 +511,14 @@
                 "DELETE":"Supprimer"
             }
           }
+        },
+        "ALERT":{
+            "TITLE":"Alertes",
+            "EDIT":{
+                "TITLE":"Editer Alerte"
+            },
+            "DATE_ERROR":"Veuillez renseigner une date valide",
+            "ALERT_ERROR":"Veuillez choisir une alerte"
         },
         "FILTERS":{
           "INSPECTION":{
