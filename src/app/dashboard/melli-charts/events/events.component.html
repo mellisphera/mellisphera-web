@@ -73,7 +73,7 @@
       <div class="modal-header">
         <h4 class="modal-title">{{'MELLICHARTS.ALERT.EDIT.TITLE' | translate}}</h4>
         <h4 *ngIf="alertToEdit?.loc === 'Hive'">{{hiveEvent?.name}}</h4>
-        <h4 *ngIf="alerttToEdit?.loc === 'Apiary'">{{apiaryEvent?.name}}</h4>
+        <h4 *ngIf="alertToEdit?.loc === 'Apiary'">{{apiaryEvent?.name}}</h4>
         <div class="add-event-date">
           <div>
             <input class="edit-alert-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtAlert" [owlDateTime]="dtAlert" (ngModelChange)="setNewAlertDate()">
