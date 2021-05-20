@@ -491,7 +491,8 @@
             "TITLE":"Edit Event"
           },
           "DELETE":{
-            "TITLE": "Delete Event"
+            "TITLE": "Delete Event",
+            "BODY": "Do you really want to delete this event ?"
           },
           "BUTTONS":{
             "ADD":"Add",
@@ -516,6 +517,10 @@
             "TITLE":"Alert",
             "EDIT":{
                 "TITLE":"Edit Alert"
+            },
+            "DELETE":{
+                "TITLE":"Delete Alert",
+                "BODY": "Do you really want to delete this alert ?"
             },
             "DATE_ERROR":"Please fill the date field with a valid date",
             "ALERT_ERROR":"Please choose an alert"

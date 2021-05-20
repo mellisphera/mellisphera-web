@@ -62,15 +62,15 @@ th{
   margin-left: 0 !important;
   margin-right: 0 !important;
   background: none;
-  color: #5cb85c !important;
+  color: #fff !important;
 }
 
 .add_icon:hover{
-  color: #ffffff !important;
+  color: #5cb85c !important;
 }
 
 .add_icon:active{
-  color:white !important;
+  color: #5cb85c !important;
 }
 
 .add-event-screen{

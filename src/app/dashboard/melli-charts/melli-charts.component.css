@@ -130,7 +130,7 @@ nav[role=admin-navigation] {
 }
 
 .list-group-hive-item{
-  width:90%;
+  width:98%;
   color: black !important;
   text-decoration: none !important;
 }
@@ -986,7 +986,9 @@ nav[role=admin-navigation] {
     .apiary-group-hive{
         width: 20%;
     }
-    .apiary-group-brood{
+    .apiary-group-brood,
+    .apiary-group-weight,
+    .apiary-group-events{
         position: relative !important;
         height: auto;
         width: 100%;

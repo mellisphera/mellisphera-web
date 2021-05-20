@@ -35,7 +35,7 @@ const PICTOS_HIVES_OBS = [
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css','../melli-charts.component.css'],
+  styleUrls: ['./events.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class EventsComponent implements OnInit {
@@ -149,7 +149,7 @@ export class EventsComponent implements OnInit {
       insps_events => {
         insps_events.forEach(_elt => {
           _elt.forEach((_insp,i) => {
-            this.tbody.appendChild( this.createRowInsp(_insp, i) );
+            this.tbody.appendChild( this.createRowInsp(_insp) );
           });
           this.events.push(..._elt);
         });
@@ -162,7 +162,7 @@ export class EventsComponent implements OnInit {
       alerts => {
         alerts.forEach(_elt => {
           _elt.forEach((_alert,i) => {
-            this.tbody.appendChild( this.createRowAlert(_alert, i) );
+            this.tbody.appendChild( this.createRowAlert(_alert) );
           });
           this.alerts.push(..._elt);
         });
@@ -190,7 +190,7 @@ export class EventsComponent implements OnInit {
     this.inspService.getInspectionByFilters(hive.apiaryId, [hive._id], this.melliDate.getRangeForReqest(), types, this.melliFilters.getPictosArrayFilter().map(s => s.toLowerCase()), true).subscribe(
       _inspections => {
         _inspections.forEach((_insp,i) => {
-          this.tbody.insertBefore(this.createRowInsp(_insp, i), this.tbody.firstElementChild);
+          this.tbody.insertBefore(this.createRowInsp(_insp), this.tbody.firstElementChild);
         });
         this.events.push(..._inspections);
       },
@@ -200,7 +200,7 @@ export class EventsComponent implements OnInit {
     this.alertService.getAlertsByFilters(hive.apiaryId, [hive._id], this.melliDate.getRangeForReqest(), this.melliFilters.getPictosArrayFilter(), locations).subscribe(
       _alerts => {
         _alerts.forEach((_alt,i) => {
-          this.tbody.insertBefore(this.createRowAlert(_alt, i), this.tbody.firstElementChild);
+          this.tbody.insertBefore(this.createRowAlert(_alt), this.tbody.firstElementChild);
         })
         this.alerts.push(..._alerts);
       },
@@ -256,6 +256,26 @@ export class EventsComponent implements OnInit {
 
   }
 
+  insertNewInsp(insp: Inspection): void{
+    if(insp.type === 'apiary'){
+      if(this.apiaries.some(_apiaryId => _apiaryId === insp.apiaryId)){
+        this.events.push(insp);
+        this.tbody.insertBefore(this.createRowInsp(insp), this.tbody.firstElementChild);
+        return;
+      }
+      return;
+    }
+    if(insp.type === 'hive'){
+      if(this.hives.some(_hiveId => _hiveId === insp.hiveId)){
+        this.events.push(insp);
+        this.tbody.insertBefore(this.createRowInsp(insp), this.tbody.firstElementChild);
+        return;
+      }
+      return;
+    }
+    return;
+  }
+
   removeByFilter(filter: string): void{
     let i=0;
     while(i<this.tbody.rows.length){
@@ -295,7 +315,7 @@ export class EventsComponent implements OnInit {
             _insps_apiary => {
               _insps_apiary.forEach(_elt => {
                 _elt.forEach((_insp,i) => {
-                  this.tbody.insertBefore(this.createRowInsp(_insp, i), this.tbody.firstElementChild);
+                  this.tbody.insertBefore(this.createRowInsp(_insp), this.tbody.firstElementChild);
                 });
                 this.events.push(..._elt);
               });
@@ -320,7 +340,7 @@ export class EventsComponent implements OnInit {
             _insps_hive => {
               _insps_hive.forEach(_elt => {
                 _elt.forEach((_insp, i) => {
-                  this.tbody.insertBefore(this.createRowInsp(_insp, i), this.tbody.firstElementChild);
+                  this.tbody.insertBefore(this.createRowInsp(_insp), this.tbody.firstElementChild);
                 });
                 this.events.push(..._elt);
               });
@@ -345,7 +365,7 @@ export class EventsComponent implements OnInit {
             _alerts => {
               _alerts.forEach(_elt => {
                 _elt.forEach((_alt, i) => {
-                  this.tbody.insertBefore(this.createRowAlert(_alt, i), this.tbody.firstElementChild);
+                  this.tbody.insertBefore(this.createRowAlert(_alt), this.tbody.firstElementChild);
                 });
                 this.alerts.push(..._elt);
               });
@@ -443,7 +463,7 @@ export class EventsComponent implements OnInit {
       insps_events => {
         insps_events.forEach(_elt => {
           _elt.forEach((_insp, i) => {
-            this.tbody.insertBefore( this.createRowInsp(_insp, i), this.tbody.firstElementChild);
+            this.tbody.insertBefore( this.createRowInsp(_insp), this.tbody.firstElementChild);
           });
           this.events.push(..._elt);
         });
@@ -455,7 +475,7 @@ export class EventsComponent implements OnInit {
       _alerts => {
         _alerts.forEach(_elt => {
           _elt.forEach((_alt, i) => {
-            this.tbody.insertBefore(this.createRowAlert(_alt, i), this.tbody.firstElementChild);
+            this.tbody.insertBefore(this.createRowAlert(_alt), this.tbody.firstElementChild);
           });
           this.alerts.push(..._elt);
         });
@@ -492,6 +512,8 @@ export class EventsComponent implements OnInit {
         this.apiaryEvent = this.rucherService.getApiaryByApiaryId(this.alertToEdit.apiaryId);
         this.newEventDate = new Date(this.alertToEdit.opsDate);
       }
+      (<HTMLElement>document.getElementsByClassName('edit-alert-error')[0]).style.display = 'none';
+      (<HTMLElement>document.getElementsByClassName('edit-alert-time-error')[0]).style.display = 'none';
       $('#editAlertModal').modal('show');
       this.addAlertList();
     }
@@ -503,11 +525,13 @@ export class EventsComponent implements OnInit {
     let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.eventToEdit._id);
     this.updateRowInsp(this.eventToEdit, rowIndex);
     this.inspService.updateInspection(this.eventToEdit).subscribe(
-      () => {}, () => {}, () => {
+      () => {}, 
+      () => {}, 
+      () => {
         if(this.translate.currentLang === 'fr'){
           this.notifyService.notify('success', 'Inspection editée');
         }else{
-          this.notifyService.notify('success', 'Edited Inspection');
+          this.notifyService.notify('success', 'Edited inspection');
         }
       }
     );
@@ -515,37 +539,103 @@ export class EventsComponent implements OnInit {
   }
 
   confirmEditAlert(): void{
-    let hours = parseInt( (<HTMLInputElement>document.getElementsByClassName('add-alert-hours-input')[0]).value );
-    let minutes = parseInt( (<HTMLInputElement>document.getElementsByClassName('add-alert-minutes-input')[0]).value );
-    if(this.alertToEdit.icon != null){
-      (<HTMLElement>document.getElementsByClassName('add-alert-error')[0]).style.display = 'block';
+    let hours = parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-alert-hours-input')[0]).value );
+    let minutes = parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-alert-minutes-input')[0]).value );
+    if(this.alertToEdit.icon == null){
+      (<HTMLElement>document.getElementsByClassName('edit-alert-error')[0]).style.display = 'block';
       return;
     }
     if(hours > 23 || minutes > 59){
-      (<HTMLElement>document.getElementsByClassName('add-alert-time-error')[0]).style.display = 'block';
+      (<HTMLElement>document.getElementsByClassName('edit-alert-time-error')[0]).style.display = 'block';
       return;
     }
+    let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.alertToEdit._id);
+    this.updateRowAlert(this.alertToEdit, rowIndex);
+    this.alertService.update(this.alertToEdit).subscribe(
+      () => {},
+      () => {},
+      () => {
+        if(this.translate.currentLang === 'fr'){
+          this.notifyService.notify('success', 'Alerte editée');
+        }else{
+          this.notifyService.notify('success', 'Edited alert');
+        }
+      }
+    );
+    $('#editAlertModal').modal('hide');
     return;
   }
 
   remove(type: string, evt: Event): void{
+    let icon = <HTMLElement>evt.target;
+    let row = <HTMLTableRowElement>icon.parentNode.parentNode;
+    let _id: string = row.cells[8].innerHTML;
     if(type === 'insp'){
-      return;
+      this.eventToEdit = this.events.find(_insp => _insp._id === _id);
+      if(this.eventToEdit.type === 'hive'){
+        this.hiveEvent = this.rucheService.getHiveById(this.eventToEdit.hiveId);
+        this.newEventDate = new Date(this.eventToEdit.opsDate);
+      }
+      if(this.eventToEdit.type === 'apiary'){
+        this.apiaryEvent = this.rucherService.getApiaryByApiaryId(this.eventToEdit.apiaryId);
+        this.newEventDate = new Date(this.eventToEdit.opsDate);
+      }
+      $('#deleteEventModal').modal('show');
     }
     if(type === 'alert'){
-      return;
+      this.alertToEdit = this.alerts.find(_alt => _alt._id === _id);
+      if(this.alertToEdit.loc === 'Hive'){
+        this.hiveEvent = this.rucheService.getHiveById(this.alertToEdit.hiveId);
+        this.newEventDate = new Date(this.alertToEdit.opsDate);
+      }
+      if(this.alertToEdit.loc === 'Apiary'){
+        this.apiaryEvent = this.rucherService.getApiaryByApiaryId(this.alertToEdit.apiaryId);
+        this.newEventDate = new Date(this.alertToEdit.opsDate);
+      }
+      $('#deleteAlertModal').modal('show');
     }
+    
   }
 
   confirmDeleteEvent(): void{
-
+    let index = this.events.findIndex(_evt => _evt._id === this.eventToEdit._id);
+    this.events.splice(index, 1);
+    let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.eventToEdit._id);
+    this.tbody.deleteRow(rowIndex);
+    this.inspService.deleteHiveInsp([this.eventToEdit._id]).subscribe(
+      () => {}, 
+      () => {}, 
+      () => {
+        if(this.translate.currentLang === 'fr'){
+          this.notifyService.notify('success', 'Evenement supprimé');
+        }else{
+          this.notifyService.notify('success', 'Deleted event');
+        }
+      }
+    );
+    $('#deleteEventModal').modal('hide');
   }
 
   confirmDeleteAlert(): void{
-
+    let index = this.events.findIndex(_evt => _evt._id === this.alertToEdit._id);
+    this.alerts.splice(index, 1);
+    let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.alertToEdit._id);
+    this.tbody.deleteRow(rowIndex);
+    this.inspService.deleteHiveInsp([this.alertToEdit._id]).subscribe(
+      () => {}, 
+      () => {}, 
+      () => {
+        if(this.translate.currentLang === 'fr'){
+          this.notifyService.notify('success', 'Alerte supprimée');
+        }else{
+          this.notifyService.notify('success', 'Deleted alert');
+        }
+      }
+    );
+    $('#deleteAlertModal').modal('hide');
   }
 
-  createRowInsp(_insp: Inspection, index: number): HTMLTableRowElement{
+  createRowInsp(_insp: Inspection): HTMLTableRowElement{
     let tr = document.createElement('tr');
     tr.style.marginBottom = '5px';
     tr.style.borderBottom = '1px solid #ddd';
@@ -606,7 +696,6 @@ export class EventsComponent implements OnInit {
     // Editer
     let cell7 = document.createElement('td');
     let i7 = document.createElement('i');
-    let n7 = this.alerts.length + index;
     i7.className = "fa fa-pen edit-icon";
     i7.onclick = (evt: Event) => this.edit('insp', evt);
     cell7.appendChild(i7);
@@ -615,7 +704,6 @@ export class EventsComponent implements OnInit {
     // Supprimer
     let cell8 = document.createElement('td');
     let i8 = document.createElement('i');
-    let n8 = this.events.length + index;
     i8.className = "fa fa-trash delete-icon";
     i8.onclick = (evt: Event) => this.remove('insp', evt);
     cell8.appendChild(i8);
@@ -629,7 +717,7 @@ export class EventsComponent implements OnInit {
     return tr;
   }
 
-  createRowAlert(_alert: AlertInterface, index: number): HTMLTableRowElement{
+  createRowAlert(_alert: AlertInterface): HTMLTableRowElement{
     let tr = document.createElement('tr');
     tr.style.marginBottom = '5px';
     tr.style.borderBottom = '1px solid #ddd';
@@ -659,11 +747,11 @@ export class EventsComponent implements OnInit {
     // Liste des pictos
     let cell5 = document.createElement('td');
     let container = document.createElement('div');
-    container.className = "event-obs-container";
+    container.className = "alerts-container";
     let div = document.createElement('div');
     div.style.background = "url('../../../../assets/pictos_alerts/charts/"+ _alert.icon +".png') center no-repeat";
     div.style.backgroundSize = "30px";
-    div.className = "event-obs-item " + _alert.icon;
+    div.className = "alert-item " + _alert.icon;
     container.appendChild(div);
     cell5.appendChild(container);
 
@@ -674,7 +762,6 @@ export class EventsComponent implements OnInit {
     // Editer
     let cell7 = document.createElement('td');
     let i7 = document.createElement('i');
-    let n7 = this.alerts.length + index;
     i7.className = "fa fa-pen edit-icon";
     i7.onclick = (evt: Event) => this.edit('alert', evt);
     cell7.appendChild(i7);
@@ -683,7 +770,6 @@ export class EventsComponent implements OnInit {
     // Supprimer
     let cell8 = document.createElement('td');
     let i8 = document.createElement('i');
-    let n8 = this.alerts.length + index;
     i8.className = "fa fa-trash delete-icon";
     i8.onclick = (evt: Event) => this.remove('alert', evt);
     cell8.appendChild(i8);
@@ -730,11 +816,29 @@ export class EventsComponent implements OnInit {
   }
 
   updateRowAlert(alert: AlertInterface, rowIndex: number){
+    let hours = '' + new Date(alert.opsDate).getHours();
+    let minutes = '' + new Date(alert.opsDate).getMinutes();
+    if(new Date(alert.opsDate).getHours() < 10){
+      hours = '0' + new Date(alert.opsDate).getHours();
+    }
+    if(new Date(alert.opsDate).getMinutes() < 10){
+      minutes = '0' + new Date(alert.opsDate).getMinutes();
+    }
+    this.tbody.rows[rowIndex].cells[2].innerHTML = this.unitService.getDailyDate(alert.opsDate) + '<br />' + hours + ':' +  minutes;
 
+    this.tbody.rows[rowIndex].cells[4].getElementsByClassName('alerts-container')[0].innerHTML = '';
+    let div = document.createElement('div');
+    div.style.background = "url('../../../../assets/pictos_alerts/charts/"+ alert.icon +".png') center no-repeat";
+    div.style.backgroundSize = "30px";
+    div.className = "alert-item " + alert.icon;
+    this.tbody.rows[rowIndex].cells[4].getElementsByClassName('alerts-container')[0].appendChild(div);
+
+    
+    this.tbody.rows[rowIndex].cells[5].innerHTML = '<p>' + this.translate.instant('MELLICHARTS.FILTERS.DISPLAY.' + alert.icon.toUpperCase()) + '</p>';
   }
 
   addObsList(): void {
-    const obsDiv = (<HTMLElement>document.getElementsByClassName('add-event-choice-obs')[0]);
+    const obsDiv = (<HTMLElement>document.getElementsByClassName('edit-event-choice-obs')[0]);
     obsDiv.innerHTML = '';
 
     // TO REMOVE
@@ -817,7 +921,6 @@ export class EventsComponent implements OnInit {
   hiveButton(evt: Event, name: string): void {
     const button = (<HTMLButtonElement> evt.target);
     let index: number = PICTOS_HIVES_OBS.findIndex(_pictos => _pictos.name === name);
-    console.log(index);
     if ( button.classList.contains(PICTOS_HIVES_OBS[index].class + '-active') ) {
       button.classList.remove(PICTOS_HIVES_OBS[index].class + '-active');
       const i = this.eventToEdit.obs.findIndex(e => e.name === PICTOS_HIVES_OBS[index].name);
@@ -830,28 +933,28 @@ export class EventsComponent implements OnInit {
   }
 
   setNewEventDate(): void {
-    (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
     this.eventToEdit.opsDate = this.newEventDate;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = false;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = false;
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).disabled = false;
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).disabled = false;
   }
 
   setNewEventHours(): void{
-    this.newEventDate.setHours( parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value) );
+    this.newEventDate.setHours( parseInt((<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).value) );
     this.eventToEdit.opsDate = this.newEventDate;
   }
 
   setNewEventMinutes(): void{
-    this.newEventDate.setMinutes( parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value) );
+    this.newEventDate.setMinutes( parseInt((<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).value) );
     this.eventToEdit.opsDate = this.newEventDate;
   }
 
   showNotes(): void{
-    let textArea = <HTMLTextAreaElement>document.getElementsByClassName('add-event-notes-textarea')[0];
-    if (textArea.classList.contains('hives-note-textarea-add-active')) {
-        textArea.classList.remove('hives-note-textarea-add-active');
+    let textArea = <HTMLTextAreaElement>document.getElementsByClassName('edit-event-notes-textarea')[0];
+    if (textArea.classList.contains('hives-note-textarea-edit-active')) {
+        textArea.classList.remove('hives-note-textarea-edit-active');
     } else {
-      textArea.classList.add('hives-note-textarea-add-active');
+      textArea.classList.add('hives-note-textarea-edit-active');
     }
   }
 
@@ -861,11 +964,11 @@ export class EventsComponent implements OnInit {
   }
 
   showTodo(): void{
-    let textArea = <HTMLTextAreaElement>document.getElementsByClassName('add-event-todo-textarea')[0];
-    if (textArea.classList.contains('hives-todo-textarea-add-active')) {
-        textArea.classList.remove('hives-todo-textarea-add-active');
+    let textArea = <HTMLTextAreaElement>document.getElementsByClassName('edit-event-todo-textarea')[0];
+    if (textArea.classList.contains('hives-todo-textarea-edit-active')) {
+        textArea.classList.remove('hives-todo-textarea-edit-active');
     } else {
-      textArea.classList.add('hives-todo-textarea-add-active');
+      textArea.classList.add('hives-todo-textarea-edit-active');
     }
   }
 
@@ -875,21 +978,16 @@ export class EventsComponent implements OnInit {
   }
 
 
-
-
-
-
-
   addAlertList(): void {
-    const alertDiv = (<HTMLElement>document.getElementsByClassName('add-alert-choice-obs')[0]);
+    const alertDiv = (<HTMLElement>document.getElementsByClassName('edit-alert-choice-obs')[0]);
     alertDiv.innerHTML = '';
 
     let alerts = this.melliFilters.alertsDisplay;
-    let desc = <HTMLParagraphElement>document.getElementsByClassName('add-alert-desc')[0];
+    let desc = <HTMLParagraphElement>document.getElementsByClassName('edit-alert-desc')[0];
 
     for(let i=0; i<alerts.length; i++){
       const button = document.createElement('button');
-      button.className = 'hives-alert-add ' + alerts[i].name;
+      button.className = 'hives-alert-edit ' + alerts[i].name;
       if(alerts[i].name === this.alertToEdit.icon){
         button.className += '-active';
         desc.innerHTML = this.translate.instant('MELLICHARTS.FILTERS.DISPLAY.' + this.alertToEdit.icon.toUpperCase());
@@ -907,30 +1005,31 @@ export class EventsComponent implements OnInit {
   }
 
   setNewAlertDate(): void {
-    (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
     this.alertToEdit.opsDate = this.newEventDate;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = false;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = false;
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).disabled = false;
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).disabled = false;
   }
 
   setNewAlertHours(): void{
-    this.newEventDate.setHours( parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value) );
+    this.newEventDate.setHours( parseInt((<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).value) );
     this.alertToEdit.opsDate = this.newEventDate;
   }
 
   setNewAlertMinutes(): void{
-    this.newEventDate.setMinutes( parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value) );
+    this.newEventDate.setMinutes( parseInt((<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).value) );
     this.alertToEdit.opsDate = this.newEventDate;
   }
 
   hiveAlertButton(evt: Event, name: string): void{
     let button = <HTMLButtonElement>evt.target;
-    let desc = <HTMLParagraphElement>document.getElementsByClassName('add-alert-desc')[0];
-    const alertDiv = (<HTMLElement>document.getElementsByClassName('add-alert-choice-obs')[0]);
+    let desc = <HTMLParagraphElement>document.getElementsByClassName('edit-alert-desc')[0];
+    const alertDiv = (<HTMLElement>document.getElementsByClassName('edit-alert-choice-obs')[0]);
     if(button.className.includes('active')){
       button.className = button.className.slice(0, -7);
       desc.innerHTML = '';
       this.alertToEdit.icon = null;
+      this.alertToEdit.code = null;
     }
     else{
       let index = Array.from(alertDiv.children).findIndex(_btn => _btn.className.includes('active'));
@@ -939,6 +1038,8 @@ export class EventsComponent implements OnInit {
       }
       desc.innerHTML = this.translate.instant('MELLICHARTS.FILTERS.DISPLAY.' + name.toUpperCase());
       this.alertToEdit.icon = name;
+      let codeIndex = this.melliFilters.alertsDisplay.findIndex(_alt => _alt.name === name);
+      this.alertToEdit.code = this.melliFilters.alertsDisplay[codeIndex].code;
       button.className += '-active'
     }
   }

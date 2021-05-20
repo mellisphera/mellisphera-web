@@ -811,7 +811,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     }
     (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
     this.inspService.insertHiveEvent(this.new_event).subscribe(
-      () => {},
+      _insp => {
+        this.insertOnGraph(_insp);
+      },
       () => {},
       () => {
         if(this.translateService.currentLang === 'fr'){
@@ -822,22 +824,24 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         }
       }
     );
-    this.insertOnGraph();
     $('#newInspectionModal').modal('hide');
     return;
   }
 
-  insertOnGraph(): void {
+  insertOnGraph(insp: Inspection): void {
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
         this.hiveComponent.dailyComponent.loadDailyEnvData(false);
         break;
       case PREFIX_PATH + 'brood':
-        this.broodComponent.insertNewEvent(this.new_event);
+        this.broodComponent.insertNewEvent(insp);
         break;
       case PREFIX_PATH + 'weight':
         break;
       case PREFIX_PATH + 'stack':
+        break;
+      case PREFIX_PATH + 'events':
+        this.eventsComponent.insertNewInsp(insp);
         break;
     }
   }

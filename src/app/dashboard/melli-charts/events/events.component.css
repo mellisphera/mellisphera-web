@@ -7,6 +7,7 @@
 .content{
     width: 100%;
     height: 100%;
+    overflow-x: hidden;
 }
 
 .table-events{
@@ -103,13 +104,13 @@
     margin: 3px;
 }
 
-.add-alert-choice{
+.edit-alert-choice{
     width: 100%;
     height: 15%;
     margin-top: 20px;
 }
   
-.add-alert-choice-obs{
+.edit-alert-choice-obs{
     width: 60%;
     display: flex;
     align-items: center;
@@ -117,7 +118,7 @@
     flex-wrap: wrap;
 }
 
-.hives-alert-add{
+.hives-alert-edit{
     margin: 5px 5px;
     height: 40px;
     width: 40px;
@@ -125,20 +126,20 @@
     box-shadow: 1px 1px 3px black;
 }
 
-.add-alert-desc{
+.edit-alert-desc{
     margin-top: 15px;
-    margin-left: 3px;
+    margin-left: 5px;
     font-family: 'Poppins';
 }
 
-.add-event-time-input,
-.add-alert-time-input{
+.edit-event-time-input,
+.edit-alert-time-input{
   width:150px;
 }
 
-.add-event-time-error,
-.add-alert-time-error
-.add-alert-error{
+.edit-event-time-error,
+.edit-alert-time-error,
+.edit-alert-error{
   color: darkred;
   display: none;
   height: 30px;
@@ -146,11 +147,55 @@
   margin-top: 15px;
 }
 
-.add-event-hours-input, .add-event-minutes-input,
-.add-alert-hours-input, .add-alert-minutes-input{
+.edit-event-hours-input, .edit-event-minutes-input,
+.edit-alert-hours-input, .edit-alert-minutes-input{
   width: 50px !important;
   margin-left: 2px !important;
   margin-right: 2px !important;
+}
+
+.edit-event-choice{
+  width: 100%;
+  height: 15%;
+  margin-top: 20px;
+}
+
+.edit-event-choice-obs{
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.edit-event-notes, .edit-event-todo{
+  width: 92%;
+  height: 16%;
+  margin-top: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.edit-event-notes{
+  margin-top: 30px;
+}
+
+.edit-event-notes-textarea, .edit-event-todo-textarea{
+  display: none;
+  overflow-y: hidden;
+  margin-left: 5px;
+  resize: none;
+  width: 100%;
+  height: 90px;
+}
+
+.hives-note-textarea-edit-active{
+  display: block;
+}
+
+.hives-todo-textarea-edit-active{
+  display: block;
 }
 
 .Dead{
@@ -409,3 +454,11 @@
   background-size: 35px;
 }
 
+@media screen and (max-width: 1200px) {
+  .table-events{
+    width: 1070px;
+  }
+  .content{
+    overflow-x: scroll;
+  }
+}

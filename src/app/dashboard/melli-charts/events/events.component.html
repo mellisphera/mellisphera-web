@@ -31,29 +31,29 @@
         <h4 *ngIf="eventToEdit?.type === 'apiary'">{{apiaryEvent?.name}}</h4>
         <div class="add-event-date">
           <div>
-            <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
+            <input class="edit-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
             <owl-date-time [pickerType]="'calendar'" #dtEvent></owl-date-time>
-            <input class="add-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours()" value="{{newEventDate?.getHours()}}">
+            <input class="edit-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours()" value="{{newEventDate?.getHours()}}">
             :
-            <input class="add-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes()" value="{{newEventDate?.getMinutes()}}">
+            <input class="edit-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes()" value="{{newEventDate?.getMinutes()}}">
           </div>
-          <div class="add-event-time-error">
+          <div class="edit-event-time-error">
             {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
           </div>
         </div>
       </div>
       <div class="modal-body">
-        <div class="add-event-choice">
-          <div class="add-event-choice-obs">
+        <div class="edit-event-choice">
+          <div class="edit-event-choice-obs">
           </div>
         </div>
-        <div class="add-event-notes">
+        <div class="edit-event-notes">
             <button class="add-event-notes-toggle" (click)="showNotes()"></button>
-            <textarea value="{{eventToEdit?.description}}" class="add-event-notes-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+            <textarea value="{{eventToEdit?.description}}" class="edit-event-notes-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
         </div>
-        <div class="add-event-todo">
+        <div class="edit-event-todo">
             <button class="add-event-todo-toggle" (click)="showTodo()"></button>
-            <textarea value="{{eventToEdit?.tasks}}" class="add-event-todo-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+            <textarea value="{{eventToEdit?.tasks}}" class="edit-event-todo-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
         </div>
       </div>
       <div class="modal-footer">
@@ -76,31 +76,72 @@
         <h4 *ngIf="alerttToEdit?.loc === 'Apiary'">{{apiaryEvent?.name}}</h4>
         <div class="add-event-date">
           <div>
-            <input class="add-alert-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtAlert" [owlDateTime]="dtAlert" (ngModelChange)="setNewAlertDate()">
+            <input class="edit-alert-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtAlert" [owlDateTime]="dtAlert" (ngModelChange)="setNewAlertDate()">
             <owl-date-time [pickerType]="'calendar'" #dtAlert></owl-date-time>
-            <input class="add-alert-hours-input" type="number" min="00" max="23" (change)="setNewAlertHours()" value="{{newEventDate?.getHours()}}">
+            <input class="edit-alert-hours-input" type="number" min="00" max="23" (change)="setNewAlertHours()" value="{{newEventDate?.getHours()}}">
             :
-            <input class="add-alert-minutes-input" type="number" min="00" max="59" (change)="setNewAlertMinutes()" value="{{newEventDate?.getMinutes()}}">
+            <input class="edit-alert-minutes-input" type="number" min="00" max="59" (change)="setNewAlertMinutes()" value="{{newEventDate?.getMinutes()}}">
           </div>
-          <div class="add-alert-time-error">
+          <div class="edit-alert-time-error">
             {{'MELLICHARTS.ALERT.DATE_ERROR' | translate}}
           </div>
         </div>
       </div>
       <div class="modal-body">
-        <div class="add-alert-choice">
-          <div class="add-alert-choice-obs">
+        <div class="edit-alert-choice">
+          <div class="edit-alert-choice-obs">
           </div>
         </div>
         <div>
-          <p class="add-alert-desc"></p>
+          <p class="edit-alert-desc"></p>
         </div>
-        <div class="add-alert-error">{{ 'MELLICHARTS.ALERT.ALERT_ERROR' | translate }}</div>
+        <div class="edit-alert-error">{{ 'MELLICHARTS.ALERT.ALERT_ERROR' | translate }}</div>
       </div>
       <div class="modal-footer">
         <div class="add-event-buttons">
           <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
           <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="confirmEditAlert()">{{'MELLICHARTS.EVENT.BUTTONS.EDIT' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Delete Event Modal-->
+<div class="modal fade" id="deleteEventModal" tabindex="-3" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.DELETE.TITLE' | translate}}</h4>
+      </div>
+      <div class="modal-body">
+        {{'MELLICHARTS.EVENT.DELETE.BODY' | translate}}
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons">
+          <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button  class="btn btn-success" style="margin-left:10px;height:34px;" (click)="confirmDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Delete Alert Modal-->
+<div class="modal fade" id="deleteAlertModal" tabindex="-4" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{'MELLICHARTS.ALERT.DELETE.TITLE' | translate}}</h4>
+      </div>
+      <div class="modal-body">
+        {{'MELLICHARTS.ALERT.DELETE.BODY' | translate}}
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons">
+          <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button  class="btn btn-success" style="margin-left:10px;height:34px;" (click)="confirmDeleteAlert()">{{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}</button>
         </div>
       </div>
     </div>

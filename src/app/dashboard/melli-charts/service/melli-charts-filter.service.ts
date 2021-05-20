@@ -11,23 +11,22 @@ const ALERTS_ICONS_PATH = '../../../../assets/pictos_alerts/charts/';
 export class MelliChartsFilterService {
 
   public alertsDisplay:any[] = [
-    {name:'Dead', show: true},
-    {name:'Hmax', show: true},
-    {name:'Hmin', show: true},
-    {name:'Honeydew', show: true},
-    {name:'LowBrood', show: true},
-    {name:'Oxalic', show: true},
-    {name:'Rswarm', show: true},
-    {name:'Stolen', show: true},
-    {name:'Super+', show: true},
-    {name:'Super-', show: true},
-    {name:'Swarm', show: true},
-    {name:'Tmax', show: true},
-    {name:'Tmin', show: true},
-    {name:'WIneg', show: true},
-    {name:'WIpos', show: true},
-    {name:'Wlim', show: true},
-
+    {name:'Dead', show: true, code: '406'},
+    {name:'Hmax', show: true, code: '306'},
+    {name:'Hmin', show: true, code: '307'},
+    {name:'Honeydew', show: true, code: '311'},
+    {name:'LowBrood', show: true, code: '305'},
+    {name:'Oxalic', show: true, code: '205'},
+    {name:'Rswarm', show: true, code: '322'},
+    {name:'Stolen', show: true, code: '405'},
+    {name:'Super+', show: true, code: '323'},
+    {name:'Super-', show: true, code: '324'},
+    {name:'Swarm', show: true, code: '321'},
+    {name:'Tmax', show: true, code: '301'},
+    {name:'Tmin', show: true, code: '302'},
+    {name:'WIneg', show: true, code: '304'},
+    {name:'WIpos', show: true, code: '303'},
+    {name:'Wlim', show: true, code: '312'},
   ];
 
   private filters: any = {

@@ -346,4 +346,8 @@ export class AlertsService {
         return this.http.post<AlertInterface[]>(CONFIG.URL + 'alertSend/filter/' + apiaryId, {'hiveIds': hiveIds, 'opsRange': opsRange, 'pictos': pictos, 'loc': locations}, httpOptions);
     }
 
+    update(alert: AlertInterface): Observable<AlertInterface>{
+        return this.http.put<AlertInterface>(CONFIG.URL + 'alertSend/update', alert, httpOptions);
+    }
+
 }

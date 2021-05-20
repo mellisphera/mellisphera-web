@@ -506,7 +506,8 @@
             "TITLE":"Editar Evento"
           },
           "DELETE":{
-            "TITLE": "Retirar Evento"
+            "TITLE": "Retirar Evento",
+            "BODY": "¿Estás seguro de que deseas retirar este evento?"
           },
           "BUTTONS":{
             "ADD":"Añadir",
@@ -531,6 +532,10 @@
             "TITLE":"Alertas",
             "EDIT":{
                 "TITLE":"Editar Alertas"
+            },
+            "DELETE":{
+                "TITLE":"Retirar Alerta",
+                "BODY": "¿Estás seguro de que deseas retirar este alerta?"
             },
             "DATE_ERROR": "Por favor complete la fecha con una fecha válida",
             "ALERT_ERROR": "Por favor elige una alerta"
