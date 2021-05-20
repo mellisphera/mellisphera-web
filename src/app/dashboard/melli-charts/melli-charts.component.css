@@ -145,17 +145,17 @@ nav[role=admin-navigation] {
 
 .hive-more-button:hover{
   background-color: transparent;
-  color: green;
+  color: rgb(0, 180, 0);
 }
 
 .hive-more-button:active{
   background-color: transparent;
-  color: green;
+  color: rgb(0, 180, 0);
 }
 
 .hive-more-button:focus{
   background-color: transparent;
-  color: green;
+  color: rgb(0, 180, 0);
 }
 
 .puce-apiary{

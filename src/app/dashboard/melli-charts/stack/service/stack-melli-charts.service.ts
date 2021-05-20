@@ -250,6 +250,10 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
     return this.arrayHiveSelect.map(_hive => _hive._id);
   }
 
+  getHiveSelectIdsOfApiary(apiaryId: string): Array<string>{
+    return this.arrayHiveSelect.filter(_hive => _hive.apiaryId === apiaryId).map(_hive => _hive._id);
+  }
+
   checkHiveisActive(hiveId: string) {
     return this.arrayHiveSelect.filter(hive => hive._id === hiveId).length > 0 ? 'active' : '';
   }

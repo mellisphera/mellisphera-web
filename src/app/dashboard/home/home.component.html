@@ -11,7 +11,7 @@ limitations under the License. -->
 <ng-container *ngIf="this.rucherService.allApiaryAccount.length > 0">
 
     <!-- Nav bar for page melliUX -->
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default home-navbar">
         <ul class="nav navbar-nav buttonLeft">
             <li><button (click)="onclickInfoApiary()" id="infoApiaryButton" type="button"
                     class="button button0">{{ 'HOME.NAVBAR.APIARY' | translate}}</button>
@@ -38,7 +38,7 @@ limitations under the License. -->
                     data-target=".sensors">{{ 'HOME.NAVBAR.SENSORS' | translate}}</button></li>
         </ul>
 
-        <ul class="nav navbar-nav navbar-date navbar-right">
+        <ul class="nav navbar-nav navbar-date navbar-right home-datebar">
             <li width="35" class="range-date" (click)="onClickPreviousDay()">
                 <button type="button" class="btn btn-info date-arrow btn_info"><i class="fa fa-arrow-circle-left"
                         id="previous-date"></i></button>

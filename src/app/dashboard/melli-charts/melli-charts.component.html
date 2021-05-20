@@ -128,7 +128,7 @@ limitations under the License. -->
               <i [class]="'fa fa-chevron-right ' + ifActiveIcon(rucher._id) "></i>
               <!--<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span>-->
             </a>
-            <span [id]="rucher._id + '_span'">{{ rucher.name }}</span>
+            <span [id]="rucher._id + '_span'" (click)="apiaryClick(rucher._id, rucher._id + '_span')">{{ rucher.name }}</span>
             <button style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)"><i class="fa fa-ellipsis-h fa-1.5x" style="margin-right: 0;font-size: 20px;"></i></button>
           </div>
 

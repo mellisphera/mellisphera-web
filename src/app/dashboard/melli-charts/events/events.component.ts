@@ -259,6 +259,7 @@ export class EventsComponent implements OnInit {
   insertNewInsp(insp: Inspection): void{
     if(insp.type === 'apiary'){
       if(this.apiaries.some(_apiaryId => _apiaryId === insp.apiaryId)){
+        console.log('insert apiary');
         this.events.push(insp);
         this.tbody.insertBefore(this.createRowInsp(insp), this.tbody.firstElementChild);
         return;
@@ -267,6 +268,7 @@ export class EventsComponent implements OnInit {
     }
     if(insp.type === 'hive'){
       if(this.hives.some(_hiveId => _hiveId === insp.hiveId)){
+        console.log('insert hive');
         this.events.push(insp);
         this.tbody.insertBefore(this.createRowInsp(insp), this.tbody.firstElementChild);
         return;

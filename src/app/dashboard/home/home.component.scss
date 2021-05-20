@@ -446,6 +446,24 @@ li:first-child img{
     line-height: 21px !important;
   }
 }
+@media screen and (max-width: 1000px){
+  .home-datebar{
+    display: block !important;
+  }
+}
+
+@media screen and (max-width: 850px){
+  .home-navbar{
+    height: 100px !important;
+    float: none;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .home-navbar{
+    float: none;
+  }
+}
 
 @media (max-width: 990px) {
   .ruche{

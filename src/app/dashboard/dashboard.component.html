@@ -14,7 +14,7 @@ limitations under the License. -->
       <app-sidebar></app-sidebar>
       <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
   </div>
-  <div class="main-panel">
+  <div class="main-panel" style="overflow-x: hidden;">
       <navbar-cmp (apiaryChange)="apiaryChange($event)" (messageEvent)="receiveMessage($event)"></navbar-cmp>
       <div class="container-fluid" style="background-color: white;">
         <router-outlet (activate)="setRouterPage($event)"></router-outlet>

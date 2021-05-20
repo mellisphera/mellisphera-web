@@ -143,6 +143,11 @@ export class RucheService {
 
   }
 
+
+  getHivesIdsByApiaryId(apiaryId: string): Array<string>{
+    return this.ruchesAllApiary.filter(_hives => _hives.apiaryId === apiaryId).map(_hives => _hives._id);
+  }
+
   /**
    *
    *
