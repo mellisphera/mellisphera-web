@@ -362,6 +362,12 @@ th{
   box-shadow: 1px 1px 3px black;
 }
 
+.hives-obs-item{
+  margin: 2px 2px;
+  height: 37px;
+  width: 37px;
+}
+
 .hives-swarm-img{
   background-size: 32px;
   background-repeat: no-repeat;

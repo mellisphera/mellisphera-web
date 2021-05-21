@@ -36,6 +36,11 @@ limitations under the License. -->
             <ng-container *ngIf="obs.type === 'apiary'">
               <td style="width: 100px;">{{ obs.opsDate | myDate }}</td>
               <td>{{ obs.description }}</td>
+              <td>
+                  <div style="width: 140px; display: flex; flex-wrap: wrap;">
+                    <div *ngFor="let item of obs?.obs" [class]="'hives-obs-item hives-'+item.name.toLowerCase()+'-img-active'"></div>
+                  </div>
+              </td>
             </ng-container>
           </tr>
         </tbody>

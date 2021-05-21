@@ -17,6 +17,7 @@ import { observeOn } from 'rxjs/operators';
 import { P } from '@angular/core/src/render3';
 import { NotifierService } from 'angular-notifier';
 import { DomEventsPlugin } from '@angular/platform-browser/src/dom/events/dom_events';
+import { MelliChartsHiveService } from './../service/melli-charts-hive.service';
 
 const INSPECT_IMG_PATH = '../../../../assets/icons/inspect/';
 const ALERT_IMG_PATH = '../../../../assets/pictos_alerts/charts/';
@@ -67,6 +68,7 @@ export class EventsComponent implements OnInit {
     private unitService: UnitService,
     private translate: TranslateService,
     private notifyService: NotifierService,
+    private melliChartsHiveService: MelliChartsHiveService
   )
   { }
 
@@ -527,8 +529,8 @@ export class EventsComponent implements OnInit {
     let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.eventToEdit._id);
     this.updateRowInsp(this.eventToEdit, rowIndex);
     this.inspService.updateInspection(this.eventToEdit).subscribe(
-      () => {}, 
-      () => {}, 
+      () => {},
+      () => {},
       () => {
         if(this.translate.currentLang === 'fr'){
           this.notifyService.notify('success', 'Inspection editée');
@@ -596,7 +598,7 @@ export class EventsComponent implements OnInit {
       }
       $('#deleteAlertModal').modal('show');
     }
-    
+
   }
 
   confirmDeleteEvent(): void{
@@ -605,8 +607,8 @@ export class EventsComponent implements OnInit {
     let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.eventToEdit._id);
     this.tbody.deleteRow(rowIndex);
     this.inspService.deleteHiveInsp([this.eventToEdit._id]).subscribe(
-      () => {}, 
-      () => {}, 
+      () => {},
+      () => {},
       () => {
         if(this.translate.currentLang === 'fr'){
           this.notifyService.notify('success', 'Evenement supprimé');
@@ -624,8 +626,8 @@ export class EventsComponent implements OnInit {
     let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.alertToEdit._id);
     this.tbody.deleteRow(rowIndex);
     this.inspService.deleteHiveInsp([this.alertToEdit._id]).subscribe(
-      () => {}, 
-      () => {}, 
+      () => {},
+      () => {},
       () => {
         if(this.translate.currentLang === 'fr'){
           this.notifyService.notify('success', 'Alerte supprimée');
@@ -835,7 +837,7 @@ export class EventsComponent implements OnInit {
     div.className = "alert-item " + alert.icon;
     this.tbody.rows[rowIndex].cells[4].getElementsByClassName('alerts-container')[0].appendChild(div);
 
-    
+
     this.tbody.rows[rowIndex].cells[5].innerHTML = '<p>' + this.translate.instant('MELLICHARTS.FILTERS.DISPLAY.' + alert.icon.toUpperCase()) + '</p>';
   }
 
@@ -850,24 +852,24 @@ export class EventsComponent implements OnInit {
 
         const button = document.createElement('button');
         button.className = 'hives-obs-add';
-  
+
         let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === this.eventToEdit.obs[i].name);
         button.classList.add(PICTOS_HIVES_OBS[index].class);
         button.classList.add(PICTOS_HIVES_OBS[index].class + '-active');
-  
+
         button.onclick = (evt: Event) => {
           this.hiveButton(evt, PICTOS_HIVES_OBS[index].name);
         }
-  
+
         if(this.eventToEdit.obs[i].name === 'default'){
           def_count++;
         }
-  
+
         obsDiv.appendChild(button);
-  
+
       }
     }
-    
+
 
     if(this.eventToEdit.obs != null){
       // TO BE REMOVED WHEN ALL PICTOS ARE READY
@@ -900,7 +902,7 @@ export class EventsComponent implements OnInit {
 
       obsDiv.appendChild(button);
     }
-    
+
 
 
     for(let i=0; i<8 - def_count; i++){

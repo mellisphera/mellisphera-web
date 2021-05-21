@@ -206,8 +206,8 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
    * @memberof StackMelliChartsService
    */
   removeHive(hive: RucheInterface) {
-    const index = this.arrayHiveSelect.indexOf(hive);
-    const indexColor = this.colorByHive.map(elt => elt.hiveId).indexOf(hive._id);
+    const index = this.arrayHiveSelect.findIndex(_hive => _hive._id === hive._id);
+    const indexColor = this.colorByHive.map(elt => elt.hiveId).findIndex(_hive => _hive._id === hive._id);
     this.arrayHiveSelect.splice(index, 1);
     this.colorByHive.splice(indexColor, 1);
   }

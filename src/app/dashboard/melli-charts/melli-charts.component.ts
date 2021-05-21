@@ -513,6 +513,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         }
         break;
       case PREFIX_PATH + 'events':
+        this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
           this.eventsComponent.removeHive(hive);
@@ -539,7 +540,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   apiaryClick(rucher: RucherModel, spanId: string): void {
     let span = (<HTMLSpanElement>document.getElementById(spanId));
     let active = this.checkAllHivesSelected(rucher);
-    console.log( this.rucheService.getHivesIdsByApiaryId(rucher._id).filter(hiveId => { if(this.stackService.getHiveSelectIdsOfApiary(rucher._id).indexOf(hiveId) === -1) return hiveId; } ) );
     if(!active){
       span.style.fontWeight = 'bold';
       let hivesToSelect = this.rucheService.getHivesIdsByApiaryId(rucher._id).filter(hiveId => { if(this.stackService.getHiveSelectIdsOfApiary(rucher._id).indexOf(hiveId) === -1) return hiveId; } );
@@ -550,13 +550,16 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
             span.style.fontWeight = 'normal';
             break;
           case PREFIX_PATH + 'brood':
-            span.style.fontWeight = 'normal';
+            this.stackService.addHive(hive);
+            this.broodComponent.loadDataByHive(hive);
             break;
           case PREFIX_PATH + 'weight':
-            span.style.fontWeight = 'normal';
+            this.stackService.addHive(hive);
+            this.weightComponent.loadDataByHive(hive);
             break;
           case PREFIX_PATH + 'stack':
-            span.style.fontWeight = 'normal';
+            this.stackService.addHive(hive);
+            this.stackComponent.loadDataByHive(hive);
             break;
           case PREFIX_PATH + 'events':
             this.stackService.addHive(hive);
@@ -575,10 +578,16 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         case PREFIX_PATH + 'hive':
           break;
         case PREFIX_PATH + 'brood':
+          this.stackService.removeHive(hive);
+          this.broodComponent.removeHiveSerie(hive);
           break;
         case PREFIX_PATH + 'weight':
+          this.stackService.removeHive(hive);
+          this.weightComponent.removeHiveSerie(hive);
           break;
         case PREFIX_PATH + 'stack':
+          this.stackService.removeHive(hive);
+          this.stackComponent.removeHiveSerie(hive);
           break;
         case PREFIX_PATH + 'events':
           this.stackService.removeHive(hive);
