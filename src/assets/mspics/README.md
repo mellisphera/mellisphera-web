@@ -1,26 +1,23 @@
 Ce dossier contient toutes les ressources de type PICTO de Mellisphera.
-Il  est gér&é en configuration sur Github : REPO TBD ******
+Il est géré en configuration sur Github : REPO TBD
+
+## Nomenclature des fichiers
+
+<nom_img><format>.<type>
+
+# Format
+* _b : black => contour noir sans couleur
+* _w : white => contour blanc sans couleur
+* _cb : colorblack => picto coloré avec contour noir
+* _cw : colorwhite => picto coloré avec contour blanc
 
 
+# Types de fichiers
+* .png
+* .svg
 
-Nomenclature des fichiers*
-
-nomdupicto_format.type
-
-formats
-- b : black : contuor classique et sans fond
-- w : white : controur blanc
-- cb : color : picto coloré avec contour noir
-- cw : video inverse : coloré a vec contour blanc
-
-
-types de fichiers *
-- png
-- svg
-
-Exemple
+# Exemple
 
 swarm_b.svg
 
-
-tout en minuscules 
+Tout en minuscule 

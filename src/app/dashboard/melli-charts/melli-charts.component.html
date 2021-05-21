@@ -123,12 +123,12 @@ limitations under the License. -->
     <div class="apiaryGroup">
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
-          <div (click)="selectAllHive(rucher, rucher._id + '_span')" [id]="rucher._id" style="display: flex; align-items: center;padding-right: 4px;" data-parent="#main-menu" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)">
+          <div [id]="rucher._id" style="display: flex; align-items: center;padding-right: 4px;" data-parent="#main-menu" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)">
             <a  [id]="rucher._id + '_link'"[href]="'#' + i" data-toggle="collapse" (click)="ifActiveApiary(rucher._id + '_link',rucher._id)">
               <i [class]="'fa fa-chevron-right ' + ifActiveIcon(rucher._id) "></i>
               <!--<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span>-->
             </a>
-            <span [id]="rucher._id + '_span'" (click)="apiaryClick(rucher._id, rucher._id + '_span')">{{ rucher.name }}</span>
+            <span class="apiary-group-title" [id]="rucher._id + '_span'" (click)="apiaryClick(rucher, rucher._id + '_span')">{{ rucher.name }}</span>
             <button style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)"><i class="fa fa-ellipsis-h fa-1.5x" style="margin-right: 0;font-size: 20px;"></i></button>
           </div>
 

@@ -466,15 +466,20 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         }
         this.stackService.addHive(hive);
         this.hiveComponent.loadDataFromHive();
+        (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'normal';
         break;
       case PREFIX_PATH + 'brood':
         this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
           this.broodComponent.removeHiveSerie(hive);
+          (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'normal';
         } else {
           this.stackService.addHive(hive);
           this.broodComponent.loadDataByHive(hive);
+          if(this.checkAllHivesSelected(this.rucherService.getApiaryByApiaryId(hive.apiaryId))){
+            (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'bold';
+          }
         }
         break;
       case PREFIX_PATH + 'stack':
@@ -482,12 +487,15 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
           this.stackComponent.removeHiveSerie(hive);
+          (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'normal';
         } else {
           this.stackService.addHive(hive);
           const t0 = performance.now();
           this.stackComponent.loadDataByHive(hive);
           const t1 = performance.now();
-
+          if(this.checkAllHivesSelected(this.rucherService.getApiaryByApiaryId(hive.apiaryId))){
+            (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'bold';
+          }
         }
         break;
       case PREFIX_PATH + 'weight':
@@ -495,37 +503,89 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
           this.weightComponent.removeHiveSerie(hive);
-
+          (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'normal';
         } else {
           this.stackService.addHive(hive);
           this.weightComponent.loadDataByHive(hive);
+          if(this.checkAllHivesSelected(this.rucherService.getApiaryByApiaryId(hive.apiaryId))){
+            (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'bold';
+          }
         }
         break;
       case PREFIX_PATH + 'events':
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
           this.eventsComponent.removeHive(hive);
+          (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'normal';
         } else {
           this.stackService.addHive(hive);
           this.eventsComponent.loadHive(hive);
+          if(this.checkAllHivesSelected(this.rucherService.getApiaryByApiaryId(hive.apiaryId))){
+            (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'bold';
+          }
         }
         break;
     }
   }
 
   checkAllHivesSelected(apiary: RucherModel): boolean{
-    
-    //if()
-    return true;
+    if(this.rucheService.getHivesIdsByApiaryId(apiary._id).every((_hiveId,index) => _hiveId === this.stackService.getHiveSelectIdsOfApiary(apiary._id)[index]) &&
+       this.rucheService.getHivesIdsByApiaryId(apiary._id).length === this.stackService.getHiveSelectIdsOfApiary(apiary._id).length ){
+      return true;
+    }
+    return false;
   }
 
   apiaryClick(rucher: RucherModel, spanId: string): void {
     let span = (<HTMLSpanElement>document.getElementById(spanId));
-    if(!this.checkAllHivesSelected(rucher)){
-      span.style.fontWeight = 'normal';
+    let active = this.checkAllHivesSelected(rucher);
+    console.log( this.rucheService.getHivesIdsByApiaryId(rucher._id).filter(hiveId => { if(this.stackService.getHiveSelectIdsOfApiary(rucher._id).indexOf(hiveId) === -1) return hiveId; } ) );
+    if(!active){
+      span.style.fontWeight = 'bold';
+      let hivesToSelect = this.rucheService.getHivesIdsByApiaryId(rucher._id).filter(hiveId => { if(this.stackService.getHiveSelectIdsOfApiary(rucher._id).indexOf(hiveId) === -1) return hiveId; } );
+      hivesToSelect.forEach(hiveId => {
+        let hive = this.rucheService.getHiveById(hiveId);
+        switch(this.router.url){
+          case PREFIX_PATH + 'hive':
+            span.style.fontWeight = 'normal';
+            break;
+          case PREFIX_PATH + 'brood':
+            span.style.fontWeight = 'normal';
+            break;
+          case PREFIX_PATH + 'weight':
+            span.style.fontWeight = 'normal';
+            break;
+          case PREFIX_PATH + 'stack':
+            span.style.fontWeight = 'normal';
+            break;
+          case PREFIX_PATH + 'events':
+            this.stackService.addHive(hive);
+            this.eventsComponent.loadHive(hive);
+            break;
+        }
+      })
       return;
     }
-    span.style.fontWeight = 'bold';
+    let hivesToDelete = [...this.rucheService.getHivesIdsByApiaryId(rucher._id)];
+    hivesToDelete.splice(0, 1);
+    span.style.fontWeight = 'normal';
+    hivesToDelete.forEach(hiveId => {
+      let hive = this.rucheService.getHiveById(hiveId);
+      switch(this.router.url){
+        case PREFIX_PATH + 'hive':
+          break;
+        case PREFIX_PATH + 'brood':
+          break;
+        case PREFIX_PATH + 'weight':
+          break;
+        case PREFIX_PATH + 'stack':
+          break;
+        case PREFIX_PATH + 'events':
+          this.stackService.removeHive(hive);
+          this.eventsComponent.removeHive(hive);
+          break;
+      }
+    })
     return;
   }
 

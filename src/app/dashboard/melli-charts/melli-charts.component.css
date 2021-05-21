@@ -247,6 +247,10 @@ nav[role=admin-navigation] {
   height: 50px;
 }
 
+.apiary-group-title:hover{
+  cursor: pointer;
+}
+
 .filters-ul{
   margin-left: 20px;
 }
