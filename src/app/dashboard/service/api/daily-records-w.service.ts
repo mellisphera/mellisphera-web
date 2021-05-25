@@ -206,10 +206,10 @@ export class DailyRecordsWService {
     return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsW/hive/between/' + hiveId, range).map(dailyW => {
       return {
         weightIncomeHight: dailyW.filter(_filter => _filter.value >= 0).map(_elt => {
-          return { date: _elt.date, value: this.unitService.convertWeightFromuserPref(_elt.value, this.unitSystem), sensorRef: _elt.sensorRef };
+          return { date: _elt.date, value: this.unitService.convertWeightFromuserPref(_elt.value, this.unitSystem), sensorRef: _elt.sensorRef, position: _elt.position };
         }),
         weightIncomeLow: dailyW.filter(_filter => _filter.value < 0).map(_elt => {
-          return { date: _elt.date, value: this.unitService.convertWeightFromuserPref(_elt.value, this.unitSystem), sensorRef: _elt.sensorRef };
+          return { date: _elt.date, value: this.unitService.convertWeightFromuserPref(_elt.value, this.unitSystem), sensorRef: _elt.sensorRef, position: _elt.position };
         })
       };
     })

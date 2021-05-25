@@ -35,6 +35,10 @@ import { MyDate } from '../../../../class/MyDate';
 import { UserParamsService } from '../../../preference-config/service/user-params.service';
 import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
 import { FitnessService } from '../../../../dashboard/service/api/fitness.service';
+import { CapteurService } from '../../../../dashboard/service/api/capteur.service';
+
+import { HIVE_POS } from '../../../../../constants/hivePositions';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -93,6 +97,8 @@ export class DailyManagerService {
     private dailyStock: DailyStockHoneyService,
     private unitService: UnitService,
     private inspectionService: InspectionService,
+    private sensorService: CapteurService,
+    private translateService: TranslateService
   ) {
     this.meanPeriodDevice = {
       value: 0,
@@ -125,6 +131,27 @@ export class DailyManagerService {
   }
 
 
+  getNameSerieByPosition(elt: any): string{
+    if(elt.values[0].position == null || elt.values[0].position == undefined || elt.values[0].position === "" ){
+      return elt.values[0].sensorRef;
+    }
+    else{
+      let nameSerie = elt.values[0].position;
+      let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
+      if(this.translateService.currentLang == 'fr'){
+        return hivePos.translations.fr;
+      }
+      if(this.translateService.currentLang == 'en'){
+        return hivePos.translations.en;
+      }
+      if(this.translateService.currentLang == 'es'){
+        return hivePos.translations.es;
+      }
+      if(this.translateService.currentLang == 'nl'){
+        return hivePos.translations.nl;
+      }
+    }
+  }
 
 
   /**
@@ -221,7 +248,24 @@ export class DailyManagerService {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, serieTemplate);
         if (nameSerie === 'gain' || nameSerie === 'loss') {
-          serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
+          if(_data.position === "" || _data.position == null || _data.position == undefined){
+            serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
+          }
+          else{
+            let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
+            if(this.translateService.currentLang == 'fr'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.nl;
+            }
+          }
         } else {
           serieTmp.name = _data.sensorRef;
         }
@@ -357,7 +401,6 @@ export class DailyManagerService {
     )
   }
   getChartWeightincome(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    //his.getLastDayForMeanValue(this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(hiveId, this.rangeSevenDay), false, type);
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(hiveId, range).subscribe(
       _daliW => {
         let option = Object.assign({}, this.baseOptionsInt);
@@ -376,6 +419,7 @@ export class DailyManagerService {
           }
           option.legend.selectedMode = 'multiple';
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete) => {
+            console.log(serieComplete.name);
             option.legend.data.push(serieComplete.name);
 /*             serieComplete.symbol = GLOBAL_ICONS.WINCOME;
  */            serieComplete.itemStyle = {
@@ -652,21 +696,40 @@ export class DailyManagerService {
   }
 
   getChartTintMax(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    // this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(hiveId, this.rangeSevenDay), false, type);
     this.dailyHService.getTempIntMaxByHive(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _tMax => {
+        let posTab = _tMax.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(hivePos != undefined){
+            if(this.translateService.currentLang == 'fr'){
+              posTab[index] = hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              posTab[index] = hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              posTab[index] = hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              posTab[index] = hivePos.translations.nl;
+            }
+          }
+        });
+        let posSet = new Set([...posTab].concat([..._tMax.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _tMax.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _tMax.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.temp_int_max])
           };
@@ -781,18 +844,55 @@ export class DailyManagerService {
   getChartBrood(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getBroodByHive(hiveId, range).subscribe(
       _brood => {
+        let posTab = _brood.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(this.translateService.currentLang == 'fr'){
+            posTab[index] = hivePos.translations.fr;
+          }
+          if(this.translateService.currentLang == 'en'){
+            posTab[index] = hivePos.translations.en;
+          }
+          if(this.translateService.currentLang == 'es'){
+            posTab[index] = hivePos.translations.es;
+          }
+          if(this.translateService.currentLang == 'nl'){
+            posTab[index] = hivePos.translations.nl;
+          }
+        });
+        let posSet = new Set([...posTab].concat([..._brood.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _brood.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _brood.forEach(elt => {
+          let nameSerie;
+          if(elt.values[0].position == null || elt.values[0].position == undefined || elt.values[0].position === "" ){
+            nameSerie = elt.values[0].sensorRef;
+          }
+          else{
+            nameSerie = elt.values[0].position;
+            let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
+            if(this.translateService.currentLang == 'fr'){
+              nameSerie = hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              nameSerie = hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              nameSerie = hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              nameSerie = hivePos.translations.nl;
+            }
+          }
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.brood])
           };

@@ -19,7 +19,7 @@ export interface CapteurInterface {
 	apiaryId: string;
 	userId: string;
 	dataLastReceived: Date;
-	hivePositionId: string;
+	deviceLocation: any;
 	start: Date;
 	createDate: Date;
 	sensorTime?: Date;

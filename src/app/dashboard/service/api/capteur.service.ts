@@ -35,7 +35,7 @@ export class CapteurService {
 
     capteur: CapteurInterface;
     capteurs: CapteurInterface[];
-    capteursByUser: CapteurInterface[];
+    public capteursByUser: CapteurInterface[];
     capteursByHive : CapteurInterface[];
     capteurAcheter: CapteurInterface[];
     capteursType: Object;
@@ -75,7 +75,7 @@ export class CapteurService {
             apiaryId: '',
             userId: '',
             dataLastReceived: null,
-            hivePositionId: '',
+            deviceLocation: null,
             start: null,
             createDate: null,
             sensorTime: null,
@@ -144,6 +144,10 @@ export class CapteurService {
         // return capteursHive.map(elt => {
         //     return elt.sensorRef
         // }).join('\n');
+    }
+
+    getCapteurByRef(ref: string): CapteurInterface{
+        return this.capteursByUser.filter(sensor => sensor.sensorRef === ref)[0];
     }
 
         /**
