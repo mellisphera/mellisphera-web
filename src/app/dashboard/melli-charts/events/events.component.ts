@@ -19,19 +19,7 @@ import { NotifierService } from 'angular-notifier';
 import { DomEventsPlugin } from '@angular/platform-browser/src/dom/events/dom_events';
 import { MelliChartsHiveService } from './../service/melli-charts-hive.service';
 
-const INSPECT_IMG_PATH = '../../../../assets/icons/inspect/';
-const ALERT_IMG_PATH = '../../../../assets/pictos_alerts/charts/';
-const PICTOS_HIVES_OBS = [
-  {name:'swarm', img: 'observations/swarm_grey.png', img_active: 'observations/swarm.png', class: 'hives-swarm-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-];
+import { PICTOS_HIVES_OBS } from '../../../../constants/pictosHiveObs'
 
 @Component({
   selector: 'app-events',
@@ -753,9 +741,9 @@ export class EventsComponent implements OnInit {
     let container = document.createElement('div');
     container.className = "alerts-container";
     let div = document.createElement('div');
-    div.style.background = "url('../../../../assets/pictos_alerts/charts/"+ _alert.icon +".png') center no-repeat";
-    div.style.backgroundSize = "30px";
-    div.className = "alert-item " + _alert.icon;
+    //div.style.background = "url('../../../../assets/pictos_alerts/charts/"+ _alert.icon +".png') center no-repeat";
+    //div.style.backgroundSize = "30px";
+    div.className = "alert-item " + _alert.icon + '-active';
     container.appendChild(div);
     cell5.appendChild(container);
 

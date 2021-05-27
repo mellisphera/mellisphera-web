@@ -47,3 +47,9 @@ src/config.ts
 **config.ts
 config.ts
 nohup.out
+
+# MSPics
+/assets/ms-pics/*.png
+/assets/ms-pics/*.svg
+/assets/ms-pics/.git
+

@@ -137,42 +137,84 @@
 .apiary-default-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/default_grey.png');
+  background-image: url('../../../../assets/ms-pics/default_b.png');
   background-position: center;
 }
 
 .apiary-default-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/default.png');
+  background-image: url('../../../../assets/ms-pics/default_cb.png');
   background-position: center;
 }
 
 .apiary-queen-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/observations/crown_grey.png');
+  background-image: url('../../../../assets/ms-pics/queen_b.png');
   background-position: center;
 }
 
 .apiary-queen-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/observations/crown.png');
+  background-image: url('../../../../assets/ms-pics/queen_cb.png');
   background-position: center;
 }
 
 .hives-swarm-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/observations/swarm_grey.png');
+  background-image: url('../../../../assets/ms-pics/swarm_b.png');
   background-position: center;
 }
 
 .hives-swarm-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/observations/swarm.png');
+  background-image: url('../../../../assets/ms-pics/swarm_cb.png');
+  background-position: center;
+}
+
+.hives-super\+-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/super+_b.png');
+  background-position: center;
+}
+
+.hives-super\+-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/super+_cb.png');
+  background-position: center;
+}
+
+.hives-super--img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/super-_b.png');
+  background-position: center;
+}
+
+.hives-super--img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/super-_cb.png');
+  background-position: center;
+}
+
+.hives-default-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/default_b.png');
+  background-position: center;
+}
+
+.hives-default-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/default_cb.png');
   background-position: center;
 }
 
@@ -278,14 +320,14 @@
 .hives-notes{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/notes.png');
+  background-image: url('../../../../assets/ms-pics/notes.svg');
   background-position: center;
 }
 
 .hives-todo{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/todo.png');
+  background-image: url('../../../../assets/ms-pics/todo.png');
   background-position: center;
 }
 

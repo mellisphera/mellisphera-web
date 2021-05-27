@@ -17,6 +17,7 @@ import { DateTimeAdapter } from 'ng-pick-datetime';
 import { TranslateService } from '@ngx-translate/core';
 import { trackByHourSegment } from 'angular-calendar/modules/common/util';
 import * as moment from 'moment';
+import { HIVE_POS } from '../../../../constants/hivePositions';
 
 
 @Component({
@@ -51,7 +52,8 @@ export class WeightComponent implements OnInit, AfterViewInit {
     private rucheService: RucheService,
     private unitService: UnitService,
     private userPrefsService: UserParamsService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    private translateService: TranslateService
   ) {
     this.option = {
       // Base Option for ECharts
@@ -293,7 +295,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
    */
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';
-    let templateValue = '{*} {n}: <B>{v} {u}</B>';
+    let templateValue = '{*} {n}: <B>{v} {u}</B> - {p}';
     let tooltipGlobal;
     if(date === 'Invalid date'){
       tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, this.unitService.getDailyDate(this.ref_Date) );
@@ -303,22 +305,22 @@ export class WeightComponent implements OnInit, AfterViewInit {
       tooltipGlobal += series.map(_serie => {
         // ADAPT GRAPH POPUP TO WEIGHT TYPE DISPLAY
         if(_serie.name === null){ // MARKLINE TOOLTIP
-          return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, '').replace(/{v}/g, '').replace(/{u}/g, '').replace(/{R}/g, '');
+          return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, '').replace(/{v}/g, '').replace(/{u}/g, '').replace(/{R}/g, '').replace(/{p}/g, '');
         }
         else{ // SERIES TOOLTIP
           if(this.normWeightDisplay){
-            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, 'x'+_serie.value).replace(/{u}/g, '').replace(/{R}/g, '');
+            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, 'x'+_serie.value).replace(/{u}/g, '').replace(/{R}/g, '').replace(/{p}/g,  _serie.name.split('|')[1]);
           }
           else if(this.gainWeightDisplay){
             if(_serie.value >= 0){
-              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, '+'+_serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '');
+              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, '+'+_serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '').replace(/{p}/g,  _serie.name.split('|')[1]);
             }
             else{
-              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '');
+              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '').replace(/{p}/g,  _serie.name.split('|')[1]);
             }
           }
           else{
-            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '');
+            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '').replace(/{p}/g,  _serie.name.split('|')[1]);
           }
         }
       }).join('');
@@ -650,18 +652,42 @@ export class WeightComponent implements OnInit, AfterViewInit {
     return this.rucheService.ruchesAllApiary.findIndex(elt => elt._id === hive._id);
   }
 
+
+  getNameSerieByPosition(elt: any): string{
+    if(elt.position == null || elt.position == undefined || elt.position === "" ){
+      return elt.sensorRef;
+    }
+    else{
+      let nameSerie = elt.position;
+      let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
+      if(this.translateService.currentLang == 'fr'){
+        return hivePos.translations.fr;
+      }
+      if(this.translateService.currentLang == 'en'){
+        return hivePos.translations.en;
+      }
+      if(this.translateService.currentLang == 'es'){
+        return hivePos.translations.es;
+      }
+      if(this.translateService.currentLang == 'nl'){
+        return hivePos.translations.nl;
+      }
+    }
+  }
+
   getSerieByData(data: Array<any>, nameSerie: string, next: Function): void {
     let sensorRef: Array<string> = [];
     data.forEach(_data => {
+      console.log(_data);
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, SERIES.line);
-        serieTmp.name = nameSerie;
+        serieTmp.name = nameSerie + ' | ' + this.getNameSerieByPosition(_data);
         serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
           let newDate = new Date(_map.date);
           newDate.setHours(1);
           if(newDate > this.melliDateService.start && newDate < this.melliDateService.end){
-            return { name: newDate.toISOString(), value: [newDate.toISOString(), _map.value, _map.sensorRef] };
+            return { name: newDate.toISOString(), value: [newDate.toISOString(), _map.value, _map.sensorRef], position: _data.position };
           }
         });
         next(serieTmp);

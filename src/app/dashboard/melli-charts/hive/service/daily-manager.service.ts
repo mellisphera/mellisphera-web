@@ -39,6 +39,10 @@ import { CapteurService } from '../../../../dashboard/service/api/capteur.servic
 
 import { HIVE_POS } from '../../../../../constants/hivePositions';
 import { TranslateService } from '@ngx-translate/core';
+import { RucherModel } from '../../../../_model/rucher-model'
+import { RucheInterface } from '../../../../_model/ruche';
+import { RucherService } from '../../../../dashboard/service/api/rucher.service';
+import { RucheService } from '../../../../dashboard/service/api/ruche.service';
 
 
 
@@ -98,7 +102,9 @@ export class DailyManagerService {
     private unitService: UnitService,
     private inspectionService: InspectionService,
     private sensorService: CapteurService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private rucherService: RucherService,
+    private rucheService: RucheService
   ) {
     this.meanPeriodDevice = {
       value: 0,
@@ -253,6 +259,7 @@ export class DailyManagerService {
           }
           else{
             let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
+            console.log(hivePos)
             if(this.translateService.currentLang == 'fr'){
               serieTmp.name = nameSerie + ' | ' + hivePos.translations.fr;
             }
@@ -267,7 +274,25 @@ export class DailyManagerService {
             }
           }
         } else {
-          serieTmp.name = _data.sensorRef;
+          if(_data.position === "" || _data.position == null || _data.position == undefined){
+            serieTmp.name = nameSerie + ' | '  + _data.sensorRef;
+          }
+          else{
+            let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
+            console.log(hivePos)
+            if(this.translateService.currentLang == 'fr'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.nl;
+            }
+          }
         }
         if (data.map(_elt => _elt.date)[0] !== undefined) {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
@@ -751,18 +776,38 @@ export class DailyManagerService {
   getChartTextMax(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getTempMaxExt(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _tmpMaxExt => {
+        let posTab = _tmpMaxExt.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(hivePos != undefined){
+            if(this.translateService.currentLang == 'fr'){
+              posTab[index] = hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              posTab[index] = hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              posTab[index] = hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              posTab[index] = hivePos.translations.nl;
+            }
+          }
+        });
+        let posSet = new Set([...posTab].concat([..._tmpMaxExt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _tmpMaxExt.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _tmpMaxExt.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.temp_ext_max])
           };
@@ -782,18 +827,38 @@ export class DailyManagerService {
   getChartTextMin(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getTempMinExt(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _tMinExt => {
+        let posTab = _tMinExt.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(hivePos != undefined){
+            if(this.translateService.currentLang == 'fr'){
+              posTab[index] = hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              posTab[index] = hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              posTab[index] = hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              posTab[index] = hivePos.translations.nl;
+            }
+          }
+        });
+        let posSet = new Set([...posTab].concat([..._tMinExt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _tMinExt.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _tMinExt.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.temp_ext_min])
           };
@@ -813,18 +878,38 @@ export class DailyManagerService {
   getChartHint(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getHintByHive(hiveId, range).subscribe(
       _hInt => {
+        let posTab = _hInt.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(hivePos != undefined){
+            if(this.translateService.currentLang == 'fr'){
+              posTab[index] = hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              posTab[index] = hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              posTab[index] = hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              posTab[index] = hivePos.translations.nl;
+            }
+          }
+        });
+        let posSet = new Set([...posTab].concat([..._hInt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _hInt.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _hInt.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.humidity_int_max])
           };
@@ -870,26 +955,7 @@ export class DailyManagerService {
         option.legend.data = [...posSet];
         option.legend.show = true;
         _brood.forEach(elt => {
-          let nameSerie;
-          if(elt.values[0].position == null || elt.values[0].position == undefined || elt.values[0].position === "" ){
-            nameSerie = elt.values[0].sensorRef;
-          }
-          else{
-            nameSerie = elt.values[0].position;
-            let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
-            if(this.translateService.currentLang == 'fr'){
-              nameSerie = hivePos.translations.fr;
-            }
-            if(this.translateService.currentLang == 'en'){
-              nameSerie = hivePos.translations.en;
-            }
-            if(this.translateService.currentLang == 'es'){
-              nameSerie = hivePos.translations.es;
-            }
-            if(this.translateService.currentLang == 'nl'){
-              nameSerie = hivePos.translations.nl;
-            }
-          }
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
             name: nameSerie,
@@ -914,18 +980,36 @@ export class DailyManagerService {
   getChartTminInt(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getTminByHive(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _tMin => {
+        let posTab = _tMin.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(this.translateService.currentLang == 'fr'){
+            posTab[index] = hivePos.translations.fr;
+          }
+          if(this.translateService.currentLang == 'en'){
+            posTab[index] = hivePos.translations.en;
+          }
+          if(this.translateService.currentLang == 'es'){
+            posTab[index] = hivePos.translations.es;
+          }
+          if(this.translateService.currentLang == 'nl'){
+            posTab[index] = hivePos.translations.nl;
+          }
+        });
+        let posSet = new Set([...posTab].concat([..._tMin.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _tMin.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _tMin.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.temp_int_min])
           };
@@ -990,13 +1074,14 @@ export class DailyManagerService {
 
   getChartAlert(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     const obs: Array<Observable<any>> = [
-      this.inspectionService.getInspectionByHiveIdAndOpsDateBetween(hiveId, range),
       this.alertService.getAlertByHive(hiveId, range)
     ]
     Observable.forkJoin(obs).subscribe(
       _data => {
-        const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
-        const joinData = _data[0].concat(_data[1]);
+        const dateJoin = _data[0].map(_elt => {
+          return { date: _elt.opsDate, value: 0, sensorRef: 'notif' };
+        })
+        const joinData = _data[0];
         let option = Object.assign({}, this.baseOptionEnv);
         if (rangeChange) {
           option.series = this.removeDataAllseries(option.series);
@@ -1148,6 +1233,326 @@ export class DailyManagerService {
       }
     );
 
+  }
+
+  getChartInsp(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean): void{
+    let hive: RucheInterface = this.rucheService.getHiveById(hiveId);
+    this.inspectionService.getInspectionByApiaryIdAndOpsDateBetween(hive.apiaryId, range).subscribe(
+      _insp => {
+        let data : any[] = _insp.filter(_elt => _elt.type === 'apiary').map(_elt => {
+          return { date: _elt.opsDate, value: 0, sensorRef: 'Inspections' };
+        });
+        let option = Object.assign({}, this.baseOptionEnv);
+        if(rangeChange){
+          option.series = this.removeDataAllseries(option.series);
+          this.getSerieByData(data, type.name, SERIES.custom, (serieComplete) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            serieComplete.renderItem = (params, api) => {
+              const cellPoint = api.coord(api.value(0));
+              const cellWidth = params.coordSys.cellWidth;
+              const cellHeight = params.coordSys.cellHeight;
+              const group = {
+                type: 'group',
+                children: []
+              };
+              const dataByDate: any[] = _insp.filter(_filter => this.graphGlobal.compareToDate(_filter.opsDate, api.value(0)));
+              group.children.push({
+                type: 'rect',
+                z2: 0,
+                shape: {
+                  x: -cellWidth / 2,
+                  y: -cellHeight / 2,
+                  width: cellWidth,
+                  height: cellHeight,
+                },
+                position: [cellPoint[0], cellPoint[1]],
+                style: {
+                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                  stroke: 'black'
+                }
+              });
+              if (dataByDate.length > 1) {
+                let path: any;
+                const nbNote = dataByDate.filter(_elt => _elt.description).length;
+                //console.log(nbNote + '===' + dataByDate.length)
+                if (nbNote === dataByDate.length) {
+                  path = this.observationService.getPictoInspect(cellPoint);
+                  group.children = group.children.concat(path);
+                } 
+                else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
+                  path = {
+                    type: 'path',
+                    z2: 1000,
+                    shape: {
+                      pathData: GLOBAL_ICONS.THREE_DOTS,
+                      x: -11,
+                      y: -10,
+                      width: 25,
+                      height: 25
+                    },
+                    position: [cellPoint[0], cellPoint[1]],
+                  };
+                  group.children.push(path);
+                }
+              }
+              else if (dataByDate.length === 1) {
+                let icon;
+                if (dataByDate[0].description) {
+                  group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
+                } else {
+                  group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
+                  // icon = this.alertService.getPicto(dataByDate[0].type);
+                }
+              }
+              return group;
+            };
+            if (index !== -1) {
+              option.series[index] = serieComplete;
+            } else {
+              option.series.push(serieComplete);
+            }
+          });
+          return;
+        }
+
+        if (this.existSeries(option.series, type.name)) {
+          option.series = new Array();
+        }
+        this.getSerieByData(data, type.name, SERIES.custom, (serieComplete: any) => {
+          serieComplete.renderItem = (params, api) => {
+            let cellPoint = api.coord(api.value(0));
+            let cellWidth = params.coordSys.cellWidth;
+            let cellHeight = params.coordSys.cellHeight;
+            let group = {
+              type: 'group',
+              children: []
+            };
+            group.children.push({
+              type: 'rect',
+              z2: 0,
+              shape: {
+                x: -cellWidth / 2,
+                y: -cellHeight / 2,
+                width: cellWidth,
+                height: cellHeight,
+              },
+              position: [cellPoint[0], cellPoint[1]],
+              style: {
+                fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                stroke: 'black'
+              }
+            });
+            const dataByDate: any[] = _insp.filter(_filter => {
+              return this.graphGlobal.compareToDate(_filter.opsDate, api.value(0));
+            });
+            if (dataByDate.length > 1) {
+              let path: any;
+              const nbNote = dataByDate.filter(_elt => _elt.description).length;
+              //console.log(nbNote + '===' + dataByDate.length)
+              if (nbNote === dataByDate.length) {
+                path = this.observationService.getPictoInspect(cellPoint);
+                group.children = group.children.concat(path);
+              } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
+                path = {
+                  type: 'path',
+                  z2: 1000,
+                  shape: {
+                    pathData: GLOBAL_ICONS.THREE_DOTS,
+                    x: -11,
+                    y: -10,
+                    width: 25,
+                    height: 25
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                };
+                group.children.push(path);
+              }
+            } else if (dataByDate.length === 1) {
+              if (dataByDate !== undefined && dataByDate[0].description) {
+                group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
+              } else {
+                group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
+              }
+            }
+            return group;
+          }
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.series.push(serieComplete);
+        });
+        option.calendar.range = range;
+        option.legend.show = true;
+        option.series.push(this.graphGlobal.getDaySerie());
+        option.tooltip = this.graphGlobal.getTooltipBySerie(type, _insp);
+        chartInstance.clear();
+        chartInstance.setOption(option, true);
+        chartInstance.hideLoading();
+        this.baseOptionEnv = option;
+        return;
+      },
+      () => {},
+      () => {}
+    )
+  }
+  
+  getChartEvent(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean): void{
+    let hive: RucheInterface = this.rucheService.getHiveById(hiveId);
+    this.inspectionService.getInspectionByApiaryIdAndOpsDateBetween(hive.apiaryId, range).subscribe(
+      _insp => {
+        let data : any[] = _insp.filter(_elt => _elt.type === 'hive' && (_elt.hiveId === hiveId || _elt.hiveId == null)).map(_elt => {
+          return { date: _elt.opsDate, value: 0, sensorRef: 'Evenements' };
+        });
+        let option = Object.assign({}, this.baseOptionEnv);
+        if(rangeChange){
+          option.series = this.removeDataAllseries(option.series);
+          this.getSerieByData(data, type.name, SERIES.custom, (serieComplete) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            serieComplete.renderItem = (params, api) => {
+              const cellPoint = api.coord(api.value(0));
+              const cellWidth = params.coordSys.cellWidth;
+              const cellHeight = params.coordSys.cellHeight;
+              const group = {
+                type: 'group',
+                children: []
+              };
+              const dataByDate: any[] = _insp.filter(_filter => this.graphGlobal.compareToDate(_filter.opsDate, api.value(0)));
+              group.children.push({
+                type: 'rect',
+                z2: 0,
+                shape: {
+                  x: -cellWidth / 2,
+                  y: -cellHeight / 2,
+                  width: cellWidth,
+                  height: cellHeight,
+                },
+                position: [cellPoint[0], cellPoint[1]],
+                style: {
+                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                  stroke: 'black'
+                }
+              });
+              if (dataByDate.length > 1) {
+                let path: any;
+                const nbNote = dataByDate.filter(_elt => _elt.description).length;
+                //console.log(nbNote + '===' + dataByDate.length)
+                if (nbNote === dataByDate.length) {
+                  path = this.observationService.getPictoEvent(cellPoint);
+                  group.children = group.children.concat(path);
+                } 
+                else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
+                  path = {
+                    type: 'path',
+                    z2: 1000,
+                    shape: {
+                      pathData: GLOBAL_ICONS.THREE_DOTS,
+                      x: -11,
+                      y: -10,
+                      width: 25,
+                      height: 25
+                    },
+                    position: [cellPoint[0], cellPoint[1]],
+                  };
+                  group.children.push(path);
+                }
+              }
+              else if (dataByDate.length === 1) {
+                let icon;
+                if (dataByDate[0].description) {
+                  group.children = group.children.concat(this.observationService.getPictoEvent(cellPoint));
+                } else {
+                  group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
+                  // icon = this.alertService.getPicto(dataByDate[0].type);
+                }
+              }
+              return group;
+            };
+            if (index !== -1) {
+              option.series[index] = serieComplete;
+            } else {
+              option.series.push(serieComplete);
+            }
+          });
+          return;
+        }
+        
+        if (this.existSeries(option.series, type.name)) {
+          option.series = new Array();
+        }
+        this.getSerieByData(data, type.name, SERIES.custom, (serieComplete: any) => {
+          serieComplete.renderItem = (params, api) => {
+            let cellPoint = api.coord(api.value(0));
+            let cellWidth = params.coordSys.cellWidth;
+            let cellHeight = params.coordSys.cellHeight;
+            let group = {
+              type: 'group',
+              children: []
+            };
+            group.children.push({
+              type: 'rect',
+              z2: 0,
+              shape: {
+                x: -cellWidth / 2,
+                y: -cellHeight / 2,
+                width: cellWidth,
+                height: cellHeight,
+              },
+              position: [cellPoint[0], cellPoint[1]],
+              style: {
+                fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                stroke: 'black'
+              }
+            });
+            const dataByDate: any[] = _insp.filter(_filter => {
+              return this.graphGlobal.compareToDate(_filter.opsDate, api.value(0));
+            });
+            if (dataByDate.length > 1) {
+              let path: any;
+              const nbNote = dataByDate.filter(_elt => _elt.description).length;
+              //console.log(nbNote + '===' + dataByDate.length)
+              if (nbNote === dataByDate.length) {
+                path = this.observationService.getPictoEvent(cellPoint);
+                group.children = group.children.concat(path);
+              } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
+                path = {
+                  type: 'path',
+                  z2: 1000,
+                  shape: {
+                    pathData: GLOBAL_ICONS.THREE_DOTS,
+                    x: -11,
+                    y: -10,
+                    width: 25,
+                    height: 25
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                };
+                group.children.push(path);
+              }
+            } else if (dataByDate.length === 1) {
+              if (dataByDate !== undefined && dataByDate[0].description) {
+                group.children = group.children.concat(this.observationService.getPictoEvent(cellPoint));
+              } else {
+                group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
+              }
+            }
+            return group;
+          }
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.series.push(serieComplete);
+        });
+        option.calendar.range = range;
+        option.legend.show = true;
+        option.series.push(this.graphGlobal.getDaySerie());
+        option.tooltip = this.graphGlobal.getTooltipBySerie(type, _insp);
+        chartInstance.clear();
+        chartInstance.setOption(option, true);
+        chartInstance.hideLoading();
+        this.baseOptionEnv = option;
+        return;
+      },
+      () => {},
+      () => {}
+    )
   }
 
 

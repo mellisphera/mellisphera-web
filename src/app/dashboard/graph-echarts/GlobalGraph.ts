@@ -201,14 +201,16 @@ export class GraphGlobal {
       { 'graph': 'loss', 'titre': 'perte' },
       { 'graph': 'gain', 'titre': 'gain' },
       { 'graph': 'Weight', 'titre': 'Poids' },
-      { 'graph': 'AlertsHive', 'titre': 'Evénements' },
+      { 'graph': 'AlertsHive', 'titre': 'Alertes' },
       { 'graph': 'AlertsApiary', 'titre': 'Evénements du rucher' },
       { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' },
       { graph: 'Weather', titre: 'Météo' },
       { graph: 'Moon', titre: 'Calendrier lunaire' },
       { graph: 'Rain', titre: 'Précipitations' },
       { graph: 'Wind', titre: 'Vent' },
-      { graph: 'Fitness', titre: 'Santé de la ruche'}
+      { graph: 'Fitness', titre: 'Santé de la ruche'},
+      { graph: 'Event-apiary', titre: 'Inspections'},
+      { graph: 'Event-hive', titre: 'Evenements'}
 
     ];
     this.titresES = [
@@ -223,14 +225,16 @@ export class GraphGlobal {
       { 'graph': 'loss', 'titre': 'Disminucion' },
       { 'graph': 'gain', 'titre': 'Aumento' },
       { 'graph': 'Weight', 'titre': 'Peso' },
-      { 'graph': 'AlertsHive', 'titre': 'Eventos' },
+      { 'graph': 'AlertsHive', 'titre': 'Alertas' },
       { 'graph': 'AlertsApiary', 'titre': 'Eventos del colmenar' },
       { 'graph': 'Blooming', 'titre': 'Calendario de floracion del colmenar' },
       { graph: 'Weather', titre: 'Meteorologia' },
       { graph: 'Moon', titre: 'Calendario lunar' },
       { graph: 'Rain', titre: 'Precipitaciones' },
       { graph: 'Wind', titre: 'Viento' },
-      { graph: 'Fitness', titre: 'Salud de la colmena'}
+      { graph: 'Fitness', titre: 'Salud de la colmena'},
+      { graph: 'Event-apiary', titre: 'Inspecciones'},
+      { graph: 'Event-hive', titre: 'Eventos'}
     ];
 
     // EN
@@ -246,14 +250,16 @@ export class GraphGlobal {
       { 'graph': 'loss', 'titre': 'loss' },
       { 'graph': 'gain', 'titre': 'gain' },
       { 'graph': 'Weight', 'titre': 'Weight' },
-      { 'graph': 'AlertsHive', 'titre': 'Events' },
+      { 'graph': 'AlertsHive', 'titre': 'Alerts' },
       { 'graph': 'AlertsApiary', 'titre': 'Events for the apiary' },
       { 'graph': 'Blooming', 'titre': 'Apiary Blooming calendar' },
       { graph: 'Weather', titre: 'Weather' },
       { graph: 'Moon', titre: 'Moon calendar' },
       { graph: 'Rain', titre: 'Precipitation' },
       { graph: 'Wind', titre: 'Wind' },
-      { graph: 'Fitness', titre: 'Hive health'}
+      { graph: 'Fitness', titre: 'Hive health'},
+      { graph: 'Event-apiary', titre: 'Inspections'},
+      { graph: 'Event-hive', titre: 'Events'}
     ];
   }
 
@@ -583,7 +589,22 @@ export class GraphGlobal {
         } else {
           return this.titresEN[11].titre;
         }
-        break;
+      case 'EVENT-APIARY':
+        if (this.translateService.currentLang === 'fr') {
+          return this.titresFR[19].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[19].titre;
+        } else {
+          return this.titresEN[19].titre;
+        }
+      case 'EVENT-HIVE':
+        if (this.translateService.currentLang === 'fr') {
+          return this.titresFR[20].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[20].titre;
+        } else {
+          return this.titresEN[20].titre;
+        }
       case 'FITNESS':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[18].titre;
@@ -983,9 +1004,9 @@ export class GraphGlobal {
             if (_singleData.description) {
               type = 'Inspection';
               img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
+              img = img.replace(/{I}/g, './assets/ms-pics/alert-icon.png');
             } else {
-              img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.icon + '.svg />';
+              img = '<img style={S} src=./assets/ms-pics/' + _singleData.icon.toLowerCase() + '_cb.png />';
             }
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
             return {
@@ -1016,6 +1037,55 @@ export class GraphGlobal {
               unit: ''
             },
           ));
+        }
+        break;
+      case 'EVENT-APIARY':
+        tooltip.formatter = (params) => {
+          const dataByDateTooltip = extraData.filter(_filter => {
+            return MyDate.compareToDailyDate(_filter.opsDate, params.data[0]);
+          });
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
+            let type = 'Inspection';
+            let img = '<img style={S} src={I} />';
+            if(_singleData.type === 'apiary'){
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, './assets/ms-pics/inspect-api_cw.png');
+            }
+            if(_singleData.type === 'hive'){
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, './assets/ms-pics/inspect_cw.png');
+            }
+            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:30px;height:30px; background-color:red;');
+            return {
+              name: img,
+              value: this.sliceTextToolip(_singleData.description),
+              unit: ''
+            }
+          }));
+        }
+        break;
+      case 'EVENT-HIVE':
+        tooltip.formatter = (params) => {
+          const dataByDateTooltip = extraData.filter(_filter => {
+            return MyDate.compareToDailyDate(_filter.opsDate, params.data[0]);
+          });
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
+            let img = '<img style={S} src={I} />';
+            if(_singleData.type === 'apiary'){
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, './assets/ms-pics/inspect-api_cw.png');
+            }
+            if(_singleData.type === 'hive'){
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, './assets/ms-pics/inspect_cw.png');
+            }
+            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:30px;height:30px; background-color:red;');
+            return {
+              name: img,
+              value: this.sliceTextToolip(_singleData.description),
+              unit: ''
+            }
+          }));
         }
         break;
       default:

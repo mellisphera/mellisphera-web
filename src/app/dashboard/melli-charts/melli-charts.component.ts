@@ -48,22 +48,9 @@ import { MatChipInputEvent } from '@angular/material';
 import { NotifierService } from 'angular-notifier';
 import { EventsComponent } from './events/events.component';
 
-const PREFIX_PATH = '/dashboard/explore/';
-const IMG_PATH = '../../../assets/icons/inspect/';
-const ALERTS_ICONS_PATH = '../../../assets/pictos_alerts/iconesPNG/';
-const ALERTS_CHART_PATH = '../../../assets/pictos_alerts/charts/';
+import { PICTOS_HIVES_OBS } from '../../../constants/pictosHiveObs'
 
-const PICTOS_HIVES_OBS = [
-  {name: 'swarm', img: 'observations/swarm_grey.png', img_active: 'observations/swarm.png', class: 'hives-swarm-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-];
+const PREFIX_PATH = '/dashboard/explore/';
 
 @Component({
   selector: 'app-melli-charts',

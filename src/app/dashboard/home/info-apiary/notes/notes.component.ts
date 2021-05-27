@@ -29,22 +29,7 @@ import { AlertInterface } from '../../../../_model/alert';
 import { UnitService } from '../../../../dashboard/service/unit.service';
 import { Router } from '@angular/router';
 
-const PREFIX_PATH = '/dashboard/explore/';
-const IMG_PATH = '../../../assets/icons/inspect/';
-const ALERTS_ICONS_PATH = '../../../assets/pictos_alerts/iconesPNG/';
-const ALERTS_CHART_PATH = '../../../assets/pictos_alerts/charts/';
-
-const PICTOS_HIVES_OBS = [
-  {name:'swarm', img: 'observations/swarm_grey.png', img_active: 'observations/swarm.png', class: 'hives-swarm-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-  {name:'default', img:'default_grey.png', img_active:'default.png', class:'hives-default-img'},
-];
+import { PICTOS_HIVES_OBS } from '../../../../../constants/pictosHiveObs'
 
 @Component({
   selector: 'app-notes',

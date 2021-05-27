@@ -80,26 +80,26 @@ export class DailyComponent implements OnInit, AfterViewInit {
     public graphGlobal: GraphGlobal,
     private melliDate: MelliChartsDateService) {
     this.typeData = [
-      { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type active', icons: './assets/picto_mellicharts/brood.png' },
-      { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/weight_inc.png' },
-      { name: 'FITNESS', id: 'FITNESS', unit: '', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/fitness.png' },
-      //{ name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/weight_max.png' },
-      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/tint_max.png' },
-      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/tint_min.png' },
-      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/hint_max.png' },
-      { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: './assets/picto_mellicharts/weather.png' },
-      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/text_max.png' },
-      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/text_min.png' },
-      { name: 'TEMP_EXT_WEATHER_MAX', id: 'TEMP_EXT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_max.png' },
-      { name: 'TEMP_EXT_WEATHER_MIN', id: 'TEMP_INT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_min.png' },
-      { name: 'HEXT_WEATHER_MAX', id: 'HEXT_WEATHER_MAX', unit: 'P', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/hext_max.png' },
-      { name: 'HEXT_WEATHER_MIN', id: 'HEXT_WEATHER_MIN', unit: 'P', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/hext_min.png' },
-      { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/wind.png' },
-      { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
-      //{ name: 'EVENT-APIARY', id: 'EVENT-APIARY', origin: 'ENV', class: 'item-type', icons: './assets/icons/inspect/inspect_v3/4_tool_jhook_api.png' },
-      //{ name: 'EVENT-HIVE', id: 'EVENT-HIVE', origin: 'ENV', class: 'item-type', icons: './assets/icons/inspect/inspect_v3/4_tool_jhook.png' },
-      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/notif.png' },
-      { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: './assets/picto_mellicharts/moon.png' },
+      { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type active', icons: './assets/pictos_alerts/charts/brood.png' },
+      { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/pictos_alerts/charts/weight_inc.png' },
+      { name: 'FITNESS', id: 'FITNESS', unit: '', origin: 'DEVICE', class: 'item-type', icons: './assets/pictos_alerts/charts/bfit_color.png' },
+      //{ name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/pictos_alerts/charts/weight_max.png' },
+      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/pictos_alerts/charts/tint_max.png' },
+      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/pictos_alerts/charts/tint_min.png' },
+      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/pictos_alerts/charts/hint_max.png' },
+      { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: './assets/pictos_alerts/charts/weather.png' },
+      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/pictos_alerts/charts/text_max.png' },
+      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/pictos_alerts/charts/text_min.png' },
+      { name: 'TEMP_EXT_WEATHER_MAX', id: 'TEMP_EXT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/pictos_alerts/charts/text_max.png' },
+      { name: 'TEMP_EXT_WEATHER_MIN', id: 'TEMP_INT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/pictos_alerts/charts/text_min.png' },
+      { name: 'HEXT_WEATHER_MAX', id: 'HEXT_WEATHER_MAX', unit: 'P', origin: 'OTHER', class: 'item-type', icons: './assets/pictos_alerts/charts/hext_max.png' },
+      { name: 'HEXT_WEATHER_MIN', id: 'HEXT_WEATHER_MIN', unit: 'P', origin: 'OTHER', class: 'item-type', icons: '/assets/pictos_alerts/charts/hext_min.png' },
+      { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/pictos_alerts/charts/wind.png' },
+      { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/pictos_alerts/charts/rain.png' },
+      { name: 'EVENT-APIARY', id: 'EVENT-APIARY', origin: 'ENV', class: 'item-type', icons: './assets/pictos_alerts/charts/4_tool_jhook_api.png' },
+      { name: 'EVENT-HIVE', id: 'EVENT-HIVE', origin: 'ENV', class: 'item-type', icons: './assets/pictos_alerts/charts/4_tool_jhook.png' },
+      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/pictos_alerts/charts/alert-icon.png' },
+      { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: './assets/pictos_alerts/charts/moon.png' },
     ];
 
     this.optionCsv = {
@@ -116,8 +116,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     };
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
-    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
-    console.log(this.currentTypeDailyEnv);
+    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[2];
 
   }
 
@@ -128,7 +127,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.calendarElements = document.getElementsByClassName('calendar');
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
-    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
+    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[2];
   /*this.dailyManager.setMeanAnnotation = (_type: Tools, clear?: boolean) => {
       if (!clear) {
         this.setMeanTextHtml();
@@ -391,8 +390,14 @@ export class DailyComponent implements OnInit, AfterViewInit {
   loadDailyEnvData(rangeChange: boolean) {
     switch(this.currentTypeDailyEnv.name){
       case 'EVENT-APIARY':
+        this.melliHive.getDailyEnvChartInstance().showLoading();
+        this.dailyManager.getChartInsp(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
+          this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'EVENT-HIVE':
+        this.melliHive.getDailyEnvChartInstance().showLoading();
+        this.dailyManager.getChartEvent(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
+          this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'ALERT':
         this.melliHive.getDailyEnvChartInstance().showLoading();

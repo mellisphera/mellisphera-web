@@ -55,18 +55,18 @@
 }
 
 .inspection-icon{
-    background: url('../../../../assets/icons/inspect/inspect_v3/4_tool_jhook_api.png') center no-repeat;
+    background: url('../../../../assets/ms-pics/inspect-api_cb.png') center no-repeat;
     background-size: 30px;
 }
 
 .event-icon{
-    background: url('../../../../assets/icons/inspect/inspect_v3/4_tool_jhook.png') center no-repeat;
+    background: url('../../../../assets/ms-pics/inspect_cb.png') center no-repeat;
     background-size: 30px;
 }
 
 .alert-icon{
-    background: url('../../../../assets/icons/ui/alert-icon.png') center no-repeat;
-    background-size: 25px;
+    background: url('../../../../assets/ms-pics/alert_cb.svg') center no-repeat;
+    background-size: 30px;
 }
 
 .edit-icon{
@@ -203,7 +203,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Dead_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/dead_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -211,7 +211,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Dead.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/dead_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -219,7 +219,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Hmax_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/hmax_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -227,7 +227,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Hmax.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/hmax_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -235,7 +235,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Hmin_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/hmin_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -243,7 +243,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Hmin.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/hmin_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -251,7 +251,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Honeydew_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/honeydew_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -259,7 +259,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Honeydew.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/honeydew_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -267,7 +267,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/LowBrood_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/lowbrood_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -275,7 +275,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/LowBrood.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/lowbrood_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -283,7 +283,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Oxalic_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/oxalic_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -291,7 +291,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Oxalic.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/oxalic_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -299,7 +299,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Rswarm_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/rswarm_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -307,7 +307,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Rswarm.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/rswarm_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -315,7 +315,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Stolen_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/stolen_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -323,7 +323,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Stolen.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/stolen_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -331,39 +331,39 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Super+_grey.png') center no-repeat;
-  background-size: 45px;
+  background: url('../../../../assets/ms-pics/super+_b.svg') center no-repeat;
+  background-size: 35px;
 }
 
 .Super\+-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Super+.png') center no-repeat;
-  background-size: 45px;
+  background: url('../../../../assets/ms-pics/super+_cb.svg') center no-repeat;
+  background-size: 35px;
 }
 
 .Super-{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Super-_grey.png') center no-repeat;
-  background-size: 45px;
+  background: url('../../../../assets/ms-pics/super-_b.svg') center no-repeat;
+  background-size: 35px;
 }
 
 .Super--active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Super-.png') center no-repeat;
-  background-size: 45px;
+  background: url('../../../../assets/ms-pics/super-_cb.svg') center no-repeat;
+  background-size: 35px;
 }
 
 .Swarm{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Swarm_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/swarm_b.png') center no-repeat;
   background-size: 33px;
 }
 
@@ -371,7 +371,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Swarm.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/swarm_cb.png') center no-repeat;
   background-size: 33px;
 }
 
@@ -379,7 +379,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Tmax_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/tmax_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -387,7 +387,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Tmax.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/tmax_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -395,7 +395,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Tmin_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/tmin_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -403,7 +403,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Tmin.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/tmin_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -411,7 +411,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/WIneg_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/wineg_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -419,7 +419,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/WIneg.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/wineg_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -427,7 +427,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/WIpos_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/wipos_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -435,7 +435,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/WIpos.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/wipos_cb.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -443,7 +443,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Wlim_grey.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/wlim_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -451,7 +451,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/pictos_alerts/charts/Wlim.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/wlim_cb.png') center no-repeat;
   background-size: 35px;
 }
 

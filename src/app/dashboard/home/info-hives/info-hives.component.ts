@@ -28,6 +28,9 @@ import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 import { WeightHivesComponent } from './weight-hives/weight-hives.component';
 import { NotesHivesComponent } from './notes-hives/notes-hives.component';
 
+import { HIVE_POS } from '../../../../constants/hivePositions';
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-info-hives',
   templateUrl: './info-hives.component.html',
@@ -51,7 +54,8 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     public capteurService: CapteurService,
     private graphGlobal: GraphGlobal,
     public dailyRecordWservice: DailyRecordsWService,
-    private alertsService: AlertsService) {
+    private alertsService: AlertsService,
+    private translateService: TranslateService) {
 
     this.getScreenSize();
 
@@ -80,6 +84,28 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
 
+  getNameSerieByPosition(elt: any): string{
+    if(elt.values[0].position == null || elt.values[0].position == undefined || elt.values[0].position === "" ){
+      return elt.values[0].sensorRef;
+    }
+    else{
+      let nameSerie = elt.values[0].position;
+      let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
+      if(this.translateService.currentLang == 'fr'){
+        return hivePos.translations.fr;
+      }
+      if(this.translateService.currentLang == 'en'){
+        return hivePos.translations.en;
+      }
+      if(this.translateService.currentLang == 'es'){
+        return hivePos.translations.es;
+      }
+      if(this.translateService.currentLang == 'nl'){
+        return hivePos.translations.nl;
+      }
+    }
+  }
+
   loadHealthCalendar() {
     if (this.healthHiveComponent.chartInstance !== null) {
       this.healthHiveComponent.chartInstance.showLoading();
@@ -89,11 +115,29 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     option.baseOption.series = new Array();
     this.dailyRecordThService.getBroodByHive(this.rucheService.getCurrentHive()._id, MyDate.getRangeForCalendarAlerts()).subscribe(
       _brood => {
-        option.baseOption.legend.data = _brood.map(_val => _val._id);
+        let posTab = _brood.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(this.translateService.currentLang == 'fr'){
+            posTab[index] = hivePos.translations.fr;
+          }
+          if(this.translateService.currentLang == 'en'){
+            posTab[index] = hivePos.translations.en;
+          }
+          if(this.translateService.currentLang == 'es'){
+            posTab[index] = hivePos.translations.es;
+          }
+          if(this.translateService.currentLang == 'nl'){
+            posTab[index] = hivePos.translations.nl;
+          }
+        });
+        let posSet = new Set([...posTab].concat([..._brood.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
+        option.baseOption.legend.data = [...posSet];
         _brood.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.brood])
           };

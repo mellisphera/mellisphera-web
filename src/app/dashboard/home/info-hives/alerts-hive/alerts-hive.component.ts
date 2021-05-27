@@ -328,9 +328,9 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
           if (_singleData.description) {
             type = 'Inspection';
             img = '<img style={S} src={I} />';
-            img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
+            img = img.replace(/{I}/g, './assets/ms-pics/inspect_cw.png');
           } else {
-            img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.icon + '.svg />';
+            img = '<img style={S} src=./assets/ms-pics/' + _singleData.icon + '_cb.png />';
           }
           img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:30px;height:30px; background-color:red;');
           return {

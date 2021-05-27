@@ -37,8 +37,10 @@ import { MelliChartsFilterService } from '../service/melli-charts-filter.service
 import { InspectionService } from './../../service/api/inspection.service';
 import { Inspection } from '../../../_model/inspection';
 
-const INSPECT_IMG_PATH = '../../../../assets/icons/inspect/';
-const ALERT_IMG_PATH = '../../../../assets/pictos_alerts/charts/';
+import { HIVE_POS } from '../../../../constants/hivePositions';
+import { throwMatDialogContentAlreadyAttachedError } from '@angular/material';
+
+const IMG_PATH = '../../../../assets/pictos_alerts/charts/';
 
 class InspHiveItem{
     name: string;
@@ -65,6 +67,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     baseOption: any,
     media: any[]
   };
+
   constructor(
     private stackService: StackMelliChartsService,
     private graphGlobal: GraphGlobal,
@@ -80,7 +83,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private alertService: AlertsService,
     private melliFilters: MelliChartsFilterService,
-    private inspService: InspectionService
+    private inspService: InspectionService,
+    private translateService: TranslateService,
     ){
     this.option = {
       baseOption : JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionHourly)),
@@ -237,13 +241,35 @@ export class VitalityComponent implements OnInit, OnDestroy {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, SERIES.line);
-        serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
+        serieTmp.name = nameSerie + ' | ' + this.getNameSerieByPosition(_data);
         serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
-          return { name: _map.date, value: [_map.date, _map.value, _map.sensorRef] };
+          return { name: _map.date, value: [_map.date, _map.value, _map.sensorRef], position: _map.position };
         });
         next(serieTmp);
       }
     });
+  }
+
+  getNameSerieByPosition(elt: any): string{
+    if(elt.position == null || elt.position == undefined || elt.position === "" ){
+      return elt.sensorRef;
+    }
+    else{
+      let nameSerie = elt.position;
+      let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
+      if(this.translateService.currentLang == 'fr'){
+        return hivePos.translations.fr;
+      }
+      if(this.translateService.currentLang == 'en'){
+        return hivePos.translations.en;
+      }
+      if(this.translateService.currentLang == 'es'){
+        return hivePos.translations.es;
+      }
+      if(this.translateService.currentLang == 'nl'){
+        return hivePos.translations.nl;
+      }
+    }
   }
 
   removeHiveSerie(hive: RucheInterface): void {
@@ -321,7 +347,6 @@ export class VitalityComponent implements OnInit, OnDestroy {
     let new_series = [];
     this.inspService.getInspectionByHiveIdAndOpsDateBetween(obs[index].hive._id, this.melliDateService.getRangeForReqest()).subscribe(
       _hive_insp => {
-        console.log(_hive_insp);
         let item : InspHiveItem = {name: obs[index].hive.name, insp: [..._hive_insp]};
         this.inspHives.push(item);
         _hive_insp.forEach(insp => {
@@ -345,7 +370,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'inspection', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook_api.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'inspection', IMG_PATH + '4_tool_jhook_api.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -355,7 +380,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'event', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'event', IMG_PATH + '4_tool_jhook.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -404,7 +429,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'alert | ' + alert.icon, ALERT_IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'alert | ' + alert.icon, IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -515,7 +540,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serie, new_item, 'inspection', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook_api.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'inspection', IMG_PATH + '4_tool_jhook_api.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -525,7 +550,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serie, new_item, 'event', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'event', IMG_PATH + '4_tool_jhook.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -569,7 +594,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serie, new_item, 'alert | ' + alert.icon, ALERT_IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'alert | ' + alert.icon, IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -599,7 +624,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     let templateValue = '{*} {n}: <B>{v} {u}</B> {R}';
     let tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
-      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, Math.round(_serie.value).toString() ).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
     }).join('');
 
     return tooltipGlobal;
@@ -620,23 +645,23 @@ export class VitalityComponent implements OnInit, OnDestroy {
       res += `<div style="margin-right:10px;">`;
       insp.obs.forEach( o => {
         let name = this.translate.instant('MELLICHARTS.BROOD.TOOLTIP.'+ o.name.toUpperCase());
-        res += `<div style="display:flex; width:100%; justify-content:center; align-items:center; margin-left: 5px;">`;
-        res += `<div style="width:25px; height:25px; margin-top:-5px; background-image:url('${INSPECT_IMG_PATH + o.img}'); background-repeat:no-repeat; background-size:25px; background-position: center;"></div>`;
-        res += `<div style="height:32px; display:flex; margin-left:10px; margin-top:5px; align-items:center;">${name}</div>`
+        res += `<div style="display:flex; width:100%; font-size:13px; justify-content:center; align-items:center; margin-left: 5px;">`;
+        res += `<div style="width:25px; height:25px; font-size:13px; margin-top:-5px; background-image:url('${IMG_PATH + o.img}'); background-repeat:no-repeat; background-size:25px; background-position: center;"></div>`;
+        res += `<div style="height:32px; display:flex; margin-left:10px; margin-top:5px; align-items:center; font-size:13px;">${name}</div>`
         res += `</div>`;
       });
       res += `</div>`;
     }
 
-    res += `<div style="margin-top: 10px;">`;
+    res += `<div style="margin-top: 10px; margin: 2px 5px;">`;
     if(insp.description != null){
-      res += `<div style="margin-left: 5px; display:flex; width:100%; justify-content:center; align-items:center;">${insp.description}</div>`;
+      res += `<p style="text-align:center; width:auto; max-width:400px; white-space:normal; font-size:13px; font-family:'Poppins';">${insp.description}</p>`;
     }
     res += `</div>`;
 
-    res += `<div style="margin-top: 10px;">`;
+    res += `<div style="margin-top: 10px; margin: 2px 5px;">`;
     if(insp.todo != null){
-      res += `<div style="margin-left: 5px; display:flex; width:100%; justify-content:center; align-items:center;">${insp.todo}</div>`;
+      res += `<p style="text-align:center; width:auto; max-width: 400px; white-space: normal; font-size:13px; font-family:'Poppins';">${insp.todo}</p>`;
     }
     res += `</div>`;
 
@@ -655,7 +680,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     `<h5 style="text-align:center;">${hiveName}</h5>` +
     `<h5 style="text-align:center;">${this.unitService.getHourlyDate(date)}</h5>` +
     `<div style="display:flex; justify-content:center; align-items:center;">` + 
-    `<img width=30 height=30 src=${ALERT_IMG_PATH + alert.icon + '.png'}>` +
+    `<img width=30 height=30 src=${IMG_PATH + alert.icon + '.png'}>` +
     `<p>${name}</p>` +
     `</div>`;
     return res;
@@ -729,7 +754,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
          let data = [
            new_item
          ];
-         let newSerie = this.createNewCustomSerie(this.option.baseOption.series[seriesIndex], new_item, 'event', INSPECT_IMG_PATH + 'inspect_v3/4_tool_jhook.png', 30, -30/2, -40/2);
+         let newSerie = this.createNewCustomSerie(this.option.baseOption.series[seriesIndex], new_item, 'event', IMG_PATH + '4_tool_jhook.png', 30, -30/2, -40/2);
          this.option.baseOption.series.push(newSerie);
          this.stackService.getBroodChartInstance().setOption(this.option);
        }

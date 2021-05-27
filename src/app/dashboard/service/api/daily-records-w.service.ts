@@ -313,7 +313,7 @@ export class DailyRecordsWService {
    */
   getWeightMinByHive(hiveId: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightMin/' + hiveId, range).map(_elt => _elt.map(_value => {
-      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
+      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef, position: _value.position };
     }));;
   }
 
@@ -325,7 +325,7 @@ export class DailyRecordsWService {
    */
   getWeightIncomeGainByHive(hiveId: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightIncomeGain/' + hiveId, range).map(_elt => _elt.map(_value => {
-      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
+      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef, position: _value.position };
     }));;
 
   }

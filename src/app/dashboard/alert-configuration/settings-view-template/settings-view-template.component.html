@@ -33,8 +33,11 @@ limitations under the License. -->
         <ng-container *ngFor="let alert of alertTypes">
           <tr [class]="(isEnable(alert._id) ? 'enable' : 'disable') + ' tr-items'"
             *ngIf="!(alert.icon === 'StopWeather' && !userHaveWeatherStation())">
-            <td scope="row" class="text-left">
-              <img width="50px" [src]="'./assets/pictos_alerts/iconesPNG/' + alert.icon + '.png'">
+            <td *ngIf="router.url !== '/dashboard/alert-configuration/sensor-alert'" scope="row" class="text-left">
+              <img width="50px" [src]="'./assets/ms-pics/' + alert.icon.toLowerCase() + '_cb.png'">
+            </td>
+            <td *ngIf="router.url === '/dashboard/alert-configuration/sensor-alert'" scope="row" class="text-left">
+              <img width="50px" [src]="'./assets/ms-pics/' + alert.icon.toLowerCase() + '_b.png'">
             </td>
             <td class="text-left name_notif">
               {{ getNameByLang(alert._id) }}
