@@ -40,7 +40,7 @@ import { Inspection } from '../../../_model/inspection';
 import { HIVE_POS } from '../../../../constants/hivePositions';
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material';
 
-const IMG_PATH = '../../../../assets/pictos_alerts/charts/';
+const IMG_PATH = '../../../../assets/ms-pics/';
 
 class InspHiveItem{
     name: string;
@@ -370,7 +370,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'inspection', IMG_PATH + '4_tool_jhook_api.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'inspection', IMG_PATH + 'inspect-api_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -380,7 +380,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'event', IMG_PATH + '4_tool_jhook.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'event', IMG_PATH + 'inspect_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -429,7 +429,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'alert | ' + alert.icon, IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'alert | ' + alert.icon, IMG_PATH + alert.icon.toLowerCase() + '_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -540,7 +540,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serie, new_item, 'inspection', IMG_PATH + '4_tool_jhook_api.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'inspection', IMG_PATH + 'inspect-api_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -550,7 +550,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serie, new_item, 'event', IMG_PATH + '4_tool_jhook.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'event', IMG_PATH + 'inspect_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -594,7 +594,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serie, new_item, 'alert | ' + alert.icon, IMG_PATH + alert.icon + '.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'alert | ' + alert.icon, IMG_PATH + alert.icon.toLowerCase() + '_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -646,7 +646,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
       insp.obs.forEach( o => {
         let name = this.translate.instant('MELLICHARTS.BROOD.TOOLTIP.'+ o.name.toUpperCase());
         res += `<div style="display:flex; width:100%; font-size:13px; justify-content:center; align-items:center; margin-left: 5px;">`;
-        res += `<div style="width:25px; height:25px; font-size:13px; margin-top:-5px; background-image:url('${IMG_PATH + o.img}'); background-repeat:no-repeat; background-size:25px; background-position: center;"></div>`;
+        res += `<div style="width:35px; height:35px; font-size:13px; margin-top:-5px; background-image:url('${IMG_PATH + o.name.toLowerCase() + '_cw.png'}'); background-repeat:no-repeat; background-size:35px; background-position: center;"></div>`;
         res += `<div style="height:32px; display:flex; margin-left:10px; margin-top:5px; align-items:center; font-size:13px;">${name}</div>`
         res += `</div>`;
       });
@@ -680,7 +680,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     `<h5 style="text-align:center;">${hiveName}</h5>` +
     `<h5 style="text-align:center;">${this.unitService.getHourlyDate(date)}</h5>` +
     `<div style="display:flex; justify-content:center; align-items:center;">` + 
-    `<img width=30 height=30 src=${IMG_PATH + alert.icon + '.png'}>` +
+    `<img width=35 height=35 src=${IMG_PATH + alert.icon.toLowerCase() + '_cw.png'}>` +
     `<p>${name}</p>` +
     `</div>`;
     return res;
@@ -754,7 +754,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
          let data = [
            new_item
          ];
-         let newSerie = this.createNewCustomSerie(this.option.baseOption.series[seriesIndex], new_item, 'event', IMG_PATH + '4_tool_jhook.png', 30, -30/2, -40/2);
+         let newSerie = this.createNewCustomSerie(this.option.baseOption.series[seriesIndex], new_item, 'event', IMG_PATH + 'inspect_cb.png', 30, -30/2, -40/2);
          this.option.baseOption.series.push(newSerie);
          this.stackService.getBroodChartInstance().setOption(this.option);
        }

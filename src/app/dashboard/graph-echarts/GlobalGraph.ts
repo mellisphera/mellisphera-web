@@ -1006,9 +1006,9 @@ export class GraphGlobal {
               img = '<img style={S} src={I} />';
               img = img.replace(/{I}/g, './assets/ms-pics/alert-icon.png');
             } else {
-              img = '<img style={S} src=./assets/ms-pics/' + _singleData.icon.toLowerCase() + '_cb.png />';
+              img = '<img style={S} src=./assets/ms-pics/' + _singleData.icon.toLowerCase() + '_cw.png />';
             }
-            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
+            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:35px;height:35px; background-color:red;');
             return {
               name: img,
               value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertService.getMessageAlertByCode(_singleData),
@@ -1055,7 +1055,7 @@ export class GraphGlobal {
               img = '<img style={S} src={I} />';
               img = img.replace(/{I}/g, './assets/ms-pics/inspect_cw.png');
             }
-            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:30px;height:30px; background-color:red;');
+            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:35px;height:35px; background-color:red;');
             return {
               name: img,
               value: this.sliceTextToolip(_singleData.description),
@@ -1079,7 +1079,7 @@ export class GraphGlobal {
               img = '<img style={S} src={I} />';
               img = img.replace(/{I}/g, './assets/ms-pics/inspect_cw.png');
             }
-            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:30px;height:30px; background-color:red;');
+            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:35px;height:35px; background-color:red;');
             return {
               name: img,
               value: this.sliceTextToolip(_singleData.description),
