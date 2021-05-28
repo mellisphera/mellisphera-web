@@ -666,9 +666,9 @@ export class EventsComponent implements OnInit {
     if(_insp.obs != null){
       _insp.obs.forEach(_obs => {
         let div = document.createElement('div');
-        div.style.background = "url('../../../../assets/icons/inspect/"+ _obs.img +"') center no-repeat";
-        div.style.backgroundSize = "30px";
-        div.className = "event-obs-item " + _obs.name;
+        let name = _obs.name.split('');
+        name[0] = name[0].toUpperCase();
+        div.className = "event-obs-item " + name.join('');
         container.appendChild(div);
       });
       cell5.appendChild(container);
@@ -741,9 +741,7 @@ export class EventsComponent implements OnInit {
     let container = document.createElement('div');
     container.className = "alerts-container";
     let div = document.createElement('div');
-    //div.style.background = "url('../../../../assets/pictos_alerts/charts/"+ _alert.icon +".png') center no-repeat";
-    //div.style.backgroundSize = "30px";
-    div.className = "alert-item " + _alert.icon + '-active';
+    div.className = "alert-item " + _alert.icon;
     container.appendChild(div);
     cell5.appendChild(container);
 
@@ -757,7 +755,6 @@ export class EventsComponent implements OnInit {
     i7.className = "fa fa-pen edit-icon";
     i7.onclick = (evt: Event) => this.edit('alert', evt);
     cell7.appendChild(i7);
-
 
     // Supprimer
     let cell8 = document.createElement('td');
@@ -790,9 +787,9 @@ export class EventsComponent implements OnInit {
     if(insp.obs != null){
       insp.obs.forEach(_obs => {
         let div = document.createElement('div');
-        div.style.background = "url('../../../../assets/icons/inspect/"+ _obs.img +"') center no-repeat";
-        div.style.backgroundSize = "30px";
-        div.className = "event-obs-item " + _obs.name;
+        let name = _obs.name.split('');
+        name[0] = name[0].toUpperCase();
+        div.className = "event-obs-item " + name.join('');
         this.tbody.rows[rowIndex].cells[4].getElementsByClassName('event-obs-container')[0].appendChild(div);
       });
     }
@@ -820,8 +817,6 @@ export class EventsComponent implements OnInit {
 
     this.tbody.rows[rowIndex].cells[4].getElementsByClassName('alerts-container')[0].innerHTML = '';
     let div = document.createElement('div');
-    div.style.background = "url('../../../../assets/pictos_alerts/charts/"+ alert.icon +".png') center no-repeat";
-    div.style.backgroundSize = "30px";
     div.className = "alert-item " + alert.icon;
     this.tbody.rows[rowIndex].cells[4].getElementsByClassName('alerts-container')[0].appendChild(div);
 

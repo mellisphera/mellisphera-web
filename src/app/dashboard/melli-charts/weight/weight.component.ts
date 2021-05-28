@@ -678,7 +678,6 @@ export class WeightComponent implements OnInit, AfterViewInit {
   getSerieByData(data: Array<any>, nameSerie: string, next: Function): void {
     let sensorRef: Array<string> = [];
     data.forEach(_data => {
-      console.log(_data);
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, SERIES.line);
