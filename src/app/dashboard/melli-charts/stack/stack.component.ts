@@ -153,13 +153,11 @@ export class StackComponent implements OnInit {
     this.options.xAxis.push(xAxisHum);
 
     let serieMarkTemp = JSON.parse(JSON.stringify(SERIES.serieMarkTemp));
-    console.log(serieMarkTemp);
     serieMarkTemp.yAxisIndex = 1;
     serieMarkTemp.xAxisIndex = 1;
     serieMarkTemp.markArea.data[0][0].yAxis = this.userPrefService.getUserPref().unitSystem === 'METRIC' ? 32 : 90;
     serieMarkTemp.markArea.data[0][1].yAxis = this.userPrefService.getUserPref().unitSystem === 'METRIC' ? 37 : 99;
     serieMarkTemp.markArea.data[0][0].name = this.graphGlobal.getNameZoneByGraph('TEMP');
-    console.log(serieMarkTemp);
     this.options.series.push(serieMarkTemp);
 
 
@@ -182,7 +180,6 @@ export class StackComponent implements OnInit {
         ));
       }).join('');
     }
-    console.log(this.options);
     this.stackService.getEchartInstance().setOption(this.options);
   }
 

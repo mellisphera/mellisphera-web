@@ -21,10 +21,12 @@ import { MelliChartsHiveService } from './../service/melli-charts-hive.service';
 
 import { PICTOS_HIVES_OBS } from '../../../../constants/pictosHiveObs'
 
+import { INSPECT_API_TEST } from '../../../../constants/pictos';
+
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css'],
+  styleUrls: ['./events.component.css','../../../../pictos.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class EventsComponent implements OnInit {
@@ -189,6 +191,14 @@ export class EventsComponent implements OnInit {
     );
     this.alertService.getAlertsByFilters(hive.apiaryId, [hive._id], this.melliDate.getRangeForReqest(), this.melliFilters.getPictosArrayFilter(), locations).subscribe(
       _alerts => {
+        if(this.apiaryLoaded(hive.apiaryId) && this.melliFilters.getFilters().alert){
+          let alts = _alerts.filter( _alt => _alt.hiveId != null);
+          alts.forEach((_alt,i) => {
+            this.tbody.insertBefore(this.createRowAlert(_alt), this.tbody.firstElementChild);
+          })
+          this.alerts.push(...alts);
+          return;
+        }
         _alerts.forEach((_alt,i) => {
           this.tbody.insertBefore(this.createRowAlert(_alt), this.tbody.firstElementChild);
         })

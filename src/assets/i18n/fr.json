@@ -586,6 +586,43 @@
       "HISTORY":{},
       "PARAMS":{}
     },
+    "ALERTS_DESC":{
+        "HONEYDEW":"Miellée",
+        "HONEYDEW_DESC":"Déclenchée lorsque l'apport de poids dans la ruche dépasse le seuil choisi lors de la dernière semaine.",
+        "RAIN":"Possibles fortes précipitations",
+        "RAIN_DESC":"Déclenchée lorsque les précipitations pluvieuses dépassent le seuil choisi le prochain jour.",
+        "SWARM":"Essaimage",
+        "SWARM_DESC":"Déclenchée lorsque un potentiel essaimage est survenu (un Hub offre plus d'efficacité).",
+        "DCONNECT":"Déconnexion",
+        "DCONNECT_DESC":"Déclenchée lorsqu'un de vos capteurs ne transmet plus de données (ou ponctuellement) pendant chaque période choisie. Ne fonctionne qu'avec un Hub.",
+        "TMAX":"Forte temp. interne",
+        "TMAX_DESC":"Déclenchée lorsque la température interne dépasse le seuil choisi.",
+        "TMIN":"Faible temp. interne",
+        "TMIN_DESC":"Déclenchée lorsque la température interne est en dessous du seuil choisi.",
+        "LOWBROOD":"Faible niveau couvain",
+        "LOWBROOD_DESC":"Déclenchée quand le pourcentage de couvain est en dessous du seuil défini.",
+        "STOPWEATHER":"Station météo arrêtée",
+        "STOPWEATHER_DESC":"Déclenchée lorsque votre station météo s'arrête d'émettre des données. Nécessite sa propre station météo.",
+        "RSWARM":"Risque d'essaimage",
+        "RSWARM_DESC":"Déclenchée lorsque le risque d'essaimage est fort sur une de vos ruches le prochain jour.",
+        "WIPOS":"Gain poids élevé",
+        "WINEG":"Perte poids élevé",
+        "WLIM":"Seuil poids",
+        "SNOW":"",
+        "WIND":"",
+        "COLDDAY":
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+    },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icône",
         "VALUE": "Valeur",
