@@ -32,6 +32,7 @@ import { WeightComponent } from './weight/weight.component';
 import { DatePipe } from '@angular/common';
 import { MatFormFieldModule, MatChipsModule, MatLabel, MatIconModule, MatInputModule } from '@angular/material';
 import { EventsComponent } from './events/events.component';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { EventsComponent } from './events/events.component';
     GraphGlobal,
     HourlyManagerService,
     StackMelliChartsService,
-    DatePipe
+    DatePipe,
+    SafeHtmlPipe,
   ],
   declarations: [
     MelliChartsComponent,
@@ -52,6 +54,7 @@ import { EventsComponent } from './events/events.component';
     HourlyComponent,
     WeightComponent,
     EventsComponent,
+    SafeHtmlPipe,
    ],
   imports: [
     MelliChartsRouting,
@@ -63,7 +66,7 @@ import { EventsComponent } from './events/events.component';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatChipsModule, 
+    MatChipsModule,
     MatIconModule,
     MatInputModule
   ]

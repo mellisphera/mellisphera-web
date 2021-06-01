@@ -69,4 +69,41 @@ export const INSPECT_API_TEST = '<svg width="30" height="30" ' +
         'style="display:inline;fill:#000000;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" ' +
         'd="m 30.527598,36.323977 -2.833786,2.704977 -4.12187,3.477828 -4.637103,4.250677 -7.986123,6.440422 -4.2506777,4.12187 -1.803318,2.189743 13.7825017,4.250678 3.993061,-5.538762 4.250679,-7.470889 7.084463,-10.948716 1.416893,-2.189743 z" ' +
         'id="path867" ' +
-        'class="st3" /></g></svg>';    
+        'class="st3" /></g></svg>';
+
+
+export const MORE_ICON =
+'<svg ' +
+'xmlns:svg="http://www.w3.org/2000/svg" ' +
+'xmlns="http://www.w3.org/2000/svg" ' +
+'id="more-icon" ' +
+'version="1.1" ' +
+'viewBox="0 0 210 297" ' +
+'height="30px" ' +
+'width="30px"> ' +
+'<g ' +
+  'id="layer1"> ' +
+ '<ellipse ' +
+    'ry="23.365862" ' +
+    'rx="23.36586" ' +
+    'cy="152.67992" ' +
+    'cx="31.909969" ' +
+    'class="circle1" ' +
+    'style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /> ' +
+ '<ellipse ' +
+    'style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" ' +
+    'class="circle2" ' +
+    'cx="105.19924" ' +
+    'cy="152.67992" ' +
+    'rx="23.36586" ' +
+    'ry="23.365862" /> ' +
+ '<ellipse ' +
+    'ry="23.365862" ' +
+    'rx="23.36586" ' +
+    'cy="152.67992" ' +
+    'cx="178.48851" ' +
+    'class="circle3" ' +
+    'style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /> ' +
+'</g> ' +
+'</svg>';
+

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, ObservableLike } from 'rxjs';
+import { BehaviorSubject, Observable} from 'rxjs';
 import { CONFIG } from '../../../../constants/config';
 
 import { Inspection } from '../../../_model/inspection';

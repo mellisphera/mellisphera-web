@@ -45,7 +45,7 @@ limitations under the License. -->
             <td class="text-left">
               <popover-content #myPopover title="{{ getNameByLang(alert._id) }}" placement="right" [animation]="true"
                 [closeOnClickOutside]="false">
-                <span class="helpTooltip">{{ getNotifDescriptionFromLangage(alert.icon) }}</span>
+                <span class="helpTooltip">{{ 'ALERTS_DESC.'+alert.icon.toUpperCase()+'_DESC' | translate }}</span>
               </popover-content>
               <a [popover]="myPopover" style="font-size: 20px !important;" class="info-link"><i
                   class="fa fa-info-circle" aria-hidden="true"></i></a>

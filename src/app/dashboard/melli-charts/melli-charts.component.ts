@@ -49,6 +49,10 @@ import { NotifierService } from 'angular-notifier';
 import { EventsComponent } from './events/events.component';
 
 import { PICTOS_HIVES_OBS } from '../../../constants/pictosHiveObs'
+import { MORE_ICON } from './../../../constants/pictos';
+
+import { DomSanitizer} from '@angular/platform-browser';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 const PREFIX_PATH = '/dashboard/explore/';
 
@@ -57,7 +61,8 @@ const PREFIX_PATH = '/dashboard/explore/';
   templateUrl: './melli-charts.component.html',
   styleUrls: ['./melli-charts.component.css',
               '../shared/navbar/navbar.component.scss',
-              '../dashboard.component.css'
+              '../dashboard.component.css',
+              '../../../pictos.scss'
               ],
   encapsulation: ViewEncapsulation.None,
 })
@@ -65,6 +70,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   public xPosContextMenu = 0;
   public yPosContextMenu = 0;
+
+  public more_icon: string = MORE_ICON;
 
   public newEventDate: Date;
   public hiveEvent: RucheInterface;
@@ -107,6 +114,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   private weightComponent: WeightComponent;
   private eventsComponent: EventsComponent;
   private eltOnClick: EventTarget;
+
+
   constructor(public rucheService: RucheService,
     public rucherService: RucherService,
     private userService: UserloggedService,
@@ -132,6 +141,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     public melliFilters: MelliChartsFilterService,
     private inspService: InspectionService,
     private notify: NotifierService,
+    public sanitizer: DomSanitizer,
+    public safeHtml: SafeHtmlPipe
     ) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [

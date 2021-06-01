@@ -606,22 +606,47 @@
         "RSWARM":"Risque d'essaimage",
         "RSWARM_DESC":"Déclenchée lorsque le risque d'essaimage est fort sur une de vos ruches le prochain jour.",
         "WIPOS":"Gain poids élevé",
+        "WIPOS_DESC":"Déclenchée lorsque le poids entrants de la journée dans la ruche dépasse le seuil choisi.",
         "WINEG":"Perte poids élevé",
+        "WINEG_DESC":"Déclenchée lorsque les abeilles consomment beaucoup plus de ressources qu'elles n'en ramènent dans la ruche. Le seuil de perte est réglable.",
         "WLIM":"Seuil poids",
-        "SNOW":"",
-        "WIND":"",
-        "COLDDAY":
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
+        "WLIM_DESC":"Déclenchée lorsque le seuil de poids indiqué est dépassé.",
+        "SNOW":"Possible neige abdondante",
+        "SNOW_DESC":"Déclenchée lorsque les précipitations neigeuses dépassent le seuil choisi le prochain jour.",
+        "WIND":"Possible fort vent",
+        "WIND_DESC":"Déclenchée lorsque le vent dépassent le seuil choisi le prochain jour.",
+        "COLDDAY":"Possible journée froide à venir",
+        "COLDDAY_DESC":"Déclenchée lorsqu'une journée froide à venir est détectée, c’est-à-dire en dessous du seuil de température indiqué.",
+        "HOTDAY":"Possible journée chaude à venir",
+        "HOTDAY_DESC":"Déclenchée lorsqu'une journée chaude à venir est détectée, c’est-à-dire au dessus du seuil de température indiqué.",
+        "HMIN":"Faible humidité interne",
+        "HMIN_DESC":"Déclenchée lorsque l'humidité interne est en dessous du seuil choisi.",
+        "HMAX":"Forte humidité interne",
+        "HMAX_DESC":"Déclenchée lorsque l'humidité interne dépasse le seuil choisi.",
+        "STOLEN":"Ruche volée",
+        "STOLEN_DESC":"Déclenchée lorsque le poids de votre ruche devient anormalement faible.",
+        "DCONNECTT":"Déconnexion",
+        "DCONNECTT_DESC":"Déclenchée lorsque votre capteur de température ne transmets plus de données durant le dernier jour.",
+        "DCONNECTW":"Déconnexion",
+        "DCONNECTW_DESC":"Déclenchée lorsque votre capteur de poids ne transmets plus de données durant le dernier jour.",
+        "DCONNECTH":"Déconnexion",
+        "DCONNECTH_DESC":"Déclenchée lorsque votre Hub ne transmets plus de données durant le dernier jour.",
+        "POORSIGNALW":"Mauvais signal",
+        "POORSIGNALW_DESC":"Déclenchée lorsque votre capteur de poids transmets peu de données durant le dernier jour.",
+        "POORSIGNALT":"Mauvais signal",
+        "POORSIGNALT_DESC":"Déclenchée lorsque votre capteur de température transmets peu de données durant le dernier jour.",
+        "LOWBATTERYW":"Batterie faible",
+        "LOWBATTERYW_DESC":"Déclenchée lorsque le niveau de batterie de votre capteur de poids est en dessous du seuil choisi.",
+        "LOWBATTERYT":"Batterie faible",
+        "LOWBATTERYT_DESC":"Déclenchée lorsque le niveau de batterie de votre capteur de température est en dessous du seuil choisi.",
+        "SUPER+":"Ajout d'une hausse",
+        "SUPER+_DESC":"Indiquer le poids minimal d'une hausse vide.",
+        "SUPER-":"Retrait d'une hausse",
+        "SUPER-_DESC":"Indiquer le poids maximal d'une hausse pleine.",
+        "OXALIC":"Traitement à l'acide oxalique",
+        "OXALIC_DESC":"Déclenchée lorsque le couvain moyen de vos ruches est en dessous du seuil fixé. C’est une indication vous permettant de traiter vos ruches à l’acide oxalique au bon moment.",
+        "DEAD":"Ruche morte",
+        "DEAD_DESC":"Notre algorithme détecte chaque jour si votre ruche est morte en fonction de différents paramètres que nous avons fixés."
     },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icône",

@@ -129,20 +129,19 @@ limitations under the License. -->
               <!--<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span>-->
             </a>
             <span class="apiary-group-title" [id]="rucher._id + '_span'" (click)="apiaryClick(rucher, rucher._id + '_span')">{{ rucher.name }}</span>
-            <button style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)"><i class="fa fa-ellipsis-h fa-1.5x" style="margin-right: 0;font-size: 20px;"></i></button>
+            <button style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)" [innerHTML]="more_icon | safeHtml"></button>
           </div>
 
           <div
             [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
             <div [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
             *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index"
-            (contextmenu)="showContextMenu(ruche, $event)"
             style="display:flex; align-items:center;padding-right: 4px;">
               <a class="list-group-hive-item" (click)="selectHive(ruche, $event)"  data-parent="#sub-menu">
                 <i class="circle" [style.background-color]="getColor(ruche)"></i>
                 <span class="puce-hive"></span>{{ ruche.name }}
               </a>
-              <button class="hive-more-button" (click)="showContextMenu(null, ruche, $event)"><i class="fa fa-ellipsis-h fa-2x" style="margin-right: 0;font-size: 20px;"></i></button>
+              <button class="hive-more-button" (click)="showContextMenu(null, ruche, $event)" [innerHTML]="more_icon | safeHtml"></button>
             </div>
 
           </div>
