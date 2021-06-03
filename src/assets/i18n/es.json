@@ -691,6 +691,10 @@
         }
     },
     "INSP_CONF":{
+        "APPLIES":{
+            "HIVE":"Colmena",
+            "APIARY":"Colmenar"
+        },
         "SUPER+":"Añadiendo alza",
         "SUPER-":"Supresión alza",
         "QUEENINSERT":"Queen inserted",

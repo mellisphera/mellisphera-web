@@ -11,40 +11,44 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let insp of inspCat">
-        <tr>
+      <ng-container *ngFor="let conf of inspConf; let i = index">
+        <tr [class]="(isEnable(i)? '' : 'disable')">
           <td>
-            <img width="50px" height="50px" [src]="'./assets/ms-pics/' + insp.img.toLowerCase() + '_b.svg'">
+            <img width="50px" height="50px" [src]="'./assets/ms-pics/' + conf.inspCat.img.toLowerCase() + '_b.svg'">
           </td>
-          <td style='vertical-align: middle;'>{{'INSP_CONF.' + insp.name.toUpperCase() | translate}}</td>
+          <td style='vertical-align: middle;'>{{'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate}}</td>
           <td style='vertical-align: middle;'>
-            <ng-container *ngIf="insp.type === 'act'">
+            <ng-container *ngIf="isEnable(i) && conf.inspCat.type === 'act'">
                 <div [class]="'div-act'"></div>
             </ng-container>
-            <ng-container *ngIf="insp.type === 'obs'">
+            <ng-container *ngIf="isEnable(i) && conf.inspCat.type === 'obs'">
               <div [class]="'div-obs'"></div>
             </ng-container>
           </td>
           <td style='vertical-align: middle;'>
-            <ng-container *ngFor="let apply of insp.applies">
-              <img width="40" height="40" [src]="'./assets/ms-pics/' + apply + '_b.svg'">
+            <ng-container *ngIf="isEnable(i)">
+              <ng-container *ngFor="let apply of conf.inspCat.applies">
+                <div>{{'INSP_CONF.APPLIES.'+ apply.toUpperCase() | translate}}</div>
+              </ng-container>
             </ng-container>
           </td>
           <td style='vertical-align: middle;'>
-            <ng-container>
-              <button [class]="'btn btn-default btn-spring ' + (isSeasonActive(insp, 'spring') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
-              <button [class]="'btn btn-default btn-summer ' + (isSeasonActive(insp, 'summer') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
-              <button [class]="'btn btn-default btn-autumn ' + (isSeasonActive(insp, 'autumn') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
-              <button [class]="'btn btn-default btn-winter ' + (isSeasonActive(insp, 'winter') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
+            <ng-container *ngIf="isEnable(i)">
+              <button [class]="'btn btn-default btn-spring ' + (isSeasonActive(conf.inspCat, 'spring') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
+              <button [class]="'btn btn-default btn-summer ' + (isSeasonActive(conf.inspCat, 'summer') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
+              <button [class]="'btn btn-default btn-autumn ' + (isSeasonActive(conf.inspCat, 'autumn') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
+              <button [class]="'btn btn-default btn-winter ' + (isSeasonActive(conf.inspCat, 'winter') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
             </ng-container> 
           </td>
           <td style='vertical-align: middle;'>
             <div class="btn-group" id="status" data-toggle="buttons">
-              <label [class]="'btn btn-default btn-on active'">
+              <label [class]="'btn btn-default btn-on ' + (isEnable(i) ? 'active' : '')"
+              (click)="onEnable(i)">
                 <input type="radio" value="1"
                   name="multifeatured_module[module_id][status]">ON
               </label>
-              <label [class]="'btn btn-default btn-off'">
+              <label [class]="'btn btn-default btn-off '  + (isEnable(i) ? '' : 'active')"
+              (click)="onDisable(i)">
                 <input type="radio" value="0"
                   name="multifeatured_module[module_id][status]">OFF
               </label>

@@ -678,6 +678,10 @@
         }
     },
     "INSP_CONF":{
+        "APPLIES":{
+            "HIVE":"Ruche",
+            "APIARY":"Rucher"
+        },
         "SUPER+":"Ajout d'une hausse",
         "SUPER-":"Retrait d'une hausse",
         "QUEENINSERT":"Insertion reine",

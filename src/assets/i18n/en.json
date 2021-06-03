@@ -676,6 +676,10 @@
         }
     },
     "INSP_CONF":{
+        "APPLIES":{
+            "HIVE":"Hive",
+            "APIARY":"Apiary"
+        },
         "SUPER+":"Added super",
         "SUPER-":"Removed super",
         "QUEENINSERT":"Queen inserted",
