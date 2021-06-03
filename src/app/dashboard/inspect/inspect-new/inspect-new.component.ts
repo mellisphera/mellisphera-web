@@ -175,6 +175,10 @@ export class InspectNewComponent implements OnInit {
   }
 
   onSelectChange(){
+
+  }
+
+  saveInspection(){
     
   }
 
