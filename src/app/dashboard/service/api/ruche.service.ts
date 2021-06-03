@@ -279,11 +279,11 @@ export class RucheService {
   }
 
   getHiveById(hiveId: string): RucheInterface{
-    return this.ruches.filter(hive => hive._id === hiveId)[0];
+    return this.ruchesAllApiary.filter(hive => hive._id === hiveId)[0];
   }
 
   getRucheNameById(hiveId: string): RucheInterface{
-    return this.ruches.filter(hive => hive._id === hiveId)[0];
+    return this.ruchesAllApiary.filter(hive => hive._id === hiveId)[0];
   }
 
 }

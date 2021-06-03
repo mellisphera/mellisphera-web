@@ -296,7 +296,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     this.setDateFromInput();
   }
 
-
   /**
    *
    *
@@ -535,8 +534,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-  apiaryClick(rucher: RucherModel, spanId: string): void {
-    let span = (<HTMLSpanElement>document.getElementById(spanId));
+  apiaryClick(rucher: RucherModel): void {
+    let span = (<HTMLSpanElement>document.getElementById(rucher._id + '_span'));
     let active = this.checkAllHivesSelected(rucher);
     if(!active){
       span.style.fontWeight = 'bold';
@@ -635,6 +634,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       case PREFIX_PATH + 'weight':
       case PREFIX_PATH + 'events' :
       case PREFIX_PATH + 'stack':
+        //console.log(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id));
         return this.stackService.getColorByIndex(this.rucherService.rucheService.ruchesAllApiary.map(elt => elt._id).indexOf(hive._id), hive);
         break;
     }
@@ -688,6 +688,18 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         //return this.stackService.
         break;
     }
+  }
+
+  mouseEnter(id: string){
+    let div = <HTMLDivElement>document.getElementById(id);
+    let more_btn = <HTMLButtonElement>div.getElementsByClassName("hive-more-button")[0];
+    more_btn.style.visibility = 'visible';
+  }
+
+  mouseLeave(id: string){
+    let div = <HTMLDivElement>document.getElementById(id);
+    let more_btn = <HTMLButtonElement>div.getElementsByClassName("hive-more-button")[0];
+    more_btn.style.visibility = 'hidden';
   }
 
   showContextMenu(rucher: RucherModel, ruche: RucheInterface, evt: MouseEvent): void {

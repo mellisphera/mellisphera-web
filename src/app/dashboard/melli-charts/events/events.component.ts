@@ -22,6 +22,7 @@ import { MelliChartsHiveService } from './../service/melli-charts-hive.service';
 import { PICTOS_HIVES_OBS } from '../../../../constants/pictosHiveObs'
 
 import { INSPECT_API_TEST } from '../../../../constants/pictos';
+import { DailyManagerService } from '../hive/service/daily-manager.service';
 
 @Component({
   selector: 'app-events',
@@ -58,7 +59,8 @@ export class EventsComponent implements OnInit {
     private unitService: UnitService,
     private translate: TranslateService,
     private notifyService: NotifierService,
-    private melliChartsHiveService: MelliChartsHiveService
+    private melliChartsHiveService: MelliChartsHiveService,
+    private dailyManager: DailyManagerService,
   )
   { }
 

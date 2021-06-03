@@ -24,6 +24,8 @@ import { RucheService } from '../../service/api/ruche.service';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { AdminService } from '../../admin/service/admin.service';
+import { DailyManagerService } from '../hive/service/daily-manager.service';
+import { MelliChartsHiveService } from '../service/melli-charts-hive.service';
 
 @Component({
   selector: 'app-stack',
@@ -43,7 +45,9 @@ export class StackComponent implements OnInit {
     private recordService: RecordService,
     private adminService: AdminService,
     private rucheService: RucheService,
-    private melliDate: MelliChartsDateService) { }
+    private melliDate: MelliChartsDateService,
+    private dailyManager: DailyManagerService,
+    private melliHive: MelliChartsHiveService) { }
 
   ngOnInit() {
 

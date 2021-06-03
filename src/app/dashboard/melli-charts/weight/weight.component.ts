@@ -18,6 +18,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { trackByHourSegment } from 'angular-calendar/modules/common/util';
 import * as moment from 'moment';
 import { HIVE_POS } from '../../../../constants/hivePositions';
+import { DailyManagerService } from '../hive/service/daily-manager.service';
+import { MelliChartsHiveService } from '../service/melli-charts-hive.service';
 
 
 @Component({
@@ -53,7 +55,9 @@ export class WeightComponent implements OnInit, AfterViewInit {
     private unitService: UnitService,
     private userPrefsService: UserParamsService,
     public datepipe: DatePipe,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private dailyManager: DailyManagerService,
+    private melliHive: MelliChartsHiveService
   ) {
     this.option = {
       // Base Option for ECharts

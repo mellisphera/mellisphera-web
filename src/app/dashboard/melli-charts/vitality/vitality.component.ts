@@ -10,7 +10,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import * as echarts from 'echarts';
 import { BASE_OPTIONS } from '../charts/BASE_OPTIONS';
 import { StackMelliChartsService } from '../stack/service/stack-melli-charts.service';
@@ -39,6 +39,9 @@ import { Inspection } from '../../../_model/inspection';
 
 import { HIVE_POS } from '../../../../constants/hivePositions';
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material';
+import { DailyManagerService } from '../hive/service/daily-manager.service';
+import { MelliChartsHiveService } from '../service/melli-charts-hive.service';
+import { RucherService } from '../../service/api/rucher.service';
 
 const IMG_PATH = '../../../../assets/ms-pics/';
 
@@ -57,7 +60,7 @@ class AlertHiveItem{
   templateUrl: './vitality.component.html',
   styleUrls: ['./vitality.component.css']
 })
-export class VitalityComponent implements OnInit, OnDestroy {
+export class VitalityComponent implements OnInit, OnDestroy{
 
   private inspHives: InspHiveItem[];
   private alertHives: AlertHiveItem[];
@@ -76,6 +79,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
     private adminService: AdminService,
     private melliDateService: MelliChartsDateService,
     private rucheService: RucheService,
+    private rucherService: RucherService,
     private unitService: UnitService,
     private inspApiaryService: InspApiaryService,
     private inspHiveService: InspHiveService,
@@ -85,6 +89,8 @@ export class VitalityComponent implements OnInit, OnDestroy {
     private melliFilters: MelliChartsFilterService,
     private inspService: InspectionService,
     private translateService: TranslateService,
+    private dailyManager: DailyManagerService,
+    private melliHive: MelliChartsHiveService
     ){
     this.option = {
       baseOption : JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionHourly)),
@@ -129,13 +135,14 @@ export class VitalityComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.userPrefsService.getUserPrefs().subscribe(
       _userPrefs => {
         this.user_pref = _userPrefs;
       },
       () => {},
-      () => {}
+      () => {
+        this.initGraph();
+      }
     );
     const elt = document.getElementsByClassName('apiaryGroup')[0];
     if (elt.classList.contains('apiary-group-hive')) {
@@ -148,6 +155,9 @@ export class VitalityComponent implements OnInit, OnDestroy {
       elt.classList.remove('apiary-group-events');
     }
     elt.classList.add('apiary-group-brood');
+  }
+
+  initGraph(): void{
     this.stackService.setBroodChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-brood')));
     this.option.baseOption.series = [];
     this.setOptionForStackChart();
@@ -158,6 +168,7 @@ export class VitalityComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   setOptionForStackChart(): void {
     if (this.option.baseOption.yAxis.length > 0) {
       this.option.baseOption.yAxis = [];
