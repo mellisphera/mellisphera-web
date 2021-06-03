@@ -170,4 +170,12 @@ export class InspectNewComponent implements OnInit {
     this.inspConf[i].enable = !this.inspConf[i].enable;
   }
 
+  inspectDate(){
+
+  }
+
+  onSelectChange(){
+    
+  }
+
 }
