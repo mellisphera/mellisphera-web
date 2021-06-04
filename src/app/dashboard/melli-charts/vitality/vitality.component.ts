@@ -690,7 +690,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
     `<div>` +
     `<h5 style="text-align:center;">${hiveName}</h5>` +
     `<h5 style="text-align:center;">${this.unitService.getHourlyDate(date)}</h5>` +
-    `<div style="display:flex; justify-content:center; align-items:center;">` + 
+    `<div style="display:flex; justify-content:center; align-items:center;">` +
     `<img width=35 height=35 src=${IMG_PATH + alert.icon.toLowerCase() + '_cw.png'}>` +
     `<p>${name}</p>` +
     `</div>`;

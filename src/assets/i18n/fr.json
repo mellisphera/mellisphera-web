@@ -526,6 +526,9 @@
             "ALERT_ERROR":"Veuillez choisir une alerte"
         },
         "FILTERS":{
+          "APIARY":{
+            "ALL": "Evenements Rucher"
+          },
           "INSPECTION":{
             "ALL": "Inspections"
           },
@@ -534,7 +537,7 @@
             "SWARM": "Essaimage"
           },
           "EVENT":{
-            "ALL": "Evenements"
+            "ALL": "Evenements Ruche"
           },
           "DISPLAY":{
             "HONEYDEW":"Miellée",

@@ -1123,6 +1123,12 @@ nav[role=admin-navigation] {
       color: darkred;
       margin-left: 15px;
     }
+
+    #filtersMenu{
+      background-color: white !important;
+      width: 200px !important;
+      border: 1px solid #ddd;
+    }
 }
 @media screen and (max-width:800px) {
 
@@ -1137,6 +1143,13 @@ nav[role=admin-navigation] {
   }
 
 }
+
+@media screen and (max-width: 767px){
+  #filtersMenu{
+    left: -110px;
+  }
+}
+
 @media screen and (max-width:500px){
     /*#dt-scale ul:first-child{
         /*padding-left: 6px;

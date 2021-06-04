@@ -541,6 +541,9 @@
             "ALERT_ERROR": "Por favor elige una alerta"
         },
         "FILTERS":{
+          "APIARY":{
+            "ALL": "Eventos Colmenar"
+          },
           "INSPECTION":{
             "ALL": "Inspecciones"
           },
@@ -549,7 +552,7 @@
             "SWARM": "Enjambrazón"
           },
           "EVENT":{
-            "ALL": "Eventos"
+            "ALL": "Eventos Colmena"
           },
           "DISPLAY":{
             "HONEYDEW":"Rocío de miel",

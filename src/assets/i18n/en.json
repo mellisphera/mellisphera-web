@@ -526,6 +526,9 @@
             "ALERT_ERROR":"Please choose an alert"
         },
         "FILTERS":{
+          "APIARY":{
+            "ALL": "Apiary Events"
+          },
           "INSPECTION":{
             "ALL": "Inspections"
           },
@@ -534,7 +537,7 @@
             "SWARM": "Swarming"
           },
           "EVENT":{
-            "ALL": "Events"
+            "ALL": "Hive Events"
           },
           "DISPLAY":{
             "HONEYDEW":"Nectar Flow",
