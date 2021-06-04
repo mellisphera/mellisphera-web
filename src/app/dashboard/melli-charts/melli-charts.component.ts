@@ -180,7 +180,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     console.log(this.deviceService.getDeviceInfo());
-    console.log(this.deviceService.isDesktop());
     this.userPrefsService.getUserPrefs().subscribe(
       _userPrefs => {
         this.user_pref = _userPrefs;
