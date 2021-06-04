@@ -179,7 +179,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log(navigator.userAgent);
+    console.log(this.deviceService.isDesktop());
     this.userPrefsService.getUserPrefs().subscribe(
       _userPrefs => {
         this.user_pref = _userPrefs;
@@ -713,6 +713,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     menu.style.top = (evt.clientY + 5) + 'px';
     menu.style.left = (evt.clientX - 180) + 'px';
     menu.style.visibility = 'visible';
+
+    const btn = <HTMLButtonElement>evt.target;
+    btn.classList.add('active');
 
     const list = (<HTMLElement>menu.getElementsByClassName('context-menu-group')[0]);
     const name = (<HTMLElement>menu.getElementsByClassName('hive-name')[0]);
