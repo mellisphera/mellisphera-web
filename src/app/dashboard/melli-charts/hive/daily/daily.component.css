@@ -70,6 +70,8 @@ limitations under the License. */
 #daily-int, #daily-other, #daily-env {
     width: calc(100% / 3);
     position: relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 @media screen and (max-width:1640px){
@@ -84,7 +86,7 @@ limitations under the License. */
         height: 35px;
         width: 35px;
     }
-} 
+}
 @media screen and (max-width:1300px) {
     #sidebar-tools-daily-device, #sidebar-tools-daily-other {
         position: relative;

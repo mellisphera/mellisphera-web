@@ -123,7 +123,7 @@ limitations under the License. -->
     <div class="apiaryGroup">
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
-          <div [id]="rucher._id" style="display: flex; align-items: center;padding-right: 4px;" data-parent="#main-menu" 
+          <div [id]="rucher._id" style="display: flex; align-items: center;padding-right: 4px;" data-parent="#main-menu"
             [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)"
             (mouseenter)="mouseEnter(rucher._id)" (mouseleave)="mouseLeave(rucher._id)">
             <a  [id]="rucher._id + '_link'"[href]="'#' + i" data-toggle="collapse" (click)="ifActiveApiary(rucher._id + '_link',rucher._id)">
@@ -131,7 +131,8 @@ limitations under the License. -->
               <!--<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span>-->
             </a>
             <span class="apiary-group-title" [id]="rucher._id + '_span'" (click)="apiaryClick(rucher)">{{ rucher.name }}</span>
-            <button style="margin-right: 0; margin-left: auto; visibility: hidden;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)" [innerHTML]="more_icon | safeHtml"></button>
+            <button *ngIf="deviceService.isMobile() || deviceService.isTablet()" style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)" [innerHTML]="more_icon | safeHtml"></button>
+            <button *ngIf="deviceService.isDesktop()" style="margin-right: 0; margin-left: auto; visibility: hidden;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)" [innerHTML]="more_icon | safeHtml"></button>
           </div>
 
           <div
@@ -144,7 +145,8 @@ limitations under the License. -->
                 <i class="circle" [style.background-color]="getColor(ruche)"></i>
                 <span class="puce-hive"></span>{{ ruche.name }}
               </a>
-              <button style="visibility: hidden;" class="hive-more-button" (click)="showContextMenu(null, ruche, $event)" [innerHTML]="more_icon | safeHtml"></button>
+              <button *ngIf="deviceService.isMobile() || deviceService.isTablet()" class="hive-more-button" (click)="showContextMenu(null, ruche, $event)" [innerHTML]="more_icon | safeHtml"></button>
+              <button *ngIf="deviceService.isDesktop()" style="visibility: hidden;" class="hive-more-button" (click)="showContextMenu(null, ruche, $event)" [innerHTML]="more_icon | safeHtml"></button>
             </div>
 
           </div>

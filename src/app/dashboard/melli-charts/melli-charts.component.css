@@ -1146,6 +1146,11 @@ nav[role=admin-navigation] {
     }
     .navbar-nav{
        width: 100%;
+
+    }
+
+    .navbar-nav button{
+      font-size: 10px;
     }
 /*     #dt-scale ul {
         padding: 0px;

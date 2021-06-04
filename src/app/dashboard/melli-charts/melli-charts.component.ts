@@ -54,6 +54,8 @@ import { MORE_ICON } from './../../../constants/pictos';
 import { DomSanitizer} from '@angular/platform-browser';
 import { SafeHtmlPipe } from './safe-html.pipe';
 
+import { DeviceDetectorService } from 'ngx-device-detector';
+
 const PREFIX_PATH = '/dashboard/explore/';
 
 @Component({
@@ -142,7 +144,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private inspService: InspectionService,
     private notify: NotifierService,
     public sanitizer: DomSanitizer,
-    public safeHtml: SafeHtmlPipe
+    public safeHtml: SafeHtmlPipe,
+    public deviceService: DeviceDetectorService
     ) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
@@ -176,6 +179,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    console.log(navigator.userAgent);
     this.userPrefsService.getUserPrefs().subscribe(
       _userPrefs => {
         this.user_pref = _userPrefs;
