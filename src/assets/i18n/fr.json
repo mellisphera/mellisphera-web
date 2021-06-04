@@ -439,7 +439,10 @@
         "BROOD": {
             "TITLE": "Evolution journalière du couvain",
             "TOOLTIP":{
-              "SWARM":"Essaimage"
+              "SWARM":"Essaimage",
+              "DEFAULT":"Default",
+              "SUPER+":"Ajout hausse",
+              "SUPER-":"Retrait hausse"
             }
         },
         "WEIGHT": {

@@ -439,7 +439,10 @@
         "BROOD": {
             "TITLE": "Daily brood progression",
             "TOOLTIP":{
-              "SWARM":"Swarming"
+              "SWARM":"Swarming",
+              "DEFAULT":"Default",
+              "SUPER+":"Added super",
+              "SUPER-":"Removed super"
             }
         },
         "WEIGHT": {

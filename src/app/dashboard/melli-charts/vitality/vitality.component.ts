@@ -198,13 +198,8 @@ export class VitalityComponent implements OnInit, OnDestroy{
 
     this.option.baseOption.tooltip.formatter = (params) => {
       let words = params.seriesName.split(' | ');
+      this.option.baseOption.tooltip.backgroundColor = 'rgba(50,50,50,0.7)';
       if(words.includes('inspection') || words.includes('event')){
-        if(words.includes('inspection')){
-          this.option.baseOption.tooltip.backgroundColor = 'rgba(30, 0, 0, 0.7)';
-        }
-        if(words.includes('event')){
-          this.option.baseOption.tooltip.backgroundColor = 'rgba(30, 30, 0, 0.7)';
-        }
         this.stackService.getBroodChartInstance().setOption(this.option);
         let indexSerie = this.option.baseOption.series.findIndex(_s => _s.name === params.seriesName);
         let indexHiveInspItem = this.inspHives.findIndex(_insp => _insp.name === words[0]);
@@ -212,7 +207,6 @@ export class VitalityComponent implements OnInit, OnDestroy{
         return this.getInspTooltipFormatter(words[0], indexSerie, indexHiveInspItem, indexHiveInsp);
       }
       else if(words.includes('alert')){
-        this.option.baseOption.tooltip.backgroundColor = 'rgba(0, 0, 30, 0.7)';
         this.stackService.getBroodChartInstance().setOption(this.option);
         let indexSerie = this.option.baseOption.series.findIndex(_s => _s.name === params.seriesName);
         let indexHiveAlertItem = this.alertHives.findIndex(_alert => _alert.name === words[0]);
@@ -220,7 +214,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
         return this.getAlertTooltipFormatter(words[0], indexSerie, indexHiveAlertItem, indexHiveAlert);
       }
       else{
-        this.option.baseOption.tooltip.backgroundColor = 'rgba(50,50,50,0.7)';
+
         this.stackService.getBroodChartInstance().setOption(this.option);
         return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data.name), new Array(
           {
@@ -649,30 +643,32 @@ export class VitalityComponent implements OnInit, OnDestroy{
       date.setHours(date.getHours() + (test / 60));
     }
     let res =
-    `<div>` +
-    `<h5 style="text-align:center;">${hiveName}</h5>` +
-    `<h5 style="text-align:center;">${this.unitService.getHourlyDate(date)} </h5>`;
+    `<div style="width:180px;">` +
+    `<div style="height:30px;">` +
+    `<h5 style="float:left"><b>${hiveName}</b></h5>` +
+    `<h5 style="float:right"><b>${this.unitService.getHourlyDate(date)}</b></h5>` +
+    `</div>`;
     if(insp.obs != null){
-      res += `<div style="margin-right:10px;">`;
+      res += `<div>`;
       insp.obs.forEach( o => {
         let name = this.translate.instant('MELLICHARTS.BROOD.TOOLTIP.'+ o.name.toUpperCase());
-        res += `<div style="display:flex; width:100%; font-size:13px; justify-content:center; align-items:center; margin-left: 5px;">`;
-        res += `<div style="width:35px; height:35px; font-size:13px; margin-top:-5px; background-image:url('${IMG_PATH + o.name.toLowerCase() + '_cw.png'}'); background-repeat:no-repeat; background-size:35px; background-position: center;"></div>`;
-        res += `<div style="height:32px; display:flex; margin-left:10px; margin-top:5px; align-items:center; font-size:13px;">${name}</div>`
+        res += `<div style="display:flex; width:100%; font-size:12px; align-items:center;">`;
+        res += `<div style="width:25px; height:25px; margin-top:-5px; background-image:url('${IMG_PATH + o.name.toLowerCase() + '_cw.png'}'); background-repeat:no-repeat; background-size:25px; background-position: center;"></div>`;
+        res += `<div style="height:30px; display:flex; margin-left:10px; margin-top:5px; align-items:center; font-size:12px;">${name}</div>`
         res += `</div>`;
       });
       res += `</div>`;
     }
 
-    res += `<div style="margin-top: 10px; margin: 2px 5px;">`;
+    res += `<div style="margin-top: 10px;">`;
     if(insp.description != null){
-      res += `<p style="text-align:center; width:auto; max-width:400px; white-space:normal; font-size:13px; font-family:'Poppins';">${insp.description}</p>`;
+      res += `<p style="max-width:400px; white-space:normal; font-size:12px; font-family:'Poppins'; margin: 0;">${insp.description}</p>`;
     }
     res += `</div>`;
 
-    res += `<div style="margin-top: 10px; margin: 2px 5px;">`;
+    res += `<div style="margin-top: 10px;">`;
     if(insp.todo != null){
-      res += `<p style="text-align:center; width:auto; max-width: 400px; white-space: normal; font-size:13px; font-family:'Poppins';">${insp.todo}</p>`;
+      res += `<p style="width:auto; max-width: 400px; white-space: normal; font-size:12px; font-family:'Poppins'; margin: 0;">${insp.todo}</p>`;
     }
     res += `</div>`;
 
@@ -687,12 +683,14 @@ export class VitalityComponent implements OnInit, OnDestroy{
     let test = date.getTimezoneOffset();
     date.setHours(date.getHours() + (test / 60));
     let res =
-    `<div>` +
-    `<h5 style="text-align:center;">${hiveName}</h5>` +
-    `<h5 style="text-align:center;">${this.unitService.getHourlyDate(date)}</h5>` +
-    `<div style="display:flex; justify-content:center; align-items:center;">` +
-    `<img width=35 height=35 src=${IMG_PATH + alert.icon.toLowerCase() + '_cw.png'}>` +
-    `<p>${name}</p>` +
+    `<div style="width:180px;">` +
+    `<div style="height:30px;">` +
+    `<h5 style="float:left"><b>${hiveName}</b></h5>` +
+    `<h5 style="float:right"><b>${this.unitService.getHourlyDate(date)}</b></h5>` +
+    `</div>` +
+    `<div style="width:100%; display:flex; align-items:center; margin-top:10px;">` +
+    `<img style="margin-top:-5px;" width=25 height=25 src=${IMG_PATH + alert.icon.toLowerCase() + '_cw.png'}>` +
+    `<p style="font-size:12px; margin-left:5px; font-family:'Poppins';" >${name}</p>` +
     `</div>`;
     return res;
   }

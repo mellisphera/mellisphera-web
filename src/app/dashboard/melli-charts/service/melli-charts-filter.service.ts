@@ -42,8 +42,8 @@ export class MelliChartsFilterService {
       Oxalic: true,
       Rswarm: true,
       Stolen: true,
-      SuperMore: true,
-      SuperLess: true,
+      'Super+': true,
+      'Super-': true,
       Swarm: true,
       Tmax: true,
       Tmin: true,
@@ -84,12 +84,6 @@ export class MelliChartsFilterService {
   }
 
   getShowAlertIcon(icon: string): boolean{
-    if(icon == 'Super+'){
-      return this.filters.display['SuperMore'];
-    }
-    if(icon == 'Super-'){
-      return this.filters.display['SuperLess'];
-    }
     return this.filters.display[icon];
   }
 

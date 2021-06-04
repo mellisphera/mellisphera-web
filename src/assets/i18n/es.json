@@ -454,7 +454,10 @@
         "BROOD": {
             "TITLE": "Evolucion diaria de la cria",
             "TOOLTIP":{
-              "SWARM":"Enjambrazón"
+              "SWARM":"Enjambrazón",
+              "DEFAULT":"Default",
+              "SUPER+":"Añadiendo alza",
+              "SUPER-":"Supresión alza"
             }
         },
         "WEIGHT": {
