@@ -1140,7 +1140,7 @@ nav[role=admin-navigation] {
 
 @media screen and (max-width: 767px){
   #filtersMenu{
-    left: -110px;
+    left: -150px;
   }
 }
 
