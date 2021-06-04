@@ -107,3 +107,36 @@ export const MORE_ICON =
 '</g> ' +
 '</svg>';
 
+export const MORE_ICON_WHITE = '<svg ' +
+'xmlns:svg="http://www.w3.org/2000/svg" ' +
+'xmlns="http://www.w3.org/2000/svg" ' +
+'id="more-icon-white" ' +
+'version="1.1" ' +
+'viewBox="0 0 210 297" ' +
+'height="45px" ' +
+'width="45px"> ' +
+'<g ' +
+  'id="layer1"> ' +
+ '<ellipse ' +
+    'ry="23.365862" ' +
+    'rx="23.36586" ' +
+    'cy="152.67992" ' +
+    'cx="31.909969" ' +
+    'class="circle1" ' +
+    'style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /> ' +
+ '<ellipse ' +
+    'style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" ' +
+    'class="circle2" ' +
+    'cx="105.19924" ' +
+    'cy="152.67992" ' +
+    'rx="23.36586" ' +
+    'ry="23.365862" /> ' +
+ '<ellipse ' +
+    'ry="23.365862" ' +
+    'rx="23.36586" ' +
+    'cy="152.67992" ' +
+    'cx="178.48851" ' +
+    'class="circle3" ' +
+    'style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /> ' +
+'</g> ' +
+'</svg>';

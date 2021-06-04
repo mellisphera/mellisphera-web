@@ -81,7 +81,15 @@ export class SidebarComponent implements OnInit {
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('nav-open'); */
     this.toggleButton = document.getElementsByClassName('navbar-toggle')[0];
-    this.focus('home');
+    if(this.router.url.includes("home")){
+      this.focus('home');
+    }
+    if(this.router.url.includes("explore")){
+      this.focus('explore');
+    }
+    if(this.router.url.includes("alert")){
+      this.focus('alertConf');
+    }
   }
   isMobileMenu() {
     if (window.innerWidth > 991) {
@@ -125,7 +133,7 @@ export class SidebarComponent implements OnInit {
     document.getElementById("mySidebar").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
   }
-  
+
   closeNav() {
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft= "0";

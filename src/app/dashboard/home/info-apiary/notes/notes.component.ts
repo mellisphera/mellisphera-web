@@ -30,16 +30,22 @@ import { UnitService } from '../../../../dashboard/service/unit.service';
 import { Router } from '@angular/router';
 
 import { PICTOS_HIVES_OBS } from '../../../../../constants/pictosHiveObs'
+import { MORE_ICON_WHITE } from './../../../../../constants/pictos';
+
+import { DomSanitizer} from '@angular/platform-browser';
+import { SafeHtmlPipe } from '../../../melli-charts/safe-html.pipe';
 
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
-  styleUrls: ['./notes.component.css'],
+  styleUrls: ['./notes.component.css', '../../../../../pictos.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class NotesComponent implements OnInit,AfterViewChecked {
   screenHeight:any;
   screenWidth:any;
+
+  public more_icon: string = MORE_ICON_WHITE;
 
   public newEventDate: Date;
   public hiveEvent: RucheInterface;
@@ -94,7 +100,9 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     private myNotifer: MyNotifierService,
     private unitService: UnitService,
     private inspService: InspectionService,
-    private router: Router) {
+    private router: Router,
+    public sanitizer: DomSanitizer,
+    public safeHtml: SafeHtmlPipe) {
       this.type = 'ApiaryObs';
       this.message = '';
       this.typeToMv = 0;

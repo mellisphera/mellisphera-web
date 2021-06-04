@@ -130,7 +130,7 @@ limitations under the License. -->
               <i [class]="'fa fa-chevron-right ' + ifActiveIcon(rucher._id) "></i>
               <!--<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span>-->
             </a>
-            <span class="apiary-group-title" [id]="rucher._id + '_span'" (click)="apiaryClick(rucher)">{{ rucher.name }}</span>
+            <span style="width:60%;" class="apiary-group-title" [id]="rucher._id + '_span'" (click)="apiaryClick(rucher)">{{ rucher.name }}</span>
             <button *ngIf="!deviceService.isDesktop()" style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)" [innerHTML]="more_icon | safeHtml"></button>
             <button *ngIf="deviceService.isDesktop()" style="margin-right: 0; margin-left: auto; visibility: hidden;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)" [innerHTML]="more_icon | safeHtml"></button>
           </div>
@@ -143,7 +143,8 @@ limitations under the License. -->
             (mouseenter)="mouseEnter(ruche._id)" (mouseleave)="mouseLeave(ruche._id)">
               <a class="list-group-hive-item" (click)="selectHive(ruche, $event)"  data-parent="#sub-menu">
                 <i class="circle" [style.background-color]="getColor(ruche)"></i>
-                <span class="puce-hive"></span>{{ ruche.name }}
+                <span class="puce-hive"></span>
+                <span style="width:60%;">{{ ruche.name }}</span>
               </a>
               <button *ngIf="!deviceService.isDesktop()" class="hive-more-button" (click)="showContextMenu(null, ruche, $event)" [innerHTML]="more_icon | safeHtml"></button>
               <button *ngIf="deviceService.isDesktop()" style="visibility: hidden;" class="hive-more-button" (click)="showContextMenu(null, ruche, $event)" [innerHTML]="more_icon | safeHtml"></button>
@@ -166,12 +167,6 @@ limitations under the License. -->
     </div>
 
     <div class="right-click-menu">
-      <div class="right-click-title">
-        <span class="hive-title">
-          <i class="circle"></i>
-          <p class="hive-name"></p>
-        </span>
-      </div>
       <div>
         <ul class="context-menu-group">
           <li class="context-menu-choice add-event" data-toggle="modal" data-target="#newInspectionModal" (click)="showAddEvent()">
@@ -221,7 +216,7 @@ limitations under the License. -->
       </div>
       <div class="modal-footer">
         <div class="add-event-buttons">
-          <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal" (click)="dismissAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
           <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
         </div>
     </div>

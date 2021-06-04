@@ -219,7 +219,21 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.hiveComponent.loadDataFromHive();
       });
     }
-    this.eltOnClick = document.getElementById('hive');
+    if(this.router.url.includes("hive")){
+      this.eltOnClick = document.getElementById('hive');
+    }
+    else if(this.router.url.includes("brood")){
+      this.eltOnClick = document.getElementById('brood');
+    }
+    else if(this.router.url.includes("weight")){
+      this.eltOnClick = document.getElementById('weight');
+    }
+    else if(this.router.url.includes("stack")){
+      this.eltOnClick = document.getElementById('stack');
+    }
+    else if(this.router.url.includes("events")){
+      this.eltOnClick = document.getElementById('events');
+    }
     this.dateDropdown = document.getElementById('date-dropdown');
     this.renderer.addClass(this.eltOnClick, 'nav-active');
   }
@@ -710,25 +724,27 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     evt.stopPropagation();
     evt.preventDefault();
     const menu = (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]);
-    menu.style.top = (evt.clientY + 5) + 'px';
-    menu.style.left = (evt.clientX - 180) + 'px';
+    menu.style.top = (evt.clientY + 2) + 'px';
+    menu.style.left = (evt.clientX - 200) + 'px';
     menu.style.visibility = 'visible';
 
-    const btn = <HTMLButtonElement>evt.target;
+
+    let btn = <HTMLButtonElement>document.getElementsByClassName('hive-more-button active')[0];
+    if(btn != undefined){
+      btn.classList.remove('active');
+    }
+    if((<HTMLElement>evt.target).localName === 'svg'){
+      btn = <HTMLButtonElement>(<HTMLElement>evt.target).parentElement;
+    }
+    else if ((<HTMLElement>evt.target).localName === 'ellipse'){
+      btn = <HTMLButtonElement>(<HTMLElement>(<HTMLElement>evt.target).parentElement).parentElement;
+    }
+    else{
+      btn = <HTMLButtonElement>evt.target;
+    }
     btn.classList.add('active');
 
     const list = (<HTMLElement>menu.getElementsByClassName('context-menu-group')[0]);
-    const name = (<HTMLElement>menu.getElementsByClassName('hive-name')[0]);
-    const circle = (<HTMLElement>menu.getElementsByClassName('circle')[0]);
-
-    if(ruche != null){
-      circle.style.backgroundColor = this.getColor(ruche);
-      name.innerHTML =  '  ' + ruche.name;
-    }
-    if(rucher != null){
-      name.innerHTML =  '  ' + rucher.name;
-    }
-
 
     this.new_event = {
       _id: null,
@@ -768,6 +784,10 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   closeContextMenu(): void {
     (<HTMLElement>document.getElementsByClassName('right-click-menu')[0]).style.visibility = 'hidden';
+    let btn = <HTMLButtonElement>document.getElementsByClassName('hive-more-button active')[0];
+    if(btn != undefined){
+      btn.classList.remove('active');
+    }
   }
 
   // <--- ADD EVENT SCREEN --->
@@ -918,10 +938,17 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         }else{
           this.notify.notify('success', 'Created Inspection');
         }
+        let btn = <HTMLButtonElement>document.getElementsByClassName('hive-more-button active')[0];
+        btn.classList.remove('active');
       }
     );
     $('#newInspectionModal').modal('hide');
     return;
+  }
+
+  dismissAddEvent(): void{
+    let btn = <HTMLButtonElement>document.getElementsByClassName('hive-more-button active')[0];
+    btn.classList.remove('active');
   }
 
   insertOnGraph(insp: Inspection): void {

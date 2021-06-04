@@ -23,13 +23,13 @@ limitations under the License. -->
           {{this.rucherService.rucher.name}}</span>
       </div>
       <button [disabled]="rucherService.rucher._id == null"
-        style="float:right;width: 5%; padding: 0;border: none; background: none;"
+        style="float:right; width:45px; height: 45px; padding:0; border:none; background: none; margin-top: -11px;"
         [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
-        class="btn btn-success btn_add" (click)="showContextMenu($event)">
-        <i class="fa fa-ellipsis-h fa-2x add_icon"></i>
+        class="btn btn-success btn_add" (click)="showContextMenu($event)"
+        [innerHTML]="more_icon | safeHtml">
       </button>
     </div>
-    <div class="user-sensors panel-body" id="notesApiary">
+    <div class="user-sensors panel-body" id="notesApiary" style="width:100%;">
       <table class="table">
         <tbody>
           <tr class="hoverStyle" *ngFor="let obs of getInspectionByApiaryId(rucherService.rucher._id); let i = index;">

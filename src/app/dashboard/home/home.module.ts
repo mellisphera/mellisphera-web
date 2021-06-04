@@ -34,6 +34,8 @@ import { AlertsService } from '../service/api/alerts.service';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 import {NgxPrintModule} from 'ngx-print';
 
+import { SafeHtmlPipe } from '../melli-charts/safe-html.pipe';
+
 
 @NgModule({
   imports: [
@@ -53,7 +55,8 @@ import {NgxPrintModule} from 'ngx-print';
     AngularDraggableModule
   ],
   providers: [
-    GraphGlobal
+    GraphGlobal,
+    SafeHtmlPipe,
   ],
   declarations: [
     HomeComponent,
@@ -67,6 +70,7 @@ import {NgxPrintModule} from 'ngx-print';
     SensorsHiveComponent,
     AlertsHiveComponent,
     InfoApiaryComponent,
+    SafeHtmlPipe
   ]
 })
 export class HomeModule { }

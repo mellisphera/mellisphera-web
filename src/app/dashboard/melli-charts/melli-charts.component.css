@@ -628,7 +628,7 @@ nav[role=admin-navigation] {
   background-color: white;
   border: 1px solid black;
   border-radius: 3px;
-  width: 200px;
+  width: 150px;
   z-index: 6;
 }
 
@@ -670,12 +670,12 @@ nav[role=admin-navigation] {
 }
 
 .context-menu-choice i{
-  margin-left: 15px;
+  margin-left: 8px;
 }
 
 .fa-plus{
   color:green;
-  margin-left: 15px;
+  margin-left: 8px;
 }
 
 .fa-minus{
@@ -685,7 +685,7 @@ nav[role=admin-navigation] {
 
 .context-menu-choice p{
   font-size: 14px;
-  margin-left: 10px;
+  margin-left: 0px;
   height:40px;
   display: flex;
   align-items: center;
@@ -977,8 +977,21 @@ nav[role=admin-navigation] {
   background-position: center;
 }
 
+.hive-more-button:hover #more-icon ellipse.circle1,
+.hive-more-button:hover #more-icon ellipse.circle2,
+.hive-more-button:hover #more-icon ellipse.circle3{
+  stroke: #5cb85c !important;
+}
 
+.hive-more-button.active{
+  visibility: visible !important;
+}
 
+.hive-more-button.active #more-icon ellipse.circle1,
+.hive-more-button.active #more-icon ellipse.circle2,
+.hive-more-button.active #more-icon ellipse.circle3{
+  stroke: #5cb85c !important;
+}
 
 
 
