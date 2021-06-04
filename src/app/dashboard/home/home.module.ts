@@ -33,9 +33,8 @@ import { InfoApiaryComponent } from './info-apiary/info-apiary.component';
 import { AlertsService } from '../service/api/alerts.service';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 import {NgxPrintModule} from 'ngx-print';
-
 import { SafeHtmlPipe } from '../melli-charts/safe-html.pipe';
-
+import { PipeModule } from './../../pipe/pipe.module';
 
 @NgModule({
   imports: [
@@ -52,11 +51,12 @@ import { SafeHtmlPipe } from '../melli-charts/safe-html.pipe';
     }),
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    AngularDraggableModule
+    AngularDraggableModule,
+    PipeModule
   ],
   providers: [
     GraphGlobal,
-    SafeHtmlPipe,
+    SafeHtmlPipe
   ],
   declarations: [
     HomeComponent,
@@ -70,7 +70,6 @@ import { SafeHtmlPipe } from '../melli-charts/safe-html.pipe';
     SensorsHiveComponent,
     AlertsHiveComponent,
     InfoApiaryComponent,
-    SafeHtmlPipe
   ]
 })
 export class HomeModule { }
