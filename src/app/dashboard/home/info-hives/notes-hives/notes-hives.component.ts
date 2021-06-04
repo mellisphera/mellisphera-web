@@ -34,6 +34,11 @@ import { AlertInterface } from '../../../../_model/alert';
 import { UnitService } from '../../../../dashboard/service/unit.service';
 
 import { PICTOS_HIVES_OBS } from '../../../../../constants/pictosHiveObs';
+import { MORE_ICON_WHITE } from './../../../../../constants/pictos';
+
+import { DomSanitizer} from '@angular/platform-browser';
+import { SafeHtmlPipe } from '../../../melli-charts/safe-html.pipe';
+
 
 @Component({
   selector: 'app-notes-hives',
@@ -56,6 +61,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   optionsDate = {
     weekday: 'short', year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric',
   };
+
+  public more_icon: string = MORE_ICON_WHITE;
 
   public newEventDate: Date;
   public hiveEvent: RucheInterface;
@@ -97,6 +104,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     private myNotifer: MyNotifierService,
     public inspectionService: InspectionService,
     private unitService: UnitService,
+    public sanitizer: DomSanitizer,
+    public safeHtml: SafeHtmlPipe
   ) {
     this.typeObs = false;
     this.notifier = notifyService;

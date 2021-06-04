@@ -24,9 +24,9 @@ limitations under the License. -->
           {{this.rucheService.getCurrentHive().name}}</span></div>
       <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.NEW' | translate}}" data-toggle="modal"
         [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
-        style="float:right;width: 5%; padding: 0;border: none; background: none;margin-top: 0px;" (click)="initForm()"
-        data-target="#newObservationModal" class="btn btn-success btn_add" (click)="showContextMenu($event)">
-        <i class="fa fa-ellipsis-h fa-2x add_icon"></i>
+        style="float:right;width: 45px; height: 45px; padding: 0;border: none; background: none;margin-top: -11px;" (click)="initForm()"
+        data-target="#newObservationModal" class="btn btn-success btn_add" (click)="showContextMenu($event)"
+        [innerHTML]="more_icon | safeHtml">
       </button>
     </div>
     <div class="user-sensors panel-body" id="notesHives">
