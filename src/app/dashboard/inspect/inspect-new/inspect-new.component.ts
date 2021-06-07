@@ -181,6 +181,14 @@ export class InspectNewComponent implements OnInit {
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input')[0]).value = this.unitService.getHourlyDate(this.inspect_date);
   }
 
+  saveApiaryNotes(){
+
+  }
+
+  saveApiaryTodo(){
+    
+  }
+
   saveInspection(): void{
     
   }
