@@ -64,6 +64,7 @@ hr
 .calendar{
     height: 280px;
     position: relative;
+    margin-bottom: 20px;
 }
 .infoToolip{
     position: absolute;

@@ -134,7 +134,6 @@ export class HealthHiveComponent implements OnInit {
             }
         },
     );
-      console.log(this.option.baseOption)
 
 
   }
@@ -147,6 +146,13 @@ export class HealthHiveComponent implements OnInit {
   initGraph(){
     this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
     this.option.baseOption.series = new Array();
+  }
+
+  onResize(event) {
+    this.chartInstance.resize({
+      width: 'auto',
+      height: 'auto'
+    });
   }
 
 }

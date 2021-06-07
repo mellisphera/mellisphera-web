@@ -31,6 +31,7 @@ limitations under the License. */
     /* border: 1px dashed gray; */
     padding: .5em;
     height: 500px;
+    width: 100%;
     white-space: pre-wrap;
     overflow-y: scroll;
 }
@@ -71,6 +72,82 @@ th{
 
 .add_icon:active{
   color: #5cb85c !important;
+}
+
+.right-click-menu{
+  position: absolute;
+  visibility: hidden;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 200px;
+  z-index: 6;
+}
+
+.context-menu-group{
+  margin-left: 0px;
+  margin-bottom: 0px;
+  list-style-type: none;
+  padding-left:0px;
+  padding-top:0px;
+}
+
+.right-click-title{
+  background-color: rgb(172, 200, 123);
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hive-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+}
+
+.hive-name{
+  margin-bottom:0px !important;
+  margin-left:10px !important;
+  font-size:14px !important;
+}
+
+.context-menu-choice{
+  border-top: #ddd;
+  height:40px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.context-menu-choice i{
+  margin-left: 15px;
+}
+
+.fa-plus{
+  color:green;
+  margin-left: 15px;
+}
+
+.fa-minus{
+  color: darkred;
+  margin-left: 15px;
+}
+
+.context-menu-choice p{
+  font-size: 14px;
+  margin-left: 10px;
+  height:40px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+  width: 100%;
+}
+
+.context-menu-choice:hover{
+  background-color: #eee;
+  cursor: pointer;
 }
 
 .add-event-screen{

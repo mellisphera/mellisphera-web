@@ -359,7 +359,7 @@ export class DailyRecordService {
 
     public getPourcentByHive(hiveId: string): string {
         const selectHive = this.dailyRecords.filter(elt => elt.hiveId === hiveId)[0];
-        if(selectHive !== undefined){
+        if(selectHive !== undefined && selectHive.brood != null){
             return selectHive.brood.toString().split('.')[0] + '%';
         }else{
             return '-';

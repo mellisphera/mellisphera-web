@@ -131,8 +131,7 @@ limitations under the License. -->
               <!--<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span>-->
             </a>
             <span style="width:60%;" class="apiary-group-title" [id]="rucher._id + '_span'" (click)="apiaryClick(rucher)">{{ rucher.name }}</span>
-            <button *ngIf="!deviceService.isDesktop()" style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)" [innerHTML]="more_icon | safeHtml"></button>
-            <button *ngIf="deviceService.isDesktop()" style="margin-right: 0; margin-left: auto; visibility: hidden;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)" [innerHTML]="more_icon | safeHtml"></button>
+            <button style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)" [innerHTML]="more_icon | safeHtml"></button>
           </div>
 
           <div
@@ -146,8 +145,7 @@ limitations under the License. -->
                 <span class="puce-hive"></span>
                 <span style="width:60%;">{{ ruche.name }}</span>
               </a>
-              <button *ngIf="!deviceService.isDesktop()" class="hive-more-button" (click)="showContextMenu(null, ruche, $event)" [innerHTML]="more_icon | safeHtml"></button>
-              <button *ngIf="deviceService.isDesktop()" style="visibility: hidden;" class="hive-more-button" (click)="showContextMenu(null, ruche, $event)" [innerHTML]="more_icon | safeHtml"></button>
+              <button class="hive-more-button" (click)="showContextMenu(null, ruche, $event)" [innerHTML]="more_icon | safeHtml"></button>
             </div>
 
           </div>

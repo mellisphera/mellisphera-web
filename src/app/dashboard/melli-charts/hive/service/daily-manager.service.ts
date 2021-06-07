@@ -932,18 +932,20 @@ export class DailyManagerService {
         let posTab = _brood.map(_val => _val.values.map(_v => _v.position)).flat();
         posTab.map((_pos,index) => {
           let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
-          if(this.translateService.currentLang == 'fr'){
-            posTab[index] = hivePos.translations.fr;
-          }
-          if(this.translateService.currentLang == 'en'){
-            posTab[index] = hivePos.translations.en;
-          }
-          if(this.translateService.currentLang == 'es'){
-            posTab[index] = hivePos.translations.es;
-          }
-          if(this.translateService.currentLang == 'nl'){
-            posTab[index] = hivePos.translations.nl;
-          }
+          if(hivePos != undefined){
+            if(this.translateService.currentLang == 'fr'){
+              posTab[index] = hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              posTab[index] = hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              posTab[index] = hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              posTab[index] = hivePos.translations.nl;
+            }
+          }  
         });
         let posSet = new Set([...posTab].concat([..._brood.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));

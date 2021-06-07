@@ -32,8 +32,8 @@ import { InspUserService } from '../../service/api/insp-user.service';
 export class InspectNewComponent implements OnInit {
 
   public inspUser: InspUser = {_id: null, idUser: null, inspConf: []};
-  public inspConf: InspConf[] = [];
-  public inspCat: InspCat[] = [];
+  public inspConf: InspConf[];
+  public inspCat: InspCat[];
 
   public user_pref : UserPref;
 
@@ -42,10 +42,10 @@ export class InspectNewComponent implements OnInit {
   public user_hives: RucheInterface[];
   public active_apiary_index: number;
 
-  public new_inspApiary: Inspection;
-  public new_inspHives: Inspection[] = [];
-
   constructor(
+    private inspService: InspectionService,
+    private inspCatService: InspCatService,
+    private inspUserService: InspUserService,
     private unitService: UnitService,
     private userPrefsService: UserParamsService,
     private rucherService: RucherService,
@@ -54,9 +54,6 @@ export class InspectNewComponent implements OnInit {
     private inspApiaryService: InspApiaryService,
     private inspHiveService: InspHiveService,
     public translateService: TranslateService,
-    private inspService: InspectionService,
-    private inspCatService: InspCatService,
-    private inspUserService: InspUserService,
   ) {}
 
   ngOnInit() {
@@ -84,7 +81,7 @@ export class InspectNewComponent implements OnInit {
           }
         )
       }
-    )
+    );
     this.inspCatService.getInspCat().subscribe(
       _inspCat => {
         this.inspCat = [..._inspCat];
@@ -95,11 +92,14 @@ export class InspectNewComponent implements OnInit {
         if(_exists){
           this.getInspUser(() => {
             this.inspConf = [...this.inspUser.inspConf];
+            console.log(this.inspConf);
           });
         }
         else{
-          this.createInspUser(() => {
+          this.createInspUser((aux) => {
+            this.inspUser = Object.assign({}, aux);
             this.inspConf = [...this.inspUser.inspConf];
+            console.log(this.inspConf);
           });
         }
       },
@@ -129,16 +129,7 @@ export class InspectNewComponent implements OnInit {
       let conf: InspConf = { enable : true, inspCat: Object.assign({},inspItem) };
       aux.inspConf.push(conf);
     });
-    this.inspUserService.createInspUser(aux).subscribe(
-      _inspUser => {
-        this.inspUser = Object.assign({}, _inspUser);
-        this.insertNewInspCat();
-      },
-      () => {},
-      () => {
-        next()
-      }
-    )
+    next(aux);
   }
 
   getInspUser(next: Function): void{
@@ -162,23 +153,35 @@ export class InspectNewComponent implements OnInit {
     });
   }
 
-  isEnable(i: number): boolean{
-    return this.inspConf[i].enable;
+  changeActive(evt: Event, inspCat: InspCat): void{
+    let button = <HTMLButtonElement>evt.target;
+    if(button.className.includes('_cb')){
+      button.className = button.className.slice(0, -3);
+      button.className += '_b';
+      return;
+    }
+    button.className = button.className.slice(0, -2);
+    button.className += '_cb';
+    return;
   }
 
-  changeEnable(i: number): void{
-    this.inspConf[i].enable = !this.inspConf[i].enable;
+  onSelectChange(): void{
+    this.active_apiary_index = (<HTMLSelectElement>document.getElementById('inspect-apiary-select')).selectedIndex;
+    this.rucheService.getHivesByApiary(this.user_apiaries[this.active_apiary_index - 1]._id).subscribe(
+      _hives => {
+        this.user_hives = [..._hives];
+      },
+      () => {},
+      () => {
+      }
+    )
   }
 
-  inspectDate(){
-
+  inspectDate(): void{
+    (<HTMLInputElement>document.getElementsByClassName('inspect-time-input')[0]).value = this.unitService.getHourlyDate(this.inspect_date);
   }
 
-  onSelectChange(){
-
-  }
-
-  saveInspection(){
+  saveInspection(): void{
     
   }
 

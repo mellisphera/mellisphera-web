@@ -40,6 +40,7 @@ export class SignupService {
       role : null,
       lastConnection : null,
       fullName : null,
+      active: null,
     }
   }
 

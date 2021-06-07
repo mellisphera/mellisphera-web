@@ -3,28 +3,17 @@
   padding-left: 10px;
 }
 
-.inspect-new-container button{
-  box-shadow: 1px 1px 3px black;
-}
-
-.inspect-new-container button:active{
-  transform: translateX(1px) translateY(1px);
-  box-shadow: 0px 0px 1px black;
-}
-
 .inspect-new-container button:focus{
   outline: 0;
 }
 
 .inspect-new-container h3{
   padding-bottom: 10px;
-  margin-left: calc(2% + 6px);
+  margin-left: 1%;
 }
 
 .inspect-body{
   width: 99%;
-  border-top: 1px solid #999999;
-  border-bottom: 1px solid #999999;
   display: flex;
 }
 
@@ -57,10 +46,7 @@
 
 .inspect-time > div {
   display: flex;
-}
-
-.inspect-time div{
-  padding : 10px;
+  align-items: center;
 }
 
 .inspect-time > div > div{
@@ -103,8 +89,9 @@
 }
 
 .apiary-op, .apiary-obs-div{
-  width: 100%;
+  max-width: 600px;
   display: flex;
+  flex-wrap: wrap;
   margin: 10px 10px;
 }
 
@@ -119,7 +106,7 @@
 
 .apiary-action, .hives-action, .apiary-obs, .hives-obs{
   border-radius: 3px;
-  margin: 5px 1px;
+  margin: 15px 5px;
   text-align: center;
   height: 40px;
   width: 40px;
@@ -134,92 +121,116 @@
   border: 1px solid skyblue;
 }
 
-.apiary-default-img{
+.btn-default_b{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/default_b.png');
+  background-image: url('../../../../assets/ms-pics/default_b.svg');
   background-position: center;
 }
 
-.apiary-default-img-active{
+.btn-default_cb{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/default_cb.png');
+  background-image: url('../../../../assets/ms-pics/default_cb.svg');
   background-position: center;
 }
 
-.apiary-queen-img{
-  background-size: 32px;
+.btn-swarm_b{
+  background-size: 35px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/queen_b.png');
+  background-image: url('../../../../assets/ms-pics/swarm_b.svg');
   background-position: center;
 }
 
-.apiary-queen-img-active{
-  background-size: 32px;
+.btn-swarm_cb{
+  background-size: 35px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/queen_cb.png');
+  background-image: url('../../../../assets/ms-pics/swarm_cb.svg');
   background-position: center;
 }
 
-.hives-swarm-img{
-  background-size: 32px;
+.btn-super\+_b{
+  background-size: 35px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/swarm_b.png');
+  background-image: url('../../../../assets/ms-pics/super+_b.svg');
   background-position: center;
 }
 
-.hives-swarm-img-active{
-  background-size: 32px;
+.btn-super\+_cb{
+  background-size: 35px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/swarm_cb.png');
+  background-image: url('../../../../assets/ms-pics/super+_cb.svg');
   background-position: center;
 }
 
-.hives-super\+-img{
-  background-size: 32px;
+.btn-super-_b{
+  background-size: 35px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/super+_b.png');
+  background-image: url('../../../../assets/ms-pics/super-_b.svg');
   background-position: center;
 }
 
-.hives-super\+-img-active{
-  background-size: 32px;
+.btn-super-_cb{
+  background-size: 35px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/super+_cb.png');
+  background-image: url('../../../../assets/ms-pics/super-_cb.svg');
   background-position: center;
 }
 
-.hives-super--img{
-  background-size: 32px;
+.btn-stolen_b{
+  background-size: 35px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/super-_b.png');
+  background-image: url('../../../../assets/ms-pics/stolen_b.svg');
   background-position: center;
 }
 
-.hives-super--img-active{
-  background-size: 32px;
+.btn-stolen_cb{
+  background-size: 35px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/super-_cb.png');
+  background-image: url('../../../../assets/ms-pics/stolen_cb.svg');
   background-position: center;
 }
 
-.hives-default-img{
-  background-size: 32px;
+.btn-lowbrood_b{
+  background-size: 35px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/default_b.png');
+  background-image: url('../../../../assets/ms-pics/lowbrood_b.svg');
   background-position: center;
 }
 
-.hives-default-img-active{
-  background-size: 32px;
+.btn-lowbrood_cb{
+  background-size: 35px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/default_cb.png');
+  background-image: url('../../../../assets/ms-pics/lowbrood_cb.svg');
   background-position: center;
 }
 
-.apiary-btn-active{
-  color: blue;
+.btn-normbrood_b{
+  background-size: 35px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/normbrood_b.svg');
+  background-position: center;
+}
+
+.btn-normbrood_cb{
+  background-size: 35px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/normbrood_cb.svg');
+  background-position: center;
+}
+
+.btn-highbrood_b{
+  background-size: 35px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/highbrood_b.svg');
+  background-position: center;
+}
+
+.btn-highbrood_cb{
+  background-size: 35px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/highbrood_cb.svg');
+  background-position: center;
 }
 
 .hives-action, .hives-obs{
@@ -231,7 +242,7 @@
 .inspect-apiary-notes, .inspect-apiary-todo{
   padding:0 !important;
   padding-left:10px !important;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .apiary-notes-input, .apiary-todo-input{
@@ -318,10 +329,7 @@
 }
 
 .hives-notes{
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/notes.svg');
-  background-position: center;
+  font-size: 22px;
 }
 
 .hives-todo{
@@ -446,6 +454,8 @@
   }
   .apiary-op, .apiary-obs-div{
     justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
   }
   .inspect-apiary-notes,.inspect-apiary-todo{
     display: flex;

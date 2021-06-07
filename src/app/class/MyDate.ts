@@ -120,13 +120,26 @@ export class MyDate {
         max.setSeconds(59);
         let min = new Date();
         min.setTime(max.getTime());
-        min.setMonth(min.getMonth() - 1);
+        min.setDate(min.getDate() - 24);
         //min.setDate(max.getDate() + 7);
 
         min.setHours(0);
         min.setMinutes(0);
         min.setSeconds(0);
+        min = MyDate.getDateBeginMonday(min)
         return [min, max];
+      }
+
+      static getDateBeginMonday(date: Date): Date {
+        const dayInf: boolean = date.getDate() <= 6;
+        while (date.getDay() !== 1) {
+          if (dayInf) {
+            date.setDate(date.getDate() + 1);
+          } else {
+            date.setDate(date.getDate() - 1);
+          }
+        }
+        return date
       }
 
 /*     static getRangeFromDate(date: Date[]) {

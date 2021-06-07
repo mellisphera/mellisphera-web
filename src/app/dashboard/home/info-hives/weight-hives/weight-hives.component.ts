@@ -20,6 +20,7 @@ import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
 import * as echarts from 'echarts';
+import { UserloggedService } from '../../../../userlogged.service';
 
 @Component({
     selector: 'app-weight-hives',
@@ -28,13 +29,14 @@ import * as echarts from 'echarts';
 })
 export class WeightHivesComponent {
     option: any;
-    private echartInstance: any;
+    echartInstance: any;
     constructor(public dailyRecordWservice: DailyRecordsWService,
         public calendrierPoids: CalendrierPoidsService,
         public rucheService: RucheService,
         public dailyStockHoneyService: DailyStockHoneyService,
         private userConfig: UserParamsService,
         private unitService: UnitService,
+        private userService: UserloggedService,
         private graphGlobal: GraphGlobal) {
         this.option = {
             baseOption: {
@@ -194,17 +196,20 @@ export class WeightHivesComponent {
     }
 
     ngOnInit(): void {
-        if (this.echartInstance == null) {
-            this.echartInstance = echarts.init(<HTMLDivElement>document.getElementById('calendrierPoids'));
-            this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
-            this.initGraph();
-          }
+        this.echartInstance = echarts.init(<HTMLDivElement>document.getElementById('calendrierPoids'));
+        this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
     }
 
     initGraph(): void{
         this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
         this.option.baseOption.series = new Array();
-        this.option.baseOption.series.push(this.graphGlobal.getDaySerie());
-        this.echartInstance.setOption(this.option, true);
     }
+
+    onResize(event) {
+        this.echartInstance.resize({
+          width: 'auto',
+          height: 'auto'
+        });
+      }
+
 }

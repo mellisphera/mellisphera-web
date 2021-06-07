@@ -55,6 +55,7 @@ import { DomSanitizer} from '@angular/platform-browser';
 import { SafeHtmlPipe } from './safe-html.pipe';
 
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { style } from '@angular/animations';
 
 const PREFIX_PATH = '/dashboard/explore/';
 
@@ -118,7 +119,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   private eltOnClick: EventTarget;
 
 
-  constructor(public rucheService: RucheService,
+  constructor(private deviceService: DeviceDetectorService,
+    public rucheService: RucheService,
     public rucherService: RucherService,
     private userService: UserloggedService,
     private renderer: Renderer2,
@@ -145,7 +147,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private notify: NotifierService,
     public sanitizer: DomSanitizer,
     public safeHtml: SafeHtmlPipe,
-    public deviceService: DeviceDetectorService
     ) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
@@ -236,6 +237,21 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     }
     this.dateDropdown = document.getElementById('date-dropdown');
     this.renderer.addClass(this.eltOnClick, 'nav-active');
+    this.modifyMoreBtnStyles();
+  }
+
+
+  modifyMoreBtnStyles(): void{
+    if(this.deviceService.isMobile() || this.deviceService.isTablet()){
+      Array.from(document.getElementsByClassName('hive-more-button')).forEach(_btn => {
+        (<HTMLButtonElement>_btn).style.visibility = 'visible';
+      })
+    }
+    else{
+      Array.from(document.getElementsByClassName('hive-more-button')).forEach(_btn => {
+        (<HTMLButtonElement>_btn).style.visibility = 'hidden';
+      })
+    }
   }
 
 
