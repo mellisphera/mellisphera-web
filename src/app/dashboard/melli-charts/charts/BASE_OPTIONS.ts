@@ -34,11 +34,11 @@ export const BASE_OPTIONS = {
         /*axisPointer: {
             link: { xAxisIndex: 'all' }
         },*/
-        /*toolbox: {
+        toolbox: {
             orient: 'vertical',
-            itemSize: 18,
-            left: 'right',
-            top: 50,
+            itemSize: 20,
+            right: 20,
+            top: 15,
             feature: {
                 dataZoom: {
                     yAxisIndex: 'none',
@@ -47,7 +47,7 @@ export const BASE_OPTIONS = {
                 restore: {},
                 saveAsImage: {}
             }
-        },*/
+        },
         /*dataZoom: [
             {
                 show: true,
@@ -189,6 +189,7 @@ export const BASE_OPTIONS = {
         toolbox: {
             orient: 'vertical',
             right:10,
+            top: 15,
             itemSize: 20,
             feature: {
                 dataZoom: {
