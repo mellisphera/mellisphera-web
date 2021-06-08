@@ -6,12 +6,12 @@ then
 		rm -rf ./dist
 		#rm -fv src/config.ts
 		#echo "config ..."
-		if [ $1 = 'test' ] #|| [ $1 = 'bzz' ];
+		if [ $1 = 'test' ]; #|| [ $1 = 'bzz' ];
 			then
 				echo "actualisation de ms-pics sur test"
 				rm -rf /mellisphera/test/mellisphera-web/src/assets/ms-pics/*
       			cp /mellisphera/test/ms-pics/* /mellisphera/test/mellisphera-web/src/assets/ms-pics/
-		else if [ $1 = 'bzz' ];
+		elif [ $1 = 'bzz' ];
 			then
 				echo "actualisation de ms-pics sur prod"
 				rm -rf /mellisphera/prod/mellisphera-web/src/assets/ms-pics/*
