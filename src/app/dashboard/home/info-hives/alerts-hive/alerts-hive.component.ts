@@ -188,7 +188,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
     Observable.forkJoin(obs).subscribe(
       _data => {
         const dateJoin = this.joinObservationAlert(_data[0].filter(_note => _note.type === 'hive'), _data[1]);
-        const joinData = _data[0].concat(_data[1]);
+        const joinData = _data[0].filter(_note => _note.type === 'hive').concat(_data[1]);
         this.noData = !(joinData.length > 0);
         const option = Object.assign({}, this.option);
         option.baseOption.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));

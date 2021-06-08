@@ -1385,7 +1385,7 @@ export class DailyManagerService {
         option.calendar.range = range;
         option.legend.show = true;
         option.series.push(this.graphGlobal.getDaySerie());
-        option.tooltip = this.graphGlobal.getTooltipBySerie(type, _insp);
+        option.tooltip = this.graphGlobal.getTooltipBySerie(type, _insp.filter(_elt => _elt.type === 'apiary'));
         chartInstance.clear();
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
@@ -1401,7 +1401,7 @@ export class DailyManagerService {
     let hive: RucheInterface = this.rucheService.getHiveById(hiveId);
     this.inspectionService.getInspectionByApiaryIdAndOpsDateBetween(hive.apiaryId, range).subscribe(
       _insp => {
-        let data : any[] = _insp.filter(_elt => _elt.type === 'hive' && (_elt.hiveId === hiveId || _elt.hiveId == null)).map(_elt => {
+        let data : any[] = _insp.filter(_elt => _elt.type === 'hive' && _elt.hiveId === hiveId).map(_elt => {
           return { date: _elt.opsDate, value: 0, sensorRef: 'Evenements' };
         });
         let option = Object.assign({}, this.baseOptionEnv);
@@ -1545,7 +1545,7 @@ export class DailyManagerService {
         option.calendar.range = range;
         option.legend.show = true;
         option.series.push(this.graphGlobal.getDaySerie());
-        option.tooltip = this.graphGlobal.getTooltipBySerie(type, _insp);
+        option.tooltip = this.graphGlobal.getTooltipBySerie(type, _insp.filter(_elt => _elt.hiveId === hiveId));
         chartInstance.clear();
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();

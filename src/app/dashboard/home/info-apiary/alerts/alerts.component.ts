@@ -185,7 +185,8 @@ export class AlertsComponent implements OnInit {
     Observable.forkJoin(obs).subscribe(
       _data => {
         const dateJoin = this.joinObservationAlert(_data[0].filter(_elt => _elt.type === 'apiary'), _data[1]);
-        const joinData = _data[0].concat(_data[1]);
+        const joinData = _data[0].filter( d => d.type === 'apiary').concat(_data[1]);
+        console.log(dateJoin);
         let option = Object.assign({}, this.option);
         option.baseOption.series = new Array();
         option.baseOption.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));

@@ -492,6 +492,9 @@
             }
           }
         },
+        "RAW_DATA":{
+            "TITLE":"Datos por horas"
+        },
         "EVENT":{
           "TITLE":"Eventos",
           "ADD":{

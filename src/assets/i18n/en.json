@@ -477,6 +477,9 @@
             }
           }
         },
+        "RAW_DATA":{
+            "TITLE":"Hourly data"
+        },
         "EVENT":{
           "TITLE":"Events",
           "ADD":{

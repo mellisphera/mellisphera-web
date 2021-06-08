@@ -477,6 +477,9 @@
             }
           }
         },
+        "RAW_DATA":{
+            "TITLE":"Données horaires"
+        },
         "EVENT":{
           "TITLE":"Evenements",
           "ADD":{
