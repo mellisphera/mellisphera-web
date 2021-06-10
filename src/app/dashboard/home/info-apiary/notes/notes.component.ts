@@ -77,6 +77,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
 
   public tags: string[] = [];
 
+  
+  public isDesktop: boolean = true;
 
 
   @Output() noteChange = new EventEmitter<any>();
@@ -100,6 +102,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   public settings: any;
   private obsSubject: Subscription;
   public apiaryObs: Array<Observation>;
+
   constructor(private deviceService: DeviceDetectorService,
     public rucherService: RucherService,
     private notifyService: NotifierService,
@@ -126,6 +129,10 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   ngOnInit() {
     this.initForm();
     this.observationService.setRange({ scale: 100, type: 'YEARS' });
+    let ua = navigator.userAgent;
+
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua))
+       this.isDesktop = false;
     // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
   }
 

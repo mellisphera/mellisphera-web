@@ -157,7 +157,7 @@ limitations under the License. -->
                 <span style="width:60%;">{{ ruche.name }}</span>
               </a>
               <div class="dropleft" (mouseenter)="mouseEnter(ruche._id)" (mouseleave)="mouseLeave(ruche._id)">
-                <button class="hive-more-button dropdown-toggle" [innerHTML]="more_icon | safeHtml" [style.visibility]="deviceService.isDesktop() ? 'hidden' : 'visible'"
+                <button class="hive-more-button dropdown-toggle" [innerHTML]="more_icon | safeHtml" [style.visibility]="isDesktop ? 'hidden' : 'visible'"
                   type="button" [id]="'hiveDropDownButton' + i" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'hiveDropDownButton' + i" 

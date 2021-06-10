@@ -95,6 +95,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   public tags: string[] = [];
   inspClicked: number;
 
+  public isDesktop: boolean = true;
+
   //observationsHive : ProcessReport[] = [];
   constructor(private deviceService: DeviceDetectorService,
     public rucherService: RucherService,
@@ -120,6 +122,10 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   }
 
   ngOnInit() {
+    let ua = navigator.userAgent;
+
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua))
+       this.isDesktop = false;
   }
 
   @HostListener('window:resize', ['$event'])

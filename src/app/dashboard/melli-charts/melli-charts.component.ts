@@ -106,6 +106,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   public user_pref: UserPref;
 
+  public isDesktop: boolean = true;
+
   public btnNav: any[];
   private btnTypeElement: HTMLElement;
   public typeNav: Array<Object>;
@@ -208,6 +210,11 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         this.stackService.addHive(hiveSelect);
       }
     );
+
+    let ua = navigator.userAgent;
+
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua))
+       this.isDesktop = false;
     
   }
 

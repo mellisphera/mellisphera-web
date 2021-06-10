@@ -56,7 +56,7 @@ limitations under the License. -->
                 <div class="notes-edit-div dropleft" (mouseenter)="mouseEnter($event)" (mouseleave)="mouseLeave($event)">
                   <button class="btn btn-default dropdown-toggle apiary-edit-insp" type="button" [id]="'dropdownMenuButton' + i" 
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [innerHTML]="more_icon | safeHtml"
-                  style="border: 0; padding: 3px 9px !important;" [style.visibility]="deviceService.isDesktop() ? 'hidden' : 'visible'"></button>
+                  style="border: 0; padding: 3px 9px !important;" [style.visibility]="isDesktop ? 'hidden' : 'visible'"></button>
                   <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'dropdownMenuButton' + i"
                     style="top:50%; padding:0; background-color: white; width: auto;">
                     <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
