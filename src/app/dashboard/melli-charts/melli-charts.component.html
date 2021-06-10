@@ -189,18 +189,6 @@ limitations under the License. -->
       <router-outlet (activate)="onActivate($event)"></router-outlet>
     </div>
 
-    <div class="right-click-menu">
-      <div>
-        <ul class="context-menu-group">
-          <li class="context-menu-choice add-event" data-toggle="modal" data-target="#newInspectionModal" (click)="showAddEvent()">
-            <i class="fa fa-plus"></i>
-            <p>{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</p>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
 
 <!--New Inspection Modal-->
 <div class="modal fade" id="newInspectionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
