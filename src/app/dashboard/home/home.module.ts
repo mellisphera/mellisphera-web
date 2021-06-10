@@ -35,6 +35,7 @@ import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 import {NgxPrintModule} from 'ngx-print';
 import { SafeHtmlPipe } from '../melli-charts/safe-html.pipe';
 import { PipeModule } from './../../pipe/pipe.module';
+import { MyDatePipe } from '../../pipe/my-date.pipe';
 
 @NgModule({
   imports: [
@@ -56,7 +57,8 @@ import { PipeModule } from './../../pipe/pipe.module';
   ],
   providers: [
     GraphGlobal,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    MyDatePipe
   ],
   declarations: [
     HomeComponent,

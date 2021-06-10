@@ -25,7 +25,12 @@ limitations under the License. */
 .fa-times{
     margin-left: 15px;
   } */
-
+.open ul.dropdown-menu {
+    display: block;
+}
+.open>.dropdown-menu{
+  display: flex;
+}
   .close{
     font-size: 30px;
 }
@@ -213,7 +218,8 @@ th{
   margin-top: 20px;
 }
 
-.add-event-choice-obs{
+.add-event-choice-obs,
+.edit-event-choice-obs{
   width: 50%;
   display: flex;
   align-items: center;
@@ -221,7 +227,8 @@ th{
   flex-wrap: wrap;
 }
 
-.add-event-notes, .add-event-todo{
+.add-event-notes, .add-event-todo,
+.edit-event-notes, .edit-event-todo{
   width: 92%;
   height: 16%;
   margin-top: 20px;
@@ -230,7 +237,7 @@ th{
   justify-content: flex-start;
 }
 
-.add-event-notes{
+.add-event-notes, .edit-event-notes{
   margin-top: 30px;
 }
 
@@ -281,11 +288,13 @@ th{
   margin-left: 5px;
 }
 
-.add-event-time-input{
+.add-event-time-input,
+.edit-event-time-input{
   width:150px;
 }
 
-.add-event-time-error{
+.add-event-time-error,
+.edit-event-time-error{
   color: darkred;
   display: none;
   height: 30px;
@@ -301,16 +310,19 @@ th{
   opacity: 1;
 }
 
-.add-event-choice > div, .add-event-notes > div{
+.add-event-choice > div, .add-event-notes > div,
+.edit-event-choice > div, .edit-event-notes > div{
   height: 80%;
 }
 
-.add-event-hours-input, .add-event-minutes-input{
+.add-event-hours-input, .add-event-minutes-input,
+.edit-event-hours-input, .edit-event-minutes-input{
   width: 50px !important;
   margin-left: 5px !important;
 }
 
-.add-event-screen input, .add-event-screen select{
+.add-event-screen input, .add-event-screen select,
+.edit-event-hours-input, .edit-event-minutes-input{
   width: 170px;
   margin: 0 auto;
 }
@@ -328,8 +340,9 @@ th{
   margin-left: 20px;
 }
 
-.add-event-notes-textarea, .add-event-todo-textarea{
-  display:none;
+.add-event-notes-textarea, .add-event-todo-textarea,
+.edit-event-notes-textarea, .edit-event-todo-textarea{
+  display: none;
   overflow-y: hidden;
   margin-left: 5px;
   resize: none;
@@ -431,10 +444,6 @@ th{
   width: 40px;
   box-shadow: 1px 1px 3px black;
   border: 1px solid gray;
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/notes.svg');
-  background-position: center;
 }
 
 .add-event-todo-toggle{
@@ -450,6 +459,11 @@ th{
   background-position: center;
 }
 
+@media  screen and (max-width: 1100px) {
+  .hoverStyle{
+    width: 450px;
+  }
+}
 
 
 @media (max-width:800px) {
@@ -470,7 +484,7 @@ th{
 
 .text-title{
     display: inline-block;
-    width: 90%;
+    width: 80%;
 }
 
 @media (max-width: 500px) {
@@ -480,5 +494,8 @@ th{
    .btn_delete_modal_mobile{
        display: block;
        padding-top: 0px !important;
+   }
+   .apiary-notes{
+     font-size: 12px;
    }
 }

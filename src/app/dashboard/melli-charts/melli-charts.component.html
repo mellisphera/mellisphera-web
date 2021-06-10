@@ -129,9 +129,20 @@ limitations under the License. -->
               <i [class]="'fa fa-chevron-right ' + ifActiveIcon(rucher._id) "></i>
               <!--<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span>-->
             </a>
-            <span style="width:60%;" class="apiary-group-title" [id]="rucher._id + '_span'" (click)="apiaryClick(rucher)">{{ rucher.name }}</span>
-            <div (mouseenter)="mouseEnter(rucher._id)" (mouseleave)="mouseLeave(rucher._id)">
-              <button style="margin-right: 0; margin-left: auto;" [class]="'hive-more-button'" (click)="showContextMenu(rucher, null, $event)" [innerHTML]="more_icon | safeHtml"></button>
+            <span style="width:60%;" class="apiary-group-title dropleft" [id]="rucher._id + '_span'" (click)="apiaryClick(rucher)">{{ rucher.name }}</span>
+            <div (mouseenter)="mouseEnter(rucher._id)" (mouseleave)="mouseLeave(rucher._id)"
+            style="margin-right: 0; margin-left: auto;">
+              <button class="hive-more-button dropdown-toggle" [style.visibility]="deviceService.isDesktop() ? 'hidden' : 'visible'" [innerHTML]="more_icon | safeHtml"
+                type="button" [id]="'apiaryDropDownButton' + i" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'apiaryDropDownButton' + i"
+              style="width: auto !important; padding: 0; top: 75%; background-color: white;">
+                <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
+                  data-toggle="modal" data-target="#newInspectionModal" (click)="showAddEvent(rucher, null, $event)">
+                  <i style="margin-left: 0px; margin-right: 10px;" class="fas fa-plus"></i>
+                  {{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}
+                </button>
+              </div>
             </div>
           </div>
 
@@ -145,8 +156,19 @@ limitations under the License. -->
                 <span class="puce-hive"></span>
                 <span style="width:60%;">{{ ruche.name }}</span>
               </a>
-              <div (mouseenter)="mouseEnter(ruche._id)" (mouseleave)="mouseLeave(ruche._id)">
-                <button class="hive-more-button" (click)="showContextMenu(null, ruche, $event)" [innerHTML]="more_icon | safeHtml"></button>
+              <div class="dropleft" (mouseenter)="mouseEnter(ruche._id)" (mouseleave)="mouseLeave(ruche._id)">
+                <button class="hive-more-button dropdown-toggle" [innerHTML]="more_icon | safeHtml" [style.visibility]="deviceService.isDesktop() ? 'hidden' : 'visible'"
+                  type="button" [id]="'hiveDropDownButton' + i" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'hiveDropDownButton' + i" 
+                    style="width: auto !important; padding: 0; top: 75%; background-color: white;">
+                  <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
+                    data-toggle="modal" data-target="#newInspectionModal" (click)="showAddEvent(rucher, ruche, $event)"
+                    [id]="'hiveDropDownButton' + i">
+                    <i style="margin-left: 0px; margin-right: 10px;" class="fas fa-plus"></i>
+                    {{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}
+                  </button>
+                </div>
               </div>
               
             </div>
@@ -208,11 +230,11 @@ limitations under the License. -->
         </div>
         <div class="add-event-notes">
             <button class="add-event-notes-toggle" (click)="showNotes()"></button>
-            <textarea class="add-event-notes-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+            <textarea class="add-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
         </div>
         <div class="add-event-todo">
             <button class="add-event-todo-toggle" (click)="showTodo()"></button>
-            <textarea class="add-event-todo-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+            <textarea class="add-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
         </div>
       </div>
       <div class="modal-footer">

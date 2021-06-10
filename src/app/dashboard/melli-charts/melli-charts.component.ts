@@ -206,12 +206,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         }
         this.melliChartHive.setHiveSelect(hiveSelect);
         this.stackService.addHive(hiveSelect);
-
-
       }
     );
-
-
+    
   }
 
   ngAfterViewInit(): void {
@@ -237,24 +234,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     }
     this.dateDropdown = document.getElementById('date-dropdown');
     this.renderer.addClass(this.eltOnClick, 'nav-active');
-    this.modifyMoreBtnStyles();
   }
-
-
-  modifyMoreBtnStyles(): void{
-    if(this.deviceService.isMobile() || this.deviceService.isTablet()){
-      Array.from(document.getElementsByClassName('hive-more-button')).forEach(_btn => {
-        (<HTMLButtonElement>_btn).style.visibility = 'visible';
-      })
-    }
-    else{
-      Array.from(document.getElementsByClassName('hive-more-button')).forEach(_btn => {
-        (<HTMLButtonElement>_btn).style.visibility = 'hidden';
-      })
-    }
-  }
-
-
 
   ifActiveApiary(idLink: string, apiaryId: string): void {
     let link = (<HTMLLinkElement>document.getElementById(idLink));
@@ -808,7 +788,43 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   // <--- ADD EVENT SCREEN --->
 
-  showAddEvent(): void {
+  showAddEvent(rucher: RucherModel, ruche: RucheInterface, evt: MouseEvent): void {
+
+    console.log(rucher, ruche, evt);
+    this.new_event = {
+      _id: null,
+      apiaryInspId: null,
+      apiaryId: null,
+      hiveId: null,
+      userId: null,
+      createDate: null,
+      opsDate: null,
+      type: null,
+      description: null,
+      tags: [],
+      tasks: [],
+      obs: [],
+      todo: null
+    };
+
+    if(ruche != null){
+      this.hiveEvent = Object.assign({}, ruche);
+      this.typeEvent = 'hive';
+      this.rucherService.findRucherById(ruche.apiaryId, (apiary) => {
+        this.apiaryEvent = Object.assign({}, apiary);
+      });
+      this.new_event.apiaryId = ruche.apiaryId;
+      this.new_event.type = this.typeEvent;
+      this.new_event.hiveId = ruche._id;
+    }
+    else{
+      this.typeEvent = 'apiary';
+    }
+
+    this.apiaryEvent = Object.assign({}, rucher);
+    this.new_event.type = this.typeEvent;
+    this.new_event.apiaryId = rucher._id;
+  
     this.new_event.userId = this.userService.getIdUserLoged();
     this.new_event.createDate = new Date();
     (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';

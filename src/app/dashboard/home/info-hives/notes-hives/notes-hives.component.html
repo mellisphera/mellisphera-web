@@ -22,36 +22,52 @@ limitations under the License. -->
           style="margin-right: 50px;"><img src="./assets/icons/ui/notesWhite.png"
             style="width:25px;margin-left:-5px;" />
           {{this.rucheService.getCurrentHive().name}}</span></div>
-      <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.NEW' | translate}}" data-toggle="modal"
-        [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
-        style="float:right;width: 45px; height: 45px; padding: 0;border: none; background: none;margin-top: -11px;" (click)="initForm()"
-        data-target="#newObservationModal" class="btn btn-success btn_add" (click)="showContextMenu($event)"
-        [innerHTML]="more_icon | safeHtml">
-      </button>
+        <div class="notes-add-div dropleft" style="float: right;">
+          <button [disabled]="rucheService.ruche._id == null"
+            style="float:right; width:45px; height: 45px; padding:0 !important; border:none; background: none; margin-top: -11px;"
+            [disabled]="!(this.userService.checkWriteObject(this.rucheService.ruche.userId))"
+            class="btn btn-success btn_add dropdown-toggle" [innerHTML]="more_icon_white | safeHtml"
+            [id]="'dropdownAddMenu'" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          </button>
+          <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'dropdownAddMenu'" 
+            style="top:6%; right:1%; padding:0; background-color: white; width: auto;">
+            <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
+              data-toggle="modal" data-target="#newObservationModal" (click)="showAddEvent()">
+              <i style="margin-left: 0px; margin-right: 10px;" class="fas fa-plus"></i>
+              {{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}
+            </button>
+          </div>
+        </div>
     </div>
-    <div class="user-sensors panel-body" id="notesHives">
-      <table class="table">
-        <tbody>
-          <ng-container *ngFor="let hiveObs of getInspectionByHiveId(rucheService.getCurrentHive()._id); index as i">
-              <tr class="hoverStyle" *ngIf="hiveObs.type === 'hive'">
-                <td style="width: 100px;">{{ hiveObs.opsDate | myDate }}</td>
-                <td>{{hiveObs.description}}</td>
-                <td>
-                  <div style="width: 140px; display: flex; flex-wrap: wrap;">
-                    <div *ngFor="let item of hiveObs?.obs" [class]="'hives-obs-item hives-'+item.name.toLowerCase()+'-img'"></div>
+    <div class="user-sensors panel-body" id="notesHives" style="width:100%;">
+      <table class="table hive-notes" style="table-layout:fixed;">
+        <tbody class="hive-events">
+          <tr class="hoverStyle" *ngFor="let obs of getInspectionByHiveId(rucheService.getCurrentHive()._id); let i = index;">
+            <ng-container *ngIf="obs.type === 'hive'">
+              <td style="max-width: 90px; width:90px;">{{ obs.opsDate | myDate }}</td>
+              <td style="min-width: 150px; width:36%">{{ obs.description }}</td>
+              <td style="min-width: 150px; width:44%">
+                  <div style="width: 100%; display: flex; flex-wrap: wrap;">
+                    <div *ngFor="let item of obs?.obs" [class]="'hives-obs-item hives-'+item.name.toLowerCase()+'-img'"></div>
                   </div>
-                </td>
-                <!-- <td>{{ 'HIVE_DETAIL.OBSERVATIONS.OBSERVATION' | translate}}</td> -->
-
-              </tr>
-
-          </ng-container>
-          <ng-container
-            *ngIf="inspectionService.inspectionsHive !== undefined && inspectionService.inspectionsHive.length === 0">
-            <tr class="hoverStyle">
-              <td>{{ 'HIVE_DETAIL.OBSERVATIONS.NONOTES' | translate}}</td>
-            </tr>
-          </ng-container>
+              </td>
+            </ng-container>
+            <td style="max-width: 50px; width:50px;">
+              <div class="notes-edit-div dropleft" (mouseenter)="mouseEnter($event)" (mouseleave)="mouseLeave($event)">
+                <button class="btn btn-default dropdown-toggle hive-edit-insp" type="button" [id]="'dropdownMenuButton' + i" 
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [innerHTML]="more_icon | safeHtml"
+                style="border: 0; padding: 3px 9px !important;" [style.visibility]="deviceService.isDesktop() ? 'hidden' : 'visible'"></button>
+                <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'dropdownMenuButton' + i"
+                  style="top:50%; padding:0; background-color: white; width: auto;">
+                  <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
+                    data-toggle="modal" data-target="#editObservationModal" (click)="showEditEvent(obs, i)">
+                    <i style="margin-right: 10px;" class="fas fa-pen"></i>
+                    {{'MELLICHARTS.EVENT.EDIT.TITLE' | translate}}
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -99,12 +115,12 @@ limitations under the License. -->
           </div>
         </div>
         <div class="add-event-notes">
-            <button class="add-event-notes-toggle" (click)="showNotes()"></button>
-            <textarea class="add-event-notes-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+            <button class="add-event-notes-toggle" (click)="showNotes()"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+            <textarea class="add-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
         </div>
         <div class="add-event-todo">
             <button class="add-event-todo-toggle" (click)="showTodo()"></button>
-            <textarea class="add-event-todo-textarea" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+            <textarea class="add-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
         </div>
       </div>
       <div class="modal-footer">
@@ -112,11 +128,55 @@ limitations under the License. -->
           <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
           <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
         </div>
+      </div>
     </div>
   </div>
 </div>
 <!-- End of new Observation Modal -->
 
+<!--Edit Inspection Modal-->
+<div class="modal fade" id="editObservationModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.EDIT.TITLE' | translate}}</h4>
+        <h4>{{this.rucherService.rucher.name}}</h4>
+        <div class="add-event-date">
+          <div>
+            <input class="edit-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEventEdit" [owlDateTime]="dtEventEdit" (ngModelChange)="setNewEventDate()">
+            <owl-date-time [pickerType]="'calendar'" #dtEventEdit></owl-date-time>
+            <input class="edit-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours()" value="{{newEventDate?.getHours()}}">
+            :
+            <input class="edit-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes()" value="{{newEventDate?.getMinutes()}}">
+          </div>
+          <div class="edit-event-time-error">
+            {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="edit-event-choice">
+          <div class="edit-event-choice-obs">
+          </div>
+        </div>
+        <div class="edit-event-notes">
+            <button class="add-event-notes-toggle" (click)="showNotes()"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+            <textarea value="{{new_event?.description}}" class="edit-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="edit-event-todo">
+            <button class="add-event-todo-toggle" (click)="showTodo()"></button>
+            <textarea value="{{new_event?.tasks}}" class="edit-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons">
+          <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="editEvent()">{{'MELLICHARTS.EVENT.BUTTONS.EDIT' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- Edit Observation Modal -->

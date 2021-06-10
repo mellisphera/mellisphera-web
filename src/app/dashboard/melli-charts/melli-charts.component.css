@@ -1116,11 +1116,7 @@ nav[role=admin-navigation] {
         margin: 0px !important;
     }
 
-    .dropdown-menu{
-        background-color: #4F4F51 !important;
-        position: absolute !important;
-        width: 100% !important;
-    }
+    
     .fa-plus{
       color:green;
       margin-left: 15px;

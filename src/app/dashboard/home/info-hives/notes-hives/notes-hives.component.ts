@@ -34,16 +34,18 @@ import { AlertInterface } from '../../../../_model/alert';
 import { UnitService } from '../../../../dashboard/service/unit.service';
 
 import { PICTOS_HIVES_OBS } from '../../../../../constants/pictosHiveObs';
-import { MORE_ICON_WHITE } from './../../../../../constants/pictos';
+import { MORE_ICON_WHITE, MORE_ICON } from './../../../../../constants/pictos';
 
 import { DomSanitizer} from '@angular/platform-browser';
 import { SafeHtmlPipe } from '../../../melli-charts/safe-html.pipe';
+import { MyDatePipe } from '../../../../pipe/my-date.pipe';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 
 @Component({
   selector: 'app-notes-hives',
   templateUrl: './notes-hives.component.html',
-  styleUrls: ['./notes-hives.component.css'],
+  styleUrls: ['./notes-hives.component.css', '../../../../../pictos.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class NotesHivesComponent implements OnInit,AfterViewChecked {
@@ -62,7 +64,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     weekday: 'short', year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric',
   };
 
-  public more_icon: string = MORE_ICON_WHITE;
+  public more_icon_white: string = MORE_ICON_WHITE;
+  public more_icon: string = MORE_ICON;
 
   public newEventDate: Date;
   public hiveEvent: RucheInterface;
@@ -90,9 +93,11 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   };
 
   public tags: string[] = [];
+  inspClicked: number;
 
   //observationsHive : ProcessReport[] = [];
-  constructor(public rucherService: RucherService,
+  constructor(private deviceService: DeviceDetectorService,
+    public rucherService: RucherService,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private translateService: TranslateService,
@@ -105,7 +110,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     public inspectionService: InspectionService,
     private unitService: UnitService,
     public sanitizer: DomSanitizer,
-    public safeHtml: SafeHtmlPipe
+    public safeHtml: SafeHtmlPipe,
+    private myDate: MyDatePipe
   ) {
     this.typeObs = false;
     this.notifier = notifyService;
@@ -324,6 +330,19 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   }
 
 
+  mouseEnter(evt: Event){
+    let div = <HTMLDivElement>evt.target;
+    let more_btn = <HTMLButtonElement>div.getElementsByClassName("hive-edit-insp")[0];
+    more_btn.style.visibility = 'visible';
+  }
+
+  mouseLeave(evt: Event){
+    let div = <HTMLDivElement>evt.target;
+    let more_btn = <HTMLButtonElement>div.getElementsByClassName("hive-edit-insp")[0];
+    more_btn.style.visibility = 'hidden';
+  }
+
+
   showContextMenu(evt: MouseEvent): void {
     evt.stopPropagation();
     evt.preventDefault();
@@ -366,6 +385,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   // <--- ADD EVENT SCREEN --->
 
   showAddEvent(): void {
+    this.hiveEvent = Object.assign({}, this.rucheService.ruche);
+    this.new_event._id = null;
     this.new_event.apiaryId = this.rucherService.rucher._id;
     this.new_event.hiveId = this.rucheService.getCurrentHive()._id;
     this.new_event.userId = this.userService.getIdUserLoged();
@@ -490,8 +511,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     }
     (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
     this.inspectionService.insertHiveEvent(this.new_event).subscribe(
-      () => {
-        this.inspectionService.inspectionsHive.push(this.new_event);
+      _insp => {
+        this.inspectionService.inspectionsHive.push(_insp);
+        this.new_event._id = _insp._id;
       },
       () => {},
       () => {
@@ -510,5 +532,206 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   }
 
   // <--- END ADD EVENT SCREEN --->
+
+   // <--- START EDIT EVENT SCREEN --->
+  
+   showEditEvent(insp: Inspection, i: number){
+    this.newEventDate = new Date(insp.opsDate);
+    (<HTMLElement>document.getElementsByClassName('edit-event-time-error')[0]).style.display = 'none';
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).value = this.newEventDate.getHours().toString();
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).value = this.newEventDate.getMinutes().toString();
+    this.new_event = {
+      _id: insp._id.valueOf(),
+      apiaryInspId: insp.apiaryInspId != null ? insp.apiaryInspId.valueOf() : null ,
+      apiaryId: insp.apiaryId.valueOf(),
+      hiveId: insp.hiveId != null ? insp.hiveId.valueOf() : null ,
+      userId: insp.userId.valueOf(),
+      createDate: new Date (insp.createDate),
+      opsDate: new Date(insp.opsDate),
+      type: insp.type.valueOf(),
+      description: insp.description != null ? insp.description.valueOf() : null,
+      tags: insp.tags != null ? [...insp.tags] : null,
+      tasks: insp.tasks != null ? [...insp.tasks] : null,
+      obs: insp.obs != null ? [...insp.obs] : null,
+      todo: insp.todo != null ? insp.todo.valueOf() : null
+    };
+    this.editObsList();
+  }
+
+  editObsList(): void {
+    const obsDiv = (<HTMLElement>document.getElementsByClassName('edit-event-choice-obs')[0]);
+    obsDiv.innerHTML = '';
+
+    // TO REMOVE
+    let def_count = 0;
+    if(this.new_event.obs != null){
+      for (let i=0; i < this.new_event.obs.length; i++){
+
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === this.new_event.obs[i].name);
+        button.classList.add(PICTOS_HIVES_OBS[index].class);
+        button.classList.add(PICTOS_HIVES_OBS[index].class + '-active');
+
+        button.onclick = (evt: Event) => {
+          this.hiveButton(evt, index);
+        }
+
+        if(this.new_event.obs[i].name === 'default'){
+          def_count++;
+        }
+
+        obsDiv.appendChild(button);
+
+      }
+    }
+
+
+    if(this.new_event.obs != null){
+      // TO BE REMOVED WHEN ALL PICTOS ARE READY
+      if(!this.new_event.obs.some(_obs => _obs.name === 'swarm')){
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm') ].class);
+
+        button.onclick = (evt: Event) => {
+          let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm');
+          this.hiveButton(evt, n);
+        }
+
+        obsDiv.appendChild(button);
+      }
+      if(!this.new_event.obs.some(_obs => _obs.name === 'super+')){
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+') ].class);
+
+        button.onclick = (evt: Event) => {
+          let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+')
+          this.hiveButton(evt, n);
+        }
+
+        obsDiv.appendChild(button);
+      }
+      if(!this.new_event.obs.some(_obs => _obs.name === 'super-')){
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-') ].class);
+
+        button.onclick = (evt: Event) => {
+          let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-');
+          this.hiveButton(evt, n);
+        }
+
+        obsDiv.appendChild(button);
+      }
+    }
+    else{
+      let button = document.createElement('button');
+      button.className = 'hives-obs-add';
+
+      button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm') ].class);
+
+      button.onclick = (evt: Event) => {
+        let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm');
+        this.hiveButton(evt, n);
+      }
+
+      obsDiv.appendChild(button);
+
+      button = document.createElement('button');
+      button.className = 'hives-obs-add';
+
+      button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+') ].class);
+
+      button.onclick = (evt: Event) => {
+        let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+');
+        this.hiveButton(evt, n);
+      }
+
+      obsDiv.appendChild(button);
+
+      button = document.createElement('button');
+      button.className = 'hives-obs-add';
+
+      button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-') ].class);
+
+      button.onclick = (evt: Event) => {
+        let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-');
+        this.hiveButton(evt, n);
+      }
+
+      obsDiv.appendChild(button);
+    }
+
+
+
+    for(let i=0; i<6 - def_count; i++){
+
+      const button = document.createElement('button');
+      button.className = 'hives-obs-add';
+
+      let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'default');
+      button.classList.add(PICTOS_HIVES_OBS[index].class);
+
+      button.onclick = (evt: Event) => {
+        this.hiveButton(evt, index);
+      }
+
+      obsDiv.appendChild(button);
+    }
+
+  }
+
+  updateRow(i: number){
+    let tbody = <HTMLTableElement>document.getElementsByClassName('apiary-events')[0];
+    let tr = <HTMLTableRowElement>tbody.rows[i];
+    tr.cells[0].innerHTML = this.myDate.transform(this.new_event.opsDate, 'myDate');
+    tr.cells[1].innerHTML = this.new_event.description;
+    const obsDiv = (<HTMLElement>document.getElementsByClassName('edit-event-choice-obs')[0]);
+    obsDiv.innerHTML = '';
+    if(this.new_event.obs != null){
+      for (let i=0; i < this.new_event.obs.length; i++){
+
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === this.new_event.obs[i].name);
+        button.classList.add(PICTOS_HIVES_OBS[index].class);
+        button.classList.add(PICTOS_HIVES_OBS[index].class + '-active');
+
+        button.onclick = (evt: Event) => {
+          this.hiveButton(evt, index);
+        }
+
+        obsDiv.appendChild(button);
+
+      }
+    }
+  }
+
+  editEvent(): void{
+    this.inspectionService.inspectionsHive[ this.inspectionService.inspectionsHive.findIndex(_insp => _insp._id === this.new_event._id) ] = Object.assign({}, this.new_event);
+    this.inspectionService.updateInspection(this.new_event).subscribe(
+      () => {},
+      () => {},
+      () => {
+        if(this.translateService.currentLang === 'fr'){
+          this.notifyService.notify('success', 'Inspection editée');
+        }else{
+          this.notifyService.notify('success', 'Edited inspection');
+        }
+        $('#newObservationModal').modal('hide');
+      }
+    );
+
+  }
+
+  // <--- END EDIT EVENT SCREEN --->
 
 }

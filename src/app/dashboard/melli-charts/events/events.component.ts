@@ -869,7 +869,6 @@ export class EventsComponent implements OnInit {
     if(this.eventToEdit.obs != null){
       // TO BE REMOVED WHEN ALL PICTOS ARE READY
       if(!this.eventToEdit.obs.some(_obs => _obs.name === 'swarm')){
-        console.log('add swarm');
         const button = document.createElement('button');
         button.className = 'hives-obs-add';
 
@@ -882,10 +881,35 @@ export class EventsComponent implements OnInit {
 
         obsDiv.appendChild(button);
       }
+      if(!this.eventToEdit.obs.some(_obs => _obs.name === 'super+')){
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+');
+        button.classList.add(PICTOS_HIVES_OBS[index].class);
+
+        button.onclick = (evt: Event) => {
+          this.hiveButton(evt, 'super+');
+        }
+
+        obsDiv.appendChild(button);
+      }
+      if(!this.eventToEdit.obs.some(_obs => _obs.name === 'super-')){
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-');
+        button.classList.add(PICTOS_HIVES_OBS[index].class);
+
+        button.onclick = (evt: Event) => {
+          this.hiveButton(evt, 'super-');
+        }
+
+        obsDiv.appendChild(button);
+      }
     }
     else{
-      console.log('add swarm');
-      const button = document.createElement('button');
+      let button = document.createElement('button');
       button.className = 'hives-obs-add';
 
       let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm');
@@ -896,11 +920,35 @@ export class EventsComponent implements OnInit {
       }
 
       obsDiv.appendChild(button);
+
+      button = document.createElement('button');
+      button.className = 'hives-obs-add';
+
+      index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+');
+      button.classList.add(PICTOS_HIVES_OBS[index].class);
+
+      button.onclick = (evt: Event) => {
+        this.hiveButton(evt, 'super+');
+      }
+
+      obsDiv.appendChild(button);
+
+      button = document.createElement('button');
+      button.className = 'hives-obs-add';
+
+      index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-');
+      button.classList.add(PICTOS_HIVES_OBS[index].class);
+
+      button.onclick = (evt: Event) => {
+        this.hiveButton(evt, 'super-');
+      }
+
+      obsDiv.appendChild(button);
     }
 
 
 
-    for(let i=0; i<8 - def_count; i++){
+    for(let i=0; i<6 - def_count; i++){
 
       const button = document.createElement('button');
       button.className = 'hives-obs-add';

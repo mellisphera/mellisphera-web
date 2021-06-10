@@ -30,10 +30,13 @@ import { UnitService } from '../../../../dashboard/service/unit.service';
 import { Router } from '@angular/router';
 
 import { PICTOS_HIVES_OBS } from '../../../../../constants/pictosHiveObs'
-import { MORE_ICON_WHITE } from './../../../../../constants/pictos';
+import { MORE_ICON_WHITE, MORE_ICON } from './../../../../../constants/pictos';
 
 import { DomSanitizer} from '@angular/platform-browser';
 import { SafeHtmlPipe } from '../../../melli-charts/safe-html.pipe';
+import { RucheService } from '../../../../dashboard/service/api/ruche.service';
+import { MyDatePipe } from '../../../../pipe/my-date.pipe';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-notes',
@@ -45,11 +48,14 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   screenHeight:any;
   screenWidth:any;
 
-  public more_icon: string = MORE_ICON_WHITE;
+  public more_icon_white: string = MORE_ICON_WHITE;
+  public more_icon: string = MORE_ICON;
 
   public newEventDate: Date;
   public hiveEvent: RucheInterface;
   public apiaryEvent: RucherModel;
+
+  public apiaryInsp: Inspection[];
 
   public new_event: Inspection = {
     _id: null,
@@ -67,7 +73,11 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     todo: null
   };
 
+  public inspClicked: number;
+
   public tags: string[] = [];
+
+
 
   @Output() noteChange = new EventEmitter<any>();
 
@@ -90,7 +100,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   public settings: any;
   private obsSubject: Subscription;
   public apiaryObs: Array<Observation>;
-  constructor(public rucherService: RucherService,
+  constructor(private deviceService: DeviceDetectorService,
+    public rucherService: RucherService,
     private notifyService: NotifierService,
     public observationService: ObservationService,
     public inspectionService: InspectionService,
@@ -102,7 +113,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     private inspService: InspectionService,
     private router: Router,
     public sanitizer: DomSanitizer,
-    public safeHtml: SafeHtmlPipe) {
+    public safeHtml: SafeHtmlPipe,
+    private myDate: MyDatePipe) {
       this.type = 'ApiaryObs';
       this.message = '';
       this.typeToMv = 0;
@@ -134,6 +146,18 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       document.getElementById('notesApiary').style.height = ''+(40) + 'vh';
     }
  */
+  }
+
+  mouseEnter(evt: Event){
+    let div = <HTMLDivElement>evt.target;
+    let more_btn = <HTMLButtonElement>div.getElementsByClassName("apiary-edit-insp")[0];
+    more_btn.style.visibility = 'visible';
+  }
+
+  mouseLeave(evt: Event){
+    let div = <HTMLDivElement>evt.target;
+    let more_btn = <HTMLButtonElement>div.getElementsByClassName("apiary-edit-insp")[0];
+    more_btn.style.visibility = 'hidden';
   }
 
   /**
@@ -383,6 +407,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   // <--- ADD EVENT SCREEN --->
 
   showAddEvent(): void {
+    this.apiaryEvent = Object.assign({}, this.rucherService.rucher);
+    this.new_event._id = null;
     this.new_event.apiaryId = this.rucherService.rucher._id;
     this.new_event.userId = this.userService.getIdUserLoged();
     this.new_event.createDate = new Date();
@@ -400,11 +426,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   addObsList(): void {
     const obsDiv = (<HTMLElement>document.getElementsByClassName('add-event-choice-obs')[0]);
     obsDiv.innerHTML = '';
-    let div;
+    
     for (let i = 0; i < PICTOS_HIVES_OBS.length; i++) {
-      /*if ( i % 8 === 0 ) {
-        div = document.createElement('div');
-      }*/
 
       const button = document.createElement('button');
       button.className = 'hives-obs-add';
@@ -435,6 +458,9 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       return;
     }
     button.classList.add(PICTOS_HIVES_OBS[btnIndex].class + '-active');
+    if(this.new_event.obs == null){
+      this.new_event.obs = [];
+    }
     this.new_event.obs.push({name: PICTOS_HIVES_OBS[btnIndex].name, img: PICTOS_HIVES_OBS[btnIndex].img_active});
     return;
   }
@@ -516,8 +542,9 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     }
     (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
     this.inspService.insertHiveEvent(this.new_event).subscribe(
-      () => {
-        this.inspectionService.inspectionsApiary.push(this.new_event);
+      _insp => {
+        this.inspectionService.inspectionsApiary.push(_insp);
+        this.new_event._id = _insp._id;
       },
       () => {},
       () => {
@@ -536,7 +563,207 @@ export class NotesComponent implements OnInit,AfterViewChecked {
 
   // <--- END ADD EVENT SCREEN --->
 
+  // <--- START EDIT EVENT SCREEN --->
+  
+  showEditEvent(insp: Inspection, i: number){
+    this.newEventDate = new Date(insp.opsDate);
+    (<HTMLElement>document.getElementsByClassName('edit-event-time-error')[0]).style.display = 'none';
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).value = this.newEventDate.getHours().toString();
+    (<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).value = this.newEventDate.getMinutes().toString();
+    this.inspClicked = i;
+    this.new_event = {
+      _id: insp._id.valueOf(),
+      apiaryInspId: insp.apiaryInspId != null ? insp.apiaryInspId.valueOf() : null ,
+      apiaryId: insp.apiaryId.valueOf(),
+      hiveId: insp.hiveId != null ? insp.hiveId.valueOf() : null ,
+      userId: insp.userId.valueOf(),
+      createDate: new Date (insp.createDate),
+      opsDate: new Date(insp.opsDate),
+      type: insp.type.valueOf(),
+      description: insp.description != null ? insp.description.valueOf() : null,
+      tags: insp.tags != null ? [...insp.tags] : null,
+      tasks: insp.tasks != null ? [...insp.tasks] : null,
+      obs: insp.obs != null ? [...insp.obs] : null,
+      todo: insp.todo != null ? insp.todo.valueOf() : null
+    };
+    this.editObsList();
+  }
 
+  editObsList(): void {
+    const obsDiv = (<HTMLElement>document.getElementsByClassName('edit-event-choice-obs')[0]);
+    obsDiv.innerHTML = '';
+
+    // TO REMOVE
+    let def_count = 0;
+    if(this.new_event.obs != null){
+      for (let i=0; i < this.new_event.obs.length; i++){
+
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === this.new_event.obs[i].name);
+        button.classList.add(PICTOS_HIVES_OBS[index].class);
+        button.classList.add(PICTOS_HIVES_OBS[index].class + '-active');
+
+        button.onclick = (evt: Event) => {
+          this.hiveButton(evt, index);
+        }
+
+        if(this.new_event.obs[i].name === 'default'){
+          def_count++;
+        }
+
+        obsDiv.appendChild(button);
+
+      }
+    }
+
+
+    if(this.new_event.obs != null){
+      // TO BE REMOVED WHEN ALL PICTOS ARE READY
+      if(!this.new_event.obs.some(_obs => _obs.name === 'swarm')){
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm') ].class);
+
+        button.onclick = (evt: Event) => {
+          let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm');
+          this.hiveButton(evt, n);
+        }
+
+        obsDiv.appendChild(button);
+      }
+      if(!this.new_event.obs.some(_obs => _obs.name === 'super+')){
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+') ].class);
+
+        button.onclick = (evt: Event) => {
+          let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+')
+          this.hiveButton(evt, n);
+        }
+
+        obsDiv.appendChild(button);
+      }
+      if(!this.new_event.obs.some(_obs => _obs.name === 'super-')){
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-') ].class);
+
+        button.onclick = (evt: Event) => {
+          let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-');
+          this.hiveButton(evt, n);
+        }
+
+        obsDiv.appendChild(button);
+      }
+    }
+    else{
+      let button = document.createElement('button');
+      button.className = 'hives-obs-add';
+
+      button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm') ].class);
+
+      button.onclick = (evt: Event) => {
+        let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm');
+        this.hiveButton(evt, n);
+      }
+
+      obsDiv.appendChild(button);
+
+      button = document.createElement('button');
+      button.className = 'hives-obs-add';
+
+      button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+') ].class);
+
+      button.onclick = (evt: Event) => {
+        let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+');
+        this.hiveButton(evt, n);
+      }
+
+      obsDiv.appendChild(button);
+
+      button = document.createElement('button');
+      button.className = 'hives-obs-add';
+
+      button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-') ].class);
+
+      button.onclick = (evt: Event) => {
+        let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-');
+        this.hiveButton(evt, n);
+      }
+
+      obsDiv.appendChild(button);
+    }
+
+
+
+    for(let i=0; i<6 - def_count; i++){
+
+      const button = document.createElement('button');
+      button.className = 'hives-obs-add';
+
+      let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'default');
+      button.classList.add(PICTOS_HIVES_OBS[index].class);
+
+      button.onclick = (evt: Event) => {
+        this.hiveButton(evt, index);
+      }
+
+      obsDiv.appendChild(button);
+    }
+
+  }
+
+  updateRow(i: number){
+    let tbody = <HTMLTableElement>document.getElementsByClassName('apiary-events')[0];
+    let tr = <HTMLTableRowElement>tbody.rows[i];
+    tr.cells[0].innerHTML = this.myDate.transform(this.new_event.opsDate, 'myDate');
+    tr.cells[1].innerHTML = this.new_event.description;
+    const obsDiv = (<HTMLElement>document.getElementsByClassName('edit-event-choice-obs')[0]);
+    obsDiv.innerHTML = '';
+    if(this.new_event.obs != null){
+      for (let i=0; i < this.new_event.obs.length; i++){
+
+        const button = document.createElement('button');
+        button.className = 'hives-obs-add';
+
+        let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === this.new_event.obs[i].name);
+        button.classList.add(PICTOS_HIVES_OBS[index].class);
+        button.classList.add(PICTOS_HIVES_OBS[index].class + '-active');
+
+        button.onclick = (evt: Event) => {
+          this.hiveButton(evt, index);
+        }
+
+        obsDiv.appendChild(button);
+
+      }
+    }
+  }
+
+  editEvent(): void{
+    this.inspectionService.inspectionsApiary[ this.inspectionService.inspectionsApiary.findIndex(_insp => _insp._id === this.new_event._id) ] = Object.assign({}, this.new_event);
+    this.inspService.updateInspection(this.new_event).subscribe(
+      () => {},
+      () => {},
+      () => {
+        if(this.translateService.currentLang === 'fr'){
+          this.notifyService.notify('success', 'Inspection editée');
+        }else{
+          this.notifyService.notify('success', 'Edited inspection');
+        }
+        $('#editObservationModal').modal('hide');
+      }
+    );
+
+  }
+
+  // <--- END EDIT EVENT SCREEN --->
 
 
 

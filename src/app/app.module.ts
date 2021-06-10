@@ -42,7 +42,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketService } from './dashboard/service/socket.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options: {} };
 export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
@@ -68,6 +68,7 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    DeviceDetectorModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -97,7 +98,6 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     JwtHelperService,
     AuthGuardService,
     SignupService,
-    DeviceDetectorService,
     // MeteoService,
     // GraphFlowerService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
