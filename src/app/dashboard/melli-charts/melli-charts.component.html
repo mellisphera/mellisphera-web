@@ -132,7 +132,7 @@ limitations under the License. -->
             <span style="width:60%;" class="apiary-group-title dropleft" [id]="rucher._id + '_span'" (click)="apiaryClick(rucher)">{{ rucher.name }}</span>
             <div (mouseenter)="mouseEnter(rucher._id)" (mouseleave)="mouseLeave(rucher._id)"
             style="margin-right: 0; margin-left: auto;">
-              <button class="hive-more-button dropdown-toggle" [style.visibility]="deviceService.isDesktop() ? 'hidden' : 'visible'" [innerHTML]="more_icon | safeHtml"
+              <button class="hive-more-button dropdown-toggle" [style.visibility]="isDesktop ? 'hidden' : 'visible'" [innerHTML]="more_icon | safeHtml"
                 type="button" [id]="'apiaryDropDownButton' + i" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               </button>
               <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'apiaryDropDownButton' + i"
