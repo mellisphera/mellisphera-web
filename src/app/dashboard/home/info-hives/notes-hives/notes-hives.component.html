@@ -94,8 +94,9 @@ limitations under the License. -->
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
-        <h4>{{this.rucheService.getCurrentHive().name}}</h4>
+        <img width="35" height="35" src="../../../../../assets/ms-pics/inspect_cb.svg" style="float: right;">
+        <h4 class="modal-title" style="margin-left: 20%;">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
+        <h4 style="margin-left: 20%;">{{this.rucheService.getCurrentHive().name}}</h4>
         <div class="add-event-date">
           <div>
             <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
@@ -139,8 +140,9 @@ limitations under the License. -->
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">{{'MELLICHARTS.EVENT.EDIT.TITLE' | translate}}</h4>
-        <h4>{{this.rucherService.rucher.name}}</h4>
+        <img width="35" height="35" src="../../../../../assets/ms-pics/inspect_cb.svg" style="float: right;">
+        <h4 class="modal-title" style="margin-left: 20%;">{{'MELLICHARTS.EVENT.EDIT.TITLE' | translate}}</h4>
+        <h4 style="margin-left: 20%;">{{this.rucherService.rucher.name}}</h4>
         <div class="add-event-date">
           <div>
             <input class="edit-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEventEdit" [owlDateTime]="dtEventEdit" (ngModelChange)="setNewEventDate()">
@@ -165,7 +167,7 @@ limitations under the License. -->
         </div>
         <div class="edit-event-todo">
             <button class="add-event-todo-toggle" (click)="showTodo()"></button>
-            <textarea value="{{new_event?.tasks}}" class="edit-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+            <textarea value="{{new_event?.todo}}" class="edit-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
         </div>
       </div>
       <div class="modal-footer">

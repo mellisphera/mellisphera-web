@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
 
-<div [class]="'content-page ' + checkLoadindingIsComplete()" (click)="closeContextMenu()">
+<div [class]="'content-page ' + checkLoadindingIsComplete()">
   <nav class="navbar navbar-default" role="admin-navigation">
     <div class="navbar-header">
     </div>
@@ -195,9 +195,11 @@ limitations under the License. -->
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
-        <h4 *ngIf="typeEvent === 'hive'">{{hiveEvent?.name}}</h4>
-        <h4 *ngIf="typeEvent === 'apiary'">{{apiaryEvent?.name}}</h4>
+        <img *ngIf="typeEvent === 'apiary'" width="35" height="35" src="../../../assets/ms-pics/inspect-api_cb.svg" style="float: right;">
+        <img *ngIf="typeEvent === 'hive'" width="35" height="35" src="../../../assets/ms-pics/inspect_cb.svg" style="float: right;">
+        <h4 class="modal-title" style="margin-left: 20%;">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
+        <h4 *ngIf="typeEvent === 'hive'" style="margin-left: 20%;">{{hiveEvent?.name}}</h4>
+        <h4 *ngIf="typeEvent === 'apiary'" style="margin-left: 20%;">{{apiaryEvent?.name}}</h4>
         <div class="add-event-date">
           <div>
             <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
@@ -217,7 +219,7 @@ limitations under the License. -->
           </div>
         </div>
         <div class="add-event-notes">
-            <button class="add-event-notes-toggle" (click)="showNotes()"></button>
+            <button class="add-event-notes-toggle" (click)="showNotes()"><i class="fas fa-pen" style="font-size: 22px;"></i></button>
             <textarea class="add-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
         </div>
         <div class="add-event-todo">

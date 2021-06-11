@@ -489,9 +489,9 @@
             "DATE_ERROR": "Please fill the date field with a valid date",
             "EVENT": "Event",
             "NOTES": "Notes",
-            "NOTES_PLACEHOLDER":"Notes...",
+            "NOTES_PLACEHOLDER":"Add a Note",
             "TODO": "Tasks",
-            "TODO_PLACEHOLDER":"Tasks..."
+            "TODO_PLACEHOLDER":"Add a task to do"
           },
           "EDIT":{
             "TITLE":"Edit Event"
@@ -510,8 +510,8 @@
             "HEADER":{
                 "APIARY":"Apiary",
                 "HIVE":"Hive",
-                "DATE":"Event date",
-                "TYPE":"Event type",
+                "DATE":"Date",
+                "TYPE":"Type",
                 "PICTOS":"Events",
                 "NOTES_TASKS":"Notes & Tasks",
                 "EDIT":"Edit",
@@ -566,8 +566,8 @@
         }
     },
     "INSPECT":{
-      "SIDEBAR":"Inspect",
-      "SIDEBAR_TOOLTIP":"Inspect",
+      "SIDEBAR":"Inspections",
+      "SIDEBAR_TOOLTIP":"Inspections",
       "ACTIONS":"Actions",
       "OBS":"Observations",
       "NOTES":"Notes",

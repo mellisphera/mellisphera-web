@@ -475,4 +475,21 @@ th{
     .hive-notes{
       font-size: 12px;
     }
+    
+    .hives-obs-item{
+      margin: 1px 1px;
+      height: 28px;
+      width: 28px;
+    }
+
+    .hives-swarm-img,
+    .hives-swarm-img-active,
+    .hives-default-img,
+    .hives-default-img-active,
+    .hives-super--img,
+    .hives-super--img-active,
+    .hives-super\+-img,
+    .hives-super\+-img-active{
+      background-size: 26px;
+    }
  }

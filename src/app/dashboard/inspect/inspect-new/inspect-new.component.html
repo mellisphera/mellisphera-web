@@ -7,13 +7,11 @@
               <option disabled selected value style="color:grey;"> {{'INSPECT.NEW.DEFAULT_SELECT' | translate}} </option>
               <option *ngFor="let apiary of user_apiaries" value="{{apiary.name}}"> {{apiary.name}} </option>
             </select>
-            <i class="fa fa-check valid-icon-select"></i>
           </div>
           <div>
             <i class="fa fa-calendar inspect-time-icon"></i>
             <input class="inspect-time-input" placeholder="{{'INSPECT.NEW.PLACEHOLDER' | translate}}" [(ngModel)]="inspect_date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDate()">
             <owl-date-time #dtPicker1></owl-date-time>
-            <i class="fa fa-check valid-icon-date"></i>
           </div>
         </div>
     </div>
@@ -24,7 +22,7 @@
             <ng-container *ngFor="let conf of inspConf; let i = index">
               <ng-container *ngIf="conf.enable && conf.inspCat.applies.includes('apiary') && conf.inspCat.type === 'act'">
                 <button [class]="'apiary-action btn btn-default btn-' + conf.inspCat.img.toLowerCase() + '_b'"
-                (click)="changeActive($event, conf.inspCat)"></button>
+                (click)="changeActive($event, conf.inspCat, 'apiary', 'act')"></button>
               </ng-container>
             </ng-container>
           </div>
@@ -32,7 +30,7 @@
             <ng-container *ngFor="let conf of inspConf; let i = index">
               <ng-container *ngIf="conf.enable && conf.inspCat.applies.includes('apiary') && conf.inspCat.type === 'obs'">
                 <button [class]="'apiary-obs btn btn-default btn-' + conf.inspCat.img.toLowerCase() + '_b'"
-                (click)="changeActive($event, conf.inspCat)"></button>
+                (click)="changeActive($event, conf.inspCat, 'apiary', 'obs')"></button>
               </ng-container>
             </ng-container>
           </div>

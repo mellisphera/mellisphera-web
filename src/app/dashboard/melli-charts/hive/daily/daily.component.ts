@@ -391,7 +391,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
     switch(this.currentTypeDailyEnv.name){
       case 'EVENT-APIARY':
         this.melliHive.getDailyEnvChartInstance().showLoading();
-        this.dailyManager.getChartInsp(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
+        this.dailyManager.getChartEventApi(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
           this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'EVENT-HIVE':

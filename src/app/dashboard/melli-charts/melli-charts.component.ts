@@ -978,7 +978,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           this.notify.notify('success', 'Created Inspection');
         }
         let btn = <HTMLButtonElement>document.getElementsByClassName('hive-more-button active')[0];
-        btn.classList.remove('active');
+        if(btn != undefined){
+          btn.classList.remove('active');
+        }
       }
     );
     $('#newInspectionModal').modal('hide');

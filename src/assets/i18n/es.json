@@ -504,9 +504,9 @@
             "DATE_ERROR": "Por favor complete la fecha con una fecha válida",
             "EVENT": "Evento",
             "NOTES": "Notas",
-            "NOTES_PLACEHOLDER":"Notas...",
+            "NOTES_PLACEHOLDER":"Añadir una Nota",
             "TODO": "Tareas",
-            "TODO_PLACEHOLDER":"Tareas..."
+            "TODO_PLACEHOLDER":"Añadir una Tarea"
           },
           "EDIT":{
             "TITLE":"Editar Evento"
@@ -525,8 +525,8 @@
             "HEADER":{
                 "APIARY":"Colmenar",
                 "HIVE":"Colmena",
-                "DATE":"Fecha de Evento",
-                "TYPE":"Typo de Evento",
+                "DATE":"Fecha",
+                "TYPE":"Typo",
                 "PICTOS":"Eventos",
                 "NOTES_TASKS":"Notas & Tareas",
                 "EDIT":"Editar",
@@ -581,8 +581,8 @@
         }
     },
     "INSPECT":{
-      "SIDEBAR":"Inspeccionar",
-      "SIDEBAR_TOOLTIP":"Inspeccionar",
+      "SIDEBAR":"Inspecciones",
+      "SIDEBAR_TOOLTIP":"Inspecciones",
       "ACTIONS":"Acciones",
       "OBS":"Observaciones",
       "NOTES":"Notas",

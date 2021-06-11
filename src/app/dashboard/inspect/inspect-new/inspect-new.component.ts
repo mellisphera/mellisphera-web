@@ -42,6 +42,38 @@ export class InspectNewComponent implements OnInit {
   public user_hives: RucheInterface[];
   public active_apiary_index: number;
 
+  public new_apiary_insp: Inspection = {
+    _id: null,
+    apiaryInspId: null,
+    apiaryId: null,
+    hiveId: null,
+    userId: null,
+    createDate: null,
+    opsDate: null,
+    type: 'apiary',
+    tags: [],
+    tasks: [],
+    obs: [],
+    description: null,
+    todo: null
+  }
+
+  public new_hive_insp: Inspection = {
+    _id: null,
+    apiaryInspId: null,
+    apiaryId: null,
+    hiveId: null,
+    userId: null,
+    createDate: null,
+    opsDate: null,
+    type: 'hive',
+    tags: [],
+    tasks: [],
+    obs: [],
+    description: null,
+    todo: null
+  }
+
   constructor(
     private inspService: InspectionService,
     private inspCatService: InspCatService,
@@ -106,6 +138,8 @@ export class InspectNewComponent implements OnInit {
       () => {},
       () => {}
     )
+
+    this.new_apiary_insp.userId = this.userService.getIdUserLoged();
   }
 
   compare(a, b) {
@@ -153,20 +187,33 @@ export class InspectNewComponent implements OnInit {
     });
   }
 
-  changeActive(evt: Event, inspCat: InspCat): void{
+  changeActive(evt: Event, inspCat: InspCat, type: string, nameCat: string): void{
     let button = <HTMLButtonElement>evt.target;
     if(button.className.includes('_cb')){
       button.className = button.className.slice(0, -3);
       button.className += '_b';
+      let index;
+      if(type === 'apiary'){
+        if(nameCat === 'act'){
+          index = this.new_apiary_insp.tasks.findIndex(_t => _t.name === inspCat.name)
+          this.new_apiary_insp.tasks.
+        }
+      }
       return;
     }
     button.className = button.className.slice(0, -2);
     button.className += '_cb';
+    if(type === 'apiary'){
+      if(nameCat === 'act'){
+        this.new_apiary_insp.tasks.push({});
+      }
+    }
     return;
   }
 
   onSelectChange(): void{
-    this.active_apiary_index = (<HTMLSelectElement>document.getElementById('inspect-apiary-select')).selectedIndex;
+    this.active_apiary_index = (<HTMLSelectElement>document.getElementById('inspect-apiary-select')).selectedIndex - 1;  
+    this.new_apiary_insp.apiaryId = this.user_apiaries[this.active_apiary_index]._id;
     this.rucheService.getHivesByApiary(this.user_apiaries[this.active_apiary_index - 1]._id).subscribe(
       _hives => {
         this.user_hives = [..._hives];
@@ -179,14 +226,15 @@ export class InspectNewComponent implements OnInit {
 
   inspectDate(): void{
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input')[0]).value = this.unitService.getHourlyDate(this.inspect_date);
+    this.new_apiary_insp.opsDate = new Date(this.inspect_date);
   }
 
   saveApiaryNotes(evt: Event){
-
+    this.new_apiary_insp.description = (<HTMLTextAreaElement>evt.target).value;
   }
 
   saveApiaryTodo(evt: Event){
-
+    this.new_apiary_insp.todo = (<HTMLTextAreaElement>evt.target).value;
   }
 
   saveInspection(): void{

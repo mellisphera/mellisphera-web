@@ -489,9 +489,9 @@
             "DATE_ERROR": "Veuillez renseigner une date valide",
             "EVENT": "Evenement",
             "NOTES": "Notes",
-            "NOTES_PLACEHOLDER":"Notes...",
+            "NOTES_PLACEHOLDER":"Ajouter une Note",
             "TODO": "Taches",
-            "TODO_PLACEHOLDER":"Taches..."
+            "TODO_PLACEHOLDER":"Ajouter une tache"
           },
           "EDIT":{
             "TITLE":"Modifier Evenement"
@@ -510,8 +510,8 @@
             "HEADER":{
                 "APIARY":"Rucher",
                 "HIVE":"Ruche",
-                "DATE":"Date Evenement",
-                "TYPE":"Type Evenement",
+                "DATE":"Date",
+                "TYPE":"Type",
                 "PICTOS":"Evenements",
                 "NOTES_TASKS":"Notes & Taches",
                 "EDIT":"Editer",
@@ -568,8 +568,8 @@
         }
     },
     "INSPECT":{
-      "SIDEBAR":"Inspecter",
-      "SIDEBAR_TOOLTIP":"Inspecter",
+      "SIDEBAR":"Inspections",
+      "SIDEBAR_TOOLTIP":"Inspections",
       "ACTIONS":"Actions",
       "OBS":"Observations",
       "NOTES":"Notes",

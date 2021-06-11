@@ -7,7 +7,7 @@
     <thead>
       <th style="width: 5%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.APIARY' | translate }}</th>
       <th style="width: 5%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.HIVE' | translate }}</th>
-      <th style="width: 7.5%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.DATE' | translate }}</th>
+      <th style="width: 7.5%;" (click)="sortByDate()" class="th-date-sort">{{'MELLICHARTS.EVENT.TABLE.HEADER.DATE' | translate }}</th>
       <th style="width: 7.5%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.TYPE' | translate }}</th>
       <th style="width: 15%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.PICTOS' | translate }}</th>
       <th style="width: 40%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.NOTES_TASKS' | translate }}</th>
@@ -48,12 +48,12 @@
           </div>
         </div>
         <div class="edit-event-notes">
-            <button class="add-event-notes-toggle" (click)="showNotes()"></button>
+            <button class="add-event-notes-toggle" (click)="showNotes()"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
             <textarea value="{{eventToEdit?.description}}" class="edit-event-notes-textarea hives-note-textarea-edit-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
         </div>
         <div class="edit-event-todo">
             <button class="add-event-todo-toggle" (click)="showTodo()"></button>
-            <textarea value="{{eventToEdit?.tasks}}" class="edit-event-todo-textarea hives-todo-textarea-edit-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+            <textarea value="{{eventToEdit?.todo}}" class="edit-event-todo-textarea hives-todo-textarea-edit-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
         </div>
       </div>
       <div class="modal-footer">

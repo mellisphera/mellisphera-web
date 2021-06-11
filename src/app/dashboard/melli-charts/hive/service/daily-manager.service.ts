@@ -1237,12 +1237,12 @@ export class DailyManagerService {
 
   }
 
-  getChartInsp(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean): void{
+  getChartEventApi(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean): void{
     let hive: RucheInterface = this.rucheService.getHiveById(hiveId);
     this.inspectionService.getInspectionByApiaryIdAndOpsDateBetween(hive.apiaryId, range).subscribe(
       _insp => {
         let data : any[] = _insp.filter(_elt => _elt.type === 'apiary').map(_elt => {
-          return { date: _elt.opsDate, value: 0, sensorRef: 'Inspections' };
+          return { date: _elt.opsDate, value: 0, sensorRef: 'Event-Api' };
         });
         let option = Object.assign({}, this.baseOptionEnv);
         if(rangeChange){

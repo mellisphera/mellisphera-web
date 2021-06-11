@@ -209,8 +209,8 @@ export class GraphGlobal {
       { graph: 'Rain', titre: 'Précipitations' },
       { graph: 'Wind', titre: 'Vent' },
       { graph: 'Fitness', titre: 'Santé de la ruche'},
-      { graph: 'Event-apiary', titre: 'Inspections'},
-      { graph: 'Event-hive', titre: 'Evenements'}
+      { graph: 'Event-apiary', titre: 'Evenements Rucher'},
+      { graph: 'Event-hive', titre: 'Evenements Ruche'}
 
     ];
     this.titresES = [
@@ -233,8 +233,8 @@ export class GraphGlobal {
       { graph: 'Rain', titre: 'Precipitaciones' },
       { graph: 'Wind', titre: 'Viento' },
       { graph: 'Fitness', titre: 'Salud de la colmena'},
-      { graph: 'Event-apiary', titre: 'Inspecciones'},
-      { graph: 'Event-hive', titre: 'Eventos'}
+      { graph: 'Event-apiary', titre: 'Eventos de Colmenar'},
+      { graph: 'Event-hive', titre: 'Eventos de Colmena'}
     ];
 
     // EN
@@ -258,8 +258,8 @@ export class GraphGlobal {
       { graph: 'Rain', titre: 'Precipitation' },
       { graph: 'Wind', titre: 'Wind' },
       { graph: 'Fitness', titre: 'Hive health'},
-      { graph: 'Event-apiary', titre: 'Inspections'},
-      { graph: 'Event-hive', titre: 'Events'}
+      { graph: 'Event-apiary', titre: 'Apiary Events'},
+      { graph: 'Event-hive', titre: 'Hive Events'}
     ];
   }
 

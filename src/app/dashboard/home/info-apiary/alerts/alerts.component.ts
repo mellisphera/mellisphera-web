@@ -147,7 +147,7 @@ export class AlertsComponent implements OnInit {
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'Inspections' : 'Notifications', type: _elt.type  }
+      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'Evenements' : 'Notifications', type: _elt.type  }
     });
   }
 

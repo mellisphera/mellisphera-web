@@ -958,10 +958,6 @@ nav[role=admin-navigation] {
   width: 40px;
   box-shadow: 1px 1px 3px black;
   border: 1px solid gray;
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../assets/ms-pics/notes.svg');
-  background-position: center;
 }
 
 .add-event-todo-toggle{

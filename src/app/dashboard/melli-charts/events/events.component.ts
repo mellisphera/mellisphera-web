@@ -48,6 +48,8 @@ export class EventsComponent implements OnInit {
   public apiaryEvent: RucherModel;
   public newEventDate: Date;
 
+  public sort: string = 'none';
+
   constructor(
     private rucheService: RucheService,
     private rucherService: RucherService,
@@ -88,6 +90,34 @@ export class EventsComponent implements OnInit {
     this.loadAll();
   }
 
+  sortByDate(): void{
+    let tbody = <HTMLTableElement>document.getElementsByClassName('table-body-events')[0];
+    let th = <HTMLTableCellElement>document.getElementsByClassName('th-date-sort')[0];
+    let arr: any[] = [ ...this.events, ...this.alerts];
+    if(this.sort === 'none' || this.sort === 'ASC'){
+      this.sort = 'DESC';
+      th.innerHTML = this.translate.instant('MELLICHARTS.EVENT.TABLE.HEADER.DATE') + '<i class="fas fa-sort-up" style="margin-left:3px"></i>';
+      arr.sort((a,b) => {
+        return new Date(a.opsDate) < new Date(b.opsDate) ? 1 : -1
+      })
+    }
+    else{
+      this.sort = 'ASC';
+      th.innerHTML = this.translate.instant('MELLICHARTS.EVENT.TABLE.HEADER.DATE') + '<i class="fas fa-sort-down" style="margin-left:3px"></i>';
+      arr.sort((a,b) => {
+        return new Date(a.opsDate) > new Date(b.opsDate) ? 1 : -1
+      })
+    }
+    arr.forEach( (_item,i) => {
+      if(_item.hasOwnProperty('description')){
+        tbody.rows[i].replaceWith( this.createRowInsp( _item ) )
+      }
+      else{
+        tbody.rows[i].replaceWith( this.createRowAlert( _item ) )
+      }
+    })
+  }
+
   getHiveIndex(hive: RucheInterface): number {
     return this.rucheService.ruchesAllApiary.findIndex(elt => elt._id === hive._id);
   }
@@ -111,6 +141,8 @@ export class EventsComponent implements OnInit {
 
   loadAll(): void{
     this.tbody.innerHTML = '';
+    let th = <HTMLTableCellElement>document.getElementsByClassName('th-date-sort')[0];
+    th.innerHTML = this.translate.instant('MELLICHARTS.EVENT.TABLE.HEADER.DATE');
     let locations = [];
     this.events = [];
     this.alerts = [];
@@ -170,6 +202,9 @@ export class EventsComponent implements OnInit {
   loadHive(hive: RucheInterface): void {
     let types = [];
     let locations = [];
+    let th = <HTMLTableCellElement>document.getElementsByClassName('th-date-sort')[0];
+    th.innerHTML = this.translate.instant('MELLICHARTS.EVENT.TABLE.HEADER.DATE');
+    this.hives.push(hive._id);
     if(this.melliFilters.getShowEvent()){
       types.push('hive');
     }
@@ -216,9 +251,15 @@ export class EventsComponent implements OnInit {
     while(i<this.tbody.rows.length){
       let row: HTMLTableRowElement = this.tbody.rows[i];
       if(row.cells[1].innerHTML === hive.name){
+        if(row.cells[3].className.includes('alert')){
+          let index = this.alerts.findIndex(_alt => _alt._id === row.cells[8].innerHTML);
+          this.alerts.splice(index, 1);
+        }
+        else{
+          let index = this.events.findIndex(_insp => _insp._id === row.cells[8].innerHTML);
+          this.events.splice(index, 1);
+        }
         this.tbody.deleteRow(i);
-        let index = this.events.findIndex(_insp => _insp._id === row.cells[8].innerHTML);
-        this.events.splice(index, 1);
       }
       else{
         i++;
@@ -227,6 +268,7 @@ export class EventsComponent implements OnInit {
     if(this.stackService.getHiveSelectFromApiaryId(hive.apiaryId) === 0){
       this.removeApiary(this.rucherService.getApiaryByApiaryId(hive.apiaryId));
     }
+    delete this.hives[hive._id];
   }
 
   removeApiary(apiary: RucherModel): void {
@@ -234,9 +276,15 @@ export class EventsComponent implements OnInit {
     while(i<this.tbody.rows.length){
       let row: HTMLTableRowElement = this.tbody.rows[i];
       if(row.cells[0].innerHTML === apiary.name){
+        if(row.cells[3].className.includes('alert')){
+          let index = this.alerts.findIndex(_alt => _alt._id === row.cells[8].innerHTML);
+          this.alerts.splice(index, 1);
+        }
+        else{
+          let index = this.events.findIndex(_insp => _insp._id === row.cells[8].innerHTML);
+          this.events.splice(index, 1);
+        }
         this.tbody.deleteRow(i);
-        let index = this.events.findIndex(_insp => _insp._id === row.cells[8].innerHTML);
-        this.events.splice(index, 1);
       }
       else{
         i++;
@@ -259,6 +307,9 @@ export class EventsComponent implements OnInit {
   }
 
   insertNewInsp(insp: Inspection): void{
+    console.log(insp);
+    let th = <HTMLTableCellElement>document.getElementsByClassName('th-date-sort')[0];
+    th.innerHTML = this.translate.instant('MELLICHARTS.EVENT.TABLE.HEADER.DATE');
     if(insp.type === 'apiary'){
       if(this.apiaries.some(_apiaryId => _apiaryId === insp.apiaryId)){
         console.log('insert apiary');
@@ -269,6 +320,7 @@ export class EventsComponent implements OnInit {
       return;
     }
     if(insp.type === 'hive'){
+      console.log(this.hives);
       if(this.hives.some(_hiveId => _hiveId === insp.hiveId)){
         console.log('insert hive');
         this.events.push(insp);
@@ -388,6 +440,8 @@ export class EventsComponent implements OnInit {
       this.removeByDisplay(display);
       return;
     }
+    let th = <HTMLTableCellElement>document.getElementsByClassName('th-date-sort')[0];
+    th.innerHTML = this.translate.instant('MELLICHARTS.EVENT.TABLE.HEADER.DATE');
     this.addByDisplay(display);
     return;
   }
@@ -524,6 +578,8 @@ export class EventsComponent implements OnInit {
   }
 
   confirmEditEvent(): void{
+    let th = <HTMLTableCellElement>document.getElementsByClassName('th-date-sort')[0];
+    th.innerHTML = this.translate.instant('MELLICHARTS.EVENT.TABLE.HEADER.DATE');
     let index = this.events.findIndex(_insp => _insp._id === this.eventToEdit._id);
     this.events[index] = Object.assign({},this.eventToEdit);
     let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.eventToEdit._id);
@@ -543,6 +599,8 @@ export class EventsComponent implements OnInit {
   }
 
   confirmEditAlert(): void{
+    let th = <HTMLTableCellElement>document.getElementsByClassName('th-date-sort')[0];
+    th.innerHTML = this.translate.instant('MELLICHARTS.EVENT.TABLE.HEADER.DATE');
     let hours = parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-alert-hours-input')[0]).value );
     let minutes = parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-alert-minutes-input')[0]).value );
     if(this.alertToEdit.icon == null){
@@ -688,14 +746,28 @@ export class EventsComponent implements OnInit {
 
      // Notes & taches
     let cell6 = document.createElement('td');
-    var text = _insp.description;
-    var match = /\r|\n/.exec(text);
-    if (match) {
-      cell6.innerHTML = '<pre>' + _insp.description + '</pre>';
+    if(_insp.description != null){
+      var text = _insp.description;
+      var match = /\r|\n/.exec(text);
+      if (match) {
+        cell6.innerHTML = '<pre>' + _insp.description + '</pre>';
+      }
+      else{
+        cell6.innerHTML = '<p>' + _insp.description + '</p>';
+      }
     }
-    else{
-      cell6.innerHTML = '<p>' + _insp.description + '</p>';
+    if(_insp.todo != null){
+      var todo = _insp.todo;
+      var match = /\r|\n/.exec(todo);
+      if (match) {
+        cell6.innerHTML += '<br /> <pre style="color: blue">' + _insp.todo + '</pre>';
+      }
+      else{
+        cell6.innerHTML += '<br /> <p style="color: blue">' + _insp.todo + '</p>';
+      }
     }
+    
+    
 
     // Editer
     let cell7 = document.createElement('td');
