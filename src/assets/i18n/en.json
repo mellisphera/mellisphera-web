@@ -578,7 +578,7 @@
         "PARAMS":"Parameters"
       },
       "NEW": {
-        "TITLE":"New Inspection",
+        "TITLE":"New Inspection of apiary ",
         "PLACEHOLDER":"Choose date",
         "DEFAULT_SELECT":"Choose apiary",
         "NOTE_PLACEHOLDER":"Notes...",

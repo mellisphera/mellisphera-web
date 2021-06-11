@@ -580,7 +580,7 @@
         "PARAMS":"Parametres"
       },
       "NEW": {
-        "TITLE":"Nouvelle Inspection",
+        "TITLE":"Nouvelle Inspection du rucher ",
         "PLACEHOLDER":"Choisir date",
         "DEFAULT_SELECT":"Choisir rucher",
         "NOTE_PLACEHOLDER":"Notes...",

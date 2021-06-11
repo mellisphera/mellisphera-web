@@ -14,7 +14,6 @@
 
 .inspect-body{
   width: 99%;
-  display: flex;
 }
 
 .inspect-time{
@@ -23,8 +22,9 @@
 }
 
 .inspect-apiary, .inspect-hive{
-  width: 50%;
-  height: 600px;
+  width: 100%;
+  display: flex;
+  margin-bottom: 20px;
 }
 
 .inspect-hive{
@@ -32,32 +32,25 @@
   overflow-x: hidden;
 }
 
-.inspect-apiary{
-  border-right: 1px dashed black;
-}
-
-.inspect-apiary-main{
-  padding:0 !important;
-}
-
 .inspect-apiary-op{
   padding:10px 0 !important;
 }
 
-.inspect-time > div {
+.title > div {
   display: flex;
   align-items: center;
-}
-
-.inspect-time > div > div{
-  width: 230px;
-}
-
-.inspect-time > div > div:nth-child(2){
   margin-left: 20px;
 }
 
-.inspect-time div i{
+.title > div > div{
+  width: 230px;
+}
+
+.title > div > div:nth-child(2){
+  margin-left: 20px;
+}
+
+.title div i{
   position: absolute;
 }
 
@@ -89,10 +82,12 @@
 }
 
 .apiary-op, .apiary-obs-div{
-  max-width: 600px;
+  width: 25%;
   display: flex;
   flex-wrap: wrap;
   margin: 10px 10px;
+  min-width: 200px;
+  height: 150px;
 }
 
 .apiary-op table, .apiary-obs-div table{
@@ -249,10 +244,6 @@
   width: 80%;
   height: 100px;
   resize: none;
-}
-
-.apiary-todo-input{
-  margin-top: -10px;
 }
 
 #hives-table{
@@ -423,16 +414,6 @@
 .inspect-footer button{
   margin-left: 20px;
   width: 100px;
-}
-
-@media screen and (max-width: 1200px){
-  .inspect-apiary{
-    width: 45%;
-  }
-  .inspect-hive{
-    width: 55%;
-    overflow-x: hidden;
-  }
 }
 
 @media screen and (max-width: 1000px){

@@ -593,7 +593,7 @@
         "PARAMS":"Configuracion"
       },
       "NEW": {
-        "TITLE":"Nueva Inspección",
+        "TITLE":"Nueva Inspección de colmenar",
         "PLACEHOLDER":"Elegir fecha",
         "DEFAULT_SELECT":"Elegir colmenar",
         "NOTE_PLACEHOLDER":"Notas...",
