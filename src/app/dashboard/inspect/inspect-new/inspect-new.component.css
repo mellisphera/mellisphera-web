@@ -101,7 +101,7 @@
 
 .apiary-action, .hives-action, .apiary-obs, .hives-obs{
   border-radius: 3px;
-  margin: 15px 5px;
+  margin: 0px 5px;
   text-align: center;
   height: 40px;
   width: 40px;
@@ -109,10 +109,18 @@
 }
 
 .apiary-action, .hives-action{
-  border: 1px solid green;
+  border: 1px solid #ddd;
 }
 
 .apiary-obs, .hives-obs{
+  border: 1px solid #ddd;
+}
+
+.apiary-action:hover, .hives-action:hover{
+  border: 1px solid green;
+}
+
+.apiary-obs:hover, .hives-obs:hover{
   border: 1px solid skyblue;
 }
 
@@ -235,9 +243,27 @@
 }
 
 .inspect-apiary-notes, .inspect-apiary-todo{
-  padding:0 !important;
-  padding-left:10px !important;
-  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+.inspect-apiary-notes button, .inspect-apiary-notes textarea,
+.inspect-apiary-todo button, .inspect-apiary-todo textarea{
+  align-items: flex-start;
+}
+
+.apiary-notes,
+.apiary-todo{
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  color: black;
+  background-color: white;
+}
+
+.apiary-notes:hover,
+.apiary-todo:hover{
+  cursor: pointer;
 }
 
 .apiary-notes-input, .apiary-todo-input{
@@ -438,10 +464,14 @@
     margin-left: auto;
     margin-right: auto;
   }
-  .inspect-apiary-notes,.inspect-apiary-todo{
+  .inspect-apiary-notes, .inspect-apiary-todo{
     display: flex;
     justify-content: center;
   }
+  .inspect-apiary-notes button, .inspect-apiary-notes textarea{
+    align-items: flex-start;
+  }
+
   .inspect-body{
     width: 99%;
     border-top: 1px solid #999999;
@@ -533,7 +563,7 @@
 
   .inspect-new-container button.apiary-action,
   .inspect-new-container button.apiary-obs{
-    margin: 10px auto;
+    margin: 0px auto;
   }
 
   .inspect-new-container button.hives-action,
