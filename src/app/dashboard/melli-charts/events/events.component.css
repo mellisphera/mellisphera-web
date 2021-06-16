@@ -499,6 +499,199 @@
   background-size: 35px;
 }
 
+.Lowbrood{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/lowbrood_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Lowbrood-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/lowbrood_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Normbrood{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/normbrood_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Normbrood-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/normbrood_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Highbrood{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/highbrood_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Highbrood-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/highbrood_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Nobrood{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/nobrood_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Nobrood-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/nobrood_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Nobees{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/nobees_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Nobees-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/nobees_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Lowbees{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/lowbees_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Lowbees-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/lowbees_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Normbees{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/normbees_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Normbees-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/normbees_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Highbees{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/highbees_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Highbees-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/highbees_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Nores{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/nores_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Nores-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/nores_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Lowres{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/lowres_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Lowres-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/lowres_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Normres{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/normres_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Normres-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/normres_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Highres{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/highres_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Highres-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/highres_cb.svg') center no-repeat;
+  background-size: 35px;
+}
+
+
 @media screen and (max-width: 1200px) {
   .table-events{
     width: 1070px;

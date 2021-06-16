@@ -41,7 +41,7 @@ limitations under the License. -->
       
     </div>
     <div class="user-sensors panel-body" id="notesApiary" style="width:100%;">
-      <table class="table apiary-notes" style="table-layout:fixed;">
+      <table class="table home-apiary-notes" style="table-layout:fixed;">
         <tbody class="apiary-events">
           <tr class="hoverStyle" *ngFor="let obs of getInspectionByApiaryId(rucherService.rucher._id); let i = index;">
             <ng-container *ngIf="obs.type === 'apiary'">
@@ -54,9 +54,9 @@ limitations under the License. -->
               </td>
               <td style="max-width: 50px; width:50px;">
                 <div class="notes-edit-div dropleft" (mouseenter)="mouseEnter($event)" (mouseleave)="mouseLeave($event)">
-                  <button class="btn btn-default dropdown-toggle apiary-edit-insp" type="button" [id]="'dropdownMenuButton' + i" 
+                  <button class="btn dropdown-toggle apiary-edit-insp" type="button" [id]="'dropdownMenuButton' + i" 
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [innerHTML]="more_icon | safeHtml"
-                  style="border: 0; padding: 3px 9px !important;" [style.visibility]="isDesktop ? 'hidden' : 'visible'"></button>
+                  style="border: 0; padding: 3px 9px !important; background-color: white;" [style.visibility]="isDesktop ? 'hidden' : 'visible'"></button>
                   <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'dropdownMenuButton' + i"
                     style="top:50%; padding:0; background-color: white; width: auto;">
                     <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"

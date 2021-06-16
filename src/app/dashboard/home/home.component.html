@@ -79,12 +79,9 @@ limitations under the License. -->
                  #fileInput>
                 <button data-toggle="tooltip" (click)="fileInput.click()" data-html="true" class="btn-picture"
                 title="" id="selectPhotos" type="button"><i class="fa fa-camera"></i></button>
-                <button *ngIf="lockHive" data-toggle="tooltip" data-html="true"
+                <button data-toggle="tooltip" data-html="true"
                     title="{{ 'HOME.PLACEMENTMODE' | translate}}" id="locked" type="button" class="btn-picture"
-                    (click)="this.lockHive = !this.lockHive;"><i class="fa fa-lock"></i></button>
-                <button *ngIf="!lockHive" data-toggle="tooltip" data-html="true"
-                    title="{{ 'HOME.CLICKMODE' | translate}}" id="unlocked" type="button" class="btn-picture"
-                    (click)="this.lockHive = !this.lockHive;"><i class="fa fa-unlock"></i></button>
+                    (click)="changeLockHive()"><i class="fa fa-lock"></i></button>
             </div>
             <div zIndex="100">
 

@@ -579,6 +579,7 @@
       },
       "NEW": {
         "TITLE":"New Inspection of apiary ",
+        "DATE":"Date : ",
         "PLACEHOLDER":"Choose date",
         "DEFAULT_SELECT":"Choose apiary",
         "NOTE_PLACEHOLDER":"Notes...",
@@ -718,10 +719,19 @@
         "VIRGINSWARM":"Virgin swarm",
         "SWARMRETURN":"Swarm and return to hive",
         "QUEENSEEN":"Queen seen",
+        "NOBROOD":"No brood",
         "LOWBROOD":"Low brood level",
         "NORMBROOD":"Normal brood level",
         "HIGHBROOD":"High brood level",
-        "SICK":"Sick"
+        "SICK":"Sick",
+        "NOBEES":"No bees",
+        "LOWBEES":"Low bee level",
+        "NORMBEES":"Average bee level",
+        "HIGHBEES":"High bee level",
+        "NORES":"No resources",
+        "LOWRES":"Low resources level",
+        "NORMRES":"Average resources level",
+        "HIGHRES":"High resources level"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",

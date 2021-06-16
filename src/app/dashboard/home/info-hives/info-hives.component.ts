@@ -160,9 +160,8 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
           };
          option.baseOption.series.push(serie);
         });
-        console.log(option.baseOption.series);
         option.baseOption.tooltip = this.graphGlobal.getTooltipBySerie({type: 'BROOD', name: 'BROOD', unit: 'P'});
-        option.baseOption.series.push(this.graphGlobal.getDaySerie());
+        option.baseOption.series.push(this.graphGlobal.getYesterdaySerie());
 
        // this.healthHiveComponent.option.baseOption.serie = this.dailyRecordThService.mergeOptionCalendarHealth.series;
         this.healthHiveComponent.chartInstance.clear();
@@ -186,7 +185,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
       _dailyW => {
         option.baseOption.legend.selectedMode = 'multiple';
         this.getSerieByData(_dailyW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete) => {
-          console.log(serieComplete.name);
           option.baseOption.legend.data.push(serieComplete.name);
           serieComplete.itemStyle = {
               normal: {
@@ -227,7 +225,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
           };
           option.baseOption.series.push(serieComplete);
         });
-        option.baseOption.series.push(this.graphGlobal.getDaySerie());
+        option.baseOption.series.push(this.graphGlobal.getYesterdaySerie());
         this.weightHiveComponent.echartInstance.clear();
         this.weightHiveComponent.echartInstance.setOption(option, true);
         this.weightHiveComponent.option = option;

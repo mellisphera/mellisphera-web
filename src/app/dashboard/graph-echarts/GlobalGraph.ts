@@ -1232,7 +1232,42 @@ export class GraphGlobal {
     return date.getTime();
   }
 
+  getYesterdaySerie(): any{
+    const newSerie = Object.assign({}, SERIES.custom);
+    newSerie.name = 'thisDay';
+    const dayDate = new Date(MyDate.thisDay);
+    dayDate.setHours(12);
+    dayDate.setMinutes(0);
+    dayDate.setSeconds(0);
+    dayDate.setMilliseconds(0);
+    newSerie.data = [ [dayDate, 0, 'OK', 'OK']];
+    newSerie.renderItem = (params, api) => {
+      const cellPoint = api.coord(api.value(0));
+      const cellWidth = params.coordSys.cellWidth;
+      const cellHeight = params.coordSys.cellHeight;
+      if (isNaN(cellPoint[0]) || isNaN(cellPoint[1])) {
+        return;
+    }
+      return {
+        type: 'rect',
+        z2: 50 ,
+        shape: {
+          x: -cellWidth / 2 + 2,
+          y: -cellHeight / 2 + 2,
+          width: cellWidth - 4,
+          height: cellHeight - 4,
+        },
+        position: [cellPoint[0], cellPoint[1]],
+        style : {
+          fill: 'none',
+          stroke : 'purple',
+          lineWidth : 3
+        }
+      };
+    };
 
+    return newSerie;
+  }
 
   getDaySerie(): any {
     const newSerie = Object.assign({}, SERIES.custom);

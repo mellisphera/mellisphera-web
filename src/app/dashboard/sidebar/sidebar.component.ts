@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, ViewChild, Renderer2 } from "@angular/core";
+import { Component, OnInit, ViewChild, Renderer2, AfterViewInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserloggedService } from "../../userlogged.service";
 import { CONFIG } from "../../../constants/config";
@@ -57,7 +57,7 @@ export const ROUTES: RouteInfo[] = [
   templateUrl: "./sidebar.component.html",
   styleUrls: ["./sidebar.component.scss"]
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, AfterViewInit {
   menuItems: any[];
   username;
   private eltOnClick: EventTarget;
@@ -77,7 +77,11 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-/*     this.menuItems = ROUTES.filter(menuItem => menuItem);
+
+  }
+
+  ngAfterViewInit(){
+    /*     this.menuItems = ROUTES.filter(menuItem => menuItem);
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('nav-open'); */
     this.toggleButton = document.getElementsByClassName('navbar-toggle')[0];
@@ -87,10 +91,14 @@ export class SidebarComponent implements OnInit {
     if(this.router.url.includes("explore")){
       this.focus('explore');
     }
+    if(this.router.url.includes("inspect")){
+      this.focus('sidebar-inspect');
+    }
     if(this.router.url.includes("alert")){
       this.focus('alertConf');
     }
   }
+
   isMobileMenu() {
     if (window.innerWidth > 991) {
       return false;

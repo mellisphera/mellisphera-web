@@ -299,7 +299,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
    */
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';
-    let templateValue = '{*} {n}: <B>{v} {u}</B> - {p}';
+    let templateValue = '{*} {n}: <B>{v} {u}</B>';
     let tooltipGlobal;
     if(date === 'Invalid date'){
       tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, this.unitService.getDailyDate(this.ref_Date) );
@@ -309,22 +309,22 @@ export class WeightComponent implements OnInit, AfterViewInit {
       tooltipGlobal += series.map(_serie => {
         // ADAPT GRAPH POPUP TO WEIGHT TYPE DISPLAY
         if(_serie.name === null){ // MARKLINE TOOLTIP
-          return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, '').replace(/{v}/g, '').replace(/{u}/g, '').replace(/{R}/g, '').replace(/{p}/g, '');
+          return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, '').replace(/{v}/g, '').replace(/{u}/g, '').replace(/{R}/g, '');
         }
         else{ // SERIES TOOLTIP
           if(this.normWeightDisplay){
-            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, 'x'+_serie.value).replace(/{u}/g, '').replace(/{R}/g, '').replace(/{p}/g,  _serie.name.split('|')[1]);
+            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, 'x'+_serie.value).replace(/{u}/g, '').replace(/{R}/g, '');
           }
           else if(this.gainWeightDisplay){
             if(_serie.value >= 0){
-              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, '+'+_serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '').replace(/{p}/g,  _serie.name.split('|')[1]);
+              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, '+'+_serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '');
             }
             else{
-              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '').replace(/{p}/g,  _serie.name.split('|')[1]);
+              return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '');
             }
           }
           else{
-            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '').replace(/{p}/g,  _serie.name.split('|')[1]);
+            return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, '');
           }
         }
       }).join('');
@@ -341,7 +341,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
       this.melliDateService.setRefDayRangeForRequest( [this.ref_Date, this.ref_Date] );
       if(this.gainWeightDisplay){
         obs = this.stackService.getHiveSelect().map(_hive => {
-          return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, this.melliDateService.getRefDayRangeForRequest()) }
+          return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, this.melliDateService.getRefDayRangeForRequest()) }
         });
       }
       else{
@@ -370,12 +370,12 @@ export class WeightComponent implements OnInit, AfterViewInit {
             if(this.gainWeightDisplay){
               if(this.ref_Date == undefined || this.ref_Date == null){ // IF REF_DATE IS UNDEFINED OR REF_DATE BEFORE START IN CALENDAR RANGE
                 obs = this.stackService.getHiveSelect().map(_hive => {
-                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
+                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
                 });
               }
               else{ // IF REF_DATE AFTER REF_DATE AFTER START IN CALENDAR RANGE
                 obs = this.stackService.getHiveSelect().map(_hive => {
-                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
+                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
                 });
               }
 
@@ -424,6 +424,18 @@ export class WeightComponent implements OnInit, AfterViewInit {
                 }
                 this.option.baseOption.series = [];
                 _weight.forEach((_elt: any[], index) => { // ITERATE THROUGH WEIGHT ARRAY
+                  let w_i_array = _elt.map(a => ({...a}));
+                  if(this.gainWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
+                    let lastIndex = _elt.length-1;
+                    for(let i=lastIndex; i > -1; i--){
+                      if( i !== lastIndex ){ // i > 0
+                        _elt[i].value -= w_i_array[i+1].value;
+                      }
+                      else{
+                        _elt[i].value = 0.0;
+                      }
+                    }
+                  }
                   this.getSerieByData(<any>_elt, obs[index].name, (serieComplete: any) => {
                     serieComplete.itemStyle = {
                       color: this.stackService.getColorByIndex(this.getHiveIndex(obs[index].hive), obs[index].hive)
@@ -509,6 +521,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
                 }
                 next(this.option);
                 this.stackService.getWeightChartInstance().hideLoading();
+                console.log(this.option.baseOption.series);
               }
             )
         }
@@ -519,12 +532,12 @@ export class WeightComponent implements OnInit, AfterViewInit {
       if(this.gainWeightDisplay){
         if(this.ref_Date == undefined || this.ref_Date == null){ // IF REF_DATE IS UNDEFINED OR REF_DATE BEFORE START IN CALENDAR RANGE
           obs = this.stackService.getHiveSelect().map(_hive => {
-            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
+            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
           });
         }
         else{ // IF REF_DATE AFTER REF_DATE AFTER START IN CALENDAR RANGE
           obs = this.stackService.getHiveSelect().map(_hive => {
-            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
+            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
           });
         }
 
@@ -561,6 +574,18 @@ export class WeightComponent implements OnInit, AfterViewInit {
           }
           this.option.baseOption.series = [];
           _weight.forEach((_elt: any[], index) => { // ITERATE THROUGH WEIGHT ARRAY
+            let w_i_array = _elt.map(a => ({...a}));
+            if(this.gainWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
+              let lastIndex = _elt.length-1;
+              for(let i=lastIndex; i > -1; i--){
+                if( i !== lastIndex ){ // i > 0
+                  _elt[i].value -= w_i_array[i+1].value;
+                }
+                else{
+                  _elt[i].value = 0.0;
+                }
+              }
+            }
             this.getSerieByData(<any>_elt, obs[index].name, (serieComplete: any) => {
               serieComplete.itemStyle = {
                 color: this.stackService.getColorByIndex(this.getHiveIndex(obs[index].hive), obs[index].hive)
@@ -685,7 +710,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, SERIES.line);
-        serieTmp.name = nameSerie + ' | ' + this.getNameSerieByPosition(_data);
+        serieTmp.name = nameSerie
         serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
           let newDate = new Date(_map.date);
           newDate.setHours(1);
@@ -727,7 +752,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
     let ref_val;
     if(this.gainWeightDisplay){ // GAIN WEIGHT DISPLAY
       if(this.ref_Date != undefined && this.ref_Date != null ){
-        this.dailyWService.getWeightIncomeGainByHive(hive._id, this.melliDateService.getRefDayRangeForRequest()).subscribe(
+        this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRefDayRangeForRequest()).subscribe(
           _ref_weight => {
             if(_ref_weight.length > 0){
               this.ref_Values.push(_ref_weight[0].value);
@@ -740,8 +765,20 @@ export class WeightComponent implements OnInit, AfterViewInit {
           },
           () => {},
           () => {
-            this.dailyWService.getWeightIncomeGainByHive(hive._id, [this.ref_Date, this.melliDateService.end]).subscribe(
+            this.dailyWService.getWeightMinByHive(hive._id, [this.ref_Date, this.melliDateService.end]).subscribe(
               _weight => {
+                let w_i_array = _weight.map(a => ({...a}));
+                if(this.gainWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
+                  let lastIndex = _weight.length-1;
+                  for(let i=lastIndex; i > -1; i--){
+                    if( i !== lastIndex ){ // i > 0
+                      _weight[i].value -= w_i_array[i+1].value;
+                    }
+                    else{
+                      _weight[i].value = 0.0;
+                    }
+                  }
+                }
                 this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
                   serieComplete.itemStyle = {
                     color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
@@ -797,8 +834,20 @@ export class WeightComponent implements OnInit, AfterViewInit {
         )
       }
       else{
-        this.dailyWService.getWeightIncomeGainByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+        this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
           _weight => {
+            let w_i_array = _weight.map(a => ({...a}));
+            if(this.gainWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
+              let lastIndex = _weight.length-1;
+              for(let i=lastIndex; i > -1; i--){
+                if( i !== lastIndex ){ // i > 0
+                  _weight[i].value -= w_i_array[i+1].value;
+                }
+                else{
+                  _weight[i].value = 0.0;
+                }
+              }
+            }
             this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
               serieComplete.itemStyle = {
                 color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)

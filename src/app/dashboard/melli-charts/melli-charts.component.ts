@@ -48,14 +48,14 @@ import { MatChipInputEvent } from '@angular/material';
 import { NotifierService } from 'angular-notifier';
 import { EventsComponent } from './events/events.component';
 
-import { PICTOS_HIVES_OBS } from '../../../constants/pictosHiveObs'
 import { MORE_ICON } from './../../../constants/pictos';
 
 import { DomSanitizer} from '@angular/platform-browser';
 import { SafeHtmlPipe } from './safe-html.pipe';
 
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { style } from '@angular/animations';
+
+import { InspCatService } from '../service/api/insp-cat.service';
 
 const PREFIX_PATH = '/dashboard/explore/';
 
@@ -73,6 +73,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
   public xPosContextMenu = 0;
   public yPosContextMenu = 0;
+
+  public PICTOS_HIVES_OBS: any[] = [];
 
   public more_icon: string = MORE_ICON;
 
@@ -149,6 +151,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private notify: NotifierService,
     public sanitizer: DomSanitizer,
     public safeHtml: SafeHtmlPipe,
+    private inspCat: InspCatService
     ) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
@@ -182,7 +185,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log(this.deviceService.getDeviceInfo());
     this.userPrefsService.getUserPrefs().subscribe(
       _userPrefs => {
         this.user_pref = _userPrefs;
@@ -216,6 +218,40 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua))
        this.isDesktop = false;
     
+
+
+    this.inspCat.getInspCat().subscribe(
+      _inspCat => {
+        _inspCat.forEach(_cat => {
+          if(_cat.applies.indexOf("apiary") !== -1 && _cat.type === "obs" && _cat.img !== "Default"){
+            this.PICTOS_HIVES_OBS.push({
+              name:_cat.name.toLowerCase(), 
+              img: _cat.img.toLowerCase() + '_b.svg',
+              img_active: _cat.img.toLowerCase() + '_cb.svg',
+              class: 'hives-' + _cat.name.toLowerCase() + '-img'
+            })
+          }
+        })
+        this.PICTOS_HIVES_OBS.push({
+          name:'super+', 
+          img: 'super+_b.svg',
+          img_active:'super+_cb.svg',
+          class: 'hives-super+-img'
+        })
+        this.PICTOS_HIVES_OBS.push({
+          name:'super-', 
+          img: 'super-_b.svg',
+          img_active:'super-_cb.svg',
+          class: 'hives-super--img'
+        })
+        this.PICTOS_HIVES_OBS.push({
+          name:'default', 
+          img: 'default_b.svg',
+          img_active:'default_cb.svg',
+          class: 'hives-default-img'
+        })
+      }
+    )   
   }
 
   ngAfterViewInit(): void {
@@ -796,8 +832,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   // <--- ADD EVENT SCREEN --->
 
   showAddEvent(rucher: RucherModel, ruche: RucheInterface, evt: MouseEvent): void {
-
-    console.log(rucher, ruche, evt);
     this.new_event = {
       _id: null,
       apiaryInspId: null,
@@ -848,16 +882,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   addObsList(): void {
     const obsDiv = (<HTMLElement>document.getElementsByClassName('add-event-choice-obs')[0]);
     obsDiv.innerHTML = '';
-    let div;
-    for (let i = 0; i < PICTOS_HIVES_OBS.length; i++) {
-      /*if ( i % 8 === 0 ) {
-        div = document.createElement('div');
-      }*/
+    
+    for (let i = 0; i < this.PICTOS_HIVES_OBS.length; i++) {
 
       const button = document.createElement('button');
       button.className = 'hives-obs-add';
 
-      button.classList.add(PICTOS_HIVES_OBS[i].class);
+      button.classList.add(this.PICTOS_HIVES_OBS[i].class);
       button.onclick = (evt: Event) => {
         const n = i;
         this.hiveButton(evt, n);
@@ -865,27 +896,19 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
       obsDiv.appendChild(button);
 
-      //div.appendChild(button);
-
-      /*if ( (i + 1) % 8 === 0 ) {
-        obsDiv.appendChild(div);
-      }*/
     }
-    /*if (PICTOS_HIVES_OBS.length % 8 !== 0) { // Push last row if not complete
-      obsDiv.appendChild(div);
-    }*/
   }
 
   hiveButton(evt: Event, btnIndex: number): void {
     const button = (<HTMLButtonElement> evt.target);
-    if ( button.classList.contains(PICTOS_HIVES_OBS[btnIndex].class + '-active') ) {
-      button.classList.remove(PICTOS_HIVES_OBS[btnIndex].class + '-active');
-      const i = this.new_event.obs.findIndex(e => e.name === PICTOS_HIVES_OBS[btnIndex].name);
+    if ( button.classList.contains(this.PICTOS_HIVES_OBS[btnIndex].class + '-active') ) {
+      button.classList.remove(this.PICTOS_HIVES_OBS[btnIndex].class + '-active');
+      const i = this.new_event.obs.findIndex(e => e.name === this.PICTOS_HIVES_OBS[btnIndex].name);
       this.new_event.obs.splice(i, 1);
       return;
     }
-    button.classList.add(PICTOS_HIVES_OBS[btnIndex].class + '-active');
-    this.new_event.obs.push({name: PICTOS_HIVES_OBS[btnIndex].name, img: PICTOS_HIVES_OBS[btnIndex].img_active});
+    button.classList.add(this.PICTOS_HIVES_OBS[btnIndex].class + '-active');
+    this.new_event.obs.push({name: this.PICTOS_HIVES_OBS[btnIndex].name, img: this.PICTOS_HIVES_OBS[btnIndex].img});
     return;
   }
 

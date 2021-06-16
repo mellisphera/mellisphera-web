@@ -40,7 +40,7 @@ limitations under the License. -->
         </div>
     </div>
     <div class="user-sensors panel-body" id="notesHives" style="width:100%;">
-      <table class="table hive-notes" style="table-layout:fixed;">
+      <table class="table home-hive-notes" style="table-layout:fixed;">
         <tbody class="hive-events">
           <tr class="hoverStyle" *ngFor="let obs of getInspectionByHiveId(rucheService.getCurrentHive()._id); let i = index;">
             <ng-container *ngIf="obs.type === 'hive'">

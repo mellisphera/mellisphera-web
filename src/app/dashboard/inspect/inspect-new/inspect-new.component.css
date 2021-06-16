@@ -9,7 +9,13 @@
 
 .inspect-new-container h3{
   padding-bottom: 10px;
-  margin-left: 1%;
+  margin-right: 10px;
+}
+
+.title-container{
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 570px;
 }
 
 .inspect-body{
@@ -24,7 +30,13 @@
 .inspect-apiary, .inspect-hive{
   width: 100%;
   display: flex;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  border: 1px solid #4f4f51;
+  border-radius: 5px;
+}
+
+.inspect-apiary{
+  margin-bottom: 10px;
 }
 
 .inspect-hive{
@@ -38,8 +50,9 @@
 
 .title > div {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 15px;
 }
 
 .title > div > div{
@@ -47,16 +60,22 @@
 }
 
 .title > div > div:nth-child(2){
-  margin-left: 20px;
+  margin-left: 5px;
 }
 
 .title div i{
   position: absolute;
 }
 
+#inspect-apiary-select{
+  margin-left: 10px;
+  width: 215px;
+  height: 26px;
+}
+
 .inspect-time-input{
   width: 200px;
-  height: 24px;
+  height: 26px;
   text-align: center;
 }
 
@@ -81,13 +100,16 @@
   visibility: hidden;
 }
 
-.apiary-op, .apiary-obs-div{
+.apiary-op, .apiary-obs-div,
+.hive-op, .hive-obs-div{
   width: 25%;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 10px 10px;
-  min-width: 200px;
-  height: 150px;
+  margin: 10px 0px 10px 10px;
+  max-height: 170px;
+  align-content: flex-start;
+}
+
+.apiary-op, .hive-op{
+  margin-right: 15px;
 }
 
 .apiary-op table, .apiary-obs-div table{
@@ -102,10 +124,12 @@
 .apiary-action, .hives-action, .apiary-obs, .hives-obs{
   border-radius: 3px;
   margin: 0px 5px;
+  margin-bottom: 10px;
   text-align: center;
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   color: grey;
+  background-color: white;
 }
 
 .apiary-action, .hives-action{
@@ -117,144 +141,309 @@
 }
 
 .apiary-action:hover, .hives-action:hover{
-  border: 1px solid green;
+  border: 1px solid rgb(0, 180, 0);
 }
 
 .apiary-obs:hover, .hives-obs:hover{
   border: 1px solid skyblue;
 }
 
+.obs-flex{
+  display: flex;
+}
+
+.border-green{
+  border: 1px solid rgb(0, 180, 0);
+}
+
+.border-blue{
+  border: 1px solid skyblue;
+}
+
+.apiary-notes-todo, .hive-notes-todo{
+  width:40%;
+  margin-left:15px;
+  min-width:400px;
+}
+
 .btn-default_b{
-  background-size: 32px;
+  background-size: 29px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/default_b.svg');
   background-position: center;
 }
 
 .btn-default_cb{
-  background-size: 32px;
+  background-size: 29px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/default_cb.svg');
   background-position: center;
 }
 
 .btn-swarm_b{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/swarm_b.svg');
   background-position: center;
 }
 
 .btn-swarm_cb{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/swarm_cb.svg');
   background-position: center;
 }
 
 .btn-super\+_b{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/super+_b.svg');
   background-position: center;
 }
 
 .btn-super\+_cb{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/super+_cb.svg');
   background-position: center;
 }
 
 .btn-super-_b{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/super-_b.svg');
   background-position: center;
 }
 
 .btn-super-_cb{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/super-_cb.svg');
   background-position: center;
 }
 
 .btn-stolen_b{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/stolen_b.svg');
   background-position: center;
 }
 
 .btn-stolen_cb{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/stolen_cb.svg');
   background-position: center;
 }
 
 .btn-lowbrood_b{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/lowbrood_b.svg');
   background-position: center;
 }
 
 .btn-lowbrood_cb{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/lowbrood_cb.svg');
   background-position: center;
 }
 
 .btn-normbrood_b{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/normbrood_b.svg');
   background-position: center;
 }
 
 .btn-normbrood_cb{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/normbrood_cb.svg');
   background-position: center;
 }
 
 .btn-highbrood_b{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/highbrood_b.svg');
   background-position: center;
 }
 
 .btn-highbrood_cb{
-  background-size: 35px;
+  background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/highbrood_cb.svg');
   background-position: center;
 }
 
-.hives-action, .hives-obs{
-  margin: 5px 5px;
-  height: 40px;
-  width: 40px;
+.btn-nobrood_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/nobrood_b.svg');
+  background-position: center;
 }
 
-.inspect-apiary-notes, .inspect-apiary-todo{
-  display: flex;
-  justify-content: center;
+.btn-nobrood_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/nobrood_cb.svg');
+  background-position: center;
 }
+
+.btn-nobees_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/nobees_b.svg');
+  background-position: center;
+}
+
+.btn-nobees_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/nobees_cb.svg');
+  background-position: center;
+}
+
+.btn-lowbees_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/lowbees_b.svg');
+  background-position: center;
+}
+
+.btn-lowbees_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/lowbees_cb.svg');
+  background-position: center;
+}
+
+.btn-normbees_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/normbees_b.svg');
+  background-position: center;
+}
+
+.btn-normbees_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/normbees_cb.svg');
+  background-position: center;
+}
+
+.btn-highbees_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/highbees_b.svg');
+  background-position: center;
+}
+
+.btn-highbees_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/highbees_cb.svg');
+  background-position: center;
+}
+
+.btn-nores_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/nores_b.svg');
+  background-position: center;
+}
+
+.btn-nores_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/nores_cb.svg');
+  background-position: center;
+}
+
+.btn-lowres_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/lowres_b.svg');
+  background-position: center;
+}
+
+.btn-lowres_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/lowres_cb.svg');
+  background-position: center;
+}
+
+.btn-normres_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/normres_b.svg');
+  background-position: center;
+}
+
+.btn-normres_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/normres_cb.svg');
+  background-position: center;
+}
+
+.btn-highres_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/highres_b.svg');
+  background-position: center;
+}
+
+.btn-highres_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/highres_cb.svg');
+  background-position: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.hives-action, .hives-obs{
+  margin: 5px 5px;
+  height: 35px;
+  width: 35px;
+}
+
+.inspect-apiary-notes, .inspect-apiary-todo,
+.inspect-hive-notes, .inspect-hive-todo{
+  display: flex;
+  margin: 10px auto 0px auto;
+}
+
+.inspect-apiary-todo{
+  margin-bottom: 10px;
+}
+
 .inspect-apiary-notes button, .inspect-apiary-notes textarea,
-.inspect-apiary-todo button, .inspect-apiary-todo textarea{
+.inspect-apiary-todo button, .inspect-apiary-todo textarea,
+.inspect-hive-notes button, .inspect-hive-notes textarea,
+.inspect-hive-todo button, .inspect-hive-todo textarea{
   align-items: flex-start;
 }
 
 .apiary-notes,
-.apiary-todo{
-  width: 40px;
-  height: 40px;
+.apiary-todo,
+.hive-notes,
+.hive-todo{
+  width: 35px;
+  height: 35px;
   margin-right: 10px;
   border: 1px solid #ddd;
   color: black;
@@ -266,16 +455,20 @@
   cursor: pointer;
 }
 
-.apiary-notes-input, .apiary-todo-input{
-  width: 80%;
+.apiary-notes-input, .apiary-todo-input,
+.hive-notes-input, .hive-todo-input{
+  width: 90%;
   height: 100px;
   resize: none;
 }
 
+.hide-textarea{
+  visibility: hidden;
+  height: 1px;
+}
+
 #hives-table{
   width: 100%;
-  text-align: center;
-  border-collapse: collapse;
 }
 
 #hives-table-head{
@@ -305,15 +498,12 @@
   display: block;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 559px;
+  height: 465px;
 }
 
 #hives-table-body{
-  width: 100%;
-}
-
-#hives-table-body > div:nth-child(2n){
-  background-color: #eaffeb;
+  width: 99%;
+  margin-left: 10px;
 }
 
 .hives-item{
@@ -337,26 +527,25 @@
   width: 10%;
 }
 
-.hives-notes, .hives-todo{
-  margin-top: 10px;
-  width: 40px;
-  height: 40px;
+.hive-notes, .hive-todo{
+  width: 35px;
+  height: 35px;
   border-radius: 3px;
-  border: 1px solid #999999;
 }
 
-.hives-notes{
+.hive-notes{
   font-size: 22px;
 }
 
-.hives-todo{
-  background-size: 32px;
+.hive-todo, .apiary-todo{
+  padding: 0;
+  background-size: 24px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/todo.png');
   background-position: center;
 }
 
-.hives-note-textarea, .hives-todo-textarea{
+.hives-note-textarea, .hive-todo-textarea{
   resize: none;
   height: 50px;
   width: 80%;
@@ -397,7 +586,7 @@
   }
 }
 
-.hives-todo-textarea-active{
+.hive-todo-textarea-active{
   height: 50px;
   display: initial;
   animation-name: show-todo;
@@ -414,7 +603,7 @@
   }
 }
 
-.hives-todo-textarea-inactive{
+.hive-todo-textarea-inactive{
   animation-name: hide-todo;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
@@ -434,12 +623,24 @@
   display: flex;
   justify-content: flex-end;
   width: 98%;
-  margin: 30px auto;
+  margin: 10px auto;
 }
 
 .inspect-footer button{
   margin-left: 20px;
   width: 100px;
+}
+@media screen and (max-width: 1300px){
+  .apiary-notes-todo, .hive-notes-todo{
+    width:70%;
+    margin-left:15px;
+    min-width:320px;
+  }
+  .apiary-op, .apiary-obs-div,
+  .hive-op, .hive-obs-div{
+    width: 35%;
+    min-width: 280px;
+  }
 }
 
 @media screen and (max-width: 1000px){
@@ -459,30 +660,25 @@
     border-right: 0px;
     width: 99%;
   }
-  .apiary-op, .apiary-obs-div{
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .inspect-apiary-notes, .inspect-apiary-todo{
+  .inspect-apiary-notes, .inspect-apiary-todo,
+  .inspect-hive-notes, .inspect-hive-todo{
     display: flex;
     justify-content: center;
   }
-  .inspect-apiary-notes button, .inspect-apiary-notes textarea{
+  .inspect-apiary-notes button, .inspect-apiary-notes textarea,
+  .inspect-hive-notes button, .inspect-hive-todo textarea{
     align-items: flex-start;
   }
 
   .inspect-body{
     width: 99%;
-    border-top: 1px solid #999999;
-    border-bottom: 1px solid #999999;
     display: block;
   }
   .inspect-hive{
     width: 100%;
     margin-top: 20px;
-    border-top: 1px dashed black;
   }
+
   .inspect-footer{
     width: 97%;
     justify-content: center;
@@ -500,21 +696,26 @@
   }
   .inspect-body{
     width: 99%;
-    border-top: 1px solid #999999;
-    border-bottom: 1px solid #999999;
     display: block;
   }
   .inspect-hive{
     margin-top: 20px;
     width: 100%;
-    border-top: 1px dashed black;
   }
 }
 
 @media screen and (max-width: 600px){
+
+  .title-container{
+    display: flex;
+    flex-wrap: wrap;
+    min-width: unset;
+  }
+
   .inspect-new-container h3{
     text-align: center;
     margin-left: -5px;
+    font-size: 20px;
   }
 
   .inspect-time-input{
@@ -538,7 +739,7 @@
 
   #inspect-apiary-select{
     text-align: center;
-    text-align-last: center;
+    margin-left: -3px;
   }
 
   .hives-swarm-img{
@@ -553,17 +754,14 @@
   .inspect-new-container button.apiary-obs,
   .inspect-new-container button.hives-action,
   .inspect-new-container button.hives-obs,
-  .hives-notes,
-  .hives-todo{
-    width: 30px;
-    height: 30px;
+  .hive-notes,
+  .hive-todo,
+  .apiary-notes,
+  .apiary-todo{
+    width: 35px;
+    height: 35px;
     font-size: 10px;
-    background-size: 22px;
-  }
-
-  .inspect-new-container button.apiary-action,
-  .inspect-new-container button.apiary-obs{
-    margin: 0px auto;
+    background-size: 24px;
   }
 
   .inspect-new-container button.hives-action,
@@ -597,13 +795,13 @@
     width: 97%;
   }
 
-  .apiary-notes-input, .apiary-todo-input{
+  .apiary-notes-input, .apiary-todo-input,
+  .hive-notes-input, .hive-todo-input{
     width: 95%;
   }
 
   .inspect-hive{
     height:500px;
-    border-top: 1px dashed black;
   }
 
   #hives-table-body{
@@ -631,6 +829,40 @@
 }
 
 @media screen and (max-width: 400px){
+
+  .title > div > div:nth-child(2){
+    margin-left: -5px;
+  }
+
+  .title-date > div > div:nth-child(2){
+    margin-bottom: 15px;
+  }
+
+  .apiary-op, .apiary-obs-div,
+  .hive-op, .hive-obs-div{
+    width: 25%;
+    margin: 10px 0px 10px 5px;
+    max-height: 170px;
+    align-content: flex-start;
+  }
+
+  .apiary-notes-todo{
+    margin-left: 8px;
+  }
+
+  .hive-notes-todo{
+    margin-left: 5px;
+  }
+
+  .inspect-apiary-notes, .inspect-apiary-todo,
+  .inspect-hive-notes, .inspect-hive-todo{
+    margin-left: 0px;
+  }
+
+  .apiary-notes-input, .apiary-todo-input,
+  .hive-notes-input, .hive-todo-input{
+    width: 85%;
+  }
 
   .inspect-body{
     width: 98%;

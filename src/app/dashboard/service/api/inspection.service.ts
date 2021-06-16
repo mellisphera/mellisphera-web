@@ -54,6 +54,7 @@ export class InspectionService {
   getInspectionByUserId(userId: string): void {
     this.http.get<Inspection[]>(CONFIG.URL + 'inspection/user/' + userId, httpOptions).subscribe(
       _insp => {
+        console.log(_insp);
         this.inspectionsHive = _insp.filter(_insp => _insp.type === 'hive').sort((inspA, inspB) => {
           return new Date(inspA.opsDate).getTime() - new Date(inspB.opsDate).getTime();
         });
@@ -260,7 +261,7 @@ export class InspectionService {
   * @param insp
   *
   */
-  insertApiary(insp: Inspection): Observable<Inspection> {
+  insertApiaryInsp(insp: Inspection): Observable<Inspection> {
     return this.http.post<Inspection>(CONFIG.URL + 'inspection/insert/apiary/' , insp, httpOptions);
   }
 

@@ -265,7 +265,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
           option.baseOption.series.push(serieComplete);
 
         });
-        option.baseOption.series.push(this.graphGlobal.getDaySerie());
+        option.baseOption.series.push(this.graphGlobal.getYesterdaySerie());
         this.echartInstance.setOption(option, true);
         this.option = option;
       });

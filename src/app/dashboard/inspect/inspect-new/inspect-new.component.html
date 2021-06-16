@@ -1,86 +1,124 @@
 <div class="inspect-new-container">
-  <div class="title" style="display:flex;align-items: center;">
-    <h3>{{'INSPECT.NEW.TITLE' | translate }}</h3>
-    <select id="inspect-apiary-select" (change)="onSelectChange()" style="margin-left: 10px;width:180px; height: 33px;">
-      <option disabled selected value style="color:grey;"> {{'INSPECT.NEW.DEFAULT_SELECT' | translate}} </option>
-      <option *ngFor="let apiary of user_apiaries" value="{{apiary.name}}"> {{apiary.name}} </option>
-    </select>
-    <div>
-      <i class="fa fa-calendar inspect-time-icon"></i>
-      <input class="inspect-time-input" placeholder="{{'INSPECT.NEW.PLACEHOLDER' | translate}}" [(ngModel)]="inspect_date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDate()">
-      <owl-date-time #dtPicker1></owl-date-time>
+  <div class="title" style="display:flex;align-items: center;flex-wrap: wrap;">
+    <div class="title-container">
+      <h3>{{'INSPECT.NEW.TITLE' | translate }}</h3>
+      <select id="inspect-apiary-select" (change)="onSelectChange()">
+        <option disabled selected value style="color:grey;"> {{'INSPECT.NEW.DEFAULT_SELECT' | translate}} </option>
+        <option *ngFor="let apiary of user_apiaries" value="{{apiary.name}}"> {{apiary.name}} </option>
+      </select>
     </div>
-
+    <div class="title-date">
+      <h3>{{'INSPECT.NEW.DATE' | translate }}</h3>
+      <div style="width:auto; display: flex; flex-wrap: wrap;">
+        <div style="width:auto; margin-right:10px;">
+          <i class="fa fa-calendar inspect-time-icon"></i>
+          <input class="inspect-time-input" placeholder="{{'INSPECT.NEW.PLACEHOLDER' | translate}}" [(ngModel)]="inspect_date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDate()">
+          <owl-date-time [pickerType]="'calendar'" #dtPicker1></owl-date-time>
+        </div>
+        <div style="width:auto;">
+          <input class="inspect-time-input-hours" type="number" min="00" max="23" (change)="inspectDateHours()"
+                 style="width:50px;">
+          :
+          <input class="inspect-time-input-minutes" type="number" min="00" max="59" (change)="inspectDateMinutes()"
+                 style="width:50px;">
+        </div>
+      </div>
+    </div>
   </div>
 
     <div class="inspect-body">
       <div class="inspect-apiary">
-
-          <div class="apiary-op">
+          <div class="apiary-obs-div">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>
+                    <img src="../../../../assets/ms-pics/low_cb.svg" width="20" height="20">
+                  </th>
+                  <th>
+                    <img src="../../../../assets/ms-pics/average_cb.svg" width="20" height="20">
+                  </th>
+                  <th>
+                    <img src="../../../../assets/ms-pics/high_cb.svg" width="20" height="20">
+                  </th>
+                  <th style="text-align: center;">
+                    <img src="../../../../assets/ms-pics/none_cb.svg" width="15" height="15">
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding-right:10px;"><img src="../../../../assets/ms-pics/bee_b.svg" width="40" height="40"></td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="bees_low_check">
+                  </td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="bees_avg_check"> 
+                  </td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="bees_high_check">
+                  </td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="bees_none_check">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="apiary-op d-flex flex-wrap">
             <ng-container *ngFor="let conf of inspConf; let i = index">
               <ng-container *ngIf="conf.enable && conf.inspCat.applies.includes('apiary') && conf.inspCat.type === 'act'">
                 <button [class]="'apiary-action btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
-                (click)="changeActive($event, conf.inspCat, 'apiary', 'act')"></button>
+                (click)="changeActive($event, conf.inspCat, 'apiary', 'act')"
+                data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
               </ng-container>
             </ng-container>
           </div>
-          <div class="apiary-obs-div">
-            <ng-container *ngFor="let conf of inspConf; let i = index">
-              <ng-container *ngIf="conf.enable && conf.inspCat.applies.includes('apiary') && conf.inspCat.type === 'obs'">
-                <button [class]="'apiary-obs btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
-                (click)="changeActive($event, conf.inspCat, 'apiary', 'obs')"></button>
-              </ng-container>
-            </ng-container>
-          </div>
-          <div style="width:49%;">
-            <div class="inspect-apiary-notes" style="margin: 10px auto 0px auto">
-              <button class="btn apiary-notes"><i class="fas fa-pen" style="font-size: 18px;"></i></button>
+          <div class="apiary-notes-todo">
+            <div class="inspect-apiary-notes">
+              <button class="btn apiary-notes" style="padding: 0;" (click)="toggleNotes($event)"><i class="fas fa-pen" style="font-size: 18px;"></i></button>
               <textarea placeholder="{{'INSPECT.NEW.NOTE_PLACEHOLDER' | translate}}" (change)="saveApiaryNotes($event)" class="apiary-notes-input" name="Text1" cols="40" rows="5" spellcheck="false"></textarea>
             </div>
-            <div class="inspect-apiary-todo" style="margin: 10px auto 0px auto">
-              <button class="btn apiary-todo"></button>
-              <textarea placeholder="{{'INSPECT.NEW.TODO_PLACEHOLDER' | translate}}" (change)="saveApiaryTodo($event)" class="apiary-todo-input" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
+            <div class="inspect-apiary-todo">
+              <button class="btn apiary-todo" (click)="toggleTodo($event)"></button>
+              <textarea placeholder="{{'INSPECT.NEW.TODO_PLACEHOLDER' | translate}}" (change)="saveApiaryTodo($event)" class="apiary-todo-input hide-textarea" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
             </div>
           </div>
-
       </div>
       <div class="inspect-hive">
         <div id="hives-table">
-          <div id="hives-table-head">
-            <div style="display: flex; height: 40px; vertical-align: middle;">
-              <p class="hives-table-head-hive">{{'INSPECT.NEW.TAB.HIVE' | translate}}</p>
-              <p class="hives-table-head-action">{{'INSPECT.NEW.TAB.ACT_OBS' | translate}}</p>
-              <p></p>
-              <p></p>
-            </div>
-          </div>
           <div id="hives-table-body" *ngIf="active_apiary_index > 0">
             <ng-container *ngFor="let ruche of user_hives">
-              <div style="display: flex; align-items: center;">
-                <div style="width:20%; text-align: center;">
-                  <p>{{ruche.name}}</p>
-                </div>
-                <div style="width:60%;">
-                  <div style="display:flex; justify-content: flex-start; align-items: center; flex-wrap: wrap;">
-                    <ng-container *ngFor="let conf of inspConf; let i = index">
-                      <button *ngIf="conf.enable && conf.inspCat.applies.includes('hive') && conf.inspCat.type === 'act'"
-                      [class]="'hives-action btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
-                      (click)="changeActive($event, conf.inspCat)"></button>
-                    </ng-container>
-                  </div>
-                  <div style="display:flex; justify-content: flex-start; align-items: center; flex-wrap: wrap;">
+              <div style="margin-bottom: 15px; width:99%">
+                <h4 style="font-weight: bold; text-align: left; margin-left: 5px; border-bottom: 1px solid #ddd;">{{ruche.name}}</h4>
+                <div style="display: flex; flex-wrap: wrap; width: 100%;">
+                  <div class="hive-obs-div">
                     <ng-container *ngFor="let conf of inspConf; let i = index">
                       <button *ngIf="conf.enable && conf.inspCat.applies.includes('hive') && conf.inspCat.type === 'obs'"
                       [class]="'hives-obs btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
-                      (click)="changeActive($event, conf.inspCat)"></button>
+                      (click)="changeActive($event, conf.inspCat, 'hive', 'obs', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
                     </ng-container>
                   </div>
-                </div>
-                <div style="width:10%;">
-                  <button class="btn btn-default hives-notes"><i class="fa fa-pen"></i></button>
-                </div>
-                <div style="width:10%;">
-                  <button class="btn btn-default hives-todo"></button>
+                  <div class="hive-op">
+                    <ng-container *ngFor="let conf of inspConf; let i = index">
+                      <button *ngIf="conf.enable && conf.inspCat.applies.includes('hive') && conf.inspCat.type === 'act'"
+                      [class]="'hives-action btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
+                      (click)="changeActive($event, conf.inspCat, 'hive', 'act', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
+                    </ng-container>
+                  </div>
+                  <div class="hive-notes-todo" style="margin-top: 5px;">
+                    <div class="inspect-hive-notes">
+                      <button class="btn hive-notes" style="padding: 0;" (click)="toggleNotes($event)"><i class="fas fa-pen" style="font-size: 18px;"></i></button>
+                      <textarea placeholder="{{'INSPECT.NEW.NOTE_PLACEHOLDER' | translate}}" (change)="saveHiveNotes($event, ruche)" class="hive-notes-input" name="Text1" cols="40" rows="5" spellcheck="false"></textarea>
+                    </div>
+                    <div class="inspect-hive-todo">
+                      <button class="btn hive-todo" (click)="toggleTodo($event)"></button>
+                      <textarea placeholder="{{'INSPECT.NEW.TODO_PLACEHOLDER' | translate}}" (change)="saveHiveTodo($event, ruche)" class="hive-todo-input hide-textarea" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
+                    </div>
+                  </div>
                 </div>
               </div>
             </ng-container>

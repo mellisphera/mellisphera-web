@@ -69,7 +69,7 @@ export class WeightHivesComponent {
                     }
                 },
                 legend: {
-                    bottom: 40,
+                    top: 30,
                     left: 'center',
                     data: [this.graphGlobal.getTitle('gain'), this.graphGlobal.getTitle("loss")],
                     textStyle: {
@@ -77,7 +77,7 @@ export class WeightHivesComponent {
                     }
                 },
                 calendar: [{
-                    top: 40,
+                    top: 60,
                     left: 'center',
                     //height:'auto',
                     cellSize: [40, 40],
@@ -182,7 +182,7 @@ export class WeightHivesComponent {
             },
             media: JSON.parse(JSON.stringify(MEDIA_QUERY_MELLIUX))
         };
-        this.option.baseOption.series.push(this.graphGlobal.getDaySerie());
+        this.option.baseOption.series.push(this.graphGlobal.getYesterdaySerie());
     }
 
     convertDate(date: Date) {

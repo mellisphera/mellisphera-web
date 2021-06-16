@@ -31,7 +31,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-states',
   templateUrl: './states.component.html',
-  styleUrls: ['./states.component.css']
+  styleUrls: ['./states.component.css'],
 })
 export class StatesComponent implements OnInit {
 

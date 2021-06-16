@@ -594,6 +594,7 @@
       },
       "NEW": {
         "TITLE":"Nueva Inspección de colmenar",
+        "DATE":"Fecha : ",
         "PLACEHOLDER":"Elegir fecha",
         "DEFAULT_SELECT":"Elegir colmenar",
         "NOTE_PLACEHOLDER":"Notas...",
@@ -733,10 +734,19 @@
         "VIRGINSWARM":"Virgin swarm",
         "SWARMRETURN":"Swarm and return to hive",
         "QUEENSEEN":"Queen seen",
+        "NOBROOD":"No cria",
         "LOWBROOD":"Bajo nivel de cria",
         "NORMBROOD":"Normal nivel de cria",
         "HIGHBROOD":"Alto nivel de cria",
-        "SICK":"Enferma"
+        "SICK":"Enferma",
+        "NOBEES":"No abejas",
+        "LOWBEES":"Bajo nivel de abeja",
+        "NORMBEES":"Normal nivel de abeja",
+        "HIGHBEES":"Alto nivel de abeja",
+        "NORES":"No recursos",
+        "LOWRES":"Bajo nivel de recurso",
+        "NORMRES":"Normal nivel de recurso",
+        "HIGHRES":"Alto nivel de recurso"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",

@@ -151,4 +151,5 @@ export class UserloggedService {
   signOut(): void {
     window.localStorage.clear();
   }
+  
 }

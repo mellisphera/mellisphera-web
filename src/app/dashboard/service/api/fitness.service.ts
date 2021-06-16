@@ -20,7 +20,7 @@ export class FitnessService {
 
   constructor(private httpClient: HttpClient, private translateService: TranslateService) {
     this.rangeFitness = new Date();
-    this.rangeFitness.setDate(new Date().getDate() - 2);
+    this.rangeFitness.setDate(new Date().getDate() - 3);
     this.rangeFitness.setHours(23);
     this.rangeFitness.setMinutes(0);
     this.dailyFitness = [];
@@ -34,6 +34,8 @@ export class FitnessService {
     previousDay.setDate(this.rangeFitness.getDate() + 1);
     previousDay.setHours(23);
     previousDay.setMinutes(0);
+    console.log(this.rangeFitness);
+    console.log(previousDay);
     return this.httpClient.get<Fitness[]>(CONFIG.URL + `fitness/daily/${userId}/${this.rangeFitness.getTime()}/${previousDay.getTime()}`);
   }
 
@@ -57,10 +59,12 @@ export class FitnessService {
 
   public getFitnessByHiveId(hiveId: string): Fitness {
     const res = this.dailyFitness.filter(_fit => _fit.hiveId === hiveId);
+    let date: Date = new Date();
+    date.setDate( date.getDate() - 1 );
     if (res.length > 1) {
       throw Error("No unique result");
     } else if (res.length < 1) {
-      return { _id: '', fitcode: '', fitcolor: "white", userId: '', hiveId: '', date: new Date() };
+      return { _id: '', fitcode: '', fitcolor: "white", userId: '', hiveId: '', date: date };
     } else {
       return res[0];
     }
@@ -82,6 +86,7 @@ export class FitnessService {
   public callRequest(userId: string) {
     this.getDailyFitnessByUserId(userId).subscribe(
       _res => {
+        console.log(_res);
         this.dailyFitness = _res;
       }
     )

@@ -235,10 +235,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
    * @memberof HomeComponent
    */
   getDateDaily(): string {
-    let showDate = new Date();
-    showDate.setFullYear(MyDate.end.getFullYear());
-    showDate.setMonth(MyDate.end.getMonth());
-    showDate.setDate(MyDate.end.getDate());
+    let showDate = new Date(MyDate.thisDay);
+    //showDate.setFullYear(MyDate.thisDay.getFullYear());
+    //showDate.setMonth(MyDate.thisDay.getMonth());
+    //showDate.setDate(MyDate.thisDay.getDate() - 1);
     return this.unitService.getDailyDate(showDate.toISOString());
   }
   closePopup(): void {
@@ -255,6 +255,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
     this.dailyRecordWservice.getDailyWeightMaxByApiary(this.rucherService.getCurrentApiary());
     this.loadAlert();
+    MyDate.init();
 /*     if (!this.rucherService.rucherSubject.closed) {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
         this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
@@ -338,21 +339,34 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   onClickNextDay() {
-    this.dailyRecTh.nextDay(this.rucherService.getCurrentApiary());
-    this.dailyRecordWservice.nextDay(this.rucherService.getCurrentApiary());
-    this.fitnessService.nextDay(this.userService.getIdUserLoged());
-    this.deviceSatusService.nextDay(this.userService.getIdUserLoged());
-    MyDate.end.setDate(MyDate.end.getDate() + 1);
-    this.updateCalendars();
+    //this.dailyRecTh.nextDay(this.rucherService.getCurrentApiary());
+    //this.dailyRecordWservice.nextDay(this.rucherService.getCurrentApiary());
+    //this.fitnessService.nextDay(this.userService.getIdUserLoged());
+    //this.deviceSatusService.nextDay(this.userService.getIdUserLoged());
+    let end =  new Date(MyDate.end)
+    end.setDate( end.getDate() - 1 );
+    end.setHours(0);
+    end.setMinutes(0);
+    if(MyDate.thisDay < new Date(end)){
+      MyDate.thisDay.setDate(MyDate.thisDay.getDate() + 1);
+      this.updateCalendars();
+    }
+    
   }
 
   onClickPreviousDay() {
-    this.dailyRecTh.previousDay(this.rucherService.getCurrentApiary());
-    this.dailyRecordWservice.previousDay(this.rucherService.getCurrentApiary());
-    this.fitnessService.previousDay(this.userService.getIdUserLoged());
-    this.deviceSatusService.previousDay(this.userService.getIdUserLoged());
-    MyDate.end.setDate(MyDate.end.getDate() - 1);
-    this.updateCalendars();
+    //this.dailyRecTh.previousDay(this.rucherService.getCurrentApiary());
+    //this.dailyRecordWservice.previousDay(this.rucherService.getCurrentApiary());
+    //this.fitnessService.previousDay(this.userService.getIdUserLoged());
+    //this.deviceSatusService.previousDay(this.userService.getIdUserLoged());
+    let d1 = new Date()
+    d1.setDate( d1.getDate() - 24 );
+    d1 = MyDate.getDateBeginMonday(d1);
+    if(MyDate.thisDay > d1){
+      MyDate.thisDay.setDate(MyDate.thisDay.getDate() - 1);
+      this.updateCalendars();
+    }
+    
   }
 
   updateCalendars(){
@@ -782,6 +796,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
   onLockHive() {
     this.lockHive = true;
+  }
+
+  changeLockHive(){
+    this.lockHive = !this.lockHive;
+    if(this.lockHive){
+      (<HTMLButtonElement>document.getElementById("locked")).innerHTML = '<i class="fa fa-lock" style="font-size:26px;margin-right:5px;"></i>';
+      (<HTMLButtonElement>document.getElementById("locked")).title = this.translateService.instant('HOME.PLACEMENTMODE');
+    }
+    else{
+      (<HTMLButtonElement>document.getElementById("locked")).innerHTML = '<i class="fa fa-unlock" style="font-size:26px;margin-right:5px;"></i>';
+      (<HTMLButtonElement>document.getElementById("locked")).title = this.translateService.instant('HOME.CLICKMODE');
+    }
+    
   }
 
 

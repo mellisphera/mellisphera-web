@@ -32,7 +32,7 @@ import { InspectionService } from '../../../../dashboard/service/api/inspection.
 @Component({
   selector: 'app-alerts',
   templateUrl: './alerts.component.html',
-  styleUrls: ['./alerts.component.css']
+  styleUrls: ['./alerts.component.css'],
 })
 export class AlertsComponent implements OnInit {
 
@@ -186,7 +186,6 @@ export class AlertsComponent implements OnInit {
       _data => {
         const dateJoin = this.joinObservationAlert(_data[0].filter(_elt => _elt.type === 'apiary'), _data[1]);
         const joinData = _data[0].filter( d => d.type === 'apiary').concat(_data[1]);
-        console.log(dateJoin);
         let option = Object.assign({}, this.option);
         option.baseOption.series = new Array();
         option.baseOption.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
@@ -261,7 +260,7 @@ export class AlertsComponent implements OnInit {
           option.baseOption.series.push(serieComplete);
 
         });
-        option.baseOption.series.push(this.graphGlobal.getDaySerie());
+        option.baseOption.series.push(this.graphGlobal.getYesterdaySerie());
         this.echartInstance.setOption(option, true);
         this.echartInstance.hideLoading();
         this.option = option;

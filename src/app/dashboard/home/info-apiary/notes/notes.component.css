@@ -41,6 +41,12 @@ limitations under the License. */
 .btn_delete_modal_mobile{
     display: none;
 }
+
+.dropdown-toggle:hover{
+  border: 0;
+  background-color: white;
+}
+
 #user-group{
     display: flex;
     justify-content: space-between;
@@ -220,7 +226,7 @@ th{
 
 .add-event-choice-obs,
 .edit-event-choice-obs{
-  width: 50%;
+  width: 55%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -434,6 +440,188 @@ th{
   background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../../assets/ms-pics/default_cb.png');
+  background-position: center;
+}
+
+.hives-stolen-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/stolen_b.svg');
+  background-position: center;
+}
+
+.hives-stolen-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/stolen_cb.svg');
+  background-position: center;
+}
+
+.hives-lowbrood-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/lowbrood_b.svg');
+  background-position: center;
+}
+
+.hives-lowbrood-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/lowbrood_cb.svg');
+  background-position: center;
+}
+
+.hives-normbrood-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/normbrood_b.svg');
+  background-position: center;
+}
+
+.hives-normbrood-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/normbrood_cb.svg');
+  background-position: center;
+}
+
+.hives-highbrood-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/highbrood_b.svg');
+  background-position: center;
+}
+
+.hives-highbrood-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/highbrood_cb.svg');
+  background-position: center;
+}
+
+.hives-nobrood-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/nobrood_b.svg');
+  background-position: center;
+}
+
+.hives-nobrood-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/nobrood_cb.svg');
+  background-position: center;
+}
+
+.hives-nobees-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/nobees_b.svg');
+  background-position: center;
+}
+
+.hives-nobees-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/nobees_cb.svg');
+  background-position: center;
+}
+
+.hives-lowbees-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/lowbees_b.svg');
+  background-position: center;
+}
+
+.hives-nobees-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/lowbees_cb.svg');
+  background-position: center;
+}
+
+.hives-normbees-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/normbees_b.svg');
+  background-position: center;
+}
+
+.hives-normbees-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/normbees_cb.svg');
+  background-position: center;
+}
+
+.hives-highbees-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/highbees_b.svg');
+  background-position: center;
+}
+
+.hives-highbees-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/highbees_cb.svg');
+  background-position: center;
+}
+
+.hives-nores-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/nores_b.svg');
+  background-position: center;
+}
+
+.hives-nores-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/nores_cb.svg');
+  background-position: center;
+}
+
+.hives-lowres-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/lowres_b.svg');
+  background-position: center;
+}
+
+.hives-lowres-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/lowres_cb.svg');
+  background-position: center;
+}
+
+.hives-normres-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/normres_b.svg');
+  background-position: center;
+}
+
+.hives-normres-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/normres_cb.svg');
+  background-position: center;
+}
+
+.hives-highres-img{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/highres_b.svg');
+  background-position: center;
+}
+
+.hives-highres-img-active{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/highres_cb.svg');
   background-position: center;
 }
 

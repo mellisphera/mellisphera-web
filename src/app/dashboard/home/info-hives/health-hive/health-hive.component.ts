@@ -59,7 +59,8 @@ export class HealthHiveComponent implements OnInit {
             legend: {
                 show: true,
                 data: [],
-                bottom: 'bottom',
+                top: 70,
+                left: 'center',
                 selectedMode: 'single'
             },
             visualMap: {
@@ -76,7 +77,7 @@ export class HealthHiveComponent implements OnInit {
                 },
             },
             calendar: [{
-                top: 70,
+                top: 100,
                 left: 'center',
                 //width: '70%',
                 range: MyDate.getRangeForCalendarAlerts(),

@@ -15,7 +15,13 @@ export class MyDate {
 
     public static start: Date;
     public static end: Date = new Date();
+    public static thisDay: Date = new Date(MyDate.end);
 
+    static init(){
+        MyDate.thisDay.setDate( MyDate.end.getDate() - 1 );
+        MyDate.end.setHours(0);
+        MyDate.end.setMinutes(0);
+    }
 
     /**
      *
@@ -114,10 +120,11 @@ export class MyDate {
        */
       static getRangeForCalendarAlerts(): Date[]{
         const day: number[] = [34, 28, 29, 30, 31, 32, 33];
-        let max = MyDate.end;
+        let max = new Date(MyDate.end);
         max.setHours(23);
         max.setMinutes(59);
         max.setSeconds(59);
+        max.setDate( max.getDate() - 1 )
         let min = new Date();
         min.setTime(max.getTime());
         min.setDate(min.getDate() - 24);

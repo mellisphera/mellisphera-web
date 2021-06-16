@@ -33,13 +33,13 @@ import { RucherModel } from '../../../../_model/rucher-model';
 import { AlertInterface } from '../../../../_model/alert';
 import { UnitService } from '../../../../dashboard/service/unit.service';
 
-import { PICTOS_HIVES_OBS } from '../../../../../constants/pictosHiveObs';
 import { MORE_ICON_WHITE, MORE_ICON } from './../../../../../constants/pictos';
 
 import { DomSanitizer} from '@angular/platform-browser';
 import { SafeHtmlPipe } from '../../../melli-charts/safe-html.pipe';
 import { MyDatePipe } from '../../../../pipe/my-date.pipe';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { InspCatService } from '../../../service/api/insp-cat.service';
 
 
 @Component({
@@ -63,6 +63,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   optionsDate = {
     weekday: 'short', year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric',
   };
+
+  public PICTOS_HIVES_OBS: any[] = [];
 
   public more_icon_white: string = MORE_ICON_WHITE;
   public more_icon: string = MORE_ICON;
@@ -113,7 +115,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     private unitService: UnitService,
     public sanitizer: DomSanitizer,
     public safeHtml: SafeHtmlPipe,
-    private myDate: MyDatePipe
+    private myDate: MyDatePipe,
+    private inspCat: InspCatService
   ) {
     this.typeObs = false;
     this.notifier = notifyService;
@@ -126,6 +129,39 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
 
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua))
        this.isDesktop = false;
+
+    this.inspCat.getInspCat().subscribe(
+      _inspCat => {
+        _inspCat.forEach(_cat => {
+          if(_cat.applies.indexOf("apiary") !== -1 && _cat.type === "obs" && _cat.img !== "Default"){
+            this.PICTOS_HIVES_OBS.push({
+              name:_cat.name.toLowerCase(), 
+              img: _cat.img.toLowerCase() + '_b.svg',
+              img_active: _cat.img.toLowerCase() + '_cb.svg',
+              class: 'hives-' + _cat.name.toLowerCase() + '-img'
+            })
+          }
+        })
+        this.PICTOS_HIVES_OBS.push({
+          name:'super+', 
+          img: 'super+_b.svg',
+          img_active:'super+_cb.svg',
+          class: 'hives-super+-img'
+        })
+        this.PICTOS_HIVES_OBS.push({
+          name:'super-', 
+          img: 'super-_b.svg',
+          img_active:'super-_cb.svg',
+          class: 'hives-super--img'
+        })
+        this.PICTOS_HIVES_OBS.push({
+          name:'default', 
+          img: 'default_b.svg',
+          img_active:'default_cb.svg',
+          class: 'hives-default-img'
+        })
+      }
+    )
   }
 
   @HostListener('window:resize', ['$event'])
@@ -411,12 +447,12 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   addObsList(): void {
     const obsDiv = (<HTMLElement>document.getElementsByClassName('add-event-choice-obs')[0]);
     obsDiv.innerHTML = '';
-    for (let i = 0; i < PICTOS_HIVES_OBS.length; i++) {
+    for (let i = 0; i < this.PICTOS_HIVES_OBS.length; i++) {
 
       const button = document.createElement('button');
       button.className = 'hives-obs-add';
 
-      button.classList.add(PICTOS_HIVES_OBS[i].class);
+      button.classList.add(this.PICTOS_HIVES_OBS[i].class);
       button.onclick = (evt: Event) => {
         const n = i;
         this.hiveButton(evt, n);
@@ -429,14 +465,14 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
 
   hiveButton(evt: Event, btnIndex: number): void {
     const button = (<HTMLButtonElement> evt.target);
-    if ( button.classList.contains(PICTOS_HIVES_OBS[btnIndex].class + '-active') ) {
-      button.classList.remove(PICTOS_HIVES_OBS[btnIndex].class + '-active');
-      const i = this.new_event.obs.findIndex(e => e.name === PICTOS_HIVES_OBS[btnIndex].name);
+    if ( button.classList.contains(this.PICTOS_HIVES_OBS[btnIndex].class + '-active') ) {
+      button.classList.remove(this.PICTOS_HIVES_OBS[btnIndex].class + '-active');
+      const i = this.new_event.obs.findIndex(e => e.name === this.PICTOS_HIVES_OBS[btnIndex].name);
       this.new_event.obs.splice(i, 1);
       return;
     }
-    button.classList.add(PICTOS_HIVES_OBS[btnIndex].class + '-active');
-    this.new_event.obs.push({name: PICTOS_HIVES_OBS[btnIndex].name, img: PICTOS_HIVES_OBS[btnIndex].img_active});
+    button.classList.add(this.PICTOS_HIVES_OBS[btnIndex].class + '-active');
+    this.new_event.obs.push({name: this.PICTOS_HIVES_OBS[btnIndex].name, img: this.PICTOS_HIVES_OBS[btnIndex].img});
     return;
   }
 
@@ -569,129 +605,24 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     const obsDiv = (<HTMLElement>document.getElementsByClassName('edit-event-choice-obs')[0]);
     obsDiv.innerHTML = '';
 
-    // TO REMOVE
-    let def_count = 0;
-    if(this.new_event.obs != null){
-      for (let i=0; i < this.new_event.obs.length; i++){
-
-        const button = document.createElement('button');
-        button.className = 'hives-obs-add';
-
-        let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === this.new_event.obs[i].name);
-        button.classList.add(PICTOS_HIVES_OBS[index].class);
-        button.classList.add(PICTOS_HIVES_OBS[index].class + '-active');
-
-        button.onclick = (evt: Event) => {
-          this.hiveButton(evt, index);
-        }
-
-        if(this.new_event.obs[i].name === 'default'){
-          def_count++;
-        }
-
-        obsDiv.appendChild(button);
-
-      }
-    }
-
-
-    if(this.new_event.obs != null){
-      // TO BE REMOVED WHEN ALL PICTOS ARE READY
-      if(!this.new_event.obs.some(_obs => _obs.name === 'swarm')){
-        const button = document.createElement('button');
-        button.className = 'hives-obs-add';
-
-        button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm') ].class);
-
-        button.onclick = (evt: Event) => {
-          let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm');
-          this.hiveButton(evt, n);
-        }
-
-        obsDiv.appendChild(button);
-      }
-      if(!this.new_event.obs.some(_obs => _obs.name === 'super+')){
-        const button = document.createElement('button');
-        button.className = 'hives-obs-add';
-
-        button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+') ].class);
-
-        button.onclick = (evt: Event) => {
-          let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+')
-          this.hiveButton(evt, n);
-        }
-
-        obsDiv.appendChild(button);
-      }
-      if(!this.new_event.obs.some(_obs => _obs.name === 'super-')){
-        const button = document.createElement('button');
-        button.className = 'hives-obs-add';
-
-        button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-') ].class);
-
-        button.onclick = (evt: Event) => {
-          let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-');
-          this.hiveButton(evt, n);
-        }
-
-        obsDiv.appendChild(button);
-      }
-    }
-    else{
-      let button = document.createElement('button');
-      button.className = 'hives-obs-add';
-
-      button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm') ].class);
-
-      button.onclick = (evt: Event) => {
-        let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'swarm');
-        this.hiveButton(evt, n);
-      }
-
-      obsDiv.appendChild(button);
-
-      button = document.createElement('button');
-      button.className = 'hives-obs-add';
-
-      button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+') ].class);
-
-      button.onclick = (evt: Event) => {
-        let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super+');
-        this.hiveButton(evt, n);
-      }
-
-      obsDiv.appendChild(button);
-
-      button = document.createElement('button');
-      button.className = 'hives-obs-add';
-
-      button.classList.add(PICTOS_HIVES_OBS[ PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-') ].class);
-
-      button.onclick = (evt: Event) => {
-        let n = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'super-');
-        this.hiveButton(evt, n);
-      }
-
-      obsDiv.appendChild(button);
-    }
-
-
-
-    for(let i=0; i<6 - def_count; i++){
+    for (let i=0; i < this.PICTOS_HIVES_OBS.length; i++){
 
       const button = document.createElement('button');
       button.className = 'hives-obs-add';
-
-      let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === 'default');
-      button.classList.add(PICTOS_HIVES_OBS[index].class);
+      button.classList.add(this.PICTOS_HIVES_OBS[i].class);
+      
+      if(this.new_event.obs != null && this.new_event.obs.findIndex( _o => _o.name === this.PICTOS_HIVES_OBS[i].name ) !== -1){
+        button.classList.add(this.PICTOS_HIVES_OBS[i].class + '-active');
+      }
 
       button.onclick = (evt: Event) => {
-        this.hiveButton(evt, index);
+        let n = i;
+        this.hiveButton(evt, n);
       }
 
       obsDiv.appendChild(button);
-    }
 
+    }
   }
 
   updateRow(i: number){
@@ -707,9 +638,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         const button = document.createElement('button');
         button.className = 'hives-obs-add';
 
-        let index = PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === this.new_event.obs[i].name);
-        button.classList.add(PICTOS_HIVES_OBS[index].class);
-        button.classList.add(PICTOS_HIVES_OBS[index].class + '-active');
+        let index = this.PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === this.new_event.obs[i].name);
+        button.classList.add(this.PICTOS_HIVES_OBS[index].class);
+        button.classList.add(this.PICTOS_HIVES_OBS[index].class + '-active');
 
         button.onclick = (evt: Event) => {
           this.hiveButton(evt, index);

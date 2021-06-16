@@ -5,19 +5,19 @@
     <ul class="nav navbar-nav buttonLeft">
       <li>
         <button type="button" id="inspect-new-btn" (click)="setButtonActive('inspect-new-btn')"
-          class="button button0" data-toggle="tooltip" data-placement="top" title="Nouvelle"
+          class="button button0" data-toggle="tooltip" data-placement="top" title="{{ 'INSPECT.NAV.PARAMS' | translate }}"
           routerLink="./new">
           {{ 'INSPECT.NAV.NEW' | translate }}</button>
       </li>
       <li>
         <button type="button" id="inspect-history-btn" (click)="setButtonActive('inspect-history-btn')"
-          class="button button0" data-toggle="tooltip" data-placement="top" title="Historique"
+          class="button button0" data-toggle="tooltip" data-placement="top" title="{{ 'INSPECT.NAV.PARAMS' | translate }}"
           routerLink="./history">
           {{ 'INSPECT.NAV.HISTORY' | translate }}</button>
       </li>
       <li>
         <button type="button" id="inspect-params-btn" (click)="setButtonActive('inspect-params-btn')"
-          class="button button0" data-toggle="tooltip" data-placement="top" title="Parametres"
+          class="button button0" data-toggle="tooltip" data-placement="top" title="{{ 'INSPECT.NAV.PARAMS' | translate }}"
           routerLink="./params">
           {{ 'INSPECT.NAV.PARAMS' | translate }}</button>
       </li>

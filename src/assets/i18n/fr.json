@@ -581,6 +581,7 @@
       },
       "NEW": {
         "TITLE":"Nouvelle Inspection du rucher ",
+        "DATE":"Date : ",
         "PLACEHOLDER":"Choisir date",
         "DEFAULT_SELECT":"Choisir rucher",
         "NOTE_PLACEHOLDER":"Notes...",
@@ -720,10 +721,19 @@
         "VIRGINSWARM":"Virgin swarm",
         "SWARMRETURN":"Swarm and return to hive",
         "QUEENSEEN":"Reine vue",
+        "NOBROOD":"Pas de couvain",
         "LOWBROOD":"Niveau couvain faible ",
         "NORMBROOD":"Niveau couvain normal",
         "HIGHBROOD":"Niveau couvain elevé",
-        "SICK":"Malade"
+        "SICK":"Malade",
+        "NOBEES":"Pas d'abeilles",
+        "LOWBEES":"Niveau d'abeilles faible",
+        "NORMBEES":"Niveau d'abeilles moyen",
+        "HIGHBEES":"Niveau d'abeilles élevé",
+        "NORES":"Pas de ressources",
+        "LOWRES":"Niveau de ressources faible",
+        "NORMRES":"Niveau de ressources moyen",
+        "HIGHRES":"Niveau de ressources élevé"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
