@@ -25,11 +25,10 @@
       </div>
     </div>
   </div>
-
     <div class="inspect-body">
       <div class="inspect-apiary">
           <div class="apiary-obs-div">
-            <table>
+            <table style="table-layout: fixed;">
               <thead>
                 <tr>
                   <th></th>
@@ -49,31 +48,77 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="padding-right:10px;"><img src="../../../../assets/ms-pics/bee_b.svg" width="40" height="40"></td>
+                  <td><img src="../../../../assets/ms-pics/bee_b.svg" width="30" height="30"></td>
                   <td style="padding-left:5px; padding-right:5px;">
-                    <input class="form-check-input" type="radio" value="" id="bees_low_check">
+                    <input class="form-check-input" type="radio" value="" id="bees_low_check" (click)="setBeeLevel('low', 'apiary')">
                   </td>
                   <td style="padding-left:5px; padding-right:5px;">
-                    <input class="form-check-input" type="radio" value="" id="bees_avg_check"> 
+                    <input class="form-check-input" type="radio" value="" id="bees_avg_check" (click)="setBeeLevel('avg', 'apiary')">
                   </td>
                   <td style="padding-left:5px; padding-right:5px;">
-                    <input class="form-check-input" type="radio" value="" id="bees_high_check">
+                    <input class="form-check-input" type="radio" value="" id="bees_high_check" (click)="setBeeLevel('high', 'apiary')">
                   </td>
                   <td style="padding-left:5px; padding-right:5px;">
-                    <input class="form-check-input" type="radio" value="" id="bees_none_check">
+                    <input class="form-check-input" type="radio" value="" id="bees_none_check" (click)="setBeeLevel('none', 'apiary')">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="../../../../assets/ms-pics/emptybrood_b.svg" width="30" height="30"></td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="brood_low_check" (click)="setBroodLevel('low', 'apiary')">
+                  </td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="brood_avg_check" (click)="setBroodLevel('avg', 'apiary')">
+                  </td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="brood_high_check" (click)="setBroodLevel('high', 'apiary')">
+                  </td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="brood_none_check" (click)="setBroodLevel('none', 'apiary')">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="../../../../assets/ms-pics/res_b.svg" width="30" height="30"></td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="res_low_check" (click)="setResLevel('low', 'apiary')">
+                  </td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="res_avg_check" (click)="setResLevel('avg', 'apiary')">
+                  </td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="res_high_check" (click)="setResLevel('high', 'apiary')">
+                  </td>
+                  <td style="padding-left:5px; padding-right:5px;">
+                    <input class="form-check-input" type="radio" value="" id="res_none_check" (click)="setResLevel('none', 'apiary')">
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="apiary-op d-flex flex-wrap">
-            <ng-container *ngFor="let conf of inspConf; let i = index">
-              <ng-container *ngIf="conf.enable && conf.inspCat.applies.includes('apiary') && conf.inspCat.type === 'act'">
-                <button [class]="'apiary-action btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
-                (click)="changeActive($event, conf.inspCat, 'apiary', 'act')"
-                data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
+            <div id="brood-stage">
+              <button class="btn apiary-obs brood-egg" (click)="setBroodStage('egg', 'apiary')"></button>
+              <button class="btn apiary-obs brood-larva" (click)="setBroodStage('larva', 'apiary')"></button>
+              <button class="btn apiary-obs brood-pupa" (click)="setBroodStage('pupa', 'apiary')"></button>
+              <button class="btn apiary-obs brood-drone" (click)="setBroodStage('drone', 'apiary')"></button>
+              <button class="btn apiary-obs brood-none" (click)="setBroodStage('none', 'apiary')"></button>
+            </div>
+            <div>
+              <button class="btn apiary-obs health-dead" (click)="setHealth('dead', 'apiary')"></button>
+              <button class="btn apiary-obs health-sick" (click)="setHealth('sick', 'apiary')"></button>
+              <button class="btn apiary-obs health-average" (click)="setHealth('average', 'apiary')"></button>
+              <button class="btn apiary-obs health-queen" (click)="setHealth('queen', 'apiary')"></button>
+              <button class="btn apiary-obs health-swarm" (click)="setHealth('swarm', 'apiary')"></button>
+            </div>
+            <div>
+              <ng-container *ngFor="let conf of inspConf; let i = index">
+                <ng-container *ngIf="conf.enable && conf.inspCat.applies.includes('apiary') && conf.inspCat.type === 'act'">
+                  <button [class]="'apiary-action btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
+                  (click)="changeActive($event, conf.inspCat, 'apiary', 'act')"
+                  data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
+                </ng-container>
               </ng-container>
-            </ng-container>
+            </div>
           </div>
           <div class="apiary-notes-todo">
             <div class="inspect-apiary-notes">
@@ -94,20 +139,96 @@
                 <h4 style="font-weight: bold; text-align: left; margin-left: 5px; border-bottom: 1px solid #ddd;">{{ruche.name}}</h4>
                 <div style="display: flex; flex-wrap: wrap; width: 100%;">
                   <div class="hive-obs-div">
-                    <ng-container *ngFor="let conf of inspConf; let i = index">
-                      <button *ngIf="conf.enable && conf.inspCat.applies.includes('hive') && conf.inspCat.type === 'obs'"
-                      [class]="'hives-obs btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
-                      (click)="changeActive($event, conf.inspCat, 'hive', 'obs', ruche)"
-                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
-                    </ng-container>
+                    <table style="table-layout: fixed;">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>
+                            <img src="../../../../assets/ms-pics/low_cb.svg" width="20" height="20">
+                          </th>
+                          <th>
+                            <img src="../../../../assets/ms-pics/average_cb.svg" width="20" height="20">
+                          </th>
+                          <th>
+                            <img src="../../../../assets/ms-pics/high_cb.svg" width="20" height="20">
+                          </th>
+                          <th>
+                            <img src="../../../../assets/ms-pics/none_cb.svg" width="15" height="15">
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><img src="../../../../assets/ms-pics/bee_b.svg" width="30" height="30"></td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_bees_low_check'" (click)="setBeeLevel('low', 'hive', ruche)">
+                          </td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_bees_avg_check'" (click)="setBeeLevel('avg', 'hive', ruche)">
+                          </td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_bees_high_check'" (click)="setBeeLevel('high', 'hive', ruche)">
+                          </td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_bees_none_check'" (click)="setBeeLevel('none', 'hive', ruche)">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><img src="../../../../assets/ms-pics/emptybrood_b.svg" width="30" height="30"></td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_brood_low_check'" (click)="setBroodLevel('low', 'hive', ruche)">
+                          </td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_brood_avg_check'" (click)="setBroodLevel('avg', 'hive', ruche)">
+                          </td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_brood_high_check'" (click)="setBroodLevel('high', 'hive', ruche)">
+                          </td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_brood_none_check'" (click)="setBroodLevel('none', 'hive', ruche)">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><img src="../../../../assets/ms-pics/res_b.svg" width="30" height="30"></td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_res_low_check'" (click)="setResLevel('low', 'hive', ruche)">
+                          </td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_res_avg_check'" (click)="setResLevel('avg', 'hive', ruche)">
+                          </td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_res_high_check'" (click)="setResLevel('high', 'hive', ruche)">
+                          </td>
+                          <td style="padding-left:5px; padding-right:5px;">
+                            <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_res_none_check'" (click)="setResLevel('none', 'hive', ruche)">
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                   <div class="hive-op">
-                    <ng-container *ngFor="let conf of inspConf; let i = index">
-                      <button *ngIf="conf.enable && conf.inspCat.applies.includes('hive') && conf.inspCat.type === 'act'"
-                      [class]="'hives-action btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
-                      (click)="changeActive($event, conf.inspCat, 'hive', 'act', ruche)"
-                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
-                    </ng-container>
+                    <div>
+                      <button [class]="'btn hives-obs brood-egg ' + ruche.name + '_egg'" (click)="setBroodStage('egg', 'hive', ruche)"></button>
+                      <button [class]="'btn hives-obs brood-larva ' + ruche.name + '_larva'" (click)="setBroodStage('larva', 'hive', ruche)"></button>
+                      <button [class]="'btn hives-obs brood-pupa ' + ruche.name + '_pupa'" (click)="setBroodStage('pupa', 'hive', ruche)"></button>
+                      <button [class]="'btn hives-obs brood-drone ' + ruche.name + '_drone'" (click)="setBroodStage('drone', 'hive', ruche)"></button>
+                      <button [class]="'btn hives-obs brood-none ' + ruche.name + '_none'" (click)="setBroodStage('none', 'hive', ruche)"></button>
+                    </div>
+                    <div>
+                      <button [class]="'btn hives-obs health-dead ' + ruche.name + '_dead'" (click)="setHealth('dead', 'hive', ruche)"></button>
+                      <button [class]="'btn hives-obs health-sick '  + ruche.name + '_sick'" (click)="setHealth('sick', 'hive', ruche)"></button>
+                      <button [class]="'btn hives-obs health-average ' + ruche.name + '_average'" (click)="setHealth('average', 'hive', ruche)"></button>
+                      <button [class]="'btn hives-obs health-queen '  + ruche.name + '_queen'" (click)="setHealth('queen', 'hive', ruche)"></button>
+                      <button [class]="'btn hives-obs health-swarm '  + ruche.name + '_swarm'" (click)="setHealth('swarm', 'hive', ruche)"></button>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; width: 100%;">
+                      <ng-container *ngFor="let conf of inspConf; let i = index">
+                        <button *ngIf="conf.enable && conf.inspCat.applies.includes('hive') && conf.inspCat.type === 'act'"
+                        [class]="'hives-action btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
+                        (click)="changeActive($event, conf.inspCat, 'hive', 'act', ruche)"
+                        data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
+                      </ng-container>
+                    </div>
                   </div>
                   <div class="hive-notes-todo" style="margin-top: 5px;">
                     <div class="inspect-hive-notes">

@@ -23,6 +23,7 @@ import { InspConf } from '../../../_model/inspConf';
 import { InspUser } from '../../../_model/inspUser';
 import { InspUserService } from '../../service/api/insp-user.service';
 import { NotifierService } from 'angular-notifier';
+import { e } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-inspect-new',
@@ -143,7 +144,7 @@ export class InspectNewComponent implements OnInit {
         )
       }
     );
-    
+
 
     this.new_apiary_insp.userId = this.userService.getIdUserLoged();
 
@@ -255,7 +256,7 @@ export class InspectNewComponent implements OnInit {
       }
       return;
     }
-    
+
   }
 
   onSelectChange(): void{
@@ -323,7 +324,7 @@ export class InspectNewComponent implements OnInit {
       this.hive_insps.forEach( _hInsp => {
         _hInsp.opsDate.setHours(parseInt(input.value));
       });
-    }  
+    }
   }
 
   inspectDateMinutes(): void{
@@ -348,7 +349,7 @@ export class InspectNewComponent implements OnInit {
         _hInsp.opsDate.setMinutes(parseInt(input.value));
       });
     }
-    
+
   }
 
   saveApiaryNotes(evt: Event){
@@ -447,7 +448,963 @@ export class InspectNewComponent implements OnInit {
         this.notifyService.notify('error', 'Please provide a valid date');
       }
     }
-    
+
+  }
+
+  setBeeLevel(lvl: string, entity: string, hive?: RucheInterface): void{
+    let index;
+    if(entity === 'apiary'){
+      switch(lvl){
+        case 'low':
+          (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("bees"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Lowbees', img:'lowbees_b.svg'});
+          break;
+        case 'avg':
+          (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("bees"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Normbees', img:'normbees_b.svg'});
+          break;
+        case 'high':
+          (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("bees"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Highbees', img:'highbees_b.svg'});
+          break;
+        case 'none':
+          (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("bees"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Nobees', img:'nobees_b.svg'});
+          break;
+      }
+      return;
+    }
+    if(entity === 'hive'){
+      let inspIndex;
+      switch(lvl){
+        case 'low':
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_none_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("bees"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Lowbees', img:'lowbees_b.svg'});
+          break;
+        case 'avg':
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_none_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("bees"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Normbees', img:'normbees_b.svg'});
+          break;
+        case 'high':
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_none_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("bees"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Highbees', img:'highbees_b.svg'});
+          break;
+        case 'none':
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_bees_high_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("bees"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Nobees', img:'nobees_b.svg'});
+          break;
+      }
+      return;
+    }
+
+  }
+
+  setBroodLevel(lvl: string, entity: string, hive?: RucheInterface){
+    let index;
+    if(entity === 'apiary'){
+      switch(lvl){
+        case 'low':
+          (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("brood"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Lowbrood', img:'lowbrood_b.svg'});
+          break;
+        case 'avg':
+          (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("brood"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Normbrood', img:'normbrood_b.svg'});
+          break;
+        case 'high':
+          (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("brood"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Highbrood', img:'highbrood_b.svg'});
+          break;
+        case 'none':
+          (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("brood"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Nobrood', img:'nobrood_b.svg'});
+          break;
+      }
+      return;
+    }
+    if(entity === 'hive'){
+      let inspIndex;
+      switch(lvl){
+        case 'low':
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_none_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("brood"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Lowbrood', img:'lowbrood_b.svg'});
+          break;
+        case 'avg':
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_none_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("brood"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Normbrood', img:'normbrood_b.svg'});
+          break;
+        case 'high':
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_none_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("brood"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Highbrood', img:'highbrood_b.svg'});
+          break;
+        case 'none':
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_brood_high_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("brood"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Nobrood', img:'nobrood_b.svg'});
+          break;
+      }
+      return;
+    }
+  }
+
+  setResLevel(lvl: string, entity: string, hive?: RucheInterface): void{
+    let index;
+    if(entity === 'apiary'){
+      switch(lvl){
+        case 'low':
+          (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("res"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Lowres', img:'lowres_b.svg'});
+          break;
+        case 'avg':
+          (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("res"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Normres', img:'normres_b.svg'});
+          break;
+        case 'high':
+          (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("res"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Highres', img:'highres_b.svg'});
+          break;
+        case 'none':
+          (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("res"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+          this.new_apiary_insp.obs.push({name:'Nores', img:'nores_b.svg'});
+          break;
+      }
+      return;
+    }
+    if(entity === 'hive'){
+      let inspIndex;
+      switch(lvl){
+        case 'low':
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_none_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("res"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Lowres', img:'lowres_b.svg'});
+          break;
+        case 'avg':
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_high_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_none_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("res"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Normres', img:'normres_b.svg'});
+          break;
+        case 'high':
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_none_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("res"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Highres', img:'highres_b.svg'});
+          break;
+        case 'none':
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_low_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_avg_check")).checked = false;
+          (<HTMLInputElement>document.getElementById(hive.name + "_res_high_check")).checked = false;
+          inspIndex = this.hive_insps.findIndex( _i => _i.hiveId === hive._id);
+          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("res"));
+          if(index > -1){
+            this.hive_insps[inspIndex].obs.splice(index,1);
+          }
+          this.hive_insps[inspIndex].obs.push({name:'Nores', img:'nores_b.svg'});
+          break;
+      }
+      return;
+    }
+  }
+
+  setBroodStage(stage: string, entity: string, hive?: RucheInterface): void{
+    let button, index, inspIndex;
+    if(entity === 'apiary'){
+      switch(stage){
+        case 'egg':
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0]).classList.remove('brood-larva-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Larva');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0]).classList.remove('brood-pupa-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Pupa');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0]).classList.remove('brood-drone-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Drone');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-none-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-none-active')[0]).classList.remove('brood-none-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Nonebrood');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName('brood-egg')[0];
+          if(!button.classList.contains('brood-egg-active')){
+            button.classList.add('brood-egg-active');
+            this.new_apiary_insp.obs.push({name:'Egg', img:'egg_cb.svg'});
+            console.log(this.new_apiary_insp.obs);
+          }
+
+          break;
+        case 'larva':
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0]).classList.remove('brood-egg-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Egg');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0]).classList.remove('brood-pupa-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Pupa');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0]).classList.remove('brood-drone-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Drone');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-none-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-none-active')[0]).classList.remove('brood-none-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Nonebrood');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName('brood-larva')[0];
+          if(!button.classList.contains('brood-larva-active')){
+            button.classList.add('brood-larva-active');
+            this.new_apiary_insp.obs.push({name:'Larva', img:'larva_cb.svg'});
+            console.log(this.new_apiary_insp.obs);
+          }
+
+          break;
+        case 'pupa':
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0]).classList.remove('brood-egg-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Egg');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0]).classList.remove('brood-larva-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Larva');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0]).classList.remove('brood-drone-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Drone');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-none-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-none-active')[0]).classList.remove('brood-none-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Nonebrood');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName('brood-pupa')[0];
+          if(!button.classList.contains('brood-pupa-active')){
+            button.classList.add('brood-pupa-active');
+            this.new_apiary_insp.obs.push({name:'Pupa', img:'pupa_cb.svg'});
+            console.log(this.new_apiary_insp.obs);
+          }
+
+          break;
+        case 'drone':
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0]).classList.remove('brood-egg-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Egg');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0]).classList.remove('brood-larva-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Larva');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0]).classList.remove('brood-pupa-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Pupa');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-none-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-none-active')[0]).classList.remove('brood-none-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Nonebrood');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName('brood-drone')[0];
+          if(!button.classList.contains('brood-drone-active')){
+            button.classList.add('brood-drone-active');
+            this.new_apiary_insp.obs.push({name:'Drone', img:'drone_cb.svg'});
+            console.log(this.new_apiary_insp.obs);
+          }
+
+          break;
+        case 'none':
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0]).classList.remove('brood-egg-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Egg');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0]).classList.remove('brood-larva-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Larva');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0]).classList.remove('brood-pupa-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Pupa');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0]).classList.remove('brood-drone-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Drone');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName('brood-none')[0];
+          if(!button.classList.contains('brood-none-active')){
+            button.classList.add('brood-none-active');
+            this.new_apiary_insp.obs.push({name:'Nonebrood', img:'nobrood_cb.svg'});
+            console.log(this.new_apiary_insp.obs);
+          }
+
+          break;
+      }
+      return;
+    }
+    if(entity === 'hive'){
+      inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+      switch(stage){
+        case 'egg':
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.contains('brood-none-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.remove('brood-none-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Nonebrood');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0]).classList.contains('brood-larva-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0]).classList.remove('brood-larva-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Larva');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0]).classList.contains('brood-pupa-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0]).classList.remove('brood-pupa-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Pupa');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0]).classList.contains('brood-drone-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0]).classList.remove('brood-drone-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Drone');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0];
+          if(!button.classList.contains('brood-egg-active')){
+            button.classList.add('brood-egg-active');
+            this.hive_insps[inspIndex].obs.push({name:'Egg', img:'egg_cb.svg'});
+          }
+
+          break;
+        case 'larva':
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.contains('brood-none-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.remove('brood-none-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Nonebrood');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0]).classList.contains('brood-egg-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0]).classList.remove('brood-egg-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Egg');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0]).classList.contains('brood-pupa-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0]).classList.remove('brood-pupa-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Pupa');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0]).classList.contains('brood-drone-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0]).classList.remove('brood-drone-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Drone');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0];
+          if(!button.classList.contains('brood-larva-active')){
+            button.classList.add('brood-larva-active');
+            this.hive_insps[inspIndex].obs.push({name:'Larva', img:'larva_cb.svg'});
+          }
+
+          break;
+        case 'pupa':
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.contains('brood-none-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.remove('brood-none-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Nonebrood');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0]).classList.contains('brood-egg-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0]).classList.remove('brood-egg-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Egg');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0]).classList.contains('brood-larva-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0]).classList.remove('brood-larva-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Larva');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0]).classList.contains('brood-drone-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0]).classList.remove('brood-drone-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Drone');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0];
+          if(!button.classList.contains('brood-pupa-active')){
+            button.classList.add('brood-pupa-active');
+            this.hive_insps[inspIndex].obs.push({name:'Pupa', img:'pupa_cb.svg'});
+          }
+
+          break;
+        case 'drone':
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.contains('brood-none-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.remove('brood-none-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Nonebrood');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0]).classList.contains('brood-egg-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0]).classList.remove('brood-egg-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Egg');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0]).classList.contains('brood-larva-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0]).classList.remove('brood-larva-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Larva');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0]).classList.contains('brood-pupa-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0]).classList.remove('brood-pupa-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Pupa');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0];
+          if(!button.classList.contains('brood-drone-active')){
+            button.classList.add('brood-drone-active');
+            this.hive_insps[inspIndex].obs.push({name:'Drone', img:'drone_cb.svg'});
+          }
+
+          break;
+        case 'none':
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0]).classList.contains('brood-egg-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0]).classList.remove('brood-egg-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Egg');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0]).classList.contains('brood-larva-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0]).classList.remove('brood-larva-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Larva');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0]).classList.contains('brood-pupa-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0]).classList.remove('brood-pupa-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Pupa');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0]).classList.contains('brood-drone-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0]).classList.remove('brood-drone-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Drone');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0];
+          if(!button.classList.contains('brood-none-active')){
+            button.classList.add('brood-none-active');
+            this.hive_insps[inspIndex].obs.push({name:'Nonebrood', img:'nobrood_cb.svg'});
+          }
+          break;
+      }
+      return;
+    }
+
+  }
+
+  setHealth(health: string, entity: string, hive?: RucheInterface): void{
+    let button, index, inspIndex;
+    if(entity === 'apiary'){
+      switch(health){
+        case 'dead':
+          if(<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0]).classList.remove('health-sick-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Sick');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0]).classList.remove('health-average-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Average');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0]).classList.remove('health-queen-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Queen');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0]).classList.remove('health-swarm-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Swarm');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName('health-dead')[0];
+          if(!button.classList.contains('health-dead-active')){
+            button.classList.add('health-dead-active');
+            this.new_apiary_insp.obs.push({name:'Dead', img:'dead_cb.svg'});
+            console.log(this.new_apiary_insp.obs);
+          }
+          break;
+        case 'sick':
+          if(<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0]).classList.remove('health-dead-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Dead');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0]).classList.remove('health-average-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Average');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0]).classList.remove('health-queen-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Queen');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0]).classList.remove('health-swarm-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Swarm');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName('health-sick')[0];
+          if(!button.classList.contains('health-sick-active')){
+            button.classList.add('health-sick-active');
+            this.new_apiary_insp.obs.push({name:'Sick', img:'sick_cb.svg'});
+            console.log(this.new_apiary_insp.obs);
+          }
+
+          break;
+        case 'average':
+          if(<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0]).classList.remove('health-dead-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Dead');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0]).classList.remove('health-sick-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Sick');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0]).classList.remove('health-queen-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Queen');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0]).classList.remove('health-swarm-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Swarm');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName('health-average')[0];
+          if(!button.classList.contains('health-average-active')){
+            button.classList.add('health-average-active');
+            this.new_apiary_insp.obs.push({name:'Average', img:'average_cb.svg'});
+            console.log(this.new_apiary_insp.obs);
+          }
+
+          break;
+        case 'queen':
+          if(<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0]).classList.remove('health-dead-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Dead');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0]).classList.remove('health-sick-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Sick');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0]).classList.remove('health-average-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Average');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0]).classList.remove('health-swarm-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Swarm');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName('health-queen')[0];
+          if(!button.classList.contains('health-queen-active')){
+            button.classList.add('health-queen-active');
+            this.new_apiary_insp.obs.push({name:'Queen', img:'queen_cb.svg'});
+            console.log(this.new_apiary_insp.obs);
+          }
+
+          break;
+        case 'swarm':
+          if(<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0]).classList.remove('health-dead-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Dead');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0]).classList.remove('health-sick-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Sick');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0]).classList.remove('health-average-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Average');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+          if(<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0]).classList.remove('health-queen-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Queen');
+            this.new_apiary_insp.obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName('health-swarm')[0];
+          if(!button.classList.contains('health-swarm-active')){
+            button.classList.add('health-swarm-active');
+            this.new_apiary_insp.obs.push({name:'Swarm', img:'swarm_cb.svg'});
+            console.log(this.new_apiary_insp.obs);
+          }
+
+          break;
+      }
+      return;
+    }
+    if(entity === 'hive'){
+      inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+      switch(health){
+        case 'dead':
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.contains('health-swarm-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.remove('health-swarm-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.contains('health-sick-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.remove('health-sick-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Sick');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.contains('health-average-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.remove('health-average-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Average');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.contains('health-queen-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.remove('health-queen-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Queen');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0];
+          if(!button.classList.contains('health-dead-active')){
+            button.classList.add('health-dead-active');
+            this.hive_insps[inspIndex].obs.push({name:'Dead', img:'dead_cb.svg'});
+          }
+
+          break;
+        case 'sick':
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.contains('health-swarm-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.remove('health-swarm-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.contains('health-dead-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.remove('health-dead-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Dead');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.contains('health-average-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.remove('health-average-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Average');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.contains('health-queen-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.remove('health-queen-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Queen');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0];
+          if(!button.classList.contains('health-sick-active')){
+            button.classList.add('health-sick-active');
+            this.hive_insps[inspIndex].obs.push({name:'Sick', img:'sick_cb.svg'});
+          }
+
+          break;
+        case 'average':
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.contains('health-swarm-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.remove('health-swarm-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.contains('health-dead-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.remove('health-dead-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Dead');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.contains('health-sick-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.remove('health-sick-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Sick');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.contains('health-queen-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.remove('health-queen-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Queen');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0];
+          if(!button.classList.contains('health-average-active')){
+            button.classList.add('health-average-active');
+            this.hive_insps[inspIndex].obs.push({name:'Average', img:'average_cb.svg'});
+          }
+
+          break;
+        case 'queen':
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.contains('health-swarm-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.remove('health-swarm-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.contains('health-dead-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.remove('health-dead-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Dead');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.contains('health-sick-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.remove('health-sick-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Sick');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.contains('health-average-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.remove('health-average-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Average');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0];
+          if(!button.classList.contains('health-queen-active')){
+            button.classList.add('health-queen-active');
+            this.hive_insps[inspIndex].obs.push({name:'Queen', img:'queen_cb.svg'});
+          }
+
+          break;
+        case 'swarm':
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.contains('health-dead-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.remove('health-dead-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Dead');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.contains('health-sick-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.remove('health-sick-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Sick');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.contains('health-average-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.remove('health-average-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Average');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.contains('health-queen-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.remove('health-queen-active');
+            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Queen');
+            this.hive_insps[inspIndex].obs.splice(index, 1);
+          }
+
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0];
+          if(!button.classList.contains('health-swarm-active')){
+            button.classList.add('health-swarm-active');
+            this.hive_insps[inspIndex].obs.push({name:'Swarm', img:'swarm_cb.svg'});
+          }
+          break;
+      }
+      return;
+    }
   }
 
 }

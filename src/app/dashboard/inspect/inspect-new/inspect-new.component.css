@@ -70,7 +70,6 @@
 #inspect-apiary-select{
   margin-left: 10px;
   width: 215px;
-  height: 26px;
 }
 
 .inspect-time-input{
@@ -101,10 +100,15 @@
 }
 
 .apiary-op, .apiary-obs-div,
-.hive-op, .hive-obs-div{
+.hive-obs-div{
   width: 25%;
   margin: 10px 0px 10px 10px;
-  max-height: 170px;
+  align-content: flex-start;
+}
+
+.hive-op{
+  width: 25%;
+  margin: 10px 0px 10px 10px;
   align-content: flex-start;
 }
 
@@ -112,12 +116,12 @@
   margin-right: 15px;
 }
 
-.apiary-op table, .apiary-obs-div table{
+.apiary-op table, .apiary-obs-div table, .hive-obs-div table{
   border-collapse:separate;
   border-spacing:5px;
 }
 
-.apiary-op table tr, .apiary-obs-div table tr{
+.apiary-op table tr, .apiary-obs-div table tr, .hive-obs-div table tr{
   margin: 0 5px;
 }
 
@@ -498,12 +502,7 @@
   display: block;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 465px;
-}
-
-#hives-table-body{
-  width: 99%;
-  margin-left: 10px;
+  height: 550px;
 }
 
 .hives-item{
@@ -630,6 +629,89 @@
   margin-left: 20px;
   width: 100px;
 }
+
+.apiary-obs-div table th, .hive-obs-div table th{
+  text-align: center;
+}
+
+.brood-egg{
+  background: url('../../../../assets/ms-pics/egg_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.brood-egg-active{
+  background: url('../../../../assets/ms-pics/egg_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 1px solid skyblue;
+}
+
+.brood-larva{
+  background: url('../../../../assets/ms-pics/larva_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.brood-larva-active{
+  background: url('../../../../assets/ms-pics/larva_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 1px solid skyblue;
+}
+
+.brood-pupa, .brood-drone{
+  background: url('../../../../assets/ms-pics/default_b.svg') center no-repeat;
+  background-size: 28px;
+}
+
+.brood-pupa-active, .brood-drone-active{
+  background: url('../../../../assets/ms-pics/default_cb.svg') center no-repeat;
+  background-size: 28px;
+  border: 1px solid skyblue;
+}
+
+.brood-none{
+  background: url('../../../../assets/ms-pics/nobrood_b.svg') center no-repeat;
+  background-size: 28px;
+}
+
+.brood-none-active{
+  background: url('../../../../assets/ms-pics/nobrood_cb.svg') center no-repeat;
+  background-size: 28px;
+  border: 1px solid skyblue;
+}
+
+.health-dead{
+  background: url('../../../../assets/ms-pics/dead_b.svg') center no-repeat;
+  background-size: 32px;
+}
+
+.health-dead-active{
+  background: url('../../../../assets/ms-pics/dead_cb.svg') center no-repeat;
+  background-size: 32px;
+  border: 1px solid skyblue;
+}
+
+.health-sick, .health-average, .health-queen{
+  background: url('../../../../assets/ms-pics/default_b.svg') center no-repeat;
+  background-size: 28px;
+}
+
+.health-sick-active, .health-average-active, .health-queen-active{
+  background: url('../../../../assets/ms-pics/default_cb.svg') center no-repeat;
+  background-size: 28px;
+  border: 1px solid skyblue;
+}
+
+.health-swarm{
+  background: url('../../../../assets/ms-pics/swarm_b.svg') center no-repeat;
+  background-size: 32px;
+}
+
+.health-swarm-active{
+  background: url('../../../../assets/ms-pics/swarm_cb.svg') center no-repeat;
+  background-size: 32px;
+  border: 1px solid skyblue;}
+
+
+
 @media screen and (max-width: 1300px){
   .apiary-notes-todo, .hive-notes-todo{
     width:70%;
@@ -640,6 +722,9 @@
   .hive-op, .hive-obs-div{
     width: 35%;
     min-width: 280px;
+  }
+  .apiary-obs-div table th, .hive-obs-div table th{
+    text-align: center;
   }
 }
 
@@ -684,6 +769,9 @@
     justify-content: center;
     margin: 30px 0;
   }
+  .apiary-obs-div table th, .hive-obs-div table th{
+    text-align: center;
+  }
 }
 
 @media screen and (max-width: 800px){
@@ -701,6 +789,10 @@
   .inspect-hive{
     margin-top: 20px;
     width: 100%;
+  }
+
+  .apiary-obs-div table th, .hive-obs-div table th{
+    text-align: center;
   }
 }
 
@@ -791,17 +883,18 @@
   }
 
 
-  .apiary-op table, .apiary-obs-div table{
+  .apiary-op table, .apiary-obs-div table, .hive-obs-div table{
     width: 97%;
+    text-align: center;
+  }
+
+  .apiary-obs-div table th, .hive-obs-div table th{
+    text-align: center;
   }
 
   .apiary-notes-input, .apiary-todo-input,
   .hive-notes-input, .hive-todo-input{
     width: 95%;
-  }
-
-  .inspect-hive{
-    height:500px;
   }
 
   #hives-table-body{
@@ -842,7 +935,6 @@
   .hive-op, .hive-obs-div{
     width: 25%;
     margin: 10px 0px 10px 5px;
-    max-height: 170px;
     align-content: flex-start;
   }
 
@@ -866,13 +958,7 @@
 
   .inspect-body{
     width: 98%;
-    border-top: 1px solid #999999;
-    border-bottom: 1px solid #999999;
     display: block;
-  }
-
-  .inspect-hive{
-    border-top: 1px dashed black;
   }
 
   #hives-table-head{
@@ -884,5 +970,9 @@
     justify-content: center;
     width: 95%;
     margin-left: -5px;
+  }
+
+  .apiary-obs-div table th, .hive-obs-div table th{
+    text-align: center;
   }
 }
