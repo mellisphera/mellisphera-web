@@ -708,11 +708,11 @@
         "INSTALLPKG":"Installed package",
         "NUCLEUSHIVE":"Installed nucleus hive",
         "SPLITQUEENREMOVE":"Split with queen removal",
-        "SPRINGNECTAR":"Spring nectar flow",
-        "FALLNECTAR":"Fall nectar flow",
+        "NECTARFLOW":"Nectar flow",
         "MITEOAVAPOR":"Mite treatment: Oxalic Acid Vapor",
         "MITEOADRIBBLE":"Mite treatment: Oxalic Acid Dribble",
         "MITEFORMICPRO":"Mite treatment: Formic Pro",
+        "MITESTRIP":"Mite treatment: Strip",
         "STARTFEED":"Start feeding",
         "STOPFEED":"Stop feeding",
         "SWARMMATEDQUEEN":"Swarm with mated queen",
@@ -731,7 +731,12 @@
         "NORES":"No resources",
         "LOWRES":"Low resources level",
         "NORMRES":"Average resources level",
-        "HIGHRES":"High resources level"
+        "HIGHRES":"High resources level",
+        "EGG":"Egg presence",
+        "LARVA":"Larva presence",
+        "PUPA":"Capped brood presence",
+        "DRONEBROOD":"Drone brood presence",
+        "DRONES":"Drone presence"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",

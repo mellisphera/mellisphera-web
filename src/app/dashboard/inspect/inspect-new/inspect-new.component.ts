@@ -24,6 +24,7 @@ import { InspUser } from '../../../_model/inspUser';
 import { InspUserService } from '../../service/api/insp-user.service';
 import { NotifierService } from 'angular-notifier';
 import { e } from '@angular/core/src/render3';
+import { SeasonsService } from '../service/seasons.service';
 
 @Component({
   selector: 'app-inspect-new',
@@ -91,6 +92,7 @@ export class InspectNewComponent implements OnInit {
     private inspHiveService: InspHiveService,
     public translateService: TranslateService,
     private notifyService: NotifierService,
+    public seasonService: SeasonsService
   ) {}
 
   ngOnInit() {
@@ -368,7 +370,7 @@ export class InspectNewComponent implements OnInit {
     else{
       button = <HTMLButtonElement>evt.target;
     }
-    let textArea = button.parentNode.children[1];
+    let textArea = button.parentNode.parentNode.children[1];
     if(textArea.classList.contains('hide-textarea')){
       textArea.classList.remove('hide-textarea');
       return;
@@ -379,7 +381,7 @@ export class InspectNewComponent implements OnInit {
 
   toggleTodo(evt: Event): void{
     let button = <HTMLButtonElement>evt.target;
-    let textArea = button.parentNode.children[1];
+    let textArea = button.parentNode.parentNode.parentNode.children[1].children[1];
     if(textArea.classList.contains('hide-textarea')){
       textArea.classList.remove('hide-textarea');
       return;
@@ -449,6 +451,78 @@ export class InspectNewComponent implements OnInit {
       }
     }
 
+  }
+
+  setGeneralLevel(lvl: string){
+    let index;
+    switch(lvl){
+      case 'bad':
+        if( <HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0] != null ){
+          (<HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0]).classList.remove('btn-normal-active');
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generalnormal"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+        }
+        if( <HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0] != null ){
+          (<HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0]).classList.remove('btn-happy-active');
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generalgood"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+        }
+        
+        if(<HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0] == null){
+          this.new_apiary_insp.obs.push({name:'Generallow', img:'generallow_b.svg'});
+          (<HTMLButtonElement>document.getElementsByClassName('btn-sad')[0]).classList.add('btn-sad-active');
+        }
+        
+        break;
+      case 'normal':
+        if( <HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0] != null ){
+          (<HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0]).classList.remove('btn-sad-active');
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generallow"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+        }
+        if( <HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0] != null ){
+          (<HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0]).classList.remove('btn-happy-active');
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generalgood"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+        }
+        
+        if( <HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0] == null ){
+          this.new_apiary_insp.obs.push({name:'Generalnormal', img:'generalnormal_b.svg'});
+          (<HTMLButtonElement>document.getElementsByClassName('btn-normal')[0]).classList.add('btn-normal-active');
+        } 
+        
+        break;
+      case 'good':
+        if( <HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0] != null ){
+          (<HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0]).classList.remove('btn-sad-active');
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generallow"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+        }
+        if( <HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0] != null ){
+          (<HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0]).classList.remove('btn-normal-active');
+          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generalnormal"));
+          if(index > -1){
+            this.new_apiary_insp.obs.splice(index,1);
+          }
+        }
+        
+        if( <HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0] == null ){
+          this.new_apiary_insp.obs.push({name:'Generalgood', img:'generalgood_b.svg'});
+          (<HTMLButtonElement>document.getElementsByClassName('btn-happy')[0]).classList.add('btn-happy-active');
+        }
+       
+        break;
+    }
   }
 
   setBeeLevel(lvl: string, entity: string, hive?: RucheInterface): void{
@@ -1083,15 +1157,15 @@ export class InspectNewComponent implements OnInit {
     let button, index, inspIndex;
     if(entity === 'apiary'){
       switch(health){
-        case 'dead':
+        case 'buzz':
           if(<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0] != null){
             (<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0]).classList.remove('health-sick-active');
             index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Sick');
             this.new_apiary_insp.obs.splice(index, 1);
           }
-          if(<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0]).classList.remove('health-average-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Average');
+          if(<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0]).classList.remove('health-mosaic-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Mosaichive');
             this.new_apiary_insp.obs.splice(index, 1);
           }
           if(<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0] != null){
@@ -1105,22 +1179,22 @@ export class InspectNewComponent implements OnInit {
             this.new_apiary_insp.obs.splice(index, 1);
           }
 
-          button = <HTMLButtonElement>document.getElementsByClassName('health-dead')[0];
-          if(!button.classList.contains('health-dead-active')){
-            button.classList.add('health-dead-active');
-            this.new_apiary_insp.obs.push({name:'Dead', img:'dead_cb.svg'});
+          button = <HTMLButtonElement>document.getElementsByClassName('health-buzz')[0];
+          if(!button.classList.contains('health-buzz-active')){
+            button.classList.add('health-buzz-active');
+            this.new_apiary_insp.obs.push({name:'Buzzinghive', img:'buzzinghive_cb.svg'});
             console.log(this.new_apiary_insp.obs);
           }
           break;
         case 'sick':
-          if(<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0]).classList.remove('health-dead-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Dead');
+          if(<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0]).classList.remove('health-buzz-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Buzzinghive');
             this.new_apiary_insp.obs.splice(index, 1);
           }
-          if(<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0]).classList.remove('health-average-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Average');
+          if(<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0]).classList.remove('health-mosaic-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Mosaichive');
             this.new_apiary_insp.obs.splice(index, 1);
           }
           if(<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0] != null){
@@ -1142,10 +1216,10 @@ export class InspectNewComponent implements OnInit {
           }
 
           break;
-        case 'average':
-          if(<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0]).classList.remove('health-dead-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Dead');
+        case 'mosaic':
+          if(<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0]).classList.remove('health-buzz-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Buzzinghive');
             this.new_apiary_insp.obs.splice(index, 1);
           }
           if(<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0] != null){
@@ -1164,18 +1238,18 @@ export class InspectNewComponent implements OnInit {
             this.new_apiary_insp.obs.splice(index, 1);
           }
 
-          button = <HTMLButtonElement>document.getElementsByClassName('health-average')[0];
-          if(!button.classList.contains('health-average-active')){
-            button.classList.add('health-average-active');
-            this.new_apiary_insp.obs.push({name:'Average', img:'average_cb.svg'});
+          button = <HTMLButtonElement>document.getElementsByClassName('health-mosaic')[0];
+          if(!button.classList.contains('health-mosaic-active')){
+            button.classList.add('health-mosaic-active');
+            this.new_apiary_insp.obs.push({name:'Mosaichive', img:'mosaichive_cb.svg'});
             console.log(this.new_apiary_insp.obs);
           }
 
           break;
         case 'queen':
-          if(<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0]).classList.remove('health-dead-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Dead');
+          if(<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0]).classList.remove('health-buzz-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Buzzinghive');
             this.new_apiary_insp.obs.splice(index, 1);
           }
           if(<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0] != null){
@@ -1183,9 +1257,9 @@ export class InspectNewComponent implements OnInit {
             index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Sick');
             this.new_apiary_insp.obs.splice(index, 1);
           }
-          if(<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0]).classList.remove('health-average-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Average');
+          if(<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0]).classList.remove('health-mosaic-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Mosaichive');
             this.new_apiary_insp.obs.splice(index, 1);
           }
           if(<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0] != null){
@@ -1203,9 +1277,9 @@ export class InspectNewComponent implements OnInit {
 
           break;
         case 'swarm':
-          if(<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-dead-active')[0]).classList.remove('health-dead-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Dead');
+          if(<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0]).classList.remove('health-buzz-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Buzzinghive');
             this.new_apiary_insp.obs.splice(index, 1);
           }
           if(<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0] != null){
@@ -1213,9 +1287,9 @@ export class InspectNewComponent implements OnInit {
             index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Sick');
             this.new_apiary_insp.obs.splice(index, 1);
           }
-          if(<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-average-active')[0]).classList.remove('health-average-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Average');
+          if(<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0]).classList.remove('health-mosaic-active');
+            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Mosaichive');
             this.new_apiary_insp.obs.splice(index, 1);
           }
           if(<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0] != null){
@@ -1238,7 +1312,7 @@ export class InspectNewComponent implements OnInit {
     if(entity === 'hive'){
       inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
       switch(health){
-        case 'dead':
+        case 'buzz':
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.contains('health-swarm-active')){
             (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.remove('health-swarm-active');
             inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
@@ -1251,10 +1325,10 @@ export class InspectNewComponent implements OnInit {
             index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Sick');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.contains('health-average-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.remove('health-average-active');
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0]).classList.contains('health-mosaic-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0]).classList.remove('health-mosaic-active');
             inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Average');
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Mosaichive');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.contains('health-queen-active')){
@@ -1264,10 +1338,10 @@ export class InspectNewComponent implements OnInit {
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
 
-          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0];
-          if(!button.classList.contains('health-dead-active')){
-            button.classList.add('health-dead-active');
-            this.hive_insps[inspIndex].obs.push({name:'Dead', img:'dead_cb.svg'});
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0];
+          if(!button.classList.contains('health-buzz-active')){
+            button.classList.add('health-buzz-active');
+            this.hive_insps[inspIndex].obs.push({name:'Buzzinghive', img:'buzzinghive_cb.svg'});
           }
 
           break;
@@ -1278,16 +1352,16 @@ export class InspectNewComponent implements OnInit {
             index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.contains('health-dead-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.remove('health-dead-active');
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0]).classList.contains('health-buzz-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0]).classList.remove('health-buzz-active');
             inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Dead');
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Buzzinghive');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.contains('health-average-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.remove('health-average-active');
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0]).classList.contains('health-mosaic-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0]).classList.remove('health-mosaic-active');
             inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Average');
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Mosaichive');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.contains('health-queen-active')){
@@ -1304,17 +1378,17 @@ export class InspectNewComponent implements OnInit {
           }
 
           break;
-        case 'average':
+        case 'mosaic':
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.contains('health-swarm-active')){
             (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.remove('health-swarm-active');
             inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
             index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.contains('health-dead-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.remove('health-dead-active');
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0]).classList.contains('health-buzz-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0]).classList.remove('health-buzz-active');
             inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Dead');
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Buzzinghive');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.contains('health-sick-active')){
@@ -1330,10 +1404,10 @@ export class InspectNewComponent implements OnInit {
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
 
-          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0];
-          if(!button.classList.contains('health-average-active')){
-            button.classList.add('health-average-active');
-            this.hive_insps[inspIndex].obs.push({name:'Average', img:'average_cb.svg'});
+          button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0];
+          if(!button.classList.contains('health-mosaic-active')){
+            button.classList.add('health-mosaic-active');
+            this.hive_insps[inspIndex].obs.push({name:'Mosaichive', img:'mosaichive_cb.svg'});
           }
 
           break;
@@ -1344,10 +1418,10 @@ export class InspectNewComponent implements OnInit {
             index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.contains('health-dead-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.remove('health-dead-active');
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0]).classList.contains('health-buzz-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0]).classList.remove('health-buzz-active');
             inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Dead');
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Buzzinghive');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.contains('health-sick-active')){
@@ -1356,10 +1430,10 @@ export class InspectNewComponent implements OnInit {
             index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Sick');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.contains('health-average-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.remove('health-average-active');
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0]).classList.contains('health-mosaic-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0]).classList.remove('health-mosaic-active');
             inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Average');
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Mosaichive');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
 
@@ -1371,10 +1445,10 @@ export class InspectNewComponent implements OnInit {
 
           break;
         case 'swarm':
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.contains('health-dead-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_dead')[0]).classList.remove('health-dead-active');
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0]).classList.contains('health-buzz-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0]).classList.remove('health-buzz-active');
             inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Dead');
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Buzzinghive');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.contains('health-sick-active')){
@@ -1383,10 +1457,10 @@ export class InspectNewComponent implements OnInit {
             index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Sick');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.contains('health-average-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_average')[0]).classList.remove('health-average-active');
+          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0]).classList.contains('health-mosaic-active')){
+            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0]).classList.remove('health-mosaic-active');
             inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Average');
+            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Mosaichive');
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.contains('health-queen-active')){

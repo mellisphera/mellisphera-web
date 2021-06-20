@@ -341,14 +341,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   onClickNextDay() {
     //this.dailyRecTh.nextDay(this.rucherService.getCurrentApiary());
     //this.dailyRecordWservice.nextDay(this.rucherService.getCurrentApiary());
-    //this.fitnessService.nextDay(this.userService.getIdUserLoged());
-    //this.deviceSatusService.nextDay(this.userService.getIdUserLoged());
     let end =  new Date(MyDate.end)
     end.setDate( end.getDate() - 1 );
     end.setHours(0);
     end.setMinutes(0);
     if(MyDate.thisDay < new Date(end)){
       MyDate.thisDay.setDate(MyDate.thisDay.getDate() + 1);
+      this.fitnessService.nextDay(this.userService.getIdUserLoged());
+      this.deviceSatusService.nextDay(this.userService.getIdUserLoged());
       this.updateCalendars();
     }
     
@@ -357,13 +357,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   onClickPreviousDay() {
     //this.dailyRecTh.previousDay(this.rucherService.getCurrentApiary());
     //this.dailyRecordWservice.previousDay(this.rucherService.getCurrentApiary());
-    //this.fitnessService.previousDay(this.userService.getIdUserLoged());
-    //this.deviceSatusService.previousDay(this.userService.getIdUserLoged());
     let d1 = new Date()
     d1.setDate( d1.getDate() - 24 );
     d1 = MyDate.getDateBeginMonday(d1);
     if(MyDate.thisDay > d1){
       MyDate.thisDay.setDate(MyDate.thisDay.getDate() - 1);
+      this.fitnessService.previousDay(this.userService.getIdUserLoged());
+      this.deviceSatusService.previousDay(this.userService.getIdUserLoged());
       this.updateCalendars();
     }
     

@@ -31,6 +31,7 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   border: 1px solid #4f4f51;
   border-radius: 5px;
 }
@@ -99,15 +100,18 @@
   visibility: hidden;
 }
 
-.apiary-op, .apiary-obs-div,
-.hive-obs-div{
-  width: 25%;
+.apiary-obs-div, .hive-obs-div{
+  width: 200px;
   margin: 10px 0px 10px 10px;
   align-content: flex-start;
 }
 
-.hive-op{
-  width: 25%;
+.apiary-obs-div{
+  margin-right: 5px;
+}
+
+.apiary-op, .hive-op{
+  width: 35%;
   margin: 10px 0px 10px 10px;
   align-content: flex-start;
 }
@@ -118,11 +122,16 @@
 
 .apiary-op table, .apiary-obs-div table, .hive-obs-div table{
   border-collapse:separate;
-  border-spacing:5px;
+  border-spacing:10px;
 }
 
 .apiary-op table tr, .apiary-obs-div table tr, .hive-obs-div table tr{
   margin: 0 5px;
+}
+
+.hive-obs-div table input[type="radio"]{
+  width: 1.25em;
+  height: 1.25em;
 }
 
 .apiary-action, .hives-action, .apiary-obs, .hives-obs{
@@ -459,11 +468,22 @@
   cursor: pointer;
 }
 
+.apiary-notes, .hive-notes{
+  margin-bottom: 10px;
+}
+
 .apiary-notes-input, .apiary-todo-input,
 .hive-notes-input, .hive-todo-input{
   width: 90%;
-  height: 100px;
   resize: none;
+}
+
+.apiary-notes-input, .hive-notes-input{
+  height: 110px;
+}
+
+.apiary-todo-input, .hive-todo-input{
+  height: 70px;
 }
 
 .hide-textarea{
@@ -502,7 +522,7 @@
   display: block;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 550px;
+  height: 500px;
 }
 
 .hives-item{
@@ -632,6 +652,17 @@
 
 .apiary-obs-div table th, .hive-obs-div table th{
   text-align: center;
+  width: 35px;
+  height: 35px;
+}
+
+.hive-obs-div table tr{
+  margin-bottom: 5px;
+}
+
+.hive-obs-div table tbody tr{
+  height: 35px;
+  text-align: center;
 }
 
 .brood-egg{
@@ -678,23 +709,23 @@
   border: 1px solid skyblue;
 }
 
-.health-dead{
-  background: url('../../../../assets/ms-pics/dead_b.svg') center no-repeat;
+.health-buzz{
+  background: url('../../../../assets/ms-pics/default_b.svg') center no-repeat;
   background-size: 32px;
 }
 
-.health-dead-active{
-  background: url('../../../../assets/ms-pics/dead_cb.svg') center no-repeat;
+.health-buzz-active{
+  background: url('../../../../assets/ms-pics/default_cb.svg') center no-repeat;
   background-size: 32px;
   border: 1px solid skyblue;
 }
 
-.health-sick, .health-average, .health-queen{
+.health-sick, .health-mosaic, .health-queen{
   background: url('../../../../assets/ms-pics/default_b.svg') center no-repeat;
   background-size: 28px;
 }
 
-.health-sick-active, .health-average-active, .health-queen-active{
+.health-sick-active, .health-mosaic-active, .health-queen-active{
   background: url('../../../../assets/ms-pics/default_cb.svg') center no-repeat;
   background-size: 28px;
   border: 1px solid skyblue;
@@ -710,6 +741,51 @@
   background-size: 32px;
   border: 1px solid skyblue;}
 
+.btn-sad, .btn-normal, .btn-happy{
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  background-color: white;
+}
+
+.btn-sad{
+  background: url('../../../../assets/ms-pics/generallow_b.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.btn-sad-active{
+  background: url('../../../../assets/ms-pics/generallow_cb.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.btn-normal{
+  background: url('../../../../assets/ms-pics/generalnormal_b.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.btn-normal-active{
+  background: url('../../../../assets/ms-pics/generalnormal_cb.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.btn-happy{
+  background: url('../../../../assets/ms-pics/generalgood_b.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.btn-happy-active{
+  background: url('../../../../assets/ms-pics/generalgood_cb.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.hive-body-container{
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: space-around;
+  width: 100%; 
+  margin-left: 5px;
+}
 
 
 @media screen and (max-width: 1300px){
@@ -718,13 +794,18 @@
     margin-left:15px;
     min-width:320px;
   }
-  .apiary-op, .apiary-obs-div,
-  .hive-op, .hive-obs-div{
-    width: 35%;
-    min-width: 280px;
+  .apiary-op, .hive-op{
+    width: 50%;
+    min-width: 300px;
   }
   .apiary-obs-div table th, .hive-obs-div table th{
     text-align: center;
+  }
+  .inspect-apiary, .inspect-hive{
+    justify-content: unset;
+  }
+  .hive-body-container{
+    justify-content: unset;
   }
 }
 
@@ -931,13 +1012,6 @@
     margin-bottom: 15px;
   }
 
-  .apiary-op, .apiary-obs-div,
-  .hive-op, .hive-obs-div{
-    width: 25%;
-    margin: 10px 0px 10px 5px;
-    align-content: flex-start;
-  }
-
   .apiary-notes-todo{
     margin-left: 8px;
   }
@@ -948,7 +1022,8 @@
 
   .inspect-apiary-notes, .inspect-apiary-todo,
   .inspect-hive-notes, .inspect-hive-todo{
-    margin-left: 0px;
+    margin-left: 7px;
+    justify-content: unset;
   }
 
   .apiary-notes-input, .apiary-todo-input,

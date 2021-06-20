@@ -35,6 +35,7 @@ export class InspectParamsComponent implements OnInit, OnDestroy {
     this.inspCatService.getInspCat().subscribe(
       _inspCatArray => {
         this.inspCat = [..._inspCatArray];
+        console.log(_inspCatArray);
       },
       () => {},
       () => {
