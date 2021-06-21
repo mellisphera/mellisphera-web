@@ -90,7 +90,7 @@ limitations under the License. -->
             <ng-container>
                 <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true"
                     data-toggle="tooltip" [ngDraggable]="!lockHive" [handle]="HiveHandle"
-                    *ngFor="let ruche of rucheService.getHivesByApiaryId(rucherService.getCurrentApiary()); let i = index"
+                    *ngFor="let ruche of rucheService.ruches; let i = index"
                     (endOffset)="onMoveEnd($event, ruche,i)" [id]="ruche.name" [style.top.%]="ruche.hivePosY"
                     style="transform: none" [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)"
                     class="hive-group drag-grid {{i}}">
@@ -133,7 +133,6 @@ limitations under the License. -->
                     </div>
                     <div (click)="onClick(ruche);" class="brood collapse ">
                         <span class="hive-info">{{ dailyRecTh.getPourcentByHive(ruche._id) }}</span>
-
                     </div>
                     <div (click)="onClick(ruche);" class="weight collapse ">
                         <span
@@ -162,7 +161,7 @@ limitations under the License. -->
             </div>
             <div class="hub-info" title="Hub" *ngIf="hubService.getHubByApiary(rucherService.getCurrentApiary()) != null">
                 <div (click)="onClick(ruche);">
-                    <div class="ruche" 
+                    <div class="ruche"
                     [style.background-color]="hubService.getHubByApiary(rucherService.getCurrentApiary()).working === 0? 'red': 'green'">
                         <i class="fa fa-wifi" aria-hidden="true"></i>
                     </div>

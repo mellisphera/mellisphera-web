@@ -23,9 +23,9 @@ export class StackMelliChartsService {
 
   private arrayHiveSelect: Array<RucheInterface>;
   private colorByHive: Array<any>;
-  private stackEchartInstance: any;
-  private broodChartInstance: any;
-  private weightChartInstance: any;
+  public stackEchartInstance: any;
+  public broodChartInstance: any;
+  public weightChartInstance: any;
   public range: DataRange;
   private arrayColor: Array<any>;
   constructor(private httpClient: HttpClient) {

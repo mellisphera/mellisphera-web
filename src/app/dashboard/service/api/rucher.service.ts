@@ -49,11 +49,10 @@ export class RucherService {
     constructor(private http: HttpClient,
         private user: UserloggedService,
         public rucheService: RucheService,
-        private loadingService: LoadingService,
-        private tokenService: AtokenStorageService) {
+        private loadingService: LoadingService
+    ) {
         this.allApiaryAccount = [];
         this.initRucher();
-        console.log("init rucher");
 /*         if (this.user.getUser() && !this.tokenService.checkAuthorities('ROLE_ADMIN')) {
             this.getApiaryByUser(this.user.getJwtReponse().idUser);
         } */
@@ -141,14 +140,11 @@ export class RucherService {
         this.loadingService.loading = true;
         this.apiarySub = this.http.get<RucherModel[]>(CONFIG.URL + 'apiaries/' + userId).subscribe(
             (apiary) => {
-                console.log(apiary);
                 this.ruchers = apiary.filter(apiary => apiary !== null && apiary.userId === this.user.getIdUserLoged());
-                console.log(this.ruchers);
                 /* DELETE THIS LINE IF YOU WANT TO SHOW SHARED APIARIES */
                 apiary = this.ruchers;
                 /* */
                 this.sharingApiary = apiary.filter(apiary => apiary.userId !== this.user.getIdUserLoged());
-                console.log(this.sharingApiary);
                 this.allApiaryAccount = apiary.sort((a, b) => {
                     return a.name.localeCompare(b.name);
                 });

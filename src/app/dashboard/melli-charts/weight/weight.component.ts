@@ -1,5 +1,5 @@
 import { UserPref } from './../../../_model/user-pref';
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as echarts from 'echarts';
 import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
@@ -28,7 +28,7 @@ import { MelliChartsHiveService } from '../service/melli-charts-hive.service';
   styleUrls: ['./weight.component.css'],
   providers:[DatePipe]
 })
-export class WeightComponent implements OnInit, AfterViewInit {
+export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private option: {
     baseOption: any,
@@ -1464,6 +1464,7 @@ export class WeightComponent implements OnInit, AfterViewInit {
   }
 
   ngOnDestroy(): void {
+    this.stackService.weightChartInstance.dispose();
   }
 
 

@@ -57,7 +57,6 @@ export class RucheService {
     this.getHiveByUserId(this.user.getIdUserLoged()).subscribe(
       _hives => {
         this.ruchesAllApiary = _hives;
-        console.log(this.ruchesAllApiary);
         this.hiveSubject.next(this.ruchesAllApiary);
       },
       () => { },

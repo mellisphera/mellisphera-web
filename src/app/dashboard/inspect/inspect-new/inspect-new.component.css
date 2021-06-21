@@ -780,10 +780,10 @@
 }
 
 .hive-body-container{
-  display: flex; 
-  flex-wrap: wrap; 
+  display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
-  width: 100%; 
+  width: 100%;
   margin-left: 5px;
 }
 

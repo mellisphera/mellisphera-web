@@ -1,9 +1,13 @@
+import { RucherService } from './rucher.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable} from 'rxjs';
 import { CONFIG } from '../../../../constants/config';
 
 import { Inspection } from '../../../_model/inspection';
+import { EVENTS, INSPECTIONS } from '../../melli-charts/charts/icons/icon_inspect';
+import * as moment from 'moment';
+import { RucheService } from './ruche.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -18,8 +22,12 @@ export class InspectionService {
   inspectionsApiary: Inspection[];
   inspectionsApiaryUser: Inspection[];
   inspectionsHiveUser: Inspection[];
+
+  public inspApi: Inspection[];
+  public inspHive: Inspection[];
+
   public obsHiveSubject: BehaviorSubject<Inspection[]>;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private rucherService: RucherService, private rucheService: RucheService) {
     this.inspectionsApiary = [];
     this.inspectionsHive = [];
     this.inspectionsApiaryUser = [];
@@ -54,17 +62,36 @@ export class InspectionService {
   getInspectionByUserId(userId: string): void {
     this.http.get<Inspection[]>(CONFIG.URL + 'inspection/user/' + userId, httpOptions).subscribe(
       _insp => {
-        console.log(_insp);
         this.inspectionsHive = _insp.filter(_insp => _insp.type === 'hive').sort((inspA, inspB) => {
           return new Date(inspA.opsDate).getTime() - new Date(inspB.opsDate).getTime();
         });
         this.inspectionsApiary = _insp.filter(_insp => _insp.type === 'apiary').sort((inspA, inspB) => {
           return new Date(inspA.opsDate).getTime() - new Date(inspB.opsDate).getTime();
         });
+      },
+      () => {},
+      () => {
+        this.inspApi = this.getInspectionCurrentApiary(this.rucherService.getCurrentApiary());
+        this.inspHive = this.getInspectionCurrentHive(this.rucheService.getCurrentHive()._id);
       }
     );
   }
 
+  getInspectionCurrentApiary(apiaryId: string): Inspection[]{
+    let start = new Date();
+    start.setDate(start.getDate() - 180);
+    return this.inspectionsApiary.filter(_insp => (_insp.apiaryId === apiaryId && new Date(_insp.opsDate) > start)).sort((inspA, inspB) => {
+      return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
+    });
+  }
+
+  getInspectionCurrentHive(hiveId: string): Inspection[]{
+    let start = new Date();
+    start.setDate(start.getDate() - 180);
+    return this.inspectionsHive.filter(_insp => (_insp.hiveId === hiveId && new Date(_insp.opsDate) > start )).sort((inspA, inspB) => {
+      return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
+    });
+  }
 
   /**
   *
@@ -303,5 +330,33 @@ export class InspectionService {
     return this.http.post<String[]>(CONFIG.URL + 'inspection/delete/hive/' , ids, httpOptions);
   }
 
+
+  getPictoInspect(cellPoint: Array<number>) {
+    return INSPECTIONS.HiveAct.map(_path => {
+      return  {
+          type: 'path',
+          scale: _path.scale,
+          shape: {
+              pathData: _path.path,
+          },
+          position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
+          style: _path.style
+      };
+    });
+  }
+
+  getPictoEvent(cellPoint: Array<number>){
+    return EVENTS.HiveAct.map(_path => {
+      return  {
+          type: 'path',
+          scale: _path.scale,
+          shape: {
+              pathData: _path.path,
+          },
+          position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
+          style: _path.style
+      };
+    });
+  }
 
 }

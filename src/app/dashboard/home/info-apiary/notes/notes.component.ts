@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, Renderer2, AfterViewChecked,HostListener, Output, EventEmitter, ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit, AfterViewChecked,HostListener, Output, EventEmitter, ViewEncapsulation  } from '@angular/core';
 import { RucherService } from '../../../service/api/rucher.service';
 import { ObservationService } from '../../../service/api/observation.service';
 import { Subscription } from 'rxjs';
@@ -25,16 +25,13 @@ import * as moment from 'moment';
 import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
 import { Inspection } from '../../../../_model/inspection';
 import { RucherModel } from '../../../../_model/rucher-model';
-import { AlertInterface } from '../../../../_model/alert';
 import { UnitService } from '../../../../dashboard/service/unit.service';
 import { Router } from '@angular/router';
 
-import { PICTOS_HIVES_OBS } from '../../../../../constants/pictosHiveObs'
 import { MORE_ICON_WHITE, MORE_ICON } from './../../../../../constants/pictos';
 
 import { DomSanitizer} from '@angular/platform-browser';
 import { SafeHtmlPipe } from '../../../melli-charts/safe-html.pipe';
-import { RucheService } from '../../../../dashboard/service/api/ruche.service';
 import { MyDatePipe } from '../../../../pipe/my-date.pipe';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { InspCatService } from '../../../service/api/insp-cat.service';
@@ -80,36 +77,30 @@ export class NotesComponent implements OnInit,AfterViewChecked {
 
   public tags: string[] = [];
 
-  
+
   public isDesktop: boolean = true;
 
 
   @Output() noteChange = new EventEmitter<any>();
 
   public hiveToMv: RucheInterface;
-  private eltOnClickId: EventTarget;
   public typeToMv: number;
   public message: string;
-  private selectHive: RucheInterface;
   public observationForm: FormGroup;
   public inspectionForm: FormGroup;
-  private hiveIndex: number;
   public type: string;
   public noteDateTime: Date;
-  private username: string;
   private notify: NotifierService;
-  private subscribe: Subscription;
   private newObs: Observation;
   private newInsp: Inspection;
   public updateRucherInput: boolean;
   public settings: any;
-  private obsSubject: Subscription;
   public apiaryObs: Array<Observation>;
 
-  constructor(private deviceService: DeviceDetectorService,
-    public rucherService: RucherService,
+  public insps: Inspection[];
+
+  constructor(public rucherService: RucherService,
     private notifyService: NotifierService,
-    public observationService: ObservationService,
     public inspectionService: InspectionService,
     private formBuilder: FormBuilder,
     public userService: UserloggedService,
@@ -117,7 +108,6 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     private myNotifer: MyNotifierService,
     private unitService: UnitService,
     private inspService: InspectionService,
-    private router: Router,
     public sanitizer: DomSanitizer,
     public safeHtml: SafeHtmlPipe,
     private myDate: MyDatePipe,
@@ -126,13 +116,12 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       this.message = '';
       this.typeToMv = 0;
       this.notify = notifyService;
-      this.eltOnClickId = null;
       this.getScreenSize();
+      this.insps = this.getInspectionByApiaryId(this.rucherService.rucher._id);
   }
 
   ngOnInit() {
     this.initForm();
-    this.observationService.setRange({ scale: 100, type: 'YEARS' });
     let ua = navigator.userAgent;
 
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua))
@@ -143,7 +132,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
         _inspCat.forEach(_cat => {
           if(_cat.applies.indexOf("apiary") !== -1 && _cat.type === "obs" && _cat.img !== "Default"){
             this.PICTOS_HIVES_OBS.push({
-              name:_cat.name.toLowerCase(), 
+              name:_cat.name.toLowerCase(),
               img: _cat.img.toLowerCase() + '_b.svg',
               img_active: _cat.img.toLowerCase() + '_cb.svg',
               class: 'hives-' + _cat.name.toLowerCase() + '-img'
@@ -151,19 +140,19 @@ export class NotesComponent implements OnInit,AfterViewChecked {
           }
         })
         this.PICTOS_HIVES_OBS.push({
-          name:'super+', 
+          name:'super+',
           img: 'super+_b.svg',
           img_active:'super+_cb.svg',
           class: 'hives-super+-img'
         })
         this.PICTOS_HIVES_OBS.push({
-          name:'super-', 
+          name:'super-',
           img: 'super-_b.svg',
           img_active:'super-_cb.svg',
           class: 'hives-super--img'
         })
         this.PICTOS_HIVES_OBS.push({
-          name:'default', 
+          name:'default',
           img: 'default_b.svg',
           img_active:'default_cb.svg',
           class: 'hives-default-img'
@@ -173,7 +162,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   }
 
   @HostListener('window:resize', ['$event'])
-    getScreenSize(event?) {
+    getScreenSize() {
           this.screenHeight = window.innerHeight;
           this.screenWidth = window.innerWidth;
     }
@@ -203,19 +192,6 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     more_btn.style.visibility = 'hidden';
   }
 
-  /**
-   *
-   *
-   * @param {string} apiaryId
-   * @returns {Observation[]}
-   * @memberof NotesComponent
-   */
-  getNoteByApiaryId(apiaryId: string): Observation[]{
-    return this.observationService.observationsApiary.filter(_note => _note.apiaryId === apiaryId).sort((noteA, noteB) => {
-      return -(moment(noteA.opsDate).unix() - moment(noteB.opsDate).unix());
-    });
-  }
-
    /**
    *
    *
@@ -225,26 +201,10 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    */
   getInspectionByApiaryId(apiaryId: string): Inspection[]{
     let start = new Date();
-    start.setDate(start.getDate() - 35);
-    return this.inspectionService.inspectionsApiary.filter(_insp => _insp.apiaryId === apiaryId).sort((inspA, inspB) => {
+    start.setDate(start.getDate() - 180);
+    return this.inspectionService.inspectionsApiary.filter(_insp => (_insp.apiaryId === apiaryId && new Date(_insp.opsDate) > start)).sort((inspA, inspB) => {
       return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
     });
-  }
-
-  /**
-   *
-   *
-   * @param {Observation} obs
-   * @memberof ApiaryNotesComponent
-   */
-  onSelectObs(obs: Observation) {
-    this.hiveToMv = this.rucherService.rucheService.ruches[0];
-    this.newObs = obs;
-    const donnée = {
-      sentence: this.newObs.description,
-      date: moment(obs.opsDate).toDate()
-    };
-    this.observationForm.setValue(donnée);
   }
 
   /**
@@ -263,29 +223,6 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     this.inspectionForm.setValue(donnée);
   }
 
-  /**
-   *
-   *
-   * @memberof ApiaryNotesComponent
-   */
-  mvToActions() {
-    if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-      this.newObs.typeInspect = this.typeToMv === 0 ? 'HiveObs' : 'HiveAct';
-      this.newObs.apiaryId = null;
-      this.newObs.hiveId = this.hiveToMv._id;
-      const index = this.observationService.observationsApiary.indexOf(this.newObs);
-      this.observationService.updateObservation(this.newObs).subscribe(() => { }, () => { }, () => {
-        this.observationService.observationsApiary.splice(index, 1);
-        if (this.translateService.currentLang === 'fr'){
-          this.notify.notify('success', 'Note déplacée ' + this.hiveToMv.name);
-        } else {
-          this.notify.notify('success', 'Moved Note ' + this.hiveToMv.name);
-        }
-      });
-    } else {
-      this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
-    }
-  }
   /**
    *
    *
@@ -358,6 +295,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       this.myNotifer.sendWarningNotif(NotifList.AUTH_WRITE_APIARY);
     }
   }
+
   /**
    *
    *
@@ -421,7 +359,6 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     menu.style.left = (evt.clientX - 180) + 'px';
     menu.style.visibility = 'visible';
 
-    const list = (<HTMLElement>menu.getElementsByClassName('context-menu-group')[0]);
 
     this.new_event = {
       _id: null,
@@ -469,7 +406,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   addObsList(): void {
     const obsDiv = (<HTMLElement>document.getElementsByClassName('add-event-choice-obs')[0]);
     obsDiv.innerHTML = '';
-    
+
     for (let i = 0; i < this.PICTOS_HIVES_OBS.length; i++) {
 
       const button = document.createElement('button');
@@ -546,7 +483,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     this.new_event.todo = textArea.value;
   }
 
-  addTag(event: Event): void{
+  addTag(): void{
     const input = <HTMLInputElement>document.getElementsByClassName('add-event-tags-input')[0];
     const value = input.value;
 
@@ -580,6 +517,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     this.inspService.insertHiveEvent(this.new_event).subscribe(
       _insp => {
         this.inspectionService.inspectionsApiary.push(_insp);
+        this.inspectionService.inspApi = this.inspectionService.getInspectionCurrentApiary(this.rucherService.getCurrentApiary())
         this.new_event._id = _insp._id;
       },
       () => {},
@@ -600,7 +538,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   // <--- END ADD EVENT SCREEN --->
 
   // <--- START EDIT EVENT SCREEN --->
-  
+
   showEditEvent(insp: Inspection, i: number){
     this.newEventDate = new Date(insp.opsDate);
     (<HTMLElement>document.getElementsByClassName('edit-event-time-error')[0]).style.display = 'none';
@@ -635,7 +573,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       const button = document.createElement('button');
       button.className = 'hives-obs-add';
       button.classList.add(this.PICTOS_HIVES_OBS[i].class);
-      
+
       if(this.new_event.obs != null && this.new_event.obs.findIndex( _o => _o.name === this.PICTOS_HIVES_OBS[i].name ) !== -1){
         button.classList.add(this.PICTOS_HIVES_OBS[i].class + '-active');
       }
@@ -680,7 +618,11 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   editEvent(): void{
     this.inspectionService.inspectionsApiary[ this.inspectionService.inspectionsApiary.findIndex(_insp => _insp._id === this.new_event._id) ] = Object.assign({}, this.new_event);
     this.inspService.updateInspection(this.new_event).subscribe(
-      () => {},
+      _insp => {
+        let index = this.inspectionService.inspectionsApiary.findIndex( _i => _i._id === _insp._id);
+        this.inspectionService.inspectionsApiary[index] = Object.assign({}, _insp);
+        this.inspectionService.inspApi = this.inspectionService.getInspectionCurrentApiary(this.rucherService.getCurrentApiary())
+      },
       () => {},
       () => {
         if(this.translateService.currentLang === 'fr'){

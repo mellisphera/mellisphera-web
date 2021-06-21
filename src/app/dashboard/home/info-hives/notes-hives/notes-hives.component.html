@@ -29,7 +29,7 @@ limitations under the License. -->
             class="btn btn-success btn_add dropdown-toggle" [innerHTML]="more_icon_white | safeHtml"
             [id]="'dropdownAddMenu'" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           </button>
-          <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'dropdownAddMenu'" 
+          <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'dropdownAddMenu'"
             style="top:6%; right:1%; padding:0; background-color: white; width: auto;">
             <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
               data-toggle="modal" data-target="#newObservationModal" (click)="showAddEvent()">
@@ -42,7 +42,7 @@ limitations under the License. -->
     <div class="user-sensors panel-body" id="notesHives" style="width:100%;">
       <table class="table home-hive-notes" style="table-layout:fixed;">
         <tbody class="hive-events">
-          <tr class="hoverStyle" *ngFor="let obs of getInspectionByHiveId(rucheService.getCurrentHive()._id); let i = index;">
+          <tr class="hoverStyle" *ngFor="let obs of inspectionService.inspHive; let i = index;">
             <ng-container *ngIf="obs.type === 'hive'">
               <td style="max-width: 90px; width:90px;">{{ obs.opsDate | myDate }}</td>
               <td style="min-width: 150px; width:36%">{{ obs.description }}</td>
@@ -54,7 +54,7 @@ limitations under the License. -->
             </ng-container>
             <td style="max-width: 50px; width:50px;">
               <div class="notes-edit-div dropleft" (mouseenter)="mouseEnter($event)" (mouseleave)="mouseLeave($event)">
-                <button class="btn btn-default dropdown-toggle hive-edit-insp" type="button" [id]="'dropdownMenuButton' + i" 
+                <button class="btn btn-default dropdown-toggle hive-edit-insp" type="button" [id]="'dropdownMenuButton' + i"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [innerHTML]="more_icon | safeHtml"
                 style="border: 0; padding: 3px 9px !important;" [style.visibility]="isDesktop ? 'hidden' : 'visible'"></button>
                 <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'dropdownMenuButton' + i"

@@ -397,9 +397,7 @@ export class StackComponent implements OnInit {
 
 
   ngOnDestroy() {
-    /*     this.stackService.cleanSlectedHives();
-        this.options.series = [];
-        this.stackService.cleanSerieFromEchartInstance(this.stackService.getEchartInstance()); */
+    this.stackService.stackEchartInstance.dispose();
   }
 
 }

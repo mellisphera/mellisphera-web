@@ -124,7 +124,6 @@ export class MyDate {
         max.setHours(23);
         max.setMinutes(59);
         max.setSeconds(59);
-        max.setDate( max.getDate() - 1 )
         let min = new Date();
         min.setTime(max.getTime());
         min.setDate(min.getDate() - 24);

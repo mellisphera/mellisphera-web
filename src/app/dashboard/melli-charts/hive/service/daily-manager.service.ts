@@ -27,11 +27,7 @@ import { AstroService } from '../../service/astro.service';
 import { _localeFactory } from '@angular/core/src/application_module';
 import 'rxjs/add/observable/of';
 import { AlertsService } from '../../../service/api/alerts.service';
-import { ObservationService } from '../../../service/api/observation.service';
-import { Observation } from '../../../../_model/observation';
-import { AlertInterface } from '../../../../_model/alert';
 import { GLOBAL_ICONS } from '../../charts/icons/icons';
-import { MyDate } from '../../../../class/MyDate';
 import { UserParamsService } from '../../../preference-config/service/user-params.service';
 import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
 import { FitnessService } from '../../../../dashboard/service/api/fitness.service';
@@ -39,7 +35,6 @@ import { CapteurService } from '../../../../dashboard/service/api/capteur.servic
 
 import { HIVE_POS } from '../../../../../constants/hivePositions';
 import { TranslateService } from '@ngx-translate/core';
-import { RucherModel } from '../../../../_model/rucher-model'
 import { RucheInterface } from '../../../../_model/ruche';
 import { RucherService } from '../../../../dashboard/service/api/rucher.service';
 import { RucheService } from '../../../../dashboard/service/api/ruche.service';
@@ -92,18 +87,13 @@ export class DailyManagerService {
     private dailyWService: DailyRecordsWService,
     private dailyHService: DailyRecordService,
     private fitnessService: FitnessService,
-    private userPref: UserParamsService,
     private alertService: AlertsService,
     private weatherService: WeatherService,
-    private observationService: ObservationService,
     private graphGlobal: GraphGlobal,
     private astroService: AstroService,
-    private dailyStock: DailyStockHoneyService,
     private unitService: UnitService,
     private inspectionService: InspectionService,
-    private sensorService: CapteurService,
     private translateService: TranslateService,
-    private rucherService: RucherService,
     private rucheService: RucheService
   ) {
     this.meanPeriodDevice = {
@@ -945,7 +935,7 @@ export class DailyManagerService {
             if(this.translateService.currentLang == 'nl'){
               posTab[index] = hivePos.translations.nl;
             }
-          }  
+          }
         });
         let posSet = new Set([...posTab].concat([..._brood.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -974,7 +964,7 @@ export class DailyManagerService {
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionsInt = option;
-        
+
       }
     )
   }
@@ -1118,7 +1108,7 @@ export class DailyManagerService {
                 const nbNote = dataByDate.filter(_elt => _elt.description).length;
                 //console.log(nbNote + '===' + dataByDate.length)
                 if (nbNote === dataByDate.length) {
-                  path = this.observationService.getPictoEvent(cellPoint);
+                  path = this.inspectionService.getPictoEvent(cellPoint);
                   group.children = group.children.concat(path);
                 } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                   path = {
@@ -1138,7 +1128,7 @@ export class DailyManagerService {
               } else if (dataByDate.length === 1) {
                 let icon;
                 if (dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoEvent(cellPoint));
+                  group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
                 } else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                   // icon = this.alertService.getPicto(dataByDate[0].type);
@@ -1158,6 +1148,7 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
+          console.log(option);
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
             serieComplete.renderItem = (params, api) => {
               let cellPoint = api.coord(api.value(0));
@@ -1190,7 +1181,7 @@ export class DailyManagerService {
                 const nbNote = dataByDate.filter(_elt => _elt.description).length;
                 //console.log(nbNote + '===' + dataByDate.length)
                 if (nbNote === dataByDate.length) {
-                  path = this.observationService.getPictoEvent(cellPoint);
+                  path = this.inspectionService.getPictoEvent(cellPoint);
                   group.children = group.children.concat(path);
                 } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                   path = {
@@ -1209,7 +1200,7 @@ export class DailyManagerService {
                 }
               } else if (dataByDate.length === 1) {
                 if (dataByDate !== undefined && dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoEvent(cellPoint));
+                  group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
                 } else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                 }
@@ -1278,9 +1269,9 @@ export class DailyManagerService {
                 const nbNote = dataByDate.filter(_elt => _elt.description).length;
                 //console.log(nbNote + '===' + dataByDate.length)
                 if (nbNote === dataByDate.length) {
-                  path = this.observationService.getPictoInspect(cellPoint);
+                  path = this.inspectionService.getPictoInspect(cellPoint);
                   group.children = group.children.concat(path);
-                } 
+                }
                 else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                   path = {
                     type: 'path',
@@ -1300,7 +1291,7 @@ export class DailyManagerService {
               else if (dataByDate.length === 1) {
                 let icon;
                 if (dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
+                  group.children = group.children.concat(this.inspectionService.getPictoInspect(cellPoint));
                 } else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                   // icon = this.alertService.getPicto(dataByDate[0].type);
@@ -1352,7 +1343,7 @@ export class DailyManagerService {
               const nbNote = dataByDate.filter(_elt => _elt.description).length;
               //console.log(nbNote + '===' + dataByDate.length)
               if (nbNote === dataByDate.length) {
-                path = this.observationService.getPictoInspect(cellPoint);
+                path = this.inspectionService.getPictoInspect(cellPoint);
                 group.children = group.children.concat(path);
               } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                 path = {
@@ -1371,7 +1362,7 @@ export class DailyManagerService {
               }
             } else if (dataByDate.length === 1) {
               if (dataByDate !== undefined && dataByDate[0].description) {
-                group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
+                group.children = group.children.concat(this.inspectionService.getPictoInspect(cellPoint));
               } else {
                 group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
               }
@@ -1396,7 +1387,7 @@ export class DailyManagerService {
       () => {}
     )
   }
-  
+
   getChartEvent(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean): void{
     let hive: RucheInterface = this.rucheService.getHiveById(hiveId);
     this.inspectionService.getInspectionByApiaryIdAndOpsDateBetween(hive.apiaryId, range).subscribe(
@@ -1438,9 +1429,9 @@ export class DailyManagerService {
                 const nbNote = dataByDate.filter(_elt => _elt.description).length;
                 //console.log(nbNote + '===' + dataByDate.length)
                 if (nbNote === dataByDate.length) {
-                  path = this.observationService.getPictoEvent(cellPoint);
+                  path = this.inspectionService.getPictoEvent(cellPoint);
                   group.children = group.children.concat(path);
-                } 
+                }
                 else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                   path = {
                     type: 'path',
@@ -1460,7 +1451,7 @@ export class DailyManagerService {
               else if (dataByDate.length === 1) {
                 let icon;
                 if (dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoEvent(cellPoint));
+                  group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
                 } else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                   // icon = this.alertService.getPicto(dataByDate[0].type);
@@ -1476,7 +1467,7 @@ export class DailyManagerService {
           });
           return;
         }
-        
+
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
@@ -1512,7 +1503,7 @@ export class DailyManagerService {
               const nbNote = dataByDate.filter(_elt => _elt.description).length;
               //console.log(nbNote + '===' + dataByDate.length)
               if (nbNote === dataByDate.length) {
-                path = this.observationService.getPictoEvent(cellPoint);
+                path = this.inspectionService.getPictoEvent(cellPoint);
                 group.children = group.children.concat(path);
               } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                 path = {
@@ -1531,7 +1522,7 @@ export class DailyManagerService {
               }
             } else if (dataByDate.length === 1) {
               if (dataByDate !== undefined && dataByDate[0].description) {
-                group.children = group.children.concat(this.observationService.getPictoEvent(cellPoint));
+                group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
               } else {
                 group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
               }
@@ -1561,7 +1552,7 @@ export class DailyManagerService {
   getChartFitness(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean){
     this.fitnessService.getFitnessByHiveIdAndDate(hiveId, range).subscribe(
       _fitness => {
-        
+
         let option = Object.assign({}, this.baseOptionsInt);
         if ( this.existSeries(option.series, type.name) ){
           option.series = new Array();
@@ -1594,7 +1585,7 @@ export class DailyManagerService {
           option.series.push(serie);
         });
         option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
-        option.tooltip = this.graphGlobal.getTooltipBySerie(type);  
+        option.tooltip = this.graphGlobal.getTooltipBySerie(type);
         option.series.push(this.graphGlobal.getDaySerie());
         option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
         option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();

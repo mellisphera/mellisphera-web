@@ -16,7 +16,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DailyRecordService } from '../../service/api/dailyRecordService';
 import { DailyRecordsWService } from '../../service/api/daily-records-w.service';
-import { RucheInterface } from '../../../_model/ruche';
 import { CapteurService } from '../../service/api/capteur.service';
 import { AlertsService } from '../../service/api/alerts.service';
 import { AlertsHiveComponent } from './alerts-hive/alerts-hive.component';
@@ -30,7 +29,7 @@ import { NotesHivesComponent } from './notes-hives/notes-hives.component';
 import { HIVE_POS } from '../../../../constants/hivePositions';
 import { TranslateService } from '@ngx-translate/core';
 
-import { isUndefined, isArray, isObject, isString } from 'util';
+import { isUndefined, isArray, isObject } from 'util';
 import { SERIES } from '../../melli-charts/charts/SERIES';
 import { UnitService } from '../../service/unit.service';
 
@@ -51,7 +50,6 @@ export interface Tools {
 })
 export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
 
-  private subscription: Subscription;
   screenHeight: any;
   screenWidth: any;
   @ViewChild(AlertsHiveComponent) alertsHiveComponent: AlertsHiveComponent;
@@ -59,15 +57,11 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild(WeightHivesComponent) weightHiveComponent: WeightHivesComponent;
   @ViewChild(NotesHivesComponent) notesHiveComponent: NotesHivesComponent
 
-  constructor(private observationService: ObservationService,
-    public rucheService: RucheService,
-    private userService: UserloggedService,
-    private route: ActivatedRoute,
+  constructor(public rucheService: RucheService,
     public dailyRecordThService: DailyRecordService,
     public capteurService: CapteurService,
     private graphGlobal: GraphGlobal,
     public dailyRecordWservice: DailyRecordsWService,
-    private alertsService: AlertsService,
     private translateService: TranslateService,
     private unitService: UnitService) {
 
@@ -86,7 +80,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   @HostListener('window:resize', ['$event'])
-  getScreenSize(event?) {
+  getScreenSize() {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
   }
@@ -100,11 +94,11 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
 
 
   getNameSerieByPosition(elt: any): string{
-    if(elt.values[0].position == null || elt.values[0].position == undefined || elt.values[0].position === "" ){
-      return elt.values[0].sensorRef;
+    if(elt.position == null || elt.position == undefined || elt.position === "" ){
+      return elt.sensorRef;
     }
     else{
-      let nameSerie = elt.values[0].position;
+      let nameSerie = elt.position;
       let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
       if(this.translateService.currentLang == 'fr'){
         return hivePos.translations.fr;
@@ -122,15 +116,13 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   loadHealthCalendar() {
-    if (this.healthHiveComponent.chartInstance !== null) {
-      this.healthHiveComponent.chartInstance.showLoading();
-    }
+    console.log('allo brood')
     this.healthHiveComponent.initGraph();
     let option = JSON.parse(JSON.stringify(this.healthHiveComponent.option));
     option.baseOption.series = new Array();
-    this.dailyRecordThService.getBroodByHive(this.rucheService.getCurrentHive()._id, MyDate.getRangeForCalendarAlerts()).subscribe(
+    this.dailyRecordThService.getBroodOldMethod(this.rucheService.getCurrentHive()._id, MyDate.getRangeForCalendarAlerts()).subscribe(
       _brood => {
-        let posTab = _brood.map(_val => _val.values.map(_v => _v.position)).flat();
+        let posTab = _brood.map(_val => _val.position);
         posTab.map((_pos,index) => {
           let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
           if(hivePos != undefined){
@@ -148,17 +140,24 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
             }
           }
         });
-        let posSet = new Set([...posTab].concat([..._brood.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
+        let posSet = new Set([...posTab].concat([..._brood.map(_val => _val.sensorRef)]));
         option.baseOption.legend.data = [...posSet];
         _brood.forEach(elt => {
           let nameSerie = this.getNameSerieByPosition(elt);
-          let serie = {
-            type: 'heatmap',
-            name: nameSerie,
-            coordinateSystem: 'calendar',
-            data: elt.values.map(_val => [_val.recordDate, _val.brood])
-          };
-         option.baseOption.series.push(serie);
+          let index = option.baseOption.series.findIndex(_s => _s.name === nameSerie)
+          if(index !== -1){
+            option.baseOption.series[index].data.push([elt.date, elt.value]);
+          }
+          else{
+            let serie = {
+              type: 'heatmap',
+              name: nameSerie,
+              coordinateSystem: 'calendar',
+              data:[[elt.date, elt.value]]
+            };
+           option.baseOption.series.push(serie);
+          }
+
         });
         option.baseOption.tooltip = this.graphGlobal.getTooltipBySerie({type: 'BROOD', name: 'BROOD', unit: 'P'});
         option.baseOption.series.push(this.graphGlobal.getYesterdaySerie());
@@ -167,17 +166,18 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.healthHiveComponent.chartInstance.clear();
         this.healthHiveComponent.chartInstance.setOption(option, true);
         this.healthHiveComponent.option = option;
-        if (this.healthHiveComponent.chartInstance !== null) {
-          this.healthHiveComponent.chartInstance.hideLoading();
-        }
+      },
+      () => {},
+      () => {
+        console.log('fini brood')
+        this.healthHiveComponent.chartInstance.hideLoading();
       }
     );
+
   }
 
   loadProductivityCalendar(){
-    if (this.weightHiveComponent.echartInstance != null) {
-      this.weightHiveComponent.echartInstance.showLoading();
-    }
+    console.log('allo poids')
     this.weightHiveComponent.initGraph();
     let option = JSON.parse(JSON.stringify(this.weightHiveComponent.option));
     option.baseOption.series = new Array();
@@ -229,9 +229,11 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.weightHiveComponent.echartInstance.clear();
         this.weightHiveComponent.echartInstance.setOption(option, true);
         this.weightHiveComponent.option = option;
-        if (this.weightHiveComponent.echartInstance != null) {
-          this.weightHiveComponent.echartInstance.hideLoading();
-        }
+      },
+      () => {},
+      () => {
+        console.log('fini poids')
+        this.weightHiveComponent.echartInstance.hideLoading();
       }
     );
   }
@@ -245,7 +247,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
-  onChangeNote(event: any): void {
+  onChangeNote(): void {
     this.alertsHiveComponent.initCalendar();
   }
 
@@ -296,7 +298,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
         if (data.map(_elt => _elt.date)[0] !== undefined) {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
-            return [_map.date].concat(this.getValueBySerie(_map.value, nameSerie), _map.sensorRef);
+            return [_map.date].concat(this.getValueBySerie(_map.value), _map.sensorRef);
           });
         } else {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef);
@@ -306,7 +308,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     });
   }
 
-  getValueBySerie(_value: any, name: string): Array<any> {
+  getValueBySerie(_value: any): Array<any> {
     let value: any = {};
     if (isArray(_value) && isObject(_value[0])) {
       _value.forEach(elt => {

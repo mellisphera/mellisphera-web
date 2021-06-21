@@ -1,3 +1,4 @@
+import { OnDestroy } from '@angular/core';
 /* Copyright 2018-present Mellisphera
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -9,15 +10,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DailyManagerService } from '../service/daily-manager.service';
 import { MelliChartsHiveService } from '../../service/melli-charts-hive.service';
 import { MelliChartsDateService } from '../../service/melli-charts-date.service';
-import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
-import { UserParamsService } from '../../../preference-config/service/user-params.service';
-import { WeatherService } from '../../../service/api/weather.service';
-import { UserloggedService } from '../../../../userlogged.service';
-import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { TranslateService } from '@ngx-translate/core';
 import * as echarts from 'echarts';
@@ -57,9 +53,8 @@ const ENV = 'ENV';
   templateUrl: './daily.component.html',
   styleUrls: ['./daily.component.css']
 })
-export class DailyComponent implements OnInit, AfterViewInit {
+export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  private currentEltTypeDaily: HTMLElement;
   public currentTypeDailyDevice: Tools;
   public currentTypeDailyEnv: Tools;
   public calendarElements: HTMLCollection = null;
@@ -68,14 +63,9 @@ export class DailyComponent implements OnInit, AfterViewInit {
   public currentOtherTextPeriodCalendar: string;
   public currentDeviceTextSevenDay: string;
   public currentOtherTextSevenDay: string;
-  private optionCsv: Object;
   private typeData: Tools[];
-  constructor(private renderer: Renderer2,
-    public dailyManager: DailyManagerService,
-    private userPref: UserParamsService,
-    private userService: UserloggedService,
+  constructor(public dailyManager: DailyManagerService,
     private translateService: TranslateService,
-    private weatherService: WeatherService,
     public melliHive: MelliChartsHiveService,
     public graphGlobal: GraphGlobal,
     private melliDate: MelliChartsDateService) {
@@ -102,18 +92,6 @@ export class DailyComponent implements OnInit, AfterViewInit {
       { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/moon_cb.png' },
     ];
 
-    this.optionCsv = {
-      fieldSeparator: ',',
-      quoteStrings: '"',
-      decimalseparator: '.',
-      showLabels: true,
-      showTitle: true,
-      title: 'Your title',
-      useBom: true,
-      noDownload: false,
-      headers: ['Date', 'Value'],
-      nullToEmptyString: false,
-    };
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
     this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[2];
@@ -252,7 +230,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
    * @param {*} event
    * @memberof DailyComponent
    */
-  onResize(event: any): void {
+  onResize(): void {
     this.melliHive.getDailyDeviceChartInstance().resize({
       width: 'auto',
       height: 'auto'
@@ -483,11 +461,13 @@ export class DailyComponent implements OnInit, AfterViewInit {
    */
   exportToCsv(origin: string): void {
     if (origin === DEVICE) {
-      const data = this.melliHive.getDailyDeviceChartInstance().getOption().series.map(_series => _series.data).flat();
-      let csv = new Angular5Csv(data, this.currentTypeDailyDevice.name, this.optionCsv);
     } else {
-      const data = this.melliHive.getDailyOtherChartInstance().getOption().series.map(_series => _series.data).flat();
-      let csv = new Angular5Csv(data, this.currentTypeDailyOther.name, this.optionCsv);
     }
+  }
+
+  ngOnDestroy():void {
+    this.melliHive.dailyDeviceEchartInstances.dispose();
+    this.melliHive.dailyEnvChartInstance.dispose();
+    this.melliHive.dailyOtherChartIstances.dispose();
   }
 }

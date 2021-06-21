@@ -43,7 +43,7 @@ limitations under the License. -->
     <div class="user-sensors panel-body" id="notesApiary" style="width:100%;">
       <table class="table home-apiary-notes" style="table-layout:fixed;">
         <tbody class="apiary-events">
-          <tr class="hoverStyle" *ngFor="let obs of getInspectionByApiaryId(rucherService.rucher._id); let i = index;">
+          <tr class="hoverStyle" *ngFor="let obs of inspectionService.inspApi; let i = index;">
             <ng-container *ngIf="obs.type === 'apiary'">
               <td style="max-width: 90px; width:90px;">{{ obs.opsDate | myDate }}</td>
               <td style="min-width: 150px; width:36%">{{ obs.description }}</td>

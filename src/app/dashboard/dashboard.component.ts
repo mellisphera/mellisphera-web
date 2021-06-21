@@ -17,12 +17,9 @@ import { RucherService } from './service/api/rucher.service';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { MyNotifierService } from './service/my-notifier.service';
 import { MessagesService } from './service/messages.service';
-import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { RoutingHistoryService } from './service/routing-history.service';
-import { SocketService } from './service/socket.service';
-import { AuthService } from '../auth/Service/auth.service';
 import { RucheService } from './service/api/ruche.service';
 import { AlertsService } from './service/api/alerts.service';
 import { FitnessService } from './service/api/fitness.service';
@@ -33,8 +30,6 @@ import { HubService } from './service/api/hub.service';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
-const PrimaryRed = '#dd0031';
-const SecondaryBlue = '#006ddd';
 
 
 @Component({
@@ -54,12 +49,8 @@ export class DashboardComponent implements OnInit {
   public config = { animationType: ngxLoadingAnimationTypes.none, primaryColour: this.primaryColour, secondaryColour: this.secondaryColour}
   @ViewChild(NavbarComponent) public navComponent: NavbarComponent;
   constructor(public login: UserloggedService,
-    private translateService: TranslateService,
     public loadingService: LoadingService,
-    private renderer: Renderer2,
-    private socketService: SocketService,
     private userService: UserloggedService,
-    private authService: AuthService,
     private rucheService: RucheService,
     private alertService: AlertsService,
     private myNotifierService: MyNotifierService,
@@ -94,10 +85,10 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  apiaryChange(event) {
-    this.checkHomeComponent().then(status => {
+  apiaryChange() {
+    this.checkHomeComponent().then(() => {
       <HomeComponent>this.homeComponent.checkIfInfoApiaryComponent().then(
-        res => {
+        () => {
           <HomeComponent>this.homeComponent.infoApiaryComponent.alertsComponent.initCalendar(true);
           <HomeComponent>this.homeComponent.onLockHive();
           <HomeComponent>this.homeComponent.loadAlert();

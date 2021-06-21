@@ -105,6 +105,7 @@ export const BASE_OPTIONS = {
             }
         },
         series: [],
+
         calendar: CALENDAR.calendarMelliUx
     },
     baseOptionDailyMelliCharts: {
@@ -157,6 +158,7 @@ export const BASE_OPTIONS = {
             fontSize: 12
         },
         formatter: {},
+        showDelay : 25
     },
     legend: {
         orient: 'horizontal',

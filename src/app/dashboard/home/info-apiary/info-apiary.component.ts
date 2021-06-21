@@ -12,7 +12,6 @@ limitations under the License. */
 import { Component, OnInit, AfterViewChecked,HostListener,ViewChild, Renderer2 } from '@angular/core';
 import { RucherService } from '../../service/api/rucher.service';
 import { AlertsComponent } from './alerts/alerts.component';
-import { Observation } from '../../../_model/observation';
 import { NotesComponent } from './notes/notes.component';
 
 @Component({
@@ -44,7 +43,7 @@ export class InfoApiaryComponent implements OnInit, AfterViewChecked {
   }
 
   @HostListener('window:resize', ['$event'])
-    getScreenSize(event?) {
+    getScreenSize() {
           this.screenHeight = window.innerHeight;
           this.screenWidth = window.innerWidth;
     }
@@ -61,7 +60,7 @@ export class InfoApiaryComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  onChangeNote(event: any): void {
+  onChangeNote(): void {
     this.alertsComponent.initCalendar();
   }
 

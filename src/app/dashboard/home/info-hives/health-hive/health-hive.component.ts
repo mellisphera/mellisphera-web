@@ -1,3 +1,4 @@
+import { OnDestroy } from '@angular/core';
 /* Copyright 2018-present Mellisphera
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -12,7 +13,6 @@ limitations under the License. */
 import { Component, OnInit} from '@angular/core';
 import { DailyRecordService } from '../../../service/api/dailyRecordService';
 import { MyDate } from '../../../../class/MyDate';
-//import { ECharts } from 'echarts';
 import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
@@ -23,13 +23,12 @@ import * as echarts from 'echarts';
   templateUrl: './health-hive.component.html',
   styleUrls: ['./health-hive.component.css']
 })
-export class HealthHiveComponent implements OnInit {
+export class HealthHiveComponent implements OnInit, OnDestroy {
 
   chartInstance: any;
   option: any;
   constructor(
-      private unitService: UnitService, 
-      private graphGlobal: GraphGlobal, 
+      private graphGlobal: GraphGlobal,
       public dailyRecordThService: DailyRecordService) {
       this.chartInstance = null;
       this.option = {
@@ -54,7 +53,8 @@ export class HealthHiveComponent implements OnInit {
                     dataView: { show: false, readOnly: false },
                     restore: { show: false },
                     saveAsImage: { show: false }
-                }
+                },
+                showDelay : 25
             },
             legend: {
                 show: true,
@@ -141,6 +141,7 @@ export class HealthHiveComponent implements OnInit {
 
   ngOnInit(): void {
     this.chartInstance = echarts.init(<HTMLDivElement>document.getElementById('graphBrood'));
+    this.chartInstance.showLoading();
     this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
   }
 
@@ -154,6 +155,10 @@ export class HealthHiveComponent implements OnInit {
       width: 'auto',
       height: 'auto'
     });
+  }
+
+  ngOnDestroy(): void{
+    this.chartInstance.dispose();
   }
 
 }

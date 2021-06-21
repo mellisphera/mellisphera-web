@@ -34,8 +34,6 @@ export class FitnessService {
     previousDay.setDate(this.rangeFitness.getDate() + 1);
     previousDay.setHours(23);
     previousDay.setMinutes(0);
-    console.log(this.rangeFitness);
-    console.log(previousDay);
     return this.httpClient.get<Fitness[]>(CONFIG.URL + `fitness/daily/${userId}/${this.rangeFitness.getTime()}/${previousDay.getTime()}`);
   }
 
@@ -86,7 +84,6 @@ export class FitnessService {
   public callRequest(userId: string) {
     this.getDailyFitnessByUserId(userId).subscribe(
       _res => {
-        console.log(_res);
         this.dailyFitness = _res;
       }
     )

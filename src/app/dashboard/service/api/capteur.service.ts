@@ -124,7 +124,6 @@ export class CapteurService {
             (data) => {
                 this.capteursByUser = data;
                 this.capteursByHive = this.capteursByUser.filter(sensor => sensor.hiveId === this.rucheService.getCurrentHive()._id);
-                console.log(this.capteursByUser);
             },
             (err) => {
                 console.log(err);

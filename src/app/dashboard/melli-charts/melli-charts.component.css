@@ -1239,7 +1239,7 @@ nav[role=admin-navigation] {
     }
     .nav-date{
         /* justify-content: end; */
-        width: 500px;
+        width: 45%;
     }
 
     .fa-plus{
@@ -1294,7 +1294,7 @@ nav[role=admin-navigation] {
         margin: 0px !important;
     }
 
-    
+
     .fa-plus{
       color:green;
       margin-left: 15px;

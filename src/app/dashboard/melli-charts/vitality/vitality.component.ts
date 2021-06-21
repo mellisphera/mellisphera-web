@@ -885,5 +885,6 @@ export class VitalityComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
+    this.stackService.broodChartInstance.dispose();
   }
 }

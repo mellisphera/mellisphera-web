@@ -30,7 +30,6 @@ import {
 } from '@angular/animations';
 import { Position } from 'angular2-draggable';
 import { UnitService } from '../service/unit.service';
-import { ObservationService } from '../service/api/observation.service';
 import { UserParamsService } from '../preference-config/service/user-params.service';
 import { DailyRecordsWService } from '../service/api/daily-records-w.service';
 import { CapteurService } from '../service/api/capteur.service';
@@ -54,7 +53,6 @@ import { CapteurInterface } from '../../_model/capteur';
 import { HubService } from '../service/api/hub.service';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 import { isUndefined } from 'util';
-import { HiveAlertComponent } from '../alert-configuration/hive-alert/hive-alert.component';
 import { InspectionService } from '../service/api/inspection.service';
 
 @Component({
@@ -117,7 +115,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     public login: UserloggedService,
     public graphGlobal: GraphGlobal,
     public rucheService: RucheService,
-    private observationService: ObservationService,
     public rucherService: RucherService,
     public dailyRecordWservice: DailyRecordsWService,
     public router: Router,
@@ -183,7 +180,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       sharingUser: []
     };
 
-    this.observationService.getNoteByUserId(this.userService.getIdUserLoged());
     this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
 
 
@@ -339,8 +335,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   onClickNextDay() {
-    //this.dailyRecTh.nextDay(this.rucherService.getCurrentApiary());
-    //this.dailyRecordWservice.nextDay(this.rucherService.getCurrentApiary());
     let end =  new Date(MyDate.end)
     end.setDate( end.getDate() - 1 );
     end.setHours(0);
@@ -348,25 +342,27 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     if(MyDate.thisDay < new Date(end)){
       MyDate.thisDay.setDate(MyDate.thisDay.getDate() + 1);
       this.fitnessService.nextDay(this.userService.getIdUserLoged());
+      this.dailyRecTh.nextDay(this.rucherService.getCurrentApiary());
+      this.dailyRecordWservice.nextDay(this.rucherService.getCurrentApiary());
       this.deviceSatusService.nextDay(this.userService.getIdUserLoged());
       this.updateCalendars();
     }
-    
+
   }
 
   onClickPreviousDay() {
-    //this.dailyRecTh.previousDay(this.rucherService.getCurrentApiary());
-    //this.dailyRecordWservice.previousDay(this.rucherService.getCurrentApiary());
     let d1 = new Date()
     d1.setDate( d1.getDate() - 24 );
     d1 = MyDate.getDateBeginMonday(d1);
     if(MyDate.thisDay > d1){
       MyDate.thisDay.setDate(MyDate.thisDay.getDate() - 1);
       this.fitnessService.previousDay(this.userService.getIdUserLoged());
+      this.dailyRecTh.previousDay(this.rucherService.getCurrentApiary());
+    this.dailyRecordWservice.previousDay(this.rucherService.getCurrentApiary());
       this.deviceSatusService.previousDay(this.userService.getIdUserLoged());
       this.updateCalendars();
     }
-    
+
   }
 
   updateCalendars(){
@@ -422,6 +418,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
     // Save the hive on dataBase
     this.rucheService.saveCurrentHive(ruche);
+    this.inspService.inspHive = this.inspService.getInspectionCurrentHive(ruche._id)
 
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       if (this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id).length > 0) {
@@ -446,9 +443,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.checkIfInfoHiveComponent().then(status => {
       this.infoHiveComponent.loadHealthCalendar();
       this.infoHiveComponent.loadProductivityCalendar();
-      this.infoHiveComponent.alertsHiveComponent.initCalendar(ruche);
+      this.infoHiveComponent.alertsHiveComponent.initCalendar();
       if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-        this.infoHiveComponent.alertsHiveComponent.readAllHiveAlerts(ruche);
+        this.infoHiveComponent.alertsHiveComponent.readAllHiveAlerts();
       }
     }).catch(err => {
       console.log(err);
@@ -808,7 +805,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       (<HTMLButtonElement>document.getElementById("locked")).innerHTML = '<i class="fa fa-unlock" style="font-size:26px;margin-right:5px;"></i>';
       (<HTMLButtonElement>document.getElementById("locked")).title = this.translateService.instant('HOME.CLICKMODE');
     }
-    
+
   }
 
 

@@ -1213,7 +1213,7 @@ export class GraphGlobal {
         if(this.translateService.currentLang === 'en'){
           visualMap.categories = ['White', 'Black', 'Red', 'Orange', 'Green'];
         }*/
-        
+
         //visualMap.show = false;
         break;
       default:
@@ -1422,12 +1422,12 @@ export class GraphGlobal {
               break;
           }
           return msg;
-        } 
+        }
         else {
           return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
         }
-      } 
-      
+      }
+
     }).join('</br>');
 
     return tooltipGlobal;

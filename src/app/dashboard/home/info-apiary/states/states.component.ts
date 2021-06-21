@@ -13,14 +13,12 @@ import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/co
 import * as jsPDF from 'jspdf';
 import { AlertsService } from '../../../service/api/alerts.service';
 import { RucherService } from '../../../service/api/rucher.service';
-import { AlertInterface } from '../../../../_model/alert';
 import { UserloggedService } from '../../../../userlogged.service';
 import { NotifierService } from 'angular-notifier';
-import * as html2canvas from 'html2canvas'; 
+import * as html2canvas from 'html2canvas';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { UnitService } from '../../../service/unit.service';
 import { MyDate } from '../../../../class/MyDate';
-import { ObservationService } from '../../../service/api/observation.service';
 import { RucheService } from '../../../service/api/ruche.service';
 import { DailyRecordService } from '../../../service/api/dailyRecordService';
 import { DailyRecordsWService } from '../../../service/api/daily-records-w.service';
@@ -35,38 +33,27 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class StatesComponent implements OnInit {
 
-  private readonly notifier: NotifierService;
-  private eltOnClickId: EventTarget;
   username: string;
   date : Date;
 
-  private elementCounter : number;
 
   public nbDaysNotesForm : number;
   public nbDaysHivesForm : number;
-  private noAlert : boolean;
 
   @ViewChild('content') content : ElementRef;
 
-  constructor(private alertsService: AlertsService,
-    public rucherService: RucherService,
-    private userService: UserloggedService,
+  constructor(public rucherService: RucherService,
     public notifierService: NotifierService,
-    private renderer: Renderer2,
     private translateService: TranslateService,
     public login: UserloggedService,
     public graphGlobal : GraphGlobal,
     public unitService : UnitService,
-    public observationService : ObservationService,
     public rucheService: RucheService,
     public dailyRecTh: DailyRecordService,
     public dailyRecordWservice : DailyRecordsWService,
-    public capteurService: CapteurService) { 
+    public capteurService: CapteurService) {
 
-      this.notifier = this.notifierService;
-      this.eltOnClickId = null;
       this.username = this.login.getUser();
-      this.elementCounter = 0;
       this.nbDaysHivesForm = 15;
 
       this.date = new Date();
@@ -80,7 +67,6 @@ export class StatesComponent implements OnInit {
     let dateSince = new Date();
     let currentObsDate = MyDate.getWekitDate(obsDate.toString());
     dateSince.setDate(dateSince.getDate() - nbDays);
-    this.elementCounter = 1;
     return (currentObsDate.getTime() > dateSince.getTime());
   }
 
@@ -105,7 +91,7 @@ export class StatesComponent implements OnInit {
     let doc = new jsPDF();
 
     let specialElementHandlers = {
-      '#editor': function(element,renderer){
+      '#editor': function(){
         return true;
       }
     };
@@ -121,24 +107,22 @@ export class StatesComponent implements OnInit {
 
   }
 
-  public captureScreen()  
-  {  
-    var data = document.getElementById('contentToConvert');  
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 297;   
-      var pageHeight = 210;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('image/png');  
-      let pdf = new jsPDF('l', 'mm', '[297, 210]'); // A4 size page of PDF  
-      var position = 0;  
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight); 
+  public captureScreen()
+  {
+    var data = document.getElementById('contentToConvert');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      var imgWidth = 297;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jsPDF('l', 'mm', '[297, 210]'); // A4 size page of PDF
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
       if (this.translateService.currentLang === 'fr') {
-        pdf.save('Résumé_rucher.pdf'); // Generated PDF   
+        pdf.save('Résumé_rucher.pdf'); // Generated PDF
       } else {
-        pdf.save('Apiary_summary.pdf'); // Generated PDF   
+        pdf.save('Apiary_summary.pdf'); // Generated PDF
       }
     });
   }

@@ -1,3 +1,4 @@
+import { OnDestroy } from '@angular/core';
 /* Copyright 2018-present Mellisphera
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,30 +14,26 @@ import { Component } from '@angular/core';
 import { DailyRecordsWService } from '../../../service/api/daily-records-w.service';
 import { CalendrierPoidsService } from '../../../service/api/calendrier-poids.service';
 import { RucheService } from '../../../service/api/ruche.service';
-import { UserParamsService } from '../../../preference-config/service/user-params.service';
 import { DailyStockHoneyService } from '../../../service/api/daily-stock-honey.service';
 import { MyDate } from '../../../../class/MyDate';
 import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
 import * as echarts from 'echarts';
-import { UserloggedService } from '../../../../userlogged.service';
 
 @Component({
     selector: 'app-weight-hives',
     templateUrl: './weight-hives.component.html',
     styleUrls: ['./weight-hives.component.css']
 })
-export class WeightHivesComponent {
+export class WeightHivesComponent implements OnDestroy{
     option: any;
     echartInstance: any;
     constructor(public dailyRecordWservice: DailyRecordsWService,
         public calendrierPoids: CalendrierPoidsService,
         public rucheService: RucheService,
         public dailyStockHoneyService: DailyStockHoneyService,
-        private userConfig: UserParamsService,
         private unitService: UnitService,
-        private userService: UserloggedService,
         private graphGlobal: GraphGlobal) {
         this.option = {
             baseOption: {
@@ -56,7 +53,8 @@ export class WeightHivesComponent {
                     formatter: (params: any) => {
                         return params.marker + this.unitService.getDailyDate(params.data[0]) +
                             '<br/>' + params.seriesName + ' : ' + this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])) + ' ' + this.graphGlobal.weight.unitW;
-                    }
+                    },
+                    showDelay : 25
                 },
                 toolbox: {
                     orient: 'vertical',
@@ -198,6 +196,7 @@ export class WeightHivesComponent {
     ngOnInit(): void {
         this.echartInstance = echarts.init(<HTMLDivElement>document.getElementById('calendrierPoids'));
         this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
+        this.echartInstance.showLoading();
     }
 
     initGraph(): void{
@@ -205,11 +204,15 @@ export class WeightHivesComponent {
         this.option.baseOption.series = new Array();
     }
 
-    onResize(event) {
+    onResize() {
         this.echartInstance.resize({
           width: 'auto',
           height: 'auto'
         });
-      }
+    }
+
+    ngOnDestroy(): void{
+      this.echartInstance.dispose();
+    }
 
 }
