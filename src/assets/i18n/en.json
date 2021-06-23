@@ -736,7 +736,9 @@
         "LARVA":"Larva presence",
         "PUPA":"Capped brood presence",
         "DRONEBROOD":"Drone brood presence",
-        "DRONES":"Drone presence"
+        "DRONES":"Drone presence",
+        "BUZZINGHIVE":"Buzzing hive",
+        "MOSAICBROOD":"Mosaic brood"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",

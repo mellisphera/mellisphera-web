@@ -746,7 +746,14 @@
         "NORES":"No recursos",
         "LOWRES":"Bajo nivel de recurso",
         "NORMRES":"Normal nivel de recurso",
-        "HIGHRES":"Alto nivel de recurso"
+        "HIGHRES":"Alto nivel de recurso",
+        "EGG":"",
+        "LARVA":"",
+        "PUPA":"",
+        "DRONEBROOD":"",
+        "DRONE":"",
+        "BUZZINGHIVE":"",
+        "MOSAICBROOD":""
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",

@@ -97,7 +97,7 @@ limitations under the License. -->
       </li>
       <li class="filters-ul">
         <button class="btn filters-btn dropdown dropdown-toogle" type="button" id="filtersMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="openFiltersMenu($event)">
-          <img src="../../../assets/ms-pics/user_prefs.svg">
+          <img src="../../../assets/ms-pics/ui/assets/filter_b.svg">
         </button>
         <div id="filtersMenu" class="dropdown-menu" aria-labelledby="filtersMenuButton" (click)="filterMenu($event)">
           <div class="filters-insp">
@@ -195,8 +195,8 @@ limitations under the License. -->
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <img *ngIf="typeEvent === 'apiary'" width="35" height="35" src="../../../assets/ms-pics/inspect-api_cb.svg" style="float: right;">
-        <img *ngIf="typeEvent === 'hive'" width="35" height="35" src="../../../assets/ms-pics/inspect_cb.svg" style="float: right;">
+        <img *ngIf="typeEvent === 'apiary'" width="35" height="35" src="../../../assets/ms-pics/ui/calendbars/inspect-api_cb.svg" style="float: right;">
+        <img *ngIf="typeEvent === 'hive'" width="35" height="35" src="../../../assets/ms-pics/ui/calendbars/inspect_cb.svg" style="float: right;">
         <h4 class="modal-title" style="margin-left: 20%;">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
         <h4 *ngIf="typeEvent === 'hive'" style="margin-left: 20%;">{{hiveEvent?.name}}</h4>
         <h4 *ngIf="typeEvent === 'apiary'" style="margin-left: 20%;">{{apiaryEvent?.name}}</h4>

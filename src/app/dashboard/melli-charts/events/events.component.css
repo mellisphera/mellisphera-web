@@ -61,17 +61,17 @@
 }
 
 .inspection-icon{
-    background: url('../../../../assets/ms-pics/inspect-api_cb.png') center no-repeat;
+    background: url('../../../../assets/ms-pics/ui/calendbars/inspect-api_cb.png') center no-repeat;
     background-size: 30px;
 }
 
 .event-icon{
-    background: url('../../../../assets/ms-pics/inspect_cb.png') center no-repeat;
+    background: url('../../../../assets/ms-pics/ui/calendbars/inspect_cb.png') center no-repeat;
     background-size: 30px;
 }
 
 .alert-icon{
-    background: url('../../../../assets/ms-pics/alert_cb.svg') center no-repeat;
+    background: url('../../../../assets/ms-pics/ui/calendbars/alert_cb.svg') center no-repeat;
     background-size: 30px;
 }
 
@@ -116,7 +116,7 @@
     height: 15%;
     margin-top: 20px;
 }
-  
+
 .edit-alert-choice-obs{
     width: 60%;
     display: flex;
@@ -129,8 +129,12 @@
     margin: 5px 5px;
     height: 40px;
     width: 40px;
-    border: 1px solid rgb(233, 162, 9);
-    box-shadow: 1px 1px 3px black;
+    border: 0;
+    background-color: transparent;
+}
+
+.hives-alert-edit:hover{
+  border: 1px solid rgb(233, 162, 9);
 }
 
 .edit-alert-desc{
@@ -168,7 +172,7 @@
 }
 
 .edit-event-choice-obs{
-  width: 50%;
+  width: 55%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -202,8 +206,8 @@
   margin: 0 3px;
   height: 40px;
   width: 40px;
-  box-shadow: 1px 1px 3px black;
-  border: 1px solid gray;
+  background-color: transparent;
+  border: 1px solid #ddd;
 }
 
 .add-event-todo-toggle {
@@ -211,11 +215,11 @@
   margin: 0 3px;
   height: 40px;
   width: 40px;
-  box-shadow: 1px 1px 3px black;
-  border: 1px solid gray;
+  background-color: transparent;
+  border: 1px solid #ddd;
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/todo.png');
+  background-image: url('../../../../assets/ms-pics/ui/assets/todo.png');
   background-position: center;
 }
 
@@ -227,11 +231,24 @@
   display: block;
 }
 
+.hives-obs-add{
+  margin: 5px 5px;
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
+  border: 0;
+  background-color: transparent;
+}
+
+.hives-obs-add:hover{
+  border: 1px solid skyblue;
+}
+
 .Default{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/default_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/default_b.png') center no-repeat;
   background-size: 30px;
 }
 
@@ -239,271 +256,288 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/default_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/default_cb.png') center no-repeat;
   background-size: 30px;
+  border: 1px solid skyblue;
 }
 
-.Dead{
+.hives-alert-edit.Dead{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/dead_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/dead_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.Dead-active{
+.hives-alert-edit.Dead-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/dead_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/dead_cb.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.Hmax{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/hmax_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.Hmax{
+.hives-alert-edit.Hmax-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/hmax_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/hmax_cb.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.Hmin{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/hmin_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.Hmax-active{
+.hives-alert-edit.Hmin-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/hmax_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/hmin_cb.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.Honeydew{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/honeydew_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.Hmin{
+.hives-alert-edit.Honeydew-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/hmin_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/honeydew_cb.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.LowBrood{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/lowbrood_bz.png') center no-repeat;
   background-size: 35px;
 }
 
-.Hmin-active{
+.hives-alert-edit.LowBrood-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/hmin_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/lowbrood_cbz.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.Oxalic{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/oxalic_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.Honeydew{
+.hives-alert-edit.Oxalic-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/honeydew_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/oxalic_cb.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.Rswarm{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/rswarm_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.Honeydew-active{
+.hives-alert-edit.Rswarm-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/honeydew_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/rswarm_cb.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.Stolen{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/stolen_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.LowBrood{
+.hives-alert-edit.Stolen-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/lowbrood_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/stolen_cb.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.Super\+{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/super+_b.svg') center no-repeat;
   background-size: 35px;
 }
 
-.LowBrood-active{
+.hives-alert-edit.Super\+-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/lowbrood_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/super+_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.Super-{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/super-_b.svg') center no-repeat;
   background-size: 35px;
 }
 
-.Oxalic{
+.hives-alert-edit.Super--active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/oxalic_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/super-_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
 }
 
-.Oxalic-active{
+.hives-alert-edit.Swarm{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/oxalic_cb.png') center no-repeat;
-  background-size: 35px;
-}
-
-.Rswarm{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/rswarm_b.png') center no-repeat;
-  background-size: 35px;
-}
-
-.Rswarm-active{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/rswarm_cb.png') center no-repeat;
-  background-size: 35px;
-}
-
-.Stolen{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/stolen_b.png') center no-repeat;
-  background-size: 35px;
-}
-
-.Stolen-active{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/stolen_cb.png') center no-repeat;
-  background-size: 35px;
-}
-
-.Super\+{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/super+_b.svg') center no-repeat;
-  background-size: 35px;
-}
-
-.Super\+-active{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/super+_cb.svg') center no-repeat;
-  background-size: 35px;
-}
-
-.Super-{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/super-_b.svg') center no-repeat;
-  background-size: 35px;
-}
-
-.Super--active{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/super-_cb.svg') center no-repeat;
-  background-size: 35px;
-}
-
-.Swarm{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/swarm_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/swarm_b.png') center no-repeat;
   background-size: 33px;
 }
 
-.Swarm-active{
+.hives-alert-edit.Swarm-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/swarm_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/swarm_cb.png') center no-repeat;
   background-size: 33px;
+  border: 1px solid rgb(233, 162, 9);
 }
 
-.Tmax{
+.hives-alert-edit.Tmax{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/tmax_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/hightemp_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.Tmax-active{
+.hives-alert-edit.Tmax-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/tmax_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/hightemp_cb.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.Tmin{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/lowtemp_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.Tmin{
+.hives-alert-edit.Tmin-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/tmin_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/lowtemp_cb.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.WIneg{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/wineg_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.Tmin-active{
+.hives-alert-edit.WIneg-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/tmin_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/wineg_cb.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.WIpos{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/wipos_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.WIneg{
+.hives-alert-edit.WIpos-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/wineg_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/wipos_cb.png') center no-repeat;
+  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
+}
+
+.hives-alert-edit.Wlim{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/wlim_b.png') center no-repeat;
   background-size: 35px;
 }
 
-.WIneg-active{
+.hives-alert-edit.Wlim-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/wineg_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/wlim_cb.png') center no-repeat;
   background-size: 35px;
-}
-
-.WIpos{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/wipos_b.png') center no-repeat;
-  background-size: 35px;
-}
-
-.WIpos-active{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/wipos_cb.png') center no-repeat;
-  background-size: 35px;
-}
-
-.Wlim{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/wlim_b.png') center no-repeat;
-  background-size: 35px;
-}
-
-.Wlim-active{
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  background: url('../../../../assets/ms-pics/wlim_cb.png') center no-repeat;
-  background-size: 35px;
+  border: 1px solid rgb(233, 162, 9);
 }
 
 .Lowbrood{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/lowbrood_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/lowbrood_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -511,15 +545,16 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/lowbrood_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/lowbrood_cbz.png') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
 }
 
 .Normbrood{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/normbrood_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/normbrood_b.svg') center no-repeat;
   background-size: 35px;
 }
 
@@ -527,15 +562,16 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/normbrood_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/normbrood_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
 }
 
 .Highbrood{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/highbrood_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/highbrood_b.svg') center no-repeat;
   background-size: 35px;
 }
 
@@ -543,15 +579,16 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/highbrood_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/highbrood_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
 }
 
 .Nobrood{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/nobrood_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/nobrood_b.svg') center no-repeat;
   background-size: 35px;
 }
 
@@ -559,15 +596,16 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/nobrood_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/nobrood_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
 }
 
 .Nobees{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/nobees_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/nobees_b.svg') center no-repeat;
   background-size: 35px;
 }
 
@@ -575,15 +613,16 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/nobees_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/nobees_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
 }
 
 .Lowbees{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/lowbees_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/lowbees_b.svg') center no-repeat;
   background-size: 35px;
 }
 
@@ -591,15 +630,16 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/lowbees_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/lowbees_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
 }
 
 .Normbees{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/normbees_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/normbees_b.svg') center no-repeat;
   background-size: 35px;
 }
 
@@ -607,15 +647,16 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/normbees_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/normbees_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
 }
 
 .Highbees{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/highbees_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/highbees_b.svg') center no-repeat;
   background-size: 35px;
 }
 
@@ -623,15 +664,16 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/highbees_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/highbees_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
 }
 
 .Nores{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/nores_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/nores_b.svg') center no-repeat;
   background-size: 35px;
 }
 
@@ -639,15 +681,16 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/nores_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/nores_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
 }
 
 .Lowres{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/lowres_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/lowres_b.svg') center no-repeat;
   background-size: 35px;
 }
 
@@ -655,15 +698,16 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/lowres_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/lowres_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
 }
 
 .Normres{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/normres_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/normres_b.svg') center no-repeat;
   background-size: 35px;
 }
 
@@ -671,15 +715,16 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/normres_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/normres_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
 }
 
 .Highres{
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/highres_b.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/highres_b.svg') center no-repeat;
   background-size: 35px;
 }
 
@@ -687,8 +732,60 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/highres_cb.svg') center no-repeat;
+  background: url('../../../../assets/ms-pics/inspects/highres_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 1px solid skyblue;
+}
+
+.hives-obs-add.Super\+{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/super+_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.hives-obs-add.Super\+-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/super+_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 1px solid skyblue;
+}
+
+.hives-obs-add.Super-{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/super-_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.hives-obs-add.Super--active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/super-_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 1px solid skyblue;
+}
+
+.hives-obs-add.Swarm{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/swarm_b.png') center no-repeat;
+  background-size: 33px;
+}
+
+.hives-obs-add.Swarm-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/alerts/ruche/swarm_cb.png') center no-repeat;
+  background-size: 33px;
+  border: 1px solid skyblue;
 }
 
 

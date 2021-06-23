@@ -375,7 +375,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'inspection', IMG_PATH + 'inspect-api_cb.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'inspection', IMG_PATH + 'ui/calendbars/inspect-api_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -385,7 +385,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'event', IMG_PATH + 'inspect_cb.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'event', IMG_PATH + 'ui/calendbars/inspect_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -434,7 +434,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'alert | ' + alert.icon, IMG_PATH + alert.icon.toLowerCase() + '_cb.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serieComplete, new_item, 'alert | ' + alert.icon, IMG_PATH + 'alerts/ruche/' + alert.icon.toLowerCase() + '_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -545,7 +545,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serie, new_item, 'inspection', IMG_PATH + 'inspect-api_cb.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'inspection', IMG_PATH + 'ui/calendbars/inspect-api_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -555,7 +555,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serie, new_item, 'event', IMG_PATH + 'inspect_cb.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'event', IMG_PATH + 'ui/calendbars/inspect_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -599,7 +599,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
                 new_series[seriesIndex].data.push(new_item);
               }
               else{
-                let newSerie = this.createNewCustomSerie(serie, new_item, 'alert | ' + alert.icon, IMG_PATH + alert.icon.toLowerCase() + '_cb.png', 30, -30/2, -40/2);
+                let newSerie = this.createNewCustomSerie(serie, new_item, 'alert | ' + alert.icon, IMG_PATH + 'alerts/ruche/' + alert.icon.toLowerCase() + '_cb.png', 30, -30/2, -40/2);
                 new_series.push(newSerie);
               }
             }
@@ -653,7 +653,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
       insp.obs.forEach( o => {
         let name = this.translate.instant('MELLICHARTS.BROOD.TOOLTIP.'+ o.name.toUpperCase());
         res += `<div style="display:flex; width:100%; font-size:12px; align-items:center;">`;
-        res += `<div style="width:25px; height:25px; margin-top:-5px; background-image:url('${IMG_PATH + o.name.toLowerCase() + '_cw.png'}'); background-repeat:no-repeat; background-size:25px; background-position: center;"></div>`;
+        res += `<div style="width:25px; height:25px; margin-top:-5px; background-image:url('${IMG_PATH + 'inspects/' + o.name.toLowerCase() + '_cw.png'}'); background-repeat:no-repeat; background-size:25px; background-position: center;"></div>`;
         res += `<div style="height:30px; display:flex; margin-left:10px; margin-top:5px; align-items:center; font-size:12px;">${name}</div>`
         res += `</div>`;
       });
@@ -689,7 +689,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
     `<h5 style="float:right"><b>${this.unitService.getHourlyDate(date)}</b></h5>` +
     `</div>` +
     `<div style="width:100%; display:flex; align-items:center; margin-top:10px;">` +
-    `<img style="margin-top:-5px;" width=25 height=25 src=${IMG_PATH + alert.icon.toLowerCase() + '_cw.png'}>` +
+    `<img style="margin-top:-5px;" width=25 height=25 src=${IMG_PATH + 'alerts/ruche/' + alert.icon.toLowerCase() + '_cw.png'}>` +
     `<p style="font-size:12px; margin-left:5px; font-family:'Poppins';" >${name}</p>` +
     `</div>`;
     return res;
@@ -763,7 +763,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
          let data = [
            new_item
          ];
-         let newSerie = this.createNewCustomSerie(this.option.baseOption.series[seriesIndex], new_item, 'event', IMG_PATH + 'inspect_cb.png', 30, -30/2, -40/2);
+         let newSerie = this.createNewCustomSerie(this.option.baseOption.series[seriesIndex], new_item, 'event', IMG_PATH + 'ui/calendbars/inspect_cb.png', 30, -30/2, -40/2);
          this.option.baseOption.series.push(newSerie);
          this.stackService.getBroodChartInstance().setOption(this.option);
        }

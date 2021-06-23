@@ -1,5 +1,5 @@
 <div id="inspect-params-content">
-  <table class="table table-striped">
+  <table class="table">
     <thead style="display: none;">
       <tr>
         <th scope="col" class="text-left cols_icon"></th>
@@ -14,7 +14,7 @@
       <ng-container *ngFor="let conf of inspConf; let i = index">
         <tr [class]="(isEnable(i)? '' : 'disable')">
           <td>
-            <img width="50px" height="50px" [src]="'./assets/ms-pics/' + conf.inspCat.img.toLowerCase() + '_b.svg'">
+            <img width="50px" height="50px" [src]="'./assets/ms-pics/inspects/' + conf.inspCat.img.toLowerCase() + '_b.svg'">
           </td>
           <td style='vertical-align: middle;'>{{'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate}}</td>
           <td style='vertical-align: middle;'>
@@ -34,11 +34,11 @@
           </td>
           <td style='vertical-align: middle;'>
             <ng-container *ngIf="isEnable(i)">
-              <button [class]="'btn btn-default btn-spring ' + (isSeasonActive(conf.inspCat, 'spring') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
-              <button [class]="'btn btn-default btn-summer ' + (isSeasonActive(conf.inspCat, 'summer') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
-              <button [class]="'btn btn-default btn-autumn ' + (isSeasonActive(conf.inspCat, 'autumn') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
-              <button [class]="'btn btn-default btn-winter ' + (isSeasonActive(conf.inspCat, 'winter') ? 'active' : '')" (click)="seasonClick($event, insp)"></button>
-            </ng-container> 
+              <button [class]="'btn-spring ' + (isSeasonActive(conf.inspCat, 'spring') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat)"></button>
+              <button [class]="'btn-summer ' + (isSeasonActive(conf.inspCat, 'summer') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat)"></button>
+              <button [class]="'btn-autumn ' + (isSeasonActive(conf.inspCat, 'autumn') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat)"></button>
+              <button [class]="'btn-winter ' + (isSeasonActive(conf.inspCat, 'winter') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat)"></button>
+            </ng-container>
           </td>
           <td style='vertical-align: middle;'>
             <div class="btn-group" id="status" data-toggle="buttons">

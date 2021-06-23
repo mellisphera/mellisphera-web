@@ -46,26 +46,17 @@ limitations under the License. -->
           <tr class="hoverStyle" *ngFor="let obs of inspectionService.inspApi; let i = index;">
             <ng-container *ngIf="obs.type === 'apiary'">
               <td style="max-width: 90px; width:90px;">{{ obs.opsDate | myDate }}</td>
-              <td style="min-width: 150px; width:36%">{{ obs.description }}</td>
-              <td style="min-width: 150px; width:44%">
-                  <div style="width: 100%; display: flex; flex-wrap: wrap;">
-                    <div *ngFor="let item of obs?.obs" [class]="'hives-obs-item hives-'+item.name.toLowerCase()+'-img'"></div>
-                  </div>
+              <td style="min-width: 230px; width:90%">
+                <div>{{ obs.description }}</div>
+                <div style="width: 100%; display: flex; flex-wrap: wrap;">
+                  <div *ngFor="let item of obs?.obs" [class]="'hives-obs-item hives-'+item.name.toLowerCase()+'-img'"></div>
+                </div>
               </td>
               <td style="max-width: 50px; width:50px;">
-                <div class="notes-edit-div dropleft" (mouseenter)="mouseEnter($event)" (mouseleave)="mouseLeave($event)">
-                  <button class="btn dropdown-toggle apiary-edit-insp" type="button" [id]="'dropdownMenuButton' + i"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [innerHTML]="more_icon | safeHtml"
-                  style="border: 0; padding: 3px 9px !important; background-color: white;" [style.visibility]="isDesktop ? 'hidden' : 'visible'"></button>
-                  <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'dropdownMenuButton' + i"
-                    style="top:30px; padding:0; background-color: white; width: auto;">
-                    <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
+                <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default btn-edit"
                       data-toggle="modal" data-target="#editObservationModal" (click)="showEditEvent(obs, i)">
-                      <i style="margin-right: 10px;" class="fas fa-pen"></i>
-                      {{'MELLICHARTS.EVENT.EDIT.TITLE' | translate}}
-                    </button>
-                  </div>
-                </div>
+                      <i style="margin-right: 10px; font-size: 16px;" class="fas fa-pen"></i>
+                </button>
               </td>
             </ng-container>
           </tr>
@@ -94,9 +85,9 @@ limitations under the License. -->
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <img width="35" height="35" src="../../../../../assets/ms-pics/inspect-api_cb.svg" style="float: right;">
-        <h4 class="modal-title" style="margin-left: 20%;">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
-        <h4 style="margin-left: 20%;">{{this.rucherService.rucher.name}}</h4>
+        <img width="35" height="35" src="../../../../../assets/ms-pics/ui/calendbars/inspect-api_cb.svg" style="float: right;">
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
+        <h4>{{this.rucherService.rucher.name}}</h4>
         <div class="add-event-date">
           <div>
             <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
@@ -116,11 +107,11 @@ limitations under the License. -->
           </div>
         </div>
         <div class="add-event-notes">
-            <button class="add-event-notes-toggle" (click)="showNotes()"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+            <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
             <textarea class="add-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
         </div>
         <div class="add-event-todo">
-            <button class="add-event-todo-toggle" (click)="showTodo()"></button>
+            <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
             <textarea class="add-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
         </div>
       </div>
@@ -140,9 +131,9 @@ limitations under the License. -->
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <img width="35" height="35" src="../../../../../assets/ms-pics/inspect-api_cb.svg" style="float: right;">
-        <h4 class="modal-title" style="margin-left: 20%;">{{'MELLICHARTS.EVENT.EDIT.TITLE' | translate}}</h4>
-        <h4 style="margin-left: 20%;">{{this.rucherService.rucher.name}}</h4>
+        <img width="35" height="35" src="../../../../../assets/ms-pics/ui/calendbars/inspect-api_cb.svg" style="float: right;">
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.EDIT.TITLE' | translate}}</h4>
+        <h4>{{this.rucherService.rucher.name}}</h4>
         <div class="add-event-date">
           <div>
             <input class="edit-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEventEdit" [owlDateTime]="dtEventEdit" (ngModelChange)="setNewEventDate()">
@@ -162,18 +153,30 @@ limitations under the License. -->
           </div>
         </div>
         <div class="edit-event-notes">
-            <button class="add-event-notes-toggle" (click)="showNotes()"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+            <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
             <textarea value="{{new_event?.description}}" class="edit-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
         </div>
         <div class="edit-event-todo">
-            <button class="add-event-todo-toggle" (click)="showTodo()"></button>
+            <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
             <textarea value="{{new_event?.todo}}" class="edit-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
         </div>
       </div>
       <div class="modal-footer">
-        <div class="add-event-buttons">
-          <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
-          <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="editEvent()">{{'MELLICHARTS.EVENT.BUTTONS.EDIT' | translate}}</button>
+        <div class="add-event-buttons" style="display: unset;">
+          <div class="dropleft" style="float:left;">
+            <button class="btn btn-danger dropdown-toggle" [id]="'dropdownDelButton'"
+              type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              style="padding: 6px 12px !important;">
+              {{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}
+            </button>
+            <div class="dropdown-menu dropdown-menu-left" [attr.aria-labelledby]="'dropdownDelButton'"
+              style="margin-top: -10px; width: 160px">
+              <p style="margin: 5px 10px 4px;">Confirmer ?</p>
+              <button class="btn btn-default btn-confirm-del" (click)="deleteEvent()"><i class="fas fa-times-circle"></i></button>
+            </div>
+          </div>
+          <button class="btn btn-success" style="float:right;height:34px;margin-left: 10px;" (click)="editEvent()">{{'MELLICHARTS.EVENT.BUTTONS.EDIT' | translate}}</button>
+          <button class="btn btn-default" style="float:right;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
         </div>
       </div>
     </div>

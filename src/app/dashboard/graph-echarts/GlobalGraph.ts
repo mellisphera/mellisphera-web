@@ -1004,9 +1004,9 @@ export class GraphGlobal {
             if (_singleData.description) {
               type = 'Inspection';
               img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, './assets/ms-pics/alert-icon.png');
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/alert_cb.png');
             } else {
-              img = '<img style={S} src=./assets/ms-pics/' + _singleData.icon.toLowerCase() + '_cw.png />';
+              img = '<img style={S} src=./assets/ms-pics/alerts/ruche/' + _singleData.icon.toLowerCase() + '_cw.png />';
             }
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:35px;height:35px; background-color:red;');
             return {
@@ -1049,11 +1049,11 @@ export class GraphGlobal {
             let img = '<img style={S} src={I} />';
             if(_singleData.type === 'apiary'){
               img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, './assets/ms-pics/inspect-api_cw.png');
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect-api_cw.png');
             }
             if(_singleData.type === 'hive'){
               img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, './assets/ms-pics/inspect_cw.png');
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect_cw.png');
             }
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:35px;height:35px; background-color:red;');
             return {
@@ -1073,11 +1073,11 @@ export class GraphGlobal {
             let img = '<img style={S} src={I} />';
             if(_singleData.type === 'apiary'){
               img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, './assets/ms-pics/inspect-api_cw.png');
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect-api_cw.png');
             }
             if(_singleData.type === 'hive'){
               img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, './assets/ms-pics/inspect_cw.png');
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect_cw.png');
             }
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:35px;height:35px; background-color:red;');
             return {

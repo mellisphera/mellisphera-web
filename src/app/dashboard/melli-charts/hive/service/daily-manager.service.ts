@@ -1390,7 +1390,7 @@ export class DailyManagerService {
 
   getChartEvent(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean): void{
     let hive: RucheInterface = this.rucheService.getHiveById(hiveId);
-    this.inspectionService.getInspectionByApiaryIdAndOpsDateBetween(hive.apiaryId, range).subscribe(
+    this.inspectionService.getInspectionByHiveIdAndOpsDateBetween(hive._id, range).subscribe(
       _insp => {
         let data : any[] = _insp.filter(_elt => _elt.type === 'hive' && _elt.hiveId === hiveId).map(_elt => {
           return { date: _elt.opsDate, value: 0, sensorRef: 'Evenements' };

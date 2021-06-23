@@ -713,7 +713,7 @@
         "NECTARFLOW":"Miellées",
         "MITEOAVAPOR":"Traitement varroa acide oxalique Vap.",
         "MITEOADRIBBLE":"Traitement varroa acide oxalique Deg.",
-        "MITEFORMICPRO":"Traitement varro formique",
+        "MITEFORMICPRO":"Traitement varroa formique",
         "MITESTRIP":"Traitement lanière",
         "STARTFEED":"Debut nourissage",
         "STOPFEED":"Arret nourissage",
@@ -738,7 +738,9 @@
         "LARVA":"Présence de larves",
         "PUPA":"Présence de couvain operculé",
         "DRONEBROOD":"Présence de couvain de male",
-        "DRONES":"Présence de males"
+        "DRONES":"Présence de males",
+        "BUZZINGHIVE":"Bourdonneuse",
+        "MOSAICBROOD":"Mosaique couvain"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",

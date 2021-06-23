@@ -455,8 +455,11 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     this.new_event.opsDate = this.newEventDate;
   }
 
-  showNotes(){
-    let textArea = <HTMLTextAreaElement>document.getElementsByClassName('add-event-notes-textarea')[0];
+  showNotes(evt: Event){
+    let textArea = <HTMLTextAreaElement>(<HTMLElement>evt.target).parentNode.children[1];
+    if( (<HTMLElement>evt.target).nodeName === 'I' ){
+      textArea = <HTMLTextAreaElement>(<HTMLElement>evt.target).parentNode.parentNode.children[1];
+    }
     if (textArea.classList.contains('hives-note-textarea-add-active')) {
         textArea.classList.remove('hives-note-textarea-add-active');
     } else {
@@ -469,8 +472,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     this.new_event.description = textArea.value;
   }
 
-  showTodo(){
-    let textArea = <HTMLTextAreaElement>document.getElementsByClassName('add-event-todo-textarea')[0];
+  showTodo(evt: Event){
+    let textArea = <HTMLTextAreaElement>(<HTMLElement>evt.target).parentNode.children[1];
     if (textArea.classList.contains('hives-todo-textarea-add-active')) {
         textArea.classList.remove('hives-todo-textarea-add-active');
     } else {
@@ -637,6 +640,25 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   }
 
   // <--- END EDIT EVENT SCREEN --->
+
+  deleteEvent(): void{
+    let index = this.inspectionService.inspectionsApiary.findIndex(_insp => _insp._id === this.new_event._id);
+    this.inspectionService.deleteHiveInsp([this.inspectionService.inspectionsApiary[index]._id]).subscribe(
+      () => {},
+      () => {},
+      () => {
+        this.inspectionService.inspectionsApiary.splice(index, 1);
+        index = this.inspectionService.inspApi.findIndex(_insp => _insp._id === this.new_event._id);
+        this.inspectionService.inspApi.splice(index, 1);
+        if(this.translateService.currentLang === 'fr'){
+          this.notifyService.notify('success', 'Inspection suprimmée');
+        }else{
+          this.notifyService.notify('success', 'Deleted inspection');
+        }
+        $('#editObservationModal').modal('hide');
+      }
+    )
+  }
 
 
 

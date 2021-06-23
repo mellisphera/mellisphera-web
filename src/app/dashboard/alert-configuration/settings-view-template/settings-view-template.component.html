@@ -33,16 +33,24 @@ limitations under the License. -->
         <ng-container *ngFor="let alert of alertTypes">
           <tr [class]="(isEnable(alert._id) ? 'enable' : 'disable') + ' tr-items'"
             *ngIf="!(alert.icon === 'StopWeather' && !userHaveWeatherStation())">
-            <td *ngIf="router.url !== '/dashboard/alert-configuration/sensor-alert'" scope="row" class="text-left">
-              <img width="50px" [src]="'./assets/ms-pics/' + alert.icon.toLowerCase() + '_cb.png'">
+            <td *ngIf="router.url === '/dashboard/alert-configuration/hive-alert'" scope="row" class="text-left"
+              style='vertical-align: middle;'>
+              <img width="50px" [src]="'./assets/ms-pics/alerts/ruche/' + alert.icon.toLowerCase() + '_cb.png'">
             </td>
-            <td *ngIf="router.url === '/dashboard/alert-configuration/sensor-alert'" scope="row" class="text-left">
-              <img width="50px" [src]="'./assets/ms-pics/' + alert.icon.toLowerCase() + '_b.png'">
+            <td *ngIf="router.url === '/dashboard/alert-configuration/weather-alert'" scope="row" class="text-left"
+              style='vertical-align: middle;'>
+              <img width="50px" [src]="'./assets/ms-pics/alerts/meteo/' + alert.icon.toLowerCase() + '_b.png'">
             </td>
-            <td class="text-left name_notif">
+            <td *ngIf="router.url === '/dashboard/alert-configuration/sensor-alert'" scope="row" class="text-left"
+              style='vertical-align: middle;'>
+              <img width="50px" [src]="'./assets/ms-pics/alerts/capteur/' + alert.icon.toLowerCase() + '_b.png'">
+            </td>
+            <td class="text-left name_notif"
+              style='vertical-align: middle;'>
               {{ getNameByLang(alert._id) }}
             </td>
-            <td class="text-left">
+            <td class="text-left"
+              style='vertical-align: middle;'>
               <popover-content #myPopover title="{{ getNameByLang(alert._id) }}" placement="right" [animation]="true"
                 [closeOnClickOutside]="false">
                 <span class="helpTooltip">{{ 'ALERTS_DESC.'+alert.icon.toUpperCase()+'_DESC' | translate }}</span>
@@ -50,19 +58,20 @@ limitations under the License. -->
               <a [popover]="myPopover" style="font-size: 20px !important;" class="info-link"><i
                   class="fa fa-info-circle" aria-hidden="true"></i></a>
             </td>
-            <td class="text-center cols_value">
+            <td class="text-center cols_value"
+              style='vertical-align: middle;'>
               <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
                 <input class="rangeInput" #range (input)="onChageValue(range.value, alert._id);" type="range"
                   [min]="getRangeValue(alert._id)[0]" [max]="getRangeValue(alert._id)[1]" [step]="getStep(alert._id)"
                   [value]="getUserValue(alert._id)" />
               </div>
             </td>
-            <td>
+            <td style='vertical-align: middle;'>
               <div *ngIf="isEnable(alert._id) && isAlterable(alert._id)">
                 <p>{{ getUserValue(alert._id) }} {{ getUnit(alert._id) }}{{ getPeriod(alert._id) }}</p>
               </div>
             </td>
-            <td class="text-left">
+            <td class="text-left" style='vertical-align: middle;'>
               <div class="btn-group" id="status" data-toggle="buttons" *ngIf="alert.disable && emailIsEnable()">
                 <label [class]="'btn btn-default btn-on ' + (isEnable(alert._id) ? 'active': '')"
                   (click)="onEnable(alert._id)">

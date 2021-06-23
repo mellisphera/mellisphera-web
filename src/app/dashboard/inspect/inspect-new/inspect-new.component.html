@@ -27,37 +27,29 @@
   </div>
     <div class="inspect-body">
       <div class="inspect-apiary">
-          <div class="apiary-obs-div" style="padding-left: 10px;">
+          <div class="apiary-obs-div" style="padding-left: 20px;">
             <h4>Etat Général</h4>
             <div style="display: flex;">
-              <button class="btn btn-sad" (click)="setGeneralLevel('bad')"></button>
-              <button class="btn btn-normal" (click)="setGeneralLevel('normal')"></button>
-              <button class="btn btn-happy" (click)="setGeneralLevel('good')"></button>
+              <button class="btn-sad" (click)="setGeneralLevel('bad')"></button>
+              <button class="btn-normal" (click)="setGeneralLevel('normal')"></button>
+              <button class="btn-happy" (click)="setGeneralLevel('good')"></button>
             </div>
-          </div>
-          <div class="apiary-op d-flex flex-wrap">
-            <div id="brood-stage">
-              <button class="btn apiary-obs brood-none" (click)="setBroodStage('none', 'apiary')"></button>
-              <button class="btn apiary-obs brood-egg" (click)="setBroodStage('egg', 'apiary')"></button>
-              <button class="btn apiary-obs brood-larva" (click)="setBroodStage('larva', 'apiary')"></button>
-              <button class="btn apiary-obs brood-pupa" (click)="setBroodStage('pupa', 'apiary')"></button>
-              <button class="btn apiary-obs brood-drone" (click)="setBroodStage('drone', 'apiary')"></button>
-            </div>
-            <div>
-              <button class="btn apiary-obs health-swarm" (click)="setHealth('swarm', 'apiary')"></button>
-              <button class="btn apiary-obs health-buzz" (click)="setHealth('buzz', 'apiary')"></button>
-              <button class="btn apiary-obs health-sick" (click)="setHealth('sick', 'apiary')"></button>
-              <button class="btn apiary-obs health-mosaic" (click)="setHealth('mosaic', 'apiary')"></button>
-              <button class="btn apiary-obs health-queen" (click)="setHealth('queen', 'apiary')"></button>
-            </div>
-            <div>
-              <ng-container *ngFor="let conf of inspConf; let i = index">
-                <ng-container *ngIf="conf.enable && conf.inspCat.applies.includes('apiary') && conf.inspCat.type === 'act' && conf.inspCat.seasons.includes(seasonService.getSeason())">
-                  <button [class]="'apiary-action btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
-                  (click)="changeActive($event, conf.inspCat, 'apiary', 'act')"
-                  data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
-                </ng-container>
-              </ng-container>
+            <div id="brood-stage" style="margin-top: 30px; display: flex;">
+              <div style="width: 45px; height: 45px; display:flex; align-items: center; justify-content: center;">
+                <button class="apiary-obs brood-none" (click)="setBroodStage('none', 'apiary')"></button>
+              </div>
+              <div style="width: 45px; height: 45px; display:flex; align-items: center; justify-content: center; margin-left: 10px;">
+                <button class="apiary-obs brood-egg" (click)="setBroodStage('egg', 'apiary')"></button>
+              </div>
+              <div style="width: 45px; height: 45px; display:flex; align-items: center; justify-content: center; margin-left: 10px;">
+                <button class="apiary-obs brood-larva" (click)="setBroodStage('larva', 'apiary')"></button>
+              </div>
+              <div style="width: 45px; height: 45px; display:flex; align-items: center; justify-content: center; margin-left: 10px;">
+                <button class="apiary-obs brood-pupa" (click)="setBroodStage('pupa', 'apiary')"></button>
+              </div>
+              <div style="width: 45px; height: 45px; display:flex; align-items: center; justify-content: center; margin-left: 10px;">
+                <button class="apiary-obs brood-drone" (click)="setBroodStage('drone', 'apiary')"></button>
+              </div>
             </div>
           </div>
           <div class="apiary-notes-todo">
@@ -71,6 +63,20 @@
             <div class="inspect-apiary-todo">
               <button style="visibility: hidden;margin-right: 5px;" class="btn apiary-todo" (click)="toggleTodo($event)" disabled></button>
               <textarea placeholder="{{'INSPECT.NEW.TODO_PLACEHOLDER' | translate}}" (change)="saveApiaryTodo($event)" class="apiary-todo-input hide-textarea" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
+            </div>
+            <div class="apiary-op">
+              <button class="apiary-obs health-swarm" (click)="setHealth('swarm', 'apiary')"></button>
+              <button class="apiary-obs health-buzz" (click)="setHealth('buzz', 'apiary')"></button>
+              <button class="apiary-obs health-sick" (click)="setHealth('sick', 'apiary')"></button>
+              <button class="apiary-obs health-mosaic" (click)="setHealth('mosaic', 'apiary')"></button>
+              <button class="apiary-obs health-queen" (click)="setHealth('queen', 'apiary')"></button>
+              <ng-container *ngFor="let conf of inspConf; let i = index">
+                <ng-container *ngIf="conf.enable && conf.inspCat.applies.includes('apiary') && conf.inspCat.type === 'act' && conf.inspCat.seasons.includes(seasonService.getSeason())">
+                  <button [class]="'apiary-action btn-' + conf.inspCat.img.toLowerCase() + '_b'"
+                  (click)="changeActive($event, conf.inspCat, 'apiary', 'act')"
+                  data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
+                </ng-container>
+              </ng-container>
             </div>
           </div>
       </div>
@@ -87,22 +93,22 @@
                         <tr>
                           <th></th>
                           <th>
-                            <img src="../../../../assets/ms-pics/none_cb.svg" width="15" height="15">
+                            <img src="../../../../assets/ms-pics/inspects/hcc/none_cb.svg" width="15" height="15">
                           </th>
                           <th>
-                            <img src="../../../../assets/ms-pics/low_cb.svg" width="20" height="20">
+                            <img src="../../../../assets/ms-pics/inspects/hcc/low_cb.svg" width="20" height="20">
                           </th>
                           <th>
-                            <img src="../../../../assets/ms-pics/average_cb.svg" width="20" height="20">
+                            <img src="../../../../assets/ms-pics/inspects/hcc/average_cb.svg" width="20" height="20">
                           </th>
                           <th>
-                            <img src="../../../../assets/ms-pics/high_cb.svg" width="20" height="20">
+                            <img src="../../../../assets/ms-pics/inspects/hcc/high_cb.svg" width="20" height="20">
                           </th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td><img src="../../../../assets/ms-pics/bee_b.svg" width="35" height="35"></td>
+                          <td><img src="../../../../assets/ms-pics/bees_b.svg" width="35" height="35"></td>
                           <td style="padding-left:5px; padding-right:5px;">
                             <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_bees_none_check'" (click)="setBeeLevel('none', 'hive', ruche)">
                           </td>
@@ -132,7 +138,7 @@
                           </td>
                         </tr>
                         <tr>
-                          <td><img src="../../../../assets/ms-pics/res_b.svg" width="30" height="30"></td>
+                          <td><img src="../../../../assets/ms-pics/inspects/res_b.svg" width="30" height="30"></td>
                           <td style="padding-left:5px; padding-right:5px;">
                             <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_res_none_check'" (click)="setResLevel('none', 'hive', ruche)">
                           </td>
@@ -146,32 +152,25 @@
                             <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_res_high_check'" (click)="setResLevel('high', 'hive', ruche)">
                           </td>
                         </tr>
+                        <tr>
+                          <td>
+                            <button [class]="'hives-obs brood-none ' + ruche.name + '_none'" (click)="setBroodStage('none', 'hive', ruche)"></button>
+                          </td>
+                          <td>
+                            <button [class]="'hives-obs brood-egg ' + ruche.name + '_egg'" (click)="setBroodStage('egg', 'hive', ruche)"></button>
+                          </td>
+                          <td>
+                            <button [class]="'hives-obs brood-larva ' + ruche.name + '_larva'" (click)="setBroodStage('larva', 'hive', ruche)"></button>
+                          </td>
+                          <td>
+                            <button [class]="'hives-obs brood-pupa ' + ruche.name + '_pupa'" (click)="setBroodStage('pupa', 'hive', ruche)"></button>
+                          </td>
+                          <td>
+                            <button [class]="'hives-obs brood-drone ' + ruche.name + '_drone'" (click)="setBroodStage('drone', 'hive', ruche)"></button>
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
-                  </div>
-                  <div class="hive-op">
-                    <div>
-                      <button [class]="'btn hives-obs brood-none ' + ruche.name + '_none'" (click)="setBroodStage('none', 'hive', ruche)"></button>
-                      <button [class]="'btn hives-obs brood-egg ' + ruche.name + '_egg'" (click)="setBroodStage('egg', 'hive', ruche)"></button>
-                      <button [class]="'btn hives-obs brood-larva ' + ruche.name + '_larva'" (click)="setBroodStage('larva', 'hive', ruche)"></button>
-                      <button [class]="'btn hives-obs brood-pupa ' + ruche.name + '_pupa'" (click)="setBroodStage('pupa', 'hive', ruche)"></button>
-                      <button [class]="'btn hives-obs brood-drone ' + ruche.name + '_drone'" (click)="setBroodStage('drone', 'hive', ruche)"></button>
-                    </div>
-                    <div>
-                      <button [class]="'btn hives-obs health-swarm '  + ruche.name + '_swarm'" (click)="setHealth('swarm', 'hive', ruche)"></button>
-                      <button [class]="'btn hives-obs health-buzz ' + ruche.name + '_buzz'" (click)="setHealth('buzz', 'hive', ruche)"></button>
-                      <button [class]="'btn hives-obs health-sick '  + ruche.name + '_sick'" (click)="setHealth('sick', 'hive', ruche)"></button>
-                      <button [class]="'btn hives-obs health-mosaic ' + ruche.name + '_mosaic'" (click)="setHealth('mosaic', 'hive', ruche)"></button>
-                      <button [class]="'btn hives-obs health-queen '  + ruche.name + '_queen'" (click)="setHealth('queen', 'hive', ruche)"></button>
-                    </div>
-                    <div style="display: flex; flex-wrap: wrap; width: 100%;">
-                      <ng-container *ngFor="let conf of inspConf; let i = index">
-                        <button *ngIf="conf.enable && conf.inspCat.applies.includes('hive') && conf.inspCat.type === 'act' && conf.inspCat.seasons.includes(seasonService.getSeason())"
-                        [class]="'hives-action btn btn-' + conf.inspCat.img.toLowerCase() + '_b'"
-                        (click)="changeActive($event, conf.inspCat, 'hive', 'act', ruche)"
-                        data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
-                      </ng-container>
-                    </div>
                   </div>
                   <div class="hive-notes-todo" style="margin-top: 5px;">
                     <div class="inspect-hive-notes">
@@ -184,6 +183,19 @@
                     <div class="inspect-hive-todo">
                       <button style="visibility: hidden;margin-right: 5px;" class="btn apiary-todo" (click)="toggleTodo($event)" disabled></button>
                       <textarea placeholder="{{'INSPECT.NEW.TODO_PLACEHOLDER' | translate}}" (change)="saveHiveTodo($event, ruche)" class="hive-todo-input hide-textarea" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
+                    </div>
+                    <div class="hive-op">
+                      <button [class]="'hives-obs health-swarm '  + ruche.name + '_swarm'" (click)="setHealth('swarm', 'hive', ruche)"></button>
+                      <button [class]="'hives-obs health-buzz ' + ruche.name + '_buzz'" (click)="setHealth('buzz', 'hive', ruche)"></button>
+                      <button [class]="'hives-obs health-sick '  + ruche.name + '_sick'" (click)="setHealth('sick', 'hive', ruche)"></button>
+                      <button [class]="'hives-obs health-mosaic ' + ruche.name + '_mosaic'" (click)="setHealth('mosaic', 'hive', ruche)"></button>
+                      <button [class]="'hives-obs health-queen '  + ruche.name + '_queen'" (click)="setHealth('queen', 'hive', ruche)"></button>
+                      <ng-container *ngFor="let conf of inspConf; let i = index">
+                        <button *ngIf="conf.enable && conf.inspCat.applies.includes('hive') && conf.inspCat.type === 'act' && conf.inspCat.seasons.includes(seasonService.getSeason())"
+                        [class]="'hives-action btn-' + conf.inspCat.img.toLowerCase() + '_b'"
+                        (click)="changeActive($event, conf.inspCat, 'hive', 'act', ruche)"
+                        data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
+                      </ng-container>
                     </div>
                   </div>
                 </div>

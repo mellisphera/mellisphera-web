@@ -25,6 +25,33 @@ limitations under the License. */
 .fa-times{
     margin-left: 15px;
   } */
+.btn-edit{
+  background-color: transparent;
+  color: black;
+}
+.btn-edit:focus{
+  background-color: transparent;
+  color: black;
+}
+.btn-edit:hover{
+  background-color: transparent;
+  color: rgb(0, 200, 0);
+}
+
+.btn-confirm-del{
+  font-size: 22px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  color: black;
+  border: 0
+}
+
+.btn-confirm-del:hover{
+  background-color: transparent;
+  color: red;
+}
+
 .open ul.dropdown-menu {
     display: block;
 }
@@ -40,11 +67,6 @@ limitations under the License. */
 }
 .btn_delete_modal_mobile{
     display: none;
-}
-
-.dropdown-toggle:hover{
-  border: 0;
-  background-color: white;
 }
 
 #user-group{
@@ -367,9 +389,6 @@ th{
 
 
 .add-event-buttons{
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
   height: 10%;
 }
 
@@ -377,8 +396,13 @@ th{
   margin: 5px 5px;
   height: 40px;
   width: 40px;
+  border-radius: 5px;
+  border: 0;
+  background-color: transparent;
+}
+
+.hives-obs-add:hover{
   border: 1px solid skyblue;
-  box-shadow: 1px 1px 3px black;
 }
 
 .hives-obs-item{
@@ -390,239 +414,256 @@ th{
 .hives-swarm-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/swarm_b.png');
+  background-image: url('../../../../../assets/ms-pics/alerts/ruche/swarm_b.png');
   background-position: center;
 }
 
 .hives-swarm-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/swarm_cb.png');
+  background-image: url('../../../../../assets/ms-pics/alerts/ruche/swarm_cb.png');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-super\+-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/super+_b.png');
+  background-image: url('../../../../../assets/ms-pics/alerts/ruche/super+_b.png');
   background-position: center;
 }
 
 .hives-super\+-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/super+_cb.png');
+  background-image: url('../../../../../assets/ms-pics/alerts/ruche/super+_cb.png');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-super--img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/super-_b.png');
+  background-image: url('../../../../../assets/ms-pics/alerts/ruche/super-_b.png');
   background-position: center;
 }
 
 .hives-super--img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/super-_cb.png');
+  background-image: url('../../../../../assets/ms-pics/alerts/ruche/super-_cb.png');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-default-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/default_b.png');
+  background-image: url('../../../../../assets/ms-pics/inspects/default_b.png');
   background-position: center;
 }
 
 .hives-default-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/default_cb.png');
+  background-image: url('../../../../../assets/ms-pics/inspects/default_cb.png');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-stolen-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/stolen_b.svg');
+  background-image: url('../../../../../assets/ms-pics/alerts/ruche/stolen_b.svg');
   background-position: center;
 }
 
 .hives-stolen-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/stolen_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/alerts/ruche/stolen_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-lowbrood-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/lowbrood_b.svg');
+  background-image: url('../../../../../assets/ms-pics/alerts/ruche/lowbrood_bz.png');
   background-position: center;
 }
 
 .hives-lowbrood-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/lowbrood_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/alerts/ruche/lowbrood_cbz.png');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-normbrood-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/normbrood_b.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/normbrood_b.svg');
   background-position: center;
 }
 
 .hives-normbrood-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/normbrood_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/normbrood_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-highbrood-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/highbrood_b.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/highbrood_b.svg');
   background-position: center;
 }
 
 .hives-highbrood-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/highbrood_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/highbrood_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-nobrood-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/nobrood_b.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/nobrood_b.svg');
   background-position: center;
 }
 
 .hives-nobrood-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/nobrood_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/nobrood_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-nobees-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/nobees_b.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/nobees_b.svg');
   background-position: center;
 }
 
 .hives-nobees-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/nobees_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/nobees_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-lowbees-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/lowbees_b.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/lowbees_b.svg');
   background-position: center;
 }
 
-.hives-nobees-img-active{
+.hives-lowbees-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/lowbees_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/lowbees_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-normbees-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/normbees_b.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/normbees_b.svg');
   background-position: center;
 }
 
 .hives-normbees-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/normbees_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/normbees_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-highbees-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/highbees_b.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/highbees_b.svg');
   background-position: center;
 }
 
 .hives-highbees-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/highbees_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/highbees_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-nores-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/nores_b.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/nores_b.svg');
   background-position: center;
 }
 
 .hives-nores-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/nores_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/nores_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-lowres-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/lowres_b.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/lowres_b.svg');
   background-position: center;
 }
 
 .hives-lowres-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/lowres_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/lowres_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-normres-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/normres_b.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/normres_b.svg');
   background-position: center;
 }
 
 .hives-normres-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/normres_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/normres_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .hives-highres-img{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/highres_b.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/highres_b.svg');
   background-position: center;
 }
 
 .hives-highres-img-active{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/highres_cb.svg');
+  background-image: url('../../../../../assets/ms-pics/inspects/highres_cb.svg');
   background-position: center;
+  border: 1px solid skyblue;
 }
 
 .add-event-notes-toggle{
@@ -630,8 +671,8 @@ th{
   margin: 0 3px;
   height: 40px;
   width: 40px;
-  box-shadow: 1px 1px 3px black;
-  border: 1px solid gray;
+  background-color: transparent;
+  border: 1px solid #ddd;
 }
 
 .add-event-todo-toggle{
@@ -639,11 +680,11 @@ th{
   margin: 0 3px;
   height: 40px;
   width: 40px;
-  box-shadow: 1px 1px 3px black;
-  border: 1px solid gray;
+  background-color: transparent;
+  border: 1px solid #ddd;
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../../assets/ms-pics/todo.png');
+  background-image: url('../../../../../assets/ms-pics/ui/assets/todo.png');
   background-position: center;
 }
 

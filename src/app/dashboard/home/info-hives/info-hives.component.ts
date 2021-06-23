@@ -116,7 +116,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   loadHealthCalendar() {
-    console.log('allo brood')
     this.healthHiveComponent.initGraph();
     let option = JSON.parse(JSON.stringify(this.healthHiveComponent.option));
     option.baseOption.series = new Array();
@@ -169,7 +168,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
       },
       () => {},
       () => {
-        console.log('fini brood')
         this.healthHiveComponent.chartInstance.hideLoading();
       }
     );
@@ -177,7 +175,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   loadProductivityCalendar(){
-    console.log('allo poids')
     this.weightHiveComponent.initGraph();
     let option = JSON.parse(JSON.stringify(this.weightHiveComponent.option));
     option.baseOption.series = new Array();
@@ -209,7 +206,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
               color: '#FE0000'
             }
           };
-          let type: Tools = { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/ms-pics/wipos_cb.png' };
+          let type: Tools = { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/wipos_cb.svg' };
           option.baseOption.legend.data.push(serieComplete.name);
           option.baseOption.visualMap = null;
           option.baseOption.tooltip = this.graphGlobal.getTooltipBySerie(type);
@@ -232,7 +229,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
       },
       () => {},
       () => {
-        console.log('fini poids')
         this.weightHiveComponent.echartInstance.hideLoading();
       }
     );
