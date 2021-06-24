@@ -10,12 +10,12 @@ then
 			then
 				echo "actualisation de ms-pics sur test"
 				rm -rf /mellisphera/test/mellisphera-web/src/assets/ms-pics/*
-      			cp /mellisphera/test/ms-pics/* /mellisphera/test/mellisphera-web/src/assets/ms-pics/
+      			cp -r /mellisphera/test/ms-pics/* /mellisphera/test/mellisphera-web/src/assets/ms-pics/
 		elif [ $1 = 'bzz' ];
 			then
 				echo "actualisation de ms-pics sur prod"
 				rm -rf /mellisphera/prod/mellisphera-web/src/assets/ms-pics/*
-      			cp /mellisphera/prod/ms-pics/* /mellisphera/prod/mellisphera-web/src/assets/ms-pics/
+      			cp -r /mellisphera/prod/ms-pics/* /mellisphera/prod/mellisphera-web/src/assets/ms-pics/
 		else
 			echo "erreur lors de la copie de ms-pics"
 		fi
