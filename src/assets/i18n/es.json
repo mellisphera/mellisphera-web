@@ -464,11 +464,15 @@
           "RAW": "Evolucion diaria del peso",
           "NORM": "Evolucion diaria del peso normalizado",
           "GAIN": "Evolución diaria del aumento de peso",
+          "INCOME": "Evolucion diaria de la productividad",
+          "HOURLY": "Evolucion horaria del peso",
           "REF_DATE": "Fecha de referencia",
           "CHECKBOX": {
               "RAW": "Bruto",
               "NORM": "Normalizado",
-              "GAIN": "Aumento"
+              "GAIN": "Aumento",
+              "INCOME": "Productividad",
+              "HOURLY": "Horaria bruto"
           },
           "TABLE":{
             "DATE":"Fecha",

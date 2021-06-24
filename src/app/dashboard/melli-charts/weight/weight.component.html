@@ -10,11 +10,18 @@ See the License for the specific language governing permissions and
 limitations under the License. -->
 
 <div>
+  <h3 id="hour-raw-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.HOURLY' | translate }}</h3>
   <h3 id="raw-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.RAW' | translate }}</h3>
-  <h3 id="norm-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.NORM' | translate }}</h3>
+  <h3 id="norm-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.INCOME' | translate }}</h3>
   <h3 id="gain-weight-title" style="text-align: center;">{{ 'MELLICHARTS.WEIGHT.GAIN' | translate }}</h3>
   <div class="btnNavWeight">
     <ul class="nav ul-weight">
+      <li>
+        <label for="hour-raw-check">
+          <input id="hour-raw-check" type="checkbox" (change)="showGraph('hour-raw-weight')" >
+          <p id="hour-raw-check-title">{{ 'MELLICHARTS.WEIGHT.CHECKBOX.HOURLY' | translate }}</p>
+        </label>
+      </li>
       <li>
         <label for="raw-check">
           <input id="raw-check" type="checkbox" (change)="showGraph('raw-weight')" >
@@ -30,7 +37,7 @@ limitations under the License. -->
       <li>
         <label for="norm-check">
           <input id="norm-check" type="checkbox" (change)="showGraph('norm-weight')" >
-          <p id="norm-check-title">{{ 'MELLICHARTS.WEIGHT.CHECKBOX.NORM' | translate }}</p>
+          <p id="norm-check-title">{{ 'MELLICHARTS.WEIGHT.CHECKBOX.INCOME' | translate }}</p>
         </label>
       </li>
     </ul>
@@ -43,80 +50,78 @@ limitations under the License. -->
       </div>
     </div>
   </div>
-
   <div id="weight-render">
     <section (window:resize)="onResize($event)">
       <div class="chart" id="graph-weight"></div>
     </section>
   </div>
+  <div *ngIf="!hourRawWeightDisplay"> <!-- For all daily displays -->
+    <div id="weight-table" *ngIf="rawWeightDisplay">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th rowspan ="2">{{'MELLICHARTS.WEIGHT.TABLE.HIVE' | translate}}</th>
+            <th>{{'MELLICHARTS.WEIGHT.TABLE.RAW.T0' | translate}}</th>
+            <th>{{'MELLICHARTS.WEIGHT.TABLE.RAW.7DAYS' | translate}}</th>
+            <th>{{'MELLICHARTS.WEIGHT.TABLE.RAW.15DAYS' | translate}}</th>
+          </tr>
+          <tr>
+            <th class="date-head">Date</th>
+            <th class="date-j-7"></th>
+            <th class="date-j-15"></th>
+          </tr>
+        </thead>
+        <tbody>
 
-  <div id="weight-table" *ngIf="rawWeightDisplay">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th rowspan ="2">{{'MELLICHARTS.WEIGHT.TABLE.HIVE' | translate}}</th>
-          <th>{{'MELLICHARTS.WEIGHT.TABLE.RAW.T0' | translate}}</th>
-          <th>{{'MELLICHARTS.WEIGHT.TABLE.RAW.7DAYS' | translate}}</th>
-          <th>{{'MELLICHARTS.WEIGHT.TABLE.RAW.15DAYS' | translate}}</th>
-        </tr>
-        <tr>
-          <th class="date-head">Date</th>
-          <th class="date-j-7"></th>
-          <th class="date-j-15"></th>
-        </tr>
-      </thead>
-      <tbody>
+        </tbody>
+      </table>
+    </div>
 
-      </tbody>
-    </table>
+    <div id="weight-table" *ngIf="normWeightDisplay">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th rowspan ="2">{{'MELLICHARTS.WEIGHT.TABLE.HIVE' | translate}}</th>
+            <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.T0' | translate}}</th>
+            <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.7DAYS' | translate}}</th>
+            <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.15DAYS' | translate}}</th>
+          </tr>
+          <tr>
+            <th class="date-head">{{'MELLICHARTS.WEIGHT.TABLE.DATE' | translate}}</th>
+            <th class="date-j-7"></th>
+            <th class="date-j-15"></th>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div id="weight-table" *ngIf="gainWeightDisplay">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th rowspan ="2">{{'MELLICHARTS.WEIGHT.TABLE.HIVE' | translate}}</th>
+            <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.T0' | translate}}</th>
+            <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.7DAYS' | translate}}</th>
+            <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.15DAYS' | translate}}</th>
+          </tr>
+          <tr>
+            <th class="date-head">{{'MELLICHARTS.WEIGHT.TABLE.DATE' | translate}}</th>
+            <th class="date-j-7"></th>
+            <th class="date-j-15"></th>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </div>
+
   </div>
-
-  <div id="weight-table" *ngIf="normWeightDisplay">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th rowspan ="2">{{'MELLICHARTS.WEIGHT.TABLE.HIVE' | translate}}</th>
-          <th>{{'MELLICHARTS.WEIGHT.TABLE.NORM.T0' | translate}}</th>
-          <th>{{'MELLICHARTS.WEIGHT.TABLE.NORM.CURRENT' | translate}}</th>
-          <th>{{'MELLICHARTS.WEIGHT.TABLE.NORM.VAR_TO' | translate}}</th>
-          <th>{{'MELLICHARTS.WEIGHT.TABLE.NORM.VAR_7DAYS' | translate}}</th>
-          <th>{{'MELLICHARTS.WEIGHT.TABLE.NORM.VAR_15DAYS' | translate}}</th>
-        </tr>
-        <tr>
-          <th class="date-head">Date</th>
-          <th class="date-current"></th>
-          <th class="date-head"></th>
-          <th class="date-j-7-norm"></th>
-          <th class="date-j-15-norm"></th>
-        </tr>
-      </thead>
-      <tbody>
-
-      </tbody>
-    </table>
+  <div #hourlyWeight>
   </div>
-
-  <div id="weight-table" *ngIf="gainWeightDisplay">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th rowspan ="2">{{'MELLICHARTS.WEIGHT.TABLE.HIVE' | translate}}</th>
-          <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.T0' | translate}}</th>
-          <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.7DAYS' | translate}}</th>
-          <th>{{'MELLICHARTS.WEIGHT.TABLE.GAIN.15DAYS' | translate}}</th>
-        </tr>
-        <tr>
-          <th class="date-head">{{'MELLICHARTS.WEIGHT.TABLE.DATE' | translate}}</th>
-          <th class="date-j-7"></th>
-          <th class="date-j-15"></th>
-        </tr>
-      </thead>
-      <tbody>
-
-      </tbody>
-    </table>
-  </div>
-
   <div class="infoToolip">
     <popover-content #weightCalendarTooltip placement="left" [animation]="true"
         [closeOnClickOutside]="false">
@@ -129,9 +134,8 @@ limitations under the License. -->
     </div>
   </div>
 
-<div id="separator">
+  <div id="separator">
 
-</div>
-
+  </div>
 </div>
 

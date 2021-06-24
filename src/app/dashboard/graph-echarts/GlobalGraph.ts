@@ -269,7 +269,7 @@ export class GraphGlobal {
     if (this.translateService.currentLang === 'fr') {
       this.weight.name = 'Poids (lbs)';
       this.weight.income_name = 'Gain (lbs)';
-      this.weight.norm_name = 'Variation Poids (%)';
+      this.weight.norm_name = 'Productivité (lbs)';
       this.humidity.name = 'Humidité';
       this.rain.name = 'Pluie';
       this.weightIncome.gain = 'Gain';
@@ -287,7 +287,7 @@ export class GraphGlobal {
     } else if (this.translateService.currentLang === 'es') {
       this.weight.name = 'Peso (lbs)';
       this.weight.income_name = 'Aumento (lbs)';
-      this.weight.norm_name = 'Variacion Peso (%)';
+      this.weight.norm_name = 'Productividad (lbs)';
       this.humidity.name = 'Humedad ';
       this.rain.name = 'Lluvia';
       this.snow.name = 'Nieve';
@@ -304,7 +304,7 @@ export class GraphGlobal {
     } else {
       this.weight.name = 'Weight (lbs)';
       this.weight.income_name = 'Gain (lbs)';
-      this.weight.norm_name = 'Weight variation (%)';
+      this.weight.norm_name = 'Productivity (lbs)';
       this.humidity.name = 'Humidity ';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Loss';
@@ -340,7 +340,7 @@ export class GraphGlobal {
     if (this.translateService.currentLang === 'fr') {
       this.weight.name = 'Poids (Kg)';
       this.weight.income_name = 'Gain (Kg)';
-      this.weight.norm_name = 'Variation Poids (%)';
+      this.weight.norm_name = 'Productivité (Kg)';
       this.humidity.name = 'Humidité (%)';
       this.rain.name = 'Pluie';
       this.snow.name = 'Neige';
@@ -359,7 +359,7 @@ export class GraphGlobal {
     }  else if (this.translateService.currentLang === 'es') {
       this.weight.name = 'Peso (Kg)';
       this.weight.income_name = 'Aumento (Kg)';
-      this.weight.norm_name = 'Variacion Peso (%)';
+      this.weight.norm_name = 'Productividad (Kg)';
       this.humidity.name = 'Humedad (%)';
       this.rain.name = 'Lluvia';
       this.snow.name = 'Nieve';
@@ -375,7 +375,7 @@ export class GraphGlobal {
     } else {
       this.weight.name = 'Weight (Kg)';
       this.weight.income_name = 'Gain (Kg)';
-      this.weight.norm_name = 'Weight Variation (%)';
+      this.weight.norm_name = 'Productivity (Kg)';
       this.humidity.name = 'Humidity (%)';
       this.wind.name = 'Wind';
       this.weightIncome.gain = 'Gain';

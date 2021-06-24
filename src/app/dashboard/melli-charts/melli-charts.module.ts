@@ -35,6 +35,7 @@ import { EventsComponent } from './events/events.component';
 
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { PipeModule } from './../../pipe/pipe.module';
+import { HourlyWeightComponent } from './weight/hourly-weight/hourly-weight.component';
 
 @NgModule({
   providers:[
@@ -55,6 +56,7 @@ import { PipeModule } from './../../pipe/pipe.module';
     HourlyComponent,
     WeightComponent,
     EventsComponent,
+    HourlyWeightComponent,
    ],
   imports: [
     MelliChartsRouting,
@@ -70,6 +72,9 @@ import { PipeModule } from './../../pipe/pipe.module';
     MatIconModule,
     MatInputModule,
     PipeModule
-  ]
+  ],
+  entryComponents: [
+    HourlyWeightComponent
+],
 })
 export class MelliChartsModule { }

@@ -449,11 +449,15 @@
           "RAW": "Daily weight progression",
           "NORM": "Daily normalized weight progression",
           "GAIN": "Daily weight gain progression",
+          "INCOME": "Daily productivity progression",
+          "HOURLY": "Hourly weight progression",
           "REF_DATE": "Reference date",
           "CHECKBOX": {
               "RAW": "Raw",
               "NORM": "Normalized",
-              "GAIN": "Gain"
+              "GAIN": "Gain",
+              "INCOME": "Productivity",
+              "HOURLY": "Hourly raw"
           },
           "TABLE":{
             "DATE":"Date",
