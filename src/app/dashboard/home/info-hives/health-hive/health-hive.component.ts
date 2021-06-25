@@ -44,7 +44,16 @@ export class HealthHiveComponent implements OnInit, OnDestroy {
                     fontSize : 16
                 }
             },
-            tooltip: {},
+            tooltip: {
+                trigger: 'item',
+                formatter: null,
+                alwaysShowContent: false,
+                displayMode: "single",
+                renderMode: "auto",
+                showDelay: 0,
+                hideDelay: 100,
+                transitionDuration: 0.4,
+            },
             toolbox: {
                 orient: 'vertical',
                 itemSize: 15,

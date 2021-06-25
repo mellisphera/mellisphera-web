@@ -449,15 +449,15 @@
           "RAW": "Daily weight progression",
           "NORM": "Daily normalized weight progression",
           "GAIN": "Daily weight gain progression",
-          "INCOME": "Daily productivity progression",
+          "INCOME": "Nectar foraging productivity",
           "HOURLY": "Hourly weight progression",
           "REF_DATE": "Reference date",
           "CHECKBOX": {
-              "RAW": "Raw",
+              "RAW": "Daily",
               "NORM": "Normalized",
               "GAIN": "Gain",
               "INCOME": "Productivity",
-              "HOURLY": "Hourly raw"
+              "HOURLY": "Hourly"
           },
           "TABLE":{
             "DATE":"Date",

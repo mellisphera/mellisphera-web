@@ -54,7 +54,12 @@ export class WeightHivesComponent implements OnDestroy{
                         return params.marker + this.unitService.getDailyDate(params.data[0]) +
                             '<br/>' + params.seriesName + ' : ' + this.graphGlobal.getNumberFormat(this.unitService.getValRound(params.data[1])) + ' ' + this.graphGlobal.weight.unitW;
                     },
-                    showDelay : 25
+                    alwaysShowContent: false,
+                    displayMode: "single",
+                    renderMode: "auto",
+                    showDelay: 0,
+                    hideDelay: 100,
+                    transitionDuration: 0.4,
                 },
                 toolbox: {
                     orient: 'vertical',

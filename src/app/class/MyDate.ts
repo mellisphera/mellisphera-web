@@ -126,7 +126,7 @@ export class MyDate {
         max.setSeconds(59);
         let min = new Date();
         min.setTime(max.getTime());
-        min.setDate(min.getDate() - 24);
+        min.setDate(min.getDate() - 28);
         //min.setDate(max.getDate() + 7);
 
         min.setHours(0);

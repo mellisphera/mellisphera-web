@@ -20,9 +20,16 @@ export const BASE_OPTIONS = {
                 animation: false
             },
             formatter: null*/
-            trigger:'item',
+            trigger:"item",
             //showContent: true,
             formatter: null,
+            alwaysShowContent: false,
+            displayMode: "single",
+            renderMode: "auto",
+            showDelay: 0,
+            hideDelay: 100,
+            transitionDuration: 0.1
+
         },
         legend: {
             width: '100%',
@@ -104,6 +111,16 @@ export const BASE_OPTIONS = {
                 saveAsImage: { show: false }
             }
         },
+        tooltip:{
+            trigger: 'item',
+            formatter: null,
+            alwaysShowContent: false,
+            displayMode: "single",
+            renderMode: "auto",
+            showDelay: 0,
+            hideDelay: 100,
+            transitionDuration: 0.1,
+        },
         series: [],
 
         calendar: CALENDAR.calendarMelliUx
@@ -153,12 +170,13 @@ export const BASE_OPTIONS = {
 
     tooltip: {
         trigger: 'item',
-        position: 'top',
-        textStyle: {
-            fontSize: 12
-        },
         formatter: {},
-        showDelay : 25
+        alwaysShowContent: false,
+        displayMode: "single",
+        renderMode: "auto",
+        showDelay: 0,
+        hideDelay: 100,
+        transitionDuration: 0.1,
     },
     legend: {
         orient: 'horizontal',
@@ -208,8 +226,13 @@ export const BASE_OPTIONS = {
                 animation: false,
                 type: 'cross'
             },
-
-            formatter: null
+            formatter: null,
+            alwaysShowContent: false,
+            displayMode: "single",
+            renderMode: "auto",
+            showDelay: 0,
+            hideDelay: 100,
+            transitionDuration: 0.1,
         },
         axisPointer: {
             link: { xAxisIndex: 'all' }

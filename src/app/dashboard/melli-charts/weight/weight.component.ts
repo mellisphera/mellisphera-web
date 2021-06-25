@@ -21,6 +21,7 @@ import { HIVE_POS } from '../../../../constants/hivePositions';
 import { DailyManagerService } from '../hive/service/daily-manager.service';
 import { MelliChartsHiveService } from '../service/melli-charts-hive.service';
 import { HourlyWeightComponent } from './hourly-weight/hourly-weight.component';
+import { timeStamp } from 'console';
 
 
 @Component({
@@ -404,9 +405,16 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
 
             }
             else if(this.normWeightDisplay){
-              obs = this.stackService.getHiveSelect().map(_hive => {
-                return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
-              });
+              if(this.ref_Date == undefined || this.ref_Date == null){
+                obs = this.stackService.getHiveSelect().map(_hive => {
+                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
+                });
+              }
+              else{
+                obs = this.stackService.getHiveSelect().map(_hive => {
+                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
+                });
+              }
             }
             else{
               obs = this.stackService.getHiveSelect().map(_hive => {
@@ -445,7 +453,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
                     };
                     // ADD DATA TO GRAPH
                     let indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-                    if(this.gainWeightDisplay){
+                    if(this.gainWeightDisplay || this.normWeightDisplay){
                       serieComplete.type = 'bar';
                     }
                     else{
@@ -465,7 +473,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
                       this.option.baseOption.series.push(Object.assign({}, serieComplete));
                     }
                   });
-                  if(this.gainWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
+                  if(this.gainWeightDisplay || this.normWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
                     let cumul = 0.0;
                     let lastIndex = _elt.length-1;
                     for(let i=lastIndex; i > -1; i--){
@@ -540,9 +548,17 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
 
       }
       else if(this.normWeightDisplay){
-        obs = this.stackService.getHiveSelect().map(_hive => {
-          return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
-        });
+        if(this.ref_Date == undefined || this.ref_Date == null){
+          obs = this.stackService.getHiveSelect().map(_hive => {
+            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
+          });
+        }
+        else{
+          obs = this.stackService.getHiveSelect().map(_hive => {
+            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightIncomeGainByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
+          });
+        }
+        
       }
       else{
         obs = this.stackService.getHiveSelect().map(_hive => {
@@ -581,7 +597,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
               };
               // ADD DATA TO GRAPH
               let indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(serieComplete.name);
-              if(this.gainWeightDisplay){
+              if(this.gainWeightDisplay || this.normWeightDisplay){
                 serieComplete.type = 'bar';
               }
               else{
@@ -602,7 +618,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.option.baseOption.series.push(Object.assign({}, serieComplete));
               }
             });
-            if(this.gainWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
+            if(this.gainWeightDisplay || this.normWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
               let cumul = 0.0;
               let lastIndex = _elt.length-1;
               for(let i=lastIndex; i > -1; i--){
@@ -896,18 +912,13 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           () => {},
           () => {
-            this.dailyWService.getWeightIncomeGainByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+            this.dailyWService.getWeightIncomeGainByHive(hive._id, [this.ref_Date, this.melliDateService.end]).subscribe(
               _weight => {
                 this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
                   serieComplete.itemStyle = {
                     color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
                   };
-                  serieComplete.showSymbol = true;
-                  serieComplete.symbol = 'emptyCircle';
-                  serieComplete.type = 'line';
-                  serieComplete.lineStyle = {
-                    width: 2,
-                  }
+                  serieComplete.type = 'bar';
                   if(this.option.baseOption.series.length === 0){
                     serieComplete.markLine =
                     {
@@ -919,8 +930,33 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
                   }
                   this.option.baseOption.series.push(serieComplete);
                   this.stackService.getWeightChartInstance().setOption(this.option);
+                  
+                  });
+                  let cumul = 0.0;
+                  let lastIndex = _weight.length-1;
+                  for(let i=lastIndex; i > -1; i--){
+                    if( i !== lastIndex ){ // i > 0
+                      cumul += _weight[i].value;
+                      _weight[i].value = cumul;
+                    }
+                    else{ // i = 0
+                      _weight[i].value = 0.0;
+                    }
+                  }
+                  this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
+                    serieComplete.itemStyle = {
+                      color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
+                    };
+                    serieComplete.showSymbol = true;
+                    serieComplete.symbol = 'emptyCircle';
+                    serieComplete.type = 'line';
+                    serieComplete.lineStyle = {
+                      width: 2,
+                    }
+                    this.option.baseOption.series.push(serieComplete);
+                    this.stackService.getWeightChartInstance().setOption(this.option);
+                  });
                   this.addDataToTable(_weight, ref_val, hive.name);
-                });
               },
               () => {},
               () => {
@@ -937,19 +973,44 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
               serieComplete.itemStyle = {
                 color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
               };
+              serieComplete.type = 'bar';
+              if(this.option.baseOption.series.length === 0){
+                serieComplete.markLine =
+                {
+                  data: [ {name: "", xAxis: this.ref_Date} ],
+                  lineStyle: {normal: { type:'dashed',color: 'red', width: 2} },
+                  label:{normal:{show:false } },
+                  symbol: ['circle', 'none']
+                }
+              }
+              this.option.baseOption.series.push(serieComplete);
+              this.stackService.getWeightChartInstance().setOption(this.option);
+            });
+            let cumul = 0.0;
+            let lastIndex = _weight.length-1;
+            for(let i=lastIndex; i > -1; i--){
+              if( i !== lastIndex ){ // i > 0
+                cumul += _weight[i].value;
+                _weight[i].value = cumul;
+              }
+              else{ // i = 0
+                _weight[i].value = 0.0;
+              }
+            }
+            this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
+              serieComplete.itemStyle = {
+                color: this.stackService.getColorByIndex(this.getHiveIndex(hive), hive)
+              };
               serieComplete.showSymbol = true;
               serieComplete.symbol = 'emptyCircle';
               serieComplete.type = 'line';
               serieComplete.lineStyle = {
                 width: 2,
-                shadowColor: 'rgba(255,255,255,1.0)',
-                shadowBlur: 10,
-                shadowOffsetY: 0
               }
               this.option.baseOption.series.push(serieComplete);
               this.stackService.getWeightChartInstance().setOption(this.option);
-              this.addDataToTable(_weight, null, hive.name);
             });
+            this.addDataToTable(_weight, null, hive.name);
           },
           () => {},
           () => {

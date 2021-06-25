@@ -198,24 +198,19 @@ export class VitalityComponent implements OnInit, OnDestroy{
 
     this.option.baseOption.tooltip.formatter = (params) => {
       let words = params.seriesName.split(' | ');
-      this.option.baseOption.tooltip.backgroundColor = 'rgba(50,50,50,0.7)';
       if(words.includes('inspection') || words.includes('event')){
-        this.stackService.getBroodChartInstance().setOption(this.option);
         let indexSerie = this.option.baseOption.series.findIndex(_s => _s.name === params.seriesName);
         let indexHiveInspItem = this.inspHives.findIndex(_insp => _insp.name === words[0]);
         let indexHiveInsp = this.inspHives[indexHiveInspItem].insp.findIndex(_insp => new Date(_insp.opsDate).getTime() === new Date(params.name).getTime());
         return this.getInspTooltipFormatter(words[0], indexSerie, indexHiveInspItem, indexHiveInsp);
       }
       else if(words.includes('alert')){
-        this.stackService.getBroodChartInstance().setOption(this.option);
         let indexSerie = this.option.baseOption.series.findIndex(_s => _s.name === params.seriesName);
         let indexHiveAlertItem = this.alertHives.findIndex(_alert => _alert.name === words[0]);
         let indexHiveAlert = this.alertHives[indexHiveAlertItem].alerts.findIndex(_alert => new Date(_alert.opsDate).getTime() === new Date(params.name).getTime());
         return this.getAlertTooltipFormatter(words[0], indexSerie, indexHiveAlertItem, indexHiveAlert);
       }
       else{
-
-        this.stackService.getBroodChartInstance().setOption(this.option);
         return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data.name), new Array(
           {
             name: params.seriesName,
