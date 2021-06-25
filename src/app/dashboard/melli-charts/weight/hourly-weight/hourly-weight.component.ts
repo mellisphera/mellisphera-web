@@ -179,9 +179,9 @@ export class HourlyWeightComponent implements OnInit {
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';
     let templateValue = '{*} {n}: <B>{v} {u}</B>';
-    let tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, date);
+    let tooltipGlobal = '<B>' + date + '</B> <br/>'
     tooltipGlobal += series.map(_serie => {
-      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
+      return markerSerie + ' ' + _serie.name.split('|')[0] + ': <B>' + _serie.value + ' ' + _serie.unit + '</B>';
     }).join('');
 
     return tooltipGlobal;

@@ -290,7 +290,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
           if (_singleData.description) {
             type = 'Inspection';
             img = '<img style={S} src={I} />';
-            img = img.replace(/{I}/g, './assets/ms-pics/ui/calenbarsinspect_cw.png');
+            img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect_cw.png');
           } else {
             img = '<img style={S} src=./assets/ms-pics/alerts/ruche/' + _singleData.icon.toLowerCase() + '_cw.png />';
           }
