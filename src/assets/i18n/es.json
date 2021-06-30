@@ -599,6 +599,7 @@
       "NEW": {
         "TITLE":"Nueva Inspección de colmenar",
         "DATE":"Fecha : ",
+        "GENERAL": "Estado general de colmenar",
         "PLACEHOLDER":"Elegir fecha",
         "DEFAULT_SELECT":"Elegir colmenar",
         "NOTE_PLACEHOLDER":"Notas...",
@@ -609,6 +610,11 @@
         },
         "BTN_SAVE":"Guardar",
         "BTN_PRINT":"Imprimir"
+      },
+      "TABLE":{
+        "BEES":"Abejas",
+        "BROOD":"Cria",
+        "STORES":"Reservas"
       },
       "HISTORY":{},
       "PARAMS":{}
@@ -720,7 +726,7 @@
         "COMBINEDHIVES":"Combined Hives",
         "SWARM":"Enjambrazón",
         "CANDIFEED":"Candi feeding",
-        "SIRUPFEED":"Sirup feeding",
+        "SYRUPFEED":"Sirup feeding",
         "REQUEEN":"Requeening",
         "QUEENLINEAGE":"Queen lineage",
         "HARVEST":"Harvest",
@@ -757,7 +763,9 @@
         "DRONEBROOD":"",
         "DRONE":"",
         "BUZZINGHIVE":"",
-        "MOSAICBROOD":""
+        "MOSAICBROOD":"",
+        "MITESTRIPADD":"",
+        "MITESTRIPREMOVE":""
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",

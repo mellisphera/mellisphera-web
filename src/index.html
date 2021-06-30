@@ -37,9 +37,11 @@ limitations under the License. -->
 
   <!--  CSS for Demo Purpose, don't include it in your project -->
 
+  <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-156163235-1"></script>
   <script>
+    window.jsPDF = window.jspdf.jsPDF
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());

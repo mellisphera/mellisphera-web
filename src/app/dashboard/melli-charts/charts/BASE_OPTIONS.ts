@@ -26,9 +26,9 @@ export const BASE_OPTIONS = {
             alwaysShowContent: false,
             displayMode: "single",
             renderMode: "auto",
-            showDelay: 0,
-            hideDelay: 100,
-            transitionDuration: 0.1
+            showDelay: 50,
+            hideDelay: 50,
+            transitionDuration: 0.5
 
         },
         legend: {
@@ -117,9 +117,9 @@ export const BASE_OPTIONS = {
             alwaysShowContent: false,
             displayMode: "single",
             renderMode: "auto",
-            showDelay: 0,
-            hideDelay: 100,
-            transitionDuration: 0.1,
+            showDelay: 50,
+            hideDelay: 50,
+            transitionDuration: 0.5,
         },
         series: [],
 
@@ -174,9 +174,9 @@ export const BASE_OPTIONS = {
         alwaysShowContent: false,
         displayMode: "single",
         renderMode: "auto",
-        showDelay: 0,
-        hideDelay: 100,
-        transitionDuration: 0.1,
+        showDelay: 50,
+        hideDelay: 50,
+        transitionDuration: 0.5,
     },
     legend: {
         orient: 'horizontal',
@@ -230,9 +230,9 @@ export const BASE_OPTIONS = {
             alwaysShowContent: false,
             displayMode: "single",
             renderMode: "auto",
-            showDelay: 0,
-            hideDelay: 100,
-            transitionDuration: 0.1,
+            showDelay: 50,
+            hideDelay: 50,
+            transitionDuration: 0.5,
         },
         axisPointer: {
             link: { xAxisIndex: 'all' }

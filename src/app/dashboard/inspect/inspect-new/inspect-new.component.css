@@ -27,7 +27,13 @@
   width: 96%
 }
 
-.inspect-apiary, .inspect-hive{
+.inspect-apiary{
+  width: 99%;
+  border: 1px solid #4f4f51;
+  border-radius: 5px;
+}
+
+.inspect-hive{
   width: 99%;
   display: flex;
   justify-content: space-around;
@@ -109,16 +115,14 @@
   margin-right: 5px;
 }
 
-.apiary-op, .hive-op{
-  width: 90.5%;
-  margin: 10px 0px 10px 30px;
-  overflow-x: auto;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
+.hive-op, .apiary-op{
+  width: 95%;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .apiary-op, .hive-op{
-  margin-right: 15px;
+  margin-left: 3%;
 }
 
 .apiary-op table, .apiary-obs-div table, .hive-obs-div table{
@@ -137,13 +141,13 @@
 
 .apiary-action, .hives-action, .apiary-obs, .hives-obs{
   border-radius: 3px;
-  margin: 0px 5px;
+  margin: 5px 5px;
   margin-bottom: 10px;
   text-align: center;
   height: 35px;
   width: 35px;
   color: grey;
-  background-color: white;
+  background-color: transparent;
   border: 0;
   border-radius: 5px;
 }
@@ -191,49 +195,119 @@
 .btn-swarm_b{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/alerts/ruche/swarm_b.svg');
+  background-image: url('../../../../assets/ms-pics/inspects/swarm_b.svg');
   background-position: center;
 }
 
 .btn-swarm_cb{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/alerts/ruche/swarm_cb.svg');
+  background-image: url('../../../../assets/ms-pics/inspects/swarm_cb.svg');
   background-position: center;
 }
 
 .btn-super\+_b{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/alerts/ruche/super+_b.svg');
+  background-image: url('../../../../assets/ms-pics/inspects/super+_b.svg');
   background-position: center;
 }
 
 .btn-super\+_cb{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/alerts/ruche/super+_cb.svg');
+  background-image: url('../../../../assets/ms-pics/inspects/super+_cb.svg');
   background-position: center;
 }
 
 .btn-super-_b{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/alerts/ruche/super-_b.svg');
+  background-image: url('../../../../assets/ms-pics/inspects/super-_b.svg');
   background-position: center;
 }
 
 .btn-super-_cb{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/alerts/ruche/super-_cb.svg');
+  background-image: url('../../../../assets/ms-pics/inspects/super-_cb.svg');
   background-position: center;
 }
 
 .btn-stolen_b{
   background-size: 32px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/alerts/ruche/stolen_b.svg');
+  background-image: url('../../../../assets/ms-pics/inspects/stolen_b.svg');
+  background-position: center;
+}
+
+.btn-mitevapor_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitevapor_b.svg');
+  background-position: center;
+}
+
+.btn-mitevapor_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitevapor_cb.svg');
+  background-position: center;
+}
+
+.btn-queeninsert_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/queeninsert_b.svg');
+  background-position: center;
+}
+
+.btn-queeninsert_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/queeninsert_cb.svg');
+  background-position: center;
+}
+
+.btn-division_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/division_b.svg');
+  background-position: center;
+}
+
+.btn-division_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/division_cb.svg');
+  background-position: center;
+}
+
+.btn-broodadd_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/broodadd_b.svg');
+  background-position: center;
+}
+
+.btn-broodadd_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/broodadd_cb.svg');
+  background-position: center;
+}
+
+.btn-broodremove_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/broodremove_b.svg');
+  background-position: center;
+}
+
+.btn-broodremove_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/broodremove_cb.svg');
   background-position: center;
 }
 
@@ -412,18 +486,8 @@
   background-position: center;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-.hives-action, .hives-obs{
+.hives-action, .hives-obs
+{
   margin: 5px 5px;
   height: 35px;
   width: 35px;
@@ -478,7 +542,7 @@
 }
 
 .apiary-todo-input, .hive-todo-input{
-  height: 70px;
+  height: 50px;
 }
 
 .hide-textarea{
@@ -682,15 +746,25 @@
   border: 1px solid skyblue;
 }
 
-.brood-pupa, .brood-drone{
-  background: url('../../../../assets/ms-pics/inspects/default_b.svg') center no-repeat;
-  background-size: 28px;
+.brood-pupa{
+  background: url('../../../../assets/ms-pics/inspects/pupa_b.svg') center no-repeat;
+  background-size: 32px;
 }
 
-.brood-pupa-active, .brood-drone-active{
-  background: url('../../../../assets/ms-pics/inspects/default_cb.svg') center no-repeat;
-  background-size: 28px;
+.brood-pupa-active{
+  background: url('../../../../assets/ms-pics/inspects/pupa_cb.svg') center no-repeat;
+  background-size: 32px;
   border: 1px solid skyblue;
+}
+
+.brood-drone{
+  background: url('../../../../assets/ms-pics/inspects/dronebrood_b.svg') center no-repeat;
+  background-size: 32px;
+}
+
+.brood-drone-active{
+  background: url('../../../../assets/ms-pics/inspects/dronebrood_cb.svg') center no-repeat;
+  background-size: 32px;
 }
 
 .brood-none{
@@ -705,24 +779,46 @@
 }
 
 .health-buzz{
-  background: url('../../../../assets/ms-pics/inspects/default_b.svg') center no-repeat;
-  background-size: 28px;
+  background: url('../../../../assets/ms-pics/inspects/buzzinghive_b.svg') center no-repeat;
+  background-size: 32px;
 }
 
 .health-buzz-active{
-  background: url('../../../../assets/ms-pics/inspects/default_cb.svg') center no-repeat;
-  background-size: 28px;
+  background: url('../../../../assets/ms-pics/inspects/buzzinghive_cb.svg') center no-repeat;
+  background-size: 32px;
   border: 1px solid skyblue;
 }
 
-.health-sick, .health-mosaic, .health-queen{
-  background: url('../../../../assets/ms-pics/inspects/default_b.svg') center no-repeat;
-  background-size: 28px;
+.health-sick{
+  background: url('../../../../assets/ms-pics/inspects/sick_b.svg') center no-repeat;
+  background-size: 32px;
 }
 
-.health-sick-active, .health-mosaic-active, .health-queen-active{
-  background: url('../../../../assets/ms-pics/inspects/default_cb.svg') center no-repeat;
-  background-size: 28px;
+.health-sick-active{
+  background: url('../../../../assets/ms-pics/inspects/sick_cb.svg') center no-repeat;
+  background-size: 32px;
+  border: 1px solid skyblue;
+}
+
+.health-mosaic{
+  background: url('../../../../assets/ms-pics/inspects/mosaicbrood_b.svg') center no-repeat;
+  background-size: 32px;
+}
+
+.health-mosaic-active{
+  background: url('../../../../assets/ms-pics/inspects/mosaicbrood_cb.svg') center no-repeat;
+  background-size: 32px;
+  border: 1px solid skyblue;
+}
+
+.health-queen{
+  background: url('../../../../assets/ms-pics/inspects/queen_b.svg') center no-repeat;
+  background-size: 32px;
+}
+
+.health-queen-active{
+  background: url('../../../../assets/ms-pics/inspects/queen_cb.svg') center no-repeat;
+  background-size: 32px;
   border: 1px solid skyblue;
 }
 
@@ -780,12 +876,21 @@
 }
 
 .hive-body-container{
-  display: flex;
   width: 99%;
   margin-left: 5px;
-  justify-content: space-around;
 }
 
+.hive-body-table-notes{
+  display: flex; 
+  justify-content: space-around; 
+  width: 100%; 
+}
+
+.hive-op-brood{
+  border-right: 5px solid white;
+  min-width: 235px; 
+  background-color: #eee;
+}
 
 @media screen and (max-width: 1300px){
   .apiary-notes-todo, .hive-notes-todo{
@@ -801,7 +906,7 @@
   .inspect-apiary, .inspect-hive{
     justify-content: unset;
   }
-  .hive-body-container{
+  .hive-body-table-notes{
     justify-content: unset;
   }
 }
@@ -830,8 +935,8 @@
     justify-content: center;
   }
   .inspect-apiary{
-    border-right: 0px;
-    width: 100%;
+    border: 1px solid black;
+    width: 99%;
   }
   .inspect-apiary-notes, .inspect-apiary-todo,
   .inspect-hive-notes, .inspect-hive-todo{
@@ -848,7 +953,7 @@
     display: block;
   }
   .inspect-hive{
-    width: 100%;
+    width: 99%;
     margin-top: 20px;
   }
 
@@ -867,8 +972,8 @@
     text-align: center;
   }
   .inspect-apiary{
-    border-right: 0px;
-    width: 100%;
+    width: 99%;
+    border: 1px solid black;
   }
   .inspect-body{
     width: 99%;
@@ -876,7 +981,7 @@
   }
   .inspect-hive{
     margin-top: 20px;
-    width: 100%;
+    width: 99%;
   }
 
   .apiary-obs-div table th, .hive-obs-div table th{
@@ -885,14 +990,14 @@
 }
 
 @media screen and (max-width: 700px){
-  .inspect-apiary, .inspect-hive, .hive-body-container{
+  .inspect-apiary, .inspect-hive, .hive-body-container, .hive-body-table-notes{
     flex-wrap: wrap;
   }
   .apiary-notes-todo, .hive-notes-todo{
     width: 90%;
   }
   .apiary-op, .hive-op{
-    width: 87%;
+    width: 88%;
     min-width: unset;
   }
 }
@@ -958,7 +1063,9 @@
   }
 
   .inspect-new-container button.hives-action,
-  .inspect-new-container button.hives-obs{
+  .inspect-new-container button.hives-obs,
+  .inspect-new-container button.apiary-action,
+  .inspect-new-container button.apiary-obs{
     margin: 5px 2px;
   }
 
@@ -1018,6 +1125,10 @@
     display: flex;
     justify-content: center;
     margin-left: -5px;
+  }
+
+  .hive-op-brood{
+    min-width: 200px;
   }
 
 }

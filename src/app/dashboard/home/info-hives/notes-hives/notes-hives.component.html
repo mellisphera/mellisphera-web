@@ -102,17 +102,27 @@ limitations under the License. -->
         </div>
       </div>
       <div class="modal-body">
-        <div class="add-event-choice">
-          <div class="add-event-choice-obs">
-          </div>
+        <div id="brood-stage" class="hive-op-brood-home" style="margin-left: 3px;">
+            <button class="hive-obs brood-none" (click)="setBroodStage('none', 'hive', ruche)"></button>  
+            <button class="hive-obs brood-egg" (click)="setBroodStage('egg', 'hive', ruche)"></button>
+            <button class="hive-obs brood-larva" (click)="setBroodStage('larva', 'hive', ruche)"></button>
+            <button class="hive-obs brood-pupa" (click)="setBroodStage('pupa', 'hive', ruche)"></button>
+            <button class="hive-obs brood-drone" (click)="setBroodStage('drone', 'hive', ruche)"></button>    
         </div>
         <div class="add-event-notes">
-            <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+            <div style="width: 45px; margin-left: 4px;">
+                <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+                <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            </div>
             <textarea class="add-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
         </div>
         <div class="add-event-todo">
-            <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            <button style="visibility: hidden; margin-left: 8px;" class="add-event-todo-toggle" (click)="showTodo($event)"></button>
             <textarea class="add-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="add-event-choice">
+            <div class="add-event-choice-obs">
+            </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -148,17 +158,27 @@ limitations under the License. -->
         </div>
       </div>
       <div class="modal-body">
-        <div class="edit-event-choice">
-          <div class="edit-event-choice-obs">
-          </div>
+        <div id="brood-stage" class="hive-op-brood-home" style="margin-left: 3px;">
+            <button class="hive-obs brood-none" (click)="editBroodStage('none', 'hive', ruche)"></button>  
+            <button class="hive-obs brood-egg" (click)="editBroodStage('egg', 'hive', ruche)"></button>
+            <button class="hive-obs brood-larva" (click)="editBroodStage('larva', 'hive', ruche)"></button>
+            <button class="hive-obs brood-pupa" (click)="editBroodStage('pupa', 'hive', ruche)"></button>
+            <button class="hive-obs brood-drone" (click)="editBroodStage('drone', 'hive', ruche)"></button>    
         </div>
         <div class="edit-event-notes">
-            <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
-            <textarea value="{{new_event?.description}}" class="edit-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+            <div style="width: 45px; margin-left: 4px;">
+              <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+              <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            </div>
+            <textarea value="{{new_event?.description}}" class="edit-home-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
         </div>
         <div class="edit-event-todo">
-            <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
-            <textarea value="{{new_event?.todo}}" class="edit-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+            <button style="visibility: hidden; margin-left: 8px;" class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            <textarea value="{{new_event?.todo}}" class="edit-home-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="edit-event-choice">
+            <div class="edit-event-choice-obs">
+            </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -170,7 +190,7 @@ limitations under the License. -->
               {{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}
             </button>
             <div class="dropdown-menu dropdown-menu-left" [attr.aria-labelledby]="'dropdownDelButton'"
-              style="margin-top: -10px; width: 160px">
+              style="margin-top: -10px; width: 160px; padding: 0; justify-content: unset; align-items:center; color: black; background-color: white;">
               <p style="margin: 5px 10px 4px;">Confirmer ?</p>
               <button class="btn btn-default btn-confirm-del" (click)="deleteEvent()"><i class="fas fa-times-circle"></i></button>
             </div>

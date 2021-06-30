@@ -10,7 +10,6 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
-import * as jsPDF from 'jspdf';
 import { AlertsService } from '../../../service/api/alerts.service';
 import { RucherService } from '../../../service/api/rucher.service';
 import { UserloggedService } from '../../../../userlogged.service';
@@ -86,7 +85,7 @@ export class StatesComponent implements OnInit {
     return(listElements.filter(element => this.isValidDate(element.date,nbDays) === true));
   }
 
-  public downloadPDF(){
+  /*public downloadPDF(){
 
     let doc = new jsPDF();
 
@@ -105,9 +104,9 @@ export class StatesComponent implements OnInit {
 
     doc.save('test.pdf');
 
-  }
+  }*/
 
-  public captureScreen()
+  /*public captureScreen()
   {
     var data = document.getElementById('contentToConvert');
     html2canvas(data).then(canvas => {
@@ -125,6 +124,6 @@ export class StatesComponent implements OnInit {
         pdf.save('Apiary_summary.pdf'); // Generated PDF
       }
     });
-  }
+  }*/
 
 }

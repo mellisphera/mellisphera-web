@@ -584,6 +584,7 @@
       "NEW": {
         "TITLE":"New Inspection of apiary ",
         "DATE":"Date : ",
+        "GENERAL": "Overall state of apiary",
         "PLACEHOLDER":"Choose date",
         "DEFAULT_SELECT":"Choose apiary",
         "NOTE_PLACEHOLDER":"Notes...",
@@ -594,6 +595,11 @@
         },
         "BTN_SAVE":"Save",
         "BTN_PRINT":"Print"
+      },
+      "TABLE":{
+        "BEES":"Bees",
+        "BROOD":"Brood",
+        "STORES":"Stores"
       },
       "HISTORY":{},
       "PARAMS":{}
@@ -705,7 +711,7 @@
         "COMBINEDHIVES":"Combined Hives",
         "SWARM":"Swarming",
         "CANDIFEED":"Candi feeding",
-        "SIRUPFEED":"Sirup feeding",
+        "SYRUPFEED":"Sirup feeding",
         "REQUEEN":"Requeening",
         "QUEENLINEAGE":"Queen lineage",
         "HARVEST":"Harvest",
@@ -742,7 +748,9 @@
         "DRONEBROOD":"Drone brood presence",
         "DRONES":"Drone presence",
         "BUZZINGHIVE":"Buzzing hive",
-        "MOSAICBROOD":"Mosaic brood"
+        "MOSAICBROOD":"Mosaic brood",
+        "MITESTRIPADD":"Mite treatment: strip add",
+        "MITESTRIPREMOVE":"Mite treatment: strip remove"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",

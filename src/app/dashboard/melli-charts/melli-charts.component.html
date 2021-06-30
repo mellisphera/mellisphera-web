@@ -97,7 +97,7 @@ limitations under the License. -->
       </li>
       <li class="filters-ul">
         <button class="btn filters-btn dropdown dropdown-toogle" type="button" id="filtersMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="openFiltersMenu($event)">
-          <img src="../../../assets/ms-pics/ui/assets/filter_b.svg">
+          <img src="../../../assets/ms-pics/ui/assets/filter_w.svg">
         </button>
         <div id="filtersMenu" class="dropdown-menu" aria-labelledby="filtersMenuButton" (click)="filterMenu($event)">
           <div class="filters-insp">
@@ -197,9 +197,9 @@ limitations under the License. -->
       <div class="modal-header">
         <img *ngIf="typeEvent === 'apiary'" width="35" height="35" src="../../../assets/ms-pics/ui/calendbars/inspect-api_cb.svg" style="float: right;">
         <img *ngIf="typeEvent === 'hive'" width="35" height="35" src="../../../assets/ms-pics/ui/calendbars/inspect_cb.svg" style="float: right;">
-        <h4 class="modal-title" style="margin-left: 20%;">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
-        <h4 *ngIf="typeEvent === 'hive'" style="margin-left: 20%;">{{hiveEvent?.name}}</h4>
-        <h4 *ngIf="typeEvent === 'apiary'" style="margin-left: 20%;">{{apiaryEvent?.name}}</h4>
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
+        <h4 *ngIf="typeEvent === 'hive'">{{hiveEvent?.name}}</h4>
+        <h4 *ngIf="typeEvent === 'apiary'">{{apiaryEvent?.name}}</h4>
         <div class="add-event-date">
           <div>
             <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
@@ -214,17 +214,27 @@ limitations under the License. -->
         </div>
       </div>
       <div class="modal-body">
-        <div class="add-event-choice">
-          <div class="add-event-choice-obs">
-          </div>
+        <div id="brood-stage" class="hive-op-brood-explore" style="margin-left: 3px;">
+          <button class="hives-obs-add brood-none" (click)="setBroodStage('none', 'apiary')"></button>  
+          <button class="hives-obs-add brood-egg" (click)="setBroodStage('egg', 'apiary')"></button>
+          <button class="hives-obs-add brood-larva" (click)="setBroodStage('larva', 'apiary')"></button>
+          <button class="hives-obs-add brood-pupa" (click)="setBroodStage('pupa', 'apiary')"></button>
+          <button class="hives-obs-add brood-drone" (click)="setBroodStage('drone', 'apiary')"></button>    
         </div>
         <div class="add-event-notes">
-            <button class="add-event-notes-toggle" (click)="showNotes()"><i class="fas fa-pen" style="font-size: 22px;"></i></button>
+            <div style="width: 45px; margin-left: 4px;">
+                <button class="add-event-notes-toggle" (click)="showNotes($event)"><i class="fas fa-pen" style="font-size: 22px;"></i></button>
+                <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            </div>  
             <textarea class="add-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
         </div>
         <div class="add-event-todo">
-            <button class="add-event-todo-toggle" (click)="showTodo()"></button>
+            <button style="visibility: hidden; margin-left: 8px;" class="add-event-todo-toggle" (click)="showTodo($event)"></button>
             <textarea class="add-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="add-event-choice">
+          <div class="add-event-choice-obs">
+          </div>
         </div>
       </div>
       <div class="modal-footer">

@@ -17,9 +17,9 @@
 }
 
 .table-events{
-    width: 98%;
+    width: 96%;
     margin-top: 20px;
-    margin-left: 1%;
+    margin-left: 3%;
     border-collapse: collapse;
     margin-bottom: 50px;
 }
@@ -172,11 +172,10 @@
 }
 
 .edit-event-choice-obs{
-  width: 55%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  width: 92%;
+  white-space: nowrap;
+  overflow-x: auto;
+  background-color: #eee;
 }
 
 .edit-event-notes, .edit-event-todo{
@@ -188,11 +187,20 @@
   justify-content: flex-start;
 }
 
+.edit-event-todo{
+  width: 92%;
+  height: 16%;
+  margin-top: 6px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
 .edit-event-notes{
   margin-top: 30px;
 }
 
-.edit-event-notes-textarea, .edit-event-todo-textarea{
+.edit-event-notes-textarea{
   display: none;
   overflow-y: hidden;
   margin-left: 5px;
@@ -201,9 +209,17 @@
   height: 90px;
 }
 
+.edit-event-todo-textarea{
+  display: none;
+  overflow-y: hidden;
+  margin-left: 5px;
+  resize: none;
+  width: 100%;
+  height: 50px;
+}
+
 .add-event-notes-toggle {
   border-radius: 3px;
-  margin: 0 3px;
   height: 40px;
   width: 40px;
   background-color: transparent;
@@ -212,9 +228,9 @@
 
 .add-event-todo-toggle {
   border-radius: 3px;
-  margin: 0 3px;
   height: 40px;
   width: 40px;
+  margin-top: 6px;
   background-color: transparent;
   border: 1px solid #ddd;
   background-size: 32px;
@@ -533,6 +549,91 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
+.Egg{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/egg_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Egg-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/egg_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 1px solid skyblue;
+}
+
+.Larva{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/larva_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Larva-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/larva_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 1px solid skyblue;
+}
+
+.Pupa{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/pupa_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Pupa-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/pupa_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 1px solid skyblue;
+}
+
+.Drone{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/dronebrood_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Drone-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/dronebrood_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 1px solid skyblue;
+}
+
+.Nonebrood{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/nobrood_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Nonebrood-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/nobrood_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 1px solid skyblue;
+}
+
 .Lowbrood{
   width: 40px;
   height: 40px;
@@ -737,7 +838,7 @@
   border: 1px solid skyblue;
 }
 
-.hives-obs-add.Super\+{
+.hives-obs-add.Super\+, .event-obs-item.Super\+{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -745,7 +846,62 @@
   background-size: 35px;
 }
 
-.hives-obs-add.Super\+-active{
+.event-brood-egg{
+  background: url('../../../../assets/ms-pics/inspects/egg_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.event-brood-egg-active{
+  background: url('../../../../assets/ms-pics/inspects/egg_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.event-brood-larva{
+  background: url('../../../../assets/ms-pics/inspects/larva_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.event-brood-larva-active{
+  background: url('../../../../assets/ms-pics/inspects/larva_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.event-brood-pupa{
+  background: url('../../../../assets/ms-pics/inspects/pupa_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.event-brood-pupa-active{
+  background: url('../../../../assets/ms-pics/inspects/pupa_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.event-brood-drone{
+  background: url('../../../../assets/ms-pics/inspects/dronebrood_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.event-brood-drone-active{
+  background: url('../../../../assets/ms-pics/inspects/dronebrood_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.event-brood-none{
+  background: url('../../../../assets/ms-pics/inspects/nobrood_b.svg') center no-repeat;
+  background-size: 32px;
+}
+
+.event-brood-none-active{
+  background: url('../../../../assets/ms-pics/inspects/nobrood_cb.svg') center no-repeat;
+  background-size: 32px;
+  border: 1px solid skyblue;
+}
+
+.hives-obs-add.Super\+-active, .event-obs-item.Super\+-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -754,7 +910,7 @@
   border: 1px solid skyblue;
 }
 
-.hives-obs-add.Super-{
+.hives-obs-add.Super-, .event-obs-item.Super-{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -762,7 +918,7 @@
   background-size: 35px;
 }
 
-.hives-obs-add.Super--active{
+.hives-obs-add.Super--active, .event-obs-item.Super--active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -771,7 +927,7 @@
   border: 1px solid skyblue;
 }
 
-.hives-obs-add.Swarm{
+.hives-obs-add.Swarm, .event-obs-item.Swarm{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -779,7 +935,7 @@
   background-size: 33px;
 }
 
-.hives-obs-add.Swarm-active{
+.hives-obs-add.Swarm-active, .event-obs-item.Swarm-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -788,12 +944,29 @@
   border: 1px solid skyblue;
 }
 
+.hive-op-brood-explore{
+  background-color: transparent;
+}
+
+@media screen and (max-width: 1300px) {
+  .table-events{
+    margin-left: 5%;
+    width: 94%;
+  }
+}
 
 @media screen and (max-width: 1200px) {
   .table-events{
     width: 1070px;
+    margin-left: 8%;
   }
   .content{
     overflow-x: scroll;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .table-events{
+    margin-left: 1%;
   }
 }

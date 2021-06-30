@@ -742,17 +742,25 @@ nav[role=admin-navigation] {
 }
 
 .add-event-choice-obs{
-  width: 55%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  width: 92%;
+  white-space: nowrap;
+  overflow: auto;
+  background-color: #eee;
 }
 
 .add-event-notes, .add-event-todo{
   width: 92%;
   height: 16%;
   margin-top: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.add-event-todo{
+  width: 92%;
+  height: 16%;
+  margin-top: 6px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -861,7 +869,7 @@ nav[role=admin-navigation] {
   margin-left: 20px;
 }
 
-.add-event-notes-textarea, .add-event-todo-textarea{
+.add-event-notes-textarea{
   display: none;
   overflow-y: hidden;
   margin-left: 5px;
@@ -870,6 +878,14 @@ nav[role=admin-navigation] {
   height: 90px;
 }
 
+.add-event-todo-textarea{
+  display: none;
+  overflow-y: hidden;
+  margin-left: 5px;
+  resize: none;
+  width: 100%;
+  height: 50px;
+}
 
 .hives-note-textarea-add-active{
   display: block;
@@ -897,6 +913,61 @@ nav[role=admin-navigation] {
 }
 
 .hives-obs-add:hover{
+  border: 1px solid skyblue;
+}
+
+.brood-egg{
+  background: url('../../../assets/ms-pics/inspects/egg_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.brood-egg-active, .apiary-brood-egg-active{
+  background: url('../../../assets/ms-pics/inspects/egg_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.brood-larva{
+  background: url('../../../assets/ms-pics/inspects/larva_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.brood-larva-active, .apiary-brood-larva-active{
+  background: url('../../../assets/ms-pics/inspects/larva_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.brood-pupa{
+  background: url('../../../assets/ms-pics/inspects/pupa_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.brood-pupa-active, .apiary-brood-pupa-active{
+  background: url('../../../assets/ms-pics/inspects/pupa_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.brood-drone{
+  background: url('../../../assets/ms-pics/inspects/dronebrood_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.brood-drone-active, .apiary-brood-drone-active{
+  background: url('../../../assets/ms-pics/inspects/dronebrood_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.brood-none{
+  background: url('../../../assets/ms-pics/inspects/nobrood_b.svg') center no-repeat;
+  background-size: 32px;
+}
+
+.brood-none-active, .apiary-brood-none-active{
+  background: url('../../../assets/ms-pics/inspects/nobrood_cb.svg') center no-repeat;
+  background-size: 32px;
   border: 1px solid skyblue;
 }
 
@@ -1157,7 +1228,6 @@ nav[role=admin-navigation] {
 
 .add-event-notes-toggle{
   border-radius: 3px;
-  margin: 0 3px;
   height: 40px;
   width: 40px;
   background-color: transparent;
@@ -1166,15 +1236,19 @@ nav[role=admin-navigation] {
 
 .add-event-todo-toggle{
   border-radius: 3px;
-  margin: 0 3px;
   height: 40px;
   width: 40px;
+  margin-top: 6px;
   background-color: transparent;
   border: 1px solid #ddd;
   background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/ui/assets/todo.png');
   background-position: center;
+}
+
+.hive-op-brood-explore{
+  background-color: transparent;
 }
 
 .hive-more-button:hover #more-icon ellipse.circle1,

@@ -586,6 +586,7 @@
       "NEW": {
         "TITLE":"Nouvelle Inspection du rucher ",
         "DATE":"Date : ",
+        "GENERAL": "Etat général du rucher",
         "PLACEHOLDER":"Choisir date",
         "DEFAULT_SELECT":"Choisir rucher",
         "NOTE_PLACEHOLDER":"Notes...",
@@ -596,6 +597,11 @@
         },
         "BTN_SAVE":"Enregistrer",
         "BTN_PRINT":"Imprimer"
+      },
+      "TABLE":{
+          "BEES":"Abeilles",
+          "BROOD":"Couvain",
+          "STORES":"Réserves"
       },
       "HISTORY":{},
       "PARAMS":{}
@@ -707,7 +713,7 @@
         "COMBINEDHIVES":"Ruches combinées",
         "SWARM":"Essaimage",
         "CANDIFEED":"Nourrir Candi",
-        "SIRUPFEED":"Nourrir Sirop",
+        "SYRUPFEED":"Nourrir Sirop",
         "REQUEEN":"Remèrage",
         "QUEENLINEAGE":"Marquage reine",
         "HARVEST":"Récolte",
@@ -744,7 +750,9 @@
         "DRONEBROOD":"Présence de couvain de male",
         "DRONES":"Présence de males",
         "BUZZINGHIVE":"Bourdonneuse",
-        "MOSAICBROOD":"Mosaique couvain"
+        "MOSAICBROOD":"Mosaique couvain",
+        "MITESTRIPADD":"Traitement varroa ajout laniere",
+        "MITESTRIPREMOVE":"Traitement varroa retrait laniere"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",

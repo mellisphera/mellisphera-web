@@ -240,7 +240,7 @@ th{
   margin-top: 30px;
 }
 
-.add-event-choice{
+.add-event-choice, .edit-event-choice{
   width: 100%;
   height: 15%;
   margin-top: 20px;
@@ -248,18 +248,17 @@ th{
 
 .add-event-choice-obs,
 .edit-event-choice-obs{
-  width: 55%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  width: 92%;
+  white-space: nowrap;
+  overflow: auto;
+  background-color: #eee;
 }
 
 .add-event-notes, .add-event-todo,
 .edit-event-notes, .edit-event-todo{
   width: 92%;
   height: 16%;
-  margin-top: 20px;
+  margin-top: 6px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -368,14 +367,22 @@ th{
   margin-left: 20px;
 }
 
-.add-event-notes-textarea, .add-event-todo-textarea,
-.edit-event-notes-textarea, .edit-event-todo-textarea{
+.add-home-event-notes-textarea, .edit-home-event-notes-textarea{
   display: none;
   overflow-y: hidden;
   margin-left: 5px;
   resize: none;
   width: 100%;
   height: 90px;
+}
+
+.add-event-todo-textarea, .edit-home-event-todo-textarea{
+  display: none;
+  overflow-y: hidden;
+  margin-left: 5px;
+  resize: none;
+  width: 100%;
+  height: 50px;
 }
 
 
@@ -409,6 +416,74 @@ th{
   margin: 2px 2px;
   height: 37px;
   width: 37px;
+}
+
+.apiary-obs{
+  margin: 2px 2px;
+  height: 40px;
+  width: 40px;
+  background-color: transparent;
+  border: 0;
+  border-radius: 5px;
+}
+
+.apiary-obs:hover{
+  border: 1px solid skyblue;
+}
+
+.brood-egg{
+  background: url('../../../../../assets/ms-pics/inspects/egg_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.brood-egg-active, .apiary-brood-egg-active{
+  background: url('../../../../../assets/ms-pics/inspects/egg_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.brood-larva{
+  background: url('../../../../../assets/ms-pics/inspects/larva_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.brood-larva-active, .apiary-brood-larva-active{
+  background: url('../../../../../assets/ms-pics/inspects/larva_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.brood-pupa{
+  background: url('../../../../../assets/ms-pics/inspects/pupa_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.brood-pupa-active, .apiary-brood-pupa-active{
+  background: url('../../../../../assets/ms-pics/inspects/pupa_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.brood-drone{
+  background: url('../../../../../assets/ms-pics/inspects/dronebrood_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.brood-drone-active, .apiary-brood-drone-active{
+  background: url('../../../../../assets/ms-pics/inspects/dronebrood_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 1px solid skyblue;
+}
+
+.brood-none{
+  background: url('../../../../../assets/ms-pics/inspects/nobrood_b.svg') center no-repeat;
+  background-size: 32px;
+}
+
+.brood-none-active, .apiary-brood-none-active{
+  background: url('../../../../../assets/ms-pics/inspects/nobrood_cb.svg') center no-repeat;
+  background-size: 32px;
+  border: 1px solid skyblue;
 }
 
 .hives-swarm-img{
@@ -668,7 +743,6 @@ th{
 
 .add-event-notes-toggle{
   border-radius: 3px;
-  margin: 0 3px;
   height: 40px;
   width: 40px;
   background-color: transparent;
@@ -677,15 +751,19 @@ th{
 
 .add-event-todo-toggle{
   border-radius: 3px;
-  margin: 0 3px;
   height: 40px;
   width: 40px;
+  margin-top: 6px;
   background-color: transparent;
   border: 1px solid #ddd;
   background-size: 32px;
   background-repeat: no-repeat;
   background-image: url('../../../../../assets/ms-pics/ui/assets/todo.png');
   background-position: center;
+}
+
+.hive-op-brood-home{
+  background-color: transparent;
 }
 
 @media  screen and (max-width: 1100px) {

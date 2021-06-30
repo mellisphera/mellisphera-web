@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import * as moment from 'moment';
 import { UserloggedService } from '../../../userlogged.service';
 import { RucherModel } from '../../../_model/rucher-model';
 import { UserPref } from '../../../_model/user-pref';
@@ -10,11 +9,6 @@ import { UnitService } from '../../service/unit.service';
 import { RucheInterface } from '../../../_model/ruche';
 import { TranslateService } from '@ngx-translate/core';
 
-import { InspApiary } from '../../../_model/inspApiary';
-import { InspHive } from '../../../_model/inspHive';
-import { InspHiveService } from './../../service/api/insp-hive.service';
-import { InspApiaryService } from './../../service/api/insp-apiary.service';
-
 import { Inspection } from '../../../_model/inspection';
 import { InspectionService } from '../../service/api/inspection.service';
 import { InspCat } from '../../../_model/inspCat';
@@ -23,8 +17,9 @@ import { InspConf } from '../../../_model/inspConf';
 import { InspUser } from '../../../_model/inspUser';
 import { InspUserService } from '../../service/api/insp-user.service';
 import { NotifierService } from 'angular-notifier';
-import { e } from '@angular/core/src/render3';
 import { SeasonsService } from '../service/seasons.service';
+
+declare var jsPDF: any;
 
 @Component({
   selector: 'app-inspect-new',
@@ -79,6 +74,8 @@ export class InspectNewComponent implements OnInit {
 
   public hive_insps: Inspection[];
 
+  private pdf = new jsPDF();
+  
   constructor(
     private inspService: InspectionService,
     private inspCatService: InspCatService,
@@ -88,8 +85,6 @@ export class InspectNewComponent implements OnInit {
     private rucherService: RucherService,
     private rucheService: RucheService,
     private userService: UserloggedService,
-    private inspApiaryService: InspApiaryService,
-    private inspHiveService: InspHiveService,
     public translateService: TranslateService,
     private notifyService: NotifierService,
     public seasonService: SeasonsService
@@ -152,6 +147,7 @@ export class InspectNewComponent implements OnInit {
 
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-hours')[0]).disabled = true;
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-minutes')[0]).disabled = true;
+
   }
 
   compare(a, b) {
@@ -1045,12 +1041,6 @@ export class InspectNewComponent implements OnInit {
     if(entity === 'apiary'){
       switch(health){
         case 'buzz':
-          if(<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0]).classList.remove('health-swarm-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Swarm');
-            this.new_apiary_insp.obs.splice(index, 1);
-          }
-
           button = <HTMLButtonElement>document.getElementsByClassName('health-buzz')[0];
           if(!button.classList.contains('health-buzz-active')){
             button.classList.add('health-buzz-active');
@@ -1063,12 +1053,6 @@ export class InspectNewComponent implements OnInit {
           }
           break;
         case 'sick':
-          if(<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0]).classList.remove('health-swarm-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Swarm');
-            this.new_apiary_insp.obs.splice(index, 1);
-          }
-
           button = <HTMLButtonElement>document.getElementsByClassName('health-sick')[0];
           if(!button.classList.contains('health-sick-active')){
             button.classList.add('health-sick-active');
@@ -1081,12 +1065,6 @@ export class InspectNewComponent implements OnInit {
           }
           break;
         case 'mosaic':
-          if(<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0]).classList.remove('health-swarm-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Swarm');
-            this.new_apiary_insp.obs.splice(index, 1);
-          }
-
           button = <HTMLButtonElement>document.getElementsByClassName('health-mosaic')[0];
           if(!button.classList.contains('health-mosaic-active')){
             button.classList.add('health-mosaic-active');
@@ -1099,12 +1077,6 @@ export class InspectNewComponent implements OnInit {
           }
           break;
         case 'queen':
-          if(<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0]).classList.remove('health-swarm-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Swarm');
-            this.new_apiary_insp.obs.splice(index, 1);
-          }
-
           button = <HTMLButtonElement>document.getElementsByClassName('health-queen')[0];
           if(!button.classList.contains('health-queen-active')){
             button.classList.add('health-queen-active');
@@ -1118,27 +1090,6 @@ export class InspectNewComponent implements OnInit {
           }
           break;
         case 'swarm':
-          if(<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0]).classList.remove('health-buzz-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Buzzinghive');
-            this.new_apiary_insp.obs.splice(index, 1);
-          }
-          if(<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0]).classList.remove('health-sick-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Sick');
-            this.new_apiary_insp.obs.splice(index, 1);
-          }
-          if(<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0]).classList.remove('health-mosaic-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Mosaichive');
-            this.new_apiary_insp.obs.splice(index, 1);
-          }
-          if(<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0]).classList.remove('health-queen-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Queen');
-            this.new_apiary_insp.obs.splice(index, 1);
-          }
-
           button = <HTMLButtonElement>document.getElementsByClassName('health-swarm')[0];
           if(!button.classList.contains('health-swarm-active')){
             button.classList.add('health-swarm-active');
@@ -1157,12 +1108,6 @@ export class InspectNewComponent implements OnInit {
       inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
       switch(health){
         case 'buzz':
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.contains('health-swarm-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.remove('health-swarm-active');
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
-          }
-
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0];
           if(!button.classList.contains('health-buzz-active')){
             button.classList.add('health-buzz-active');
@@ -1176,12 +1121,6 @@ export class InspectNewComponent implements OnInit {
 
           break;
         case 'sick':
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.contains('health-swarm-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.remove('health-swarm-active');
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
-          }
-
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0];
           if(!button.classList.contains('health-sick-active')){
             button.classList.add('health-sick-active');
@@ -1194,12 +1133,6 @@ export class InspectNewComponent implements OnInit {
           }
           break;
         case 'mosaic':
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.contains('health-swarm-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.remove('health-swarm-active');
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
-          }
-
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0];
           if(!button.classList.contains('health-mosaic-active')){
             button.classList.add('health-mosaic-active');
@@ -1212,13 +1145,6 @@ export class InspectNewComponent implements OnInit {
           }
           break;
         case 'queen':
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.contains('health-swarm-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0]).classList.remove('health-swarm-active');
-            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
-          }
-
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0];
           if(!button.classList.contains('health-queen-active')){
             button.classList.add('health-queen-active');
@@ -1231,31 +1157,6 @@ export class InspectNewComponent implements OnInit {
           }
           break;
         case 'swarm':
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0]).classList.contains('health-buzz-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0]).classList.remove('health-buzz-active');
-            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Buzzinghive');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
-          }
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.contains('health-sick-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0]).classList.remove('health-sick-active');
-            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Sick');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
-          }
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0]).classList.contains('health-mosaic-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0]).classList.remove('health-mosaic-active');
-            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Mosaichive');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
-          }
-          if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.contains('health-queen-active')){
-            (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0]).classList.remove('health-queen-active');
-            inspIndex = this.hive_insps.findIndex(_i => _i.hiveId === hive._id);
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Queen');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
-          }
-
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0];
           if(!button.classList.contains('health-swarm-active')){
             button.classList.add('health-swarm-active');
@@ -1269,6 +1170,131 @@ export class InspectNewComponent implements OnInit {
       }
       return;
     }
+  }
+
+  generatePDF(): void{
+    let headerTitle = this.translateService.instant('INSPECT.NEW.TITLE');
+    let headerDate = this.translateService.instant('INSPECT.NEW.DATE');
+
+    console.log(this.pdf.getFontList())
+    this.pdf.setFont("courier","normal");
+    this.pdf.setFontSize(18);
+    this.pdf.text(headerTitle, 10, 10);
+
+    this.pdf.setFont("courier","bolditalic");
+    //this.pdf.text(this.user_apiaries[this.active_apiary_index - 1].name, 123, 10);
+
+    this.pdf.setFont("courier","normal");
+    this.pdf.text(headerDate, 10, 20);
+
+    this.pdf.setFont("courier","bolditalic");
+    this.pdf.text(this.unitService.getHourlyDate(this.inspect_date), 37, 20);
+
+    this.pdf.setFont("courier","normal");
+    this.pdf.rect(10, 30, 190, 110, "S");
+
+    this.pdf.text(this.translateService.instant('INSPECT.NEW.GENERAL'), 15, 40);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/generallow_b.png", "PNG", 20, 45, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/generalnormal_b.png", "PNG", 35, 45, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/generalgood_b.png", "PNG", 50, 45, 10, 10);
+
+    this.pdf.rect(15, 60, 8, 8, "S");
+    this.pdf.addImage("../../../../assets/ms-pics/ui/assets/notes.png", "PNG", 16, 61, 6, 6);
+    this.pdf.rect(30, 60, 150, 20, "S");
+
+    this.pdf.rect(15, 70, 8, 8, "S");
+    this.pdf.addImage("../../../../assets/ms-pics/ui/assets/todo.png", "PNG", 16, 71, 6, 6);
+    this.pdf.rect(30, 85, 150, 15, "S");
+
+    this.pdf.setFillColor("#EEEEEE");
+    this.pdf.rect(15, 110, 77, 12, "F");
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/nobrood_b.png", "PNG", 17, 112, 8, 8);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/egg_b.png", "PNG", 32, 111, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/larva_b.png", "PNG", 47, 111, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/pupa_b.png", "PNG", 62, 111, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/dronebrood_b.png", "PNG", 77, 111, 10, 10);
+
+
+    let nbElt = 5;
+    let lineCount = 0;
+    this.inspConf.forEach(conf => {
+      lineCount = parseInt( (nbElt/15).toFixed(1) );
+      if(conf.enable && conf.inspCat.applies.findIndex(_ap => _ap === 'apiary') !== -1 && conf.inspCat.type === 'act' && conf.inspCat.seasons.findIndex(_s => _s === this.seasonService.getSeason()) !== -1 && conf.inspCat.img !== 'Default'){
+        nbElt++;
+      }
+    });
+    if(nbElt > 15){
+      this.pdf.rect(15, 125, 175, 12 + 10*lineCount, "F");
+    }
+    else{
+      this.pdf.rect(15, 125, 15*nbElt, 12, "F");
+    }
+
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/swarm_b.png", "PNG", 17, 126, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/buzzinghive_b.png", "PNG", 32, 126, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/sick_b.png", "PNG", 47, 126, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/mosaicbrood_b.png", "PNG", 62, 126, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/queen_b.png", "PNG", 77, 126, 10, 10);
+
+    nbElt = 5;
+    lineCount = 0;
+    this.inspConf.forEach(conf => {
+      lineCount = parseInt( (nbElt/15).toFixed(1) );
+      if(conf.enable && conf.inspCat.applies.findIndex(_ap => _ap === 'apiary') !== -1 && conf.inspCat.type === 'act' && conf.inspCat.seasons.findIndex(_s => _s === this.seasonService.getSeason()) !== -1 && conf.inspCat.img !== 'Default'){
+        this.pdf.addImage("../../../../assets/ms-pics/inspects/"+ conf.inspCat.img.toLowerCase() +"_b.png", "PNG", 17 + 15*(nbElt%15), 126 + 10*lineCount, 8, 8);
+        nbElt++;
+      }
+    });
+
+    this.pdf.rect(10, 145, 190, 145, "S");
+
+    this.generateRuche();
+
+  }
+
+  generateRuche(): void{
+    let startX = 15, startY = 155;
+    for(let i=0; i<this.user_hives.length; i++){
+      // TITLE
+      this.pdf.setFontSize(14);
+      this.pdf.setFont("courier","bolditalic");
+      this.pdf.text(this.user_hives[i].name , 15, 152+(i*45));
+      this.pdf.line(15, 154+(i*45), 185, 154+(i*45));
+
+      // TABLEAU A COCHER
+      this.pdf.setFont("courier","normal");
+      this.pdf.setFontSize(10);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/low_cb.png", "PNG", 41, 160+(i*45), 3, 3);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/average_cb.png", "PNG", 48, 160+(i*45), 3, 3);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/high_cb.png", "PNG", 55, 160+(i*45), 3, 3);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/none_cb.png", "PNG", 62, 160+(i*45), 3, 3);
+
+      this.pdf.text(this.translateService.instant('INSPECT.TABLE.BEES'), 20, 168+(i*45));
+      this.pdf.circle(42, 167+(i*45), 1.5, "S");
+      this.pdf.circle(49, 167+(i*45), 1.5, "S");
+      this.pdf.circle(56, 167+(i*45), 1.5, "S");
+      this.pdf.circle(63, 167+(i*45), 1.5, "S");
+
+      this.pdf.text(this.translateService.instant('INSPECT.TABLE.BROOD'), 20, 178+(i*45));
+      this.pdf.circle(42, 177+(i*45), 1.5, "S");
+      this.pdf.circle(49, 177+(i*45), 1.5, "S");
+      this.pdf.circle(56, 177+(i*45), 1.5, "S");
+      this.pdf.circle(63, 177+(i*45), 1.5, "S");
+
+      this.pdf.text(this.translateService.instant('INSPECT.TABLE.STORES'), 20, 188+(i*45));
+      this.pdf.circle(42, 187+(i*45), 1.5, "S");
+      this.pdf.circle(49, 187+(i*45), 1.5, "S");
+      this.pdf.circle(56, 187+(i*45), 1.5, "S");
+      this.pdf.circle(63, 187+(i*45), 1.5, "S");
+
+
+
+    }
+  }
+
+  printPDF(): void{
+    this.generatePDF();
+    this.pdf.save("test.pdf");
   }
 
 }

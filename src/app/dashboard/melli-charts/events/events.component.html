@@ -43,17 +43,27 @@
         </div>
       </div>
       <div class="modal-body">
-        <div class="edit-event-choice">
-          <div class="edit-event-choice-obs">
-          </div>
+        <div id="brood-stage" class="hive-op-brood-explore" style="margin-left: 3px;">
+          <button class="hives-obs-add event-brood-none" (click)="setBroodStage('none', 'apiary')"></button>  
+          <button class="hives-obs-add event-brood-egg" (click)="setBroodStage('egg', 'apiary')"></button>
+          <button class="hives-obs-add event-brood-larva" (click)="setBroodStage('larva', 'apiary')"></button>
+          <button class="hives-obs-add event-brood-pupa" (click)="setBroodStage('pupa', 'apiary')"></button>
+          <button class="hives-obs-add event-brood-drone" (click)="setBroodStage('drone', 'apiary')"></button>    
         </div>
         <div class="edit-event-notes">
-            <button class="add-event-notes-toggle" (click)="showNotes()"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+            <div style="width: 45px; margin-left: 4px;">
+                <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+                <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            </div>
             <textarea value="{{eventToEdit?.description}}" class="edit-event-notes-textarea hives-note-textarea-edit-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
         </div>
         <div class="edit-event-todo">
-            <button class="add-event-todo-toggle" (click)="showTodo()"></button>
+            <button style="visibility: hidden; margin-right: 8px;" class="add-event-todo-toggle" (click)="showTodo($event)"></button>
             <textarea value="{{eventToEdit?.todo}}" class="edit-event-todo-textarea hives-todo-textarea-edit-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="edit-event-choice">
+            <div class="edit-event-choice-obs">
+            </div>
         </div>
       </div>
       <div class="modal-footer">
