@@ -205,12 +205,10 @@ export class InspectNewComponent implements OnInit {
         if(nameCat === 'act'){
           index = this.new_apiary_insp.tasks.findIndex(_t => _t.name === inspCat.name)
           this.new_apiary_insp.tasks.splice(index, 1);
-          button.style.border = '1px solid #ddd';
         }
         if(nameCat === 'obs'){
           index = this.new_apiary_insp.obs.findIndex(_t => _t.name === inspCat.name)
           this.new_apiary_insp.obs.splice(index, 1);
-          button.style.border = '1px solid #ddd';
         }
         return;
       }
@@ -219,12 +217,10 @@ export class InspectNewComponent implements OnInit {
         if(nameCat === 'act'){
           index = this.hive_insps[indexInsp].tasks.findIndex(_t => _t.name === inspCat.name)
           this.hive_insps[indexInsp].tasks.splice(index, 1);
-          button.style.border = '1px solid #ddd';
         }
         if(nameCat === 'obs'){
           index = this.hive_insps[indexInsp].obs.findIndex(_t => _t.name === inspCat.name)
           this.hive_insps[indexInsp].obs.splice(index, 1);
-          button.style.border = '1px solid #ddd';
         }
         return;
       }
@@ -234,11 +230,9 @@ export class InspectNewComponent implements OnInit {
     if(type === 'apiary'){
       if(nameCat === 'act'){
         this.new_apiary_insp.tasks.push({name:inspCat.name, img:inspCat.img.toLocaleLowerCase() + '_b.svg'});
-        button.style.border = '1px solid rgb(0, 180, 0)';
       }
       if(nameCat === 'obs'){
         this.new_apiary_insp.obs.push({name:inspCat.name, img:inspCat.img.toLocaleLowerCase() + '_b.svg'});
-        button.style.border = '1px solid skyblue';
       }
       return;
     }
@@ -246,11 +240,9 @@ export class InspectNewComponent implements OnInit {
       let indexInsp = this.hive_insps.findIndex( _i => _i.hiveId === ruche._id );
       if(nameCat === 'act'){
         index = this.hive_insps[indexInsp].tasks.push({name:inspCat.name, img:inspCat.img.toLocaleLowerCase() + '_b.svg'});
-        button.style.border = '1px solid rgb(0, 180, 0)';
       }
       if(nameCat === 'obs'){
-        index = this.hive_insps[indexInsp].obs.push({name:inspCat.name, img:inspCat.img.toLocaleLowerCase() + '_b.svg'});
-        button.style.border = '1px solid skyblue';
+        index = this.hive_insps[indexInsp].obs.push({name:inspCat.name, img:inspCat.img.toLocaleLowerCase() + '_b.svg'})
       }
       return;
     }
@@ -293,7 +285,7 @@ export class InspectNewComponent implements OnInit {
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input')[0]).value = this.unitService.getDailyDate(this.inspect_date);
     this.new_apiary_insp.opsDate = new Date(this.inspect_date);
     this.hive_insps.forEach( _hInsp => {
-      _hInsp.opsDate = this.inspect_date;
+      _hInsp.opsDate = new Date(this.inspect_date);
     });
     if(this.inspect_date != undefined && this.inspect_date != null){
       (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-hours')[0]).disabled = false;
@@ -1191,28 +1183,21 @@ export class InspectNewComponent implements OnInit {
     this.pdf.text(this.unitService.getHourlyDate(this.inspect_date), 37, 20);
 
     this.pdf.setFont("courier","normal");
-    this.pdf.rect(10, 30, 190, 110, "S");
+    this.pdf.rect(10, 25, 190, 72, "S");
 
-    this.pdf.text(this.translateService.instant('INSPECT.NEW.GENERAL'), 15, 40);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/generallow_b.png", "PNG", 20, 45, 10, 10);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/generalnormal_b.png", "PNG", 35, 45, 10, 10);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/generalgood_b.png", "PNG", 50, 45, 10, 10);
-
-    this.pdf.rect(15, 60, 8, 8, "S");
-    this.pdf.addImage("../../../../assets/ms-pics/ui/assets/notes.png", "PNG", 16, 61, 6, 6);
-    this.pdf.rect(30, 60, 150, 20, "S");
-
-    this.pdf.rect(15, 70, 8, 8, "S");
-    this.pdf.addImage("../../../../assets/ms-pics/ui/assets/todo.png", "PNG", 16, 71, 6, 6);
-    this.pdf.rect(30, 85, 150, 15, "S");
+    this.pdf.setFontSize(14);
+    this.pdf.text(this.translateService.instant('INSPECT.NEW.GENERAL'), 15, 35);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/generallow_b.png", "PNG", 20, 40, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/generalnormal_b.png", "PNG", 35, 40, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/generalgood_b.png", "PNG", 50, 40, 10, 10);
 
     this.pdf.setFillColor("#EEEEEE");
-    this.pdf.rect(15, 110, 77, 12, "F");
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/nobrood_b.png", "PNG", 17, 112, 8, 8);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/egg_b.png", "PNG", 32, 111, 10, 10);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/larva_b.png", "PNG", 47, 111, 10, 10);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/pupa_b.png", "PNG", 62, 111, 10, 10);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/dronebrood_b.png", "PNG", 77, 111, 10, 10);
+    this.pdf.rect(15, 65, 77, 12, "F");
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/nobrood_b.png", "PNG", 17, 67, 8, 8);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/egg_b.png", "PNG", 32, 66, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/larva_b.png", "PNG", 47, 66, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/pupa_b.png", "PNG", 62, 66, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/dronebrood_b.png", "PNG", 77, 66, 10, 10);
 
 
     let nbElt = 5;
@@ -1224,70 +1209,104 @@ export class InspectNewComponent implements OnInit {
       }
     });
     if(nbElt > 15){
-      this.pdf.rect(15, 125, 175, 12 + 10*lineCount, "F");
+      this.pdf.rect(15, 80, 175, 12 + 10*lineCount, "F");
     }
     else{
-      this.pdf.rect(15, 125, 15*nbElt, 12, "F");
+      this.pdf.rect(15, 80, 15*nbElt, 12, "F");
     }
 
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/swarm_b.png", "PNG", 17, 126, 10, 10);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/buzzinghive_b.png", "PNG", 32, 126, 10, 10);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/sick_b.png", "PNG", 47, 126, 10, 10);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/mosaicbrood_b.png", "PNG", 62, 126, 10, 10);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/queen_b.png", "PNG", 77, 126, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/swarm_b.png", "PNG", 17, 81, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/buzzinghive_b.png", "PNG", 32, 81, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/sick_b.png", "PNG", 47, 81, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/mosaicbrood_b.png", "PNG", 62, 81, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/queen_b.png", "PNG", 77, 81, 10, 10);
 
     nbElt = 5;
     lineCount = 0;
     this.inspConf.forEach(conf => {
       lineCount = parseInt( (nbElt/15).toFixed(1) );
       if(conf.enable && conf.inspCat.applies.findIndex(_ap => _ap === 'apiary') !== -1 && conf.inspCat.type === 'act' && conf.inspCat.seasons.findIndex(_s => _s === this.seasonService.getSeason()) !== -1 && conf.inspCat.img !== 'Default'){
-        this.pdf.addImage("../../../../assets/ms-pics/inspects/"+ conf.inspCat.img.toLowerCase() +"_b.png", "PNG", 17 + 15*(nbElt%15), 126 + 10*lineCount, 8, 8);
+        this.pdf.addImage("../../../../assets/ms-pics/inspects/"+ conf.inspCat.img.toLowerCase() +"_b.png", "PNG", 17 + 15*(nbElt%15), 81 + 10*lineCount, 8, 8);
         nbElt++;
       }
     });
 
-    this.pdf.rect(10, 145, 190, 145, "S");
+    this.pdf.rect(10, 100, 190, 190, "S");
 
     this.generateRuche();
 
   }
 
   generateRuche(): void{
-    let startX = 15, startY = 155;
+    let startX = 15, startY = 108;
+    let page = 1;
+    let mult = 0;
     for(let i=0; i<this.user_hives.length; i++){
       // TITLE
       this.pdf.setFontSize(14);
       this.pdf.setFont("courier","bolditalic");
-      this.pdf.text(this.user_hives[i].name , 15, 152+(i*45));
-      this.pdf.line(15, 154+(i*45), 185, 154+(i*45));
+      this.pdf.text(this.user_hives[i].name , 15, startY+(mult*30));
+      this.pdf.line(15, startY+2+(mult*30), 195, startY+2+(mult*30));
 
       // TABLEAU A COCHER
       this.pdf.setFont("courier","normal");
       this.pdf.setFontSize(10);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/low_cb.png", "PNG", 41, 160+(i*45), 3, 3);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/average_cb.png", "PNG", 48, 160+(i*45), 3, 3);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/high_cb.png", "PNG", 55, 160+(i*45), 3, 3);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/none_cb.png", "PNG", 62, 160+(i*45), 3, 3);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/none_cb.png", "PNG", 41, startY+4+(mult*30), 3, 3);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/low_cb.png", "PNG", 48, startY+4+(mult*30), 3, 3);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/average_cb.png", "PNG", 55, startY+4+(mult*30), 3, 3);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/high_cb.png", "PNG", 62, startY+4+(mult*30), 3, 3);
 
-      this.pdf.text(this.translateService.instant('INSPECT.TABLE.BEES'), 20, 168+(i*45));
-      this.pdf.circle(42, 167+(i*45), 1.5, "S");
-      this.pdf.circle(49, 167+(i*45), 1.5, "S");
-      this.pdf.circle(56, 167+(i*45), 1.5, "S");
-      this.pdf.circle(63, 167+(i*45), 1.5, "S");
+      this.pdf.text(this.translateService.instant('INSPECT.TABLE.BEES'), 20, startY+11+(mult*30));
+      this.pdf.circle(42, startY+10+(mult*30), 1.5, "S");
+      this.pdf.circle(49, startY+10+(mult*30), 1.5, "S");
+      this.pdf.circle(56, startY+10+(mult*30), 1.5, "S");
+      this.pdf.circle(63, startY+10+(mult*30), 1.5, "S");
 
-      this.pdf.text(this.translateService.instant('INSPECT.TABLE.BROOD'), 20, 178+(i*45));
-      this.pdf.circle(42, 177+(i*45), 1.5, "S");
-      this.pdf.circle(49, 177+(i*45), 1.5, "S");
-      this.pdf.circle(56, 177+(i*45), 1.5, "S");
-      this.pdf.circle(63, 177+(i*45), 1.5, "S");
+      this.pdf.text(this.translateService.instant('INSPECT.TABLE.BROOD'), 20, startY+16+(mult*30));
+      this.pdf.circle(42, startY+15+(mult*30), 1.5, "S");
+      this.pdf.circle(49, startY+15+(mult*30), 1.5, "S");
+      this.pdf.circle(56, startY+15+(mult*30), 1.5, "S");
+      this.pdf.circle(63, startY+15+(mult*30), 1.5, "S");
 
-      this.pdf.text(this.translateService.instant('INSPECT.TABLE.STORES'), 20, 188+(i*45));
-      this.pdf.circle(42, 187+(i*45), 1.5, "S");
-      this.pdf.circle(49, 187+(i*45), 1.5, "S");
-      this.pdf.circle(56, 187+(i*45), 1.5, "S");
-      this.pdf.circle(63, 187+(i*45), 1.5, "S");
+      this.pdf.text(this.translateService.instant('INSPECT.TABLE.STORES'), 20, startY+21+(mult*30));
+      this.pdf.circle(42, startY+20+(mult*30), 1.5, "S");
+      this.pdf.circle(49, startY+20+(mult*30), 1.5, "S");
+      this.pdf.circle(56, startY+20+(mult*30), 1.5, "S");
+      this.pdf.circle(63, startY+20+(mult*30), 1.5, "S");
 
+      this.pdf.setFillColor("#EEEEEE");
+      this.pdf.rect(70, startY+5+(mult*30), 110, 8, "F");
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/nobrood_b.png", "PNG", 72, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/egg_b.png", "PNG", 80, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/larva_b.png", "PNG", 88, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/pupa_b.png", "PNG", 96, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/dronebrood_b.png", "PNG", 104, startY+6+(mult*30), 6, 6);
 
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/swarm_b.png", "PNG", 122, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/buzzinghive_b.png", "PNG", 130, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/sick_b.png", "PNG", 138, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/mosaicbrood_b.png", "PNG", 146, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/queen_b.png", "PNG", 154, startY+6+(mult*30), 6, 6);
+      
+      mult++;
+
+      if(mult%9 === 0 && i>0 && page > 1){
+        this.pdf.addPage();
+        page++;
+        this.pdf.setPage(page);
+        this.pdf.rect(10,10,190,280);
+        startY = 18;
+        mult = 0;
+      }
+
+      if(mult%6 === 0 && i>0 && page === 1){
+        this.pdf.addPage();
+        page++;
+        this.pdf.setPage(page);
+        this.pdf.rect(10,10,190,280);
+        startY = 18;
+        mult = 0;
+      }
 
     }
   }

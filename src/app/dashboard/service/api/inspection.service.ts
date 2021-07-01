@@ -77,6 +77,10 @@ export class InspectionService {
     );
   }
 
+  getInspectionByUser(userId: string): Observable<Inspection[]>{
+    return this.http.get<Inspection[]>(CONFIG.URL + 'inspection/user/' + userId, httpOptions);
+  }
+
   getInspectionCurrentApiary(apiaryId: string): Inspection[]{
     let start = new Date();
     start.setDate(start.getDate() - 180);
@@ -289,7 +293,16 @@ export class InspectionService {
   *
   */
   insertApiaryInsp(insp: Inspection): Observable<Inspection> {
-    return this.http.post<Inspection>(CONFIG.URL + 'inspection/insert/apiary/' , insp, httpOptions);
+    return this.http.post<Inspection>(CONFIG.URL + 'inspection/insert/insp/apiary/' , insp, httpOptions);
+  }
+
+  /**
+  *
+  * @param insp
+  *
+  */
+   insertApiaryEvent(insp: Inspection): Observable<Inspection> {
+    return this.http.post<Inspection>(CONFIG.URL + 'inspection/insert/event/apiary/' , insp, httpOptions);
   }
 
 
@@ -318,7 +331,16 @@ export class InspectionService {
   *
   */
   updateInspection(insp: Inspection): Observable<Inspection> {
-    return this.http.put<Inspection>(CONFIG.URL + 'inspection/update/' + insp._id, insp, httpOptions);
+    return this.http.put<Inspection>(CONFIG.URL + 'inspection/update/insp/' + insp._id, insp, httpOptions);
+  }
+
+   /**
+  *
+  * @param insp
+  *
+  */
+  updateEvent(insp: Inspection): Observable<Inspection> {
+    return this.http.put<Inspection>(CONFIG.URL + 'inspection/update/event/' + insp._id, insp, httpOptions);
   }
 
   /**

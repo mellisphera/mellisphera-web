@@ -1,4 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 import { InspectHistoryComponent } from './inspect-history/inspect-history.component';
 import { InspectNewComponent } from './inspect-new/inspect-new.component';
 import { InspectParamsComponent } from './inspect-params/inspect-params.component';
@@ -19,6 +20,7 @@ export class InspectComponent implements OnInit {
 
   constructor(
     private renderer: Renderer2,
+    private router: Router
   ){
   }
 
@@ -27,8 +29,19 @@ export class InspectComponent implements OnInit {
   }
 
   ngAfterViewInit(): void{
-    this.eltOnClick = document.getElementById('inspect-new-btn');
-    this.renderer.addClass(this.eltOnClick, 'nav-active');
+    if(this.router.url === PREFIX_PATH + 'new'){
+      this.eltOnClick = document.getElementById('inspect-new-btn');
+      this.renderer.addClass(this.eltOnClick, 'nav-active');
+    }
+    if(this.router.url === PREFIX_PATH + 'history'){
+      this.eltOnClick = document.getElementById('inspect-history-btn');
+      this.renderer.addClass(this.eltOnClick, 'nav-active');
+    }
+    if(this.router.url === PREFIX_PATH + 'params'){
+      this.eltOnClick = document.getElementById('inspect-params-btn');
+      this.renderer.addClass(this.eltOnClick, 'nav-active');
+    }
+    
   }
 
   setButtonActive(_id: string): void{

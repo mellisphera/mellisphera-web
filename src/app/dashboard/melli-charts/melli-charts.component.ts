@@ -56,6 +56,7 @@ import { SafeHtmlPipe } from './safe-html.pipe';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { InspCatService } from '../service/api/insp-cat.service';
+import { InspCat } from '../../_model/inspCat';
 
 const PREFIX_PATH = '/dashboard/explore/';
 
@@ -223,35 +224,32 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     this.inspCat.getInspCat().subscribe(
       _inspCat => {
         _inspCat.forEach(_cat => {
-          if(_cat.applies.indexOf("apiary") !== -1 && _cat.type === "obs" && _cat.img !== "Default"){
+          if(_cat.img !== "Default" && this.notConstant(_cat)){
             this.PICTOS_HIVES_OBS.push({
               name:_cat.name.toLowerCase(), 
               img: _cat.img.toLowerCase() + '_b.svg',
               img_active: _cat.img.toLowerCase() + '_cb.svg',
-              class: 'hives-' + _cat.name.toLowerCase() + '-img'
+              class: 'hives-' + _cat.name.toLowerCase() + '-img',
+              type: _cat.type
             })
           }
-        })
-        this.PICTOS_HIVES_OBS.push({
-          name:'super+', 
-          img: 'super+_b.svg',
-          img_active:'super+_cb.svg',
-          class: 'hives-super+-img'
-        })
-        this.PICTOS_HIVES_OBS.push({
-          name:'super-', 
-          img: 'super-_b.svg',
-          img_active:'super-_cb.svg',
-          class: 'hives-super--img'
         })
         this.PICTOS_HIVES_OBS.push({
           name:'default', 
           img: 'default_b.svg',
           img_active:'default_cb.svg',
-          class: 'hives-default-img'
+          class: 'hives-default-img',
+          type: 'obs'
         })
       }
     )   
+  }
+
+  notConstant(cat: InspCat): boolean{
+    if(cat.name === 'Egg' || cat.name === 'Larva' || cat.name === 'Pupa' || cat.name === 'Dronebrood' || cat.name === 'Mitecountwash'){
+      return false;
+    }
+    else return true;
   }
 
   ngAfterViewInit(): void {
@@ -832,6 +830,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   // <--- ADD EVENT SCREEN --->
 
   showAddEvent(rucher: RucherModel, ruche: RucheInterface, evt: MouseEvent): void {
+    this.PICTOS_HIVES_OBS = [];
     this.new_event = {
       _id: null,
       apiaryInspId: null,
@@ -857,26 +856,93 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       this.new_event.apiaryId = ruche.apiaryId;
       this.new_event.type = this.typeEvent;
       this.new_event.hiveId = ruche._id;
+
+      this.inspCat.getInspCat().subscribe(
+        _inspCat => {
+          _inspCat.forEach(_cat => {
+            if(_cat.applies.indexOf("hive") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
+              this.PICTOS_HIVES_OBS.push({
+                name:_cat.name.toLowerCase(), 
+                img: _cat.img.toLowerCase() + '_b.svg',
+                img_active: _cat.img.toLowerCase() + '_cb.svg',
+                class: 'hives-' + _cat.name.toLowerCase() + '-img',
+                type: _cat.type
+              })
+            }
+          })
+          this.PICTOS_HIVES_OBS.push({
+            name:'default', 
+            img: 'default_b.svg',
+            img_active:'default_cb.svg',
+            class: 'hives-default-img',
+            type: 'obs'
+          })
+        },
+        () => {},
+        () => {
+          console.log(this.PICTOS_HIVES_OBS);
+          this.apiaryEvent = Object.assign({}, rucher);
+          this.new_event.type = this.typeEvent;
+          this.new_event.apiaryId = rucher._id;
+        
+          this.new_event.userId = this.userService.getIdUserLoged();
+          this.new_event.createDate = new Date();
+          (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
+          (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = null;
+          (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = null;
+          (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = null;
+          (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = true;
+          (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = true;
+          (<HTMLTextAreaElement>document.getElementsByClassName('add-event-notes-textarea')[0]).value = null;
+          (<HTMLTextAreaElement>document.getElementsByClassName('add-event-todo-textarea')[0]).value = null;
+          this.addObsList();
+        }
+      )   
     }
     else{
+      this.inspCat.getInspCat().subscribe(
+        _inspCat => {
+          _inspCat.forEach(_cat => {
+            if(_cat.applies.indexOf("apiary") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
+              this.PICTOS_HIVES_OBS.push({
+                name:_cat.name.toLowerCase(), 
+                img: _cat.img.toLowerCase() + '_b.svg',
+                img_active: _cat.img.toLowerCase() + '_cb.svg',
+                class: 'hives-' + _cat.name.toLowerCase() + '-img',
+                type: _cat.type
+              })
+            }
+          })
+          this.PICTOS_HIVES_OBS.push({
+            name:'default', 
+            img: 'default_b.svg',
+            img_active:'default_cb.svg',
+            class: 'hives-default-img',
+            type: 'obs'
+          })
+        },
+        () => {},
+        () => {
+          console.log(this.PICTOS_HIVES_OBS);
+          this.apiaryEvent = Object.assign({}, rucher);
+          this.new_event.type = this.typeEvent;
+          this.new_event.apiaryId = rucher._id;
+        
+          this.new_event.userId = this.userService.getIdUserLoged();
+          this.new_event.createDate = new Date();
+          (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
+          (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = null;
+          (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = null;
+          (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = null;
+          (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = true;
+          (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = true;
+          (<HTMLTextAreaElement>document.getElementsByClassName('add-event-notes-textarea')[0]).value = null;
+          (<HTMLTextAreaElement>document.getElementsByClassName('add-event-todo-textarea')[0]).value = null;
+          this.addObsList();
+        }
+      )   
       this.typeEvent = 'apiary';
     }
-
-    this.apiaryEvent = Object.assign({}, rucher);
-    this.new_event.type = this.typeEvent;
-    this.new_event.apiaryId = rucher._id;
-  
-    this.new_event.userId = this.userService.getIdUserLoged();
-    this.new_event.createDate = new Date();
-    (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
-    (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = null;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = null;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = null;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = true;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = true;
-    (<HTMLTextAreaElement>document.getElementsByClassName('add-event-notes-textarea')[0]).value = null;
-    (<HTMLTextAreaElement>document.getElementsByClassName('add-event-todo-textarea')[0]).value = null;
-    this.addObsList();
   }
 
   addObsList(): void {
@@ -886,7 +952,12 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.PICTOS_HIVES_OBS.length; i++) {
 
       const button = document.createElement('button');
-      button.className = 'hives-obs-add';
+      if(this.PICTOS_HIVES_OBS[i].type === 'act'){
+        button.className = 'hives-act-add';
+      }
+      if(this.PICTOS_HIVES_OBS[i].type === 'obs'){
+        button.className = 'hives-obs-add';
+      }
 
       button.classList.add(this.PICTOS_HIVES_OBS[i].class);
       button.onclick = (evt: Event) => {

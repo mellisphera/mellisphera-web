@@ -4,8 +4,6 @@
       <tr>
         <th scope="col" class="text-left cols_icon"></th>
         <th scope="col" class="text-left cols_name"></th>
-        <th scope="col" class="text-left cols_type"></th>
-        <th scope="col" class="text-left cols_applies"></th>
         <th scope="col" class="text-left cols_seasons"></th>
         <th scope="col" class="text-left cols_on_off" ></th>
       </tr>
@@ -17,21 +15,6 @@
             <img width="50px" height="50px" [src]="'./assets/ms-pics/inspects/' + conf.inspCat.img.toLowerCase() + '_b.svg'">
           </td>
           <td style='vertical-align: middle;'>{{'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate}}</td>
-          <td style='vertical-align: middle;'>
-            <ng-container *ngIf="isEnable(i) && conf.inspCat.type === 'act'">
-                <div [class]="'div-act'"></div>
-            </ng-container>
-            <ng-container *ngIf="isEnable(i) && conf.inspCat.type === 'obs'">
-              <div [class]="'div-obs'"></div>
-            </ng-container>
-          </td>
-          <td style='vertical-align: middle;'>
-            <ng-container *ngIf="isEnable(i)">
-              <ng-container *ngFor="let apply of conf.inspCat.applies">
-                <div>{{'INSP_CONF.APPLIES.'+ apply.toUpperCase() | translate}}</div>
-              </ng-container>
-            </ng-container>
-          </td>
           <td style='vertical-align: middle;'>
             <ng-container *ngIf="isEnable(i)">
               <button [class]="'btn-spring ' + (isSeasonActive(conf.inspCat, 'spring') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat)"></button>

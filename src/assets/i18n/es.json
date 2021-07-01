@@ -616,7 +616,14 @@
         "BROOD":"Cria",
         "STORES":"Reservas"
       },
-      "HISTORY":{},
+      "HISTORY":{
+        "TITLE":"Histórico",
+        "TABLE":{
+            "APIARY":"Colmenar",
+            "DATE":"Fecha",
+            "HEALTH":"Salud"
+        }
+      },
       "PARAMS":{}
     },
     "ALERTS_DESC":{
@@ -765,7 +772,10 @@
         "BUZZINGHIVE":"",
         "MOSAICBROOD":"",
         "MITESTRIPADD":"",
-        "MITESTRIPREMOVE":""
+        "MITESTRIPREMOVE":"",
+        "QUEEN":"Reina",
+        "MITECOUNTLOUNGE":"",
+        "MITECOUNTWASH":""
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",

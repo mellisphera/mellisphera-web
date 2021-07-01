@@ -614,7 +614,7 @@ export class EventsComponent implements OnInit {
     this.events[index] = Object.assign({},this.eventToEdit);
     let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.eventToEdit._id);
     this.updateRowInsp(this.eventToEdit, rowIndex);
-    this.inspService.updateInspection(this.eventToEdit).subscribe(
+    this.inspService.updateEvent(this.eventToEdit).subscribe(
       () => {},
       () => {},
       () => {

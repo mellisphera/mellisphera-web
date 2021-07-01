@@ -53,18 +53,28 @@
         <div style="margin-left: 10px;">
           <div class="apiary-op" style="margin-bottom: 10px;">
             <div id="brood-stage" class="hive-op-brood">
-              <button class="apiary-obs brood-none" (click)="setBroodStage('none', 'apiary')"></button>  
-              <button class="apiary-obs brood-egg" (click)="setBroodStage('egg', 'apiary')"></button>
-              <button class="apiary-obs brood-larva" (click)="setBroodStage('larva', 'apiary')"></button>
-              <button class="apiary-obs brood-pupa" (click)="setBroodStage('pupa', 'apiary')"></button>
-              <button class="apiary-obs brood-drone" (click)="setBroodStage('drone', 'apiary')"></button>    
+              <button class="apiary-obs brood-none" (click)="setBroodStage('none', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.NOBROOD' | translate }}"></button>  
+              <button class="apiary-obs brood-egg" (click)="setBroodStage('egg', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.EGG' | translate }}"></button>
+              <button class="apiary-obs brood-larva" (click)="setBroodStage('larva', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.LARVA' | translate }}"></button>
+              <button class="apiary-obs brood-pupa" (click)="setBroodStage('pupa', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.PUPA' | translate }}"></button>
+              <button class="apiary-obs brood-drone" (click)="setBroodStage('drone', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.DRONEBROOD' | translate }}"></button>    
             </div>
             <div style="overflow-x: auto; white-space: nowrap; background-color: #eee;">
-              <button class="apiary-obs health-swarm" (click)="setHealth('swarm', 'apiary')"></button>
-              <button class="apiary-obs health-buzz" (click)="setHealth('buzz', 'apiary')"></button>
-              <button class="apiary-obs health-sick" (click)="setHealth('sick', 'apiary')"></button>
-              <button class="apiary-obs health-mosaic" (click)="setHealth('mosaic', 'apiary')"></button>
-              <button class="apiary-obs health-queen" (click)="setHealth('queen', 'apiary')"></button>
+              <button class="apiary-obs health-swarm" (click)="setHealth('swarm', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SWARM' | translate }}"></button>
+              <button class="apiary-obs health-buzz" (click)="setHealth('buzz', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.BUZZINGHIVE' | translate }}"></button>
+              <button class="apiary-obs health-sick" (click)="setHealth('sick', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SICK' | translate }}"></button>
+              <button class="apiary-obs health-mosaic" (click)="setHealth('mosaic', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.MOSAICBROOD' | translate }}"></button>
+              <button class="apiary-obs health-queen" (click)="setHealth('queen', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.QUEEN' | translate }}"></button>
               <ng-container *ngFor="let conf of inspConf; let i = index">
                 <ng-container *ngIf="conf.enable && conf.inspCat.applies.includes('apiary') && conf.inspCat.type === 'act' && conf.inspCat.seasons.includes(seasonService.getSeason()) && conf.inspCat.img !== 'Default'">
                   <button [class]="'apiary-action btn-' + conf.inspCat.img.toLowerCase() + '_b'"
@@ -168,18 +178,28 @@
                   </div>
                   <div class="hive-op">
                     <div class="hive-op-brood"> 
-                      <button [class]="'hives-obs brood-none ' + ruche.name + '_none'" (click)="setBroodStage('none', 'hive', ruche)"></button>
-                      <button [class]="'hives-obs brood-egg ' + ruche.name + '_egg'" (click)="setBroodStage('egg', 'hive', ruche)"></button>
-                      <button [class]="'hives-obs brood-larva ' + ruche.name + '_larva'" (click)="setBroodStage('larva', 'hive', ruche)"></button>
-                      <button [class]="'hives-obs brood-pupa ' + ruche.name + '_pupa'" (click)="setBroodStage('pupa', 'hive', ruche)"></button>
-                      <button [class]="'hives-obs brood-drone ' + ruche.name + '_drone'" (click)="setBroodStage('drone', 'hive', ruche)"></button>
+                      <button [class]="'hives-obs brood-none ' + ruche.name + '_none'" (click)="setBroodStage('none', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.NOBROOD' | translate }}"></button>
+                      <button [class]="'hives-obs brood-egg ' + ruche.name + '_egg'" (click)="setBroodStage('egg', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.EGG' | translate }}"></button>
+                      <button [class]="'hives-obs brood-larva ' + ruche.name + '_larva'" (click)="setBroodStage('larva', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.LARVA' | translate }}"></button>
+                      <button [class]="'hives-obs brood-pupa ' + ruche.name + '_pupa'" (click)="setBroodStage('pupa', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.PUPA' | translate }}"></button>
+                      <button [class]="'hives-obs brood-drone ' + ruche.name + '_drone'" (click)="setBroodStage('drone', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.DRONEBROOD' | translate }}"></button>
                     </div>
                     <div style="overflow-x: auto; white-space: nowrap; background-color: #eee;">
-                      <button [class]="'hives-obs health-swarm '  + ruche.name + '_swarm'" (click)="setHealth('swarm', 'hive', ruche)"></button>
-                      <button [class]="'hives-obs health-buzz ' + ruche.name + '_buzz'" (click)="setHealth('buzz', 'hive', ruche)"></button>
-                      <button [class]="'hives-obs health-sick '  + ruche.name + '_sick'" (click)="setHealth('sick', 'hive', ruche)"></button>
-                      <button [class]="'hives-obs health-mosaic ' + ruche.name + '_mosaic'" (click)="setHealth('mosaic', 'hive', ruche)"></button>
-                      <button [class]="'hives-obs health-queen '  + ruche.name + '_queen'" (click)="setHealth('queen', 'hive', ruche)"></button>
+                      <button [class]="'hives-obs health-swarm '  + ruche.name + '_swarm'" (click)="setHealth('swarm', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SWARM' | translate }}"></button>
+                      <button [class]="'hives-obs health-buzz ' + ruche.name + '_buzz'" (click)="setHealth('buzz', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.BUZZINGHIVE' | translate }}"></button>
+                      <button [class]="'hives-obs health-sick '  + ruche.name + '_sick'" (click)="setHealth('sick', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SICK' | translate }}"></button>
+                      <button [class]="'hives-obs health-mosaic ' + ruche.name + '_mosaic'" (click)="setHealth('mosaic', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.MOSAICBROOD' | translate }}"></button>
+                      <button [class]="'hives-obs health-queen '  + ruche.name + '_queen'" (click)="setHealth('queen', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.QUEEN' | translate }}"></button>
                       <ng-container *ngFor="let conf of inspConf; let i = index">
                         <button *ngIf="conf.enable && conf.inspCat.applies.includes('hive') && conf.inspCat.type === 'act' && conf.inspCat.seasons.includes(seasonService.getSeason()) && conf.inspCat.img !== 'Default'"
                         [class]="'hives-action btn-' + conf.inspCat.img.toLowerCase() + '_b'"

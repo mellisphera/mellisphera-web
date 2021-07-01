@@ -35,6 +35,7 @@ import { SafeHtmlPipe } from '../../../melli-charts/safe-html.pipe';
 import { MyDatePipe } from '../../../../pipe/my-date.pipe';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { InspCatService } from '../../../service/api/insp-cat.service';
+import { InspCat } from '../../../../_model/inspCat';
 
 @Component({
   selector: 'app-notes',
@@ -130,33 +131,27 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     this.inspCat.getInspCat().subscribe(
       _inspCat => {
         _inspCat.forEach(_cat => {
-          if(_cat.applies.indexOf("apiary") !== -1 && _cat.type === "obs" && _cat.img !== "Default"){
+          if(_cat.applies.indexOf("apiary") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
             this.PICTOS_HIVES_OBS.push({
               name:_cat.name.toLowerCase(),
               img: _cat.img.toLowerCase() + '_b.svg',
               img_active: _cat.img.toLowerCase() + '_cb.svg',
-              class: 'hives-' + _cat.name.toLowerCase() + '-img'
+              class: 'hives-' + _cat.name.toLowerCase() + '-img',
+              type: _cat.type
             })
           }
-        })
-        this.PICTOS_HIVES_OBS.push({
-          name:'super+',
-          img: 'super+_b.svg',
-          img_active:'super+_cb.svg',
-          class: 'hives-super+-img'
-        })
-        this.PICTOS_HIVES_OBS.push({
-          name:'super-',
-          img: 'super-_b.svg',
-          img_active:'super-_cb.svg',
-          class: 'hives-super--img'
         })
         this.PICTOS_HIVES_OBS.push({
           name:'default',
           img: 'default_b.svg',
           img_active:'default_cb.svg',
-          class: 'hives-default-img'
+          class: 'hives-default-img',
+          type: "obs"
         })
+      },
+      () => {},
+      () => {
+        console.log(this.PICTOS_HIVES_OBS);
       }
     )
   }
@@ -178,6 +173,13 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       document.getElementById('notesApiary').style.height = ''+(40) + 'vh';
     }
  */
+  }
+
+  notConstant(cat: InspCat): boolean{
+    if(cat.name === 'Egg' || cat.name === 'Larva' || cat.name === 'Pupa' || cat.name === 'Dronebrood' || cat.name === 'Mitecountwash'){
+      return false;
+    }
+    else return true;
   }
 
   mouseEnter(evt: Event){
@@ -239,7 +241,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       this.newInsp.type = 'apiary';
       this.newInsp.userId = this.userService.getIdUserLoged();
       this.initForm();
-      this.inspectionService.insertApiaryInsp(this.newInsp).subscribe((obs) => {
+      this.inspectionService.insertApiaryEvent(this.newInsp).subscribe((obs) => {
         this.inspectionService.inspectionsApiary.push(obs);
 /*         this.observationService.observationsApiary.sort((a: Observation, b: Observation) => {
           return -(moment(a.opsDate).unix() - moment(b.opsDate).unix())
@@ -276,7 +278,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       this.newInsp.apiaryId = this.rucherService.getCurrentApiary();
       this.newInsp.type = 'apiary';
       const index = this.inspectionService.inspectionsApiary.indexOf(this.newInsp);
-      this.inspectionService.updateInspection(this.newInsp).subscribe(() => { },
+      this.inspectionService.updateEvent(this.newInsp).subscribe(() => { },
       (_err) => {
         if (_err.error_code === 403) {
           this.inspectionService.inspectionsApiary[index] = this.newInsp;
@@ -410,7 +412,13 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     for (let i = 0; i < this.PICTOS_HIVES_OBS.length; i++) {
 
       const button = document.createElement('button');
-      button.className = 'hives-obs-add';
+      if(this.PICTOS_HIVES_OBS[i].type === 'act'){
+        button.className = 'hives-act-add';
+      }
+      if(this.PICTOS_HIVES_OBS[i].type === 'obs'){
+        button.className = 'hives-obs-add';
+      }
+      
 
       button.classList.add(this.PICTOS_HIVES_OBS[i].class);
       button.onclick = (evt: Event) => {
@@ -574,7 +582,12 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     for (let i=0; i < this.PICTOS_HIVES_OBS.length; i++){
 
       const button = document.createElement('button');
-      button.className = 'hives-obs-add';
+      if(this.PICTOS_HIVES_OBS[i].type === 'act'){
+        button.className = 'hives-act-add';
+      }
+      if(this.PICTOS_HIVES_OBS[i].type === 'obs'){
+        button.className = 'hives-obs-add';
+      }
       button.classList.add(this.PICTOS_HIVES_OBS[i].class);
 
       if(this.new_event.obs != null && this.new_event.obs.findIndex( _o => _o.name === this.PICTOS_HIVES_OBS[i].name ) !== -1){
@@ -643,7 +656,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
 
   editEvent(): void{
     this.inspectionService.inspectionsApiary[ this.inspectionService.inspectionsApiary.findIndex(_insp => _insp._id === this.new_event._id) ] = Object.assign({}, this.new_event);
-    this.inspService.updateInspection(this.new_event).subscribe(
+    this.inspService.updateEvent(this.new_event).subscribe(
       _insp => {
         let index = this.inspectionService.inspectionsApiary.findIndex( _i => _i._id === _insp._id);
         this.inspectionService.inspectionsApiary[index] = Object.assign({}, _insp);

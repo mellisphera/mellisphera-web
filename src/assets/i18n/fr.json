@@ -603,7 +603,14 @@
           "BROOD":"Couvain",
           "STORES":"Réserves"
       },
-      "HISTORY":{},
+      "HISTORY":{
+          "TITLE":"Historique",
+          "TABLE":{
+              "APIARY":"Rucher",
+              "DATE":"Date",
+              "HEALTH":"Santé"
+          }
+      },
       "PARAMS":{}
     },
     "ALERTS_DESC":{
@@ -752,7 +759,10 @@
         "BUZZINGHIVE":"Bourdonneuse",
         "MOSAICBROOD":"Mosaique couvain",
         "MITESTRIPADD":"Traitement varroa ajout laniere",
-        "MITESTRIPREMOVE":"Traitement varroa retrait laniere"
+        "MITESTRIPREMOVE":"Traitement varroa retrait laniere",
+        "QUEEN":"Reine",
+        "MITECOUNTLOUNGE":"Lange",
+        "MITECOUNTWASH":"Compteur de Varroa"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",

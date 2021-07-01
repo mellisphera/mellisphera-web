@@ -1,3 +1,17 @@
-<p>
-  inspect-history works!
-</p>
+<div class="inspect-history-container">
+  <h3>{{'INSPECT.HISTORY.TITLE' | translate}}</h3>
+  <table class="inspect-history-table">
+    <thead>
+      <th style="padding: 5px;">{{'INSPECT.HISTORY.TABLE.APIARY' | translate}}</th>
+      <th style="padding: 5px;">{{'INSPECT.HISTORY.TABLE.DATE' | translate}}</th>
+      <th style="padding: 5px;">{{'INSPECT.HISTORY.TABLE.HEALTH' | translate}}</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of inspInfoTab;">
+        <td style="padding: 5px;">{{ item.apiary }}</td>
+        <td style="padding: 5px;">{{ item.date }}</td>
+        <td [class]="item.health" style="padding: 5px;"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

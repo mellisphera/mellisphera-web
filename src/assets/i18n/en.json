@@ -601,7 +601,14 @@
         "BROOD":"Brood",
         "STORES":"Stores"
       },
-      "HISTORY":{},
+      "HISTORY":{
+        "TITLE":"History",
+        "TABLE":{
+            "APIARY":"Apiary",
+            "DATE":"Date",
+            "HEALTH":"Health"
+        }
+      },
       "PARAMS":{}
     },
     "ALERTS_DESC":{
@@ -750,7 +757,10 @@
         "BUZZINGHIVE":"Buzzing hive",
         "MOSAICBROOD":"Mosaic brood",
         "MITESTRIPADD":"Mite treatment: strip add",
-        "MITESTRIPREMOVE":"Mite treatment: strip remove"
+        "MITESTRIPREMOVE":"Mite treatment: strip remove",
+        "QUEEN":"Queen",
+        "MITECOUNTLOUNGE":"Lounge",
+        "MITECOUNTWASH":"Mite counter"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
