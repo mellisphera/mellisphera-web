@@ -17,6 +17,7 @@ import { NotifierService } from 'angular-notifier';
 import { MelliChartsHiveService } from './../service/melli-charts-hive.service';
 import { DailyManagerService } from '../hive/service/daily-manager.service';
 import { InspCatService } from '../../service/api/insp-cat.service';
+import { InspCat } from '../../../_model/inspCat';
 
 @Component({
   selector: 'app-events',
@@ -89,7 +90,7 @@ export class EventsComponent implements OnInit {
     this.inspCat.getInspCat().subscribe(
       _inspCat => {
         _inspCat.forEach(_cat => {
-          if(_cat.applies.indexOf("apiary") !== -1 && _cat.type === "obs" && _cat.img !== "Default"){
+          if(_cat.img !== "Default" && this.notConstant(_cat)){
             this.PICTOS_HIVES_OBS.push({
               name:_cat.name.toLowerCase(), 
               img: _cat.img.toLowerCase() + '_b.svg',
@@ -99,18 +100,6 @@ export class EventsComponent implements OnInit {
           }
         })
         this.PICTOS_HIVES_OBS.push({
-          name:'super+', 
-          img: 'super+_b.svg',
-          img_active:'super+_cb.svg',
-          class: 'hives-super+-img'
-        })
-        this.PICTOS_HIVES_OBS.push({
-          name:'super-', 
-          img: 'super-_b.svg',
-          img_active:'super-_cb.svg',
-          class: 'hives-super--img'
-        })
-        this.PICTOS_HIVES_OBS.push({
           name:'default', 
           img: 'default_b.svg',
           img_active:'default_cb.svg',
@@ -118,6 +107,13 @@ export class EventsComponent implements OnInit {
         })
       }
     )
+  }
+
+  notConstant(cat: InspCat): boolean{
+    if(cat.name === 'Egg' || cat.name === 'Larva' || cat.name === 'Pupa' || cat.name === 'Dronebrood' || cat.name === 'Mitecountwash'){
+      return false;
+    }
+    else return true;
   }
 
   sortByDate(): void{
@@ -578,17 +574,70 @@ export class EventsComponent implements OnInit {
     let row = <HTMLTableRowElement>icon.parentNode.parentNode;
     let _id: string = row.cells[8].innerHTML;
     if(type === 'insp'){
+      this.PICTOS_HIVES_OBS = [];
       this.eventToEdit = this.events.find(_insp => _insp._id === _id);
       if(this.eventToEdit.type === 'hive'){
         this.hiveEvent = this.rucheService.getHiveById(this.eventToEdit.hiveId);
         this.newEventDate = new Date(this.eventToEdit.opsDate);
+        this.inspCat.getInspCat().subscribe(
+          _inspCat => {
+            _inspCat.forEach(_cat => {
+              if(_cat.applies.indexOf("hive") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
+                this.PICTOS_HIVES_OBS.push({
+                  name:_cat.name.toLowerCase(), 
+                  img: _cat.img.toLowerCase() + '_b.svg',
+                  img_active: _cat.img.toLowerCase() + '_cb.svg',
+                  class: 'hives-' + _cat.name.toLowerCase() + '-img',
+                  type: _cat.type
+                })
+              }
+            })
+            this.PICTOS_HIVES_OBS.push({
+              name:'default', 
+              img: 'default_b.svg',
+              img_active:'default_cb.svg',
+              class: 'hives-default-img',
+              type: 'obs'
+            })
+          },
+          () => {},
+          () => {
+            $('#editInspectionModal').modal('show');
+            this.addObsList();
+          }
+        );
       }
       if(this.eventToEdit.type === 'apiary'){
         this.apiaryEvent = this.rucherService.getApiaryByApiaryId(this.eventToEdit.apiaryId);
         this.newEventDate = new Date(this.eventToEdit.opsDate);
+        this.inspCat.getInspCat().subscribe(
+          _inspCat => {
+            _inspCat.forEach(_cat => {
+              if(_cat.applies.indexOf("apiary") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
+                this.PICTOS_HIVES_OBS.push({
+                  name:_cat.name.toLowerCase(), 
+                  img: _cat.img.toLowerCase() + '_b.svg',
+                  img_active: _cat.img.toLowerCase() + '_cb.svg',
+                  class: 'hives-' + _cat.name.toLowerCase() + '-img',
+                  type: _cat.type
+                })
+              }
+            })
+            this.PICTOS_HIVES_OBS.push({
+              name:'default', 
+              img: 'default_b.svg',
+              img_active:'default_cb.svg',
+              class: 'hives-default-img',
+              type: 'obs'
+            })
+          },
+          () => {},
+          () => {
+            $('#editInspectionModal').modal('show');
+            this.addObsList();
+          }
+        );
       }
-      $('#editInspectionModal').modal('show');
-      this.addObsList();
     }
     if(type === 'alert'){
       this.alertToEdit = this.alerts.find(_alt => _alt._id === _id);

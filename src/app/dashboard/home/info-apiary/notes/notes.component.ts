@@ -396,11 +396,9 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     this.new_event.createDate = new Date();
     this.newEventDate = new Date();
     this.new_event.type = 'apiary';
-    //(<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = null;
+    (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
     (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = this.newEventDate.getHours().toString();
-    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = this.newEventDate.getHours().toString();
-    /*(<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = true;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = true;*/
+    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = this.newEventDate.getMinutes().toString();
     (<HTMLTextAreaElement>document.getElementsByClassName('add-home-event-notes-textarea')[0]).value = null;
     (<HTMLTextAreaElement>document.getElementsByClassName('add-home-event-todo-textarea')[0]).value = null;
     this.addObsList();

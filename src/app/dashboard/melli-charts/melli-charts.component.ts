@@ -884,15 +884,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           this.apiaryEvent = Object.assign({}, rucher);
           this.new_event.type = this.typeEvent;
           this.new_event.apiaryId = rucher._id;
-        
+          this.newEventDate = new Date();
           this.new_event.userId = this.userService.getIdUserLoged();
           this.new_event.createDate = new Date();
           (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
-          (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = null;
-          (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = null;
-          (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = null;
-          (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = true;
-          (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = true;
+          (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
+          (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = this.newEventDate.getHours().toString();
+          (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = this.newEventDate.getMinutes().toString();
           (<HTMLTextAreaElement>document.getElementsByClassName('add-event-notes-textarea')[0]).value = null;
           (<HTMLTextAreaElement>document.getElementsByClassName('add-event-todo-textarea')[0]).value = null;
           this.addObsList();
@@ -927,15 +925,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           this.apiaryEvent = Object.assign({}, rucher);
           this.new_event.type = this.typeEvent;
           this.new_event.apiaryId = rucher._id;
-        
+          this.newEventDate = new Date();
           this.new_event.userId = this.userService.getIdUserLoged();
           this.new_event.createDate = new Date();
           (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
-          (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = null;
-          (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = null;
-          (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = null;
-          (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = true;
-          (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = true;
+          (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
+          (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = this.newEventDate.getHours().toString();
+          (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = this.newEventDate.getMinutes().toString();
           (<HTMLTextAreaElement>document.getElementsByClassName('add-event-notes-textarea')[0]).value = null;
           (<HTMLTextAreaElement>document.getElementsByClassName('add-event-todo-textarea')[0]).value = null;
           this.addObsList();
