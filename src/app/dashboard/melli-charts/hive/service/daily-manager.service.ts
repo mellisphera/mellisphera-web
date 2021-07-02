@@ -1020,9 +1020,9 @@ export class DailyManagerService {
   }
 
   getChartWeight(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.dailyWService.getWeightByHive(hiveId, range).subscribe(
+    this.dailyWService.getWeight23fByHive(hiveId, range).subscribe(
       _weightMax => {
-        //this.getLastDayForMeanValue(this.dailyWService.getWeightByHive(hiveId, this.rangeSevenDay), true, type);
+        //this.getLastDayForMeanValue(this.dailyWService.getWeight23fByHive(hiveId, this.rangeSevenDay), true, type);
         let option = this.baseOptionsInt;
         if (rangeChange) {
           let serie = JSON.parse(JSON.stringify(SERIES.effectScatter));
