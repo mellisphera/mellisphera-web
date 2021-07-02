@@ -383,6 +383,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     this.new_event.hiveId = this.rucheService.getCurrentHive()._id;
     this.new_event.userId = this.userService.getIdUserLoged();
     this.new_event.createDate = new Date();
+    this.newEventDate = new Date();
     this.new_event.type = 'hive';
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = null;
     (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = null;

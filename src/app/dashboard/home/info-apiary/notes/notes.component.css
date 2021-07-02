@@ -376,7 +376,7 @@ th{
   height: 90px;
 }
 
-.add-event-todo-textarea, .edit-home-event-todo-textarea{
+.add-home-event-todo-textarea, .edit-home-event-todo-textarea{
   display: none;
   overflow-y: hidden;
   margin-left: 5px;
