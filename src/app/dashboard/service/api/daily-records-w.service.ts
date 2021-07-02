@@ -323,7 +323,7 @@ export class DailyRecordsWService {
    * @param hiveId
    * @param range
    */
-  getWeigh23fByHive(hiveId: string, range: Date[]): Observable<any> {
+  getWeight23fByHive(hiveId: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weight23f/' + hiveId, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef, position: _value.position };
     }));

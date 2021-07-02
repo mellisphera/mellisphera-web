@@ -372,7 +372,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       else{
         obs = this.stackService.getHiveSelect().map(_hive => {
-          return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, this.melliDateService.getRefDayRangeForRequest()) }
+          return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeight23fByHive(_hive._id, this.melliDateService.getRefDayRangeForRequest()) }
         });
       }
       Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
@@ -394,12 +394,12 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
             if(this.gainWeightDisplay){
               if(this.ref_Date == undefined || this.ref_Date == null){ // IF REF_DATE IS UNDEFINED OR REF_DATE BEFORE START IN CALENDAR RANGE
                 obs = this.stackService.getHiveSelect().map(_hive => {
-                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
+                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeight23fByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
                 });
               }
               else{ // IF REF_DATE AFTER REF_DATE AFTER START IN CALENDAR RANGE
                 obs = this.stackService.getHiveSelect().map(_hive => {
-                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
+                  return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeight23fByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
                 });
               }
 
@@ -418,7 +418,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
             }
             else{
               obs = this.stackService.getHiveSelect().map(_hive => {
-                return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
+                return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeight23fByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
               });
             }
             Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
@@ -537,12 +537,12 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
       if(this.gainWeightDisplay){
         if(this.ref_Date == undefined || this.ref_Date == null){ // IF REF_DATE IS UNDEFINED OR REF_DATE BEFORE START IN CALENDAR RANGE
           obs = this.stackService.getHiveSelect().map(_hive => {
-            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
+            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeight23fByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
           });
         }
         else{ // IF REF_DATE AFTER REF_DATE AFTER START IN CALENDAR RANGE
           obs = this.stackService.getHiveSelect().map(_hive => {
-            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
+            return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeight23fByHive(_hive._id, [this.ref_Date, this.melliDateService.end]) }
           });
         }
 
@@ -562,7 +562,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       else{
         obs = this.stackService.getHiveSelect().map(_hive => {
-          return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeightMinByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
+          return { hive: _hive, name: _hive.name, obs: this.dailyWService.getWeight23fByHive(_hive._id, this.melliDateService.getRangeForReqest()) }
         });
       }
       Observable.forkJoin(obs.map(_elt => _elt.obs)).subscribe(
@@ -760,7 +760,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
     let ref_val;
     if(this.gainWeightDisplay){ // GAIN WEIGHT DISPLAY
       if(this.ref_Date != undefined && this.ref_Date != null ){
-        this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRefDayRangeForRequest()).subscribe(
+        this.dailyWService.getWeight23fByHive(hive._id, this.melliDateService.getRefDayRangeForRequest()).subscribe(
           _ref_weight => {
             if(_ref_weight.length > 0){
               this.ref_Values.push(_ref_weight[0].value);
@@ -773,7 +773,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           () => {},
           () => {
-            this.dailyWService.getWeightMinByHive(hive._id, [this.ref_Date, this.melliDateService.end]).subscribe(
+            this.dailyWService.getWeight23fByHive(hive._id, [this.ref_Date, this.melliDateService.end]).subscribe(
               _weight => {
                 let w_i_array = _weight.map(a => ({...a}));
                 if(this.gainWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
@@ -842,7 +842,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
         )
       }
       else{
-        this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+        this.dailyWService.getWeight23fByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
           _weight => {
             let w_i_array = _weight.map(a => ({...a}));
             if(this.gainWeightDisplay){ // IF GAIN WEIGHT DISPLAY THEN TRANSFORM DATA AND ADD ANOTHER DATA SERIES
@@ -1022,7 +1022,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     if(this.rawWeightDisplay){
       if(this.ref_Date != undefined && this.ref_Date != null){ // REF DATE DEFINED
-        this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRefDayRangeForRequest()).subscribe(
+        this.dailyWService.getWeight23fByHive(hive._id, this.melliDateService.getRefDayRangeForRequest()).subscribe(
           _ref_weight => {
             if(_ref_weight.length > 0){
               this.ref_Values.push(_ref_weight[0].value);
@@ -1035,7 +1035,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           () => {},
           () => {
-            this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+            this.dailyWService.getWeight23fByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
               _weight => {
                 this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
                   serieComplete.itemStyle = {
@@ -1073,7 +1073,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
         )
       }
       else{ // NO REF DATE
-        this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+        this.dailyWService.getWeight23fByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
           _weight => {
             this.getSerieByData(_weight, hive.name, (serieComplete: any) => {
               serieComplete.itemStyle = {
@@ -1490,7 +1490,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
 
   addDataToNormTable(normWeight: any[], ref_val: number | null, hive: RucheInterface){
     let rawWeight;
-    this.dailyWService.getWeightMinByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
+    this.dailyWService.getWeight23fByHive(hive._id, this.melliDateService.getRangeForReqest()).subscribe(
       _weight => {
         rawWeight = [..._weight];
       },
