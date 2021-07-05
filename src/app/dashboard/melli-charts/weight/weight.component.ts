@@ -225,7 +225,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
     let yAxis = Object.assign({}, BASE_OPTIONS.yAxis[1]);
     if(this.gainWeightDisplay){
       yAxis.name = this.graphGlobal.weight.income_name;
-      yAxis.interval = 1;
+      yAxis.interval = 2;
     }
     if(this.rawWeightDisplay){
       yAxis.name = this.graphGlobal.weight.name;
@@ -233,7 +233,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     if(this.normWeightDisplay){
       yAxis.name = this.graphGlobal.weight.norm_name;
-      yAxis.interval = 5;
+      yAxis.interval = 1;
     }
 
     // ADAPT Y AXIS TO WEIGHT DISPLAY
@@ -728,26 +728,30 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
       this.hourlyWeight.instance.removeHiveSerie(hive);
       return;
     }
-    const series = this.option.baseOption.series.filter(_filter => _filter.name.indexOf(hive.name) !== -1);
-    let indexSerie;
-    let nb = series.length;
-    if (series.length > 0) {
-      series.forEach(element => {
-        indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(element.name);
-        this.option.baseOption.series.splice(indexSerie, 1);
-      });
-      if(indexSerie === 0 && this.option.baseOption.series.length > 0){
-        this.option.baseOption.series[0].markLine =
-        {
-          data: [ {name: "", xAxis: this.ref_Date} ],
-          lineStyle: {normal: { type:'dashed',color: 'red', width: 2} },
-          label:{normal:{show:false } },
-          symbol: ['circle', 'none']
+    if(this.findIdInTable(hive) !== -1){
+      const series = this.option.baseOption.series.filter(_filter => _filter.name.indexOf(hive.name) !== -1);
+      let indexSerie;
+      let nb = series.length;
+      if (series.length > 0) {
+        series.forEach(element => {
+          indexSerie = this.option.baseOption.series.map(_serie => _serie.name).indexOf(element.name);
+          this.option.baseOption.series.splice(indexSerie, 1);
+        });
+        if(indexSerie === 0 && this.option.baseOption.series.length > 0){
+          this.option.baseOption.series[0].markLine =
+          {
+            data: [ {name: "", xAxis: this.ref_Date} ],
+            lineStyle: {normal: { type:'dashed',color: 'red', width: 2} },
+            label:{normal:{show:false } },
+            symbol: ['circle', 'none']
+          }
         }
       }
+      this.stackService.getWeightChartInstance().setOption(this.option, true);
+      this.removeDataFromTable(hive);
+      return;
     }
-    this.stackService.getWeightChartInstance().setOption(this.option, true);
-    this.removeDataFromTable(hive.name);
+    
   }
 
   // RELOAD GRAPH WHEN ADDING NEW HIVE
@@ -831,7 +835,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.option.baseOption.series.push(serieComplete);
                   this.stackService.getWeightChartInstance().setOption(this.option);
                 });
-                this.addDataToTable(_weight, ref_val, hive.name);
+                this.addDataToTable(_weight, ref_val, hive);
               },
               () => {},
               () => {
@@ -888,7 +892,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
               this.option.baseOption.series.push(serieComplete);
               this.stackService.getWeightChartInstance().setOption(this.option);
             });
-            this.addDataToTable(_weight, null, hive.name);
+            this.addDataToTable(_weight, null, hive);
           },
           () => {},
           () => {
@@ -956,7 +960,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.option.baseOption.series.push(serieComplete);
                     this.stackService.getWeightChartInstance().setOption(this.option);
                   });
-                  this.addDataToTable(_weight, ref_val, hive.name);
+                  this.addDataToTable(_weight, ref_val, hive);
               },
               () => {},
               () => {
@@ -1010,7 +1014,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
               this.option.baseOption.series.push(serieComplete);
               this.stackService.getWeightChartInstance().setOption(this.option);
             });
-            this.addDataToTable(_weight, null, hive.name);
+            this.addDataToTable(_weight, null, hive);
           },
           () => {},
           () => {
@@ -1061,7 +1065,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
                   }
                   this.option.baseOption.series.push(serieComplete);
                   this.stackService.getWeightChartInstance().setOption(this.option);
-                  this.addDataToTable(_weight, ref_val, hive.name);
+                  this.addDataToTable(_weight, ref_val, hive);
                 });
               },
               () => {},
@@ -1090,7 +1094,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
               }
               this.option.baseOption.series.push(serieComplete);
               this.stackService.getWeightChartInstance().setOption(this.option);
-              this.addDataToTable(_weight, null, hive.name);
+              this.addDataToTable(_weight, null, hive);
             });
           },
           () => {},
@@ -1319,6 +1323,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
           let cell2 = row.insertCell(); // T0 CELL
           let cell3 = row.insertCell(); // 7DAYS CELL
           let cell4 = row.insertCell(); // 15DAYS CELL
+          let cell5 = row.insertCell();
           if(this.gainWeightDisplay || this.normWeightDisplay){
             if(e.length > 0){
               if(e.length >= 7){
@@ -1357,15 +1362,18 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
           }
+
+          cell5.innerHTML = obs[index].hive._id;
+          cell5.style.display = 'none';
     });
   }
 
-  addDataToTable(_weight: any[], ref_val: number | null, name: string): void{
+  addDataToTable(_weight: any[], ref_val: number | null, hive: RucheInterface): void{
     let table = document.getElementById("weight-table").getElementsByTagName("table")[0];
     let tbody = table.getElementsByTagName('tbody')[0];
     let row = tbody.insertRow();
     let cell1 = row.insertCell(); // HIVE CELL
-    cell1.innerHTML = name;
+    cell1.innerHTML = hive.name;
     let cell2 = row.insertCell(); // T0 CELL
     if(ref_val == null){
       cell2.innerHTML = "No Value";
@@ -1380,37 +1388,57 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     let cell3 = row.insertCell(); // 7DAYS CELL
     if(this.gainWeightDisplay || this.normWeightDisplay){
-      if(_weight.length >= 7){
+      if(_weight.length > 7){
         cell3.innerHTML = (_weight[0].value - _weight[7].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
       }
     }
     if(this.rawWeightDisplay){
-      if(_weight.length >= 7){
+      if(_weight.length > 7){
         cell3.innerHTML =  _weight[7].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
       }
     }
     let cell4 = row.insertCell(); // 15DAYS CELL
     if(this.gainWeightDisplay || this.normWeightDisplay){
-      if(_weight.length >= 15){
+      if(_weight.length > 15){
         cell4.innerHTML = (_weight[0].value - _weight[15].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
       }
     }
     if(this.rawWeightDisplay){
-      if(_weight.length >= 15){
+      if(_weight.length > 15){
         cell4.innerHTML =  _weight[15].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
       }
     }
 
+    let cell5 = row.insertCell();
+    cell5.innerHTML = hive._id;
+    cell5.style.display = 'none';
   }
 
-  removeDataFromTable(name: string): void{
+  removeDataFromTable(hive: RucheInterface): void{
+    console.log(hive);
     let table = document.getElementById("weight-table").getElementsByTagName("table")[0];
     let tbody = table.getElementsByTagName('tbody')[0];
     let tr = tbody.getElementsByTagName('tr');
-    let index = Array.from(tr).findIndex(e => e.cells[0].innerHTML === name);
+    let index = Array.from(tr).findIndex(e => e.cells[4].innerHTML === hive._id);
     if(index > -1){
       tbody.deleteRow(index);
     }
+  }
+
+  findIdInTable(hive: RucheInterface): number{
+    let table = document.getElementById("weight-table").getElementsByTagName("table")[0];
+    let tbody = table.getElementsByTagName('tbody')[0];
+    let index = -1, i = 0;
+    while(i<tbody.rows.length){
+      if(tbody.rows[i].cells[4].innerHTML === hive._id){
+        index = i;
+        break;
+      }
+      else{
+        i++;
+      }
+    }
+    return index;
   }
 
   updateNormTableData(normWeight: any[], obs:any){

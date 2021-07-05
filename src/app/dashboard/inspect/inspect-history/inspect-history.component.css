@@ -21,11 +21,24 @@
     background-size: 20px;
 }
 
+.inspect-history-table{
+    border-collapse: collapse;
+}
+
 .inspect-history-table th{
     width: 100px;
     text-align: center;
 }
 
+.inspect-history-table tr{
+    border-bottom: 1px solid rgb(221, 221, 221);
+}
+
 .inspect-history-table td{
     text-align: center;
+}
+
+.apiary-sort:hover, .date-sort:hover{
+    background-color: #ddd;
+    cursor: pointer;
 }

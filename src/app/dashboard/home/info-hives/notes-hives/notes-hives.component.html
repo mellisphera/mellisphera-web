@@ -127,8 +127,8 @@ limitations under the License. -->
       </div>
       <div class="modal-footer">
         <div class="add-event-buttons">
-          <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
-          <button class="btn btn-success" style="margin-left:10px;height:34px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
+          <button class="btn btn-danger" style="margin-right:10px;height:34px; width:100px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button class="btn btn-success" style="margin-left:10px;height:34px; width:100px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
         </div>
       </div>
     </div>
@@ -186,7 +186,7 @@ limitations under the License. -->
           <div class="dropleft" style="float:left;">
             <button class="btn btn-danger dropdown-toggle" [id]="'dropdownDelButton'"
               type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-              style="padding: 6px 12px !important;">
+              style="padding: 6px 12px !important; width:100px;">
               {{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}
             </button>
             <div class="dropdown-menu dropdown-menu-left" [attr.aria-labelledby]="'dropdownDelButton'"
@@ -195,8 +195,8 @@ limitations under the License. -->
               <button class="btn btn-default btn-confirm-del" (click)="deleteEvent()"><i class="fas fa-times-circle"></i></button>
             </div>
           </div>
-          <button class="btn btn-success" style="float:right;height:34px;margin-left: 10px;" (click)="editEvent()">{{'MELLICHARTS.EVENT.BUTTONS.EDIT' | translate}}</button>
-          <button class="btn btn-default" style="float:right;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button class="btn btn-success" style="float:right;height:34px;margin-left: 10px; width:100px;" (click)="editEvent()">{{'MELLICHARTS.EVENT.BUTTONS.EDIT' | translate}}</button>
+          <button class="btn btn-default" style="float:right;height:34px; width:100px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
         </div>
       </div>
     </div>

@@ -275,7 +275,7 @@ export class HourlyWeightComponent implements OnInit {
         serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
           let newDate = new Date(_map.date);
           if(newDate > this.melliDateService.start && newDate < this.melliDateService.end){
-            return { name: newDate.toISOString(), value: [newDate.toISOString(), _map.value, _map.sensorRef], position: _data.position };
+            return { name: newDate.toISOString(), value: [newDate.toISOString(), _map.value.replace(/,/ ,'.'), _map.sensorRef], position: _data.position };
           }
         });
         next(serieTmp);

@@ -621,7 +621,9 @@
         "TABLE":{
             "APIARY":"Colmenar",
             "DATE":"Fecha",
-            "HEALTH":"Salud"
+            "HEALTH":"Salud",
+            "DESC":"Notas",
+            "TODO":"Tareas"
         }
       },
       "PARAMS":{}

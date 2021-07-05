@@ -5,11 +5,14 @@ import { Inspection } from '../../../_model/inspection';
 import { InspectionService } from '../../service/api/inspection.service';
 import { RucherService } from '../../service/api/rucher.service';
 import { UnitService } from '../../service/unit.service';
+import { TranslateService } from '@ngx-translate/core';
 
 interface InspInfo{
   apiary: string,
-  date: string,
+  date: Date,
   health: string,
+  notes: string,
+  todo: string
 }
 
 @Component({
@@ -23,11 +26,15 @@ export class InspectHistoryComponent implements OnInit {
   public inspInfoTab: InspInfo[] = [];
   private user_apiaries: RucherModel[] = [];
 
+  private apiarySort: string = "";
+  private dateSort: string = "";
+
   constructor(
     private inspService: InspectionService,
     private userService: UserloggedService,
     private rucherService: RucherService,
-    public unitService: UnitService
+    public unitService: UnitService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -74,8 +81,87 @@ export class InspectHistoryComponent implements OnInit {
       if(insp.obs.find(_o => _o.name.includes('General')) != undefined){
         health = insp.obs.find(_o => _o.name.includes('General')).name.toLowerCase();
       }
-      this.inspInfoTab.push({apiary : this.user_apiaries.find(_api => _api._id === insp.apiaryId).name, date: this.unitService.getHourlyDate(new Date(insp.opsDate)), health: health.toLowerCase()})
+      this.inspInfoTab.push({
+        apiary : this.user_apiaries.find(_api => _api._id === insp.apiaryId).name, 
+        date: new Date(insp.opsDate), 
+        health: health.toLowerCase(),
+        notes:insp.description,
+        todo:insp.todo
+      })
     })
   }
+
+  changeSortApiary(): void{
+    let th = <HTMLTableCellElement>document.getElementsByClassName('apiary-sort')[0];
+    let th_other = <HTMLTableCellElement>document.getElementsByClassName('date-sort')[0];
+    th_other.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.DATE');
+    if(this.apiarySort === "" || this.apiarySort === "DESC"){
+      this.apiarySort = "ASC";
+      th.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.APIARY') + '<i class="fas fa-sort-up" style="margin-left:3px"></i>';
+      this.inspInfoTab.sort((a,b) => {
+        if( b.apiary > a.apiary ){
+          return 1;
+        }
+        if( b.apiary < a.apiary ){
+          return -1;
+        }
+        if(b.apiary === a.apiary){
+          return 0;
+        }
+      });
+      return;
+    }
+    this.apiarySort = "DESC";
+    th.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.APIARY') + '<i class="fas fa-sort-down" style="margin-left:3px"></i>';
+    this.inspInfoTab.sort((a,b) => {
+      if( b.apiary < a.apiary ){
+        return 1;
+      }
+      if( b.apiary > a.apiary ){
+        return -1;
+      }
+      if(b.apiary === a.apiary){
+        return 0;
+      }      
+    });
+    return;
+  }
+
+  changeSortDate(): void{
+    let th = <HTMLTableCellElement>document.getElementsByClassName('date-sort')[0];
+    let th_other = <HTMLTableCellElement>document.getElementsByClassName('apiary-sort')[0];
+    th_other.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.APIARY');
+    if(this.dateSort === "" || this.dateSort === "DESC"){
+      this.dateSort = "ASC";
+      th.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.DATE') + '<i class="fas fa-sort-up" style="margin-left:3px"></i>';    
+      this.inspInfoTab.sort((a,b) => {
+        if(new Date(b.date).getTime() > new Date(a.date).getTime()){
+          return 1;
+        }
+        if(new Date(b.date).getTime() < new Date(a.date).getTime()){
+          return -1;
+        }
+        if(new Date(b.date).getTime() === new Date(a.date).getTime()){
+          return 0;
+        }
+      });
+      return;
+    }
+    this.dateSort = "DESC";
+    th.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.DATE') + '<i class="fas fa-sort-down" style="margin-left:3px"></i>';
+    this.inspInfoTab.sort((a,b) => {
+      if(new Date(b.date).getTime() < new Date(a.date).getTime()){
+        return 1;
+      }
+      if(new Date(b.date).getTime() > new Date(a.date).getTime()){
+        return -1;
+      }
+      if(new Date(b.date).getTime() === new Date(a.date).getTime()){
+        return 0;
+      }
+    });
+    return;
+  }
+
 
 }

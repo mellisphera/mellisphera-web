@@ -39,7 +39,7 @@ limitations under the License. */
 
 .btn-confirm-del:hover{
   background-color: transparent;
-  color: red;
+  color: rgb(0, 200, 0);
 }
 
 .close{

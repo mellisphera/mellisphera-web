@@ -136,7 +136,7 @@ limitations under the License. -->
                     </div>
                     <div (click)="onClick(ruche);" class="weight collapse ">
                         <span
-                            class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightMaxByHive(ruche._id)) }}</span>
+                            class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getDailyWeightByHive(ruche._id)) }}</span>
                     </div>
                     <div (click)="onClick(ruche);" id="collapse1"
                         [class]="(capteurService.getCapteursByHive(ruche._id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">

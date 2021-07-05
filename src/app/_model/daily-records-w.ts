@@ -19,6 +19,7 @@ export interface DailyRecordsW {
     weight_min : number;
     weight_max : number;
     weight_gain : number;
+    weight_23f: number;
     weight_income_gain : number;
     sensorRef: string;
     weight_foragingbees : number;

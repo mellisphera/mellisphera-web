@@ -49,7 +49,7 @@ limitations under the License. */
 
 .btn-confirm-del:hover{
   background-color: transparent;
-  color: red;
+  color: rgb(0, 200, 0);
 }
 
 .open ul.dropdown-menu {
@@ -993,6 +993,43 @@ th{
   background-position: center;
   border: 1px solid rgb(0, 180, 0);
 }*/
+
+.hives-generallow-img{
+  background-size: 28px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/inspects/hcc/generallow_b.svg');
+  background-position: center;
+}
+.hives-generallow-img-active{
+  background-size: 28px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/inspects/hcc/generallow_cb.svg');
+  background-position: center;
+}
+.hives-generalnormal-img{
+  background-size: 28px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/inspects/hcc/generalnormal_b.svg');
+  background-position: center;
+}
+.hives-generalnormal-img-active{
+  background-size: 28px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/inspects/hcc/generalnormal_cb.svg');
+  background-position: center;
+}
+.hives-generalgood-img{
+  background-size: 28px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/inspects/hcc/generalgood_b.svg');
+  background-position: center;
+}
+.hives-generalgood-img-active{
+  background-size: 28px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../../assets/ms-pics/inspects/hcc/generalgood_cb.svg');
+  background-position: center;
+}
 
 .add-event-notes-toggle{
   border-radius: 3px;

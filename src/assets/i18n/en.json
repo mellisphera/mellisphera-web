@@ -606,7 +606,9 @@
         "TABLE":{
             "APIARY":"Apiary",
             "DATE":"Date",
-            "HEALTH":"Health"
+            "HEALTH":"Health",
+            "DESC":"Notes",
+            "TODO":"Tasks"
         }
       },
       "PARAMS":{}

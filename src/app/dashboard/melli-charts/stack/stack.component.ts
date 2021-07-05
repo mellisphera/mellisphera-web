@@ -348,7 +348,7 @@ export class StackComponent implements OnInit {
           };
         }
         serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
-          return { name: _map.date, value: [_map.date, _map.value, _map.sensorRef] };
+          return { name: _map.date, value: [_map.date, typeof _map.value === 'string' ? _map.value.replace(/,/ , '.') : _map.value , _map.sensorRef] };
         });
         next(serieTmp);
       }

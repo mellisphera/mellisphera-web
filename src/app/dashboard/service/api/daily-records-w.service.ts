@@ -369,13 +369,13 @@ export class DailyRecordsWService {
     this.getDailyWeightMaxByApiary(apiaryId);
   }
 
-  public getWeightMaxByHive(hiveId: string): string {
+  public getDailyWeightByHive(hiveId: string): string {
     // console.log(this.dailyWeightRecords);
     const selectHive = this.dailyWeightRecords.filter(elt => elt.hiveId === hiveId)[0];
     if (this.unitSystem === 'METRIC') {
-      return selectHive ? this.unitService.convertWeightFromuserPref(selectHive.weight_min, 'METRIC', true)+ ' kg' : '-';
+      return selectHive ? this.unitService.convertWeightFromuserPref(selectHive.weight_23f, 'METRIC', true)+ ' kg' : '-';
     } else {
-      return selectHive ?this.unitService.convertWeightFromuserPref(selectHive.weight_min, 'IMPERIAL', true) + ' lbs' : '-';
+      return selectHive ?this.unitService.convertWeightFromuserPref(selectHive.weight_23f, 'IMPERIAL', true) + ' lbs' : '-';
     }
 
   }

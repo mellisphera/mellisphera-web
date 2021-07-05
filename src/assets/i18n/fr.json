@@ -608,7 +608,9 @@
           "TABLE":{
               "APIARY":"Rucher",
               "DATE":"Date",
-              "HEALTH":"Santé"
+              "HEALTH":"Santé",
+              "DESC":"Notes",
+              "TODO":"Taches"
           }
       },
       "PARAMS":{}
