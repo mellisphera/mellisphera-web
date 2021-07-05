@@ -76,16 +76,17 @@
 #inspect-apiary-select{
   margin-left: 10px;
   width: 215px;
+  height: 28px;
 }
 
 .inspect-time-input{
   width: 200px;
-  height: 26px;
+  height: 28px;
   text-align: center;
 }
 
 .inspect-time-icon{
-  padding: 5px 15px;
+  padding: 7px 15px;
   min-width: 40px;
 }
 

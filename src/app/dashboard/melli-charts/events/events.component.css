@@ -468,7 +468,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/alerts/ruche/hightemp_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/tmax_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -476,7 +476,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/alerts/ruche/hightemp_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/tmax_cb.png') center no-repeat;
   background-size: 35px;
   border: 1px solid rgb(233, 162, 9);
 }
@@ -485,7 +485,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/alerts/ruche/lowtemp_b.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/tmin_b.png') center no-repeat;
   background-size: 35px;
 }
 
@@ -493,7 +493,7 @@
   width: 40px;
   height: 40px;
   border-radius: 5px;
-  background: url('../../../../assets/ms-pics/alerts/ruche/lowtemp_cb.png') center no-repeat;
+  background: url('../../../../assets/ms-pics/alerts/ruche/tmin_cb.png') center no-repeat;
   background-size: 35px;
   border: 1px solid rgb(233, 162, 9);
 }

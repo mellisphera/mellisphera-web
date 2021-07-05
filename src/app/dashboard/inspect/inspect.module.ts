@@ -13,8 +13,20 @@ import { InspectNewComponent } from './inspect-new/inspect-new.component';
 import { InspectParamsComponent } from './inspect-params/inspect-params.component';
 import { InspectComponent } from './inspect.component';
 import { InspectRouting } from './inspect.routing';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { SharedModule } from '../shared/shared.module';
+
+import { DateTimeAdapter, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { MomentDateTimeAdapter, OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
+
+const MY_CUSTOM_FORMATS = {
+  fullPickerInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  parseInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  datePickerInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY'
+};
 
 @NgModule({
   imports: [
@@ -33,6 +45,8 @@ import { SharedModule } from '../shared/shared.module';
     UnitService,
     AuthGuardService,
     UserParamsService,
+    { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }
   ],
   declarations: [
     InspectComponent,

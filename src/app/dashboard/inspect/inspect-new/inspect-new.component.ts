@@ -91,6 +91,9 @@ export class InspectNewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.inspect_date = new Date();
+    (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-hours')[0]).value = this.inspect_date.getHours().toString();
+    (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-minutes')[0]).value = this.inspect_date.getMinutes().toString();
     this.active_apiary_index = 0;
     this.userPrefsService.getUserPrefs().subscribe(
       _userPrefs => {
