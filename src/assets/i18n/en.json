@@ -594,7 +594,12 @@
           "ACT_OBS": "Actions and Observations"
         },
         "BTN_SAVE":"Save",
-        "BTN_PRINT":"Print"
+        "BTN_PRINT":"Print",
+        "BTN_PDF":"Generate PDF",
+        "BTN_DL":"Download",
+        "GEN_DL":"File generating : ",
+        "READY_DL":"Your file is ready for download !",
+        "BTN_CANCEL":"Cancel"
       },
       "TABLE":{
         "BEES":"Bees",
@@ -606,7 +611,7 @@
         "TABLE":{
             "APIARY":"Apiary",
             "DATE":"Date",
-            "HEALTH":"Health",
+            "HEALTH":"Overall state",
             "DESC":"Notes",
             "TODO":"Tasks"
         }

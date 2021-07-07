@@ -18,6 +18,7 @@ import { InspUser } from '../../../_model/inspUser';
 import { InspUserService } from '../../service/api/insp-user.service';
 import { NotifierService } from 'angular-notifier';
 import { SeasonsService } from '../service/seasons.service';
+import { generate } from 'rxjs';
 
 declare var jsPDF: any;
 
@@ -150,6 +151,8 @@ export class InspectNewComponent implements OnInit {
 
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-hours')[0]).disabled = true;
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-minutes')[0]).disabled = true;
+
+    $("#downloadModal").on('shown.bs.modal', () => {this.generatePDF()} );
 
   }
 
@@ -1167,15 +1170,27 @@ export class InspectNewComponent implements OnInit {
     }
   }
 
+
+  openModal():void{
+    (<HTMLButtonElement>document.getElementById("btn-dl")).disabled = true;
+    $("#downloadModal").modal("show");
+  }
+
   generatePDF(): void{
+
+    this.pdf = new jsPDF();
+
     let headerTitle = this.translateService.instant('INSPECT.NEW.TITLE');
     let headerDate = this.translateService.instant('INSPECT.NEW.DATE');
 
-    console.log(this.pdf.getFontList())
+    (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "0%";
+
     this.pdf.setFont("courier","normal");
     this.pdf.setFontSize(18);
     this.pdf.text(headerTitle, 10, 10);
 
+    (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "5%";
+    
     this.pdf.setFont("courier","bolditalic");
     //this.pdf.text(this.user_apiaries[this.active_apiary_index - 1].name, 123, 10);
 
@@ -1184,6 +1199,8 @@ export class InspectNewComponent implements OnInit {
 
     this.pdf.setFont("courier","bolditalic");
     this.pdf.text(this.unitService.getHourlyDate(this.inspect_date), 37, 20);
+
+    (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "10%";
 
     this.pdf.setFont("courier","normal");
     this.pdf.rect(10, 25, 190, 72, "S");
@@ -1194,6 +1211,8 @@ export class InspectNewComponent implements OnInit {
     this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/generalnormal_b.png", "PNG", 35, 40, 10, 10);
     this.pdf.addImage("../../../../assets/ms-pics/inspects/hcc/generalgood_b.png", "PNG", 50, 40, 10, 10);
 
+    (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "15%";
+
     this.pdf.setFillColor("#EEEEEE");
     this.pdf.rect(15, 65, 77, 12, "F");
     this.pdf.addImage("../../../../assets/ms-pics/inspects/nobrood_b.png", "PNG", 17, 67, 8, 8);
@@ -1202,6 +1221,7 @@ export class InspectNewComponent implements OnInit {
     this.pdf.addImage("../../../../assets/ms-pics/inspects/pupa_b.png", "PNG", 62, 66, 10, 10);
     this.pdf.addImage("../../../../assets/ms-pics/inspects/dronebrood_b.png", "PNG", 77, 66, 10, 10);
 
+    (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "20%";
 
     let nbElt = 5;
     let lineCount = 0;
@@ -1218,11 +1238,15 @@ export class InspectNewComponent implements OnInit {
       this.pdf.rect(15, 80, 15*nbElt, 12, "F");
     }
 
+    (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "30%";
+
     this.pdf.addImage("../../../../assets/ms-pics/inspects/swarm_b.png", "PNG", 17, 81, 10, 10);
     this.pdf.addImage("../../../../assets/ms-pics/inspects/buzzinghive_b.png", "PNG", 32, 81, 10, 10);
     this.pdf.addImage("../../../../assets/ms-pics/inspects/sick_b.png", "PNG", 47, 81, 10, 10);
     this.pdf.addImage("../../../../assets/ms-pics/inspects/mosaicbrood_b.png", "PNG", 62, 81, 10, 10);
     this.pdf.addImage("../../../../assets/ms-pics/inspects/queen_b.png", "PNG", 77, 81, 10, 10);
+
+    (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "40%";
 
     nbElt = 5;
     lineCount = 0;
@@ -1236,11 +1260,14 @@ export class InspectNewComponent implements OnInit {
 
     this.pdf.rect(10, 100, 190, 190, "S");
 
+    (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "50%";
+
     this.generateRuche();
 
   }
 
   generateRuche(): void{
+    let loading = 50;
     let startX = 15, startY = 108;
     let page = 1;
     let mult = 0;
@@ -1311,12 +1338,135 @@ export class InspectNewComponent implements OnInit {
         mult = 0;
       }
 
+      loading += Math.floor(50/this.user_hives.length);
+
+      (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + loading + "%";
+
     }
+
+    (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "100%";
+    (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.READY_DL');
+    (<HTMLButtonElement>document.getElementById("btn-dl")).disabled = false;
   }
 
+
   printPDF(): void{
-    this.generatePDF();
     this.pdf.save("test.pdf");
+  }
+
+  cancelInspection(): void{
+    (<HTMLSelectElement>document.getElementById("inspect-apiary-select")).selectedIndex = 0;
+    this.active_apiary_index = 0;
+    this.inspect_date = new Date();
+    (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-hours')[0]).disabled = true;
+    (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-minutes')[0]).disabled = true;
+
+    this.new_apiary_insp = {
+      _id: null,
+      apiaryInspId: null,
+      apiaryId: null,
+      hiveId: null,
+      userId: this.userService.getIdUserLoged(),
+      createDate: null,
+      opsDate: null,
+      type: 'apiary',
+      tags: [],
+      tasks: [],
+      obs: [],
+      description: null,
+      todo: null
+    }
+  
+    this.new_hive_insp = {
+      _id: null,
+      apiaryInspId: null,
+      apiaryId: null,
+      hiveId: null,
+      userId: this.userService.getIdUserLoged(),
+      createDate: null,
+      opsDate: null,
+      type: 'hive',
+      tags: [],
+      tasks: [],
+      obs: [],
+      description: null,
+      todo: null
+    }
+
+    if( <HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0] != null ){
+      (<HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0]).classList.remove('btn-sad-active');
+    }
+
+    if( <HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0] != null ){
+      (<HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0]).classList.remove('btn-normal-active');
+    }
+
+    if( <HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0] != null ){
+      (<HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0]).classList.remove('btn-happy-active');
+    }
+
+    (<HTMLTextAreaElement>document.getElementsByClassName('apiary-notes-input')[0]).value = "";
+    (<HTMLTextAreaElement>document.getElementsByClassName('apiary-todo-input')[0]).value = "";
+  
+
+    if(<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0] != null){
+      (<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0]).classList.remove('brood-egg-active'); 
+    }
+
+    if(<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0] != null){
+      (<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0]).classList.remove('brood-larva-active');
+    }
+
+    if(<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0] != null){
+      (<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0]).classList.remove('brood-pupa-active');
+    }
+
+    if(<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0] != null){
+      (<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0]).classList.remove('brood-drone-active');
+    }
+
+    if(<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0] != null){
+      (<HTMLButtonElement>document.getElementsByClassName('health-buzz-active')[0]).classList.remove('health-buzz-active'); 
+    }
+
+    if(<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0] != null){
+      (<HTMLButtonElement>document.getElementsByClassName('health-sick-active')[0]).classList.remove('health-sick-active');
+    }
+
+    if(<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0] != null){
+      (<HTMLButtonElement>document.getElementsByClassName('health-mosaic-active')[0]).classList.remove('health-mosaic-active');
+    }
+
+    if(<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0] != null){
+      (<HTMLButtonElement>document.getElementsByClassName('health-queen-active')[0]).classList.remove('health-queen-active');
+    }
+
+    if(<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0] != null){
+      (<HTMLButtonElement>document.getElementsByClassName('health-swarm-active')[0]).classList.remove('health-swarm-active');
+    }
+    
+    this.unactiveBtn();
+
+  }
+
+  unactiveBtn():void{
+    let div = <HTMLDivElement>document.getElementById("not-brood-stage");
+    Array.from(div.children).forEach((b,i) => {
+      if(this.notConstant(b.className.split(' ')[1])){
+        if((b.className.split(' ')[1]).includes('_cb')){
+          b.className = b.className.slice(0, -3);
+          b.className += '_b';
+        }
+      }
+    });
+  }
+
+  notConstant(classname: string):boolean{
+    if(classname === "health-swarm" || classname === "health-buzz" || classname === "health-sick"
+       || classname === "health-mosaic" || classname === "health-queen"){
+      return false;
+    }
+    return true;
   }
 
 }

@@ -60,7 +60,8 @@ export class EventsComponent implements OnInit {
     private notifyService: NotifierService,
     private melliChartsHiveService: MelliChartsHiveService,
     private dailyManager: DailyManagerService,
-    private inspCat: InspCatService
+    private inspCat: InspCatService,
+    private translateService: TranslateService,
   )
   { }
 
@@ -1000,6 +1001,10 @@ export class EventsComponent implements OnInit {
       if(this.eventToEdit.obs != null && this.eventToEdit.obs.findIndex( _o => _o.name === this.PICTOS_HIVES_OBS[i].name ) !== -1){
         button.classList.add(this.PICTOS_HIVES_OBS[i].class + '-active');
       }
+
+      button.setAttribute('data-toggle', 'tooltip');
+      button.setAttribute('data-placement', 'top');
+      button.setAttribute('title', this.translateService.instant('INSP_CONF.' + this.PICTOS_HIVES_OBS[i].name.toUpperCase()));
 
       button.onclick = (evt: Event) => {
         this.hiveButton(evt, this.PICTOS_HIVES_OBS[i].name);

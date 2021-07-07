@@ -609,7 +609,12 @@
           "ACT_OBS": "Acciones y Observaciones"
         },
         "BTN_SAVE":"Guardar",
-        "BTN_PRINT":"Imprimir"
+        "BTN_PRINT":"Imprimir",
+        "BTN_PDF":"Generar PDF",
+        "BTN_DL":"Descargar",
+        "GEN_DL":"Creación en progreso : ",
+        "READY_DL":"Archivo está listo para descargarse !",
+        "BTN_CANCEL":"Anular"
       },
       "TABLE":{
         "BEES":"Abejas",
@@ -621,7 +626,7 @@
         "TABLE":{
             "APIARY":"Colmenar",
             "DATE":"Fecha",
-            "HEALTH":"Salud",
+            "HEALTH":"Estado general",
             "DESC":"Notas",
             "TODO":"Tareas"
         }

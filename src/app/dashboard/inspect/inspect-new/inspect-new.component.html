@@ -17,10 +17,10 @@
         </div>
         <div style="width:auto;">
           <input class="inspect-time-input-hours" type="number" min="00" max="23" (change)="inspectDateHours()"
-                 style="width:50px;" placeholder="h">
+                 style="width:50px;height:28px;" placeholder="h">
           :
           <input class="inspect-time-input-minutes" type="number" min="00" max="59" (change)="inspectDateMinutes()"
-                 style="width:50px;" placeholder="m">
+                 style="width:50px;height:28px;" placeholder="m">
         </div>
       </div>
     </div>
@@ -64,7 +64,7 @@
               <button class="apiary-obs brood-drone" (click)="setBroodStage('drone', 'apiary')"
               data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.DRONEBROOD' | translate }}"></button>    
             </div>
-            <div style="overflow-x: auto; white-space: nowrap; background-color: #eee;">
+            <div id="not-brood-stage" style="overflow-x: auto; white-space: nowrap; background-color: #eee;">
               <button class="apiary-obs health-swarm" (click)="setHealth('swarm', 'apiary')"
               data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SWARM' | translate }}"></button>
               <button class="apiary-obs health-buzz" (click)="setHealth('buzz', 'apiary')"
@@ -216,7 +216,24 @@
       </div>
     </div>
     <div class="inspect-footer">
-      <button class="btn btn-light" (click)="printPDF()">{{'INSPECT.NEW.BTN_PRINT' | translate}}</button>
-      <button class="btn btn-success" (click)="saveInspection()">{{'INSPECT.NEW.BTN_SAVE' | translate}}</button>
+      <button class="btn btn-danger btn-cancel" (click)="cancelInspection()">{{'INSPECT.NEW.BTN_CANCEL' | translate}}</button>
+      <button class="btn btn-success btn-save" (click)="saveInspection()">{{'INSPECT.NEW.BTN_SAVE' | translate}}</button>
+      <button class="btn btn-light btn-pdf" (click)="openModal()">{{'INSPECT.NEW.BTN_PDF' | translate}}</button>
     </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p id="loading-text"></p> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">{{'INSPECT.NEW.BTN_CANCEL' | translate}}</button>
+        <button id="btn-dl" type="button" class="btn btn-success" (click)="printPDF()" disabled>{{'INSPECT.NEW.BTN_DL' | translate}}</button>
+      </div>
+    </div>
+  </div>
 </div>

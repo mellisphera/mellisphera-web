@@ -887,6 +887,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           this.newEventDate = new Date();
           this.new_event.userId = this.userService.getIdUserLoged();
           this.new_event.createDate = new Date();
+          this.new_event.opsDate = new Date();
           (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
           (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
           (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = this.newEventDate.getHours().toString();
@@ -928,6 +929,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           this.newEventDate = new Date();
           this.new_event.userId = this.userService.getIdUserLoged();
           this.new_event.createDate = new Date();
+          this.new_event.opsDate = new Date();
           (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
           (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
           (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value = this.newEventDate.getHours().toString();
@@ -954,6 +956,10 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       if(this.PICTOS_HIVES_OBS[i].type === 'obs'){
         button.className = 'hives-obs-add';
       }
+
+      button.setAttribute('data-toggle', 'tooltip');
+      button.setAttribute('data-placement', 'top');
+      button.setAttribute('title', this.translateService.instant('INSP_CONF.' + this.PICTOS_HIVES_OBS[i].name.toUpperCase()));
 
       button.classList.add(this.PICTOS_HIVES_OBS[i].class);
       button.onclick = (evt: Event) => {
@@ -1053,6 +1059,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   insertAddEvent(): void {
     let hours = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value)
     let minutes = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value)
+    console.log(this.new_event.opsDate, hours, minutes)
     if (this.new_event.opsDate == null  || hours > 23 || minutes > 59 ) {
       (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'flex';
       return;

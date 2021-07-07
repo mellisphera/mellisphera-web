@@ -1064,16 +1064,22 @@ export class DailyManagerService {
     )
   }
 
-  getChartAlert(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+  getChartAlert(type: Tools, hiveId: string, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     const obs: Array<Observable<any>> = [
-      this.alertService.getAlertByHive(hiveId, range)
+      this.alertService.getAlertByHive(hiveId, range),
+      this.inspectionService.getInspectionByHiveIdAndOpsDateBetween(hiveId, range),
+      this.inspectionService.getInspectionByApiaryIdAndOpsDateBetween(apiaryId, range),
     ]
     Observable.forkJoin(obs).subscribe(
       _data => {
         const dateJoin = _data[0].map(_elt => {
           return { date: _elt.opsDate, value: 0, sensorRef: 'notif' };
-        })
-        const joinData = _data[0];
+        }).concat(_data[1].filter(_elt => _elt.type === 'hive').map(_elt => {
+          return _elt.type === "hive" ? { date: _elt.opsDate, value: 0, sensorRef: 'event' } : {};
+        })).concat(_data[2].filter(_elt => _elt.type === 'apiary').map(_elt => {
+          return _elt.type === "apiary" ? { date: _elt.opsDate, value: 0, sensorRef: 'inspect' } : {};
+        }));
+        const joinData = _data[0].concat(_data[1].filter(_elt => _elt.type === 'hive')).concat(_data[2].filter(_elt => _elt.type === 'apiary'));
         let option = Object.assign({}, this.baseOptionEnv);
         if (rangeChange) {
           option.series = this.removeDataAllseries(option.series);
@@ -1107,7 +1113,10 @@ export class DailyManagerService {
                 let path: any;
                 const nbNote = dataByDate.filter(_elt => _elt.description).length;
                 //console.log(nbNote + '===' + dataByDate.length)
-                if (nbNote === dataByDate.length) {
+                if (nbNote === dataByDate.length && dataByDate.findIndex(_d => _d.type === 'apiary') !== -1) {
+                  path = this.inspectionService.getPictoInspect(cellPoint);
+                  group.children = group.children.concat(path);
+                } else if (nbNote === dataByDate.length && dataByDate.findIndex(_d => _d.type === 'apiary') === -1){
                   path = this.inspectionService.getPictoEvent(cellPoint);
                   group.children = group.children.concat(path);
                 } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
@@ -1127,9 +1136,13 @@ export class DailyManagerService {
                 }
               } else if (dataByDate.length === 1) {
                 let icon;
-                if (dataByDate[0].description) {
+                if (dataByDate[0].description && dataByDate[0].type === 'apiary') {
+                  group.children = group.children.concat(this.inspectionService.getPictoInspect(cellPoint));
+                }
+                else if(dataByDate[0].description && dataByDate[0].type === 'hive'){
                   group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
-                } else {
+                } 
+                else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                   // icon = this.alertService.getPicto(dataByDate[0].type);
                 }
@@ -1148,7 +1161,6 @@ export class DailyManagerService {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
           }
-          console.log(option);
           this.getSerieByData(dateJoin, type.name, SERIES.custom, (serieComplete: any) => {
             serieComplete.renderItem = (params, api) => {
               let cellPoint = api.coord(api.value(0));
@@ -1180,7 +1192,10 @@ export class DailyManagerService {
                 let path: any;
                 const nbNote = dataByDate.filter(_elt => _elt.description).length;
                 //console.log(nbNote + '===' + dataByDate.length)
-                if (nbNote === dataByDate.length) {
+                if (nbNote === dataByDate.length && dataByDate.findIndex(_d => _d.type === 'apiary') !== -1) {
+                  path = this.inspectionService.getPictoInspect(cellPoint);
+                  group.children = group.children.concat(path);
+                } else if(nbNote === dataByDate.length && dataByDate.findIndex(_d => _d.type === 'apiary') === -1){
                   path = this.inspectionService.getPictoEvent(cellPoint);
                   group.children = group.children.concat(path);
                 } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
@@ -1199,9 +1214,13 @@ export class DailyManagerService {
                   group.children.push(path);
                 }
               } else if (dataByDate.length === 1) {
-                if (dataByDate !== undefined && dataByDate[0].description) {
+                if (dataByDate !== undefined && dataByDate[0].description && dataByDate[0].type === 'apiary') {
+                  group.children = group.children.concat(this.inspectionService.getPictoInspect(cellPoint));
+                }
+                else if(dataByDate !== undefined && dataByDate[0].description && dataByDate[0].type === 'hive'){
                   group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
-                } else {
+                } 
+                else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                 }
               }

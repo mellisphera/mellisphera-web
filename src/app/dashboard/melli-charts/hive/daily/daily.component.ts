@@ -86,15 +86,15 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
       { name: 'HEXT_WEATHER_MIN', id: 'HEXT_WEATHER_MIN', unit: 'P', origin: 'OTHER', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/hext_min_cb.png' },
       { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/ms-pics/alerts/meteo/wind_cb.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/rain_cb.png' },
+      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/ms-pics/ui/calendbars/alerts-events_cb.svg' },
       { name: 'EVENT-APIARY', id: 'EVENT-APIARY', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/inspect-api_cb.png' },
       { name: 'EVENT-HIVE', id: 'EVENT-HIVE', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/inspect_cb.png' },
-      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/ms-pics/ui/calendbars/alert_cb.png' },
       { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/moon_cb.png' },
     ];
 
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
-    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[2];
+    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
 
   }
 
@@ -105,7 +105,7 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
     this.calendarElements = document.getElementsByClassName('calendar');
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
-    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[2];
+    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
   /*this.dailyManager.setMeanAnnotation = (_type: Tools, clear?: boolean) => {
       if (!clear) {
         this.setMeanTextHtml();
@@ -379,8 +379,8 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
       case 'ALERT':
         this.melliHive.getDailyEnvChartInstance().showLoading();
-        this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
-          this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id, 
+        this.melliHive.getHiveSelect().apiaryId, this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
       case 'MOON':
         this.melliHive.getDailyEnvChartInstance().showLoading();

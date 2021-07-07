@@ -419,6 +419,10 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       }
       
 
+      button.setAttribute('data-toggle', 'tooltip');
+      button.setAttribute('data-placement', 'top');
+      button.setAttribute('title', this.translateService.instant('INSP_CONF.' + this.PICTOS_HIVES_OBS[i].name.toUpperCase()));
+
       button.classList.add(this.PICTOS_HIVES_OBS[i].class);
       button.onclick = (evt: Event) => {
         const n = i;
@@ -592,6 +596,10 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       if(this.new_event.obs != null && this.new_event.obs.findIndex( _o => _o.name === this.PICTOS_HIVES_OBS[i].name ) !== -1){
         button.classList.add(this.PICTOS_HIVES_OBS[i].class + '-active');
       }
+
+      button.setAttribute('data-toggle', 'tooltip');
+      button.setAttribute('data-placement', 'top');
+      button.setAttribute('title', this.translateService.instant('INSP_CONF.' + this.PICTOS_HIVES_OBS[i].name.toUpperCase()));
 
       button.onclick = (evt: Event) => {
         let n = i;

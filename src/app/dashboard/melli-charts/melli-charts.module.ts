@@ -37,6 +37,20 @@ import { SafeHtmlPipe } from './safe-html.pipe';
 import { PipeModule } from './../../pipe/pipe.module';
 import { HourlyWeightComponent } from './weight/hourly-weight/hourly-weight.component';
 
+import { UserParamsService } from '../preference-config/service/user-params.service';
+import { DateTimeAdapter, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { MomentDateTimeAdapter, OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
+
+const MY_CUSTOM_FORMATS = {
+  fullPickerInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  parseInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  datePickerInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY'
+};
+
 @NgModule({
   providers:[
     DailyManagerService,
@@ -44,7 +58,10 @@ import { HourlyWeightComponent } from './weight/hourly-weight/hourly-weight.comp
     HourlyManagerService,
     StackMelliChartsService,
     DatePipe,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    UserParamsService,
+    { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }
   ],
   declarations: [
     MelliChartsComponent,

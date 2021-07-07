@@ -985,14 +985,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-swarm-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/alerts/ruche/swarm_b.png');
   background-position: center;
 }
 
 .hives-swarm-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/alerts/ruche/swarm_cb.png');
   background-position: center;
@@ -1000,14 +1000,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-super\+-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/alerts/ruche/super+_b.svg');
   background-position: center;
 }
 
 .hives-super\+-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/alerts/ruche/super+_cb.svg');
   background-position: center;
@@ -1015,14 +1015,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-super--img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/alerts/ruche/super-_b.svg');
   background-position: center;
 }
 
 .hives-super--img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/alerts/ruche/super-_cb.svg');
   background-position: center;
@@ -1030,14 +1030,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-default-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/default_b.png');
   background-position: center;
 }
 
 .hives-default-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/default_cb.png');
   background-position: center;
@@ -1045,14 +1045,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-stolen-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/alerts/ruche/stolen_b.svg');
   background-position: center;
 }
 
 .hives-stolen-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/alerts/ruche/stolen_cb.svg');
   background-position: center;
@@ -1060,14 +1060,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-lowbrood-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/alerts/ruche/lowbrood_b.svg');
   background-position: center;
 }
 
 .hives-lowbrood-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/alerts/ruche/lowbrood_cb.svg');
   background-position: center;
@@ -1075,14 +1075,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-normbrood-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/normbrood_b.svg');
   background-position: center;
 }
 
 .hives-normbrood-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/normbrood_cb.svg');
   background-position: center;
@@ -1090,14 +1090,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-highbrood-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/highbrood_b.svg');
   background-position: center;
 }
 
 .hives-highbrood-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/highbrood_cb.svg');
   background-position: center;
@@ -1135,14 +1135,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-lowbees-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/lowbees_b.svg');
   background-position: center;
 }
 
 .hives-lowbees-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/lowbees_cb.svg');
   background-position: center;
@@ -1150,14 +1150,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-normbees-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/normbees_b.svg');
   background-position: center;
 }
 
 .hives-normbees-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/normbees_cb.svg');
   background-position: center;
@@ -1165,14 +1165,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-highbees-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/highbees_b.svg');
   background-position: center;
 }
 
 .hives-highbees-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/highbees_cb.svg');
   background-position: center;
@@ -1180,14 +1180,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-nores-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/nores_b.svg');
   background-position: center;
 }
 
 .hives-nores-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/nores_cb.svg');
   background-position: center;
@@ -1195,14 +1195,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-lowres-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/lowres_b.svg');
   background-position: center;
 }
 
 .hives-lowres-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/lowres_cb.svg');
   background-position: center;
@@ -1210,14 +1210,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-normres-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/normres_b.svg');
   background-position: center;
 }
 
 .hives-normres-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/normres_cb.svg');
   background-position: center;
@@ -1225,14 +1225,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-highres-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/highres_b.svg');
   background-position: center;
 }
 
 .hives-highres-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/highres_cb.svg');
   background-position: center;
@@ -1240,14 +1240,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-candifeed-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/candifeed_b.svg');
   background-position: center;
 }
 
 .hives-candifeed-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/candifeed_cb.svg');
   background-position: center;
@@ -1255,14 +1255,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-syrupfeed-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/syrupfeed_b.svg');
   background-position: center;
 }
 
 .hives-syrupfeed-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/syrupfeed_cb.svg');
   background-position: center;
@@ -1270,14 +1270,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-miteoavapor-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitevapor_b.svg');
   background-position: center;
 }
 
 .hives-miteoavapor-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitevapor_cb.svg');
   background-position: center;
@@ -1285,14 +1285,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-miteoadribble-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitedribble_b.svg');
   background-position: center;
 }
 
 .hives-miteoadribble-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitedribble_cb.svg');
   background-position: center;
@@ -1300,14 +1300,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-queeninsert-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/queeninsert_b.svg');
   background-position: center;
 }
 
 .hives-queeninsert-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/queeninsert_cb.svg');
   background-position: center;
@@ -1315,14 +1315,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-division-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/division_b.svg');
   background-position: center;
 }
 
 .hives-division-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/division_cb.svg');
   background-position: center;
@@ -1330,14 +1330,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-broodadd-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/broodadd_b.svg');
   background-position: center;
 }
 
 .hives-broodadd-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/broodadd_cb.svg');
   background-position: center;
@@ -1345,14 +1345,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-broodremove-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/broodremove_b.svg');
   background-position: center;
 }
 
 .hives-broodremove-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/broodremove_cb.svg');
   background-position: center;
@@ -1360,14 +1360,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-sick-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/sick_b.svg');
   background-position: center;
 }
 
 .hives-sick-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/sick_cb.svg');
   background-position: center;
@@ -1375,14 +1375,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-mitestripadd-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitestripadd_b.svg');
   background-position: center;
 }
 
 .hives-mitestripadd-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitestripadd_cb.svg');
   background-position: center;
@@ -1390,14 +1390,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-mitestripadd-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitestripadd_b.svg');
   background-position: center;
 }
 
 .hives-mitestripadd-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitestripadd_cb.svg');
   background-position: center;
@@ -1405,14 +1405,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-mitestripremove-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitestripremove_b.svg');
   background-position: center;
 }
 
 .hives-mitestripremove-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitestripremove_cb.svg');
   background-position: center;
@@ -1420,14 +1420,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-buzzinghive-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/buzzinghive_b.svg');
   background-position: center;
 }
 
 .hives-buzzinghive-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/buzzinghive_cb.svg');
   background-position: center;
@@ -1435,14 +1435,14 @@ nav[role=admin-navigation] {
 }
 
 .hives-mosaicbrood-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mosaicbrood_b.svg');
   background-position: center;
 }
 
 .hives-mosaicbrood-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mosaicbrood_cb.svg');
   background-position: center;
@@ -1450,29 +1450,44 @@ nav[role=admin-navigation] {
 }
 
 .hives-mitecountlounge-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitecountlounge_b.svg');
   background-position: center;
 }
 
 .hives-mitecountlounge-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitecountlounge_cb.svg');
   background-position: center;
   border: 1px solid rgb(0, 180, 0);
 }
 
+.hives-queenlineage-img{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/ms-pics/inspects/markqueen_b.svg');
+  background-position: center;
+}
+
+.hives-queenlineage-img-active{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/ms-pics/inspects/markqueen_cb.svg');
+  background-position: center;
+  border: 1px solid rgb(0, 180, 0);
+}
+
 /*.hives-mitecountwash-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitecountwash_b.svg');
   background-position: center;
 }
 
 .hives-mitecountwash-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../assets/ms-pics/inspects/mitecountwash_cb.svg');
   background-position: center;
@@ -1680,6 +1695,7 @@ nav[role=admin-navigation] {
       background-color: white !important;
       width: 200px !important;
       border: 1px solid #ddd;
+      
     }
 }
 @media screen and (max-width:800px) {

@@ -127,7 +127,6 @@ export class UserParamsService {
   }
 
   static getUPref(): UserPref {
-    console.log(JSON.parse(window.localStorage.getItem('jwtReponse')).userPref.timeFormat);
     return JSON.parse(window.localStorage.getItem('jwtReponse')).userPref;
   }
 

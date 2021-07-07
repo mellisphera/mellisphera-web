@@ -65,13 +65,16 @@ export class InspectParamsComponent implements OnInit, OnDestroy {
     return inspCat.seasons.some(_season => _season === season);
   }
 
-  seasonClick(evt: Event, inspcat: InspCat): void{
+  seasonClick(evt: Event, inspcat: InspCat, i:number, season:string): void{
     let button = <HTMLButtonElement>evt.target;
     if(button.classList.contains('active')){
       button.classList.remove('active');
+      let index = this.inspUser.inspConf[i].inspCat.seasons.findIndex(_s => _s === season)
+      this.inspUser.inspConf[i].inspCat.seasons.splice(index, 1);
       return;
     }
     button.classList.add('active');
+    this.inspUser.inspConf[i].inspCat.seasons.push(season);
     return;
   }
 
@@ -79,8 +82,11 @@ export class InspectParamsComponent implements OnInit, OnDestroy {
     let aux : InspUser = {_id: null, idUser: null, inspConf: []};
     aux.idUser = this.userService.getIdUserLoged();
     this.inspCat.forEach(inspItem => {
-      let conf: InspConf = { enable : true, inspCat: Object.assign({},inspItem) };
-      aux.inspConf.push(conf);
+      if(inspItem.img !== "Default"){
+        let conf: InspConf = { enable : true, inspCat: Object.assign({},inspItem) };
+        aux.inspConf.push(conf);
+      }
+      
     });
     this.inspUserService.createInspUser(aux).subscribe(
       _inspUser => {
@@ -110,8 +116,10 @@ export class InspectParamsComponent implements OnInit, OnDestroy {
   insertNewInspCat(): void{
     let array = this.inspCat.filter( x => !this.inspUser.inspConf.some(_conf => x.name === _conf.inspCat.name) );
     array.forEach(_elt => {
-      let conf: InspConf = { enable: true, inspCat: _elt }
-      this.inspUser.inspConf.push(conf);
+      if(_elt.img !== "Default"){
+        let conf: InspConf = { enable: true, inspCat: _elt }
+        this.inspUser.inspConf.push(conf);
+      }
     });
   }
 

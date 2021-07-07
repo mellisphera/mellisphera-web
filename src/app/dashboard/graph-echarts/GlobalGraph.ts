@@ -201,7 +201,7 @@ export class GraphGlobal {
       { 'graph': 'loss', 'titre': 'perte' },
       { 'graph': 'gain', 'titre': 'gain' },
       { 'graph': 'Weight', 'titre': 'Poids' },
-      { 'graph': 'AlertsHive', 'titre': 'Alertes' },
+      { 'graph': 'AlertsHive', 'titre': 'Alertes et Evenements' },
       { 'graph': 'AlertsApiary', 'titre': 'Evénements du rucher' },
       { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' },
       { graph: 'Weather', titre: 'Météo' },
@@ -225,7 +225,7 @@ export class GraphGlobal {
       { 'graph': 'loss', 'titre': 'Disminucion' },
       { 'graph': 'gain', 'titre': 'Aumento' },
       { 'graph': 'Weight', 'titre': 'Peso' },
-      { 'graph': 'AlertsHive', 'titre': 'Alertas' },
+      { 'graph': 'AlertsHive', 'titre': 'Alertas y Eventos' },
       { 'graph': 'AlertsApiary', 'titre': 'Eventos del colmenar' },
       { 'graph': 'Blooming', 'titre': 'Calendario de floracion del colmenar' },
       { graph: 'Weather', titre: 'Meteorologia' },
@@ -250,7 +250,7 @@ export class GraphGlobal {
       { 'graph': 'loss', 'titre': 'loss' },
       { 'graph': 'gain', 'titre': 'gain' },
       { 'graph': 'Weight', 'titre': 'Weight' },
-      { 'graph': 'AlertsHive', 'titre': 'Alerts' },
+      { 'graph': 'AlertsHive', 'titre': 'Alerts and Events' },
       { 'graph': 'AlertsApiary', 'titre': 'Events for the apiary' },
       { 'graph': 'Blooming', 'titre': 'Apiary Blooming calendar' },
       { graph: 'Weather', titre: 'Weather' },
@@ -1001,17 +1001,21 @@ export class GraphGlobal {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
             let type = 'Notif';
             let img = '';
-            if (_singleData.description) {
+            if (_singleData.type && _singleData.type === 'apiary') {
               type = 'Inspection';
               img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/alert_cb.png');
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect-api_cb.png');
+            } else if(_singleData.type && _singleData.type === 'hive') {
+              type = 'Event';
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect_cb.png');
             } else {
               img = '<img style={S} src=./assets/ms-pics/alerts/ruche/' + _singleData.icon.toLowerCase() + '_cw.png />';
             }
             img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:35px;height:35px; background-color:red;');
             return {
               name: img,
-              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertService.getMessageAlertByCode(_singleData),
+              value: type === 'Inspection' || type === 'Event' ? this.sliceTextToolip(_singleData.description) : this.alertService.getMessageAlertByCode(_singleData),
               unit: ''
             }
           }));

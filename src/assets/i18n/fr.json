@@ -596,7 +596,12 @@
           "ACT_OBS": "Actions et Observations"
         },
         "BTN_SAVE":"Enregistrer",
-        "BTN_PRINT":"Imprimer"
+        "BTN_PRINT":"Imprimer",
+        "BTN_PDF":"Generer PDF",
+        "BTN_DL":"Télécharger",
+        "GEN_DL":"Génération en cours : ",
+        "READY_DL":"Votre fichier est pret a etre téléchargé !",
+        "BTN_CANCEL":"Annuler"
       },
       "TABLE":{
           "BEES":"Abeilles",
@@ -608,7 +613,7 @@
           "TABLE":{
               "APIARY":"Rucher",
               "DATE":"Date",
-              "HEALTH":"Santé",
+              "HEALTH":"Etat Général",
               "DESC":"Notes",
               "TODO":"Taches"
           }

@@ -17,10 +17,10 @@
           <td style='vertical-align: middle;'>{{'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate}}</td>
           <td style='vertical-align: middle;'>
             <ng-container *ngIf="isEnable(i)">
-              <button [class]="'btn-spring ' + (isSeasonActive(conf.inspCat, 'spring') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat)"></button>
-              <button [class]="'btn-summer ' + (isSeasonActive(conf.inspCat, 'summer') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat)"></button>
-              <button [class]="'btn-autumn ' + (isSeasonActive(conf.inspCat, 'autumn') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat)"></button>
-              <button [class]="'btn-winter ' + (isSeasonActive(conf.inspCat, 'winter') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat)"></button>
+              <button [class]="'btn-spring ' + (isSeasonActive(conf.inspCat, 'spring') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat, i, 'spring')"></button>
+              <button [class]="'btn-summer ' + (isSeasonActive(conf.inspCat, 'summer') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat, i, 'summer')"></button>
+              <button [class]="'btn-autumn ' + (isSeasonActive(conf.inspCat, 'autumn') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat, i, 'autumn')"></button>
+              <button [class]="'btn-winter ' + (isSeasonActive(conf.inspCat, 'winter') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat, i, 'winter')"></button>
             </ng-container>
           </td>
           <td style='vertical-align: middle;'>

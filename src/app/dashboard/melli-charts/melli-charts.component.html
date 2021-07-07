@@ -124,7 +124,7 @@ limitations under the License. -->
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
           <div [id]="rucher._id" style="display: flex; align-items: center;padding-right: 4px;" data-parent="#main-menu"
-            [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)">
+            [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)"  (mouseenter)="mouseEnter(rucher._id)" (mouseleave)="mouseLeave(rucher._id)">
             <a  [id]="rucher._id + '_link'"[href]="'#' + i" data-toggle="collapse" (click)="ifActiveApiary(rucher._id + '_link',rucher._id)">
               <i [class]="'fa fa-chevron-right ' + ifActiveIcon(rucher._id) "></i>
               <!--<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span>-->
@@ -150,13 +150,13 @@ limitations under the License. -->
             [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
             <div [id]="ruche._id" [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
             *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index"
-            style="display:flex; align-items:center;padding-right: 4px;">
+            style="display:flex; align-items:center;padding-right: 4px;"  (mouseenter)="mouseEnter(ruche._id)" (mouseleave)="mouseLeave(ruche._id)">
               <a class="list-group-hive-item" (click)="selectHive(ruche, $event)"  data-parent="#sub-menu">
                 <i class="circle" [style.background-color]="getColor(ruche)"></i>
                 <span class="puce-hive"></span>
                 <span style="width:60%;">{{ ruche.name }}</span>
               </a>
-              <div class="dropleft" (mouseenter)="mouseEnter(ruche._id)" (mouseleave)="mouseLeave(ruche._id)">
+              <div class="dropleft">
                 <button class="hive-more-button dropdown-toggle" [innerHTML]="more_icon | safeHtml" [style.visibility]="isDesktop ? 'hidden' : 'visible'"
                   type="button" [id]="'hiveDropDownButton' + i" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 </button>
@@ -233,7 +233,7 @@ limitations under the License. -->
             <textarea class="add-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
         </div>
         <div class="add-event-choice">
-          <div class="add-event-choice-obs">
+          <div class="add-event-choice-obs" style="padding-bottom: 5px;">
           </div>
         </div>
       </div>

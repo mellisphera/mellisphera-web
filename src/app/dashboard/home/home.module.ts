@@ -32,10 +32,24 @@ import { AlertsHiveComponent } from './info-hives/alerts-hive/alerts-hive.compon
 import { InfoApiaryComponent } from './info-apiary/info-apiary.component';
 import { AlertsService } from '../service/api/alerts.service';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
-import {NgxPrintModule} from 'ngx-print';
+import { NgxPrintModule } from 'ngx-print';
 import { SafeHtmlPipe } from '../melli-charts/safe-html.pipe';
 import { PipeModule } from './../../pipe/pipe.module';
 import { MyDatePipe } from '../../pipe/my-date.pipe';
+
+import { UserParamsService } from '../preference-config/service/user-params.service';
+import { DateTimeAdapter, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { MomentDateTimeAdapter, OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
+
+const MY_CUSTOM_FORMATS = {
+  fullPickerInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  parseInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  datePickerInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY'
+};
 
 @NgModule({
   imports: [
@@ -58,7 +72,10 @@ import { MyDatePipe } from '../../pipe/my-date.pipe';
   providers: [
     GraphGlobal,
     SafeHtmlPipe,
-    MyDatePipe
+    MyDatePipe,
+    UserParamsService,
+    { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }
   ],
   declarations: [
     HomeComponent,
