@@ -206,10 +206,10 @@ export class DailyRecordsWService {
     return this.http.post<any[]>(CONFIG.URL + 'dailyRecordsW/hive/between/' + hiveId, range).map(dailyW => {
       return {
         weightIncomeHight: dailyW.filter(_filter => _filter.value >= 0).map(_elt => {
-          return { date: _elt.date, value: this.unitService.convertWeightFromuserPref(_elt.value, this.unitSystem), sensorRef: _elt.sensorRef };
+          return { date: _elt.date, value: this.unitService.convertWeightFromuserPref(_elt.value, this.unitSystem), sensorRef: _elt.sensorRef, position: _elt.position };
         }),
         weightIncomeLow: dailyW.filter(_filter => _filter.value < 0).map(_elt => {
-          return { date: _elt.date, value: this.unitService.convertWeightFromuserPref(_elt.value, this.unitSystem), sensorRef: _elt.sensorRef };
+          return { date: _elt.date, value: this.unitService.convertWeightFromuserPref(_elt.value, this.unitSystem), sensorRef: _elt.sensorRef, position: _elt.position };
         })
       };
     })
@@ -302,7 +302,7 @@ export class DailyRecordsWService {
   getWeightByHive(hiveId: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightMax/' + hiveId, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
-    }));;
+    }));
   }
 
 
@@ -313,8 +313,20 @@ export class DailyRecordsWService {
    */
   getWeightMinByHive(hiveId: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightMin/' + hiveId, range).map(_elt => _elt.map(_value => {
-      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
-    }));;
+      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef, position: _value.position };
+    }));
+  }
+
+
+  /**
+   *
+   * @param hiveId
+   * @param range
+   */
+  getWeight23fByHive(hiveId: string, range: Date[]): Observable<any> {
+    return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weight23f/' + hiveId, range).map(_elt => _elt.map(_value => {
+      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef, position: _value.position };
+    }));
   }
 
 
@@ -325,8 +337,8 @@ export class DailyRecordsWService {
    */
   getWeightIncomeGainByHive(hiveId: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'dailyRecordsW/weightIncomeGain/' + hiveId, range).map(_elt => _elt.map(_value => {
-      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
-    }));;
+      return { date: _value.date, value: this.unitService.convertWeightFromuserPref(_value.value, this.unitSystem), sensorRef: _value.sensorRef, position: _value.position };
+    }));
 
   }
 
@@ -357,13 +369,13 @@ export class DailyRecordsWService {
     this.getDailyWeightMaxByApiary(apiaryId);
   }
 
-  public getWeightMaxByHive(hiveId: string): string {
+  public getDailyWeightByHive(hiveId: string): string {
     // console.log(this.dailyWeightRecords);
     const selectHive = this.dailyWeightRecords.filter(elt => elt.hiveId === hiveId)[0];
     if (this.unitSystem === 'METRIC') {
-      return selectHive ? this.unitService.convertWeightFromuserPref(selectHive.weight_max, 'METRIC', true)+ ' kg' : '-';
+      return selectHive ? this.unitService.convertWeightFromuserPref(selectHive.weight_23f, 'METRIC', true)+ ' kg' : '-';
     } else {
-      return selectHive ?this.unitService.convertWeightFromuserPref(selectHive.weight_max, 'IMPERIAL', true) + ' lbs' : '-';
+      return selectHive ?this.unitService.convertWeightFromuserPref(selectHive.weight_23f, 'IMPERIAL', true) + ' lbs' : '-';
     }
 
   }

@@ -3,29 +3,23 @@
   padding-left: 10px;
 }
 
-.inspect-new-container button{
-  box-shadow: 1px 1px 3px black;
-}
-
-.inspect-new-container button:active{
-  transform: translateX(1px) translateY(1px);
-  box-shadow: 0px 0px 1px black;
-}
-
 .inspect-new-container button:focus{
   outline: 0;
 }
 
 .inspect-new-container h3{
   padding-bottom: 10px;
-  margin-left: 20px;
+  margin-right: 10px;
+}
+
+.title-container{
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 570px;
 }
 
 .inspect-body{
   width: 99%;
-  border-top: 1px solid #999999;
-  border-bottom: 1px solid #999999;
-  display: flex;
 }
 
 .inspect-time{
@@ -33,9 +27,22 @@
   width: 96%
 }
 
-.inspect-apiary, .inspect-hive{
-  width: 50%;
-  height: 600px;
+.inspect-apiary{
+  width: 99%;
+  border: 1px solid #4f4f51;
+  border-radius: 5px;
+}
+
+.inspect-hive{
+  width: 99%;
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid #4f4f51;
+  border-radius: 5px;
+}
+
+.inspect-apiary{
+  margin-bottom: 10px;
 }
 
 .inspect-hive{
@@ -43,46 +50,43 @@
   overflow-x: hidden;
 }
 
-.inspect-apiary{
-  border-right: 1px dashed black;
-}
-
-.inspect-apiary-main{
-  padding:0 !important;
-}
-
 .inspect-apiary-op{
   padding:10px 0 !important;
 }
 
-.inspect-time > div {
+.title > div {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: 15px;
 }
 
-.inspect-time div{
-  padding : 10px;
-}
-
-.inspect-time > div > div{
+.title > div > div{
   width: 230px;
 }
 
-.inspect-time > div > div:nth-child(2){
-  margin-left: 20px;
+.title > div > div:nth-child(2){
+  margin-left: 5px;
 }
 
-.inspect-time div i{
+.title div i{
   position: absolute;
+}
+
+#inspect-apiary-select{
+  margin-left: 10px;
+  width: 215px;
+  height: 28px;
 }
 
 .inspect-time-input{
   width: 200px;
-  height: 24px;
+  height: 28px;
   text-align: center;
 }
 
 .inspect-time-icon{
-  padding: 5px 15px;
+  padding: 7px 15px;
   min-width: 40px;
 }
 
@@ -102,110 +106,506 @@
   visibility: hidden;
 }
 
-.apiary-op, .apiary-obs-div{
-  width: 100%;
+.apiary-obs-div, .hive-obs-div{
+  width: 270px;
+  margin: 10px 0px 10px 10px;
+  align-content: flex-start;
+}
+
+.apiary-obs-div{
+  margin-right: 5px;
+}
+
+.hive-op, .apiary-op{
+  width: 95%;
   display: flex;
-  margin: 10px 10px;
+  justify-content: flex-start;
 }
 
-.apiary-op table, .apiary-obs-div table{
+.apiary-op, .hive-op{
+  margin-left: 3%;
+}
+
+.apiary-op table, .apiary-obs-div table, .hive-obs-div table{
   border-collapse:separate;
-  border-spacing:5px;
+  border-spacing:10px;
 }
 
-.apiary-op table tr, .apiary-obs-div table tr{
+.apiary-op table tr, .apiary-obs-div table tr, .hive-obs-div table tr{
   margin: 0 5px;
+}
+
+.hive-obs-div table input[type="radio"]{
+  width: 1.25em;
+  height: 1.25em;
 }
 
 .apiary-action, .hives-action, .apiary-obs, .hives-obs{
   border-radius: 3px;
-  margin: 5px 1px;
-  text-align: center;
-  height: 40px;
-  width: 40px;
-  color: grey;
-}
-
-.apiary-action, .hives-action{
-  border: 1px solid rgb(0, 180, 0);
-}
-
-.apiary-obs, .hives-obs{
-  border: 1px solid skyblue;
-}
-
-.apiary-default-img{
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/default_grey.png');
-  background-position: center;
-}
-
-.apiary-default-img-active{
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/default.png');
-  background-position: center;
-}
-
-.apiary-queen-img{
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/observations/crown_grey.png');
-  background-position: center;
-}
-
-.apiary-queen-img-active{
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/observations/crown.png');
-  background-position: center;
-}
-
-.hives-swarm-img{
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/observations/swarm_grey.png');
-  background-position: center;
-}
-
-.hives-swarm-img-active{
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/observations/swarm.png');
-  background-position: center;
-}
-
-.apiary-btn-active{
-  color: blue;
-}
-
-.hives-action, .hives-obs{
   margin: 5px 5px;
-  height: 40px;
-  width: 40px;
+  margin-bottom: 10px;
+  text-align: center;
+  height: 42px;
+  width: 42px;
+  color: grey;
+  background-color: transparent;
+  border: 0;
+  border-radius: 5px;
 }
 
-.inspect-apiary-notes, .inspect-apiary-todo{
-  padding:0 !important;
-  padding-left:10px !important;
-  margin-top: 20px;
+.apiary-action:hover, .hives-action:hover{
+  border: 2px solid #4f4f51;
 }
 
-.apiary-notes-input, .apiary-todo-input{
-  width: 80%;
-  height: 100px;
+.apiary-obs:hover, .hives-obs:hover{
+  border: 2px solid #4f4f51;
+}
+
+.obs-flex{
+  display: flex;
+}
+
+.border-green{
+  border: 2px solid #4f4f51;
+}
+
+.border-blue{
+  border: 2px solid #4f4f51;
+}
+
+.apiary-notes-todo, .hive-notes-todo{
+  width:70%;
+  margin-left:15px;
+  min-width:400px;
+}
+
+.btn-default_b{
+  background-size: 29px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/default_b.svg');
+  background-position: center;
+}
+
+.btn-default_cb{
+  background-size: 29px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/default_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-swarm_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/swarm_b.svg');
+  background-position: center;
+}
+
+.btn-swarm_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/swarm_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-super\+_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/super+_b.svg');
+  background-position: center;
+}
+
+.btn-super\+_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/super+_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-super-_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/super-_b.svg');
+  background-position: center;
+}
+
+.btn-super-_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/super-_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-stolen_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/stolen_b.svg');
+  background-position: center;
+}
+
+.btn-syrupfeed_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/syrupfeed_b.svg');
+  background-position: center;
+}
+
+.btn-syrupfeed_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/syrupfeed_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-mitevapor_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitevapor_b.svg');
+  background-position: center;
+}
+
+.btn-mitevapor_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitevapor_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-queeninsert_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/queeninsert_b.svg');
+  background-position: center;
+}
+
+.btn-queeninsert_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/queeninsert_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-division_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/division_b.svg');
+  background-position: center;
+}
+
+.btn-division_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/division_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-broodadd_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/broodadd_b.svg');
+  background-position: center;
+}
+
+.btn-broodadd_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/broodadd_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-broodremove_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/broodremove_b.svg');
+  background-position: center;
+  
+}
+
+.btn-broodremove_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/broodremove_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-stolen_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/alerts/ruche/stolen_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-lowbrood_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/alerts/ruche/lowbrood_bz.png');
+  background-position: center;
+}
+
+.btn-lowbrood_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/alerts/ruche/lowbrood_cbz.png');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-normbrood_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/normbrood_b.svg');
+  background-position: center;
+}
+
+.btn-normbrood_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/normbrood_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-highbrood_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/highbrood_b.svg');
+  background-position: center;
+}
+
+.btn-highbrood_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/highbrood_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-nobrood_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/nobrood_b.svg');
+  background-position: center;
+}
+
+.btn-nobrood_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/nobrood_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-nobees_b{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/nobees_b.svg');
+  background-position: center;
+}
+
+.btn-nobees_cb{
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/nobees_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-lowbees_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/lowbees_b.svg');
+  background-position: center;
+}
+
+.btn-lowbees_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/lowbees_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-normbees_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/normbees_b.svg');
+  background-position: center;
+}
+
+.btn-normbees_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/normbees_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-highbees_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/highbees_b.svg');
+  background-position: center;
+}
+
+.btn-highbees_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/highbees_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-nores_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/nores_b.svg');
+  background-position: center;
+}
+
+.btn-nores_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/nores_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-lowres_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/lowres_b.svg');
+  background-position: center;
+}
+
+.btn-lowres_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/lowres_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-normres_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/normres_b.svg');
+  background-position: center;
+}
+
+.btn-normres_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/normres_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-highres_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/highres_b.svg');
+  background-position: center;
+}
+
+.btn-highres_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/highres_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-honeydew_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/honeydew_b.svg');
+  background-position: center;
+}
+
+.btn-honeydew_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/honeydew_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.hives-action, .hives-obs
+{
+  margin: 5px 5px;
+  height: 42px;
+  width: 42px;
+}
+
+.inspect-apiary-notes, .inspect-apiary-todo,
+.inspect-hive-notes, .inspect-hive-todo{
+  display: flex;
+  margin: 10px auto 0px auto;
+}
+
+.inspect-apiary-todo{
+  margin-bottom: 10px;
+}
+
+.inspect-apiary-notes button, .inspect-apiary-notes textarea,
+.inspect-apiary-todo button, .inspect-apiary-todo textarea,
+.inspect-hive-notes button, .inspect-hive-notes textarea,
+.inspect-hive-todo button, .inspect-hive-todo textarea{
+  align-items: flex-start;
+}
+
+.apiary-notes,
+.apiary-todo,
+.hive-notes,
+.hive-todo{
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  color: black;
+  background-color: white;
+}
+
+.apiary-notes:hover,
+.apiary-todo:hover{
+  cursor: pointer;
+}
+
+.apiary-notes, .hive-notes{
+  margin-bottom: 10px;
+}
+
+.apiary-notes-input, .apiary-todo-input,
+.hive-notes-input, .hive-todo-input{
+  width: 90%;
   resize: none;
 }
 
-.apiary-todo-input{
-  margin-top: -10px;
+.apiary-notes-input, .hive-notes-input{
+  height: 110px;
+}
+
+.apiary-todo-input, .hive-todo-input{
+  height: 50px;
+}
+
+.hide-textarea{
+  visibility: hidden;
+  height: 1px;
 }
 
 #hives-table{
   width: 100%;
-  text-align: center;
-  border-collapse: collapse;
 }
 
 #hives-table-head{
@@ -235,15 +635,7 @@
   display: block;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 559px;
-}
-
-#hives-table-body{
-  width: 100%;
-}
-
-#hives-table-body > div:nth-child(2n){
-  background-color: #eaffeb;
+  height: 560px;
 }
 
 .hives-item{
@@ -267,29 +659,25 @@
   width: 10%;
 }
 
-.hives-notes, .hives-todo{
-  margin-top: 10px;
-  width: 40px;
-  height: 40px;
+.hive-notes, .hive-todo{
+  width: 35px;
+  height: 35px;
   border-radius: 3px;
-  border: 1px solid #999999;
 }
 
-.hives-notes{
-  background-size: 32px;
+.hive-notes{
+  font-size: 22px;
+}
+
+.hive-todo, .apiary-todo{
+  padding: 0;
+  background-size: 24px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/notes.png');
+  background-image: url('../../../../assets/ms-pics/ui/assets/todo.png');
   background-position: center;
 }
 
-.hives-todo{
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-image: url('../../../../assets/icons/inspect/todo.png');
-  background-position: center;
-}
-
-.hives-note-textarea, .hives-todo-textarea{
+.hives-note-textarea, .hive-todo-textarea{
   resize: none;
   height: 50px;
   width: 80%;
@@ -330,7 +718,7 @@
   }
 }
 
-.hives-todo-textarea-active{
+.hive-todo-textarea-active{
   height: 50px;
   display: initial;
   animation-name: show-todo;
@@ -347,7 +735,7 @@
   }
 }
 
-.hives-todo-textarea-inactive{
+.hive-todo-textarea-inactive{
   animation-name: hide-todo;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
@@ -364,26 +752,234 @@
 
 
 .inspect-footer{
-  display: flex;
-  justify-content: flex-end;
   width: 98%;
-  margin: 30px auto;
+  margin: 10px 0;
 }
 
-.inspect-footer button{
+.btn-cancel{
+  float: left;
+  width: 114px;
+}
+
+.btn-pdf, .btn-save{
+  float: right;
+  width: 114px;
   margin-left: 20px;
-  width: 100px;
 }
 
-@media screen and (max-width: 1200px){
-  .inspect-apiary{
-    width: 45%;
+.apiary-obs-div table th, .hive-obs-div table th{
+  text-align: center;
+  width: 35px;
+  height: 35px;
+}
+
+.hive-obs-div table tr{
+  margin-bottom: 5px;
+}
+
+.hive-obs-div table tbody tr{
+  height: 35px;
+  text-align: center;
+}
+
+.brood-egg{
+  background: url('../../../../assets/ms-pics/inspects/egg_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.brood-egg-active{
+  background: url('../../../../assets/ms-pics/inspects/egg_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 2px solid #4f4f51;
+}
+
+.brood-larva{
+  background: url('../../../../assets/ms-pics/inspects/larva_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.brood-larva-active{
+  background: url('../../../../assets/ms-pics/inspects/larva_cb.svg') center no-repeat;
+  background-size: 35px;
+  border: 2px solid #4f4f51;
+}
+
+.brood-pupa{
+  background: url('../../../../assets/ms-pics/inspects/pupa_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.brood-pupa-active{
+  background: url('../../../../assets/ms-pics/inspects/pupa_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 2px solid #4f4f51;
+}
+
+.brood-drone{
+  background: url('../../../../assets/ms-pics/inspects/dronebrood_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.brood-drone-active{
+  background: url('../../../../assets/ms-pics/inspects/dronebrood_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 2px solid #4f4f51;
+}
+
+.brood-none{
+  background: url('../../../../assets/ms-pics/inspects/nobrood_b.svg') center no-repeat;
+  background-size: 28px;
+}
+
+.brood-none-active{
+  background: url('../../../../assets/ms-pics/inspects/nobrood_cb.svg') center no-repeat;
+  background-size: 28px;
+  border: 2px solid #4f4f51;
+}
+
+.health-buzz{
+  background: url('../../../../assets/ms-pics/inspects/buzzinghive_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.health-buzz-active{
+  background: url('../../../../assets/ms-pics/inspects/buzzinghive_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 2px solid #4f4f51;
+}
+
+.health-sick{
+  background: url('../../../../assets/ms-pics/inspects/sick_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.health-sick-active{
+  background: url('../../../../assets/ms-pics/inspects/sick_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 2px solid #4f4f51;
+}
+
+.health-mosaic{
+  background: url('../../../../assets/ms-pics/inspects/mosaicbrood_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.health-mosaic-active{
+  background: url('../../../../assets/ms-pics/inspects/mosaicbrood_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 2px solid #4f4f51;
+}
+
+.health-queen{
+  background: url('../../../../assets/ms-pics/inspects/queen_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.health-queen-active{
+  background: url('../../../../assets/ms-pics/inspects/queen_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 2px solid #4f4f51;
+}
+
+.health-swarm{
+  background: url('../../../../assets/ms-pics/alerts/ruche/swarm_b.svg') center no-repeat;
+  background-size: 37px;
+}
+
+.health-swarm-active{
+  background: url('../../../../assets/ms-pics/alerts/ruche/swarm_cb.svg') center no-repeat;
+  background-size: 37px;
+  border: 2px solid #4f4f51;
+}
+
+.btn-sad, .btn-normal, .btn-happy{
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border: 0;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.btn-sad:hover, .btn-normal:hover, .btn-happy:hover{
+  border: 1px solid #ddd;
+}
+
+.btn-sad{
+  background: url('../../../../assets/ms-pics/inspects/hcc/generallow_b.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.btn-sad-active{
+  background: url('../../../../assets/ms-pics/inspects/hcc/generallow_cb.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.btn-normal{
+  background: url('../../../../assets/ms-pics/inspects/hcc/generalnormal_b.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.btn-normal-active{
+  background: url('../../../../assets/ms-pics/inspects/hcc/generalnormal_cb.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.btn-happy{
+  background: url('../../../../assets/ms-pics/inspects/hcc/generalgood_b.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.btn-happy-active{
+  background: url('../../../../assets/ms-pics/inspects/hcc/generalgood_cb.svg') center no-repeat;
+  background-size: 40px;
+}
+
+.hive-body-container{
+  width: 99%;
+  margin-left: 5px;
+}
+
+.hive-body-table-notes{
+  display: flex; 
+  justify-content: space-around; 
+  width: 100%; 
+}
+
+.hive-op-brood{
+  border-right: 5px solid white;
+  min-width: 270px; 
+  padding-bottom: 10px;
+}
+
+@media screen and (max-width: 1300px){
+  .apiary-notes-todo, .hive-notes-todo{
+    margin-left:15px;
+    min-width:320px;
   }
-  .inspect-hive{
-    width: 55%;
-    overflow-x: hidden;
+  .apiary-op, .hive-op{
+    min-width: 300px;
+  }
+  .apiary-obs-div table th, .hive-obs-div table th{
+    text-align: center;
+  }
+  .inspect-apiary, .inspect-hive{
+    justify-content: unset;
+  }
+  .hive-body-table-notes{
+    justify-content: unset;
   }
 }
+
+@media screen and (max-width: 1100px){
+  #hives-table-body{
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 560px;
+  }
+}
+
 
 @media screen and (max-width: 1000px){
   .inspect-new-container h3{
@@ -399,31 +995,35 @@
     justify-content: center;
   }
   .inspect-apiary{
-    border-right: 0px;
+    border: 1px solid black;
     width: 99%;
   }
-  .apiary-op, .apiary-obs-div{
-    justify-content: center;
-  }
-  .inspect-apiary-notes,.inspect-apiary-todo{
+  .inspect-apiary-notes, .inspect-apiary-todo,
+  .inspect-hive-notes, .inspect-hive-todo{
     display: flex;
     justify-content: center;
   }
+  .inspect-apiary-notes button, .inspect-apiary-notes textarea,
+  .inspect-hive-notes button, .inspect-hive-todo textarea{
+    align-items: flex-start;
+  }
+
   .inspect-body{
     width: 99%;
-    border-top: 1px solid #999999;
-    border-bottom: 1px solid #999999;
     display: block;
   }
   .inspect-hive{
-    width: 100%;
+    width: 99%;
     margin-top: 20px;
-    border-top: 1px dashed black;
   }
+
   .inspect-footer{
     width: 97%;
     justify-content: center;
     margin: 30px 0;
+  }
+  .apiary-obs-div table th, .hive-obs-div table th{
+    text-align: center;
   }
 }
 
@@ -432,26 +1032,48 @@
     text-align: center;
   }
   .inspect-apiary{
-    border-right: 0px;
-    width: 98%;
+    width: 99%;
+    border: 1px solid black;
   }
   .inspect-body{
     width: 99%;
-    border-top: 1px solid #999999;
-    border-bottom: 1px solid #999999;
     display: block;
   }
   .inspect-hive{
     margin-top: 20px;
-    width: 100%;
-    border-top: 1px dashed black;
+    width: 99%;
+  }
+
+  .apiary-obs-div table th, .hive-obs-div table th{
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 700px){
+  .inspect-apiary, .inspect-hive, .hive-body-container, .hive-body-table-notes{
+    flex-wrap: wrap;
+  }
+  .apiary-notes-todo, .hive-notes-todo{
+    width: 90%;
+  }
+  .apiary-op, .hive-op{
+    width: 88%;
+    min-width: unset;
   }
 }
 
 @media screen and (max-width: 600px){
+
+  .title-container{
+    display: flex;
+    flex-wrap: wrap;
+    min-width: unset;
+  }
+
   .inspect-new-container h3{
     text-align: center;
     margin-left: -5px;
+    font-size: 20px;
   }
 
   .inspect-time-input{
@@ -475,7 +1097,7 @@
 
   #inspect-apiary-select{
     text-align: center;
-    text-align-last: center;
+    margin-left: -3px;
   }
 
   .hives-swarm-img{
@@ -490,22 +1112,21 @@
   .inspect-new-container button.apiary-obs,
   .inspect-new-container button.hives-action,
   .inspect-new-container button.hives-obs,
-  .hives-notes,
-  .hives-todo{
-    width: 30px;
-    height: 30px;
+  .hive-notes,
+  .hive-todo,
+  .apiary-notes,
+  .apiary-todo{
+    width: 35px;
+    height: 35px;
     font-size: 10px;
-    background-size: 22px;
-  }
-
-  .inspect-new-container button.apiary-action,
-  .inspect-new-container button.apiary-obs{
-    margin: 10px auto;
+    background-size: 24px;
   }
 
   .inspect-new-container button.hives-action,
-  .inspect-new-container button.hives-obs{
-    margin: 2px 2px;
+  .inspect-new-container button.hives-obs,
+  .inspect-new-container button.apiary-action,
+  .inspect-new-container button.apiary-obs{
+    margin: 5px 2px;
   }
 
   .hives-table-head-hive{
@@ -530,17 +1151,18 @@
   }
 
 
-  .apiary-op table, .apiary-obs-div table{
+  .apiary-op table, .apiary-obs-div table, .hive-obs-div table{
     width: 97%;
+    text-align: center;
   }
 
-  .apiary-notes-input, .apiary-todo-input{
+  .apiary-obs-div table th, .hive-obs-div table th{
+    text-align: center;
+  }
+
+  .apiary-notes-input, .apiary-todo-input,
+  .hive-notes-input, .hive-todo-input{
     width: 95%;
-  }
-
-  .inspect-hive{
-    height:500px;
-    border-top: 1px dashed black;
   }
 
   #hives-table-body{
@@ -560,24 +1182,47 @@
   }
 
   .inspect-footer{
-    display: flex;
-    justify-content: center;
-    margin-left: -5px;
+    height: 45px;
+  }
+
+  .hive-op-brood{
+    min-width: 200px;
   }
 
 }
 
 @media screen and (max-width: 400px){
 
-  .inspect-body{
-    width: 98%;
-    border-top: 1px solid #999999;
-    border-bottom: 1px solid #999999;
-    display: block;
+  .title > div > div:nth-child(2){
+    margin-left: -5px;
   }
 
-  .inspect-hive{
-    border-top: 1px dashed black;
+  .title-date > div > div:nth-child(2){
+    margin-bottom: 15px;
+  }
+
+  .apiary-notes-todo{
+    margin-left: 8px;
+  }
+
+  .hive-notes-todo{
+    margin-left: 5px;
+  }
+
+  .inspect-apiary-notes, .inspect-apiary-todo,
+  .inspect-hive-notes, .inspect-hive-todo{
+    margin-left: 7px;
+    justify-content: unset;
+  }
+
+  .apiary-notes-input, .apiary-todo-input,
+  .hive-notes-input, .hive-todo-input{
+    width: 85%;
+  }
+
+  .inspect-body{
+    width: 98%;
+    display: block;
   }
 
   #hives-table-head{
@@ -585,9 +1230,35 @@
   }
 
   .inspect-footer{
-    display: flex;
-    justify-content: center;
-    width: 95%;
-    margin-left: -5px;
+    width: 97%;
+  }
+
+  .btn-cancel, .btn-save, .btn-pdf{
+    width:40px;
+    height: 40px;
+    text-indent: 200%;
+    overflow: hidden; 
+  }
+
+  .btn-cancel{
+    background: url('../../../../assets/ms-pics/inspects/hcc/close_w.svg') center no-repeat;
+    background-size: 20px;
+    background-color: #d9534f;
+  }
+
+  .btn-pdf{
+    background: url('../../../../assets/ms-pics/inspects/hcc/pdf_b.svg') center no-repeat;
+    background-size: 28px;
+    background-color: #efefef;
+  }
+
+  .btn-save{
+    background: url('../../../../assets/ms-pics/inspects/hcc/valid_w.svg') center no-repeat;
+    background-size: 20px;
+    background-color: #5cb85c;
+  }
+
+  .apiary-obs-div table th, .hive-obs-div table th{
+    text-align: center;
   }
 }

@@ -1,29 +1,25 @@
 <div class="inspect-history-container">
-  <h3>{{'INSPECT.HISTORY.TITLE' | translate }}</h3>
-  <div class="inspect-history-body">
-    <div class="inspect-history-search">
-      <h4>{{'INSPECT.HISTORY.SEARCH' | translate}}</h4>
-      <div class="inspect-history-search-components">
-        <div>
-          <select id="inspect-apiary-select" (change)="onSelectChange()" style="margin-left: 10px;width:180px;">
-            <option disabled selected value style="color:grey;"> {{'INSPECT.NEW.DEFAULT_SELECT' | translate}} </option>
-            <option *ngFor="let apiary of user_apiaries" value="{{apiary.name}}"> {{apiary.name}} </option>
-          </select>
-          <i class="fa fa-check valid-icon"></i>
-        </div>
-        <div>
-          <i class="fa fa-calendar inspect-time-icon"></i>
-          <input class="inspect-time-input date-start" placeholder="{{'INSPECT.HISTORY.PLACEHOLDER_START' | translate}}" [(ngModel)]="inspect_date_start" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDateStart()">
-          <owl-date-time #dtPicker1></owl-date-time>
-          <i class="fa fa-check valid-icon"></i>
-        </div>
-        <div>
-          <i class="fa fa-calendar inspect-time-icon"></i>
-          <input class="inspect-time-input date-end" placeholder="{{'INSPECT.HISTORY.PLACEHOLDER_END' | translate}}" [(ngModel)]="inspect_date_end" [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2" (ngModelChange)="inspectDateEnd()">
-          <owl-date-time #dtPicker2></owl-date-time>
-          <i class="fa fa-check valid-icon"></i>
-        </div>
-      </div>
-    </div>
+  <h3>{{'INSPECT.HISTORY.TITLE' | translate}}</h3>
+  <div style="overflow-x: auto;">
+    <table class="inspect-history-table">
+      <thead>
+        <tr>
+          <th class="apiary-sort" style="padding: 5px;" (click)="changeSortApiary()">{{'INSPECT.HISTORY.TABLE.APIARY' | translate}}</th>
+          <th class="date-sort" style="padding: 5px;" (click)="changeSortDate()">{{'INSPECT.HISTORY.TABLE.DATE' | translate}}</th>
+          <th style="padding: 5px;">{{'INSPECT.HISTORY.TABLE.HEALTH' | translate}}</th>
+          <th style="padding: 5px;">{{'INSPECT.HISTORY.TABLE.DESC' | translate}}</th>
+          <th style="padding: 5px;">{{'INSPECT.HISTORY.TABLE.TODO' | translate}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of inspInfoTab;">
+          <td style="padding: 5px;">{{ item.apiary }}</td>
+          <td style="padding: 5px;">{{ unitService.getHourlyDate(item.date) }}</td>
+          <td [class]="item.health" style="padding: 5px;"></td>
+          <td style="padding: 5px; min-width: 200px; text-align: left;">{{ item.notes }}</td>
+          <td style="padding: 5px; min-width: 200px; text-align: left;">{{ item.todo }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

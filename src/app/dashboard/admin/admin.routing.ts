@@ -24,7 +24,7 @@ import { UserComponent } from './user/user.component';
 const routes: Routes = [
     {
       path: '', component: AdminComponent, canActivate: [AuthGuardService], children: [
-        { path: '', redirectTo: 'status', pathMatch: 'full', canActivate: [AuthGuardService]},
+        { path: '', redirectTo: 'user', pathMatch: 'full', canActivate: [AuthGuardService]},
         { path: 'kpisynclog', component: KpisynclogComponent, canActivate: [AuthGuardService]},
         { path: 'status', component: GlobalStatusComponent, canActivate: [AuthGuardService]},
         { path: 'sensor-manager', component: SensorsManagerComponent, canActivate: [AuthGuardService]},

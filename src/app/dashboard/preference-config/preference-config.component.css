@@ -15,13 +15,13 @@ limitations under the License. */
 .checkOk{
     border: 1px solid green;
 }
-#lang-group div{
+#pref-config-lang-group div{
     padding: 2px;
 }
 .lang_active{
     border: 5px solid orange;
 }
-.form-group label, #lang-group img  {
+.form-group label, #pref-config-lang-group img  {
     margin-left: 6px;
 }
 .icon_notif{

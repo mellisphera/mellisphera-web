@@ -18,4 +18,5 @@ limitations under the License. */
 
 .main-panel{
     background-color: white;
+    height: 100% !important;
 }

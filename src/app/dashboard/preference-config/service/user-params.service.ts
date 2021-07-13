@@ -25,6 +25,8 @@ const httpOptions = {
 })
 export class UserParamsService {
 
+  static uPrefs: UserPref;
+
   public dtFormat: Array<string>;
   private formatDate: string;
   private userPref: UserPref;
@@ -53,6 +55,7 @@ export class UserParamsService {
 
   initService(): void {
     this.userPref = this.getUserPref() ? this.getUserPref() : null;
+    UserParamsService.uPrefs = this.getUserPref() ? this.getUserPref() : null;
     this.prefSubject.next(this.userPref);
     this.formatDate = this.getUserPref() ?  this.getUserPref().timeFormat : this.dtFormat[0];
   }
@@ -120,6 +123,10 @@ export class UserParamsService {
    * @memberof UserParamsService
    */
   getUserPref(): UserPref {
+    return JSON.parse(window.localStorage.getItem('jwtReponse')).userPref;
+  }
+
+  static getUPref(): UserPref {
     return JSON.parse(window.localStorage.getItem('jwtReponse')).userPref;
   }
 

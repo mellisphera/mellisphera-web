@@ -60,7 +60,8 @@ import { InspectHistoryComponent } from './inspect/inspect-history/inspect-histo
 import { InspectParamsComponent } from './inspect/inspect-params/inspect-params.component';
 
 
-
+import { HomeModule } from './home/home.module';
+import { MelliChartsModule } from './melli-charts/melli-charts.module';
 
 
 @NgModule({
@@ -83,6 +84,8 @@ import { InspectParamsComponent } from './inspect/inspect-params/inspect-params.
     }),
    //  DragAndCheckModule,
     ArchwizardModule,
+    HomeModule,
+    MelliChartsModule,
   ],
   providers: [
     RucherService,
@@ -102,7 +105,6 @@ import { InspectParamsComponent } from './inspect/inspect-params/inspect-params.
     MessagesService,
     UserParamsService,
     //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
-
   ],
   declarations: [
     DashboardComponent,

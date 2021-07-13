@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { UserloggedService } from '../../../userlogged.service';
-import { RucheInterface } from '../../../_model/ruche';
 import { RucherModel } from '../../../_model/rucher-model';
-import { UserParamsService } from '../../preference-config/service/user-params.service';
-import { RucheService } from '../../service/api/ruche.service';
+import { UserloggedService } from '../../../userlogged.service';
+import { Inspection } from '../../../_model/inspection';
+import { InspectionService } from '../../service/api/inspection.service';
 import { RucherService } from '../../service/api/rucher.service';
+import { UnitService } from '../../service/unit.service';
+import { TranslateService } from '@ngx-translate/core';
 
-import { InspApiary } from '../../../_model/inspApiary';
-import { InspHive } from '../../../_model/inspHive';
-import { InspHiveService } from './../../service/api/insp-hive.service';
-import { InspApiaryService } from './../../service/api/insp-apiary.service';
-import { UserPref } from '../../../_model/user-pref';
-import * as moment from 'moment';
+interface InspInfo{
+  apiary: string,
+  date: Date,
+  health: string,
+  notes: string,
+  todo: string
+}
 
 @Component({
   selector: 'app-inspect-history',
@@ -20,31 +22,32 @@ import * as moment from 'moment';
 })
 export class InspectHistoryComponent implements OnInit {
 
-  public user_pref : UserPref;
+  private inspTab: Inspection[] = [];
+  public inspInfoTab: InspInfo[] = [];
+  private user_apiaries: RucherModel[] = [];
 
-  public inspect_date_start: Date;
-  public inspect_date_end: Date;
-  public user_apiaries: RucherModel[];
-  public user_hives: RucheInterface[];
-  public active_apiary_index: number;
+  private apiarySort: string = "";
+  private dateSort: string = "";
 
   constructor(
-    private userPrefsService: UserParamsService,
-    private rucherService: RucherService,
-    private rucheService: RucheService,
+    private inspService: InspectionService,
     private userService: UserloggedService,
-    private inspApiaryService: InspApiaryService,
-    private inspHiveService: InspHiveService,
+    private rucherService: RucherService,
+    public unitService: UnitService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
-    this.active_apiary_index = 0;
-    this.userPrefsService.getUserPrefs().subscribe(
-      _userPrefs => {
-        this.user_pref = _userPrefs;
+    this.inspService.getInspectionByUser(this.userService.getIdUserLoged()).subscribe(
+      _inspTab => {
+        this.inspTab = [..._inspTab];
       },
       () => {},
-      () => {}
+      () => {
+        let arr = new Set<string>(this.inspTab.filter(_i => _i.apiaryInspId != null).map(_i => _i.apiaryInspId));
+        console.log(arr);
+        this.tableData(Array.from(arr));
+      }
     );
     this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
       _apiaries => {
@@ -53,16 +56,8 @@ export class InspectHistoryComponent implements OnInit {
       () => {},
       () => {
         this.user_apiaries.sort(this.compare);
-        this.rucheService.getHivesByApiary(this.user_apiaries[0]._id).subscribe(
-          _hives => {
-            this.user_hives = [..._hives];
-          },
-          () => {},
-          () => {
-          }
-        )
       }
-    )
+    );
   }
 
   compare(a, b) {
@@ -79,22 +74,94 @@ export class InspectHistoryComponent implements OnInit {
     return comparison;
   }
 
-  onSelectChange(): void{
-
+  tableData(array: string[]): void{
+    array.forEach(_id => {
+      let insp = this.inspTab.filter(_i => _i.apiaryInspId === _id)[0];
+      let health = "";
+      if(insp.obs.find(_o => _o.name.includes('General')) != undefined){
+        health = insp.obs.find(_o => _o.name.includes('General')).name.toLowerCase();
+      }
+      this.inspInfoTab.push({
+        apiary : this.user_apiaries.find(_api => _api._id === insp.apiaryId).name, 
+        date: new Date(insp.opsDate), 
+        health: health.toLowerCase(),
+        notes:insp.description,
+        todo:insp.todo
+      })
+    })
   }
 
-  inspectDateStart(): void{
-    (<HTMLInputElement>document.getElementsByClassName('date-start')[0]).value = moment(this.inspect_date_start).format(this.user_pref.timeFormat);
-    let parentDiv = document.getElementsByClassName('inspect-history-search-components')[0].children[1];
-    (<HTMLElement>parentDiv.getElementsByClassName('valid-icon')[0]).style.visibility = 'visible';
+  changeSortApiary(): void{
+    let th = <HTMLTableCellElement>document.getElementsByClassName('apiary-sort')[0];
+    let th_other = <HTMLTableCellElement>document.getElementsByClassName('date-sort')[0];
+    th_other.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.DATE');
+    if(this.apiarySort === "" || this.apiarySort === "DESC"){
+      this.apiarySort = "ASC";
+      th.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.APIARY') + '<i class="fas fa-sort-up" style="margin-left:3px"></i>';
+      this.inspInfoTab.sort((a,b) => {
+        if( b.apiary > a.apiary ){
+          return 1;
+        }
+        if( b.apiary < a.apiary ){
+          return -1;
+        }
+        if(b.apiary === a.apiary){
+          return 0;
+        }
+      });
+      return;
+    }
+    this.apiarySort = "DESC";
+    th.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.APIARY') + '<i class="fas fa-sort-down" style="margin-left:3px"></i>';
+    this.inspInfoTab.sort((a,b) => {
+      if( b.apiary < a.apiary ){
+        return 1;
+      }
+      if( b.apiary > a.apiary ){
+        return -1;
+      }
+      if(b.apiary === a.apiary){
+        return 0;
+      }      
+    });
     return;
   }
 
-  inspectDateEnd(): void{
-    (<HTMLInputElement>document.getElementsByClassName('date-end')[0]).value = moment(this.inspect_date_end).format(this.user_pref.timeFormat);
-    let parentDiv = document.getElementsByClassName('inspect-history-search-components')[0].children[2];
-    (<HTMLElement>parentDiv.getElementsByClassName('valid-icon')[0]).style.visibility = 'visible';
+  changeSortDate(): void{
+    let th = <HTMLTableCellElement>document.getElementsByClassName('date-sort')[0];
+    let th_other = <HTMLTableCellElement>document.getElementsByClassName('apiary-sort')[0];
+    th_other.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.APIARY');
+    if(this.dateSort === "" || this.dateSort === "DESC"){
+      this.dateSort = "ASC";
+      th.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.DATE') + '<i class="fas fa-sort-up" style="margin-left:3px"></i>';    
+      this.inspInfoTab.sort((a,b) => {
+        if(new Date(b.date).getTime() > new Date(a.date).getTime()){
+          return 1;
+        }
+        if(new Date(b.date).getTime() < new Date(a.date).getTime()){
+          return -1;
+        }
+        if(new Date(b.date).getTime() === new Date(a.date).getTime()){
+          return 0;
+        }
+      });
+      return;
+    }
+    this.dateSort = "DESC";
+    th.innerHTML = this.translate.instant('INSPECT.HISTORY.TABLE.DATE') + '<i class="fas fa-sort-down" style="margin-left:3px"></i>';
+    this.inspInfoTab.sort((a,b) => {
+      if(new Date(b.date).getTime() < new Date(a.date).getTime()){
+        return 1;
+      }
+      if(new Date(b.date).getTime() > new Date(a.date).getTime()){
+        return -1;
+      }
+      if(new Date(b.date).getTime() === new Date(a.date).getTime()){
+        return 0;
+      }
+    });
     return;
   }
+
 
 }

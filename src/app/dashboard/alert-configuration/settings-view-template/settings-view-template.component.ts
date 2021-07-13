@@ -3,8 +3,9 @@ import { AlertCat } from '../../../_model/alertCat';
 import { AlertUser } from '../../../_model/alertUser';
 import { TranslateService } from '@ngx-translate/core';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
-import { NotifList } from '../../../../constants/notify';
-import { NOTIF_DESCRIPTION5 } from '../../../../constants/notif_description';
+//import { NotifList } from '../../../../constants/notify';
+//import { NOTIF_DESCRIPTION5 } from '../../../../constants/notif_description';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings-view-template',
@@ -17,7 +18,8 @@ export class SettingsViewTemplateComponent implements OnInit {
   @Input() alertUser: AlertUser;
 
   constructor(private translateService: TranslateService, 
-              private userPrefService: UserParamsService) { }
+              private userPrefService: UserParamsService,
+              public router: Router) { }
 
   ngOnInit() {
   }
@@ -154,8 +156,9 @@ export class SettingsViewTemplateComponent implements OnInit {
     } else {
       return NOTIF_DESCRIPTION5.EN[_alertName];
     }*/
-    const lang = this.translateService.currentLang.toUpperCase();
-    return NOTIF_DESCRIPTION5[lang][_alertName];
+    //const lang = this.translateService.currentLang.toUpperCase();
+    //return NOTIF_DESCRIPTION5[lang][_alertName];
+    return this.translateService.instant('ALERTS_DESC.'+_alertName.toUpperCase()+'_MSG');
   }
 
   onEnable(alertId: string): void {

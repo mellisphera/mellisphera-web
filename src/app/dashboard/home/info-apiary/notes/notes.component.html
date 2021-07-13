@@ -22,28 +22,40 @@ limitations under the License. -->
             style="width:25px;margin-left:-5px;" />
           {{this.rucherService.rucher.name}}</span>
       </div>
-      <button [disabled]="rucherService.rucher._id == null" data-toggle="tooltip" data-html="true"
-        title="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NEW_NOTES' | translate}}" data-toggle="modal"
-        style="float:right;width: 5%; padding: 0;border: none; background: none;"
-        [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
-        data-target="#newObservationModal" class="btn btn-success btn_create">
-        <i class="fa fa-plus fa-2x"></i>
-      </button>
+      <div class="notes-add-div dropleft" style="float: right;">
+        <button [disabled]="rucherService.rucher._id == null"
+          style="float:right; width:45px; height: 45px; padding:0 !important; border:none; background: none; margin-top: -11px;"
+          [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
+          class="btn btn-success btn_add dropdown-toggle" [innerHTML]="more_icon_white | safeHtml"
+          [id]="'dropdownAddMenu'" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'dropdownAddMenu'"
+          style="top:6%; right:1%; padding:0; background-color: white; width: auto;">
+          <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
+            data-toggle="modal" data-target="#newObservationModal" (click)="showAddEvent()">
+            <i style="margin-left: 0px; margin-right: 10px;" class="fas fa-plus"></i>
+            {{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}
+          </button>
+        </div>
+      </div>
+
     </div>
-    <div class="user-sensors panel-body" id="notesApiary">
-      <table class="table">
-        <tbody>
-          <tr class="hoverStyle" *ngFor="let obs of getNoteByApiaryId(rucherService.rucher._id); let i = index;">
+    <div class="user-sensors panel-body" id="notesApiary" style="width:100%;">
+      <table class="table home-apiary-notes" style="table-layout:fixed;">
+        <tbody class="apiary-events">
+          <tr class="hoverStyle" *ngFor="let obs of inspectionService.inspApi; let i = index;">
             <ng-container *ngIf="obs.type === 'apiary'">
-              <td style="width: 100px;">{{ obs.opsDate | myDate }}</td>
-              <td>{{ obs.description }}</td>
-              <td class="text-right" style="width: 80px;">
-                <button data-toggle="tooltip" data-html="true" title="{{ 'NOTES.FORM.EDIT' | translate}}"
-                  data-toggle="modal" type="button" data-target="#editObservationModal"
-                  [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
-                  (click)="onSelectObs(obs)" class="btn btn-success btn_create"
-                  style="padding: 10;border: none;margin-right: -5px;">
-                  <i class="fa fa-edit fa-2x"></i>
+              <td style="max-width: 90px; width:90px;">{{ obs.opsDate | myDate }}</td>
+              <td style="min-width: 230px; width:90%">
+                <div>{{ obs.description }}</div>
+                <div style="width: 100%; display: flex; flex-wrap: wrap;">
+                  <div *ngFor="let item of obs?.obs" [class]="'hives-obs-item hives-'+item.name.toLowerCase()+'-img'"></div>
+                </div>
+              </td>
+              <td style="max-width: 50px; width:50px;">
+                <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default btn-edit"
+                      data-toggle="modal" data-target="#editObservationModal" (click)="showEditEvent(obs, i)">
+                      <i style="margin-right: 10px; font-size: 16px;" class="fas fa-pen"></i>
                 </button>
               </td>
             </ng-container>
@@ -53,94 +65,141 @@ limitations under the License. -->
     </div>
   </div>
 
-</div>
+  <!-- Context menu -->
+  <div class="right-click-menu">
+    <div>
+      <ul class="context-menu-group">
+        <li class="context-menu-choice add-event" data-toggle="modal" data-target="#newObservationModal" (click)="showAddEvent()">
+          <i class="fa fa-plus"></i>
+          <p>{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
 
+</div>
 
 
 <div class="modal fade" id="newObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h5 class="modal-title" id="exampleModalLabel">
-          <h3 class="text-center">{{ 'APIARY_NOTES.FORM.NEW' | translate}}</h3>
-        </h5>
+        <img width="35" height="35" src="../../../../../assets/ms-pics/ui/calendbars/inspect-api_cb.svg" style="float: right;">
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
+        <h4>{{this.rucherService.rucher.name}}</h4>
+        <div class="add-event-date">
+          <div>
+            <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
+            <owl-date-time [pickerType]="'calendar'" #dtEvent></owl-date-time>
+            <input class="add-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours($event)">
+            :
+            <input class="add-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes($event)">
+          </div>
+          <div class="add-event-time-error">
+            {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
+          </div>
+        </div>
       </div>
       <div class="modal-body">
-        <form [formGroup]="observationForm" (ngSubmit)="createObservation()">
-          <div class="form-group">
-            <label class="example-input-wrapper">
-              {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
-            </label><br />
-            <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
-            <owl-date-time #dt></owl-date-time><br />
-            <label for="recipient-obs"
-              class="col-form-label">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
-            <textarea formControlName="sentence" type="text" class="form-control" id="recipient-obs"></textarea>
+        <div id="brood-stage" class="hive-op-brood-home" style="margin-left: 3px;">
+          <button class="apiary-obs brood-none" (click)="setBroodStage('none', 'apiary')"></button>  
+          <button class="apiary-obs brood-egg" (click)="setBroodStage('egg', 'apiary')"></button>
+          <button class="apiary-obs brood-larva" (click)="setBroodStage('larva', 'apiary')"></button>
+          <button class="apiary-obs brood-pupa" (click)="setBroodStage('pupa', 'apiary')"></button>
+          <button class="apiary-obs brood-drone" (click)="setBroodStage('drone', 'apiary')"></button>    
+        </div>
+        <div class="add-event-notes">
+            <div style="width: 45px; margin-left: 4px;">
+              <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+              <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            </div>
+            <textarea class="add-home-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="add-event-todo">
+            <button style="visibility: hidden; margin-left: 8px;" class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            <textarea class="add-home-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="add-event-choice">
+          <div class="add-event-choice-obs" style="padding-bottom: 5px;">
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" [disabled]="!observationForm.valid">
-              {{ 'APIARY_NOTES.FORM.CREATE' | translate}}</button>
-            <button type="button" class="btn btn-secondary btn_close" data-dismiss="modal"
-              (click)="initForm()">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
-          </div>
-        </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons">
+          <button class="btn btn-danger cancelButton" style="margin-right:10px;height:34px; width:100px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button class="btn btn-success editButton" style="margin-left:10px;height:34px; width:100px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 <!-- End of new Observation Modal -->
 
-
-<!-- Edit Observation Modal -->
-<div class="modal fade" id="editObservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<!--Edit Inspection Modal-->
+<div class="modal fade" id="editObservationModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h5 class="modal-title" id="exampleModalLabel">
-          <h3 class="text-center">{{ 'APIARY_NOTES.FORM.EDITNOTE' | translate}}</h3>
-        </h5>
+        <img width="35" height="35" src="../../../../../assets/ms-pics/ui/calendbars/inspect-api_cb.svg" style="float: right;">
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.EDIT.TITLE' | translate}}</h4>
+        <h4>{{this.rucherService.rucher.name}}</h4>
+        <div class="add-event-date">
+          <div>
+            <input class="edit-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEventEdit" [owlDateTime]="dtEventEdit" (ngModelChange)="setNewEventDate()">
+            <owl-date-time [pickerType]="'calendar'" #dtEventEdit></owl-date-time>
+            <input class="edit-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours($event)">
+            :
+            <input class="edit-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes($event)">
+          </div>
+          <div class="edit-event-time-error">
+            {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
+          </div>
+        </div>
       </div>
       <div class="modal-body">
-        <form [formGroup]="observationForm">
-          <div class="form-group">
-            <label class="example-input-wrapper">
-              {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DATE' | translate}}
-            </label><br />
-            <input placeholder="Date Time:" formControlName="date" [owlDateTimeTrigger]="dtUpdate"
-              [owlDateTime]="dtUpdate">
-            <owl-date-time #dtUpdate></owl-date-time><br />
-            <label for="recipient-editobs"
-              class="col-form-label">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.NOTES' | translate}}</label>
-            <textarea formControlName="sentence" type="text" class="form-control" id="recipient-editobs"></textarea>
+        <div id="brood-stage" class="hive-op-brood-home" style="margin-left: 3px;">
+          <button class="apiary-obs brood-none" (click)="editBroodStage('none', 'apiary')"></button>  
+          <button class="apiary-obs brood-egg" (click)="editBroodStage('egg', 'apiary')"></button>
+          <button class="apiary-obs brood-larva" (click)="editBroodStage('larva', 'apiary')"></button>
+          <button class="apiary-obs brood-pupa" (click)="editBroodStage('pupa', 'apiary')"></button>
+          <button class="apiary-obs brood-drone" (click)="editBroodStage('drone', 'apiary')"></button>    
+        </div>
+        <div class="edit-event-notes">
+            <div style="width: 45px; margin-left: 4px;">
+              <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+              <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            </div>
+            <textarea value="{{new_event?.description}}" class="edit-home-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="edit-event-todo">
+            <button style="visibility: hidden; margin-left: 8px;" class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            <textarea value="{{new_event?.todo}}" class="edit-home-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="edit-event-choice">
+          <div class="edit-event-choice-obs" style="padding-bottom: 5px;">
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn delete btn_delete_modal" mwlConfirmationPopover
-              popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top"
-              confirmText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}"
-              cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObs()">
-              {{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE' | translate}}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons" style="display: unset;">
+          <div class="dropleft" style="float:left;">
+            <button class="btn btn-danger dropdown-toggle dropdownDelButton" [id]="'dropdownDelButton'"
+              type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              style="padding: 6px 12px !important; width:100px;">
+              {{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}
             </button>
-            <button type="submit" class="btn delete btn_delete btn_delete_modal_mobile" mwlConfirmationPopover
-              popoverTitle="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.DELETE_ASK' | translate}}" placement="top"
-              confirmText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CONFIRM' | translate}}"
-              cancelText="{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CANCEL' | translate}}" (confirm)="deleteObs()">
-              <i class="fa fa-trash fa-2x"></i>
-            </button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onEditObservation()"
-              [disabled]="!observationForm.valid">{{ 'APIARY_NOTES.FORM.SAVE' | translate}}</button>
-            <button type="button" class="btn btn-secondary btn_close"
-              data-dismiss="modal">{{ 'HIVE_DETAIL.OBSERVATIONS.FORM.CLOSE' | translate}}</button>
+            <div class="dropdown-menu dropdown-menu-left dropdowndel" [attr.aria-labelledby]="'dropdownDelButton'"
+              style="margin-top: -10px; width: 160px; padding: 0; justify-content: unset; align-items:center; color: black; background-color: white;">
+              <p style="margin: 5px 10px 4px;">Confirmer ?</p>
+              <button class="btn btn-default btn-confirm-del" (click)="deleteEvent()"><i class="fas fa-check-square"></i></button>
+            </div>
           </div>
-        </form>
+          <button class="btn btn-success editButton" style="float:right;height:34px;margin-left: 10px; width:100px;" (click)="editEvent()">{{'MELLICHARTS.EVENT.BUTTONS.EDIT' | translate}}</button>
+          <button class="btn btn-default cancelButton" style="float:right;height:34px; width:100px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+

@@ -31,7 +31,7 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eltOnClick = document.getElementById('status');
+    this.eltOnClick = document.getElementById('user');
     this.renderer.addClass(this.eltOnClick, 'active');
   }
 

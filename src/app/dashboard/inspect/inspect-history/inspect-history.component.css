@@ -1,51 +1,44 @@
 .inspect-history-container{
-  width: 100%;
-  padding-left: 10px;
+    padding-left: 25px;
 }
 
 .inspect-history-container h3{
-  padding-bottom: 20px;
-  margin-left: 20px;
+    padding-bottom: 10px;
 }
 
-.inspect-history-search{
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
-  border-bottom-left-radius: 3px;
-  margin-left: 10px;
-  width: 98%;
+.generallow{
+    background: url('../../../../assets/ms-pics/inspects/hcc/generallow_cb.svg') center no-repeat;
+    background-size: 20px;
 }
 
-.inspect-history-search h4{
-  margin-left: 10px;
-  padding-bottom: 10px;
+.generalnormal{
+    background: url('../../../../assets/ms-pics/inspects/hcc/generalnormal_cb.svg') center no-repeat;
+    background-size: 20px;
 }
 
-.inspect-history-search-components{
-  display: flex;
+.generalgood{
+    background: url('../../../../assets/ms-pics/inspects/hcc/generalgood_cb.svg') center no-repeat;
+    background-size: 20px;
 }
 
-.inspect-history-search-components div{
-  margin-right: 60px;
+.inspect-history-table{
+    border-collapse: collapse;
 }
 
-.inspect-history-search-components input{
-  text-align: center;
+.inspect-history-table th{
+    width: 100px;
+    text-align: center;
 }
 
-.inspect-history-search-components select{
-  margin-bottom: 20px;
+.inspect-history-table tr{
+    border-bottom: 1px solid rgb(221, 221, 221);
 }
 
-.valid-icon{
-  position: absolute;
-  color: green;
-  min-width: 40px;
-  font-size: 24px;
-  visibility: hidden;
+.inspect-history-table td{
+    text-align: center;
 }
 
-.inspect-time-icon{
-  position: absolute;
-  padding: 6px 5px;
+.apiary-sort:hover, .date-sort:hover{
+    background-color: #ddd;
+    cursor: pointer;
 }

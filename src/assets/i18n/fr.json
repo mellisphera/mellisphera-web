@@ -3,7 +3,7 @@
         "SIGN_IN": {
             "DENIED": "Accès refusé",
             "SUBMIT": "S'identifier",
-            "SIGN_UP_LINK": "creer un compte MyBroodminder"
+            "SIGN_UP_LINK": "Creer un compte MyBroodminder"
         },
         "SIGN_UP": {
 
@@ -125,6 +125,7 @@
     "SIDEBAR" : {
         "APIARY" : "Mon Rucher",
         "HIVES" : "Ruches",
+        "INSPECT": "Inspecter",
         "DATA" : "Explorer",
         "ALERT_CONF": "Alertes",
         "USERGUIDE": "Documentation"
@@ -426,7 +427,9 @@
             "DONNEE": "Données",
             "DONNEE_TOOLTIP": "Données brutes",
             "WEIGHT": "Poids",
-            "WEIGHT_TOOLTIP": "Poids"
+            "WEIGHT_TOOLTIP": "Poids",
+            "EVENTS": "Evenements",
+            "EVENTS_TOOLTIP": "Evenements"
         },
         "DATE": {
             "START": "Début",
@@ -434,17 +437,27 @@
             "BTN_APPLY": "Appliquer"
         },
         "BROOD": {
-            "TITLE": "Evolution journalière du couvain"
+            "TITLE": "Evolution journalière du couvain",
+            "TOOLTIP":{
+              "SWARM":"Essaimage",
+              "DEFAULT":"Default",
+              "SUPER+":"Ajout hausse",
+              "SUPER-":"Retrait hausse"
+            }
         },
         "WEIGHT": {
           "RAW": "Evolution journalière du poids",
           "NORM": "Evolution journalière du poids normalisé",
           "GAIN": "Evolution journalière du gain de poids",
+          "INCOME": "Productivité de miellée",
+          "HOURLY": "Evolution horaire du poids",
           "REF_DATE": "Date Reference",
           "CHECKBOX": {
-              "RAW": "Brut",
+              "RAW": "Journalier",
               "NORM": "Normalisé",
-              "GAIN": "Gain"
+              "GAIN": "Gain",
+              "INCOME": "Productivité",
+              "HOURLY": "Horaire"
           },
           "TABLE":{
             "DATE":"Date",
@@ -467,18 +480,113 @@
               "VAR_15DAYS": "Variation 15 derniers jours"
             }
           }
+        },
+        "RAW_DATA":{
+            "TITLE":"Données horaires"
+        },
+        "EVENT":{
+          "TITLE":"Evenements",
+          "ADD":{
+            "TITLE": "Ajouter Evenement",
+            "DATE": "Date",
+            "DATE_PLACEHOLDER": "Date d'observation",
+            "DATE_ERROR": "Veuillez renseigner une date valide",
+            "EVENT": "Evenement",
+            "NOTES": "Notes",
+            "NOTES_PLACEHOLDER":"Ajouter une Note",
+            "TODO": "Taches",
+            "TODO_PLACEHOLDER":"Ajouter une tache"
+          },
+          "EDIT":{
+            "TITLE":"Modifier Evenement"
+          },
+          "DELETE":{
+            "TITLE": "Supprimer Evenement",
+            "BODY": "Voulez-vous vraiment supprimer cet evenement ?"
+          },
+          "BUTTONS":{
+            "ADD":"Enregistrer",
+            "CANCEL":"Annuler",
+            "EDIT":"Enregistrer",
+            "DELETE":"Supprimer"
+          },
+          "TABLE":{
+            "HEADER":{
+                "APIARY":"Rucher",
+                "HIVE":"Ruche",
+                "DATE":"Date",
+                "TYPE":"Type",
+                "PICTOS":"Evenements",
+                "NOTES_TASKS":"Notes & Taches",
+                "EDIT":"Editer",
+                "DELETE":"Supprimer"
+            }
+          }
+        },
+        "ALERT":{
+            "TITLE":"Alertes",
+            "EDIT":{
+                "TITLE":"Editer Alerte"
+            },
+            "DELETE":{
+                "TITLE":"Supprimer Alerte",
+                "BODY": "Voulez-vous vraiment supprimer cette alerte ?"
+            },
+            "DATE_ERROR":"Veuillez renseigner une date valide",
+            "ALERT_ERROR":"Veuillez choisir une alerte"
+        },
+        "FILTERS":{
+          "APIARY":{
+            "ALL": "Evenements Rucher"
+          },
+          "INSPECTION":{
+            "ALL": "Inspections"
+          },
+          "ALERT":{
+            "ALL": "Alertes",
+            "SWARM": "Essaimage"
+          },
+          "EVENT":{
+            "ALL": "Evenements Ruche"
+          },
+          "DISPLAY":{
+            "HONEYDEW":"Miellée",
+            "SWARM":"Essaimage",
+            "RSWARM":"Risque d'essaimage",
+            "TMAX":"Forte temp. interne",
+            "TMIN":"Faible temp. interne",
+            "LOWBROOD":"Faible niveau couvain",
+            "WINEG":"Perte poids élevé",
+            "WIPOS":"Gain poids élevé",
+            "HMAX":"Forte humidité interne",
+            "HMIN":"Faible humidité interne",
+            "STOLEN":"Ruche volée",
+            "DEAD":"Ruche morte",
+            "OXALIC":"Traitement acide oxalique",
+            "SUPER+":"Ajout hausse",
+            "SUPER-":"Retrait hausse",
+            "SUPERMORE":"Ajout hausse",
+            "SUPERLESS":"Retrait hausse",
+            "WLIM":"Seuil poids"
+          }
         }
     },
     "INSPECT":{
-      "SIDEBAR":"Inspecter",
-      "SIDEBAR_TOOLTIP":"Inspecter",
+      "SIDEBAR":"Inspections",
+      "SIDEBAR_TOOLTIP":"Inspections",
+      "ACTIONS":"Actions",
+      "OBS":"Observations",
+      "NOTES":"Notes",
+      "TODO":"Taches",
       "NAV":{
         "NEW":"Nouvelle",
         "HISTORY":"Historique",
         "PARAMS":"Parametres"
       },
       "NEW": {
-        "TITLE":"Nouvelle Inspection",
+        "TITLE":"Nouvelle Inspection du rucher ",
+        "DATE":"Date : ",
+        "GENERAL": "Etat général du rucher",
         "PLACEHOLDER":"Choisir date",
         "DEFAULT_SELECT":"Choisir rucher",
         "NOTE_PLACEHOLDER":"Notes...",
@@ -488,15 +596,120 @@
           "ACT_OBS": "Actions et Observations"
         },
         "BTN_SAVE":"Enregistrer",
-        "BTN_PRINT":"Imprimer"
+        "BTN_PRINT":"Imprimer",
+        "BTN_PDF":"Générer PDF",
+        "BTN_DL":"Télécharger",
+        "GEN_DL":"Génération en cours : ",
+        "READY_DL":"Votre fichier est pret a etre téléchargé !",
+        "BTN_CANCEL":"Annuler"
+      },
+      "TABLE":{
+          "BEES":"Abeilles",
+          "BROOD":"Couvain",
+          "STORES":"Réserves"
       },
       "HISTORY":{
-        "TITLE":"Historique des inspections",
-        "PLACEHOLDER_START":"Choisir date depart",
-        "PLACEHOLDER_END":"Choisir date fin"
-
+          "TITLE":"Historique",
+          "TABLE":{
+              "APIARY":"Rucher",
+              "DATE":"Date",
+              "HEALTH":"Etat Général",
+              "DESC":"Notes",
+              "TODO":"Taches"
+          }
       },
       "PARAMS":{}
+    },
+    "ALERTS_DESC":{
+        "HONEYDEW":"Miellée",
+        "HONEYDEW_DESC":"Déclenchée lorsque l'apport de poids dans la ruche dépasse le seuil choisi lors de la dernière semaine.",
+        "RAIN":"Possibles fortes précipitations",
+        "RAIN_DESC":"Déclenchée lorsque les précipitations pluvieuses dépassent le seuil choisi le prochain jour.",
+        "SWARM":"Essaimage",
+        "SWARM_DESC":"Déclenchée lorsque un potentiel essaimage est survenu (un Hub offre plus d'efficacité).",
+        "DCONNECT":"Déconnexion",
+        "DCONNECT_DESC":"Déclenchée lorsqu'un de vos capteurs ne transmet plus de données (ou ponctuellement) pendant chaque période choisie. Ne fonctionne qu'avec un Hub.",
+        "TMAX":"Forte temp. interne",
+        "TMAX_DESC":"Déclenchée lorsque la température interne dépasse le seuil choisi.",
+        "TMIN":"Faible temp. interne",
+        "TMIN_DESC":"Déclenchée lorsque la température interne est en dessous du seuil choisi.",
+        "LOWBROOD":"Faible niveau couvain",
+        "LOWBROOD_DESC":"Déclenchée quand le pourcentage de couvain est en dessous du seuil défini.",
+        "STOPWEATHER":"Station météo arrêtée",
+        "STOPWEATHER_DESC":"Déclenchée lorsque votre station météo s'arrête d'émettre des données. Nécessite sa propre station météo.",
+        "RSWARM":"Risque d'essaimage",
+        "RSWARM_DESC":"Déclenchée lorsque le risque d'essaimage est fort sur une de vos ruches le prochain jour.",
+        "WIPOS":"Gain poids élevé",
+        "WIPOS_DESC":"Déclenchée lorsque le poids entrants de la journée dans la ruche dépasse le seuil choisi.",
+        "WINEG":"Perte poids élevé",
+        "WINEG_DESC":"Déclenchée lorsque les abeilles consomment beaucoup plus de ressources qu'elles n'en ramènent dans la ruche. Le seuil de perte est réglable.",
+        "WLIM":"Seuil poids",
+        "WLIM_DESC":"Déclenchée lorsque le seuil de poids indiqué est dépassé.",
+        "SNOW":"Possible neige abdondante",
+        "SNOW_DESC":"Déclenchée lorsque les précipitations neigeuses dépassent le seuil choisi le prochain jour.",
+        "WIND":"Possible fort vent",
+        "WIND_DESC":"Déclenchée lorsque le vent dépassent le seuil choisi le prochain jour.",
+        "COLDDAY":"Possible journée froide à venir",
+        "COLDDAY_DESC":"Déclenchée lorsqu'une journée froide à venir est détectée, c’est-à-dire en dessous du seuil de température indiqué.",
+        "HOTDAY":"Possible journée chaude à venir",
+        "HOTDAY_DESC":"Déclenchée lorsqu'une journée chaude à venir est détectée, c’est-à-dire au dessus du seuil de température indiqué.",
+        "HMIN":"Faible humidité interne",
+        "HMIN_DESC":"Déclenchée lorsque l'humidité interne est en dessous du seuil choisi.",
+        "HMAX":"Forte humidité interne",
+        "HMAX_DESC":"Déclenchée lorsque l'humidité interne dépasse le seuil choisi.",
+        "STOLEN":"Ruche volée",
+        "STOLEN_DESC":"Déclenchée lorsque le poids de votre ruche devient anormalement faible.",
+        "DCONNECTT":"Déconnexion",
+        "DCONNECTT_DESC":"Déclenchée lorsque votre capteur de température ne transmets plus de données durant le dernier jour.",
+        "DCONNECTW":"Déconnexion",
+        "DCONNECTW_DESC":"Déclenchée lorsque votre capteur de poids ne transmets plus de données durant le dernier jour.",
+        "DCONNECTH":"Déconnexion",
+        "DCONNECTH_DESC":"Déclenchée lorsque votre Hub ne transmets plus de données durant le dernier jour.",
+        "POORSIGNALW":"Mauvais signal",
+        "POORSIGNALW_DESC":"Déclenchée lorsque votre capteur de poids transmets peu de données durant le dernier jour.",
+        "POORSIGNALT":"Mauvais signal",
+        "POORSIGNALT_DESC":"Déclenchée lorsque votre capteur de température transmets peu de données durant le dernier jour.",
+        "LOWBATTERYW":"Batterie faible",
+        "LOWBATTERYW_DESC":"Déclenchée lorsque le niveau de batterie de votre capteur de poids est en dessous du seuil choisi.",
+        "LOWBATTERYT":"Batterie faible",
+        "LOWBATTERYT_DESC":"Déclenchée lorsque le niveau de batterie de votre capteur de température est en dessous du seuil choisi.",
+        "SUPER+":"Ajout d'une hausse",
+        "SUPER+_DESC":"Indiquer le poids minimal d'une hausse vide.",
+        "SUPER-":"Retrait d'une hausse",
+        "SUPER-_DESC":"Indiquer le poids maximal d'une hausse pleine.",
+        "OXALIC":"Traitement à l'acide oxalique",
+        "OXALIC_DESC":"Déclenchée lorsque le couvain moyen de vos ruches est en dessous du seuil fixé. C’est une indication vous permettant de traiter vos ruches à l’acide oxalique au bon moment.",
+        "DEAD":"Ruche morte",
+        "DEAD_DESC":"Notre algorithme détecte chaque jour si votre ruche est morte en fonction de différents paramètres que nous avons fixés.",
+        "RAIN_MSG":"Les précipitations de pluie dépasseront {VAL}",
+        "SNOW_MSG":"Les précipitations de neige dépasseront {VAL} ",
+        "WIND_MSG":"Le vent dépassera {VAL}",
+        "COLDDAY_MSG":"Les températures seront inhabituellement froides",
+        "OXALIC_MSG":"C'est le moment pour traiter vos ruches",
+        "HOTDAY_MSG":"Les températures seront inhabituellement chaudes",
+        "TMAX_MSG":"Température interne dépassant {VAL}",
+        "TMIN_MSG":"Température interne en dessous de {VAL}",
+        "WIPOS_MSG":"Le gain de réserves dépasse {VAL}",
+        "WINEG_MSG":"La perte de réserves dépasse {VAL}",
+        "LOWBROOD_MSG":"Couvain en dessous de {VAL}",
+        "HMAX_MSG":"Humidité interne dépassant {VAL}",
+        "HMIN_MSG":"Humidité interne en dessous de {VAL}",
+        "HONEYDEW_MSG":"Poids entrants lors de la dernière semaine excédant {VAL}",
+        "WLIM_MSG":"Le poids de votre ruche dépasse {VAL}",
+        "SWARM_MSG":"Potentiel essaimage détecté vers 14:00",
+        "RSWARM_MSG":"Journée d'essaimages attendue",
+        "SUPER+_MSG":"Vous avez ajouté une hausse",
+        "SUPER-_MSG":"Vous avez retiré une hausse",
+        "LOWBATTERYT_MSG":"Remplacer la batterie de ",
+        "LOWBATTERYW_MSG":"Remplacer la batterie de ",
+        "DCONNECTT_MSG":"{REF} déconnecté depuis {DATE}",
+        "DCONNECTW_MSG":"{REF} déconnecté depuis {DATE}",
+        "DCONNECTH_MSG":"{REF} déconnecté depuis {DATE}",
+        "POORSIGNALT_MSG":"{REF} mauvais signal depuis {DATE}",
+        "POORSIGNALW_MSG":"{REF} mauvais signal depuis {DATE}",
+        "STOPWEATHER_MSG":"Erreur de transmission de données de votre station météo depuis le {DATE}",
+        "STOLEN_MSG":"Le poids de votre ruche est anormalement faible",
+        "DEAD_MSG":"Votre ruche a été détectée morte"
     },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icône",
@@ -527,12 +740,77 @@
                 "Allez dans l'onglet \"configurer\" pour définir vos préférences pour l'email et la fréquence des notifications."]
         }
     },
-
+    "INSP_CONF":{
+        "APPLIES":{
+            "HIVE":"Ruche",
+            "APIARY":"Rucher"
+        },
+        "SUPER+":"Ajout d'une hausse",
+        "SUPER-":"Retrait d'une hausse",
+        "QUEENINSERT":"Insertion reine",
+        "DIVISION":"Division",
+        "QUEENABSENT":"Reine absente",
+        "STOLEN":"Ruche volée",
+        "BROODADD":"Ajout de cadres de couvain",
+        "BROODREMOVE":"Retrait de cadres de couvain",
+        "COMBINEDHIVES":"Ruches combinées",
+        "SWARM":"Essaimage",
+        "CANDIFEED":"Nourrir Candi",
+        "SYRUPFEED":"Nourrir Sirop",
+        "REQUEEN":"Remèrage",
+        "QUEENLINEAGE":"Marquage reine",
+        "HARVEST":"Récolte",
+        "INSTALLPKG":"Installer essaime d'abeilles",
+        "NUCLEUSHIVE":"Installed nucleus hive",
+        "SPLITQUEENREMOVE":"Divison avec retrait de la reine",
+        "NECTARFLOW":"Miellées",
+        "MITEOAVAPOR":"Traitement varroa acide oxalique Vap.",
+        "MITEOADRIBBLE":"Traitement varroa acide oxalique Deg.",
+        "MITEFORMICPRO":"Traitement varroa formique",
+        "MITESTRIP":"Traitement lanière",
+        "STARTFEED":"Debut nourissage",
+        "STOPFEED":"Arret nourissage",
+        "SWARMMATEDQUEEN":"Swarm with mated queen",
+        "VIRGINSWARM":"Virgin swarm",
+        "SWARMRETURN":"Swarm and return to hive",
+        "QUEENSEEN":"Reine vue",
+        "NOBROOD":"Pas de couvain",
+        "LOWBROOD":"Niveau couvain faible ",
+        "NORMBROOD":"Niveau couvain normal",
+        "HIGHBROOD":"Niveau couvain elevé",
+        "SICK":"Malade",
+        "NOBEES":"Pas d'abeilles",
+        "LOWBEES":"Niveau d'abeilles faible",
+        "NORMBEES":"Niveau d'abeilles moyen",
+        "HIGHBEES":"Niveau d'abeilles élevé",
+        "NORES":"Pas de ressources",
+        "LOWRES":"Niveau de ressources faible",
+        "NORMRES":"Niveau de ressources moyen",
+        "HIGHRES":"Niveau de ressources élevé",
+        "EGG":"Présence d'oeufs",
+        "LARVA":"Présence de larves",
+        "PUPA":"Présence de couvain operculé",
+        "DRONEBROOD":"Présence de couvain de male",
+        "DRONES":"Présence de males",
+        "BUZZINGHIVE":"Bourdonneuse",
+        "MOSAICBROOD":"Mosaique couvain",
+        "MITESTRIPADD":"Traitement varroa ajout laniere",
+        "MITESTRIPREMOVE":"Traitement varroa retrait laniere",
+        "QUEEN":"Reine",
+        "MITECOUNTLOUNGE":"Lange",
+        "MITECOUNTWASH":"Compteur de Varroa"
+    },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
         "BTN": "Login",
         "EULA": "Contrat de Licence Utilisateur Final",
         "BTN_EUA": "J'accepte",
+
+        "SIGN_IN": {
+            "DENIED": "Accès refusé",
+            "SUBMIT": "S'identifier",
+            "SIGN_UP_LINK": "Creer un compte MyBroodminder"
+        },
 
         "BECOMING": {
             "TITLE": "Devenir un apiculteur de précision",
@@ -566,7 +844,135 @@
             "CONNECTION": "Connexion",
             "ERR": "Je n’arrive pas à me connecter",
             "TRY_MS": "Compte démo",
-            "MAIL_SUBJECT": "Problème de connexion"
+            "MAIL_SUBJECT": "Problème de connexion",
+            "DENIED":"Accès refusé"
         }
+    },
+    "NOTIFY":{
+        "SUCCESS":{  
+            "CHANGE_NAME_DEMO_APIARY": "Nom modifié",
+            "READ_ALL_ALERTS_HIVE": "Alertes lues",
+            "SAVE_ALERT_CONF": "Paramètres sauvegardés",
+            "SAVE_INSP_CONF": "Paramètres sauvegardés",
+            "SEND_MAIL_TEST": "Email envoyé !"
+        },
+        "FAIL":{
+            "AUTH_WRITE_APIARY": "Vous n'avez pas le droit de modifier le rucher de démo.",
+            "NO_DELETE_RIGHT": "Vous ne pouvez pas supprimer le dernier rucher",
+            "AUTH_WRITE_HIVE": "Vous n'avez pas le droit de modifier cette ruche",
+            "AUTH_WRITE_NOTES": "Vous n'avez pas le droit de modifier les notes de ce rucher",
+            "AUTH_WRITE_NOTES_HIVE": "Vous n'avez pas le droit d'écrire ici"
+        }
+    },
+    "MOON":{
+        "1":"Pleine lune",
+        "2":"Nouvelle lune",
+        "3":"Dernier quartier",
+        "4":"Premier quartier",
+        "5":"Gibbeuse croissante",
+        "6":"Gibbeuse décroissante",
+        "7":"Dernier croissant",
+        "8":"Premier croissant"
+    },
+    "DEVICE_STATUS_CODE":{
+        "R":{
+            "COLOR":"Red",
+            "MSG":"Capteur déconnecté"
+        },
+        "O1":{
+            "COLOR":"Orange",
+            "MSG":"Mauvais signal"
+        },
+        "O2":{
+            "COLOR":"Orange",
+            "MSG":"Batterie faible"
+        }
+    },
+    "FITNESS_CODE":{
+        "B1":{
+            "COLOR":"Black",
+            "MSG":"Ruche morte"
+        },
+        "B2":{
+            "COLOR":"Black",
+            "MSG":"Ruche volée"
+        },
+        "R1":{
+            "COLOR":"Red",
+            "MSG":"Ruche très faible"
+        },
+        "O1":{
+            "COLOR":"Orange",
+            "MSG":"Ruche faible ou en fort déclin"
+        },
+        "O2":{
+            "COLOR":"Orange",
+            "MSG":"Potentiel essaimage"
+        },
+        "O3":{
+            "COLOR":"Orange",
+            "MSG":"Surchauffe"
+        },
+        "O4":{
+            "COLOR":"Orange",
+            "MSG":"Grand froid"
+        },
+        "O5":{
+            "COLOR":"Orange",
+            "MSG":"Perte de poids importante"
+        },
+        "G1":{
+            "COLOR":"Green",
+            "MSG":"Bonne santé"
+        }
+    },
+    "HIVE_POS":{
+        "ABOVE LOWER BROOD BOX":{
+            "COLOR":"#d45087",
+            "MSG":"Corps"
+        },
+        "ABOVE UPPER BROOD BOX":{
+            "COLOR":"#ffa600",
+            "MSG":"Hausse"
+        },
+        "OTHER":{
+            "COLOR":"#f95d6a",
+            "MSG":"Autre"
+        },
+        "OUTSIDE HIVE":{
+            "COLOR":"#a05195",
+            "MSG":"Exterieur"
+        },
+        "SCALE UNDER HIVE":{
+            "COLOR":"#003f5c",
+            "MSG":"Balance AV"
+        },
+        "SCALE UNDER HIVE (BACK)":{
+            "COLOR":"#ff7c43",
+            "MSG":"Balance AR"
+        },
+        "UNDER INNER COVER":{
+            "COLOR":"#665191",
+            "MSG":"Sous le couvre-cadres"
+        }
+    },
+    "MESSAGES":{
+        "WARNINGHIVE":"Attention, la ruche ",
+        "WILLBEDELETED":" sera supprimée.",
+        "WARNINGHIVES":"Attention, les ruches ",
+        "WILLBEDELETEDS":" seront supprimées.",
+        "AND":" et ",
+        "PASSWORD":"Mot de passe",
+        "DENIED":"Accès refusé",
+        "LOGIN":"Se connecter",
+        "CREATEACCOUNT":"Créer un compte",
+        "OR":"ou",
+        "RESETPSW":"Réinitialiser le mot de passe",
+        "ENTEREMAIL":"Entrez votre email",
+        "SIXCARACMIN":"6 caractères min",
+        "ENTERPSW":"Entrez votre mot de passe",
+        "SIGNUP":"Créer un compte",
+        "BACK":"Retour",
+        "RESET":"Réinitialiser"
     }
 }

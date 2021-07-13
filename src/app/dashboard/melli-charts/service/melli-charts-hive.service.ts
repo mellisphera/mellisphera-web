@@ -19,9 +19,9 @@ import { HttpClient } from '@angular/common/http';
 export class MelliChartsHiveService {
 
   private hiveSelectForHivePage: RucheInterface;
-  private dailyDeviceEchartInstances: any;
-  private dailyOtherChartIstances: any;
-  private dailyEnvChartInstance: any;
+  public dailyDeviceEchartInstances: any;
+  public dailyOtherChartIstances: any;
+  public dailyEnvChartInstance: any;
   private stackChartInstance: any;
   private hourlyEchartInstances: any
   private arrayColor: Array<any>;

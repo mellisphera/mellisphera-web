@@ -123,6 +123,7 @@
     "SIDEBAR": {
         "APIARY": "Colmenar",
         "HIVES": "Colmenas",
+        "INSPECT": "Inspeccionar",
         "DATA": "Explorar",
         "ALERT_CONF": "Alertas ",
         "USERGUIDE": "Guia Usuario"
@@ -194,25 +195,6 @@
             "NAME": "Nombre",
             "CREATE": "Crear colmena",
             "CLOSE": "Cerrar",
-            "APIARY": "Colmenar"
-        }
-    },
-    "HIVES": {
-        "HIVES": "Colmenas",
-        "HIVE": "Ruche",
-        "SENSOR": "Capteur",
-        "FORM": {
-            "NEW": "Nouvelle ruche",
-            "EDIT": "Enregistrer",
-            "EDITHIVE": "Modifier la ruche",
-            "DELETE": "Supprimer la ruche",
-            "DELETE_ASK": "Supprimer la ruche ?",
-            "CANCEL": "Annuler",
-            "CONFIRM": "Confirmer",
-            "NAME": "Nom de la ruche",
-            "DESCRIPTION": "Description de la ruche",
-            "CREATE": "Créer la ruche",
-            "CLOSE": "Fermer",
             "APIARY": "Colmenar"
         }
     },
@@ -441,7 +423,9 @@
             "DONNEE": "Datos",
             "DONNEE_TOOLTIP": "Datos",
             "WEIGHT" : "Peso",
-            "WEIGHT_TOOLTIP" : "Peso"
+            "WEIGHT_TOOLTIP" : "Peso",
+            "EVENTS": "Eventos",
+            "EVENTS_TOOLTIP": "Eventos"
         },
         "DATE": {
             "START": "Inicio",
@@ -449,17 +433,27 @@
             "BTN_APPLY": "Aplicar"
         },
         "BROOD": {
-            "TITLE": "Evolucion diaria de la cria"
+            "TITLE": "Evolucion diaria de la cria",
+            "TOOLTIP":{
+              "SWARM":"Enjambrazón",
+              "DEFAULT":"Default",
+              "SUPER+":"Añadiendo alza",
+              "SUPER-":"Supresión alza"
+            }
         },
         "WEIGHT": {
           "RAW": "Evolucion diaria del peso",
           "NORM": "Evolucion diaria del peso normalizado",
           "GAIN": "Evolución diaria del aumento de peso",
+          "INCOME": "Productividad de rocio de miel",
+          "HOURLY": "Evolucion horaria del peso",
           "REF_DATE": "Fecha de referencia",
           "CHECKBOX": {
-              "RAW": "Bruto",
+              "RAW": "Diaria",
               "NORM": "Normalizado",
-              "GAIN": "Aumento"
+              "GAIN": "Aumento",
+              "INCOME": "Productividad",
+              "HOURLY": "Horaria"
           },
           "TABLE":{
             "DATE":"Fecha",
@@ -482,18 +476,111 @@
               "VAR_15DAYS": "Variacion los ultimos 15 dias"
             }
           }
-      }
+        },
+        "RAW_DATA":{
+            "TITLE":"Datos por horas"
+        },
+        "EVENT":{
+          "TITLE":"Eventos",
+          "ADD":{
+            "TITLE": "Crear evento",
+            "DATE": "Fecha",
+            "DATE_PLACEHOLDER": "Fecha de observacion",
+            "DATE_ERROR": "Por favor complete la fecha con una fecha válida",
+            "EVENT": "Evento",
+            "NOTES": "Notas",
+            "NOTES_PLACEHOLDER":"Añadir una Nota",
+            "TODO": "Tareas",
+            "TODO_PLACEHOLDER":"Añadir una Tarea"
+          },
+          "EDIT":{
+            "TITLE":"Editar Evento"
+          },
+          "DELETE":{
+            "TITLE": "Retirar Evento",
+            "BODY": "¿Estás seguro de que deseas retirar este evento?"
+          },
+          "BUTTONS":{
+            "ADD":"Guardar",
+            "CANCEL":"Anular",
+            "EDIT":"Guardar",
+            "DELETE":"Retirar"
+          },
+          "TABLE":{
+            "HEADER":{
+                "APIARY":"Colmenar",
+                "HIVE":"Colmena",
+                "DATE":"Fecha",
+                "TYPE":"Typo",
+                "PICTOS":"Eventos",
+                "NOTES_TASKS":"Notas & Tareas",
+                "EDIT":"Editar",
+                "DELETE":"Eliminar"
+            }
+          }
+        },
+        "ALERT":{
+            "TITLE":"Alertas",
+            "EDIT":{
+                "TITLE":"Editar Alertas"
+            },
+            "DELETE":{
+                "TITLE":"Retirar Alerta",
+                "BODY": "¿Estás seguro de que deseas retirar este alerta?"
+            },
+            "DATE_ERROR": "Por favor complete la fecha con una fecha válida",
+            "ALERT_ERROR": "Por favor elige una alerta"
+        },
+        "FILTERS":{
+          "APIARY":{
+            "ALL": "Eventos Colmenar"
+          },
+          "INSPECTION":{
+            "ALL": "Inspecciones"
+          },
+          "ALERT":{
+            "ALL": "Alertas",
+            "SWARM": "Enjambrazón"
+          },
+          "EVENT":{
+            "ALL": "Eventos Colmena"
+          },
+          "DISPLAY":{
+            "HONEYDEW":"Rocío de miel",
+            "SWARM":"Enjambrazón",
+            "RSWARM":"Riesgo de enjambrazón",
+            "TMAX":"Fuerte temp. interna",
+            "TMIN":"Baja temp. interna",
+            "LOWBROOD":"Bajo nivel de cria",
+            "WINEG":"Pérdida peso importante",
+            "WIPOS":"Ganancia peso importante",
+            "HMAX":"Alta humedad interna",
+            "HMIN":"Baja humedad interna",
+            "STOLEN":"Colmena robada",
+            "DEAD":"Colmena muerta",
+            "OXALIC":"Tratamiento ácido oxálico",
+            "SUPER+":"Añadiendo alza",
+            "SUPER-":"Supresión alza",
+            "WLIM":"Umbral de peso"
+          }
+        }
     },
     "INSPECT":{
-      "SIDEBAR":"Inspeccionar",
-      "SIDEBAR_TOOLTIP":"Inspeccionar",
+      "SIDEBAR":"Inspecciones",
+      "SIDEBAR_TOOLTIP":"Inspecciones",
+      "ACTIONS":"Acciones",
+      "OBS":"Observaciones",
+      "NOTES":"Notas",
+      "TODO":"Tareas",
       "NAV":{
         "NEW":"Nueva",
         "HISTORY":"Historial",
         "PARAMS":"Configuracion"
       },
       "NEW": {
-        "TITLE":"Nueva Inspección",
+        "TITLE":"Nueva Inspección de colmenar",
+        "DATE":"Fecha : ",
+        "GENERAL": "Estado general de colmenar",
         "PLACEHOLDER":"Elegir fecha",
         "DEFAULT_SELECT":"Elegir colmenar",
         "NOTE_PLACEHOLDER":"Notas...",
@@ -503,16 +590,120 @@
           "ACT_OBS": "Acciones y Observaciones"
         },
         "BTN_SAVE":"Guardar",
-        "BTN_PRINT":"Imprimir"
+        "BTN_PRINT":"Imprimir",
+        "BTN_PDF":"Generar PDF",
+        "BTN_DL":"Descargar",
+        "GEN_DL":"Creación en progreso : ",
+        "READY_DL":"Archivo está listo para descargarse !",
+        "BTN_CANCEL":"Anular"
+      },
+      "TABLE":{
+        "BEES":"Abejas",
+        "BROOD":"Cria",
+        "STORES":"Reservas"
       },
       "HISTORY":{
-        "TITLE":"Historial de inspección",
-        "SEARCH":"Busqueda",
-        "PLACEHOLDER_START":"Eligir la fecha de inicio",
-        "PLACEHOLDER_END":"Eligir la fecha final"
-
+        "TITLE":"Histórico",
+        "TABLE":{
+            "APIARY":"Colmenar",
+            "DATE":"Fecha",
+            "HEALTH":"Estado general",
+            "DESC":"Notas",
+            "TODO":"Tareas"
+        }
       },
       "PARAMS":{}
+    },
+    "ALERTS_DESC":{
+      "HONEYDEW":"Producción de nectar",
+      "HONEYDEW_DESC":"Ganancia de peso sobre 7 dias superior al umbral.",
+      "RAIN":"Posibles fuertes precipitaciones",
+      "RAIN_DESC":"Precipitaciones en las proximas 24h superiores al umbral.",
+      "SWARM":"Enjambrazón",
+      "SWARM_DESC":"Posible enjambrazon à partir de sensores W y T2 (un Hub ofrece mayor precision).",
+      "DCONNECT":"Desconexión",
+      "DCONNECT_DESC":"Uno de los sensores no transmite datos o lo hace de manera esporadica, durante el período seleccionado (necesita un Hub).",
+      "TMAX":"Alta temperatura interna",
+      "TMAX_DESC":"Temperatura interna superior al umbral.",
+      "TMIN":"Baja temperatura interna",
+      "TMIN_DESC":"Temperatura interna inferior al umbral.",
+      "LOWBROOD":"Bajo nivel de cria",
+      "LOWBROOD_DESC":"Nivel de cría por debajo del umbral.",
+      "STOPWEATHER":"Sin señal de la estación meteorológica",
+      "STOPWEATHER_DESC":"Estación meteorológica interrumpe la transmision de datos. Requiere su propia estación meteorológica.",
+      "RSWARM":"Riesgo de enjambrazón",
+      "RSWARM_DESC":"Alto riesgo de enjambrazón en las proximas 24h.",
+      "WIPOS":"Aporte importante de recursos",
+      "WIPOS_DESC":"Aporte de recursos diario superior al umbral.",
+      "WINEG":"Consumo de reservas",
+      "WINEG_DESC":"Consumo de recursos excesivo o pillaje superior al umbral.",
+      "WLIM":"Límite de peso excedido",
+      "WLIM_DESC":"Se activa cuando se supera el umbral de peso indicado.",
+      "SNOW":"Posible fuerte nevada",
+      "SNOW_DESC":"Nevada superior al umbral en las proximas 24h.",
+      "WIND":"Posible viento fuerte",
+      "WIND_DESC":"Viento superior al umbral en las proximas 24h.",
+      "COLDDAY":"Posible día frío por venir",
+      "COLDDAY_DESC":"Se activa cuando se detecta un próximo día frío, es decir, por debajo del umbral de temperatura especificado.",
+      "HOTDAY":"Posible día caluroso por venir",
+      "HOTDAY_DESC":"Se activa cuando se detecta un día caluroso por delante, es decir, por encima del umbral de temperatura especificado.",
+      "HMIN":"Baja humedad interna",
+      "HMIN_DESC":"Humedad interna por debajo del umbral seleccionado.",
+      "HMAX":"Fuerte humedad interna",
+      "HMAX_DESC":"Humedad interna por encima del umbral seleccionado.",
+      "STOLEN":"Colmena robada",
+      "STOLEN_DESC":"Evolución anormal del peso de la colmena, por debajo del umbral.",
+      "DCONNECTT":"Desconexión",
+      "DCONNECTT_DESC":"Se activa cuando su sensor de temperatura ya no transmite datos durante el último día.",
+      "DCONNECTW":"Desconexión",
+      "DCONNECTW_DESC":"Se activa cuando su sensor de peso ya no transmite datos durante el último día.",
+      "DCONNECTH":"Desconexión",
+      "DCONNECTH_DESC":"Se activa cuando su Hub ya no transmite datos durante el último día.",
+      "POORSIGNALW":"Señal deficiente",
+      "POORSIGNALW_DESC":"Se activa cuando tu sensor de peso transmite pocos datos durante el último día.",
+      "POORSIGNALT":"Señal deficiente",
+      "POORSIGNALT_DESC":"Se activa cuando su sensor de temperatura transmite pocos datos durante el último día.",
+      "LOWBATTERYW":"Bateria baja",
+      "LOWBATTERYW_DESC":"Se activa cuando el nivel de la batería de su sensor de peso está por debajo del umbral seleccionado.",
+      "LOWBATTERYT":"Bateria baja",
+      "LOWBATTERYT_DESC":"Se activa cuando el nivel de la batería de su sensor de temperatura está por debajo del umbral seleccionado.",
+      "SUPER+":"Añadiendo una alza",
+      "SUPER+_DESC":"Indicar el peso máximo de una alza completa.",
+      "SUPER-":"Supresión de una alza",
+      "SUPER-_DESC":"Indicar el peso mínimo de una alza vacía.",
+      "OXALIC":"Tratamiento con ácido oxálico",
+      "OXALIC_DESC":"Se desencadena cuando el promedio de cría en sus colmenas está por debajo del umbral establecido. Esta es una indicación que le permite tratar sus colmenas con ácido oxálico en el momento adecuado.",
+      "DEAD":"Colmena muerta",
+      "DEAD_DESC":"Nuestro algoritmo detecta cada día si su colmena está muerta basándose en diferentes parámetros que hemos establecido.",
+      "RAIN_MSG":"La lluvia excederá {VAL}",
+      "SNOW_MSG":"La nieve excederá {VAL}",
+      "WIND_MSG":"El viento excederá {VAL}",
+      "COLDDAY_MSG":"Las temperaturas serán inusualmente frías",
+      "OXALIC_MSG":"Es hora de tratar sus colmenas.",
+      "HOTDAY_MSG":"Las temperaturas serán inusualmente cálidas",
+      "TMAX_MSG":"La temperatura interna excede {VAL}",
+      "TMIN_MSG":"La temperatura interna está por debajo de {VAL}",
+      "WIPOS_MSG":"La ganancia de las reservas excede {VAL}",
+      "WINEG_MSG":"La pérdida de reservas excede {VAL}",
+      "LOWBROOD_MSG":"La cria esta por debajo del {VAL}",
+      "HMAX_MSG":"La humedad interna supera el {VAL}",
+      "HMIN_MSG":"La humedad interna está por debajo de {VAL}",
+      "HONEYDEW_MSG":"El ingreso de recursos durante la última semana supera {VAL}",
+      "WLIM_MSG":"El peso de su colmena excede {VAL}",
+      "SWARM_MSG":"Posible enjambre detectado alrededor de 14:00",
+      "RSWARM_MSG":"Día de enjambrazón previsto",
+      "SUPER+_MSG":"Añadiste una alza",
+      "SUPER-_MSG":"Retiraste una alza",
+      "LOWBATTERYT_MSG":"Cambiar la bateria de ",
+      "LOWBATTERYW_MSG":"Cambiar la bateria de ",
+      "DCONNECTT_MSG":"{REF} desconectado desde {DATE}",
+      "DCONNECTW_MSG":"{REF} desconectado desde {DATE}",
+      "DCONNECTH_MSG":"{REF} desconectado desde {DATE}",
+      "POORSIGNALT_MSG":" señal deficiente desde {DATE}",
+      "POORSIGNALW_MSG":" señal deficiente desde {DATE}",
+      "STOPWEATHER_MSG":"Error de transmision de datos desde {DATE}",
+      "STOLEN_MSG":"El peso de tu colmena es anormalmente bajo",
+      "DEAD_MSG":"Tu colmena ha sido detectada muerta"
     },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icono",
@@ -543,11 +734,78 @@
                 "Vaya a la pestaña \"configurar\" para establecer sus preferencias de correo electrónico y la frecuencia de las notificaciones"]
         }
     },
+    "INSP_CONF":{
+        "APPLIES":{
+            "HIVE":"Colmena",
+            "APIARY":"Colmenar"
+        },
+        "SUPER+":"Añadiendo alza",
+        "SUPER-":"Supresión alza",
+        "QUEENINSERT":"Queen inserted",
+        "DIVISION":"Division",
+        "QUEENABSENT":"Queen absent",
+        "STOLEN":"Colmena robada",
+        "BROODADD":"Added brood frames",
+        "BROODREMOVE":"Removed brood frames",
+        "COMBINEDHIVES":"Combined Hives",
+        "SWARM":"Enjambrazón",
+        "CANDIFEED":"Candi feeding",
+        "SYRUPFEED":"Sirup feeding",
+        "REQUEEN":"Requeening",
+        "QUEENLINEAGE":"Queen lineage",
+        "HARVEST":"Harvest",
+        "INSTALLPKG":"Installed package",
+        "NUCLEUSHIVE":"Installed nucleus hive",
+        "SPLITQUEENREMOVE":"Split with queen removal",
+        "SPRINGNECTAR":"Spring nectar flow",
+        "FALLNECTAR":"Fall nectar flow",
+        "MITEOAVAPOR":"Mite treatment: Oxalic Acid Vapor",
+        "MITEOADRIBBLE":"Mite treatment: Oxalic Acid Dribble",
+        "MITEFORMICPRO":"Mite treatment: Formic Pro",
+        "STARTFEED":"Start feeding",
+        "STOPFEED":"Stop feeding",
+        "SWARMMATEDQUEEN":"Swarm with mated queen",
+        "VIRGINSWARM":"Virgin swarm",
+        "SWARMRETURN":"Swarm and return to hive",
+        "QUEENSEEN":"Queen seen",
+        "NOBROOD":"No cria",
+        "LOWBROOD":"Bajo nivel de cria",
+        "NORMBROOD":"Normal nivel de cria",
+        "HIGHBROOD":"Alto nivel de cria",
+        "SICK":"Enferma",
+        "NOBEES":"No abejas",
+        "LOWBEES":"Bajo nivel de abeja",
+        "NORMBEES":"Normal nivel de abeja",
+        "HIGHBEES":"Alto nivel de abeja",
+        "NORES":"No recursos",
+        "LOWRES":"Bajo nivel de recurso",
+        "NORMRES":"Normal nivel de recurso",
+        "HIGHRES":"Alto nivel de recurso",
+        "EGG":"",
+        "LARVA":"",
+        "PUPA":"",
+        "DRONEBROOD":"",
+        "DRONE":"",
+        "BUZZINGHIVE":"",
+        "MOSAICBROOD":"",
+        "MITESTRIPADD":"",
+        "MITESTRIPREMOVE":"",
+        "QUEEN":"Reina",
+        "MITECOUNTLOUNGE":"",
+        "MITECOUNTWASH":""
+    },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
         "BTN": "Conexion",
         "EULA": "Acuerdo de licencia de usuario final",
         "BTN_EUA": "Estoy de acuerdo",
+
+        "SIGN_IN": {
+            "DENIED": "Acceso denegado ",
+            "SUBMIT": "conexion",
+            "SIGN_UP_LINK": "Crear cuenta MyBroodminder"
+        },
+
         "BECOMING": {
             "TITLE": "Bienvenido a la apicultura de precisión ",
             "CONTENT": ["Con Mellisphera puedes convertirte en apicultor de precisión. Te ofrecemos es una interfaz completa que agrega los datos de tus colmenas junto con las acciones del apicultor y la meteorología. ",
@@ -574,8 +832,135 @@
             "CONNECTION": "Conexión",
             "ERR": "No te puedes conectar",
             "TRY_MS": "Cuenta Démo",
-            "MAIL_SUBJECT": "Problema de conexión"
-
+            "MAIL_SUBJECT": "Problema de conexión",
+            "DENIED":"Acceso denegado"
         }
+    },
+    "NOTIFY":{
+        "SUCCESS":{  
+            "CHANGE_NAME_DEMO_APIARY": "",
+            "READ_ALL_ALERTS_HIVE": "",
+            "SAVE_ALERT_CONF": "Configuraciones guardadas",
+            "SAVE_INSP_CONF": "Configuraciones guardadas",
+            "SEND_MAIL_TEST": "Email enviado !"
+        },
+        "FAIL":{
+            "AUTH_WRITE_APIARY": "",
+            "NO_DELETE_RIGHT": "",
+            "AUTH_WRITE_HIVE": "",
+            "AUTH_WRITE_NOTES": "",
+            "AUTH_WRITE_NOTES_HIVE": ""
+        }
+    },
+    "MOON":{
+        "1":"Luna llena",
+        "2":"Luna nueva",
+        "3":"Cuarto menguante",
+        "4":"Cuarto creciente",
+        "5":"Menguante",
+        "6":"Gibosa menguante",
+        "7":"Creciente menguante",
+        "8":"Creciente"
+    },
+    "DEVICE_STATUS_CODE":{
+        "R":{
+            "COLOR":"Red",
+            "MSG":"Sensor desconectado"
+        },
+        "O1":{
+            "COLOR":"Orange",
+            "MSG":"Señal débil"
+        },
+        "O2":{
+            "COLOR":"Orange",
+            "MSG":"Batería baja"
+        }
+    },
+    "FITNESS_CODE":{
+        "B1":{
+            "COLOR":"Black",
+            "MSG":"Colmena muerta"
+        },
+        "B2":{
+            "COLOR":"Black",
+            "MSG":"Colmena robada"
+        },
+        "R1":{
+            "COLOR":"Red",
+            "MSG":"Colmena muy débil"
+        },
+        "O1":{
+            "COLOR":"Orange",
+            "MSG":"Colmena débil o en fuerte declive"
+        },
+        "O2":{
+            "COLOR":"Orange",
+            "MSG":"Posible enjambre"
+        },
+        "O3":{
+            "COLOR":"Orange",
+            "MSG":"Sobrecalentamiento"
+        },
+        "O4":{
+            "COLOR":"Orange",
+            "MSG":"Frío extremo"
+        },
+        "O5":{
+            "COLOR":"Orange",
+            "MSG":"Perdida de peso subita, pillaje"
+        },
+        "G1":{
+            "COLOR":"Green",
+            "MSG":"Buena salud"
+        }
+    },
+    "HIVE_POS":{
+        "ABOVE LOWER BROOD BOX":{
+            "COLOR":"#d45087",
+            "MSG":"Camara de cría"
+        },
+        "ABOVE UPPER BROOD BOX":{
+            "COLOR":"#ffa600",
+            "MSG":"Alza"
+        },
+        "OTHER":{
+            "COLOR":"#f95d6a",
+            "MSG":"Otro"
+        },
+        "OUTSIDE HIVE":{
+            "COLOR":"#a05195",
+            "MSG":"Exterior"
+        },
+        "SCALE UNDER HIVE":{
+            "COLOR":"#003f5c",
+            "MSG":"Báscula anterior"
+        },
+        "SCALE UNDER HIVE (BACK)":{
+            "COLOR":"#ff7c43",
+            "MSG":"Báscula posterior"
+        },
+        "UNDER INNER COVER":{
+            "COLOR":"#665191",
+            "MSG":"Cubre cuadros"
+        }
+    },
+    "MESSAGES":{
+        "WARNINGHIVE":" ",
+        "WILLBEDELETED":" ",
+        "WARNINGHIVES":" ",
+        "WILLBEDELETEDS":" ",
+        "AND":" y ",
+        "PASSWORD":"",
+        "DENIED":"",
+        "LOGIN":"",
+        "CREATEACCOUNT":"",
+        "OR":"o",
+        "RESETPSW":"",
+        "ENTEREMAIL":"",
+        "SIXCARACMIN":"",
+        "ENTERPSW":"",
+        "SIGNUP":"",
+        "BACK":"",
+        "RESET":""
     }
 }

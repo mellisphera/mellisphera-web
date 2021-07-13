@@ -32,7 +32,6 @@ export class HubService {
     this.getHubByUser(userId).subscribe(
       _res => {
         this.hubs = _res;
-        console.log(this.hubs);
       }
     );
   }

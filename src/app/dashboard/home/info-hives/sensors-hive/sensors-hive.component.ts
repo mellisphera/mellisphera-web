@@ -14,14 +14,12 @@ import { RucherModel } from '../../../../_model/rucher-model';
 import { RucheInterface } from '../../../../_model/ruche';
 import { Component, OnInit, OnDestroy, AfterViewChecked,HostListener } from '@angular/core';
 import { CapteurService } from '../../../service/api/capteur.service';
-import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { RucherService } from '../../../service/api/rucher.service';
 import { UserloggedService } from '../../../../userlogged.service';
 
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 // import { AnonymousSubscription } from "rxjs/Subscription";
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
@@ -61,7 +59,6 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
     private notifier: NotifierService;
     constructor(
         public userService: UserloggedService,
-        private _router: Router,
         private formBuilder: FormBuilder,
         private translateService: TranslateService,
         public rucherService: RucherService,
@@ -93,7 +90,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
     }
 
     @HostListener('window:resize', ['$event'])
-    getScreenSize(event?) {
+    getScreenSize() {
           this.screenHeight = window.innerHeight;
           this.screenWidth = window.innerWidth;
     }
@@ -110,7 +107,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
           }else{
             document.getElementById('sensorsHive').style.height = ''+(40) + 'vh';
           }
-    
+
       }
 
     onChangeCapteur($event) {
@@ -124,7 +121,7 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
         /* Assigne les données du capteurs au formulaire pour modification*/
         const donnee = {
             checkbox: this.editCapteurCheckbox ? 'ruche' : 'stock',
-        }; 
+        };
         this.editCapteurForm.setValue(donnee);
         if (this.editCapteurCheckbox) { // Si le capteur n'était pas en stock
             this.rucherService.findRucherById(this.capteurService.capteur.apiaryId, (apiary) => {
@@ -168,7 +165,6 @@ export class SensorsHiveComponent implements OnInit, OnDestroy, AfterViewChecked
             const formValue = this.newCapteurForm.value;
             /* POUR OBTENIR LE TYPË A CHANGER DES QUE POSSIBLE */
             const sensorType = document.querySelector('#typeSensor > option').innerHTML;
-            const tempType = this.capteurService.capteur.type;
             this.capteurService.initCapteur();
             if (formValue.checkbox !== 'stock') {
                 this.capteurService.capteur.hiveId = this.rucheService.getCurrentHive()._id;

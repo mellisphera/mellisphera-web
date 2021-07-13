@@ -1,4 +1,4 @@
-export const MOON_CODE = {
+/*export const MOON_CODE = {
     "1": {
         "FR": {
             "Name": "Pleine lune"
@@ -94,4 +94,4 @@ export const MOON_CODE = {
             "Name": "Creciente"
         }
     }
-}
+}*/

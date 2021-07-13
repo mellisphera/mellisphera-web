@@ -15,6 +15,7 @@ import { Routes, RouterModule, CanActivate, UrlSegment } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { Erreur404ComponentComponent } from './erreur404-component/erreur404-component.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 export function urlLogin(url: UrlSegment[]) {

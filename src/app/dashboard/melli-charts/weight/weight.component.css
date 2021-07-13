@@ -1,10 +1,10 @@
-#raw-weight-title, #norm-weight-title, #gain-weight-title{
+#raw-weight-title, #norm-weight-title, #gain-weight-title, #hour-raw-weight-title{
   display: none;
   margin-bottom: 15px;
 }
 
 #graph-weight{
-  width: 100%;
+  width: 99%;
   height: 55vh;
 }
 
@@ -20,7 +20,7 @@
   width: 100%;
   display: flex !important;
   justify-content: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .ul-weight > li {
@@ -68,18 +68,15 @@ input[type=checkbox]
 
 .calendar-icon{
   position: absolute;
+  padding-top: 4px;
+  min-width: 40px;
+  font-size: 18px;
 }
 
 .input-wrapper {
   margin-bottom: 10px;
   width: 35%;
   text-align: center;
-}
-
-.fa-calendar{
-  padding-top: 4px;
-  min-width: 40px;
-  font-size: 18px;
 }
 
 .weight_ref_date{

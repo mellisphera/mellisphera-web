@@ -37,10 +37,12 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxLoadingModule } from 'ngx-loading';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { MyDatePipe } from './pipe/my-date.pipe';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketService } from './dashboard/service/socket.service';
 import { AuthGuardService } from './auth/auth-guard.service';
+
+import { DeviceDetectorModule } from 'ngx-device-detector';
+import { RucherService } from './dashboard/service/api/rucher.service';
 
 const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options: {} };
 export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
@@ -66,6 +68,7 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    DeviceDetectorModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -95,6 +98,7 @@ export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     JwtHelperService,
     AuthGuardService,
     SignupService,
+    RucherService,
     // MeteoService,
     // GraphFlowerService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }

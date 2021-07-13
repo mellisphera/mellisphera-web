@@ -19,7 +19,7 @@ import { EULA } from '../../EULA';
 import * as $ from 'jquery';
 import { TranslateService } from '@ngx-translate/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
-import { MESSAGES, MessagesList } from '../../../constants/messages';
+import { MessagesList } from '../../../constants/messages';
 
 @Component({
   selector: 'app-bm-login',
@@ -77,12 +77,6 @@ export class BmLoginComponent implements OnInit, OnDestroy, AfterViewInit {
     this.email = 'bzz@mellisphera.com';
     this.password  ='test123';
     this.login();
-  }
-
-
-  getMessageTraduction(msg: MessagesList) : string{
-    let language : string = this.translateService.currentLang.toUpperCase();
-    return(MESSAGES[language][msg]);
   }
   
   agreeEula(event : any) /* event checkbox */{

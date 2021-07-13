@@ -81,7 +81,43 @@
 .btn_create {
     background: none;
     color: #5cb85c;
+    border-radius: 5px;
 }
+
+.btn_add {
+    background: none;
+    color: #5cb85c;
+    border-radius: 5px;
+    width: 40px;
+}
+
+.btn_add:hover{
+    background-color: #5cb85c;
+    color: white;
+}
+
+.btn_add:active{
+    background-color: #5cb85c;
+    color: white;
+}
+
+.btn_remove {
+    background: none;
+    color: red;
+    border-radius: 5px;
+    width: 40px;
+}
+
+.btn_remove:hover{
+    background-color: red;
+    color: white;
+}
+
+.btn_remove:active{
+    background-color: red;
+    color: white;
+}
+
 .owl-dt-popup-container {
     width: 300px !important;
     font-size: 15px !important;
@@ -105,6 +141,7 @@
 .note-heading{
     background-color: #4F4F51 !important;
 }
+
 @media (max-width: 991px){
     .main-panel{
         width: 100% !important;

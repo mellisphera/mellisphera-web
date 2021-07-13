@@ -64,6 +64,7 @@ export class AuthService {
     this.loginObs = this.http.post<JwtResponse>(CONFIG.URL + 'api/auth/signin', this.login, httpOptions);
     this.loginObs.subscribe(
       (data) => {
+        console.log(data);
         this.jwtReponse = data;
         this.tokenService.saveToken(this.jwtReponse.accessToken);
         this.tokenService.saveAuthorities(this.jwtReponse.authorities);

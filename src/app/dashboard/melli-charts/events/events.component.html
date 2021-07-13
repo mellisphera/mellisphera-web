@@ -1,0 +1,159 @@
+
+<section>
+  <h3 style="text-align: center;">{{'MELLICHARTS.EVENT.TITLE' | translate }}</h3>
+</section>
+<div class="content">
+  <table class="table-events">
+    <thead>
+      <th style="width: 5%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.APIARY' | translate }}</th>
+      <th style="width: 5%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.HIVE' | translate }}</th>
+      <th style="width: 7.5%;" (click)="sortByDate()" class="th-date-sort">{{'MELLICHARTS.EVENT.TABLE.HEADER.DATE' | translate }}</th>
+      <th style="width: 7.5%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.TYPE' | translate }}</th>
+      <th style="width: 15%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.PICTOS' | translate }}</th>
+      <th style="width: 40%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.NOTES_TASKS' | translate }}</th>
+      <th style="width: 5%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.EDIT' | translate }}</th>
+      <th style="width: 5%;">{{'MELLICHARTS.EVENT.TABLE.HEADER.DELETE' | translate }}</th>
+      <th style="width: 0%;display: none">_id</th>
+    </thead>
+    <tbody class="table-body-events">
+
+    </tbody>
+  </table>
+</div>
+
+<!--Edit Inspection Modal-->
+<div class="modal fade" id="editInspectionModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.EDIT.TITLE' | translate}}</h4>
+        <h4 *ngIf="eventToEdit?.type === 'hive'">{{hiveEvent?.name}}</h4>
+        <h4 *ngIf="eventToEdit?.type === 'apiary'">{{apiaryEvent?.name}}</h4>
+        <div class="add-event-date">
+          <div>
+            <input class="edit-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
+            <owl-date-time [pickerType]="'calendar'" #dtEvent></owl-date-time>
+            <input class="edit-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours($event)">
+            :
+            <input class="edit-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes($event)">
+          </div>
+          <div class="edit-event-time-error">
+            {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div id="brood-stage" class="hive-op-brood-explore" style="margin-left: 3px;">
+          <button class="hives-obs-add event-brood-none" (click)="setBroodStage('none', 'apiary')"></button>  
+          <button class="hives-obs-add event-brood-egg" (click)="setBroodStage('egg', 'apiary')"></button>
+          <button class="hives-obs-add event-brood-larva" (click)="setBroodStage('larva', 'apiary')"></button>
+          <button class="hives-obs-add event-brood-pupa" (click)="setBroodStage('pupa', 'apiary')"></button>
+          <button class="hives-obs-add event-brood-drone" (click)="setBroodStage('drone', 'apiary')"></button>    
+        </div>
+        <div class="edit-event-notes">
+            <div style="width: 45px; margin-left: 4px;">
+                <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
+                <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            </div>
+            <textarea value="{{eventToEdit?.description}}" class="edit-event-notes-textarea hives-note-textarea-edit-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="edit-event-todo">
+            <button style="visibility: hidden; margin-right: 8px;" class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            <textarea value="{{eventToEdit?.todo}}" class="edit-event-todo-textarea hives-todo-textarea-edit-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="edit-event-choice">
+            <div class="edit-event-choice-obs" style="padding-bottom: 5px;">
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons">
+          <button class="btn btn-danger" style="margin-right:10px;height:34px;width:100px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button class="btn btn-success" style="margin-left:10px;height:34px;width:100px;" (click)="confirmEditEvent()">{{'MELLICHARTS.EVENT.BUTTONS.EDIT' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit Alert Modal-->
+<div class="modal fade" id="editAlertModal" tabindex="-2" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{'MELLICHARTS.ALERT.EDIT.TITLE' | translate}}</h4>
+        <h4 *ngIf="alertToEdit?.loc === 'Hive'">{{hiveEvent?.name}}</h4>
+        <h4 *ngIf="alertToEdit?.loc === 'Apiary'">{{apiaryEvent?.name}}</h4>
+        <div class="add-event-date">
+          <div>
+            <input class="edit-alert-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtAlert" [owlDateTime]="dtAlert" (ngModelChange)="setNewAlertDate()">
+            <owl-date-time [pickerType]="'calendar'" #dtAlert></owl-date-time>
+            <input class="edit-alert-hours-input" type="number" min="00" max="23" (change)="setNewAlertHours()">
+            :
+            <input class="edit-alert-minutes-input" type="number" min="00" max="59" (change)="setNewAlertMinutes()">
+          </div>
+          <div class="edit-alert-time-error">
+            {{'MELLICHARTS.ALERT.DATE_ERROR' | translate}}
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="edit-alert-choice">
+          <div class="edit-alert-choice-obs">
+          </div>
+        </div>
+        <div>
+          <p class="edit-alert-desc"></p>
+        </div>
+        <div class="edit-alert-error">{{ 'MELLICHARTS.ALERT.ALERT_ERROR' | translate }}</div>
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons">
+          <button class="btn btn-danger" style="margin-right:10px;height:34px;width:100px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button class="btn btn-success" style="margin-left:10px;height:34px;width:100px;" (click)="confirmEditAlert()">{{'MELLICHARTS.EVENT.BUTTONS.EDIT' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Delete Event Modal-->
+<div class="modal fade" id="deleteEventModal" tabindex="-3" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.DELETE.TITLE' | translate}}</h4>
+      </div>
+      <div class="modal-body">
+        {{'MELLICHARTS.EVENT.DELETE.BODY' | translate}}
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons">
+          <button class="btn btn-danger" style="margin-right:10px;height:34px;width:100px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button  class="btn btn-success" style="margin-left:10px;height:34px;width:100px;" (click)="confirmDeleteEvent()">{{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Delete Alert Modal-->
+<div class="modal fade" id="deleteAlertModal" tabindex="-4" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{'MELLICHARTS.ALERT.DELETE.TITLE' | translate}}</h4>
+      </div>
+      <div class="modal-body">
+        {{'MELLICHARTS.ALERT.DELETE.BODY' | translate}}
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons">
+          <button class="btn btn-danger" style="margin-right:10px;height:34px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button  class="btn btn-success" style="margin-left:10px;height:34px;" (click)="confirmDeleteAlert()">{{'MELLICHARTS.EVENT.BUTTONS.DELETE' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

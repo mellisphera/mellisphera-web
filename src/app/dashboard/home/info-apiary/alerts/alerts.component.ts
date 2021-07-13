@@ -1,3 +1,4 @@
+import { OnDestroy } from '@angular/core';
 /* Copyright 2018-present Mellisphera
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -9,7 +10,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, Renderer2, Input } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { AlertsService } from '../../../service/api/alerts.service';
 import { RucherService } from '../../../service/api/rucher.service';
 import { AlertInterface } from '../../../../_model/alert';
@@ -27,16 +28,17 @@ import { SERIES } from '../../../melli-charts/charts/SERIES';
 import { GLOBAL_ICONS } from '../../../melli-charts/charts/icons/icons';
 import * as echarts from 'echarts';
 import { TranslateService } from '@ngx-translate/core';
+import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
+import { timeStamp } from 'console';
 
 @Component({
   selector: 'app-alerts',
   templateUrl: './alerts.component.html',
-  styleUrls: ['./alerts.component.css']
+  styleUrls: ['./alerts.component.css'],
 })
-export class AlertsComponent implements OnInit {
+export class AlertsComponent implements OnInit, OnDestroy {
 
   private readonly notifier: NotifierService;
-  private eltOnClickId: EventTarget;
   username: string;
 
   private option: {
@@ -44,52 +46,23 @@ export class AlertsComponent implements OnInit {
     media: Array<any>
   };
   private echartInstance: any;
-  // tabPos[Nombre d'alertes dans le jour][x ou y][rang de la prochaine alerte a traiter]
-  private tabPos: number[][][];
-  // map repertoriant le nombre d'alerts par jour
-  // Sous la forme date => [Les nombres d'alertes correspondants][Le rang de la prochaine alerte a placer dans le tableau]
-  private mapDateNbAlerts: Map<string, number[]>;
 
   constructor(private alertsService: AlertsService,
     public rucherService: RucherService,
-    private userService: UserloggedService,
     private observationService: ObservationService,
     private translateService: TranslateService,
     public notifierService: NotifierService,
-    private renderer: Renderer2,
     public login: UserloggedService,
     private graphGlobal: GraphGlobal,
     private myNotifer: MyNotifierService,
-    private unitService: UnitService) {
+    private unitService: UnitService,
+    private inspService: InspectionService) {
 
     this.notifier = this.notifierService;
-    this.eltOnClickId = null;
     this.username = this.login.getUser();
 
     this.notifier = this.notifierService;
     this.echartInstance = null;
-    this.mapDateNbAlerts = new Map();
-    this.tabPos = [
-      [
-        [0],
-        [0]
-      ],
-      [
-        [0.2, -0.2],
-        [0, 0]
-      ],
-      [
-        [0.3, 0.1, -0.1],
-        [-0.15, 0.3, -0.15]
-      ],
-      [
-        [0.3, 0.3, -0.1, -0.1],
-        [-0.15, 0.3, -0.15, 0.3]
-      ],
-      [
-        [0.25, -0.05, -0.2, 0.1, 0.4],
-        [0.3, 0.3, -0.15, -0.15, -0.15]]
-    ];
   }
 
   clearOption() {
@@ -120,7 +93,6 @@ export class AlertsComponent implements OnInit {
     this.option.baseOption.calendar.orient = 'vertical';
     //this.option.calendar.top = 70;
     this.option.baseOption.calendar.left = 'center';
-    this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();
     this.option.baseOption.calendar.cellSize = [50, 50];
     this.option.baseOption.series = new Array();
   }
@@ -128,6 +100,7 @@ export class AlertsComponent implements OnInit {
     if (this.echartInstance == null) {
       this.echartInstance = echarts.init(<HTMLDivElement>document.getElementById('notif-celendar'));
       this.clearOption();
+      this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();
       this.loadCalendar();
     }
   }
@@ -137,24 +110,25 @@ export class AlertsComponent implements OnInit {
     this.echartInstance.clear();
   }
 
-  initCalendar(isReload?: boolean){
+  initCalendar(){
     this.clearOption();
+    this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();
     this.loadCalendar();
 }
 
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
-      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'Inspections' : 'Notifications' }
+      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'Evenements' : 'Notifications', type: _elt.type  }
     });
   }
 
-  onResize(event) {
+  onResize() {
     this.echartInstance.resize({
       width: 'auto',
       height: 'auto'
     });
   }
-  getSerieByData(data: Array<any>, nameSerie: string, serieTemplate: any, next: Function): void {
+  getSerieByData(data: Array<any>, serieTemplate: any, next: Function): void {
     const sensorRef: Array<string> = [];
     data.forEach((_data) => {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
@@ -163,7 +137,7 @@ export class AlertsComponent implements OnInit {
         serieTmp.name = _data.sensorRef;
         if (data.map(_elt => _elt.date)[0] !== undefined) {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
-            return [_map.date, _map.value, _map.sensorRef];
+            return [_map.date, _map.value, _map.sensorRef, _map.type];
           });
         } else {
           serieTmp.data = data;
@@ -176,19 +150,19 @@ export class AlertsComponent implements OnInit {
   loadCalendar() {
     this.echartInstance.showLoading();
     const obs: Array<Observable<any>> = [
-      this.observationService.getObservationByapiaryIdForMelliUx(this.rucherService.getCurrentApiary()),
+      this.inspService.getInspectionByApiaryIdAndOpsDateBetween(this.rucherService.rucher._id, MyDate.getRangeForCalendarAlerts()),
       this.alertsService.getAlertsByApiary(this.rucherService.getCurrentApiary(), MyDate.getRangeForCalendarAlerts())
     ];
     Observable.forkJoin(obs).subscribe(
       _data => {
         const dateJoin = this.joinObservationAlert(_data[0].filter(_elt => _elt.type === 'apiary'), _data[1]);
-        const joinData = _data[0].concat(_data[1]);
+        const joinData = _data[0].filter( d => d.type === 'apiary').concat(_data[1]);
         let option = Object.assign({}, this.option);
         option.baseOption.series = new Array();
         option.baseOption.legend = JSON.parse(JSON.stringify(BASE_OPTIONS.legend));
         option.baseOption.legend.top = 30;
         option.baseOption.legend.selectedMode = 'multiple';
-        this.getSerieByData(dateJoin, 'alert', SERIES.custom, (serieComplete: any) => {
+        this.getSerieByData(dateJoin, SERIES.custom, (serieComplete: any) => {
           //serieComplete.tooltip = this.getTooltipBySerie();
           serieComplete.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
@@ -223,7 +197,7 @@ export class AlertsComponent implements OnInit {
               const nbNote = dataByDate.filter(_elt => _elt.description).length;
               //console.log(nbNote + '===' + dataByDate.length)
               if (nbNote === dataByDate.length) {
-                path = this.observationService.getPictoInspect(cellPoint);
+                path = this.inspService.getPictoInspect(cellPoint);
                 group.children = group.children.concat(path);
               } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                 path = {
@@ -242,7 +216,7 @@ export class AlertsComponent implements OnInit {
               }
             } else if (dataByDate.length === 1) {
               if (dataByDate !== undefined && dataByDate[0].description) {
-                group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
+                group.children = group.children.concat(this.inspService.getPictoInspect(cellPoint));
               } else {
                 group.children = group.children.concat(this.alertsService.getPicto(dataByDate[0].icon, cellPoint));
               }
@@ -257,7 +231,7 @@ export class AlertsComponent implements OnInit {
           option.baseOption.series.push(serieComplete);
 
         });
-        option.baseOption.series.push(this.graphGlobal.getDaySerie());
+        option.baseOption.series.push(this.graphGlobal.getYesterdaySerie());
         this.echartInstance.setOption(option, true);
         this.echartInstance.hideLoading();
         this.option = option;
@@ -306,14 +280,21 @@ export class AlertsComponent implements OnInit {
       return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
         let type = 'Notif';
         let img = '';
-        if (_singleData.description || _singleData.description === '') {
+        if (_singleData.type ) {
           type = 'Inspection';
-          img = '<img style={S} src={I} />';
-          img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
+          if(_singleData.type === 'apiary'){
+            img = '<img style={S} src={I} />';
+            img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect-api_cw.png');
+          }
+          if(_singleData.type === 'hive'){
+            img = '<img style={S} src={I} />';
+            img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect_cw.png');
+          }
+
         } else {
-          img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.icon + '.svg />';
+          img = '<img style={S} src=./assets/ms-pics/alerts/ruche/' + _singleData.icon.toLowerCase() + '_cw.png />';
         }
-        img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
+        img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:30px;height:30px; background-color:red;');
         return {
           name: img,
           value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertsService.getMessageAlertByCode(_singleData),
@@ -326,21 +307,27 @@ export class AlertsComponent implements OnInit {
   }
 
   sliceTextToolip(text: string): string {
-    try{
-      if (text === undefined) {
-        text = '';
-      }
-      let originString: string = text;
-      let newString: string;
-      while(originString.length >= 80) {
-        newString += originString.slice(0, 80) + '<br/>';
-        originString = originString.replace(originString.slice(0, 80), '');
-      }
-      return (newString + originString).replace(/undefined/g, '');
-    } catch{}
+    if(text != undefined && text != null){
+      try{
+        if (text === undefined) {
+          text = '';
+        }
+        let originString: string = text;
+        let newString: string;
+        while(originString.length >= 80) {
+          newString += originString.slice(0, 80) + '<br/>';
+          originString = originString.replace(originString.slice(0, 80), '');
+        }
+        return (newString + originString).replace(/undefined/g, '');
+      } catch{}
+    }
+    else{
+      return '';
+    }
+    
   }
 
-  
+
   onClickRead(alert: AlertInterface, i: number) {
     // Update in database
     this.alertsService.updateAlert(alert._id, true).subscribe(() => { }, () => { }, () => {
@@ -408,6 +395,10 @@ export class AlertsComponent implements OnInit {
         resolve(true);
       }
     });
+  }
+
+  ngOnDestroy(): void{
+    this.echartInstance.dispose();
   }
 
 }

@@ -125,6 +125,7 @@
     "SIDEBAR" : {
         "APIARY" : "My Apiary",
         "HIVES" : "Hives",
+        "INSPECT": "Inspect",
         "DATA" : "Explore",
         "ALERT_CONF": "Alerts",
         "USERGUIDE": "User Guide"
@@ -426,7 +427,9 @@
             "DONNEE": "Raw data",
             "DONNEE_TOOLTIP": "Raw data",
             "WEIGHT": "Weight",
-            "WEIGHT_TOOLTIP": "Weight"
+            "WEIGHT_TOOLTIP": "Weight",
+            "EVENTS": "Events",
+            "EVENTS_TOOLTIP": "Events"
         },
         "DATE": {
             "START": "Start",
@@ -434,17 +437,27 @@
             "BTN_APPLY": "Apply"
         },
         "BROOD": {
-            "TITLE": "Daily brood progression"
+            "TITLE": "Daily brood progression",
+            "TOOLTIP":{
+              "SWARM":"Swarming",
+              "DEFAULT":"Default",
+              "SUPER+":"Added super",
+              "SUPER-":"Removed super"
+            }
         },
         "WEIGHT": {
           "RAW": "Daily weight progression",
           "NORM": "Daily normalized weight progression",
           "GAIN": "Daily weight gain progression",
+          "INCOME": "Nectar foraging productivity",
+          "HOURLY": "Hourly weight progression",
           "REF_DATE": "Reference date",
           "CHECKBOX": {
-              "RAW": "Raw",
+              "RAW": "Daily",
               "NORM": "Normalized",
-              "GAIN": "Gain"
+              "GAIN": "Gain",
+              "INCOME": "Productivity",
+              "HOURLY": "Hourly"
           },
           "TABLE":{
             "DATE":"Date",
@@ -467,18 +480,111 @@
               "VAR_15DAYS": "Variation since D-15"
             }
           }
+        },
+        "RAW_DATA":{
+            "TITLE":"Hourly data"
+        },
+        "EVENT":{
+          "TITLE":"Events",
+          "ADD":{
+            "TITLE": "Create Event",
+            "DATE": "Date",
+            "DATE_PLACEHOLDER": "Observation date",
+            "DATE_ERROR": "Please fill the date field with a valid date",
+            "EVENT": "Event",
+            "NOTES": "Notes",
+            "NOTES_PLACEHOLDER":"Add a Note",
+            "TODO": "Tasks",
+            "TODO_PLACEHOLDER":"Add a task to do"
+          },
+          "EDIT":{
+            "TITLE":"Edit Event"
+          },
+          "DELETE":{
+            "TITLE": "Delete Event",
+            "BODY": "Do you really want to delete this event ?"
+          },
+          "BUTTONS":{
+            "ADD":"Save",
+            "CANCEL":"Cancel",
+            "EDIT":"Save",
+            "DELETE":"Delete"
+          },
+          "TABLE":{
+            "HEADER":{
+                "APIARY":"Apiary",
+                "HIVE":"Hive",
+                "DATE":"Date",
+                "TYPE":"Type",
+                "PICTOS":"Events",
+                "NOTES_TASKS":"Notes & Tasks",
+                "EDIT":"Edit",
+                "DELETE":"Delete"
+            }
+          }
+        },
+        "ALERT":{
+            "TITLE":"Alert",
+            "EDIT":{
+                "TITLE":"Edit Alert"
+            },
+            "DELETE":{
+                "TITLE":"Delete Alert",
+                "BODY": "Do you really want to delete this alert ?"
+            },
+            "DATE_ERROR":"Please fill the date field with a valid date",
+            "ALERT_ERROR":"Please choose an alert"
+        },
+        "FILTERS":{
+          "APIARY":{
+            "ALL": "Apiary Events"
+          },
+          "INSPECTION":{
+            "ALL": "Inspections"
+          },
+          "ALERT":{
+            "ALL": "Alerts",
+            "SWARM": "Swarming"
+          },
+          "EVENT":{
+            "ALL": "Hive Events"
+          },
+          "DISPLAY":{
+            "HONEYDEW":"Nectar Flow",
+            "SWARM":"Swarm occured",
+            "RSWARM":"Swarm risk",
+            "TMAX":"High internal temp.",
+            "TMIN":"Low internal temp.",
+            "LOWBROOD":"Low brood level",
+            "WINEG":"Rapid weight loss",
+            "WIPOS":"Rapid weight gain",
+            "HMAX":"High internal humidity",
+            "HMIN":"Low internal humidity",
+            "STOLEN":"Stolen hive",
+            "DEAD":"Dead hive",
+            "OXALIC":"Oxalic acid treatment",
+            "SUPER+":"Adding super",
+            "SUPER-":"Removing super",
+            "WLIM":"Weight limit"
+          }
         }
     },
     "INSPECT":{
-      "SIDEBAR":"Inspect",
-      "SIDEBAR_TOOLTIP":"Inspect",
+      "SIDEBAR":"Inspections",
+      "SIDEBAR_TOOLTIP":"Inspections",
+      "ACTIONS":"Actions",
+      "OBS":"Observations",
+      "NOTES":"Notes",
+      "TODO":"Tasks",
       "NAV":{
         "NEW":"New",
         "HISTORY":"History",
         "PARAMS":"Parameters"
       },
       "NEW": {
-        "TITLE":"New Inspection",
+        "TITLE":"New Inspection of apiary ",
+        "DATE":"Date : ",
+        "GENERAL": "Overall state of apiary",
         "PLACEHOLDER":"Choose date",
         "DEFAULT_SELECT":"Choose apiary",
         "NOTE_PLACEHOLDER":"Notes...",
@@ -488,16 +594,121 @@
           "ACT_OBS": "Actions and Observations"
         },
         "BTN_SAVE":"Save",
-        "BTN_PRINT":"Print"
+        "BTN_PRINT":"Print",
+        "BTN_PDF":"Generate PDF",
+        "BTN_DL":"Download",
+        "GEN_DL":"File generating : ",
+        "READY_DL":"Your file is ready for download !",
+        "BTN_CANCEL":"Cancel"
+      },
+      "TABLE":{
+        "BEES":"Bees",
+        "BROOD":"Brood",
+        "STORES":"Stores"
       },
       "HISTORY":{
-        "TITLE":"Inspection history",
-        "SEARCH":"Research",
-        "PLACEHOLDER_START":"Choose start date",
-        "PLACEHOLDER_END":"Choose end date"
+        "TITLE":"History",
+        "TABLE":{
+            "APIARY":"Apiary",
+            "DATE":"Date",
+            "HEALTH":"Overall state",
+            "DESC":"Notes",
+            "TODO":"Tasks"
+        }
       },
       "PARAMS":{}
     },
+    "ALERTS_DESC":{
+      "HONEYDEW":"Honeydew",
+      "HONEYDEW_DESC":"Triggered when the weight contribution to the hive exceeds the chosen threshold during the last week.",
+      "RAIN":"Possible heavy rainfall",
+      "RAIN_DESC":"Triggered when rainfall exceeds the chosen threshold on the next day.",
+      "SWARM":"Swarm",
+      "SWARM_DESC":"Triggered when a potential swarm has occurred (Hub offers more efficiency).",
+      "DCONNECT":"Device disconnect",
+      "DCONNECT_DESC":"Triggered when one of your sensors no longer transmits data (or punctually) during each chosen period. Only works with a Hub.",
+      "TMAX":"High internal temperature",
+      "TMAX_DESC":"Triggered when the internal temperature exceeds the chosen threshold.",
+      "TMIN":"Low internal temperature",
+      "TMIN_DESC":"Triggered when the internal temperature is below the chosen threshold.",
+      "LOWBROOD":"Weak brood",
+      "LOWBROOD_DESC":"Triggered when the percentage of brood is below the chosen threshold.",
+      "STOPWEATHER":"Weather station stopped",
+      "STOPWEATHER_DESC":"Triggered when your weather station stops transmitting data. Requires its own weather station.",
+      "RSWARM":"Swarm risk",
+      "RSWARM_DESC":"Triggered when the risk of swarm is high on one of your hives on the next day.",
+      "WIPOS":"Significant provision of resources",
+      "WIPOS_DESC":"Triggered when the incoming weight of the day in the hive exceeds the chosen threshold.",
+      "WINEG":"Resource depletion",
+      "WINEG_DESC":"Triggered when bees consume many more resources than they bring back to the hive. The loss threshold is adjustable.",
+      "WLIM":"Weight limit exceeded",
+      "WLIM_DESC":"Triggered when the indicated weight threshold is exceeded.",
+      "SNOW":"Possible heavy snowfall",
+      "SNOW_DESC":"Triggered when snowfall exceeds the chosen threshold on the next day.",
+      "WIND":"Possible strong wind",
+      "WIND_DESC":"Triggered when the wind exceeds the chosen threshold on the next day.",
+      "COLDDAY":"Possible cold day ahead",
+      "COLDDAY_DESC":"Triggered when an upcoming cold day is detected, i.e. below the specified temperature threshold.",
+      "HOTDAY":"Possible hot day ahead",
+      "HOTDAY_DESC":"Triggered when an upcoming hot day is detected, i.e. above the specified temperature threshold.",
+      "HMIN":"Low internal humidity",
+      "HMIN_DESC":"Triggered when the internal humidity is below the chosen threshold.",
+      "HMAX":"High internal humidity",
+      "HMAX_DESC":"Triggered when the internal humidity exceeds the chosen threshold.",
+      "STOLEN":"Stolen hive",
+      "STOLEN_DESC":"Triggered when the weight of your hive becomes abnormally low.",
+      "DCONNECTT":"Device disconnect",
+      "DCONNECTT_DESC":"Triggered when your T sensor no longer transmits data during the last day.",
+      "DCONNECTW":"Device disconnect",
+      "DCONNECTW_DESC":"Triggered when your W sensor no longer transmits data during the last day.",
+      "DCONNECTH":"Device disconnect",
+      "DCONNECTH_DESC":"Triggered when your Hub no longer transmits data during the last day.",
+      "POORSIGNALW":"Poor signal",
+      "POORSIGNALW_DESC":"Triggered when your W sensor transmits little data during the last day.",
+      "POORSIGNALT":"Poor signal",
+      "POORSIGNALT_DESC":"Triggered when your T sensor transmits little data during the last day. ",
+      "LOWBATTERYW":"Low battery",
+      "LOWBATTERYW_DESC":"Triggered when the battery level of your W sensor is below the selected threshold.",
+      "LOWBATTERYT":"Low battery",
+      "LOWBATTERYT_DESC":"Triggered when the battery level of your T sensor is below the selected threshold.",
+      "SUPER+":"Adding a super",
+      "SUPER+_DESC":"Indicate the maximum weight of a full super.",
+      "SUPER-":"Removing a super",
+      "SUPER-_DESC":"Indicate the minimum weight of an empty super.",
+      "OXALIC":"Oxalic acid treatment",
+      "OXALIC_DESC":"Triggered when the average brood in your hives is below the set threshold. This is an indication that allows you to treat your hives with oxalic acid at the right time.",
+      "DEAD":"Dead hive",
+      "DEAD_DESC":"Our algorithm detects every day if your hive is dead based on various parameters we have set.",
+      "RAIN_MSG":"Rainfall will exceed {VAL}" ,
+      "SNOW_MSG":"Snowfall will exceed {VAL} " ,
+      "WIND_MSG":"The wind will exceed {VAL}" ,
+      "COLDDAY_MSG":"Temperatures will be unusually cold",
+      "OXALIC_MSG":"It's time to treat your hives",
+      "HOTDAY_MSG":"Temperatures will be unusually warm",
+      "TMAX_MSG":"Internal temperature over {VAL}" ,
+      "TMIN_MSG":"Internal temperature below {VAL}" ,
+      "WIPOS_MSG":"The gain of your bees' stock exceeds {VAL}",
+      "WINEG_MSG":"The loss of your bees' stock exceeds {VAL}",
+      "LOWBROOD_MSG":"Brood below {VAL}",
+      "HMAX_MSG":"Internal humidity over {VAL}",
+      "HMIN_MSG":"Internal humidity below {VAL}",
+      "HONEYDEW_MSG":"Incoming weights during the last week exceeding {VAL}",
+      "WLIM_MSG":"The weight of your hive exceeds {VAL}",
+      "SWARM_MSG":"Potential swarm detected around 14:00",
+      "RSWARM_MSG":"Swarming day expected",
+      "SUPER+_MSG":"You added a super",
+      "SUPER-_MSG":"You removed a super",
+      "LOWBATTERYT_MSG":"Replace the battery of ",
+      "LOWBATTERYW_MSG":"Replace the battery of ",
+      "DCONNECTT_MSG":"{REF} disconnected since {DATE}",
+      "DCONNECTW_MSG":"{REF} disconnected since {DATE}",
+      "DCONNECTH_MSG":"{REF} disconnected since {DATE}",
+      "POORSIGNALT_MSG":"{REF} poor signal since {DATE}",
+      "POORSIGNALW_MSG":"{REF} poor signal since {DATE}",
+      "STOPWEATHER_MSG":"Data transmission error from your weather station since {DATE}",
+      "STOLEN_MSG":"The weight of your hive is abnormally low",
+      "DEAD_MSG":"Your hive has been detected dead"
+  },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icon",
         "NAME": "Name",
@@ -527,12 +738,78 @@
                 "Go to the \"configure\" tab to set your preferences for email and frequency of notifications."]
         }
     },
-
+    "INSP_CONF":{
+        "APPLIES":{
+            "HIVE":"Hive",
+            "APIARY":"Apiary"
+        },
+        "SUPER+":"Added super",
+        "SUPER-":"Removed super",
+        "QUEENINSERT":"Queen inserted",
+        "DIVISION":"Division",
+        "QUEENABSENT":"Queen absent",
+        "STOLEN":"Stolen hive",
+        "BROODADD":"Added brood frames",
+        "BROODREMOVE":"Removed brood frames",
+        "COMBINEDHIVES":"Combined Hives",
+        "SWARM":"Swarming",
+        "CANDIFEED":"Candi feeding",
+        "SYRUPFEED":"Sirup feeding",
+        "REQUEEN":"Requeening",
+        "QUEENLINEAGE":"Queen lineage",
+        "HARVEST":"Harvest",
+        "INSTALLPKG":"Installed package",
+        "NUCLEUSHIVE":"Installed nucleus hive",
+        "SPLITQUEENREMOVE":"Split with queen removal",
+        "NECTARFLOW":"Nectar flow",
+        "MITEOAVAPOR":"Mite treatment: Oxalic Acid Vapor",
+        "MITEOADRIBBLE":"Mite treatment: Oxalic Acid Dribble",
+        "MITEFORMICPRO":"Mite treatment: Formic Pro",
+        "MITESTRIP":"Mite treatment: Strip",
+        "STARTFEED":"Start feeding",
+        "STOPFEED":"Stop feeding",
+        "SWARMMATEDQUEEN":"Swarm with mated queen",
+        "VIRGINSWARM":"Virgin swarm",
+        "SWARMRETURN":"Swarm and return to hive",
+        "QUEENSEEN":"Queen seen",
+        "NOBROOD":"No brood",
+        "LOWBROOD":"Low brood level",
+        "NORMBROOD":"Normal brood level",
+        "HIGHBROOD":"High brood level",
+        "SICK":"Sick",
+        "NOBEES":"No bees",
+        "LOWBEES":"Low bee level",
+        "NORMBEES":"Average bee level",
+        "HIGHBEES":"High bee level",
+        "NORES":"No resources",
+        "LOWRES":"Low resources level",
+        "NORMRES":"Average resources level",
+        "HIGHRES":"High resources level",
+        "EGG":"Egg presence",
+        "LARVA":"Larva presence",
+        "PUPA":"Capped brood presence",
+        "DRONEBROOD":"Drone brood presence",
+        "DRONES":"Drone presence",
+        "BUZZINGHIVE":"Buzzing hive",
+        "MOSAICBROOD":"Mosaic brood",
+        "MITESTRIPADD":"Mite treatment: strip add",
+        "MITESTRIPREMOVE":"Mite treatment: strip remove",
+        "QUEEN":"Queen",
+        "MITECOUNTLOUNGE":"Lounge",
+        "MITECOUNTWASH":"Mite counter"
+    },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
         "BTN": "Login",
         "EULA": "End User License Agreement",
         "BTN_EUA": "Accept EULA terms and conditions ",
+
+        "SIGN_IN": {
+            "DENIED": "Access denied",
+            "SUBMIT": "Login",
+            "SIGN_UP_LINK": "Create MyBroodminder account"
+        },
+
         "BECOMING": {
             "TITLE": "Becoming a precision beekeeper",
             "CONTENT": ["We want to make your hive monitoring experience more intense. Mellisphera is a comprehensive interface that",
@@ -563,7 +840,135 @@
             "CONNECTION": "Connection",
             "ERR": "Cannot log in",
             "TRY_MS": "Démo account",
-            "MAIL_SUBJECT": "Connection problem"
+            "MAIL_SUBJECT": "Connection problem",
+            "DENIED":"Access denied"
         }
+    },
+    "NOTIFY":{
+        "SUCCESS":{  
+            "CHANGE_NAME_DEMO_APIARY": "Name updated",
+            "READ_ALL_ALERTS_HIVE": "Alerts read",
+            "SAVE_ALERT_CONF": "Saved settings",
+            "SAVE_INSP_CONF": "Saved settings",
+            "SEND_MAIL_TEST": "Email sent !"
+        },
+        "FAIL":{
+            "AUTH_WRITE_APIARY": "You are not allowed to modify the demonstration apiary.",
+            "NO_DELETE_RIGHT": "You can't delete the last apiary",
+            "AUTH_WRITE_HIVE": "You are not allowed to modify this hive",
+            "AUTH_WRITE_NOTES": "You are not allowed to write notes in this apiary",
+            "AUTH_WRITE_NOTES_HIVE": "You are not allowed to write here"
+        }
+    },
+    "MOON":{
+        "1":"Full moon",
+        "2":"New moon",
+        "3":"Last quarter",
+        "4":"First quarter",
+        "5":"Waxing gibbous",
+        "6":"Waning gibbous",
+        "7":"Waning crescent",
+        "8":"Waxing crescent"
+    },
+    "DEVICE_STATUS_CODE":{
+        "R":{
+            "COLOR":"Red",
+            "MSG":"Sensor disconnected"
+        },
+        "O1":{
+            "COLOR":"Orange",
+            "MSG":"Poor signal"
+        },
+        "O2":{
+            "COLOR":"Orange",
+            "MSG":"Low battery"
+        }
+    },
+    "FITNESS_CODE":{
+        "B1":{
+            "COLOR":"Black",
+            "MSG":"Dead hive"
+        },
+        "B2":{
+            "COLOR":"Black",
+            "MSG":"Stolen hive"
+        },
+        "R1":{
+            "COLOR":"Red",
+            "MSG":"Very weak hive"
+        },
+        "O1":{
+            "COLOR":"Orange",
+            "MSG":"Weak hive or in strong decrease"
+        },
+        "O2":{
+            "COLOR":"Orange",
+            "MSG":"Potential swarm"
+        },
+        "O3":{
+            "COLOR":"Orange",
+            "MSG":"Overheating"
+        },
+        "O4":{
+            "COLOR":"Orange",
+            "MSG":"Extreme cold"
+        },
+        "O5":{
+            "COLOR":"Orange",
+            "MSG":"Rapid weight loss, being robbed"
+        },
+        "G1":{
+            "COLOR":"Green",
+            "MSG":"Healthy"
+        }
+    },
+    "HIVE_POS":{
+        "ABOVE LOWER BROOD BOX":{
+            "COLOR":"#d45087",
+            "MSG":"Above Lower Brood Box"
+        },
+        "ABOVE UPPER BROOD BOX":{
+            "COLOR":"#ffa600",
+            "MSG":"Above Upper Brood Box"
+        },
+        "OTHER":{
+            "COLOR":"#f95d6a",
+            "MSG":"Other"
+        },
+        "OUTSIDE HIVE":{
+            "COLOR":"#a05195",
+            "MSG":"Outside Hive"
+        },
+        "SCALE UNDER HIVE":{
+            "COLOR":"#003f5c",
+            "MSG":"Scale Under Hive"
+        },
+        "SCALE UNDER HIVE (BACK)":{
+            "COLOR":"#ff7c43",
+            "MSG":"Scale Under Hive (Back)"
+        },
+        "UNDER INNER COVER":{
+            "COLOR":"#665191",
+            "MSG":"Under Inner Cover"
+        }
+    },
+    "MESSAGES":{
+        "WARNINGHIVE":"Warning, the hive ",
+        "WILLBEDELETED":" will be deleted.",
+        "WARNINGHIVES":"Warning, the hives ",
+        "WILLBEDELETEDS":" will be deleted.",
+        "AND":" and ",
+        "PASSWORD":"Password",
+        "DENIED":"Acces denied",
+        "LOGIN":"Login",
+        "CREATEACCOUNT":"Create account",
+        "OR":"or",
+        "RESETPSW":"Reset password",
+        "ENTEREMAIL":"Enter your Email",
+        "SIXCARACMIN":"6 characters min",
+        "ENTERPSW":"Enter your password",
+        "SIGNUP":"Sign up",
+        "BACK":"Back",
+        "RESET":"Reset"
     }
 }

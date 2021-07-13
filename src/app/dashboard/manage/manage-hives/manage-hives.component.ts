@@ -29,6 +29,7 @@ import { NotifierService } from 'angular-notifier';
 import { MyNotifierService } from '../../service/my-notifier.service';
 import { NotifList } from '../../../../constants/notify';
 import { TranslateService } from '@ngx-translate/core';
+import { InspectionService } from '../../service/api/inspection.service';
 
 @Component({
   selector: 'app-manage-hives',
@@ -73,7 +74,8 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
     public rucheService: RucheService,
     private translateService: TranslateService,
     private notifyService: NotifierService,
-    private myNotifer: MyNotifierService) {
+    private myNotifer: MyNotifierService,
+    public inspeService: InspectionService) {
 
 
     this.username = userService.getUser();

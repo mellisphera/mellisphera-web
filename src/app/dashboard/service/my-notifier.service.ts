@@ -11,7 +11,7 @@ limitations under the License. */
 
 import { Injectable } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
-import { NOTIF_MSG, NotifList } from '../../../constants/notify';
+import { NotifList } from '../../../constants/notify';
 import { TranslateService } from '@ngx-translate/core';
 
 const SUCCESS = 'success';
@@ -59,8 +59,7 @@ export class MyNotifierService {
    * @memberof MyNotifierService
    */
   sendWarningNotif(msg: NotifList): void {
-    const currentLang = this.translateService.currentLang.toUpperCase();
-    this.notif.notify(WARNING, NOTIF_MSG.FAIL[currentLang][msg]);
+    this.notif.notify(WARNING, this.translateService.instant('NOTIFY.FAIL.' + msg));
   }
 
   /**
@@ -70,8 +69,7 @@ export class MyNotifierService {
    * @memberof MyNotifierService
    */
   sendDangerNotif(msg: NotifList): void {
-    const currentLang = this.translateService.currentLang.toUpperCase();
-    this.notif.notify(DANGER, NOTIF_MSG.FAIL[currentLang][msg]);
+    this.notif.notify(DANGER, this.translateService.instant('NOTIFY.FAIL.' + msg));
   }
 
   /**
@@ -81,7 +79,6 @@ export class MyNotifierService {
    * @memberof MyNotifierService
    */
   sendSuccessNotif(msg: NotifList) {
-    const currentLang = this.translateService.currentLang.toUpperCase();
-    this.notif.notify(SUCCESS, NOTIF_MSG.SUCCESS[currentLang][msg]);
+    this.notif.notify(SUCCESS, this.translateService.instant('NOTIFY.SUCCESS.' + msg));
   }
 }

@@ -71,9 +71,6 @@ nav[role=admin-navigation] {
   .navbar-nav {
       display: flex !important;
   }
-  .navbar{
-      height: 100px;
-  }
   .buttonLeft{
       justify-content: space-around;
       width: 100%;

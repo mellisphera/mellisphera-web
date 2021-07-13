@@ -48,15 +48,15 @@
   <div class="form-group loginMobile" id="footter">
     <button type="button" (click)="login()" [disabled]="!eulaCheck" class="btn btn-success">Login</button>
     <div class="linkForm">
-      <p class="linkContact"><a target="_blank" href="https://mybroodminder.com/login">{{ 'LOGIN.SIGN_IN.SIGN_UP_LINK' | translate }}</a></p>
+      <p class="linkContact"><a target="_blank" href="https://mybroodminder.com/login">{{ 'LOGIN_BM.SIGN_IN.SIGN_UP_LINK' | translate }}</a></p>
       <p class="linkContact"><a href="mailto:support@mellisphera.com?subject=Problème de connection">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
-      <p class="errorLogin" *ngIf="authService.errLogin">{{getMessageTraduction(messageList.DENIED)}}</p>
+      <p class="errorLogin" *ngIf="authService.errLogin">{{ 'LOGIN_BM.FORM.DENIED' | translate }}</p>
     </div>
     <button type="button" (click)="testAccount()" class="btn btn-default btnTest">{{ 'LOGIN_BM.FORM.TRY_MS' | translate }}</button>
 
 
   </div>
-  <div id="text">
+  <!--<div id="text">
     <h2>{{ 'LOGIN_BM.BECOMING.TITLE' | translate }}</h2>
     <p>
       <span *ngFor="let line of 'LOGIN_BM.BECOMING.CONTENT' | translate">{{ line }}</span>
@@ -75,53 +75,58 @@
     <p>
       <span *ngFor="let line of 'LOGIN_BM.BM_MS.CONTENT' | translate">{{ line }}</span>
     </p>
-  </div>
+  </div>-->
   <div id="loginGroup">
-    <div class="loginDesktop">
-      <form class="login-container desktop">
-        <P>
-          <label>{{ 'LOGIN_BM.FORM.CONNECTION' | translate }}</label>
-        </P>
-        <div class="form-group">
-          <!-- <label for="Password">Username</label> -->
-          <input type="email" class="form-control" name="emailDesktop" [placeholder]="'LOGIN_BM.FORM.EMAIL' | translate"
-            [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+    <div style="margin-top: -140px;">
+      
+      <div class="loginDesktop">
+        <form class="login-container desktop">
+          <P>
+            <label>{{ 'LOGIN_BM.FORM.CONNECTION' | translate }}</label>
+          </P>
+          <div class="form-group">
+            <!-- <label for="Password">Username</label> -->
+            <input type="email" class="form-control" name="emailDesktop" [placeholder]="'LOGIN_BM.FORM.EMAIL' | translate"
+              [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+          </div>
+  
+          <div class="form-group">
+            <!-- <label for="Password">Password</label> -->
+            <input type="password" name="passwdDesktop" class="form-control"
+              [placeholder]="'LOGIN_BM.FORM.PASSWORD' | translate" [(ngModel)]="password"
+              [ngModelOptions]="{standalone: true}">
+          </div>
+          <!--         <div *ngIf="!eulaCheck && !checkButtonIsDisabled()" style="text-align: center;">
+            <img src="./assets/img/smile.png"/>
+          </div> -->
+        </form>
+      </div>
+      <section *ngIf="newUser" id="sectionEula" class="eulaDesktop">
+        <h2 class="modal-title eulaTitle">{{ eula.TITLE }} <br /> {{ eula.SUBTITLE }}</h2>
+        <div>
+          <ol>
+            <li class="li-items" *ngFor="let pt of eula.POINTS; let i = index;">{{ pt }}</li>
+          </ol>
         </div>
-
-        <div class="form-group">
-          <!-- <label for="Password">Password</label> -->
-          <input type="password" name="passwdDesktop" class="form-control"
-            [placeholder]="'LOGIN_BM.FORM.PASSWORD' | translate" [(ngModel)]="password"
-            [ngModelOptions]="{standalone: true}">
+        <div class="checkEula">
+          <input type="checkbox" (input)="agreeEula($event)"
+            value="agree" /><label>{{ 'LOGIN_BM.BTN_EUA' | translate }}</label>
         </div>
-        <!--         <div *ngIf="!eulaCheck && !checkButtonIsDisabled()" style="text-align: center;">
-          <img src="./assets/img/smile.png"/>
-        </div> -->
-      </form>
-    </div>
-    <section *ngIf="newUser" id="sectionEula" class="eulaDesktop">
-      <h2 class="modal-title eulaTitle">{{ eula.TITLE }} <br /> {{ eula.SUBTITLE }}</h2>
-      <div>
-        <ol>
-          <li class="li-items" *ngFor="let pt of eula.POINTS; let i = index;">{{ pt }}</li>
-        </ol>
+      </section>
+      <div class="form-group eulaDesktop" id="footter">
+        <button type="button" id="btnLoginDesktop" (click)="login()" [disabled]="!eulaCheck"
+          class="btn btn-success">{{ 'LOGIN_BM.FORM.CONNECTION' | translate }}</button>
+        <div class="linkForm">
+          <p class="linkContact"><a target="_blank" href="https://mybroodminder.com/login">{{ 'LOGIN_BM.SIGN_IN.SIGN_UP_LINK' | translate }}</a></p>
+          <p class="linkContact"><a href="mailto:support@mellisphera.com?subject=Problème de connection">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
+          <p class="errorLogin" *ngIf="authService.errLogin">{{ 'LOGIN_BM.FORM.DENIED' | translate }}</p>
+        </div>
+        <button type="button" (click)="testAccount()"  class="btn btn-default btnTest">{{ 'LOGIN_BM.FORM.TRY_MS' | translate }}</button>
+  
       </div>
-      <div class="checkEula">
-        <input type="checkbox" (input)="agreeEula($event)"
-          value="agree" /><label>{{ 'LOGIN_BM.BTN_EUA' | translate }}</label>
-      </div>
-    </section>
-    <div class="form-group eulaDesktop" id="footter">
-      <button type="button" id="btnLoginDesktop" (click)="login()" [disabled]="!eulaCheck"
-        class="btn btn-success">{{ 'LOGIN_BM.FORM.CONNECTION' | translate }}</button>
-      <div class="linkForm">
-        <p class="linkContact"><a target="_blank" href="https://mybroodminder.com/login">{{ 'LOGIN.SIGN_IN.SIGN_UP_LINK' | translate }}</a></p>
-        <p class="linkContact"><a href="mailto:support@mellisphera.com?subject=Problème de connection">{{ 'LOGIN_BM.FORM.ERR' | translate }}</a></p>
-        <p class="errorLogin" *ngIf="authService.errLogin">{{getMessageTraduction(messageList.DENIED)}}</p>
-      </div>
-      <button type="button" (click)="testAccount()"  class="btn btn-default btnTest">{{ 'LOGIN_BM.FORM.TRY_MS' | translate }}</button>
 
     </div>
+    
   </div>
 </section>
 <footer></footer>
