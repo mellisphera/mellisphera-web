@@ -103,10 +103,6 @@ button{
   color: red;
 }
 @media screen and (max-width:990px) {
-  .form-group{
-    width: 50%;
-    margin: auto;
-  }
   iframe{
     width: 50%;
   }
@@ -127,9 +123,6 @@ button{
   .eulaMobile{
     display: block;
   }
-  .eulaDesktop{
-    display: none;
-  }
   .eulaMobile ol{
     padding-left: 20px;
   }
@@ -139,7 +132,7 @@ button{
     width: 100%;
   }
   .loginDesktop{
-    display: none;
+    display: block;
   }
   .login-container div:last-child{
     margin-top: 5px;

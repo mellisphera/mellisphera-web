@@ -5,9 +5,7 @@
             "SUBMIT": "Login",
             "SIGN_UP_LINK": "Create MyBroodminder account"
         },
-        "SIGN_UP": {
-
-        }
+        "SIGN_UP": {}
     },
     "MELLIUX": {
         "HELP": {
@@ -765,7 +763,10 @@
         "MITEOAVAPOR":"Mite treatment: Oxalic Acid Vapor",
         "MITEOADRIBBLE":"Mite treatment: Oxalic Acid Dribble",
         "MITEFORMICPRO":"Mite treatment: Formic Pro",
-        "MITESTRIP":"Mite treatment: Strip",
+        "MITESTRIPADD":"Mite treatment: strip add",
+        "MITESTRIPREMOVE":"Mite treatment: strip remove",
+        "MITECOUNTLOUNGE":"Mite count Lounge",
+        "MITECOUNTWASH":"Mite count wash",
         "STARTFEED":"Start feeding",
         "STOPFEED":"Stop feeding",
         "SWARMMATEDQUEEN":"Swarm with mated queen",
@@ -792,11 +793,6 @@
         "DRONES":"Drone presence",
         "BUZZINGHIVE":"Buzzing hive",
         "MOSAICBROOD":"Mosaic brood",
-        "MITESTRIPADD":"Mite treatment: strip add",
-        "MITESTRIPREMOVE":"Mite treatment: strip remove",
-        "QUEEN":"Queen",
-        "MITECOUNTLOUNGE":"Lounge",
-        "MITECOUNTWASH":"Mite counter"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
@@ -808,31 +804,6 @@
             "DENIED": "Access denied",
             "SUBMIT": "Login",
             "SIGN_UP_LINK": "Create MyBroodminder account"
-        },
-
-        "BECOMING": {
-            "TITLE": "Becoming a precision beekeeper",
-            "CONTENT": ["We want to make your hive monitoring experience more intense. Mellisphera is a comprehensive interface that",
-            "aggregates your hive data together with beekeeper actions and environmental weather.",
-            "A set of unique algorithms provide actionable information. It’s no more about temperature and weight but about",
-            "hive fitness, brood level, honey productivity, robing or swarming… Alerts and notifications!"],
-            "READ_MORE": "Read more",
-            "READ_MORE_CONTENT": ["The good news is that Mellisphera is integrated with Broodminder. Once logged in you’ll inherit your full sensor",
-            "history. Moreover this data will be enriched with daily averages, events, alerts etc. You’ll be able to explore",
-            "past events and read the season development from a completely new perspective.",
-            "In two words, you’re about to become a precision beekeeper."]
-        },
-        "QUICK_TOUR": {
-            "TITLE": "Quick tour of Mellisphera",
-            "CONTENT": "Watch this video to discover Mellisphera main functions"
-        },
-        "BM_MS": {
-            "TITLE": "Broodminder and Mellisphera - How it works",
-            "CONTENT": ["Mellisphera and Broodminder environments are complementary and closely linked.",
-            "You’ll continue to use myBroodminder to set up your apiaries, hives and sensors. This information is updated into",
-            "Mellisphera at your next login. Mellisphera will allow you to carry detailed analysis and explorations as well as",
-            "sending you custom alerts and notifications.",
-            "Tip : use your Broodminder account and password to directly log into Mellisphera"]
         },
         "FORM": {
             "EMAIL": "Email MyBroodMinder",

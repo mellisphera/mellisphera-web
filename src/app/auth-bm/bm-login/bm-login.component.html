@@ -11,26 +11,26 @@
   </nav>
 </header>
 <section id="content">
-  <div class="loginMobile">
+  <!--<div class="loginMobile">
     <form class="login-container mobile">
       <P>
         <label>{{ 'LOGIN_BM.FORM.CONNECTION' | translate }}</label>
       </P>
       <div class="form-group">
-        <!-- <label for="Password">Username</label> -->
+        <label for="Password">Username</label>
         <input type="email" class="form-control" name="emailDesktop" [placeholder]="'LOGIN_BM.FORM.EMAIL' | translate"
           [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
       </div>
 
       <div class="form-group">
-        <!-- <label for="Password">Password</label> -->
+        <label for="Password">Password</label>
         <input type="password" name="passwdDesktop" class="form-control"
           [placeholder]="'LOGIN_BM.FORM.PASSWORD' | translate" [(ngModel)]="password"
           [ngModelOptions]="{standalone: true}">
       </div>
-      <!--         <div *ngIf="!eulaCheck && !checkButtonIsDisabled()" style="text-align: center;">
+               <div *ngIf="!eulaCheck && !checkButtonIsDisabled()" style="text-align: center;">
         <img src="./assets/img/smile.png"/>
-      </div> -->
+      </div>
     </form>
   </div>
   <section *ngIf="newUser" id="sectionEula" class="eulaMobile">
@@ -55,7 +55,7 @@
     <button type="button" (click)="testAccount()" class="btn btn-default btnTest">{{ 'LOGIN_BM.FORM.TRY_MS' | translate }}</button>
 
 
-  </div>
+  </div>-->
   <!--<div id="text">
     <h2>{{ 'LOGIN_BM.BECOMING.TITLE' | translate }}</h2>
     <p>
@@ -77,7 +77,7 @@
     </p>
   </div>-->
   <div id="loginGroup">
-    <div style="margin-top: -140px;">
+    <div style="margin-top: -140px; width: 300px;">
       
       <div class="loginDesktop">
         <form class="login-container desktop">

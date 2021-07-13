@@ -5,9 +5,7 @@
             "SUBMIT": "S'identifier",
             "SIGN_UP_LINK": "Creer un compte MyBroodminder"
         },
-        "SIGN_UP": {
-
-        }
+        "SIGN_UP": {}
     },
     "MELLIUX": {
         "HELP": {
@@ -565,8 +563,6 @@
             "OXALIC":"Traitement acide oxalique",
             "SUPER+":"Ajout hausse",
             "SUPER-":"Retrait hausse",
-            "SUPERMORE":"Ajout hausse",
-            "SUPERLESS":"Retrait hausse",
             "WLIM":"Seuil poids"
           }
         }
@@ -713,7 +709,9 @@
     },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icône",
-        "VALUE": "Valeur",
+        "NAME": "Nom",
+        "DESCRIPTION": "Description",
+        "VALUE": "Value",
         "PAGE": {
             "SENSORS": "Capteur",
             "WEATHER": "Metéo",
@@ -730,8 +728,6 @@
                 "BTN_MAIL_TEST": "Tester email"
             }
         },
-        "NAME": "Nom",
-        "DESCRIPTION": "Description",
         "STATUS": "Status",
         "HELP": {
             "ALERTS" : ["Dans cette page, vous pouvez configurer toutes les alertes et notifications.",
@@ -767,12 +763,15 @@
         "MITEOAVAPOR":"Traitement varroa acide oxalique Vap.",
         "MITEOADRIBBLE":"Traitement varroa acide oxalique Deg.",
         "MITEFORMICPRO":"Traitement varroa formique",
-        "MITESTRIP":"Traitement lanière",
+        "MITESTRIPADD":"Traitement varroa ajout laniere",
+        "MITESTRIPREMOVE":"Traitement varroa retrait laniere",
+        "MITECOUNTLOUNGE":"Lange",
+        "MITECOUNTWASH":"Compteur de Varroa",
         "STARTFEED":"Debut nourissage",
         "STOPFEED":"Arret nourissage",
-        "SWARMMATEDQUEEN":"Swarm with mated queen",
-        "VIRGINSWARM":"Virgin swarm",
-        "SWARMRETURN":"Swarm and return to hive",
+        "SWARMMATEDQUEEN":"Essaim avec reine fecondée",
+        "VIRGINSWARM":"Essaim avec reine vierge",
+        "SWARMRETURN":"Essaim revenu à la ruche",
         "QUEENSEEN":"Reine vue",
         "NOBROOD":"Pas de couvain",
         "LOWBROOD":"Niveau couvain faible ",
@@ -793,12 +792,7 @@
         "DRONEBROOD":"Présence de couvain de male",
         "DRONES":"Présence de males",
         "BUZZINGHIVE":"Bourdonneuse",
-        "MOSAICBROOD":"Mosaique couvain",
-        "MITESTRIPADD":"Traitement varroa ajout laniere",
-        "MITESTRIPREMOVE":"Traitement varroa retrait laniere",
-        "QUEEN":"Reine",
-        "MITECOUNTLOUNGE":"Lange",
-        "MITECOUNTWASH":"Compteur de Varroa"
+        "MOSAICBROOD":"Mosaique couvain"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
@@ -810,33 +804,6 @@
             "DENIED": "Accès refusé",
             "SUBMIT": "S'identifier",
             "SIGN_UP_LINK": "Creer un compte MyBroodminder"
-        },
-
-        "BECOMING": {
-            "TITLE": "Devenir un apiculteur de précision",
-            "CONTENT": ["Nous voulons rendre votre expérience de surveillance de la ruche plus intense. Mellisphera est une interface",
-            "complète qui regroupe vos données ainsi que vos actions d’apiculteur et la météo. Un ensemble d'algorithmes",
-            "uniques fournit des informations exploitables. Il ne s'agit plus de la température et du poids mais de la forme de la",
-            "ruche, du niveau de couvain, de la productivité du miel, du vol ou de l'essaimage... sous forme d’alertes et",
-            "notifications !"],
-
-            "READ_MORE": "Lire plus",
-            "READ_MORE_CONTENT": ["La bonne nouvelle est que Mellisphera est intégré à BroodMinder. Une fois connecté, vous hériterez de l'historique",
-            "complet de vos capteurs. De plus, ces données seront enrichies de moyennes quotidiennes, d'événements,",
-            "d'alertes, etc. Vous pourrez explorer les événements passés et lire l'évolution de la saison sous un angle",
-            "complètement nouveau. En deux mots, vous êtes sur le point de devenir un apiculteur de précision."]
-        },
-        "QUICK_TOUR": {
-            "TITLE": "Visite rapide de Mellisphera",
-            "CONTENT": "Regardez cette vidéo pour découvrir les principales fonctionnalités de Mellisphera."
-        },
-        "BM_MS": {
-            "TITLE": "BroodMinder et Mellisphera - Comment ça marche ?",
-            "CONTENT": ["Les environnements Mellisphera et BroodMinder sont complémentaires et étroitement liés. Vous continuerez à",
-            "utiliser MyBroodMinder pour installer vos ruchers, ruches et capteurs. Ces informations sont mises à jour dans",
-            "Mellisphera à chaque nouvelle connexion. Mellisphera vous permettra d'effectuer des analyses et des explorations",
-            "détaillées ainsi que de vous envoyer des alertes et des notifications personnalisées. Conseil : utilisez votre compte",
-            "BroodMinder et votre mot de passe pour vous connecter directement à Mellisphera."]
         },
         "FORM": {
             "EMAIL": "Email MyBroodMinder",

@@ -99,7 +99,7 @@ limitations under the License. -->
         <button class="btn filters-btn dropdown dropdown-toogle" type="button" id="filtersMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="openFiltersMenu($event)">
           <img src="../../../assets/ms-pics/ui/assets/filter_w.svg">
         </button>
-        <div id="filtersMenu" class="dropdown-menu" aria-labelledby="filtersMenuButton" (click)="filterMenu($event)">
+        <div id="filtersMenu" class="dropdown-menu" aria-labelledby="filtersMenuButton" (click)="filterMenu($event)" style="position: absolute;">
           <div class="filters-insp">
             <input type="button" class="filters-inspection-btn-active" width="35" height="35" (click)="filterButton($event)">
             <p class="filters-insp-title">{{ 'MELLICHARTS.FILTERS.APIARY.ALL' | translate}}</p>
