@@ -47,7 +47,7 @@ limitations under the License. -->
                 <p>{{ 'SIDEBAR.DATA' | translate }}</p>
             </a>
         </li>
-        <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('sidebar-inspect')">
+        <li (click)="focus('sidebar-inspect')">
           <a id="sidebar-inspect" routerLink="./inspect" data-toggle="tooltip" data-placement="top"
               title="Inspecter">
               <img src="../../../assets/icons/inspect/inspectsV2/3_bkpr_observ_white.png" style="width:50px;" />
