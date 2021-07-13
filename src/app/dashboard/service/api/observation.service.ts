@@ -19,7 +19,7 @@ import { DataRange } from '../../../_model/data-range';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { UnitService } from '../unit.service';
 import { RucheService } from './ruche.service';
-import { INSPECTIONS } from '../../melli-charts/charts/icons/icon_inspect';
+import { INSPECTIONS, EVENTS } from '../../melli-charts/charts/icons/icon_inspect';
 import { filter } from 'rxjs/operators';
 
 const httpOptions = {
@@ -55,7 +55,7 @@ export class ObservationService {
     this.observationsApiaryUser = [];
     this.observationsHiveUser = [];
     this.setRange({scale: 100, type: 'YEAR'});
-    
+
     this.imgHiveObs = 'M256,96C144.341,96,47.559,161.021,0,256c47.559,94.979,144.341,160,256,160c111.656,0,208.439-65.021,256-160' +
 		'C464.441,161.021,367.656,96,256,96z M382.225,180.852c30.082,19.187,55.572,44.887,74.719,75.148' +
 		'c-19.146,30.261-44.639,55.961-74.719,75.148C344.428,355.257,300.779,368,256,368c-44.78,0-88.428-12.743-126.225-36.852' +
@@ -63,7 +63,7 @@ export class ObservationService {
 		'C130.725,190.866,128,205.613,128,221c0,70.691,57.308,128,128,128c70.691,0,128-57.309,128-128' +
 		'c0-15.387-2.725-30.134-7.703-43.799C378.285,178.39,380.266,179.602,382.225,180.852z M256,205c0,26.51-21.49,48-48,48' +
     's-48-21.49-48-48s21.49-48,48-48S256,178.49,256,205z';
-    
+
 
     this.imgHiveAct = 'M162.9,198.9v-22.95c-22.95-15.3-38.25-42.075-38.25-70.763c0-47.812,38.25-86.062,86.062-86.062' +
     'c47.812,0,86.062,38.25,86.062,86.062c0,17.212-5.737,34.425-15.3,47.812c1.913,0,3.825,0,5.737,0c5.738,0,11.476,0,15.301,1.913' +
@@ -208,20 +208,5 @@ export class ObservationService {
    */
   deleteObservation(idObs: string): Observable<Observation> {
     return this.http.delete<Observation>(CONFIG.URL + 'report/' + idObs);
-  }
-
-  
-  getPictoInspect(cellPoint: Array<number>) {
-    return INSPECTIONS.HiveAct.map(_path => {
-      return  {
-          type: 'path',
-          scale: _path.scale,
-          shape: {
-              pathData: _path.path,
-          },
-          position: [cellPoint[0] + _path.position[0], cellPoint[1] + _path.position[1]],
-          style: _path.style
-      };
-    });
   }
 }

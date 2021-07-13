@@ -19,8 +19,7 @@ import * as moment from 'moment';
 @Injectable({
   providedIn: 'root'
 })
-export class 
-UnitService {
+export class UnitService {
 
   constructor() { }
 

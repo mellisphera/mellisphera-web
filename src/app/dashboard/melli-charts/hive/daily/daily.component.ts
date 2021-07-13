@@ -1,3 +1,4 @@
+import { OnDestroy } from '@angular/core';
 /* Copyright 2018-present Mellisphera
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -9,15 +10,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DailyManagerService } from '../service/daily-manager.service';
 import { MelliChartsHiveService } from '../../service/melli-charts-hive.service';
 import { MelliChartsDateService } from '../../service/melli-charts-date.service';
-import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
-import { UserParamsService } from '../../../preference-config/service/user-params.service';
-import { WeatherService } from '../../../service/api/weather.service';
-import { UserloggedService } from '../../../../userlogged.service';
-import { BASE_OPTIONS } from '../../charts/BASE_OPTIONS';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { TranslateService } from '@ngx-translate/core';
 import * as echarts from 'echarts';
@@ -57,9 +53,8 @@ const ENV = 'ENV';
   templateUrl: './daily.component.html',
   styleUrls: ['./daily.component.css']
 })
-export class DailyComponent implements OnInit, AfterViewInit {
+export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  private currentEltTypeDaily: HTMLElement;
   public currentTypeDailyDevice: Tools;
   public currentTypeDailyEnv: Tools;
   public calendarElements: HTMLCollection = null;
@@ -68,54 +63,38 @@ export class DailyComponent implements OnInit, AfterViewInit {
   public currentOtherTextPeriodCalendar: string;
   public currentDeviceTextSevenDay: string;
   public currentOtherTextSevenDay: string;
-  private optionCsv: Object;
   private typeData: Tools[];
-  constructor(private renderer: Renderer2,
-    public dailyManager: DailyManagerService,
-    private userPref: UserParamsService,
-    private userService: UserloggedService,
+  constructor(public dailyManager: DailyManagerService,
     private translateService: TranslateService,
-    private weatherService: WeatherService,
     public melliHive: MelliChartsHiveService,
     public graphGlobal: GraphGlobal,
     private melliDate: MelliChartsDateService) {
     this.typeData = [
-      { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type active', icons: './assets/picto_mellicharts/brood.png' },
-      { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/weight_inc.png' },
-      //{ name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/weight_max.png' },
-      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/tint_max.png' },
-      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/tint_min.png' },
-      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/hint_max.png' },
-      { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: './assets/picto_mellicharts/weather.png' },
-      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/text_max.png' },
-      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/picto_mellicharts/text_min.png' },
-      { name: 'TEMP_EXT_WEATHER_MAX', id: 'TEMP_EXT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_max.png' },
-      { name: 'TEMP_EXT_WEATHER_MIN', id: 'TEMP_INT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/text_min.png' },
-      { name: 'HEXT_WEATHER_MAX', id: 'HEXT_WEATHER_MAX', unit: 'P', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/hext_max.png' },
-      { name: 'HEXT_WEATHER_MIN', id: 'HEXT_WEATHER_MIN', unit: 'P', origin: 'OTHER', class: 'item-type', icons: '/assets/picto_mellicharts/hext_min.png' },
-      { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/wind.png' },
-      { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/picto_mellicharts/rain.png' },
-      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/notif.png' },
-      { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: '/assets/picto_mellicharts/moon.png' },
-      /* { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/picto_mellicharts/tool_jhook.png' } */
+      { name: 'BROOD', id: 'BROOD', unit: 'P', origin: 'DEVICE', class: 'item-type active', icons: './assets/ms-pics/ui/calendbars/brood_cb.png' },
+      { name: 'WINCOME', id: 'WINCOME', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/wipos_cb.svg' },
+      { name: 'FITNESS', id: 'FITNESS', unit: '', origin: 'DEVICE', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/fitness_cb.png' },
+      //{ name: 'WEIGHT_MAX', id: 'WEIGHT_MAX', unit: 'W', origin: 'DEVICE', class: 'item-type', icons: './assets/pictos_alerts/charts/weight_max.png' },
+      { name: 'TEMP_INT_MAX', id: 'TEMP_INT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/tmax_cb.png' },
+      { name: 'TEMP_INT_MIN', id: 'TEMP_INT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/tmin_cb.png' },
+      { name: 'HRIN', id: 'HRIN', unit: 'P', origin: 'DEVICE', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/hint_max_cb.png' },
+      { name: 'WEATHER', id: 'WHEATHER', unit: 'T', origin: 'OTHER', class: 'item-type active', icons: './assets/ms-pics/ui/calendbars/weather_cb.png' },
+      { name: 'TEMP_EXT_MAX', id: 'TEMP_EXT_MAX', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/text_max_cb.png' },
+      { name: 'TEMP_EXT_MIN', id: 'TEMP_EXT_MIN', unit: 'T', origin: 'DEVICE', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/text_min_cb.png' },
+      { name: 'TEMP_EXT_WEATHER_MAX', id: 'TEMP_EXT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/text_max_cb.png' },
+      { name: 'TEMP_EXT_WEATHER_MIN', id: 'TEMP_INT_WEATHER', unit: 'T', origin: 'OTHER', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/text_min_cb.png' },
+      { name: 'HEXT_WEATHER_MAX', id: 'HEXT_WEATHER_MAX', unit: 'P', origin: 'OTHER', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/hext_max_cb.png' },
+      { name: 'HEXT_WEATHER_MIN', id: 'HEXT_WEATHER_MIN', unit: 'P', origin: 'OTHER', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/hext_min_cb.png' },
+      { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/ms-pics/alerts/meteo/wind_cb.png' },
+      { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/rain_cb.png' },
+      { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/ms-pics/ui/calendbars/alerts-events_cb.svg' },
+      { name: 'EVENT-APIARY', id: 'EVENT-APIARY', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/inspect-api_cb.png' },
+      { name: 'EVENT-HIVE', id: 'EVENT-HIVE', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/inspect_cb.png' },
+      { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/moon_cb.png' },
     ];
 
-    this.optionCsv = {
-      fieldSeparator: ',',
-      quoteStrings: '"',
-      decimalseparator: '.',
-      showLabels: true,
-      showTitle: true,
-      title: 'Your title',
-      useBom: true,
-      noDownload: false,
-      headers: ['Date', 'Value'],
-      nullToEmptyString: false,
-    };
     this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
     this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
     this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
-    console.log(this.currentTypeDailyEnv);
 
   }
 
@@ -124,7 +103,10 @@ export class DailyComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.setMeanTextHtml();
     this.calendarElements = document.getElementsByClassName('calendar');
-/*     this.dailyManager.setMeanAnnotation = (_type: Tools, clear?: boolean) => {
+    this.currentTypeDailyDevice = this.typeData.filter(_filter => _filter.origin === DEVICE)[0];
+    this.currentTypeDailyOther = this.typeData.filter(_filter => _filter.origin === OTHER)[0];
+    this.currentTypeDailyEnv = this.typeData.filter(_filter => _filter.origin === ENV)[0];
+  /*this.dailyManager.setMeanAnnotation = (_type: Tools, clear?: boolean) => {
       if (!clear) {
         this.setMeanTextHtml();
         if (_type.origin === DEVICE) {
@@ -248,7 +230,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
    * @param {*} event
    * @memberof DailyComponent
    */
-  onResize(event: any): void {
+  onResize(): void {
     this.melliHive.getDailyDeviceChartInstance().resize({
       width: 'auto',
       height: 'auto'
@@ -300,6 +282,9 @@ export class DailyComponent implements OnInit, AfterViewInit {
         this.dailyManager.getChartWeight(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
           this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
         break;
+      case 'FITNESS':
+        this.dailyManager.getChartFitness(this.currentTypeDailyDevice, this.melliHive.getHiveSelect()._id,
+          this.melliHive.getDailyDeviceChartInstance(), this.melliDate.getRangeForReqest(), rangeChange)
       default:
         break;
     }
@@ -381,7 +366,31 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
 
   loadDailyEnvData(rangeChange: boolean) {
-    if (this.currentTypeDailyEnv.name === 'MOON') {
+    switch(this.currentTypeDailyEnv.name){
+      case 'EVENT-APIARY':
+        this.melliHive.getDailyEnvChartInstance().showLoading();
+        this.dailyManager.getChartEventApi(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
+          this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        break;
+      case 'EVENT-HIVE':
+        this.melliHive.getDailyEnvChartInstance().showLoading();
+        this.dailyManager.getChartEvent(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
+          this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        break;
+      case 'ALERT':
+        this.melliHive.getDailyEnvChartInstance().showLoading();
+        this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id, 
+        this.melliHive.getHiveSelect().apiaryId, this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        break;
+      case 'MOON':
+        this.melliHive.getDailyEnvChartInstance().showLoading();
+        this.dailyManager.getChartAstro(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().apiaryId,
+          this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
+        break;
+      default:
+        break;
+    }
+    /*if (this.currentTypeDailyEnv.name === 'MOON') {
       this.melliHive.getDailyEnvChartInstance().showLoading();
       this.dailyManager.getChartAstro(this.currentTypeDailyEnv, this.melliHive.getHiveSelect().apiaryId,
         this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
@@ -390,7 +399,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
       this.melliHive.getDailyEnvChartInstance().showLoading();
       this.dailyManager.getChartAlert(this.currentTypeDailyEnv, this.melliHive.getHiveSelect()._id,
         this.melliHive.getDailyEnvChartInstance(), this.melliDate.getRangeForReqest(), rangeChange);
-    }
+    }*/
   }
 
 
@@ -452,11 +461,13 @@ export class DailyComponent implements OnInit, AfterViewInit {
    */
   exportToCsv(origin: string): void {
     if (origin === DEVICE) {
-      const data = this.melliHive.getDailyDeviceChartInstance().getOption().series.map(_series => _series.data).flat();
-      let csv = new Angular5Csv(data, this.currentTypeDailyDevice.name, this.optionCsv);
     } else {
-      const data = this.melliHive.getDailyOtherChartInstance().getOption().series.map(_series => _series.data).flat();
-      let csv = new Angular5Csv(data, this.currentTypeDailyOther.name, this.optionCsv);
     }
+  }
+
+  ngOnDestroy():void {
+    this.melliHive.dailyDeviceEchartInstances.dispose();
+    this.melliHive.dailyEnvChartInstance.dispose();
+    this.melliHive.dailyOtherChartIstances.dispose();
   }
 }

@@ -44,6 +44,7 @@ import { EventEmitter } from '@angular/core';
 import { Binary } from '@angular/compiler';
 import { GeonamesService } from '../../service/geonames.service';
 import { DailyRecordsWService } from '../../service/api/daily-records-w.service';
+import { InspectionService } from '../../service/api/inspection.service';
 
 @Component({
     // moduleId: module.id,
@@ -131,7 +132,8 @@ export class NavbarComponent implements OnInit {
         public translateService: TranslateService,
         private alertsService: AlertsService,
         private renderer: Renderer2,
-        private messagesService: MessagesService) {
+        private messagesService: MessagesService,
+        private inspService: InspectionService) {
         this.location = location;
         this.notifier = this.notifierService;
         this.sidebarVisible = false;
@@ -256,13 +258,13 @@ export class NavbarComponent implements OnInit {
 
     // Desactive the 'active' class from buttons in homePage
     desactiveButtonHomePage() {
-        this.eltOnClickId = document.getElementById('name');
+        this.eltOnClickId = document.getElementById('nameNav');
         this.renderer.removeClass(this.eltOnClickId, 'active');
-        this.eltOnClickId = document.getElementById('brood');
+        this.eltOnClickId = document.getElementById('broodNav');
         this.renderer.removeClass(this.eltOnClickId, 'active');
-        this.eltOnClickId = document.getElementById('weight');
-        this.renderer.removeClass(this.eltOnClickId, 'active');
-        this.eltOnClickId = document.getElementById('sensors');
+        this.eltOnClickId = document.getElementById('weightNav');
+        this.renderer.removeClass(this.eltOnClickId, 'activeNav');
+        this.eltOnClickId = document.getElementById('sensorsNav');
         this.renderer.removeClass(this.eltOnClickId, 'active');
 
         // Desactive alerts buttons
@@ -272,13 +274,13 @@ export class NavbarComponent implements OnInit {
 
     // Desactive the 'active' class from buttons in homePage, Active the name one
     desactiveButtonHomePageActiveName() {
-        this.eltOnClickId = document.getElementById('name');
+        this.eltOnClickId = document.getElementById('nameNav');
         this.renderer.addClass(this.eltOnClickId, 'active');
-        this.eltOnClickId = document.getElementById('brood');
+        this.eltOnClickId = document.getElementById('broodNav');
         this.renderer.removeClass(this.eltOnClickId, 'active');
-        this.eltOnClickId = document.getElementById('weight');
+        this.eltOnClickId = document.getElementById('weightNav');
         this.renderer.removeClass(this.eltOnClickId, 'active');
-        this.eltOnClickId = document.getElementById('sensors');
+        this.eltOnClickId = document.getElementById('sensorsNav');
         this.renderer.removeClass(this.eltOnClickId, 'active');
 
         // Desactive alerts
@@ -288,13 +290,13 @@ export class NavbarComponent implements OnInit {
 
     // Desactive the 'active' class from buttons in homePage, Active the name one
     desactiveButtonHomePageActiveNameAndAlerts() {
-        this.eltOnClickId = document.getElementById('name');
+        this.eltOnClickId = document.getElementById('nameNav');
         this.renderer.addClass(this.eltOnClickId, 'active');
-        this.eltOnClickId = document.getElementById('brood');
+        this.eltOnClickId = document.getElementById('broodNav');
         this.renderer.removeClass(this.eltOnClickId, 'active');
-        this.eltOnClickId = document.getElementById('weight');
+        this.eltOnClickId = document.getElementById('weightNav');
         this.renderer.removeClass(this.eltOnClickId, 'active');
-        this.eltOnClickId = document.getElementById('sensors');
+        this.eltOnClickId = document.getElementById('sensorsNav');
         this.renderer.removeClass(this.eltOnClickId, 'active');
 
         // active alerts
@@ -304,22 +306,22 @@ export class NavbarComponent implements OnInit {
 
     // Desactive the 'in' class from info under hives in home page
     desactiveCollapsesInfoHivesHomePage() {
-        this.eltOnClickClass = document.getElementsByClassName('name');
+        this.eltOnClickClass = document.getElementsByClassName('nameNav');
         for (let i = 0; i < this.eltOnClickClass.length; i++) {
             this.eltOnClickClass[i].classList.remove('in');
         }
 
-        this.eltOnClickClass = document.getElementsByClassName('brood');
+        this.eltOnClickClass = document.getElementsByClassName('broodNav');
         for (let i = 0; i < this.eltOnClickClass.length; i++) {
             this.eltOnClickClass[i].classList.remove('in');
         }
 
-        this.eltOnClickClass = document.getElementsByClassName('weight');
+        this.eltOnClickClass = document.getElementsByClassName('weightNav');
         for (let i = 0; i < this.eltOnClickClass.length; i++) {
             this.eltOnClickClass[i].classList.remove('in');
         }
 
-        this.eltOnClickClass = document.getElementsByClassName('sensors');
+        this.eltOnClickClass = document.getElementsByClassName('sensorsNav');
         for (let i = 0; i < this.eltOnClickClass.length; i++) {
             this.eltOnClickClass[i].classList.remove('in');
         }
@@ -356,11 +358,15 @@ export class NavbarComponent implements OnInit {
                 this.desactiveButtonHomePageActiveName();
                 break;
             case '/dashboard/home/info-hives':
+                this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
+                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 this.desactiveButtonHomePageActiveName();
                 this.router.navigate(['dashboard/home/info-apiary']);
                 break;
             case '/dashboard/home/info-apiary':
+                this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
+                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
                 this.apiaryChange.emit(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
                 this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));

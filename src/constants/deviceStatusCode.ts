@@ -1,4 +1,4 @@
-export const DEVICE_STATUS_CODE = {
+/*export const DEVICE_STATUS_CODE = {
     "R": {
         "color": "Red",
         "FR": {
@@ -37,4 +37,4 @@ export const DEVICE_STATUS_CODE = {
             "Message": "Batería baja"
         }
     }
-}
+}*/

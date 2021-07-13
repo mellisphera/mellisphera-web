@@ -1,3 +1,4 @@
+import { InspectComponent } from './inspect/inspect.component';
 /* Copyright 2018-present Mellisphera
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,6 +33,7 @@ const routes: Routes = [
             //{ path: 'stack-apiary', component: StackApiaryComponent, canActivate: [AuthGuardService]},
             { path: 'preferences', component: PreferenceConfigComponent, canActivate: [AuthGuardService]},
             { path: 'explore', loadChildren: './melli-charts/melli-charts.module#MelliChartsModule', canLoad: [AuthGuardService]},
+            { path: 'inspect', loadChildren: './inspect/inspect.module#InspectModule', canLoad: [AuthGuardService]},
             { path: 'manage-hives', component: ManageHivesComponent, canActivate: [AuthGuardService]},
             { path: 'manage-apiarys', component: ManageApiarysComponent, canActivate: [AuthGuardService]},
             { path: 'manage-notes', component: ManageNotesComponent, canActivate: [AuthGuardService]},

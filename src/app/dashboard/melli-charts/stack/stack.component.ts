@@ -24,6 +24,8 @@ import { RucheService } from '../../service/api/ruche.service';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
 import { AdminService } from '../../admin/service/admin.service';
+import { DailyManagerService } from '../hive/service/daily-manager.service';
+import { MelliChartsHiveService } from '../service/melli-charts-hive.service';
 
 @Component({
   selector: 'app-stack',
@@ -43,7 +45,9 @@ export class StackComponent implements OnInit {
     private recordService: RecordService,
     private adminService: AdminService,
     private rucheService: RucheService,
-    private melliDate: MelliChartsDateService) { }
+    private melliDate: MelliChartsDateService,
+    private dailyManager: DailyManagerService,
+    private melliHive: MelliChartsHiveService) { }
 
   ngOnInit() {
 
@@ -54,6 +58,8 @@ export class StackComponent implements OnInit {
       elt.classList.remove('apiary-group-hive');
     } else if (elt.classList.contains('apiary-group-weight')){
       elt.classList.remove('apiary-group-weight');
+    } else if (elt.classList.contains('apiary-group-events')){
+      elt.classList.remove('apiary-group-events');
     }
     elt.classList.add('apiary-group-stack');
     this.options = Object.assign({}, BASE_OPTIONS.baseOptionStack);
@@ -68,7 +74,7 @@ export class StackComponent implements OnInit {
           this.setOptionForStackChart();
         } */
 
-        this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack')));
+        this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack'),{},{height: '1400px'}));
         if (!this.checkIfChartIsUpdate()) {
           this.setOptionForStackChart();
           this.loadAfterRangeChanged((options: any) => {
@@ -151,13 +157,11 @@ export class StackComponent implements OnInit {
     this.options.xAxis.push(xAxisHum);
 
     let serieMarkTemp = JSON.parse(JSON.stringify(SERIES.serieMarkTemp));
-    console.log(serieMarkTemp);
     serieMarkTemp.yAxisIndex = 1;
     serieMarkTemp.xAxisIndex = 1;
     serieMarkTemp.markArea.data[0][0].yAxis = this.userPrefService.getUserPref().unitSystem === 'METRIC' ? 32 : 90;
     serieMarkTemp.markArea.data[0][1].yAxis = this.userPrefService.getUserPref().unitSystem === 'METRIC' ? 37 : 99;
     serieMarkTemp.markArea.data[0][0].name = this.graphGlobal.getNameZoneByGraph('TEMP');
-    console.log(serieMarkTemp);
     this.options.series.push(serieMarkTemp);
 
 
@@ -180,7 +184,6 @@ export class StackComponent implements OnInit {
         ));
       }).join('');
     }
-    console.log(this.options);
     this.stackService.getEchartInstance().setOption(this.options);
   }
 
@@ -345,7 +348,7 @@ export class StackComponent implements OnInit {
           };
         }
         serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
-          return { name: _map.date, value: [_map.date, _map.value, _map.sensorRef] };
+          return { name: _map.date, value: [_map.date, typeof _map.value === 'string' ? _map.value.replace(/,/ , '.') : _map.value , _map.sensorRef] };
         });
         next(serieTmp);
       }
@@ -394,9 +397,7 @@ export class StackComponent implements OnInit {
 
 
   ngOnDestroy() {
-    /*     this.stackService.cleanSlectedHives();
-        this.options.series = [];
-        this.stackService.cleanSerieFromEchartInstance(this.stackService.getEchartInstance()); */
+    this.stackService.stackEchartInstance.dispose();
   }
 
 }

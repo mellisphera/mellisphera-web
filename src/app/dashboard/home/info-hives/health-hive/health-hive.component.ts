@@ -1,3 +1,4 @@
+import { OnDestroy } from '@angular/core';
 /* Copyright 2018-present Mellisphera
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -12,7 +13,6 @@ limitations under the License. */
 import { Component, OnInit} from '@angular/core';
 import { DailyRecordService } from '../../../service/api/dailyRecordService';
 import { MyDate } from '../../../../class/MyDate';
-//import { ECharts } from 'echarts';
 import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
@@ -23,13 +23,12 @@ import * as echarts from 'echarts';
   templateUrl: './health-hive.component.html',
   styleUrls: ['./health-hive.component.css']
 })
-export class HealthHiveComponent implements OnInit {
+export class HealthHiveComponent implements OnInit, OnDestroy {
 
   chartInstance: any;
   option: any;
   constructor(
-      private unitService: UnitService, 
-      private graphGlobal: GraphGlobal, 
+      private graphGlobal: GraphGlobal,
       public dailyRecordThService: DailyRecordService) {
       this.chartInstance = null;
       this.option = {
@@ -45,7 +44,16 @@ export class HealthHiveComponent implements OnInit {
                     fontSize : 16
                 }
             },
-            tooltip: {},
+            tooltip: {
+                trigger: 'item',
+                formatter: null,
+                alwaysShowContent: false,
+                displayMode: "single",
+                renderMode: "auto",
+                showDelay: 0,
+                hideDelay: 100,
+                transitionDuration: 0.4,
+            },
             toolbox: {
                 orient: 'vertical',
                 itemSize: 15,
@@ -54,12 +62,14 @@ export class HealthHiveComponent implements OnInit {
                     dataView: { show: false, readOnly: false },
                     restore: { show: false },
                     saveAsImage: { show: false }
-                }
+                },
+                showDelay : 25
             },
             legend: {
                 show: true,
                 data: [],
-                bottom: 'bottom',
+                top: 70,
+                left: 'center',
                 selectedMode: 'single'
             },
             visualMap: {
@@ -76,7 +86,7 @@ export class HealthHiveComponent implements OnInit {
                 },
             },
             calendar: [{
-                top: 70,
+                top: 100,
                 left: 'center',
                 //width: '70%',
                 range: MyDate.getRangeForCalendarAlerts(),
@@ -134,14 +144,30 @@ export class HealthHiveComponent implements OnInit {
             }
         },
     );
-      console.log(this.option.baseOption)
 
 
   }
 
   ngOnInit(): void {
     this.chartInstance = echarts.init(<HTMLDivElement>document.getElementById('graphBrood'));
+    this.chartInstance.showLoading();
+    this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
   }
 
+  initGraph(){
+    this.option.baseOption.calendar[0].range = MyDate.getRangeForCalendarAlerts();
+    this.option.baseOption.series = new Array();
+  }
+
+  onResize(event) {
+    this.chartInstance.resize({
+      width: 'auto',
+      height: 'auto'
+    });
+  }
+
+  ngOnDestroy(): void{
+    this.chartInstance.dispose();
+  }
 
 }

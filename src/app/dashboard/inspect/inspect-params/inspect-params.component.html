@@ -1,0 +1,44 @@
+<div id="inspect-params-content">
+  <table class="table">
+    <thead style="display: none;">
+      <tr>
+        <th scope="col" class="text-left cols_icon"></th>
+        <th scope="col" class="text-left cols_name"></th>
+        <th scope="col" class="text-left cols_seasons"></th>
+        <th scope="col" class="text-left cols_on_off" ></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let conf of inspConf; let i = index">
+        <tr [class]="(isEnable(i)? '' : 'disable')">
+          <td>
+            <img width="50px" height="50px" [src]="'./assets/ms-pics/inspects/' + conf.inspCat.img.toLowerCase() + '_b.svg'">
+          </td>
+          <td style='vertical-align: middle;'>{{'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate}}</td>
+          <td style='vertical-align: middle;'>
+            <ng-container *ngIf="isEnable(i)">
+              <button [class]="'btn-spring ' + (isSeasonActive(conf.inspCat, 'spring') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat, i, 'spring')"></button>
+              <button [class]="'btn-summer ' + (isSeasonActive(conf.inspCat, 'summer') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat, i, 'summer')"></button>
+              <button [class]="'btn-autumn ' + (isSeasonActive(conf.inspCat, 'autumn') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat, i, 'autumn')"></button>
+              <button [class]="'btn-winter ' + (isSeasonActive(conf.inspCat, 'winter') ? 'active' : '')" (click)="seasonClick($event, conf.inspCat, i, 'winter')"></button>
+            </ng-container>
+          </td>
+          <td style='vertical-align: middle;'>
+            <div class="btn-group" id="status" data-toggle="buttons">
+              <label [class]="'btn btn-default btn-on ' + (isEnable(i) ? 'active' : '')"
+              (click)="onEnable(i)">
+                <input type="radio" value="1"
+                  name="multifeatured_module[module_id][status]">ON
+              </label>
+              <label [class]="'btn btn-default btn-off '  + (isEnable(i) ? '' : 'active')"
+              (click)="onDisable(i)">
+                <input type="radio" value="0"
+                  name="multifeatured_module[module_id][status]">OFF
+              </label>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

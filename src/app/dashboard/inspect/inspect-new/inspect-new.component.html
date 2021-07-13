@@ -1,0 +1,239 @@
+<div class="inspect-new-container">
+  <div class="title" style="display:flex;align-items: center;flex-wrap: wrap;">
+    <div class="title-container">
+      <h3>{{'INSPECT.NEW.TITLE' | translate }}</h3>
+      <select id="inspect-apiary-select" (change)="onSelectChange()">
+        <option disabled selected value style="color:grey;"> {{'INSPECT.NEW.DEFAULT_SELECT' | translate}} </option>
+        <option *ngFor="let apiary of user_apiaries" value="{{apiary.name}}"> {{apiary.name}} </option>
+      </select>
+    </div>
+    <div class="title-date">
+      <h3>{{'INSPECT.NEW.DATE' | translate }}</h3>
+      <div style="width:auto; display: flex; flex-wrap: wrap;">
+        <div style="width:auto; margin-right:10px;">
+          <i class="fa fa-calendar inspect-time-icon"></i>
+          <input class="inspect-time-input" placeholder="{{'INSPECT.NEW.PLACEHOLDER' | translate}}" [(ngModel)]="inspect_date" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" (ngModelChange)="inspectDate()">
+          <owl-date-time [pickerType]="'calendar'" #dtPicker1></owl-date-time>
+        </div>
+        <div style="width:auto;">
+          <input class="inspect-time-input-hours" type="number" min="00" max="23" (change)="inspectDateHours()"
+                 style="width:50px;height:28px;" placeholder="h">
+          :
+          <input class="inspect-time-input-minutes" type="number" min="00" max="59" (change)="inspectDateMinutes()"
+                 style="width:50px;height:28px;" placeholder="m">
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="inspect-body">
+      <div class="inspect-apiary">
+        <div class="hive-body-table-notes">
+          <div class="apiary-obs-div" style="padding-left: 20px;">
+            <h4>{{'INSPECT.NEW.GENERAL' | translate }}</h4>
+            <div style="display: flex;">
+              <button class="btn-sad" (click)="setGeneralLevel('bad')"></button>
+              <button class="btn-normal" (click)="setGeneralLevel('normal')"></button>
+              <button class="btn-happy" (click)="setGeneralLevel('good')"></button>
+            </div>    
+          </div>
+          <div class="apiary-notes-todo">
+            <div class="inspect-apiary-notes">
+              <div style="width:40px;">
+                <button class="btn apiary-notes" style="padding: 0;" (click)="toggleNotes($event)"><i class="fas fa-pen" style="font-size: 18px;"></i></button>
+                <button class="btn apiary-todo" (click)="toggleTodo($event)"></button>
+              </div>
+              <textarea placeholder="{{'INSPECT.NEW.NOTE_PLACEHOLDER' | translate}}" (change)="saveApiaryNotes($event)" class="apiary-notes-input" name="Text1" cols="40" rows="5" spellcheck="false"></textarea>
+            </div>
+            <div class="inspect-apiary-todo">
+              <button style="visibility: hidden;margin-right: 5px;" class="btn apiary-todo" (click)="toggleTodo($event)" disabled></button>
+              <textarea placeholder="{{'INSPECT.NEW.TODO_PLACEHOLDER' | translate}}" (change)="saveApiaryTodo($event)" class="apiary-todo-input hide-textarea" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
+            </div>
+          </div>  
+        </div>
+        <div style="margin-left: 10px;">
+          <div class="apiary-op" style="margin-bottom: 10px;">
+            <div id="brood-stage" class="hive-op-brood">
+              <button class="apiary-obs brood-none" (click)="setBroodStage('none', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.NOBROOD' | translate }}"></button>  
+              <button class="apiary-obs brood-egg" (click)="setBroodStage('egg', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.EGG' | translate }}"></button>
+              <button class="apiary-obs brood-larva" (click)="setBroodStage('larva', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.LARVA' | translate }}"></button>
+              <button class="apiary-obs brood-pupa" (click)="setBroodStage('pupa', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.PUPA' | translate }}"></button>
+              <button class="apiary-obs brood-drone" (click)="setBroodStage('drone', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.DRONEBROOD' | translate }}"></button>    
+            </div>
+            <div id="not-brood-stage" style="overflow-x: auto; white-space: nowrap;">
+              <button class="apiary-obs health-swarm" (click)="setHealth('swarm', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SWARM' | translate }}"></button>
+              <button class="apiary-obs health-buzz" (click)="setHealth('buzz', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.BUZZINGHIVE' | translate }}"></button>
+              <button class="apiary-obs health-sick" (click)="setHealth('sick', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SICK' | translate }}"></button>
+              <button class="apiary-obs health-mosaic" (click)="setHealth('mosaic', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.MOSAICBROOD' | translate }}"></button>
+              <button class="apiary-obs health-queen" (click)="setHealth('queen', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.QUEEN' | translate }}"></button>
+              <ng-container *ngFor="let conf of inspConf; let i = index">
+                <ng-container *ngIf="conf.enable && conf.inspCat.applies.includes('apiary') && conf.inspCat.type === 'act' && conf.inspCat.seasons.includes(seasonService.getSeason()) && conf.inspCat.img !== 'Default'">
+                  <button [class]="'apiary-action btn-' + conf.inspCat.img.toLowerCase() + '_b'"
+                  (click)="changeActive($event, conf.inspCat, 'apiary', 'act')"
+                  data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="inspect-hive">
+        <div id="hives-table">
+          <div id="hives-table-body" *ngIf="active_apiary_index > 0">
+            <ng-container *ngFor="let ruche of user_hives">
+              <div style="margin-bottom: 15px; margin-left: 5px;">
+                <h4 style="font-weight: bold; text-align: left; margin-left: 5px; border-bottom: 1px solid #ddd;">{{ruche.name}}</h4>
+                <div class="hive-body-container">
+                  <div class="hive-body-table-notes">
+                    <div class="hive-obs-div">
+                      <table style="table-layout: fixed;">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>
+                              <img src="../../../../assets/ms-pics/inspects/hcc/none_cb.svg" width="15" height="15">
+                            </th>
+                            <th>
+                              <img src="../../../../assets/ms-pics/inspects/hcc/low_cb.svg" width="20" height="20">
+                            </th>
+                            <th>
+                              <img src="../../../../assets/ms-pics/inspects/hcc/average_cb.svg" width="20" height="20">
+                            </th>
+                            <th>
+                              <img src="../../../../assets/ms-pics/inspects/hcc/high_cb.svg" width="20" height="20">
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td><!--<img src="../../../../assets/ms-pics/bees_b.svg" width="35" height="35">-->{{ 'INSPECT.TABLE.BEES' | translate }}</td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_bees_none_check'" (click)="setBeeLevel('none', 'hive', ruche)">
+                            </td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_bees_low_check'" (click)="setBeeLevel('low', 'hive', ruche)">
+                            </td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_bees_avg_check'" (click)="setBeeLevel('avg', 'hive', ruche)">
+                            </td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_bees_high_check'" (click)="setBeeLevel('high', 'hive', ruche)">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td><!--<img src="../../../../assets/ms-pics/emptybrood_b.svg" width="30" height="30">-->{{ 'INSPECT.TABLE.BROOD' | translate }}</td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_brood_none_check'" (click)="setBroodLevel('none', 'hive', ruche)">
+                            </td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_brood_low_check'" (click)="setBroodLevel('low', 'hive', ruche)">
+                            </td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_brood_avg_check'" (click)="setBroodLevel('avg', 'hive', ruche)">
+                            </td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_brood_high_check'" (click)="setBroodLevel('high', 'hive', ruche)">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td><!--<img src="../../../../assets/ms-pics/inspects/res_b.svg" width="30" height="30">-->{{ 'INSPECT.TABLE.STORES' | translate }}</td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_res_none_check'" (click)="setResLevel('none', 'hive', ruche)">
+                            </td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_res_low_check'" (click)="setResLevel('low', 'hive', ruche)">
+                            </td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_res_avg_check'" (click)="setResLevel('avg', 'hive', ruche)">
+                            </td>
+                            <td style="padding-left:5px; padding-right:5px;">
+                              <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_res_high_check'" (click)="setResLevel('high', 'hive', ruche)">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="hive-notes-todo" style="margin-top: 5px;">
+                      <div class="inspect-hive-notes">
+                        <div style="width:40px;">
+                          <button class="btn hive-notes" style="padding: 0;" (click)="toggleNotes($event)"><i class="fas fa-pen" style="font-size: 18px;"></i></button>
+                          <button class="btn hive-todo" (click)="toggleTodo($event)"></button>
+                        </div>
+                        <textarea placeholder="{{'INSPECT.NEW.NOTE_PLACEHOLDER' | translate}}" (change)="saveHiveNotes($event, ruche)" class="hive-notes-input" name="Text1" cols="40" rows="5" spellcheck="false"></textarea>
+                      </div>
+                      <div class="inspect-hive-todo">
+                        <button style="visibility: hidden;margin-right: 5px;" class="btn apiary-todo" (click)="toggleTodo($event)" disabled></button>
+                        <textarea placeholder="{{'INSPECT.NEW.TODO_PLACEHOLDER' | translate}}" (change)="saveHiveTodo($event, ruche)" class="hive-todo-input hide-textarea" name="Text2" cols="40" rows="5" spellcheck="false"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hive-op">
+                    <div class="hive-op-brood"> 
+                      <button [class]="'hives-obs brood-none ' + ruche.name + '_none'" (click)="setBroodStage('none', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.NOBROOD' | translate }}"></button>
+                      <button [class]="'hives-obs brood-egg ' + ruche.name + '_egg'" (click)="setBroodStage('egg', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.EGG' | translate }}"></button>
+                      <button [class]="'hives-obs brood-larva ' + ruche.name + '_larva'" (click)="setBroodStage('larva', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.LARVA' | translate }}"></button>
+                      <button [class]="'hives-obs brood-pupa ' + ruche.name + '_pupa'" (click)="setBroodStage('pupa', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.PUPA' | translate }}"></button>
+                      <button [class]="'hives-obs brood-drone ' + ruche.name + '_drone'" (click)="setBroodStage('drone', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.DRONEBROOD' | translate }}"></button>
+                    </div>
+                    <div style="overflow-x: auto; white-space: nowrap;">
+                      <button [class]="'hives-obs health-swarm '  + ruche.name + '_swarm'" (click)="setHealth('swarm', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SWARM' | translate }}"></button>
+                      <button [class]="'hives-obs health-buzz ' + ruche.name + '_buzz'" (click)="setHealth('buzz', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.BUZZINGHIVE' | translate }}"></button>
+                      <button [class]="'hives-obs health-sick '  + ruche.name + '_sick'" (click)="setHealth('sick', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SICK' | translate }}"></button>
+                      <button [class]="'hives-obs health-mosaic ' + ruche.name + '_mosaic'" (click)="setHealth('mosaic', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.MOSAICBROOD' | translate }}"></button>
+                      <button [class]="'hives-obs health-queen '  + ruche.name + '_queen'" (click)="setHealth('queen', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.QUEEN' | translate }}"></button>
+                      <ng-container *ngFor="let conf of inspConf; let i = index">
+                        <button *ngIf="conf.enable && conf.inspCat.applies.includes('hive') && conf.inspCat.type === 'act' && conf.inspCat.seasons.includes(seasonService.getSeason()) && conf.inspCat.img !== 'Default'"
+                        [class]="'hives-action btn-' + conf.inspCat.img.toLowerCase() + '_b'"
+                        (click)="changeActive($event, conf.inspCat, 'hive', 'act', ruche)"
+                        data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.' + conf.inspCat.name.toUpperCase() | translate }}"></button>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="inspect-footer">
+      <button class="btn btn-danger btn-cancel" (click)="cancelInspection()">{{'INSPECT.NEW.BTN_CANCEL' | translate}}</button>
+      <button class="btn btn-success btn-save" (click)="saveInspection()">{{'INSPECT.NEW.BTN_SAVE' | translate}}</button>
+      <button class="btn btn-light btn-pdf" (click)="openModal()">{{'INSPECT.NEW.BTN_PDF' | translate}}</button>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p id="loading-text"></p> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">{{'INSPECT.NEW.BTN_CANCEL' | translate}}</button>
+        <button id="btn-dl" type="button" class="btn btn-success" (click)="printPDF()" disabled>{{'INSPECT.NEW.BTN_DL' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

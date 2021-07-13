@@ -66,20 +66,20 @@ li:first-child img{
 }
 
 .button1, .button0 {
-  background-color: #4F4F51;  
-  color: white; 
+  background-color: #4F4F51;
+  color: white;
   border: 2px solid #70A8B2;
   border-radius: 4px;
-} 
+}
 
 .button1:hover {
   background-color: white;
-  color: #4F4F51; 
+  color: #4F4F51;
 }
 
 .active {
-  background-color: white; 
-  color: #4F4F51; 
+  background-color: white;
+  color: #4F4F51;
   border: 2px solid #70A8B2;
 }
 
@@ -107,24 +107,24 @@ li:first-child img{
 }
 
 .button0 {
-  background-color: #4F4F51; 
-  color: white; 
+  background-color: #4F4F51;
+  color: white;
   border: 2px solid #70A8B2;
   border-radius: 4px;
 }
 
 .button0:hover {
   background-color: white;
-  color: #4F4F51; 
+  color: #4F4F51;
 }
 
 .active0{
   background-color: white;
-  color: #4F4F51; 
+  color: #4F4F51;
 }
 
 .active0:hover{
-  color: #70A8B2; 
+  color: #70A8B2;
   border: 2px solid #4F4F51;
 }
 
@@ -166,6 +166,11 @@ li:first-child img{
   width: 100%;
   border: 2px solid #4F4F51;
 }
+
+@media screen and (max-width: 1000px){
+
+}
+
 // FOR A NORMAL SCREEN
 @media (min-width : 990px){
   #cadre {
@@ -179,14 +184,14 @@ li:first-child img{
     position: relative;
     border-bottom: 5px solid transparent;
     border-color: white;
-  
+
     // transform: rotate(0deg);
   }
 
   .photo{
 /*     max-height: 40vh;
  */    max-width: 100%;
-  
+
   }
 
   #right{
@@ -310,7 +315,7 @@ li:first-child img{
 .hive-info:hover{
   cursor: pointer;
   //background-color: white;
-  //color: #4F4F51; 
+  //color: #4F4F51;
 }
 
 .weightIncome{
@@ -329,7 +334,7 @@ li:first-child img{
    padding-left: 3px;
    padding-top: 3px;
    font-size : medium;
-   
+
    background: #ededed;
 }
 
@@ -439,6 +444,24 @@ li:first-child img{
 
   .has-sensors{
     line-height: 21px !important;
+  }
+}
+@media screen and (max-width: 1000px){
+  .home-datebar{
+    display: block !important;
+  }
+}
+
+@media screen and (max-width: 850px){
+  .home-navbar{
+    height: 100px !important;
+    float: none;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .home-navbar{
+    float: none;
   }
 }
 
@@ -566,9 +589,9 @@ li:first-child img{
     position: relative;
     top: 5px;
     left: 10px;
-    
+
     z-index: 1;
-    
+
     -webkit-user-select: none;
     user-select: none;
   }
@@ -584,12 +607,12 @@ li:first-child img{
   position: absolute;
   top: -7px;
   left: -5px;
-  
+
   cursor: pointer;
-  
+
   opacity: 0; /* hide this */
   z-index: 2; /* and place it over the hamburger */
-  
+
   -webkit-touch-callout: none;
 }
 
@@ -603,14 +626,14 @@ li:first-child img{
   height: 3px;
   margin-bottom: 6px;
   position: relative;
-  
+
   background: #cdcdcd;
   border-radius: 3px;
-  
+
   z-index: 1;
-  
+
   transform-origin: 2px 0px;
-  
+
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
               background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
               opacity 0.55s ease;
@@ -626,7 +649,7 @@ li:first-child img{
   transform-origin: 0% 100%;
 }
 
-// /* 
+// /*
 //  * Transform all the slices of hamburger
 //  * into a crossmark.
 //  */
@@ -666,15 +689,15 @@ li:first-child img{
   padding-bottom: 50px;
   padding-left: 65px;
   padding-top: 70px;
-  
+
   background: #4F4F51;
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   /* to stop flickering of text in safari */
-  
+
   transform-origin: 0% 0%;
   transform: translate(-100%, 0);
-  
+
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
 }
 
@@ -800,8 +823,9 @@ li:first-child img{
   opacity: 1;
 }
 
-.btn-picture .fa{
-  font-size: 35px;
+.btn-picture .fa,
+.btn-picture .far{
+  font-size: 26px;
   margin-right: 5px;
 }
 #selectPhotos{

@@ -9,13 +9,16 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "es2016",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
       "es2019",
-      "dom"
+      "dom",
+      "es7",
+      "ES2016.Array.Include",
+      "es2017"
     ]
   }
 }

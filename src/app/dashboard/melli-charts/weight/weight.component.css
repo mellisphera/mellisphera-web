@@ -1,11 +1,11 @@
-#raw-weight-title, #norm-weight-title, #gain-weight-title{
+#raw-weight-title, #norm-weight-title, #gain-weight-title, #hour-raw-weight-title{
   display: none;
   margin-bottom: 15px;
 }
 
 #graph-weight{
-  width: 100%;
-  height: 70vh;
+  width: 99%;
+  height: 55vh;
 }
 
 .infoToolip{
@@ -20,6 +20,7 @@
   width: 100%;
   display: flex !important;
   justify-content: center;
+  margin-bottom: 10px;
 }
 
 .ul-weight > li {
@@ -38,7 +39,6 @@
 .ul-weight > li > label > p{
   margin-left: 10px;
   margin-bottom: 0px;
-  margin-top: 3px;
   font-size: 16px;
   font-family: 'Poppins' !important;
 }
@@ -68,6 +68,9 @@ input[type=checkbox]
 
 .calendar-icon{
   position: absolute;
+  padding-top: 4px;
+  min-width: 40px;
+  font-size: 18px;
 }
 
 .input-wrapper {
@@ -76,18 +79,13 @@ input[type=checkbox]
   text-align: center;
 }
 
-.fa-calendar{
-  padding-top: 8px;
-  min-width: 40px;
-  font-size: 20px;
-}
-
 .weight_ref_date{
-  padding: 10px;
+  width: 50%;
   text-align: center;
 }
 
 .delete-date{
+  padding-top: 2px;
   width: 10px;
   border: 0;
   background-color: transparent;
@@ -102,7 +100,7 @@ input[type=checkbox]
   position: absolute;
   font-size: 20px;
   margin-left: -10px;
-  margin-top: -18px;
+  margin-top: -15px;
 }
 
 .fa-times:hover{
@@ -114,7 +112,7 @@ input[type=checkbox]
 }
 
 #weight-table{
-  margin-top: -5%;
+  margin-top: 1%;
 }
 
 #weight-table > table{
@@ -126,7 +124,7 @@ input[type=checkbox]
 
 #weight-table > table td, #weight-table > table th{
   font-family: 'Poppins' !important;
-  border: 1px solid #ddd;
+  border: 1px solid white;
   padding: 8px;
 }
 
@@ -134,8 +132,9 @@ input[type=checkbox]
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #3d3d3d;
-  color: white;
+  background-color: #c5c5c5;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
 }
 
 #separator{
@@ -151,20 +150,32 @@ input[type=checkbox]
 @media screen and (max-width: 400px) {
   .input-wrapper {
     margin-bottom: 10px;
-    width: 50%;
-    text-align: center;
+    width: 60%;
   }
   ::ng-deep .owl-dt-popup {
     right: 0 !important;
   }
   .weight_ref_date{
     width: 100%;
-    padding: 10px;
     text-align: center;
   }
   #graph-weight{
     width: 95%;
     height: 60vh;
+  }
+  #weight-table{
+    margin-top: 2%;
+  }
+  #weight-table > table{
+    font-family: 'Poppins' !important;
+    width: 90%;
+    border-collapse: collapse;
+    margin: 0 auto; /* or margin: 0 auto 0 auto */
+  }
+  #weight-table > table td, #weight-table > table th{
+    font-family: 'Poppins' !important;
+    padding: 8px;
+    font-size: 10px !important;
   }
 }
 
@@ -179,7 +190,6 @@ input[type=checkbox]
   }
   .weight_ref_date{
     width: 80%;
-    padding: 10px;
     text-align: center;
   }
   #graph-weight{
@@ -199,7 +209,6 @@ input[type=checkbox]
   }
   .weight_ref_date{
     width: 70%;
-    padding: 10px;
     text-align: center;
   }
   #graph-weight{

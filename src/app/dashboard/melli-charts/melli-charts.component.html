@@ -34,14 +34,19 @@ limitations under the License. -->
           class="button button0"data-toggle="tooltip" data-placement="top"
           title="{{ 'MELLICHARTS.NAV.DONNEE_TOOLTIP' | translate }}">{{ 'MELLICHARTS.NAV.DONNEE' | translate }}</button>
       </li>
+      <li>
+        <button type="button" [id]="btnNav[4].path" (click)="navToPage(btnNav[4].path, btnNav[4].path)"
+          class="button button0" data-toggle="tooltip" data-placement="top"
+          title="{{ 'MELLICHARTS.NAV.EVENTS_TOOLTIP' | translate }}">{{ 'MELLICHARTS.NAV.EVENTS' | translate }}</button>
+      </li>
     </ul>
     <ul class="nav nav-date navbar-nav navbar-right">
-      <li><button type="button" (click)="previousDate()" class="btn date-arrow btn-transparent"><i
+      <li style="width: 44px;"><button style="width: 40px;" type="button" (click)="previousDate()" class="btn date-arrow btn-transparent"><i
             class="fa fa-arrow-circle-left" id="previous-date"></i></button></li>
       <li id="dropdown">
         <div class="dropdown" id="date-dropdown">
           <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
-              class="fa fa-calendar"></i>{{ melliChartDate.start | myDate: 'DAILY' }} <span id="arrow">&#8680;</span>
+              class="fa fa-calendar-alt"></i>{{ melliChartDate.start | myDate: 'DAILY' }} <span id="arrow">&#8680;</span>
             {{ melliChartDate.end | myDate: 'DAILY' }}
             <span class="caret"></span></button>
           <div class="dropdown-menu dropdown-menu-right">
@@ -71,6 +76,10 @@ limitations under the License. -->
                     {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
                 </ul>
                 <ul>
+                  <li class="time" *ngFor="let dt of getRangeByType('WEEK')" (click)="setRangeSelect(dt)">
+                    {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
+                </ul>
+                <ul>
                   <li class="time" *ngFor="let dt of getRangeByType('MONTH')" (click)="setRangeSelect(dt)">
                     {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
                 </ul>
@@ -84,24 +93,86 @@ limitations under the License. -->
         </div>
       </li>
       <li><button type="button" (click)="nextDate()" class="btn date-arrow btn-transparent"><i id="next-date"
-            class="fa fa-arrow-circle-right"></i></button></li>
-
+            class="fa fa-arrow-circle-right"></i></button>
+      </li>
+      <li class="filters-ul">
+        <button class="btn filters-btn dropdown dropdown-toogle" type="button" id="filtersMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="openFiltersMenu($event)">
+          <img src="../../../assets/ms-pics/ui/assets/filter_w.svg">
+        </button>
+        <div id="filtersMenu" class="dropdown-menu" aria-labelledby="filtersMenuButton" (click)="filterMenu($event)" style="position: absolute;">
+          <div class="filters-insp">
+            <input type="button" class="filters-inspection-btn-active" width="35" height="35" (click)="filterButton($event)">
+            <p class="filters-insp-title">{{ 'MELLICHARTS.FILTERS.APIARY.ALL' | translate}}</p>
+          </div>
+          <div class="filters-events">
+            <input type="button" class="filters-events-btn-active" width="35" height="35" (click)="filterButton($event)">
+            <p class="filters-events-title">{{ 'MELLICHARTS.FILTERS.EVENT.ALL' | translate}}</p>
+            <!--<img src="../../../assets/icons/inspect/inspectsV2/4_tool_jhook.svg" width="25" height="25" style="margin-left:5px;">-->
+          </div>
+          <div class="filters-alerts">
+            <input type="button" class="filters-alerts-btn-active" width="35" height="35" (click)="filterButton($event)">
+            <p class="filters-alerts-title">{{ 'MELLICHARTS.FILTERS.ALERT.ALL' | translate}}</p>
+          </div>
+          <div class="filters-events-display">
+          </div>
+        </div>
+    </li>
     </ul>
-
   </nav>
   <div class="row nopadding">
-    <div id="apiary-group" class="apiaryGroup">
+    <div class="apiaryGroup">
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;">
-          <a [href]="'#' + i" [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)"
-            data-toggle="collapse" data-parent="#main-menu"><span></span>{{ rucher.name }}<span [id]="rucher._id"
-              [class]="'caret ' + ifActiveApiary(rucher._id)"></span></a>
+          <div [id]="rucher._id" style="display: flex; align-items: center;padding-right: 4px;" data-parent="#main-menu"
+            [class]="'list-group-item apiary ' + checkApiaryIfAcive(rucher._id)"  (mouseenter)="mouseEnter(rucher._id)" (mouseleave)="mouseLeave(rucher._id)">
+            <a  [id]="rucher._id + '_link'"[href]="'#' + i" data-toggle="collapse" (click)="ifActiveApiary(rucher._id + '_link',rucher._id)">
+              <i [class]="'fa fa-chevron-right ' + ifActiveIcon(rucher._id) "></i>
+              <!--<span [id]="rucher._id" [class]="'caret ' + ifActiveApiary(rucher._id)"></span>-->
+            </a>
+            <span style="width:60%;" class="apiary-group-title dropleft" [id]="rucher._id + '_span'" (click)="apiaryClick(rucher)">{{ rucher.name }}</span>
+            <div (mouseenter)="mouseEnter(rucher._id)" (mouseleave)="mouseLeave(rucher._id)"
+            style="margin-right: 0; margin-left: auto;">
+              <button class="hive-more-button dropdown-toggle" [style.visibility]="isDesktop ? 'hidden' : 'visible'" [innerHTML]="more_icon | safeHtml"
+                type="button" [id]="'apiaryDropDownButton' + i" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'apiaryDropDownButton' + i"
+              style="width: auto !important; padding: 0; top: 35px; background-color: white;">
+                <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
+                  data-toggle="modal" data-target="#newInspectionModal" (click)="showAddEvent(rucher, null, $event)">
+                  <i style="margin-left: 0px; margin-right: 10px;" class="fas fa-plus"></i>
+                  {{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div
             [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
-            <a [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
-              *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index"
-              (click)="selectHive(ruche, $event)" data-parent="#sub-menu"><i class="circle"
-                [style.background-color]="getColor(ruche)"></i><span class="puce-hive"></span>{{ ruche.name }}</a>
+            <div [id]="ruche._id" [class]="'list-group-item sub-items ' + checkLoadindingIsComplete()"
+            *ngFor="let ruche of rucheService.getHivesByApiaryId(rucher._id); let i = index"
+            style="display:flex; align-items:center;padding-right: 4px;"  (mouseenter)="mouseEnter(ruche._id)" (mouseleave)="mouseLeave(ruche._id)">
+              <a class="list-group-hive-item" (click)="selectHive(ruche, $event)"  data-parent="#sub-menu">
+                <i class="circle" [style.background-color]="getColor(ruche)"></i>
+                <span class="puce-hive"></span>
+                <span style="width:60%;">{{ ruche.name }}</span>
+              </a>
+              <div class="dropleft">
+                <button class="hive-more-button dropdown-toggle" [innerHTML]="more_icon | safeHtml" [style.visibility]="isDesktop ? 'hidden' : 'visible'"
+                  type="button" [id]="'hiveDropDownButton' + i" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'hiveDropDownButton' + i"
+                    style="width: auto !important; padding: 0; top: 35px; background-color: white;">
+                  <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
+                    data-toggle="modal" data-target="#newInspectionModal" (click)="showAddEvent(rucher, ruche, $event)"
+                    [id]="'hiveDropDownButton' + i">
+                    <i style="margin-left: 0px; margin-right: 10px;" class="fas fa-plus"></i>
+                    {{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
           </div>
 <!--           <div *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
             [class]="'collapse list-group-level1 ' +ifCurrentApiary(rucher._id) " [id]="i">
@@ -118,5 +189,59 @@ limitations under the License. -->
       <router-outlet (activate)="onActivate($event)"></router-outlet>
     </div>
 
+
+<!--New Inspection Modal-->
+<div class="modal fade" id="newInspectionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img *ngIf="typeEvent === 'apiary'" width="35" height="35" src="../../../assets/ms-pics/ui/calendbars/inspect-api_cb.svg" style="float: right;">
+        <img *ngIf="typeEvent === 'hive'" width="35" height="35" src="../../../assets/ms-pics/ui/calendbars/inspect_cb.svg" style="float: right;">
+        <h4 class="modal-title">{{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}</h4>
+        <h4 *ngIf="typeEvent === 'hive'">{{hiveEvent?.name}}</h4>
+        <h4 *ngIf="typeEvent === 'apiary'">{{apiaryEvent?.name}}</h4>
+        <div class="add-event-date">
+          <div>
+            <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
+            <owl-date-time [pickerType]="'calendar'" #dtEvent></owl-date-time>
+            <input class="add-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours($event)">
+            :
+            <input class="add-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes($event)">
+          </div>
+          <div class="add-event-time-error">
+            {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div id="brood-stage" class="hive-op-brood-explore" style="margin-left: 3px;">
+          <button class="hives-obs-add brood-none" (click)="setBroodStage('none', 'apiary')"></button>  
+          <button class="hives-obs-add brood-egg" (click)="setBroodStage('egg', 'apiary')"></button>
+          <button class="hives-obs-add brood-larva" (click)="setBroodStage('larva', 'apiary')"></button>
+          <button class="hives-obs-add brood-pupa" (click)="setBroodStage('pupa', 'apiary')"></button>
+          <button class="hives-obs-add brood-drone" (click)="setBroodStage('drone', 'apiary')"></button>    
+        </div>
+        <div class="add-event-notes">
+            <div style="width: 45px; margin-left: 4px;">
+                <button class="add-event-notes-toggle" (click)="showNotes($event)"><i class="fas fa-pen" style="font-size: 22px;"></i></button>
+                <button class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            </div>  
+            <textarea class="add-event-notes-textarea hives-note-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.NOTES_PLACEHOLDER' | translate}}" (change)="saveNotes($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="add-event-todo">
+            <button style="visibility: hidden; margin-left: 8px;" class="add-event-todo-toggle" (click)="showTodo($event)"></button>
+            <textarea class="add-event-todo-textarea hives-todo-textarea-add-active" placeholder="{{'MELLICHARTS.EVENT.ADD.TODO_PLACEHOLDER' | translate}}" (change)="saveTodo($event)" spellcheck="false"></textarea>
+        </div>
+        <div class="add-event-choice">
+          <div class="add-event-choice-obs" style="padding-bottom: 5px;">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="add-event-buttons">
+          <button class="btn btn-danger" style="margin-right:10px;height:34px;width:100px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
+          <button class="btn btn-success" style="margin-left:10px;height:34px;width:100px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
+        </div>
+    </div>
   </div>
 </div>

@@ -21,4 +21,5 @@ export interface User {
 	connexions: number;
 	lastConnection: Date;
 	fullName: String;
+	active: boolean;
 }

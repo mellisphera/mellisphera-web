@@ -1,4 +1,4 @@
-export const FITNESS_CODE =  {
+/*export const FITNESS_CODE =  {
     "B1": {
         "color": "Black",
         "FR": {
@@ -115,4 +115,4 @@ export const FITNESS_CODE =  {
             "Message": "Buena salud"
         }
     }
-}
+}*/

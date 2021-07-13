@@ -11,20 +11,20 @@ limitations under the License. */
 
 export interface AlertInterface {
     _id: string;
-    userId : string;
+    userId: string;
     user: string;
     apiary: string;
-    apiaryId:string;
-    hiveId:string;
-    hive:string;
-    icon:string;
-    notif:string;
-    message:string;
+    apiaryId: string;
+    hiveId: string;
+    hive: string;
+    icon: string;
+    notif: string;
+    message: string;
     code: string;
     sensorRef: string;
     opsDate: Date;
-    check:boolean;
-    picto:string;
-    loc:string;
-    time:string;
+    check: boolean;
+    picto: string;
+    loc: string;
+    time: string;
 }

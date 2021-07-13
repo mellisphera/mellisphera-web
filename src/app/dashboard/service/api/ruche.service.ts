@@ -57,7 +57,6 @@ export class RucheService {
     this.getHiveByUserId(this.user.getIdUserLoged()).subscribe(
       _hives => {
         this.ruchesAllApiary = _hives;
-        console.log(this.ruchesAllApiary);
         this.hiveSubject.next(this.ruchesAllApiary);
       },
       () => { },
@@ -143,6 +142,11 @@ export class RucheService {
 
   }
 
+
+  getHivesIdsByApiaryId(apiaryId: string): Array<string>{
+    return this.ruchesAllApiary.filter(_hives => _hives.apiaryId === apiaryId).map(_hives => _hives._id);
+  }
+
   /**
    *
    *
@@ -188,7 +192,7 @@ export class RucheService {
    *
    * @returns {RucheInterface[]}
    * @memberof RucheService
-   * @description without hives shared 
+   * @description without hives shared
    */
   getUserHive(): RucheInterface[] {
     return this.ruches.filter(hive => hive.userId === this.user.getIdUserLoged());
@@ -210,6 +214,13 @@ export class RucheService {
   getRucheByID(id: string) {
     return this.http.get<RucheInterface[]>(CONFIG.URL + 'hives/' + id);
   }
+
+
+  getHiveByHiveId(hiveId: string): Observable<RucheInterface>{
+    return this.http.get<RucheInterface>(CONFIG.URL + 'hives/hiveId/' + hiveId);
+  }
+
+
   updateCoordonneesRuche(ruche: RucheInterface) {
     return this.http.put<RucheInterface>(CONFIG.URL + 'hives/update/coordonnees/' + ruche._id, ruche, httpOptions);
   }
@@ -224,7 +235,7 @@ export class RucheService {
     return this.http.put<RucheInterface>(CONFIG.URL + 'hives/update/' + hive._id, hive, httpOptions);
   }
 
-  /**   
+  /**
    *
    *
    * @param {RucheInterface} ruche
@@ -264,6 +275,14 @@ export class RucheService {
     } else {
       error('Not hive');
     }
+  }
+
+  getHiveById(hiveId: string): RucheInterface{
+    return this.ruchesAllApiary.filter(hive => hive._id === hiveId)[0];
+  }
+
+  getRucheNameById(hiveId: string): RucheInterface{
+    return this.ruchesAllApiary.filter(hive => hive._id === hiveId)[0];
   }
 
 }

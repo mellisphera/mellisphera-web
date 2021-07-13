@@ -30,6 +30,26 @@ import { AlertsService } from '../service/api/alerts.service';
 import { GraphGlobal } from '../graph-echarts/GlobalGraph';
 import { WeightComponent } from './weight/weight.component';
 import { DatePipe } from '@angular/common';
+import { MatFormFieldModule, MatChipsModule, MatLabel, MatIconModule, MatInputModule } from '@angular/material';
+import { EventsComponent } from './events/events.component';
+
+import { SafeHtmlPipe } from './safe-html.pipe';
+import { PipeModule } from './../../pipe/pipe.module';
+import { HourlyWeightComponent } from './weight/hourly-weight/hourly-weight.component';
+
+import { UserParamsService } from '../preference-config/service/user-params.service';
+import { DateTimeAdapter, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { MomentDateTimeAdapter, OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
+
+const MY_CUSTOM_FORMATS = {
+  fullPickerInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  parseInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  datePickerInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY'
+};
 
 @NgModule({
   providers:[
@@ -37,7 +57,11 @@ import { DatePipe } from '@angular/common';
     GraphGlobal,
     HourlyManagerService,
     StackMelliChartsService,
-    DatePipe
+    DatePipe,
+    SafeHtmlPipe,
+    UserParamsService,
+    { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }
   ],
   declarations: [
     MelliChartsComponent,
@@ -48,6 +72,8 @@ import { DatePipe } from '@angular/common';
     DailyComponent,
     HourlyComponent,
     WeightComponent,
+    EventsComponent,
+    HourlyWeightComponent,
    ],
   imports: [
     MelliChartsRouting,
@@ -58,6 +84,14 @@ import { DatePipe } from '@angular/common';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-  ]
+    MatFormFieldModule,
+    MatChipsModule,
+    MatIconModule,
+    MatInputModule,
+    PipeModule
+  ],
+  entryComponents: [
+    HourlyWeightComponent
+],
 })
 export class MelliChartsModule { }

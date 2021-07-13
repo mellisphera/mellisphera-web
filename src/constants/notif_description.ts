@@ -1,4 +1,4 @@
-export const NOTIF_DESCRIPTION5 = {
+/*export const NOTIF_DESCRIPTION5 = {
     FR: {
         Honeydew: "Déclenchée lorsque l'apport de poids dans la ruche dépasse le seuil choisi lors de la dernière semaine.",
         Rain : "Déclenchée lorsque les précipitations pluvieuses dépassent le seuil choisi le prochain jour.",
@@ -93,10 +93,10 @@ export const NOTIF_DESCRIPTION5 = {
         PoorSignalT: 'Se activa cuando su sensor de temperatura transmite pocos datos durante el último día.',
         LowBatteryW: 'Se activa cuando el nivel de la batería de su sensor de peso está por debajo del umbral seleccionado.',
         LowBatteryT: 'Se activa cuando el nivel de la batería de su sensor de temperatura está por debajo del umbral seleccionado.',
-        'Super+': 'Indicar el peso mínimo de una alza vacía.',
-        'Super-': 'Indicar el peso máximo de una alza completa.',
+        'Super+': 'Indicar el peso máximo de una alza completa.',
+        'Super-': 'Indicar el peso mínimo de una alza vacía.',
         Oxalic: 'Se desencadena cuando el promedio de cría en sus colmenas está por debajo del umbral establecido. Esta es una indicación que le permite tratar sus colmenas con ácido oxálico en el momento adecuado.',
         Dead: 'Nuestro algoritmo detecta cada día si su colmena está muerta basándose en diferentes parámetros que hemos establecido.'
 
     }
-}
+}*/

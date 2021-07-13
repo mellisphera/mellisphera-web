@@ -12,6 +12,17 @@ import * as moment from 'moment';
 
 export class MyDate {
     private date: Date;
+
+    public static start: Date;
+    public static end: Date = new Date();
+    public static thisDay: Date = new Date(MyDate.end);
+
+    static init(){
+        MyDate.thisDay.setDate( MyDate.end.getDate() - 1 );
+        MyDate.end.setHours(0);
+        MyDate.end.setMinutes(0);
+    }
+
     /**
      *
      *
@@ -79,7 +90,10 @@ export class MyDate {
       }
 
     static getRangeForCalendar(){
-        let max = new Date();
+        let max = MyDate.end;
+        max.setHours(23);
+        max.setMinutes(59);
+        max.setSeconds(59);
         let tmp = (max.getFullYear() - 1) + '-' + (max.getMonth() + 1) + '-' + max.getDate();
         let min = (max.getFullYear() - 1) + '-' + (max.getMonth() + 1) + '-' + max.getDate();
         let rangeCalendar = [min, MyDate.convertDate(max)];
@@ -87,7 +101,10 @@ export class MyDate {
       }
 
       static getRangeForCalendarHome(){
-        let max = new Date();
+        let max = MyDate.end;
+        max.setHours(23);
+        max.setMinutes(59);
+        max.setSeconds(59);
         let tmp = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
         let min = (max.getFullYear()) + '-' + (max.getMonth()-1) + '-' + max.getDate();
         let rangeCalendar = [min, MyDate.convertDate(max)];
@@ -103,19 +120,34 @@ export class MyDate {
        */
       static getRangeForCalendarAlerts(): Date[]{
         const day: number[] = [34, 28, 29, 30, 31, 32, 33];
-        let max = new Date();
+        let max = new Date(MyDate.end);
+        max.setHours(23);
+        max.setMinutes(59);
+        max.setSeconds(59);
         let min = new Date();
-        let nbDay = day[min.getDay()];
-        min.setDate(min.getDate() - nbDay);
+        min.setTime(max.getTime());
+        min.setDate(min.getDate() - 28);
         //min.setDate(max.getDate() + 7);
 
-        max.setDate(max.getDate() + 3);
         min.setHours(0);
         min.setMinutes(0);
         min.setSeconds(0);
+        min = MyDate.getDateBeginMonday(min)
         return [min, max];
       }
-    
+
+      static getDateBeginMonday(date: Date): Date {
+        const dayInf: boolean = date.getDate() <= 6;
+        while (date.getDay() !== 1) {
+          if (dayInf) {
+            date.setDate(date.getDate() + 1);
+          } else {
+            date.setDate(date.getDate() - 1);
+          }
+        }
+        return date
+      }
+
 /*     static getRangeFromDate(date: Date[]) {
 
     } */

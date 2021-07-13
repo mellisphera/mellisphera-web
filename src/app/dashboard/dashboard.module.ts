@@ -53,9 +53,15 @@ import { AuthGuardService } from '../auth/auth-guard.service';
 import { AuthInterceptorService } from '../auth/Service/auth-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FeedbackComponent } from '../feedback/feedback.component';
+import { InspectComponent } from './inspect/inspect.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { InspectNewComponent } from './inspect/inspect-new/inspect-new.component';
+import { InspectHistoryComponent } from './inspect/inspect-history/inspect-history.component';
+import { InspectParamsComponent } from './inspect/inspect-params/inspect-params.component';
 
 
-
+import { HomeModule } from './home/home.module';
+import { MelliChartsModule } from './melli-charts/melli-charts.module';
 
 
 @NgModule({
@@ -70,6 +76,7 @@ import { FeedbackComponent } from '../feedback/feedback.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    MatStepperModule,
     // AngularDraggableModule,
     ngfModule,
     ConfirmationPopoverModule.forRoot({
@@ -77,6 +84,8 @@ import { FeedbackComponent } from '../feedback/feedback.component';
     }),
    //  DragAndCheckModule,
     ArchwizardModule,
+    HomeModule,
+    MelliChartsModule,
   ],
   providers: [
     RucherService,
@@ -96,7 +105,6 @@ import { FeedbackComponent } from '../feedback/feedback.component';
     MessagesService,
     UserParamsService,
     //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
-
   ],
   declarations: [
     DashboardComponent,

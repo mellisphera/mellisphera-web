@@ -1,4 +1,4 @@
-export const NOTIF_CODE = {
+/*export const NOTIF_CODE = {
     "201": {
         "icon": "Rain",
         "FR": {
@@ -243,15 +243,15 @@ export const NOTIF_CODE = {
         "icon": "Swarm",
         "FR": {
             "Subject": "Essaimage",
-            "Message": "Potentiel essaimage détecté"
+            "Message": "Potentiel essaimage détecté vers 14:00"
         },
         "EN": {
             "Subject": "Swarm",
-            "Message": "Potentiel swarm detected"
+            "Message": "Potentiel swarm detected around 14:00"
         },
         "ES": {
             "Subject": "Enjambre",
-            "Message": "Posible enjambre detectado"
+            "Message": "Posible enjambre detectado alrededor de 14:00"
         }
     },
 
@@ -480,4 +480,4 @@ export const NOTIF_CODE = {
         }
     }
 
-}
+}*/

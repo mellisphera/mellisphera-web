@@ -20,23 +20,32 @@ export const BASE_OPTIONS = {
                 animation: false
             },
             formatter: null*/
-            trigger:'item',
+            trigger:"item",
             //showContent: true,
             formatter: null,
+            alwaysShowContent: false,
+            //displayMode: "single",
+            //renderMode: "auto",
+            showDelay: 0,
+            hideDelay: 100,
+            transitionDuration: 0.5
+
         },
         legend: {
-            orient: 'vertical',
-            right: '5',
+            width: '100%',
+            orient: 'horizontal',
+            top: '0',
+            align: 'left',
             data: [],
         },
         /*axisPointer: {
             link: { xAxisIndex: 'all' }
         },*/
-        /*toolbox: {
+        toolbox: {
             orient: 'vertical',
-            itemSize: 18,
-            left: 'right',
-            top: 50,
+            itemSize: 20,
+            right: 20,
+            top: 15,
             feature: {
                 dataZoom: {
                     yAxisIndex: 'none',
@@ -45,7 +54,7 @@ export const BASE_OPTIONS = {
                 restore: {},
                 saveAsImage: {}
             }
-        },*/
+        },
         /*dataZoom: [
             {
                 show: true,
@@ -67,8 +76,8 @@ export const BASE_OPTIONS = {
         ],*/
         grid: [{
             containLabel: true,
-            top: 11,
-            height: '80%',
+            top: 30,
+            height: '90%',
             left: 'center',
             width: '80%'
         }],
@@ -102,7 +111,18 @@ export const BASE_OPTIONS = {
                 saveAsImage: { show: false }
             }
         },
+        tooltip:{
+            trigger: 'item',
+            formatter: null,
+            alwaysShowContent: false,
+            //displayMode: "single",
+            //renderMode: "auto",
+            showDelay: 0,
+            hideDelay: 100,
+            transitionDuration: 0.5,
+        },
         series: [],
+
         calendar: CALENDAR.calendarMelliUx
     },
     baseOptionDailyMelliCharts: {
@@ -140,21 +160,23 @@ export const BASE_OPTIONS = {
         nameLocation: 'middle',
         type: 'value',
         splitArea: {},
-        nameGap: 25,
-        interval: 0,
+        nameGap: 35,
+        interval: 5,
         min: (value) => {return 0},
         max: (value) => {return 0},
-        gridIndex: 0
+        gridIndex: 0,
       },
     ],
 
     tooltip: {
         trigger: 'item',
-        position: 'top',
-        textStyle: {
-            fontSize: 12
-        },
         formatter: {},
+        alwaysShowContent: false,
+        //displayMode: "single",
+        //renderMode: "auto",
+        showDelay: 0,
+        hideDelay: 100,
+        transitionDuration: 0.5,
     },
     legend: {
         orient: 'horizontal',
@@ -187,6 +209,7 @@ export const BASE_OPTIONS = {
         toolbox: {
             orient: 'vertical',
             right:10,
+            top: 15,
             itemSize: 20,
             feature: {
                 dataZoom: {
@@ -203,8 +226,13 @@ export const BASE_OPTIONS = {
                 animation: false,
                 type: 'cross'
             },
-
-            formatter: null
+            formatter: null,
+            alwaysShowContent: false,
+            //displayMode: "single",
+            //renderMode: "auto",
+            showDelay: 0,
+            hideDelay: 100,
+            transitionDuration: 0.5,
         },
         axisPointer: {
             link: { xAxisIndex: 'all' }

@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Fitness } from '../../../_model/fitness';
 import { Observable } from 'rxjs';
 import { CONFIG } from '../../../../constants/config';
 import { TranslateService } from '@ngx-translate/core';
-import { FITNESS_CODE } from '../../../../constants/fitnessCode';
+//import { FITNESS_CODE } from '../../../../constants/fitnessCode';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +20,7 @@ export class FitnessService {
 
   constructor(private httpClient: HttpClient, private translateService: TranslateService) {
     this.rangeFitness = new Date();
-    this.rangeFitness.setDate(new Date().getDate() - 2);
+    this.rangeFitness.setDate(new Date().getDate() - 3);
     this.rangeFitness.setHours(23);
     this.rangeFitness.setMinutes(0);
     this.dailyFitness = [];
@@ -53,10 +57,12 @@ export class FitnessService {
 
   public getFitnessByHiveId(hiveId: string): Fitness {
     const res = this.dailyFitness.filter(_fit => _fit.hiveId === hiveId);
+    let date: Date = new Date();
+    date.setDate( date.getDate() - 1 );
     if (res.length > 1) {
       throw Error("No unique result");
     } else if (res.length < 1) {
-      return { _id: '', fitcode: '', fitcolor: "white", userId: '', hiveId: '', date: new Date() };
+      return { _id: '', fitcode: '', fitcolor: "white", userId: '', hiveId: '', date: date };
     } else {
       return res[0];
     }
@@ -70,7 +76,7 @@ export class FitnessService {
     } else if (res.length < 1) {
       return '';
     } else {
-      return FITNESS_CODE[res[0].fitcode][lang]['Message'];
+      return this.translateService.instant('FITNESS_CODE.'+res[0].fitcode+'.MSG')
     }
   }
 
@@ -83,5 +89,8 @@ export class FitnessService {
     )
   }
 
+  public getFitnessByHiveIdAndDate(hiveId: string, range: Date[]): Observable<Fitness[]>{
+    return this.httpClient.post<Fitness[]>(CONFIG.URL + 'fitness/daily/' + hiveId, range, httpOptions);
+  }
 
 }

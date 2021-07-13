@@ -23,9 +23,9 @@ export class StackMelliChartsService {
 
   private arrayHiveSelect: Array<RucheInterface>;
   private colorByHive: Array<any>;
-  private stackEchartInstance: any;
-  private broodChartInstance: any;
-  private weightChartInstance: any;
+  public stackEchartInstance: any;
+  public broodChartInstance: any;
+  public weightChartInstance: any;
   public range: DataRange;
   private arrayColor: Array<any>;
   constructor(private httpClient: HttpClient) {
@@ -206,8 +206,8 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
    * @memberof StackMelliChartsService
    */
   removeHive(hive: RucheInterface) {
-    const index = this.arrayHiveSelect.indexOf(hive);
-    const indexColor = this.colorByHive.map(elt => elt.hiveId).indexOf(hive._id);
+    const index = this.arrayHiveSelect.findIndex(_hive => _hive._id === hive._id);
+    const indexColor = this.colorByHive.map(elt => elt.hiveId).findIndex(_hive => _hive._id === hive._id);
     this.arrayHiveSelect.splice(index, 1);
     this.colorByHive.splice(indexColor, 1);
   }
@@ -246,7 +246,20 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
     return this.arrayHiveSelect;
   }
 
+  getHiveSelectIds(): Array<string>{
+    return this.arrayHiveSelect.map(_hive => _hive._id);
+  }
+
+  getHiveSelectIdsOfApiary(apiaryId: string): Array<string>{
+    return this.arrayHiveSelect.filter(_hive => _hive.apiaryId === apiaryId).map(_hive => _hive._id);
+  }
+
   checkHiveisActive(hiveId: string) {
     return this.arrayHiveSelect.filter(hive => hive._id === hiveId).length > 0 ? 'active' : '';
+  }
+
+  getHiveSelectFromApiaryId(apiaryId: string): number{
+    let nb = this.arrayHiveSelect.filter(_hive => _hive.apiaryId === apiaryId).length;
+    return nb;
   }
 }

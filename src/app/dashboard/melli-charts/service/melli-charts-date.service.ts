@@ -12,8 +12,11 @@ limitations under the License. */
 import { Injectable } from '@angular/core';
 import { DataRange } from '../../../_model/data-range';
 import { MyDate } from '../../../class/MyDate';
+import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+
+const EXPLORE_PATH = '/dashboard/explore/';
 
 @Injectable({
   providedIn: 'root'
@@ -30,15 +33,19 @@ export class MelliChartsDateService {
   public refDayEnd: Date;
 
   public ranges: DataRange[];
-  constructor() {
+  constructor(
+    private router: Router,
+  ) {
     this.ranges = [
 /*       { scale: 1, type: 'HOUR'},
       { scale: 6, type: 'HOURS'},
       { scale: 12, type: 'HOURS'}, */
-      { scale: 1, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
+      { scale: 2, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
       { scale: 3, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
-      { scale: 7, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
-      { scale: 15, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
+      { scale: 5, type: 'DAY', typeFr: 'JOUR', typeEs: 'Día'},
+      { scale: 1, type: 'WEEK', typeFr: 'SEMAINE', typeEs: 'Semana'},
+      { scale: 2, type: 'WEEK', typeFr: 'SEMAINE', typeEs: 'Semana'},
+      { scale: 3, type: 'WEEK', typeFr: 'SEMAINE', typeEs: 'Semana'},
       { scale: 1, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
       { scale: 2, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
       { scale: 3, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
@@ -46,15 +53,19 @@ export class MelliChartsDateService {
       { scale: 9, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
       { scale: 1, type: 'YEAR', typeFr: 'AN', typeEs: 'Año'}
     ];
-    this.setRange(this.ranges[4]);
+    this.setRange(this.ranges[6]);
   }
 
 
   setRange(scale: DataRange): void {
     let date = new Date();
+    //console.log(this.router.url);
     switch(scale.type){
       case 'DAY':
         date.setDate((new Date().getDate() - scale.scale));
+        break;
+      case 'WEEK':
+        date.setDate((new Date().getDate() - (scale.scale*7) ));
         break;
       case 'MONTH':
         date.setMonth((new Date().getMonth() - scale.scale));
@@ -68,7 +79,9 @@ export class MelliChartsDateService {
       default:
         date.setDate(date.getDate() - 15);
     }
-    date = this.getDateBeginMonday(date);
+    if(this.router.url === EXPLORE_PATH + 'hive'){
+      date = this.getDateBeginMonday(date);
+    }
     this.rangeDateForRequest = MyDate.getRange(date);
     this.rangeDateForRequest[0].setHours(0);
     this.rangeDateForRequest[0].setMinutes(0);
@@ -76,9 +89,9 @@ export class MelliChartsDateService {
 
     //this.rangeDateForRequest[1].setDate(this.rangeDateForRequest[0].getDate() + 1);
     this.rangeDateForRequest[1].setHours(23);
-    this.rangeDateForRequest[1].setMinutes(0);
+    this.rangeDateForRequest[1].setMinutes(59);
     this.rangeDateForRequest[1].setSeconds(0);
-    //console.log(this.rangeDateForRequest);
+    console.log(this.rangeDateForRequest);
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
   }

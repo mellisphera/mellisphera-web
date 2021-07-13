@@ -1,0 +1,110 @@
+#inspect-params-content table{
+  width: 80%;
+}
+
+.btn-default.btn-on.active{
+    background-color: #5BB75B;
+    color: white;
+}
+.btn-default.btn-off.active{
+    background-color: #DA4F49;
+    color: white;
+}
+
+.btn-spring,
+.btn-summer,
+.btn-autumn,
+.btn-winter{
+    width: 34px;
+    height: 34px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border: 0;
+    border-radius: 5px;
+}
+
+.btn-spring:hover,
+.btn-summer:hover,
+.btn-autumn:hover,
+.btn-winter:hover{
+    border: 1px solid #ddd;
+}
+
+.div-act{
+    width: 40px;
+    height: 40px;
+    margin-left: 2px;
+    margin-right: 2px;
+    background: url('../../../../assets/ms-pics/ui/hive-act_b.svg') center no-repeat;
+    background-size: 38px;
+}
+.div-obs{
+    width: 40px;
+    height: 40px;
+    margin-left: 2px;
+    margin-right: 2px;
+    background: url('../../../../assets/ms-pics/ui/hive-obs_b.svg') center no-repeat;
+    background-size: 38px;
+}
+.div-hive{
+    width: 40px;
+    height: 40px;
+    margin-left: 2px;
+    margin-right: 2px;
+    background: url('../../../../assets/ms-pics/ui/hive_b.svg') center no-repeat;
+    background-size: 32px;
+}
+.div-apiary{
+    width: 40px;
+    height: 40px;
+    margin-left: 2px;
+    margin-right: 2px;
+    background: url('../../../../assets/ms-pics/ui/sidebar/myapiary.svg') center no-repeat;
+    background-size: 35px;
+}
+.btn-spring{
+    background: url('../../../../assets/ms-pics/ui/tables/spring_b.svg') center no-repeat;
+    background-size: 26px;
+}
+.btn-spring.active{
+    background: url('../../../../assets/ms-pics/ui/tables/spring_cb.svg') center no-repeat;
+    background-size: 26px;
+    border: 1px solid #ddd;
+}
+.btn-summer{
+    background: url('../../../../assets/ms-pics/ui/tables/summer_b.svg') center no-repeat;
+    background-size: 27px;
+}
+.btn-summer.active{
+    background: url('../../../../assets/ms-pics/ui/tables/summer_cb.svg') center no-repeat;
+    background-size: 26px;
+    border: 1px solid #ddd;
+}
+.btn-autumn{
+    background: url('../../../../assets/ms-pics/ui/tables/autumn_b.svg') center no-repeat;
+    background-size: 27px;
+}
+.btn-autumn.active{
+    background: url('../../../../assets/ms-pics/ui/tables/autumn_cb.svg') center no-repeat;
+    background-size: 26px;
+    border: 1px solid #ddd;
+}
+.btn-winter{
+    background: url('../../../../assets/ms-pics/ui/calendbars/winter_b.svg') center no-repeat;
+    background-size: 32px;
+}
+.btn-winter.active{
+    background: url('../../../../assets/ms-pics/ui/calendbars/winter_cb.svg') center no-repeat;
+    background-size: 32px;
+    border: 1px solid #ddd;
+}
+
+.disable{
+    background-color: rgba(73, 73, 72, 0.3) !important;
+}
+
+@media screen and (max-width:1060px) {
+  #inspect-params-content table{
+    width: 100%;
+  }
+}

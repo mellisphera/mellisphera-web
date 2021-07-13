@@ -48,7 +48,7 @@ nav{
 #select-Apiary{
     padding-top: 5px;
     margin-top: 5px;
-    width: 30%;
+    width: 300px;
     height: 36px;
 }
 label{
@@ -95,6 +95,13 @@ label{
 .img-zone{
     height: 60px;
 }
+#navbar-dropdown{
+  background-color: white !important;
+  color: black !important;
+  width: 170px !important;
+  height: 90px !important;
+}
+
 @media (max-width: 991px){
 /*     #apiary-group li:last-child{
         margin-left: 20px;
@@ -129,7 +136,7 @@ label{
         width: initial !important;
     }
     #apiary-group{
-        width: 100% !important;
+        width: 80% !important;
     }
     #select-Apiary{
         width: 100% !important;
@@ -167,20 +174,20 @@ label{
 }
 
 // HERE THE LEFT HAMBURGER
- 
+
  #menuToggle
  {
    display: block;
    position: relative;
    top: 15px;
    left: 10px;
-   
+
    z-index: 2;
-   
+
    -webkit-user-select: none;
    user-select: none;
  }
- 
+
  #menuToggle input
  {
    display: block;
@@ -189,15 +196,15 @@ label{
    position: absolute;
    top: -7px;
    left: -5px;
-   
+
    cursor: pointer;
-   
+
    opacity: 0; /* hide this */
    z-index: 3; /* and place it over the hamburger */
-   
+
    -webkit-touch-callout: none;
  }
- 
+
  /*
   * Just a quick hamburger
   */
@@ -208,30 +215,30 @@ label{
    height: 3px;
    margin-bottom: 6px;
    position: relative;
-   
+
    background: #E5AF2C;
    border-radius: 3px;
-   
+
    z-index: 2;
-   
+
    transform-origin: 2px 0px;
-   
+
    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
                background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
                opacity 0.55s ease;
  }
- 
+
  #menuToggle span:first-child
  {
    transform-origin: 0% 0%;
  }
- 
+
  #menuToggle span:nth-last-child(2)
  {
    transform-origin: 0% 100%;
  }
- 
- /* 
+
+ /*
   * Transform all the slices of hamburger
   * into a crossmark.
   */
@@ -241,7 +248,7 @@ label{
    transform: rotate(45deg) translate(-2px, -1px);
    background: #232323;
  }
- 
+
  /*
   * But let's hide the middle one.
   */
@@ -250,7 +257,7 @@ label{
    opacity: 0;
    transform: rotate(0deg) scale(0.2, 0.2);
  }
- 
+
  /*
   * Ohyeah and the last one should go the other direction
   */
@@ -258,7 +265,7 @@ label{
  {
    transform: rotate(-45deg) translate(0, -1px);
  }
- 
+
  /*
   * Make this absolute positioned
   * at the top left of the screen
@@ -271,24 +278,24 @@ label{
    padding-bottom: 50px;
    padding-left: 50px;
    padding-top: 125px;
-   
+
    background: #ededed;
    list-style-type: none;
    -webkit-font-smoothing: antialiased;
    /* to stop flickering of text in safari */
-   
+
    transform-origin: 0% 0%;
    transform: translate(-100%, 0);
-   
+
    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
  }
- 
+
  #menu li
  {
    padding: 10px 0;
    font-size: medium;
  }
- 
+
  /*
   * And let's slide it in from the left
   */
@@ -305,7 +312,7 @@ label{
  }
 
  .fa-plus{
-     margin-left: 70px !important;
+     margin-left: 70px;
  }
 
 //  .Ruches{
@@ -331,9 +338,4 @@ label{
   .delete{
     position: absolute;
     left: 15px;
-}
-@media (max-width: 500px) {
-    #apiary-group li:last-child{
-        margin-left: 31%;
-    }
 }

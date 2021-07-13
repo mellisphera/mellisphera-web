@@ -23,6 +23,7 @@ const TEMP_EXT_WEATHER_MAX = 'TEMP_EXT_WEATHER_MAX';
 const TEMP_EXT_WEATHER_MIN = 'TEMP_EXT_WEATHER_MIN';
 const TEMP_INT_WEATHER = 'TEMP_INT_WEATHER';
 const WIND = 'WIND';
+const FITNESS = 'FITNESS';
 
 import { Injectable } from '@angular/core';
 import { UserParamsService } from '../preference-config/service/user-params.service';
@@ -36,12 +37,13 @@ import { Tools } from '../melli-charts/hive/service/daily-manager.service';
 import { CALENDAR } from '../melli-charts/charts/CALENDAR';
 import { WeatherService } from '../service/api/weather.service';
 import { SERIES } from '../melli-charts/charts/SERIES';
-import { NOTIF_CODE } from '../../../constants/notif_code';
-import { MOON_CODE } from '../../../constants/moonTrad';
+//import { MOON_CODE } from '../../../constants/moonTrad';
+//import { FITNESS_CODE } from '../../../constants/fitnessCode';
 
 import { AlertsService } from '../service/api/alerts.service';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
+import { ignoreElements } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -53,8 +55,12 @@ export class GraphGlobal {
     max: number,
     interval: number,
     unitW: string,
-    income_name: string
+    income_name: string,
+    norm_name: string
   };
+  public fitness:{
+    name: string,
+  }
   public moon: {
     phase: string,
     period: string,
@@ -120,12 +126,16 @@ export class GraphGlobal {
       max: 0,
       interval: 0,
       unitW: 'Kg',
-      income_name: 'Gain'
+      income_name: 'Gain',
+      norm_name: 'Weight'
     };
     this.weightIncome = {
       gain: '',
       loss: ''
     };
+    this.fitness = {
+      name:'Fitness',
+    }
     this.temp = {
       name: '',
       min: null,
@@ -190,13 +200,16 @@ export class GraphGlobal {
       { 'graph': 'loss', 'titre': 'perte' },
       { 'graph': 'gain', 'titre': 'gain' },
       { 'graph': 'Weight', 'titre': 'Poids' },
-      { 'graph': 'AlertsHive', 'titre': 'Evénements' },
+      { 'graph': 'AlertsHive', 'titre': 'Alertes et Evenements' },
       { 'graph': 'AlertsApiary', 'titre': 'Evénements du rucher' },
       { 'graph': 'Blooming', 'titre': 'Calendrier de floraison du rucher' },
       { graph: 'Weather', titre: 'Météo' },
       { graph: 'Moon', titre: 'Calendrier lunaire' },
       { graph: 'Rain', titre: 'Précipitations' },
       { graph: 'Wind', titre: 'Vent' },
+      { graph: 'Fitness', titre: 'Santé de la ruche'},
+      { graph: 'Event-apiary', titre: 'Evenements Rucher'},
+      { graph: 'Event-hive', titre: 'Evenements Ruche'}
 
     ];
     this.titresES = [
@@ -211,13 +224,16 @@ export class GraphGlobal {
       { 'graph': 'loss', 'titre': 'Disminucion' },
       { 'graph': 'gain', 'titre': 'Aumento' },
       { 'graph': 'Weight', 'titre': 'Peso' },
-      { 'graph': 'AlertsHive', 'titre': 'Eventos' },
+      { 'graph': 'AlertsHive', 'titre': 'Alertas y Eventos' },
       { 'graph': 'AlertsApiary', 'titre': 'Eventos del colmenar' },
       { 'graph': 'Blooming', 'titre': 'Calendario de floracion del colmenar' },
       { graph: 'Weather', titre: 'Meteorologia' },
       { graph: 'Moon', titre: 'Calendario lunar' },
       { graph: 'Rain', titre: 'Precipitaciones' },
-      { graph: 'Wind', titre: 'Viento' }
+      { graph: 'Wind', titre: 'Viento' },
+      { graph: 'Fitness', titre: 'Salud de la colmena'},
+      { graph: 'Event-apiary', titre: 'Eventos de Colmenar'},
+      { graph: 'Event-hive', titre: 'Eventos de Colmena'}
     ];
 
     // EN
@@ -233,13 +249,16 @@ export class GraphGlobal {
       { 'graph': 'loss', 'titre': 'loss' },
       { 'graph': 'gain', 'titre': 'gain' },
       { 'graph': 'Weight', 'titre': 'Weight' },
-      { 'graph': 'AlertsHive', 'titre': 'Events' },
+      { 'graph': 'AlertsHive', 'titre': 'Alerts and Events' },
       { 'graph': 'AlertsApiary', 'titre': 'Events for the apiary' },
       { 'graph': 'Blooming', 'titre': 'Apiary Blooming calendar' },
       { graph: 'Weather', titre: 'Weather' },
       { graph: 'Moon', titre: 'Moon calendar' },
       { graph: 'Rain', titre: 'Precipitation' },
       { graph: 'Wind', titre: 'Wind' },
+      { graph: 'Fitness', titre: 'Hive health'},
+      { graph: 'Event-apiary', titre: 'Apiary Events'},
+      { graph: 'Event-hive', titre: 'Hive Events'}
     ];
   }
 
@@ -249,6 +268,7 @@ export class GraphGlobal {
     if (this.translateService.currentLang === 'fr') {
       this.weight.name = 'Poids (lbs)';
       this.weight.income_name = 'Gain (lbs)';
+      this.weight.norm_name = 'Productivité (lbs)';
       this.humidity.name = 'Humidité';
       this.rain.name = 'Pluie';
       this.weightIncome.gain = 'Gain';
@@ -266,6 +286,7 @@ export class GraphGlobal {
     } else if (this.translateService.currentLang === 'es') {
       this.weight.name = 'Peso (lbs)';
       this.weight.income_name = 'Aumento (lbs)';
+      this.weight.norm_name = 'Productividad (lbs)';
       this.humidity.name = 'Humedad ';
       this.rain.name = 'Lluvia';
       this.snow.name = 'Nieve';
@@ -282,6 +303,7 @@ export class GraphGlobal {
     } else {
       this.weight.name = 'Weight (lbs)';
       this.weight.income_name = 'Gain (lbs)';
+      this.weight.norm_name = 'Productivity (lbs)';
       this.humidity.name = 'Humidity ';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Loss';
@@ -317,6 +339,7 @@ export class GraphGlobal {
     if (this.translateService.currentLang === 'fr') {
       this.weight.name = 'Poids (Kg)';
       this.weight.income_name = 'Gain (Kg)';
+      this.weight.norm_name = 'Productivité (Kg)';
       this.humidity.name = 'Humidité (%)';
       this.rain.name = 'Pluie';
       this.snow.name = 'Neige';
@@ -335,6 +358,7 @@ export class GraphGlobal {
     }  else if (this.translateService.currentLang === 'es') {
       this.weight.name = 'Peso (Kg)';
       this.weight.income_name = 'Aumento (Kg)';
+      this.weight.norm_name = 'Productividad (Kg)';
       this.humidity.name = 'Humedad (%)';
       this.rain.name = 'Lluvia';
       this.snow.name = 'Nieve';
@@ -350,6 +374,7 @@ export class GraphGlobal {
     } else {
       this.weight.name = 'Weight (Kg)';
       this.weight.income_name = 'Gain (Kg)';
+      this.weight.norm_name = 'Productivity (Kg)';
       this.humidity.name = 'Humidity (%)';
       this.wind.name = 'Wind';
       this.weightIncome.gain = 'Gain';
@@ -563,7 +588,30 @@ export class GraphGlobal {
         } else {
           return this.titresEN[11].titre;
         }
-        break;
+      case 'EVENT-APIARY':
+        if (this.translateService.currentLang === 'fr') {
+          return this.titresFR[19].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[19].titre;
+        } else {
+          return this.titresEN[19].titre;
+        }
+      case 'EVENT-HIVE':
+        if (this.translateService.currentLang === 'fr') {
+          return this.titresFR[20].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[20].titre;
+        } else {
+          return this.titresEN[20].titre;
+        }
+      case 'FITNESS':
+        if (this.translateService.currentLang === 'fr') {
+          return this.titresFR[18].titre;
+        } else if (this.translateService.currentLang === 'es') {
+          return this.titresES[18].titre;
+        } else {
+          return this.titresEN[18].titre;
+        }
       default:
         return '';
     }
@@ -800,6 +848,9 @@ export class GraphGlobal {
       case WIND:
         name = this.wind.name;
         break;
+      case FITNESS:
+        name = this.fitness.name;
+        break;
       default:
         break;
     }
@@ -809,15 +860,6 @@ export class GraphGlobal {
     return name;
 
   }
-
-  getMessageAlertByCode(code: string): string {
-    if (this.translateService.currentLang === 'fr') {
-        return NOTIF_CODE[code].FR.Message;
-    } else {
-        return NOTIF_CODE[code].EN.Message;
-    }
-
-}
 
   /**
    *
@@ -910,7 +952,7 @@ export class GraphGlobal {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
               name: this.moon.phase,
-              value: MOON_CODE[params.data[1]][lang]['Name'],
+              value: this.translateService.instant('MOON.' + params.data[1]),
               unit: ''
             },
             {
@@ -949,23 +991,27 @@ export class GraphGlobal {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
             let type = 'Notif';
             let img = '';
-            if (_singleData.description) {
+            if (_singleData.type && _singleData.type === 'apiary') {
               type = 'Inspection';
               img = '<img style={S} src={I} />';
-              img = img.replace(/{I}/g, './assets/pictos_alerts/newIcones/inspect.svg');
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect-api_cb.png');
+            } else if(_singleData.type && _singleData.type === 'hive') {
+              type = 'Event';
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect_cb.png');
             } else {
-              img = '<img style={S} src=./assets/pictos_alerts/newIcones/' + _singleData.icon + '.svg />';
+              img = '<img style={S} src=./assets/ms-pics/alerts/ruche/' + _singleData.icon.toLowerCase() + '_cw.png />';
             }
-            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:25px;height:25px; background-color:red;');
+            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:35px;height:35px; background-color:red;');
             return {
               name: img,
-              value: type === 'Inspection' ? this.sliceTextToolip(_singleData.description) : this.alertService.getMessageAlertByCode(_singleData),
+              value: type === 'Inspection' || type === 'Event' ? this.sliceTextToolip(_singleData.description) : this.alertService.getMessageAlertByCode(_singleData),
               unit: ''
             }
           }));
         }
         break;
-      case WINCOME:
+      case 'WINCOME':
         tooltip.formatter = (params) => {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
@@ -974,6 +1020,66 @@ export class GraphGlobal {
               unit: this.getUnitByType(type.unit)
             },
           ));
+        }
+        break;
+      case 'FITNESS':
+        tooltip.formatter = (params) => {
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
+            {
+              name: params.seriesName,
+              value: params.data[1],
+              unit: ''
+            },
+          ));
+        }
+        break;
+      case 'EVENT-APIARY':
+        tooltip.formatter = (params) => {
+          const dataByDateTooltip = extraData.filter(_filter => {
+            return MyDate.compareToDailyDate(_filter.opsDate, params.data[0]);
+          });
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
+            let type = 'Inspection';
+            let img = '<img style={S} src={I} />';
+            if(_singleData.type === 'apiary'){
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect-api_cw.png');
+            }
+            if(_singleData.type === 'hive'){
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect_cw.png');
+            }
+            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:35px;height:35px; background-color:red;');
+            return {
+              name: img,
+              value: this.sliceTextToolip(_singleData.description),
+              unit: ''
+            }
+          }));
+        }
+        break;
+      case 'EVENT-HIVE':
+        tooltip.formatter = (params) => {
+          const dataByDateTooltip = extraData.filter(_filter => {
+            return MyDate.compareToDailyDate(_filter.opsDate, params.data[0]);
+          });
+          return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
+            let img = '<img style={S} src={I} />';
+            if(_singleData.type === 'apiary'){
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect-api_cw.png');
+            }
+            if(_singleData.type === 'hive'){
+              img = '<img style={S} src={I} />';
+              img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect_cw.png');
+            }
+            img = img.replace(/{S}/g, 'display:inline-block;margin-right:5px;border-radius:20px;width:35px;height:35px; background-color:red;');
+            return {
+              name: img,
+              value: this.sliceTextToolip(_singleData.description),
+              unit: ''
+            }
+          }));
         }
         break;
       default:
@@ -999,17 +1105,21 @@ export class GraphGlobal {
    * @memberof GraphGlobal
    */
   sliceTextToolip(text: string): string {
-    let originString: string = text;
-    if (/\n/g.test(text)) {
-      return originString.replace(/\n/g, '<br/>');
-    } else {
-      let newString: string;
-      while(originString.length >= 100) {
-        newString += originString.slice(0, 100) + '<br/>';
-        originString = originString.replace(originString.slice(0, 100), '');
+    if(text != null){
+      let originString: string = text;
+      if (/\n/g.test(text)) {
+        return originString.replace(/\n/g, '<br/>');
+      } else {
+        let newString: string;
+        while(originString.length >= 100) {
+          newString += originString.slice(0, 100) + '<br/>';
+          originString = originString.replace(originString.slice(0, 100), '');
+        }
+        return (newString + originString).replace(/undefined/g, '');
       }
-      return (newString + originString).replace(/undefined/g, '');
-     }
+    }
+    return '';
+    
   }
   /**
    *
@@ -1087,6 +1197,23 @@ export class GraphGlobal {
         visualMap.max = this.unitService.getUserPref().unitSystem === 'METRIC' ? 45 : 28;
         visualMap.inRange.color = ['#129001', 'yellow', 'red'];
         break;
+      case 'FITNESS':
+        visualMap.type = 'continuous';
+        visualMap.min = 0;
+        visualMap.max = 100;
+        visualMap.inRange.color = ['black', 'red', 'orange', 'green'];
+        /*if(this.translateService.currentLang === 'fr'){
+          visualMap.categories = ['Blanc', 'Noir', 'Rouge', 'Orange', 'Vert'];
+        }
+        if(this.translateService.currentLang === 'es'){
+          visualMap.categories = ['Blanco', 'Negro', 'Rojo', 'Naranja', 'Verde'];
+        }
+        if(this.translateService.currentLang === 'en'){
+          visualMap.categories = ['White', 'Black', 'Red', 'Orange', 'Green'];
+        }*/
+
+        //visualMap.show = false;
+        break;
       default:
         break;
     }
@@ -1103,7 +1230,42 @@ export class GraphGlobal {
     return date.getTime();
   }
 
+  getYesterdaySerie(): any{
+    const newSerie = Object.assign({}, SERIES.custom);
+    newSerie.name = 'thisDay';
+    const dayDate = new Date(MyDate.thisDay);
+    dayDate.setHours(12);
+    dayDate.setMinutes(0);
+    dayDate.setSeconds(0);
+    dayDate.setMilliseconds(0);
+    newSerie.data = [ [dayDate, 0, 'OK', 'OK']];
+    newSerie.renderItem = (params, api) => {
+      const cellPoint = api.coord(api.value(0));
+      const cellWidth = params.coordSys.cellWidth;
+      const cellHeight = params.coordSys.cellHeight;
+      if (isNaN(cellPoint[0]) || isNaN(cellPoint[1])) {
+        return;
+    }
+      return {
+        type: 'rect',
+        z2: 50 ,
+        shape: {
+          x: -cellWidth / 2 + 2,
+          y: -cellHeight / 2 + 2,
+          width: cellWidth - 4,
+          height: cellHeight - 4,
+        },
+        position: [cellPoint[0], cellPoint[1]],
+        style : {
+          fill: 'none',
+          stroke : 'purple',
+          lineWidth : 3
+        }
+      };
+    };
 
+    return newSerie;
+  }
 
   getDaySerie(): any {
     const newSerie = Object.assign({}, SERIES.custom);
@@ -1149,9 +1311,49 @@ export class GraphGlobal {
     tooltipGlobal += series.map(_serie => {
       if (/picto/g.test(_serie.name) || _serie.name === '') {
         return templateValue.replace(/:/g, '').replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit)
-      } else {
-        return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
       }
+      else{
+        let words = _serie.name.split(' | ');
+        if( _serie.name.includes('FITNESS') ){
+          let msg, lang, code;
+          lang = this.translateService.currentLang.toUpperCase();
+          code = words[1];
+          switch(code){
+            case 'B1':
+              msg = this.translateService.instant('FITNESS_CODE.B1.MSG');
+              break;
+            case 'B2':
+              msg = this.translateService.instant('FITNESS_CODE.B2.MSG');
+              break;
+            case 'R1':
+              msg = this.translateService.instant('FITNESS_CODE.R1.MSG');
+              break;
+            case 'O1':
+              msg = this.translateService.instant('FITNESS_CODE.O1.MSG');
+              break;
+            case 'O2':
+              msg = this.translateService.instant('FITNESS_CODE.O2.MSG');
+              break;
+            case 'O3':
+              msg = this.translateService.instant('FITNESS_CODE.O3.MSG');
+              break;
+            case 'O4':
+              msg = this.translateService.instant('FITNESS_CODE.O4.MSG');
+              break;
+            case 'O5':
+              msg = this.translateService.instant('FITNESS_CODE.O5.MSG');
+              break;
+            case 'G1':
+              msg = this.translateService.instant('FITNESS_CODE.G1.MSG');
+              break;
+          }
+          return msg;
+        }
+        else {
+          return templateValue.replace(/{n}/g, _serie.name).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit);
+        }
+      }
+
     }).join('</br>');
 
     return tooltipGlobal;

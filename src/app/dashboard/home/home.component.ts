@@ -30,7 +30,6 @@ import {
 } from '@angular/animations';
 import { Position } from 'angular2-draggable';
 import { UnitService } from '../service/unit.service';
-import { ObservationService } from '../service/api/observation.service';
 import { UserParamsService } from '../preference-config/service/user-params.service';
 import { DailyRecordsWService } from '../service/api/daily-records-w.service';
 import { CapteurService } from '../service/api/capteur.service';
@@ -54,7 +53,7 @@ import { CapteurInterface } from '../../_model/capteur';
 import { HubService } from '../service/api/hub.service';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 import { isUndefined } from 'util';
-import { HiveAlertComponent } from '../alert-configuration/hive-alert/hive-alert.component';
+import { InspectionService } from '../service/api/inspection.service';
 
 @Component({
   selector: 'app-home',
@@ -98,8 +97,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   private notify: NotifierService;
   private selectHive: RucheInterface;
   private hiveIndex: number;
-  private infoHiveComponent: any;
-  private infoApiaryComponent: any;
+  private infoHiveComponent: InfoHivesComponent;
+  private infoApiaryComponent: InfoApiaryComponent;
   screenHeight: any;
   public apiaryAlertsActives: AlertInterface[];
   // Hive alerts by apiay
@@ -116,7 +115,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     public login: UserloggedService,
     public graphGlobal: GraphGlobal,
     public rucheService: RucheService,
-    private observationService: ObservationService,
     public rucherService: RucherService,
     public dailyRecordWservice: DailyRecordsWService,
     public router: Router,
@@ -131,7 +129,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     private renderer: Renderer2,
     public hubService: HubService,
     public deviceSatusService: DeviceStatusService,
-    public alertsService: AlertsService) {
+    public alertsService: AlertsService,
+    public inspService: InspectionService) {
 
     this.notify = notifyService;
     this.eltOnClickClass = null;
@@ -181,7 +180,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       sharingUser: []
     };
 
-    this.observationService.getNoteByUserId(this.userService.getIdUserLoged());
+    this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
+
 
     this.boolDraggable = true;
     this.firstValue = true;
@@ -205,15 +205,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   exportToCsv(): void {
     this.optionCsv['title'] = `Export Mellisphera ${this.unitService.getDailyDate(new Date())}`
       const data = this.rucheService.ruchesAllApiary.map(_hive => {
-        let noteLengh =  this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id).length;
-        let lastNote = this.observationService.observationsHive.filter(_note => _note.hiveId === _hive._id)[noteLengh - 1];
+        let noteLengh =  this.inspService.inspectionsHive.filter(_insp => _insp.hiveId === _hive._id).length;
+        let lastNote = this.inspService.inspectionsHive.filter(_insp => _insp.hiveId === _hive._id)[noteLengh - 1];
         if(this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0] !== undefined){
           const apiary_name = this.rucherService.allApiaryAccount.filter(_apiary => _apiary._id === _hive.apiaryId)[0].name;
           return {
             APIARY: apiary_name,
             HIVE: _hive.name,
             BROOD: this.dailyRecTh.getPourcentByHive(_hive._id),
-            WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getWeightMaxByHive(_hive._id)),
+            WEIGHT: this.graphGlobal.getStringWeightFormat(this.dailyRecordWservice.getDailyWeightByHive(_hive._id)),
             BATTERY: this.capteurService.getCapteursByHive(_hive._id).sort((a: CapteurInterface, b:CapteurInterface) => a.sensorRef.localeCompare(b.sensorRef)).map(_elt => _elt.sensorBat + '%').join('\n'),
             SENSORS: this.capteurService.getCapteursByHive(_hive._id).map(_elt => _elt.sensorRef).sort((a: string, b:string) => a.localeCompare(b)).join('\n'),
             NOTE: !isUndefined(lastNote) ? this.unitService.getDailyDate(lastNote.opsDate) + ' - ' + lastNote.description: '-'
@@ -231,10 +231,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
    * @memberof HomeComponent
    */
   getDateDaily(): string {
-    let showDate = new Date();
-    showDate.setFullYear(this.dailyRecTh.rangeDailyRecord.getFullYear());
-    showDate.setMonth(this.dailyRecTh.rangeDailyRecord.getMonth());
-    showDate.setDate(this.dailyRecTh.rangeDailyRecord.getDate() + 1);
+    let showDate = new Date(MyDate.thisDay);
+    //showDate.setFullYear(MyDate.thisDay.getFullYear());
+    //showDate.setMonth(MyDate.thisDay.getMonth());
+    //showDate.setDate(MyDate.thisDay.getDate() - 1);
     return this.unitService.getDailyDate(showDate.toISOString());
   }
   closePopup(): void {
@@ -251,6 +251,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
     this.dailyRecordWservice.getDailyWeightMaxByApiary(this.rucherService.getCurrentApiary());
     this.loadAlert();
+    MyDate.init();
 /*     if (!this.rucherService.rucherSubject.closed) {
       this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
         this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
@@ -334,17 +335,47 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   onClickNextDay() {
-    this.dailyRecTh.nextDay(this.rucherService.getCurrentApiary());
-    this.dailyRecordWservice.nextDay(this.rucherService.getCurrentApiary());
-    this.fitnessService.nextDay(this.userService.getIdUserLoged());
-    this.deviceSatusService.nextDay(this.userService.getIdUserLoged());
+    let end =  new Date(MyDate.end)
+    end.setDate( end.getDate() - 1 );
+    end.setHours(0);
+    end.setMinutes(0);
+    if(MyDate.thisDay < new Date(end)){
+      MyDate.thisDay.setDate(MyDate.thisDay.getDate() + 1);
+      this.fitnessService.nextDay(this.userService.getIdUserLoged());
+      this.dailyRecTh.nextDay(this.rucherService.getCurrentApiary());
+      this.dailyRecordWservice.nextDay(this.rucherService.getCurrentApiary());
+      this.deviceSatusService.nextDay(this.userService.getIdUserLoged());
+      this.updateCalendars();
+    }
+
   }
 
   onClickPreviousDay() {
-    this.dailyRecTh.previousDay(this.rucherService.getCurrentApiary());
+    let d1 = new Date()
+    d1.setDate( d1.getDate() - 24 );
+    d1 = MyDate.getDateBeginMonday(d1);
+    if(MyDate.thisDay > d1){
+      MyDate.thisDay.setDate(MyDate.thisDay.getDate() - 1);
+      this.fitnessService.previousDay(this.userService.getIdUserLoged());
+      this.dailyRecTh.previousDay(this.rucherService.getCurrentApiary());
     this.dailyRecordWservice.previousDay(this.rucherService.getCurrentApiary());
-    this.fitnessService.previousDay(this.userService.getIdUserLoged());
-    this.deviceSatusService.previousDay(this.userService.getIdUserLoged());
+      this.deviceSatusService.previousDay(this.userService.getIdUserLoged());
+      this.updateCalendars();
+    }
+
+  }
+
+  updateCalendars(){
+    switch(this.router.url){
+      case '/dashboard/home/info-apiary':
+        this.infoApiaryComponent.alertsComponent.initCalendar();
+        break;
+      case '/dashboard/home/info-hives':
+        this.infoHiveComponent.alertsHiveComponent.initCalendar();
+        this.infoHiveComponent.loadHealthCalendar();
+        this.infoHiveComponent.loadProductivityCalendar();
+        break;
+    }
   }
 
   //   checkHiveActive(): Promise<Boolean> {
@@ -387,6 +418,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
     // Save the hive on dataBase
     this.rucheService.saveCurrentHive(ruche);
+    this.inspService.inspHive = this.inspService.getInspectionCurrentHive(ruche._id)
 
     if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
       if (this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id).length > 0) {
@@ -410,9 +442,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     // For the hive alerts
     this.checkIfInfoHiveComponent().then(status => {
       this.infoHiveComponent.loadHealthCalendar();
-      this.infoHiveComponent.alertsHiveComponent.initCalendar(ruche);
+      this.infoHiveComponent.loadProductivityCalendar();
+      this.infoHiveComponent.alertsHiveComponent.initCalendar();
       if (this.userService.checkWriteObject(this.rucherService.rucher.userId)) {
-        this.infoHiveComponent.alertsHiveComponent.readAllHiveAlerts(ruche);
+        this.infoHiveComponent.alertsHiveComponent.readAllHiveAlerts();
       }
     }).catch(err => {
       console.log(err);
@@ -567,7 +600,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       this.eltOnClickClass[i].classList.remove('in');
     }
     this.eltOnClickClass = document.getElementsByClassName(class2);
-    console.log(class2);
     for (let i = 0; i < this.eltOnClickClass.length; i++) {
       this.eltOnClickClass[i].classList.remove('in');
     }
@@ -761,6 +793,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
   onLockHive() {
     this.lockHive = true;
+  }
+
+  changeLockHive(){
+    this.lockHive = !this.lockHive;
+    if(this.lockHive){
+      (<HTMLButtonElement>document.getElementById("locked")).innerHTML = '<i class="fa fa-lock" style="font-size:26px;margin-right:5px;"></i>';
+      (<HTMLButtonElement>document.getElementById("locked")).title = this.translateService.instant('HOME.PLACEMENTMODE');
+    }
+    else{
+      (<HTMLButtonElement>document.getElementById("locked")).innerHTML = '<i class="fa fa-unlock" style="font-size:26px;margin-right:5px;"></i>';
+      (<HTMLButtonElement>document.getElementById("locked")).title = this.translateService.instant('HOME.CLICKMODE');
+    }
+
   }
 
 

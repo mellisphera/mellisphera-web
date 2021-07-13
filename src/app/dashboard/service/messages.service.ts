@@ -10,7 +10,8 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 import { Injectable } from '@angular/core';
-import { MESSAGES, MessagesList } from '../../../constants/messages';
+import { TranslateService } from '@ngx-translate/core';
+import { MessagesList } from '../../../constants/messages';
 
 
 
@@ -22,7 +23,9 @@ export class MessagesService {
 
   private currentLang: string;
 
-  constructor() {
+  constructor(
+    private translateService: TranslateService
+  ) {
   }
 
   setLang(currentLang: string): void {
@@ -30,6 +33,6 @@ export class MessagesService {
   }
 
   getMessage(msg: MessagesList) : string{
-    return(MESSAGES[this.currentLang][msg]);
+    return this.translateService.instant('MESSAGES.' + msg.toUpperCase());
   }
 }

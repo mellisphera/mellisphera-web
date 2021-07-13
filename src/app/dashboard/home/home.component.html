@@ -11,7 +11,7 @@ limitations under the License. -->
 <ng-container *ngIf="this.rucherService.allApiaryAccount.length > 0">
 
     <!-- Nav bar for page melliUX -->
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default home-navbar">
         <ul class="nav navbar-nav buttonLeft">
             <li><button (click)="onclickInfoApiary()" id="infoApiaryButton" type="button"
                     class="button button0">{{ 'HOME.NAVBAR.APIARY' | translate}}</button>
@@ -38,7 +38,7 @@ limitations under the License. -->
                     data-target=".sensors">{{ 'HOME.NAVBAR.SENSORS' | translate}}</button></li>
         </ul>
 
-        <ul class="nav navbar-nav navbar-date navbar-right">
+        <ul class="nav navbar-nav navbar-date navbar-right home-datebar">
             <li width="35" class="range-date" (click)="onClickPreviousDay()">
                 <button type="button" class="btn btn-info date-arrow btn_info"><i class="fa fa-arrow-circle-left"
                         id="previous-date"></i></button>
@@ -72,19 +72,16 @@ limitations under the License. -->
             <!-- The button to change hive handle => click -->
             <div zIndex="100" class="toolApiaryPicture">
                 <button data-toggle="tooltip" data-html="true" (click)="exportToCsv()" class="btn-picture"
-                title="{{ 'HOME.PRINT' | translate}}" id="print" type="button"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+                title="{{ 'HOME.PRINT' | translate}}" id="print" type="button"><i class="far fa-file-excel" aria-hidden="true"></i></button>
                 <!-- <button data-toggle="tooltip" data-html="true" class="btn-picture"
                 title="{{ 'HOME.PRINT' | translate}}" id="print" printSectionId="print-section" [printTitle]="rucherService.rucher.name" ngxPrint [useExistingCss]="true" type="button"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
                 <input style="display: none" type="file" (lastBaseUrlChange)="changePicturePhotos($event)" ngf [(file)]="selectPhotoApiary"
                  #fileInput>
                 <button data-toggle="tooltip" (click)="fileInput.click()" data-html="true" class="btn-picture"
                 title="" id="selectPhotos" type="button"><i class="fa fa-camera"></i></button>
-                <button *ngIf="lockHive" data-toggle="tooltip" data-html="true"
+                <button data-toggle="tooltip" data-html="true"
                     title="{{ 'HOME.PLACEMENTMODE' | translate}}" id="locked" type="button" class="btn-picture"
-                    (click)="this.lockHive = !this.lockHive;"><i class="fa fa-lock"></i></button>
-                <button *ngIf="!lockHive" data-toggle="tooltip" data-html="true"
-                    title="{{ 'HOME.CLICKMODE' | translate}}" id="unlocked" type="button" class="btn-picture"
-                    (click)="this.lockHive = !this.lockHive;"><i class="fa fa-unlock"></i></button>
+                    (click)="changeLockHive()"><i class="fa fa-lock"></i></button>
             </div>
             <div zIndex="100">
 
@@ -93,7 +90,7 @@ limitations under the License. -->
             <ng-container>
                 <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true"
                     data-toggle="tooltip" [ngDraggable]="!lockHive" [handle]="HiveHandle"
-                    *ngFor="let ruche of rucheService.getHivesByApiaryId(rucherService.getCurrentApiary()); let i = index"
+                    *ngFor="let ruche of rucheService.ruches; let i = index"
                     (endOffset)="onMoveEnd($event, ruche,i)" [id]="ruche.name" [style.top.%]="ruche.hivePosY"
                     style="transform: none" [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)"
                     class="hive-group drag-grid {{i}}">
@@ -136,11 +133,10 @@ limitations under the License. -->
                     </div>
                     <div (click)="onClick(ruche);" class="brood collapse ">
                         <span class="hive-info">{{ dailyRecTh.getPourcentByHive(ruche._id) }}</span>
-
                     </div>
                     <div (click)="onClick(ruche);" class="weight collapse ">
                         <span
-                            class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getWeightMaxByHive(ruche._id)) }}</span>
+                            class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getDailyWeightByHive(ruche._id)) }}</span>
                     </div>
                     <div (click)="onClick(ruche);" id="collapse1"
                         [class]="(capteurService.getCapteursByHive(ruche._id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">
@@ -165,7 +161,7 @@ limitations under the License. -->
             </div>
             <div class="hub-info" title="Hub" *ngIf="hubService.getHubByApiary(rucherService.getCurrentApiary()) != null">
                 <div (click)="onClick(ruche);">
-                    <div class="ruche" 
+                    <div class="ruche"
                     [style.background-color]="hubService.getHubByApiary(rucherService.getCurrentApiary()).working === 0? 'red': 'green'">
                         <i class="fa fa-wifi" aria-hidden="true"></i>
                     </div>

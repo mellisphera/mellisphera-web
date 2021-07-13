@@ -40,12 +40,19 @@ limitations under the License. -->
                     <img src="./assets/img/stack.png" style="width:30px;height: 30px; margin-top:-6px;" />
                 </a>
             </li> -->
-        <li (click)="focus('melli-charts')">
-            <a id="melli-charts" routerLink="./explore" data-toggle="tooltip" data-placement="top"
+        <li (click)="focus('explore')">
+            <a id="explore" routerLink="./explore" data-toggle="tooltip" data-placement="top"
                 title="{{ 'SIDEBAR.DATA' | translate }}">
                 <img src="./assets/icons/ui/melliCharts.png" style="width:50px;margin-left:-5px;" />
                 <p>{{ 'SIDEBAR.DATA' | translate }}</p>
             </a>
+        </li>
+        <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('sidebar-inspect')">
+          <a id="sidebar-inspect" routerLink="./inspect" data-toggle="tooltip" data-placement="top"
+              title="Inspecter">
+              <img src="../../../assets/icons/inspect/inspectsV2/3_bkpr_observ_white.png" style="width:50px;" />
+              <p>{{ 'SIDEBAR.INSPECT' | translate }}</p>
+          </a>
         </li>
         <li (click)="focus('alertConf')">
             <a id="alertConf" routerLink="./alert-configuration/hive-alert" data-toggle="tooltip" data-placement="top"
@@ -82,7 +89,7 @@ limitations under the License. -->
             </a>
         </li>
         <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('admin')">
-            <a routerLink="./admin" data-toggle="tooltip" id="admin" data-placement="top" title="admin">
+            <a routerLink="./admin" data-toggle="tooltip" id="admin" data-placement="top" title="Admin">
                 <img src="./assets/img/admin.png" style="width:30px;height: 30px; margin-top:-6px;" />
             </a>
         </li>

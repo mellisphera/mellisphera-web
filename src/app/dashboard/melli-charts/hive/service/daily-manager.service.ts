@@ -27,12 +27,17 @@ import { AstroService } from '../../service/astro.service';
 import { _localeFactory } from '@angular/core/src/application_module';
 import 'rxjs/add/observable/of';
 import { AlertsService } from '../../../service/api/alerts.service';
-import { ObservationService } from '../../../service/api/observation.service';
-import { Observation } from '../../../../_model/observation';
-import { AlertInterface } from '../../../../_model/alert';
 import { GLOBAL_ICONS } from '../../charts/icons/icons';
-import { MyDate } from '../../../../class/MyDate';
 import { UserParamsService } from '../../../preference-config/service/user-params.service';
+import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
+import { FitnessService } from '../../../../dashboard/service/api/fitness.service';
+import { CapteurService } from '../../../../dashboard/service/api/capteur.service';
+
+//import { HIVE_POS } from '../../../../../constants/hivePositions';
+import { TranslateService } from '@ngx-translate/core';
+import { RucheInterface } from '../../../../_model/ruche';
+import { RucherService } from '../../../../dashboard/service/api/rucher.service';
+import { RucheService } from '../../../../dashboard/service/api/ruche.service';
 
 
 
@@ -81,14 +86,15 @@ export class DailyManagerService {
   constructor(
     private dailyWService: DailyRecordsWService,
     private dailyHService: DailyRecordService,
-    private userPref: UserParamsService,
+    private fitnessService: FitnessService,
     private alertService: AlertsService,
     private weatherService: WeatherService,
-    private observationService: ObservationService,
     private graphGlobal: GraphGlobal,
     private astroService: AstroService,
-    private dailyStock: DailyStockHoneyService,
-    private unitService: UnitService
+    private unitService: UnitService,
+    private inspectionService: InspectionService,
+    private translateService: TranslateService,
+    private rucheService: RucheService
   ) {
     this.meanPeriodDevice = {
       value: 0,
@@ -121,6 +127,15 @@ export class DailyManagerService {
   }
 
 
+  getNameSerieByPosition(elt: any): string{
+    if(elt.values[0].position == null || elt.values[0].position == undefined || elt.values[0].position === "" ){
+      return elt.values[0].sensorRef;
+    }
+    else{
+      let nameSerie = elt.values[0].position;
+      return this.translateService.instant('HIVE_POS.'+nameSerie.toUpperCase()+'.MSG')
+    }
+  }
 
 
   /**
@@ -217,9 +232,45 @@ export class DailyManagerService {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, serieTemplate);
         if (nameSerie === 'gain' || nameSerie === 'loss') {
-          serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
+          if(_data.position === "" || _data.position == null || _data.position == undefined){
+            serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
+          }
+          else{
+            serieTmp.name = nameSerie + ' | ' + this.translateService.instant('HIVE_POS.' + _data.position.toUpperCase() + '.MSG');
+            /*let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
+            if(this.translateService.currentLang == 'fr'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.nl;
+            }*/
+          }
         } else {
-          serieTmp.name = _data.sensorRef;
+          if(_data.position === "" || _data.position == null || _data.position == undefined){
+            serieTmp.name = nameSerie + ' | '  + _data.sensorRef;
+          }
+          else{
+            serieTmp.name = nameSerie + ' | ' + this.translateService.instant('HIVE_POS.' + _data.position.toUpperCase() + '.MSG');
+            /*let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
+            if(this.translateService.currentLang == 'fr'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              serieTmp.name = nameSerie + ' | ' + hivePos.translations.nl;
+            }*/
+          }
         }
         if (data.map(_elt => _elt.date)[0] !== undefined) {
           serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
@@ -246,7 +297,7 @@ export class DailyManagerService {
           option.legend.selectedMode = 'single';
           let serie = JSON.parse(JSON.stringify(SERIES.custom));
           serie.data = data;
-          console.log(serie.data);
+          //console.log(serie.data);
           serie.name = data[0][9];
           serie.renderItem = (params, api) => {
             let cellPoint = api.coord(api.value(0));
@@ -353,7 +404,6 @@ export class DailyManagerService {
     )
   }
   getChartWeightincome(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    //his.getLastDayForMeanValue(this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(hiveId, this.rangeSevenDay), false, type);
     this.dailyWService.getDailyRecordsWbyHiveForMelliCharts(hiveId, range).subscribe(
       _daliW => {
         let option = Object.assign({}, this.baseOptionsInt);
@@ -372,6 +422,7 @@ export class DailyManagerService {
           }
           option.legend.selectedMode = 'multiple';
           this.getSerieByData(_daliW.weightIncomeHight, 'gain', SERIES.effectScatter, (serieComplete) => {
+            console.log(serieComplete.name);
             option.legend.data.push(serieComplete.name);
 /*             serieComplete.symbol = GLOBAL_ICONS.WINCOME;
  */            serieComplete.itemStyle = {
@@ -648,21 +699,43 @@ export class DailyManagerService {
   }
 
   getChartTintMax(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    // this.getLastDayForMeanValue(this.dailyHService.getTempIntMaxByHive(hiveId, this.rangeSevenDay), false, type);
     this.dailyHService.getTempIntMaxByHive(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _tMax => {
+        let posTab = _tMax.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(hivePos != undefined){
+            if(this.translateService.currentLang == 'fr'){
+              posTab[index] = hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              posTab[index] = hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              posTab[index] = hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              posTab[index] = hivePos.translations.nl;
+            }
+          }*/
+        });
+        let posSet = new Set([...posTab].concat([..._tMax.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _tMax.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _tMax.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.temp_int_max])
           };
@@ -684,18 +757,41 @@ export class DailyManagerService {
   getChartTextMax(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getTempMaxExt(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _tmpMaxExt => {
+        let posTab = _tmpMaxExt.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(hivePos != undefined){
+            if(this.translateService.currentLang == 'fr'){
+              posTab[index] = hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              posTab[index] = hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              posTab[index] = hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              posTab[index] = hivePos.translations.nl;
+            }
+          }*/
+        });
+        let posSet = new Set([...posTab].concat([..._tmpMaxExt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _tmpMaxExt.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _tmpMaxExt.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.temp_ext_max])
           };
@@ -715,18 +811,41 @@ export class DailyManagerService {
   getChartTextMin(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyWService.getTempMinExt(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _tMinExt => {
+        let posTab = _tMinExt.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(hivePos != undefined){
+            if(this.translateService.currentLang == 'fr'){
+              posTab[index] = hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              posTab[index] = hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              posTab[index] = hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              posTab[index] = hivePos.translations.nl;
+            }
+          }*/
+        });
+        let posSet = new Set([...posTab].concat([..._tMinExt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _tMinExt.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _tMinExt.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.temp_ext_min])
           };
@@ -746,18 +865,41 @@ export class DailyManagerService {
   getChartHint(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getHintByHive(hiveId, range).subscribe(
       _hInt => {
+        let posTab = _hInt.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(hivePos != undefined){
+            if(this.translateService.currentLang == 'fr'){
+              posTab[index] = hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              posTab[index] = hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              posTab[index] = hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              posTab[index] = hivePos.translations.nl;
+            }
+          }*/
+        });
+        let posSet = new Set([...posTab].concat([..._hInt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _hInt.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _hInt.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.humidity_int_max])
           };
@@ -777,18 +919,41 @@ export class DailyManagerService {
   getChartBrood(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getBroodByHive(hiveId, range).subscribe(
       _brood => {
+        let posTab = _brood.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(hivePos != undefined){
+            if(this.translateService.currentLang == 'fr'){
+              posTab[index] = hivePos.translations.fr;
+            }
+            if(this.translateService.currentLang == 'en'){
+              posTab[index] = hivePos.translations.en;
+            }
+            if(this.translateService.currentLang == 'es'){
+              posTab[index] = hivePos.translations.es;
+            }
+            if(this.translateService.currentLang == 'nl'){
+              posTab[index] = hivePos.translations.nl;
+            }
+          }*/
+        });
+        let posSet = new Set([...posTab].concat([..._brood.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _brood.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _brood.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.brood])
           };
@@ -810,18 +975,39 @@ export class DailyManagerService {
   getChartTminInt(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.dailyHService.getTminByHive(hiveId, range, this.unitService.getUserPref().unitSystem).subscribe(
       _tMin => {
+        let posTab = _tMin.map(_val => _val.values.map(_v => _v.position)).flat();
+        posTab.map((_pos,index) => {
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(this.translateService.currentLang == 'fr'){
+            posTab[index] = hivePos.translations.fr;
+          }
+          if(this.translateService.currentLang == 'en'){
+            posTab[index] = hivePos.translations.en;
+          }
+          if(this.translateService.currentLang == 'es'){
+            posTab[index] = hivePos.translations.es;
+          }
+          if(this.translateService.currentLang == 'nl'){
+            posTab[index] = hivePos.translations.nl;
+          }*/
+        });
+        let posSet = new Set([...posTab].concat([..._tMin.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
         if (this.existSeries(option.series, type.name)) {
           option.series = new Array();
         }
         option.calendar.range = range;
         option.legend.selectedMode = 'single';
-        option.legend.data = _tMin.map(_val => _val._id);
+        option.legend.data = [...posSet];
         option.legend.show = true;
         _tMin.forEach(elt => {
+          let nameSerie = this.getNameSerieByPosition(elt);
           let serie = {
             type: 'heatmap',
-            name: elt.values[0].sensorRef,
+            name: nameSerie,
             coordinateSystem: 'calendar',
             data: elt.values.map(_val => [_val.recordDate, _val.temp_int_min])
           };
@@ -840,9 +1026,9 @@ export class DailyManagerService {
   }
 
   getChartWeight(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
-    this.dailyWService.getWeightByHive(hiveId, range).subscribe(
+    this.dailyWService.getWeight23fByHive(hiveId, range).subscribe(
       _weightMax => {
-        //this.getLastDayForMeanValue(this.dailyWService.getWeightByHive(hiveId, this.rangeSevenDay), true, type);
+        //this.getLastDayForMeanValue(this.dailyWService.getWeight23fByHive(hiveId, this.rangeSevenDay), true, type);
         let option = this.baseOptionsInt;
         if (rangeChange) {
           let serie = JSON.parse(JSON.stringify(SERIES.effectScatter));
@@ -884,15 +1070,22 @@ export class DailyManagerService {
     )
   }
 
-  getChartAlert(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+  getChartAlert(type: Tools, hiveId: string, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     const obs: Array<Observable<any>> = [
-      this.observationService.getObservationByHiveForMelliCharts(hiveId, range),
-      this.alertService.getAlertByHive(hiveId, range)
+      this.alertService.getAlertByHive(hiveId, range),
+      this.inspectionService.getInspectionByHiveIdAndOpsDateBetween(hiveId, range),
+      this.inspectionService.getInspectionByApiaryIdAndOpsDateBetween(apiaryId, range),
     ]
     Observable.forkJoin(obs).subscribe(
       _data => {
-        const dateJoin = this.joinObservationAlert(_data[0], _data[1]);
-        const joinData = _data[0].concat(_data[1]);
+        const dateJoin = _data[0].map(_elt => {
+          return { date: _elt.opsDate, value: 0, sensorRef: 'notif' };
+        }).concat(_data[1].filter(_elt => _elt.type === 'hive').map(_elt => {
+          return _elt.type === "hive" ? { date: _elt.opsDate, value: 0, sensorRef: 'event' } : {};
+        })).concat(_data[2].filter(_elt => _elt.type === 'apiary').map(_elt => {
+          return _elt.type === "apiary" ? { date: _elt.opsDate, value: 0, sensorRef: 'inspect' } : {};
+        }));
+        const joinData = _data[0].concat(_data[1].filter(_elt => _elt.type === 'hive')).concat(_data[2].filter(_elt => _elt.type === 'apiary'));
         let option = Object.assign({}, this.baseOptionEnv);
         if (rangeChange) {
           option.series = this.removeDataAllseries(option.series);
@@ -926,8 +1119,11 @@ export class DailyManagerService {
                 let path: any;
                 const nbNote = dataByDate.filter(_elt => _elt.description).length;
                 //console.log(nbNote + '===' + dataByDate.length)
-                if (nbNote === dataByDate.length) {
-                  path = this.observationService.getPictoInspect(cellPoint);
+                if (nbNote === dataByDate.length && dataByDate.findIndex(_d => _d.type === 'apiary') !== -1) {
+                  path = this.inspectionService.getPictoInspect(cellPoint);
+                  group.children = group.children.concat(path);
+                } else if (nbNote === dataByDate.length && dataByDate.findIndex(_d => _d.type === 'apiary') === -1){
+                  path = this.inspectionService.getPictoEvent(cellPoint);
                   group.children = group.children.concat(path);
                 } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                   path = {
@@ -946,9 +1142,13 @@ export class DailyManagerService {
                 }
               } else if (dataByDate.length === 1) {
                 let icon;
-                if (dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
-                } else {
+                if (dataByDate[0].type && dataByDate[0].type === 'apiary') {
+                  group.children = group.children.concat(this.inspectionService.getPictoInspect(cellPoint));
+                }
+                else if(dataByDate[0].type && dataByDate[0].type === 'hive'){
+                  group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
+                } 
+                else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                   // icon = this.alertService.getPicto(dataByDate[0].type);
                 }
@@ -996,10 +1196,13 @@ export class DailyManagerService {
               });
               if (dataByDate.length > 1) {
                 let path: any;
-                const nbNote = dataByDate.filter(_elt => _elt.description).length;
+                const nbNote = dataByDate.filter(_elt => _elt.type).length;
                 //console.log(nbNote + '===' + dataByDate.length)
-                if (nbNote === dataByDate.length) {
-                  path = this.observationService.getPictoInspect(cellPoint);
+                if (nbNote === dataByDate.length && dataByDate.findIndex(_d => _d.type === 'apiary') !== -1) {
+                  path = this.inspectionService.getPictoInspect(cellPoint);
+                  group.children = group.children.concat(path);
+                } else if(nbNote === dataByDate.length && dataByDate.findIndex(_d => _d.type === 'apiary') === -1){
+                  path = this.inspectionService.getPictoEvent(cellPoint);
                   group.children = group.children.concat(path);
                 } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
                   path = {
@@ -1017,9 +1220,13 @@ export class DailyManagerService {
                   group.children.push(path);
                 }
               } else if (dataByDate.length === 1) {
-                if (dataByDate !== undefined && dataByDate[0].description) {
-                  group.children = group.children.concat(this.observationService.getPictoInspect(cellPoint));
-                } else {
+                if (dataByDate !== undefined && dataByDate[0].type && dataByDate[0].type === 'apiary') {
+                  group.children = group.children.concat(this.inspectionService.getPictoInspect(cellPoint));
+                }
+                else if(dataByDate !== undefined && dataByDate[0].type && dataByDate[0].type === 'hive'){
+                  group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
+                } 
+                else {
                   group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
                 }
               }
@@ -1044,6 +1251,375 @@ export class DailyManagerService {
       }
     );
 
+  }
+
+  getChartEventApi(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean): void{
+    let hive: RucheInterface = this.rucheService.getHiveById(hiveId);
+    this.inspectionService.getInspectionByApiaryIdAndOpsDateBetween(hive.apiaryId, range).subscribe(
+      _insp => {
+        let data : any[] = _insp.filter(_elt => _elt.type === 'apiary').map(_elt => {
+          return { date: _elt.opsDate, value: 0, sensorRef: 'Event-Api' };
+        });
+        let option = Object.assign({}, this.baseOptionEnv);
+        if(rangeChange){
+          option.series = this.removeDataAllseries(option.series);
+          this.getSerieByData(data, type.name, SERIES.custom, (serieComplete) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            serieComplete.renderItem = (params, api) => {
+              const cellPoint = api.coord(api.value(0));
+              const cellWidth = params.coordSys.cellWidth;
+              const cellHeight = params.coordSys.cellHeight;
+              const group = {
+                type: 'group',
+                children: []
+              };
+              const dataByDate: any[] = _insp.filter(_filter => this.graphGlobal.compareToDate(_filter.opsDate, api.value(0)));
+              group.children.push({
+                type: 'rect',
+                z2: 0,
+                shape: {
+                  x: -cellWidth / 2,
+                  y: -cellHeight / 2,
+                  width: cellWidth,
+                  height: cellHeight,
+                },
+                position: [cellPoint[0], cellPoint[1]],
+                style: {
+                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                  stroke: 'black'
+                }
+              });
+              if (dataByDate.length > 1) {
+                let path: any;
+                const nbNote = dataByDate.filter(_elt => _elt.description).length;
+                //console.log(nbNote + '===' + dataByDate.length)
+                if (nbNote === dataByDate.length) {
+                  path = this.inspectionService.getPictoInspect(cellPoint);
+                  group.children = group.children.concat(path);
+                }
+                else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
+                  path = {
+                    type: 'path',
+                    z2: 1000,
+                    shape: {
+                      pathData: GLOBAL_ICONS.THREE_DOTS,
+                      x: -11,
+                      y: -10,
+                      width: 25,
+                      height: 25
+                    },
+                    position: [cellPoint[0], cellPoint[1]],
+                  };
+                  group.children.push(path);
+                }
+              }
+              else if (dataByDate.length === 1) {
+                let icon;
+                if (dataByDate[0].description) {
+                  group.children = group.children.concat(this.inspectionService.getPictoInspect(cellPoint));
+                } else {
+                  group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
+                  // icon = this.alertService.getPicto(dataByDate[0].type);
+                }
+              }
+              return group;
+            };
+            if (index !== -1) {
+              option.series[index] = serieComplete;
+            } else {
+              option.series.push(serieComplete);
+            }
+          });
+          return;
+        }
+
+        if (this.existSeries(option.series, type.name)) {
+          option.series = new Array();
+        }
+        this.getSerieByData(data, type.name, SERIES.custom, (serieComplete: any) => {
+          serieComplete.renderItem = (params, api) => {
+            let cellPoint = api.coord(api.value(0));
+            let cellWidth = params.coordSys.cellWidth;
+            let cellHeight = params.coordSys.cellHeight;
+            let group = {
+              type: 'group',
+              children: []
+            };
+            group.children.push({
+              type: 'rect',
+              z2: 0,
+              shape: {
+                x: -cellWidth / 2,
+                y: -cellHeight / 2,
+                width: cellWidth,
+                height: cellHeight,
+              },
+              position: [cellPoint[0], cellPoint[1]],
+              style: {
+                fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                stroke: 'black'
+              }
+            });
+            const dataByDate: any[] = _insp.filter(_filter => {
+              return this.graphGlobal.compareToDate(_filter.opsDate, api.value(0));
+            });
+            if (dataByDate.length > 1) {
+              let path: any;
+              const nbNote = dataByDate.filter(_elt => _elt.description).length;
+              //console.log(nbNote + '===' + dataByDate.length)
+              if (nbNote === dataByDate.length) {
+                path = this.inspectionService.getPictoInspect(cellPoint);
+                group.children = group.children.concat(path);
+              } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
+                path = {
+                  type: 'path',
+                  z2: 1000,
+                  shape: {
+                    pathData: GLOBAL_ICONS.THREE_DOTS,
+                    x: -11,
+                    y: -10,
+                    width: 25,
+                    height: 25
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                };
+                group.children.push(path);
+              }
+            } else if (dataByDate.length === 1) {
+              if (dataByDate !== undefined && dataByDate[0].description) {
+                group.children = group.children.concat(this.inspectionService.getPictoInspect(cellPoint));
+              } else {
+                group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
+              }
+            }
+            return group;
+          }
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.series.push(serieComplete);
+        });
+        option.calendar.range = range;
+        option.legend.show = true;
+        option.series.push(this.graphGlobal.getDaySerie());
+        option.tooltip = this.graphGlobal.getTooltipBySerie(type, _insp.filter(_elt => _elt.type === 'apiary'));
+        chartInstance.clear();
+        chartInstance.setOption(option, true);
+        chartInstance.hideLoading();
+        this.baseOptionEnv = option;
+        return;
+      },
+      () => {},
+      () => {}
+    )
+  }
+
+  getChartEvent(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean): void{
+    let hive: RucheInterface = this.rucheService.getHiveById(hiveId);
+    this.inspectionService.getInspectionByHiveIdAndOpsDateBetween(hive._id, range).subscribe(
+      _insp => {
+        let data : any[] = _insp.filter(_elt => _elt.type === 'hive' && _elt.hiveId === hiveId).map(_elt => {
+          return { date: _elt.opsDate, value: 0, sensorRef: 'Evenements' };
+        });
+        let option = Object.assign({}, this.baseOptionEnv);
+        if(rangeChange){
+          option.series = this.removeDataAllseries(option.series);
+          this.getSerieByData(data, type.name, SERIES.custom, (serieComplete) => {
+            const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
+            serieComplete.renderItem = (params, api) => {
+              const cellPoint = api.coord(api.value(0));
+              const cellWidth = params.coordSys.cellWidth;
+              const cellHeight = params.coordSys.cellHeight;
+              const group = {
+                type: 'group',
+                children: []
+              };
+              const dataByDate: any[] = _insp.filter(_filter => this.graphGlobal.compareToDate(_filter.opsDate, api.value(0)));
+              group.children.push({
+                type: 'rect',
+                z2: 0,
+                shape: {
+                  x: -cellWidth / 2,
+                  y: -cellHeight / 2,
+                  width: cellWidth,
+                  height: cellHeight,
+                },
+                position: [cellPoint[0], cellPoint[1]],
+                style: {
+                  fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                  stroke: 'black'
+                }
+              });
+              if (dataByDate.length > 1) {
+                let path: any;
+                const nbNote = dataByDate.filter(_elt => _elt.description).length;
+                //console.log(nbNote + '===' + dataByDate.length)
+                if (nbNote === dataByDate.length) {
+                  path = this.inspectionService.getPictoEvent(cellPoint);
+                  group.children = group.children.concat(path);
+                }
+                else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
+                  path = {
+                    type: 'path',
+                    z2: 1000,
+                    shape: {
+                      pathData: GLOBAL_ICONS.THREE_DOTS,
+                      x: -11,
+                      y: -10,
+                      width: 25,
+                      height: 25
+                    },
+                    position: [cellPoint[0], cellPoint[1]],
+                  };
+                  group.children.push(path);
+                }
+              }
+              else if (dataByDate.length === 1) {
+                let icon;
+                if (dataByDate[0].description) {
+                  group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
+                } else {
+                  group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
+                  // icon = this.alertService.getPicto(dataByDate[0].type);
+                }
+              }
+              return group;
+            };
+            if (index !== -1) {
+              option.series[index] = serieComplete;
+            } else {
+              option.series.push(serieComplete);
+            }
+          });
+          return;
+        }
+
+        if (this.existSeries(option.series, type.name)) {
+          option.series = new Array();
+        }
+        this.getSerieByData(data, type.name, SERIES.custom, (serieComplete: any) => {
+          serieComplete.renderItem = (params, api) => {
+            let cellPoint = api.coord(api.value(0));
+            let cellWidth = params.coordSys.cellWidth;
+            let cellHeight = params.coordSys.cellHeight;
+            let group = {
+              type: 'group',
+              children: []
+            };
+            group.children.push({
+              type: 'rect',
+              z2: 0,
+              shape: {
+                x: -cellWidth / 2,
+                y: -cellHeight / 2,
+                width: cellWidth,
+                height: cellHeight,
+              },
+              position: [cellPoint[0], cellPoint[1]],
+              style: {
+                fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                stroke: 'black'
+              }
+            });
+            const dataByDate: any[] = _insp.filter(_filter => {
+              return this.graphGlobal.compareToDate(_filter.opsDate, api.value(0));
+            });
+            if (dataByDate.length > 1) {
+              let path: any;
+              const nbNote = dataByDate.filter(_elt => _elt.description).length;
+              //console.log(nbNote + '===' + dataByDate.length)
+              if (nbNote === dataByDate.length) {
+                path = this.inspectionService.getPictoEvent(cellPoint);
+                group.children = group.children.concat(path);
+              } else if (nbNote < dataByDate.length && dataByDate.length !== 1) {
+                path = {
+                  type: 'path',
+                  z2: 1000,
+                  shape: {
+                    pathData: GLOBAL_ICONS.THREE_DOTS,
+                    x: -11,
+                    y: -10,
+                    width: 25,
+                    height: 25
+                  },
+                  position: [cellPoint[0], cellPoint[1]],
+                };
+                group.children.push(path);
+              }
+            } else if (dataByDate.length === 1) {
+              if (dataByDate !== undefined && dataByDate[0].description) {
+                group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
+              } else {
+                group.children = group.children.concat(this.alertService.getPicto(dataByDate[0].icon, cellPoint));
+              }
+            }
+            return group;
+          }
+          option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+          option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.series.push(serieComplete);
+        });
+        option.calendar.range = range;
+        option.legend.show = true;
+        option.series.push(this.graphGlobal.getDaySerie());
+        option.tooltip = this.graphGlobal.getTooltipBySerie(type, _insp.filter(_elt => _elt.hiveId === hiveId));
+        chartInstance.clear();
+        chartInstance.setOption(option, true);
+        chartInstance.hideLoading();
+        this.baseOptionEnv = option;
+        return;
+      },
+      () => {},
+      () => {}
+    )
+  }
+
+
+  getChartFitness(type: Tools, hiveId: string, chartInstance: any, range: Date[], rangeChange: boolean){
+    this.fitnessService.getFitnessByHiveIdAndDate(hiveId, range).subscribe(
+      _fitness => {
+
+        let option = Object.assign({}, this.baseOptionsInt);
+        if ( this.existSeries(option.series, type.name) ){
+          option.series = new Array();
+        }
+        option.calendar.range = range;
+        option.legend.show = false;
+        _fitness.forEach(elt => {
+          let nb;
+          switch(elt.fitcolor){
+            case 'Green':
+              nb = 100;
+              break;
+            case 'Orange':
+              nb = 66;
+              break;
+            case 'Red':
+              nb = 33;
+              break;
+            case 'Black':
+              nb = 0;
+              break;
+          }
+          let item = [elt.date, nb];
+          let serie = {
+            type: 'heatmap',
+            name: type.name + ' | ' + elt.fitcode,
+            coordinateSystem: 'calendar',
+            data: [item]
+          }
+          option.series.push(serie);
+        });
+        option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+        option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+        option.series.push(this.graphGlobal.getDaySerie());
+        option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+        option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+        chartInstance.clear();
+        chartInstance.setOption(option, true);
+        chartInstance.hideLoading();
+        this.baseOptionsInt = option;
+      }
+    );
   }
 
   /**
@@ -1106,7 +1682,7 @@ export class DailyManagerService {
       value = value + parseInt(_value[1], 10);
     });
     let meanValue = this.unitService.getValRound(mean ? value / data.length : value);
-    /*     switch(type.name) {
+    /* switch(type.name) {
           case 'RAIN':
             meanValue = this.unitService.convertMilimetreToPouce(meanValue, this.unitService.getUserPref().unitSystem, false);
             break;
@@ -1172,6 +1748,21 @@ export class DailyManagerService {
    */
   joinObservationAlert(_obs: any[], _alert: any[]): any[] {
     return _obs.concat(_alert).map(_elt => {
+      return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'inspect' : 'notif' };
+    });
+  }
+
+
+  /**
+   *
+   *
+   * @param {any[]} _obs
+   * @param {any[]} _alert
+   * @returns {any[]}
+   * @memberof DailyManagerService
+   */
+  joinInspectionAlert(_insp: any[], _alert: any[]): any[] {
+    return _insp.concat(_alert).map(_elt => {
       return { date: _elt.opsDate, value: 0, sensorRef: _elt.description ? 'inspect' : 'notif' };
     });
   }

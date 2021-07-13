@@ -1,0 +1,81 @@
+nav[role=admin-navigation] {
+  color: white;
+  background-color: #4F4F51;
+}
+
+.nav li .btn{
+  color: white !important;
+}
+
+.active{
+  background-color: white;
+}
+
+.nopadding{
+  padding: 0px !important;
+  margin: 0 !important;
+}
+
+.button {
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 6px 1px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button0 {
+  background-color: #4F4F51;
+  color: white;
+  border: 2px solid #70A8B2;
+  border-radius: 4px;
+}
+
+.button0:hover {
+  background-color: white;
+  color: #4F4F51;
+}
+
+.button0:focus {
+  outline: 0;
+}
+
+.nav-active {
+  background-color: white;
+  color: #4F4F51;
+}
+
+.active0{
+  background-color: white;
+  color: #4F4F51;
+}
+
+.active0:hover{
+  color: #70A8B2;
+  border: 2px solid #4F4F51;
+}
+
+.buttonLeft{
+    margin-left: 25px;
+}
+
+.navbar{
+    height: 50px;
+}
+
+@media screen and (max-width:1000px){
+  .navbar-nav {
+      display: flex !important;
+  }
+  .buttonLeft{
+      justify-content: space-around;
+      width: 100%;
+  }
+  .navbar-nav{
+      margin: 0px !important;
+  }
+}
