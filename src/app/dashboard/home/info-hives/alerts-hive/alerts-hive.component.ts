@@ -287,7 +287,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
         return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
           let type = 'Notif';
           let img = '';
-          if (_singleData.description) {
+          if (_singleData.type) {
             type = 'Inspection';
             img = '<img style={S} src={I} />';
             img = img.replace(/{I}/g, './assets/ms-pics/ui/calendbars/inspect_cw.png');
@@ -305,17 +305,23 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
     }
     return tooltip;
   }
+
   sliceTextToolip(text: string): string {
-    try {
-      let originString = '';
-      originString = text;
-      let newString: string;
-      while (originString.length >= 70) {
-        newString += originString.slice(0, 70) + '<br/>';
-        originString = originString.replace(originString.slice(0, 70), '');
-      }
-      return (newString + originString).replace(/undefined/g, '');
-    } catch{ }
+    if(text != undefined && text != null){
+      try {
+        let originString = '';
+        originString = text;
+        let newString: string;
+        while (originString.length >= 70) {
+          newString += originString.slice(0, 70) + '<br/>';
+          originString = originString.replace(originString.slice(0, 70), '');
+        }
+        return (newString + originString).replace(/undefined/g, '');
+      } catch{ }
+    }
+    else{
+      return '';
+    }
   }
 
 

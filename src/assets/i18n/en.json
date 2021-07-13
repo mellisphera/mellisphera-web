@@ -505,9 +505,9 @@
             "BODY": "Do you really want to delete this event ?"
           },
           "BUTTONS":{
-            "ADD":"Add",
+            "ADD":"Save",
             "CANCEL":"Cancel",
-            "EDIT":"Edit",
+            "EDIT":"Save",
             "DELETE":"Delete"
           },
           "TABLE":{
@@ -678,7 +678,36 @@
       "OXALIC":"Oxalic acid treatment",
       "OXALIC_DESC":"Triggered when the average brood in your hives is below the set threshold. This is an indication that allows you to treat your hives with oxalic acid at the right time.",
       "DEAD":"Dead hive",
-      "DEAD_DESC":"Our algorithm detects every day if your hive is dead based on various parameters we have set."
+      "DEAD_DESC":"Our algorithm detects every day if your hive is dead based on various parameters we have set.",
+      "RAIN_MSG":"Rainfall will exceed {VAL}" ,
+      "SNOW_MSG":"Snowfall will exceed {VAL} " ,
+      "WIND_MSG":"The wind will exceed {VAL}" ,
+      "COLDDAY_MSG":"Temperatures will be unusually cold",
+      "OXALIC_MSG":"It's time to treat your hives",
+      "HOTDAY_MSG":"Temperatures will be unusually warm",
+      "TMAX_MSG":"Internal temperature over {VAL}" ,
+      "TMIN_MSG":"Internal temperature below {VAL}" ,
+      "WIPOS_MSG":"The gain of your bees' stock exceeds {VAL}",
+      "WINEG_MSG":"The loss of your bees' stock exceeds {VAL}",
+      "LOWBROOD_MSG":"Brood below {VAL}",
+      "HMAX_MSG":"Internal humidity over {VAL}",
+      "HMIN_MSG":"Internal humidity below {VAL}",
+      "HONEYDEW_MSG":"Incoming weights during the last week exceeding {VAL}",
+      "WLIM_MSG":"The weight of your hive exceeds {VAL}",
+      "SWARM_MSG":"Potential swarm detected around 14:00",
+      "RSWARM_MSG":"Swarming day expected",
+      "SUPER+_MSG":"You added a super",
+      "SUPER-_MSG":"You removed a super",
+      "LOWBATTERYT_MSG":"Replace the battery of ",
+      "LOWBATTERYW_MSG":"Replace the battery of ",
+      "DCONNECTT_MSG":"{REF} disconnected since {DATE}",
+      "DCONNECTW_MSG":"{REF} disconnected since {DATE}",
+      "DCONNECTH_MSG":"{REF} disconnected since {DATE}",
+      "POORSIGNALT_MSG":"{REF} poor signal since {DATE}",
+      "POORSIGNALW_MSG":"{REF} poor signal since {DATE}",
+      "STOPWEATHER_MSG":"Data transmission error from your weather station since {DATE}",
+      "STOLEN_MSG":"The weight of your hive is abnormally low",
+      "DEAD_MSG":"Your hive has been detected dead"
   },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icon",
@@ -774,6 +803,13 @@
         "BTN": "Login",
         "EULA": "End User License Agreement",
         "BTN_EUA": "Accept EULA terms and conditions ",
+
+        "SIGN_IN": {
+            "DENIED": "Access denied",
+            "SUBMIT": "Login",
+            "SIGN_UP_LINK": "Create MyBroodminder account"
+        },
+
         "BECOMING": {
             "TITLE": "Becoming a precision beekeeper",
             "CONTENT": ["We want to make your hive monitoring experience more intense. Mellisphera is a comprehensive interface that",
@@ -804,7 +840,135 @@
             "CONNECTION": "Connection",
             "ERR": "Cannot log in",
             "TRY_MS": "Démo account",
-            "MAIL_SUBJECT": "Connection problem"
+            "MAIL_SUBJECT": "Connection problem",
+            "DENIED":"Access denied"
         }
+    },
+    "NOTIFY":{
+        "SUCCESS":{  
+            "CHANGE_NAME_DEMO_APIARY": "Name updated",
+            "READ_ALL_ALERTS_HIVE": "Alerts read",
+            "SAVE_ALERT_CONF": "Saved settings",
+            "SAVE_INSP_CONF": "Saved settings",
+            "SEND_MAIL_TEST": "Email sent !"
+        },
+        "FAIL":{
+            "AUTH_WRITE_APIARY": "You are not allowed to modify the demonstration apiary.",
+            "NO_DELETE_RIGHT": "You can't delete the last apiary",
+            "AUTH_WRITE_HIVE": "You are not allowed to modify this hive",
+            "AUTH_WRITE_NOTES": "You are not allowed to write notes in this apiary",
+            "AUTH_WRITE_NOTES_HIVE": "You are not allowed to write here"
+        }
+    },
+    "MOON":{
+        "1":"Full moon",
+        "2":"New moon",
+        "3":"Last quarter",
+        "4":"First quarter",
+        "5":"Waxing gibbous",
+        "6":"Waning gibbous",
+        "7":"Waning crescent",
+        "8":"Waxing crescent"
+    },
+    "DEVICE_STATUS_CODE":{
+        "R":{
+            "COLOR":"Red",
+            "MSG":"Sensor disconnected"
+        },
+        "O1":{
+            "COLOR":"Orange",
+            "MSG":"Poor signal"
+        },
+        "O2":{
+            "COLOR":"Orange",
+            "MSG":"Low battery"
+        }
+    },
+    "FITNESS_CODE":{
+        "B1":{
+            "COLOR":"Black",
+            "MSG":"Dead hive"
+        },
+        "B2":{
+            "COLOR":"Black",
+            "MSG":"Stolen hive"
+        },
+        "R1":{
+            "COLOR":"Red",
+            "MSG":"Very weak hive"
+        },
+        "O1":{
+            "COLOR":"Orange",
+            "MSG":"Weak hive or in strong decrease"
+        },
+        "O2":{
+            "COLOR":"Orange",
+            "MSG":"Potential swarm"
+        },
+        "O3":{
+            "COLOR":"Orange",
+            "MSG":"Overheating"
+        },
+        "O4":{
+            "COLOR":"Orange",
+            "MSG":"Extreme cold"
+        },
+        "O5":{
+            "COLOR":"Orange",
+            "MSG":"Rapid weight loss, being robbed"
+        },
+        "G1":{
+            "COLOR":"Green",
+            "MSG":"Healthy"
+        }
+    },
+    "HIVE_POS":{
+        "ABOVE LOWER BROOD BOX":{
+            "COLOR":"#d45087",
+            "MSG":"Above Lower Brood Box"
+        },
+        "ABOVE UPPER BROOD BOX":{
+            "COLOR":"#ffa600",
+            "MSG":"Above Upper Brood Box"
+        },
+        "OTHER":{
+            "COLOR":"#f95d6a",
+            "MSG":"Other"
+        },
+        "OUTSIDE HIVE":{
+            "COLOR":"#a05195",
+            "MSG":"Outside Hive"
+        },
+        "SCALE UNDER HIVE":{
+            "COLOR":"#003f5c",
+            "MSG":"Scale Under Hive"
+        },
+        "SCALE UNDER HIVE (BACK)":{
+            "COLOR":"#ff7c43",
+            "MSG":"Scale Under Hive (Back)"
+        },
+        "UNDER INNER COVER":{
+            "COLOR":"#665191",
+            "MSG":"Under Inner Cover"
+        }
+    },
+    "MESSAGES":{
+        "WARNINGHIVE":"Warning, the hive ",
+        "WILLBEDELETED":" will be deleted.",
+        "WARNINGHIVES":"Warning, the hives ",
+        "WILLBEDELETEDS":" will be deleted.",
+        "AND":" and ",
+        "PASSWORD":"Password",
+        "DENIED":"Acces denied",
+        "LOGIN":"Login",
+        "CREATEACCOUNT":"Create account",
+        "OR":"or",
+        "RESETPSW":"Reset password",
+        "ENTEREMAIL":"Enter your Email",
+        "SIXCARACMIN":"6 characters min",
+        "ENTERPSW":"Enter your password",
+        "SIGNUP":"Sign up",
+        "BACK":"Back",
+        "RESET":"Reset"
     }
 }

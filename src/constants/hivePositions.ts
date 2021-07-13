@@ -1,4 +1,4 @@
-export const HIVE_POS = [
+/*export const HIVE_POS = [
   {
     "id": "Rw1rfjmWOM1NGrWLvqc2",
     "name": "Above Lower Brood Box",
@@ -153,4 +153,4 @@ export const HIVE_POS = [
       "es": "Custom (7)"
     }
   }
-];
+];*/

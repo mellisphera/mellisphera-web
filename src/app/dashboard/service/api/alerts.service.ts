@@ -19,7 +19,7 @@ import { ALERTS_ICONS } from '../../melli-charts/charts/icons/icons_alerts';
 import { AlertUser } from '../../../_model/alertUser';
 import { AlertCat } from '../../../_model/alertCat';
 import { UserloggedService } from '../../../userlogged.service';
-import { NOTIF_CODE } from '../../../../constants/notif_code';
+//import { NOTIF_CODE } from '../../../../constants/notif_code';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { UnitService } from '../unit.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -226,9 +226,9 @@ export class AlertsService {
      * @memberof AlertsService
      */
     getMessageAlertByCode(args: AlertInterface): string {
-        const alertId = this.alertTypes.filter(_alert => _alert.icon === NOTIF_CODE[args.code].icon)[0]._id;
+        const alertId = this.alertTypes.filter(_alert => _alert.icon === args.icon)[0]._id;
         const lang = this.translateService.currentLang.toUpperCase();
-        const msg: string = NOTIF_CODE[args.code][lang].Message;
+        const msg: string = this.translateService.instant('ALERTS_DESC.'+args.icon.toUpperCase()+'_MSG');
         return msg.replace(/{VAL}/g, this.getUserValue(alertId))
         .replace(/{DATE}/g, this.unitService.getDailyDate(args.opsDate)).replace(/{REF}/g, args.sensorRef)
         .replace(/{PERIOD}/g, this.getUserValue(alertId)).replace(/day/g, this.getDayLabelByLang(lang));

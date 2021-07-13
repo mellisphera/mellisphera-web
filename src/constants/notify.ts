@@ -11,7 +11,7 @@ limitations under the License. */
 
 
 
-export const NOTIF_MSG = {
+/*export const NOTIF_MSG = {
         SUCCESS: {
             FR: {
                 CHANGE_NAME_DEMO_APIARY: 'Nom modifié',
@@ -52,7 +52,7 @@ export const NOTIF_MSG = {
                 AUTH_WRITE_NOTES_HIVE: 'You are not allowed to write here'
             }
         }
-}
+}*/
 export enum NotifList{
     AUTH_WRITE_APIARY = 'AUTH_WRITE_APIARY',
     NO_DELETE_RIGHT = 'NO_DELETE_RIGHT',

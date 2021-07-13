@@ -145,8 +145,8 @@
   margin: 5px 5px;
   margin-bottom: 10px;
   text-align: center;
-  height: 35px;
-  width: 35px;
+  height: 42px;
+  width: 42px;
   color: grey;
   background-color: transparent;
   border: 0;
@@ -154,11 +154,11 @@
 }
 
 .apiary-action:hover, .hives-action:hover{
-  border: 1px solid rgb(0, 180, 0);
+  border: 2px solid #4f4f51;
 }
 
 .apiary-obs:hover, .hives-obs:hover{
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .obs-flex{
@@ -166,11 +166,11 @@
 }
 
 .border-green{
-  border: 1px solid rgb(0, 180, 0);
+  border: 2px solid #4f4f51;
 }
 
 .border-blue{
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .apiary-notes-todo, .hive-notes-todo{
@@ -191,6 +191,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/default_cb.svg');
   background-position: center;
+  border: 2px solid #4f4f51;
 }
 
 .btn-swarm_b{
@@ -205,7 +206,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/swarm_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-super\+_b{
@@ -220,7 +221,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/super+_cb.svg');
   background-position: center;
-  border: 1px solid rgb(0, 180, 0);
+  border: 2px solid #4f4f51;
 }
 
 .btn-super-_b{
@@ -235,7 +236,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/super-_cb.svg');
   background-position: center;
-  border: 1px solid rgb(0, 180, 0);
+  border: 2px solid #4f4f51;
 }
 
 .btn-stolen_b{
@@ -257,7 +258,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/syrupfeed_cb.svg');
   background-position: center;
-  border: 1px solid rgb(0, 180, 0);
+  border: 2px solid #4f4f51;
 }
 
 .btn-mitevapor_b{
@@ -272,7 +273,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/mitevapor_cb.svg');
   background-position: center;
-  border: 1px solid rgb(0, 180, 0);
+  border: 2px solid #4f4f51;
 }
 
 .btn-queeninsert_b{
@@ -287,7 +288,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/queeninsert_cb.svg');
   background-position: center;
-  border: 1px solid rgb(0, 180, 0);
+  border: 2px solid #4f4f51;
 }
 
 .btn-division_b{
@@ -302,7 +303,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/division_cb.svg');
   background-position: center;
-  border: 1px solid rgb(0, 180, 0);
+  border: 2px solid #4f4f51;
 }
 
 .btn-broodadd_b{
@@ -317,7 +318,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/broodadd_cb.svg');
   background-position: center;
-  border: 1px solid rgb(0, 180, 0);
+  border: 2px solid #4f4f51;
 }
 
 .btn-broodremove_b{
@@ -333,7 +334,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/broodremove_cb.svg');
   background-position: center;
-  border: 1px solid rgb(0, 180, 0);
+  border: 2px solid #4f4f51;
 }
 
 .btn-stolen_cb{
@@ -341,7 +342,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/alerts/ruche/stolen_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-lowbrood_b{
@@ -356,7 +357,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/alerts/ruche/lowbrood_cbz.png');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-normbrood_b{
@@ -371,7 +372,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/normbrood_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-highbrood_b{
@@ -386,7 +387,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/highbrood_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-nobrood_b{
@@ -401,7 +402,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nobrood_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-nobees_b{
@@ -416,7 +417,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nobees_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-lowbees_b{
@@ -431,7 +432,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/lowbees_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-normbees_b{
@@ -446,7 +447,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/normbees_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-highbees_b{
@@ -461,7 +462,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/highbees_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-nores_b{
@@ -476,7 +477,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nores_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-lowres_b{
@@ -491,7 +492,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/lowres_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-normres_b{
@@ -506,7 +507,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/normres_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .btn-highres_b{
@@ -521,14 +522,29 @@
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/highres_cb.svg');
   background-position: center;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
+}
+
+.btn-honeydew_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/honeydew_b.svg');
+  background-position: center;
+}
+
+.btn-honeydew_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/honeydew_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
 }
 
 .hives-action, .hives-obs
 {
   margin: 5px 5px;
-  height: 35px;
-  width: 35px;
+  height: 42px;
+  width: 42px;
 }
 
 .inspect-apiary-notes, .inspect-apiary-todo,
@@ -774,7 +790,7 @@
 .brood-egg-active{
   background: url('../../../../assets/ms-pics/inspects/egg_cb.svg') center no-repeat;
   background-size: 35px;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .brood-larva{
@@ -785,7 +801,7 @@
 .brood-larva-active{
   background: url('../../../../assets/ms-pics/inspects/larva_cb.svg') center no-repeat;
   background-size: 35px;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .brood-pupa{
@@ -796,7 +812,7 @@
 .brood-pupa-active{
   background: url('../../../../assets/ms-pics/inspects/pupa_cb.svg') center no-repeat;
   background-size: 37px;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .brood-drone{
@@ -807,7 +823,7 @@
 .brood-drone-active{
   background: url('../../../../assets/ms-pics/inspects/dronebrood_cb.svg') center no-repeat;
   background-size: 37px;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .brood-none{
@@ -818,7 +834,7 @@
 .brood-none-active{
   background: url('../../../../assets/ms-pics/inspects/nobrood_cb.svg') center no-repeat;
   background-size: 28px;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .health-buzz{
@@ -829,7 +845,7 @@
 .health-buzz-active{
   background: url('../../../../assets/ms-pics/inspects/buzzinghive_cb.svg') center no-repeat;
   background-size: 37px;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .health-sick{
@@ -840,7 +856,7 @@
 .health-sick-active{
   background: url('../../../../assets/ms-pics/inspects/sick_cb.svg') center no-repeat;
   background-size: 37px;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .health-mosaic{
@@ -851,7 +867,7 @@
 .health-mosaic-active{
   background: url('../../../../assets/ms-pics/inspects/mosaicbrood_cb.svg') center no-repeat;
   background-size: 37px;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .health-queen{
@@ -862,7 +878,7 @@
 .health-queen-active{
   background: url('../../../../assets/ms-pics/inspects/queen_cb.svg') center no-repeat;
   background-size: 37px;
-  border: 1px solid skyblue;
+  border: 2px solid #4f4f51;
 }
 
 .health-swarm{
@@ -873,7 +889,8 @@
 .health-swarm-active{
   background: url('../../../../assets/ms-pics/alerts/ruche/swarm_cb.svg') center no-repeat;
   background-size: 37px;
-  border: 1px solid skyblue;}
+  border: 2px solid #4f4f51;
+}
 
 .btn-sad, .btn-normal, .btn-happy{
   width: 50px;
@@ -931,8 +948,7 @@
 
 .hive-op-brood{
   border-right: 5px solid white;
-  min-width: 235px; 
-  background-color: #eee;
+  min-width: 270px; 
   padding-bottom: 10px;
 }
 

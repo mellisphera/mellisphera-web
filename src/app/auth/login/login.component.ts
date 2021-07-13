@@ -18,7 +18,7 @@ import { AuthService } from '../Service/auth.service';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { Login } from '../../_model/login';
 import { SignupService } from '../Service/signup.service';
-import { MESSAGES, MessagesList } from '../../../constants/messages';
+import { MessagesList } from '../../../constants/messages';
 
 @Component({
   selector: 'app-login',
@@ -154,6 +154,6 @@ export class LoginComponent implements OnInit, AfterContentInit, OnDestroy {
     }else{
       language = 'EN';
     }
-    return(MESSAGES[language][msg]);
+    return '';
   }
 }

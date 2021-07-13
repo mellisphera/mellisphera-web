@@ -20,7 +20,7 @@ import { AlertCat } from '../../_model/alertCat';
 import { UserParamsService } from '../preference-config/service/user-params.service';
 import { MyNotifierService } from '../service/my-notifier.service';
 import { NotifList } from '../../../constants/notify';
-import { NOTIF_DESCRIPTION5 } from '../../../constants/notif_description';
+//import { NOTIF_DESCRIPTION5 } from '../../../constants/notif_description';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 

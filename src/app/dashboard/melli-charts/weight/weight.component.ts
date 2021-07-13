@@ -17,11 +17,12 @@ import { DateTimeAdapter } from 'ng-pick-datetime';
 import { TranslateService } from '@ngx-translate/core';
 import { trackByHourSegment } from 'angular-calendar/modules/common/util';
 import * as moment from 'moment';
-import { HIVE_POS } from '../../../../constants/hivePositions';
+//import { HIVE_POS } from '../../../../constants/hivePositions';
 import { DailyManagerService } from '../hive/service/daily-manager.service';
 import { MelliChartsHiveService } from '../service/melli-charts-hive.service';
 import { HourlyWeightComponent } from './hourly-weight/hourly-weight.component';
 import { timeStamp } from 'console';
+import { throwMatDuplicatedDrawerError } from '@angular/material';
 
 
 @Component({
@@ -688,19 +689,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else{
       let nameSerie = elt.position;
-      let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
-      if(this.translateService.currentLang == 'fr'){
-        return hivePos.translations.fr;
-      }
-      if(this.translateService.currentLang == 'en'){
-        return hivePos.translations.en;
-      }
-      if(this.translateService.currentLang == 'es'){
-        return hivePos.translations.es;
-      }
-      if(this.translateService.currentLang == 'nl'){
-        return hivePos.translations.nl;
-      }
+      return this.translateService.instant('HIVE_POS.'+nameSerie.toUpperCase()+'.MSG')
     }
   }
 
@@ -1251,6 +1240,7 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // FUNCTION TRIGGERED WHEN REF DATE IS CHOSEN
   refDate(){
+    this.ref_Date = new Date(this.ref_Date);
     (<HTMLInputElement>document.getElementsByClassName('weight_ref_date')[0]).value = this.unitService.getDailyDate(this.ref_Date);
     this.user_pref.dateRef = this.ref_Date;
     this.userPrefsService.setRefDate(this.ref_Date).subscribe(

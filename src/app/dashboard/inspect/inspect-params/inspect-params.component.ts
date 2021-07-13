@@ -34,8 +34,10 @@ export class InspectParamsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.inspCatService.getInspCat().subscribe(
       _inspCatArray => {
-        this.inspCat = [..._inspCatArray];
-        console.log(_inspCatArray);
+        this.inspCat = [..._inspCatArray].sort((a,b) => {
+          return a.code - b.code;
+        });
+        console.log(this.inspCat);
       },
       () => {},
       () => {

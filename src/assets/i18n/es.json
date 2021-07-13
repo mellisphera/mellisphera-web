@@ -520,9 +520,9 @@
             "BODY": "¿Estás seguro de que deseas retirar este evento?"
           },
           "BUTTONS":{
-            "ADD":"Añadir",
+            "ADD":"Guardar",
             "CANCEL":"Anular",
-            "EDIT":"Editar",
+            "EDIT":"Guardar",
             "DELETE":"Retirar"
           },
           "TABLE":{
@@ -693,7 +693,36 @@
       "OXALIC":"Tratamiento con ácido oxálico",
       "OXALIC_DESC":"Se desencadena cuando el promedio de cría en sus colmenas está por debajo del umbral establecido. Esta es una indicación que le permite tratar sus colmenas con ácido oxálico en el momento adecuado.",
       "DEAD":"Colmena muerta",
-      "DEAD_DESC":"Nuestro algoritmo detecta cada día si su colmena está muerta basándose en diferentes parámetros que hemos establecido."
+      "DEAD_DESC":"Nuestro algoritmo detecta cada día si su colmena está muerta basándose en diferentes parámetros que hemos establecido.",
+      "RAIN_MSG":"La lluvia excederá {VAL}",
+      "SNOW_MSG":"La nieve excederá {VAL}",
+      "WIND_MSG":"El viento excederá {VAL}",
+      "COLDDAY_MSG":"Las temperaturas serán inusualmente frías",
+      "OXALIC_MSG":"Es hora de tratar sus colmenas.",
+      "HOTDAY_MSG":"Las temperaturas serán inusualmente cálidas",
+      "TMAX_MSG":"La temperatura interna excede {VAL}",
+      "TMIN_MSG":"La temperatura interna está por debajo de {VAL}",
+      "WIPOS_MSG":"La ganancia de las reservas excede {VAL}",
+      "WINEG_MSG":"La pérdida de reservas excede {VAL}",
+      "LOWBROOD_MSG":"La cria esta por debajo del {VAL}",
+      "HMAX_MSG":"La humedad interna supera el {VAL}",
+      "HMIN_MSG":"La humedad interna está por debajo de {VAL}",
+      "HONEYDEW_MSG":"El ingreso de recursos durante la última semana supera {VAL}",
+      "WLIM_MSG":"El peso de su colmena excede {VAL}",
+      "SWARM_MSG":"Posible enjambre detectado alrededor de 14:00",
+      "RSWARM_MSG":"Día de enjambrazón previsto",
+      "SUPER+_MSG":"Añadiste una alza",
+      "SUPER-_MSG":"Retiraste una alza",
+      "LOWBATTERYT_MSG":"Cambiar la bateria de ",
+      "LOWBATTERYW_MSG":"Cambiar la bateria de ",
+      "DCONNECTT_MSG":"{REF} desconectado desde {DATE}",
+      "DCONNECTW_MSG":"{REF} desconectado desde {DATE}",
+      "DCONNECTH_MSG":"{REF} desconectado desde {DATE}",
+      "POORSIGNALT_MSG":" señal deficiente desde {DATE}",
+      "POORSIGNALW_MSG":" señal deficiente desde {DATE}",
+      "STOPWEATHER_MSG":"Error de transmision de datos desde {DATE}",
+      "STOLEN_MSG":"El peso de tu colmena es anormalmente bajo",
+      "DEAD_MSG":"Tu colmena ha sido detectada muerta"
     },
     "ALERT_CONF_PAGE": {
         "TYPE": "Icono",
@@ -789,6 +818,13 @@
         "BTN": "Conexion",
         "EULA": "Acuerdo de licencia de usuario final",
         "BTN_EUA": "Estoy de acuerdo",
+
+        "SIGN_IN": {
+            "DENIED": "Acceso denegado ",
+            "SUBMIT": "conexion",
+            "SIGN_UP_LINK": "Crear cuenta MyBroodminder"
+        },
+
         "BECOMING": {
             "TITLE": "Bienvenido a la apicultura de precisión ",
             "CONTENT": ["Con Mellisphera puedes convertirte en apicultor de precisión. Te ofrecemos es una interfaz completa que agrega los datos de tus colmenas junto con las acciones del apicultor y la meteorología. ",
@@ -815,8 +851,135 @@
             "CONNECTION": "Conexión",
             "ERR": "No te puedes conectar",
             "TRY_MS": "Cuenta Démo",
-            "MAIL_SUBJECT": "Problema de conexión"
-
+            "MAIL_SUBJECT": "Problema de conexión",
+            "DENIED":"Acceso denegado"
         }
+    },
+    "NOTIFY":{
+        "SUCCESS":{  
+            "CHANGE_NAME_DEMO_APIARY": "",
+            "READ_ALL_ALERTS_HIVE": "",
+            "SAVE_ALERT_CONF": "Configuraciones guardadas",
+            "SAVE_INSP_CONF": "Configuraciones guardadas",
+            "SEND_MAIL_TEST": "Email enviado !"
+        },
+        "FAIL":{
+            "AUTH_WRITE_APIARY": "",
+            "NO_DELETE_RIGHT": "",
+            "AUTH_WRITE_HIVE": "",
+            "AUTH_WRITE_NOTES": "",
+            "AUTH_WRITE_NOTES_HIVE": ""
+        }
+    },
+    "MOON":{
+        "1":"Luna llena",
+        "2":"Luna nueva",
+        "3":"Cuarto menguante",
+        "4":"Cuarto creciente",
+        "5":"Menguante",
+        "6":"Gibosa menguante",
+        "7":"Creciente menguante",
+        "8":"Creciente"
+    },
+    "DEVICE_STATUS_CODE":{
+        "R":{
+            "COLOR":"Red",
+            "MSG":"Sensor desconectado"
+        },
+        "O1":{
+            "COLOR":"Orange",
+            "MSG":"Señal débil"
+        },
+        "O2":{
+            "COLOR":"Orange",
+            "MSG":"Batería baja"
+        }
+    },
+    "FITNESS_CODE":{
+        "B1":{
+            "COLOR":"Black",
+            "MSG":"Colmena muerta"
+        },
+        "B2":{
+            "COLOR":"Black",
+            "MSG":"Colmena robada"
+        },
+        "R1":{
+            "COLOR":"Red",
+            "MSG":"Colmena muy débil"
+        },
+        "O1":{
+            "COLOR":"Orange",
+            "MSG":"Colmena débil o en fuerte declive"
+        },
+        "O2":{
+            "COLOR":"Orange",
+            "MSG":"Posible enjambre"
+        },
+        "O3":{
+            "COLOR":"Orange",
+            "MSG":"Sobrecalentamiento"
+        },
+        "O4":{
+            "COLOR":"Orange",
+            "MSG":"Frío extremo"
+        },
+        "O5":{
+            "COLOR":"Orange",
+            "MSG":"Perdida de peso subita, pillaje"
+        },
+        "G1":{
+            "COLOR":"Green",
+            "MSG":"Buena salud"
+        }
+    },
+    "HIVE_POS":{
+        "ABOVE LOWER BROOD BOX":{
+            "COLOR":"#d45087",
+            "MSG":"Camara de cría"
+        },
+        "ABOVE UPPER BROOD BOX":{
+            "COLOR":"#ffa600",
+            "MSG":"Alza"
+        },
+        "OTHER":{
+            "COLOR":"#f95d6a",
+            "MSG":"Otro"
+        },
+        "OUTSIDE HIVE":{
+            "COLOR":"#a05195",
+            "MSG":"Exterior"
+        },
+        "SCALE UNDER HIVE":{
+            "COLOR":"#003f5c",
+            "MSG":"Báscula anterior"
+        },
+        "SCALE UNDER HIVE (BACK)":{
+            "COLOR":"#ff7c43",
+            "MSG":"Báscula posterior"
+        },
+        "UNDER INNER COVER":{
+            "COLOR":"#665191",
+            "MSG":"Cubre cuadros"
+        }
+    },
+    "MESSAGES":{
+        "WARNINGHIVE":" ",
+        "WILLBEDELETED":" ",
+        "WARNINGHIVES":" ",
+        "WILLBEDELETEDS":" ",
+        "AND":" y ",
+        "PASSWORD":"",
+        "DENIED":"",
+        "LOGIN":"",
+        "CREATEACCOUNT":"",
+        "OR":"o",
+        "RESETPSW":"",
+        "ENTEREMAIL":"",
+        "SIXCARACMIN":"",
+        "ENTERPSW":"",
+        "SIGNUP":"",
+        "BACK":"",
+        "RESET":""
     }
 }

@@ -280,7 +280,7 @@ export class AlertsComponent implements OnInit, OnDestroy {
       return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), dataByDateTooltip.map(_singleData => {
         let type = 'Notif';
         let img = '';
-        if (_singleData.description || _singleData.description === '') {
+        if (_singleData.type ) {
           type = 'Inspection';
           if(_singleData.type === 'apiary'){
             img = '<img style={S} src={I} />';
@@ -307,18 +307,24 @@ export class AlertsComponent implements OnInit, OnDestroy {
   }
 
   sliceTextToolip(text: string): string {
-    try{
-      if (text === undefined) {
-        text = '';
-      }
-      let originString: string = text;
-      let newString: string;
-      while(originString.length >= 80) {
-        newString += originString.slice(0, 80) + '<br/>';
-        originString = originString.replace(originString.slice(0, 80), '');
-      }
-      return (newString + originString).replace(/undefined/g, '');
-    } catch{}
+    if(text != undefined && text != null){
+      try{
+        if (text === undefined) {
+          text = '';
+        }
+        let originString: string = text;
+        let newString: string;
+        while(originString.length >= 80) {
+          newString += originString.slice(0, 80) + '<br/>';
+          originString = originString.replace(originString.slice(0, 80), '');
+        }
+        return (newString + originString).replace(/undefined/g, '');
+      } catch{}
+    }
+    else{
+      return '';
+    }
+    
   }
 
 

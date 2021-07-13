@@ -90,7 +90,9 @@ export class EventsComponent implements OnInit {
 
     this.inspCat.getInspCat().subscribe(
       _inspCat => {
-        _inspCat.forEach(_cat => {
+        _inspCat.sort((a,b) => {
+          return a.code - b.code;
+        }).forEach(_cat => {
           if(_cat.img !== "Default" && this.notConstant(_cat)){
             this.PICTOS_HIVES_OBS.push({
               name:_cat.name.toLowerCase(), 
@@ -120,29 +122,44 @@ export class EventsComponent implements OnInit {
   sortByDate(): void{
     let tbody = <HTMLTableElement>document.getElementsByClassName('table-body-events')[0];
     let th = <HTMLTableCellElement>document.getElementsByClassName('th-date-sort')[0];
-    let arr: any[] = [ ...this.events, ...this.alerts];
     if(this.sort === 'none' || this.sort === 'ASC'){
+      let arr: any[] = [ ...this.events, ...this.alerts].sort((a,b) => {
+        return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
+      });
       this.sort = 'DESC';
-      th.innerHTML = this.translate.instant('MELLICHARTS.EVENT.TABLE.HEADER.DATE') + '<i class="fas fa-sort-up" style="margin-left:3px"></i>';
-      arr.sort((a,b) => {
-        return new Date(a.opsDate) < new Date(b.opsDate) ? 1 : -1
-      })
-    }
-    else{
-      this.sort = 'ASC';
+      console.log('allo desc', this.sort);
       th.innerHTML = this.translate.instant('MELLICHARTS.EVENT.TABLE.HEADER.DATE') + '<i class="fas fa-sort-down" style="margin-left:3px"></i>';
       arr.sort((a,b) => {
-        return new Date(a.opsDate) > new Date(b.opsDate) ? 1 : -1
-      })
+        return new Date(b.opsDate).getTime() - new Date(a.opsDate).getTime();
+      }).forEach( (_item,i) => {
+        if(_item.hasOwnProperty('description')){
+          tbody.rows[i].replaceWith( this.createRowInsp( _item ) )
+        }
+        else{
+          tbody.rows[i].replaceWith( this.createRowAlert( _item ) )
+        }
+      });
+      return;
     }
-    arr.forEach( (_item,i) => {
-      if(_item.hasOwnProperty('description')){
-        tbody.rows[i].replaceWith( this.createRowInsp( _item ) )
-      }
-      else{
-        tbody.rows[i].replaceWith( this.createRowAlert( _item ) )
-      }
-    })
+    else{
+      let arr: any[] = [ ...this.events, ...this.alerts].sort((a,b) => {
+        return new Date(a.opsDate).getTime() - new Date(b.opsDate).getTime();
+      });
+      this.sort = 'ASC';
+      console.log('allo asc', this.sort);
+      th.innerHTML = this.translate.instant('MELLICHARTS.EVENT.TABLE.HEADER.DATE') + '<i class="fas fa-sort-up" style="margin-left:3px"></i>';
+      arr.sort((a,b) => {
+        return new Date(a.opsDate).getTime() - new Date(b.opsDate).getTime();
+      }).forEach( (_item,i) => {
+        if(_item.hasOwnProperty('description')){
+          tbody.rows[i].replaceWith( this.createRowInsp( _item ) )
+        }
+        else{
+          tbody.rows[i].replaceWith( this.createRowAlert( _item ) )
+        }
+      });
+      return;
+    }
   }
 
   getHiveIndex(hive: RucheInterface): number {
@@ -183,7 +200,6 @@ export class EventsComponent implements OnInit {
                                                             this.stackService.getHiveSelectIds(),
                                                             this.melliDate.getRangeForReqest(),
                                                             this.melliFilters.getEventArrayFilter(),
-                                                            this.melliFilters.getPictosArrayFilter().map(s => s.toLowerCase()),
                                                             true
                                                            )
               }
@@ -200,6 +216,7 @@ export class EventsComponent implements OnInit {
     });
     Observable.forkJoin(obsInsp.map(_elt => _elt.obs)).subscribe(
       insps_events => {
+        console.log(insps_events);
         insps_events.forEach(_elt => {
           _elt.forEach((_insp,i) => {
             this.tbody.appendChild( this.createRowInsp(_insp) );
@@ -208,20 +225,22 @@ export class EventsComponent implements OnInit {
         });
       },
       () => {},
-      () => {}
-    );
-
-    Observable.forkJoin(obsAlert.map(_elt => _elt.obs)).subscribe(
-      alerts => {
-        alerts.forEach(_elt => {
-          _elt.forEach((_alert,i) => {
-            this.tbody.appendChild( this.createRowAlert(_alert) );
-          });
-          this.alerts.push(..._elt);
-        });
-      },
-      () => {},
-      () => {}
+      () => {
+        Observable.forkJoin(obsAlert.map(_elt => _elt.obs)).subscribe(
+          alerts => {
+            alerts.forEach(_elt => {
+              _elt.forEach((_alert,i) => {
+                this.tbody.appendChild( this.createRowAlert(_alert) );
+              });
+              this.alerts.push(..._elt);
+            });
+          },
+          () => {},
+          () => {
+            this.sortByDate();
+          }
+        );
+      }
     );
 
   }
@@ -243,7 +262,7 @@ export class EventsComponent implements OnInit {
       types.push('apiary');
       this.apiaries.push(hive.apiaryId);
     }
-    this.inspService.getInspectionByFilters(hive.apiaryId, [hive._id], this.melliDate.getRangeForReqest(), types, this.melliFilters.getPictosArrayFilter().map(s => s.toLowerCase()), true).subscribe(
+    this.inspService.getInspectionByFilters(hive.apiaryId, [hive._id], this.melliDate.getRangeForReqest(), types, true).subscribe(
       _inspections => {
         _inspections.forEach((_insp,i) => {
           this.tbody.insertBefore(this.createRowInsp(_insp), this.tbody.firstElementChild);
@@ -389,7 +408,6 @@ export class EventsComponent implements OnInit {
                                                                 this.stackService.getHiveSelectIds(),
                                                                 this.melliDate.getRangeForReqest(),
                                                                 ['apiary'],
-                                                                this.melliFilters.getPictosArrayFilter().map(s => s.toLowerCase()),
                                                                 true
                                                                )
                   }
@@ -414,7 +432,6 @@ export class EventsComponent implements OnInit {
                                                                 this.stackService.getHiveSelectIds(),
                                                                 this.melliDate.getRangeForReqest(),
                                                                 ['hive'],
-                                                                this.melliFilters.getPictosArrayFilter().map(s => s.toLowerCase()),
                                                                 true
                                                                )
                   }
@@ -529,7 +546,6 @@ export class EventsComponent implements OnInit {
                                                             this.stackService.getHiveSelectIds(),
                                                             this.melliDate.getRangeForReqest(),
                                                             this.melliFilters.getEventArrayFilter(),
-                                                            [display.toLowerCase()],
                                                             false
                                                            )
               }
@@ -580,6 +596,8 @@ export class EventsComponent implements OnInit {
       if(this.eventToEdit.type === 'hive'){
         this.hiveEvent = this.rucheService.getHiveById(this.eventToEdit.hiveId);
         this.newEventDate = new Date(this.eventToEdit.opsDate);
+        (<HTMLInputElement>document.getElementsByClassName("edit-event-hours-input")[0]).value = this.newEventDate.getHours().toString();
+        (<HTMLInputElement>document.getElementsByClassName("edit-event-minutes-input")[0]).value = this.newEventDate.getMinutes().toString();
         this.inspCat.getInspCat().subscribe(
           _inspCat => {
             _inspCat.forEach(_cat => {
@@ -611,6 +629,8 @@ export class EventsComponent implements OnInit {
       if(this.eventToEdit.type === 'apiary'){
         this.apiaryEvent = this.rucherService.getApiaryByApiaryId(this.eventToEdit.apiaryId);
         this.newEventDate = new Date(this.eventToEdit.opsDate);
+        (<HTMLInputElement>document.getElementsByClassName("edit-event-hours-input")[0]).value = this.newEventDate.getHours().toString();
+        (<HTMLInputElement>document.getElementsByClassName("edit-event-minutes-input")[0]).value = this.newEventDate.getMinutes().toString();
         this.inspCat.getInspCat().subscribe(
           _inspCat => {
             _inspCat.forEach(_cat => {
@@ -645,10 +665,14 @@ export class EventsComponent implements OnInit {
       if(this.alertToEdit.loc === 'Hive'){
         this.hiveEvent = this.rucheService.getHiveById(this.alertToEdit.hiveId);
         this.newEventDate = new Date(this.alertToEdit.opsDate);
+        (<HTMLInputElement>document.getElementsByClassName("edit-alert-hours-input")[0]).value = this.newEventDate.getHours().toString();
+        (<HTMLInputElement>document.getElementsByClassName("edit-alert-minutes-input")[0]).value = this.newEventDate.getMinutes().toString();
       }
       if(this.alertToEdit.loc === 'Apiary'){
         this.apiaryEvent = this.rucherService.getApiaryByApiaryId(this.alertToEdit.apiaryId);
         this.newEventDate = new Date(this.alertToEdit.opsDate);
+        (<HTMLInputElement>document.getElementsByClassName("edit-alert-hours-input")[0]).value = this.newEventDate.getHours().toString();
+        (<HTMLInputElement>document.getElementsByClassName("edit-alert-minutes-input")[0]).value = this.newEventDate.getMinutes().toString();
       }
       (<HTMLElement>document.getElementsByClassName('edit-alert-error')[0]).style.display = 'none';
       (<HTMLElement>document.getElementsByClassName('edit-alert-time-error')[0]).style.display = 'none';
@@ -664,6 +688,9 @@ export class EventsComponent implements OnInit {
     this.events[index] = Object.assign({},this.eventToEdit);
     let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.eventToEdit._id);
     this.updateRowInsp(this.eventToEdit, rowIndex);
+    this.eventToEdit.obs.sort((a,b) => {
+      return a.code - b.code;
+    });
     this.inspService.updateEvent(this.eventToEdit).subscribe(
       () => {},
       () => {},
@@ -1052,20 +1079,27 @@ export class EventsComponent implements OnInit {
   }
 
   setNewEventDate(): void {
+    this.newEventDate = new Date(this.newEventDate);
     (<HTMLInputElement>document.getElementsByClassName('edit-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
-    this.eventToEdit.opsDate = this.newEventDate;
-    (<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).disabled = false;
-    (<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).disabled = false;
+    this.eventToEdit.opsDate = new Date(this.newEventDate);
+    this.newEventDate.setHours( parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).value ));
+    this.newEventDate.setMinutes( parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).value ));
   }
 
-  setNewEventHours(): void{
-    this.newEventDate.setHours( parseInt((<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).value) );
-    this.eventToEdit.opsDate = this.newEventDate;
+  setNewEventHours(evt: Event): void{
+    if(parseInt((<HTMLInputElement>evt.target).value) > 23){
+      (<HTMLInputElement>evt.target).value = "23";
+    }
+    this.newEventDate.setHours( parseInt((<HTMLInputElement>evt.target).value) );
+    this.eventToEdit.opsDate = new Date(this.newEventDate);
   }
 
-  setNewEventMinutes(): void{
-    this.newEventDate.setMinutes( parseInt((<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).value) );
-    this.eventToEdit.opsDate = this.newEventDate;
+  setNewEventMinutes(evt: Event): void{
+    if(parseInt((<HTMLInputElement>evt.target).value) > 59){
+      (<HTMLInputElement>evt.target).value = "59";
+    }
+    this.newEventDate.setMinutes( parseInt((<HTMLInputElement>evt.target).value) );
+    this.eventToEdit.opsDate = new Date(this.newEventDate);
   }
 
   showNotes(evt: Event){

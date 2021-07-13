@@ -1,4 +1,4 @@
-export const NOTIF_CODE = {
+/*export const NOTIF_CODE = {
     "201": {
         "icon": "Rain",
         "FR": {
@@ -480,4 +480,4 @@ export const NOTIF_CODE = {
         }
     }
 
-}
+}*/

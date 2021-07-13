@@ -37,7 +37,7 @@ import { MelliChartsFilterService } from '../service/melli-charts-filter.service
 import { InspectionService } from './../../service/api/inspection.service';
 import { Inspection } from '../../../_model/inspection';
 
-import { HIVE_POS } from '../../../../constants/hivePositions';
+//import { HIVE_POS } from '../../../../constants/hivePositions';
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material';
 import { DailyManagerService } from '../hive/service/daily-manager.service';
 import { MelliChartsHiveService } from '../service/melli-charts-hive.service';
@@ -256,19 +256,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
     }
     else{
       let nameSerie = elt.position;
-      let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
-      if(this.translateService.currentLang == 'fr'){
-        return hivePos.translations.fr;
-      }
-      if(this.translateService.currentLang == 'en'){
-        return hivePos.translations.en;
-      }
-      if(this.translateService.currentLang == 'es'){
-        return hivePos.translations.es;
-      }
-      if(this.translateService.currentLang == 'nl'){
-        return hivePos.translations.nl;
-      }
+      return this.translateService.instant('HIVE_POS.'+nameSerie.toUpperCase()+'.MSG')
     }
   }
 

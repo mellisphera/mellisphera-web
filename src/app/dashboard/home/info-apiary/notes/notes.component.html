@@ -92,9 +92,9 @@ limitations under the License. -->
           <div>
             <input class="add-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
             <owl-date-time [pickerType]="'calendar'" #dtEvent></owl-date-time>
-            <input class="add-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours()">
+            <input class="add-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours($event)">
             :
-            <input class="add-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes()">
+            <input class="add-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes($event)">
           </div>
           <div class="add-event-time-error">
             {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
@@ -148,9 +148,9 @@ limitations under the License. -->
           <div>
             <input class="edit-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEventEdit" [owlDateTime]="dtEventEdit" (ngModelChange)="setNewEventDate()">
             <owl-date-time [pickerType]="'calendar'" #dtEventEdit></owl-date-time>
-            <input class="edit-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours()" value="{{newEventDate?.getHours()}}">
+            <input class="edit-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours($event)">
             :
-            <input class="edit-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes()" value="{{newEventDate?.getMinutes()}}">
+            <input class="edit-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes($event)">
           </div>
           <div class="edit-event-time-error">
             {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}

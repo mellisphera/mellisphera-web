@@ -14,7 +14,10 @@ nav section{
   height: 90vh;
 }
 #loginGroup{
-  width: 30%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .btnTest{
   background-color: #4f4f51;

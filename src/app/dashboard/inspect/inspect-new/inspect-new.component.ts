@@ -122,7 +122,9 @@ export class InspectNewComponent implements OnInit {
     );
     this.inspCatService.getInspCat().subscribe(
       _inspCat => {
-        this.inspCat = [..._inspCat];
+        this.inspCat = [..._inspCat].sort((a,b) => {
+          return a.code - b.code;
+        });
       },
       () => {},
       () => {
@@ -148,9 +150,6 @@ export class InspectNewComponent implements OnInit {
 
 
     this.new_apiary_insp.userId = this.userService.getIdUserLoged();
-
-    (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-hours')[0]).disabled = true;
-    (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-minutes')[0]).disabled = true;
 
     $("#downloadModal").on('shown.bs.modal', () => {this.generatePDF()} );
 
@@ -290,9 +289,11 @@ export class InspectNewComponent implements OnInit {
   inspectDate(): void{
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input')[0]).value = this.unitService.getDailyDate(this.inspect_date);
     this.new_apiary_insp.opsDate = new Date(this.inspect_date);
-    this.hive_insps.forEach( _hInsp => {
-      _hInsp.opsDate = new Date(this.inspect_date);
-    });
+    if(this.hive_insps != null && this.hive_insps != undefined && this.hive_insps.length > 0){
+      this.hive_insps.forEach( _hInsp => {
+        _hInsp.opsDate = new Date(this.inspect_date);
+      });
+    }
     if(this.inspect_date != undefined && this.inspect_date != null){
       (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-hours')[0]).disabled = false;
       (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-minutes')[0]).disabled = false;
@@ -415,10 +416,16 @@ export class InspectNewComponent implements OnInit {
         }
       }
       this.new_apiary_insp.createDate = new Date();
+      this.new_apiary_insp.obs.sort((a,b) => {
+        return a.code - b.code;
+      });
       this.inspService.insertApiaryInsp(this.new_apiary_insp).subscribe(
         _api_insp => {
           console.log(_api_insp);
           inspHivesToPush.forEach(_h => {
+            _h.obs.sort((a,b) => {
+              return a.code - b.code;
+            });
             _h.apiaryInspId = _api_insp._id;
             _h.createDate = new Date();
             this.inspService.insertHiveInsp(_h).subscribe(
@@ -1358,8 +1365,6 @@ export class InspectNewComponent implements OnInit {
     (<HTMLSelectElement>document.getElementById("inspect-apiary-select")).selectedIndex = 0;
     this.active_apiary_index = 0;
     this.inspect_date = new Date();
-    (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-hours')[0]).disabled = true;
-    (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-minutes')[0]).disabled = true;
 
     this.new_apiary_insp = {
       _id: null,

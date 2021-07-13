@@ -282,8 +282,8 @@ export class InspectionService {
   * @param opsRange
   *
   */
-  getInspectionByFilters(apiaryId: string, hiveIds: string[], opsRange: Date[], types: string[], pictos: string[], empty: boolean): Observable<Inspection[]>{
-    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/filter/' + apiaryId, {'hiveIds': hiveIds, 'opsRange': opsRange, 'types': types, 'pictos':pictos, 'empty': empty}, httpOptions);
+  getInspectionByFilters(apiaryId: string, hiveIds: string[], opsRange: Date[], types: string[], empty: boolean): Observable<Inspection[]>{
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/filter/' + apiaryId, {'hiveIds': hiveIds, 'opsRange': opsRange, 'types': types, 'empty': empty}, httpOptions);
   }
 
 

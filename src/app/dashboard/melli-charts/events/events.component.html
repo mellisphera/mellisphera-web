@@ -33,9 +33,9 @@
           <div>
             <input class="edit-event-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtEvent" [owlDateTime]="dtEvent" (ngModelChange)="setNewEventDate()">
             <owl-date-time [pickerType]="'calendar'" #dtEvent></owl-date-time>
-            <input class="edit-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours()" value="{{newEventDate?.getHours()}}">
+            <input class="edit-event-hours-input" type="number" min="00" max="23" (change)="setNewEventHours($event)">
             :
-            <input class="edit-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes()" value="{{newEventDate?.getMinutes()}}">
+            <input class="edit-event-minutes-input" type="number" min="00" max="59" (change)="setNewEventMinutes($event)">
           </div>
           <div class="edit-event-time-error">
             {{'MELLICHARTS.EVENT.ADD.DATE_ERROR' | translate}}
@@ -88,9 +88,9 @@
           <div>
             <input class="edit-alert-time-input" placeholder="{{'MELLICHARTS.EVENT.ADD.DATE_PLACEHOLDER' | translate}}" [(ngModel)]="newEventDate" [owlDateTimeTrigger]="dtAlert" [owlDateTime]="dtAlert" (ngModelChange)="setNewAlertDate()">
             <owl-date-time [pickerType]="'calendar'" #dtAlert></owl-date-time>
-            <input class="edit-alert-hours-input" type="number" min="00" max="23" (change)="setNewAlertHours()" value="{{newEventDate?.getHours()}}">
+            <input class="edit-alert-hours-input" type="number" min="00" max="23" (change)="setNewAlertHours()">
             :
-            <input class="edit-alert-minutes-input" type="number" min="00" max="59" (change)="setNewAlertMinutes()" value="{{newEventDate?.getMinutes()}}">
+            <input class="edit-alert-minutes-input" type="number" min="00" max="59" (change)="setNewAlertMinutes()">
           </div>
           <div class="edit-alert-time-error">
             {{'MELLICHARTS.ALERT.DATE_ERROR' | translate}}

@@ -37,9 +37,8 @@ import { Tools } from '../melli-charts/hive/service/daily-manager.service';
 import { CALENDAR } from '../melli-charts/charts/CALENDAR';
 import { WeatherService } from '../service/api/weather.service';
 import { SERIES } from '../melli-charts/charts/SERIES';
-import { NOTIF_CODE } from '../../../constants/notif_code';
-import { MOON_CODE } from '../../../constants/moonTrad';
-import { FITNESS_CODE } from '../../../constants/fitnessCode';
+//import { MOON_CODE } from '../../../constants/moonTrad';
+//import { FITNESS_CODE } from '../../../constants/fitnessCode';
 
 import { AlertsService } from '../service/api/alerts.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -862,15 +861,6 @@ export class GraphGlobal {
 
   }
 
-  getMessageAlertByCode(code: string): string {
-    if (this.translateService.currentLang === 'fr') {
-        return NOTIF_CODE[code].FR.Message;
-    } else {
-        return NOTIF_CODE[code].EN.Message;
-    }
-
-}
-
   /**
    *
    * @param type
@@ -962,7 +952,7 @@ export class GraphGlobal {
           return this.getTooltipFormater(params.marker, this.unitService.getDailyDate(params.data[0]), new Array(
             {
               name: this.moon.phase,
-              value: MOON_CODE[params.data[1]][lang]['Name'],
+              value: this.translateService.instant('MOON.' + params.data[1]),
               unit: ''
             },
             {
@@ -1115,17 +1105,21 @@ export class GraphGlobal {
    * @memberof GraphGlobal
    */
   sliceTextToolip(text: string): string {
-    let originString: string = text;
-    if (/\n/g.test(text)) {
-      return originString.replace(/\n/g, '<br/>');
-    } else {
-      let newString: string;
-      while(originString.length >= 100) {
-        newString += originString.slice(0, 100) + '<br/>';
-        originString = originString.replace(originString.slice(0, 100), '');
+    if(text != null){
+      let originString: string = text;
+      if (/\n/g.test(text)) {
+        return originString.replace(/\n/g, '<br/>');
+      } else {
+        let newString: string;
+        while(originString.length >= 100) {
+          newString += originString.slice(0, 100) + '<br/>';
+          originString = originString.replace(originString.slice(0, 100), '');
+        }
+        return (newString + originString).replace(/undefined/g, '');
       }
-      return (newString + originString).replace(/undefined/g, '');
-     }
+    }
+    return '';
+    
   }
   /**
    *
@@ -1326,103 +1320,31 @@ export class GraphGlobal {
           code = words[1];
           switch(code){
             case 'B1':
-              if(lang === 'FR'){
-                msg = FITNESS_CODE.B1.FR.Message;
-              }
-              if(lang === 'ES'){
-                msg = FITNESS_CODE.B1.ES.Message;
-              }
-              if(lang === 'EN'){
-                msg = FITNESS_CODE.B1.EN.Message;
-              }
+              msg = this.translateService.instant('FITNESS_CODE.B1.MSG');
               break;
             case 'B2':
-              if(lang === 'FR'){
-                msg = FITNESS_CODE.B2.FR.Message;
-              }
-              if(lang === 'ES'){
-                msg = FITNESS_CODE.B2.ES.Message;
-              }
-              if(lang === 'EN'){
-                msg = FITNESS_CODE.B2.EN.Message;
-              }
+              msg = this.translateService.instant('FITNESS_CODE.B2.MSG');
               break;
             case 'R1':
-              if(lang === 'FR'){
-                msg = FITNESS_CODE.R1.FR.Message;
-              }
-              if(lang === 'ES'){
-                msg = FITNESS_CODE.R1.ES.Message;
-              }
-              if(lang === 'EN'){
-                msg = FITNESS_CODE.R1.EN.Message;
-              }
+              msg = this.translateService.instant('FITNESS_CODE.R1.MSG');
               break;
             case 'O1':
-              if(lang === 'FR'){
-                msg = FITNESS_CODE.O1.FR.Message;
-              }
-              if(lang === 'ES'){
-                msg = FITNESS_CODE.O1.ES.Message;
-              }
-              if(lang === 'EN'){
-                msg = FITNESS_CODE.O1.EN.Message;
-              }
+              msg = this.translateService.instant('FITNESS_CODE.O1.MSG');
               break;
             case 'O2':
-              if(lang === 'FR'){
-                msg = FITNESS_CODE.O2.FR.Message;
-              }
-              if(lang === 'ES'){
-                msg = FITNESS_CODE.O2.ES.Message;
-              }
-              if(lang === 'EN'){
-                msg = FITNESS_CODE.O2.EN.Message;
-              }
+              msg = this.translateService.instant('FITNESS_CODE.O2.MSG');
               break;
             case 'O3':
-              if(lang === 'FR'){
-                msg = FITNESS_CODE.O3.FR.Message;
-              }
-              if(lang === 'ES'){
-                msg = FITNESS_CODE.O3.ES.Message;
-              }
-              if(lang === 'EN'){
-                msg = FITNESS_CODE.O3.EN.Message;
-              }
+              msg = this.translateService.instant('FITNESS_CODE.O3.MSG');
               break;
             case 'O4':
-              if(lang === 'FR'){
-                msg = FITNESS_CODE.O4.FR.Message;
-              }
-              if(lang === 'ES'){
-                msg = FITNESS_CODE.O4.ES.Message;
-              }
-              if(lang === 'EN'){
-                msg = FITNESS_CODE.O4.EN.Message;
-              }
+              msg = this.translateService.instant('FITNESS_CODE.O4.MSG');
               break;
             case 'O5':
-              if(lang === 'FR'){
-                msg = FITNESS_CODE.O5.FR.Message;
-              }
-              if(lang === 'ES'){
-                msg = FITNESS_CODE.O5.ES.Message;
-              }
-              if(lang === 'EN'){
-                msg = FITNESS_CODE.O5.EN.Message;
-              }
+              msg = this.translateService.instant('FITNESS_CODE.O5.MSG');
               break;
             case 'G1':
-              if(lang === 'FR'){
-                msg = FITNESS_CODE.G1.FR.Message;
-              }
-              if(lang === 'ES'){
-                msg = FITNESS_CODE.G1.ES.Message;
-              }
-              if(lang === 'EN'){
-                msg = FITNESS_CODE.G1.EN.Message;
-              }
+              msg = this.translateService.instant('FITNESS_CODE.G1.MSG');
               break;
           }
           return msg;

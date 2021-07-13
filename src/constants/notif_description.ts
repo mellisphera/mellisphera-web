@@ -1,4 +1,4 @@
-export const NOTIF_DESCRIPTION5 = {
+/*export const NOTIF_DESCRIPTION5 = {
     FR: {
         Honeydew: "Déclenchée lorsque l'apport de poids dans la ruche dépasse le seuil choisi lors de la dernière semaine.",
         Rain : "Déclenchée lorsque les précipitations pluvieuses dépassent le seuil choisi le prochain jour.",
@@ -99,4 +99,4 @@ export const NOTIF_DESCRIPTION5 = {
         Dead: 'Nuestro algoritmo detecta cada día si su colmena está muerta basándose en diferentes parámetros que hemos establecido.'
 
     }
-}
+}*/

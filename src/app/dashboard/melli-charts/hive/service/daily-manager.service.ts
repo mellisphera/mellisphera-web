@@ -33,7 +33,7 @@ import { InspectionService } from '../../../../dashboard/service/api/inspection.
 import { FitnessService } from '../../../../dashboard/service/api/fitness.service';
 import { CapteurService } from '../../../../dashboard/service/api/capteur.service';
 
-import { HIVE_POS } from '../../../../../constants/hivePositions';
+//import { HIVE_POS } from '../../../../../constants/hivePositions';
 import { TranslateService } from '@ngx-translate/core';
 import { RucheInterface } from '../../../../_model/ruche';
 import { RucherService } from '../../../../dashboard/service/api/rucher.service';
@@ -133,19 +133,7 @@ export class DailyManagerService {
     }
     else{
       let nameSerie = elt.values[0].position;
-      let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
-      if(this.translateService.currentLang == 'fr'){
-        return hivePos.translations.fr;
-      }
-      if(this.translateService.currentLang == 'en'){
-        return hivePos.translations.en;
-      }
-      if(this.translateService.currentLang == 'es'){
-        return hivePos.translations.es;
-      }
-      if(this.translateService.currentLang == 'nl'){
-        return hivePos.translations.nl;
-      }
+      return this.translateService.instant('HIVE_POS.'+nameSerie.toUpperCase()+'.MSG')
     }
   }
 
@@ -248,8 +236,8 @@ export class DailyManagerService {
             serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
           }
           else{
-            let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
-            console.log(hivePos)
+            serieTmp.name = nameSerie + ' | ' + this.translateService.instant('HIVE_POS.' + _data.position.toUpperCase() + '.MSG');
+            /*let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
             if(this.translateService.currentLang == 'fr'){
               serieTmp.name = nameSerie + ' | ' + hivePos.translations.fr;
             }
@@ -261,15 +249,15 @@ export class DailyManagerService {
             }
             if(this.translateService.currentLang == 'nl'){
               serieTmp.name = nameSerie + ' | ' + hivePos.translations.nl;
-            }
+            }*/
           }
         } else {
           if(_data.position === "" || _data.position == null || _data.position == undefined){
             serieTmp.name = nameSerie + ' | '  + _data.sensorRef;
           }
           else{
-            let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
-            console.log(hivePos)
+            serieTmp.name = nameSerie + ' | ' + this.translateService.instant('HIVE_POS.' + _data.position.toUpperCase() + '.MSG');
+            /*let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
             if(this.translateService.currentLang == 'fr'){
               serieTmp.name = nameSerie + ' | ' + hivePos.translations.fr;
             }
@@ -281,7 +269,7 @@ export class DailyManagerService {
             }
             if(this.translateService.currentLang == 'nl'){
               serieTmp.name = nameSerie + ' | ' + hivePos.translations.nl;
-            }
+            }*/
           }
         }
         if (data.map(_elt => _elt.date)[0] !== undefined) {
@@ -715,7 +703,10 @@ export class DailyManagerService {
       _tMax => {
         let posTab = _tMax.map(_val => _val.values.map(_v => _v.position)).flat();
         posTab.map((_pos,index) => {
-          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
           if(hivePos != undefined){
             if(this.translateService.currentLang == 'fr'){
               posTab[index] = hivePos.translations.fr;
@@ -729,7 +720,7 @@ export class DailyManagerService {
             if(this.translateService.currentLang == 'nl'){
               posTab[index] = hivePos.translations.nl;
             }
-          }
+          }*/
         });
         let posSet = new Set([...posTab].concat([..._tMax.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -768,7 +759,10 @@ export class DailyManagerService {
       _tmpMaxExt => {
         let posTab = _tmpMaxExt.map(_val => _val.values.map(_v => _v.position)).flat();
         posTab.map((_pos,index) => {
-          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
           if(hivePos != undefined){
             if(this.translateService.currentLang == 'fr'){
               posTab[index] = hivePos.translations.fr;
@@ -782,7 +776,7 @@ export class DailyManagerService {
             if(this.translateService.currentLang == 'nl'){
               posTab[index] = hivePos.translations.nl;
             }
-          }
+          }*/
         });
         let posSet = new Set([...posTab].concat([..._tmpMaxExt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -819,7 +813,10 @@ export class DailyManagerService {
       _tMinExt => {
         let posTab = _tMinExt.map(_val => _val.values.map(_v => _v.position)).flat();
         posTab.map((_pos,index) => {
-          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
           if(hivePos != undefined){
             if(this.translateService.currentLang == 'fr'){
               posTab[index] = hivePos.translations.fr;
@@ -833,7 +830,7 @@ export class DailyManagerService {
             if(this.translateService.currentLang == 'nl'){
               posTab[index] = hivePos.translations.nl;
             }
-          }
+          }*/
         });
         let posSet = new Set([...posTab].concat([..._tMinExt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -870,7 +867,10 @@ export class DailyManagerService {
       _hInt => {
         let posTab = _hInt.map(_val => _val.values.map(_v => _v.position)).flat();
         posTab.map((_pos,index) => {
-          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
           if(hivePos != undefined){
             if(this.translateService.currentLang == 'fr'){
               posTab[index] = hivePos.translations.fr;
@@ -884,7 +884,7 @@ export class DailyManagerService {
             if(this.translateService.currentLang == 'nl'){
               posTab[index] = hivePos.translations.nl;
             }
-          }
+          }*/
         });
         let posSet = new Set([...posTab].concat([..._hInt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -921,7 +921,10 @@ export class DailyManagerService {
       _brood => {
         let posTab = _brood.map(_val => _val.values.map(_v => _v.position)).flat();
         posTab.map((_pos,index) => {
-          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
           if(hivePos != undefined){
             if(this.translateService.currentLang == 'fr'){
               posTab[index] = hivePos.translations.fr;
@@ -935,7 +938,7 @@ export class DailyManagerService {
             if(this.translateService.currentLang == 'nl'){
               posTab[index] = hivePos.translations.nl;
             }
-          }
+          }*/
         });
         let posSet = new Set([...posTab].concat([..._brood.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -974,7 +977,10 @@ export class DailyManagerService {
       _tMin => {
         let posTab = _tMin.map(_val => _val.values.map(_v => _v.position)).flat();
         posTab.map((_pos,index) => {
-          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
           if(this.translateService.currentLang == 'fr'){
             posTab[index] = hivePos.translations.fr;
           }
@@ -986,7 +992,7 @@ export class DailyManagerService {
           }
           if(this.translateService.currentLang == 'nl'){
             posTab[index] = hivePos.translations.nl;
-          }
+          }*/
         });
         let posSet = new Set([...posTab].concat([..._tMin.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -1136,10 +1142,10 @@ export class DailyManagerService {
                 }
               } else if (dataByDate.length === 1) {
                 let icon;
-                if (dataByDate[0].description && dataByDate[0].type === 'apiary') {
+                if (dataByDate[0].type && dataByDate[0].type === 'apiary') {
                   group.children = group.children.concat(this.inspectionService.getPictoInspect(cellPoint));
                 }
-                else if(dataByDate[0].description && dataByDate[0].type === 'hive'){
+                else if(dataByDate[0].type && dataByDate[0].type === 'hive'){
                   group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
                 } 
                 else {
@@ -1190,7 +1196,7 @@ export class DailyManagerService {
               });
               if (dataByDate.length > 1) {
                 let path: any;
-                const nbNote = dataByDate.filter(_elt => _elt.description).length;
+                const nbNote = dataByDate.filter(_elt => _elt.type).length;
                 //console.log(nbNote + '===' + dataByDate.length)
                 if (nbNote === dataByDate.length && dataByDate.findIndex(_d => _d.type === 'apiary') !== -1) {
                   path = this.inspectionService.getPictoInspect(cellPoint);
@@ -1214,10 +1220,10 @@ export class DailyManagerService {
                   group.children.push(path);
                 }
               } else if (dataByDate.length === 1) {
-                if (dataByDate !== undefined && dataByDate[0].description && dataByDate[0].type === 'apiary') {
+                if (dataByDate !== undefined && dataByDate[0].type && dataByDate[0].type === 'apiary') {
                   group.children = group.children.concat(this.inspectionService.getPictoInspect(cellPoint));
                 }
-                else if(dataByDate !== undefined && dataByDate[0].description && dataByDate[0].type === 'hive'){
+                else if(dataByDate !== undefined && dataByDate[0].type && dataByDate[0].type === 'hive'){
                   group.children = group.children.concat(this.inspectionService.getPictoEvent(cellPoint));
                 } 
                 else {

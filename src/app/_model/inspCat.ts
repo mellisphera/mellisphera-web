@@ -1,5 +1,6 @@
 export interface InspCat{
   _id : string;
+  code : number;
   name : string;
   img : string;
   type : string;

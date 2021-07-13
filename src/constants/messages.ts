@@ -11,7 +11,7 @@ limitations under the License. */
 
 
 
-export const MESSAGES = {
+/*export const MESSAGES = {
     FR: {
         WARNINGHIVE: 'Attention, la ruche ',
         WILLBEDELETED: ' sera supprimée.',
@@ -50,7 +50,7 @@ export const MESSAGES = {
         BACK : 'Back',
         RESET : 'Reset'
     }
-}
+}*/
 
 export enum MessagesList {
     WARNINGHIVE = 'WARNINGHIVE',

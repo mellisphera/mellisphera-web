@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { DeviceStatus } from '../../../_model/device-status';
 import { Observable } from 'rxjs';
 import { CONFIG } from '../../../../constants/config';
-import { DEVICE_STATUS_CODE } from '../../../../constants/deviceStatusCode';
+//import { DEVICE_STATUS_CODE } from '../../../../constants/deviceStatusCode';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
@@ -64,7 +64,7 @@ export class DeviceStatusService {
     const lang = this.translateService.currentLang.toUpperCase();
     const deviceStat: DeviceStatus[] = this.deviceStatus.filter(_ds => _ds.sensorRef === sensorRef);
     if (deviceStat.length > 0) {
-      return DEVICE_STATUS_CODE[deviceStat[0].code][lang]['Message'];
+      return this.translateService.instant('DEVICE_STATUS_CODE.' + deviceStat[0].code + '.MSG');
     } else {
       return '';
     }

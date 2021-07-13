@@ -64,7 +64,7 @@
               <button class="apiary-obs brood-drone" (click)="setBroodStage('drone', 'apiary')"
               data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.DRONEBROOD' | translate }}"></button>    
             </div>
-            <div id="not-brood-stage" style="overflow-x: auto; white-space: nowrap; background-color: #eee;">
+            <div id="not-brood-stage" style="overflow-x: auto; white-space: nowrap;">
               <button class="apiary-obs health-swarm" (click)="setHealth('swarm', 'apiary')"
               data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SWARM' | translate }}"></button>
               <button class="apiary-obs health-buzz" (click)="setHealth('buzz', 'apiary')"
@@ -189,7 +189,7 @@
                       <button [class]="'hives-obs brood-drone ' + ruche.name + '_drone'" (click)="setBroodStage('drone', 'hive', ruche)"
                       data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.DRONEBROOD' | translate }}"></button>
                     </div>
-                    <div style="overflow-x: auto; white-space: nowrap; background-color: #eee;">
+                    <div style="overflow-x: auto; white-space: nowrap;">
                       <button [class]="'hives-obs health-swarm '  + ruche.name + '_swarm'" (click)="setHealth('swarm', 'hive', ruche)"
                       data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SWARM' | translate }}"></button>
                       <button [class]="'hives-obs health-buzz ' + ruche.name + '_buzz'" (click)="setHealth('buzz', 'hive', ruche)"

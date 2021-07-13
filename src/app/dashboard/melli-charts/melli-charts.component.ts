@@ -582,7 +582,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   checkAllHivesSelected(apiary: RucherModel): boolean{
-    if(this.rucheService.getHivesIdsByApiaryId(apiary._id).every((_hiveId,index) => _hiveId === this.stackService.getHiveSelectIdsOfApiary(apiary._id)[index]) &&
+    if(this.rucheService.getHivesIdsByApiaryId(apiary._id).every((_hiveId) => this.stackService.getHiveSelectIdsOfApiary(apiary._id).findIndex(_id => _id ===_hiveId) !== -1) &&
        this.rucheService.getHivesIdsByApiaryId(apiary._id).length === this.stackService.getHiveSelectIdsOfApiary(apiary._id).length ){
       return true;
     }
@@ -593,6 +593,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     let span = (<HTMLSpanElement>document.getElementById(rucher._id + '_span'));
     let active = this.checkAllHivesSelected(rucher);
     if(!active){
+      console.log('je suis ici');
       span.style.fontWeight = 'bold';
       let hivesToSelect = this.rucheService.getHivesIdsByApiaryId(rucher._id).filter(hiveId => { if(this.stackService.getHiveSelectIdsOfApiary(rucher._id).indexOf(hiveId) === -1) return hiveId; } );
       hivesToSelect.forEach(hiveId => {
@@ -622,9 +623,11 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       return;
     }
     let hivesToDelete = [...this.rucheService.getHivesIdsByApiaryId(rucher._id)];
+    console.log(hivesToDelete);
     hivesToDelete.splice(0, 1);
     span.style.fontWeight = 'normal';
     hivesToDelete.forEach(hiveId => {
+      console.log(hiveId);
       let hive = this.rucheService.getHiveById(hiveId);
       switch(this.router.url){
         case PREFIX_PATH + 'hive':
@@ -988,18 +991,24 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   setNewEventDate(): void {
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
     this.new_event.opsDate = this.newEventDate;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = false;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = false;
+    this.newEventDate.setHours( parseInt( (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value ));
+    this.newEventDate.setMinutes( parseInt( (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value ));
   }
 
-  setNewEventHours(): void{
-    this.newEventDate.setHours( parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value) );
-    this.new_event.opsDate = this.newEventDate;
+  setNewEventHours(evt: Event): void{
+    if(parseInt((<HTMLInputElement>evt.target).value) > 23){
+      (<HTMLInputElement>evt.target).value = "23";
+    }
+    this.newEventDate.setHours( parseInt((<HTMLInputElement>evt.target).value) );
+    this.new_event.opsDate = new Date(this.newEventDate);
   }
 
-  setNewEventMinutes(): void{
-    this.newEventDate.setMinutes( parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value) );
-    this.new_event.opsDate = this.newEventDate;
+  setNewEventMinutes(evt: Event): void{
+    if(parseInt((<HTMLInputElement>evt.target).value) > 59){
+      (<HTMLInputElement>evt.target).value = "59";
+    }
+    this.newEventDate.setMinutes( parseInt((<HTMLInputElement>evt.target).value) );
+    this.new_event.opsDate = new Date(this.newEventDate);
   }
 
   showNotes(evt: Event){
@@ -1059,11 +1068,13 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   insertAddEvent(): void {
     let hours = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value)
     let minutes = parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value)
-    console.log(this.new_event.opsDate, hours, minutes)
     if (this.new_event.opsDate == null  || hours > 23 || minutes > 59 ) {
       (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'flex';
       return;
     }
+    this.new_event.obs.sort((a,b) => {
+      return a.code - b.code;
+    });
     (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
     this.inspService.insertHiveEvent(this.new_event).subscribe(
       _insp => {

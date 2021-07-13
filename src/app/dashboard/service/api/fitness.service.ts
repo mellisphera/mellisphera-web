@@ -4,7 +4,7 @@ import { Fitness } from '../../../_model/fitness';
 import { Observable } from 'rxjs';
 import { CONFIG } from '../../../../constants/config';
 import { TranslateService } from '@ngx-translate/core';
-import { FITNESS_CODE } from '../../../../constants/fitnessCode';
+//import { FITNESS_CODE } from '../../../../constants/fitnessCode';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -76,7 +76,7 @@ export class FitnessService {
     } else if (res.length < 1) {
       return '';
     } else {
-      return FITNESS_CODE[res[0].fitcode][lang]['Message'];
+      return this.translateService.instant('FITNESS_CODE.'+res[0].fitcode+'.MSG')
     }
   }
 

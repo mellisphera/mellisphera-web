@@ -17,7 +17,8 @@
       "es2019",
       "dom",
       "es7",
-      "ES2016.Array.Include"
+      "ES2016.Array.Include",
+      "es2017"
     ]
   }
 }

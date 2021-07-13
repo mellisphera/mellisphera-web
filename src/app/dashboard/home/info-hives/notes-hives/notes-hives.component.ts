@@ -95,6 +95,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
 
   public isDesktop: boolean = true;
 
+  private edit: boolean;
+
   public insps: Inspection[] = [];
 
   //observationsHive : ProcessReport[] = [];
@@ -377,12 +379,16 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   // <--- ADD EVENT SCREEN --->
 
   showAddEvent(): void {
+    this.edit = false;
+
     this.hiveEvent = Object.assign({}, this.rucheService.ruche);
     this.new_event._id = null;
     this.new_event.apiaryId = this.rucherService.rucher._id;
     this.new_event.hiveId = this.rucheService.getCurrentHive()._id;
     this.new_event.userId = this.userService.getIdUserLoged();
     this.new_event.createDate = new Date();
+    this.new_event.opsDate = new Date();
+    this.new_event.obs = [];
     this.newEventDate = new Date();
     this.new_event.type = 'hive';
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
@@ -437,17 +443,29 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   setNewEventDate(): void {
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
     this.new_event.opsDate = this.newEventDate;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).disabled = false;
-    (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).disabled = false;
+    if(this.edit){
+      this.newEventDate.setHours( parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).value ));
+      this.newEventDate.setMinutes( parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).value ));
+    }
+    else{
+      this.newEventDate.setHours( parseInt( (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value ));
+      this.newEventDate.setMinutes( parseInt( (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value ));
+    }
   }
 
-  setNewEventHours(): void{
-    this.newEventDate.setHours( parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value) );
+  setNewEventHours(evt: Event): void{
+    if(parseInt((<HTMLInputElement>evt.target).value) > 23){
+      (<HTMLInputElement>evt.target).value = "23";
+    }
+    this.newEventDate.setHours( parseInt((<HTMLInputElement>evt.target).value) );
     this.new_event.opsDate = this.newEventDate;
   }
 
-  setNewEventMinutes(): void{
-    this.newEventDate.setMinutes( parseInt((<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value) );
+  setNewEventMinutes(evt: Event): void{
+    if(parseInt((<HTMLInputElement>evt.target).value) > 59){
+      (<HTMLInputElement>evt.target).value = "59";
+    }
+    this.newEventDate.setMinutes( parseInt((<HTMLInputElement>evt.target).value) );
     this.new_event.opsDate = this.newEventDate;
   }
 
@@ -517,6 +535,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       return;
     }
     (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
+    this.new_event.obs.sort((a,b) => {
+      return a.code - b.code;
+    });
     this.inspectionService.insertHiveEvent(this.new_event).subscribe(
       _insp => {
         this.inspectionService.inspectionsHive.push(_insp);
@@ -544,6 +565,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
    // <--- START EDIT EVENT SCREEN --->
 
    showEditEvent(insp: Inspection){
+    this.edit = false;
+
     this.newEventDate = new Date(insp.opsDate);
     (<HTMLElement>document.getElementsByClassName('edit-event-time-error')[0]).style.display = 'none';
     (<HTMLInputElement>document.getElementsByClassName('edit-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
@@ -651,6 +674,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
 
   editEvent(): void{
     this.inspectionService.inspectionsHive[ this.inspectionService.inspectionsHive.findIndex(_insp => _insp._id === this.new_event._id) ] = Object.assign({}, this.new_event);
+    this.new_event.obs.sort((a,b) => {
+      return a.code - b.code;
+    });
     this.inspectionService.updateEvent(this.new_event).subscribe(
       _insp => {
         let index = this.inspectionService.inspectionsHive.findIndex( _i => _i._id === _insp._id);

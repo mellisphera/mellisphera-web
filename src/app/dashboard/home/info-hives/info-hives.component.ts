@@ -26,7 +26,7 @@ import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 import { WeightHivesComponent } from './weight-hives/weight-hives.component';
 import { NotesHivesComponent } from './notes-hives/notes-hives.component';
 
-import { HIVE_POS } from '../../../../constants/hivePositions';
+//import { HIVE_POS } from '../../../../constants/hivePositions';
 import { TranslateService } from '@ngx-translate/core';
 
 import { isUndefined, isArray, isObject } from 'util';
@@ -99,7 +99,8 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
     else{
       let nameSerie = elt.position;
-      let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
+      return this.translateService.instant('HIVE_POS.'+nameSerie.toUpperCase()+'.MSG')
+      /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === nameSerie);
       if(this.translateService.currentLang == 'fr'){
         return hivePos.translations.fr;
       }
@@ -111,7 +112,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
       if(this.translateService.currentLang == 'nl'){
         return hivePos.translations.nl;
-      }
+      }*/
     }
   }
 
@@ -123,7 +124,10 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
       _brood => {
         let posTab = _brood.map(_val => _val.position);
         posTab.map((_pos,index) => {
-          let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
+          if(_pos != undefined && _pos != null){
+            posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
+          }
+          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
           if(hivePos != undefined){
             if(this.translateService.currentLang == 'fr'){
               posTab[index] = hivePos.translations.fr;
@@ -137,7 +141,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
             if(this.translateService.currentLang == 'nl'){
               posTab[index] = hivePos.translations.nl;
             }
-          }
+          }*/
         });
         let posSet = new Set([...posTab].concat([..._brood.map(_val => _val.sensorRef)]));
         option.baseOption.legend.data = [...posSet];
@@ -258,7 +262,8 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
             serieTmp.name = nameSerie + ' | ' + _data.sensorRef;
           }
           else{
-            let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
+            serieTmp.name = nameSerie + ' | ' + this.translateService.instant('HIVE_POS.' + _data.position.toUpperCase() + '.MSG');
+            /*let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
             if(this.translateService.currentLang == 'fr'){
               serieTmp.name = nameSerie + ' | ' + hivePos.translations.fr;
             }
@@ -270,14 +275,15 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
             }
             if(this.translateService.currentLang == 'nl'){
               serieTmp.name = nameSerie + ' | ' + hivePos.translations.nl;
-            }
+            }*/
           }
         } else {
           if(_data.position === "" || _data.position == null || _data.position == undefined){
             serieTmp.name = nameSerie + ' | '  + _data.sensorRef;
           }
           else{
-            let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
+            serieTmp.name = nameSerie + ' | ' + this.translateService.instant('HIVE_POS.' + _data.position.toUpperCase() + '.MSG');
+            /*let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
             if(this.translateService.currentLang == 'fr'){
               serieTmp.name = nameSerie + ' | ' + hivePos.translations.fr;
             }
@@ -289,7 +295,7 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
             }
             if(this.translateService.currentLang == 'nl'){
               serieTmp.name = nameSerie + ' | ' + hivePos.translations.nl;
-            }
+            }*/
           }
         }
         if (data.map(_elt => _elt.date)[0] !== undefined) {
