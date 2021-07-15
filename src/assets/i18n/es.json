@@ -741,6 +741,7 @@
             "HIVE":"Colmena",
             "APIARY":"Colmenar"
         },
+        "DEFAULT":"Default",
         "SUPER+":"Añadir alza",
         "SUPER-":"Retirar alza",
         "QUEENINSERT":"Inserción de Reine",

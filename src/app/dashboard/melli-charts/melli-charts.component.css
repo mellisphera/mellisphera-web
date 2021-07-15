@@ -620,8 +620,6 @@ nav[role=admin-navigation] {
 }
 
 
-
-
 .right-click-menu{
   position: absolute;
   visibility: hidden;
@@ -1314,6 +1312,36 @@ nav[role=admin-navigation] {
   border: 1px solid rgb(0, 180, 0);
 }
 
+.hives-queenseen-img{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/ms-pics/inspects/queenseen_b.svg');
+  background-position: center;
+}
+
+.hives-queenseen-img-active{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/ms-pics/inspects/queenseen_cb.svg');
+  background-position: center;
+  border: 1px solid rgb(0, 180, 0);
+}
+
+.hives-nectarflow-img{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/ms-pics/inspects/honeydew_b.svg');
+  background-position: center;
+}
+
+.hives-nectarflow-img-active{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/ms-pics/inspects/honeydew_cb.svg');
+  background-position: center;
+  border: 1px solid rgb(0, 180, 0);
+}
+
 .hives-division-img{
   background-size: 37px;
   background-repeat: no-repeat;
@@ -1478,6 +1506,8 @@ nav[role=admin-navigation] {
   background-position: center;
   border: 1px solid rgb(0, 180, 0);
 }
+
+
 
 /*.hives-mitecountwash-img{
   background-size: 37px;

@@ -1081,16 +1081,16 @@ export class InspectNewComponent implements OnInit {
             this.new_apiary_insp.obs.splice(index, 1);
           }
           break;
-        case 'queen':
+        case 'queenseen':
           button = <HTMLButtonElement>document.getElementsByClassName('health-queen')[0];
           if(!button.classList.contains('health-queen-active')){
             button.classList.add('health-queen-active');
-            this.new_apiary_insp.obs.push({name:'Queen', img:'queen_cb.svg'});
+            this.new_apiary_insp.obs.push({name:'Queenseen', img:'queenseen_cb.svg'});
             console.log(this.new_apiary_insp.obs);
           }
           else{
             button.classList.remove('health-queen-active');
-            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Queen')
+            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Queenseen')
             this.new_apiary_insp.obs.splice(index, 1);
           }
           break;
@@ -1149,15 +1149,15 @@ export class InspectNewComponent implements OnInit {
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
           break;
-        case 'queen':
+        case 'queenseen':
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0];
           if(!button.classList.contains('health-queen-active')){
             button.classList.add('health-queen-active');
-            this.hive_insps[inspIndex].obs.push({name:'Queen', img:'queen_cb.svg'});
+            this.hive_insps[inspIndex].obs.push({name:'Queenseen', img:'queenseen_cb.svg'});
           }
           else{
             button.classList.remove('health-queen-active');
-            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Queen')
+            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Queenseen')
             this.hive_insps[inspIndex].obs.splice(index, 1);
           }
           break;
@@ -1199,7 +1199,7 @@ export class InspectNewComponent implements OnInit {
     (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "5%";
     
     this.pdf.setFont("courier","bolditalic");
-    //this.pdf.text(this.user_apiaries[this.active_apiary_index - 1].name, 123, 10);
+    this.pdf.text(this.user_apiaries[this.active_apiary_index - 1].name, 123, 10);
 
     this.pdf.setFont("courier","normal");
     this.pdf.text(headerDate, 10, 20);
@@ -1358,7 +1358,7 @@ export class InspectNewComponent implements OnInit {
 
 
   printPDF(): void{
-    this.pdf.save("test.pdf");
+    this.pdf.save("inspection-" + this.user_apiaries[this.active_apiary_index - 1].name +"-"+this.unitService.getPDFDate(this.inspect_date)+ ".pdf");
   }
 
   cancelInspection(): void{

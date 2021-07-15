@@ -35,6 +35,17 @@ export class UnitService {
     return moment(date).format(this.getUserPref().timeFormat);
   }
 
+
+  /**
+   *
+   *
+   * @param {string} date
+   * @returns {string}
+   * @memberof UnitService
+   */
+  getPDFDate(date: string | Date): string {
+    return moment(date).format(this.getUserPref().timeFormat).replace('/','-');
+  }
   /**
    *
    *

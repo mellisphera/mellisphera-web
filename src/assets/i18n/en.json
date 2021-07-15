@@ -741,6 +741,7 @@
             "HIVE":"Hive",
             "APIARY":"Apiary"
         },
+        "DEFAULT":"Default",
         "SUPER+":"Added super",
         "SUPER-":"Removed super",
         "QUEENINSERT":"Queen inserted",

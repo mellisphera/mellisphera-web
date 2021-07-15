@@ -741,6 +741,7 @@
             "HIVE":"Ruche",
             "APIARY":"Rucher"
         },
+        "DEFAULT":"Default",
         "SUPER+":"Ajout d'une hausse",
         "SUPER-":"Retrait d'une hausse",
         "QUEENINSERT":"Insertion reine",

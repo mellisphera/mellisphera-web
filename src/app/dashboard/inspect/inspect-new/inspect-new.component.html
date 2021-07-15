@@ -73,8 +73,8 @@
               data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SICK' | translate }}"></button>
               <button class="apiary-obs health-mosaic" (click)="setHealth('mosaic', 'apiary')"
               data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.MOSAICBROOD' | translate }}"></button>
-              <button class="apiary-obs health-queen" (click)="setHealth('queen', 'apiary')"
-              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.QUEEN' | translate }}"></button>
+              <button class="apiary-obs health-queen" (click)="setHealth('queenseen', 'apiary')"
+              data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.QUEENSEEN' | translate }}"></button>
               <ng-container *ngFor="let conf of inspConf; let i = index">
                 <ng-container *ngIf="conf.enable && conf.inspCat.applies.includes('apiary') && conf.inspCat.type === 'act' && conf.inspCat.seasons.includes(seasonService.getSeason()) && conf.inspCat.img !== 'Default'">
                   <button [class]="'apiary-action btn-' + conf.inspCat.img.toLowerCase() + '_b'"
@@ -198,8 +198,8 @@
                       data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.SICK' | translate }}"></button>
                       <button [class]="'hives-obs health-mosaic ' + ruche.name + '_mosaic'" (click)="setHealth('mosaic', 'hive', ruche)"
                       data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.MOSAICBROOD' | translate }}"></button>
-                      <button [class]="'hives-obs health-queen '  + ruche.name + '_queen'" (click)="setHealth('queen', 'hive', ruche)"
-                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.QUEEN' | translate }}"></button>
+                      <button [class]="'hives-obs health-queen '  + ruche.name + '_queen'" (click)="setHealth('queenseen', 'hive', ruche)"
+                      data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.QUEENSEEN' | translate }}"></button>
                       <ng-container *ngFor="let conf of inspConf; let i = index">
                         <button *ngIf="conf.enable && conf.inspCat.applies.includes('hive') && conf.inspCat.type === 'act' && conf.inspCat.seasons.includes(seasonService.getSeason()) && conf.inspCat.img !== 'Default'"
                         [class]="'hives-action btn-' + conf.inspCat.img.toLowerCase() + '_b'"

@@ -87,8 +87,8 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
       { name: 'WIND', id: 'WIND', unit: 'V', origin: 'OTHER', class: 'item-type', icons: './assets/ms-pics/alerts/meteo/wind_cb.png' },
       { name: 'RAIN', id: 'RAIN', unit: 'MM', origin: 'OTHER', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/rain_cb.png' },
       { name: 'ALERT', id: 'ALERT', origin: 'ENV', class: 'item-type active', icons: './assets/ms-pics/ui/calendbars/alerts-events_cb.svg' },
-      { name: 'EVENT-APIARY', id: 'EVENT-APIARY', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/inspect-api_cb.png' },
-      { name: 'EVENT-HIVE', id: 'EVENT-HIVE', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/inspect_cb.png' },
+      //{ name: 'EVENT-APIARY', id: 'EVENT-APIARY', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/inspect-api_cb.png' },
+      //{ name: 'EVENT-HIVE', id: 'EVENT-HIVE', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/inspect_cb.png' },
       { name: 'MOON', id: 'MOON', origin: 'ENV', class: 'item-type', icons: './assets/ms-pics/ui/calendbars/moon_cb.png' },
     ];
 
