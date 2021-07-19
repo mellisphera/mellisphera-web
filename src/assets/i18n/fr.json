@@ -124,6 +124,7 @@
         "APIARY" : "Mon Rucher",
         "HIVES" : "Ruches",
         "INSPECT": "Inspecter",
+        "WEATHER": "Météo",
         "DATA" : "Explorer",
         "ALERT_CONF": "Alertes",
         "USERGUIDE": "Documentation"
@@ -942,5 +943,11 @@
         "SIGNUP":"Créer un compte",
         "BACK":"Retour",
         "RESET":"Réinitialiser"
+    },
+    "WEATHER":{
+        "NAV":{
+            "RECORDS":"Relevés",
+            "CONFIG":"Configuration"
+        }
     }
 }

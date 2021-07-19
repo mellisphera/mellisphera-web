@@ -25,6 +25,7 @@ limitations under the License. */
 /*     background-color: #204d74;
  */ color: black;
 }
+
 .apiaryGroup::-webkit-scrollbar {
     /* This is the magic bit for WebKit */
     display: none;
@@ -76,13 +77,16 @@ nav[role=admin-navigation] {
      width: 500px;
      height: 48px;
 }
+
 #dropdown{
     width: 50%;
     text-align: center;
 }
+
 .nav-date .btn-primary {
     width: 100% !important;
 }
+
 #btn-date{
     margin-top: 13px;
     height: 36px;
@@ -101,15 +105,18 @@ nav[role=admin-navigation] {
 #next-date{
     margin-right: 20px;
 }
+
 .time{
     white-space: nowrap;
     list-style: none;
 }
+
 #content{
     position: relative !important;
     left: 13% !important;
     width: calc(100% - 13%);
 }
+
 .circle{
     border: 1px solid black;
     display: inline-block;
@@ -118,6 +125,7 @@ nav[role=admin-navigation] {
     height: 14px;
 
 }
+
 .puce-hive, hive-circle{
     background-image: url('../../../assets/ms-pics/ui/hive_b.png');
     display: inline-block;

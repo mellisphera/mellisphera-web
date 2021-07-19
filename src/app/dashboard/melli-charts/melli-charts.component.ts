@@ -593,7 +593,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     let span = (<HTMLSpanElement>document.getElementById(rucher._id + '_span'));
     let active = this.checkAllHivesSelected(rucher);
     if(!active){
-      console.log('je suis ici');
+      //console.log('je suis ici');
       span.style.fontWeight = 'bold';
       let hivesToSelect = this.rucheService.getHivesIdsByApiaryId(rucher._id).filter(hiveId => { if(this.stackService.getHiveSelectIdsOfApiary(rucher._id).indexOf(hiveId) === -1) return hiveId; } );
       hivesToSelect.forEach(hiveId => {

@@ -92,6 +92,6 @@ const MY_CUSTOM_FORMATS = {
   ],
   entryComponents: [
     HourlyWeightComponent
-],
+  ],
 })
 export class MelliChartsModule { }

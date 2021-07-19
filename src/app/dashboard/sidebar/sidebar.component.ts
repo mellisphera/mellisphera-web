@@ -94,6 +94,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     if(this.router.url.includes("inspect")){
       this.focus('sidebar-inspect');
     }
+    if(this.router.url.includes("weather")){
+      this.focus('sidebar-weather');
+    }
     if(this.router.url.includes("alert")){
       this.focus('alertConf');
     }

@@ -61,6 +61,13 @@ limitations under the License. -->
                 <p>{{ 'SIDEBAR.ALERT_CONF' | translate }}</p>
             </a>
         </li>
+        <li *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" (click)="focus('sidebar-weather')">
+            <a id="sidebar-weather" routerLink="./weather" data-toggle="tooltip" data-placement="top"
+            title="Weather">
+                <img src="../../../assets/ms-pics/ui/sidebar/weather.svg" style="width:50px;" />
+                <p>{{ 'SIDEBAR.WEATHER' | translate }}</p>
+            </a>
+        </li>
         <li *ngIf="!tokenService.ifDemoAccount()" (click)="focus('bm')">
             <a id="bm" href="https://mybroodminder.com/app" target="blank" data-toggle="tooltip" data-placement="top"
                 title="mybroodminder">

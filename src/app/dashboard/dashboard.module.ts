@@ -62,6 +62,7 @@ import { InspectParamsComponent } from './inspect/inspect-params/inspect-params.
 
 import { HomeModule } from './home/home.module';
 import { MelliChartsModule } from './melli-charts/melli-charts.module';
+import { WeatherComponent } from './weather/weather.component';
 
 
 @NgModule({

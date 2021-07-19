@@ -150,6 +150,7 @@ export class InspectNewComponent implements OnInit {
 
 
     this.new_apiary_insp.userId = this.userService.getIdUserLoged();
+    this.new_apiary_insp.opsDate = new Date(this.inspect_date);
 
     $("#downloadModal").on('shown.bs.modal', () => {this.generatePDF()} );
 

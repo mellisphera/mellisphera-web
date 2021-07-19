@@ -1,0 +1,182 @@
+.apiaryGroup{
+    /*overflow: auto;*/
+    scrollbar-width: none;
+    overflow-y: scroll;
+    z-index: 5;
+    position: absolute;
+    justify-content: space-between;
+    height: auto;
+}
+.apiary-group-weather-records, .apiary-group-weather-config{
+    width: 15%;
+}
+.apiaryGroup, .list-group-item {
+  /*     background-color: #204d74;
+  */ color: black;
+}
+.apiaryGroup::-webkit-scrollbar {
+    /* This is the magic bit for WebKit */
+    display: none;
+}
+
+.list-group-item::after{
+    content: none;
+}
+
+.list-group-item:hover{
+    background-color: rgb(247, 247, 247);
+    cursor: pointer;
+}
+
+.date-arrow{
+    border: none;
+    padding: 0px !important;
+}
+.date-arrow .fa{
+    font-size: 35px;
+}
+.fa-calendar{
+    margin-right: 5px !important;
+}
+
+nav[role=admin-navigation] {
+    color: white;
+    background-color: #4F4F51;
+}
+
+.nav li .btn{
+    color: white !important;
+}
+
+.active{
+    background-color: white;
+}
+
+.nopadding{
+    padding: 0px !important;
+    margin: 0 !important;
+}
+
+.list-group-hive-item{
+    color: black !important;
+    text-decoration: none !important;
+}
+
+.button {
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 6px 1px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button0 {
+    background-color: #4F4F51;
+    color: white;
+    border: 2px solid #70A8B2;
+    border-radius: 4px;
+}
+
+.button0:hover {
+    background-color: white;
+    color: #4F4F51;
+}
+
+.button0:focus {
+    outline: 0;
+}
+
+.nav-active {
+    background-color: white;
+    color: #4F4F51;
+}
+
+.active0{
+    background-color: white;
+    color: #4F4F51;
+}
+
+.active0:hover{
+    color: #70A8B2;
+    border: 2px solid #4F4F51;
+}
+
+.buttonLeft{
+    margin-left: 25px;
+}
+
+.navbar{
+    height: 50px;
+}
+
+.nav-date{
+    margin-right: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 500px;
+    height: 48px;
+}
+
+#dropdown{
+    width: 50%;
+    text-align: center;
+}
+
+.nav-date .btn-primary {
+    width: 100% !important;
+}
+
+#btn-date{
+    margin-top: 13px;
+    height: 36px;
+    font-size: 14px;
+    padding: 0px;
+    background-color: #4F4F51;
+    color: white !important;
+    border: none !important;
+}
+
+#previous-date {
+    margin-right: 10px;
+}
+
+#next-date{
+    margin-right: 20px;
+}
+
+.time{
+    white-space: nowrap;
+    list-style: none;
+}
+
+#content{
+    position: relative !important;
+    left: 16% !important;
+    width: calc(100% - 16%);
+}
+
+.apiary-active{
+    background-color: #eafffd;
+}
+
+.apiary-active a span{
+    font-weight: bold;
+}
+
+@media screen and (max-width:1000px){
+  .navbar-nav {
+      display: flex !important;
+  }
+  .buttonLeft{
+      justify-content: space-around;
+      width: 100%;
+  }
+  .navbar-nav{
+      margin: 0px !important;
+  }
+}

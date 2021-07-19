@@ -124,6 +124,7 @@
         "APIARY" : "My Apiary",
         "HIVES" : "Hives",
         "INSPECT": "Inspect",
+        "WEATHER": "Weather",
         "DATA" : "Explore",
         "ALERT_CONF": "Alerts",
         "USERGUIDE": "User Guide"
@@ -942,5 +943,11 @@
         "SIGNUP":"Sign up",
         "BACK":"Back",
         "RESET":"Reset"
+    },
+    "WEATHER":{
+        "NAV":{
+            "RECORDS":"Records",
+            "CONFIG":"Configuration"
+        }
     }
 }
