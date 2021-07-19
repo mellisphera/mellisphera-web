@@ -112,5 +112,9 @@ export class WeatherComponent implements OnInit {
     }
   }
 
+  previousDate(){}
+
+  nextDate(){}
+
 }
 

@@ -1317,9 +1317,9 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
           if(this.gainWeightDisplay || this.normWeightDisplay){
             if(e.length > 0){
               if(e.length >= 7){
-                cell3.innerHTML = (e[0].value - e[7].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+                cell3.innerHTML = (e[0].value - e[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
                 if(e.length >= 15){
-                  cell4.innerHTML = (e[0].value - e[15].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+                  cell4.innerHTML = (e[0].value - e[14].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
                 }
               }
               if( this.ref_Values != undefined && this.ref_Values[index] != undefined && this.ref_Values[index] != null ){
@@ -1346,9 +1346,9 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
             if(e.length >= 7){
-              cell3.innerHTML = parseFloat(e[7].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+              cell3.innerHTML = parseFloat(e[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
               if(e.length >= 15){
-                cell4.innerHTML = parseFloat(e[15].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+                cell4.innerHTML = parseFloat(e[14].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
               }
             }
           }
@@ -1378,24 +1378,24 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     let cell3 = row.insertCell(); // 7DAYS CELL
     if(this.gainWeightDisplay || this.normWeightDisplay){
-      if(_weight.length > 7){
-        cell3.innerHTML = (_weight[0].value - _weight[7].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      if(_weight.length >= 7){
+        cell3.innerHTML = (_weight[0].value - _weight[6].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
       }
     }
     if(this.rawWeightDisplay){
-      if(_weight.length > 7){
-        cell3.innerHTML =  _weight[7].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      if(_weight.length >= 7){
+        cell3.innerHTML =  _weight[6].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
       }
     }
     let cell4 = row.insertCell(); // 15DAYS CELL
     if(this.gainWeightDisplay || this.normWeightDisplay){
-      if(_weight.length > 15){
-        cell4.innerHTML = (_weight[0].value - _weight[15].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      if(_weight.length >= 15){
+        cell4.innerHTML = (_weight[0].value - _weight[14].value).toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
       }
     }
     if(this.rawWeightDisplay){
-      if(_weight.length > 15){
-        cell4.innerHTML =  _weight[15].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
+      if(_weight.length >= 15){
+        cell4.innerHTML =  _weight[14].value.toFixed(2) + ' ' + this.graphGlobal.weight.unitW;
       }
     }
 
@@ -1405,7 +1405,6 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   removeDataFromTable(hive: RucheInterface): void{
-    console.log(hive);
     let table = document.getElementById("weight-table").getElementsByTagName("table")[0];
     let tbody = table.getElementsByTagName('tbody')[0];
     let tr = tbody.getElementsByTagName('tr');
@@ -1492,13 +1491,13 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           let cell5 = row.insertCell();
           if(e.length >= 7 && this.ref_Date != null){
-            if(( (e[0].value / e[7].value) - 1) >= 0) cell5.innerHTML = '+ ' +(( (e[0].value / e[7].value) - 1) * 100).toFixed(2) + ' %';
-            else cell5.innerHTML = '- ' + Math.abs(( (e[0].value / e[7].value) - 1) * 100).toFixed(2) + ' %';
+            if(( (e[0].value / e[6].value) - 1) >= 0) cell5.innerHTML = '+ ' +(( (e[0].value / e[6].value) - 1) * 100).toFixed(2) + ' %';
+            else cell5.innerHTML = '- ' + Math.abs(( (e[0].value / e[6].value) - 1) * 100).toFixed(2) + ' %';
           }
           let cell6 = row.insertCell();
           if(e.length >= 15 && this.ref_Date != null){
-            if(( (e[0].value / e[15].value) - 1) >= 0) cell6.innerHTML = '+ ' +(( (e[0].value / e[15].value) - 1) * 100).toFixed(2) + ' %';
-            else cell6.innerHTML = '- ' + Math.abs(( (e[0].value / e[15].value) - 1) * 100).toFixed(2) + ' %';
+            if(( (e[0].value / e[14].value) - 1) >= 0) cell6.innerHTML = '+ ' +(( (e[0].value / e[14].value) - 1) * 100).toFixed(2) + ' %';
+            else cell6.innerHTML = '- ' + Math.abs(( (e[0].value / e[14].value) - 1) * 100).toFixed(2) + ' %';
           }
         });
       }
@@ -1537,13 +1536,13 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         let cell5 = row.insertCell();
         if(rawWeight.length >= 7 && this.ref_Date != null){
-          if(( (rawWeight[0].value / rawWeight[7].value)*100 - 100) >= 0) cell5.innerHTML = '+ ' +(( (rawWeight[0].value / rawWeight[7].value)*100 - 100)).toFixed(2) + ' %';
-          else cell5.innerHTML = '- ' + Math.abs(( (rawWeight[0].value / rawWeight[7].value)*100 - 100)).toFixed(2) + ' %';
+          if(( (rawWeight[0].value / rawWeight[6].value)*100 - 100) >= 0) cell5.innerHTML = '+ ' +(( (rawWeight[0].value / rawWeight[6].value)*100 - 100)).toFixed(2) + ' %';
+          else cell5.innerHTML = '- ' + Math.abs(( (rawWeight[0].value / rawWeight[6].value)*100 - 100)).toFixed(2) + ' %';
         }
         let cell6 = row.insertCell();
         if(rawWeight.length >= 15 && this.ref_Date != null){
-          if(( (rawWeight[0].value / rawWeight[15].value)*100 - 100) >= 0) cell6.innerHTML = '+ ' +(( (rawWeight[0].value / rawWeight[15].value)*100 - 100)).toFixed(2) + ' %';
-          else cell6.innerHTML = '- ' + Math.abs(( (rawWeight[0].value / rawWeight[15].value)*100 - 100)).toFixed(2) + ' %';
+          if(( (rawWeight[0].value / rawWeight[14].value)*100 - 100) >= 0) cell6.innerHTML = '+ ' +(( (rawWeight[0].value / rawWeight[14].value)*100 - 100)).toFixed(2) + ' %';
+          else cell6.innerHTML = '- ' + Math.abs(( (rawWeight[0].value / rawWeight[14].value)*100 - 100)).toFixed(2) + ' %';
         }
       }
     )
