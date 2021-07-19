@@ -216,8 +216,11 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
     let ua = navigator.userAgent;
 
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua))
-       this.isDesktop = false;
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)){
+      this.isDesktop = false;
+      console.log("mobile");
+    }
+       
     
 
 

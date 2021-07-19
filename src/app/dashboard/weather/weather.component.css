@@ -168,6 +168,10 @@ nav[role=admin-navigation] {
     font-weight: bold;
 }
 
+.btn-transparent{
+    background-color: transparent !important;
+}
+
 @media screen and (max-width:1000px){
   .navbar-nav {
       display: flex !important;

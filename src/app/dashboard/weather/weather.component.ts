@@ -8,6 +8,8 @@ import { WeatherRecordsComponent } from './weather-records/weather-records.compo
 import { WeatherConfigComponent } from './weather-config/weather-config.component';
 import { WeatherOptionService } from './service/weather-option.service';
 import { WeatherDateService } from './service/weather-date.service';
+import { DataRange } from '../../_model/data-range';
+import { TranslateService } from '@ngx-translate/core';
 
 const PREFIX_PATH = '/dashboard/weather/';
 
@@ -31,6 +33,7 @@ export class WeatherComponent implements OnInit {
     private w_o_service: WeatherOptionService,
     public w_d_service: WeatherDateService,
     private renderer: Renderer2,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit() {
@@ -115,6 +118,59 @@ export class WeatherComponent implements OnInit {
   previousDate(){}
 
   nextDate(){}
+
+  /**
+   *
+   *
+   * @param {DataRange} range
+   * @returns {DataRange}
+   * @memberof MelliChartsComponent
+   */
+   getRangeBYLang(range: DataRange): string {
+    if (this.translateService.currentLang === 'fr') {
+      return this.w_d_service.ranges.filter(_range => _range.type === range.type)[0].typeFr;
+    } else if (this.translateService.currentLang === 'es') {
+      return this.w_d_service.ranges.filter(_range => _range.type === range.type)[0].typeEs;
+    } else {
+      return range.type;
+    }
+  }
+
+   /**
+   *
+   *
+   * @param {string} type
+   * @returns {Array<DataRange>}
+   * @memberof MelliChartsComponent
+   */
+    getRangeByType(type: string): Array<DataRange> {
+      let arg: DataRange;
+      const ranges: Array<DataRange> = this.w_d_service.ranges.filter(elt => elt.type === type || elt.type === type + 'S');
+      if (type === 'YEAR') {
+        arg = this.w_d_service.ranges[10];
+        ranges.unshift(arg);
+        arg = this.w_d_service.ranges[9];
+        ranges.unshift(arg);
+      } else if (type === 'MONTH') {
+        let index = ranges.findIndex(_range => _range.type === 'MONTHS' && _range.scale === 9);
+        ranges.splice(index, 1);
+        index = ranges.findIndex(_range => _range.type === 'MONTHS' && _range.scale === 6);
+        ranges.splice(index, 1);
+      }
+      return ranges;
+    }
+
+    /*setDateFromInput(): void {
+      const start = this.w_d_service.start;
+      const end = this.w_d_service.end;
+      this.w_d_service.setRangeForRequest([start, end]);
+      if (this.router.url === PREFIX_PATH + 'records') {
+        this.recordsComponent.loadAfterRangeChanged((options: any) => {
+          this.stackService.getEchartInstance().setOption(options, true);
+          this.stackService.getEchartInstance().hideLoading();
+        });
+      } 
+    }*/
 
 }
 

@@ -30,7 +30,7 @@
             <div id="input-date">
               <div class="form-group">
                 <label>{{ 'MELLICHARTS.DATE.START' | translate }} </label>
-                <input id="calendar-begin" class="form-control" [owlDateTimeTrigger]="dt1" [(ngModel)]="melliChartDate.start"
+                <input id="calendar-begin" class="form-control" [owlDateTimeTrigger]="dt1" [(ngModel)]="w_d_service.start"
                   [owlDateTime]="dt1">
                 <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1"
                   #dt1></owl-date-time>
@@ -38,7 +38,7 @@
               </div>
               <div class="form-group">
                 <label>{{ 'MELLICHARTS.DATE.END' | translate }} </label>
-                <input id="calendar-end" class="form-control" [owlDateTimeTrigger]="dt2" [(ngModel)]="melliChartDate.end"
+                <input id="calendar-end" class="form-control" [owlDateTimeTrigger]="dt2" [(ngModel)]="w_d_service.end"
                   [owlDateTime]="dt2">
                 <owl-date-time (afterPickerClosed)="onCloseDatePicker()" [pickerType]="'calendar'" firstDayOfWeek="1"
                   #dt2></owl-date-time>
