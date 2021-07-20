@@ -21,12 +21,14 @@
             class="fa fa-arrow-circle-left" id="previous-date"></i></button></li>
       <li id="dropdown">
         <div class="dropdown" id="date-dropdown">
-          <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i
-              class="fa fa-calendar-alt"></i>{{ w_d_service.start | myDate: 'DAILY' }} <span id="arrow">&#8680;</span>
+          <button id="btn-date" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="padding-top: 8px;">
+            <i class="fa fa-calendar-alt" style="margin-right: 10px;"></i>
+            {{ w_d_service.start | myDate: 'DAILY' }} 
+            <span id="arrow">&#8680;</span>
             {{ w_d_service.end | myDate: 'DAILY' }}
             <span class="caret"></span>
           </button>
-          <!--<div class="dropdown-menu dropdown-menu-right">
+          <div class="dropdown-menu dropdown-menu-right">
             <div id="input-date">
               <div class="form-group">
                 <label>{{ 'MELLICHARTS.DATE.START' | translate }} </label>
@@ -66,7 +68,7 @@
                 </ul>
               </div>
             </div>
-          </div>-->
+          </div>
         </div>
       </li>
       <li><button type="button" (click)="nextDate()" class="btn date-arrow btn-transparent"><i id="next-date"
@@ -78,10 +80,11 @@
     <div class="apiaryGroup">
       <div id="main-menu" class="list-group">
         <ng-container *ngFor="let apiary of user_apiaries let i = index;">
-          <div [id]="apiary._id" style="display: flex; align-items: center;padding-right: 4px;" data-parent="#main-menu"
+          <div [id]="apiary._id" style="display: flex; align-items: center;padding-right: 4px;padding-left: 6px;" data-parent="#main-menu"
             [class]="'list-group-item apiary ' + checkApiaryIfActive(apiary._id)" (click)="apiaryClick(apiary)">
-            <a class="list-group-hive-item" >
-              <span class="apiary-group-title dropleft" [id]="apiary._id + '_span'">{{ apiary.name }}</span>
+            <a class="list-group-hive-item" style="display: flex;">
+              <i class="circle" [style.background-color]="getColor(apiary)"></i>
+              <span style="width: 135px;" class="apiary-group-title dropleft" [id]="apiary._id + '_span'">{{ apiary.name }}</span>
             </a>
             
           </div>

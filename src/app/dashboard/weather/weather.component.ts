@@ -10,8 +10,11 @@ import { WeatherOptionService } from './service/weather-option.service';
 import { WeatherDateService } from './service/weather-date.service';
 import { DataRange } from '../../_model/data-range';
 import { TranslateService } from '@ngx-translate/core';
+import { UnitService } from '../service/unit.service';
+import { WeatherService } from '../service/api/weather.service';
 
 const PREFIX_PATH = '/dashboard/weather/';
+const colors: string[] = ['rgb(20,150,255)', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta', 'brown', 'grey'];
 
 @Component({
   selector: 'app-weather',
@@ -24,6 +27,7 @@ export class WeatherComponent implements OnInit {
   private recordsComponent: WeatherRecordsComponent;
   private configComponent: WeatherConfigComponent;
   private eltOnClick: EventTarget;
+  private dateDropdown: HTMLElement;
 
   constructor(
     public rucheService: RucheService,
@@ -33,16 +37,19 @@ export class WeatherComponent implements OnInit {
     private w_o_service: WeatherOptionService,
     public w_d_service: WeatherDateService,
     private renderer: Renderer2,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private unitService: UnitService
   ) { }
 
   ngOnInit() {
     this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
       _apiaries => {
-        this.user_apiaries = [..._apiaries];
+        this.user_apiaries = [..._apiaries].sort(this.compare);
       },
       () => {},
-      () => {}
+      () => {
+        this.w_o_service.addApiary(this.user_apiaries[0]);
+      }
     );
   }
 
@@ -55,6 +62,17 @@ export class WeatherComponent implements OnInit {
       this.eltOnClick = document.getElementById('weather-config');
       this.renderer.addClass(this.eltOnClick, 'nav-active');
     }
+    this.dateDropdown = document.getElementById('date-dropdown');
+  }
+
+  compare( a:RucherModel, b:RucherModel ) {
+    if ( a.name < b.name ){
+      return -1;
+    }
+    if ( a.name > b.name ){
+      return 1;
+    }
+    return 0;
   }
 
   checkApiaryIfActive(apiaryId: string): string{
@@ -119,6 +137,12 @@ export class WeatherComponent implements OnInit {
 
   nextDate(){}
 
+  onCloseDatePicker(): void {
+    (<HTMLInputElement>document.getElementById('calendar-begin')).value = this.unitService.getDailyDate(this.w_d_service.start);
+    (<HTMLInputElement>document.getElementById('calendar-end')).value = this.unitService.getDailyDate(this.w_d_service.end);
+    this.dateDropdown.classList.add('open');
+  }
+
   /**
    *
    *
@@ -160,17 +184,59 @@ export class WeatherComponent implements OnInit {
       return ranges;
     }
 
-    /*setDateFromInput(): void {
+    setDateFromInput(): void {
       const start = this.w_d_service.start;
       const end = this.w_d_service.end;
       this.w_d_service.setRangeForRequest([start, end]);
       if (this.router.url === PREFIX_PATH + 'records') {
-        this.recordsComponent.loadAfterRangeChanged((options: any) => {
-          this.stackService.getEchartInstance().setOption(options, true);
-          this.stackService.getEchartInstance().hideLoading();
+        this.recordsComponent.loadAllRecords((options: any) => {
+          this.w_o_service.getRecordsChartInstance().setOption(options, true);
+          this.w_o_service.getRecordsChartInstance().hideLoading();
         });
       } 
-    }*/
+    }
+
+    /**
+   *
+   *
+   * @param {DataRange} rangeSelect
+   * @memberof MelliChartsComponent
+   */
+  setRangeSelect(rangeSelect: DataRange): void {
+    this.w_d_service.setRange(rangeSelect);
+    if (this.router.url === PREFIX_PATH + 'records' ) {
+      this.recordsComponent.loadAllRecords((options: any) => {
+        options.baseOption.xAxis[0].min = this.w_d_service.getRangeForRequest()[0];
+        options.baseOption.xAxis[0].max = this.w_d_service.getRangeForRequest()[1];
+        this.w_o_service.getRecordsChartInstance().setOption(options, true);
+        this.w_o_service.getRecordsChartInstance().hideLoading();
+      });
+    }
+  }
+
+  getColor(apiary: RucherModel): string{
+    switch(this.router.url){
+      case PREFIX_PATH + 'records':
+        if(this.w_o_service.getApiariesSelected().findIndex(_a => _a._id === apiary._id) !== -1){
+          let index = this.user_apiaries.findIndex(_a => _a._id === apiary._id);
+          return colors[index];
+        }
+        else{
+          return 'white';
+        }
+        break;
+      case PREFIX_PATH + 'config':
+        if(this.w_o_service.getApiaryConfig()._id === apiary._id){
+          let index = this.user_apiaries.findIndex(_a => _a._id === apiary._id);
+          return colors[index];
+        }
+        else{
+          return 'white';
+        }
+        break;
+    }
+    
+  }
 
 }
 

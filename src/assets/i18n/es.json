@@ -948,6 +948,14 @@
         "NAV":{
             "RECORDS":"Registros",
             "CONFIG":"Configuracion"
+        },
+        "GRAPH":{
+            "TEMP":"Temperatura",
+            "TEMP_LEFT":"36%",
+            "WIND":"Viento",
+            "WIND_LEFT":"39%",
+            "RAIN":"Humedad",
+            "RAIN_LEFT":"38%"
         }
     }
 }

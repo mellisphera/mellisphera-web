@@ -284,6 +284,100 @@ export const BASE_OPTIONS = {
         xAxis: [],
         series: []
     },
+    
+    baseOptionWeather: {
+        toolbox: {
+            orient: 'vertical',
+            left:'0%',
+            top: '2%',
+            itemSize: 16,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none',
+                },
+                dataView: { readOnly: false },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false,
+                type: 'cross'
+            },
+            formatter: null,
+            alwaysShowContent: false,
+            //displayMode: "single",
+            //renderMode: "auto",
+            showDelay: 0,
+            hideDelay: 100,
+            transitionDuration: 0.5,
+        },
+        axisPointer: {
+            link: { xAxisIndex: 'all' }
+        },
+        title: [{
+            top: '2%',
+            left: '36%',
+            text: 'Temperature'
+        }, {
+            top: '32%',
+            left: '40%',
+            text: 'Vent'
+        }, {
+            top: '62%',
+            left: '40%',
+            text: 'Humidité'
+        }],
+        legend: {
+            orient: 'vertical',
+            data: [],
+            selectedMode: 'multiple',
+            right: 10,
+            top: '5%',
+            width: 150
+        },
+        grid: [
+            { x: '3%', y: '6%', left: '6%', width: '75%', height: '22%', background: 'white'},
+            { x: '3%', y: '36%', left: '6%', width: '75%', height: '22%', background: 'white' },
+            { x: '3%', y: '66%', left: '6%', width: '75%', height: '22%', background: 'white' }
+        ],
+        dataZoom: [
+              {
+                show: true,
+                realtime: true,
+                start: 0,
+                end: 100,
+                // bottom: 50,
+                bottom: 20,
+                xAxisIndex: [0, 1, 2]
+            },
+            {
+                type: 'inside',
+                filterMode: 'empty',
+                realtime: true,
+                xAxisIndex: [0, 1, 2]
+            },
+            {
+                type: 'inside',
+                filterMode: 'empty',
+                realtime: true,
+                yAxisIndex: 0,
+                left: 'left'
+            },
+            {
+                type: 'inside',
+                filterMode: 'empty',
+                realtime: true,
+                yAxisIndex: 1,
+                left: 'left'
+            }
+        ],
+        yAxis: [],
+        xAxis: [],
+        series: []
+    },
 
     graphic:
         {

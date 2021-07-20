@@ -1573,6 +1573,17 @@ nav[role=admin-navigation] {
   stroke: #5cb85c !important;
 }
 
+.navbar-nav .open .dropdown-menu{
+  padding: 10px;
+  color: #fff;
+  display: flex;
+  background-color: #4f4f51;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 332px;
+  position: absolute;
+  left: -10%;
+}
 
 
 @media screen and (max-width:1500px) {

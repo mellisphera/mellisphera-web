@@ -114,7 +114,7 @@ limitations under the License. -->
               <b class="caret"></b>
             </p>
           </a>
-          <ul id="navbar-dropdown" class="dropdown-menu">
+          <ul id="navbar-dropdown" class="dropdown-menu" style="display: block;left: unset;">
             <li><a [routerLink]="[ './preferences']">{{ 'NAVBAR.ACCOUNT.PREFERENCES' | translate }}</a></li>
             <li class="divider"></li>
             <li><a href="#" (click)="logout()">{{ 'NAVBAR.ACCOUNT.LOG_OUT' | translate }}</a></li>

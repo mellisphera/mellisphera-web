@@ -1,5 +1,4 @@
-<ng-container *ngFor="let apiary of w_o_service.getApiariesSelected();">
-  <p>
-    {{ apiary.name }}
-  </p>
-</ng-container>
+<section (window:resize)="onResize($event)">
+  <div id="graph-weather"></div>
+</section>
+

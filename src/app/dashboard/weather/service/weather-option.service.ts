@@ -8,6 +8,7 @@ export class WeatherOptionService {
 
   private apiaryConfig: RucherModel;
   private apiariesSelected: RucherModel[] = [];
+  public recordsChartInstance: any;
 
   constructor() { }
 
@@ -38,5 +39,13 @@ export class WeatherOptionService {
 
   isApiarySelected(apiary: RucherModel){
     return this.apiariesSelected.findIndex(_a => _a._id === apiary._id) !== -1;
+  }
+
+  setRecordsChartInstance(chartInstance: any){
+    this.recordsChartInstance = chartInstance;
+  }
+
+  getRecordsChartInstance(): any{
+    return this.recordsChartInstance;
   }
 }

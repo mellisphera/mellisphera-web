@@ -16,6 +16,8 @@ export class WeatherDateService {
    public start: Date;
    public end: Date;
 
+   public today: Date = new Date();
+
   constructor(
     private router: Router,
   ) { 
@@ -66,10 +68,12 @@ export class WeatherDateService {
     this.rangeDateForRequest[0].setMinutes(0);
     this.rangeDateForRequest[0].setSeconds(0);
 
-    this.rangeDateForRequest[1].setHours(23);
-    this.rangeDateForRequest[1].setMinutes(59);
+    this.rangeDateForRequest[1].setDate(this.rangeDateForRequest[1].getDate() + 10);
+    //this.rangeDateForRequest[1].setHours(23);
+    //this.rangeDateForRequest[1].setMinutes(59);
     this.rangeDateForRequest[1].setSeconds(0);
-    console.log(this.rangeDateForRequest);
+
+
     this.start = this.rangeDateForRequest[0];
     this.end = this.rangeDateForRequest[1];
   }
@@ -78,6 +82,24 @@ export class WeatherDateService {
     return this.rangeDateForRequest;
   }
 
+
+  getCurrentRangeForRequest(): Date[]{
+    if(this.rangeDateForRequest[1] < this.today){
+      return this.rangeDateForRequest;
+    }
+    else{
+      return [this.rangeDateForRequest[0], this.today];
+    }
+  }
+
+  getForecastRangeForRequest(): Date[]{
+    if(this.rangeDateForRequest[1] < new Date()){
+      return [];
+    }
+    else{
+      return [this.today, this.rangeDateForRequest[1]];
+    }
+  }
 
   setRangeForRequest(_range: Date[] ) {
     const range: Date[] = [new Date(_range[0]), new Date(_range[1])];

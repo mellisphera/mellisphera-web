@@ -127,6 +127,27 @@ nav[role=admin-navigation] {
     text-align: center;
 }
 
+.dropdown-menu{
+    padding: 10px;
+    color: white;
+    display: flex;
+    background-color: #4F4F51;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 332px;
+}
+
+#dt-scale{
+    width: 100%;
+}
+#dt-scale div{
+    display: flex;
+}
+#dt-scale ul{
+    margin: 8px;
+    padding: 0px;
+}
+
 .nav-date .btn-primary {
     width: 100% !important;
 }
@@ -170,6 +191,16 @@ nav[role=admin-navigation] {
 
 .btn-transparent{
     background-color: transparent !important;
+}
+
+.circle{
+    border: 1px solid black;
+    display: inline-block;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    margin-right: 10px;
+    margin-top: 2px;
 }
 
 @media screen and (max-width:1000px){

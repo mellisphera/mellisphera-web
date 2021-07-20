@@ -40,6 +40,7 @@ export class WeatherService {
   setUnitSystem(unit: string): void {
     this.unitSystem = unit;
   }
+
   /**
    *
    *
@@ -57,11 +58,35 @@ export class WeatherService {
    *
    * @param {string} apiaryId
    * @param {Date[]} range
+   * @returns {Observable<CurrentHourlyWeather[]>}
+   * @memberof WeatherService
+   */
+   public getCurrentHourlyWeather(apiaryId: string, range: Date[]): Observable<CurrentHourlyWeather[]> {
+    return this.httpClient.post<CurrentHourlyWeather[]>(CONFIG.URL + `hourlyWeather/hourly/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
+  }
+
+  /**
+   *
+   *
+   * @param {string} apiaryId
+   * @param {Date[]} range
    * @returns {Observable<ForecastDailyWeather[]>}
    * @memberof WeatherService
    */
   public getForecastDailyWeather(apiaryId: string, range: Date[]): Observable<ForecastDailyWeather[]> {
     return this.httpClient.post<ForecastDailyWeather[]>(CONFIG.URL + `forecastDailyWeather/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
+  }
+
+  /**
+   *
+   *
+   * @param {string} apiaryId
+   * @param {Date[]} range
+   * @returns {Observable<ForecastHourlyWeather[]>}
+   * @memberof WeatherService
+   */
+   public getForecastHourlyWeather(apiaryId: string, range: Date[]): Observable<ForecastHourlyWeather[]> {
+    return this.httpClient.post<ForecastHourlyWeather[]>(CONFIG.URL + `forecastHourlyWeather/hourly/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
   }
 
   /**
