@@ -55,8 +55,8 @@ export class CapteurService {
                 {'sensorRef' : '42', 'type' : 'T_HR'},
                 {'sensorRef' : '43', 'type' : 'WEIGHT'},
                 {'sensorRef' : '47', 'type' : 'T2'},
-                {'sensorRef' : '56', 'type' : 'T_HR'},
                 {'sensorRef' : '49', 'type' : 'WEIGHT'},
+                {'sensorRef' : '56', 'type' : 'T_HR'},
                 {'sensorRef' : '57', 'type' : 'WEIGHT'},
                 {'sensorRef' : '58', 'type' : 'WEIGHT'},
             ];
@@ -177,5 +177,9 @@ export class CapteurService {
      */
     updateCapteur(): Observable<CapteurInterface> {
         return this.http.put<CapteurInterface>(CONFIG.URL + 'sensors/', this.capteur, httpOptions);
+    }
+
+    getCapteursByApiaryId(apiaryId): Observable<CapteurInterface[]>{
+        return this.http.get<CapteurInterface[]>(CONFIG.URL + 'sensors/apiary/'+ apiaryId, httpOptions);
     }
 }

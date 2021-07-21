@@ -133,9 +133,21 @@ export class WeatherComponent implements OnInit {
     }
   }
 
-  previousDate(){}
+  previousDate(){
+     const start: Date = new Date(this.w_d_service.start);
+     const end: Date = new Date(this.w_d_service.end);
+     this.w_d_service.start = new Date(start.getTime() - (end.getTime() - start.getTime()));
+     this.w_d_service.end = new Date(start.getTime());
+     this.setDateFromInput();
+  }
 
-  nextDate(){}
+  nextDate(){
+    const start: Date = new Date(this.w_d_service.start);
+    const end: Date = new Date(this.w_d_service.end);
+    this.w_d_service.start = new Date(end.getTime());
+    this.w_d_service.end = new Date(end.getTime() + (this.w_d_service.end.getTime() - start.getTime()));
+    this.setDateFromInput();
+  }
 
   onCloseDatePicker(): void {
     (<HTMLInputElement>document.getElementById('calendar-begin')).value = this.unitService.getDailyDate(this.w_d_service.start);

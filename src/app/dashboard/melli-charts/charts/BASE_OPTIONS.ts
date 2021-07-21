@@ -322,11 +322,11 @@ export const BASE_OPTIONS = {
             left: '36%',
             text: 'Temperature'
         }, {
-            top: '32%',
+            top: '33%',
             left: '40%',
             text: 'Vent'
         }, {
-            top: '62%',
+            top: '63%',
             left: '40%',
             text: 'Humidité'
         }],
@@ -339,9 +339,9 @@ export const BASE_OPTIONS = {
             width: 150
         },
         grid: [
-            { x: '3%', y: '6%', left: '6%', width: '75%', height: '22%', background: 'white'},
-            { x: '3%', y: '36%', left: '6%', width: '75%', height: '22%', background: 'white' },
-            { x: '3%', y: '66%', left: '6%', width: '75%', height: '22%', background: 'white' }
+            { x: '3%', y: '7%', left: '6%', width: '75%', height: '22%', background: 'white'},
+            { x: '3%', y: '38%', left: '6%', width: '75%', height: '22%', background: 'white' },
+            { x: '3%', y: '68%', left: '6%', width: '75%', height: '22%', background: 'white' }
         ],
         dataZoom: [
               {

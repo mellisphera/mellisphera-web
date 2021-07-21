@@ -13,6 +13,7 @@ import { WeatherService } from '../../service/api/weather.service';
 import { Observable } from 'rxjs';
 import { SERIES } from '../../melli-charts/charts/SERIES';
 import { Console } from 'console';
+import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 
 const colors: string[] = ['rgb(20,150,255)', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta', 'brown', 'grey'];
 
@@ -36,14 +37,8 @@ export class WeatherRecordsComponent implements OnInit {
     private weatherService: WeatherService,
     private unitService: UnitService,
     private translateService: TranslateService,
-  ) {
-    this.options = Object.assign({}, BASE_OPTIONS.baseOptionWeather);
-    this.options.series = [];
-    this.options.yAxis = [];
-    this.options.xAxis = [];
-    this.valueSubjectComplete = 0;
-    this.gridIndex = [1, 1, 0, 2];
-  }
+    private graphGlobal: GraphGlobal,
+  ) { }
 
   ngOnInit() {
     this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
@@ -59,6 +54,13 @@ export class WeatherRecordsComponent implements OnInit {
     } 
     elt.classList.add('apiary-group-weather-records');
     this.w_d_service.today = new Date();
+
+    this.options = Object.assign({}, BASE_OPTIONS.baseOptionWeather);
+    this.options.series = [];
+    this.options.yAxis = [];
+    this.options.xAxis = [];
+    this.valueSubjectComplete = 0;
+    this.gridIndex = [1, 1, 0, 2];
     
   }
 
@@ -90,7 +92,7 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.title[2].left = this.translateService.instant('WEATHER.GRAPH.RAIN_LEFT');
 
     let yAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
-    yAxisTemp.name = 'Temp';
+    yAxisTemp.name = this.graphGlobal.temp.name;
     yAxisTemp.min = function (value) {
       if(value.min < 0){
         let nb = Math.ceil(value.min) / 5;
@@ -124,7 +126,7 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.xAxis.push(xAxis);
 
     let yAxisWind = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
-    yAxisWind.name = 'Vent';
+    yAxisWind.name = this.graphGlobal.wind.name;
     yAxisWind.min = 0;
     yAxisWind.max = 50;
     yAxisWind.gridIndex = 1;
@@ -141,7 +143,7 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.xAxis.push(xAxisWind);
 
     let yAxisRain = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
-    yAxisRain.name = 'Humidité';
+    yAxisRain.name = this.graphGlobal.humidity.name;
     yAxisRain.min = 0;
     yAxisRain.max = 100;
     yAxisRain.gridIndex = 2;
@@ -164,16 +166,16 @@ export class WeatherRecordsComponent implements OnInit {
           {
             name: _elt.seriesName,
             value: this.unitService.getValRound(_elt.data.value[1]),
-            unit: (_elt.seriesId === "temp" ? '°C' : _elt.seriesId === "humi" ? '%' : 'Km/h')
+            unit:  this.graphGlobal.getUnitBySerieName(_elt.seriesId)
           }
         ));
       }).join('');
     }
 
     this.w_o_service.getRecordsChartInstance().setOption(this.options);
-    if(new Date().getTime() > this.w_d_service.start.getTime() && new Date().getTime() < this.w_d_service.end.getTime() ){
-      this.insertMarklines();
-    }
+    //if(new Date().getTime() > this.w_d_service.start.getTime() && new Date().getTime() < this.w_d_service.end.getTime() ){
+      //this.insertMarklines();
+    //}
   }
 
   insertMarklines(){
@@ -193,6 +195,7 @@ export class WeatherRecordsComponent implements OnInit {
         },
         silent: true,
       },
+      name:"markLine",
       yAxisIndex: 0,
       xAxisIndex: 0
     });
@@ -211,6 +214,7 @@ export class WeatherRecordsComponent implements OnInit {
         },
         silent: true,
       },
+      name:"markLine",
       yAxisIndex: 1,
       xAxisIndex: 1
     });
@@ -229,6 +233,7 @@ export class WeatherRecordsComponent implements OnInit {
         },
         silent: true,
       },
+      name:"markLine",
       yAxisIndex: 2,
       xAxisIndex: 2
     });
@@ -263,6 +268,11 @@ export class WeatherRecordsComponent implements OnInit {
   }
 
   loadAllRecords(next: Function){
+    if(this.w_o_service.getRecordsChartInstance().getOption().series.findIndex(_s => _s.name === "markLine") === -1){
+      if(new Date().getTime() > this.w_d_service.start.getTime() && new Date().getTime() < this.w_d_service.end.getTime() ){
+        this.insertMarklines();
+      }
+    }
     let temp: any[], rain: any[], wind: any[];
     this.w_o_service.getRecordsChartInstance().showLoading();
     let obsArray = [];
@@ -281,7 +291,7 @@ export class WeatherRecordsComponent implements OnInit {
     }).flat();
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _records => {
-        console.log(_records);
+        //console.log(_records);
         _records.forEach((_apiRec: any[], index) => {
           if(index % 2 === 0){
             temp = [];
@@ -303,15 +313,16 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[0].temp ? _elt.value[0].temp : null , sensorRef: _elt.sensorRef, type: "temp" }
             }) ), obsArray[index].name, (serieComplete: any) => {
               
-              serieComplete.id = "temp";
+              serieComplete.id = "Temp " + obsArray[index].name.substr(0, 5);
               serieComplete.yAxisIndex = 0;
               serieComplete.xAxisIndex = 0;
               serieComplete.itemStyle = {
                 color: this.getColor(obsArray[index].apiary)
               };
-              this.options.xAxis.forEach(_xAxe => {
+              /*this.options.xAxis.forEach(_xAxe => {
+                _xAxe.min = this.w_d_service.getRangeForRequest()[0];
                 _xAxe.max = this.w_d_service.getRangeForRequest()[1];
-              });
+              });*/
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
                 this.options.series[indexSerie] = Object.assign({}, serieComplete);
@@ -324,15 +335,16 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: _elt.sensorRef, type: "humi" }
             }) ), obsArray[index].name, (serieComplete: any) => {
 
-              serieComplete.id = "humi";
+              serieComplete.id = "Hum " + obsArray[index].name.substr(0, 5);
               serieComplete.yAxisIndex = 2;
               serieComplete.xAxisIndex = 2;
               serieComplete.itemStyle = {
                 color: this.getColor(obsArray[index].apiary)
               };
-              this.options.xAxis.forEach(_xAxe => {
+              /*this.options.xAxis.forEach(_xAxe => {
+                _xAxe.min = this.w_d_service.getRangeForRequest()[0];
                 _xAxe.max = this.w_d_service.getRangeForRequest()[1];
-              });
+              });*/
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
                 this.options.series[indexSerie] = Object.assign({}, serieComplete);
@@ -345,13 +357,14 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[1].speed ? _elt.value[1].speed : null , sensorRef: _elt.sensorRef, type: "wind" }
             }) ), obsArray[index].name, (serieComplete: any) => {
 
-              serieComplete.id = "wind";
+              serieComplete.id = "Wind " + obsArray[index].name.substr(0, 5);
               serieComplete.yAxisIndex = 1;
               serieComplete.xAxisIndex = 1;
               serieComplete.itemStyle = {
                 color: this.getColor(obsArray[index].apiary)
               };
               this.options.xAxis.forEach(_xAxe => {
+                _xAxe.min = this.w_d_service.getRangeForRequest()[0];
                 _xAxe.max = this.w_d_service.getRangeForRequest()[1];
               });
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
@@ -367,13 +380,18 @@ export class WeatherRecordsComponent implements OnInit {
       },
       () => {},
       () => {
-        console.log(this.options.series);
+        //console.log(this.options.series);
         next(this.options);
       }
     );
   }
 
   loadRecords(apiary: RucherModel){
+    if(this.w_o_service.getRecordsChartInstance().getOption().series.findIndex(_s => _s.name === "markLine") === -1){
+      if(new Date().getTime() > this.w_d_service.start.getTime() && new Date().getTime() < this.w_d_service.end.getTime() ){
+        this.insertMarklines();
+      }
+    }
     let temp: any[], rain: any[], wind: any[];
     this.w_o_service.getRecordsChartInstance().showLoading();
     let obsArray = [];
@@ -389,7 +407,7 @@ export class WeatherRecordsComponent implements OnInit {
     ];
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _records => {
-        console.log(_records);
+        //console.log(_records);
         _records.forEach((_apiRec: any[], index) => {
           if(index % 2 === 0){
             temp = [];
@@ -411,15 +429,16 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[0].temp ? _elt.value[0].temp : null , sensorRef: _elt.sensorRef, type: "temp" }
             }) ), obsArray[index].name, (serieComplete: any) => {
               
-              serieComplete.id = "temp";
+              serieComplete.id = "Temp " + obsArray[index].name.substr(0, 5);
               serieComplete.yAxisIndex = 0;
               serieComplete.xAxisIndex = 0;
               serieComplete.itemStyle = {
                 color: this.getColor(obsArray[index].apiary)
               };
-              this.options.xAxis.forEach(_xAxe => {
+              /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.max = this.w_d_service.getRangeForRequest()[1];
-              });
+                _xAxe.min = this.w_d_service.getRangeForRequest()[0];
+              });*/
               if(serieComplete.data.length > 0){
                 const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
                 if (indexSerie !== -1) {
@@ -435,15 +454,16 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: _elt.sensorRef, type: "humi" }
             }) ), obsArray[index].name, (serieComplete: any) => {
 
-              serieComplete.id = "humi";
+              serieComplete.id = "Hum " + obsArray[index].name.substr(0, 5);
               serieComplete.yAxisIndex = 2;
               serieComplete.xAxisIndex = 2;
               serieComplete.itemStyle = {
                 color: this.getColor(obsArray[index].apiary)
               };
-              this.options.xAxis.forEach(_xAxe => {
+              /*this.options.xAxis.forEach(_xAxe => {
+                _xAxe.min = this.w_d_service.getRangeForRequest()[0];
                 _xAxe.max = this.w_d_service.getRangeForRequest()[1];
-              });
+              });*/
               if(serieComplete.data.length > 0){
                 const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
                 if (indexSerie !== -1) {
@@ -458,13 +478,14 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[1].speed ? _elt.value[1].speed : null , sensorRef: _elt.sensorRef, type: "wind" }
             }) ), obsArray[index].name, (serieComplete: any) => {
 
-              serieComplete.id = "wind";
+              serieComplete.id = "Wind " + obsArray[index].name.substr(0, 5);
               serieComplete.yAxisIndex = 1;
               serieComplete.xAxisIndex = 1;
               serieComplete.itemStyle = {
                 color: this.getColor(obsArray[index].apiary)
               };
               this.options.xAxis.forEach(_xAxe => {
+                _xAxe.min = this.w_d_service.getRangeForRequest()[0];
                 _xAxe.max = this.w_d_service.getRangeForRequest()[1];
               });
               if(serieComplete.data.length > 0){

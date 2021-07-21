@@ -16,6 +16,9 @@ import { WeatherRecordsComponent } from './weather-records/weather-records.compo
 import { WeatherConfigComponent } from './weather-config/weather-config.component';
 import { WeatherRouting } from './weather.routing';
 import { WeatherComponent } from './weather.component';
+import { GraphGlobal } from '../graph-echarts/GlobalGraph';
+import { WeatherDateService } from './service/weather-date.service';
+import { TranslateService } from '@ngx-translate/core';
 
 const MY_CUSTOM_FORMATS = {
     fullPickerInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
@@ -44,6 +47,9 @@ const MY_CUSTOM_FORMATS = {
       UnitService,
       AuthGuardService,
       UserParamsService,
+      GraphGlobal,
+      WeatherDateService,
+      TranslateService,
       { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
       { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }
     ],

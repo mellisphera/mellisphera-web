@@ -692,6 +692,8 @@ export class GraphGlobal {
       return this.weight.unitW;
     } else if (/Hum/g.test(serie) || /Hint/g.test(serie) || /Brood/g.test(serie)) {
       return this.humidity.unitT;
+    } else if(/Wind/g.test(serie)){
+      return this.wind.unitT;
     }
   }
 

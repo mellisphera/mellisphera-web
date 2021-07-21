@@ -94,7 +94,7 @@ export class WeatherDateService {
 
   getForecastRangeForRequest(): Date[]{
     if(this.rangeDateForRequest[1] < new Date()){
-      return [];
+      return [this.rangeDateForRequest[1],this.rangeDateForRequest[1]];
     }
     else{
       return [this.today, this.rangeDateForRequest[1]];
