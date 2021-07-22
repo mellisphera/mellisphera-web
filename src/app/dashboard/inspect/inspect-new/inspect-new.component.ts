@@ -18,7 +18,15 @@ import { InspUser } from '../../../_model/inspUser';
 import { InspUserService } from '../../service/api/insp-user.service';
 import { NotifierService } from 'angular-notifier';
 import { SeasonsService } from '../service/seasons.service';
-import { generate } from 'rxjs';
+
+import { CapteurInterface } from '../../../_model/capteur';
+import { CapteurService } from '../../service/api/capteur.service';
+import { DailyRecordService } from '../../service/api/dailyRecordService';
+import { FitnessService } from '../../service/api/fitness.service';
+import { DailyRecordsWService } from '../../service/api/daily-records-w.service';
+import { Fitness } from '../../../_model/fitness';
+import { DailyRecordTh } from '../../../_model/daily-record-th';
+import { DailyRecordsW } from '../../../_model/daily-records-w';
 
 declare var jsPDF: any;
 
@@ -39,6 +47,11 @@ export class InspectNewComponent implements OnInit {
   public inspect_date: Date;
   public user_apiaries: RucherModel[];
   public user_hives: RucheInterface[];
+  private sensors_by_apiary: CapteurInterface[];
+  private fitness_by_apiary: Fitness[];
+  private brood_by_apiary: DailyRecordTh[];
+  private weight_by_apiary: DailyRecordsW[];
+  
   public active_apiary_index: number;
 
   public new_apiary_insp: Inspection = {
@@ -88,7 +101,11 @@ export class InspectNewComponent implements OnInit {
     private userService: UserloggedService,
     public translateService: TranslateService,
     private notifyService: NotifierService,
-    public seasonService: SeasonsService
+    public seasonService: SeasonsService,
+    private captService: CapteurService,
+    private dailyRecords: DailyRecordService,
+    private fitnessService: FitnessService,
+    private dailyRecordsW: DailyRecordsWService
   ) {}
 
   ngOnInit() {
@@ -104,18 +121,26 @@ export class InspectNewComponent implements OnInit {
       () => {}
     );
     this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
-      _apiaries => {
-        this.user_apiaries = [..._apiaries];
-      },
+      _apiaries => { this.user_apiaries = [..._apiaries]; },
       () => {},
       () => {
         this.user_apiaries.sort(this.compare);
         this.rucheService.getHivesByApiary(this.user_apiaries[0]._id).subscribe(
-          _hives => {
-            this.user_hives = [..._hives];
-          },
+          _hives => { this.user_hives = [..._hives]; },
           () => {},
           () => {
+            this.captService.getCapteursByApiaryId(this.user_apiaries[0]._id).subscribe(
+              _captArray => { this.sensors_by_apiary = _captArray.filter(_c => !_c.sensorRef.includes("_removed")); },
+            );
+            this.dailyRecords.getDailyTHByApiary(this.user_apiaries[0]._id).subscribe(
+              _recTH => { this.brood_by_apiary = _recTH; },
+            );
+            this.fitnessService.getDailyFitnessByApiaryId(this.user_apiaries[0]._id).subscribe(
+              _fit => { this.fitness_by_apiary = _fit; },
+            );
+            this.dailyRecordsW.getDailyWeightByApiary(this.user_apiaries[0]._id).subscribe(
+              _recW => { this.weight_by_apiary = _recW; }
+            );
           }
         )
       }
@@ -283,6 +308,18 @@ export class InspectNewComponent implements OnInit {
           }
           this.hive_insps.push(insp);
         })
+        this.captService.getCapteursByApiaryId(this.user_apiaries[this.active_apiary_index - 1]._id).subscribe(
+          _captArray => { this.sensors_by_apiary = _captArray.filter(_c => !_c.sensorRef.includes("_removed")) },
+        );
+        this.dailyRecords.getDailyTHByApiary(this.user_apiaries[this.active_apiary_index - 1]._id).subscribe(
+          _recTH => { this.brood_by_apiary = _recTH; },
+        );
+        this.fitnessService.getDailyFitnessByApiaryId(this.user_apiaries[this.active_apiary_index - 1]._id).subscribe(
+          _fit => { this.fitness_by_apiary = _fit; },
+        );
+        this.dailyRecordsW.getDailyWeightByApiary(this.user_apiaries[this.active_apiary_index - 1]._id).subscribe(
+          _recW => { this.weight_by_apiary = _recW; }
+        );
       }
     )
   }
@@ -1252,7 +1289,7 @@ export class InspectNewComponent implements OnInit {
     this.pdf.addImage("../../../../assets/ms-pics/inspects/buzzinghive_b.png", "PNG", 32, 81, 10, 10);
     this.pdf.addImage("../../../../assets/ms-pics/inspects/sick_b.png", "PNG", 47, 81, 10, 10);
     this.pdf.addImage("../../../../assets/ms-pics/inspects/mosaicbrood_b.png", "PNG", 62, 81, 10, 10);
-    this.pdf.addImage("../../../../assets/ms-pics/inspects/queen_b.png", "PNG", 77, 81, 10, 10);
+    this.pdf.addImage("../../../../assets/ms-pics/inspects/queenseen_b.png", "PNG", 77, 81, 10, 10);
 
     (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "40%";
 
@@ -1280,11 +1317,24 @@ export class InspectNewComponent implements OnInit {
     let page = 1;
     let mult = 0;
     for(let i=0; i<this.user_hives.length; i++){
+      let sensorsArr = this.sensors_by_apiary.filter(_s => _s.hiveId === this.user_hives[i]._id);
+      let sensorX = 215 - ((sensorsArr.length + 1) * 20);
+      let brood = this.brood_by_apiary.find( _b => _b.hiveId === this.user_hives[i]._id);
+      let fitness = this.fitness_by_apiary.find( _f => _f.hiveId === this.user_hives[i]._id);
+      let weight = this.weight_by_apiary.find( _w => _w.hiveId === this.user_hives[i]._id);
+
       // TITLE
       this.pdf.setFontSize(14);
       this.pdf.setFont("courier","bolditalic");
-      this.pdf.text(this.user_hives[i].name , 15, startY+(mult*30));
+      this.pdf.setFillColor(fitness.fitcolor);
+      this.pdf.roundedRect(15, startY-4+(mult*30), 4, 4, 1, 1, "FD");
+      this.pdf.text(this.user_hives[i].name , 22, startY+(mult*30));
       this.pdf.line(15, startY+2+(mult*30), 195, startY+2+(mult*30));
+      this.pdf.setFontSize(9);
+      this.pdf.setFont("courier","normal");
+      for(let j=0; j<sensorsArr.length; j++){
+        this.pdf.text(sensorsArr[j].sensorRef, sensorX + (j*20), startY+1+(mult*30));
+      }
 
       // TABLEAU A COCHER
       this.pdf.setFont("courier","normal");
@@ -1312,19 +1362,24 @@ export class InspectNewComponent implements OnInit {
       this.pdf.circle(56, startY+20+(mult*30), 1.5, "S");
       this.pdf.circle(63, startY+20+(mult*30), 1.5, "S");
 
-      this.pdf.setFillColor("#EEEEEE");
-      this.pdf.rect(70, startY+5+(mult*30), 110, 8, "F");
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/nobrood_b.png", "PNG", 72, startY+6+(mult*30), 6, 6);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/egg_b.png", "PNG", 80, startY+6+(mult*30), 6, 6);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/larva_b.png", "PNG", 88, startY+6+(mult*30), 6, 6);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/pupa_b.png", "PNG", 96, startY+6+(mult*30), 6, 6);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/dronebrood_b.png", "PNG", 104, startY+6+(mult*30), 6, 6);
+      this.pdf.setFontSize(9);
+      this.pdf.text(brood.brood.toFixed(0) + '%', 67, startY+16+(mult*30));
+      let textW = this.unitService.convertWeightFromuserPref(weight.weight_23f, this.unitService.getUserPref().unitSystem, true).toFixed(0) + (this.unitService.getUserPref().unitSystem === 'IMPERIAL' ? 'lbs':'Kg');
+      this.pdf.text(textW, 67, startY+21+(mult*30));
 
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/swarm_b.png", "PNG", 122, startY+6+(mult*30), 6, 6);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/buzzinghive_b.png", "PNG", 130, startY+6+(mult*30), 6, 6);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/sick_b.png", "PNG", 138, startY+6+(mult*30), 6, 6);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/mosaicbrood_b.png", "PNG", 146, startY+6+(mult*30), 6, 6);
-      this.pdf.addImage("../../../../assets/ms-pics/inspects/queen_b.png", "PNG", 154, startY+6+(mult*30), 6, 6);
+      this.pdf.setFillColor("#EEEEEE");
+      this.pdf.rect(85, startY+5+(mult*30), 110, 8, "F");
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/nobrood_b.png", "PNG", 87, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/egg_b.png", "PNG", 95, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/larva_b.png", "PNG", 103, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/pupa_b.png", "PNG", 111, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/dronebrood_b.png", "PNG", 119, startY+6+(mult*30), 6, 6);
+
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/swarm_b.png", "PNG", 137, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/buzzinghive_b.png", "PNG", 145, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/sick_b.png", "PNG", 153, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/mosaicbrood_b.png", "PNG", 161, startY+6+(mult*30), 6, 6);
+      this.pdf.addImage("../../../../assets/ms-pics/inspects/queenseen_b.png", "PNG", 169, startY+6+(mult*30), 6, 6);
       
       mult++;
 

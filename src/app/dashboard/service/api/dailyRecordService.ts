@@ -245,6 +245,19 @@ export class DailyRecordService {
         );
     }
 
+    public getDailyTHByApiary(apiaryId: string): Observable<DailyRecordTh[]> {
+        var tabDate: Date[];
+        var previousDay: Date;
+        previousDay = new Date();
+        previousDay.setFullYear(this.rangeDailyRecord.getFullYear());
+        previousDay.setMonth(this.rangeDailyRecord.getMonth());
+        previousDay.setDate(this.rangeDailyRecord.getDate() + 1);
+        previousDay.setHours(23);
+        previousDay.setMinutes(0);
+        tabDate = [this.rangeDailyRecord, previousDay];
+        return this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/apiary/' + apiaryId, tabDate); 
+    }
+
     /**
      *
      * @public

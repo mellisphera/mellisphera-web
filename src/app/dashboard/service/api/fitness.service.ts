@@ -37,6 +37,17 @@ export class FitnessService {
     return this.httpClient.get<Fitness[]>(CONFIG.URL + `fitness/daily/${userId}/${this.rangeFitness.getTime()}/${previousDay.getTime()}`);
   }
 
+  public getDailyFitnessByApiaryId(apiaryId: string): Observable<Fitness[]> {
+    let previousDay: Date = new Date();
+    previousDay.setFullYear(this.rangeFitness.getFullYear());
+    previousDay.setMonth(this.rangeFitness.getMonth());
+    previousDay.setDate(this.rangeFitness.getDate() + 1);
+    previousDay.setHours(23);
+    previousDay.setMinutes(0);
+    let arr = [this.rangeFitness, previousDay];
+    return this.httpClient.post<Fitness[]>(CONFIG.URL + `fitness/daily/apiary/${apiaryId}`, arr, httpOptions);
+  }
+
 
   public nextDay(userId: string): void {
     this.rangeFitness.setDate(this.rangeFitness.getDate() + 1);

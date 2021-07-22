@@ -403,6 +403,20 @@ export class DailyRecordsWService {
     );
   }
 
+  public getDailyWeightByApiary(apiaryId: string): Observable<DailyRecordsW[]> {
+    this.dailyWeightRecords = [];
+    var tabDate: Date[];
+    var previousDay: Date;
+    previousDay = new Date();
+    previousDay.setFullYear(this.rangeDailyRecord.getFullYear());
+    previousDay.setMonth(this.rangeDailyRecord.getMonth());
+    previousDay.setDate(this.rangeDailyRecord.getDate() - 1);
+    previousDay.setHours(23);
+    previousDay.setMinutes(0);
+    tabDate = [previousDay, this.rangeDailyRecord];
+    return this.http.post<DailyRecordsW[]>(CONFIG.URL + 'dailyRecordsW/apiary/' + apiaryId, tabDate, httpOptions);
+  }
+
   /**
    *
    *
