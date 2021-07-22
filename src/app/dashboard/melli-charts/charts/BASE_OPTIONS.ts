@@ -286,7 +286,7 @@ export const BASE_OPTIONS = {
     },
     
     baseOptionWeather: {
-        toolbox: {
+        /*toolbox: {
             orient: 'vertical',
             left:'0%',
             top: '2%',
@@ -299,7 +299,7 @@ export const BASE_OPTIONS = {
                 restore: {},
                 saveAsImage: {}
             }
-        },
+        },*/
         tooltip: {
             trigger: 'axis',
             axisPointer: {

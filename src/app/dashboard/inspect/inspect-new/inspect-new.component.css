@@ -140,7 +140,7 @@
   height: 1.25em;
 }
 
-.apiary-action, .hives-action, .apiary-obs, .hives-obs{
+.apiary-action, .hives-act, .apiary-obs, .hives-obs{
   border-radius: 3px;
   margin: 5px 5px;
   margin-bottom: 10px;
@@ -153,7 +153,7 @@
   border-radius: 5px;
 }
 
-.apiary-action:hover, .hives-action:hover{
+.apiary-action:hover, .hives-act:hover{
   border: 2px solid #4f4f51;
 }
 
@@ -540,7 +540,7 @@
   border: 2px solid #4f4f51;
 }
 
-.hives-action, .hives-obs
+.hives-act, .hives-obs
 {
   margin: 5px 5px;
   height: 42px;
@@ -782,111 +782,111 @@
   text-align: center;
 }
 
-.brood-egg{
+.btn-egg_b{
   background: url('../../../../assets/ms-pics/inspects/egg_b.svg') center no-repeat;
   background-size: 35px;
 }
 
-.brood-egg-active{
+.btn-egg_cb{
   background: url('../../../../assets/ms-pics/inspects/egg_cb.svg') center no-repeat;
   background-size: 35px;
   border: 2px solid #4f4f51;
 }
 
-.brood-larva{
+.btn-larva_b{
   background: url('../../../../assets/ms-pics/inspects/larva_b.svg') center no-repeat;
   background-size: 35px;
 }
 
-.brood-larva-active{
+.btn-larva_cb{
   background: url('../../../../assets/ms-pics/inspects/larva_cb.svg') center no-repeat;
   background-size: 35px;
   border: 2px solid #4f4f51;
 }
 
-.brood-pupa{
+.btn-pupa_b{
   background: url('../../../../assets/ms-pics/inspects/pupa_b.svg') center no-repeat;
   background-size: 37px;
 }
 
-.brood-pupa-active{
+.btn-pupa_cb{
   background: url('../../../../assets/ms-pics/inspects/pupa_cb.svg') center no-repeat;
   background-size: 37px;
   border: 2px solid #4f4f51;
 }
 
-.brood-drone{
+.btn-dronebrood_b{
   background: url('../../../../assets/ms-pics/inspects/dronebrood_b.svg') center no-repeat;
   background-size: 37px;
 }
 
-.brood-drone-active{
+.btn-dronebrood_cb{
   background: url('../../../../assets/ms-pics/inspects/dronebrood_cb.svg') center no-repeat;
   background-size: 37px;
   border: 2px solid #4f4f51;
 }
 
-.brood-none{
+.btn-none_b{
   background: url('../../../../assets/ms-pics/inspects/nobrood_b.svg') center no-repeat;
   background-size: 28px;
 }
 
-.brood-none-active{
+.btn-none_cb{
   background: url('../../../../assets/ms-pics/inspects/nobrood_cb.svg') center no-repeat;
   background-size: 28px;
   border: 2px solid #4f4f51;
 }
 
-.health-buzz{
+.btn-buzzinghive_b{
   background: url('../../../../assets/ms-pics/inspects/buzzinghive_b.svg') center no-repeat;
   background-size: 37px;
 }
 
-.health-buzz-active{
+.btn-buzzinghive_cb{
   background: url('../../../../assets/ms-pics/inspects/buzzinghive_cb.svg') center no-repeat;
   background-size: 37px;
   border: 2px solid #4f4f51;
 }
 
-.health-sick{
+.btn-sick_b{
   background: url('../../../../assets/ms-pics/inspects/sick_b.svg') center no-repeat;
   background-size: 37px;
 }
 
-.health-sick-active{
+.btn-sick_cb{
   background: url('../../../../assets/ms-pics/inspects/sick_cb.svg') center no-repeat;
   background-size: 37px;
   border: 2px solid #4f4f51;
 }
 
-.health-mosaic{
+.btn-mosaicbrood_b{
   background: url('../../../../assets/ms-pics/inspects/mosaicbrood_b.svg') center no-repeat;
   background-size: 37px;
 }
 
-.health-mosaic-active{
+.btn-mosaicbrood_cb{
   background: url('../../../../assets/ms-pics/inspects/mosaicbrood_cb.svg') center no-repeat;
   background-size: 37px;
   border: 2px solid #4f4f51;
 }
 
-.health-queen{
+.btn-queenseen_b{
   background: url('../../../../assets/ms-pics/inspects/queenseen_b.svg') center no-repeat;
   background-size: 37px;
 }
 
-.health-queen-active{
+.btn-queenseen_cb{
   background: url('../../../../assets/ms-pics/inspects/queenseen_cb.svg') center no-repeat;
   background-size: 37px;
   border: 2px solid #4f4f51;
 }
 
-.health-swarm{
+.btn-swarm_b{
   background: url('../../../../assets/ms-pics/alerts/ruche/swarm_b.svg') center no-repeat;
   background-size: 37px;
 }
 
-.health-swarm-active{
+.btn-swarm_cb{
   background: url('../../../../assets/ms-pics/alerts/ruche/swarm_cb.svg') center no-repeat;
   background-size: 37px;
   border: 2px solid #4f4f51;
@@ -1110,7 +1110,7 @@
 
   .inspect-new-container button.apiary-action,
   .inspect-new-container button.apiary-obs,
-  .inspect-new-container button.hives-action,
+  .inspect-new-container button.hives-act,
   .inspect-new-container button.hives-obs,
   .hive-notes,
   .hive-todo,
@@ -1122,7 +1122,7 @@
     background-size: 24px;
   }
 
-  .inspect-new-container button.hives-action,
+  .inspect-new-container button.hives-act,
   .inspect-new-container button.hives-obs,
   .inspect-new-container button.apiary-action,
   .inspect-new-container button.apiary-obs{

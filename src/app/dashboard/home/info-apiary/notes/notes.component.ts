@@ -132,7 +132,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
     this.inspCat.getInspCat().subscribe(
       _inspCat => {
-        _inspCat.forEach(_cat => {
+        let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
+        arr.forEach(_cat => {
           if(_cat.applies.indexOf("apiary") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
             this.PICTOS_HIVES_OBS.push({
               name:_cat.name.toLowerCase(),
@@ -205,7 +206,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
    */
   getInspectionByApiaryId(apiaryId: string): Inspection[]{
     let start = new Date();
-    start.setDate(start.getDate() - 180);
+    start.setDate(start.getDate() - 270);
     return this.inspectionService.inspectionsApiary.filter(_insp => (_insp.apiaryId === apiaryId && new Date(_insp.opsDate) > start)).sort((inspA, inspB) => {
       return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
     });

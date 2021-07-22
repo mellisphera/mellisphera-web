@@ -1,0 +1,945 @@
+{
+    "LOGIN": {
+        "SIGN_IN": {
+            "DENIED": "Acces refuzat",
+            "SUBMIT": "Autentificare",
+            "SIGN_UP_LINK": "Creați un cont MyBroodminder"
+        },
+        "SIGN_UP": {}
+    },
+    "MELLIUX": {
+        "HELP": {
+            "APIARY": {
+                "APIARY_PICTURE": ["Vedere globală a stupinei: stare simplă și rapidă a stupinei dvs.",
+                "Fitnessul stupului este indicat cu culoarea patratului (verde / portocaliu / roșu). Plasați cursorul pe el pentru a găsi mai multe detalii.",
+                "Meniul de sus afișează informații contextuale de stup: nume, puiet, greutate și senzorii.",
+                "Faceți clic pe fiecare patrat pentru a accesa datele specifice de stup.",                  
+                "Modificați data folosind săgețile din partea de sus a interfeței.",
+                "Stup Fitness este calculat cu modelul nostru exclusiv BFit.",
+
+                "Prima notă de configurare:",
+                "1 / glisați și fixați propria imagine sau hartă a stupinei.",
+                "2 / deschideți butonul de blocare și așezați patratele în poziția dorita."],
+                "EVENT_CALENDAR": ["Calendarul stupinei: inregistrați datele de stupine pentru a urmări acțiunile generale pe care le-ați făcut în stupină.",
+                "Acest calendar afișează, de asemenea, alerte meteorologice."]
+         },
+            "HIVE": {
+                "EVENT_CALENDAR": "Calendarul evenimentelor: afișează date și notificări de alertă.",
+                "BROOD_CALENDAR": ["Calendar de puiet: afișează progresia puietului în stupul dvs.",
+                "Intervalul variază de la 0% (fără puiet) la 100% (puiet complet).",
+                "Stupii cu niveluri de puiet peste 80% produc miere.",
+                "Nivelul de puiet este calculat cu modelul nostru exclusiv BForce."],
+                "WEIGHT_CALENDAR": ["Calendarul greutății: afișează productivitatea zilnică a stupilor echipați cu un cântar.",
+                "Sunt afișate numai cresterile și scaderile în greutate.",
+                "Operațiunile apicultorilor, cum ar fi hrănirea sau adăugarea Magazin, sunt eliminate."]
+            }
+        }
+    },
+    "WIZARD": {
+        "STEP_TITLE": "Bine ați venit",
+        "WELCOME":"Bine ați venit",
+        "DESCRIPTION": "Vrem să vă ghidăm primii pași în crearea stupinei și a stupilor aferenți.",
+        "DESCRIPTION_2": "Odată ce ați terminat, veți putea zbura cu propriile aripi",
+        "APIARY": {
+            "STEP_TITLE": "Stupină",
+            "TITLE": "Creează-ți stupină"
+        },
+        "HIVE": {
+            "STEP_TITLE": "Stup",
+            "TITLE": "Creați un stup",
+            "DESCRIPTION": "Mai târziu veți crea oricâți stupi doriți"
+        },
+        "FLOWER": {
+            "TITLE": "Adăugați niște flori",
+            "DESCRIPTION": "Mai târziu veți edita și completa această listă"
+        },
+        "SENSOR": {
+            "STEP_TITLE": "Senzor",
+            "TITLE": "Adăugați un senzor"
+        },
+        "DONE": {
+            "STEP_TITLE": "Sfârșit",
+            "TITLE": "Asta e tot!",
+            "DESCRIPTION": "Navigând în diferite pagini veți găsi următoarele simboluri",
+            "ICONS": {
+                "ADD": "Adăugați un obiect (stupină, stup, senzor, floare)",
+                "EDIT": "Editați un obiect",
+                "DELETE": "Ștergeți un obiect"
+            }
+        },
+        "NEXT": "Următorul",
+        "BACK": "Inapoi",
+        "SKIP": "Respinge",
+        "FINISH": "Termină"
+     },
+    "NAVBAR": {
+        "NEW_APIARY": "Nouă stupină",
+        "EDIT_APIARY": "Editați stupină",
+        "EDITAPIARY": "Editați stupină",
+        "DELETE_APIARY": "Ștergeți stupină",
+        "DELETE_APIARY2": "Ștergeți stupină",
+        "DELETE_ASK": "Ștergeți stupină?",
+        "ACCOUNT": {
+            "PREFERENCES": "Setări",
+            "LOG_OUT": "Deconectare"
+        },
+        "CRUD": {
+            "APIARY_NAME": "Numele stupinei",
+            "TITLE": "Meniu de gestionare",
+            "APIARY_DESCRIPTION": "Descrierea stupinei",
+            "NAME": "Nume",
+            "NAME_ERROR": "Adaugați un nume cuprins intre 1 și 20 de caractere",
+            "DESCRIPTION_ERROR": "Descrierea poate avea maximum 40 de caractere",
+            "CITY": "Oraș",
+            "CITY_APIARY": "Oraș de stupină",
+            "CITY_ERROR": "Adaugați numele orașului",
+            "ZIP_CODE": "Codul poștal",
+            "ZIP_CODE_APIARY": "Codul poștal stupină",
+            "ZIP_ERROR": "Adaugați codul poștal",
+            "PICTURE": "Adaugați imaginea din stupină:",
+            "WARNING_PICTURE": "Dimensiunea fișierului este prea mare",
+            "FILE": "Selectați fișierul",
+            "DROP": "Glisați imaginea cu ajutorul cursorului",
+            "CLOSE": "Inchideți",
+            "SAVE": "Salvați",
+            "CANCEL": "Anulați",
+            "CONFIRM": "Confirmați",
+            "CREATE": "Stupină nouă",
+            "APIARY_UPDATE": "Actualizați stupină",
+            "APIARY": "Stupină",
+            "HIVES":  "Stupi",
+            "MANAGE": "Gestionați",
+            "SELECTHIVE": "Selectați stupul de actualizat",
+            "EDITAHIVE": "Editați stup",
+            "DELETEAHIVE": "Ștergeți stup",
+            "DELETEHIVE": "Ștergeți stup",
+            "DELETEHIVEASK": "Ștergeți stup ?",
+            "HIVENAME": "Numele stupului",
+            "HIVEDESC": "Descrierea stupului",
+            "EDIT": "Modificați",
+            "FROMAPIARY": "din stupină"
+        }
+    },    
+    "SIDEBAR": {
+        "APIARY": "stupină mea",
+        "HIVES": "Stupi",
+        "INSPECT": "Inspectați",
+        "DATA": "Explorați",
+        "ALERT_CONF": "Alerte",
+        "USERGUIDE": "Ghidul utilizatorului"
+    },
+    "PREFERENCE_CONFIG": {
+        "TITLE_PASSWORD": "Schimbați parola",
+        "FORM_PASSWORD": {
+            "NEW": "Parolă nouă",
+            "PASSWORD": "parolă",
+            "CHARACTER": "min 6 caractere",
+            "CONFIRM": "Confirmați parola",
+            "ERRROR": "Eroare!",
+            "NOT_MATCH": "Parolele nu se potrivesc",
+            "SUBMIT": "Trimite"
+        },
+        "TITLE_DATE": "Formatează data",
+        "SAVE_DATE": "Salvați",
+        "TITLE_UNIT": "Unitate de sistem",
+        "FORM_UNIT": {
+            "METRIC": "Metric (kg, ° C)",
+            "IMPERIAL": "Imperial (lb, F)",
+            "SAVE": "Salvați"
+        },
+        "LANG": "Limbă",
+        "WEATHER_SOURCE": "Sursa meteo"
+
+    },
+    "HOME" : {
+        "BACK": "Salvați imaginea?",
+        "CHANGE": "Salvați",
+        "CANCEL":"Anulare",
+        "NODATA" : "-",
+        "NOSENSORS": "-",
+        "CLICK": "Faceți clic pe un stup pentru mai multe informații!",
+        "PLACEMENTMODE": "Pune stupii în modul 'mișcare'" ,
+        "CLICKMODE": "Pune stupii în modul 'clic'",
+        "MANAGE": "Gestionați",
+        "PRINT": "Tipăriți o listă a stupilor dvs.",
+        "WARNING": "Atenție!",
+        "NAVBAR": {
+            "ALERTS": "Alerte",
+            "NOTES": "Note",
+            "SUMMARY": "Rezumat",
+            "NAME": "Nume",
+            "BROOD": "Puiet",
+            "WEIGHT": "Greutate",
+            "SENSORS": "Dispozitiv",
+            "APIARY": "Stupină"
+        },
+        "POPUP_NEW_USER": {
+            "TITLE": "Bine ați venit la Mellisphera",
+            "BODY": ["Acum vă calculăm datele.",
+            "Acest proces poate dura ceva timp, în funcție de istoricul datelor dvs.",
+            "Veți vedea date care apar progresiv în următoarele 10 minute."],
+            "CLOSE_BTN": "Închide"
+        }
+    },
+    "HIVES": {
+        "HIVES": "Stupi",
+        "HIVE": "Stup",
+        "SENSOR": "Dispozitiv",
+        "FORM": {
+            "NEW": "Stup nou",
+            "EDIT": "Salvați",
+            "EDITHIVE": "Editați stupul",
+            "DELETE": "Ștergeți stupul",
+            "DELETE_ASK": "Ștergeți stupul?",
+            "CANCEL": "Anulați",
+            "CONFIRM": "Confirmați",
+            "NAME": "Numele stupului",
+            "DESCRIPTION": "Descrierea stupului",
+            "CREATE": "Creați stup",
+            "CLOSE": "A inchida",
+            "APIARY": "Stupină"
+        }
+    },
+    "HIVE_DETAIL": {
+        "NAV": {
+            "NOTES": "Note",
+            "STOCK": "Stoc",
+            "HEALTH": "Sănătate",
+            "DAYLY": "Zilnic",
+            "CONDENSED": "Condensat"
+        },
+        "OBSERVAȚIONS": {
+            "AO": "Acțiuni și observații",
+            "TITLE": "Note ale stupului",
+            "DATE": "Date observații",
+            "SENTENCE": "Propoziții",
+            "TYPES": "Tipuri",
+            "ACTIONS": "Editează",
+            "OBSERVATION": "Observare",
+            "NONOTES": "Nu există note pentru acest stup.",
+            "ACTION": "Acțiune",
+            "FORM": {
+                "NEW": "Nou",
+                "NEW_NOTES": "Notă nouă pentru stup",
+                "DATE": "Data Ora:",
+                "CREATE_OBS": "Creați o notă",
+                "CREATE_ACT": "Creați acțiune",
+                "CLOSE": "Inchideți",
+                "EDIT": "Salvați",
+                "EDITNOTE": "Editați nota stupului",
+                "DELETE": "Ștergeți nota",
+                "DELETE_ASK": "Ștergeți nota ?",
+                "CANCEL": "Anulare",
+                "CONFIRM": "Confirmați",
+                "NOTES": "Notă:",
+                "TYPE": "Tip",
+                "YOUWANTCREATE": "Vrei să creezi:",
+                "APIARYNOTE": "O notă de stupină",
+                "HIVENOTE": "O notă de stup",
+                "CREATENOTE": "Creați o notă",
+                "LOCATION": "Locație",
+                "APIARYLOCATION": "Notă de stupină",
+                "HIVELOCATION": "Notă de stup",
+                "EDITANOTE": "Editați o notă"
+            }
+        },
+        "SENSORS": {
+            "NOSENSENSORS": "Nu există senzori pentru acest stup."
+        },
+        "STOCK": {
+            "NO_DATA" : "",
+            "STOCK": "Stoc de miere",
+            "WEIGHT": "Creșterea zilnica în greutate:"
+        },
+        "HOURLY": {
+            "RANGE": "Interval de timp:",
+            "LAST": "Da cand"
+        },
+        "CLICK": {
+            "SENSORSTITLE": "Senzorii stupului",
+            "BROOD": "Pueti",
+            "BROODINFO": "Puietul este calculat in functie de temperatura stupului. Cu cât temperatura este mai stabilă în jurul zonei puietului, cu atât procentajul este mai mare.",
+            "UNKNOWN": "necunoscut",
+            "ALERTS": {
+                "TITLE": "Alerte stup",
+                "TIP": "TIP",
+                "READ": "CITESTE",
+                "NOALERTS": "Fără alerte pentru săptămâna aceasta"
+            }
+        },
+        "ALERT" : {
+            "NOALERTS": "Nu există inspecții și notificări pentru acest stup de 2 luni."
+        }
+    },
+    "ALERTS": {
+        "TITLE": "Alerte ale stupinei",
+        "NOALERTS": "Fără alerte pentru săptămâna aceasta!"
+    },
+    "APIARY_NOTES": {
+        "TITLE": "Note de stupină",
+        "FORM": {
+            "NEW": "Nouă notă",
+            "CREATE": "Creați o notă",
+            "SAVE": "Salvați",
+            "EDITNOTE": "Editați nota stupinei",
+            "SELECT": "Selectați stupul",
+            "TIP": "Tip:",
+            "MOVE":"Deplasați"
+        }
+    },
+    "CAPTEUR": {
+        "SENSORS": "Senzori",
+        "REFERENȚE": "Referințe",
+        "SEARCH": "Identificați senzorul de căutare",
+        "FORM": {
+            "NEW": "Senzor nou",
+            "DELETE": "Ștergeți senzorul",
+            "DELETE_ASK": "Ștergeți senzorul?",
+            "CONFIRM": "Confirmați",
+            "CANCEL": "Anulare",
+            "REFERENCE": "Referință (*):",
+            "REF_ERROR": "Ar trebui să selectați o referință validă",
+            "SENS_ERROR": "Senzorul există deja!",
+            "SELECT_ERROR": "Selectați referința senzorului",
+            "LINK": "Senzorul dvs. este:",
+            "STOCK": "În stoc",
+            "HIVEDETAIL": "În stup",
+            "INHIVE": "În stup",
+            "HIVE": "Hive",
+            "HIVEAPIARY": "Stup | Stupină",
+            "SELECT_HIVE": "Selectați un stup",
+            "ADD": "Adăugați senzor",
+            "CLOSE": "Inchideți",
+            "APIARY": "Stupină",
+            "SAVE": "Salvați",
+            "EDIT": "Editați",
+            "EDITSENSORTITLE": "Editați senzorul",
+            "SENSOR_EDIT": "Editarea senzorului",
+            "SUCCES": "Succes!",
+            "EDITSELECT": "Selectați senzorul de editat",
+            "SENSOR": "Senzor",
+            "EDITSENSOR": "Editați",
+            "OF": "din",
+            "NOSENSOR": "Nu aveți senzor de editat.",
+            "EDITASENSOR": "Editați un senzor",
+            "EDITTHESENSOR": "Editează senzorul"
+        }
+    },
+    "FEEDBACK" : {
+        "TITLE": "Asistență",
+        "TITLE_MODAL": "Vă putem ajuta?",
+        "COMMENT": "Mesajul tău",
+        "MSG": "Scrieți-ne un <a href=mailto:support@Mellisphera.com> e-mail </a>, chat pe <a href=https://Mellisphera.slack.com/messages/Mellisphera_en/ target=_blank> slack </a> sau trimiteți un mesaj direct. ",
+        "SLACK": "discutați cu noi pe",
+        "SIGNUP": "înscriere",
+        "OR":"sau",
+        "LOGIN": "login",
+        "SEND": "Trimiteți",
+        "CLOSE": "Închideți"
+    },
+    "FLOWER": {
+        "APIARYPLANTS": "Plante stupine",
+        "PLANTDIR": "Lista de plante",
+        "MELLIPLANTS": "Plante melifere",
+        "NAME": "Nume",
+        "STARTS": "Începe",
+        "ENDS": "Se termină",
+        "RELATIVE": "Relative",
+        "BLOOMING": "înflorit",
+        "THEORICAL": "teoretic",
+        "OBSERVED": "observat",
+        "ABUNDENCE": "abundență",
+        "INAPIARY": "în stupină",
+        "HIGH": "Ridicat",
+        "MEDIUM": "Medium",
+        "LOW": "Scăzut",
+        "DELETEFLOWER": "Ștergeți floarea",
+        "EDIT": "Editați",
+        "MELLIDIR": "Lista plantelor melifere",
+        "MYPLANTS": "Plantele mele",
+        "SEARCHNAME": "Căutare după nume",
+        "SEARCHMONTH": "Căutare după lună",
+        "ALLTYPES": "Toate tipurile",
+        "BLOOMONTH": "Luna de înflorire",
+        "COMMON": "Comun",
+        "BLOOMINGPERIOD": "Perioada de înflorire",
+        "CONFIDENCELEVEL": "Nivelul de încredere",
+        "ADDTOAPIARY": "Adăugați la stupină",
+        "CLOSE": "Închideți"
+    },
+    "SUMMARY" : {
+        "PDF": "Descărcați în PDF",
+        "APIARY": "Stupină",
+        "SUMMARY": "Rezumatul stupinei",
+        "ALERTSSINCE": "alerte pentru",
+        "NOALERTS": "Fără alerte stupine!",
+        "FOR": "pentru",
+        "DAYS": "zile",
+        "NONOTES": "Fără note de stupină!",
+        "SUMMARYHIVES": "Rezumat stupuri + alerte pentru",
+        "NAME": "Nume",
+        "BROOD": "Puiet",
+        "BROODD3": "Puiet Z-3",
+        "BROODD7": "Puiet Z-7",
+        "WEIGHT": "Greutate",
+        "SENSORS": "Senzor",
+        "ALERTS": "Alerte",
+        "NOHIVEALERTS": "Fără alerte",
+        "NOHIVES": "Nu există stupi pentru această stupină!"
+    },
+    "NOTES": {
+        "TITLEAPIARY": "Note de stupină",
+        "TITLEHIVE": "Note de stup",
+        "SEARCH": "Căutați o notă",
+        "FORMULAR": {
+            "NEW": "Notă nouă",
+            "APIARY": "Stupină",
+            "HIVE": "Stup",
+            "EDIT": "Editați nota",
+            "DELETE": "Ștergeți nota",
+            "DELETE_ASK": "Ștergeți nota?",
+            "CONFIRM": "Confirmați ștergerea",
+            "CANCEL": "Annulați"
+        }
+    },
+    "MELLICHARTS": {
+        "HELP": {
+            "HIVE": ["Aici puteți explora in detaliu toate datele legate de un stup.",
+            "Comparați datele stupului cu propriile operațiuni (note) și cu condițiile meteorologice.",
+            "Alegeți detaliile de afișat cu pictogramele de deasupra fiecărui calendar.",
+            "Utilizați navigarea datei (în partea dreaptă sus a ecranului) pentru a afișa perioade mai lungi de timp.",
+            "Salt de la o perioadă la alta cu săgețile."],
+            "BROOD": ["Suprapuneți progresia puietului din mai mulți stupi în aceiași stupină sau stupine diferite.",
+            "De regulă, 10% reprezintă un cadru de puiet, 40% reprezintă 4 cadre etc.",
+            "În funcție de practica și modelul de stup (langstroth, dadant), va trebui să ajustați procentajele.",
+
+            "Notă importantă: numai stupii care ating pragul de 80% vor produce miere! Sperăm că știți cum să faceți acest lucru."],
+            "RAWDATA": "Acest afișaj este foarte asemănător cu ceea ce sunteți deja obișnuiți în MyBroodminder. De asemenea, este posibilă suprapunerea diferiților stupi / stupine.",
+            "WEIGHT": "Suprapuneți progresiile în greutate ale mai multor stupi în aceiași stupină sau stupine diferite."
+        },
+        "NAV": {
+            "HIVE": "Stup",
+            "HIVE_TOOLTIP": "Stup",
+            "BROOD": "Puiet",
+            "BROOD_TOOLTIP": "Puiet",
+            "DONNEE": "Date brute",
+            "DONNEE_TOOLTIP": "Date brute",
+            "WEIGHT": "Greutate",
+            "WEIGHT_TOOLTIP": "Greutate",
+            "EVENTS": "Evenimente",
+            "EVENTS_TOOLTIP": "Evenimente"
+        },
+        "DATA": {
+            "START": "Inceput",
+            "END": "Sfârșit",
+            "BTN_APPLY": "Aplică"
+        },
+        "BROOD": {
+            "TITLE": "Progresia zilnică a puietului",
+            "TOOLTIP": {
+              "SWARM": "Roire",
+              "DEFAULT": "Implicit",
+              "SUPER +": "Adăugați Magazin",
+              "SUPER -": "Eliminați Magazin"
+            }
+        },
+        "WEIGHT": {
+          "RAW": "Progresia zilnică a greutății",
+          "NORM": "Progresia zilnică a greutății normalizate",
+          "GAIN": "Progresul zilnic de creștere în greutate",
+          "INCOME": "Productivitatea nectarului",
+          "HOURLY": "Progresia greutății orare",
+          "REF_DATE": "Data de referință",
+          "CHECKBOX": {
+              "RAW": "Zilnic",
+              "NORM": "Normalizat",
+              "GAIN": "Aport",
+              "INCOME": "Productivitate",
+              "HOURLY": "Orar"
+          },
+          "MASA":{
+            "DATE": "Data",
+            "Stup": "Stupi",
+            "BRUT":{
+              "T0": "Greutate la data X",
+              "7DAYS": "Greutate la Z-7",
+              "15DAYS": "Greutate la Z-15"
+            },
+            "GAIN":{
+              "T0": "Câștig de la data X",
+              "7DAYS": "Câștigați ultimele 7 zile",
+              "15DAYS": "Câștigați ultimele 15 zile"
+            },
+            "NORM":{
+              "T0": "Greutate la data de X",
+              "CURENT": "Greutatea curentă",
+              "VAR_TO": "Variație de la data X",
+              "VAR_7DAYS": "Variație în ultimele 7 zile",
+              "VAR_15DAYS": "Variație în ultimele 15 zile"
+            }
+          }
+        },
+        "RAW_DATA":{
+            "TITLE": "Date orare"
+        },
+        "EVENT":{
+          "TITLE": "Evenimente",
+          "ADD":{
+            "TITLE": "Creați evenimentul",
+            "DATE": "Data",
+            "DATE_PLACEHOLDER": "Data observării",
+            "DATE_ERROR": "Vă rugăm să completați câmpul de dată cu o dată validă",
+            "EVENT": "Eveniment",
+            "NOTES": "Note",
+            "NOTES_PLACEHOLDER": "Adăugați o notă",
+            "TODO": "Sarcini",
+            "TODO_PLACEHOLDER": "Adăugați o sarcină"
+          },
+          "EDIT":{
+            "TITLE": "Editați evenimentul"
+          },
+          "DELETE":{
+            "TITLE": "Ștergeți evenimentul",
+            "BODY": "Sigur doriți să ștergeți acest eveniment?"
+          },
+          "BUTONS":{
+            "ADD": "Salvare",
+            "CANCEL": "Anulare",
+            "EDIT": "Salvați",
+            "DELETE": "Ștergeți"
+          },
+          "TABLE":{
+            "HEADER":{
+                "APIARY": "Stupină",
+                "HIVE": "Stup",
+                "DATE": "Data",
+                "TYPE": "Tip",
+                "PICTOS": "Evenimente",
+                "NOTES_TASKS": "Note și activități",
+                "EDIT": "Editați",
+                "DELETE": "Ștergeți"
+            }
+          }
+        },
+        "ALERT":{
+            "TITLE": "Alertă",
+            "EDIT":{
+                "TITLE": "Editați alerta"
+            },
+            "DELETE":{
+                "TITLE": "Ștergeți alerta",
+                "BODY": "Sigur doriți să ștergeți această alertă?"
+            },
+            "DATE_ERROR": "Vă rugăm să completați câmpul de dată cu o dată validă",
+            "ALERT_ERROR": "Vă rugăm să alegeți o alertă"
+        },
+        "FILTERS": {
+          "APIARY":{
+            "ALL": "Evenimente stupine"
+          },
+          "INSPECŢION":{
+            "ALL": "Inspecții"
+          },
+          "ALERT":{
+            "ALL": "Alerte",
+            "SWARM": "Roire"
+          },
+          "EVENT":{
+            "ALL": "Evenimente stup"
+          },
+          "DISPLAY":{
+            "HONEYDEW": "Aport ridicat de nectar",
+            "SWARM": "S-a produs roiul",
+            "RSWARM": "Riscul de roit",
+            "TMAX": "Temperatura internă ridicată",
+            "TMIN": "Temperatură internă scăzută",
+            "LOWBROOD": "Nivel scăzut de puiet",
+            "WINEG": "Pierderea rapidă în greutate",
+            "WIPOS": "Creșterea rapidă în greutate",
+            "HMAX": "Umiditate internă ridicată",
+            "HMIN": "Umiditate internă scăzută",
+            "STOLEN": "Stup furat",
+            "DEAD": "Stup mort",
+            "OXALIC": "Tratamentul cu acid oxalic",
+            "SUPER +": "Adăugarea Magazin",
+            "SUPER -": "Eliminarea Magazin",
+            "WLIM": "Limită de greutate"
+          }
+        }
+    },
+    "INSPECT":{
+      "SIDEBAR": "Inspecții",
+      "SIDEBAR_TOOLTIP": "Inspecții",
+      "ACTIONS": "Acțiuni",
+      "OBS": "Observații",
+      "NOTES": "Note",
+      "TODO": "Sarcini",
+      "NAV": {
+        "NEW": "Nou",
+        "HISTORY": "Istoric",
+        "PARAMS": "Parametri"
+      },
+      "NEW": {
+        "TITLE": "Noua inspecție a stupinei",
+        "DATE": "Data:",
+        "GENERAL": "Starea generală a stupinei",
+        "PLACEHOLDER": "Alegeți data",
+        "DEFAULT_SELECT": "Alege stupină",
+        "NOTE_PLACEHOLDER": "Note ...",
+        "TODO_PLACEHOLDER": "Sarcini de făcut ...",
+        "TAB": {
+          "HIVE": "Stup",
+          "ACT_OBS": "Acțiuni și observații"
+        },
+        "BTN_SAVE": "Salvați",
+        "BTN_PRINT": "Tipăriți",
+        "BTN_PDF": "Generați PDF",
+        "BTN_DL": "Descărcați",
+        "GEN_DL": "Generare fișier:",
+        "READY_DL": "Fișierul dvs. este gata pentru descărcare!",
+        "BTN_CANCEL": "Anulați"
+      },
+      "TABLE":{
+        "BEES": "Albine",
+        "BROOD": "Puiet",
+        "STORES": "Magazine"
+      },
+      "HISTORY":{
+        "TITLE": "Istoric",
+        "TABLE":{
+            "APIARY": "Stupină",
+            "DATE": "Data",
+            "HEALTH": "Stare generală",
+            "DESC": "Note",
+            "TODO": "Sarcini"
+        }
+      },
+      "PARAMS": {}
+    },
+    "ALERTS_DESC": {
+      "HONEYDEW": "Aport ridicat de nectar",
+      "HONEYDEW_DESC": "Este declanșata atunci când greutate stupului depășește pragul ales în ultima săptămână.",
+      "Ploaia": "Posibile precipitații abundente",
+      "RAIN_DESC": "Declanșata atunci când precipitațiile depășesc pragul ales în ziua următoare.",
+      "SWARM": "Roit",
+      "SWARM_DESC": "Declanșata când exista riscul unui potențial roit (Hub oferă mai multă eficiență).",
+      "DCONNECT": "Deconectarea dispozitivului",
+      "DCONNECT_DESC": "Declanșata atunci când unul dintre senzori nu mai transmite date în fiecare perioadă aleasă. Funcționează numai cu un Hub.",
+      "TMAX": "Temperatură internă ridicată",
+      "TMAX_DESC": "Declanșata atunci când temperatura internă depășește pragul ales.",
+      "TMIN": "Temperatură internă scăzută",
+      "TMIN_DESC": "Declanșata atunci când temperatura internă este sub pragul ales.",
+      "LOWBROOD": "Puiet slab",
+      "LOWBROOD_DESC": "Declanșata atunci când procentul de puiet este sub pragul ales.",
+      "STOPWEATHER": "Stația meteo oprită",
+      "STOPWEATHER_DESC": "Declanșata când stația meteo nu mai transmite date. Necesită propria stație meteo.",
+      "RSWARM": "Riscul de roit",
+      "RSWARM_DESC": "Declanșata atunci când riscul de roit este ridicat în unul dintre stupi în ziua următoare.",
+      "WIPOS": "Furnizare semnificativă de resurse",
+      "WIPOS_DESC": "Declanșata atunci când greutatea de intrare a zilei în stup depășește pragul ales.",
+      "WINEG": "Epuizarea resurselor",
+      "WINEG_DESC": "Declanșata atunci când albinele consumă mult mai multe resurse decât aduc înapoi în stup. Pragul de pierdere este reglabil.",
+      "WLIM": "Limita de greutate depășită",
+      "WLIM_DESC": "Declanșata atunci când pragul de greutate indicat este depășit.",
+      "SNOW": "Posibile ninsoare puternică",
+      "SNOW_DESC": "Declanșata când zăpada depășește pragul ales în ziua următoare.",
+      "WIND": "Vânt puternic posibil",
+      "WIND_DESC": "Declanșata când vântul depășește pragul ales în ziua următoare.",
+      "COLDDAY": "Posibilă zi friguroasă înainte",
+      "COLDDAY_DESC": "Declanșata atunci când este detectată o zi friguroasă viitoare, adică sub pragul de temperatură specificat.",
+      "HOTDAY": "Posibilă zi caniculară înainte",
+      "HOTDAY_DESC": "Declanșata când este detectată o zi caniculară viitoare, adică peste pragul de temperatură specificat.",
+      "HMIN": "Umiditate internă scăzută",
+      "HMIN_DESC": "Declanșata atunci când umiditatea internă este sub pragul ales.",
+      "HMAX": "Umiditate internă ridicată",
+      "HMAX_DESC": "Declanșata atunci când umiditatea internă depășește pragul ales.",
+      "FURAT": "Stup furat",
+      "STOLEN_DESC": "Declanșata atunci când greutatea stupului devine anormal de scăzută.",
+      "DCONNECTT": "Deconectarea dispozitivului",
+      "DCONNECTT_DESC": "Declanșata când senzorul T nu mai transmite date în ultima zi.",
+      "DCONNECTW": "Deconectarea dispozitivului",
+      "DCONNECTW_DESC": "Declanșata atunci când senzorul dvs. W nu mai transmite date în ultima zi.",
+      "DCONNECTH": "Deconectarea dispozitivului",
+      "DCONNECTH_DESC": "Declanșata când Hub-ul dvs. nu mai transmite date în ultima zi.",
+      "POORSIGNALW": "Semnal slab",
+      "POORSIGNALW_DESC": "Declanșata atunci când senzorul dvs. W transmite date puține în ultima zi.",
+      "POORSIGNALT": "Semnal slab",
+      "POORSIGNALT_DESC": "Declanșata când senzorul T transmite date puține în ultima zi.",
+      "LOWBATTERYW": "Baterie descărcată",
+      "LOWBATTERYW_DESC": "Declanșata când nivelul bateriei senzorului W este sub pragul selectat.",
+      "LOWBATTERYT": "Baterie descărcată",
+      "LOWBATTERYT_DESC": "Declanșata când nivelul bateriei senzorului T este sub pragul selectat.",
+      "SUPER +": "Adăugarea unui Magazin",
+      "SUPER + _DESC": "Indicați greutatea maximă a unui Magazin.",
+      "SUPER -": "Eliminarea unui Magazin",
+      "SUPER-_DESC": "Indicați greutatea minimă a unui Magazin.",
+      "OXALIC": "Tratamentul cu acid oxalic",
+      "OXALIC_DESC": "Declanșata când puietul mediu din stupi este sub pragul stabilit. Aceasta este o indicație care vă permite să vă tratați stupii cu acid oxalic la momentul potrivit.",
+      "DEAD": "Stup mort",
+      "DEAD_DESC": "Algoritmul nostru detectează în fiecare zi dacă stupul dvs. este mort pe baza diferiților parametri pe care i-am setat.",
+      "RAIN_MSG": "Precipitațiile vor depăși {VAL}",
+      "SNOW_MSG": "Zăpada va depăși {VAL}",
+      "WIND_MSG": "Vântul va depăși {VAL}",
+      "COLDDAY_MSG": "Temperaturile vor fi neobișnuit de reci",
+      "OXALIC_MSG": "Este timpul să vă tratați stupii",
+      "HOTDAY_MSG": "Temperaturile vor fi neobișnuit de mari",
+      "TMAX_MSG": "Temperatura internă peste {VAL}",
+      "TMIN_MSG": "Temperatura internă sub {VAL}",
+      "WIPOS_MSG": "Câștigul stocului de albine depășește {VAL}",
+      "WINEG_MSG": "Pierderea stocului de albine depășește {VAL}",
+      "LOWBROOD_MSG": "Puiet sub {VAL}",
+      "HMAX_MSG": "Umiditate internă peste {VAL}",
+      "HMIN_MSG": "Umiditate internă sub {VAL}",
+      "HONEYDEW_MSG": "Greutăți primite în ultima săptămână care depășesc {VAL}",
+      "WLIM_MSG": "Greutatea stupului dvs. depășește {VAL}",
+      "SWARM_MSG": "Potențial roit detectat în jurul orei 14:00",
+      "RSWARM_MSG": "Se așteaptă o zi de roit",
+      "SUPER + _MSG": "Ați adăugat un Magazin",
+      "SUPER-_MSG": "Ați eliminat un Magazin",
+      "LOWBATTERYT_MSG": "Înlocuiți bateria",
+      "LOWBATTERYW_MSG": "Înlocuiți bateria",
+      "DCONNECTT_MSG": "{REF} deconectat de la {DATE}",
+      "DCONNECTW_MSG": "{REF} deconectat de la {DATE}",
+      "DCONNECTH_MSG": "{REF} deconectat de la {DATE}",
+      "POORSIGNALT_MSG": "{REF} semnal slab de la {DATE}",
+      "POORSIGNALW_MSG": "{REF} semnal slab de la {DATE}",
+      "STOPWEATHER_MSG": "Eroare de transmitere a datelor de la stația meteo a dvs. începând cu {DATE}",
+      "STOLEN_MSG": "Greutatea stupului dvs. este anormal de scăzută",
+      "DEAD_MSG": "Stupul dvs. a fost detectat mort"
+  },
+    "ALERT_CONF_PAGE": {
+        "TYPE": "Pictogramă",
+        "NAME": "Nume",
+        "DESCRIPTION": "Descriere",
+        "VALUE": "Valoare",
+        "PAGE": {
+            "SENSORS": "Senzor",
+            "WEATHER": "Vremea",
+            "HIVE": "Stup",
+            "CONF": {
+                "TITLE": "Setări",
+                "MAIL": "Trimiteți alerte prin e-mail:",
+                "FREQUENCY": "Trimiteți fiecare",
+                "DAILY": "zi",
+                "WEEKLY": "săptămână",
+                "DAY": "zi",
+                "OTHER": "personalizat",
+                "EVERY": "fiecare",
+                "BTN_MAIL_TEST": "Trimiteți un e-mail de testare"
+            }
+        },
+        "STATUS": "Status",
+        "HELP": {
+            "ALERTS": ["În această pagină puteți configura toate alertele și notificările.",
+                "Alertele sunt clasificate în 3 grupe: în stup / vreme / senzori.",
+                "Puteți începe cu limitele predefinite și să le reglați pe baza propriei experiențe.",
+                "Accesați fila\" configurați \"pentru a vă seta preferințele pentru e-mail și frecvența notificărilor."]
+        }
+    },
+    "INSP_CONF": {
+        "APPLIES": {
+            "HIVE": "Stup",
+            "APIARY": "Stupină"
+        },
+        "SUPER +": "Magazin adăugat",
+        "SUPER -": "Magazin eliminat",
+        "QUEENINSERT": "Matci introdusă",
+        "DIVIZIUNE": "Divizie",
+        "QUEENABSENT": "Matca absentă",
+        "STOLEN": "Stup furat",
+        "BROODADD": "Rame de puiet adăugate",
+        "BROODREMOVE": "Rame de puiet îndepărtate",
+        "COMBINEDHIVES": "Stupi combinati",
+        "SWARM": "Roit",
+        "CANDIFEED": "Hrăniți-l pe turta de zahar",
+        "SYRUPFEED": "Hrăniți-l pe Sirop",
+        "REQUEEN": "Requeening",
+        "QUEENLINEAGE": "Decedența reginei",
+        "HARVEST": "Recoltare",
+        "INSTALLPKG": "Pachetul instalat",
+        "NUCLEUSHIVE": "Stupul de nucleu instalat",
+        "SPLITQUEENREMOVE": "Split cu eliminarea reginei",
+        "NECTARFLOW": "Aport ridicat de nectar",
+        "MITEOAVAPOR": "Tratamentul Varroa: vapori de acid oxalic",
+        "MITEOADRIBBLE": "Tratamentul Varroa: picurare de acid oxalic",
+        "MITEFORMICPRO": "Tratamentul Varroa: Acid formic",
+        "MITESTRIPADD": "Tratamentul Varroa: adaos de benzi",
+        "MITESTRIPREMOVE": "Tratamentul Varroa: îndepărtați benzi",
+        "MITECOUNTLOUNGE": "Placa de control varroa",
+        "MITECOUNTWASH": "Spălarea numărului de Varroa",
+        "STARTFEED": "Începeți să vă hrăniți",
+        "STOPFEED": "Opriți hrănirea",
+        "SWARMMATEDQUEEN": "Roi cu matcă împerecheată",
+        "VIRGINSWARM": "roi virgin",
+        "SWARMRETURN": "Roit și întoarce-te la stup",
+        "QUEENSEEN": "Matcă văzută",
+        "NOBROOD": "Fără puiet",
+        "LOWBROOD": "Nivel scăzut de puiet",
+        "NORMBROOD": "Nivel normal de puiet",
+        "HIGHBROOD": "Nivel ridicat de puiet",
+        "SICK": "Bolnav",
+        "NOBEES": "Fără albine",
+        "LOWBEES": "Nivel scăzut de albine",
+        "NORMBEES": "Nivel mediu de albine",
+        "HIGHBEES": "Nivel ridicat de albine",
+        "NORES": "Fără resurse",
+        "LOWRES": "Nivel scăzut de resurse",
+        "NORMRES": "Nivel mediu de resurse",
+        "HIGHRES": "Nivel ridicat de resurse",
+        "EGG": "Prezența ouălor",
+        "LARVA": "Prezența larvei",
+        "PUPA": "Prezență cu puiet plafonată",
+        "DRONEBROOD": "Prezența puietului de trantori",
+        "DRONES": "Prezența trantorilor",
+        "BUZZINGHIVE": "Stup bezmetic",
+        "MOSAICBROOD": "Puiet mozaic"
+    },
+    "LOGIN_BM": {
+        "TITLE": "Mellisphera",
+        "BTN": "Autentificare",
+        "EULA": "Acord de licență pentru utilizatorul final",
+        "BTN_EUA": "Acceptați termenii și condițiile EULA",
+
+        "SIGN_IN": {
+            "DENIED": "Acces refuzat",
+            "SUBMIT": "Autentificare",
+            "SIGN_UP_LINK": "Creați un contul MyBroodminder"
+        },
+        "FORM": {
+            "EMAIL": "Trimiteți un e-mail MyBroodminder",
+            "PASSWORD": "Parola MyBroodminder",
+            "CONNECTION": "Conexiune",
+            "ERR": "Nu se poate conecta",
+            "TRY_MS": "Cont Demo",
+            "MAIL_SUBJECT": "Problemă de conexiune",
+            "DENIED": "Acces refuzat"
+        }
+    },
+    "NOTIFY": {
+        "SUCCESS":{
+            "CHANGE_NAME_DEMO_APIARY": "Numele actualizat",
+            "READ_ALL_ALERTS_HIVE": "Alerte citite",
+            "SAVE_ALERT_CONF": "Setări salvate",
+            "SAVE_INSP_CONF": "Setări salvate",
+            "SEND_MAIL_TEST": "E-mail trimis!"
+        },
+        "FAIL": {
+            "AUTH_WRITE_APIARY": "Nu aveți permisiunea de a modifica stupină demonstrativă.",
+            "NO_DELETE_RIGHT": "Nu puteți șterge ultima stupină",
+            "AUTH_WRITE_HIVE": "Nu aveți permisiunea de a modifica acest stup",
+            "AUTH_WRITE_NOTES": "Nu aveți voie să scrieți note în această stupină",
+            "AUTH_WRITE_NOTES_HIVE": "Nu aveți voie să scrieți aici"
+        }
+    },
+    "MOON": {
+        "1": "Lună plină",
+        "2": "Luna nouă",
+        "3": "Ultimul patrar",
+        "4": "Primul patrar",
+        "5": "Lună în creștere",
+        "6": "Lună în scădere",
+        "7": "Semiluna în scădere",
+        "8": "Semilună în creștere"
+    },
+    "DEVICE_STATUS_CODE": {
+        "R": {
+            "COLOR": "Rosie",
+            "MSG": "Senzorul deconectat"
+        },
+        "O1": {
+            "COLOR": "Portocalie",
+            "MSG": "Semnal slab"
+        },
+        "O2": {
+            "COLOR": "Portocalie",
+            "MSG": "Baterie descărcată"
+        }
+    },
+    "FITNESS_CODE": {
+        "B1": {
+            "COLOR": "Neagră",
+            "MSG": "Stup mort"
+        },
+        "B2": {
+            "COLOR": "Neagră",
+            "MSG": "Stup furat"
+        },
+        "R1": {
+            "COLOR": "Rosie",
+            "MSG": "Stup foarte slab"
+        },
+        "O1": {
+            "COLOR": "Portocalie",
+            "MSG": "Stup slab sau în scădere puternică"
+        },
+        "O2": {
+            "COLOR": "Portocalie",
+            "MSG": "Potențial roit"
+        },
+        "O3": {
+            "COLOR": "Portocalie",
+            "MSG": "Caniculă"
+        },
+        "O4": {
+            "COLOR": "Portocalie",
+            "MSG": "Frig extrem"
+        },
+        "O5": {
+            "COLOR": "Portocalie",
+            "MSG": "Pierderea rapidă în greutate (furt?)"
+        },
+        "G1": {
+            "COLOR": "Verde",
+            "MSG": "Sănătos"
+        }
+    },
+    "HIVE_POS": {
+        "ABOVE LOWER BROOD BOX": {
+            "COLOR": "#d45087",
+            "MSG": "Corp"
+        },
+        "ABOVE UPPER BROOD BOX": {
+            "COLOR": "#ffa600",
+            "MSG": "Magazin"
+        },
+        "OTHER":{
+            "COLOR": "# f95d6a",
+            "MSG": "Altele"
+        },
+        "EOUTSIDE HIVE": {
+            "COLOR": "#a05195",
+            "MSG": "În afara stupului"
+        },
+        "SCALE UNDER HIVE": {
+            "COLOR": "#003f5c",
+            "MSG": "Cantar sub stup (față)"
+        },
+        "SCALE UNDER HIVE (BACK)": {
+            "COLOR": "#ff7c43",
+            "MSG": "Cantar sub stup (spate)"
+        },
+        "UNDER INNER COVER": {
+            "COLOR": "#665191",
+            "MSG": "Sub acoperire interioară"
+        }
+    },
+    "MESSAGES": {
+        "WARNINGHIVE": "Avertisment, stupul",
+        "WILLBEDELETED": " va fi șters.",
+        "WARNINGHIVES": "Avertisment, stupii",
+        "WILLBEDELETEDS": "vor fi ștersi.",
+        "AND":  " si ",
+        "PASSWORD": "Parolă",
+        "DENIED": "Acces refuzat",
+        "LOGIN": "Autentificare",
+        "CREATEACCOUNT": "Înregistrare",
+        "OR": "sau",
+        "RESETPSW": "Resetați parola",
+        "ENTEREMAIL": "Introduceți adresa dvs. de e-mail",
+        "SIXCARACMIN": "6 caractere min",
+        "ENTERPSW": "Introduceți parola",
+        "SIGNUP": "Autentificare",
+        "BACK": "Inapoi",
+        "RESET": "Resetare"
+    }
+}

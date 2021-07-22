@@ -90,9 +90,8 @@ export class EventsComponent implements OnInit {
 
     this.inspCat.getInspCat().subscribe(
       _inspCat => {
-        _inspCat.sort((a,b) => {
-          return a.code - b.code;
-        }).forEach(_cat => {
+        let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
+        arr.forEach(_cat => {
           if(_cat.img !== "Default" && this.notConstant(_cat)){
             this.PICTOS_HIVES_OBS.push({
               name:_cat.name.toLowerCase(), 
@@ -600,7 +599,8 @@ export class EventsComponent implements OnInit {
         (<HTMLInputElement>document.getElementsByClassName("edit-event-minutes-input")[0]).value = this.newEventDate.getMinutes().toString();
         this.inspCat.getInspCat().subscribe(
           _inspCat => {
-            _inspCat.forEach(_cat => {
+            let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
+            arr.forEach(_cat => {
               if(_cat.applies.indexOf("hive") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
                 this.PICTOS_HIVES_OBS.push({
                   name:_cat.name.toLowerCase(), 
@@ -633,7 +633,8 @@ export class EventsComponent implements OnInit {
         (<HTMLInputElement>document.getElementsByClassName("edit-event-minutes-input")[0]).value = this.newEventDate.getMinutes().toString();
         this.inspCat.getInspCat().subscribe(
           _inspCat => {
-            _inspCat.forEach(_cat => {
+            let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
+            arr.forEach(_cat => {
               if(_cat.applies.indexOf("apiary") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
                 this.PICTOS_HIVES_OBS.push({
                   name:_cat.name.toLowerCase(), 

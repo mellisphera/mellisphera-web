@@ -257,19 +257,7 @@ export class DailyManagerService {
           }
           else{
             serieTmp.name = nameSerie + ' | ' + this.translateService.instant('HIVE_POS.' + _data.position.toUpperCase() + '.MSG');
-            /*let hivePos = HIVE_POS.filter(_hiveP => _hiveP.name === _data.position)[0];
-            if(this.translateService.currentLang == 'fr'){
-              serieTmp.name = nameSerie + ' | ' + hivePos.translations.fr;
-            }
-            if(this.translateService.currentLang == 'en'){
-              serieTmp.name = nameSerie + ' | ' + hivePos.translations.en;
-            }
-            if(this.translateService.currentLang == 'es'){
-              serieTmp.name = nameSerie + ' | ' + hivePos.translations.es;
-            }
-            if(this.translateService.currentLang == 'nl'){
-              serieTmp.name = nameSerie + ' | ' + hivePos.translations.nl;
-            }*/
+           
           }
         }
         if (data.map(_elt => _elt.date)[0] !== undefined) {
@@ -706,21 +694,7 @@ export class DailyManagerService {
           if(_pos != undefined && _pos != null){
             posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
           }
-          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
-          if(hivePos != undefined){
-            if(this.translateService.currentLang == 'fr'){
-              posTab[index] = hivePos.translations.fr;
-            }
-            if(this.translateService.currentLang == 'en'){
-              posTab[index] = hivePos.translations.en;
-            }
-            if(this.translateService.currentLang == 'es'){
-              posTab[index] = hivePos.translations.es;
-            }
-            if(this.translateService.currentLang == 'nl'){
-              posTab[index] = hivePos.translations.nl;
-            }
-          }*/
+          
         });
         let posSet = new Set([...posTab].concat([..._tMax.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -762,21 +736,7 @@ export class DailyManagerService {
           if(_pos != undefined && _pos != null){
             posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
           }
-          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
-          if(hivePos != undefined){
-            if(this.translateService.currentLang == 'fr'){
-              posTab[index] = hivePos.translations.fr;
-            }
-            if(this.translateService.currentLang == 'en'){
-              posTab[index] = hivePos.translations.en;
-            }
-            if(this.translateService.currentLang == 'es'){
-              posTab[index] = hivePos.translations.es;
-            }
-            if(this.translateService.currentLang == 'nl'){
-              posTab[index] = hivePos.translations.nl;
-            }
-          }*/
+         
         });
         let posSet = new Set([...posTab].concat([..._tmpMaxExt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -816,21 +776,7 @@ export class DailyManagerService {
           if(_pos != undefined && _pos != null){
             posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
           }
-          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
-          if(hivePos != undefined){
-            if(this.translateService.currentLang == 'fr'){
-              posTab[index] = hivePos.translations.fr;
-            }
-            if(this.translateService.currentLang == 'en'){
-              posTab[index] = hivePos.translations.en;
-            }
-            if(this.translateService.currentLang == 'es'){
-              posTab[index] = hivePos.translations.es;
-            }
-            if(this.translateService.currentLang == 'nl'){
-              posTab[index] = hivePos.translations.nl;
-            }
-          }*/
+          
         });
         let posSet = new Set([...posTab].concat([..._tMinExt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -870,21 +816,7 @@ export class DailyManagerService {
           if(_pos != undefined && _pos != null){
             posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
           }
-          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
-          if(hivePos != undefined){
-            if(this.translateService.currentLang == 'fr'){
-              posTab[index] = hivePos.translations.fr;
-            }
-            if(this.translateService.currentLang == 'en'){
-              posTab[index] = hivePos.translations.en;
-            }
-            if(this.translateService.currentLang == 'es'){
-              posTab[index] = hivePos.translations.es;
-            }
-            if(this.translateService.currentLang == 'nl'){
-              posTab[index] = hivePos.translations.nl;
-            }
-          }*/
+          
         });
         let posSet = new Set([...posTab].concat([..._hInt.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -924,21 +856,7 @@ export class DailyManagerService {
           if(_pos != undefined && _pos != null){
             posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
           }
-          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
-          if(hivePos != undefined){
-            if(this.translateService.currentLang == 'fr'){
-              posTab[index] = hivePos.translations.fr;
-            }
-            if(this.translateService.currentLang == 'en'){
-              posTab[index] = hivePos.translations.en;
-            }
-            if(this.translateService.currentLang == 'es'){
-              posTab[index] = hivePos.translations.es;
-            }
-            if(this.translateService.currentLang == 'nl'){
-              posTab[index] = hivePos.translations.nl;
-            }
-          }*/
+          
         });
         let posSet = new Set([...posTab].concat([..._brood.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));
@@ -980,19 +898,7 @@ export class DailyManagerService {
           if(_pos != undefined && _pos != null){
             posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')
           }
-          /*let hivePos = HIVE_POS.find(_hiveP => _hiveP.name === _pos);
-          if(this.translateService.currentLang == 'fr'){
-            posTab[index] = hivePos.translations.fr;
-          }
-          if(this.translateService.currentLang == 'en'){
-            posTab[index] = hivePos.translations.en;
-          }
-          if(this.translateService.currentLang == 'es'){
-            posTab[index] = hivePos.translations.es;
-          }
-          if(this.translateService.currentLang == 'nl'){
-            posTab[index] = hivePos.translations.nl;
-          }*/
+          
         });
         let posSet = new Set([...posTab].concat([..._tMin.map(_val => _val.values.map(_v => _v.sensorRef)).flat()]));
         let option = JSON.parse(JSON.stringify(this.baseOptionsInt));

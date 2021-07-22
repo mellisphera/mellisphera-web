@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
       private authService: AuthService,
       private translateService: TranslateService,
       public loadingService: LoadingService) {
-       translateService.addLangs(['en', 'fr']);
+       translateService.addLangs(['en', 'fr', 'es', 'ro']);
        translateService.setDefaultLang('en');
        this.primaryColour = PrimaryRed;
        this.secondaryColour = SecondaryBlue;

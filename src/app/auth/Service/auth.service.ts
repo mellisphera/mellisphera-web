@@ -75,16 +75,17 @@ export class AuthService {
         this.connexionStatus.next(data);
         this.isAuthenticated = this.tokenService.getToken() ? true : false;
         this.errLogin = !this.isAuthenticated;
-        this.translateService.addLangs(['en', 'fr', 'es']);
+        this.translateService.addLangs(['en', 'fr', 'es', 'ro']);
         this.socketService.loadDataRequest(this.userService.getJwtReponse().idUser);
 
          if (this.jwtReponse.lang === null || this.jwtReponse.lang.toLowerCase().indexOf('en') !== -1) {
            this.translateService.use('en');
-        } else if (this.jwtReponse.lang.toLowerCase().indexOf('fr') === -1) {
+        } else if (this.jwtReponse.lang.toLowerCase().indexOf('fr') !== -1) {
           this.translateService.use('fr');
-        }  else if (this.jwtReponse.lang.toLowerCase().indexOf('fr') === -1) {
+        } else if (this.jwtReponse.lang.toLowerCase().indexOf('es') !== -1) {
           this.translateService.use('es');
-
+        } else if (this.jwtReponse.lang.toLowerCase().indexOf('ro') !== -1) {
+          this.translateService.use('ro');
         }
         if (this.jwtReponse.connexions === 1) {
           this.userService.setFristConnection(true);

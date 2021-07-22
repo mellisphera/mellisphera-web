@@ -226,7 +226,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
     this.inspCat.getInspCat().subscribe(
       _inspCat => {
-        _inspCat.forEach(_cat => {
+        let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
+        arr.sort((a:InspCat, b:InspCat) => { return a.code - b.code }).forEach(_cat => {
           if(_cat.img !== "Default" && this.notConstant(_cat)){
             this.PICTOS_HIVES_OBS.push({
               name:_cat.name.toLowerCase(), 
@@ -865,7 +866,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
       this.inspCat.getInspCat().subscribe(
         _inspCat => {
-          _inspCat.forEach(_cat => {
+          let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
+          arr.forEach(_cat => {
             if(_cat.applies.indexOf("hive") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
               this.PICTOS_HIVES_OBS.push({
                 name:_cat.name.toLowerCase(), 
@@ -907,7 +909,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     else{
       this.inspCat.getInspCat().subscribe(
         _inspCat => {
-          _inspCat.forEach(_cat => {
+          let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
+          arr.forEach(_cat => {
             if(_cat.applies.indexOf("apiary") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
               this.PICTOS_HIVES_OBS.push({
                 name:_cat.name.toLowerCase(), 
