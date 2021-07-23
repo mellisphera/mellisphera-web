@@ -69,9 +69,15 @@
       <div class="inspect-hive">
         <div id="hives-table">
           <div id="hives-table-body" *ngIf="active_apiary_index > 0">
-            <ng-container *ngFor="let ruche of user_hives">
+            <ng-container *ngFor="let ruche of user_hives; let i = index;">
               <div style="margin-bottom: 15px; margin-left: 5px;">
-                <h4 style="font-weight: bold; text-align: left; margin-left: 5px; border-bottom: 1px solid #ddd;">{{ruche.name}}</h4>
+                <h4 style="font-weight: bold; text-align: left; margin-left: 5px; border-bottom: 1px solid #ddd; display: flex; align-items: center;">
+                  <div class="hive-fit-square" *ngIf="fitness_by_apiary[i] && fitness_by_apiary[i].hiveId === ruche._id" [style.background-color]="fitness_by_apiary[i].fitcolor"></div>
+                  {{ruche.name}}
+                  <div style="margin-right: 10px; margin-left: auto; font-weight: normal; font-size: 14px;">
+                    <span style="margin-left: 10px;" *ngFor="let sensor of (sensors_by_apiary | filterBy: 'hiveId':ruche._id);">{{ sensor.sensorRef }}</span>
+                </div>
+                </h4>
                 <div class="hive-body-container">
                   <div class="hive-body-table-notes">
                     <div class="hive-obs-div">
@@ -91,6 +97,7 @@
                             <th>
                               <img src="../../../../assets/ms-pics/inspects/hcc/high_cb.svg" width="20" height="20">
                             </th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -123,6 +130,12 @@
                             <td style="padding-left:5px; padding-right:5px;">
                               <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_brood_high_check'" (click)="setBroodLevel('high', 'hive', ruche)">
                             </td>
+                            <td>
+                              <p style="font-family: 'Poppins'; font-size: 14px; margin: 0;"
+                                *ngFor="let brood of (brood_by_apiary | filterBy: 'hiveId':ruche._id);" >
+                                {{ brood ? brood.brood.toFixed(0) + '%' : '' }}
+                            </p>
+                            </td>
                           </tr>
                           <tr>
                             <td><!--<img src="../../../../assets/ms-pics/inspects/res_b.svg" width="30" height="30">-->{{ 'INSPECT.TABLE.STORES' | translate }}</td>
@@ -137,6 +150,12 @@
                             </td>
                             <td style="padding-left:5px; padding-right:5px;">
                               <input class="form-check-input" type="radio" value="" [id]="ruche.name + '_res_high_check'" (click)="setResLevel('high', 'hive', ruche)">
+                            </td>
+                            <td>
+                              <p style="font-family: 'Poppins'; font-size: 14px;  margin: 0;"
+                                *ngFor="let weight of (weight_by_apiary | filterBy: 'hiveId':ruche._id);" >
+                                {{ weight ? unitService.convertWeightFromuserPref(weight.weight_23f, this.unitService.getUserPref().unitSystem, true).toFixed(0) + (this.unitService.getUserPref().unitSystem === 'IMPERIAL' ? 'lbs':'Kg') : '' }}
+                              </p>
                             </td>
                           </tr>
                         </tbody>

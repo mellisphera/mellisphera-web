@@ -17,6 +17,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { DateTimeAdapter, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { MomentDateTimeAdapter, OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
+import { FilterPipe } from './inspect-new/filter.pipe';
 
 const MY_CUSTOM_FORMATS = {
   fullPickerInput: UserParamsService.getUPref().timeFormat.split(' ')[0],
@@ -45,6 +46,7 @@ const MY_CUSTOM_FORMATS = {
     UnitService,
     AuthGuardService,
     UserParamsService,
+    FilterPipe,
     { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
     { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }
   ],
@@ -53,6 +55,7 @@ const MY_CUSTOM_FORMATS = {
     InspectNewComponent,
     InspectHistoryComponent,
     InspectParamsComponent,
+    FilterPipe
   ]
 })
 export class InspectModule { }

@@ -47,10 +47,10 @@ export class InspectNewComponent implements OnInit {
   public inspect_date: Date;
   public user_apiaries: RucherModel[];
   public user_hives: RucheInterface[];
-  private sensors_by_apiary: CapteurInterface[];
-  private fitness_by_apiary: Fitness[];
-  private brood_by_apiary: DailyRecordTh[];
-  private weight_by_apiary: DailyRecordsW[];
+  private sensors_by_apiary: CapteurInterface[] = [];
+  public fitness_by_apiary: Fitness[] = [];
+  public brood_by_apiary: DailyRecordTh[] = [];
+  public weight_by_apiary: DailyRecordsW[] = [];
   
   public active_apiary_index: number;
 
@@ -94,7 +94,7 @@ export class InspectNewComponent implements OnInit {
     private inspService: InspectionService,
     private inspCatService: InspCatService,
     private inspUserService: InspUserService,
-    private unitService: UnitService,
+    public unitService: UnitService,
     private userPrefsService: UserParamsService,
     private rucherService: RucherService,
     private rucheService: RucheService,
@@ -136,7 +136,22 @@ export class InspectNewComponent implements OnInit {
               _recTH => { this.brood_by_apiary = _recTH; },
             );
             this.fitnessService.getDailyFitnessByApiaryId(this.user_apiaries[0]._id).subscribe(
-              _fit => { this.fitness_by_apiary = _fit; },
+              _fit => { 
+                this.fitness_by_apiary = _fit;
+                this.user_hives.forEach( _hive => {
+                  let index = _fit.findIndex( _f => _f.hiveId === _hive._id);
+                  if(index === -1){
+                    this.fitness_by_apiary.push({
+                      _id: null,
+                      userId: null,
+                      hiveId: _hive._id, 
+                      fitcode: null,
+                      fitcolor: 'white',
+                      date: null,
+                    })
+                  }
+                })
+              },
             );
             this.dailyRecordsW.getDailyWeightByApiary(this.user_apiaries[0]._id).subscribe(
               _recW => { this.weight_by_apiary = _recW; }
@@ -315,7 +330,22 @@ export class InspectNewComponent implements OnInit {
           _recTH => { this.brood_by_apiary = _recTH; },
         );
         this.fitnessService.getDailyFitnessByApiaryId(this.user_apiaries[this.active_apiary_index - 1]._id).subscribe(
-          _fit => { this.fitness_by_apiary = _fit; },
+          _fit => {
+            this.fitness_by_apiary = _fit;
+            this.user_hives.forEach( (_hive,i) => {
+              let index = _fit.findIndex( _f => _f.hiveId === _hive._id);
+              if(index === -1){
+                this.fitness_by_apiary.splice(i, 0 ,{
+                  _id: null,
+                  userId: null,
+                  hiveId: _hive._id, 
+                  fitcode: null,
+                  fitcolor: 'white',
+                  date: null,
+                });
+              }
+            });
+          },
         );
         this.dailyRecordsW.getDailyWeightByApiary(this.user_apiaries[this.active_apiary_index - 1]._id).subscribe(
           _recW => { this.weight_by_apiary = _recW; }
@@ -1259,7 +1289,7 @@ export class InspectNewComponent implements OnInit {
     (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "15%";
 
     this.pdf.setFillColor("#EEEEEE");
-    this.pdf.rect(15, 65, 77, 12, "F");
+    //this.pdf.rect(15, 65, 77, 12, "F");
     this.pdf.addImage("../../../../assets/ms-pics/inspects/nobrood_b.png", "PNG", 17, 67, 8, 8);
     this.pdf.addImage("../../../../assets/ms-pics/inspects/egg_b.png", "PNG", 32, 66, 10, 10);
     this.pdf.addImage("../../../../assets/ms-pics/inspects/larva_b.png", "PNG", 47, 66, 10, 10);
@@ -1270,7 +1300,7 @@ export class InspectNewComponent implements OnInit {
 
     let nbElt = 5;
     let lineCount = 0;
-    this.inspConf.forEach(conf => {
+    /*this.inspConf.forEach(conf => {
       lineCount = parseInt( (nbElt/15).toFixed(1) );
       if(conf.enable && conf.inspCat.applies.findIndex(_ap => _ap === 'apiary') !== -1 && conf.inspCat.type === 'act' && conf.inspCat.seasons.findIndex(_s => _s === this.seasonService.getSeason()) !== -1 && conf.inspCat.img !== 'Default'){
         nbElt++;
@@ -1281,7 +1311,7 @@ export class InspectNewComponent implements OnInit {
     }
     else{
       this.pdf.rect(15, 80, 15*nbElt, 12, "F");
-    }
+    }*/
 
     (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "30%";
 
@@ -1326,7 +1356,7 @@ export class InspectNewComponent implements OnInit {
       // TITLE
       this.pdf.setFontSize(14);
       this.pdf.setFont("courier","bolditalic");
-      this.pdf.setFillColor(fitness.fitcolor);
+      this.pdf.setFillColor( fitness ? fitness.fitcolor : "white" );
       this.pdf.roundedRect(15, startY-4+(mult*30), 4, 4, 1, 1, "FD");
       this.pdf.text(this.user_hives[i].name , 22, startY+(mult*30));
       this.pdf.line(15, startY+2+(mult*30), 195, startY+2+(mult*30));
@@ -1363,12 +1393,12 @@ export class InspectNewComponent implements OnInit {
       this.pdf.circle(63, startY+20+(mult*30), 1.5, "S");
 
       this.pdf.setFontSize(9);
-      this.pdf.text(brood.brood.toFixed(0) + '%', 67, startY+16+(mult*30));
-      let textW = this.unitService.convertWeightFromuserPref(weight.weight_23f, this.unitService.getUserPref().unitSystem, true).toFixed(0) + (this.unitService.getUserPref().unitSystem === 'IMPERIAL' ? 'lbs':'Kg');
+      this.pdf.text( brood ? brood.brood.toFixed(0) + '%' : '', 67, startY+16+(mult*30));
+      let textW = weight ? this.unitService.convertWeightFromuserPref(weight.weight_23f, this.unitService.getUserPref().unitSystem, true).toFixed(0) + (this.unitService.getUserPref().unitSystem === 'IMPERIAL' ? 'lbs':'Kg') : '';
       this.pdf.text(textW, 67, startY+21+(mult*30));
 
       this.pdf.setFillColor("#EEEEEE");
-      this.pdf.rect(85, startY+5+(mult*30), 110, 8, "F");
+      //this.pdf.rect(85, startY+5+(mult*30), 110, 8, "F");
       this.pdf.addImage("../../../../assets/ms-pics/inspects/nobrood_b.png", "PNG", 87, startY+6+(mult*30), 6, 6);
       this.pdf.addImage("../../../../assets/ms-pics/inspects/egg_b.png", "PNG", 95, startY+6+(mult*30), 6, 6);
       this.pdf.addImage("../../../../assets/ms-pics/inspects/larva_b.png", "PNG", 103, startY+6+(mult*30), 6, 6);

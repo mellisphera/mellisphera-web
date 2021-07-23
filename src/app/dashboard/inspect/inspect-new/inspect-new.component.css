@@ -952,6 +952,14 @@
   padding-bottom: 10px;
 }
 
+.hive-fit-square{
+  width: 16px;
+  height: 16px;
+  border: 1px solid #4f4f51;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
 @media screen and (max-width: 1300px){
   .apiary-notes-todo, .hive-notes-todo{
     margin-left:15px;
