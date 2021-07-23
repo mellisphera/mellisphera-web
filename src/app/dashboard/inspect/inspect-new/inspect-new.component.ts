@@ -126,9 +126,10 @@ export class InspectNewComponent implements OnInit {
       () => {
         this.user_apiaries.sort(this.compare);
         this.rucheService.getHivesByApiary(this.user_apiaries[0]._id).subscribe(
-          _hives => { this.user_hives = [..._hives]; },
+          _hives => { this.user_hives = _hives.sort(this.compare); },
           () => {},
           () => {
+            this.user_hives.sort(this.compare);
             this.captService.getCapteursByApiaryId(this.user_apiaries[0]._id).subscribe(
               _captArray => { this.sensors_by_apiary = _captArray.filter(_c => !_c.sensorRef.includes("_removed")); },
             );
@@ -299,9 +300,7 @@ export class InspectNewComponent implements OnInit {
     this.active_apiary_index = (<HTMLSelectElement>document.getElementById('inspect-apiary-select')).selectedIndex;
     this.new_apiary_insp.apiaryId = this.user_apiaries[this.active_apiary_index - 1]._id;
     this.rucheService.getHivesByApiary(this.user_apiaries[this.active_apiary_index - 1]._id).subscribe(
-      _hives => {
-        this.user_hives = [..._hives];
-      },
+      _hives => { this.user_hives = _hives.sort(this.compare); },
       () => {},
       () => {
         this.hive_insps = [];

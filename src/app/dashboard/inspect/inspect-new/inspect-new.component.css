@@ -540,6 +540,21 @@
   border: 2px solid #4f4f51;
 }
 
+.btn-mitestripadd_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitestripadd_b.svg');
+  background-position: center;
+}
+
+.btn-mitestripadd_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitestripadd_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
 .hives-act, .hives-obs
 {
   margin: 5px 5px;

@@ -46,3 +46,30 @@ limitations under the License. */
 .panel{
     margin: 12px;
 }
+.btn-changeLang{
+    width: 230px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-changeLang:focus{
+    color:#888;
+    border-color: transparent;
+}
+.btn-changeLang:hover{
+    color:black !important;
+    border-color: #777 !important;
+}
+
+.btn-changeLang-item{
+    height: 42px;
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#collapseLang{
+    width: 230px;
+}
+

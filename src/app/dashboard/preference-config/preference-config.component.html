@@ -81,7 +81,7 @@ limitations under the License. -->
             <div class="panel-heading">{{ 'PREFERENCE_CONFIG.LANG' | translate }}</div>
             <div class="panel-body">
                 <div id="pref-config-lang-group">
-                    <div>
+                    <!--<div>
                         <input [(ngModel)]="lang" (ngModelChange)="onChangeLang()" value="fr" name="lang"
                             type="radio" />
                         <img width="40px" src="./assets/img/fr.png" alt="FR" />
@@ -100,9 +100,64 @@ limitations under the License. -->
                         <input [(ngModel)]="lang" (ngModelChange)="onChangeLang()" value="ro" name="lang"
                             type="radio" />
                         <img width="40px" src="./assets/img/ro.svg" alt="EN" />
+                    </div>-->
+                    <button class="btn btn-changeLang" type="button" data-toggle="collapse" data-target="#collapseLang" aria-expanded="false" aria-controls="collapseExample">
+                        <div style="width:30px">
+                            <img width="30px" [src]="'./assets/img/'+ lang +'.svg'" alt="FR" style="margin: 0;"/>
+                        </div>
+                        <div style="width:120px; margin-left: 18px;">
+                            <p *ngIf="lang === 'fr'" style="font-family: 'Poppins'; margin: 0; text-align: left;">Français</p>
+                            <p *ngIf="lang === 'en'" style="font-family: 'Poppins'; margin: 0; text-align: left;">English</p>
+                            <p *ngIf="lang === 'es'" style="font-family: 'Poppins'; margin: 0; text-align: left;">Español</p>
+                            <p *ngIf="lang === 'ro'" style="font-family: 'Poppins'; margin: 0; text-align: left;">Română</p>
+                        </div>
+                    </button>
+                    <div class="collapse" id="collapseLang">
+                        <div class="card card-body">
+                            <button class="btn btn-changeLang-item" (click)="changeLangToggle('fr')">
+                                <div style="width:30px">
+                                    <img width="30px" src="./assets/img/fr.svg" alt="FR" style="margin: 0;"/>
+                                </div>
+                                <div style="width:120px; margin-left: 18px;">
+                                    <p style="font-family: 'Poppins'; margin: 0; text-align: left;">Français</p>
+                                </div>
+                            </button>
+                            <button class="btn btn-changeLang-item" (click)="changeLangToggle('en')">
+                                <div style="width:30px">
+                                    <img width="30px" src="./assets/img/en.svg" alt="EN" style="margin: 0;"/>
+                                </div>
+                                <div style="width:120px; margin-left: 18px;">
+                                    <p style="font-family: 'Poppins'; margin: 0; text-align: left;">English</p>
+                                </div>
+                            </button>
+                            <button class="btn btn-changeLang-item" (click)="changeLangToggle('es')">
+                                <div style="width:30px">
+                                    <img width="30px" src="./assets/img/es.svg" alt="ES" style="margin: 0;"/>
+                                </div>
+                                <div style="width:120px; margin-left: 18px;">
+                                    <p style="font-family: 'Poppins'; margin: 0; text-align: left;">Español</p>
+                                </div>
+                            </button>
+                            <button class="btn btn-changeLang-item" (click)="changeLangToggle('ro')" >
+                                <div style="width:30px">
+                                    <img width="30px" src="./assets/img/ro.svg" alt="RO" style="margin: 0;"/>
+                                </div>
+                                <div style="width:120px; margin-left: 18px;">
+                                    <p style="font-family: 'Poppins'; margin: 0; text-align: left;">Română</p>
+                                </div>                              
+                            </button>
+                            <!--<button class="btn btn-changeLang-item">
+                                <div style="width:30px">
+                                    <img width="26px" src="./assets/img/default.svg" alt="" style="margin: 0;"/>
+                                </div>
+                                <div style="width:120px; margin-left: 18px;">
+                                    <p style="font-family: 'Poppins'; margin: 0; text-align: left;">Browser default</p>
+                                </div>
+                            </button>-->
+                        </div>
                     </div>
                 </div>
-
+                
             </div>
         </div>
         <div class="panel panel-default">

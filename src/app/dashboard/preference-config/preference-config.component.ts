@@ -61,6 +61,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
       'password': ['', [Validators.required, Validators.minLength(6)]],
       'confirmPassword': ['', [Validators.required, Validators.minLength(6)]]
     });
+    console.log(navigator.language);
   }
 
   changeLangToggle(lang: string) {
