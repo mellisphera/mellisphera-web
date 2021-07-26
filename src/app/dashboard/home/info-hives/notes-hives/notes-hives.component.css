@@ -493,7 +493,51 @@ th{
   height: 37px;
   width: 37px;
 }
-
+.hives-nonebrood-img{
+  background: url('../../../../../assets/ms-pics/inspects/nobrood_b.svg') center no-repeat;
+  background-size: 32px;
+}
+.hives-nonebrood-img-active{
+  background: url('../../../../../assets/ms-pics/inspects/nobrood_cb.svg') center no-repeat !important;
+  background-size: 32px !important;
+  border: 2px solid #4f4f51;
+}
+.hives-egg-img{
+  background: url('../../../../../assets/ms-pics/inspects/egg_b.svg') center no-repeat;
+  background-size: 37px;
+}
+.hives-egg-img-active{
+  background: url('../../../../../assets/ms-pics/inspects/egg_cb.svg') center no-repeat !important;
+  background-size: 37px !important;
+  border: 2px solid #4f4f51;
+}
+.hives-larva-img{
+  background: url('../../../../../assets/ms-pics/inspects/larva_b.svg') center no-repeat;
+  background-size: 37px;
+}
+.hives-larva-img-active{
+  background: url('../../../../../assets/ms-pics/inspects/larva_cb.svg') center no-repeat !important;
+  background-size: 37px !important;
+  border: 2px solid #4f4f51;
+}
+.hives-pupa-img{
+  background: url('../../../../../assets/ms-pics/inspects/pupa_b.svg') center no-repeat;
+  background-size: 37px;
+}
+.hives-pupa-img-active{
+  background: url('../../../../../assets/ms-pics/inspects/pupa_cb.svg') center no-repeat !important;
+  background-size: 37px !important;
+  border: 2px solid #4f4f51;
+}
+.hives-drone-img{
+  background: url('../../../../../assets/ms-pics/inspects/dronebrood_b.svg') center no-repeat;
+  background-size: 37px;
+}
+.hives-drone-img-active{
+  background: url('../../../../../assets/ms-pics/inspects/dronebrood_cb.svg') center no-repeat !important;
+  background-size: 37px !important;
+  border: 2px solid #4f4f51;
+}
 .hives-swarm-img{
   background-size: 37px;
   background-repeat: no-repeat;

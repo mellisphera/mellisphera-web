@@ -47,6 +47,7 @@ limitations under the License. -->
               <td style="max-width: 90px; width:90px;">{{ obs.opsDate | myDate }}</td>
               <td style="min-width: 230px; width: 90%;">
                 <div>{{ obs.description }}</div>
+                <div *ngIf="obs.todo && obs.todo !== ''" style="color:blue;">{{ obs.todo }}</div>
                 <div style="width: 100%; display: flex; flex-wrap: wrap;">
                   <div *ngFor="let item of obs?.obs" [class]="'hives-obs-item hives-'+item.name.toLowerCase()+'-img'"></div>
                 </div>

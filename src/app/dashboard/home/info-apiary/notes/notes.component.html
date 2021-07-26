@@ -48,6 +48,7 @@ limitations under the License. -->
               <td style="max-width: 90px; width:90px;">{{ obs.opsDate | myDate }}</td>
               <td style="min-width: 230px; width:90%">
                 <div>{{ obs.description }}</div>
+                <div *ngIf="obs.todo && obs.todo !== ''" style="color:blue;">{{ obs.todo }}</div>
                 <div style="width: 100%; display: flex; flex-wrap: wrap;">
                   <div *ngFor="let item of obs?.obs" [class]="'hives-obs-item hives-'+item.name.toLowerCase()+'-img'"></div>
                 </div>
@@ -102,13 +103,13 @@ limitations under the License. -->
         </div>
       </div>
       <div class="modal-body">
-        <div id="brood-stage" class="hive-op-brood-home" style="margin-left: 3px;">
+        <!--<div id="brood-stage" class="hive-op-brood-home" style="margin-left: 3px;">
           <button class="apiary-obs brood-none" (click)="setBroodStage('none', 'apiary')"></button>  
           <button class="apiary-obs brood-egg" (click)="setBroodStage('egg', 'apiary')"></button>
           <button class="apiary-obs brood-larva" (click)="setBroodStage('larva', 'apiary')"></button>
           <button class="apiary-obs brood-pupa" (click)="setBroodStage('pupa', 'apiary')"></button>
           <button class="apiary-obs brood-drone" (click)="setBroodStage('drone', 'apiary')"></button>    
-        </div>
+        </div>-->
         <div class="add-event-notes">
             <div style="width: 45px; margin-left: 4px;">
               <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
@@ -158,13 +159,13 @@ limitations under the License. -->
         </div>
       </div>
       <div class="modal-body">
-        <div id="brood-stage" class="hive-op-brood-home" style="margin-left: 3px;">
+        <!--<div id="brood-stage" class="hive-op-brood-home" style="margin-left: 3px;">
           <button class="apiary-obs brood-none" (click)="editBroodStage('none', 'apiary')"></button>  
           <button class="apiary-obs brood-egg" (click)="editBroodStage('egg', 'apiary')"></button>
           <button class="apiary-obs brood-larva" (click)="editBroodStage('larva', 'apiary')"></button>
           <button class="apiary-obs brood-pupa" (click)="editBroodStage('pupa', 'apiary')"></button>
           <button class="apiary-obs brood-drone" (click)="editBroodStage('drone', 'apiary')"></button>    
-        </div>
+        </div>-->
         <div class="edit-event-notes">
             <div style="width: 45px; margin-left: 4px;">
               <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>

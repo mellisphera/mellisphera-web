@@ -220,8 +220,8 @@
     </div>
     <div class="inspect-footer">
       <button class="btn btn-danger btn-cancel" (click)="cancelInspection()">{{'INSPECT.NEW.BTN_CANCEL' | translate}}</button>
-      <button class="btn btn-success btn-save" (click)="saveInspection()">{{'INSPECT.NEW.BTN_SAVE' | translate}}</button>
-      <button class="btn btn-light btn-pdf" (click)="openModal()">{{'INSPECT.NEW.BTN_PDF' | translate}}</button>
+      <button class="btn btn-success btn-save" data-toggle="modal" data-target="#saveModal" (click)="openSaveModal()">{{'INSPECT.NEW.BTN_SAVE' | translate}}</button>
+      <button class="btn btn-success btn-pdf" (click)="openModal()">{{'INSPECT.NEW.BTN_PDF' | translate}}</button>
     </div>
 </div>
 
@@ -240,3 +240,20 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveExampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p *ngFor="let line of 'INSPECT.NEW.SAVE_TEXT' | translate">{{ line }}<br /></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">{{'INSPECT.NEW.BTN_CANCEL' | translate}}</button>
+        <button id="btn-save" type="button" class="btn btn-success" (click)="saveInspection()"><i id="btn-save-icon" style="display: none;" class="fa fa-spinner fa-spin"></i><span id="btn-save-text">{{'INSPECT.NEW.BTN_SAVE' | translate}}</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  -->

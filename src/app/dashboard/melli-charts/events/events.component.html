@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="modal-body">
-        <div id="brood-stage" class="hive-op-brood-explore" style="margin-left: 3px;">
+        <div *ngIf="eventToEdit?.type === 'hive'" id="brood-stage" class="hive-op-brood-explore" style="margin-left: 3px;">
           <button class="hives-obs-add event-brood-none" (click)="setBroodStage('none', 'apiary')"></button>  
           <button class="hives-obs-add event-brood-egg" (click)="setBroodStage('egg', 'apiary')"></button>
           <button class="hives-obs-add event-brood-larva" (click)="setBroodStage('larva', 'apiary')"></button>

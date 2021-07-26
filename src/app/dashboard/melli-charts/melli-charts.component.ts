@@ -57,6 +57,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { InspCatService } from '../service/api/insp-cat.service';
 import { InspCat } from '../../_model/inspCat';
+import { from } from 'rxjs';
+import { b } from '@angular/core/src/render3';
 
 const PREFIX_PATH = '/dashboard/explore/';
 
@@ -205,14 +207,37 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     );
     this.rucheService.hiveSubject.subscribe(
       () => { }, () => { }, () => {
-        let hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive._id === this.rucheService.getCurrentHive()._id)[0];
+        /*let hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive._id === this.rucheService.getCurrentHive()._id)[0];
         if (hiveSelect === undefined) {
           hiveSelect = this.rucheService.ruchesAllApiary.filter(_hive => _hive.apiaryId === this.rucherService.getCurrentApiary())[0];
         }
         this.melliChartHive.setHiveSelect(hiveSelect);
         this.stackService.addHive(hiveSelect);
+        console.log(this.rucheService.ruchesAllApiary);
+        console.log(this.rucherService.allApiaryAccount);*/
+        console.log(this.melliChartHive.getHiveSelect());
+        loopRuchers:
+        for(let i=0; i<this.rucherService.allApiaryAccount.length; i++){
+          let arr = [];
+          loopRcuhes:
+          for(let j=0; j<this.rucheService.ruchesAllApiary.length; j++){
+            if(this.rucheService.ruchesAllApiary[j].apiaryId === this.rucherService.allApiaryAccount[i]._id){
+              arr.push(this.rucheService.ruchesAllApiary[j]);
+            }
+          }
+          arr.sort(this.compare);
+          console.log( arr );
+          if(arr.length > 0){
+            let hiveSelect = arr[0];
+            this.melliChartHive.setHiveSelect(hiveSelect);
+            this.stackService.addHive(hiveSelect);
+            break loopRuchers;
+          }
+        }
       }
     );
+
+    
 
     let ua = navigator.userAgent;
 
@@ -247,6 +272,20 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         })
       }
     )   
+  }
+
+  compare(a, b) {
+
+    const apiA = a.name.toLowerCase();
+    const apiB = b.name.toLowerCase();
+
+    let comparison = 0;
+    if (apiA > apiB) {
+      comparison = 1;
+    } else if (apiA < apiB) {
+      comparison = -1;
+    }
+    return comparison;
   }
 
   notConstant(cat: InspCat): boolean{
@@ -514,6 +553,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    * @memberof MelliChartsComponent
    */
   selectHive(hive: RucheInterface, event: MouseEvent): void {
+    let length;
     switch (this.router.url) {
       case PREFIX_PATH + 'hive':
         this.melliChartHive.setHiveSelect(hive);
@@ -525,25 +565,28 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
         (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'normal';
         break;
       case PREFIX_PATH + 'brood':
-        this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
           this.broodComponent.removeHiveSerie(hive);
           (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'normal';
+          length = this.stackService.getHiveSelect().length;
+          this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[length - 1]);
         } else {
           this.stackService.addHive(hive);
           this.broodComponent.loadDataByHive(hive);
           if(this.checkAllHivesSelected(this.rucherService.getApiaryByApiaryId(hive.apiaryId))){
             (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'bold';
           }
+          this.melliChartHive.setHiveSelect(hive);
         }
         break;
       case PREFIX_PATH + 'stack':
-        this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
           this.stackComponent.removeHiveSerie(hive);
           (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'normal';
+          length = this.stackService.getHiveSelect().length;
+          this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[length - 1]);
         } else {
           this.stackService.addHive(hive);
           const t0 = performance.now();
@@ -552,34 +595,39 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           if(this.checkAllHivesSelected(this.rucherService.getApiaryByApiaryId(hive.apiaryId))){
             (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'bold';
           }
+          this.melliChartHive.setHiveSelect(hive);
         }
         break;
       case PREFIX_PATH + 'weight':
-        this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
           this.weightComponent.removeHiveSerie(hive);
           (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'normal';
+          length = this.stackService.getHiveSelect().length;
+        this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[length - 1]);
         } else {
           this.stackService.addHive(hive);
           this.weightComponent.loadDataByHive(hive);
           if(this.checkAllHivesSelected(this.rucherService.getApiaryByApiaryId(hive.apiaryId))){
             (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'bold';
           }
+          this.melliChartHive.setHiveSelect(hive);
         }
         break;
       case PREFIX_PATH + 'events':
-        this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[0]);
         if (this.stackService.ifActiveAlreadySelected(hive)) {
           this.stackService.removeHive(hive);
           this.eventsComponent.removeHive(hive);
           (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'normal';
+          length = this.stackService.getHiveSelect().length;
+          this.melliChartHive.setHiveSelect(this.stackService.getHiveSelect()[length - 1]);
         } else {
           this.stackService.addHive(hive);
           this.eventsComponent.loadHive(hive);
           if(this.checkAllHivesSelected(this.rucherService.getApiaryByApiaryId(hive.apiaryId))){
             (<HTMLSpanElement>document.getElementById(hive.apiaryId + '_span')).style.fontWeight = 'bold';
           }
+          this.melliChartHive.setHiveSelect(hive);
         }
         break;
     }
@@ -627,11 +675,9 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       return;
     }
     let hivesToDelete = [...this.rucheService.getHivesIdsByApiaryId(rucher._id)];
-    console.log(hivesToDelete);
     hivesToDelete.splice(0, 1);
     span.style.fontWeight = 'normal';
     hivesToDelete.forEach(hiveId => {
-      console.log(hiveId);
       let hive = this.rucheService.getHiveById(hiveId);
       switch(this.router.url){
         case PREFIX_PATH + 'hive':

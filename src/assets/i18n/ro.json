@@ -170,7 +170,7 @@
             "NAME": "Nume",
             "BROOD": "Puiet",
             "WEIGHT": "Greutate",
-            "SENSORS": "Dispozitiv",
+            "SENSORS": "Senzori",
             "APIARY": "Stupină"
         },
         "POPUP_NEW_USER": {
@@ -184,7 +184,7 @@
     "HIVES": {
         "HIVES": "Stupi",
         "HIVE": "Stup",
-        "SENSOR": "Dispozitiv",
+        "SENSOR": "Senzori",
         "FORM": {
             "NEW": "Stup nou",
             "EDIT": "Salvați",
@@ -623,7 +623,7 @@
       "RAIN_DESC": "Declanșata atunci când precipitațiile depășesc pragul ales în ziua următoare.",
       "SWARM": "Roit",
       "SWARM_DESC": "Declanșata când exista riscul unui potențial roit (Hub oferă mai multă eficiență).",
-      "DCONNECT": "Deconectarea dispozitivului",
+      "DCONNECT": "Deconectarea Senzoriului",
       "DCONNECT_DESC": "Declanșata atunci când unul dintre senzori nu mai transmite date în fiecare perioadă aleasă. Funcționează numai cu un Hub.",
       "TMAX": "Temperatură internă ridicată",
       "TMAX_DESC": "Declanșata atunci când temperatura internă depășește pragul ales.",
@@ -655,11 +655,11 @@
       "HMAX_DESC": "Declanșata atunci când umiditatea internă depășește pragul ales.",
       "FURAT": "Stup furat",
       "STOLEN_DESC": "Declanșata atunci când greutatea stupului devine anormal de scăzută.",
-      "DCONNECTT": "Deconectarea dispozitivului",
+      "DCONNECTT": "Deconectarea Senzoriului",
       "DCONNECTT_DESC": "Declanșata când senzorul T nu mai transmite date în ultima zi.",
-      "DCONNECTW": "Deconectarea dispozitivului",
+      "DCONNECTW": "Deconectarea Senzoriului",
       "DCONNECTW_DESC": "Declanșata atunci când senzorul dvs. W nu mai transmite date în ultima zi.",
-      "DCONNECTH": "Deconectarea dispozitivului",
+      "DCONNECTH": "Deconectarea Senzoriului",
       "DCONNECTH_DESC": "Declanșata când Hub-ul dvs. nu mai transmite date în ultima zi.",
       "POORSIGNALW": "Semnal slab",
       "POORSIGNALW_DESC": "Declanșata atunci când senzorul dvs. W transmite date puține în ultima zi.",

@@ -598,7 +598,9 @@
         "BTN_DL":"Descargar",
         "GEN_DL":"Creación en progreso : ",
         "READY_DL":"Archivo está listo para descargarse !",
-        "BTN_CANCEL":"Anular"
+        "BTN_CANCEL":"Anular",
+        "SAVE_TEXT":["¿Quieres guardar esta inspección?",
+            "No es posible editar esta inspección excepto editando colmenas y colmenares eventos por separado."]
       },
       "TABLE":{
         "BEES":"Abejas",

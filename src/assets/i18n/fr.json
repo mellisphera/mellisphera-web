@@ -598,7 +598,9 @@
         "BTN_DL":"Télécharger",
         "GEN_DL":"Génération en cours : ",
         "READY_DL":"Votre fichier est pret a etre téléchargé !",
-        "BTN_CANCEL":"Annuler"
+        "BTN_CANCEL":"Annuler",
+        "SAVE_TEXT":["Voulez vous sauvegarder cette inspection?",
+            "Il n’y a pas de réédition possible de l’inspection sauf en reprenant séparément les elements de chaque ruche ou rucher"]
       },
       "TABLE":{
           "BEES":"Abeilles",

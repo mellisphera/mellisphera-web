@@ -469,8 +469,16 @@ export class InspectNewComponent implements OnInit {
            (insp.todo === '' || insp.todo == null || insp.todo == undefined);
   }
 
+  openSaveModal(){
+
+  }
+
   saveInspection(): void{
+
     if(this.inspect_date != null || this.inspect_date != undefined){
+      (<HTMLElement>document.getElementById("btn-save-icon")).style.display ="block";
+      (<HTMLElement>document.getElementById("btn-save-text")).style.display ="none";
+      (<HTMLButtonElement>document.getElementById("btn-save")).disabled = true;
       let inspHivesToPush = [...this.hive_insps];
       let i = 0;
       while(i < inspHivesToPush.length){
@@ -503,11 +511,15 @@ export class InspectNewComponent implements OnInit {
         () => {},
         () => {
           console.log(inspHivesToPush);
+          $("#saveModal").modal("hide");
           if(this.translateService.currentLang === 'fr') {
             this.notifyService.notify('success', "Votre inspection a été enregistrée");
           } else {
             this.notifyService.notify('success', 'Your inspection has been saved');
           }
+          (<HTMLElement>document.getElementById("btn-save-icon")).style.display ="none";
+          (<HTMLElement>document.getElementById("btn-save-text")).style.display ="block";
+          (<HTMLButtonElement>document.getElementById("btn-save")).disabled = false;
         }
       )
     }

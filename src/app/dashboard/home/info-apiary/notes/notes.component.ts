@@ -634,7 +634,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
 
     }
 
-    (<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.remove('brood-none-active');
+    /*(<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.remove('brood-none-active');
     (<HTMLButtonElement>document.getElementsByClassName('brood-egg')[1]).classList.remove('brood-egg-active');
     (<HTMLButtonElement>document.getElementsByClassName('brood-larva')[1]).classList.remove('brood-larva-active');
     (<HTMLButtonElement>document.getElementsByClassName('brood-pupa')[1]).classList.remove('brood-pupa-active');
@@ -655,7 +655,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     }
     if(this.new_event.obs.findIndex(_o => _o.name === 'Drone') !== -1){
       (<HTMLButtonElement>document.getElementsByClassName('brood-drone')[1]).classList.add('brood-drone-active');
-    }
+    }*/
   }
 
   updateRow(i: number){

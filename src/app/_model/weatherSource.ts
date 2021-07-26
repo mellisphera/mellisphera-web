@@ -1,6 +1,7 @@
 import { WeatherConfig } from './weatherConfig';
 
 export interface WeatherSource{
+    _id: string,
     apiaryId: string,
     apiaryName: string,
     userId: string,

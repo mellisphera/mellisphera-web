@@ -15,6 +15,7 @@ import { CapteurInterface } from '../../../_model/capteur';
 export class WeatherConfigComponent implements OnInit {
 
   public wS: WeatherSource = {
+    _id: null,
     apiaryId: null,
     apiaryName: null,
     userId: null,

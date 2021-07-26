@@ -837,117 +837,118 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
 
   editBroodStage(stage: string, entity: string, hive?: RucheInterface): void{
     let button, index, inspIndex;
+    
     if(entity === 'hive'){
       switch(stage){
         case 'egg':
-          if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.contains('hive-brood-none-active')){
-            (<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.remove('hive-brood-none-active');
+          if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.contains('brood-none-active')){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.remove('brood-none-active');
             index = this.new_event.obs.findIndex(_o => _o.name === 'Nonebrood');
             this.new_event.obs.splice(index, 1);
           }
           button = <HTMLButtonElement>document.getElementsByClassName('brood-egg')[1];
-          if(!button.classList.contains('hive-brood-egg-active')){
-            button.classList.add('hive-brood-egg-active');
+          if(!button.classList.contains('brood-egg-active')){
+            button.classList.add('brood-egg-active');
             this.new_event.obs.push({name:'Egg', img:'egg_cb.svg'});
           }
           else{
-            button.classList.remove('hive-brood-egg-active');
+            button.classList.remove('brood-egg-active');
             let index = this.new_event.obs.findIndex(_o => _o.name === 'Egg')
             this.new_event.obs.splice(index, 1);
           }
 
           break;
         case 'larva':
-          if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.contains('hive-brood-none-active')){
-            (<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.remove('hive-brood-none-active');
+          if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.contains('brood-none-active')){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.remove('brood-none-active');
             index = this.new_event.obs.findIndex(_o => _o.name === 'Nonebrood');
             this.new_event.obs.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName('brood-larva')[1];
-          if(!button.classList.contains('hive-brood-larva-active')){
-            button.classList.add('hive-brood-larva-active');
+          if(!button.classList.contains('brood-larva-active')){
+            button.classList.add('brood-larva-active');
             this.new_event.obs.push({name:'Larva', img:'larva_cb.svg'});
           }
           else{
-            button.classList.remove('hive-brood-larva-active');
+            button.classList.remove('brood-larva-active');
             let index = this.new_event.obs.findIndex(_o => _o.name === 'Larva')
             this.new_event.obs.splice(index, 1);
           }
           break;
         case 'pupa':
-          if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.contains('hive-brood-none-active')){
-            (<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.remove('hive-brood-none-active');
+          if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.contains('brood-none-active')){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.remove('brood-none-active');
             index = this.new_event.obs.findIndex(_o => _o.name === 'Nonebrood');
             this.new_event.obs.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName('brood-pupa')[1];
-          if(!button.classList.contains('hive-brood-pupa-active')){
-            button.classList.add('hive-brood-pupa-active');
+          if(!button.classList.contains('brood-pupa-active')){
+            button.classList.add('brood-pupa-active');
             this.new_event.obs.push({name:'Pupa', img:'pupa_cb.svg'});
             console.log(this.new_event.obs);
           }
           else{
-            button.classList.remove('hive-brood-pupa-active');
+            button.classList.remove('brood-pupa-active');
             let index = this.new_event.obs.findIndex(_o => _o.name === 'Pupa')
             this.new_event.obs.splice(index, 1);
           }
           break;
         case 'drone':
-          if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.contains('hive-brood-none-active')){
-            (<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.remove('hive-brood-none-active');
+          if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.contains('brood-none-active')){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.remove('brood-none-active');
             index = this.new_event.obs.findIndex(_o => _o.name === 'Nonebrood');
             this.new_event.obs.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName('brood-drone')[1];
-          if(!button.classList.contains('hive-brood-drone-active')){
-            button.classList.add('hive-brood-drone-active');
+          if(!button.classList.contains('brood-drone-active')){
+            button.classList.add('brood-drone-active');
             this.new_event.obs.push({name:'Drone', img:'drone_cb.svg'});
             console.log(this.new_event.obs);
           }
           else{
-            button.classList.remove('hive-brood-drone-active');
+            button.classList.remove('brood-drone-active');
             let index = this.new_event.obs.findIndex(_o => _o.name === 'Drone')
             this.new_event.obs.splice(index, 1);
           }
           break;
         case 'none':
-          if(<HTMLButtonElement>document.getElementsByClassName('hive-brood-egg-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('hive-brood-egg-active')[0]).classList.remove('hive-brood-egg-active');
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0]).classList.remove('brood-egg-active');
             index = this.new_event.obs.findIndex(_o => _o.name === 'Egg');
             this.new_event.obs.splice(index, 1);
           }
-          if(<HTMLButtonElement>document.getElementsByClassName('hive-brood-larva-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('hive-brood-larva-active')[0]).classList.remove('hive-brood-larva-active');
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0]).classList.remove('brood-larva-active');
             index = this.new_event.obs.findIndex(_o => _o.name === 'Larva');
             this.new_event.obs.splice(index, 1);
           }
-          if(<HTMLButtonElement>document.getElementsByClassName('hive-brood-pupa-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('hive-brood-pupa-active')[0]).classList.remove('hive-brood-pupa-active');
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0]).classList.remove('brood-pupa-active');
             index = this.new_event.obs.findIndex(_o => _o.name === 'Pupa');
             this.new_event.obs.splice(index, 1);
           }
-          if(<HTMLButtonElement>document.getElementsByClassName('hive-brood-drone-active')[0] != null){
-            (<HTMLButtonElement>document.getElementsByClassName('hive-brood-drone-active')[0]).classList.remove('hive-brood-drone-active');
+          if(<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0] != null){
+            (<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0]).classList.remove('brood-drone-active');
             index = this.new_event.obs.findIndex(_o => _o.name === 'Drone');
             this.new_event.obs.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName('brood-none')[1];
-          if(!button.classList.contains('hive-brood-none-active')){
-            button.classList.add('hive-brood-none-active');
+          if(!button.classList.contains('brood-none-active')){
+            button.classList.add('brood-none-active');
             this.new_event.obs.push({name:'Nonebrood', img:'nobrood_cb.svg'});
-            console.log(this.new_event.obs);
           }
           else{
-            button.classList.remove('hive-brood-none-active');
+            button.classList.remove('brood-none-active');
             let index = this.new_event.obs.findIndex(_o => _o.name === 'Nonebrood')
             this.new_event.obs.splice(index, 1);
           }
           break;
       }
+      console.log( this.new_event.obs );
       return;
     }
   }
