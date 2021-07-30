@@ -27,8 +27,16 @@ export class WeatherSrcsService {
     return this.http.get<WeatherSource[]>(CONFIG.URL + 'weathersrcs/userId/' + userId, httpOptions)
   }
 
+  requestUserWeatherSrcsWithDateBetween(userId: string, range: Date[]):Observable<WeatherSource[]>{
+    return this.http.post<WeatherSource[]>(CONFIG.URL + 'weathersrcs/userId/between/' + userId, range, httpOptions)
+  }
+
   requestApiaryWeatherSrcs(apiaryId: string):Observable<WeatherSource[]>{
     return this.http.get<WeatherSource[]>(CONFIG.URL + 'weathersrcs/apiaryId/' + apiaryId, httpOptions)
+  }
+
+  requestApiaryWeatherSrcsWithDateBetween(apiaryId: string, range: Date[]):Observable<WeatherSource[]>{
+    return this.http.post<WeatherSource[]>(CONFIG.URL + 'weathersrcs/apiaryId/between/' + apiaryId, range, httpOptions)
   }
 
   getUserWeatherSrcs(): WeatherSource[]{
@@ -47,7 +55,7 @@ export class WeatherSrcsService {
     return this.http.put<WeatherSource>(CONFIG.URL + 'weathersrcs/update', ws, httpOptions);
   }
 
-  delete(wsId: string): void{
-    this.http.delete<void>(CONFIG.URL + 'weathersrcs/delete/' + wsId, httpOptions);
+  delete(wsId: string): Observable<String[]> {
+    return this.http.post<String[]>(CONFIG.URL + 'weathersrcs/delete', [wsId], httpOptions);
   }
 }

@@ -7,8 +7,8 @@
           <th class="apiary-sort" style="padding: 5px;" (click)="changeSortApiary()">{{'INSPECT.HISTORY.TABLE.APIARY' | translate}}</th>
           <th class="date-sort" style="padding: 5px;" (click)="changeSortDate()">{{'INSPECT.HISTORY.TABLE.DATE' | translate}}</th>
           <th style="padding: 5px;">{{'INSPECT.HISTORY.TABLE.HEALTH' | translate}}</th>
-          <th style="padding: 5px;">{{'INSPECT.HISTORY.TABLE.DESC' | translate}}</th>
-          <th style="padding: 5px;">{{'INSPECT.HISTORY.TABLE.TODO' | translate}}</th>
+          <th style="padding: 5px;text-align: left;">{{'INSPECT.HISTORY.TABLE.DESC' | translate}}</th>
+          <th style="padding: 5px;text-align: left;">{{'INSPECT.HISTORY.TABLE.TODO' | translate}}</th>
         </tr>
       </thead>
       <tbody>
@@ -21,5 +21,16 @@
         </tr>
       </tbody>
     </table>
+    <div>
+      <popover-content #weightCalendarTooltip placement="left" [animation]="true"
+          [closeOnClickOutside]="false">
+          <span class="helpTooltip">
+              <span *ngFor="let line of 'INSPECT.HELP.HISTORY' | translate">{{ line }}<br /></span>
+          </span>
+      </popover-content>
+      <div [popover]="weightCalendarTooltip" style="font-size: 18px !important;width: 36px; float: right; margin-right: 5px;">
+          <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+      </div>
+    </div>
   </div>
 </div>

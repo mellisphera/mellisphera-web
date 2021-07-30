@@ -2,37 +2,50 @@
   <table class="table" id="weather-table">
     <thead>
       <tr>
-        <th scope="col">Rucher</th>
-        <th scope="col">Source</th>
-        <th scope="col">Debut</th>
-        <th scope="col">Fin</th>
-        <th scope="col">Editer</th>
-        <th scope="col">Effacer</th>
+        <th scope="col">{{ 'WEATHER.CONFIG.APIARY' | translate }}</th>
+        <th scope="col">{{ 'WEATHER.CONFIG.SOURCE' | translate }}</th>
+        <th scope="col">{{ 'WEATHER.CONFIG.BEGIN' | translate }}</th>
+        <th scope="col">{{ 'WEATHER.CONFIG.END' | translate }}</th>
+        <th scope="col">{{ 'WEATHER.CONFIG.EDIT' | translate }}</th>
+        <th scope="col">{{ 'WEATHER.CONFIG.DELETE' | translate }}</th>
+        <th style="display: none;"></th>
       </tr>  
     </thead>
     <tbody>
-      <tr>
-        <td>Gelos</td>
-        <td>WeatherSource</td>
-        <td>01-01-2020</td>
-        <td>Actuel</td>
-        <td class="td-edit"><i class="fas fa-pen"></i></td>
-        <td class="td-del"><i class="fas fa-trash"></i></td>
+      <tr *ngFor="let w_srcs of weatherSrcsByApiary;">
+        <td>{{ w_srcs.apiaryName }}</td>
+        <td>{{ w_srcs.source }}</td>
+        <td>{{ unitService.getHourlyDate(w_srcs.begin) }}</td>
+        <td>{{ w_srcs.end ? unitService.getHourlyDate(w_srcs.end) : 'WEATHER.CONFIG.ACTUAL' | translate }}</td>
+        <td class="td-edit" data-toggle="modal" data-target="#newSourceModal"(click)="editSource(w_srcs._id)"><i class="fas fa-pen"></i></td>
+        <td class="td-del" data-toggle="modal" data-target="#deleteSourceModal"(click)="openDeleteModal(w_srcs)"><i class="fas fa-trash"></i></td>
+        <td style="display: none;">{{ w_srcs._id }}</td>
       </tr>
-      <tr class="tr-add" data-toggle="modal" data-target="#newSourceModal">
+      <tr class="tr-add" data-toggle="modal" data-target="#newSourceModal" (click)="reset()">
         <td colspan="6">
           <i class="fas fa-plus-circle td-more" style="font-size: 18px; color:green; margin-right: 20px;"></i>
-          <span>Ajouter une nouvelle source</span> 
+          <span>{{ 'WEATHER.CONFIG.ADD_NEW_SOURCE' | translate }}</span> 
         </td>
       </tr>
     </tbody>
   </table>
+  <div>
+    <popover-content #weightCalendarTooltip placement="left" [animation]="true"
+        [closeOnClickOutside]="false">
+        <span class="helpTooltip">
+            <span>{{ 'WEATHER.HELP.CONFIG' | translate }}<br /></span>
+        </span>
+    </popover-content>
+    <div [popover]="weightCalendarTooltip" style="font-size: 18px !important;width: 36px; float: right; margin-right: 5px;">
+        <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+    </div>
+  </div>
 
   <div class="modal fade" id="newSourceModal" tabindex="-1" role="dialog" aria-labelledby="newSourceModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" id="modal-small">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="newSourceModalLabel" style="float:left;">Nouvelle Source</h4>
+          <h4 class="modal-title" id="newSourceModalLabel" style="float:left;"></h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right;">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -40,62 +53,94 @@
         <div class="modal-body">
           <div> 
             <span class="weather-modal-flex">
-              <p class="weather-field-name">Rucher :</p> <p style="margin-left: 10px; font-style: italic;">{{ w_o_service.getApiaryConfig()?.name }}</p>
+              <p>{{ w_o_service.getApiaryConfig()?.name }}</p>
             </span>
           </div>
           <div class="weather-modal-flex">
-            <p class="weather-field-name">Type station :</p>
             <select id="sources-select" class="weather-select" (change)="onSourceChange()">
+              <option disabled selected >{{ 'WEATHER.CONFIG.CHOOSE_SOURCE' | translate }}</option>
               <option value="Station Davis">Station Davis</option>
-              <option value="WSTH">WSTH</option>
+              <option value="TH">TH</option>
               <option value="T2">T2</option>
-              <option value="Scale">Balance</option>
-              <option selected value="WeatherSource">WeatherSource</option>
+              <option value="Scale">{{ 'WEATHER.CONFIG.SCALE' | translate }}</option>
+              <option value="WeatherSource">WeatherSource</option>
             </select>
           </div>
           <div class="weather-modal-flex" *ngIf="!(wS.source === 'WeatherSource')">
-            <p class="weather-field-name">Configuration :</p>
-            <div *ngIf="wS.source === 'WSTH' || wS.source === 'Scale' || wS.source === 'T2'" class="weather-config weather-modal-flex">
-              <p style="margin-left: 10px;">ID capteur :</p>
+            <div style="margin-top: 10px;" *ngIf="wS.source === 'TH' || wS.source === 'Scale' || wS.source === 'T2'" class="weather-config weather-modal-flex">
               <select id="sensors-select" class="weather-select" >
+                <option disabled selected>{{ 'WEATHER.CONFIG.ID_SENSOR' | translate }}</option>
                 <option *ngFor="let sensor of captByType" value="{{sensor.sensorRef}}">{{sensor.sensorRef}}</option>
               </select>
             </div>
             <div *ngIf="wS.source === 'Station Davis'" class="weather-config">
               <div>
-                <p class="weather-config-p">ID Station :</p>
-                <input type="text" class="weather-input">
+                <input style="margin-top: 10px;" type="text" class="weather-input" placeholder="{{ 'WEATHER.CONFIG.ID_STATION' | translate }}">
               </div>
               <div>
-                <p class="weather-config-p" style="margin-top: 10px;">Clé API :</p>
-                <input type="text" class="weather-input">
+                <input style="margin-top: 10px;" type="text" class="weather-input" placeholder="{{ 'WEATHER.CONFIG.API_KEY' | translate }}">
               </div>
               <div>
-                <p class="weather-config-p" style="margin-top: 10px;">API Secret :</p>
-                <input type="text" class="weather-input">
+                <input style="margin-top: 10px;" type="text" class="weather-input" placeholder="{{ 'WEATHER.CONFIG.API_SECRET' | translate }}">
               </div>
             </div>
           </div>
-          <div class="weather-modal-flex">
+          <div class="weather-modal-flex" style="margin-top: 10px;">
             <div class="weather-modal-flex" style="flex-wrap: wrap;">
-              <p class="weather-field-name">Date Debut :</p>
-              <!--<p class="weather-field-name">Date Fin :</p>-->
+              <p class="weather-field-name">{{ 'WEATHER.CONFIG.BEGIN' | translate }} :</p>
             </div>
             <div class="weather-modal-flex" style="flex-wrap: wrap;">
               <input type="text" class="weather-input-date" style="margin-left: 10px;" [(ngModel)]="wS.begin" [owlDateTimeTrigger]="dtBegin" [owlDateTime]="dtBegin" (ngModelChange)="beginDate()">
               <owl-date-time [pickerType]="'calendar'" #dtBegin></owl-date-time>
               <input id="w-begin-h" type="number" (change)="beginHours()"
-                 class="weather-m-h" placeholder="h" style="text-align:center; font-style:italic;">
+                 class="weather-m-h" placeholder="h" style="text-align:center;">
               :
               <input id="w-begin-m" type="number" (change)="beginMinutes()"
-                class="weather-m-h" placeholder="m" style="text-align: center; font-style:italic;">
-              <!--<input type="text" class="weather-input-date" style="margin-left: 10px;">-->
+                class="weather-m-h" placeholder="m" style="text-align: center;">
+            </div>
+          </div>
+          <div id="end-div" class="weather-modal-flex" style="margin-top: 10px;">
+            <div class="weather-modal-flex" style="flex-wrap: wrap;">
+              <input id="end-checkbox" type="checkbox" (change)="endCheckbox()" style="margin: 0" checked>
+              <p id="end-field" class="weather-field-name" style="margin-left: 7px;color:#ccc">{{ 'WEATHER.CONFIG.END' | translate }} :</p>
+            </div>
+            <div class="weather-modal-flex" style="flex-wrap: wrap;">
+              <input type="text" id="end-date" class="weather-input-date" style="margin-left: 10px;" [(ngModel)]="wS.end" [owlDateTimeTrigger]="dtEnd" [owlDateTime]="dtEnd" (ngModelChange)="endDate()">
+              <owl-date-time [pickerType]="'calendar'" #dtEnd></owl-date-time>
+              <input id="w-end-h" type="number" (change)="endHours()"
+                 class="weather-m-h" placeholder="h" style="text-align:center;">
+              :
+              <input id="w-end-m" type="number" (change)="endMinutes()"
+                class="weather-m-h" placeholder="m" style="text-align: center;">
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-          <button type="button" class="btn btn-success">Sauvegarder</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'WEATHER.CONFIG.BTN_CANCEL' | translate }}</button>
+          <button type="button" class="btn btn-success" (click)="saveSource()"><i id="source-save-icon" style="display: none;" class="fa fa-spinner fa-spin"></i><span id="source-save-text">{{ 'WEATHER.CONFIG.BTN_ADD' | translate }}</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Delete Source Modal-->
+  <div class="modal fade" id="deleteSourceModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" id="modal-small">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="newSourceModalLabel" style="float:left;">{{ 'WEATHER.CONFIG.DELETE_SOURCE' | translate }}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{ 'WEATHER.CONFIG.DELETE_TEXT' | translate }}
+        </div>
+        <div class="modal-footer">
+          <div class="add-event-buttons">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'WEATHER.CONFIG.BTN_CANCEL' | translate }}</button>
+            <button type="button" class="btn btn-success" (click)="deleteSource()"><i id="source-del-icon" style="display: none;" class="fa fa-spinner fa-spin"></i><span id="source-del-text">{{ 'WEATHER.CONFIG.BTN_DEL' | translate }}</span></button>
+          </div>
         </div>
       </div>
     </div>

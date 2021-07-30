@@ -617,7 +617,24 @@
               "TODO":"Taches"
           }
       },
-      "PARAMS":{}
+      "PARAMS":{
+          "ICON":"Icone",
+          "DESC":"Libellé",
+          "SEASON":"Saisons",
+          "ACTIVE":"Actif"
+      },
+      "HELP":{
+          "NEW":["Ici vous pouvez realiser une inspection. Celle ci se realise en 2 parties:",
+                "- La partie du rucher permet de relevé un etat global du rucher",
+                "- La partie des ruches permet d'evaluer chacune des ruches de votre rucher",
+                "",
+                "L'inspection doit etre saisie sur l'interface mais une version pdf est disponible pour les apiculteurs qui ne veulent pas amener leur tablette ou téléphone au rucher",
+                "Le format PDF ne contient pas toutes les icones de l'interface."],
+          "HISTORY":["Ici se trouve un historique de vos inspections avec l'etat général, les notes et les taches du rucher" ],
+          "PARAMS":["Ici se trouve la liste des icones que vous trouverez dans l'ecran de nouvelle inspection, ainsi que leur description, les saisons pour lesquelles l'icone est affiché et un bouton d'activation/desactivation.",
+                    "Vous pouvez editer les saisons auxquelles s'applique l'icone en cliquant sur les icones de saisons.",
+                    "Vous pouvez également decider de desactiver ou reactiver certaines icones."]
+      }
     },
     "ALERTS_DESC":{
         "HONEYDEW":"Miellée",
@@ -796,7 +813,8 @@
         "DRONEBROOD":"Présence de couvain de male",
         "DRONES":"Présence de males",
         "BUZZINGHIVE":"Bourdonneuse",
-        "MOSAICBROOD":"Mosaique couvain"
+        "MOSAICBROOD":"Mosaique couvain",
+        "QUEENCELLSEEN":"Présence de cellules royales"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
@@ -956,8 +974,38 @@
             "TEMP_LEFT":"36%",
             "WIND":"Vent",
             "WIND_LEFT":"40%",
-            "RAIN":"Humidité",
-            "RAIN_LEFT":"38%"
+            "RAIN":"Pluie",
+            "RAIN_LEFT":"40%",
+            "HUMI":"Humidité",
+            "HUMI_LEFT":"38%"
+        },
+        "CONFIG":{
+            "APIARY":"Rucher",
+            "SOURCE":"Source",
+            "BEGIN":"Debut",
+            "END":"Fin",
+            "ACTUAL":"Actuel",
+            "EDIT":"Editer",
+            "DELETE":"Effacer",
+            "ADD_NEW_SOURCE":"Ajouter une nouvelle source",
+            "NEW_SOURCE":"Nouvelle source",
+            "EDIT_SOURCE":"Editer source",
+            "DELETE_SOURCE":"Supprimer source",
+            "CHOOSE_SOURCE":"Choix source",
+            "SCALE":"Balance",
+            "ID_SENSOR":"ID Capteur",
+            "ID_STATION":"ID Station",
+            "API_KEY":"Clé API",
+            "API_SECRET":"API Secret",
+            "DELETE_TEXT":"Etes-vous sur de vouloir supprimer la source météo ?",
+            "BTN_CANCEL":"Annuler",
+            "BTN_ADD":"Enregistrer",
+            "BTN_EDIT":"Sauvegarder",
+            "BTN_DEL":"Supprimer"
+        },
+        "HELP":{
+            "RECORDS":"",
+            "CONFIG":""
         }
     }
 }

@@ -79,12 +79,12 @@
   <div class="row nopadding">
     <div class="apiaryGroup">
       <div id="main-menu" class="list-group">
-        <ng-container *ngFor="let apiary of user_apiaries let i = index;">
+        <ng-container *ngFor="let apiary of w_o_service.user_apiaries; let i = index;">
           <div [id]="apiary._id" style="display: flex; align-items: center;padding-right: 4px;padding-left: 6px;" data-parent="#main-menu"
             [class]="'list-group-item apiary ' + checkApiaryIfActive(apiary._id)" (click)="apiaryClick(apiary)">
             <a class="list-group-hive-item" style="display: flex;">
               <i class="circle" [style.background-color]="getColor(apiary)"></i>
-              <span style="width: 135px;" class="apiary-group-title dropleft" [id]="apiary._id + '_span'">{{ apiary.name }}</span>
+              <span style="width:auto;" class="apiary-group-title dropleft" [id]="apiary._id + '_span'">{{ apiary.name }}</span>
             </a>
             
           </div>

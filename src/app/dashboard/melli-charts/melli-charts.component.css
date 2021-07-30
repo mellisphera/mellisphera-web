@@ -288,6 +288,7 @@ nav[role=admin-navigation] {
 #filtersMenu{
   background-color: white;
   width: 200px;
+  left: unset;
 }
 
 #filtersMenu > div{
@@ -361,7 +362,7 @@ nav[role=admin-navigation] {
 
 .filters-events-display{
   display: grid;
-  grid: repeat(4, 40px) / auto-flow 46px;
+  grid: repeat(4, 45px) / auto-flow 46px;
   color: transparent;
   margin-top: 10px;
 }

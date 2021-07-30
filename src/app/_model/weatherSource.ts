@@ -9,5 +9,5 @@ export interface WeatherSource{
     begin: Date,
     end: Date,
     source: string,
-    config: WeatherConfig
+    config: WeatherConfig,
 }

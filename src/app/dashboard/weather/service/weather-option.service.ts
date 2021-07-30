@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserloggedService } from '../../../userlogged.service';
 import { RucherModel } from '../../../_model/rucher-model';
+import { RucherService } from '../../service/api/rucher.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,28 @@ export class WeatherOptionService {
   private apiariesSelected: RucherModel[] = [];
   public recordsChartInstance: any;
 
-  constructor() { }
+  public user_apiaries: RucherModel[] = [];
+
+  constructor(private rucherService: RucherService, private userService: UserloggedService) {
+    this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
+      _apiaries => {
+        this.user_apiaries = [..._apiaries].sort(this.compare);
+        this.addApiary(this.user_apiaries[0]);
+      },
+      () => {},
+      () => {}
+    );
+  }
+
+  compare( a:RucherModel, b:RucherModel ) {
+    if ( a.name < b.name ){
+      return -1;
+    }
+    if ( a.name > b.name ){
+      return 1;
+    }
+    return 0;
+  }
 
   getApiaryConfig(): RucherModel{
     return this.apiaryConfig;

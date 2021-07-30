@@ -215,7 +215,6 @@ export class EventsComponent implements OnInit {
     });
     Observable.forkJoin(obsInsp.map(_elt => _elt.obs)).subscribe(
       insps_events => {
-        console.log(insps_events);
         insps_events.forEach(_elt => {
           _elt.forEach((_insp,i) => {
             this.tbody.appendChild( this.createRowInsp(_insp) );
@@ -227,6 +226,7 @@ export class EventsComponent implements OnInit {
       () => {
         Observable.forkJoin(obsAlert.map(_elt => _elt.obs)).subscribe(
           alerts => {
+            console.log(alerts);
             alerts.forEach(_elt => {
               _elt.forEach((_alert,i) => {
                 this.tbody.appendChild( this.createRowAlert(_alert) );
@@ -273,6 +273,7 @@ export class EventsComponent implements OnInit {
     );
     this.alertService.getAlertsByFilters(hive.apiaryId, [hive._id], this.melliDate.getRangeForReqest(), this.melliFilters.getPictosArrayFilter(), locations).subscribe(
       _alerts => {
+        console.log(_alerts);
         if(this.apiaryLoaded(hive.apiaryId) && this.melliFilters.getFilters().alert){
           let alts = _alerts.filter( _alt => _alt.hiveId != null);
           alts.forEach((_alt,i) => {

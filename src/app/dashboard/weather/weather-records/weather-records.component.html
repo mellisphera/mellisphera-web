@@ -1,4 +1,15 @@
 <section (window:resize)="onResize($event)">
   <div id="graph-weather"></div>
+  <div>
+    <popover-content #weightCalendarTooltip placement="left" [animation]="true"
+        [closeOnClickOutside]="false">
+        <span class="helpTooltip">
+            <span>{{ 'WEATHER.HELP.RECORDS' | translate }}<br /></span>
+        </span>
+    </popover-content>
+    <div [popover]="weightCalendarTooltip" style="font-size: 18px !important;width: 36px; float: right; margin-right: 5px;">
+        <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+    </div>
+  </div>
 </section>
 

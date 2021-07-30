@@ -177,8 +177,8 @@ nav[role=admin-navigation] {
 
 #content{
     position: relative !important;
-    left: 16% !important;
-    width: calc(100% - 16%);
+    left: 19% !important;
+    width: calc(100% - 19%);
 }
 
 .apiary-active{
@@ -203,15 +203,52 @@ nav[role=admin-navigation] {
     margin-top: 2px;
 }
 
+@media screen and (max-width:1300px) {
+    .apiary-group-weather-records,
+    .apiary-group-weather-config{
+      width: 17%;
+    }
+}
+@media screen and (max-width:1200px) {
+
+    .apiary-group-weather-records,
+    .apiary-group-weather-config{
+      width: 19%;
+    } 
+
+}
+
 @media screen and (max-width:1000px){
-  .navbar-nav {
-      display: flex !important;
-  }
-  .buttonLeft{
-      justify-content: space-around;
-      width: 100%;
-  }
-  .navbar-nav{
-      margin: 0px !important;
-  }
+
+    #content{
+        position: relative;
+        left: auto !important;
+        width: 100% !important;
+      }
+
+    .apiary-group-weather-records,
+    .apiary-group-weather-config{
+        position: relative !important;
+        height: auto;
+        width: 100%;
+    }
+
+    .navbar{
+        height: 100px;
+    }
+
+    .navbar-nav {
+        display: flex !important;
+    }
+    .buttonLeft{
+        justify-content: space-around;
+        width: 100%;
+    }
+    .navbar-nav{
+        margin: 0px !important;
+    }
+    .nav-date{
+        /* justify-content: end; */
+        width: 100%;
+    }
 }

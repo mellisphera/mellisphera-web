@@ -14,7 +14,7 @@ import { UnitService } from '../service/unit.service';
 import { WeatherService } from '../service/api/weather.service';
 
 const PREFIX_PATH = '/dashboard/weather/';
-const colors: string[] = ['rgb(20,150,255)', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta', 'brown', 'grey'];
+const colors: string[] = ['rgb(20,150,255)', 'green', 'red', 'purple', 'orange', 'cyan', 'magenta', 'brown', 'grey'];
 
 @Component({
   selector: 'app-weather',
@@ -39,9 +39,8 @@ export class WeatherComponent implements OnInit {
     private renderer: Renderer2,
     private translateService: TranslateService,
     private unitService: UnitService
-  ) { }
-
-  ngOnInit() {
+  ) {
+    /*console.log('weather constructor')
     this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
       _apiaries => {
         this.user_apiaries = [..._apiaries].sort(this.compare);
@@ -49,8 +48,13 @@ export class WeatherComponent implements OnInit {
       () => {},
       () => {
         this.w_o_service.addApiary(this.user_apiaries[0]);
+        console.log('weather constructor')
       }
-    );
+    );*/
+   }
+
+  ngOnInit() {
+    
   }
 
   ngAfterViewInit(): void{
@@ -230,7 +234,7 @@ export class WeatherComponent implements OnInit {
     switch(this.router.url){
       case PREFIX_PATH + 'records':
         if(this.w_o_service.getApiariesSelected().findIndex(_a => _a._id === apiary._id) !== -1){
-          let index = this.user_apiaries.findIndex(_a => _a._id === apiary._id);
+          let index = this.w_o_service.user_apiaries.findIndex(_a => _a._id === apiary._id);
           return colors[index];
         }
         else{
@@ -239,7 +243,7 @@ export class WeatherComponent implements OnInit {
         break;
       case PREFIX_PATH + 'config':
         if(this.w_o_service.getApiaryConfig()._id === apiary._id){
-          let index = this.user_apiaries.findIndex(_a => _a._id === apiary._id);
+          let index = this.w_o_service.user_apiaries.findIndex(_a => _a._id === apiary._id);
           return colors[index];
         }
         else{

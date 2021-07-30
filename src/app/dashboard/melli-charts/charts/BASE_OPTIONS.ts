@@ -318,15 +318,19 @@ export const BASE_OPTIONS = {
             link: { xAxisIndex: 'all' }
         },
         title: [{
-            top: '2%',
+            top: '3%',
             left: '36%',
             text: 'Temperature'
-        }, {
-            top: '33%',
+        },  {
+            top: '19%',
+            left: '40%',
+            text: 'Vent'
+        },{
+            top: '35%',
             left: '40%',
             text: 'Vent'
         }, {
-            top: '63%',
+            top: '51%',
             left: '40%',
             text: 'Humidité'
         }],
@@ -339,9 +343,10 @@ export const BASE_OPTIONS = {
             width: 150
         },
         grid: [
-            { x: '3%', y: '7%', left: '6%', width: '75%', height: '22%', background: 'white'},
-            { x: '3%', y: '38%', left: '6%', width: '75%', height: '22%', background: 'white' },
-            { x: '3%', y: '68%', left: '6%', width: '75%', height: '22%', background: 'white' }
+            { x: '3%', y: '5%', left: '8%', width: '75%', height: '12%', background: 'white'},
+            { x: '3%', y: '21%', left: '8%', width: '75%', height: '12%', background: 'white'},
+            { x: '3%', y: '37%', left: '8%', width: '75%', height: '12%', background: 'white' },
+            { x: '3%', y: '53%', left: '8%', width: '75%', height: '12%', background: 'white' },
         ],
         dataZoom: [
               {
@@ -351,13 +356,13 @@ export const BASE_OPTIONS = {
                 end: 100,
                 // bottom: 50,
                 bottom: 20,
-                xAxisIndex: [0, 1, 2]
+                xAxisIndex: [0, 1, 2, 3]
             },
             {
                 type: 'inside',
                 filterMode: 'empty',
                 realtime: true,
-                xAxisIndex: [0, 1, 2]
+                xAxisIndex: [0, 1, 2, 3]
             },
             {
                 type: 'inside',

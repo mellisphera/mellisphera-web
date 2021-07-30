@@ -40,32 +40,29 @@
 
 .weather-modal-flex{
     display:flex;
+    align-items: center;
 }
 
 .weather-field-name{
     font-weight: bold;
+    margin: 0;
 }
 
 .weather-select{
     height: 25px; 
-    margin-left: 10px; 
-    font-style: italic; 
     background-color: rgb(248, 248, 248); 
     border: 1px solid #777; 
     border-radius: 5px;
 }
 
 .weather-config{
-    margin-left: 10px; 
     width: 60%; 
     border-radius: 3px;
-    margin-bottom: 20px;
 }
 
 .weather-input{
     width: 200px;
     border-radius: 3px;
-    font-style: italic;
     border: 1px solid #777;
     height: 25px;
 }
@@ -73,7 +70,6 @@
 .weather-input-date{
     width: 100px;
     border-radius: 3px;
-    font-style: italic;
     border: 1px solid #777;
     height: 25px;
     text-align: center;
@@ -105,4 +101,8 @@
     height:25px;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.disabled{
+    background-color: #eee;
 }

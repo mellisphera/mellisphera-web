@@ -555,6 +555,112 @@
   border: 2px solid #4f4f51;
 }
 
+.btn-mitestripremove_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitestripremove_b.svg');
+  background-position: center;
+}
+
+.btn-mitestripremove_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitestripremove_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-mitedribble_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitedribble_b.svg');
+  background-position: center;
+}
+
+.btn-mitedribble_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitedribble_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-candifeed_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/candifeed_b.svg');
+  background-position: center;
+}
+
+.btn-candifeed_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/candifeed_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-mitecountlounge_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitecountlounge_b.svg');
+  background-position: center;
+}
+
+.btn-mitecountlounge_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitecountlounge_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-mitecountwash_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitecountwash_b.svg');
+  background-position: center;
+}
+
+.btn-mitecountwash_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/mitecountwash_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-markqueen_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/markqueen_b.svg');
+  background-position: center;
+}
+
+.btn-markqueen_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/markqueen_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.btn-queencellseen_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/queencellseen_b.svg');
+  background-position: center;
+}
+
+.btn-queencellseen_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/queencellseen_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+
 .hives-act, .hives-obs
 {
   margin: 5px 5px;
@@ -1214,7 +1320,9 @@
 
 }
 
-@media screen and (max-width: 400px){
+
+
+@media screen and (max-width: 500px){
 
   .title > div > div:nth-child(2){
     margin-left: -5px;

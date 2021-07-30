@@ -617,7 +617,17 @@
             "TODO":"Tareas"
         }
       },
-      "PARAMS":{}
+      "PARAMS":{
+        "ICON":"Icono",
+        "DESC":"Descripción",
+        "SEASON":"Estaciones",
+        "ACTIVE":"Activo"
+      },
+      "HELP":{
+          "NEW":[""],
+          "HISTORY":[""],
+          "PARAMS":[""]
+      }
     },
     "ALERTS_DESC":{
       "HONEYDEW":"Producción de nectar",
@@ -796,7 +806,8 @@
         "DRONEBROOD":"Cria de zángano",
         "DRONE":"Zángano",
         "BUZZINGHIVE":"Zánganera",
-        "MOSAICBROOD":"Cria en mosaico"
+        "MOSAICBROOD":"Cria en mosaico",
+        "QUEENCELLSEEN":"Celula real"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
@@ -956,8 +967,38 @@
             "TEMP_LEFT":"36%",
             "WIND":"Viento",
             "WIND_LEFT":"39%",
-            "RAIN":"Humedad",
-            "RAIN_LEFT":"38%"
+            "RAIN":"Lluvia",
+            "RAIN_LEFT":"39%",
+            "HUMI":"Humedad",
+            "HUMI_LEFT":"38%"
+        },
+        "CONFIG":{
+            "APIARY":"Colemnar",
+            "SOURCE":"Fuente",
+            "BEGIN":"Inicio",
+            "END":"Fin",
+            "ACTUAL":"Actual",
+            "EDIT":"Editar",
+            "DELETE":"Retirar",
+            "ADD_NEW_SOURCE":"Agregar una nueva fuente",
+            "NEW_SOURCE":"Nueva fuente",
+            "EDIT_SOURCE":"Editar fuente",
+            "DELETE_SOURCE":"Retirar fuente",
+            "CHOOSE_SOURCE":"Elegir fuente",
+            "SCALE":"Báscula",
+            "ID_SENSOR":"ID Sensor",
+            "ID_STATION":"ID Estación",
+            "API_KEY":"API Llave",
+            "API_SECRET":"API Secreto",
+            "DELETE_TEXT":"¿Estás seguro de que deseas retirar esta fuente meteorológica?",
+            "BTN_CANCEL":"Anular",
+            "BTN_ADD":"Guardar",
+            "BTN_EDIT":"Guardar",
+            "BTN_DEL":"Retirar"
+        },
+        "HELP":{
+            "RECORDS":"",
+            "CONFIG":""
         }
     }
 }

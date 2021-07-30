@@ -276,7 +276,7 @@
   border: 2px solid #4f4f51
 }
 
-.hives-alert-edit.Dead{
+.hives-alert-edit.Dead, .Dead{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -284,7 +284,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Dead-active{
+.hives-alert-edit.Dead-active, .Dead-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -293,7 +293,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Hmax{
+.hives-alert-edit.Hmax, .Hmax{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -301,7 +301,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Hmax-active{
+.hives-alert-edit.Hmax-active, .Hmax-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -310,7 +310,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Hmin{
+.hives-alert-edit.Hmin, .Hmin{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -318,7 +318,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Hmin-active{
+.hives-alert-edit.Hmin-active, .Hmin-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -327,7 +327,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Honeydew{
+.hives-alert-edit.Honeydew, .Honeydew{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -335,7 +335,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Honeydew-active{
+.hives-alert-edit.Honeydew-active, .Honeydew-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -344,7 +344,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.LowBrood{
+.hives-alert-edit.LowBrood, .LowBrood{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -352,7 +352,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.LowBrood-active{
+.hives-alert-edit.LowBrood-active, .LowBrood-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -361,7 +361,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Oxalic{
+.hives-alert-edit.Oxalic, .Oxalic{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -369,7 +369,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Oxalic-active{
+.hives-alert-edit.Oxalic-active, .Oxalic-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -378,7 +378,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Rswarm{
+.hives-alert-edit.Rswarm, .Rswarm{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -386,7 +386,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Rswarm-active{
+.hives-alert-edit.Rswarm-active, .Rswarm-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -395,7 +395,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Stolen{
+.hives-alert-edit.Stolen, .Stolen{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -403,7 +403,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Stolen-active{
+.hives-alert-edit.Stolen-active, .Stolen-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -412,7 +412,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Super\+{
+.hives-alert-edit.Super\+, .Super\+{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -420,7 +420,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Super\+-active{
+.hives-alert-edit.Super\+-active, .Super\+-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -429,7 +429,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Super-{
+.hives-alert-edit.Super-, .Super-{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -437,7 +437,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Super--active{
+.hives-alert-edit.Super--active, .Super--active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -446,7 +446,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Swarm{
+.hives-alert-edit.Swarm, .Swarm{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -454,7 +454,7 @@
   background-size: 33px;
 }
 
-.hives-alert-edit.Swarm-active{
+.hives-alert-edit.Swarm-active, .Swarm-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -463,7 +463,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Tmax{
+.hives-alert-edit.Tmax, .Tmax{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -471,7 +471,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Tmax-active{
+.hives-alert-edit.Tmax-active, .Tmax-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -480,7 +480,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Tmin{
+.hives-alert-edit.Tmin, .Tmin{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -488,7 +488,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Tmin-active{
+.hives-alert-edit.Tmin-active, .Tmin-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -497,7 +497,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.WIneg{
+.hives-alert-edit.WIneg, .WIneg{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -505,7 +505,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.WIneg-active{
+.hives-alert-edit.WIneg-active, .WIneg-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -514,7 +514,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.WIpos{
+.hives-alert-edit.WIpos, .WIpos{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -522,7 +522,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.WIpos-active{
+.hives-alert-edit.WIpos-active, .WIpos-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -531,7 +531,7 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
-.hives-alert-edit.Wlim{
+.hives-alert-edit.Wlim, .Wlim{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -539,7 +539,7 @@
   background-size: 35px;
 }
 
-.hives-alert-edit.Wlim-active{
+.hives-alert-edit.Wlim-active, .Wlim-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;

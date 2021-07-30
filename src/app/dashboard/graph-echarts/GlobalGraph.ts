@@ -260,6 +260,7 @@ export class GraphGlobal {
       { graph: 'Event-apiary', titre: 'Apiary Events'},
       { graph: 'Event-hive', titre: 'Hive Events'}
     ];
+    console.log(this.translateService.currentLang);
   }
 
 
@@ -270,7 +271,7 @@ export class GraphGlobal {
       this.weight.income_name = 'Gain (lbs)';
       this.weight.norm_name = 'Productivité (lbs)';
       this.humidity.name = 'Humidité';
-      this.rain.name = 'Pluie';
+      this.rain.name = 'Pluie (″)';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Perte';
       this.moon.phase = 'Phase';
@@ -281,14 +282,14 @@ export class GraphGlobal {
       this.brood.name = 'Couvain (%)';
       this.snow.name = 'Neige';
       this.temp.name = 'Température (°F)';
-      this.wind.name = 'Vent';
+      this.wind.name = 'Vent (mph)';
       // EN
     } else if (this.translateService.currentLang === 'es') {
       this.weight.name = 'Peso (lbs)';
       this.weight.income_name = 'Aumento (lbs)';
       this.weight.norm_name = 'Productividad (lbs)';
       this.humidity.name = 'Humedad ';
-      this.rain.name = 'Lluvia';
+      this.rain.name = 'Lluvia (″)';
       this.snow.name = 'Nieve';
       this.moon.phase = 'Fase';
       this.moon.period = 'Período';
@@ -298,7 +299,7 @@ export class GraphGlobal {
       this.weightIncome.gain = 'Ganancia';
       this.weightIncome.loss = 'Perdida';
       this.moon.period = 'Periodo';
-      this.wind.name = 'Viento';
+      this.wind.name = 'Viento (mph)';
       this.brood.name = 'Cria (%)';
     } else {
       this.weight.name = 'Weight (lbs)';
@@ -307,7 +308,7 @@ export class GraphGlobal {
       this.humidity.name = 'Humidity ';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Loss';
-      this.rain.name = 'Rain';
+      this.rain.name = 'Rain (″)';
       this.moon.phase = 'Phase';
       this.moon.period = 'Period';
       this.moon.sunrise = 'Sunrise';
@@ -315,7 +316,7 @@ export class GraphGlobal {
       this.moon.dayLength = 'Daylight';
       this.snow.name = 'Snow';
       this.temp.name = 'Temperature (°F)';
-      this.wind.name = 'Wind';
+      this.wind.name = 'Wind (mph)';
       this.brood.name = 'Brood (%)';
     }
     this.snow.unitT = '″';
@@ -341,7 +342,7 @@ export class GraphGlobal {
       this.weight.income_name = 'Gain (Kg)';
       this.weight.norm_name = 'Productivité (Kg)';
       this.humidity.name = 'Humidité (%)';
-      this.rain.name = 'Pluie';
+      this.rain.name = 'Pluie (mm)';
       this.snow.name = 'Neige';
       this.moon.phase = 'Phase';
       this.moon.phase = 'Phase';
@@ -352,7 +353,7 @@ export class GraphGlobal {
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Perte';
       this.moon.period = 'Période';
-      this.wind.name = 'Vent';
+      this.wind.name = 'Vent (km/h)';
       this.brood.name = 'Couvain (%)';
       // EN
     }  else if (this.translateService.currentLang === 'es') {
@@ -360,7 +361,7 @@ export class GraphGlobal {
       this.weight.income_name = 'Aumento (Kg)';
       this.weight.norm_name = 'Productividad (Kg)';
       this.humidity.name = 'Humedad (%)';
-      this.rain.name = 'Lluvia';
+      this.rain.name = 'Lluvia (mm)';
       this.snow.name = 'Nieve';
       this.moon.phase = 'Fase';
       this.moon.period = 'Período';
@@ -369,14 +370,14 @@ export class GraphGlobal {
       this.moon.dayLength = 'Duración del día';
       this.weightIncome.gain = 'Ganancia';
       this.weightIncome.loss = 'Perdida';
-      this.wind.name = 'Viento';
+      this.wind.name = 'Viento (km/h)';
       this.brood.name = 'Cria (%)';
     } else {
       this.weight.name = 'Weight (Kg)';
       this.weight.income_name = 'Gain (Kg)';
       this.weight.norm_name = 'Productivity (Kg)';
       this.humidity.name = 'Humidity (%)';
-      this.wind.name = 'Wind';
+      this.wind.name = 'Wind (km/h)';
       this.weightIncome.gain = 'Gain';
       this.weightIncome.loss = 'Loss';
       this.moon.phase = 'Phase';
@@ -384,7 +385,7 @@ export class GraphGlobal {
       this.moon.sunrise = 'Sunrise';
       this.moon.sunset = 'Sunset';
       this.moon.dayLength = 'Daylight';
-      this.rain.name = 'Rain';
+      this.rain.name = 'Rain (mm)';
       this.snow.name = 'Snow';
       this.brood.name = 'Brood (%)';
     }
@@ -694,7 +695,9 @@ export class GraphGlobal {
       return this.humidity.unitT;
     } else if(/Wind/g.test(serie)){
       return this.wind.unitT;
-    }
+    } else if(/Rain/g.test(serie)){
+      return this.rain.unitT;
+    } 
   }
 
   /**

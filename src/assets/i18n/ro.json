@@ -614,7 +614,24 @@
             "TODO": "Sarcini"
         }
       },
-      "PARAMS": {}
+      "PARAMS": {
+        "ICON":"Pictogramă",
+        "DESC":"Descriere",
+        "SEASON":"Anotimpuri",
+        "ACTIVE":"Activ"
+      },
+      "HELP":{
+          "NEW":["Here you can create a new inspection. It is divided into 2 parts:",
+                "- The Apiary part which allows you to make a global evaluation of your apiary",
+                "- The Hive part which allows you to make an evaluation for each hive of your apiary",
+                "",
+                "The inspection must be entered on this interface but a PDF version is available for the beekeepers who can't take their mobiles or tablets to the apiary.",
+                "The PDF version do not includes all of the icons."],
+          "HISTORY":["Here is the history of your inspections with the general state, notes and tasks of the apiary"],
+          "PARAMS":["Here is the icon list that you can find on the new inspection screen, with their description and the seasons they are applied to.",
+                    "You can edit the seasons an icon is applied to by clicking the seasons icons.",
+                    "You can also decide to enable/disable some icons."]
+      }
     },
     "ALERTS_DESC": {
       "HONEYDEW": "Aport ridicat de nectar",
@@ -792,7 +809,8 @@
         "DRONEBROOD": "Prezența puietului de trantori",
         "DRONES": "Prezența trantorilor",
         "BUZZINGHIVE": "Stup bezmetic",
-        "MOSAICBROOD": "Puiet mozaic"
+        "MOSAICBROOD": "Puiet mozaic",
+        "QUEENCELLSEEN":"Queencellseen"
     },
     "LOGIN_BM": {
         "TITLE": "Mellisphera",
@@ -941,5 +959,49 @@
         "SIGNUP": "Autentificare",
         "BACK": "Inapoi",
         "RESET": "Resetare"
+    },
+    "WEATHER":{
+        "NAV":{
+            "RECORDS":"Records",
+            "CONFIG":"Configuration"
+        },
+        "GRAPH":{
+            "TEMP":"Temperature",
+            "TEMP_LEFT":"36%",
+            "WIND":"Wind",
+            "WIND_LEFT":"40%",
+            "RAIN":"Rain",
+            "RAIN_LEFT":"40%",
+            "HUMI":"Humidity",
+            "HUMI_LEFT":"38%"
+        },
+        "CONFIG":{
+            "APIARY":"Apiary",
+            "SOURCE":"Source",
+            "BEGIN":"Begin",
+            "END":"End",
+            "ACTUAL":"Actual",
+            "EDIT":"Edit",
+            "DELETE":"Delete",
+            "ADD_NEW_SOURCE":"Add new weather source",
+            "NEW_SOURCE":"New source",
+            "EDIT_SOURCE":"Edit source",
+            "DELETE_SOURCE":"Delete source",
+            "CHOOSE_SOURCE":"Choose source",
+            "SCALE":"Scale",
+            "ID_SENSOR":"Sensor ID",
+            "ID_STATION":"Station ID",
+            "API_KEY":"API Key",
+            "API_SECRET":"API Secret",
+            "DELETE_TEXT":"Are you sure you want to delete the weather source ?",
+            "BTN_CANCEL":"Cancel",
+            "BTN_ADD":"Add",
+            "BTN_EDIT":"Save",
+            "BTN_DEL":"Delete"
+        },
+        "HELP":{
+            "RECORDS":"",
+            "CONFIG":""
+        }
     }
 }

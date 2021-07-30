@@ -1,11 +1,11 @@
 <div id="inspect-params-content">
   <table class="table">
-    <thead style="display: none;">
+    <thead>
       <tr>
-        <th scope="col" class="text-left cols_icon"></th>
-        <th scope="col" class="text-left cols_name"></th>
-        <th scope="col" class="text-left cols_seasons"></th>
-        <th scope="col" class="text-left cols_on_off" ></th>
+        <th scope="col" class="text-left cols_icon">{{ 'INSPECT.PARAMS.ICON' | translate }}</th>
+        <th scope="col" class="text-left cols_name">{{ 'INSPECT.PARAMS.DESC' | translate }}</th>
+        <th scope="col" class="text-left cols_seasons">{{ 'INSPECT.PARAMS.SEASON' | translate }}</th>
+        <th scope="col" class="text-left cols_on_off" >{{ 'INSPECT.PARAMS.ACTIVE' | translate }}</th>
       </tr>
     </thead>
     <tbody>
@@ -41,4 +41,15 @@
       </ng-container>
     </tbody>
   </table>
+  <div>
+    <popover-content #weightCalendarTooltip placement="left" [animation]="true"
+        [closeOnClickOutside]="false">
+        <span class="helpTooltip">
+            <span *ngFor="let line of 'INSPECT.HELP.PARAMS' | translate">{{ line }}<br /></span>
+        </span>
+    </popover-content>
+    <div [popover]="weightCalendarTooltip" style="font-size: 18px !important;width: 36px; float: right; margin-right: 5px;">
+        <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+    </div>
+  </div>
 </div>
