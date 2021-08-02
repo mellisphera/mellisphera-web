@@ -27,6 +27,7 @@ import { DailyRecordsWService } from '../../service/api/daily-records-w.service'
 import { Fitness } from '../../../_model/fitness';
 import { DailyRecordTh } from '../../../_model/daily-record-th';
 import { DailyRecordsW } from '../../../_model/daily-records-w';
+import { Observable } from 'rxjs';
 
 declare var jsPDF: any;
 
@@ -503,10 +504,11 @@ export class InspectNewComponent implements OnInit {
             });
             _h.apiaryInspId = _api_insp._id;
             _h.createDate = new Date();
-            this.inspService.insertHiveInsp(_h).subscribe(
-              () => {}, () => {}, () => {}
-            )
           });
+          this.inspService.insertHiveInsp(inspHivesToPush).subscribe(
+            _insps => console.log(_insps),
+            () => {}, () => {}
+          );
         },
         () => {},
         () => {

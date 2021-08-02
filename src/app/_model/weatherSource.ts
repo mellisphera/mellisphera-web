@@ -1,13 +1,13 @@
-import { WeatherConfig } from './weatherConfig';
-
 export interface WeatherSource{
     _id: string,
     apiaryId: string,
     apiaryName: string,
     userId: string,
     userName: string,
+    source: string,
     begin: Date,
     end: Date,
-    source: string,
-    config: WeatherConfig,
+    stationId: string,
+    APIKey: string,
+    APISecret: string
 }

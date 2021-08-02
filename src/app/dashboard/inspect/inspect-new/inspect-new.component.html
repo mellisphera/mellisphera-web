@@ -71,7 +71,7 @@
           <div id="hives-table-body" *ngIf="active_apiary_index > 0">
             <ng-container *ngFor="let ruche of user_hives; let i = index;">
               <div style="margin-bottom: 15px; margin-left: 5px;">
-                <h4 style="font-weight: bold; text-align: left; margin-left: 5px; border-bottom: 1px solid #ddd; display: flex; align-items: center;">
+                <h4 style="font-weight: bold; text-align: left; margin-left: 5px; border-bottom: 1px solid #ddd; display: flex; align-items: center; margin-bottom: 0px;">
                   <div class="hive-fit-square" *ngIf="fitness_by_apiary[i] && fitness_by_apiary[i].hiveId === ruche._id" [style.background-color]="fitness_by_apiary[i].fitcolor"></div>
                   {{ruche.name}}
                   <div style="margin-right: 10px; margin-left: auto; font-weight: normal; font-size: 14px;">
@@ -258,7 +258,8 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
-        <p *ngFor="let line of 'INSPECT.NEW.SAVE_TEXT' | translate">{{ line }}<br /></p>
+        <p><b>{{ 'INSPECT.NEW.SAVE_TEXT_1' | translate }}</b><br /></p>
+        <p>{{ 'INSPECT.NEW.SAVE_TEXT_2' | translate }}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-light" data-dismiss="modal">{{'INSPECT.NEW.BTN_CANCEL' | translate}}</button>

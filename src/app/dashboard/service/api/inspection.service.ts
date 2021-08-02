@@ -311,8 +311,8 @@ export class InspectionService {
   * @param insp
   *
   */
-  insertHiveInsp(insp: Inspection): Observable<Inspection> {
-    return this.http.post<Inspection>(CONFIG.URL + 'inspection/insert/insp/hive/' , insp, httpOptions);
+  insertHiveInsp(insps: Inspection[]): Observable<Inspection[]> {
+    return this.http.post<Inspection[]>(CONFIG.URL + 'inspection/insert/insp/hive/' , insps, httpOptions);
   }
 
 

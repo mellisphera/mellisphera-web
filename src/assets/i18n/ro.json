@@ -597,7 +597,9 @@
         "BTN_DL": "Descărcați",
         "GEN_DL": "Generare fișier:",
         "READY_DL": "Fișierul dvs. este gata pentru descărcare!",
-        "BTN_CANCEL": "Anulați"
+        "BTN_CANCEL": "Anulați",
+        "SAVE_TEXT_1":"Do you want to save this inspection ?",
+        "SAVE_TEXT_2":"There is no possible inspection re-editing unless editing in apiary and hives events separately"
       },
       "TABLE":{
         "BEES": "Albine",

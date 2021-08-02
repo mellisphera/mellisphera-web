@@ -58,6 +58,10 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  
+}
+
+.title > div:nth-child(2){
   margin-left: 15px;
 }
 
@@ -660,6 +664,21 @@
   border: 2px solid #4f4f51;
 }
 
+.btn-harvest_b{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/harvest_b.svg');
+  background-position: center;
+}
+
+.btn-harvest_cb{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/harvest_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
 
 .hives-act, .hives-obs
 {
@@ -756,7 +775,7 @@
   display: block;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 560px;
+  height: 49vh;
 }
 
 .hives-item{
@@ -1105,10 +1124,18 @@
     display: block;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 560px;
+    height: 44vh;
   }
 }
 
+@media screen and (max-width: 1024px) and (orientation: landscape){
+  #hives-table-body{
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 30vh;
+  }
+}
 
 @media screen and (max-width: 1000px){
   .inspect-new-container h3{

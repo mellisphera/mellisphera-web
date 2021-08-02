@@ -251,4 +251,21 @@ nav[role=admin-navigation] {
         /* justify-content: end; */
         width: 100%;
     }
+
+    #dropdown{
+        width: auto;
+        text-align: center;
+    }
+
+    #date-menu{
+        position: absolute;
+        padding: 10px;
+        color: white;
+        display: flex;
+        background-color: #4F4F51;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 330px;
+        left: calc(50% - 165px);
+    }
 }

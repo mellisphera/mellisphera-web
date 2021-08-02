@@ -1,4 +1,4 @@
-<section style="margin-top: 30px;">
+<section id="weather-config-section" style="margin-top: 30px;">
   <table class="table" id="weather-table">
     <thead>
       <tr>
@@ -29,17 +29,6 @@
       </tr>
     </tbody>
   </table>
-  <div>
-    <popover-content #weightCalendarTooltip placement="left" [animation]="true"
-        [closeOnClickOutside]="false">
-        <span class="helpTooltip">
-            <span>{{ 'WEATHER.HELP.CONFIG' | translate }}<br /></span>
-        </span>
-    </popover-content>
-    <div [popover]="weightCalendarTooltip" style="font-size: 18px !important;width: 36px; float: right; margin-right: 5px;">
-        <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
-    </div>
-  </div>
 
   <div class="modal fade" id="newSourceModal" tabindex="-1" role="dialog" aria-labelledby="newSourceModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" id="modal-small">
@@ -66,14 +55,14 @@
               <option value="WeatherSource">WeatherSource</option>
             </select>
           </div>
-          <div class="weather-modal-flex" *ngIf="!(wS.source === 'WeatherSource')">
-            <div style="margin-top: 10px;" *ngIf="wS.source === 'TH' || wS.source === 'Scale' || wS.source === 'T2'" class="weather-config weather-modal-flex">
-              <select id="sensors-select" class="weather-select" >
+          <div class="weather-modal-flex" *ngIf="!(sourceType === 'WeatherSource')">
+            <div style="margin-top: 10px;" *ngIf="sourceType === 'TH' || sourceType === 'Scale' || sourceType === 'T2'" class="weather-config weather-modal-flex">
+              <select id="sensors-select" class="weather-select" (change)="sensorChange()">
                 <option disabled selected>{{ 'WEATHER.CONFIG.ID_SENSOR' | translate }}</option>
                 <option *ngFor="let sensor of captByType" value="{{sensor.sensorRef}}">{{sensor.sensorRef}}</option>
               </select>
             </div>
-            <div *ngIf="wS.source === 'Station Davis'" class="weather-config">
+            <div *ngIf="sourceType === 'Station Davis'" class="weather-config">
               <div>
                 <input style="margin-top: 10px;" type="text" class="weather-input" placeholder="{{ 'WEATHER.CONFIG.ID_STATION' | translate }}">
               </div>
@@ -147,3 +136,14 @@
   </div>
 </section>
 
+<div>
+  <popover-content #weightCalendarTooltip placement="left" [animation]="true"
+      [closeOnClickOutside]="false">
+      <span class="helpTooltip">
+          <span>{{ 'WEATHER.HELP.CONFIG' | translate }}<br /></span>
+      </span>
+  </popover-content>
+  <div [popover]="weightCalendarTooltip" style="font-size: 18px !important;width: 36px; float: right; margin-right: 5px;">
+      <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+  </div>
+</div>

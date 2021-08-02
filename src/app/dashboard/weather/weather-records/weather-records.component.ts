@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { SERIES } from '../../melli-charts/charts/SERIES';
 import { Console } from 'console';
 import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
+import { _MatTabMixinBase } from '@angular/material/tabs/typings/tab';
 
 const colors: string[] = ['rgb(20,150,255)', 'green', 'red', 'purple', 'orange', 'cyan', 'magenta', 'brown', 'grey'];
 
@@ -308,8 +309,6 @@ export class WeatherRecordsComponent implements OnInit {
       width: 'auto',
       height: '1400px'
     });
-    console.log(document.body.clientWidth);
-    //let options = this.w_o_service.getRecordsChartInstance();
     let width = (<HTMLElement>document.getElementById("graph-weather")).offsetWidth
     if(document.body.clientWidth < 950){
       if( (this.type_graph === 'desktop' || this.type_graph === 'mobile500') && width < 800 && width > 500){
@@ -338,14 +337,24 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.legend.top = 0;
     this.options.legend.width = '100%';
     this.options.title[0].top = "3%";
-    this.options.title.forEach((_t,i) => _t.top = (3 + i*16) + '%');
+    this.options.title.forEach((_t,i) => {
+      _t.top = (3 + i*16) + '%';
+      _t.left = 'center';
+    });
     this.options.grid[0].top = "5%";
     this.options.grid.forEach((_t,i) => {
       _t.top = (5 + i*16) + '%';
-      _t.width = "87%";
+      _t.width = "85%";
+      _t.left = "8%";
     });
     this.options.xAxis.forEach(_a => _a.axisLabel.fontSize = 10);
-    this.options.yAxis.forEach(_a => _a.axisLabel.fontSize = 10);
+    this.options.yAxis.forEach(_a => {
+      _a.axisLabel.fontSize = 10;
+      _a.nameGap = 20;
+      _a.nameTextStyle = {
+        fontSize : 10
+      }
+    });
     this.w_o_service.getRecordsChartInstance().setOption(this.options);
   }
 
@@ -359,14 +368,24 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.legend.top = 0;
     this.options.legend.width = '100%';
     this.options.title[0].top = "5%";
-    this.options.title.forEach((_t,i) => _t.top = (5 + i*16) + '%');
+    this.options.title.forEach((_t,i) => {
+      _t.top = (5 + i*16) + '%'
+      _t.left = 'center';
+    });
     this.options.grid[0].top = "7%";
     this.options.grid.forEach((_t,i) => {
       _t.top = (7+ i*16) + '%';
       _t.width = "83%";
+      _t.left = "10%";
     });
     this.options.xAxis.forEach(_a => _a.axisLabel.fontSize = 8);
-    this.options.yAxis.forEach(_a => _a.axisLabel.fontSize = 8);
+    this.options.yAxis.forEach(_a => {
+      _a.axisLabel.fontSize = 8;
+      _a.nameGap = 15;
+      _a.nameTextStyle = {
+        fontSize : 9
+      }
+    });
     this.w_o_service.getRecordsChartInstance().setOption(this.options);
   }
 
@@ -380,13 +399,25 @@ export class WeatherRecordsComponent implements OnInit {
     delete this.options.legend.center;
     this.options.title[0].top = "3%";
     this.options.title.forEach((_t,i) => _t.top = (3 + i*16) + '%');
+    this.options.title[0].left = this.translateService.instant('WEATHER.GRAPH.TEMP_LEFT');
+    this.options.title[1].left = this.translateService.instant('WEATHER.GRAPH.RAIN_LEFT');
+    this.options.title[2].left = this.translateService.instant('WEATHER.GRAPH.HUMI_LEFT');
+    this.options.title[3].left = this.translateService.instant('WEATHER.GRAPH.WIND_LEFT');
+
     this.options.grid[0].top = "5%";
     this.options.grid.forEach((_t,i) => {
       _t.top = (5 + i*16) + '%';
       _t.width = "75%";
+      _t.left = "6%";
     });
     this.options.xAxis.forEach(_a => _a.axisLabel.fontSize = 12);
-    this.options.yAxis.forEach(_a => _a.axisLabel.fontSize = 12);
+    this.options.yAxis.forEach(_a => {
+      _a.axisLabel.fontSize = 12;
+      _a.nameGap = 25;
+      _a.nameTextStyle = {
+        fontSize : 16
+      }
+    });
     this.w_o_service.getRecordsChartInstance().setOption(this.options);
   }
 

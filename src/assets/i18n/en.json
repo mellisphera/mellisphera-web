@@ -599,8 +599,8 @@
         "GEN_DL":"File generating : ",
         "READY_DL":"Your file is ready for download !",
         "BTN_CANCEL":"Cancel",
-        "SAVE_TEXT":["Do you want to save this inspection?",
-            "There is no possible inspection re-editing unless editing in apiary and hives events separately"]
+        "SAVE_TEXT_1":"Do you want to save this inspection ?",
+        "SAVE_TEXT_2":"There is no possible inspection re-editing unless editing in apiary and hives events separately"
       },
       "TABLE":{
         "BEES":"Bees",

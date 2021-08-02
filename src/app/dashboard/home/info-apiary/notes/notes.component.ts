@@ -594,9 +594,9 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       opsDate: new Date(insp.opsDate),
       type: insp.type.valueOf(),
       description: insp.description != null ? insp.description.valueOf() : null,
-      tags: insp.tags != null ? [...insp.tags] : null,
-      tasks: insp.tasks != null ? [...insp.tasks] : null,
-      obs: insp.obs != null ? [...insp.obs] : null,
+      tags: insp.tags != null ? [...insp.tags] : [],
+      tasks: insp.tasks != null ? [...insp.tasks] : [],
+      obs: insp.obs != null ? [...insp.obs] : [],
       todo: insp.todo != null ? insp.todo.valueOf() : null
     };
     this.editObsList();
