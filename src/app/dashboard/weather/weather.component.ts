@@ -34,7 +34,7 @@ export class WeatherComponent implements OnInit {
     public rucherService: RucherService,
     private userService: UserloggedService,
     private router: Router,
-    private w_o_service: WeatherOptionService,
+    public w_o_service: WeatherOptionService,
     public w_d_service: WeatherDateService,
     private renderer: Renderer2,
     private translateService: TranslateService,
